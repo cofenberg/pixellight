@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
-#define __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
+#ifndef __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
+#define __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
 #pragma once
 
 
@@ -29,13 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLScript/PLScript.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -44,17 +43,14 @@ namespace PLScript {
 /**
 *  @brief
 *    System console script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
 */
-class ScriptBindingSystemConsole : public ScriptBinding {
+class ScriptBindingSystemConsole : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingSystemConsole, "PLScript", PLScript::ScriptBinding, "System console script binding class")
+	pl_class(pl_rtti_export, ScriptBindingSystemConsole, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
 		pl_properties
 			pl_property("Namespace", "PL.System.Console")
 		pl_properties_end
@@ -67,7 +63,7 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPT_API void Print(PLGeneral::String sText);
+		void Print(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -78,13 +74,13 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBindingSystemConsole();
+		ScriptBindingSystemConsole();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptBindingSystemConsole();
+		virtual ~ScriptBindingSystemConsole();
 
 
 };
@@ -93,7 +89,7 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
+#endif // __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__

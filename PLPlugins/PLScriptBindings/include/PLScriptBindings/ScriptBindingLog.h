@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_LOG_H__
-#define __PLSCRIPT_SCRIPTBINDING_LOG_H__
+#ifndef __PLSCRIPTBINDINGS_LOG_H__
+#define __PLSCRIPTBINDINGS_LOG_H__
 #pragma once
 
 
@@ -29,13 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLScript/PLScript.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -44,17 +43,14 @@ namespace PLScript {
 /**
 *  @brief
 *    Log script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
 */
-class ScriptBindingLog : public ScriptBinding {
+class ScriptBindingLog : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingLog, "PLScript", PLScript::ScriptBinding, "Log script binding class")
+	pl_class(pl_rtti_export, ScriptBindingLog, "PLScriptBindings", PLScript::ScriptBinding, "Log script binding class")
 		pl_properties
 			pl_property("Namespace", "PL.Log")
 		pl_properties_end
@@ -72,12 +68,12 @@ class ScriptBindingLog : public ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPT_API void OutputAlways(PLGeneral::String sText);
-		PLSCRIPT_API void OutputCritical(PLGeneral::String sText);
-		PLSCRIPT_API void OutputError(PLGeneral::String sText);
-		PLSCRIPT_API void OutputWarning(PLGeneral::String sText);
-		PLSCRIPT_API void OutputInfo(PLGeneral::String sText);
-		PLSCRIPT_API void OutputDebug(PLGeneral::String sText);
+		void OutputAlways(PLGeneral::String sText);
+		void OutputCritical(PLGeneral::String sText);
+		void OutputError(PLGeneral::String sText);
+		void OutputWarning(PLGeneral::String sText);
+		void OutputInfo(PLGeneral::String sText);
+		void OutputDebug(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -88,13 +84,13 @@ class ScriptBindingLog : public ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBindingLog();
+		ScriptBindingLog();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptBindingLog();
+		virtual ~ScriptBindingLog();
 
 
 };
@@ -103,7 +99,7 @@ class ScriptBindingLog : public ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_LOG_H__
+#endif // __PLSCRIPTBINDINGS_LOG_H__

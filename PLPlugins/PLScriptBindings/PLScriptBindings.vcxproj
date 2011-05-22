@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CC92EBB3-44C5-429C-992C-CF71C8C69D29}</ProjectGuid>
+    <ProjectGuid>{7A493195-2B4D-4F1E-9454-A971CEB6D986}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,8 +88,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLScript/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLEngine/include/;../../PLEngine/PLCompositing/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -101,24 +101,24 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngineD.dll</OutputFile>
+      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLScriptD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLRendererD.lib;PLSceneD.lib;PLEngineD.lib;PLCompositingD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptBindingsD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLEngineD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLScriptBindingsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngineD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptBindingsD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLEngineD.dll ..\..\Bin\PLRuntime\
-copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
+      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+copy build\debug\PLScriptBindingsD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -128,8 +128,8 @@ copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLScript/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLEngine/include/;../../PLEngine/PLCompositing/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -141,23 +141,23 @@ copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngineD64.dll</OutputFile>
+      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLScriptD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLGuiD64.lib;PLRendererD64.lib;PLSceneD64.lib;PLEngineD64.lib;PLCompositingD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptBindingsD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLEngineD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLScriptBindingsD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngineD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptBindingsD64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLEngineD64.dll ..\..\Bin\PLRuntime\
-copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
+      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+copy build\debug64\PLScriptBindingsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -169,8 +169,8 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLScript/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLEngine/include/;../../PLEngine/PLCompositing/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -189,8 +189,8 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngine.dll</OutputFile>
+      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLScript.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLRenderer.lib;PLScene.lib;PLEngine.lib;PLCompositing.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptBindings.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -199,12 +199,13 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLEngine.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptBindings.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLEngine.dll ..\..\Bin\PLRuntime\
-copy build\release\PLEngine.lib ..\..\Bin\Lib\
+      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+copy build\release\PLScriptBindings.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -218,8 +219,8 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLScript/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLEngine/include/;../../PLEngine/PLCompositing/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -234,8 +235,8 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngine64.dll</OutputFile>
+      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLScript64.lib;PLMath64.lib;PLGraphics642.lib;PLGui64.lib;PLRenderer64.lib;PLScene64.lib;PLEngine64.lib;PLCompositing64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptBindings64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -243,54 +244,27 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngine64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptBindings64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLEngine64.dll ..\..\Bin\PLRuntime\
-copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
+      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+copy build\release64\PLScriptBindings64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application\BasicSceneApplication.cpp" />
-    <ClCompile Include="src\Application\RenderApplication.cpp" />
-    <ClCompile Include="src\Application\SceneApplication.cpp" />
-    <ClCompile Include="src\PLEngine.cpp" />
-    <ClCompile Include="src\Picking\MousePicking.cpp" />
-    <ClCompile Include="src\Picking\Picking.cpp" />
-    <ClCompile Include="src\Picking\PickingResult.cpp" />
-    <ClCompile Include="src\Gui\ModTrapMouse.cpp" />
-    <ClCompile Include="src\Gui\PreviewWidget.cpp" />
-    <ClCompile Include="src\Gui\RenderWidget.cpp" />
-    <ClCompile Include="src\Gui\RenderWindow.cpp" />
-    <ClCompile Include="src\Gui\WindowConnection.cpp" />
-    <ClCompile Include="src\Config\RendererConfigGroup.cpp" />
-    <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
-    <ClCompile Include="src\Tools\Screenshot.cpp" />
+    <ClCompile Include="src\PLScriptBindings.cpp" />
+    <ClCompile Include="src\ScriptBindingLog.cpp" />
+    <ClCompile Include="src\ScriptBindingScene.cpp" />
+    <ClCompile Include="src\ScriptBindingSystemConsole.cpp" />
+    <ClCompile Include="src\ScriptBindingTiming.cpp" />
+    <ClCompile Include="src\SNMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\RenderApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\SceneApplication.h" />
-    <ClInclude Include="include\PLEngine\PLEngine.h" />
-    <ClInclude Include="include\PLEngine\PLEngineLinux.h" />
-    <ClInclude Include="include\PLEngine\PLEngineWindows.h" />
-    <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />
-    <ClInclude Include="include\PLEngine\Picking\Picking.h" />
-    <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />
-    <ClInclude Include="include\PLEngine\Gui\ModTrapMouse.h" />
-    <ClInclude Include="include\PLEngine\Gui\PreviewWidget.h" />
-    <ClInclude Include="include\PLEngine\Gui\RenderWidget.h" />
-    <ClInclude Include="include\PLEngine\Gui\RenderWindow.h" />
-    <ClInclude Include="include\PLEngine\Gui\WindowConnection.h" />
-    <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h" />
-    <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
-    <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\..\PLBase\PLScript\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">
@@ -309,26 +283,37 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLGui\PLGui\PLGui.vcxproj">
-      <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
+    <ProjectReference Include="..\..\PLEngine\PLCompositing\PLCompositing.vcxproj">
+      <Project>{a4efce15-1178-484a-a59f-343ae41ddd52}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLInput\PLInput.vcxproj">
+    <ProjectReference Include="..\..\PLEngine\PLInput\PLInput.vcxproj">
       <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLMesh\PLMesh.vcxproj">
+    <ProjectReference Include="..\..\PLEngine\PLMesh\PLMesh.vcxproj">
       <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLRenderer\PLRenderer.vcxproj">
+    <ProjectReference Include="..\..\PLEngine\PLRenderer\PLRenderer.vcxproj">
       <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLScene\PLScene.vcxproj">
+    <ProjectReference Include="..\..\PLEngine\PLScene\PLScene.vcxproj">
       <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+      <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLScriptBindings\ScriptBindingLog.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBindingScene.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBindingSystemConsole.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBindingTiming.h" />
+    <ClInclude Include="include\PLScriptBindings\SNMScript.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

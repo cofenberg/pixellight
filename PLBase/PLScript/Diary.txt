@@ -3,6 +3,13 @@
 - Woho, the demo "Scripts.scene" comes to live... "ScriptsScene.lua" is already up and running and is manipulating a scene
   node by using a Lua script. It's still everything experimental to see what's possible and how it may work as a whole
   system.
+PLScriptBindings:
+- Added PLScriptBindings plugin which exposes certain parts of PixelLight to script languages. This means that the script bindings
+  are a 100% loose plugin and are not within the core. First I thought about adding some basic script bindings directly into PLScript and
+  other script bindings into the PLEngine project which brings together the individual components to an easy usable framework. But
+  this way the standard PixelLight script bindings would be scattered over multiple projects and there would also be the risk that the
+  completly optional script support may accidentally grow into the core over the time. This way, it will probably also easier for other
+  people to contribute to the script bindings part.
 
 
 

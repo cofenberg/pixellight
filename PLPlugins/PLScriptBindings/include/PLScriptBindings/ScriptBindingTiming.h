@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingScene.h                           *
+ *  File: ScriptBindingTiming.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#ifndef __PLSCRIPTBINDINGS_TIMING_H__
+#define __PLSCRIPTBINDINGS_TIMING_H__
 #pragma once
 
 
@@ -29,13 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -43,23 +42,21 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    Timing script binding class
 */
-class ScriptBindingScene : public PLScript::ScriptBinding {
+class ScriptBindingTiming : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingScene, "PLEngine", PLScript::ScriptBinding, "Scene script binding class")
+	pl_class(pl_rtti_export, ScriptBindingTiming, "PLScriptBindings", PLScript::ScriptBinding, "Timing script binding class")
 		pl_properties
-			pl_property("Namespace", "PL.Application.Scene")
+			pl_property("Namespace", "PL.Timing")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Get, PLCore::Object*, PLGeneral::String, "Returns the scene node with the given absolute name", "")
+		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
+		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
 	pl_class_end
 
 
@@ -67,7 +64,8 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API PLCore::Object *Get(PLGeneral::String sName);
+		float GetTimeDifference();
+		float GetFramesPerSecond();
 
 
 	//[-------------------------------------------------------]
@@ -78,13 +76,13 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingScene();
+		ScriptBindingTiming();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingScene();
+		virtual ~ScriptBindingTiming();
 
 
 };
@@ -93,7 +91,7 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings
 
 
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#endif // __PLSCRIPTBINDINGS_TIMING_H__

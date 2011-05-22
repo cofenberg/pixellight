@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SNMSCRIPT_H__
-#define __PLENGINE_SCRIPT_SNMSCRIPT_H__
+#ifndef __PLSCRIPTBINDINGS_SNMSCRIPT_H__
+#define __PLSCRIPTBINDINGS_SNMSCRIPT_H__
 #pragma once
 
 
@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
-#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +43,7 @@ namespace PLScript {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -53,9 +52,6 @@ namespace PLEngine {
 /**
 *  @brief
 *    Script scene node modifier
-*
-*  @note
-*    - [TODO] Script support is currently under construction
 */
 class SNMScript : public PLScene::SceneNodeModifier {
 
@@ -63,7 +59,7 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SNMScript, "PLEngine", PLScene::SceneNodeModifier, "Script scene node modifier")
+	pl_class(pl_rtti_export, SNMScript, "PLScriptBindings", PLScene::SceneNodeModifier, "Script scene node modifier")
 		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
 		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use",										"")
 		pl_attribute(UpdateFunction,	PLGeneral::String,	"Update",	ReadWrite,	DirectValue,	"Name of the script function to be called for update",	"")
@@ -74,8 +70,8 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API PLGeneral::String GetScript() const;
-		PL_API void SetScript(const PLGeneral::String &sValue);
+		PLGeneral::String GetScript() const;
+		void SetScript(const PLGeneral::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -89,20 +85,20 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PL_API SNMScript(PLScene::SceneNode &cSceneNode);
+		SNMScript(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~SNMScript();
+		virtual ~SNMScript();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate);
 
 
 	//[-------------------------------------------------------]
@@ -137,7 +133,7 @@ class SNMScript : public PLScene::SceneNodeModifier {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings
 
 
-#endif // __PLENGINE_SCRIPT_SNMSCRIPT_H__
+#endif // __PLSCRIPTBINDINGS_SNMSCRIPT_H__

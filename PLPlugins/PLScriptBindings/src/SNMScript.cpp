@@ -27,7 +27,7 @@
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "PLEngine/Script/SNMScript.h"
+#include "PLScriptBindings/SNMScript.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +37,7 @@ using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLScript;
 using namespace PLScene;
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -132,4 +132,4 @@ void SNMScript::NotifyUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings

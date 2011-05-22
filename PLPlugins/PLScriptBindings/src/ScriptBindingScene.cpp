@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.cpp                        *
+ *  File: ScriptBindingScene.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,34 +23,44 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include "PLScript/ScriptBindingTiming.h"
+#include <PLScene/Scene/SceneContainer.h>
+#include <PLEngine/Application/SceneApplication.h>
+#include "PLScriptBindings/ScriptBindingScene.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScript {
+using namespace PLCore;
+using namespace PLScene;
+using namespace PLEngine;
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingTiming)
+pl_implement_class(ScriptBindingScene)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-float ScriptBindingTiming::GetTimeDifference()
+Object *ScriptBindingScene::Get(String sName)
 {
-	return Timing::GetInstance()->GetTimeDifference();
-}
+	// [TODO] Do any type checks?
+	// Get the scene application instance
+	SceneApplication *pSceneApplication = static_cast<SceneApplication*>(SceneApplication::GetApplication());
+	if (pSceneApplication) {
+		// Get the root scene container
+		SceneContainer *pSceneContainer = pSceneApplication->GetRootScene();
+		if (pSceneContainer)
+			return pSceneContainer->Get(sName);
+	}
 
-float ScriptBindingTiming::GetFramesPerSecond()
-{
-	return Timing::GetInstance()->GetFramesPerSecond();
+	// Error!
+	return nullptr;
 }
 
 
@@ -61,9 +71,8 @@ float ScriptBindingTiming::GetFramesPerSecond()
 *  @brief
 *    Constructor
 */
-ScriptBindingTiming::ScriptBindingTiming() :
-	MethodGetTimeDifference(this),
-	MethodGetFramesPerSecond(this)
+ScriptBindingScene::ScriptBindingScene() :
+	MethodGet(this)
 {
 }
 
@@ -71,7 +80,7 @@ ScriptBindingTiming::ScriptBindingTiming() :
 *  @brief
 *    Destructor
 */
-ScriptBindingTiming::~ScriptBindingTiming()
+ScriptBindingScene::~ScriptBindingScene()
 {
 }
 
@@ -79,4 +88,4 @@ ScriptBindingTiming::~ScriptBindingTiming()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings

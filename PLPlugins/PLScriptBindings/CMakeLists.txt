@@ -1,34 +1,18 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLEngine)
-
-##################################################
-## Prerequisites
-##################################################
-
-# Create 'Plugins/PLEngine' directory
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLEngine)
+define_project(PLScriptBindings)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Application/RenderApplication.cpp
-	src/Application/SceneApplication.cpp
-	src/Application/BasicSceneApplication.cpp
-	src/Config/RendererConfigGroup.cpp
-	src/Gui/WindowConnection.cpp
-	src/Gui/RenderWidget.cpp
-	src/Gui/PreviewWidget.cpp
-	src/Gui/RenderWindow.cpp
-	src/Gui/ModTrapMouse.cpp
-	src/Picking/Picking.cpp
-	src/Picking/PickingResult.cpp
-	src/Picking/MousePicking.cpp
-	src/Tools/Screenshot.cpp
-	src/Tools/SceneRendererTool.cpp
-	src/PLEngine.cpp
+	src/PLScriptBindings.cpp
+	src/ScriptBindingLog.cpp
+	src/ScriptBindingTiming.cpp
+	src/ScriptBindingSystemConsole.cpp
+	src/Script/ScriptBindingScene.cpp
+	src/Script/SNMScript.cpp
 )
 
 ##################################################
@@ -38,13 +22,14 @@ add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScript/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLGui/PLGui/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLInput/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
+	${CMAKE_SOURCE_DIR}/PLEngine/PLEngine/include
+	${CMAKE_SOURCE_DIR}/PLEngine/PLCompositing/include
 )
 
 ##################################################
@@ -60,31 +45,19 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
+	PLScript
 	PLMath
 	PLGraphics
 	PLGui
-	PLInput
 	PLRenderer
-	PLMesh
 	PLScene
+	PLEngine
+	PLCompositing
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_libs(
-		${WIN32_USER32_LIB}
-		${WIN32_ADVAPI32_LIB}
-		${WIN32_WINMM_LIB}
-	)
-endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
-add_compile_defs(
-	PLENGINE_EXPORTS
-)
 if(WIN32)
 	##################################################
 	## Win32
@@ -143,12 +116,13 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
-add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLScript PLMath PLGraphics PLGui PLRenderer PLScene PLEngine)
+add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -156,13 +130,13 @@ add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLRuntime/Plugins/PLScript"
 )
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime/Plugins/PLScript"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime/Plugins/PLScript"
 	)
 endif()
 
@@ -179,12 +153,12 @@ endif()
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScript		COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScript		COMPONENT Runtime
+	ARCHIVE DESTINATION ${PL_INSTALL_LIB}							COMPONENT SDK
 )
 
-# Include files
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
+# Plugin file
+install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScript				COMPONENT Runtime
 )

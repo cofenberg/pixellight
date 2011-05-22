@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingScene.cpp                         *
+ *  File: ScriptBindingLog.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,43 +23,54 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneContainer.h>
-#include "PLEngine/Application/SceneApplication.h"
-#include "PLEngine/Script/ScriptBindingScene.h"
+#include <PLGeneral/Log/Log.h>
+#include "PLScriptBindings/ScriptBindingLog.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
-using namespace PLScene;
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingScene)
+pl_implement_class(ScriptBindingLog)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-Object *ScriptBindingScene::Get(String sName)
+void ScriptBindingLog::OutputAlways(String sText)
 {
-	// [TODO] Do any type checks?
-	// Get the scene application instance
-	SceneApplication *pSceneApplication = static_cast<SceneApplication*>(SceneApplication::GetApplication());
-	if (pSceneApplication) {
-		// Get the root scene container
-		SceneContainer *pSceneContainer = pSceneApplication->GetRootScene();
-		if (pSceneContainer)
-			return pSceneContainer->Get(sName);
-	}
+	Log::GetInstance()->Output(Log::Always, sText);
+}
 
-	// Error!
-	return nullptr;
+void ScriptBindingLog::OutputCritical(String sText)
+{
+	Log::GetInstance()->Output(Log::Critical, sText);
+}
+
+void ScriptBindingLog::OutputError(String sText)
+{
+	Log::GetInstance()->Output(Log::Error, sText);
+}
+
+void ScriptBindingLog::OutputWarning(String sText)
+{
+	Log::GetInstance()->Output(Log::Warning, sText);
+}
+
+void ScriptBindingLog::OutputInfo(String sText)
+{
+	Log::GetInstance()->Output(Log::Info, sText);
+}
+
+void ScriptBindingLog::OutputDebug(String sText)
+{
+	Log::GetInstance()->Output(Log::Debug, sText);
 }
 
 
@@ -70,8 +81,13 @@ Object *ScriptBindingScene::Get(String sName)
 *  @brief
 *    Constructor
 */
-ScriptBindingScene::ScriptBindingScene() :
-	MethodGet(this)
+ScriptBindingLog::ScriptBindingLog() :
+	MethodOutputAlways(this),
+	MethodOutputCritical(this),
+	MethodOutputError(this),
+	MethodOutputWarning(this),
+	MethodOutputInfo(this),
+	MethodOutputDebug(this)
 {
 }
 
@@ -79,7 +95,7 @@ ScriptBindingScene::ScriptBindingScene() :
 *  @brief
 *    Destructor
 */
-ScriptBindingScene::~ScriptBindingScene()
+ScriptBindingLog::~ScriptBindingLog()
 {
 }
 
@@ -87,4 +103,4 @@ ScriptBindingScene::~ScriptBindingScene()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings

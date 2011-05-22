@@ -25,14 +25,14 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
-#include "PLScript/ScriptBindingSystemConsole.h"
+#include "PLScriptBindings/ScriptBindingSystemConsole.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScript {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -74,4 +74,4 @@ ScriptBindingSystemConsole::~ScriptBindingSystemConsole()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings
