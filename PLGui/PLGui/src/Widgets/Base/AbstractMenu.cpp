@@ -199,7 +199,7 @@ void AbstractMenu::SetSelection(int nItem)
 		m_nSelection = nItem;
 
 		// Emit event
-		EventItemSelected.Emit(m_nSelection);
+		EventItemSelected(m_nSelection);
 
 		// Check selected item
 		if (pItem && bOpenSubmenu) {
@@ -275,7 +275,7 @@ void AbstractMenu::ClickItem(int nItem)
 void AbstractMenu::OnItemClicked(MenuItem *pItem)
 {
 	// Emit event
-	EventItemClicked.Emit(pItem);
+	EventItemClicked(pItem);
 }
 
 
@@ -522,7 +522,7 @@ void AbstractMenu::OpenSubmenu(MenuItem *pItem, int nItem)
 		m_pPopupMenu->SetOpenSide(Vertical,   m_nOpenSideVertical);
 
 		// Emit event
-		EventSubmenuOpened.Emit(m_pSelectedItem);
+		EventSubmenuOpened(m_pSelectedItem);
 
 		// Inform controller
 		m_pController->SetControlledMenu(m_pPopupMenu);
@@ -538,7 +538,7 @@ void AbstractMenu::CloseSubmenu()
 	// Check if current item is valid
 	if (m_pSelectedItem) {
 		// Emit event
-		EventSubmenuClosed.Emit(m_pSelectedItem);
+		EventSubmenuClosed(m_pSelectedItem);
 
 		// Close popup menu
 		if (m_pPopupMenu) {

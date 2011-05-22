@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMScript.h                                    *
+ *  File: RTTIObjectMethodPointer.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,31 +20,29 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SNMSCRIPT_H__
-#define __PLENGINE_SCRIPT_SNMSCRIPT_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
-#include <PLScene/Scene/SceneNodeModifier.h>
-#include "PLEngine/PLEngine.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLScript {
-	class Script;
+namespace PLCore {
+	class DynFunc;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -52,30 +50,30 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Script scene node modifier
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    RTTI object method pointer
 */
-class SNMScript : public PLScene::SceneNodeModifier {
+class RTTIObjectMethodPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SNMScript, "PLEngine", PLScene::SceneNodeModifier, "Script scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use",										"")
-		pl_attribute(UpdateFunction,	PLGeneral::String,	"Update",	ReadWrite,	DirectValue,	"Name of the script function to be called for update",	"")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
+	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API PLGeneral::String GetScript() const;
-		PL_API void SetScript(const PLGeneral::String &sValue);
+		/**
+		*  @brief
+		*    Calls the current Lua stack dynamic function
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] cDynFunc
+		*    Dynamic function to be called
+		*  @param[in] bIsMethod
+		*    'true' if the dynamic function is a method, 'false' if it's a global function
+		*
+		*  @return
+		*    Number of results on the Lua stack
+		*/
+		static int CallDynFunc(Script &cScript, PLCore::DynFunc &cDynFunc, bool bIsMethod);
 
 
 	//[-------------------------------------------------------]
@@ -86,49 +84,34 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cSceneNode
-		*    Owner scene node
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynFunc
+		*    Pointer to the RTTI object method to wrap, can be a null pointer
 		*/
-		PL_API SNMScript(PLScene::SceneNode &cSceneNode);
+		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynFunc);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~SNMScript();
+		virtual ~RTTIObjectMethodPointer();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnActivate(bool bActivate);
+		virtual void CallMetamethod(lua_State *pLuaState);
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Called when the scene node modifier needs to be updated
-		*/
-		void NotifyUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLGeneral::String  m_sScript;	/**< Script to use */
-		PLScript::Script  *m_pScript;	/**< Used script instance, can be a null pointer */
+	protected:
+		PLCore::DynFunc *m_pDynFunc;	/**< Pointer to the RTTI object method to wrap, can be a null pointer */
 
 
 };
@@ -137,7 +120,7 @@ class SNMScript : public PLScene::SceneNodeModifier {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptLua
 
 
-#endif // __PLENGINE_SCRIPT_SNMSCRIPT_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTMETHODPOINTER_H__

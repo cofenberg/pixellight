@@ -1055,10 +1055,10 @@ if (pMyClass != nullptr) {
 	pMyObject->MySignalParameter.Connect(&cMyEventHandlerParameter);
 
 	// Emit the MySignal signal, MyFunction will be called
-	pMyObject->MySignal.Emit();
+	pMyObject->MySignal();
 
 	// Emit the MySignalParameter signal, MyFunctionParameter will be called
-	pMyObject->MySignalParameter.Emit(42);
+	pMyObject->MySignalParameter(42);
 
 	// Cleanup
 	delete pMyObject;
@@ -1157,10 +1157,10 @@ if (pMyClass != nullptr) {
 	cMyEventParameter.Connect(&pMyObject->SlotOnMyEventParameter);
 
 	// Emit the cMyEvent event, MyClass::OnMyEvent will be called
-	cMyEvent.Emit();
+	cMyEvent();
 
 	// Emit the cMyEventParameter event, MyClass::OnMyEventParameter will be called
-	cMyEventParameter.Emit(42);
+	cMyEventParameter(42);
 
 	// Cleanup
 	delete pMyObject;
@@ -1183,10 +1183,10 @@ if (pMyClass != nullptr) {
 	cMyEventParameter.Connect(pMyObject->GetSlot("OnMyEventParameter"));
 
 	// Emit the cMyEvent event, MyClass::OnMyEvent will be called
-	cMyEvent.Emit();
+	cMyEvent();
 
 	// Emit the cMyEventParameter event, MyClass::OnMyEventParameter will be called
-	cMyEventParameter.Emit(42);
+	cMyEventParameter(42);
 
 	// Cleanup
 	delete pMyObject;

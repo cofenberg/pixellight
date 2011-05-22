@@ -192,6 +192,11 @@ void Script::PushArgument(const String &sString)
 	// Nothing to do in here
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	// Nothing to do in here
+}
+
 bool Script::EndCall()
 {
 	// Nothing to do in here
@@ -200,76 +205,82 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(bool &bValue)
+void Script::GetReturn(bool *pbValue)
 {
 	// Nothing to do in here
-	bValue = false;
+	*pbValue = false;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(float *pfValue)
 {
 	// Nothing to do in here
-	fValue = 0.0f;
+	*pfValue = 0.0f;
 }
 
-void Script::GetReturn(double &fValue)
+void Script::GetReturn(double *pfValue)
 {
 	// Nothing to do in here
-	fValue = 0.0;
+	*pfValue = 0.0;
 }
 
-void Script::GetReturn(int8 &nValue)
+void Script::GetReturn(int8 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(int16 &nValue)
+void Script::GetReturn(int16 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(int32 &nValue)
+void Script::GetReturn(int32 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(int64 &nValue)
+void Script::GetReturn(int64 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(uint8 &nValue)
+void Script::GetReturn(uint8 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(uint16 &nValue)
+void Script::GetReturn(uint16 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(uint32 &nValue)
+void Script::GetReturn(uint32 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(uint64 &nValue)
+void Script::GetReturn(uint64 *pnValue)
 {
 	// Nothing to do in here
-	nValue = 0;
+	*pnValue = 0;
 }
 
-void Script::GetReturn(String &sValue)
+void Script::GetReturn(String *psValue)
 {
 	// Nothing to do in here
-	sValue = "";
+	*psValue = "";
+}
+
+void Script::GetReturn(Object **ppObject)
+{
+	// Nothing to do in here
+	*ppObject = nullptr;
 }
 
 

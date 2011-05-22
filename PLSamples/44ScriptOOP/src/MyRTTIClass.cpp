@@ -31,6 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLGeneral;
 
 
@@ -56,6 +57,11 @@ void MyRTTIClass::IgnoreTheParameter(float fValue)
 void MyRTTIClass::SaySomethingWise()
 {
 	System::GetInstance()->GetConsole().Print(String(Return42()) + " - wise enough?\n");
+}
+
+Object *MyRTTIClass::GetSelf()
+{
+	return this;
 }
 
 
@@ -90,7 +96,7 @@ void MyRTTIClass::SetName(const String &sName)
 	m_sName = sName;
 
 	// Emit the signal
-	MySignal.Emit();
+	MySignal("C++");
 }
 
 
@@ -105,10 +111,12 @@ MyRTTIClass::MyRTTIClass() :
 	MethodReturn42(this),
 	MethodIgnoreTheParameter(this),
 	MethodSaySomethingWise(this),
+	MethodGetSelf(this),
 	MySignal(this),
 	SlotOnMyEvent(this),
 	Name(this),
-	Level(this)
+	Level(this),
+	m_sName("Bob")
 {
 }
 

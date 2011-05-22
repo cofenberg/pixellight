@@ -18,9 +18,6 @@ add_sources(
 	src/Script.cpp
 	src/ScriptManager.cpp
 	src/ScriptBinding.cpp
-	src/ScriptBindingLog.cpp
-	src/ScriptBindingTiming.cpp
-	src/ScriptBindingSystemConsole.cpp
 )
 
 ##################################################

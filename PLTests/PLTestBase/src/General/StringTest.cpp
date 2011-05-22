@@ -2812,30 +2812,6 @@ void StringTest::Test()
 	if (sString.GetInt() != 0) bResult = false;
 	EndTask(bResult);
 
-	// GetLong(): ASCII
-	StartTask("GetLong(): ASCII");
-	bResult = true;
-	sString = "";
-	if (sString.GetLong()) bResult = false;
-	sString = "0";
-	if (sString.GetLong()) bResult = false;
-	sString = "5";
-	if (sString.GetLong() != 5) bResult = false;
-	EndTask(bResult);
-
-	// GetLong(): Unicode
-	StartTask("GetLong(): Unicode");
-	bResult = true;
-	sString = L"";
-	if (sString.GetLong()) bResult = false;
-	sString = L"0";
-	if (sString.GetLong()) bResult = false;
-	sString = L"5";
-	if (sString.GetLong() != 5) bResult = false;
-	sString = L"\u672c";
-	if (sString.GetLong() != 0) bResult = false;
-	EndTask(bResult);
-
 	// GetFloat(): ASCII
 	StartTask("GetFloat(): ASCII");
 	bResult = true;

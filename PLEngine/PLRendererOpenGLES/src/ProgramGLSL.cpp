@@ -134,7 +134,7 @@ void ProgramGLSL::RelinkRequired()
 		DestroyUniformInformation();
 
 		// The program is now dirty
-		EventDirty.Emit(this);
+		EventDirty(this);
 	}
 }
 

@@ -85,7 +85,7 @@ Controller *SNMCameraZoomController::GetInputController() const
 void SNMCameraZoomController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNMCameraZoomController::OnActivate(bool bActivate)

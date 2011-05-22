@@ -34,17 +34,22 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	class XmlElement;
+}
+namespace PLCore {
+	class DynParams;
+	class DynEventHandler;
+	class EventDesc;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class DynParams;
-class DynEventHandler;
-class EventDesc;
 
 
 //[-------------------------------------------------------]
@@ -135,12 +140,60 @@ class DynEvent {
 
 		/**
 		*  @brief
+		*    Return the number of parameters
+		*
+		*  @return
+		*    Number of parameters
+		*/
+		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
+
+		/**
+		*  @brief
+		*    Get a parameter type ID
+		*
+		*  @param[in] nIndex
+		*    Index of the parameter to return the type ID from
+		*
+		*  @return
+		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
+		*/
+		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] cParams
+		*    Parameters
+		*/
+		PLCORE_API virtual void Emit(DynParams &cParams) const;
+
+		/**
+		*  @brief
 		*    Emit event
 		*
 		*  @param[in] cParams
 		*    Parameters
 		*/
 		PLCORE_API virtual void Emit(const DynParams &cParams) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] sParams
+		*    Parameters as string
+		*/
+		PLCORE_API virtual void Emit(const PLGeneral::String &sParams) const;
+
+		/**
+		*  @brief
+		*    Emit event
+		*
+		*  @param[in] cElement
+		*    Parameters as XML
+		*/
+		PLCORE_API virtual void Emit(const PLGeneral::XmlElement &cElement) const;
 
 
 	//[-------------------------------------------------------]

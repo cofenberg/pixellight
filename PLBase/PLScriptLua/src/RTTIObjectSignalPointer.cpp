@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.cpp                        *
+ *  File: RTTIObjectSignalPointer.cpp                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,35 +23,21 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include "PLScript/ScriptBindingTiming.h"
+extern "C" {
+	#include <Lua/lua.h>
+}
+#include <PLGeneral/String/String.h>
+#include <PLCore/Base/Object.h>
+#include "PLScriptLua/Script.h"
+#include "PLScriptLua/RTTIObjectSignalPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScript {
-
-
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(ScriptBindingTiming)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
-//[-------------------------------------------------------]
-float ScriptBindingTiming::GetTimeDifference()
-{
-	return Timing::GetInstance()->GetTimeDifference();
-}
-
-float ScriptBindingTiming::GetFramesPerSecond()
-{
-	return Timing::GetInstance()->GetFramesPerSecond();
-}
+using namespace PLCore;
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -61,9 +47,8 @@ float ScriptBindingTiming::GetFramesPerSecond()
 *  @brief
 *    Constructor
 */
-ScriptBindingTiming::ScriptBindingTiming() :
-	MethodGetTimeDifference(this),
-	MethodGetFramesPerSecond(this)
+RTTIObjectSignalPointer::RTTIObjectSignalPointer(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent) : RTTIObjectPointer(cScript, pRTTIObject),
+	m_pDynEvent(pDynEvent)
 {
 }
 
@@ -71,12 +56,31 @@ ScriptBindingTiming::ScriptBindingTiming() :
 *  @brief
 *    Destructor
 */
-ScriptBindingTiming::~ScriptBindingTiming()
+RTTIObjectSignalPointer::~RTTIObjectSignalPointer()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual LuaUserData functions               ]
+//[-------------------------------------------------------]
+void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
+{
+	// Is there a RTTI object and a RTTI object signal?
+	if (m_pRTTIObject && m_pDynEvent) {
+		// Get the number of arguments Lua gave to us
+		String sParams;
+		const int nNumOfArguments = lua_gettop(pLuaState) - 2;
+		for (int i=3; i<=2+nNumOfArguments; i++)
+			sParams += String("Param") + (i-3) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
+
+		// Emit the RTTI object signal
+		m_pDynEvent->Emit(sParams);
+	}
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptLua

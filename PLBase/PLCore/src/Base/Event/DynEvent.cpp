@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Func/DynParams.h"
 #include "PLCore/Base/Event/DynEventHandler.h"
 #include "PLCore/Base/Event/DynEvent.h"
@@ -125,9 +126,56 @@ String DynEvent::GetSignature() const
 
 /**
 *  @brief
+*    Return the number of parameters
+*/
+uint32 DynEvent::GetNumOfParameters() const
+{
+	// No function
+	return 0;
+}
+
+/**
+*  @brief
+*    Get a parameter type ID
+*/
+int DynEvent::GetParameterTypeID(uint32 nIndex) const
+{
+	// No function
+	return Type<void>::TypeID;
+}
+
+/**
+*  @brief
+*    Call function
+*/
+void DynEvent::Emit(DynParams &cParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
 *    Call function
 */
 void DynEvent::Emit(const DynParams &cParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
+*    Emit event
+*/
+void DynEvent::Emit(const String &sParams) const
+{
+	// No function
+}
+
+/**
+*  @brief
+*    Emit event
+*/
+void DynEvent::Emit(const XmlElement &cElement) const
 {
 	// No function
 }

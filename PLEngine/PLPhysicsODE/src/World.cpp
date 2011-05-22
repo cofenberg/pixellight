@@ -255,7 +255,7 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 						PLPhysics::ContactInformation cContactInformation(*pBody1, *pBody2);
 
 						// Emit event
-						EventContact.Emit(cContactInformation);
+						EventContact(cContactInformation);
 
 						// Is the contact marked to be ignored?
 						if (!cContactInformation.IsContactIgnored()) {
@@ -754,7 +754,7 @@ void World::UpdateSimulation()
 				PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(pElement);
 				if (pBody->IsActive() && !pBody->IsFrozen()) {
 					// Emit event
-					pBody->EventTransform.Emit();
+					pBody->EventTransform();
 				}
 			}
 		}

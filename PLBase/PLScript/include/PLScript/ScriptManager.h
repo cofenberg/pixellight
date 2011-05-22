@@ -66,9 +66,6 @@ namespace PLScript {
 /**
 *  @brief
 *    Script manager
-*
-*  @note
-*    - [TODO] Script support is currently under construction
 */
 class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 

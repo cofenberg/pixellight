@@ -500,7 +500,7 @@ int World::OnAABBOverlap(const NewtonMaterial *pMaterial, const NewtonBody *pNew
 						PLPhysics::ContactInformation cContactInformation(*pBody1, *pBody2);
 
 						// Emit event
-						cWorld.EventContact.Emit(cContactInformation);
+						cWorld.EventContact(cContactInformation);
 
 						// Return one the tell Newton the application wants to proccess this contact? (0=ignore, 1=use it)
 						return cContactInformation.IsContactIgnored() ? 0 : 1;
@@ -1098,7 +1098,7 @@ void World::UpdateSimulation()
 						// Emit event
 						const PLPhysics::Body *pBody = cBodyImpl.GetBody();
 						if (pBody)
-							pBody->EventTransform.Emit();
+							pBody->EventTransform();
 					}
 
 					// Set the linear and angular velocity

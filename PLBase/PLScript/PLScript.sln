@@ -12,6 +12,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptV8", "..\PLScriptV8
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptAngelScript", "..\PLScriptAngelScript\PLScriptAngelScript.vcxproj", "{384D6889-29E9-4996-A142-0F1A8BE5513A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptBindings", "..\..\PLPlugins\PLScriptBindings\PLScriptBindings.vcxproj", "{7A493195-2B4D-4F1E-9454-A971CEB6D986}"
+	ProjectSection(ProjectDependencies) = postProject
+		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -68,6 +73,14 @@ Global
 		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|Win32.Build.0 = Release|Win32
 		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.ActiveCfg = Release|x64
 		{384D6889-29E9-4996-A142-0F1A8BE5513A}.Release|x64.Build.0 = Release|x64
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Debug|Win32.Build.0 = Debug|Win32
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Debug|x64.ActiveCfg = Debug|x64
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Debug|x64.Build.0 = Debug|x64
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Release|Win32.ActiveCfg = Release|Win32
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Release|Win32.Build.0 = Release|Win32
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Release|x64.ActiveCfg = Release|x64
+		{7A493195-2B4D-4F1E-9454-A971CEB6D986}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

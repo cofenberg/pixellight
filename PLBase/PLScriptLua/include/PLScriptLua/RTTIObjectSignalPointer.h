@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.h                          *
+ *  File: RTTIObjectSignalPointer.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,29 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_TIMING_H__
-#define __PLSCRIPT_SCRIPTBINDING_TIMING_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTSIGNALPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTSIGNALPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
-#include "PLScript/PLScript.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class DynEvent;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -43,33 +50,9 @@ namespace PLScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Timing script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    RTTI object signal pointer
 */
-class ScriptBindingTiming : public ScriptBinding {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingTiming, "PLScript", PLScript::ScriptBinding, "Timing script binding class")
-		pl_properties
-			pl_property("Namespace", "PL.Timing")
-		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
-		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		PLSCRIPT_API float GetTimeDifference();
-		PLSCRIPT_API float GetFramesPerSecond();
+class RTTIObjectSignalPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
@@ -79,14 +62,35 @@ class ScriptBindingTiming : public ScriptBinding {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynEvent
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
 		*/
-		PLSCRIPT_API ScriptBindingTiming();
+		RTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptBindingTiming();
+		virtual ~RTTIObjectSignalPointer();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual LuaUserData functions               ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void CallMetamethod(lua_State *pLuaState);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCore::DynEvent *m_pDynEvent;	/**< Pointer to the RTTI object signal to wrap, can be a null pointer */
 
 
 };
@@ -95,7 +99,7 @@ class ScriptBindingTiming : public ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptLua
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_TIMING_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTSIGNALPOINTER_H__

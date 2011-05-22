@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSystemConsole.h                   *
+ *  File: ScriptBindingTiming.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
-#define __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
+#ifndef __PLSCRIPTBINDINGS_TIMING_H__
+#define __PLSCRIPTBINDINGS_TIMING_H__
 #pragma once
 
 
@@ -29,13 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLScript/PLScript.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -43,23 +42,21 @@ namespace PLScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    System console script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    Timing script binding class
 */
-class ScriptBindingSystemConsole : public ScriptBinding {
+class ScriptBindingTiming : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBindingSystemConsole, "PLScript", PLScript::ScriptBinding, "System console script binding class")
+	pl_class(pl_rtti_export, ScriptBindingTiming, "PLScriptBindings", PLScript::ScriptBinding, "Timing script binding class")
 		pl_properties
-			pl_property("Namespace", "PL.System.Console")
+			pl_property("Namespace", "PL.Timing")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Print, void, PLGeneral::String, "Prints the given string into the system console",   "")
+		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
+		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
 	pl_class_end
 
 
@@ -67,7 +64,8 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLSCRIPT_API void Print(PLGeneral::String sText);
+		float GetTimeDifference();
+		float GetFramesPerSecond();
 
 
 	//[-------------------------------------------------------]
@@ -78,13 +76,13 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBindingSystemConsole();
+		ScriptBindingTiming();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptBindingSystemConsole();
+		virtual ~ScriptBindingTiming();
 
 
 };
@@ -93,7 +91,7 @@ class ScriptBindingSystemConsole : public ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_SYSTEMCONSOLE_H__
+#endif // __PLSCRIPTBINDINGS_TIMING_H__

@@ -75,7 +75,7 @@ bool SQEnumerate::PerformQueryRec(const SceneContainer &cContainer)
 		SceneNode *pSceneNode = cContainer.Get(i);
 
 		// Emit event
-		EventSceneNode.Emit(*this, *pSceneNode);
+		EventSceneNode(*this, *pSceneNode);
 		if (m_nFlags & StopQuery)
 			return false; // Stop the query right now
 

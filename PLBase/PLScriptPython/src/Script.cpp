@@ -274,7 +274,7 @@ String Script::GetGlobalVariable(const String &sName)
 			if (PyString_Check(pPythonAttribute))
 				return PyString_AsString(pPythonAttribute);
 			else if (PyInt_Check(pPythonAttribute))
-				return PyInt_AsLong(pPythonAttribute);
+				return static_cast<int32>(PyInt_AsLong(pPythonAttribute));	// [TODO] Use int32 or int64? (currently int32 is used)
 			else if (PyFloat_Check(pPythonAttribute))
 				return PyFloat_AsDouble(pPythonAttribute);
 		}
@@ -493,6 +493,11 @@ void Script::PushArgument(const String &sString)
 	}
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	// [TODO] Implement me
+}
+
 bool Script::EndCall()
 {
 	// Is there a current Python function?
@@ -520,66 +525,72 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(bool &bValue)
+void Script::GetReturn(bool *pbValue)
 {
-	bValue = m_pPythonFunctionResult ? (PyInt_AsLong(m_pPythonFunctionResult) != 0): false;
+	*pbValue = m_pPythonFunctionResult ? (PyInt_AsLong(m_pPythonFunctionResult) != 0): false;
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(float *pfValue)
 {
-	fValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
+	*pfValue = m_pPythonFunctionResult ? static_cast<float>(PyFloat_AsDouble(m_pPythonFunctionResult)) : 0.0f;
 }
 
-void Script::GetReturn(double &fValue)
+void Script::GetReturn(double *pfValue)
 {
-	fValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
+	*pfValue = m_pPythonFunctionResult ? PyFloat_AsDouble(m_pPythonFunctionResult) : 0.0;
 }
 
-void Script::GetReturn(int8 &nValue)
+void Script::GetReturn(int8 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+	*pnValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
 }
 
-void Script::GetReturn(int16 &nValue)
+void Script::GetReturn(int16 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+	*pnValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
 }
 
-void Script::GetReturn(int32 &nValue)
+void Script::GetReturn(int32 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+	*pnValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(int64 &nValue)
+void Script::GetReturn(int64 *pnValue)
 {
 	// [TODO] There's no int64 support in Python (?)
-	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+	*pnValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(uint8 &nValue)
+void Script::GetReturn(uint8 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+	*pnValue = m_pPythonFunctionResult ? static_cast<uint8>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
 }
 
-void Script::GetReturn(uint16 &nValue)
+void Script::GetReturn(uint16 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
+	*pnValue = m_pPythonFunctionResult ? static_cast<uint16>(PyInt_AsLong(m_pPythonFunctionResult)) : 0;
 }
 
-void Script::GetReturn(uint32 &nValue)
+void Script::GetReturn(uint32 *pnValue)
 {
-	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+	*pnValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(uint64 &nValue)
+void Script::GetReturn(uint64 *pnValue)
 {
 	// [TODO] There's no uint64 support in Python (?)
-	nValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
+	*pnValue = m_pPythonFunctionResult ? PyInt_AsLong(m_pPythonFunctionResult) : 0;
 }
 
-void Script::GetReturn(String &sValue)
+void Script::GetReturn(String *psValue)
 {
-	sValue = m_pPythonFunctionResult ? PyString_AsString(m_pPythonFunctionResult) : "";
+	*psValue = m_pPythonFunctionResult ? PyString_AsString(m_pPythonFunctionResult) : "";
+}
+
+void Script::GetReturn(Object **ppObject)
+{
+	// [TODO] Implement me
+	*ppObject = nullptr;
 }
 
 
@@ -607,7 +618,7 @@ PyObject *Script::PythonFunctionCallback(PyObject *pPythonSelf, PyObject *pPytho
 			if (PyString_Check(pPythonArgument))
 				sValue = PyString_AsString(pPythonArgument);
 			else if (PyInt_Check(pPythonArgument))
-				sValue = PyInt_AsLong(pPythonArgument);
+				sValue = static_cast<int32>(PyInt_AsLong(pPythonArgument));	// [TODO] Use int32 or int64? (currently int32 is used)
 			else if (PyFloat_Check(pPythonArgument))
 				sValue = PyFloat_AsDouble(pPythonArgument);
 

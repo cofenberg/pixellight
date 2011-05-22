@@ -276,7 +276,7 @@ void ProgramCg::RelinkRequired()
 		}
 
 		// The program is now dirty
-		EventDirty.Emit(this);
+		EventDirty(this);
 	}
 }
 

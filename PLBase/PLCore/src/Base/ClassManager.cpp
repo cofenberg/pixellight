@@ -501,7 +501,7 @@ void ClassManager::RegisterModule(uint32 nModuleID, const String &sName, const S
 		pModule->SetModuleInfo(sName, sVendor, sLicense, sDescription);
 
 		// Module has been registered (emit event)
-		EventModuleLoaded.Emit(pModule);
+		EventModuleLoaded(pModule);
 	}
 }
 
@@ -524,7 +524,7 @@ void ClassManager::UnregisterModule(Module *pModule)
 		}
 
 		// Module has been unloaded (emit event)
-		EventModuleUnloaded.Emit(pModule);
+		EventModuleUnloaded(pModule);
 
 		// Remove module
 		m_lstModules.Remove(pModule);
@@ -563,7 +563,7 @@ void ClassManager::RegisterClass(uint32 nModuleID, Class *pClass)
 	pModule->AddClass(pClass);
 
 	// Class has been registered (emit event)
-	EventClassLoaded.Emit(pClass);
+	EventClassLoaded(pClass);
 }
 
 /**
@@ -583,7 +583,7 @@ void ClassManager::UnregisterClass(uint32 nModuleID, Class *pClass)
 	pModule->RemoveClass(pClass);
 
 	// Class has been unloaded (emit event)
-	EventClassUnloaded.Emit(pClass);
+	EventClassUnloaded(pClass);
 }
 
 

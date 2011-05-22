@@ -82,6 +82,24 @@ class Script : public PLScript::Script {
 		*/
 		PLSCRIPTLUA_API virtual ~Script();
 
+		/**
+		*  @brief
+		*    Returns the Lua state
+		*
+		*  @return
+		*    Lua state, can be a null pointer
+		*/
+		PLSCRIPTLUA_API lua_State *GetLuaState() const;
+
+		/**
+		*  @brief
+		*    Writes the current Lua stack content into the log
+		*
+		*  @note
+		*    - For debugging
+		*/
+		PLSCRIPTLUA_API void LuaStackDump();
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScript::Script functions             ]
@@ -124,19 +142,21 @@ class Script : public PLScript::Script {
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTLUA_API virtual bool EndCall();
-		PLSCRIPTLUA_API virtual void GetReturn(bool &bValue);
-		PLSCRIPTLUA_API virtual void GetReturn(float &fValue);
-		PLSCRIPTLUA_API virtual void GetReturn(double &fValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int8 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int16 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int32 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int64 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint8 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint16 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint64 &nValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::String &sValue);
+		PLSCRIPTLUA_API virtual void GetReturn(bool *pbValue);
+		PLSCRIPTLUA_API virtual void GetReturn(float *pfValue);
+		PLSCRIPTLUA_API virtual void GetReturn(double *pfValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int8 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int16 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int32 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int64 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::String *psValue);
+		PLSCRIPTLUA_API virtual void GetReturn(PLCore::Object **ppObject);
 
 
 	//[-------------------------------------------------------]
@@ -210,15 +230,6 @@ class Script : public PLScript::Script {
 
 		/**
 		*  @brief
-		*    Writes the current Lua stack content into the log
-		*
-		*  @note
-		*    - For debugging
-		*/
-		void LuaStackDump();
-
-		/**
-		*  @brief
 		*    Clears the script
 		*/
 		void Clear();
@@ -252,6 +263,7 @@ class Script : public PLScript::Script {
 		*    A global function
 		*/
 		struct GlobalFunction {
+			Script			  *pScript;		/**< Pointer to the owner script instance, always valid! */
 			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
 			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
 			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */

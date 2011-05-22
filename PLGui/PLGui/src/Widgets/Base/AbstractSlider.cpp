@@ -246,7 +246,7 @@ void AbstractSlider::DecreaseFast()
 void AbstractSlider::OnChangeValue(int nValue)
 {
 	// Emit event
-	EventChangeValue.Emit(nValue);
+	EventChangeValue(nValue);
 }
 
 

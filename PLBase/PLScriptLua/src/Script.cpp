@@ -30,6 +30,8 @@ extern "C" {
 }
 #include <PLGeneral/Log/Log.h>
 #include "PLScriptLua/LuaContext.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
+#include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/Script.h"
 
 
@@ -79,6 +81,79 @@ Script::~Script()
 	LuaContext::ReleaseContextReference();
 }
 
+/**
+*  @brief
+*    Returns the Lua state
+*/
+lua_State *Script::GetLuaState() const
+{
+	return m_pLuaState;
+}
+
+/**
+*  @brief
+*    Writes the current Lua stack content into the log
+*/
+void Script::LuaStackDump()
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Get the number of elements on the Lua stack
+		const int nNumOfStackElements = lua_gettop(m_pLuaState);
+
+		// Write this number into the log
+		LogOutput(Log::Info, String("Number of elements on the Lua stack: ") + nNumOfStackElements);
+
+		// Iterate through the Lua stack
+		for (int i=1; i<=nNumOfStackElements; i++) {
+			const int nLuaType = lua_type(m_pLuaState, i);
+			String sValue;
+			switch (nLuaType) {
+				case LUA_TNIL:
+					sValue = "nil";
+					break;
+
+				case LUA_TNUMBER:
+					sValue = lua_tonumber(m_pLuaState, i);
+					break;
+
+				case LUA_TBOOLEAN:
+					sValue = lua_toboolean(m_pLuaState, i) ? "true" : "false";
+					break;
+
+				case LUA_TSTRING:
+					sValue = lua_tostring(m_pLuaState, i);
+					break;
+
+				case LUA_TTABLE:
+					sValue = "Table";
+					break;
+
+				case LUA_TFUNCTION:
+					sValue = "Function";
+					break;
+
+				case LUA_TUSERDATA:
+					sValue = "User data";
+					break;
+
+				case LUA_TTHREAD:
+					sValue = "Thread";
+					break;
+
+				case LUA_TLIGHTUSERDATA:
+					sValue = "Light user data";
+					break;
+
+				default:
+					sValue = "?";
+					break;
+			}
+			LogOutput(Log::Info, String("Lua stack element ") + (i-1) + ": \"" + sValue + "\" (Lua type name: \"" + lua_typename(m_pLuaState, nLuaType) + "\")");
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLScript::Script functions             ]
@@ -92,6 +167,7 @@ bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc,
 	} else {
 		// Add the global function
 		GlobalFunction *psGlobalFunction = new GlobalFunction;
+		psGlobalFunction->pScript	 = this;
 		psGlobalFunction->sFunction  = sFunction;
 		psGlobalFunction->pDynFunc   = cDynFunc.Clone();
 		psGlobalFunction->sNamespace = sNamespace;
@@ -145,6 +221,9 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 			// Open all standard Lua libraries into the given state
 			luaL_openlibs(m_pLuaState);
+
+			// Create the metatable for LuaUserData events
+			LuaUserData::CreateMetatable(m_pLuaState);
 
 			// Add the global functions
 			for (uint32 i=0; i<m_lstGlobalFunctions.GetNumOfElements(); i++) {
@@ -479,6 +558,12 @@ void Script::PushArgument(const String &sString)
 	}
 }
 
+void Script::PushArgument(Object *pObject)
+{
+	RTTIObjectPointer::LuaStackPush(*this, pObject);
+	m_nCurrentArgument++;
+}
+
 bool Script::EndCall()
 {
 	// Is there a Lua state?
@@ -515,173 +600,269 @@ bool Script::EndCall()
 	return false;
 }
 
-void Script::GetReturn(bool &bValue)
+void Script::GetReturn(bool *pbValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isboolean(m_pLuaState, -1))
+		// Must be a boolean
+		if (lua_isboolean(m_pLuaState, -1)) {
+			// Get the result
+			*pbValue = (lua_toboolean(m_pLuaState, -1) != 0);
+		} else {
+			// Error!
+			*pbValue = false;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a boolean");
-		bValue = (lua_toboolean(m_pLuaState, -1) != 0);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		bValue = false;
+		*pbValue = false;
 	}
 }
 
-void Script::GetReturn(float &fValue)
+void Script::GetReturn(float *pfValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pfValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pfValue = 0.0f;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		fValue = static_cast<float>(lua_tonumber(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		fValue = 0.0f;
+		*pfValue = 0.0f;
 	}
 }
 
-void Script::GetReturn(double &fValue)
+void Script::GetReturn(double *pfValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pfValue = lua_tonumber(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pfValue = 0.0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		fValue = lua_tonumber(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		fValue = 0.0;
+		*pfValue = 0.0;
 	}
 }
 
-void Script::GetReturn(int8 &nValue)
+void Script::GetReturn(int8 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(int16 &nValue)
+void Script::GetReturn(int16 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(int32 &nValue)
+void Script::GetReturn(int32 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the value
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(int64 &nValue)
+void Script::GetReturn(int64 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// [TODO] There's no int64 support in Lua (?)
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		// [TODO] There's no int64 support in Lua (?)
-		nValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(uint8 &nValue)
+void Script::GetReturn(uint8 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = static_cast<uint8>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(uint16 &nValue)
+void Script::GetReturn(uint16 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = static_cast<uint16>(lua_tointeger(m_pLuaState, -1));
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(uint32 &nValue)
+void Script::GetReturn(uint32 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		nValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(uint64 &nValue)
+void Script::GetReturn(uint64 *pnValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isnumber(m_pLuaState, -1))
+		// Must be a number
+		if (lua_isnumber(m_pLuaState, -1)) {
+			// [TODO] There's no uint64 support in Lua (?)
+			// Get the result
+			*pnValue = lua_tointeger(m_pLuaState, -1);
+		} else {
+			// Error!
+			*pnValue = 0;
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
-		// [TODO] There's no uint64 support in Lua (?)
-		nValue = lua_tointeger(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		nValue = 0;
+		*pnValue = 0;
 	}
 }
 
-void Script::GetReturn(String &sValue)
+void Script::GetReturn(String *psValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		if (!lua_isstring(m_pLuaState, -1))
+		// Must be a string
+		if (lua_isstring(m_pLuaState, -1)) {
+			// Get the result
+			*psValue = lua_tostring(m_pLuaState, -1);
+		} else {
+			// Error!
+			*psValue = "";
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a string");
-		sValue = lua_tostring(m_pLuaState, -1);
+		}
 		lua_pop(m_pLuaState, 1);
 	} else {
 		// Error!
-		sValue = "";
+		*psValue = "";
+	}
+}
+
+void Script::GetReturn(Object **ppObject)
+{
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Must be user data or nil
+		if (lua_isuserdata(m_pLuaState, -1)) {
+			// Get user data from the top of the Lua stack and removes it from the Lua stack
+			// [TODO] Do any type tests in here?
+			*ppObject = reinterpret_cast<RTTIObjectPointer*>(LuaUserData::PopUserDataFromLuaStack(m_pLuaState))->GetObject();
+		} else {
+			// Nil is fine, too
+			*ppObject = nullptr;
+			if (!lua_isnil(m_pLuaState, -1)) {
+				// Error!
+				LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return user data");
+			}
+			lua_pop(m_pLuaState, 1);
+		}
+	} else {
+		// Error!
+		*ppObject = nullptr;
 	}
 }
 
@@ -709,40 +890,11 @@ void *Script::LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOrigi
 */
 int Script::LuaFunctionCallback(lua_State *pLuaState)
 {
-	// Get the number of arguments Lua gave to us
-	String sParams;
-	const int nNumOfArguments = lua_gettop(pLuaState);
-	for (int i=1; i<=nNumOfArguments; i++)
-		sParams += String("Param") + (i-1) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
-
 	// Get the global function
 	GlobalFunction *psGlobalFunction = reinterpret_cast<GlobalFunction*>(lua_touserdata(pLuaState, lua_upvalueindex(1)));
-	const String sReturn = psGlobalFunction->pDynFunc->CallWithReturn(sParams);
-	if (sReturn.GetLength()) {
-		// Process the functor return
-		switch (psGlobalFunction->pDynFunc->GetReturnTypeID()) {
-			case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());								break;
-			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());							break;
-			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());								break;
-			case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-			case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-			case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-			case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;	// [TODO] TypeInt64 is currently handled just as long
-			case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());								break;
-			case TypeString:	lua_pushstring (pLuaState, sReturn);										break;
-			case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());							break;
-			case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());							break;
-			case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(sReturn.GetUInt64()));	break;	// [TODO] TypeUInt64 is currently handled just as long
-			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());								break;
-			default:			lua_pushstring (pLuaState, sReturn);										break;	// TypeVoid, TypeNull, TypeObjectPtr, -1
-		}
 
-		// The function returns one argument
-		return 1;
-	} else {
-		// The function returns nothing
-		return 0;
-	}
+	// Call the dynamic function
+	return psGlobalFunction ? RTTIObjectMethodPointer::CallDynFunc(*psGlobalFunction->pScript, *psGlobalFunction->pDynFunc, false) : 0;
 }
 
 
@@ -786,70 +938,6 @@ void Script::ReportErrors()
 
 /**
 *  @brief
-*    Writes the current Lua stack content into the log
-*/
-void Script::LuaStackDump()
-{
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Get the number of elements on the Lua stack
-		const int nNumOfStackElements = lua_gettop(m_pLuaState);
-
-		// Write this number into the log
-		LogOutput(Log::Info, String("Number of elements on the Lua stack: ") + nNumOfStackElements);
-
-		// Iterate through the Lua stack
-		for (int i=1; i<=nNumOfStackElements; i++) {
-			const int nLuaType = lua_type(m_pLuaState, i);
-			String sValue;
-			switch (nLuaType) {
-				case LUA_TNIL:
-					sValue = "nil";
-					break;
-
-				case LUA_TNUMBER:
-					sValue = lua_tonumber(m_pLuaState, i);
-					break;
-
-				case LUA_TBOOLEAN:
-					sValue = lua_toboolean(m_pLuaState, i) ? "true" : "false";
-					break;
-
-				case LUA_TSTRING:
-					sValue = lua_tostring(m_pLuaState, i);
-					break;
-
-				case LUA_TTABLE:
-					sValue = "Table";
-					break;
-
-				case LUA_TFUNCTION:
-					sValue = "Function";
-					break;
-
-				case LUA_TUSERDATA:
-					sValue = "User data";
-					break;
-
-				case LUA_TTHREAD:
-					sValue = "Thread";
-					break;
-
-				case LUA_TLIGHTUSERDATA:
-					sValue = "Light user data";
-					break;
-
-				default:
-					sValue = "?";
-					break;
-			}
-			LogOutput(Log::Info, String("Lua stack element ") + (i-1) + ": \"" + sValue + "\" (Lua type name: \"" + lua_typename(m_pLuaState, nLuaType) + "\")");
-		}
-	}
-}
-
-/**
-*  @brief
 *    Clears the script
 */
 void Script::Clear()
@@ -864,6 +952,22 @@ void Script::Clear()
 			LogOutput(Log::Warning, "Script termination, but the stack is not empty");
 			LuaStackDump();
 		}
+
+		// Clear all global variables
+		while (true) {
+			lua_pushnil(m_pLuaState);
+			if (!lua_next(m_pLuaState, LUA_GLOBALSINDEX))
+				break;
+			lua_pop(m_pLuaState, 1);
+			lua_pushnil(m_pLuaState);
+			lua_rawset(m_pLuaState, LUA_GLOBALSINDEX);
+		}
+
+		// Force the garbage collector to cleanup right now... because required stuff like the LuaUserData metatable are still there at the moment...
+		lua_gc(m_pLuaState, LUA_GCCOLLECT, 0);
+
+		// Destroy the metatable for LuaUserData events
+		LuaUserData::DestroyMetatable(m_pLuaState);
 
 		// Close the Lua state
 		lua_close(m_pLuaState);

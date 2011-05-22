@@ -413,22 +413,6 @@ class Tokenizer {
 
 		/**
 		*  @brief
-		*    Expects the next token to be a number and returns it as a long value
-		*
-		*  @param[out] nNumber
-		*    Receives the number
-		*
-		*  @return
-		*    'true' on success, else 'false'
-		*
-		*  @note
-		*    - If a number has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
-		*/
-		PLGENERAL_API bool ParseNumber(long &nNumber);
-
-		/**
-		*  @brief
 		*    Expects the next token to be a floating point number and returns it as a float value
 		*
 		*  @param[out] fNumber

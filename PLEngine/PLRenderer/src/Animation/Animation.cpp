@@ -136,7 +136,7 @@ void Animation::Start(uint32 nStart, uint32 nEnd, float fSpeed, uint32 nFlags)
 	SetCurrentFrame(static_cast<float>(nStart));
 
 	// Emit start event
-	EventStart.Emit();
+	EventStart();
 }
 
 /**
@@ -165,7 +165,7 @@ void Animation::Start(AnimationInfo &cAnimationInfo, bool bRestart)
 		CheckEvent();
 
 		// Emit start event
-		EventStart.Emit();
+		EventStart();
 	}
 }
 
@@ -186,7 +186,7 @@ void Animation::Stop()
 		m_bRunning		 = false;
 
 		// Emit stop event
-		EventStop.Emit();
+		EventStop();
 	}
 }
 
@@ -382,7 +382,7 @@ void Animation::SetCurrentFrame(float fFrame)
 
 		// Emit frame change event
 		if (m_bEvents)
-			EventFrameChange.Emit();
+			EventFrameChange();
 	}
 }
 
@@ -603,7 +603,7 @@ void Animation::Update(float fTimeDifference)
 		// Frame change?
 		if (fPreviousFrame != m_fFrame && m_bEvents) {
 			// Emit frame change event
-			EventFrameChange.Emit();
+			EventFrameChange();
 		}
 
 		// Check if a event is caused
@@ -675,7 +675,7 @@ void Animation::CheckEvent(int nPreviousFrame) const
 			const AnimationEvent *pAnimationEvent = m_pAnimationInfo->GetEventManager().Get(i);
 			if (pAnimationEvent->GetFrame() == static_cast<uint32>(m_fFrame)) {
 				// Emit event
-				EventSpecialFrame.Emit(pAnimationEvent->GetID());
+				EventSpecialFrame(pAnimationEvent->GetID());
 			}
 		}
 	}

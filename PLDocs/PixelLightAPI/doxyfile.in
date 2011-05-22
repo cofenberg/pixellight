@@ -576,6 +576,7 @@ WARN_LOGFILE           =
 INPUT                  = PixelLight.h \
                          ../../PLBase/PLGeneral/include \
                          ../../PLBase/PLCore/include \
+                         ../../PLBase/PLScript/include \
                          ../../PLBase/PLMath/include \
                          ../../PLBase/PLGraphics/include \
                          ../../PLBase/PLDatabase/include \
@@ -673,6 +674,9 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLBase/PLCore/include/PLCore/PLCore.h \
                          ../../PLBase/PLCore/include/PLCore/PLCoreWindows.h \
                          ../../PLBase/PLCore/include/PLCore/PLCoreLinux.h \
+                         ../../PLBase/PLCore/include/PLScript/PLScript.h \
+                         ../../PLBase/PLCore/include/PLScript/PLScriptWindows.h \
+                         ../../PLBase/PLCore/include/PLScript/PLScriptLinux.h \
                          ../../PLBase/PLMath/include/PLMath/PLMath.h \
                          ../../PLBase/PLMath/include/PLMath/PLMathWindows.h \
                          ../../PLBase/PLMath/include/PLMath/PLMathLinux.h \

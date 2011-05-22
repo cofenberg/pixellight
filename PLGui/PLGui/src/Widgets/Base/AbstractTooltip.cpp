@@ -170,7 +170,7 @@ void AbstractTooltip::OnTimeout()
 void AbstractTooltip::OnTimer()
 {
 	// Emit event
-	EventTimeout.Emit();
+	EventTimeout();
 
 	// Call virtual function
 	OnTimeout();

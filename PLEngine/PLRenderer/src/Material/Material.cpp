@@ -417,7 +417,7 @@ Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Res
 void Material::NotifyParameterChanged(Parameter &cParameter)
 {
 	// Emit event (=> pass on the event)
-	EventParameterChanged.Emit(cParameter);
+	EventParameterChanged(cParameter);
 }
 
 

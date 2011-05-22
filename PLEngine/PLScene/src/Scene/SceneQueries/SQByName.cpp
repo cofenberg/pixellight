@@ -95,7 +95,7 @@ bool SQByName::PerformQueryRec(const SceneContainer &cContainer)
 		// Does the name of this scene node match the given regular expression?
 		if (m_cRegEx.Match(pSceneNode->GetName())) {
 			// Emit event
-			EventSceneNode.Emit(*this, *pSceneNode);
+			EventSceneNode(*this, *pSceneNode);
 			if (m_nFlags & StopQuery)
 				return false; // Stop the query right now
 		}

@@ -110,7 +110,7 @@ bool SQPlaneSet::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 					pSceneContext->TouchNode(*pSceneNode);
 
 					// Emit event
-					EventSceneNode.Emit(*this, *pSceneNode);
+					EventSceneNode(*this, *pSceneNode);
 					if (m_nFlags & StopQuery)
 						return false; // Stop the query right now
 

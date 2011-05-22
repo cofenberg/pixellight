@@ -102,3 +102,41 @@ function OOP()
 	secondObject.b = 2
 	PL.System.Console.Print("secondObject.GetPrivateX() = " .. secondObject.GetPrivateX() .. "\n")
 end
+
+function UseCppRTTIObject(cppRTTIObject)
+	if cppRTTIObject == nil then
+		PL.System.Console.Print("UseCppRTTIObject() was called with a null pointer as parameter\n")
+	else
+		-- Access RTTI object property
+		PL.System.Console.Print("Property: cppRTTIObject.MyProperty = " .. cppRTTIObject.MyProperty .. "\n")
+
+		-- Access RTTI object attributes
+		PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
+		PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
+		cppRTTIObject.Name = "Timmy!"
+		PL.System.Console.Print("Attribute: cppRTTIObject.Level = " .. cppRTTIObject.Level .. "\n")
+		PL.System.Console.Print("Attribute: cppRTTIObject.Name = " .. cppRTTIObject.Name .. "\n")
+
+		-- Call RTTI object methods
+		cppRTTIObject:SaySomethingWise()
+		cppRTTIObject:IgnoreTheParameter(5)
+
+		-- Emit RTTI object signal
+		cppRTTIObject:MySignal("Lua")
+	end
+
+	-- Get an RTTI object by using a C++ functor
+	local object = GetMyRTTIClassInstance(cppRTTIObject)
+	if object == nil then
+		PL.System.Console.Print("GetMyRTTIClassInstance() returned a null pointer\n")
+	else
+		object:MySignal("Lua GetMyRTTIClassInstance() worked\n")
+		local self = object:GetSelf()
+		if self == nil then
+			PL.System.Console.Print("Lua object:GetSelf() returned a null pointer\n")
+		else
+			self:MySignal("Lua object:GetSelf():GetMyRTTIClassInstance() worked\n")
+		end
+	end
+	return object
+end

@@ -553,21 +553,6 @@ bool Tokenizer::ParseNumber(int &nNumber)
 
 /**
 *  @brief
-*    Expects the next token to be a number and returns it as a long value
-*/
-bool Tokenizer::ParseNumber(long &nNumber)
-{
-	String sToken = GetNextToken();
-	if (sToken.GetLength()) {
-		nNumber = sToken.GetLong();
-
-		// Done
-		return true;
-	} else return false; // Error!
-}
-
-/**
-*  @brief
 *    Expects the next token to be a floating point number and returns it as a float value
 */
 bool Tokenizer::ParseNumber(float &fNumber)

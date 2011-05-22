@@ -1,4 +1,40 @@
-﻿>> 13.05.2011
+﻿>> 22.05.2011
+[CO]
+- Woho, the demo "Scripts.scene" comes to live... "ScriptsScene.lua" is already up and running and is manipulating a scene
+  node by using a Lua script. It's still everything experimental to see what's possible and how it may work as a whole
+  system.
+PLScriptBindings:
+- Added PLScriptBindings plugin which exposes certain parts of PixelLight to script languages. This means that the script bindings
+  are a 100% loose plugin and are not within the core. First I thought about adding some basic script bindings directly into PLScript and
+  other script bindings into the PLEngine project which brings together the individual components to an easy usable framework. But
+  this way the standard PixelLight script bindings would be scattered over multiple projects and there would also be the risk that the
+  completly optional script support may accidentally grow into the core over the time. This way, it will probably also easier for other
+  people to contribute to the script bindings part.
+
+
+
+>> 21.05.2011
+[CO]
+- Worked on "PLCore::Object*" support
+
+
+
+>> 19.05.2011
+[CO]
+- PLScriptLua: Calling RTTI object methods within Lua scripts is working... currently only slow progress because the university is using most of my available
+  time. But I still try to get the script support up and running until the next scheduled PixelLight release. :D
+- PLScriptLua: Calling RTTI object signals within Lua scripts is working
+
+
+
+>> 17.05.2011
+[CO]
+- Added "Script::PushArgument(PLCore::Object *pObject)" and an experimental Lua implementation to get an idea how to access RTTI objects
+  directly within scripts *work in progress*
+
+
+
+>> 13.05.2011
 [CO]
 - "Script:" Added support for global variables. At first I thought about adding "GetGlobalVariable()" & "SetGlobalVariable()" versions
   for the supported primitive data types - but this would result in a total copy'n'past overkill within the internal implementations. Those

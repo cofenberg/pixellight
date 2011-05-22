@@ -230,7 +230,7 @@ void SNGun::InitFunction()
 	SNSound::InitFunction();
 
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneContext()->EventInputControllerFound.Emit(m_pController, InputSemantic);
+	GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNGun::OnActivate(bool bActivate)

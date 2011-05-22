@@ -82,9 +82,9 @@ Transform3 &Transform3::operator =(const Transform3 &cSource)
 		m_mInvTrans = cSource.m_mInvTrans;
 
 	// Emit events
-	EventPosition.Emit();
-	EventRotation.Emit();
-	EventScale.   Emit();
+	EventPosition();
+	EventRotation();
+	EventScale();
 
 	// Return a reference to this instance
 	return *this;
@@ -104,7 +104,7 @@ void Transform3::SetPosition(const Vector3 &vPosition)
 	m_nInternalFlags |= RecalculateInverseTransformMatrix;
 
 	// Emit event
-	EventPosition.Emit();
+	EventPosition();
 }
 
 /**
@@ -121,7 +121,7 @@ void Transform3::SetRotation(const Quaternion &qRotation)
 	m_nInternalFlags |= RecalculateInverseTransformMatrix;
 
 	// Emit event
-	EventRotation.Emit();
+	EventRotation();
 }
 
 /**
@@ -138,7 +138,7 @@ void Transform3::SetScale(const Vector3 &vScale)
 	m_nInternalFlags |= RecalculateInverseTransformMatrix;
 
 	// Emit event
-	EventScale.Emit();
+	EventScale();
 }
 
 /**
@@ -196,9 +196,9 @@ void Transform3::SetMatrix(const Matrix3x4 &mTrans)
 	m_nInternalFlags |= RecalculateInverseTransformMatrix;
 
 	// Emit events
-	EventPosition.Emit();
-	EventRotation.Emit();
-	EventScale.   Emit();
+	EventPosition();
+	EventRotation();
+	EventScale();
 }
 
 /**

@@ -55,8 +55,7 @@ class Type<T*> {
 		// Convert var to pointer
 		static T *ConvertFromVar(const DynVar *pValue)
 		{
-			// [TODO] Should be as big as possible (uint32/uint64)
-			return static_cast<T*>(pValue->GetInt());
+			return static_cast<T*>(pValue->GetUIntPtr());
 		}
 
 		// Convert pointer to bool
@@ -222,7 +221,7 @@ class Type<T*> {
 		// Convert pointer to string
 		static PLGeneral::String ConvertToString(T *pValue)
 		{
-			return PLGeneral::String() + static_cast<PLGeneral::uint_ptr>(pValue);
+			return PLGeneral::String() + reinterpret_cast<PLGeneral::uint_ptr>(pValue);
 		}
 
 		// Convert string to pointer

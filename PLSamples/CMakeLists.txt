@@ -35,8 +35,8 @@ add_subdirectory(98GuiTest)
 	add_subdirectory(40ScriptHelloWorld)
 	add_subdirectory(41ScriptGlobalVariables)
 	add_subdirectory(42ScriptFunctors)
-	add_subdirectory(42ScriptBindings)
-	add_subdirectory(42ScriptOOP)
+	add_subdirectory(43ScriptBindings)
+	add_subdirectory(44ScriptOOP)
 #	add_subdirectory(21GuiWidgets)
 #	add_subdirectory(99Test)
 #	add_subdirectory(99TestPlugin)
@@ -54,6 +54,11 @@ add_dependencies(PixelLight Samples)
 # "WhereIsTheLog.txt"-file
 install(FILES ${CMAKE_SOURCE_DIR}/Bin/PLSamples/WhereIsTheLog.txt
 	DESTINATION ${PL_INSTALL_SAMPLES}/Bin	COMPONENT SDK
+)
+
+# Data
+install(DIRECTORY ${PL_BIN_DIR}/PLSamples/Data
+	DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK	PATTERN ".svn" EXCLUDE
 )
 
 # Microsoft Visual Studio Solution

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingScene.h                           *
+ *  File: ScriptBindingSystemConsole.h                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
-#define __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#ifndef __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
+#define __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
 #pragma once
 
 
@@ -29,13 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScript/ScriptBinding.h>
-#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -43,23 +42,20 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene script binding class
-*
-*  @note
-*    - [TODO] Script support is currently under construction
+*    System console script binding class
 */
-class ScriptBindingScene : public PLScript::ScriptBinding {
+class ScriptBindingSystemConsole : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptBindingScene, "PLEngine", PLScript::ScriptBinding, "Scene script binding class")
+	pl_class(pl_rtti_export, ScriptBindingSystemConsole, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
 		pl_properties
-			pl_property("Namespace", "PL.Scene")
+			pl_property("Namespace", "PL.System.Console")
 		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Get, void, PLGeneral::String, "Returns the scene node with the given name",   "")
+		pl_method_1(Print, void, PLGeneral::String, "Prints the given string into the system console",   "")
 	pl_class_end
 
 
@@ -67,7 +63,7 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API void Get(PLGeneral::String sText);
+		void Print(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -78,13 +74,13 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API ScriptBindingScene();
+		ScriptBindingSystemConsole();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ScriptBindingScene();
+		virtual ~ScriptBindingSystemConsole();
 
 
 };
@@ -93,7 +89,7 @@ class ScriptBindingScene : public PLScript::ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings
 
 
-#endif // __PLENGINE_SCRIPT_SCRIPTBINDING_SCENE_H__
+#endif // __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__

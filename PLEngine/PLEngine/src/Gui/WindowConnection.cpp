@@ -282,7 +282,7 @@ void WindowConnection::SetFullscreen(bool bFullscreen)
 void WindowConnection::OnDisplayMode()
 {
 	// Emit event
-	EventDisplayMode.Emit();
+	EventDisplayMode();
 }
 
 /**
@@ -292,7 +292,7 @@ void WindowConnection::OnDisplayMode()
 void WindowConnection::OnFullscreenMode()
 {
 	// Emit event
-	EventFullscreenMode.Emit();
+	EventFullscreenMode();
 }
 
 

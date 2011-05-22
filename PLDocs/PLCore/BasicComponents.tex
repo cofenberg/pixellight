@@ -177,6 +177,6 @@ PLCore::EventHandler<int> cMyEventHandler1(&MyClass::OnMyEvent, &cMyObject);
 cMyEvent.Connect(&cMyEventHandler1);
 
 // Emit cMyEvent event, now MyFunction and MyClass are called
-cMyEvent.Emit(42);
+cMyEvent(42);
 \end{lstlisting}
 Please note that you should not rely on that the event handlers are called within a fixed order. For example, it's not guaranteed that \emph{MyFunction} is called before \emph{MyClass::OnMyEvent}.

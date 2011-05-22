@@ -118,19 +118,21 @@ class Script : public PLScript::Script {
 		PLSCRIPTNULL_API virtual void PushArgument(PLGeneral::uint32 nValue);
 		PLSCRIPTNULL_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTNULL_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTNULL_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTNULL_API virtual bool EndCall();
-		PLSCRIPTNULL_API virtual void GetReturn(bool &bValue);
-		PLSCRIPTNULL_API virtual void GetReturn(float &fValue);
-		PLSCRIPTNULL_API virtual void GetReturn(double &fValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int8 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int16 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int32 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int64 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint8 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint16 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint32 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint64 &nValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::String &sValue);
+		PLSCRIPTNULL_API virtual void GetReturn(bool *pbValue);
+		PLSCRIPTNULL_API virtual void GetReturn(float *pfValue);
+		PLSCRIPTNULL_API virtual void GetReturn(double *pfValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int8 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int16 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int32 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int64 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::String *psValue);
+		PLSCRIPTNULL_API virtual void GetReturn(PLCore::Object **ppObject);
 
 
 	//[-------------------------------------------------------]

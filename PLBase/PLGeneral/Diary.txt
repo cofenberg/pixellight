@@ -1,3 +1,10 @@
+>> 16.05.2011
+[CO]
+- Removed "long" methods within the "String" and "Tokenizer" classes to avoid compiler issues with 64 bit data types
+  (a compiler may actually define a 64 bit data type as long, and then there's no way to distinguish long from long *g*)
+
+
+
 >> 13.05.2011
 [CO]
 - "String": Added "int64"-support

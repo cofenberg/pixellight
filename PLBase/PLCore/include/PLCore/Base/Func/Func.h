@@ -3781,6 +3781,7 @@ class Func<R> : public DynFunc {
 
 		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
 		{
+			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
 		}
 
@@ -3861,6 +3862,7 @@ class Func<void> : public DynFunc {
 
 		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
 		{
+			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
 		}
 

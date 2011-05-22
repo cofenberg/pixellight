@@ -79,7 +79,7 @@ class Event : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -106,6 +106,49 @@ class Event : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 16;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				case 15:	return Type<T15>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
+						cP.Param15);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -113,12 +156,24 @@ class Event : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-					 cP.Param15);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
+						cP.Param15);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -159,7 +214,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -186,6 +241,47 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 15;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				case 14:	return Type<T14>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -193,11 +289,23 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -237,7 +345,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -264,6 +372,46 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 14;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				case 13:	return Type<T13>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -271,11 +419,23 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -314,7 +474,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -341,6 +501,45 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 13;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				case 12:	return Type<T12>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -348,11 +547,23 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11, cP.Param12);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11, cP.Param12);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -390,7 +601,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -417,6 +628,44 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 12;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				case 11:	return Type<T11>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -424,11 +673,23 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10, cP.Param11);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10, cP.Param11);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -465,7 +726,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -492,6 +753,43 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 11;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				case 10:	return Type<T10>::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -499,11 +797,23 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-					 cP.Param10);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
+						cP.Param10);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -539,7 +849,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -566,6 +876,41 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 10;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				case 9:		return Type<T9> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -573,10 +918,22 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -611,7 +968,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -638,6 +995,40 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 9;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				case 8:		return Type<T8> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -645,10 +1036,22 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -682,7 +1085,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -709,6 +1112,39 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 8;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				case 7:		return Type<T7> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -716,10 +1152,22 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6,  cP.Param7);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6,  cP.Param7);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -752,7 +1200,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -779,6 +1227,38 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 7;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				case 6:		return Type<T6> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -786,10 +1266,22 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5,  cP.Param6);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5,  cP.Param6);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -821,7 +1313,7 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -848,6 +1340,37 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 6;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				case 5:		return Type<T5> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -855,10 +1378,22 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-					 cP.Param5);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
+						cP.Param5);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -889,7 +1424,7 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -916,6 +1451,35 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 5;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				case 4:		return Type<T4> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -923,9 +1487,21 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -955,7 +1531,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -982,6 +1558,34 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 4;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				case 3:		return Type<T3> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -989,9 +1593,21 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1020,7 +1636,7 @@ class Event<T0, T1, T2> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1, _T2 t2) const
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1047,6 +1663,33 @@ class Event<T0, T1, T2> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 3;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				case 2:		return Type<T2> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1054,9 +1697,21 @@ class Event<T0, T1, T2> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1,  cP.Param2);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1084,7 +1739,7 @@ class Event<T0, T1> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0, _T1 t1) const
+		virtual void operator ()(_T0 t0, _T1 t1) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1111,6 +1766,32 @@ class Event<T0, T1> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 2;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				case 1:		return Type<T1> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1118,9 +1799,21 @@ class Event<T0, T1> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0,  cP.Param1);
+				// Emit event
+				(*this)(cP.Param0,  cP.Param1);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1149,7 +1842,7 @@ class Event<T0> : public DynEvent {
 		{
 		}
 
-		virtual void Emit(_T0 t0) const
+		virtual void operator ()(_T0 t0) const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1176,6 +1869,31 @@ class Event<T0> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 1;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			switch (nIndex) {
+				case 0:		return Type<T0> ::TypeID;
+				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Get typed params
+				TypeParams &cP = static_cast<TypeParams&>(cParams);
+
+				// Emit event
+				(*this)(cP.Param0);
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
@@ -1183,9 +1901,21 @@ class Event<T0> : public DynEvent {
 				// Get typed params
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
-				// Call function
-				Emit(cP.Param0);
+				// Emit event
+				(*this)(cP.Param0);
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 
@@ -1211,7 +1941,7 @@ class Event<> : public DynEvent {
 		{
 		}
 
-		virtual void Emit() const
+		virtual void operator ()() const
 		{
 			// [HACK] This is currently necessary to avoid the following strange compiler error:
 			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
@@ -1238,13 +1968,45 @@ class Event<> : public DynEvent {
 			return TypeSignature::GetSignatureID();
 		}
 
+		virtual PLGeneral::uint32 GetNumOfParameters() const
+		{
+			return 0;
+		}
+
+		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		{
+			// There are no candidates, so the choice is pretty simple
+			return TypeInvalid;
+		}
+
+		virtual void Emit(DynParams &cParams) const
+		{
+			// Check signature
+			if (cParams.GetSignature() == GetSignature()) {
+				// Emit event
+				(*this)();
+			}
+		}
+
 		virtual void Emit(const DynParams &cParams) const
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
-				// Call function
-				Emit();
+				// Emit event
+				(*this)();
 			}
+		}
+
+		virtual void Emit(const PLGeneral::String &sParams) const
+		{
+			Params<void> cParams = Params<void>::FromString(sParams);
+			Emit(cParams);
+		}
+
+		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		{
+			Params<void> cParams = Params<void>::FromXml(cElement);
+			Emit(cParams);
 		}
 };
 

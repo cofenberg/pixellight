@@ -205,7 +205,6 @@ class String {
 		PLGENERAL_API String(uint16 nValue);
 		PLGENERAL_API String(uint32 nValue);
 		PLGENERAL_API String(uint64 nValue);
-		PLGENERAL_API String(long nValue);
 		PLGENERAL_API String(float fValue);
 		PLGENERAL_API String(double fValue);
 
@@ -938,7 +937,6 @@ class String {
 		PLGENERAL_API uint32   GetUInt32()   const;
 		PLGENERAL_API uint64   GetUInt64()   const;
 		PLGENERAL_API uint_ptr GetUIntPtr()  const;
-		PLGENERAL_API long     GetLong()     const;
 		PLGENERAL_API float    GetFloat()    const;
 		PLGENERAL_API double   GetDouble()   const;
 
@@ -952,7 +950,6 @@ class String {
 		PLGENERAL_API String &operator =(uint16   nValue);
 		PLGENERAL_API String &operator =(uint32   nValue);
 		PLGENERAL_API String &operator =(uint64   nValue);
-		PLGENERAL_API String &operator =(long     lValue);
 		PLGENERAL_API String &operator =(float    fValue);
 		PLGENERAL_API String &operator =(double   dValue);
 

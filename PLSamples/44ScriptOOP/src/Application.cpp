@@ -23,12 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/File/Url.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLScript/Script.h>
 #include <PLScript/FuncScriptPtr.h>
 #include <PLScript/ScriptManager.h>
+#include "MyRTTIClass.h"
 #include "Application.h"
 
 
@@ -47,12 +50,17 @@ using namespace PLScript;
 *  @brief
 *    Constructor
 */
-Application::Application() : ConsoleApplication()
+Application::Application() : ConsoleApplication(),
+	EventHandlerMySignal(&Application::NotifyMySignal, this),
+	m_pMyRTTIClass(new MyRTTIClass())
 {
 	// Set application name and title
 	SetName("44ScriptOOP");
 	SetTitle(PLT("PLSample 44 - Script OOP"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
+
+	// Connect event handler
+	m_pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
 }
 
 /**
@@ -61,6 +69,8 @@ Application::Application() : ConsoleApplication()
 */
 Application::~Application()
 {
+	// Destroy the RTTI object instance
+	delete m_pMyRTTIClass;
 }
 
 
@@ -73,28 +83,59 @@ Application::~Application()
 */
 void Application::OOP(const String &sScriptFilename)
 {
-	// [TODO] Tell the script about MyRTTIClass
-	// [TODO] Create MyRTTIClass instance from within a script
-	// [TODO] Use an already existing MyRTTIClass instance within a script
+	// Get the script source code
+	const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sScriptFilename);
+	if (sSourceCode.GetLength()) {
+		// Create the script instance by using the extension of the given filename to detect the script language
+		Script *pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(sScriptFilename).GetExtension()));
+		if (pScript) {
+			// Tell the script about "Application::GetMyRTTIClassInstance"
+			pScript->AddGlobalFunction("GetMyRTTIClassInstance", Functor<Object*, Object*>(&Application::GetMyRTTIClassInstance, this));
 
-	// Create the script instance
-	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
-	if (pScript) {
-		// Print the name of the used script language
-		System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
+			// Set the script source code
+			if (pScript->SetSourceCode(sSourceCode)) {
+				// Print the name of the used script language
+				System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
 
-		// Call the script function "OOP"
-		FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
+				// Call the script function "OOP"
+				FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
 
-		// Cleanup
-		delete pScript;
+				{ // Call the script function "UseCppRTTIObject"
+					Params<Object*, Object*> cParams(m_pMyRTTIClass);
+					FuncScriptPtr<Object*, Object*>(pScript, "UseCppRTTIObject").Call(cParams);
+					if (cParams.Return != m_pMyRTTIClass)
+						System::GetInstance()->GetConsole().Print("Error, script returned invalid RTTI object instance!\n");
+				}
 
-		// Print new line
-		System::GetInstance()->GetConsole().Print("--\n\n");
+				// Cleanup
+				delete pScript;
+
+				// Print new line
+				System::GetInstance()->GetConsole().Print("--\n\n");
+			}
+		}
 	} else {
 		// Error!
 		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
+}
+
+/**
+*  @brief
+*    Called on MySignal signal
+*/
+void Application::NotifyMySignal(String sParameter)
+{
+	System::GetInstance()->GetConsole().Print(sParameter + " emitted MySignal signal\n");
+}
+
+/**
+*  @brief
+*    Returns the MyRTTIClass instance
+*/
+Object *Application::GetMyRTTIClassInstance(Object *pObject)
+{
+	return (pObject == m_pMyRTTIClass) ? m_pMyRTTIClass : nullptr;
 }
 
 

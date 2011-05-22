@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSystemConsole.cpp                 *
+ *  File: ScriptBindingScene.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,30 +23,44 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include "PLScript/ScriptBindingSystemConsole.h"
+#include <PLScene/Scene/SceneContainer.h>
+#include <PLEngine/Application/SceneApplication.h>
+#include "PLScriptBindings/ScriptBindingScene.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScript {
+using namespace PLCore;
+using namespace PLScene;
+using namespace PLEngine;
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingSystemConsole)
+pl_implement_class(ScriptBindingScene)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-void ScriptBindingSystemConsole::Print(String sText)
+Object *ScriptBindingScene::Get(String sName)
 {
-	System::GetInstance()->GetConsole().Print(sText);
+	// [TODO] Do any type checks?
+	// Get the scene application instance
+	SceneApplication *pSceneApplication = static_cast<SceneApplication*>(SceneApplication::GetApplication());
+	if (pSceneApplication) {
+		// Get the root scene container
+		SceneContainer *pSceneContainer = pSceneApplication->GetRootScene();
+		if (pSceneContainer)
+			return pSceneContainer->Get(sName);
+	}
+
+	// Error!
+	return nullptr;
 }
 
 
@@ -57,8 +71,8 @@ void ScriptBindingSystemConsole::Print(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingSystemConsole::ScriptBindingSystemConsole() :
-	MethodPrint(this)
+ScriptBindingScene::ScriptBindingScene() :
+	MethodGet(this)
 {
 }
 
@@ -66,7 +80,7 @@ ScriptBindingSystemConsole::ScriptBindingSystemConsole() :
 *  @brief
 *    Destructor
 */
-ScriptBindingSystemConsole::~ScriptBindingSystemConsole()
+ScriptBindingScene::~ScriptBindingScene()
 {
 }
 
@@ -74,4 +88,4 @@ ScriptBindingSystemConsole::~ScriptBindingSystemConsole()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLScriptBindings

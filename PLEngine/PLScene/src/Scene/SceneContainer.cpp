@@ -384,7 +384,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 		static_cast<SceneContainer&>(cNode).m_pSceneContext = m_pSceneContext;
 
 	// Emit event
-	cNode.EventContainer.Emit();
+	cNode.EventContainer();
 
 	// Setup name
 	String sNameT = sName;

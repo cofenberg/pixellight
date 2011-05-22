@@ -403,12 +403,6 @@ String::String(uint64 nValue) :
 	*this = nValue;
 }
 
-String::String(long nValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = nValue;
-}
-
 String::String(float fValue) :
 	m_pStringBuffer(nullptr)
 {
@@ -2427,22 +2421,6 @@ uint_ptr String::GetUIntPtr() const
 	#endif
 }
 
-long String::GetLong() const
-{
-	if (m_pStringBuffer) {
-		switch (m_pStringBuffer->GetFormat()) {
-			case ASCII:
-				return atol(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
-
-			case Unicode:
-				return _wtol(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
-		}
-	}
-
-	// Error!
-	return 0;
-}
-
 float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
@@ -2682,15 +2660,6 @@ String &String::operator =(uint64 nValue)
 		*/
 		*this = Format("%llu", nValue);
 	#endif
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(long lValue)
-{
-	// Set data
-	*this = Format("%ld", lValue);
 
 	// Return a reference to this instance
 	return *this;

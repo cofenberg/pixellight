@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingScene.cpp                         *
+ *  File: ScriptBindingLog.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,27 +23,54 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Script/ScriptBindingScene.h"
+#include <PLGeneral/Log/Log.h>
+#include "PLScriptBindings/ScriptBindingLog.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLEngine {
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingScene)
+pl_implement_class(ScriptBindingLog)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-void ScriptBindingScene::Get(String sText)
+void ScriptBindingLog::OutputAlways(String sText)
 {
+	Log::GetInstance()->Output(Log::Always, sText);
+}
+
+void ScriptBindingLog::OutputCritical(String sText)
+{
+	Log::GetInstance()->Output(Log::Critical, sText);
+}
+
+void ScriptBindingLog::OutputError(String sText)
+{
+	Log::GetInstance()->Output(Log::Error, sText);
+}
+
+void ScriptBindingLog::OutputWarning(String sText)
+{
+	Log::GetInstance()->Output(Log::Warning, sText);
+}
+
+void ScriptBindingLog::OutputInfo(String sText)
+{
+	Log::GetInstance()->Output(Log::Info, sText);
+}
+
+void ScriptBindingLog::OutputDebug(String sText)
+{
+	Log::GetInstance()->Output(Log::Debug, sText);
 }
 
 
@@ -54,8 +81,13 @@ void ScriptBindingScene::Get(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingScene::ScriptBindingScene() :
-	MethodGet(this)
+ScriptBindingLog::ScriptBindingLog() :
+	MethodOutputAlways(this),
+	MethodOutputCritical(this),
+	MethodOutputError(this),
+	MethodOutputWarning(this),
+	MethodOutputInfo(this),
+	MethodOutputDebug(this)
 {
 }
 
@@ -63,7 +95,7 @@ ScriptBindingScene::ScriptBindingScene() :
 *  @brief
 *    Destructor
 */
-ScriptBindingScene::~ScriptBindingScene()
+ScriptBindingLog::~ScriptBindingLog()
 {
 }
 
@@ -71,4 +103,4 @@ ScriptBindingScene::~ScriptBindingScene()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScriptBindings
