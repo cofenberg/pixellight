@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/System/System.h>
-#include "PLGeneral/System/DynLib.h"
+#include <PLGeneral/System/DynLib.h>
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/FileSearch.h>
@@ -572,7 +572,7 @@ void ClassManager::LoadPluginLibrary(const Url &cUrl, const String &sAbsFilename
 						if (pModule) {
 							// Set plugin information
 							pModule->m_bPlugin	 = true;
-							pModule->m_pDynLib   = pDynLib;
+							pModule->m_pDynLib   = pDynLib;	// The module now takes over the control of the dynamic library instance
 							pModule->m_sFilename = sAbsFilename;
 							bUseLibrary = true;
 						} else {

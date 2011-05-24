@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/System/DynLib.h>
 #include "PLCore/Base/Module.h"
 
 
@@ -57,6 +58,11 @@ Module::Module(uint32 nModuleID) :
 */
 Module::~Module()
 {
+	// If there's a dynamic library instance, destroy it right now
+	if (m_pDynLib) {
+		m_pDynLib->Unload();
+		delete m_pDynLib;
+	}
 }
 
 /**
