@@ -478,11 +478,21 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 		}
 	}
 
-	// Get plugin directory
-	const String sPluginDirectory = cUrl.CutFilename();
-
 	// By default, we do not force a build type match
 	bool bForceBuildTypeMatch = false;
+	{
+		// Get the "ForceBuildTypeMatch" element
+		const XmlNode *pNode = cPluginElement.GetFirstChild("ForceBuildTypeMatch");
+		if (pNode) {
+			// Get the value of the node
+			const XmlNode *pValue = pNode->GetFirstChild();
+			if (pValue && pValue->GetType() == XmlNode::Text) {
+				const String sValue = pValue->GetValue();
+				if (sValue.GetLength())
+					bForceBuildTypeMatch = sValue.GetBool();
+			}
+		}
+	}
 
 	// Iterate through all children and collect plugin meta information
 	const XmlElement *pElement = cPluginElement.GetFirstChildElement();
@@ -490,18 +500,8 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 		// Get node name
 		const String sNodeName = pElement->GetValue();
 
-		// ForceBuildTypeMatch
-		if (sNodeName == "ForceBuildTypeMatch") {
-			// Get the value of the node
-			const XmlNode *pValue = pElement->GetFirstChild();
-			if (pValue && pValue->GetType() == XmlNode::Text) {
-				const String sValue = pValue->GetValue();
-				if (sValue.GetLength())
-					bForceBuildTypeMatch = sValue.GetBool();
-			}
-
 		// Platform
-		} else if (sNodeName == "Platform") {
+		if (sNodeName == "Platform") {
 			// Get platform name
 			const String sPlatformName = pElement->GetAttribute("Name");
 
@@ -526,7 +526,7 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 								bool bDebugMode = PLCORE_IS_DEBUGMODE;
 								if ((bDebugMode && sType == "Debug") || (!bDebugMode && sType == "Release")) {
 									// Get absolute filename
-									const String sAbsFilename = Url(sValue).IsAbsolute() ? sValue : sPluginDirectory + sValue;
+									const String sAbsFilename = Url(sValue).IsAbsolute() ? sValue : cUrl.CutFilename() + sValue;
 
 									// Check if that library is already loaded
 									bool bLibAlreadyLoaded = false;
