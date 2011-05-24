@@ -43,6 +43,12 @@ const String ShaderLanguageGLSL::GLSL = "GLSL";
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(ShaderLanguageGLSL)
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLRenderer::ShaderLanguage functions   ]
 //[-------------------------------------------------------]
 String ShaderLanguageGLSL::GetShaderLanguage() const
