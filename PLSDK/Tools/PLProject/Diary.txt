@@ -2,6 +2,12 @@
 [CO]
 - Added "--verbose" program argument to PLProject. By default, PLProject no longer tells you everything in detail what's
   going on because it's sometimes somewhat irritating if a lot of information is popping up when compiling.
+- Until now the PLProject program version was 1.0 and was fixed build into the source code. It's somewhat annoying to modify
+  such a version number frequently by hand and it has been proofen useful when the progam versions within a PixelLight release have
+  the same release numbers. So, in "PixelLight 0.9.7-R1" PLProject is "PLProject PixelLight 0.9.7-R1" instead of "PLProject V1.0".
+  I know, it's not that good if the version number suddenly goes down instead of up. In the long term I'am sure this will as be
+  useful as it's already within e.g. the Autodesk 3ds Max scene exporter because you know exactly to which PixelLight version a
+  PixelLight component/tool belonging to.
 
 
 

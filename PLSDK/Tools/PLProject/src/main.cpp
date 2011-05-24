@@ -681,7 +681,7 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 	LocalizationLoaderPL cHack;
 
 	// Output startup info
-	Message(MESSAGE, "PLProject V1.0");
+	Message(MESSAGE, "PLProject " + Core::GetVersion().ToString());
 	Message(MESSAGE, "Current dir is '" + System::GetInstance()->GetCurrentDir() + '\'');
 
 	// Parse command line
