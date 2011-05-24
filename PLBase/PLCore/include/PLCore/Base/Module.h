@@ -187,7 +187,7 @@ class Module {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~Module();
+		PLCORE_API ~Module();
 
 		/**
 		*  @brief

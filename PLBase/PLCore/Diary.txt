@@ -6,6 +6,7 @@
   library was given to the created "Module" instance, but "Module" never destroyed the given instance of the dynamic library.
 - "ClassManager": No one was destroying the module instances, so this is now done within the "ClassManager"-destructor
 - Made the "Module" constructor and destructor private because only the class manager is responsible for managing the modules
+- The "Module" destructor was virtual, but there's no reason for that
 
 
 
