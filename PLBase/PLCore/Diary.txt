@@ -1,3 +1,9 @@
+>> 24.05.2011
+[CO]
+- "ClassManager": Moved plugin file format version 1 loading code from "LoadPlugin()" into a separate method "LoadPluginV1()"
+
+
+
 >> 21.05.2011
 [CO]
 - "TypeObjectPtr" & "TypePtr" & "TypeRef": "ConvertFromVar()" is now using "GetUIntPtr()" instead of "GetInt()" (this was a [TODO] point)

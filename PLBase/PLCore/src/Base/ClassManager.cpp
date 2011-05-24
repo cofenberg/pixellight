@@ -156,169 +156,8 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 					if (nVersion == 0)
 						PL_LOG(Warning, cDocument.GetValue() + ": " + Loader::DeprecatedFormatVersion)
 
-					// Is plugin active?
-					const XmlNode *pNode = pPluginElement->GetFirstChild("Active");
-					if (pNode) {
-						// Get node value
-						const XmlNode *pValue = pNode->GetFirstChild();
-						if (pValue && pValue->GetType() == XmlNode::Text) {
-							const String sValue = pValue->GetValue();
-							if (sValue.GetLength() && !sValue.GetBool()) {
-								// Plugin is inactive
-								PL_LOG(Info, cDocument.GetValue() + ": Plugin is ignored because it's inactive")
-								return false;
-							}
-						}
-					}
-
-					// Get plugin directory
-					const String sPluginDirectory = cUrl.CutFilename();
-
-					// By default, we do not force a build type match
-					bool bForceBuildTypeMatch = false;
-
-					// Iterate through all children and collect plugin meta information
-					const XmlElement *pElement = pPluginElement->GetFirstChildElement();
-					while (pElement) {
-						// Get node name
-						const String sNodeName = pElement->GetValue();
-
-						// ForceBuildTypeMatch
-						if (sNodeName == "ForceBuildTypeMatch") {
-							// Get the value of the node
-							const XmlNode *pValue = pElement->GetFirstChild();
-							if (pValue && pValue->GetType() == XmlNode::Text) {
-								const String sValue = pValue->GetValue();
-								if (sValue.GetLength())
-									bForceBuildTypeMatch = sValue.GetBool();
-							}
-
-						// Platform
-						} else if (sNodeName == "Platform") {
-							// Get platform name
-							const String sPlatformName = pElement->GetAttribute("Name");
-
-							// Platform match?
-							if (sPlatformName.GetLength() && sPlatformName == System::GetInstance()->GetPlatform()) {
-								const XmlElement *pPlatformElement = pElement->GetFirstChildElement();
-								while (pPlatformElement) {
-									// Get platform node name
-									const String sPlatformNodeName = pPlatformElement->GetValue();
-
-									// Library
-									if (sPlatformNodeName == "Library") {
-										// Get node value
-										const XmlNode *pValue = pPlatformElement->GetFirstChild();
-										if (pValue && pValue->GetType() == XmlNode::Text) {
-											const String sValue = pValue->GetValue();
-											if (sValue.GetLength()) {
-												// Get type
-												const String sType = pPlatformElement->GetAttribute("Type");
-
-												// If we don't use this variable, we may receive a "conditional expression is constant"-warning (4127) from VC
-												bool bDebugMode = PLCORE_IS_DEBUGMODE;
-												if ((bDebugMode && sType == "Debug") || (!bDebugMode && sType == "Release")) {
-													// Get absolute filename
-													const String sAbsFilename = Url(sValue).IsAbsolute() ? sValue : sPluginDirectory + sValue;
-
-													// Check if that library is already loaded
-													bool bLibAlreadyLoaded = false;
-													Iterator<const Module*> cIterator = m_lstModules.GetIterator();
-													while (!bLibAlreadyLoaded && cIterator.HasNext()) {
-														const Module *pModule = cIterator.Next();
-														if (pModule->GetFilename() == sAbsFilename)
-															bLibAlreadyLoaded = true;
-													}
-
-													// Library already loaded?
-													if (!bLibAlreadyLoaded) {
-														// Is the library existent?
-														File cFile(sAbsFilename);
-														if (cFile.Exists() && cFile.IsFile()) {
-															// Load library
-															DynLib *pDynLib = new DynLib();
-															if (pDynLib->Load(sAbsFilename)) {
-																bool bUseLibrary = true;
-
-																// Check build type match
-																if (bForceBuildTypeMatch) {
-																	PLIsPluginDebugBuildFunc pIsPluginDebugBuild = reinterpret_cast<PLIsPluginDebugBuildFunc>(pDynLib->GetSymbol("PLIsPluginDebugBuild"));
-																	if (pIsPluginDebugBuild) {
-																		if (bDebugMode != pIsPluginDebugBuild()) {
-																			// Error!
-																			bUseLibrary = false;
-																			PL_LOG(Error, cDocument.GetValue() + ": Plugin library '" + sAbsFilename + "': Release/debug missmatch")
-																		}
-																	} else {
-																		// Error!
-																		bUseLibrary = false;
-																		PL_LOG(Error, cDocument.GetValue() + ": Plugin library '" + sAbsFilename + "': Forced build type match is active, but there's no 'PLIsPluginDebugBuild' function!")
-																	}
-																}
-
-																// Check if it is a valid PL plugin library
-																if (bUseLibrary) {
-																	bUseLibrary = false;
-																	PLGetPluginInfoFunc pGetPluginInfo = reinterpret_cast<PLGetPluginInfoFunc>(pDynLib->GetSymbol("PLGetPluginInfo"));
-																	if (pGetPluginInfo) {
-																		// Get plugin info
-																		const int nModuleID = pGetPluginInfo();
-																		if (nModuleID > 0) {
-																			// Library successfully loaded
-																			PL_LOG(Info, cDocument.GetValue() + ": Plugin library '" + sValue + "' successfully loaded")
-																			Module *pModule = CreateModule(nModuleID);
-																			if (pModule) {
-																				// Set plugin information
-																				pModule->m_bPlugin	 = true;
-																				pModule->m_pDynLib   = pDynLib;
-																				pModule->m_sFilename = sAbsFilename;
-																				bUseLibrary = true;
-																			} else {
-																				// Error!
-																				PL_LOG(Error, cDocument.GetValue() + ": Plugin library '" + sValue + "': failed to create the module")
-																			}
-																		} else {
-																			// Error!
-																			PL_LOG(Error, cDocument.GetValue() + ": Plugin library '" + sValue + "': release/debug missmatch")
-																		}
-																	} else {
-																		// Error!
-																		PL_LOG(Error, cDocument.GetValue() + ": The plugin library '" + sValue + "' is no valid PixelLight plugin library")
-																	}
-																}
-
-																// Unload library if it is not used
-																if (!bUseLibrary) {
-																	pDynLib->Unload();
-																	delete pDynLib;
-																}
-															} else {
-																// Error!
-																PL_LOG(Error, cDocument.GetValue() + ": Can't load the plugin library '" + sAbsFilename + '\'')
-																delete pDynLib;
-															}
-														} else {
-															// Error!
-															PL_LOG(Error, cDocument.GetValue() + ": Can't find the plugin library '" + sAbsFilename + '\'')
-														}
-													}
-												}
-											}
-										}
-									}
-
-									// Next element, please
-									pPlatformElement = pPlatformElement->GetNextSiblingElement();
-								}
-							}
-						}
-
-						// Next element, please
-						pElement = pElement->GetNextSiblingElement();
-					}
-
-					// Done
-					return true;
+					// Load in the plugin
+					return LoadPluginV1(cUrl, *pPluginElement);
 
 				// No longer supported format version
 				} else if (nVersion >= 0) {
@@ -584,6 +423,177 @@ void ClassManager::UnregisterClass(uint32 nModuleID, Class *pClass)
 
 	// Class has been unloaded (emit event)
 	EventClassUnloaded(pClass);
+}
+
+/**
+*  @brief
+*    Load file format version 1 plugin
+*/
+bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElement)
+{
+	// Is plugin active?
+	const XmlNode *pNode = cPluginElement.GetFirstChild("Active");
+	if (pNode) {
+		// Get node value
+		const XmlNode *pValue = pNode->GetFirstChild();
+		if (pValue && pValue->GetType() == XmlNode::Text) {
+			const String sValue = pValue->GetValue();
+			if (sValue.GetLength() && !sValue.GetBool()) {
+				// Plugin is inactive
+				PL_LOG(Info, cUrl.GetUrl() + ": Plugin is ignored because it's inactive")
+				return false;
+			}
+		}
+	}
+
+	// Get plugin directory
+	const String sPluginDirectory = cUrl.CutFilename();
+
+	// By default, we do not force a build type match
+	bool bForceBuildTypeMatch = false;
+
+	// Iterate through all children and collect plugin meta information
+	const XmlElement *pElement = cPluginElement.GetFirstChildElement();
+	while (pElement) {
+		// Get node name
+		const String sNodeName = pElement->GetValue();
+
+		// ForceBuildTypeMatch
+		if (sNodeName == "ForceBuildTypeMatch") {
+			// Get the value of the node
+			const XmlNode *pValue = pElement->GetFirstChild();
+			if (pValue && pValue->GetType() == XmlNode::Text) {
+				const String sValue = pValue->GetValue();
+				if (sValue.GetLength())
+					bForceBuildTypeMatch = sValue.GetBool();
+			}
+
+		// Platform
+		} else if (sNodeName == "Platform") {
+			// Get platform name
+			const String sPlatformName = pElement->GetAttribute("Name");
+
+			// Platform match?
+			if (sPlatformName.GetLength() && sPlatformName == System::GetInstance()->GetPlatform()) {
+				const XmlElement *pPlatformElement = pElement->GetFirstChildElement();
+				while (pPlatformElement) {
+					// Get platform node name
+					const String sPlatformNodeName = pPlatformElement->GetValue();
+
+					// Library
+					if (sPlatformNodeName == "Library") {
+						// Get node value
+						const XmlNode *pValue = pPlatformElement->GetFirstChild();
+						if (pValue && pValue->GetType() == XmlNode::Text) {
+							const String sValue = pValue->GetValue();
+							if (sValue.GetLength()) {
+								// Get type
+								const String sType = pPlatformElement->GetAttribute("Type");
+
+								// If we don't use this variable, we may receive a "conditional expression is constant"-warning (4127) from VC
+								bool bDebugMode = PLCORE_IS_DEBUGMODE;
+								if ((bDebugMode && sType == "Debug") || (!bDebugMode && sType == "Release")) {
+									// Get absolute filename
+									const String sAbsFilename = Url(sValue).IsAbsolute() ? sValue : sPluginDirectory + sValue;
+
+									// Check if that library is already loaded
+									bool bLibAlreadyLoaded = false;
+									Iterator<const Module*> cIterator = m_lstModules.GetIterator();
+									while (!bLibAlreadyLoaded && cIterator.HasNext()) {
+										const Module *pModule = cIterator.Next();
+										if (pModule->GetFilename() == sAbsFilename)
+											bLibAlreadyLoaded = true;
+									}
+
+									// Library already loaded?
+									if (!bLibAlreadyLoaded) {
+										// Is the library existent?
+										File cFile(sAbsFilename);
+										if (cFile.Exists() && cFile.IsFile()) {
+											// Load library
+											DynLib *pDynLib = new DynLib();
+											if (pDynLib->Load(sAbsFilename)) {
+												bool bUseLibrary = true;
+
+												// Check build type match
+												if (bForceBuildTypeMatch) {
+													PLIsPluginDebugBuildFunc pIsPluginDebugBuild = reinterpret_cast<PLIsPluginDebugBuildFunc>(pDynLib->GetSymbol("PLIsPluginDebugBuild"));
+													if (pIsPluginDebugBuild) {
+														if (bDebugMode != pIsPluginDebugBuild()) {
+															// Error!
+															bUseLibrary = false;
+															PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Release/debug missmatch")
+														}
+													} else {
+														// Error!
+														bUseLibrary = false;
+														PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Forced build type match is active, but there's no 'PLIsPluginDebugBuild' function!")
+													}
+												}
+
+												// Check if it is a valid PL plugin library
+												if (bUseLibrary) {
+													bUseLibrary = false;
+													PLGetPluginInfoFunc pGetPluginInfo = reinterpret_cast<PLGetPluginInfoFunc>(pDynLib->GetSymbol("PLGetPluginInfo"));
+													if (pGetPluginInfo) {
+														// Get plugin info
+														const int nModuleID = pGetPluginInfo();
+														if (nModuleID > 0) {
+															// Library successfully loaded
+															PL_LOG(Info, cUrl.GetUrl() + ": Plugin library '" + sValue + "' successfully loaded")
+															Module *pModule = CreateModule(nModuleID);
+															if (pModule) {
+																// Set plugin information
+																pModule->m_bPlugin	 = true;
+																pModule->m_pDynLib   = pDynLib;
+																pModule->m_sFilename = sAbsFilename;
+																bUseLibrary = true;
+															} else {
+																// Error!
+																PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sValue + "': failed to create the module")
+															}
+														} else {
+															// Error!
+															PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sValue + "': release/debug missmatch")
+														}
+													} else {
+														// Error!
+														PL_LOG(Error, cUrl.GetUrl() + ": The plugin library '" + sValue + "' is no valid PixelLight plugin library")
+													}
+												}
+
+												// Unload library if it is not used
+												if (!bUseLibrary) {
+													pDynLib->Unload();
+													delete pDynLib;
+												}
+											} else {
+												// Error!
+												PL_LOG(Error, cUrl.GetUrl() + ": Can't load the plugin library '" + sAbsFilename + '\'')
+												delete pDynLib;
+											}
+										} else {
+											// Error!
+											PL_LOG(Error, cUrl.GetUrl() + ": Can't find the plugin library '" + sAbsFilename + '\'')
+										}
+									}
+								}
+							}
+						}
+					}
+
+					// Next element, please
+					pPlatformElement = pPlatformElement->GetNextSiblingElement();
+				}
+			}
+		}
+
+		// Next element, please
+		pElement = pElement->GetNextSiblingElement();
+	}
+
+	// Done
+	return true;
 }
 
 

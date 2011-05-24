@@ -38,6 +38,9 @@
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
+namespace PLGeneral {
+	class Url;
+}
 namespace PLCore {
 	class ClassManager;
 }
@@ -297,6 +300,20 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    Pointer to class (must be valid)
 		*/
 		PLCORE_API void UnregisterClass(PLGeneral::uint32 nModuleID, Class *pClass);
+
+		/**
+		*  @brief
+		*    Load file format version 1 plugin
+		*
+		*  @param[in] cUrl
+		*    XML plugin file URL
+		*  @param[in] cPluginElement
+		*    XML plugin element with the plugin information
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLCORE_API bool LoadPluginV1(const PLGeneral::Url &cUrl, const PLGeneral::XmlElement &cPluginElement);
 
 
 	//[-------------------------------------------------------]
