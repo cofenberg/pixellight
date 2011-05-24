@@ -104,6 +104,8 @@ struct Project {
 //[-------------------------------------------------------]
 // Debug mode
 bool g_bDebug = false;
+// Verbose mode
+bool g_bVerbose = false;
 
 
 //[-------------------------------------------------------]
@@ -116,6 +118,7 @@ bool g_bDebug = false;
 void Message(int nType, const String &sMessage)
 {
 	// Print beginning of line
+	if (nType == STATUS && !g_bVerbose) return;
 	if (nType == DEBUG && !g_bDebug) return;
 	if (nType == STATUS) System::GetInstance()->GetConsole().Print("-- ");
 	if (nType == DEBUG)  System::GetInstance()->GetConsole().Print("** ");
@@ -147,6 +150,7 @@ bool IsOption(const String &sArgument)
 {
 	// Check if the argument is a known option
 	return (sArgument == "--debug" ||
+			sArgument == "--verbose" ||
 			sArgument == "--suffix" ||
 			sArgument == "--output-path" ||
 			sArgument == "--write-plugin");
@@ -698,6 +702,9 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 					if (sArgument == "--debug") {
 						// Set debug mode
 						g_bDebug = true;
+					} else if (sArgument == "--verbose") {
+						// Set verbose mode
+						g_bVerbose = true;
 					} else if (sArgument == "--suffix") {
 						// Get project suffix
 						sSuffix = '-' + lstArguments[i+1];
@@ -770,7 +777,7 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		// Output help
 		Message(MESSAGE, "");
 		Message(MESSAGE, "Usage:");
-		Message(MESSAGE, "  PLProject <path> [--write-plugin] [--output-path <filename>] [--suffix <suffix>] [--debug] ");
+		Message(MESSAGE, "  PLProject <path> [--write-plugin] [--output-path <filename>] [--suffix <suffix>] [--debug] [--verbose]");
 		Message(MESSAGE, "");
 
 		// Error!

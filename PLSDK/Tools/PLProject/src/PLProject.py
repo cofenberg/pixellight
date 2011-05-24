@@ -1,4 +1,5 @@
 [TODO] Update vcproj (Microsoft Visual Studio 2008) to vcxproj (Microsoft Visual Studio 2010)
+[TODO] Add verbose option
 
 #!/usr/bin/python
 import sys

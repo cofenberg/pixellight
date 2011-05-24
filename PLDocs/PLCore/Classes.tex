@@ -185,6 +185,12 @@ PLGeneral::String sDirectory = PLGeneral::System::GetInstance()->GetCurrentDir()
 PLCore::ClassManager::GetInstance()->ScanPlugins(sDirectory);
 \end{lstlisting}
 
+By default, \emph{PLProject} will inform you only about errors. Add the \emph{--verbose} command line option like
+\begin{verbatim}
+..\Runtime\PLProject.exe . --output-path Bin\Plugins --write-plugin --verbose
+\end{verbatim}
+and \emph{PLProject} tells you in detail what's currently going on.
+
 
 \paragraph{Class Name Conflicts}
 Multiple classes within different modules, but with the same class name - don't do this. The RTTI will register all classes correctly, but then, it's not possible to access all those classes with the same name by using for example \emph{PLCore::ClassManager::GetClass}. That's one of the reasons why you should always work with namespaces, this will reduce the probability that this name conflict situation will arise. It there's a RTTI class name conflict, the class manager will write a warning into the log like

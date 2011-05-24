@@ -1,3 +1,10 @@
+>> 24.05.2011
+[CO]
+- Added "--verbose" program argument to PLProject. By default, PLProject no longer tells you everything in detail what's
+  going on because it's sometimes somewhat irritating if a lot of information is popping up when compiling.
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/
