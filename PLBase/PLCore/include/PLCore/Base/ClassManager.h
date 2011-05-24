@@ -315,6 +315,19 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*/
 		PLCORE_API bool LoadPluginV1(const PLGeneral::Url &cUrl, const PLGeneral::XmlElement &cPluginElement);
 
+		/**
+		*  @brief
+		*    Load a plugin library
+		*
+		*  @param[in] cUrl
+		*    XML plugin file URL the load request came from
+		*  @param[in] sAbsFilename
+		*    Absolute filename of the shared library to load in
+		*  @param[in] bForceBuildTypeMatch
+		*    'true' to force a build type match, else 'false'
+		*/
+		PLCORE_API void LoadPluginLibrary(const PLGeneral::Url &cUrl, const PLGeneral::String &sAbsFilename, bool bForceBuildTypeMatch);
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

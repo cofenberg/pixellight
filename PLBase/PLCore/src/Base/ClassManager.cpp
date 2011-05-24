@@ -506,77 +506,8 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 									}
 
 									// Library already loaded?
-									if (!bLibAlreadyLoaded) {
-										// Is the library existent?
-										File cFile(sAbsFilename);
-										if (cFile.Exists() && cFile.IsFile()) {
-											// Load library
-											DynLib *pDynLib = new DynLib();
-											if (pDynLib->Load(sAbsFilename)) {
-												bool bUseLibrary = true;
-
-												// Check build type match
-												if (bForceBuildTypeMatch) {
-													PLIsPluginDebugBuildFunc pIsPluginDebugBuild = reinterpret_cast<PLIsPluginDebugBuildFunc>(pDynLib->GetSymbol("PLIsPluginDebugBuild"));
-													if (pIsPluginDebugBuild) {
-														if (bDebugMode != pIsPluginDebugBuild()) {
-															// Error!
-															bUseLibrary = false;
-															PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Release/debug missmatch")
-														}
-													} else {
-														// Error!
-														bUseLibrary = false;
-														PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Forced build type match is active, but there's no 'PLIsPluginDebugBuild' function!")
-													}
-												}
-
-												// Check if it is a valid PL plugin library
-												if (bUseLibrary) {
-													bUseLibrary = false;
-													PLGetPluginInfoFunc pGetPluginInfo = reinterpret_cast<PLGetPluginInfoFunc>(pDynLib->GetSymbol("PLGetPluginInfo"));
-													if (pGetPluginInfo) {
-														// Get plugin info
-														const int nModuleID = pGetPluginInfo();
-														if (nModuleID > 0) {
-															// Library successfully loaded
-															PL_LOG(Info, cUrl.GetUrl() + ": Plugin library '" + sValue + "' successfully loaded")
-															Module *pModule = CreateModule(nModuleID);
-															if (pModule) {
-																// Set plugin information
-																pModule->m_bPlugin	 = true;
-																pModule->m_pDynLib   = pDynLib;
-																pModule->m_sFilename = sAbsFilename;
-																bUseLibrary = true;
-															} else {
-																// Error!
-																PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sValue + "': failed to create the module")
-															}
-														} else {
-															// Error!
-															PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sValue + "': release/debug missmatch")
-														}
-													} else {
-														// Error!
-														PL_LOG(Error, cUrl.GetUrl() + ": The plugin library '" + sValue + "' is no valid PixelLight plugin library")
-													}
-												}
-
-												// Unload library if it is not used
-												if (!bUseLibrary) {
-													pDynLib->Unload();
-													delete pDynLib;
-												}
-											} else {
-												// Error!
-												PL_LOG(Error, cUrl.GetUrl() + ": Can't load the plugin library '" + sAbsFilename + '\'')
-												delete pDynLib;
-											}
-										} else {
-											// Error!
-											PL_LOG(Error, cUrl.GetUrl() + ": Can't find the plugin library '" + sAbsFilename + '\'')
-										}
-									}
+									if (!bLibAlreadyLoaded)
+										LoadPluginLibrary(cUrl, sAbsFilename, bForceBuildTypeMatch);
 								}
 							}
 						}
@@ -594,6 +525,84 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 
 	// Done
 	return true;
+}
+
+/**
+*  @brief
+*    Load a plugin library
+*/
+void ClassManager::LoadPluginLibrary(const Url &cUrl, const String &sAbsFilename, bool bForceBuildTypeMatch)
+{
+	// Is the library existent?
+	File cFile(sAbsFilename);
+	if (cFile.Exists() && cFile.IsFile()) {
+		// Load library
+		DynLib *pDynLib = new DynLib();
+		if (pDynLib->Load(sAbsFilename)) {
+			bool bUseLibrary = true;
+
+			// Check build type match
+			if (bForceBuildTypeMatch) {
+				PLIsPluginDebugBuildFunc pIsPluginDebugBuild = reinterpret_cast<PLIsPluginDebugBuildFunc>(pDynLib->GetSymbol("PLIsPluginDebugBuild"));
+				if (pIsPluginDebugBuild) {
+					if (PLCORE_IS_DEBUGMODE != pIsPluginDebugBuild()) {
+						// Error!
+						bUseLibrary = false;
+						PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Release/debug missmatch")
+					}
+				} else {
+					// Error!
+					bUseLibrary = false;
+					PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sAbsFilename + "': Forced build type match is active, but there's no 'PLIsPluginDebugBuild' function!")
+				}
+			}
+
+			// Check if it is a valid PL plugin library
+			if (bUseLibrary) {
+				bUseLibrary = false;
+				const String sLibraryFilename = Url(sAbsFilename).GetFilename();
+				PLGetPluginInfoFunc pGetPluginInfo = reinterpret_cast<PLGetPluginInfoFunc>(pDynLib->GetSymbol("PLGetPluginInfo"));
+				if (pGetPluginInfo) {
+					// Get plugin info
+					const int nModuleID = pGetPluginInfo();
+					if (nModuleID > 0) {
+						// Library successfully loaded
+						PL_LOG(Info, cUrl.GetUrl() + ": Plugin library '" + sLibraryFilename + "' successfully loaded")
+						Module *pModule = CreateModule(nModuleID);
+						if (pModule) {
+							// Set plugin information
+							pModule->m_bPlugin	 = true;
+							pModule->m_pDynLib   = pDynLib;
+							pModule->m_sFilename = sAbsFilename;
+							bUseLibrary = true;
+						} else {
+							// Error!
+							PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sLibraryFilename + "': failed to create the module")
+						}
+					} else {
+						// Error!
+						PL_LOG(Error, cUrl.GetUrl() + ": Plugin library '" + sLibraryFilename + "': release/debug missmatch")
+					}
+				} else {
+					// Error!
+					PL_LOG(Error, cUrl.GetUrl() + ": The plugin library '" + sLibraryFilename + "' is no valid PixelLight plugin library")
+				}
+			}
+
+			// Unload library if it is not used
+			if (!bUseLibrary) {
+				pDynLib->Unload();
+				delete pDynLib;
+			}
+		} else {
+			// Error!
+			PL_LOG(Error, cUrl.GetUrl() + ": Can't load the plugin library '" + sAbsFilename + '\'')
+			delete pDynLib;
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, cUrl.GetUrl() + ": Can't find the plugin library '" + sAbsFilename + '\'')
+	}
 }
 
 

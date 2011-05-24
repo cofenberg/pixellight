@@ -1,6 +1,7 @@
 >> 24.05.2011
 [CO]
 - "ClassManager": Moved plugin file format version 1 loading code from "LoadPlugin()" into a separate method "LoadPluginV1()"
+- "ClassManager": Moved plugin library loading code from "LoadPluginV1()" into a separate method "LoadPluginLibrary()"
 
 
 
