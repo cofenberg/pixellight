@@ -69,6 +69,9 @@ class DynLib {
 		/**
 		*  @brief
 		*    Destructor
+		*
+		*  @note
+		*    - The dynamic library is unloaded automatically
 		*/
 		PLGENERAL_API ~DynLib();
 

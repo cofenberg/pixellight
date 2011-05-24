@@ -59,10 +59,8 @@ Module::Module(uint32 nModuleID) :
 Module::~Module()
 {
 	// If there's a dynamic library instance, destroy it right now
-	if (m_pDynLib) {
-		m_pDynLib->Unload();
+	if (m_pDynLib)
 		delete m_pDynLib;
-	}
 }
 
 /**

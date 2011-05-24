@@ -622,10 +622,8 @@ void ClassManager::LoadPluginLibrary(const Url &cUrl, const String &sAbsFilename
 			}
 
 			// Unload library if it is not used
-			if (!bUseLibrary) {
-				pDynLib->Unload();
+			if (!bUseLibrary)
 				delete pDynLib;
-			}
 		} else {
 			// Error!
 			PL_LOG(Error, cUrl.GetUrl() + ": Can't load the plugin library '" + sAbsFilename + '\'')

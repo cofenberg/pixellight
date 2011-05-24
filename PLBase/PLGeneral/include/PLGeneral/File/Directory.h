@@ -94,6 +94,9 @@ class Directory : public FileObject {
 		/**
 		*  @brief
 		*    Destructor
+		*
+		*  @note
+		*    - The directory is closed automatically
 		*/
 		PLGENERAL_API virtual ~Directory();
 
