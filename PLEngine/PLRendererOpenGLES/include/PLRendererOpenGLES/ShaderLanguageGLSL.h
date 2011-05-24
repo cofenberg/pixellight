@@ -92,9 +92,9 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	private:
+	public:
 		/**
 		*  @brief
 		*    Constructor

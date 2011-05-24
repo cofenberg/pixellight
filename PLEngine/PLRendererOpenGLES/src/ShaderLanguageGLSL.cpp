@@ -85,7 +85,7 @@ PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief

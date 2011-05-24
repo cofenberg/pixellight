@@ -2,6 +2,8 @@
 [CO]
 PLRendererOpenGLEs:
 - Bugfix: "ShaderLanguageGLSL": "pl_class" and "pl_implement_class(ShaderLanguageGLSL)" was missing
+PLRendererOpenGLCg:
+- Bugfix: "ShaderLanguageCg": "pl_implement_class(ShaderLanguageCg)" was missing
 
 
 
