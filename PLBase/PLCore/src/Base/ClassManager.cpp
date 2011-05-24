@@ -282,7 +282,7 @@ const Class *ClassManager::GetClass(const String &sClass) const
 *    Constructor
 */
 ClassManager::ClassManager() :
-	m_nModuleID(10000)
+	m_nModuleID(10000)	// Any value to start with
 {
 }
 
@@ -292,8 +292,38 @@ ClassManager::ClassManager() :
 */
 ClassManager::~ClassManager()
 {
-	// Clear list
-	m_lstClasses.Clear();
+	// Iterate through all modules and destroy them
+	Iterator<const Module*> cIterator = m_lstModules.GetIterator();
+	while (cIterator.HasNext()) {
+		// Get module
+		const Module *pModule = cIterator.Next();
+
+		// At this point, all actual class instances should already have been destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
+
+		{ // Remove all classes from that module (there shouldn't be any classes left, but safe is safe)
+			// Get list of classes (make a copy!)
+			List<const Class*> lstClasses = pModule->GetClasses();
+
+			// Remove all classes from that module
+			Iterator<const Class*> cIterator = lstClasses.GetIterator();
+			while (cIterator.HasNext()) {
+				// Get the class
+				const Class *pClass = cIterator.Next();
+
+				// Write an error into the log (if it still exists...) because there shouldn't be any classes left in here
+				PL_LOG(Error, "Class '" + pClass->GetName() + "' [module '" + pModule->GetName() + "']: Failed to unregister the class automatically, maybe there's no \"pl_implement_class\" within the class implementation?");
+
+				// Unregister the class
+				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(pClass));
+			}
+		}
+
+		// Module has been unloaded (emit event)
+		EventModuleUnloaded(pModule);
+
+		// Destroy the module instance
+		delete pModule;
+	}
 }
 
 /**
@@ -423,6 +453,8 @@ void ClassManager::UnregisterClass(uint32 nModuleID, Class *pClass)
 
 	// Class has been unloaded (emit event)
 	EventClassUnloaded(pClass);
+
+	// The actual class instance is destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
 }
 
 /**

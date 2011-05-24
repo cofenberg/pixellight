@@ -4,6 +4,7 @@
 - "ClassManager": Moved plugin library loading code from "LoadPluginV1()" into a separate method "LoadPluginLibrary()"
 - "ClassManager": There was a memory leak during plugin library loading: The ownership of the created instance of the dynamic
   library was given to the created "Module" instance, but "Module" never destroyed the given instance of the dynamic library.
+- "ClassManager": No one was destroying the module instances, so this is now done within the "ClassManager"-destructor
 
 
 
