@@ -79,21 +79,6 @@ class Module {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] nModuleID
-		*    Module ID
-		*/
-		PLCORE_API Module(PLGeneral::uint32 nModuleID);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLCORE_API virtual ~Module();
-
-		/**
-		*  @brief
 		*    Get module ID
 		*
 		*  @return
@@ -189,6 +174,21 @@ class Module {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] nModuleID
+		*    Module ID
+		*/
+		PLCORE_API Module(PLGeneral::uint32 nModuleID);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~Module();
+
 		/**
 		*  @brief
 		*    Set module information
