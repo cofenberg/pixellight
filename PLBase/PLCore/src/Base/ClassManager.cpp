@@ -237,7 +237,7 @@ const List<const Class*> &ClassManager::GetClasses() const
 *  @brief
 *    Get classes based on their base class and/or module (search for classes)
 */
-void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive, EIncludeBase nIncludeBase, EIncludeAbstract nIncludeAbstract, PLGeneral::uint32 nModuleID) const
+void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive, EIncludeBase nIncludeBase, EIncludeAbstract nIncludeAbstract, uint32 nModuleID) const
 {
 	// Iterate through classes
 	Iterator<const Class*> cIterator = m_lstClasses.GetIterator();
