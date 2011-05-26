@@ -119,10 +119,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug\PLScriptAngelScriptD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug\PLScriptAngelScriptD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptAngelScriptD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -162,10 +162,11 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug64\PLScriptAngelScriptD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug64\PLScriptAngelScriptD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptAngelScriptD64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -211,10 +212,11 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release\PLScriptAngelScript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release\PLScriptAngelScript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptAngelScript.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -257,10 +259,11 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release64\PLScriptAngelScript64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release64\PLScriptAngelScript64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptAngelScript64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

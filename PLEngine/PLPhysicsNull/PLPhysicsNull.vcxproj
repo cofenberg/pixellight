@@ -116,8 +116,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsNullD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsNullD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -154,8 +154,8 @@ copy build\debug\PLPhysicsNullD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -201,8 +201,8 @@ copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsNull.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsNull.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -245,8 +245,8 @@ copy build\release\PLPhysicsNull.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release64\PLPhysicsNull64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release64\PLPhysicsNull64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

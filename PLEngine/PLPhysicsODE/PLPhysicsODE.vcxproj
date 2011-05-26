@@ -117,10 +117,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -158,9 +158,9 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -207,10 +207,10 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -254,9 +254,9 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

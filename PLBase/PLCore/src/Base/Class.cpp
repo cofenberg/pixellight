@@ -239,11 +239,11 @@ bool Class::HasConstructor() const
 
 /**
 *  @brief
-*    Check if class has a default constructors
+*    Check if class has a default constructor
 */
 bool Class::HasDefaultConstructor() const
 {
-	// Check if class has a default constructors
+	// Check if class has a default constructor
 	return m_pClassImpl->HasDefaultConstructor();
 }
 

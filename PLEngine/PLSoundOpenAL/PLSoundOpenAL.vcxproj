@@ -118,10 +118,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug\PLSoundOpenALD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundOpenALD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -159,8 +159,8 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug64\PLSoundOpenALD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug64\PLSoundOpenALD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -207,10 +207,10 @@ copy build\debug64\PLSoundOpenALD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release\PLSoundOpenAL.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundOpenAL.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -254,8 +254,8 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release64\PLSoundOpenAL64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release64\PLSoundOpenAL64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

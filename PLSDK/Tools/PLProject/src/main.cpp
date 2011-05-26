@@ -33,6 +33,8 @@
 #include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Registry/Registry.h>
 #include <PLCore/Core.h>
+#include <PLCore/Base/Class.h>
+#include <PLCore/Base/Module.h>
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
@@ -667,6 +669,90 @@ bool CreatePluginFile(Project &cProject)
 
 			// Platform end tag
 			Write(cFile, "	</Platform>");
+		}
+
+		{ // Classes
+			// Get the filename of the shared library
+			String sSharedLibraryFilename;
+			#ifdef WIN32
+				#ifdef WIN64
+					#ifdef _DEBUG
+						sSharedLibraryFilename = cProject.sLibWin64Debug;
+					#else
+						sSharedLibraryFilename = cProject.sLibWin64Release;
+					#endif
+				#else
+					#ifdef _DEBUG
+						sSharedLibraryFilename = cProject.sLibWin32Debug;
+					#else
+						sSharedLibraryFilename = cProject.sLibWin32Release;
+					#endif
+				#endif
+			#endif
+			#ifdef LINUX
+				#ifdef _DEBUG
+					sSharedLibraryFilename = cProject.sLibLinuxDebug;
+				#else
+					sSharedLibraryFilename = cProject.sLibLinuxRelease;
+				#endif
+			#endif
+
+			// Get the absolute filename of the shared library
+			const String sAbsSharedLibraryFilename = System::GetInstance()->GetCurrentDir() + '/' + Url(cProject.sOutputPlugin).CutFilename() + sSharedLibraryFilename;
+
+			// Load the module
+			const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
+			if (pModule) {
+				//  Get classes of module
+				const List<const Class*> &lstClasses = pModule->GetClasses();
+				if (lstClasses.GetNumOfElements()) {
+					// Classes start tag
+					Write(cFile, "	<Classes>");
+
+					// Iterate through all classes
+					Iterator<const Class*> cIterator = lstClasses.GetIterator();
+					while (cIterator.HasNext()) {
+						// Get the class instance
+						const Class *pClass = cIterator.Next();
+
+						// Class start tag
+						Write(cFile, String("		<Class Name=\"") + pClass->GetName() + "\" Namespace=\"" + pClass->GetNamespace() + "\" BaseClassName=\"" + pClass->GetBaseClassName() + "\" Description=\"" + pClass->GetDescription() + "\" HasConstructor=\"" + pClass->HasConstructor() + "\" HasDefaultConstructor=\"" + pClass->HasDefaultConstructor() + "\">");
+
+						{ // Properties
+							const HashMap<String, String> &mapProperties = pClass->GetProperties();
+							if (mapProperties.GetNumOfElements()) {
+								// Properties start tag
+								Write(cFile, "			<Properties>");
+
+								// Iterate over all RTTI class properties
+								Iterator<String> cIterator = pClass->GetProperties().GetKeyIterator();
+								while (cIterator.HasNext()) {
+									// Get the name of the current property
+									const String sName = cIterator.Next();
+
+									// Get the value of the current property
+									const String sValue = pClass->GetProperties().Get(sName);
+
+									// Write down the property
+									Write(cFile, String("				<Property Name=\"") + sName + "\">" + sValue + "</Property>");
+								}
+
+								// Properties end tag
+								Write(cFile, "			</Properties>");
+							}
+						}
+
+						// Class end tag
+						Write(cFile, "		</Class>");
+					}
+
+					// Classes end tag
+					Write(cFile, "	</Classes>");
+				}
+			} else {
+				// Error!
+				Message(ERR, "Failed to load in the module '" + sAbsSharedLibraryFilename + "' in order to gather RTTI class metadata!");
+			}
 		}
 
 		// Plugin end tag

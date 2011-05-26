@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\debug\PLParticleGroupsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\debug\PLParticleGroupsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
 copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,9 +155,9 @@ copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\debug64\PLParticleGroupsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\debug64\PLParticleGroupsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
 copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -203,9 +203,9 @@ copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\release\PLParticleGroups.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\release\PLParticleGroups.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
 copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -248,9 +248,9 @@ copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\release64\PLParticleGroups64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\release64\PLParticleGroups64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
 copy build\release64\PLParticleGroups64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -19,4 +19,12 @@
 		<Library Type="Release">libPLDefaultFileFormats.so</Library>
 		<Library Type="Debug">libPLDefaultFileFormatsD.so</Library>
 	</Platform>
+	<Classes>
+		<Class Name="Script" Namespace="PLScriptLua" BaseClassName="PLScript::Script" Description="Lua (http://www.lua.org/) script implementation" HasConstructor="true" HasDefaultConstructor="true">
+			<Properties>
+				<Property Name="Formats">lua,LUA</Property>
+				<Property Name="Language">Lua</Property>
+			</Properties>
+		</Class>
+	</Classes>
 </Plugin>

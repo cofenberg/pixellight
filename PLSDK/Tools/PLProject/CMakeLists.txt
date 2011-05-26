@@ -32,8 +32,8 @@ add_link_directories(
 ##################################################
 add_libs(
 	${ZLIB_LIBRARIES}
-	PLGeneralStat
-	PLCoreStat
+	PLGeneral
+	PLCore
 )
 if(WIN32)
 	##################################################
@@ -47,10 +47,6 @@ endif()
 ##################################################
 ## Preprocessor definitions
 ##################################################
-add_compile_defs(
-	PLGENERAL_STATIC
-	PLCORE_STATIC
-)
 if(WIN32)
 	##################################################
 	## Win32
@@ -113,7 +109,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneralStat PLCoreStat)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore)
 add_dependencies(SDKTools ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

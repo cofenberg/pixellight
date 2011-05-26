@@ -25,6 +25,8 @@
   In this case, the internal class implementation is changed - but the "Class" instance the user is working with will be still the same. This should
   speed up the program start.
 - Added "pl_module_delayed()"-macro and the plugin file option "Delayed" which is "true" by default
+- Renamed "ClassManager::LoadPluginLibrary()" into "ClassManager::LoadModule()" and made it public
+- Add RTTI class metadata within the XML plugin file
 
 
 

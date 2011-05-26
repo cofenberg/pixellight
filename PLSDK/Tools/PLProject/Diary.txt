@@ -1,3 +1,14 @@
+>> 26.05.2011
+[CO]
+- PLProject now also writes some basic RTTI class metadata into the XML plugin file - but not everything to keep the plugin file
+  as compact as possible. The RTTI class metadata can be used to delay the loading of the shared library by creating a dummy RTTI
+  class using the stored metadata. Class name, class namespace, base class name, description and properties are usually enough to
+  prevent unnecessary shared library loading. To make the access to the RTTI class information within PLProject as simple as possible,
+  PLProject now uses the dynamic versions of PLGeneral and PLCore instead of the static ones. As far as I can see there's no demand
+  to use the static versions, I hope I didn't miss anything...
+
+
+
 >> 24.05.2011
 [CO]
 - Added "--verbose" program argument to PLProject. By default, PLProject no longer tells you everything in detail what's

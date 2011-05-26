@@ -119,9 +119,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug\PLScriptNullD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug\PLScriptNullD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptNullD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -161,9 +161,9 @@ copy build\debug\PLScriptNullD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug64\PLScriptNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug64\PLScriptNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptNullD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -210,9 +210,9 @@ copy build\debug64\PLScriptNullD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release\PLScriptNull.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release\PLScriptNull.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptNull.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,9 +256,9 @@ copy build\release\PLScriptNull.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release64\PLScriptNull64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release64\PLScriptNull64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptNull64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

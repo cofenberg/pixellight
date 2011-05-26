@@ -118,10 +118,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\debug\PLRendererOpenGLCgD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\debug\PLRendererOpenGLCgD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -159,8 +159,8 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\debug64\PLRendererOpenGLCgD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\debug64\PLRendererOpenGLCgD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -208,10 +208,10 @@ copy build\debug64\PLRendererOpenGLCgD64.dll ..\..\Bin\PLRuntime\Plugins\PLRende
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\release\PLRendererOpenGLCg.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\release\PLRendererOpenGLCg.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,8 +256,8 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -116,9 +116,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug\PLSoundFMODExD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\</Command>
+      <Command>copy build\debug\PLSoundFMODExD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -154,8 +155,8 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -201,9 +202,10 @@ copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release\PLSoundFMODEx.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\</Command>
+      <Command>copy build\release\PLSoundFMODEx.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -245,8 +247,8 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release64\PLSoundFMODEx64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release64\PLSoundFMODEx64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

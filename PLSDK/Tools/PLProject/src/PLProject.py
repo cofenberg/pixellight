@@ -3,6 +3,7 @@
 # [TODO] Write the current PixelLight version into the XML plugin file
 # [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.7-R1 (Python)")
 # [TODO] Add "Delayed" option within the resulting XML plugin file
+# [TODO] Add RTTI class metadata within the resulting XML plugin file
 
 
 #!/usr/bin/python

@@ -119,9 +119,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug\PLDatabaseNullD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug\PLDatabaseNullD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug\PLDatabaseNullD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -161,9 +161,9 @@ copy build\debug\PLDatabaseNullD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug64\PLDatabaseNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug64\PLDatabaseNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug64\PLDatabaseNullD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -210,9 +210,9 @@ copy build\debug64\PLDatabaseNullD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release\PLDatabaseNull.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release\PLDatabaseNull.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release\PLDatabaseNull.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,9 +256,9 @@ copy build\release\PLDatabaseNull.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release64\PLDatabaseNull64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release64\PLDatabaseNull64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release64\PLDatabaseNull64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

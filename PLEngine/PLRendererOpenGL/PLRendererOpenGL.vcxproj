@@ -117,9 +117,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\debug\PLRendererOpenGLD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-copy build\debug\PLRendererOpenGLD.lib ..\..\Bin\Lib\</Command>
+      <Command>copy build\debug\PLRendererOpenGLD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+copy build\debug\PLRendererOpenGLD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,9 +157,10 @@ copy build\debug\PLRendererOpenGLD.lib ..\..\Bin\Lib\</Command>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\debug64\PLRendererOpenGLD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-copy build\debug64\PLRendererOpenGLD64.lib ..\..\Bin\Lib\</Command>
+      <Command>copy build\debug64\PLRendererOpenGLD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+copy build\debug64\PLRendererOpenGLD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -205,9 +207,10 @@ copy build\debug64\PLRendererOpenGLD64.lib ..\..\Bin\Lib\</Command>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\release\PLRendererOpenGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-copy build\release\PLRendererOpenGL.lib ..\..\Bin\Lib\</Command>
+      <Command>copy build\release\PLRendererOpenGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+copy build\release\PLRendererOpenGL.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -251,9 +254,10 @@ copy build\release\PLRendererOpenGL.lib ..\..\Bin\Lib\</Command>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\release64\PLRendererOpenGL64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-copy build\release64\PLRendererOpenGL64.lib ..\..\Bin\Lib\</Command>
+      <Command>copy build\release64\PLRendererOpenGL64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+copy build\release64\PLRendererOpenGL64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

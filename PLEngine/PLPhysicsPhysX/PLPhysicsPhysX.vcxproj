@@ -116,10 +116,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -156,9 +156,9 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntim
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -204,10 +204,10 @@ copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -250,9 +250,9 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntim
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

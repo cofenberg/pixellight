@@ -119,10 +119,11 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug\PLScriptV8D.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug\PLScriptV8D.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptV8D.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,10 +162,11 @@ copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug64\PLScriptV8D64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug64\PLScriptV8D64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptV8D64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -210,10 +212,11 @@ copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release\PLScriptV8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release\PLScriptV8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptV8.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -256,10 +259,11 @@ copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release64\PLScriptV864.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release64\PLScriptV864.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptV864.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

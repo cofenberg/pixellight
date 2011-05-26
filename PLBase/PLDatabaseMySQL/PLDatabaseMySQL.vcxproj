@@ -118,10 +118,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug\PLDatabaseMySQLD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug\PLDatabaseMySQLD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug\PLDatabaseMySQLD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -160,9 +160,9 @@ copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\PLRuntime\P
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug64\PLDatabaseMySQLD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug64\PLDatabaseMySQLD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug64\PLDatabaseMySQLD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -209,10 +209,10 @@ copy build\debug64\PLDatabaseMySQLD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release\PLDatabaseMySQL.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release\PLDatabaseMySQL.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release\PLDatabaseMySQL.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,9 +256,9 @@ copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\PLRuntime\P
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release64\PLDatabaseMySQL64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release64\PLDatabaseMySQL64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release64\PLDatabaseMySQL64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

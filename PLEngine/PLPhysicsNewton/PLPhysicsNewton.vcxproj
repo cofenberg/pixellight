@@ -116,10 +116,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug\PLPhysicsNewtonD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsNewtonD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsNewtonD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -156,9 +156,9 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Pl
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\debug64\PLPhysicsNewtonD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug64\PLPhysicsNewtonD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug64\PLPhysicsNewtonD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -204,10 +204,10 @@ copy build\debug64\PLPhysicsNewtonD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release\PLPhysicsNewton.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsNewton.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsNewton.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -250,9 +250,9 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Pl
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
-copy build\release64\PLPhysicsNewton64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release64\PLPhysicsNewton64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release64\PLPhysicsNewton64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

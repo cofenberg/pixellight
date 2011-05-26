@@ -74,10 +74,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\debug\PLRendererOpenGLESD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\debug\PLRendererOpenGLESD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -119,10 +119,10 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\PLRunti
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
-copy build\release\PLRendererOpenGLES.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\release\PLRendererOpenGLES.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

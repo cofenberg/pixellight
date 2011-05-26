@@ -119,9 +119,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug\PLDatabaseSQLiteD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug\PLDatabaseSQLiteD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -161,9 +161,9 @@ copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug64\PLDatabaseSQLiteD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug64\PLDatabaseSQLiteD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -210,9 +210,9 @@ copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release\PLDatabaseSQLite.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release\PLDatabaseSQLite.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,9 +256,9 @@ copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release64\PLDatabaseSQLite64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release64\PLDatabaseSQLite64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release64\PLDatabaseSQLite64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

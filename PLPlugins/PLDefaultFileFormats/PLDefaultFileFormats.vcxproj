@@ -117,8 +117,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\debug\PLDefaultFileFormatsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\debug\PLDefaultFileFormatsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -156,8 +156,8 @@ copy build\debug\PLDefaultFileFormatsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\debug64\PLDefaultFileFormatsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\debug64\PLDefaultFileFormatsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -204,8 +204,8 @@ copy build\debug64\PLDefaultFileFormatsD64.dll ..\..\Bin\PLRuntime\Plugins\PLSce
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\release\PLDefaultFileFormats.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\release\PLDefaultFileFormats.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -249,8 +249,8 @@ copy build\release\PLDefaultFileFormats.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
-copy build\release64\PLDefaultFileFormats64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+      <Command>copy build\release64\PLDefaultFileFormats64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

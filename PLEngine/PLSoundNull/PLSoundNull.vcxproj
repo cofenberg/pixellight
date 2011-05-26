@@ -116,8 +116,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug\PLSoundNullD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundNullD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -154,8 +154,8 @@ copy build\debug\PLSoundNullD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug64\PLSoundNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug64\PLSoundNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -201,8 +201,8 @@ copy build\debug64\PLSoundNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release\PLSoundNull.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundNull.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -245,8 +245,8 @@ copy build\release\PLSoundNull.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release64\PLSoundNull64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release64\PLSoundNull64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

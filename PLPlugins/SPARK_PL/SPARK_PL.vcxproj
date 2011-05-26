@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
-copy build\debug\SPARK_PLD.dll ..\..\Bin\PLRuntime\
+      <Command>copy build\debug\SPARK_PLD.dll ..\..\Bin\PLRuntime\
 copy build\debug\SPARK_PLD.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,9 +155,9 @@ copy build\debug\SPARK_PLD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
-copy build\debug64\SPARK_PLD64.dll ..\..\Bin\PLRuntime\
+      <Command>copy build\debug64\SPARK_PLD64.dll ..\..\Bin\PLRuntime\
 copy build\debug64\SPARK_PLD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -203,9 +203,9 @@ copy build\debug64\SPARK_PLD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
-copy build\release\SPARK_PL.dll ..\..\Bin\PLRuntime\
+      <Command>copy build\release\SPARK_PL.dll ..\..\Bin\PLRuntime\
 copy build\release\SPARK_PL.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -248,9 +248,9 @@ copy build\release\SPARK_PL.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
-copy build\release64\SPARK_PL64.dll ..\..\Bin\PLRuntime\
+      <Command>copy build\release64\SPARK_PL64.dll ..\..\Bin\PLRuntime\
 copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

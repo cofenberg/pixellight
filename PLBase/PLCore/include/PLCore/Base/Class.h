@@ -289,7 +289,7 @@ class Class {
 
 		/**
 		*  @brief
-		*    Check if class has a default constructors
+		*    Check if class has a default constructor
 		*
 		*  @return
 		*    'true' if class has a default constructor, else 'false'

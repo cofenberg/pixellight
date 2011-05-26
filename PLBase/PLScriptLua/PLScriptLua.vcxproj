@@ -119,10 +119,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug\PLScriptLuaD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug\PLScriptLuaD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptLuaD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -162,10 +162,11 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\debug64\PLScriptLuaD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\debug64\PLScriptLuaD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptLuaD64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -211,10 +212,11 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release\PLScriptLua.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release\PLScriptLua.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptLua.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -257,10 +259,11 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
-copy build\release64\PLScriptLua64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+      <Command>copy build\release64\PLScriptLua64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptLua64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\</Command>
+copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

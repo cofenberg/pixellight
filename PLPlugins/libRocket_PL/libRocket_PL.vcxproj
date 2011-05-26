@@ -316,10 +316,6 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\P
       <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
-      <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

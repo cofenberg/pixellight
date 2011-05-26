@@ -118,8 +118,8 @@
       <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
-copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+      <Command>copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -157,8 +157,8 @@ copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
-copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+      <Command>copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -205,8 +205,8 @@ copy build\debug\PLImageLoaderEXRD.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
-copy build\release\PLImageLoaderEXR.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+      <Command>copy build\release\PLImageLoaderEXR.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -250,8 +250,8 @@ copy build\release\PLImageLoaderEXR.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
-copy build\release\PLImageLoaderEXR.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+      <Command>copy build\release\PLImageLoaderEXR.dll ..\..\Bin\PLRuntime\Plugins\PLGraphics\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLGraphics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

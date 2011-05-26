@@ -379,10 +379,6 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
-      <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\PLGeneral\PLGeneral.vcxproj">
       <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

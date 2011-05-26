@@ -118,8 +118,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug\PLDatabasePostgreSQLD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug\PLDatabasePostgreSQLD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug\PLDatabasePostgreSQLD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\comerr32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\gssapi32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
@@ -133,6 +132,7 @@ copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\msvcr71.dll ..\..\Bin\PLRunti
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\msvcr80.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\Microsoft.VC80.CRT.manifest ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\ssleay32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -171,9 +171,9 @@ copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\ssleay32.dll ..\..\Bin\PLRunt
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\debug64\PLDatabasePostgreSQLD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\debug64\PLDatabasePostgreSQLD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug64\PLDatabasePostgreSQLD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -219,8 +219,7 @@ copy build\debug64\PLDatabasePostgreSQLD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release\PLDatabasePostgreSQL.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release\PLDatabasePostgreSQL.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release\PLDatabasePostgreSQL.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\comerr32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\gssapi32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
@@ -234,6 +233,7 @@ copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\msvcr71.dll ..\..\Bin\PLRunti
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\msvcr80.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\Microsoft.VC80.CRT.manifest ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\ssleay32.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -276,9 +276,9 @@ copy ..\..\External\_Windows_x86_32\PostgreSQL\bin\ssleay32.dll ..\..\Bin\PLRunt
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
-copy build\release64\PLDatabasePostgreSQL64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
+      <Command>copy build\release64\PLDatabasePostgreSQL64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release64\PLDatabasePostgreSQL64.lib ..\..\Bin\Lib\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

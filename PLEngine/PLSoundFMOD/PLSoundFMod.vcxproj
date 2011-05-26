@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug\PLSoundFMODD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,8 +155,8 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\PLRuntime\Plugin
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\debug\PLSoundFMODD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -202,9 +202,9 @@ copy build\debug\PLSoundFMODD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release\PLSoundFMOD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -247,8 +247,8 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\PLRuntime\Plugin
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
-copy build\release\PLSoundFMOD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
