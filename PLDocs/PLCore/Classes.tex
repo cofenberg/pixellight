@@ -140,6 +140,7 @@ It's recommended to do this within our main file so that you always have a fixed
 \item \textbf{pl\_module\_description} A short description of the module
 \item \textbf{pl\_module\_version} Version information, the version format is up to you
 \item \textbf{pl\_module\_active} Defines the default active state of the project, if nothing is defined, a module will be active by default. Only relevant for plugins, if a plugin is deactivated, it's not loaded when using the PLCore plugin features.
+\item \textbf{pl\_module\_delayed} Defines the default delayed shared library loading state of the project, if nothing is defined, a module will load it's shared libraries delayed by default. Only relevant for (active) plugins.
 \item \textbf{pl\_module\_dependencies\_\textless platform\textgreater\_\textless mode\textgreater} Enumeration of the external shared libraries this module depends on. This information is only for the user and it will not be used internally. \emph{\textless platform\textgreater} can be for example \emph{win32} or \emph{win64} describing dependencies for a \SI{32}{\bit} or \SI{64}{\bit} version of \emph{Microsoft Windows}. \emph{\textless mode\textgreater} can be \emph{release} or \emph{debug} for a release or debug version of the module.
 \end{itemize}
 

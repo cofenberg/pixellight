@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <Plugin Version="1" PixelLightVersion="PixelLight 0.9.7-R1">
 	<Active>1</Active>
+	<Delayed>1</Delayed>
 	<ForceBuildTypeMatch>0</ForceBuildTypeMatch>
 	<Name>PLDefaultFileFormats</Name>
 	<Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>

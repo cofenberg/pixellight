@@ -79,6 +79,7 @@ struct Project {
 	String sModuleDescription;		/**< Module description */
 	bool   bModulePlugin;			/**< Is the module a plugin? */
 	bool   bModuleActive;			/**< Is the module active? */
+	bool   bModuleDelayed;			/**< Is the module delayed? */
 	String sLibWin32Release;		/**< Output file name for Win32 Release */
 	String sLibWin32Debug;			/**< Output file name for Win32 Debug */
 	String sLibWin64Release;		/**< Output file name for Win64 Release */
@@ -348,6 +349,7 @@ bool ParseModule(Project &cProject)
 	RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
 	RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
 	RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
+	RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
 
 	// Parse file
 	while (!cFile.IsEof()) {
@@ -435,6 +437,13 @@ bool ParseModule(Project &cProject)
 			String sActive = cRegExActive.GetNameResult("num");
 			cProject.bModuleActive = (sActive == "1");
 			Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + '\'');
+		}
+
+		// Check for pl_module_delayed
+		if (cRegExDelayed.Match(sLine)) {
+			String sDelayed = cRegExDelayed.GetNameResult("num");
+			cProject.bModuleDelayed = (sDelayed == "1");
+			Message(STATUS, String("Delayed = '") + (cProject.bModuleDelayed ? "yes" : "no") + '\'');
 		}
 	}
 
@@ -584,6 +593,7 @@ bool CreatePluginFile(Project &cProject)
 		Write(cFile, "<?xml version=\"1.0\" ?>");
 		Write(cFile, "<Plugin Version=\"1\" PixelLightVersion=\"" + Core::GetVersion().ToString() + "\">");
 		Write(cFile, String("	<Active>") + (cProject.bModuleActive ? "1" : "0") + "</Active>");
+		Write(cFile, String("	<Delayed>") + (cProject.bModuleDelayed ? "1" : "0") + "</Delayed>");
 		Write(cFile, "	<Name>" + cProject.sModuleName + "</Name>");
 
 		// Version
@@ -756,10 +766,11 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 	if (!bError) {
 		// Parse project
 		Project cProject;
-		cProject.sPath         = sPath;
-		cProject.sSuffix       = sSuffix;
-		cProject.bModulePlugin = false;
-		cProject.bModuleActive = true; // By default, projects are active
+		cProject.sPath          = sPath;
+		cProject.sSuffix        = sSuffix;
+		cProject.bModulePlugin  = false;
+		cProject.bModuleActive  = true; // By default, projects are active
+		cProject.bModuleDelayed = true; // By default, projects are delayed
 		if (ParseProject(cProject)) {
 			// Write plugin file
 			if (bWritePlugin && sOutputPath.GetLength() > 0) {

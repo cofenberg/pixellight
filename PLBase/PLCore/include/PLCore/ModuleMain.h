@@ -191,6 +191,18 @@
 
 /**
 *  @brief
+*    Sets the module's default delayed shared library loading state
+*
+*  @param[in] Delayed
+*    Default delayed shared library loading state (1 or 0)
+*
+*  @note
+*    - If not other defined, modules are loading their shared libraries delayed by default
+*/
+#define pl_module_delayed(Delayed)
+
+/**
+*  @brief
 *    Ends the module definition
 */
 #define pl_module_end \

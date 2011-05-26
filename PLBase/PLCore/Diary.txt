@@ -24,6 +24,7 @@
   RTTI class instance is only created by loading in the shared library when really required, e.g. when an instance of the RTTI class has to be created.
   In this case, the internal class implementation is changed - but the "Class" instance the user is working with will be still the same. This should
   speed up the program start.
+- Added "pl_module_delayed()"-macro and the plugin file option "Delayed" which is "true" by default
 
 
 

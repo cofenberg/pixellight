@@ -525,6 +525,22 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 		}
 	}
 
+	// By default, delayed shared library loading is enabled
+	bool bDelayed = false;
+	{
+		// Get the "DelayedLoading" element
+		const XmlNode *pNode = cPluginElement.GetFirstChild("Delayed");
+		if (pNode) {
+			// Get the value of the node
+			const XmlNode *pValue = pNode->GetFirstChild();
+			if (pValue && pValue->GetType() == XmlNode::Text) {
+				const String sValue = pValue->GetValue();
+				if (sValue.GetLength())
+					bDelayed = sValue.GetBool();
+			}
+		}
+	}
+
 	// Iterate through all children and collect plugin meta information
 	const XmlElement *pElement = cPluginElement.GetFirstChildElement();
 	while (pElement) {
@@ -569,8 +585,13 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 									}
 
 									// Library already loaded?
-									if (!bLibAlreadyLoaded)
-										LoadPluginLibrary(cUrl, sAbsFilename, bForceBuildTypeMatch);
+									if (!bLibAlreadyLoaded) {
+										// Delayed shared library loading enabled?
+//										if (bDelayed)
+//											;	// [TODO] Implement shared library loading
+//										else
+											LoadPluginLibrary(cUrl, sAbsFilename, bForceBuildTypeMatch);
+									}
 								}
 							}
 						}
