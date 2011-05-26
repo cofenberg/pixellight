@@ -52,6 +52,8 @@ DynLibWindows::DynLibWindows() :
 */
 DynLibWindows::~DynLibWindows()
 {
+	// Unload the library
+	Unload();
 }
 
 

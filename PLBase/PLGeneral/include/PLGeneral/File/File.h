@@ -162,6 +162,9 @@ class File : public FileObject {
 		/**
 		*  @brief
 		*    Destructor
+		*
+		*  @note
+		*    - The file is closed automatically
 		*/
 		PLGENERAL_API virtual ~File();
 

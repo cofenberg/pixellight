@@ -53,6 +53,8 @@ DynLibLinux::DynLibLinux() :
 */
 DynLibLinux::~DynLibLinux()
 {
+	// Unload the library
+	Unload();
 }
 
 

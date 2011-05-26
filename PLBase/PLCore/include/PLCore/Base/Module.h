@@ -79,21 +79,6 @@ class Module {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] nModuleID
-		*    Module ID
-		*/
-		PLCORE_API Module(PLGeneral::uint32 nModuleID);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLCORE_API virtual ~Module();
-
-		/**
-		*  @brief
 		*    Get module ID
 		*
 		*  @return
@@ -115,7 +100,7 @@ class Module {
 		*    Get dynamic library that contains the plugin
 		*
 		*  @return
-		*    Pointer to dynamic library (can be a null pointer, if the module is not a plugin)
+		*    Pointer to dynamic library (can be a null pointer, if the module is not a plugin, do NOT destroy the returned instance!)
 		*
 		*  @remarks
 		*    This function will only return a dynamic library, if the module is a plugin
@@ -191,6 +176,21 @@ class Module {
 	private:
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] nModuleID
+		*    Module ID
+		*/
+		PLCORE_API Module(PLGeneral::uint32 nModuleID);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API ~Module();
+
+		/**
+		*  @brief
 		*    Set module information
 		*
 		*  @param[in] sName
@@ -230,7 +230,7 @@ class Module {
 		// Module information
 		PLGeneral::uint32			  m_nModuleID;		/**< Module ID */
 		bool						  m_bPlugin;		/**< Is module a plugin? */
-		PLGeneral::DynLib			 *m_pDynLib;		/**< Plugin library (can be a null pointer) */
+		PLGeneral::DynLib			 *m_pDynLib;		/**< Plugin library (can be a null pointer, has the ownership over the dynamic library instance) */
 		PLGeneral::String			  m_sFilename;		/**< Absolute plugin filename (can be empty) */
 		PLGeneral::String			  m_sName;			/**< Name of module */
 		PLGeneral::String			  m_sVendor;		/**< Vendor of module */

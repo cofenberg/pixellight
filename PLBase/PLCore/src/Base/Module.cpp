@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/System/DynLib.h>
 #include "PLCore/Base/Module.h"
 
 
@@ -36,29 +37,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-Module::Module(uint32 nModuleID) :
-	m_nModuleID(nModuleID),
-	m_bPlugin(false),
-	m_pDynLib(nullptr),
-	m_sName("Unknown"),
-	m_sVendor("Unknown"),
-	m_sLicense("Unknown"),
-	m_sDescription("Unknown module")
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-Module::~Module()
-{
-}
-
 /**
 *  @brief
 *    Get module ID
@@ -153,6 +131,32 @@ const List<const Class*> &Module::GetClasses() const
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+Module::Module(uint32 nModuleID) :
+	m_nModuleID(nModuleID),
+	m_bPlugin(false),
+	m_pDynLib(nullptr),
+	m_sName("Unknown"),
+	m_sVendor("Unknown"),
+	m_sLicense("Unknown"),
+	m_sDescription("Unknown module")
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+Module::~Module()
+{
+	// If there's a dynamic library instance, destroy it right now
+	if (m_pDynLib)
+		delete m_pDynLib;
+}
+
 /**
 *  @brief
 *    Set module information

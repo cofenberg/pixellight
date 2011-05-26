@@ -1,3 +1,15 @@
+>> 24.05.2011
+[CO]
+- "ClassManager": Moved plugin file format version 1 loading code from "LoadPlugin()" into a separate method "LoadPluginV1()"
+- "ClassManager": Moved plugin library loading code from "LoadPluginV1()" into a separate method "LoadPluginLibrary()"
+- "ClassManager": There was a memory leak during plugin library loading: The ownership of the created instance of the dynamic
+  library was given to the created "Module" instance, but "Module" never destroyed the given instance of the dynamic library.
+- "ClassManager": No one was destroying the module instances, so this is now done within the "ClassManager"-destructor
+- Made the "Module" constructor and destructor private because only the class manager is responsible for managing the modules
+- The "Module" destructor was virtual, but there's no reason for that
+
+
+
 >> 21.05.2011
 [CO]
 - "TypeObjectPtr" & "TypePtr" & "TypeRef": "ConvertFromVar()" is now using "GetUIntPtr()" instead of "GetInt()" (this was a [TODO] point)

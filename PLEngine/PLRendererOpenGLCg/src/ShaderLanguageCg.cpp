@@ -45,6 +45,12 @@ const String ShaderLanguageCg::Cg = "Cg";
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(ShaderLanguageCg)
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLRenderer::ShaderLanguage functions   ]
 //[-------------------------------------------------------]
 String ShaderLanguageCg::GetShaderLanguage() const

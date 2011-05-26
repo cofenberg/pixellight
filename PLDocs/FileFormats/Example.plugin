@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
-<Plugin Version="1" PixelLightVersion="PixelLight 0.9.5-R1">
+<Plugin Version="1" PixelLightVersion="PixelLight 0.9.7-R1">
 	<Active>1</Active>
+	<ForceBuildTypeMatch>0</ForceBuildTypeMatch>
 	<Name>PLDefaultFileFormats</Name>
 	<Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
 	<License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>

@@ -548,7 +548,7 @@ void Class::InitClass() const
 				m_pBaseClass->InitClass();
 
 				// Add properties from base class
-				Iterator<PLGeneral::String> cIterator = m_pBaseClass->m_mapOwnProperties.GetKeyIterator();
+				Iterator<String> cIterator = m_pBaseClass->m_mapOwnProperties.GetKeyIterator();
 				while (cIterator.HasNext()) {
 					const String sName  = cIterator.Next();
 					const String sValue = m_pBaseClass->m_mapOwnProperties.Get(sName);
@@ -587,7 +587,7 @@ void Class::InitClass() const
 			}
 
 			// Add own properties
-			Iterator<PLGeneral::String> cIterator = m_mapOwnProperties.GetKeyIterator();
+			Iterator<String> cIterator = m_mapOwnProperties.GetKeyIterator();
 			while (cIterator.HasNext()) {
 				const String sName  = cIterator.Next();
 				const String sValue = m_mapOwnProperties.Get(sName);
