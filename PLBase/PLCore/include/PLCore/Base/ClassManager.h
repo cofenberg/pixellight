@@ -78,6 +78,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 	friend class PLGeneral::Singleton<ClassManager>;
 	friend class ModuleID<int>;
 	friend class ClassReal;
+	friend class ClassDummy;
 
 
 	//[-------------------------------------------------------]
@@ -291,6 +292,19 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    Otherwise it will create a new module and assign it to the given ID.
 		*/
 		PLCORE_API Module *CreateModule(PLGeneral::uint32 nModuleID);
+
+		/**
+		*  @brief
+		*    Load a module delayed
+		*
+		*  @param[in] cPluginElement
+		*    The XML element we're loading from
+		*  @param[in] sAbsFilename
+		*    Absolute filename of the shared library to load in
+		*  @param[in] bForceBuildTypeMatch
+		*    'true' to force a build type match, else 'false'
+		*/
+		PLCORE_API void LoadModuleDelayed(const PLGeneral::XmlElement &cPluginElement, const PLGeneral::String &sAbsFilename, bool bForceBuildTypeMatch = false);
 
 		/**
 		*  @brief

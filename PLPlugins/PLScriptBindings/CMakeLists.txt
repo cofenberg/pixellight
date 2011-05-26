@@ -29,7 +29,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLEngine/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLCompositing/include
 )
 
 ##################################################
@@ -52,7 +51,6 @@ add_libs(
 	PLRenderer
 	PLScene
 	PLEngine
-	PLCompositing
 )
 
 ##################################################

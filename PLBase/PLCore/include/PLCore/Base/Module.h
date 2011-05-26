@@ -70,6 +70,7 @@ class Module {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
+	friend class ClassDummy;
 	friend class ClassManager;
 
 

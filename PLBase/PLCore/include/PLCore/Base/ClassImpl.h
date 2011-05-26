@@ -73,6 +73,8 @@ class ClassImpl {
 	//[-------------------------------------------------------]
 	friend class Class;
 	friend class ClassReal;
+	friend class ClassDummy;
+	friend class ClassManager;
 
 
 	//[-------------------------------------------------------]
@@ -116,14 +118,6 @@ class ClassImpl {
 		*/
 		PLCORE_API virtual ~ClassImpl();
 
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual ClassImpl functions                 ]
-	//[-------------------------------------------------------]
-	protected:
-		//[-------------------------------------------------------]
-		//[ Class interface                                       ]
-		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Get module the class belongs to
@@ -131,7 +125,7 @@ class ClassImpl {
 		*  @return
 		*    Module (always valid)
 		*/
-		PLCORE_API virtual const Module *GetModule() const;
+		PLCORE_API const Module *GetModule() const;
 
 		/**
 		*  @brief
@@ -140,7 +134,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class and namespace
 		*/
-		PLCORE_API virtual PLGeneral::String GetClassName() const;
+		PLCORE_API PLGeneral::String GetClassName() const;
 
 		/**
 		*  @brief
@@ -149,7 +143,7 @@ class ClassImpl {
 		*  @return
 		*    Name of base class and namespace
 		*/
-		PLCORE_API virtual PLGeneral::String GetBaseClassName() const;
+		PLCORE_API PLGeneral::String GetBaseClassName() const;
 
 		/**
 		*  @brief
@@ -158,7 +152,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class
 		*/
-		PLCORE_API virtual PLGeneral::String GetName() const;
+		PLCORE_API PLGeneral::String GetName() const;
 
 		/**
 		*  @brief
@@ -167,7 +161,7 @@ class ClassImpl {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API virtual PLGeneral::String GetDescription() const;
+		PLCORE_API PLGeneral::String GetDescription() const;
 
 		/**
 		*  @brief
@@ -176,7 +170,7 @@ class ClassImpl {
 		*  @return
 		*    Namespace
 		*/
-		PLCORE_API virtual PLGeneral::String GetNamespace() const;
+		PLCORE_API PLGeneral::String GetNamespace() const;
 
 		/**
 		*  @brief
@@ -185,7 +179,7 @@ class ClassImpl {
 		*  @return
 		*    Pointer to base class (can be a null pointer)
 		*/
-		PLCORE_API virtual const Class *GetBaseClass() const;
+		PLCORE_API const Class *GetBaseClass() const;
 
 		/**
 		*  @brief
@@ -197,7 +191,7 @@ class ClassImpl {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API virtual bool IsDerivedFrom(const Class &cBaseClass) const;
+		PLCORE_API bool IsDerivedFrom(const Class &cBaseClass) const;
 
 		/**
 		*  @brief
@@ -209,21 +203,7 @@ class ClassImpl {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API virtual bool IsDerivedFrom(const PLGeneral::String &sBaseClass) const;
-
-		/**
-		*  @brief
-		*    Get derived classes
-		*
-		*  @return
-		*    List of derived classes
-		*
-		*  @remarks
-		*    This method always returns all sub-classes of a class.
-		*    If you want to search for classes with more specific search criteria,
-		*    have a look at ClassManager::GetClasses().
-		*/
-		PLCORE_API virtual const PLGeneral::List<const Class*> GetDerivedClasses() const;
+		PLCORE_API bool IsDerivedFrom(const PLGeneral::String &sBaseClass) const;
 
 		/**
 		*  @brief
@@ -238,8 +218,62 @@ class ClassImpl {
 		*      "PluginType"  -> "Widget"
 		*      "FileFormats" -> "avi mpg mp4"
 		*/
-		PLCORE_API virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> &GetProperties() const;
+		PLCORE_API const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> &GetProperties() const;
 
+		//[-------------------------------------------------------]
+		//[ Class management                                      ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Initialize class and class members
+		*
+		*  @remarks
+		*    This function is called automatically when it is necessary, e.g. the first time
+		*    any members are being accessed. It will search for the base class of the class
+		*    and initialize all members. If later a class is changed (e.g. a new member is
+		*    registered at one of the base classes), that class and all derived classes will
+		*    destroy their information and must be initialized again.
+		*/
+		PLCORE_API void InitClass() const;
+
+		/**
+		*  @brief
+		*    De-Initialize class and class members
+		*
+		*  @remarks
+		*    This function destroyes all data about the class and it's members. See
+		*    InitClass() for more information about why this is necessary and when.
+		*/
+		PLCORE_API void DeInitClass() const;
+
+		/**
+		*  @brief
+		*    Add property
+		*
+		*  @param[in] sName
+		*    Property name
+		*  @param[in] sValue
+		*    Property value
+		*/
+		PLCORE_API void AddProperty(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual ClassImpl functions                 ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Return whether or not the class implementation is a dummy used for delayed shared library loading
+		*
+		*  @return
+		*    'true' if the class implementation is a dummy used for delayed shared library loading, else 'false'
+		*/
+		virtual bool IsDummy() const = 0;
+
+		//[-------------------------------------------------------]
+		//[ Class interface                                       ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Get attributes
@@ -247,7 +281,7 @@ class ClassImpl {
 		*  @return
 		*    List of attribute descriptors
 		*/
-		PLCORE_API virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
+		virtual const PLGeneral::List<VarDesc*> &GetAttributes() const = 0;
 
 		/**
 		*  @brief
@@ -259,7 +293,7 @@ class ClassImpl {
 		*  @return
 		*    Attribute descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		PLCORE_API virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
+		virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -268,7 +302,7 @@ class ClassImpl {
 		*  @return
 		*    List of method descriptors
 		*/
-		PLCORE_API virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
+		virtual const PLGeneral::List<FuncDesc*> &GetMethods() const = 0;
 
 		/**
 		*  @brief
@@ -280,7 +314,7 @@ class ClassImpl {
 		*  @return
 		*    Method descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		PLCORE_API virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
+		virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -289,7 +323,7 @@ class ClassImpl {
 		*  @return
 		*    List of signal descriptors
 		*/
-		PLCORE_API virtual const PLGeneral::List<EventDesc*> &GetSignals() const;
+		virtual const PLGeneral::List<EventDesc*> &GetSignals() const = 0;
 
 		/**
 		*  @brief
@@ -301,7 +335,7 @@ class ClassImpl {
 		*  @return
 		*    Signal descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		PLCORE_API virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const;
+		virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -310,7 +344,7 @@ class ClassImpl {
 		*  @return
 		*    List of slot descriptors
 		*/
-		PLCORE_API virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
+		virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const = 0;
 
 		/**
 		*  @brief
@@ -322,7 +356,7 @@ class ClassImpl {
 		*  @return
 		*    Slot descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		PLCORE_API virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
+		virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -331,16 +365,16 @@ class ClassImpl {
 		*  @return
 		*    'true' if class has at least one constructor, else 'false'
 		*/
-		PLCORE_API virtual bool HasConstructor() const;
+		virtual bool HasConstructor() const = 0;
 
 		/**
 		*  @brief
-		*    Check if class has a default constructors
+		*    Check if class has a default constructor
 		*
 		*  @return
 		*    'true' if class has a default constructor, else 'false'
 		*/
-		PLCORE_API virtual bool HasDefaultConstructor() const;
+		virtual bool HasDefaultConstructor() const = 0;
 
 		/**
 		*  @brief
@@ -349,7 +383,7 @@ class ClassImpl {
 		*  @return
 		*    List of constructor descriptors
 		*/
-		PLCORE_API virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
+		virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const = 0;
 
 		/**
 		*  @brief
@@ -361,7 +395,7 @@ class ClassImpl {
 		*  @return
 		*    Constructor descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		PLCORE_API virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
+		virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -374,7 +408,7 @@ class ClassImpl {
 		*    This function will call the default constructor of the class.
 		*    If the class has no default constructor, the function will fail and return a null pointer.
 		*/
-		PLCORE_API virtual Object *Create() const;
+		virtual Object *Create() const = 0;
 
 		/**
 		*  @brief
@@ -390,7 +424,7 @@ class ClassImpl {
 		*    This function will search for a constructor that matches the signature of the given parameters.
 		*    If no such contructor can be found, the function will fail and return a null pointer.
 		*/
-		PLCORE_API virtual Object *Create(const DynParams &cParams) const;
+		virtual Object *Create(const DynParams &cParams) const = 0;
 
 		/**
 		*  @brief
@@ -408,59 +442,7 @@ class ClassImpl {
 		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
-		PLCORE_API virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
-
-		//[-------------------------------------------------------]
-		//[ Class management                                      ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Initialize class and class members
-		*
-		*  @remarks
-		*    This function is called automatically when it is necessary, e.g. the first time
-		*    any members are being accessed. It will search for the base class of the class
-		*    and initialize all members. If later a class is changed (e.g. a new member is
-		*    registered at one of the base classes), that class and all derived classes will
-		*    destroy their information and must be initialized again.
-		*/
-		PLCORE_API virtual void InitClass() const;
-
-		/**
-		*  @brief
-		*    De-Initialize class and class members
-		*
-		*  @remarks
-		*    This function destroyes all data about the class and it's members. See
-		*    InitClass() for more information about why this is necessary and when.
-		*/
-		PLCORE_API virtual void DeInitClass() const;
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*/
-		ClassImpl(const ClassImpl &cSource);
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		ClassImpl &operator =(const ClassImpl &cSource);
+		virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const = 0;
 
 
 	//[-------------------------------------------------------]
@@ -493,6 +475,32 @@ class ClassImpl {
 		mutable PLGeneral::List<EventDesc*>								 m_lstSignals;			/**< List of signals */
 		mutable PLGeneral::List<EventHandlerDesc*>						 m_lstSlots;			/**< List of slots */
 		mutable PLGeneral::List<ConstructorDesc*>						 m_lstConstructors;		/**< List of constructors */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		ClassImpl(const ClassImpl &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		ClassImpl &operator =(const ClassImpl &cSource);
 
 
 };

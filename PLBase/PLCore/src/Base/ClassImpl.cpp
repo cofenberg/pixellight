@@ -68,7 +68,8 @@ ClassImpl::ClassImpl(uint32 nModuleID, const String &sName, const String &sDescr
 	m_sDescription(sDescription),
 	m_sBaseClass(sBaseClass),
 	m_nModuleID(nModuleID),
-	m_bInitialized(false)
+	m_bInitialized(false),
+	m_pBaseClass(nullptr)
 {
 }
 
@@ -78,48 +79,75 @@ ClassImpl::ClassImpl(uint32 nModuleID, const String &sName, const String &sDescr
 */
 ClassImpl::~ClassImpl()
 {
+	// De-initialize class
+	if (m_bInitialized)
+		DeInitClass();
 }
 
-
-//[-------------------------------------------------------]
-//[ Protected virtual ClassImpl functions                 ]
-//[-------------------------------------------------------]
+/**
+*  @brief
+*    Get module the class belongs to
+*/
 const Module *ClassImpl::GetModule() const
 {
 	// Return module from class manager
 	return ClassManager::GetInstance()->GetModule(m_nModuleID);
 }
 
+/**
+*  @brief
+*    Get full class name (with namespace)
+*/
 String ClassImpl::GetClassName() const
 {
 	// Return name of class and namespace
 	return m_sClassName;
 }
 
+/**
+*  @brief
+*    Get full name of base class (with namespace)
+*/
 String ClassImpl::GetBaseClassName() const
 {
 	// Return base class
 	return m_sBaseClass;
 }
 
+/**
+*  @brief
+*    Get class name (without namespace)
+*/
 String ClassImpl::GetName() const
 {
 	// Return name of class
 	return m_sName;
 }
 
+/**
+*  @brief
+*    Get class description
+*/
 String ClassImpl::GetDescription() const
 {
 	// Return description
 	return m_sDescription;
 }
 
+/**
+*  @brief
+*    Get namespace
+*/
 String ClassImpl::GetNamespace() const
 {
 	// Return namespace
 	return m_sNamespace;
 }
 
+/**
+*  @brief
+*    Get base class
+*/
 const Class *ClassImpl::GetBaseClass() const
 {
 	// Check if class has been initialized
@@ -130,12 +158,20 @@ const Class *ClassImpl::GetBaseClass() const
 	return m_pBaseClass;
 }
 
+/**
+*  @brief
+*    Check if class is derived from another class
+*/
 bool ClassImpl::IsDerivedFrom(const Class &cBaseClass) const
 {
 	// Get base class by name
 	return IsDerivedFrom(cBaseClass.GetClassName());
 }
 
+/**
+*  @brief
+*    Check if class is derived from another class
+*/
 bool ClassImpl::IsDerivedFrom(const String &sBaseClass) const
 {
 	// Start with own class name
@@ -154,14 +190,10 @@ bool ClassImpl::IsDerivedFrom(const String &sBaseClass) const
 	return false;
 }
 
-const List<const Class*> ClassImpl::GetDerivedClasses() const
-{
-	// Get list of derived classes
-	List<const Class*> lstClasses;
-	ClassManager::GetInstance()->GetClasses(lstClasses, GetClassName(), NonRecursive, NoBase, IncludeAbstract);
-	return lstClasses;
-}
-
+/**
+*  @brief
+*    Get properties
+*/
 const HashMap<String, String> &ClassImpl::GetProperties() const
 {
 	// Check if class has been initialized
@@ -172,231 +204,10 @@ const HashMap<String, String> &ClassImpl::GetProperties() const
 	return m_mapProperties;
 }
 
-const List<VarDesc*> &ClassImpl::GetAttributes() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return attributes
-	return m_lstAttributes;
-}
-
-const VarDesc *ClassImpl::GetAttribute(const String &sName) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Get attribute
-	MemberDesc *pMember = m_mapMembers.Get(sName);
-	if (pMember && pMember->GetMemberType() == MemberAttribute)
-		return static_cast<VarDesc*>(pMember);
-
-	// Attribute could not be found
-	return nullptr;
-}
-
-const List<FuncDesc*> &ClassImpl::GetMethods() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return methods
-	return m_lstMethods;
-}
-
-const FuncDesc *ClassImpl::GetMethod(const String &sName) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Get method
-	MemberDesc *pMember = m_mapMembers.Get(sName);
-	if (pMember && pMember->GetMemberType() == MemberMethod)
-		return static_cast<FuncDesc*>(pMember);
-
-	// Method could not be found
-	return nullptr;
-}
-
-const List<EventDesc*> &ClassImpl::GetSignals() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return signals
-	return m_lstSignals;
-}
-
-const EventDesc *ClassImpl::GetSignal(const String &sName) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Get signal
-	MemberDesc *pMember = m_mapMembers.Get(sName);
-	if (pMember && pMember->GetMemberType() == MemberEvent)
-		return static_cast<EventDesc*>(pMember);
-
-	// Signal could not be found
-	return nullptr;
-}
-
-const List<EventHandlerDesc*> &ClassImpl::GetSlots() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return slots
-	return m_lstSlots;
-}
-
-const EventHandlerDesc *ClassImpl::GetSlot(const String &sName) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Get slot
-	MemberDesc *pMember = m_mapMembers.Get(sName);
-	if (pMember && pMember->GetMemberType() == MemberEventHandler)
-		return static_cast<EventHandlerDesc*>(pMember);
-
-	// Slot could not be found
-	return nullptr;
-}
-
-bool ClassImpl::HasConstructor() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Check if there is at least one constructor
-	return (m_lstConstructors.GetNumOfElements() > 0);
-}
-
-bool ClassImpl::HasDefaultConstructor() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Loop through list
-	Iterator<ConstructorDesc*> cIterator = m_lstConstructors.GetIterator();
-	while (cIterator.HasNext()) {
-		// Get constructor
-		ConstructorDesc *pConstructor = cIterator.Next();
-
-		// Default constructor?
-		if (pConstructor->IsDefaultConstructor()) {
-			// We found a default constructor
-			return true;
-		}
-	}
-
-	// No default constructor found
-	return false;
-}
-
-const List<ConstructorDesc*> &ClassImpl::GetConstructors() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return constructors
-	return m_lstConstructors;
-}
-
-const ConstructorDesc *ClassImpl::GetConstructor(const String &sName) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Get constructor
-	MemberDesc *pMember = m_mapMembers.Get(sName);
-	if (pMember && pMember->GetMemberType() == MemberConstructor)
-		return static_cast<ConstructorDesc*>(pMember);
-
-	// Constructor could not be found
-	return nullptr;
-}
-
-Object *ClassImpl::Create() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Loop through constructors
-	for (uint32 i=0; i<m_lstConstructors.GetNumOfElements(); i++) {
-		// Get constructor
-		ConstructorDesc *pConstructor = m_lstConstructors[i];
-
-		// Check if this constructor is a default constructor
-		if (pConstructor->GetSignature() == "Object*()") {
-			// Call constructor
-			Params<Object*> cParams;
-			return pConstructor->Create(cParams);
-		}
-	}
-
-	// Error, no value constructor found
-	return nullptr;
-}
-
-Object *ClassImpl::Create(const DynParams &cParams) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Loop through constructors
-	for (uint32 i=0; i<m_lstConstructors.GetNumOfElements(); i++) {
-		// Get constructor
-		ConstructorDesc *pConstructor = m_lstConstructors[i];
-
-		// Check if this constructor is a default constructor
-		if (pConstructor->GetSignature() == cParams.GetSignature()) {
-			// Call constructor
-			return pConstructor->Create(cParams);
-		}
-	}
-
-	// Error, no value constructor found
-	return nullptr;
-}
-
-Object *ClassImpl::Create(const String &sName, const DynParams &cParams) const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Loop through constructors
-	for (uint32 i=0; i<m_lstConstructors.GetNumOfElements(); i++) {
-		// Get constructor
-		ConstructorDesc *pConstructor = m_lstConstructors[i];
-
-		// Check if this constructor is a default constructor
-		if (pConstructor->GetName() == sName && pConstructor->GetSignature() == cParams.GetSignature()) {
-			// Call constructor
-			return pConstructor->Create(cParams);
-		}
-	}
-
-	// Error, no value constructor found
-	return nullptr;
-}
-
+/**
+*  @brief
+*    Initialize class and class members
+*/
 void ClassImpl::InitClass() const
 {
 	// Check if class has already been initialized
@@ -409,14 +220,13 @@ void ClassImpl::InitClass() const
 			// Do we have a base class? (only Object doesn't, but that must count, too)
 			if (m_pBaseClass) {
 				// Get the real base class implementation
-				// [TODO] If the base class is currently just a dummy, we need to make it to a real class right no1
 				ClassImpl *pBaseClassReal = static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl);
 
 				// Initialize base class
 				pBaseClassReal->InitClass();
 
 				// Add properties from base class
-				Iterator<PLGeneral::String> cIterator = pBaseClassReal->m_mapOwnProperties.GetKeyIterator();
+				Iterator<String> cIterator = pBaseClassReal->m_mapOwnProperties.GetKeyIterator();
 				while (cIterator.HasNext()) {
 					const String sName  = cIterator.Next();
 					const String sValue = pBaseClassReal->m_mapOwnProperties.Get(sName);
@@ -455,7 +265,7 @@ void ClassImpl::InitClass() const
 			}
 
 			// Add own properties
-			Iterator<PLGeneral::String> cIterator = m_mapOwnProperties.GetKeyIterator();
+			Iterator<String> cIterator = m_mapOwnProperties.GetKeyIterator();
 			while (cIterator.HasNext()) {
 				const String sName  = cIterator.Next();
 				const String sValue = m_mapOwnProperties.Get(sName);
@@ -512,6 +322,10 @@ void ClassImpl::InitClass() const
 	}
 }
 
+/**
+*  @brief
+*    De-Initialize class and class members
+*/
 void ClassImpl::DeInitClass() const
 {
 	// Clear lists
@@ -530,9 +344,27 @@ void ClassImpl::DeInitClass() const
 	m_bInitialized = false;
 
 	// De-initialize derived classes
-	List<const Class*> lstClasses = GetDerivedClasses();
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, m_sClassName, NonRecursive, NoBase, IncludeAbstract);
 	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
 		lstClasses[i]->m_pClassImpl->DeInitClass();
+}
+
+/**
+*  @brief
+*    Add property
+*/
+void ClassImpl::AddProperty(const String &sName, const String &sValue)
+{
+	// De-initialize class
+	if (m_bInitialized)
+		DeInitClass();
+
+	// Check if name is valid
+	if (sName != "") {
+		// Add property
+		m_mapOwnProperties.Add(sName, sValue);
+	}
 }
 
 

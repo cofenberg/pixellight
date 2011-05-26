@@ -118,7 +118,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLPhysicsD.dll ..\..\Bin\PLRuntime\
 copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,7 +156,7 @@ copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLPhysicsD64.dll ..\..\Bin\PLRuntime\
 copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -203,7 +203,7 @@ copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLPhysics.dll ..\..\Bin\PLRuntime\
 copy build\release\PLPhysics.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -247,7 +247,7 @@ copy build\release\PLPhysics.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLPhysics64.dll ..\..\Bin\PLRuntime\
 copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

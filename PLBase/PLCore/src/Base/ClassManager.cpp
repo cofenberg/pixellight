@@ -35,6 +35,7 @@
 #include "PLCore/Base/Rtti.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassImpl.h"
+#include "PLCore/Base/ClassDummy.h"
 #include "PLCore/Base/ClassManager.h"
 
 
@@ -86,7 +87,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 	Iterator<const Module*> cIterator = m_lstModules.GetIterator();
 	while (cIterator.HasNext()) {
 		const Module *pModule = cIterator.Next();
-		if (pModule->GetFilename() == sAbsFilename)
+		if (pModule->GetFilename() == sAbsFilename && (!pModule->IsPlugin() || pModule->GetDynLib()))
 			return pModule;
 	}
 
@@ -129,7 +130,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 						pModule = CreateModule(nModuleID);
 						if (pModule) {
 							// Set plugin information
-							pModule->m_bPlugin	 = true;
+							pModule->m_bPlugin   = true;
 							pModule->m_pDynLib   = pDynLib;	// The module now takes over the control of the dynamic library instance
 							pModule->m_sFilename = sAbsFilename;
 							bUseLibrary = true;
@@ -257,7 +258,7 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 					PL_LOG(Error, cDocument.GetValue() + ": " + Loader::InvalidFormatVersion)
 				}
 			} else {
-				PL_LOG(Error, "Can't find 'Plugin' element")
+				PL_LOG(Error, cDocument.GetValue() + ": Can't find 'Plugin' element")
 			}
 		} else {
 			PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
@@ -326,7 +327,7 @@ const List<const Class*> &ClassManager::GetClasses() const
 *  @brief
 *    Get classes based on their base class and/or module (search for classes)
 */
-void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive, EIncludeBase nIncludeBase, EIncludeAbstract nIncludeAbstract, PLGeneral::uint32 nModuleID) const
+void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive, EIncludeBase nIncludeBase, EIncludeAbstract nIncludeAbstract, uint32 nModuleID) const
 {
 	// Iterate through classes
 	Iterator<const Class*> cIterator = m_lstClasses.GetIterator();
@@ -468,6 +469,85 @@ Module *ClassManager::CreateModule(uint32 nModuleID)
 
 /**
 *  @brief
+*    Load a module delayed
+*/
+void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const String &sAbsFilename, bool bForceBuildTypeMatch)
+{
+	// Is the library existent?
+	File cFile(sAbsFilename);
+	if (cFile.Exists() && cFile.IsFile()) {
+		// Get classes element
+		const XmlElement *pClassesElement = cPluginElement.GetFirstChildElement("Classes");
+		if (pClassesElement) {
+			// Request module ID from ClassManager
+			const uint32 nModuleID = GetUniqueModuleID();
+
+			// Create the module
+			Module *pModule = CreateModule(nModuleID);
+			if (pModule) {
+				// Set plugin information
+				pModule->m_bPlugin   = true;
+				pModule->m_sFilename = sAbsFilename;
+
+				// Iterate through all children and collect RTTI class meta information
+				const XmlElement *pClassElement = pClassesElement->GetFirstChildElement("Class");
+				while (pClassElement) {
+					// Get class name, there must be a name!
+					const String sClassName = pClassElement->GetAttribute("Name");
+					if (sClassName.GetLength()) {
+						// Get namespace
+						const String sNamespace = pClassElement->GetAttribute("Namespace");
+
+						// Create the dummy class implementation
+						ClassDummy *pClassDummy = new ClassDummy(nModuleID, sClassName, pClassElement->GetAttribute("Description"),
+							pClassElement->GetAttribute("Namespace"), pClassElement->GetAttribute("BaseClassName"), pClassElement->GetAttribute("HasConstructor").GetBool(), pClassElement->GetAttribute("HasDefaultConstructor").GetBool());
+
+						// Get properties element
+						const XmlElement *pPropertiesElement = pClassElement->GetFirstChildElement("Properties");
+						if (pPropertiesElement) {
+							// Iterate through all children and collect RTTI class meta information
+							const XmlElement *pPropertyElement = pPropertiesElement->GetFirstChildElement("Property");
+							while (pPropertyElement) {
+								// Get property name, there must be a name!
+								const String sPropertyName = pPropertyElement->GetAttribute("Name");
+								if (sPropertyName.GetLength()) {
+									// Get node value
+									String sValue;
+									const XmlNode *pValue = pPropertyElement->GetFirstChild();
+									if (pValue && pValue->GetType() == XmlNode::Text)
+										sValue = pValue->GetValue();
+
+									// Add property
+									pClassDummy->AddProperty(sPropertyName, sValue);
+								}
+
+								// Next property element, please
+								pPropertyElement = pPropertyElement->GetNextSiblingElement("Property");
+							}
+						}
+
+						// Register at class manager
+						ClassManager::GetInstance()->RegisterClass(nModuleID, pClassDummy);
+					}
+
+					// Next class element, please
+					pClassElement = pClassElement->GetNextSiblingElement("Class");
+				}
+			} else {
+				// Error!
+				PL_LOG(Error, "Module '" + Url(sAbsFilename).GetFilename() + "': failed to create the module")
+			}
+		} else {
+			// A plugin without any RTTI classes? Hm...
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, "Can't find the module '" + sAbsFilename + '\'')
+	}
+}
+
+/**
+*  @brief
 *    Register module
 */
 void ClassManager::RegisterModule(uint32 nModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription)
@@ -520,20 +600,39 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 	// Get module
 	Module *pModule = CreateModule(nModuleID);
 
-	// Create an class instance wrapping the class implementation
-	Class *pClass = new Class(*pClassImpl);
-
-	// Check for duplicate class name
-	const Class *pOldClass = m_mapClasses.Get(pClass->GetClassName());
+	// Check for dummy class or duplicate class name
+	const Class *pOldClass = m_mapClasses.Get(pClassImpl->GetClassName());
 	if (pOldClass) {
-		// The class has a name that is already used by another class
-		String sClass	  = pClass->GetClassName();
-		String sModule	  = pModule->GetName();
-		String sOldModule = pOldClass->GetModule()->GetName();
+		// Is the implementation of the class currently a dummy?
+		if (pOldClass->m_pClassImpl->IsDummy()) {
+			// It's a worthless dummy, replace it through the real thingy right now!
 
-		// Add warning to log that the class will not be available through e.g. GetClass()
-		PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']");
+			// Destroy the dummy class implementation
+			delete pOldClass->m_pClassImpl;
+
+			// Set the real class implementation
+			pOldClass->m_pClassImpl = pClassImpl;
+
+			// Tell the class implementation about the class instance wrapping it
+			pClassImpl->m_pClass = const_cast<Class*>(pOldClass);
+
+			// We're done, get us out of this method right now!
+			return;
+		} else {
+			// It's no dummy, this means that there's a class name conflict!
+
+			// The class has a name that is already used by another class
+			String sClass	  = pClassImpl->GetClassName();
+			String sModule	  = pModule->GetName();
+			String sOldModule = pOldClass->GetModule()->GetName();
+
+			// Add warning to log that the class will not be available through e.g. GetClass()
+			PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']");
+		}
 	}
+
+	// Create an class instance wrapping the class implementation?
+	Class *pClass = new Class(*pClassImpl);
 
 	// Add class to list
 	m_lstClasses.Add(pClass);
@@ -614,7 +713,7 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 	}
 
 	// By default, delayed shared library loading is enabled
-	bool bDelayed = false;
+	bool bDelayed = true;
 	{
 		// Get the "DelayedLoading" element
 		const XmlNode *pNode = cPluginElement.GetFirstChild("Delayed");
@@ -675,9 +774,9 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 									// Library already loaded?
 									if (!bLibAlreadyLoaded) {
 										// Delayed shared library loading enabled?
-//										if (bDelayed)
-//											;	// [TODO] Implement shared library loading
-//										else
+										if (bDelayed)
+											LoadModuleDelayed(cPluginElement, sAbsFilename, bForceBuildTypeMatch);
+										else
 											LoadModule(sAbsFilename, bForceBuildTypeMatch);
 									}
 								}

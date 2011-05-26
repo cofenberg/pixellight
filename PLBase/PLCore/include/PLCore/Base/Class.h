@@ -71,6 +71,7 @@ class Class {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class ClassImpl;
+	friend class ClassDummy;
 	friend class ClassManager;
 
 
@@ -410,7 +411,7 @@ class Class {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ClassImpl *m_pClassImpl;	/**< Pointer to the class specific implementation, just shared pointer (assumed to be never a null pointer!) */
+		mutable ClassImpl *m_pClassImpl;	/**< Pointer to the class specific implementation, just shared pointer (assumed to be never a null pointer!) */
 
 
 };

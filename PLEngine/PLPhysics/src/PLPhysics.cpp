@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Module implementation                                 ]
 //[-------------------------------------------------------]
-pl_module("PLPhysics")
+pl_module_plugin("PLPhysics")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight physics library")

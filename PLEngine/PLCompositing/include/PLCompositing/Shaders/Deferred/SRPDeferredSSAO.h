@@ -87,7 +87,7 @@ class SRPDeferredSSAO : public SRPDeferred {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSSAO, "PLCompositing", PLCompositing::SRPDeferred, "Abstract scene renderer pass for deferred rendering \"Screen-Space Ambient Occlusion\" (SSAO)")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSSAO, "PLCompositing", PLCompositing::SRPDeferred, "Abstract scene renderer pass for deferred rendering 'Screen-Space Ambient Occlusion' (SSAO)")
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",																																		"")
 		pl_attribute(Contrast,			float,					1.25f,	ReadWrite,	DirectValue,	"This value allows to scales up the ambient occlusion values",																																																				"Min='0.0'")
 		pl_attribute(BlurRadius,		float,					2.0f,	ReadWrite,	DirectValue,	"Blur kernel radius in pixel",																																																												"Min='0.0'")

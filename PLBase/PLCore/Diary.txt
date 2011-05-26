@@ -27,6 +27,9 @@
 - Added "pl_module_delayed()"-macro and the plugin file option "Delayed" which is "true" by default
 - Renamed "ClassManager::LoadPluginLibrary()" into "ClassManager::LoadModule()" and made it public
 - Add RTTI class metadata within the XML plugin file
+- Wow, already done! Delayed shared library loading is working! The startup time of e.g. "01Application" is now better.
+  (it's of course only faster when not all available plugins are used)
+-> I'll do some more testing before I upload this change (although the next two days I'am quite busy with university, again :/)
 
 
 

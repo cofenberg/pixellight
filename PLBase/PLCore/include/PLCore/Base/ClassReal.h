@@ -58,6 +58,28 @@ class ClassReal : public ClassImpl {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual ClassImpl functions                 ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCORE_API virtual bool IsDummy() const;
+		PLCORE_API virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
+		PLCORE_API virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
+		PLCORE_API virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
+		PLCORE_API virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
+		PLCORE_API virtual const PLGeneral::List<EventDesc*> &GetSignals() const;
+		PLCORE_API virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const;
+		PLCORE_API virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
+		PLCORE_API virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
+		PLCORE_API virtual bool HasConstructor() const;
+		PLCORE_API virtual bool HasDefaultConstructor() const;
+		PLCORE_API virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
+		PLCORE_API virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
+		PLCORE_API virtual Object *Create() const;
+		PLCORE_API virtual Object *Create(const DynParams &cParams) const;
+		PLCORE_API virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
@@ -97,17 +119,6 @@ class ClassReal : public ClassImpl {
 		*    Member descriptor
 		*/
 		PLCORE_API void AddMember(MemberDesc *pMemberDesc);
-
-		/**
-		*  @brief
-		*    Add property
-		*
-		*  @param[in] sName
-		*    Property name
-		*  @param[in] sValue
-		*    Property value
-		*/
-		PLCORE_API void AddProperty(const PLGeneral::String &sName, const PLGeneral::String &sValue);
 
 
 };

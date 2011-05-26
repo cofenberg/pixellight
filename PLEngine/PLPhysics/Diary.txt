@@ -1,3 +1,10 @@
+>> 26.05.2011
+[CO]
+- "PLPhysics" was designed as a component one can use as a completely loose plugin, or link against it to have access to advanced features
+  using C++... so this RTTI module should really be defined as "pl_module_plugin" instead of "pl_module"...
+
+
+
 >> 03.04.2011
 [CO]
 - Renamed "SNMPhysicsJoint::GetParentBodyModifier()" into "SNMPhysicsJoint::GetOwnerBodyModifier()"

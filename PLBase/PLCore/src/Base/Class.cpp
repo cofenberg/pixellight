@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Base/ClassImpl.h"
+#include "PLCore/Base/ClassManager.h"
 #include "PLCore/Base/Class.h"
 
 
@@ -133,8 +134,10 @@ bool Class::IsDerivedFrom(const String &sBaseClass) const
 */
 const List<const Class*> Class::GetDerivedClasses() const
 {
-	// Call implementation
-	return m_pClassImpl->GetDerivedClasses();
+	// Get list of derived classes
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, m_pClassImpl->GetClassName(), NonRecursive, NoBase, IncludeAbstract);
+	return lstClasses;
 }
 
 /**

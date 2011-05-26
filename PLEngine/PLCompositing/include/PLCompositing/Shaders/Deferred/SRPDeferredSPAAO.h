@@ -64,7 +64,7 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSPAAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering \"A Simple and Practical Approach to SSAO\" (SPAAO), a \"Screen-Space Ambient Occlusion\" (SSAO) technique")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSPAAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering 'A Simple and Practical Approach to SSAO' (SPAAO), a 'Screen-Space Ambient Occlusion' (SSAO) technique")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(NumberOfDirections,	PLGeneral::uint32,		8,		ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",	"Min='1'")
 		pl_attribute(SampleRadius,			float,					0.1f,	ReadWrite,	DirectValue,	"The sampling radius",																																								"Min='0.0'")

@@ -81,7 +81,7 @@ class SRPDeferredHDAO : public SRPDeferredSSAO {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredHDAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering \"High Definition Ambient Occlusion\" (HDAO), a \"Screen-Space Ambient Occlusion\" (SSAO) technique")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredHDAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering 'High Definition Ambient Occlusion' (HDAO), a 'Screen-Space Ambient Occlusion' (SSAO) technique")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		pl_attribute(AORejectRadius,		float,					0.43f,		ReadWrite,	DirectValue,	"If either of a twin pair of sampled camera Z values is further away from the central pixel’s camera Z value than the “Reject Radius”, then the twin pair of samples will not contribute to the occlusion factor. This alleviates a common problem with SSAO, where distant objects can cause a halo of occlusion on the silhouette edges of close by objects.",	"Min='0.0'")
 		pl_attribute(AOAcceptRadius,		float,					0.00312f,	ReadWrite,	DirectValue,	"This works in a similar fashion to the “Reject Radius”. Again if either of a twin pair is closer to the central sample than the “Accept Radius”, then the twin pair of samples will not contribute to the occlusion factor. This can be particularly useful for avoiding unwanted occlusion on low density meshes.",												"Min='0.0'")

@@ -1,4 +1,11 @@
-﻿>> 11.02.2011
+﻿>> 26.05.2011
+[CO]
+- "PLSound" was designed as a component one can use as a completely loose plugin, or link against it to have access to advanced features
+  using C++... so this RTTI module should really be defined as "pl_module_plugin" instead of "pl_module"...
+
+
+
+>> 11.02.2011
 [CO]
 - Updated from "FMOD Ex 4.18.03" to "FMOD Ex 4.32.08"
 

@@ -228,7 +228,9 @@ void ScriptManager::RegisterClasses()
 				}
 			} else if (pClass->IsDerivedFrom(sScriptBindingClassString)) {
 				// Create an script binding instance
-				m_lstScriptBindings.Add(static_cast<ScriptBinding*>(pClass->Create()));
+				ScriptBinding *pScriptBinding = static_cast<ScriptBinding*>(pClass->Create());
+				if (pScriptBinding)
+					m_lstScriptBindings.Add(pScriptBinding);
 			}
 		}
 		m_lstNewClasses.Clear();
