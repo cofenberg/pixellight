@@ -25,7 +25,8 @@
 //[-------------------------------------------------------]
 #ifdef WIN32
 	#include <Winsock2.h>
-	#undef Yield // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+	#undef Yield		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+	#undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #endif
 #include <MySQL/mysql.h>
 #include <PLGeneral/Log/Log.h>

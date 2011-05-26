@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/Class.h"
+#include "PLCore/Base/ClassReal.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Base/Var/Var.h"
 #include "PLCore/Base/Var/Attribute.h"
@@ -250,7 +250,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 		typedef BASECLASS _Base; \
 		\
 		/* Class description */ \
-		class _Class : public PLCore::Class { \
+		class _Class : public PLCore::ClassReal { \
 			friend class CLASS; \
 			public: \
 				/* Check base class */ \
@@ -280,7 +280,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				} \
 				\
 				/* Constructor */ \
-				_Class() : PLCore::Class(PLCore::ModuleID<int>::GetModuleID(), #CLASS, DESCRIPTION, NAMESPACE, BASECLASSNAME) { \
+				_Class() : PLCore::ClassReal(PLCore::ModuleID<int>::GetModuleID(), #CLASS, DESCRIPTION, NAMESPACE, BASECLASSNAME) { \
 				}; \
 				\
 				/* Destructor */ \
@@ -332,7 +332,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 		/* Public virtual PLCore::Object function */ \
 		virtual PLCore::Class *GetClass() const \
 		{ \
-			return _Class::GetSingleton(); \
+			return _Class::GetSingleton()->GetClass(); \
 		} \
 
 /**
@@ -352,7 +352,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 */
 #define __pl_prop_meth \
 		/* Class properties */ \
-		static inline void _RegisterProperties(PLCore::Class *pClass) { \
+		static inline void _RegisterProperties(PLCore::ClassReal *pClass) { \
 
 /**
 *  @brief

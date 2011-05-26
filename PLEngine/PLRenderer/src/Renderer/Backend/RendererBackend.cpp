@@ -28,6 +28,7 @@
 #include <PLGeneral/Tools/Profiling.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRenderer/RendererContext.h"

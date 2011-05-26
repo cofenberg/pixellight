@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Object.h>
-#include <PLCore/Base/Class.h>
+#include <PLCore/Base/ClassReal.h>
 #include <PLCore/Base/Var/Var.h>
 #include <PLCore/Base/Var/Attribute.h>
 #include <PLCore/Base/Func/Method.h>
@@ -63,7 +63,7 @@ class TestObject : public PLCore::Object {
 		typedef TestObject _Self;
 
 		/* Class description */
-		class _Class : public PLCore::Class {
+		class _Class : public PLCore::ClassReal {
 			public:
 				/* Singleton */
 				static _Class *Instance;
@@ -88,7 +88,7 @@ class TestObject : public PLCore::Object {
 				}
 
 				/* Constructor */
-				_Class() : Class(PLCore::ModuleID<int>::GetModuleID(), "TestObject", "RTTI test class", "", "PLCore::Object") {
+				_Class() : ClassReal(PLCore::ModuleID<int>::GetModuleID(), "TestObject", "RTTI test class", "", "PLCore::Object") {
 				};
 
 				/* Destructor */

@@ -36,14 +36,23 @@
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLGeneral {
 	class Url;
 }
 namespace PLCore {
+	class Class;
+	class Module;
+	class ClassImpl;
 	class ClassManager;
+	template <typename T> class ModuleID;
 }
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
 PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ClassManager>;
 
 
@@ -51,14 +60,6 @@ PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ClassMana
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-template <typename T> class ModuleID;
-class Module;
-class Class;
 
 
 //[-------------------------------------------------------]
@@ -76,7 +77,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 	//[-------------------------------------------------------]
 	friend class PLGeneral::Singleton<ClassManager>;
 	friend class ModuleID<int>;
-	friend class Class;
+	friend class ClassReal;
 
 
 	//[-------------------------------------------------------]
@@ -224,9 +225,30 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 
 		/**
 		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		PLCORE_API ClassManager(const ClassManager &cSource);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API virtual ~ClassManager();
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		PLCORE_API ClassManager &operator =(const ClassManager &cSource);
 
 		/**
 		*  @brief
@@ -285,10 +307,13 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*
 		*  @param[in] nModuleID
 		*    Module ID
-		*  @param[in] pClass
-		*    Pointer to class (must be valid)
+		*  @param[in] pClassImpl
+		*    Pointer to class implementation (must be valid)
+		*
+		*  @note
+		*    - Called automatically by the RTTI system (see "pl_class"-macro)
 		*/
-		PLCORE_API void RegisterClass(PLGeneral::uint32 nModuleID, Class *pClass);
+		PLCORE_API void RegisterClass(PLGeneral::uint32 nModuleID, ClassImpl *pClassImpl);
 
 		/**
 		*  @brief
@@ -296,10 +321,13 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*
 		*  @param[in] nModuleID
 		*    Module ID
-		*  @param[in] pClass
-		*    Pointer to class (must be valid)
+		*  @param[in] pClassImpl
+		*    Pointer to class implementation (must be valid)
+		*
+		*  @note
+		*    - Called automatically by the RTTI system (see "pl_class"-macro)
 		*/
-		PLCORE_API void UnregisterClass(PLGeneral::uint32 nModuleID, Class *pClass);
+		PLCORE_API void UnregisterClass(PLGeneral::uint32 nModuleID, ClassImpl *pClassImpl);
 
 		/**
 		*  @brief

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MemberDesc.cpp                                 *
+ *  File: ClassDummy.cpp                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/ClassReal.h"
-#include "PLCore/Base/MemberDesc.h"
+#include "PLCore/Base/ClassDummy.h"
 
 
 //[-------------------------------------------------------]
@@ -35,17 +34,13 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-MemberDesc::MemberDesc(EMemberType nMemberType, const String &sName, const String &sDescription, const String &sAnnotation) :
-	m_nMemberType(nMemberType),
-	m_sName(sName),
-	m_sDescription(sDescription),
-	m_sAnnotation(sAnnotation)
+ClassDummy::ClassDummy(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass) : ClassImpl(nModuleID, sName, sDescription, sNamespace, sBaseClass)
 {
 }
 
@@ -53,65 +48,8 @@ MemberDesc::MemberDesc(EMemberType nMemberType, const String &sName, const Strin
 *  @brief
 *    Destructor
 */
-MemberDesc::~MemberDesc()
+ClassDummy::~ClassDummy()
 {
-}
-
-/**
-*  @brief
-*    Get type
-*/
-EMemberType MemberDesc::GetMemberType() const
-{
-	// Return type
-	return m_nMemberType;
-}
-
-/**
-*  @brief
-*    Get name
-*/
-String MemberDesc::GetName() const
-{
-	// Return name of var
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get description
-*/
-String MemberDesc::GetDescription() const
-{
-	// Return description of var
-	return m_sDescription;
-}
-
-/**
-*  @brief
-*    Get annotation
-*/
-String MemberDesc::GetAnnotation() const
-{
-	// Return annotation of var
-	return m_sAnnotation;
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Register member at class
-*/
-void MemberDesc::Register(ClassReal *pClass)
-{
-	// Check parameters
-	if (pClass) {
-		// Add attribute
-		pClass->AddMember(this);
-	}
 }
 
 

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include "PLGraphics/Image/Image.h"
 #include "PLGraphics/Image/ImagePart.h"
 #include "PLGraphics/Image/ImageBuffer.h"

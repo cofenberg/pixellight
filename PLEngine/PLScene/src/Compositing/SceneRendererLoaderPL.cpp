@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Xml/Xml.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLScene/Compositing/SceneRenderer.h"
 #include "PLScene/Compositing/SceneRendererLoaderPL.h"
 

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLGeneral/Container/List.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLGui/Gui/Base/GuiMessage.h"

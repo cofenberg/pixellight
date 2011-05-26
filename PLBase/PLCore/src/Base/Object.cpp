@@ -78,7 +78,7 @@ Object::~Object()
 Class *Object::GetClass() const
 {
 	// Return class for PLCore::Object
-	return _Class::GetSingleton();
+	return _Class::GetSingleton()->GetClass();
 }
 
 /**

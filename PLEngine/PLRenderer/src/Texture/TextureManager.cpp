@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Profiling.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Renderer/ResourceHandler.h"
 #include "PLRenderer/Texture/Creator/TextureCreator.h"

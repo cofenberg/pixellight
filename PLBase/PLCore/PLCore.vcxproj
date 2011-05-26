@@ -229,6 +229,9 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Base\ClassDummy.cpp" />
+    <ClCompile Include="src\Base\ClassImpl.cpp" />
+    <ClCompile Include="src\Base\ClassReal.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\PLCore.cpp" />
     <ClCompile Include="src\Application\ApplicationContext.cpp" />
@@ -270,6 +273,9 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Tools\LocalizationText.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLCore\Base\ClassDummy.h" />
+    <ClInclude Include="include\PLCore\Base\ClassImpl.h" />
+    <ClInclude Include="include\PLCore\Base\ClassReal.h" />
     <ClInclude Include="include\PLCore\Core.h" />
     <ClInclude Include="include\PLCore\ModuleMain.h" />
     <ClInclude Include="include\PLCore\PLCore.h" />

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MemberDesc.cpp                                 *
+ *  File: ClassDummy.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,102 +20,74 @@
 \*********************************************************/
 
 
+#ifndef __PLCORE_CLASS_DUMMY_H__
+#define __PLCORE_CLASS_DUMMY_H__
+#pragma once
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/ClassReal.h"
-#include "PLCore/Base/MemberDesc.h"
+#include "PLCore/Base/ClassImpl.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Dummy 'Class' implementation
 */
-MemberDesc::MemberDesc(EMemberType nMemberType, const String &sName, const String &sDescription, const String &sAnnotation) :
-	m_nMemberType(nMemberType),
-	m_sName(sName),
-	m_sDescription(sDescription),
-	m_sAnnotation(sAnnotation)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-MemberDesc::~MemberDesc()
-{
-}
-
-/**
-*  @brief
-*    Get type
-*/
-EMemberType MemberDesc::GetMemberType() const
-{
-	// Return type
-	return m_nMemberType;
-}
-
-/**
-*  @brief
-*    Get name
-*/
-String MemberDesc::GetName() const
-{
-	// Return name of var
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get description
-*/
-String MemberDesc::GetDescription() const
-{
-	// Return description of var
-	return m_sDescription;
-}
-
-/**
-*  @brief
-*    Get annotation
-*/
-String MemberDesc::GetAnnotation() const
-{
-	// Return annotation of var
-	return m_sAnnotation;
-}
+class ClassDummy : public ClassImpl {
 
 
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Register member at class
-*/
-void MemberDesc::Register(ClassReal *pClass)
-{
-	// Check parameters
-	if (pClass) {
-		// Add attribute
-		pClass->AddMember(this);
-	}
-}
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class ClassManager;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] nModuleID
+		*    ID of owner module
+		*  @param[in] sName
+		*    Name
+		*  @param[in] sDescription
+		*    Description
+		*  @param[in] sNamespace
+		*    Namespace
+		*  @param[in] sBaseClass
+		*    Base class
+		*/
+		ClassDummy(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sNamespace, const PLGeneral::String &sBaseClass);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~ClassDummy();
+
+
+};
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+#endif // __PLCORE_CLASS_DUMMY_H__

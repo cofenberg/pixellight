@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLMath/Intersect.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>

@@ -1,3 +1,32 @@
+>> 26.05.2011
+[CO]
+- Started "Class" refactoring... There are now a lot of PixelLight plugins within the Git repository and by default, they are all loaded within
+  "ConsoleApplication::OnInitPlugins()" so that it's possible to create RTTI class instances. While this behaviour is quite comfortable
+  because plugins can be used automatically by just throwing the loose plugins into a scanned directory, it's also quite slow at program start.
+  (although there are already several internal optimizations in place like delayed RTTI class initialization!)
+  Usually only a few plugins are really used during runtime, but in order to be able to create RTTI class instances it's required that the system
+  knows which RTTI classes are actually available. Currently, this requires to load in the shared library which may cause the loading of other
+  shared libraries. (domino effect) Due to the increasing number of loose PixelLight plugins, the program start time starts to get annoying long
+  - especially in debug mode. My plan was to focus on the script implementation, but I'am not able to try out and debug stuff in reasonable time
+  because each program start takes several seconds, even if there's actually not happening much in an application. Of course, it would be possible
+  to just "deactivate" plugins, but such hacking around would cost time as well and would be error prone. So, it's probably time to add another
+  RTTI initialization speed up optimization: Delayed shared library loading
+  This was actually planned for several years, but there were always more important things to do - like getting the RTTI to the point were it's
+  really cool and powerful. Stefan accomplished that. The "new" RTTI system is now several months in use and works really well, so, it's now probably
+  really time to implement this delayed shared library loading thingy to speed up the program start when there are a lot of optional loose plugins
+  available. (which is now the case)
+  The delayed shared library loading should be transparent to the user, meaning that it should happen automatically on the fly so that the user don't
+  need to care about it. So, as the first refactoring step I applied the bridge design pattern to "Class" and moved the previous implementation
+  into the implementor "ClassReal". The RTTI system still creates automatically class instances, but they are now derived from "ClassReal" instead
+  of "Class" which is now just a class implementation wrapper. Looks like everything is still working as before. This change makes it possible to
+  secretly change the internal class implementation... the next step is to add class metadata into the "plugin" file and when loading a plugin,
+  this metadata is used to create dummy class instances without actually loading the shared libraries the RTTI classes are implemented in. The real
+  RTTI class instance is only created by loading in the shared library when really required, e.g. when an instance of the RTTI class has to be created.
+  In this case, the internal class implementation is changed - but the "Class" instance the user is working with will be still the same. This should
+  speed up the program start.
+
+
+
 >> 24.05.2011
 [CO]
 - "ClassManager": Moved plugin file format version 1 loading code from "LoadPlugin()" into a separate method "LoadPluginV1()"

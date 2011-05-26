@@ -27,6 +27,7 @@
 #include <PLGeneral/Tools/Stopwatch.h>
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifier.h"
 #include "PLScene/Scene/SceneLoader/SceneLoaderPL.h"

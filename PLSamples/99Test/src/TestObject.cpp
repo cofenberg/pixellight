@@ -87,7 +87,7 @@ void TestObject::Test()
 // Public virtual PLCore::Object function
 Class *TestObject::GetClass() const
 {
-	return _Class::GetInstance();
+	return _Class::GetInstance()->GetClass();
 }
 
 

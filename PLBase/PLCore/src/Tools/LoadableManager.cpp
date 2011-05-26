@@ -27,6 +27,7 @@
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/FileSearch.h>
+#include "PLCore/Base/Class.h"
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Tools/LoadableType.h"
 #include "PLCore/Tools/LoadableManager.h"

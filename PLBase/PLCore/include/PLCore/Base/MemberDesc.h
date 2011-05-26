@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/String/String.h>
 #include "PLCore/PLCoreDefinitions.h"
 
 
@@ -40,8 +41,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Class;
-class Object;
+class ClassReal;
 
 
 //[-------------------------------------------------------]
@@ -131,17 +131,17 @@ class MemberDesc {
 		*  @param[in] pClass
 		*    Pointer to class (must be valid!)
 		*/
-		PLCORE_API void Register(Class *pClass);
+		PLCORE_API void Register(ClassReal *pClass);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		EMemberType			m_nMemberType;		/**< Member type */
-		PLGeneral::String	m_sName;			/**< Name */
-		PLGeneral::String	m_sDescription;		/**< Description */
-		PLGeneral::String	m_sAnnotation;		/**< Annotation */
+		EMemberType			m_nMemberType;	/**< Member type */
+		PLGeneral::String	m_sName;		/**< Name */
+		PLGeneral::String	m_sDescription;	/**< Description */
+		PLGeneral::String	m_sAnnotation;	/**< Annotation */
 
 
 };

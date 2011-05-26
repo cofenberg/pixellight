@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Base/Class.h>
 #include <PLMath/Line.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>

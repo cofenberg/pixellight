@@ -26,6 +26,7 @@
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/String/Tokenizer.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Material/MaterialManager.h>
 #include "PLMesh/Creator/MeshCreator.h"

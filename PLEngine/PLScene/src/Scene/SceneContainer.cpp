@@ -26,6 +26,7 @@
 #include <PLGeneral/Tools/Timing.h>
 #include <PLGeneral/Container/Stack.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneHierarchy.h"
 #include "PLScene/Scene/SceneHierarchyNode.h"

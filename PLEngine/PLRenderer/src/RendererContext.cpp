@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Stopwatch.h>
 #include <PLGeneral/Tools/Profiling.h>
+#include <PLCore/Base/Class.h>
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Texture/TextureManager.h"
 #include "PLRenderer/Effect/EffectManager.h"

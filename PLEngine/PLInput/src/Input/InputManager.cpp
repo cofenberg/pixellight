@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/System/MutexGuard.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLInput/Input/Controller.h"
 #include "PLInput/Input/InputManager.h"
 #include "PLInput/Input/Devices/Device.h"

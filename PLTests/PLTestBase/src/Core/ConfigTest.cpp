@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLCore/Config/Config.h>
 #include "PLTestBase/Core/ConfigTest.h"
 

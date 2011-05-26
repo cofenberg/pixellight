@@ -29,11 +29,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <EGL/egl.h>
-#undef Yield 	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
-#undef Success	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
-#undef None	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
-#undef Always	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
-#undef PSize	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef Yield 		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef Success		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef None			// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef Always		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef PSize		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #include <GLES2/gl2.h>
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
 #ifdef LINUX

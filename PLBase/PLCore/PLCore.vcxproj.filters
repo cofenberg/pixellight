@@ -151,6 +151,15 @@
     <ClCompile Include="src\Tools\LocalizationText.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\Base\ClassImpl.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\ClassReal.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\ClassDummy.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Core.h">
@@ -362,6 +371,15 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\ResourceManager.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\ClassImpl.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\ClassReal.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\ClassDummy.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

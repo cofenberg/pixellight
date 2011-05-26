@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLScript/ScriptManager.h"
 #include "PLScript/Script.h"
 

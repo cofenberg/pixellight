@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLCore/Base/Object.h>
 #include <PLCore/Base/ClassManager.h>
 #include <PLMath/Vector2.h>

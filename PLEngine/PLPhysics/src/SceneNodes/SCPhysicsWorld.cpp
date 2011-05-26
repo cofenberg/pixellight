@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLPhysics/World.h"
 #include "PLPhysics/SceneNodes/SCPhysicsWorld.h"

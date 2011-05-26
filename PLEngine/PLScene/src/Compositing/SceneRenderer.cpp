@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include "PLScene/Compositing/SceneRendererManager.h"
 #include "PLScene/Compositing/SceneRenderer.h"
 

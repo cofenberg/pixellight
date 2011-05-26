@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
 #include <PLGeneral/System/System.h>
+#include <PLCore/Base/Class.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneQuery.h>

@@ -10,6 +10,9 @@ add_sources(
 	src/PLCore.cpp
 	src/Core.cpp
 	src/Base/Class.cpp
+	src/Base/ClassImpl.cpp
+	src/Base/ClassReal.cpp
+	src/Base/ClassDummy.cpp
 	src/Base/ClassManager.cpp
 	src/Base/MemberDesc.cpp
 	src/Base/Module.cpp

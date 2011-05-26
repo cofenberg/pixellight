@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>

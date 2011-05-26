@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneQueries/SQByClassName.h"
 

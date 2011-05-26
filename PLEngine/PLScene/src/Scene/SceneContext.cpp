@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Stopwatch.h>
 #include <PLGeneral/Tools/Profiling.h>
+#include <PLCore/Base/Class.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLMesh/MeshManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>

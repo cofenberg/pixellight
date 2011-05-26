@@ -26,6 +26,7 @@
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/Log/Log.h>
+#include "PLCore/Base/Class.h"
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Tools/LoadableType.h"

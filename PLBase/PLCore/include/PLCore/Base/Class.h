@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/HashMap.h>
-#include <PLGeneral/Container/List.h>
 #include <PLGeneral/String/String.h>
+#include <PLGeneral/Container/List.h>
+#include <PLGeneral/Container/HashMap.h>
 #include "PLCore/PLCore.h"
 
 
@@ -45,13 +45,13 @@ namespace PLCore {
 //[-------------------------------------------------------]
 class Module;
 class Object;
-class DynParams;
-class MemberDesc;
 class VarDesc;
 class FuncDesc;
 class EventDesc;
-class EventHandlerDesc;
+class DynParams;
+class ClassImpl;
 class ConstructorDesc;
+class EventHandlerDesc;
 
 
 //[-------------------------------------------------------]
@@ -60,6 +60,9 @@ class ConstructorDesc;
 /**
 *  @brief
 *    Description and interface for classes
+*
+*  @note
+*    - Implementation of the bridge design pattern, this class is the abstraction
 */
 class Class {
 
@@ -67,7 +70,8 @@ class Class {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class MemberDesc;
+	friend class ClassImpl;
+	friend class ClassManager;
 
 
 	//[-------------------------------------------------------]
@@ -76,33 +80,10 @@ class Class {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] nModuleID
-		*    ID of owner module
-		*  @param[in] sName
-		*    Name
-		*  @param[in] sDescription
-		*    Description
-		*  @param[in] sNamespace
-		*    Namespace
-		*  @param[in] sBaseClass
-		*    Base class
-		*/
-		PLCORE_API Class(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sNamespace, const PLGeneral::String &sBaseClass);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLCORE_API virtual ~Class();
-
-		/**
-		*  @brief
 		*    Get module the class belongs to
 		*
 		*  @return
-		*    Module (always valid)
+		*    Module (always valid, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const Module *GetModule() const;
 
@@ -156,7 +137,7 @@ class Class {
 		*    Get base class
 		*
 		*  @return
-		*    Pointer to base class (can be a null pointer)
+		*    Pointer to base class (can be a null pointer, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const Class *GetBaseClass() const;
 
@@ -189,7 +170,7 @@ class Class {
 		*    Get derived classes
 		*
 		*  @return
-		*    List of derived classes
+		*    List of derived classes, do NOT destroy the returned instances!
 		*
 		*  @remarks
 		*    This method always returns all sub-classes of a class.
@@ -218,7 +199,7 @@ class Class {
 		*    Get attributes
 		*
 		*  @return
-		*    List of attribute descriptors
+		*    List of attribute descriptors, do NOT destroy the returned instances!
 		*/
 		PLCORE_API const PLGeneral::List<VarDesc*> &GetAttributes() const;
 
@@ -230,7 +211,7 @@ class Class {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute descriptor (can be a null pointer, if no member with that name could be found)
+		*    Attribute descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
 
@@ -239,7 +220,7 @@ class Class {
 		*    Get methods
 		*
 		*  @return
-		*    List of method descriptors
+		*    List of method descriptors, do NOT destroy the returned instances!
 		*/
 		PLCORE_API const PLGeneral::List<FuncDesc*> &GetMethods() const;
 
@@ -251,7 +232,7 @@ class Class {
 		*    Method name
 		*
 		*  @return
-		*    Method descriptor (can be a null pointer, if no member with that name could be found)
+		*    Method descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
 
@@ -260,7 +241,7 @@ class Class {
 		*    Get signals
 		*
 		*  @return
-		*    List of signal descriptors
+		*    List of signal descriptors, do NOT destroy the returned instances!
 		*/
 		PLCORE_API const PLGeneral::List<EventDesc*> &GetSignals() const;
 
@@ -272,7 +253,7 @@ class Class {
 		*    Signal name
 		*
 		*  @return
-		*    Signal descriptor (can be a null pointer, if no member with that name could be found)
+		*    Signal descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const EventDesc *GetSignal(const PLGeneral::String &sName) const;
 
@@ -281,7 +262,7 @@ class Class {
 		*    Get slot
 		*
 		*  @return
-		*    List of slot descriptors
+		*    List of slot descriptors, do NOT destroy the returned instances!
 		*/
 		PLCORE_API const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
 
@@ -293,7 +274,7 @@ class Class {
 		*    Slot name
 		*
 		*  @return
-		*    Slot descriptor (can be a null pointer, if no member with that name could be found)
+		*    Slot descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
 
@@ -320,7 +301,7 @@ class Class {
 		*    Get constructors
 		*
 		*  @return
-		*    List of constructor descriptors
+		*    List of constructor descriptors, do NOT destroy the returned instances!
 		*/
 		PLCORE_API const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
 
@@ -332,7 +313,7 @@ class Class {
 		*    Constructor name
 		*
 		*  @return
-		*    Constructor descriptor (can be a null pointer, if no member with that name could be found)
+		*    Constructor descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
 		PLCORE_API const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
 
@@ -341,7 +322,7 @@ class Class {
 		*    Create object
 		*
 		*  @return
-		*    Pointer to created object (can be a null pointer)
+		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
 		*    This function will call the default constructor of the class.
@@ -357,7 +338,7 @@ class Class {
 		*    Constructor parameters
 		*
 		*  @return
-		*    Pointer to created object (can be a null pointer)
+		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
 		*    This function will search for a constructor that matches the signature of the given parameters.
@@ -375,7 +356,7 @@ class Class {
 		*    Constructor parameters
 		*
 		*  @return
-		*    Pointer to created object (can be a null pointer)
+		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
 		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
@@ -385,81 +366,51 @@ class Class {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
+	private:
 		/**
 		*  @brief
-		*    Add member
+		*    Constructor
 		*
-		*  @param[in] pMemberDesc
-		*    Member descriptor
+		*  @param[in] cClassImpl
+		*    Reference to the class specific implementation (this class just shares the given data and doesn't destroy it)
 		*/
-		PLCORE_API void AddMember(MemberDesc *pMemberDesc);
+		Class(ClassImpl &cClassImpl);
 
 		/**
 		*  @brief
-		*    Add property
+		*    Copy constructor
 		*
-		*  @param[in] sName
-		*    Property name
-		*  @param[in] sValue
-		*    Property value
+		*  @param[in] cSource
+		*    Source to copy from
 		*/
-		PLCORE_API void AddProperty(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+		Class(const Class &cSource);
 
 		/**
 		*  @brief
-		*    Initialize class and class members
-		*
-		*  @remarks
-		*    This function is called automatically when it is necessary, e.g. the first time
-		*    any members are being accessed. It will search for the base class of the class
-		*    and initialize all members. If later a class is changed (e.g. a new member is
-		*    registered at one of the base classes), that class and all derived classes will
-		*    destroy their information and must be initialized again.
+		*    Destructor
 		*/
-		PLCORE_API void InitClass() const;
+		~Class();
 
 		/**
 		*  @brief
-		*    De-Initialize class and class members
+		*    Copy operator
 		*
-		*  @remarks
-		*    This function destroyes all data about the class and it's members. See
-		*    InitClass() for more information about why this is necessary and when.
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
 		*/
-		PLCORE_API void DeInitClass() const;
+		Class &operator =(const Class &cSource);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
-	protected:
-		// Class information
-		PLGeneral::String												 m_sName;				/**< Name of class */
-		PLGeneral::String												 m_sNamespace;			/**< Namespace of class */
-		PLGeneral::String												 m_sClassName;			/**< Name of class (with namespace) */
-		PLGeneral::String												 m_sDescription;		/**< Description of class */
-		PLGeneral::String												 m_sBaseClass;			/**< Name of base class (with namespace) */
-
-		// Own data (does not include data from base classes)
-		PLGeneral::List<MemberDesc*>									 m_lstOwnMembers;		/**< List of members */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>		 m_mapOwnProperties;	/**< Hash map of properties (name -> value) */
-
-		// Runtime data
-		mutable PLGeneral::uint32										 m_nModuleID;			/**< ID of owner module */
-		mutable bool													 m_bInitialized;		/**< Is the class initialized? */
-		mutable const Class												*m_pBaseClass;			/**< Pointer to base class */
-
-		// Member lists (also including the members from base classes)
-		mutable PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;		/**< Hash map of properties (name -> value) */
-		mutable PLGeneral::HashMap<PLGeneral::String, MemberDesc*>		 m_mapMembers;			/**< Hash map of names -> members */
-		mutable PLGeneral::List<VarDesc*>								 m_lstAttributes;		/**< List of attributes */
-		mutable PLGeneral::List<FuncDesc*>								 m_lstMethods;			/**< List of methods */
-		mutable PLGeneral::List<EventDesc*>								 m_lstSignals;			/**< List of signals */
-		mutable PLGeneral::List<EventHandlerDesc*>						 m_lstSlots;			/**< List of slots */
-		mutable PLGeneral::List<ConstructorDesc*>						 m_lstConstructors;		/**< List of constructors */
+	private:
+		ClassImpl *m_pClassImpl;	/**< Pointer to the class specific implementation, just shared pointer (assumed to be never a null pointer!) */
 
 
 };

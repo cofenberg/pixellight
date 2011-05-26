@@ -32,9 +32,10 @@
 #include <PLGeneral/Log/Log.h>
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Base/Module.h"
-#include "PLCore/Base/Class.h"
-#include "PLCore/Base/ClassManager.h"
 #include "PLCore/Base/Rtti.h"
+#include "PLCore/Base/Class.h"
+#include "PLCore/Base/ClassImpl.h"
+#include "PLCore/Base/ClassManager.h"
 
 
 //[-------------------------------------------------------]
@@ -288,6 +289,16 @@ ClassManager::ClassManager() :
 
 /**
 *  @brief
+*    Copy constructor
+*/
+ClassManager::ClassManager(const ClassManager &cSource) :
+	m_nModuleID(10000)	// Any value to start with
+{
+	// No implementation because the copy constructor is never used
+}
+
+/**
+*  @brief
 *    Destructor
 */
 ClassManager::~ClassManager()
@@ -314,7 +325,7 @@ ClassManager::~ClassManager()
 				PL_LOG(Error, "Class '" + pClass->GetName() + "' [module '" + pModule->GetName() + "']: Failed to unregister the class automatically, maybe there's no \"pl_implement_class\" within the class implementation?");
 
 				// Unregister the class
-				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(pClass));
+				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(pClass)->m_pClassImpl);
 			}
 		}
 
@@ -324,6 +335,16 @@ ClassManager::~ClassManager()
 		// Destroy the module instance
 		delete pModule;
 	}
+}
+
+/**
+*  @brief
+*    Copy operator
+*/
+ClassManager &ClassManager::operator =(const ClassManager &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 /**
@@ -389,7 +410,7 @@ void ClassManager::UnregisterModule(Module *pModule)
 			// Remove all classes from that module
 			Iterator<const Class*> cIterator = lstClasses.GetIterator();
 			while (cIterator.HasNext())
-				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(cIterator.Next()));
+				UnregisterClass(pModule->GetModuleID(), const_cast<Class*>(cIterator.Next())->m_pClassImpl);
 		}
 
 		// Module has been unloaded (emit event)
@@ -406,10 +427,13 @@ void ClassManager::UnregisterModule(Module *pModule)
 *  @brief
 *    Register class
 */
-void ClassManager::RegisterClass(uint32 nModuleID, Class *pClass)
+void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 {
 	// Get module
 	Module *pModule = CreateModule(nModuleID);
+
+	// Create an class instance wrapping the class implementation
+	Class *pClass = new Class(*pClassImpl);
 
 	// Check for duplicate class name
 	const Class *pOldClass = m_mapClasses.Get(pClass->GetClassName());
@@ -439,20 +463,27 @@ void ClassManager::RegisterClass(uint32 nModuleID, Class *pClass)
 *  @brief
 *    Unregister class
 */
-void ClassManager::UnregisterClass(uint32 nModuleID, Class *pClass)
+void ClassManager::UnregisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 {
-	// Get module
-	Module *pModule = CreateModule(nModuleID);
+	// Get the class instance wrapping the class implementation
+	Class *pClass = pClassImpl->GetClass();
+	if (pClass) {
+		// Get module
+		Module *pModule = CreateModule(nModuleID);
 
-	// Remove class from list
-	m_lstClasses.Remove(pClass);
-	m_mapClasses.Remove(pClass->GetClassName());
+		// Remove class from list
+		m_lstClasses.Remove(pClass);
+		m_mapClasses.Remove(pClass->GetClassName());
 
-	// Remove class from module
-	pModule->RemoveClass(pClass);
+		// Remove class from module
+		pModule->RemoveClass(pClass);
 
-	// Class has been unloaded (emit event)
-	EventClassUnloaded(pClass);
+		// Class has been unloaded (emit event)
+		EventClassUnloaded(pClass);
+
+		// Destroy the class instance wrapping the class implementation
+		delete pClass;
+	}
 
 	// The actual class instance is destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
 }

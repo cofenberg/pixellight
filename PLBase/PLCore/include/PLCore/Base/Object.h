@@ -105,7 +105,7 @@ class Object : public ObjectBase {
 		*    Get class
 		*
 		*  @return
-		*    Class of the object ( should never be a null pointer, unless something is *terribly* wrong ;-) )
+		*    Class of the object (should never be a null pointer, unless something is *terribly* wrong ;-) )
 		*/
 		PLCORE_API virtual Class *GetClass() const;
 

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/ParseTools.h>
+#include "PLCore/Base/Class.h"
 #include "PLCore/Config/ConfigLoader.h"
 #include "PLCore/Config/Config.h"
 

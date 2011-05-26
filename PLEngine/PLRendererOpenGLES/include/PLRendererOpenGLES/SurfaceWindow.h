@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <EGL/egl.h>
-#undef None	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef None		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef Always	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef PSize	// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #include <PLRenderer/Renderer/SurfaceWindow.h>

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLSound/SoundManager.h"

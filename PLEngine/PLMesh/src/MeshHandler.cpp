@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include <PLMath/Ray.h>
 #include <PLMath/Intersect.h>
 #include <PLMath/BoundingBox.h>

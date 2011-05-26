@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Profiling.h>
 #include <PLGeneral/Tools/Stopwatch.h>
+#include <PLCore/Base/Class.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Scene/SNCamera.h>
 #include "PLCompositing/SRPBegin.h"

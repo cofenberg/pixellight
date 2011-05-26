@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Tools.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
