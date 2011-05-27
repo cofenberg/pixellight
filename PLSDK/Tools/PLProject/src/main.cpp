@@ -242,9 +242,9 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 	// - Parse Text-Macros for localization
 
 	// Setup regular expressions
-	RegEx cRegExNoStepInto("\\w*<<nostepinto>>\\w*(?<exp>.*)\\w*$");
-	RegEx cRegExStepInto  ("\\w*<<stepinto>>\\w*(?<exp>.*)\\w*$");
-	RegEx cRegExI18n	  ("_TEXT\\(\\\"((\\w|\\s|[-!\"#$%&'()*+,./:;<=>?@[\\\\\\]_`{|}~]|(\\\"))*)\\\"\\)");
+	static const RegEx cRegExNoStepInto("\\w*<<nostepinto>>\\w*(?<exp>.*)\\w*$");
+	static const RegEx cRegExStepInto  ("\\w*<<stepinto>>\\w*(?<exp>.*)\\w*$");
+	static const RegEx cRegExI18n	  ("_TEXT\\(\\\"((\\w|\\s|[-!\"#$%&'()*+,./:;<=>?@[\\\\\\]_`{|}~]|(\\\"))*)\\\"\\)");
 	LocalizationGroup *pLocalizationGroup = Localization::GetInstance()->AddGroup("test");
 
 	// Loop through files
@@ -277,8 +277,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 				Registry cReg;
 				String sValue = EscapeString(sExpression) + "=NoStepInto";
 				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\10.0\\NativeDE\\StepOver",
-								Registry::RegRead | Registry::RegWrite))
-				{
+								Registry::RegRead | Registry::RegWrite)) {
 					cReg.SetValueString(sExpression, sValue);
 					cReg.Close();
 				}
@@ -294,8 +293,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 				Registry cReg;
 				String sValue = EscapeString(sExpression) + "=NoStepInto";
 				if (cReg.Open(Registry::KeyLocalMachine, "SOFTWARE\\Microsoft\\VisualStudio\\10.0\\NativeDE\\StepOver",
-								Registry::RegRead | Registry::RegWrite))
-				{
+								Registry::RegRead | Registry::RegWrite)) {
 					cReg.SetValueString(sExpression, sValue);
 					cReg.Close();
 				}
@@ -338,20 +336,20 @@ bool ParseModule(Project &cProject)
 	}
 
 	// Setup regular expressions
-	RegEx cRegExModule("^\\s*pl_module\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	RegEx cRegExModulePlugin("^\\s*pl_module_plugin\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	RegEx cRegExVendor("^\\s*pl_module_vendor\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExLicense("^\\s*pl_module_license\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDescription("^\\s*pl_module_description\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExVersion("^\\s*pl_module_version\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin32Release("^\\s*pl_module_dependencies_win32_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin32Debug("^\\s*pl_module_dependencies_win32_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin64Release("^\\s*pl_module_dependencies_win64_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin64Debug("^\\s*pl_module_dependencies_win64_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
-	RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
+	static const RegEx cRegExModule("^\\s*pl_module\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
+	static const RegEx cRegExModulePlugin("^\\s*pl_module_plugin\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
+	static const RegEx cRegExVendor("^\\s*pl_module_vendor\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExLicense("^\\s*pl_module_license\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDescription("^\\s*pl_module_description\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExVersion("^\\s*pl_module_version\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsWin32Release("^\\s*pl_module_dependencies_win32_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsWin32Debug("^\\s*pl_module_dependencies_win32_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsWin64Release("^\\s*pl_module_dependencies_win64_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsWin64Debug("^\\s*pl_module_dependencies_win64_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	static const RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
+	static const RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
 
 	// Parse file
 	while (!cFile.IsEof()) {
@@ -698,9 +696,11 @@ bool CreatePluginFile(Project &cProject)
 			#endif
 
 			// Get the absolute filename of the shared library
-			const String sAbsSharedLibraryFilename = System::GetInstance()->GetCurrentDir() + '/' + Url(cProject.sOutputPlugin).CutFilename() + sSharedLibraryFilename;
+			const Url cUrl(cProject.sOutputPlugin);
+			const String sAbsSharedLibraryFilename = (cUrl.IsAbsolute() ? cUrl : (System::GetInstance()->GetCurrentDir() + '/' + cUrl.GetUrl())).CutFilename() + sSharedLibraryFilename;
 
 			// Load the module
+			// [TODO] Currently this solution is now working under Linux because the so file can't be loaded... uff, maybe it's really required to parse the cpp file...
 			const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
 			if (pModule) {
 				//  Get classes of module
