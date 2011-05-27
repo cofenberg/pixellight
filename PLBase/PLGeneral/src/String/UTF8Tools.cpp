@@ -67,7 +67,7 @@ static const uint8 g_nTrailingBytesForUTF8[256] = {
 */
 uint8 UTF8Tools::GetNumOfCharacterBytes(char nCharacter)
 {
-        return g_nTrailingBytesForUTF8[static_cast<unsigned char>(nCharacter)] + 1;
+	return g_nTrailingBytesForUTF8[static_cast<unsigned char>(nCharacter)] + 1;
 }
 
 /**

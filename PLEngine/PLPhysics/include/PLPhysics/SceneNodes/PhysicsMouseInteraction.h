@@ -60,14 +60,14 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 	//[-------------------------------------------------------]
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
-	public:	
-		PLInput::Button		Pickup;			/**< Keep pressed to pickup */
-		PLInput::Button		Throw;			/**< Throw the picked object */
-		PLInput::Button		IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
-		PLInput::Button		DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
-		PLInput::Axis		PushPull;		/**< Used to push/pull the picked object */
-		PLInput::Axis		MouseX;		/**X-Pos of the Mouse */
-		PLInput::Axis		MouseY;		/**Y-Pos of the Mouse */
+	public:
+		PLInput::Button	Pickup;			/**< Keep pressed to pickup */
+		PLInput::Button	Throw;			/**< Throw the picked object */
+		PLInput::Button	IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
+		PLInput::Button	DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
+		PLInput::Axis	PushPull;		/**< Used to push/pull the picked object */
+		PLInput::Axis	MouseX;			/**< X-position of the mouse */
+		PLInput::Axis	MouseY;			/**< Y-position of the mouse */
 
 
 	//[-------------------------------------------------------]

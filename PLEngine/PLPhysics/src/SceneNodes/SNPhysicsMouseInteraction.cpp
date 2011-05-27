@@ -200,15 +200,14 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					//if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow())
-					{
+					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						//if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos))
-						{
-						    float fX = m_pController->MouseX.GetValue();
-						    float fY = m_pController->MouseY.GetValue();
-						    m_vPickingMousePos.y = fY;
-						    m_vPickingMousePos.x = fX;
+						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+							// [TODO] Check Stephans solution in detail, looks good at the first look - but currently not working because no one feeds MouseX/MouseY
+							// Get current mouse cursor position by using the input controller
+						//	m_vPickingMousePos.x = m_pController->MouseX.GetValue();
+						//	m_vPickingMousePos.y = m_pController->MouseY.GetValue();
+
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
@@ -283,15 +282,14 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 					// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
-					//if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow())
-					{
+					if (PLCore::ConsoleApplication::GetApplication() && static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()) {
 						// Get current mouse cursor position inside the widget
-						//if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos))
-						{
-						    float fX = m_pController->MouseX.GetValue();
-						    float fY = m_pController->MouseY.GetValue();
-						    m_vPickingMousePos.y = fY;
-						    m_vPickingMousePos.x = fX;
+						if (static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget()->GetMousePos(m_vPickingMousePos)) {
+							// [TODO] Check Stephans solution in detail, looks good at the first look - but currently not working because no one feeds MouseX/MouseY
+							// Get current mouse cursor position by using the input controller
+						//	m_vPickingMousePos.x = m_pController->MouseX.GetValue();
+						//	m_vPickingMousePos.y = m_pController->MouseY.GetValue();
+
 							// Get the renderer
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
