@@ -223,14 +223,14 @@ if(WIN32)
 		${WIN32_LINKER_FLAGS}
 		/NODEFAULTLIB:LIBCMT						# Ignore libraries
 	)
-    if(CMAKE_BUILD_TYPE MATCHES Debug)
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
 		##################################################
 		## Debug
 		##################################################
 		add_linker_flags(
 			/NODEFAULTLIB:MSVCRT					# Ignore libraries
 		)
-    endif()
+	endif()
 elseif(LINUX)
 	##################################################
 	## GCC Compiler
@@ -249,7 +249,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib External-libpcre)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Base							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -264,6 +264,10 @@ if(LINUX)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLRuntime"
+	)
+	# Debug helper for gdb (pretty printer for PLGeneral::String)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKETOOLS_CURRENT_TARGET}-gdb.py" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION}-gdb.py"
 	)
 endif()
 
@@ -285,6 +289,13 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
 )
 
+# Debug helper for gdb (pretty printer for PLGeneral::String)
+if(LINUX)
+	install(FILES								"${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION}-gdb.py"
+			DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
+	)
+endif()
+
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		PATTERN ".svn" EXCLUDE
@@ -303,7 +314,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET}Stat STATIC)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	External-zlib External-libpcre)
-add_dependencies(Base                       		${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Base								${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build

@@ -51,7 +51,9 @@ PhysicsMouseInteraction::PhysicsMouseInteraction() : Controller(ControllerVirtua
 	Throw			(this, "Throw",			"Throw the picked object",											0x00),
 	IncreaseForce	(this, "IncreaseForce",	"Keep pressed to increase the force applied to the picked object",	0x00),
 	DecreaseForce	(this, "DecreaseForce",	"Keep pressed to decrease the force applied to the picked object",	0x00),
-	PushPull		(this, "PushPull",		"Used to push/pull the picked object")
+	PushPull		(this, "PushPull",		"Used to push/pull the picked object"),
+	MouseX			(this, "MouseX",		"X-position of the mouse"),
+	MouseY			(this, "MouseY",		"Y-position of the mouse")
 {
 }
 
