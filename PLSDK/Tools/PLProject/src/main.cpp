@@ -242,9 +242,9 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 	// - Parse Text-Macros for localization
 
 	// Setup regular expressions
-	static const RegEx cRegExNoStepInto("\\w*<<nostepinto>>\\w*(?<exp>.*)\\w*$");
-	static const RegEx cRegExStepInto  ("\\w*<<stepinto>>\\w*(?<exp>.*)\\w*$");
-	static const RegEx cRegExI18n	  ("_TEXT\\(\\\"((\\w|\\s|[-!\"#$%&'()*+,./:;<=>?@[\\\\\\]_`{|}~]|(\\\"))*)\\\"\\)");
+	RegEx cRegExNoStepInto("\\w*<<nostepinto>>\\w*(?<exp>.*)\\w*$");
+	RegEx cRegExStepInto  ("\\w*<<stepinto>>\\w*(?<exp>.*)\\w*$");
+	RegEx cRegExI18n	  ("_TEXT\\(\\\"((\\w|\\s|[-!\"#$%&'()*+,./:;<=>?@[\\\\\\]_`{|}~]|(\\\"))*)\\\"\\)");
 	LocalizationGroup *pLocalizationGroup = Localization::GetInstance()->AddGroup("test");
 
 	// Loop through files
@@ -336,20 +336,20 @@ bool ParseModule(Project &cProject)
 	}
 
 	// Setup regular expressions
-	static const RegEx cRegExModule("^\\s*pl_module\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	static const RegEx cRegExModulePlugin("^\\s*pl_module_plugin\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	static const RegEx cRegExVendor("^\\s*pl_module_vendor\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExLicense("^\\s*pl_module_license\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDescription("^\\s*pl_module_description\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExVersion("^\\s*pl_module_version\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsWin32Release("^\\s*pl_module_dependencies_win32_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsWin32Debug("^\\s*pl_module_dependencies_win32_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsWin64Release("^\\s*pl_module_dependencies_win64_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsWin64Debug("^\\s*pl_module_dependencies_win64_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	static const RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
-	static const RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
+	RegEx cRegExModule("^\\s*pl_module\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
+	RegEx cRegExModulePlugin("^\\s*pl_module_plugin\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
+	RegEx cRegExVendor("^\\s*pl_module_vendor\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExLicense("^\\s*pl_module_license\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDescription("^\\s*pl_module_description\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExVersion("^\\s*pl_module_version\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsWin32Release("^\\s*pl_module_dependencies_win32_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsWin32Debug("^\\s*pl_module_dependencies_win32_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsWin64Release("^\\s*pl_module_dependencies_win64_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsWin64Debug("^\\s*pl_module_dependencies_win64_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+	RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
+	RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
 
 	// Parse file
 	while (!cFile.IsEof()) {
@@ -589,11 +589,44 @@ bool CreatePluginFile(Project &cProject)
 	// Open plugin file
 	File cFile(cProject.sOutputPlugin);
 	if (cFile.Open(File::FileCreate | File::FileWrite | File::FileText)) {
+		// Get the filename of the shared library
+		String sSharedLibraryFilename;
+		#ifdef WIN32
+			#ifdef WIN64
+				#ifdef _DEBUG
+					sSharedLibraryFilename = cProject.sLibWin64Debug;
+				#else
+					sSharedLibraryFilename = cProject.sLibWin64Release;
+				#endif
+			#else
+				#ifdef _DEBUG
+					sSharedLibraryFilename = cProject.sLibWin32Debug;
+				#else
+					sSharedLibraryFilename = cProject.sLibWin32Release;
+				#endif
+			#endif
+		#endif
+		#ifdef LINUX
+			#ifdef _DEBUG
+				sSharedLibraryFilename = cProject.sLibLinuxDebug;
+			#else
+				sSharedLibraryFilename = cProject.sLibLinuxRelease;
+			#endif
+		#endif
+
+		// Get the absolute filename of the shared library
+		const Url cUrl(cProject.sOutputPlugin);
+		const String sAbsSharedLibraryFilename = (cUrl.IsAbsolute() ? cUrl : (System::GetInstance()->GetCurrentDir() + '/' + cUrl.GetUrl())).CutFilename() + sSharedLibraryFilename;
+
+		// Load the module
+		// [TODO] Currently this solution is not working under Linux because the so file can't be loaded (delayed is set to 0)... uff, maybe it's really required to parse the cpp file...
+		const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
+
 		// Write plugin file
 		Write(cFile, "<?xml version=\"1.0\" ?>");
 		Write(cFile, "<Plugin Version=\"1\" PixelLightVersion=\"" + Core::GetVersion().ToString() + "\">");
 		Write(cFile, String("	<Active>") + (cProject.bModuleActive ? "1" : "0") + "</Active>");
-		Write(cFile, String("	<Delayed>") + (cProject.bModuleDelayed ? "1" : "0") + "</Delayed>");
+		Write(cFile, String("	<Delayed>") + (cProject.bModuleDelayed && pModule ? "1" : "0") + "</Delayed>");
 		Write(cFile, "	<Name>" + cProject.sModuleName + "</Name>");
 
 		// Version
@@ -669,89 +702,53 @@ bool CreatePluginFile(Project &cProject)
 			Write(cFile, "	</Platform>");
 		}
 
-		{ // Classes
-			// Get the filename of the shared library
-			String sSharedLibraryFilename;
-			#ifdef WIN32
-				#ifdef WIN64
-					#ifdef _DEBUG
-						sSharedLibraryFilename = cProject.sLibWin64Debug;
-					#else
-						sSharedLibraryFilename = cProject.sLibWin64Release;
-					#endif
-				#else
-					#ifdef _DEBUG
-						sSharedLibraryFilename = cProject.sLibWin32Debug;
-					#else
-						sSharedLibraryFilename = cProject.sLibWin32Release;
-					#endif
-				#endif
-			#endif
-			#ifdef LINUX
-				#ifdef _DEBUG
-					sSharedLibraryFilename = cProject.sLibLinuxDebug;
-				#else
-					sSharedLibraryFilename = cProject.sLibLinuxRelease;
-				#endif
-			#endif
+		// Classes
+		if (pModule) {
+			// Get classes of module
+			const List<const Class*> &lstClasses = pModule->GetClasses();
+			if (lstClasses.GetNumOfElements()) {
+				// Classes start tag
+				Write(cFile, "	<Classes>");
 
-			// Get the absolute filename of the shared library
-			const Url cUrl(cProject.sOutputPlugin);
-			const String sAbsSharedLibraryFilename = (cUrl.IsAbsolute() ? cUrl : (System::GetInstance()->GetCurrentDir() + '/' + cUrl.GetUrl())).CutFilename() + sSharedLibraryFilename;
+				// Iterate through all classes
+				Iterator<const Class*> cIterator = lstClasses.GetIterator();
+				while (cIterator.HasNext()) {
+					// Get the class instance
+					const Class *pClass = cIterator.Next();
 
-			// Load the module
-			// [TODO] Currently this solution is now working under Linux because the so file can't be loaded... uff, maybe it's really required to parse the cpp file...
-			const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
-			if (pModule) {
-				//  Get classes of module
-				const List<const Class*> &lstClasses = pModule->GetClasses();
-				if (lstClasses.GetNumOfElements()) {
-					// Classes start tag
-					Write(cFile, "	<Classes>");
+					// Class start tag
+					Write(cFile, String("		<Class Name=\"") + pClass->GetName() + "\" Namespace=\"" + pClass->GetNamespace() + "\" BaseClassName=\"" + pClass->GetBaseClassName() + "\" Description=\"" + pClass->GetDescription() + "\" HasConstructor=\"" + pClass->HasConstructor() + "\" HasDefaultConstructor=\"" + pClass->HasDefaultConstructor() + "\">");
 
-					// Iterate through all classes
-					Iterator<const Class*> cIterator = lstClasses.GetIterator();
-					while (cIterator.HasNext()) {
-						// Get the class instance
-						const Class *pClass = cIterator.Next();
+					{ // Properties
+						const HashMap<String, String> &mapProperties = pClass->GetProperties();
+						if (mapProperties.GetNumOfElements()) {
+							// Properties start tag
+							Write(cFile, "			<Properties>");
 
-						// Class start tag
-						Write(cFile, String("		<Class Name=\"") + pClass->GetName() + "\" Namespace=\"" + pClass->GetNamespace() + "\" BaseClassName=\"" + pClass->GetBaseClassName() + "\" Description=\"" + pClass->GetDescription() + "\" HasConstructor=\"" + pClass->HasConstructor() + "\" HasDefaultConstructor=\"" + pClass->HasDefaultConstructor() + "\">");
+							// Iterate over all RTTI class properties
+							Iterator<String> cIterator = pClass->GetProperties().GetKeyIterator();
+							while (cIterator.HasNext()) {
+								// Get the name of the current property
+								const String sName = cIterator.Next();
 
-						{ // Properties
-							const HashMap<String, String> &mapProperties = pClass->GetProperties();
-							if (mapProperties.GetNumOfElements()) {
-								// Properties start tag
-								Write(cFile, "			<Properties>");
+								// Get the value of the current property
+								const String sValue = pClass->GetProperties().Get(sName);
 
-								// Iterate over all RTTI class properties
-								Iterator<String> cIterator = pClass->GetProperties().GetKeyIterator();
-								while (cIterator.HasNext()) {
-									// Get the name of the current property
-									const String sName = cIterator.Next();
-
-									// Get the value of the current property
-									const String sValue = pClass->GetProperties().Get(sName);
-
-									// Write down the property
-									Write(cFile, String("				<Property Name=\"") + sName + "\">" + sValue + "</Property>");
-								}
-
-								// Properties end tag
-								Write(cFile, "			</Properties>");
+								// Write down the property
+								Write(cFile, String("				<Property Name=\"") + sName + "\">" + sValue + "</Property>");
 							}
-						}
 
-						// Class end tag
-						Write(cFile, "		</Class>");
+							// Properties end tag
+							Write(cFile, "			</Properties>");
+						}
 					}
 
-					// Classes end tag
-					Write(cFile, "	</Classes>");
+					// Class end tag
+					Write(cFile, "		</Class>");
 				}
-			} else {
-				// Error!
-				Message(ERR, "Failed to load in the module '" + sAbsSharedLibraryFilename + "' in order to gather RTTI class metadata!");
+
+				// Classes end tag
+				Write(cFile, "	</Classes>");
 			}
 		}
 
