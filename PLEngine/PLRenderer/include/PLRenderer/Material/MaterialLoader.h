@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -45,13 +45,13 @@ namespace PLRenderer {
 *  @brief
 *    Abstract material loader base class
 */
-class MaterialLoader : public PLCore::Loader {
+class MaterialLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLRENDERER_RTTI_EXPORT, MaterialLoader, "PLRenderer", PLCore::Loader, "Abstract material loader base class")
+	pl_class(PLRENDERER_RTTI_EXPORT, MaterialLoader, "PLRenderer", PLCore::LoaderImpl, "Abstract material loader base class")
 		pl_properties
 			pl_property("Type", "Material")
 		pl_properties_end

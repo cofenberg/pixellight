@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Tools/Loader.h"
+#include "PLCore/Tools/LoaderImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLCore {
 *  @brief
 *    Abstract localization loader base class
 */
-class LocalizationLoader : public Loader {
+class LocalizationLoader : public LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, LocalizationLoader, "PLCore", PLCore::Loader, "Abstract localization loader base class")
+	pl_class(PLCORE_RTTI_EXPORT, LocalizationLoader, "PLCore", PLCore::LoaderImpl, "Abstract localization loader base class")
 		pl_properties
 			pl_property("Type", "Localization")
 		pl_properties_end

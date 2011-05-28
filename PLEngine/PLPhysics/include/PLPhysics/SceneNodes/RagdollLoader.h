@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include <PLPhysics/PLPhysics.h>
 
 
@@ -49,13 +49,13 @@ namespace PLPhysics {
 *    - Normally all load functions accept a boolean 'AllowAttachToWorld'-parameter, (default setting: 'true')
 *      if this parameter is 'true', the ragdoll is allowed to be attached to the world
 */
-class RagdollLoader : public PLCore::Loader {
+class RagdollLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, RagdollLoader, "PLPhysics", PLCore::Loader, "Abstract ragdoll loader base class")
+	pl_class(PLPHYSICS_RTTI_EXPORT, RagdollLoader, "PLPhysics", PLCore::LoaderImpl, "Abstract ragdoll loader base class")
 		pl_properties
 			pl_property("Type", "Ragdoll")
 		pl_properties_end

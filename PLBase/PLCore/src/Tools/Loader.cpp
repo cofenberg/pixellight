@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/String/Tokenizer.h>
 #include "PLCore/Base/Class.h"
+#include "PLCore/Tools/LoaderImpl.h"
 #include "PLCore/Tools/Loader.h"
 
 
@@ -35,23 +37,31 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public static data                                    ]
-//[-------------------------------------------------------]
-const String Loader::UnknownFormatVersion			= "Format version is unknown (too new), you may need to update your PixelLight version";
-const String Loader::DeprecatedFormatVersion		= "Deprecated format version";
-const String Loader::NoLongerSupportedFormatVersion	= "Format version is no longer supported";
-const String Loader::InvalidFormatVersion			= "Invalid format version";
-
-
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(Loader)
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Loader implementation class
+*/
+const Class &Loader::GetClass() const
+{
+	return *m_pClass;
+}
+
+/**
+*  @brief
+*    Returns the loader implementation
+*/
+LoaderImpl *Loader::GetImpl()
+{
+	// Create the loader implementation class instance if required right now
+	if (!m_pLoaderImpl)
+		m_pLoaderImpl = reinterpret_cast<LoaderImpl*>(m_pClass->Create());
+
+	// Return the loader implementation class instance
+	return m_pLoaderImpl;
+}
+
 /**
 *  @brief
 *    Returns the loadable type
@@ -67,7 +77,7 @@ LoadableType *Loader::GetType() const
 */
 String Loader::GetTypeName() const
 {
-	const Class *pClass = GetClass();
+	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetProperties().Get("Type") : "";
 }
 
@@ -114,7 +124,7 @@ bool Loader::IsFormatSupported(const String &sExtension)
 */
 String Loader::GetFormats() const
 {
-	const Class *pClass = GetClass();
+	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetProperties().Get("Formats") : "";
 }
 
@@ -124,7 +134,7 @@ String Loader::GetFormats() const
 */
 String Loader::GetDescription() const
 {
-	const Class *pClass = GetClass();
+	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetDescription() : "";
 }
 
@@ -134,7 +144,7 @@ String Loader::GetDescription() const
 */
 bool Loader::CanLoad() const
 {
-	const Class *pClass = GetClass();
+	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetProperties().Get("Load").GetBool() : false;
 }
 
@@ -144,19 +154,33 @@ bool Loader::CanLoad() const
 */
 bool Loader::CanSave() const
 {
-	const Class *pClass = GetClass();
+	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetProperties().Get("Save").GetBool() : false;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Default constructor
 */
 Loader::Loader() :
+	m_pClass(nullptr),
+	m_pLoaderImpl(nullptr),
+	m_pLoadableType(nullptr)
+{
+	// No implementation because the copy operator is never used
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+Loader::Loader(const Class &cClass) :
+	m_pClass(&cClass),
+	m_pLoaderImpl(nullptr),
 	m_pLoadableType(nullptr)
 {
 }
@@ -167,12 +191,21 @@ Loader::Loader() :
 */
 Loader::~Loader()
 {
+	// Destroy the loader implementation class instance
+	if (m_pLoaderImpl)
+		delete m_pLoaderImpl;
 }
 
+/**
+*  @brief
+*    Copy operator
+*/
+Loader &Loader::operator =(const Loader &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
+}
 
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
 /**
 *  @brief
 *    Initializes the formats list

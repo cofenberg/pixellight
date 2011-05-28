@@ -38,6 +38,7 @@ add_sources(
 	src/Tools/LoadableManager.cpp
 	src/Tools/LoadableType.cpp
 	src/Tools/Loader.cpp
+	src/Tools/LoaderImpl.cpp
 	src/Tools/Chunk.cpp
 	src/Tools/ChunkLoader.cpp
 	src/Tools/ChunkLoaderPL.cpp

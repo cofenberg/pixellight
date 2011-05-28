@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLMath/PLMath.h"
 
 
@@ -45,13 +45,13 @@ namespace PLMath {
 *  @brief
 *    Abstract graph loader base class
 */
-class GraphLoader : public PLCore::Loader {
+class GraphLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLMATH_RTTI_EXPORT, GraphLoader, "PLMath", PLCore::Loader, "Abstract graph loader base class")
+	pl_class(PLMATH_RTTI_EXPORT, GraphLoader, "PLMath", PLCore::LoaderImpl, "Abstract graph loader base class")
 		pl_properties
 			pl_property("Type", "Graph")
 		pl_properties_end

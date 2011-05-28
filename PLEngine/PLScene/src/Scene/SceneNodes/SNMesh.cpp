@@ -28,6 +28,8 @@
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Loader.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Application/ConsoleApplication.h>
@@ -238,7 +240,7 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 						// Get loader
 						Loader *pLoader = pLoadableType->GetLoader(sExtension);
 						if (pLoader) {
-							if (pLoader->IsInstanceOf("PLScene::SkinLoader")) {
+							if (pLoader->GetClass().IsDerivedFrom("PLScene::SkinLoader")) {
 								if (pLoader->CanLoad()) {
 									// Open the file
 									File cFile;
@@ -250,14 +252,18 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 										if (!sMethodName.GetLength())
 											sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
 
-										// Finally, load the skin!
-										if (sParams.GetLength()) {
-											pLoader->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-											return true;
-										} else {
-											Params<bool, SNMesh&, File&> cParams(*this, cFile);
-											pLoader->CallMethod(sMethodName, cParams);
-											return cParams.Return;
+										// Get the loader implementation
+										LoaderImpl *pLoaderImpl = pLoader->GetImpl();
+										if (pLoaderImpl) {
+											// Finally, load the skin!
+											if (sParams.GetLength()) {
+												pLoaderImpl->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+												return true;
+											} else {
+												Params<bool, SNMesh&, File&> cParams(*this, cFile);
+												pLoaderImpl->CallMethod(sMethodName, cParams);
+												return cParams.Return;
+											}
 										}
 									} else {
 										PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable 'Skin'!")
@@ -334,7 +340,7 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 			// Error!
 			return false;
 		}
-		if (!pLoader->IsInstanceOf("PLScene::SkinLoader")) {
+		if (!pLoader->GetClass().IsDerivedFrom("PLScene::SkinLoader")) {
 			PL_LOG(Error, "Can't save the loadable 'Skin' from '" + sFilename + "' because the file format is no valid 'Skin' format!")
 
 			// Error!
@@ -353,14 +359,18 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 			if (!sMethodName.GetLength())
 				sMethodName = sParams.GetLength() ? sSaveParams : sSave;
 
-			// Finally, load the skin!
-			if (sParams.GetLength()) {
-				pLoader->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-				return true;
-			} else {
-				Params<bool, SNMesh&, File&> cParams(*this, cFile);
-				pLoader->CallMethod(sMethodName, cParams);
-				return cParams.Return;
+			// Get the loader implementation
+			LoaderImpl *pLoaderImpl = pLoader->GetImpl();
+			if (pLoaderImpl) {
+				// Finally, load the skin!
+				if (sParams.GetLength()) {
+					pLoaderImpl->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+					return true;
+				} else {
+					Params<bool, SNMesh&, File&> cParams(*this, cFile);
+					pLoaderImpl->CallMethod(sMethodName, cParams);
+					return cParams.Return;
+				}
 			}
 		}
 	}

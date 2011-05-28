@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -45,13 +45,13 @@ namespace PLRenderer {
 *  @brief
 *    Abstract effect loader base class
 */
-class EffectLoader : public PLCore::Loader {
+class EffectLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLRENDERER_RTTI_EXPORT, EffectLoader, "PLRenderer", PLCore::Loader, "Abstract effect loader base class")
+	pl_class(PLRENDERER_RTTI_EXPORT, EffectLoader, "PLRenderer", PLCore::LoaderImpl, "Abstract effect loader base class")
 		pl_properties
 			pl_property("Type", "Effect")
 		pl_properties_end

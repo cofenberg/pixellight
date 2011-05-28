@@ -1,3 +1,12 @@
+>> 28.05.2011
+[CO]
+- Continued "Delayed shared library loading"-refactoring: Currently, "LoadableManager" forces many plugins to be loaded in order to register
+  loader instances. To delay the plugin loading, "Loader" is now just a proxy and "LoaderImpl" the real loader implementation. This way, the available
+  loader implementations are registered correctly, but the actual loader implementations which require to load in the shared library are only
+  created when really required.
+
+
+
 >> 26.05.2011
 [CO]
 - Started "Class" refactoring... There are now a lot of PixelLight plugins within the Git repository and by default, they are all loaded within

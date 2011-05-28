@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Loader.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/EulerAngles.h>
 #include <PLRenderer/RendererContext.h>
@@ -497,14 +498,22 @@ String SNSky::GetLoadableTypeName() const
 //[-------------------------------------------------------]
 bool SNSky::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
 {
-	if (sParams.GetLength()) {
-		cLoader.CallMethod(sMethod, "Param0=\"" + Type<SNSky&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-		return true;
-	} else {
-		Params<bool, SNSky&, File&> cParams(*this, cFile);
-		cLoader.CallMethod(sMethod, cParams);
-		return cParams.Return;
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<SNSky&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, SNSky&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
 	}
+
+	// Error!
+	return false;
 }
 
 

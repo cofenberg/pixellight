@@ -26,7 +26,9 @@
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/File/File.h>
 #include <PLGeneral/Log/Log.h>
+#include "PLCore/Base/Class.h"
 #include "PLCore/Tools/Loader.h"
+#include "PLCore/Tools/LoaderImpl.h"
 #include "PLCore/Tools/LoadableType.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Tools/Loadable.h"
@@ -81,7 +83,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 				// Get loader
 				Loader *pLoader = pLoadableType->GetLoader(sExtension);
 				if (pLoader) {
-					if (pLoader->IsInstanceOf(pLoadableType->GetClass())) {
+					if (pLoader->GetClass().IsDerivedFrom(pLoadableType->GetClass())) {
 						if (pLoader->CanLoad()) {
 							// Open the file
 							File cFile;
@@ -156,7 +158,7 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 				// Get loader
 				Loader *pLoader = pLoadableType->GetLoader(sExtension);
 				if (pLoader) {
-					if (pLoader->IsInstanceOf(pLoadableType->GetClass())) {
+					if (pLoader->GetClass().IsDerivedFrom(pLoadableType->GetClass())) {
 						if (pLoader->CanLoad()) {
 							// Unload the loadable
 							Unload();
@@ -219,7 +221,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 				// Get loader
 				Loader *pLoader = pLoadableType->GetLoader(sExtension);
 				if (pLoader) {
-					if (pLoader->IsInstanceOf(pLoadableType->GetClass())) {
+					if (pLoader->GetClass().IsDerivedFrom(pLoadableType->GetClass())) {
 						if (pLoader->CanSave()) {
 							// Open the file
 							File cFile;
@@ -281,7 +283,7 @@ bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
 					// Get loader
 					Loader *pLoader = pLoadableType->GetLoader(sExtension);
 					if (pLoader) {
-						if (pLoader->IsInstanceOf(pLoadableType->GetClass())) {
+						if (pLoader->GetClass().IsDerivedFrom(pLoadableType->GetClass())) {
 							if (pLoader->CanSave()) {
 								// Get method name
 								static const String sSave = "Save";
@@ -389,14 +391,22 @@ Loadable::~Loadable()
 //[-------------------------------------------------------]
 bool Loadable::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
 {
-	if (sParams.GetLength()) {
-		cLoader.CallMethod(sMethod, "Param0=\"" + Type<Loadable&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-		return true;
-	} else {
-		Params<bool, Loadable&, File&> cParams(*this, cFile);
-		cLoader.CallMethod(sMethod, cParams);
-		return cParams.Return;
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<Loadable&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, Loadable&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
 	}
+
+	// Error!
+	return false;
 }
 
 

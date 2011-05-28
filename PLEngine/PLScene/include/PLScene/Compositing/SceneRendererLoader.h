@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLScene/PLScene.h"
 
 
@@ -45,13 +45,13 @@ namespace PLScene {
 *  @brief
 *    Abstract scene renderer loader base class
 */
-class SceneRendererLoader : public PLCore::Loader {
+class SceneRendererLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SceneRendererLoader, "PLScene", PLCore::Loader, "Abstract scene renderer loader base class")
+	pl_class(PLS_RTTI_EXPORT, SceneRendererLoader, "PLScene", PLCore::LoaderImpl, "Abstract scene renderer loader base class")
 		pl_properties
 			pl_property("Type", "SceneRenderer")
 		pl_properties_end

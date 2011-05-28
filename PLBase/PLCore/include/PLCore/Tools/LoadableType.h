@@ -169,6 +169,12 @@ class LoadableType {
 	private:
 		/**
 		*  @brief
+		*    Default constructor
+		*/
+		LoadableType();
+
+		/**
+		*  @brief
 		*    Constructor
 		*
 		*  @param[in] sName
@@ -183,6 +189,18 @@ class LoadableType {
 		*    Destructor
 		*/
 		~LoadableType();
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		LoadableType &operator =(const LoadableType &cSource);
 
 		/**
 		*  @brief

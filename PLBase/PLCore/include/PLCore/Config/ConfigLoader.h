@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Tools/Loader.h"
+#include "PLCore/Tools/LoaderImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -51,7 +51,7 @@ namespace PLCore {
 *    - Normally all save functions accept a boolean 'NoDefault'-parameter, (default setting: 'false')
 *      if this parameter is 'true', all variables with default valures are not saved
 */
-class ConfigLoader : public Loader {
+class ConfigLoader : public LoaderImpl {
 
 
 	//[-------------------------------------------------------]
@@ -63,7 +63,7 @@ class ConfigLoader : public Loader {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, ConfigLoader, "PLCore", PLCore::Loader, "Abstract config loader base class")
+	pl_class(PLCORE_RTTI_EXPORT, ConfigLoader, "PLCore", PLCore::LoaderImpl, "Abstract config loader base class")
 		pl_properties
 			pl_property("Type", "Config")
 		pl_properties_end

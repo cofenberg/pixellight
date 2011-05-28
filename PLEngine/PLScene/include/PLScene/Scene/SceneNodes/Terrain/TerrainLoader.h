@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLScene/PLScene.h"
 
 
@@ -45,13 +45,13 @@ namespace PLScene {
 *  @brief
 *    Abstract terrain loader base class
 */
-class TerrainLoader : public PLCore::Loader {
+class TerrainLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, TerrainLoader, "PLScene", PLCore::Loader, "Abstract terrain loader base class")
+	pl_class(PLS_RTTI_EXPORT, TerrainLoader, "PLScene", PLCore::LoaderImpl, "Abstract terrain loader base class")
 		pl_properties
 			pl_property("Type", "Terrain")
 		pl_properties_end

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLScene/PLScene.h"
 
 
@@ -45,13 +45,13 @@ namespace PLScene {
 *  @brief
 *    Abstract sky loader base class
 */
-class SkyLoader : public PLCore::Loader {
+class SkyLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SkyLoader, "PLScene", PLCore::Loader, "Abstract sky loader base class")
+	pl_class(PLS_RTTI_EXPORT, SkyLoader, "PLScene", PLCore::LoaderImpl, "Abstract sky loader base class")
 		pl_properties
 			pl_property("Type", "Sky")
 		pl_properties_end

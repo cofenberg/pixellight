@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLMesh/PLMesh.h"
 
 
@@ -49,13 +49,13 @@ namespace PLMesh {
 *    - Normally all load functions accept a boolean 'Static'-parameter, (default setting: 'true')
 *      if this parameter is 'true', the mesh is assumed to be 'static' (better performance)
 */
-class MeshLoader : public PLCore::Loader {
+class MeshLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLMESH_RTTI_EXPORT, MeshLoader, "PLMesh", PLCore::Loader, "Abstract mesh loader base class")
+	pl_class(PLMESH_RTTI_EXPORT, MeshLoader, "PLMesh", PLCore::LoaderImpl, "Abstract mesh loader base class")
 		pl_properties
 			pl_property("Type", "Mesh")
 		pl_properties_end

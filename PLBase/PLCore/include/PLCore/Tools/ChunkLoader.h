@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Tools/Loader.h"
+#include "PLCore/Tools/LoaderImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLCore {
 *  @brief
 *    Abstract chunk loader base class
 */
-class ChunkLoader : public Loader {
+class ChunkLoader : public LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, ChunkLoader, "PLCore", PLCore::Loader, "Abstract chunk loader base class")
+	pl_class(PLCORE_RTTI_EXPORT, ChunkLoader, "PLCore", PLCore::LoaderImpl, "Abstract chunk loader base class")
 		pl_properties
 			pl_property("Type", "Chunk")
 		pl_properties_end

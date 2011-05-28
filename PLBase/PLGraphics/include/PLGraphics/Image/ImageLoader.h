@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -45,13 +45,13 @@ namespace PLGraphics {
 *  @brief
 *    Abstract image loader base class
 */
-class ImageLoader : public PLCore::Loader {
+class ImageLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoader, "PLGraphics", PLCore::Loader, "Abstract image loader base class")
+	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoader, "PLGraphics", PLCore::LoaderImpl, "Abstract image loader base class")
 		pl_properties
 			pl_property("Type", "Image")
 		pl_properties_end

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: TextureAniLoader.h                             *
+ *  File: LoaderImpl.cpp                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,68 +20,55 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDERER_MATERIALLOADER_H__
-#define __PLRENDERER_MATERIALLOADER_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/LoaderImpl.h>
-#include "PLRenderer/PLRenderer.h"
+#include "PLCore/Tools/LoaderImpl.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRenderer {
+using namespace PLGeneral;
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(LoaderImpl)
+
+
+//[-------------------------------------------------------]
+//[ Public static data                                    ]
+//[-------------------------------------------------------]
+const String LoaderImpl::UnknownFormatVersion			= "Format version is unknown (too new), you may need to update your PixelLight version";
+const String LoaderImpl::DeprecatedFormatVersion		= "Deprecated format version";
+const String LoaderImpl::NoLongerSupportedFormatVersion	= "Format version is no longer supported";
+const String LoaderImpl::InvalidFormatVersion			= "Invalid format version";
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract texture animation loader base class
+*    Default constructor
 */
-class TextureAniLoader : public PLCore::LoaderImpl {
+LoaderImpl::LoaderImpl()
+{
+}
 
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLRENDERER_RTTI_EXPORT, TextureAniLoader, "PLRenderer", PLCore::LoaderImpl, "Abstract texture animation loader base class")
-		pl_properties
-			pl_property("Type", "TextureAni")
-		pl_properties_end
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		PLRENDERER_API TextureAniLoader();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLRENDERER_API virtual ~TextureAniLoader();
-
-
-};
+/**
+*  @brief
+*    Destructor
+*/
+LoaderImpl::~LoaderImpl()
+{
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRenderer
-
-
-#endif // __PLRENDERER_MATERIALLOADER_H__
+} // PLCore

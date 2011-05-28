@@ -266,6 +266,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Tools\LoadableManager.cpp" />
     <ClCompile Include="src\Tools\LoadableType.cpp" />
     <ClCompile Include="src\Tools\Loader.cpp" />
+    <ClCompile Include="src\Tools\LoaderImpl.cpp" />
     <ClCompile Include="src\Tools\Localization.cpp" />
     <ClCompile Include="src\Tools\LocalizationGroup.cpp" />
     <ClCompile Include="src\Tools\LocalizationLoader.cpp" />
@@ -338,6 +339,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\Tools\LoadableManager.h" />
     <ClInclude Include="include\PLCore\Tools\LoadableType.h" />
     <ClInclude Include="include\PLCore\Tools\Loader.h" />
+    <ClInclude Include="include\PLCore\Tools\LoaderImpl.h" />
     <ClInclude Include="include\PLCore\Tools\Localization.h" />
     <ClInclude Include="include\PLCore\Tools\LocalizationGroup.h" />
     <ClInclude Include="include\PLCore\Tools\LocalizationLoader.h" />

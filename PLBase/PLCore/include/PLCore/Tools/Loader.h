@@ -28,20 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/Object.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class File;
-	class Parameters;
-}
-namespace PLCore {
-	class Loadable;
-	class LoadableType;
-}
+#include <PLGeneral/String/String.h>
+#include <PLGeneral/Container/Array.h>
+#include "PLCore/PLCore.h"
 
 
 //[-------------------------------------------------------]
@@ -51,31 +40,25 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Class;
+class Loadable;
+class LoaderImpl;
+class LoadableType;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract loader base class, derive your concrete loader implementations from this class
+*    Loader class
 *
-*  @remarks
-*    A loader implementation is ONLY responsible for loading & saving, NOT for opening/closing
-*    concrete file objects!
-*    There's only one instance of each loader within the system, do NOT use class member variables,
-*    do ONLY use local variables else you may get in trouble when using multi-threading.
-*    By default, the loadable system looks for "Load" and "LoadParams" RTTI methods for loading, and
-*    "Save" and "SaveParams" for saving. For example "Load" is used if there are no special user provided
-*    parameters, "LoadParams" is used if a loader supports special format dependent parameters and
-*    the user explicitly set them. Please note that it's also possible to add methods with other names,
-*    when loading a loadable, this method name can be used explicitly. The first method parameter has to
-*    be a reference to the loadable, the second parameter has to be a reference to the file to operate on.
-*
-*    Each loader should have the followig properties:
-*    - "Type":    Loader type, usually only defined once within the abstract loader base class
-*    - "Formats": File format extensions this loader can load in (for example: "bmp" or "jpg,jpeg")
-*    - "Load":    "1" if loading is implemented, else "0"
-*    - "Save":    "1" if saving is implemented, else "0"
+*  @note
+*    - Implementation of the proxy design pattern
 */
-class Loader : public Object {
+class Loader {
 
 
 	//[-------------------------------------------------------]
@@ -87,32 +70,30 @@ class Loader : public Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Public static data                                    ]
-	//[-------------------------------------------------------]
-	public:
-		PLCORE_API static const PLGeneral::String UnknownFormatVersion;				/**< 'Unknown format version' string */
-		PLCORE_API static const PLGeneral::String DeprecatedFormatVersion;			/**< 'Deprecated format version' string */
-		PLCORE_API static const PLGeneral::String NoLongerSupportedFormatVersion;	/**< 'No longer supported format version' string */
-		PLCORE_API static const PLGeneral::String InvalidFormatVersion;				/**< 'Invalid format version' string */
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, Loader, "PLCore", PLCore::Object, "Abstract loader base class, derive your concrete loader implementations from this class")
-		pl_properties
-			pl_property("Type",		"Unknown")
-			pl_property("Formats",	"")
-			pl_property("Load",		"0")
-			pl_property("Save",		"0")
-		pl_properties_end
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
+		/**
+		*  @brief
+		*    Loader implementation class
+		*
+		*  @return
+		*    Loader implementation class
+		*/
+		PLCORE_API const Class &GetClass() const;
+
+		/**
+		*  @brief
+		*    Returns the loader implementation
+		*
+		*  @return
+		*    The loader implementation, a null pointer on error
+		*
+		*  @note
+		*    - If required, this method creates an instance of the loader implementation class
+		*/
+		PLCORE_API LoaderImpl *GetImpl();
+
 		/**
 		*  @brief
 		*    Returns the loadable type
@@ -202,26 +183,42 @@ class Loader : public Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
+	private:
 		/**
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API Loader();
+		Loader();
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cClass
+		*    Loader implementation class, must be derived from "PLCore::LoaderImpl"
+		*/
+		Loader(const Class &cClass);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~Loader();
+		~Loader();
 
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		Loader &operator =(const Loader &cSource);
 
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
 		*    Initializes the formats list
@@ -236,6 +233,8 @@ class Loader : public Object {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		const Class							*m_pClass;			/**< Loader implementation class, must be derived from "PLCore::LoaderImpl", always valid! */
+		LoaderImpl							*m_pLoaderImpl;		/**< Loader implementation class instance, can be a null pointer */
 		LoadableType						*m_pLoadableType;	/**< Loadable type, can be a null pointer */
 		PLGeneral::Array<PLGeneral::String>  m_lstFormats;		/**< List of parsed formats */
 

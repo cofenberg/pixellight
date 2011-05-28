@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -45,7 +45,7 @@ namespace PLCompositing {
 *  @brief
 *    Abstract post process loader base class
 */
-class PostProcessLoader : public PLCore::Loader {
+class PostProcessLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
@@ -57,7 +57,7 @@ class PostProcessLoader : public PLCore::Loader {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, PostProcessLoader, "PLCompositing", PLCore::Loader, "Abstract post process loader base class")
+	pl_class(PLCOM_RTTI_EXPORT, PostProcessLoader, "PLCompositing", PLCore::LoaderImpl, "Abstract post process loader base class")
 		pl_properties
 			pl_property("Type", "PostProcess")
 		pl_properties_end

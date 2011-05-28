@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLScene/PLScene.h"
 
 
@@ -45,13 +45,13 @@ namespace PLScene {
 *  @brief
 *    Abstract skin loader base class (embedded within SNMesh)
 */
-class SkinLoader : public PLCore::Loader {
+class SkinLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SkinLoader, "PLScene", PLCore::Loader, "Abstract skin loader base class (embedded within SNMesh)")
+	pl_class(PLS_RTTI_EXPORT, SkinLoader, "PLScene", PLCore::LoaderImpl, "Abstract skin loader base class (embedded within SNMesh)")
 		pl_properties
 			pl_property("Type", "Skin")
 		pl_properties_end

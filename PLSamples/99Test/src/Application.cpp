@@ -178,11 +178,11 @@ void Application::TestClasses()
 		System::GetInstance()->GetConsole().Print('\n');
 	}
 
-	// List classes derived from PLCore::Loader
+	// List classes derived from PLCore::LoaderImpl
 	{
-		System::GetInstance()->GetConsole().Print("All classes derived from PLCore::Loader:\n");
+		System::GetInstance()->GetConsole().Print("All classes derived from PLCore::LoaderImpl:\n");
 		List<const PLCore::Class *> lstClasses;
-		PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::Loader", PLCore::Recursive, PLCore::IncludeBase, PLCore::IncludeAbstract);
+		PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::LoaderImpl", PLCore::Recursive, PLCore::IncludeBase, PLCore::IncludeAbstract);
 		for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++) {
 			// Get class
 			const PLCore::Class *pClass = lstClasses[i];

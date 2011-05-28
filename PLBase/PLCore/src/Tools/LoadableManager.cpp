@@ -28,6 +28,7 @@
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/FileSearch.h>
 #include "PLCore/Base/Class.h"
+#include "PLCore/Base/ClassManager.h"
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Tools/LoadableType.h"
 #include "PLCore/Tools/LoadableManager.h"
@@ -480,7 +481,7 @@ LoadableManager::LoadableManager() :
 
 	// Register all loaders
 	List<const Class*> lstClasses;
-	ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::Loader", Recursive, NoBase, NoAbstract);
+	ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::LoaderImpl", Recursive, NoBase, NoAbstract);
 	Iterator<const Class*> cIterator = lstClasses.GetIterator();
 	while (cIterator.HasNext())
 		m_lstNewClasses.Add(cIterator.Next());
@@ -501,6 +502,16 @@ LoadableManager::~LoadableManager()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Copy operator
+*/
+LoadableManager &LoadableManager::operator =(const LoadableManager &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
+}
+
 /**
 *  @brief
 *    Register a class
@@ -526,36 +537,33 @@ void LoadableManager::RegisterClasses()
 			const Class *pClass = cIterator.Next();
 
 			// Check parameter and base class
-			static const String sClassString = "PLCore::Loader";
+			static const String sClassString = "PLCore::LoaderImpl";
 			if (pClass->IsDerivedFrom(sClassString)) {
-				// Create loader instance
+				// Get the loadable type
 				const String sType = pClass->GetProperties().Get("Type");
 				if (sType.GetLength()) {
-					Loader *pLoader = static_cast<Loader*>(pClass->Create());
-					if (pLoader) {
-						// Try to get an instance of the loadable type
-						LoadableType *pLoadableType = m_mapTypes.Get(sType);
-						if (!pLoadableType) {
-							// Currently, there's no such loadable type, add one
+					// Try to get an instance of the loadable type
+					LoadableType *pLoadableType = m_mapTypes.Get(sType);
+					if (!pLoadableType) {
+						// Currently, there's no such loadable type, add one
 
-							// Find the base class, all loader implementations of this type are derived from
-							const Class *pLoaderClass = ClassManager::GetInstance()->GetClass(sClassString);
-							const Class *pLoaderTypeClass = pClass->GetBaseClass();
-							while (pLoaderTypeClass && pLoaderTypeClass->GetBaseClass() != pLoaderClass)
-								pLoaderTypeClass = pLoaderTypeClass->GetBaseClass();
+						// Find the base class, all loader implementations of this type are derived from
+						const Class *pLoaderClass = ClassManager::GetInstance()->GetClass(sClassString);
+						const Class *pLoaderTypeClass = pClass->GetBaseClass();
+						while (pLoaderTypeClass && pLoaderTypeClass->GetBaseClass() != pLoaderClass)
+							pLoaderTypeClass = pLoaderTypeClass->GetBaseClass();
 
-							// Create type
-							if (pLoaderTypeClass) {
-								pLoadableType = new LoadableType(sType, *pLoaderTypeClass);
-								m_lstTypes.Add(pLoadableType);
-								m_mapTypes.Add(sType, pLoadableType);
-							}
+						// Create type
+						if (pLoaderTypeClass) {
+							pLoadableType = new LoadableType(sType, *pLoaderTypeClass);
+							m_lstTypes.Add(pLoadableType);
+							m_mapTypes.Add(sType, pLoadableType);
 						}
-
-						// Add loader to this loadable type
-						if (pLoadableType)
-							pLoadableType->AddLoader(*pLoader);
 					}
+
+					// Create loader instance and add loader to this loadable type
+					if (pLoadableType)
+						pLoadableType->AddLoader(*(new Loader(*pClass)));
 				}
 			}
 		}

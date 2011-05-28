@@ -149,6 +149,16 @@ Loader *LoadableType::GetLoader(const String &sExtension) const
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Default constructor
+*/
+LoadableType::LoadableType() :
+	m_pClass(nullptr)
+{
+	// No implementation because the copy operator is never used
+}
+
+/**
+*  @brief
 *    Constructor
 */
 LoadableType::LoadableType(const String &sName, const Class &cClass) :
@@ -163,6 +173,16 @@ LoadableType::LoadableType(const String &sName, const Class &cClass) :
 */
 LoadableType::~LoadableType()
 {
+}
+
+/**
+*  @brief
+*    Copy operator
+*/
+LoadableType &LoadableType::operator =(const LoadableType &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 /**
@@ -187,13 +207,13 @@ void LoadableType::AddLoader(Loader &cLoader)
 			if (pLoader) {
 				// Two loaders for the same format extension of the same loadable type? That's not ok!
 				// (in fact, CAN happen, but we don't allow this!)
-				PL_LOG(Error, "Loader '" + cLoader.GetClass()->GetClassName() + "': Format '" + sFormat + "' is already used by loader '" + pLoader->GetClass()->GetClassName());
+				PL_LOG(Error, "Loader '" + cLoader.m_pClass->GetClassName() + "': Format '" + sFormat + "' is already used by loader '" + cLoader.m_pClass->GetClassName());
 			} else {
 				// Is there already such a format within the loadable manager?
 				pLoader = pLoadableManager->m_mapLoaders.Get(sFormat);
 				if (pLoader) {
 					// Write a note into the log - but no error because that a situation that CAN occur
-					PL_LOG(Info, "Loader '" + cLoader.GetClass()->GetClassName() + "': Format '" + sFormat + "' is already used by loader '" + pLoader->GetClass()->GetClassName());
+					PL_LOG(Info, "Loader '" + cLoader.m_pClass->GetClassName() + "': Format '" + sFormat + "' is already used by loader '" + cLoader.m_pClass->GetClassName());
 
 				// Add format to the loadable manager
 				} else {

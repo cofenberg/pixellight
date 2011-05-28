@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Loader.h>
 #include "PLCompositing/Shaders/PostProcessing/PostProcess.h"
 #include "PLCompositing/Shaders/PostProcessing/PostProcessLoader.h"
 #include "PLCompositing/Shaders/PostProcessing/PostProcessManager.h"
@@ -113,14 +114,22 @@ String PostProcessManager::GetLoadableTypeName() const
 //[-------------------------------------------------------]
 bool PostProcessManager::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
 {
-	if (sParams.GetLength()) {
-		cLoader.CallMethod(sMethod, "Param0=\"" + Type<PostProcessManager&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-		return true;
-	} else {
-		Params<bool, PostProcessManager&, File&> cParams(*this, cFile);
-		cLoader.CallMethod(sMethod, cParams);
-		return cParams.Return;
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<PostProcessManager&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, PostProcessManager&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
 	}
+
+	// Error!
+	return false;
 }
 
 

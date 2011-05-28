@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include "PLMesh/PLMesh.h"
 
 
@@ -51,13 +51,13 @@ namespace PLMesh {
 *    (RefSkeleton'-pointer parameter) in order to be able to load in all available skeleton
 *    animation formats.
 */
-class SkeletonAniLoader : public PLCore::Loader {
+class SkeletonAniLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLMESH_RTTI_EXPORT, SkeletonAniLoader, "PLMesh", PLCore::Loader, "Abstract skeleton animation loader base class")
+	pl_class(PLMESH_RTTI_EXPORT, SkeletonAniLoader, "PLMesh", PLCore::LoaderImpl, "Abstract skeleton animation loader base class")
 		pl_properties
 			pl_property("Type", "Skeleton")
 		pl_properties_end

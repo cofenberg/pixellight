@@ -157,6 +157,9 @@
     <ClCompile Include="src\Base\ClassDummy.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tools\LoaderImpl.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Core.h">
@@ -380,6 +383,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\ClassDummy.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Tools\LoaderImpl.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -428,6 +428,18 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 	private:
 		/**
 		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		LoadableManager &operator =(const LoadableManager &cSource);
+
+		/**
+		*  @brief
 		*    Register a class
 		*
 		*  @param[in] pClass

@@ -27,6 +27,7 @@
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/Log/Log.h>
 #include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLGraphics/Image/ImageEffects.h>
@@ -297,13 +298,13 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 						// Unkown
 						if (nVersion > 1) {
-							PL_LOG(Error, cDocument.GetValue() + ": " + Loader::UnknownFormatVersion)
+							PL_LOG(Error, cDocument.GetValue() + ": " + LoaderImpl::UnknownFormatVersion)
 
 						// 1 (current) or ""/0 (same format as 1)
 						} else if (nVersion == 1 || nVersion == 0) {
 							// [DEPRECATED]
 							if (nVersion == 0)
-								PL_LOG(Warning, cDocument.GetValue() + ": " + Loader::DeprecatedFormatVersion)
+								PL_LOG(Warning, cDocument.GetValue() + ": " + LoaderImpl::DeprecatedFormatVersion)
 
 							// Iterate through all general elements
 							String sValue;
@@ -436,11 +437,11 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 						// No longer supported format version
 						} else if (nVersion >= 0) {
-							PL_LOG(Warning, cDocument.GetValue() + ": " + Loader::NoLongerSupportedFormatVersion)
+							PL_LOG(Warning, cDocument.GetValue() + ": " + LoaderImpl::NoLongerSupportedFormatVersion)
 
 						// Invalid format version (negative!)
 						} else {
-							PL_LOG(Error, cDocument.GetValue() + ": " + Loader::InvalidFormatVersion)
+							PL_LOG(Error, cDocument.GetValue() + ": " + LoaderImpl::InvalidFormatVersion)
 						}
 
 						// We can only reduce the quality if this is allowed for this texture

@@ -27,6 +27,7 @@
 #include <PLGeneral/Container/Stack.h>
 #include <PLGeneral/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Loader.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneHierarchy.h"
 #include "PLScene/Scene/SceneHierarchyNode.h"
@@ -647,14 +648,22 @@ String SceneContainer::GetLoadableTypeName() const
 //[-------------------------------------------------------]
 bool SceneContainer::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
 {
-	if (sParams.GetLength()) {
-		cLoader.CallMethod(sMethod, "Param0=\"" + Type<SceneContainer&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-		return true;
-	} else {
-		Params<bool, SceneContainer&, File&> cParams(*this, cFile);
-		cLoader.CallMethod(sMethod, cParams);
-		return cParams.Return;
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<SceneContainer&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, SceneContainer&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
 	}
+
+	// Error!
+	return false;
 }
 
 
