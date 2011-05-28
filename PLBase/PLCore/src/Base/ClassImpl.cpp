@@ -150,9 +150,9 @@ String ClassImpl::GetNamespace() const
 */
 const Class *ClassImpl::GetBaseClass() const
 {
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
+	// Get base class?
+	if (!m_pBaseClass && m_sBaseClass.GetLength())
+		m_pBaseClass = ClassManager::GetInstance()->GetClass(m_sBaseClass);
 
 	// Return base class
 	return m_pBaseClass;
@@ -213,10 +213,11 @@ void ClassImpl::InitClass() const
 	// Check if class has already been initialized
 	if (!m_bInitialized) {
 		// Get base class
-		m_pBaseClass = ClassManager::GetInstance()->GetClass(m_sBaseClass);
+		if (m_sBaseClass.GetLength())
+			m_pBaseClass = ClassManager::GetInstance()->GetClass(m_sBaseClass);
 
 		// Check if a valid base class has been found
-		if (m_pBaseClass || m_sBaseClass == "") {
+		if (m_pBaseClass || !m_sBaseClass.GetLength()) {
 			// Do we have a base class? (only Object doesn't, but that must count, too)
 			if (m_pBaseClass) {
 				// Get the real base class implementation
