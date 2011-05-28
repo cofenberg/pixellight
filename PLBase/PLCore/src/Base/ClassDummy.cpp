@@ -37,12 +37,108 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Private static data                                   ]
+//[-------------------------------------------------------]
+HashMap<String, MemberDesc*> ClassDummy::m_mapMembers;
+List<VarDesc*>				 ClassDummy::m_lstAttributes;
+List<FuncDesc*>				 ClassDummy::m_lstMethods;
+List<EventDesc*>			 ClassDummy::m_lstSignals;
+List<EventHandlerDesc*>		 ClassDummy::m_lstSlots;
+List<ConstructorDesc*>		 ClassDummy::m_lstConstructors;
+
+
+//[-------------------------------------------------------]
 //[ Protected virtual ClassImpl functions                 ]
 //[-------------------------------------------------------]
 bool ClassDummy::IsDummy() const
 {
 	// Bah! It's just a dummy!
 	return true;
+}
+
+/**
+*  @brief
+*    Initialize class and class members
+*/
+void ClassDummy::InitClass() const
+{
+	// Check if class has already been initialized
+	if (!m_bInitialized) {
+		// Get base class
+		if (m_sBaseClass.GetLength())
+			m_pBaseClass = ClassManager::GetInstance()->GetClass(m_sBaseClass);
+
+		// Check if a valid base class has been found
+		if (m_pBaseClass || !m_sBaseClass.GetLength()) {
+			// Do we have a base class? (only Object doesn't, but that must count, too)
+			if (m_pBaseClass) {
+				// Initialize base class
+				static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl)->InitClass();
+
+				// Add properties from base class
+				ClassImpl *pBaseClassReal = static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl);
+				Iterator<String> cIterator = pBaseClassReal->m_mapOwnProperties.GetKeyIterator();
+				while (cIterator.HasNext()) {
+					const String sName  = cIterator.Next();
+					const String sValue = pBaseClassReal->m_mapOwnProperties.Get(sName);
+					m_mapProperties.Set(sName, sValue);
+				}
+
+				// The dummy doesn't support attributes
+				// The dummy doesn't support methods
+				// The dummy doesn't support signals
+				// The dummy doesn't support slots
+
+				// Constructors are not copied from base classes, only the own constructors can be used!
+			}
+
+			// Add own properties
+			Iterator<String> cIterator = m_mapOwnProperties.GetKeyIterator();
+			while (cIterator.HasNext()) {
+				const String sName  = cIterator.Next();
+				const String sValue = m_mapOwnProperties.Get(sName);
+				m_mapProperties.Set(sName, sValue);
+			}
+
+			// The dummy doesn't support attributes
+			// The dummy doesn't support methods
+			// The dummy doesn't support signals
+			// The dummy doesn't support slots
+
+			// Done
+			m_bInitialized = true;
+		} else {
+			// Error! Could not find base class
+		}
+	}
+}
+
+/**
+*  @brief
+*    De-Initialize class and class members
+*/
+void ClassDummy::DeInitClass() const
+{
+	// Clear lists
+	m_mapProperties.Clear();
+	// The dummy doesn't support members
+	// The dummy doesn't support attributes
+	// The dummy doesn't support methods
+	// The dummy doesn't support signals
+	// The dummy doesn't support slots
+	// The dummy doesn't support constructors
+
+	// Remove base class
+	m_pBaseClass = nullptr;
+
+	// Class de-initialized
+	m_bInitialized = false;
+
+	// De-initialize derived classes
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, m_sClassName, NonRecursive, NoBase, IncludeAbstract);
+	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
+		lstClasses[i]->m_pClassImpl->DeInitClass();
 }
 
 const List<VarDesc*> &ClassDummy::GetAttributes() const
@@ -166,6 +262,9 @@ ClassDummy::ClassDummy(uint32 nModuleID, const String &sName, const String &sDes
 */
 ClassDummy::~ClassDummy()
 {
+	// De-initialize class
+	if (m_bInitialized)
+		DeInitClass();
 }
 
 /*

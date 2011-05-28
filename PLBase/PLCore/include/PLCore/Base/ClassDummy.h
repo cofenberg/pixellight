@@ -58,6 +58,8 @@ class ClassDummy : public ClassImpl {
 	//[-------------------------------------------------------]
 	protected:
 		virtual bool IsDummy() const;
+		virtual void InitClass() const;
+		virtual void DeInitClass() const;
 		virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
 		virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
 		virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
@@ -117,6 +119,19 @@ class ClassDummy : public ClassImpl {
 		*    - Please note that it's not valid to use this dummy class implementation after this method was call because it may have been killed!
 		*/
 		ClassImpl *GetRealClassImpl() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private static data                                   ]
+	//[-------------------------------------------------------]
+	private:
+		// Member lists (also including the members from base classes) - static because those are just dummies in here
+		static PLGeneral::HashMap<PLGeneral::String, MemberDesc*> m_mapMembers;			/**< Hash map of names -> members */
+		static PLGeneral::List<VarDesc*>						  m_lstAttributes;		/**< List of attributes */
+		static PLGeneral::List<FuncDesc*>						  m_lstMethods;			/**< List of methods */
+		static PLGeneral::List<EventDesc*>						  m_lstSignals;			/**< List of signals */
+		static PLGeneral::List<EventHandlerDesc*>				  m_lstSlots;			/**< List of slots */
+		static PLGeneral::List<ConstructorDesc*>				  m_lstConstructors;	/**< List of constructors */
 
 
 	//[-------------------------------------------------------]

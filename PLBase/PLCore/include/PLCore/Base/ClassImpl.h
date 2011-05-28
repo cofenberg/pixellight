@@ -225,29 +225,6 @@ class ClassImpl {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Initialize class and class members
-		*
-		*  @remarks
-		*    This function is called automatically when it is necessary, e.g. the first time
-		*    any members are being accessed. It will search for the base class of the class
-		*    and initialize all members. If later a class is changed (e.g. a new member is
-		*    registered at one of the base classes), that class and all derived classes will
-		*    destroy their information and must be initialized again.
-		*/
-		PLCORE_API void InitClass() const;
-
-		/**
-		*  @brief
-		*    De-Initialize class and class members
-		*
-		*  @remarks
-		*    This function destroyes all data about the class and it's members. See
-		*    InitClass() for more information about why this is necessary and when.
-		*/
-		PLCORE_API void DeInitClass() const;
-
-		/**
-		*  @brief
 		*    Add property
 		*
 		*  @param[in] sName
@@ -262,6 +239,9 @@ class ClassImpl {
 	//[ Protected virtual ClassImpl functions                 ]
 	//[-------------------------------------------------------]
 	protected:
+		//[-------------------------------------------------------]
+		//[ Class management                                      ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Return whether or not the class implementation is a dummy used for delayed shared library loading
@@ -270,6 +250,29 @@ class ClassImpl {
 		*    'true' if the class implementation is a dummy used for delayed shared library loading, else 'false'
 		*/
 		virtual bool IsDummy() const = 0;
+
+		/**
+		*  @brief
+		*    Initialize class and class members
+		*
+		*  @remarks
+		*    This function is called automatically when it is necessary, e.g. the first time
+		*    any members are being accessed. It will search for the base class of the class
+		*    and initialize all members. If later a class is changed (e.g. a new member is
+		*    registered at one of the base classes), that class and all derived classes will
+		*    destroy their information and must be initialized again.
+		*/
+		virtual void InitClass() const = 0;
+
+		/**
+		*  @brief
+		*    De-Initialize class and class members
+		*
+		*  @remarks
+		*    This function destroyes all data about the class and it's members. See
+		*    InitClass() for more information about why this is necessary and when.
+		*/
+		virtual void DeInitClass() const = 0;
 
 		//[-------------------------------------------------------]
 		//[ Class interface                                       ]
@@ -449,9 +452,8 @@ class ClassImpl {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Class *m_pClass;	/**< Class instance wrapping this class implementation (can be a null pointer, set and managed by the class manager) */
-
 		// Class information
+		Class															*m_pClass;				/**< Class instance wrapping this class implementation (can be a null pointer, set and managed by the class manager) */
 		PLGeneral::String												 m_sName;				/**< Name of class */
 		PLGeneral::String												 m_sNamespace;			/**< Namespace of class */
 		PLGeneral::String												 m_sClassName;			/**< Name of class (with namespace) */
@@ -459,7 +461,6 @@ class ClassImpl {
 		PLGeneral::String												 m_sBaseClass;			/**< Name of base class (with namespace) */
 
 		// Own data (does not include data from base classes)
-		PLGeneral::List<MemberDesc*>									 m_lstOwnMembers;		/**< List of members */
 		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>		 m_mapOwnProperties;	/**< Hash map of properties (name -> value) */
 
 		// Runtime data
@@ -469,12 +470,6 @@ class ClassImpl {
 
 		// Member lists (also including the members from base classes)
 		mutable PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;		/**< Hash map of properties (name -> value) */
-		mutable PLGeneral::HashMap<PLGeneral::String, MemberDesc*>		 m_mapMembers;			/**< Hash map of names -> members */
-		mutable PLGeneral::List<VarDesc*>								 m_lstAttributes;		/**< List of attributes */
-		mutable PLGeneral::List<FuncDesc*>								 m_lstMethods;			/**< List of methods */
-		mutable PLGeneral::List<EventDesc*>								 m_lstSignals;			/**< List of signals */
-		mutable PLGeneral::List<EventHandlerDesc*>						 m_lstSlots;			/**< List of slots */
-		mutable PLGeneral::List<ConstructorDesc*>						 m_lstConstructors;		/**< List of constructors */
 
 
 	//[-------------------------------------------------------]

@@ -62,6 +62,8 @@ class ClassReal : public ClassImpl {
 	//[-------------------------------------------------------]
 	protected:
 		PLCORE_API virtual bool IsDummy() const;
+		PLCORE_API virtual void InitClass() const;
+		PLCORE_API virtual void DeInitClass() const;
 		PLCORE_API virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
 		PLCORE_API virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
 		PLCORE_API virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
@@ -119,6 +121,22 @@ class ClassReal : public ClassImpl {
 		*    Member descriptor
 		*/
 		PLCORE_API void AddMember(MemberDesc *pMemberDesc);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		// Own data (does not include data from base classes)
+		PLGeneral::List<MemberDesc*>									 m_lstOwnMembers;	/**< List of members */
+
+		// Member lists (also including the members from base classes)
+		mutable PLGeneral::HashMap<PLGeneral::String, MemberDesc*>		 m_mapMembers;		/**< Hash map of names -> members */
+		mutable PLGeneral::List<VarDesc*>								 m_lstAttributes;	/**< List of attributes */
+		mutable PLGeneral::List<FuncDesc*>								 m_lstMethods;		/**< List of methods */
+		mutable PLGeneral::List<EventDesc*>								 m_lstSignals;		/**< List of signals */
+		mutable PLGeneral::List<EventHandlerDesc*>						 m_lstSlots;		/**< List of slots */
+		mutable PLGeneral::List<ConstructorDesc*>						 m_lstConstructors;	/**< List of constructors */
 
 
 };

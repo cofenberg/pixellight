@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Base/Var/VarDesc.h"
 #include "PLCore/Base/Func/FuncDesc.h"
@@ -60,6 +61,10 @@ ClassReal::~ClassReal()
 {
 	// Unregister at class manager
 	ClassManager::GetInstance()->UnregisterClass(m_nModuleID, this);
+
+	// De-initialize class
+	if (m_bInitialized)
+		DeInitClass();
 }
 
 
@@ -70,6 +75,166 @@ bool ClassReal::IsDummy() const
 {
 	// This is the real thingy!
 	return false;
+}
+
+/**
+*  @brief
+*    Initialize class and class members
+*/
+void ClassReal::InitClass() const
+{
+	// Check if class has already been initialized
+	if (!m_bInitialized) {
+		// Get base class
+		if (m_sBaseClass.GetLength())
+			m_pBaseClass = ClassManager::GetInstance()->GetClass(m_sBaseClass);
+
+		// Check if a valid base class has been found
+		if (m_pBaseClass || !m_sBaseClass.GetLength()) {
+			// Do we have a base class? (only Object doesn't, but that must count, too)
+			if (m_pBaseClass) {
+				// Initialize base class
+				static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl)->InitClass();
+
+				{ // Add properties from base class
+					ClassImpl *pBaseClassReal = static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl);
+					Iterator<String> cIterator = pBaseClassReal->m_mapOwnProperties.GetKeyIterator();
+					while (cIterator.HasNext()) {
+						const String sName  = cIterator.Next();
+						const String sValue = pBaseClassReal->m_mapOwnProperties.Get(sName);
+						m_mapProperties.Set(sName, sValue);
+					}
+				}
+
+				// Add attributes from base class
+				m_lstAttributes = m_pBaseClass->GetAttributes();
+				for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++) {
+					VarDesc *pAttr = m_lstAttributes[i];
+					m_mapMembers.Add(pAttr->GetName(), pAttr);
+				}
+
+				// Add methods from base class
+				m_lstMethods = m_pBaseClass->GetMethods();
+				for (uint32 i=0; i<m_lstMethods.GetNumOfElements(); i++) {
+					FuncDesc *pMethod = m_lstMethods[i];
+					m_mapMembers.Add(pMethod->GetName(), pMethod);
+				}
+
+				// Add signals from base class
+				m_lstSignals = m_pBaseClass->GetSignals();
+				for (uint32 i=0; i<m_lstSignals.GetNumOfElements(); i++) {
+					EventDesc *pSignal = m_lstSignals[i];
+					m_mapMembers.Add(pSignal->GetName(), pSignal);
+				}
+
+				// Add slots from base class
+				m_lstSlots = m_pBaseClass->GetSlots();
+				for (uint32 i=0; i<m_lstSlots.GetNumOfElements(); i++) {
+					EventHandlerDesc *pSlot = m_lstSlots[i];
+					m_mapMembers.Add(pSlot->GetName(), pSlot);
+				}
+
+				// Constructors are not copied from base classes, only the own constructors can be used!
+			}
+
+			// Add own properties
+			Iterator<String> cIterator = m_mapOwnProperties.GetKeyIterator();
+			while (cIterator.HasNext()) {
+				const String sName  = cIterator.Next();
+				const String sValue = m_mapOwnProperties.Get(sName);
+				m_mapProperties.Set(sName, sValue);
+			}
+
+			// Add own members
+			for (uint32 i=0; i<m_lstOwnMembers.GetNumOfElements(); i++) {
+				// Get member
+				MemberDesc *pMember = m_lstOwnMembers[i];
+
+				// Add to hash map and overwrite variables from base classes that are already there (having the same name!)
+				MemberDesc *pOverwriteMember = m_mapMembers.Get(pMember->GetName());
+				if (pOverwriteMember) {
+					// Overwrite base class member
+					m_mapMembers.Set(pMember->GetName(), pMember);
+				} else {
+					// Add new member
+					m_mapMembers.Add(pMember->GetName(), pMember);
+				}
+
+				// Check type and add to respective list
+				switch (pMember->GetMemberType()) {
+					// Attribute
+					case MemberAttribute:
+						if (pOverwriteMember)
+							m_lstAttributes.Replace(static_cast<VarDesc*>(pOverwriteMember), static_cast<VarDesc*>(pMember));
+						else
+							m_lstAttributes.Add(static_cast<VarDesc*>(pMember));
+						break;
+
+					// Method
+					case MemberMethod:
+						if (pOverwriteMember)
+							m_lstMethods.Replace(static_cast<FuncDesc*>(pOverwriteMember), static_cast<FuncDesc*>(pMember));
+						else
+							m_lstMethods.Add(static_cast<FuncDesc*>(pMember));
+						break;
+
+					// Event
+					case MemberEvent:
+						if (pOverwriteMember)
+							m_lstSignals.Replace(static_cast<EventDesc*>(pOverwriteMember), static_cast<EventDesc*>(pMember));
+						else
+							m_lstSignals.Add(static_cast<EventDesc*>(pMember));
+						break;
+
+					// Event handler
+					case MemberEventHandler:
+						if (pOverwriteMember)
+							m_lstSlots.Replace(static_cast<EventHandlerDesc*>(pOverwriteMember), static_cast<EventHandlerDesc*>(pMember));
+						else
+							m_lstSlots.Add(static_cast<EventHandlerDesc*>(pMember));
+						break;
+
+					// Constructor
+					case MemberConstructor:
+						m_lstConstructors.Add(static_cast<ConstructorDesc*>(pMember));
+						break;
+				}
+			}
+
+			// Done
+			m_bInitialized = true;
+		} else {
+			// Error! Could not find base class
+		}
+	}
+}
+
+/**
+*  @brief
+*    De-Initialize class and class members
+*/
+void ClassReal::DeInitClass() const
+{
+	// Clear lists
+	m_mapProperties.Clear();
+	m_mapMembers.Clear();
+	m_lstAttributes.Clear();
+	m_lstMethods.Clear();
+	m_lstSignals.Clear();
+	m_lstSlots.Clear();
+	m_lstConstructors.Clear();
+
+	// Remove base class
+	m_pBaseClass = nullptr;
+
+	// Class de-initialized
+	m_bInitialized = false;
+
+	// De-initialize derived classes
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, m_sClassName, NonRecursive, NoBase, IncludeAbstract);
+	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
+		lstClasses[i]->m_pClassImpl->DeInitClass();
 }
 
 const List<VarDesc*> &ClassReal::GetAttributes() const
@@ -244,8 +409,7 @@ Object *ClassReal::Create() const
 		// Check if this constructor is a default constructor
 		if (pConstructor->GetSignature() == "Object*()") {
 			// Call constructor
-			Params<Object*> cParams;
-			return pConstructor->Create(cParams);
+			return pConstructor->Create(Params<Object*>());
 		}
 	}
 

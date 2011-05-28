@@ -71,6 +71,7 @@ class Class {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class ClassImpl;
+	friend class ClassReal;
 	friend class ClassDummy;
 	friend class ClassManager;
 
