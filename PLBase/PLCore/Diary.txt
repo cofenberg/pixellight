@@ -4,6 +4,11 @@
   loader instances. To delay the plugin loading, "Loader" is now just a proxy and "LoaderImpl" the real loader implementation. This way, the available
   loader implementations are registered correctly, but the actual loader implementations which require to load in the shared library are only
   created when really required.
+- The RTTI interface for "Object" was defined as
+    pl_class_internal(Object, "PLCore", "", "Object base class")
+  and the result was that the base class of "Object" was "" instead of <no base class>, meaning an empty string. I changed it to
+    pl_class_internal(Object, "PLCore", , "Object base class")
+  ... although it looks somewhat strange, it's correct this way.
 
 
 
