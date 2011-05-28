@@ -92,7 +92,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 		*    Returns the post process manager
 		*
 		*  @note
-		*    - The default implementation is empty
+		*    - If the post process manager is not initialized yet, this method will initialize it
 		*/
 		PLCOM_API PostProcessManager &GetPostProcessManager();
 
@@ -149,13 +149,6 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLScene::SceneNodeModifier functions ]
-	//[-------------------------------------------------------]
-	protected:
-		PLCOM_API virtual void InformedOnInit();
-
-
-	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
@@ -186,7 +179,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PostProcessManager *m_pPostProcessManager;	/**< Post process manager (always valid!) */
+		PostProcessManager *m_pPostProcessManager;	/**< Post process manager, can be a null pointer */
 
 
 };

@@ -1,3 +1,10 @@
+>> 28.05.2011
+[CO]
+- "SNMPostProcess" is now using lazy evaluation of the internal post process manager... if this post process manager is never used during runtime,
+  this scene node modifier is now super-lightweight :)
+
+
+
 >> 21.04.2011
 [CO]
 - Moved the content from "SRPDebugHierarchiesFixedFunctions" into "SRPDebugHierarchies" because a special fixed functions or shader implementation is no longer

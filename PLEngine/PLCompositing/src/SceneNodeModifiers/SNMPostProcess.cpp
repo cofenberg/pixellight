@@ -58,7 +58,8 @@ void SNMPostProcess::SetFilename(const String &sValue)
 {
 	if (m_sFilename != sValue) {
 		m_sFilename = sValue;
-		m_pPostProcessManager->Load(m_sFilename);
+		if (m_pPostProcessManager)
+			m_pPostProcessManager->Load(m_sFilename);
 	}
 }
 
@@ -72,6 +73,14 @@ void SNMPostProcess::SetFilename(const String &sValue)
 */
 PostProcessManager &SNMPostProcess::GetPostProcessManager()
 {
+	// Create the post process manager instance right now?
+	if (!m_pPostProcessManager) {
+		m_pPostProcessManager = new PostProcessManager(GetSceneNode().GetSceneContext()->GetRendererContext());
+		if (m_sFilename.GetLength())
+			m_pPostProcessManager->Load(m_sFilename);
+	}
+
+	// Return the post process manager instance
 	return *m_pPostProcessManager;
 }
 
@@ -82,7 +91,7 @@ PostProcessManager &SNMPostProcess::GetPostProcessManager()
 Parameter *SNMPostProcess::GetParameter(const String &sName, uint32 nIndex, bool bActiveOnly)
 {
 	// Get post process
-	const PostProcess *pPostProcess = m_pPostProcessManager->Get(nIndex);
+	const PostProcess *pPostProcess = GetPostProcessManager().Get(nIndex);
 	if (pPostProcess && (!bActiveOnly || pPostProcess->IsActive())) {
 		// Get material
 		const Material *pMaterial = pPostProcess->GetMaterial();
@@ -101,8 +110,9 @@ Parameter *SNMPostProcess::GetParameter(const String &sName, uint32 nIndex, bool
 bool SNMPostProcess::GetParameters(const String &sName, Array<Parameter*> &lstParameters, bool bActiveOnly)
 {
 	// Loop through all post processes
-	for (uint32 nPostProcess=0; nPostProcess<m_pPostProcessManager->GetNumOfElements(); nPostProcess++) {
-		const PostProcess *pPostProcess = m_pPostProcessManager->Get(nPostProcess);
+	PostProcessManager &cPostProcessManager = GetPostProcessManager();
+	for (uint32 nPostProcess=0; nPostProcess<cPostProcessManager.GetNumOfElements(); nPostProcess++) {
+		const PostProcess *pPostProcess = cPostProcessManager.Get(nPostProcess);
 		if (!bActiveOnly || pPostProcess->IsActive()) {
 			// Get material
 			const Material *pMaterial = pPostProcess->GetMaterial();
@@ -130,9 +140,10 @@ bool SNMPostProcess::GetParameters(const String &sName, Array<Parameter*> &lstPa
 void SNMPostProcess::SetParameters()
 {
 	// Set all EffectWeight to 1, except for the last effect
-	const uint32 nNumOfPostProcesses = m_pPostProcessManager->GetNumOfElements();
+	PostProcessManager &cPostProcessManager = GetPostProcessManager();
+	const uint32 nNumOfPostProcesses = cPostProcessManager.GetNumOfElements();
 	for (uint32 nPostProcess=0; nPostProcess<nNumOfPostProcesses; nPostProcess++) {
-		const PostProcess *pPostProcess = m_pPostProcessManager->Get(nPostProcess);
+		const PostProcess *pPostProcess = cPostProcessManager.Get(nPostProcess);
 
 		// Get material
 		const Material *pMaterial = pPostProcess->GetMaterial();
@@ -147,16 +158,6 @@ void SNMPostProcess::SetParameters()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLScene::SceneNodeModifier functions ]
-//[-------------------------------------------------------]
-void SNMPostProcess::InformedOnInit()
-{
-	// Load the post process
-	m_pPostProcessManager->Load(GetFilename());
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
@@ -166,7 +167,7 @@ void SNMPostProcess::InformedOnInit()
 SNMPostProcess::SNMPostProcess(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Filename(this),
 	EffectWeight(this),
-	m_pPostProcessManager(new PostProcessManager(GetSceneNode().GetSceneContext()->GetRendererContext()))
+	m_pPostProcessManager(nullptr)
 {
 }
 
@@ -176,7 +177,9 @@ SNMPostProcess::SNMPostProcess(SceneNode &cSceneNode) : SceneNodeModifier(cScene
 */
 SNMPostProcess::~SNMPostProcess()
 {
-	delete m_pPostProcessManager;
+	// Destroy the post process manager instance, if there's one
+	if (m_pPostProcessManager)
+		delete m_pPostProcessManager;
 }
 
 
