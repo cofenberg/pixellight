@@ -281,10 +281,9 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 					cReg.SetValueString(sExpression, sValue);
 					cReg.Close();
 				}
-			}
 
 			// Check for <<stepinto>>
-			if (cRegExStepInto.Match(sLine)) {
+			} else if (cRegExStepInto.Match(sLine)) {
 				// Get expression
 				String sExpression = cRegExStepInto.GetNameResult("exp");
 				Message(STATUS, "StepInto: '" + sExpression + '\'');
@@ -297,10 +296,9 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 					cReg.SetValueString(sExpression, sValue);
 					cReg.Close();
 				}
-			}
 
 			// Check for localization string
-			if (cRegExI18n.Match(sLine)) {
+			} else if (cRegExI18n.Match(sLine)) {
 				String sString = cRegExI18n.GetResult(0);
 				Message(STATUS, "Localization String: '" + sString + '\'');
 				pLocalizationGroup->AddText(sString, sString);
@@ -311,6 +309,7 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 		cFile.Close();
 	}
 
+	// [TODO] Right now, this is just a test
 //	String sLocFile = cProject.sPath + "/test.loc";
 //	pLocalizationGroup->Save(sLocFile);
 
@@ -357,93 +356,94 @@ bool ParseModule(Project &cProject)
 		String sLine = cFile.GetS();
 		Message(DEBUG, sLine);
 
-		// Check for pl_module
+		// Check for module definition, may start with "pl_module" or "pl_module_plugin"
+		bool bParseModule = false;
 		if (cRegExModule.Match(sLine)) {
+			bParseModule = true;
 			cProject.sModuleName = cRegExModule.GetNameResult("name");
 			cProject.bModulePlugin = false;
 			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
-		}
 
-		// Check for pl_module_plugin
-		if (cRegExModulePlugin.Match(sLine)) {
+		// Check for "pl_module_plugin"
+		} else if (cRegExModulePlugin.Match(sLine)) {
+			bParseModule = true;
 			cProject.sModuleName = cRegExModulePlugin.GetNameResult("name");
 			cProject.bModulePlugin = true;
 			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
 			Message(STATUS, "This module is a plugin");
 		}
 
-		// Check for pl_module_vendor
-		if (cRegExVendor.Match(sLine)) {
-			cProject.sModuleVendor = GetQuotedString(cRegExVendor.GetNameResult("text"));
-			Message(STATUS, "Vendor name = '" + cProject.sModuleVendor + '\'');
-		}
+		// Parse module?
+		if (bParseModule) {
+			// Parse module and the rest of the file
+			while (!cFile.IsEof()) {
+				// Read line
+				sLine = cFile.GetS();
+				Message(DEBUG, sLine);
 
-		// Check for pl_module_license
-		if (cRegExLicense.Match(sLine)) {
-			cProject.sModuleLicense = GetQuotedString(cRegExLicense.GetNameResult("text"));
-			Message(STATUS, "License = '" + cProject.sModuleLicense + '\'');
-		}
+				// Check for pl_module_vendor
+				if (cRegExVendor.Match(sLine)) {
+					cProject.sModuleVendor = GetQuotedString(cRegExVendor.GetNameResult("text"));
+					Message(STATUS, "Vendor name = '" + cProject.sModuleVendor + '\'');
 
-		// Check for pl_module_description
-		if (cRegExDescription.Match(sLine)) {
-			cProject.sModuleDescription = GetQuotedString(cRegExDescription.GetNameResult("text"));
-			Message(STATUS, "Description = '" + cProject.sModuleDescription + '\'');
-		}
+				// Check for pl_module_license
+				} else if (cRegExLicense.Match(sLine)) {
+					cProject.sModuleLicense = GetQuotedString(cRegExLicense.GetNameResult("text"));
+					Message(STATUS, "License = '" + cProject.sModuleLicense + '\'');
 
-		// Check for pl_module_version
-		if (cRegExVersion.Match(sLine)) {
-			cProject.sModuleVersion = GetQuotedString(cRegExVersion.GetNameResult("text"));
-			Message(STATUS, "Version = '" + cProject.sModuleVersion + '\'');
-		}
+				// Check for pl_module_description
+				} else if (cRegExDescription.Match(sLine)) {
+					cProject.sModuleDescription = GetQuotedString(cRegExDescription.GetNameResult("text"));
+					Message(STATUS, "Description = '" + cProject.sModuleDescription + '\'');
 
-		// Check for pl_module_dependencies_win32_release
-		if (cRegExDepsWin32Release.Match(sLine)) {
-			cProject.sDependWin32Release = GetQuotedString(cRegExDepsWin32Release.GetNameResult("text"));
-			Message(STATUS, "Win32 release dependencies = '" + cProject.sDependWin32Release + '\'');
-		}
+				// Check for pl_module_version
+				} else if (cRegExVersion.Match(sLine)) {
+					cProject.sModuleVersion = GetQuotedString(cRegExVersion.GetNameResult("text"));
+					Message(STATUS, "Version = '" + cProject.sModuleVersion + '\'');
 
-		// Check for pl_module_dependencies_win32_debug
-		if (cRegExDepsWin32Debug.Match(sLine)) {
-			cProject.sDependWin32Debug = GetQuotedString(cRegExDepsWin32Debug.GetNameResult("text"));
-			Message(STATUS, "Win32 debug dependencies = '" + cProject.sDependWin32Debug + '\'');
-		}
+				// Check for pl_module_dependencies_win32_release
+				} else if (cRegExDepsWin32Release.Match(sLine)) {
+					cProject.sDependWin32Release = GetQuotedString(cRegExDepsWin32Release.GetNameResult("text"));
+					Message(STATUS, "Win32 release dependencies = '" + cProject.sDependWin32Release + '\'');
 
-		// Check for pl_module_dependencies_win64_release
-		if (cRegExDepsWin64Release.Match(sLine)) {
-			cProject.sDependWin64Release = GetQuotedString(cRegExDepsWin64Release.GetNameResult("text"));
-			Message(STATUS, "Win64 release dependencies = '" + cProject.sDependWin64Release + '\'');
-		}
+				// Check for pl_module_dependencies_win32_debug
+				} else if (cRegExDepsWin32Debug.Match(sLine)) {
+					cProject.sDependWin32Debug = GetQuotedString(cRegExDepsWin32Debug.GetNameResult("text"));
+					Message(STATUS, "Win32 debug dependencies = '" + cProject.sDependWin32Debug + '\'');
 
-		// Check for pl_module_dependencies_win64_debug
-		if (cRegExDepsWin64Debug.Match(sLine)) {
-			cProject.sDependWin64Debug = GetQuotedString(cRegExDepsWin64Debug.GetNameResult("text"));
-			Message(STATUS, "Win64 debug dependencies = '" + cProject.sDependWin64Debug + '\'');
-		}
+				// Check for pl_module_dependencies_win64_release
+				} else if (cRegExDepsWin64Release.Match(sLine)) {
+					cProject.sDependWin64Release = GetQuotedString(cRegExDepsWin64Release.GetNameResult("text"));
+					Message(STATUS, "Win64 release dependencies = '" + cProject.sDependWin64Release + '\'');
 
-		// Check for pl_module_dependencies_linux_release
-		if (cRegExDepsLinuxRelease.Match(sLine)) {
-			cProject.sDependLinuxRelease = GetQuotedString(cRegExDepsLinuxRelease.GetNameResult("text"));
-			Message(STATUS, "Linux release dependencies = '" + cProject.sDependLinuxRelease + '\'');
-		}
+				// Check for pl_module_dependencies_win64_debug
+				} else if (cRegExDepsWin64Debug.Match(sLine)) {
+					cProject.sDependWin64Debug = GetQuotedString(cRegExDepsWin64Debug.GetNameResult("text"));
+					Message(STATUS, "Win64 debug dependencies = '" + cProject.sDependWin64Debug + '\'');
 
-		// Check for pl_module_dependencies_linux_debug
-		if (cRegExDepsLinuxDebug.Match(sLine)) {
-			cProject.sDependLinuxDebug = GetQuotedString(cRegExDepsLinuxDebug.GetNameResult("text"));
-			Message(STATUS, "Linux debug dependencies = '" + cProject.sDependLinuxDebug + '\'');
-		}
+				// Check for pl_module_dependencies_linux_release
+				} else if (cRegExDepsLinuxRelease.Match(sLine)) {
+					cProject.sDependLinuxRelease = GetQuotedString(cRegExDepsLinuxRelease.GetNameResult("text"));
+					Message(STATUS, "Linux release dependencies = '" + cProject.sDependLinuxRelease + '\'');
 
-		// Check for pl_module_active
-		if (cRegExActive.Match(sLine)) {
-			String sActive = cRegExActive.GetNameResult("num");
-			cProject.bModuleActive = (sActive == "1");
-			Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + '\'');
-		}
+				// Check for pl_module_dependencies_linux_debug
+				} else if (cRegExDepsLinuxDebug.Match(sLine)) {
+					cProject.sDependLinuxDebug = GetQuotedString(cRegExDepsLinuxDebug.GetNameResult("text"));
+					Message(STATUS, "Linux debug dependencies = '" + cProject.sDependLinuxDebug + '\'');
 
-		// Check for pl_module_delayed
-		if (cRegExDelayed.Match(sLine)) {
-			String sDelayed = cRegExDelayed.GetNameResult("num");
-			cProject.bModuleDelayed = (sDelayed == "1");
-			Message(STATUS, String("Delayed = '") + (cProject.bModuleDelayed ? "yes" : "no") + '\'');
+				// Check for pl_module_active
+				} else if (cRegExActive.Match(sLine)) {
+					String sActive = cRegExActive.GetNameResult("num");
+					cProject.bModuleActive = (sActive == "1");
+					Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + '\'');
+
+				// Check for pl_module_delayed
+				} else if (cRegExDelayed.Match(sLine)) {
+					String sDelayed = cRegExDelayed.GetNameResult("num");
+					cProject.bModuleDelayed = (sDelayed == "1");
+					Message(STATUS, String("Delayed = '") + (cProject.bModuleDelayed ? "yes" : "no") + '\'');
+				}
+			}
 		}
 	}
 
