@@ -598,10 +598,8 @@ void ClassManager::UnregisterModule(Module *pModule)
 */
 void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 {
-	// Get module
-	Module *pModule = CreateModule(nModuleID);
-
-	// Check for dummy class or duplicate class name
+	// Check for real/dummy class or duplicate class name
+	Module *pModule = nullptr;
 	const Class *pOldClass = m_mapClasses.Get(pClassImpl->GetClassName());
 	if (pOldClass) {
 		// Is the implementation of the class currently a dummy?
@@ -620,16 +618,30 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 			// We're done, get us out of this method right now!
 			return;
 		} else {
-			// It's no dummy, this means that there's a class name conflict!
+			// It's no dummy, is the new class to register a dummy?
+			if (pClassImpl->IsDummy()) {
+				// Ok, the new class to register is a worthless dummy because we already have the real thingy, so just ignore it!
 
-			// The class has a name that is already used by another class
-			String sClass	  = pClassImpl->GetClassName();
-			String sModule	  = pModule->GetName();
-			String sOldModule = pOldClass->GetModule()->GetName();
+				// We're done, get us out of this method right now!
+				return;
+			} else {
+				// Ok, the old and new classes are not dummies, this means that there's a class name conflict!
 
-			// Add warning to log that the class will not be available through e.g. GetClass()
-			PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']");
+				// Get module
+				pModule = CreateModule(nModuleID);
+
+				// The class has a name that is already used by another class
+				const String sClass		= pClassImpl->GetClassName();
+				const String sModule	= pModule->GetName();
+				const String sOldModule	= pOldClass->GetModule()->GetName();
+
+				// Add warning to log that the class will not be available through e.g. GetClass()
+				PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']");
+			}
 		}
+	} else {
+		// Get module
+		pModule = CreateModule(nModuleID);
 	}
 
 	// Create an class instance wrapping the class implementation?
@@ -796,6 +808,7 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 	}
 
 	// Done
+	PL_LOG(Info, cUrl.GetUrl() + ": Plugin successfully loaded")
 	return true;
 }
 
