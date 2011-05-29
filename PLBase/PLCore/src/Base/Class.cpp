@@ -330,6 +330,7 @@ Class::Class(const Class &cSource)
 */
 Class::~Class()
 {
+	// Don't destroy the class implementation in here, it's the job of the class manager to take care of that
 }
 
 /**
