@@ -32,6 +32,7 @@
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/Tools/Timing.h>
+#include <PLGeneral/Tools/Stopwatch.h>
 #include "PLCore/Core.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include <PLCore/Tools/Localization.h>
@@ -76,6 +77,7 @@ ConsoleApplication *ConsoleApplication::GetApplication()
 ConsoleApplication::ConsoleApplication() :
 	m_bMultiUser(true),
 	m_bUseRuntime(true),
+	m_bDelayedPluginLoading(true),
 	m_bRunning(false),
 	m_nResult(0)
 {
@@ -225,6 +227,26 @@ void ConsoleApplication::SetUseRuntime(bool bUseRuntime)
 {
 	// Set runtime flag
 	m_bUseRuntime = bUseRuntime;
+}
+
+/**
+*  @brief
+*    Check if application allows delayed shared library loading to speed up the program start
+*/
+bool ConsoleApplication::GetDelayedPluginLoading() const
+{
+	// Return the current value
+	return m_bDelayedPluginLoading;
+}
+
+/**
+*  @brief
+*    Set if application allows delayed shared library loading to speed up the program start
+*/
+void ConsoleApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
+{
+	// Set new value
+	m_bDelayedPluginLoading = bDelayedPluginLoading;
 }
 
 /**
@@ -594,22 +616,28 @@ void ConsoleApplication::OnInitConfig()
 
 		// Use PixelLight runtime?
 		m_bUseRuntime = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
+
+		// Allow delayed shared library loading to speed up the program start?
+		m_bDelayedPluginLoading = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "DelayedPluginLoading").GetBool();
 	}
 }
 
 /**
 *  @brief
-*    Called when application should load it's plugins and data
+*    Called when application should load it's plugins
 */
 void ConsoleApplication::OnInitPlugins()
 {
+	// Start the stopwatch
+	Stopwatch cStopwatch(true);
+
 	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
 	// for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive, m_bDelayedPluginLoading);
 
 	// Scan for plugins in "Plugins" directory (recursively)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/");
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive, m_bDelayedPluginLoading);
 
 	// Use PixelLight runtime?
 	if (m_bUseRuntime) {
@@ -619,12 +647,15 @@ void ConsoleApplication::OnInitPlugins()
 			// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
 			// for projects which can be used completely dynamically, but can also be used in other C++ projects
 			// to access certain features.
-			ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
+			ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive, m_bDelayedPluginLoading);
 
 			// Scan for plugins in PixelLight runtime directory
-			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/");
+			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive, m_bDelayedPluginLoading);
 		}
 	}
+
+	// Write message into log
+	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")
 }
 
 /**

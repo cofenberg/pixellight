@@ -1,3 +1,10 @@
+>> 29.05.2011
+[CO]
+- Added an option to "ConsoleApplication" to make it possible to configure whether or not it's allowed to perform delayed shared library loading to
+  speed up the program start ("DelayedPluginLoading" within the configuration file)
+
+
+
 >> 28.05.2011
 [CO]
 - Continued "Delayed shared library loading"-refactoring: Currently, "LoadableManager" forces many plugins to be loaded in order to register

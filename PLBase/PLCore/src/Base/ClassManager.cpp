@@ -206,7 +206,7 @@ bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive, bool 
 					File cFile(sFile);
 					if (cFile.Exists() && cFile.IsDirectory()) {
 						// Scan sub-directory
-						ScanPlugins(sFile, nRecursive);
+						ScanPlugins(sFile, nRecursive, bDelayedPluginLoading);
 					}
 				}
 			}
