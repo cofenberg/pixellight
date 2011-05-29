@@ -341,6 +341,7 @@ def CreatePluginFile(project):
 	file.write(u"<?xml version=\"1.0\" ?>\n")
 	file.write(u"<Plugin Version=\"1\">\n")
 	file.write(u"\t<Active>" + BoolToString(project.moduleActive) + "</Active>\n")
+	file.write(u"\t<Delayed>0</Delayed>\n")
 	file.write(u"\t<Name>" + project.moduleName + "</Name>\n")
 	file.write(u"\t<Version>" + project.moduleVersion + "</Version>\n")
 

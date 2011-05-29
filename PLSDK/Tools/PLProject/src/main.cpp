@@ -619,8 +619,12 @@ bool CreatePluginFile(Project &cProject)
 		const String sAbsSharedLibraryFilename = (cUrl.IsAbsolute() ? cUrl : (System::GetInstance()->GetCurrentDir() + '/' + cUrl.GetUrl())).CutFilename() + sSharedLibraryFilename;
 
 		// Load the module
-		// [TODO] Currently this solution is not working under Linux because the so file can't be loaded (delayed is set to 0)... uff, maybe it's really required to parse the cpp file...
-		const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
+		#ifdef WIN32
+			const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
+		#else
+			// [TODO] Currently this solution is not working under Linux because the so file can't be loaded (delayed is set to 0)... uff, maybe it's really required to parse the cpp file...
+			const Module *pModule = nullptr;
+		#endif
 
 		// Write plugin file
 		Write(cFile, "<?xml version=\"1.0\" ?>");

@@ -1,3 +1,11 @@
+>> 29.05.2011
+[CO]
+- "PLProject.py": Added 
+    file.write(u"\t<Delayed>0</Delayed>\n")
+  because delayed shared libary loading is currently under Linux not working/tested.
+
+
+
 >> 26.05.2011
 [CO]
 - PLProject now also writes some basic RTTI class metadata into the XML plugin file - but not everything to keep the plugin file
