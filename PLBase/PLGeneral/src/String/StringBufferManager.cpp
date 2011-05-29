@@ -171,10 +171,8 @@ StringBufferUnicode *StringBufferManager::GetStringBufferUnicode(uint32 nLength)
 */
 void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 {
-	// [TODO] StringBuffer caching is currently experimental and may cause problems... under Linux I currently just get a segment fault if I try to start an appliction, so it's deactivated by default for Linux at the moment
-#ifdef WIN32
 	// Is the string buffer going to be destroyed if we release one more reference?
-	if (cStringBuffer.GetRefCount() < 2) {
+	if (cStringBuffer.GetFormat() != String::UTF8 && cStringBuffer.GetRefCount() < 2) {
 		// Ok, this is the reason why we can't use the "RefCount"-template in here - the string buffer manager may keep the string buffer
 		// alive for later reuse, but the "reused" string buffer really needs a "fresh" reference counter set to 0
 		bool bBackuped = false;
@@ -256,10 +254,6 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 		// Just release the reference - after this, the string buffer will still be there because it's still referenced
 		cStringBuffer.Release();
 	}
-#else
-	// Just release the reference - after this, the string buffer will still be there because it's still referenced
-	cStringBuffer.Release();
-#endif
 }
 
 
