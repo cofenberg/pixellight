@@ -5,7 +5,7 @@ Changes in PixelLight 0.9.7-R1 (not yet released)
 - Feature: Added the script backend PLScriptPython which adds support for Python
 - Feature: Added the script backend PLScriptAngelScript which adds support for AngelScript
 - Feature: Added plugin PLScriptBindings which exposes certain parts of PixelLight to script languages
-- Feature: Added support for non power of two textures (NPOT)
+- Feature: Added support for non-power-of-two textures (NPOT)
 - Feature: Added delayed shared library loading for plugins to speed up the program start
 - Change: Changed event emit, to emit an event named "MyEvent" call "MyEvent()" instead of "MyEvent.Emit()"
 
