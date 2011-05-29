@@ -50,10 +50,10 @@ namespace PLGeneral {
 *    // Start the stopwatch
 *    Stopwatch cStopwatch(true);
 *
-*   // Do some stuff
+*    // Do some stuff
 *
 *    // Measure elapsed time
-*   float fElapsedSeconds = cStopwatch.GetSeconds();
+*    float fElapsedSeconds = cStopwatch.GetSeconds();
 *  @endverbatim
 *
 *  @note

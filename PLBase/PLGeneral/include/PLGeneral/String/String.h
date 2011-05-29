@@ -99,7 +99,8 @@ class String {
 		*/
 		enum EFormat {
 			ASCII   = 0,	/**< ASCII, 1 byte per character (American Standard Code for Information Interchange, 0-128 defined, above undefined) */
-			Unicode = 1		/**< Unicode, (sometimes called 'multi-byte' or 'wide character') normally two bytes (UTF-16) on Microsoft Windows per character, four bytes long on UNIX systems (UTF-32) */
+			Unicode = 1,	/**< Unicode, (sometimes called 'multi-byte' or 'wide character') normally two bytes (UTF-16) on Microsoft Windows per character, four bytes long on UNIX systems (UTF-32) */
+			UTF8    = 2		/**< UTF8, only used internal */
 		};
 
 

@@ -40,7 +40,7 @@ namespace PLGeneral {
 *  @brief
 *    Constructor
 */
-StringBufferUTF8::StringBufferUTF8(char szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::Unicode),
+StringBufferUTF8::StringBufferUTF8(char szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::UTF8),
 	m_pszString(nullptr),
 	m_nNumOfBytes(0)
 {
@@ -56,7 +56,7 @@ StringBufferUTF8::StringBufferUTF8(char szString[], uint32 nLength) : StringBuff
 *  @brief
 *    Constructor
 */
-StringBufferUTF8::StringBufferUTF8(const wchar_t szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::Unicode),
+StringBufferUTF8::StringBufferUTF8(const wchar_t szString[], uint32 nLength) : StringBuffer(nLength, nLength, String::UTF8),
 	m_pszString(nullptr),
 	m_nNumOfBytes(0)
 {
@@ -83,7 +83,7 @@ StringBufferUTF8::~StringBufferUTF8()
 //[-------------------------------------------------------]
 String::EFormat StringBufferUTF8::GetFormat() const
 {
-	return String::Unicode;
+	return String::UTF8;
 }
 
 StringBufferASCII *StringBufferUTF8::GetASCII()
