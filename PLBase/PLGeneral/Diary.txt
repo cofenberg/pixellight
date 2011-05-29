@@ -7,6 +7,8 @@
   Under Linux, I currently just get a segment fault when starting an application with enabled string buffer management - so it's deactivated
   under Linux for now because I don't have the time to do intensive debugging at the moment, but I really need to be able to do decend debugging
   under MS Windows...
+- Ok, "StringBufferManager::ReleaseStringBuffer()" is now working under Linux as well... there was a really stupied bug which caused the UTF8
+  string buffer to lie about it's type...
 
 
 

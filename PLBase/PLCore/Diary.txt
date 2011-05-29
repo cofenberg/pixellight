@@ -4,9 +4,13 @@
 - Added an option to "ConsoleApplication" to make it possible to configure whether or not it's allowed to perform delayed shared library loading to
   speed up the program start ("DelayedPluginLoading" within the configuration file)
 - The "ClassManager"-destructor has to destroy the class implementation dummies, the real classes are destroyed automatically by the RTTI system
-  (see "pl_class" -> "__pl_guard")
+  (see "pl_class" -> "__pl_guard"). Stephan Wezel helped me in identifying those (hopefully) last bugs in the refactored "Class"-class and helped
+  testing the stuff under Linux as well as fixing some details, a huge thank's for the motivating support. :D
 -> It looks like the delayed shared library loading is really working quite fine and it's finally fun again to do debugging because the program start
-   doesn't take half a minute.
+   doesn't take half a minute. I hope I'am now able to focus back to complete the scripting stuff and fix some general bugs like the one described at
+   http://dev.pixellight.org/forum/viewtopic.php?f=6&t=48&p=153#p153
+   ... the time until the next planned PixelLight release is running, but it was really important to me to speed up the program start time in order
+   to be able to debug in a resonable way.
 
 
 
