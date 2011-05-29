@@ -30,6 +30,7 @@
 #include <PLGeneral/File/FileSearch.h>
 #include <PLGeneral/Xml/Xml.h>
 #include <PLGeneral/Log/Log.h>
+#include <PLGeneral/Tools/Stopwatch.h>
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Tools/LoaderImpl.h"
 #include "PLCore/Base/Module.h"
@@ -92,6 +93,9 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 			return pModule;
 	}
 
+	// Start the stopwatch
+	Stopwatch cStopwatch(true);
+
 	// Is the library existent?
 	Module *pModule = nullptr;
 	File cFile(sAbsFilename);
@@ -127,7 +131,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 					const int nModuleID = pGetPluginInfo();
 					if (nModuleID > 0) {
 						// Library successfully loaded
-						PL_LOG(Info, "Module '" + sLibraryFilename + "' successfully loaded")
+						PL_LOG(Info, "Module '" + sLibraryFilename + "' successfully loaded (required time: " + cStopwatch.GetSeconds() + " sec)")
 						pModule = CreateModule(nModuleID);
 						if (pModule) {
 							// Set plugin information
@@ -170,7 +174,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 *  @brief
 *    Scan a directory for compatible plugins and load them in
 */
-bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive)
+bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive, bool bDelayedPluginLoading)
 {
 	// Get URL from path
 	Url cUrl(sPath);
@@ -194,7 +198,7 @@ bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive)
 				const String sExtension = Url(sFile).GetExtension();
 				if (sExtension == "plugin") {
 					// Try to load plugin
-					LoadPlugin(sFile);
+					LoadPlugin(sFile, bDelayedPluginLoading);
 
 				// Scan recursively?
 				} else if (nRecursive == Recursive) {
@@ -220,7 +224,7 @@ bool ClassManager::ScanPlugins(const String &sPath, ERecursive nRecursive)
 *  @brief
 *    Load plugin
 */
-bool ClassManager::LoadPlugin(const String &sFilename)
+bool ClassManager::LoadPlugin(const String &sFilename, bool bDelayedPluginLoading)
 {
 	// Get URL
 	const Url cUrl = Url(sFilename);
@@ -248,7 +252,7 @@ bool ClassManager::LoadPlugin(const String &sFilename)
 						PL_LOG(Warning, cDocument.GetValue() + ": " + LoaderImpl::DeprecatedFormatVersion)
 
 					// Load in the plugin
-					return LoadPluginV1(cUrl, *pPluginElement);
+					return LoadPluginV1(cUrl, *pPluginElement, bDelayedPluginLoading);
 
 				// No longer supported format version
 				} else if (nVersion >= 0) {
@@ -698,7 +702,7 @@ void ClassManager::UnregisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 *  @brief
 *    Load file format version 1 plugin
 */
-bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElement)
+bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElement, bool bDelayedPluginLoading)
 {
 	// Is plugin active?
 	const XmlNode *pNode = cPluginElement.GetFirstChild("Active");
@@ -731,9 +735,9 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 		}
 	}
 
-	// By default, delayed shared library loading is enabled
-	bool bDelayed = true;
-	{
+	// By default, delayed shared library loading depends on the provided setting
+	bool bDelayed = bDelayedPluginLoading;
+	if (bDelayed) {
 		// Get the "DelayedLoading" element
 		const XmlNode *pNode = cPluginElement.GetFirstChild("Delayed");
 		if (pNode) {

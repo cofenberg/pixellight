@@ -141,6 +141,8 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    Directory to search in
 		*  @param[in] nRecursive
 		*    Also take sub-directories into account?
+		*  @param[in] bDelayedPluginLoading
+		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -148,7 +150,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @remarks
 		*     This function scans for '.plugin'-files and registers the plugins if all went fine.
 		*/
-		PLCORE_API bool ScanPlugins(const PLGeneral::String &sPath, ERecursive nRecursive = Recursive);
+		PLCORE_API bool ScanPlugins(const PLGeneral::String &sPath, ERecursive nRecursive = Recursive, bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -156,11 +158,13 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*
 		*  @param[in] sFilename
 		*    Filename of the plugin (must be a '.plugin'-file!)
+		*  @param[in] bDelayedPluginLoading
+		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool LoadPlugin(const PLGeneral::String &sFilename);
+		PLCORE_API bool LoadPlugin(const PLGeneral::String &sFilename, bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -368,11 +372,13 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    XML plugin file URL
 		*  @param[in] cPluginElement
 		*    XML plugin element with the plugin information
+		*  @param[in] bDelayedPluginLoading
+		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool LoadPluginV1(const PLGeneral::Url &cUrl, const PLGeneral::XmlElement &cPluginElement);
+		PLCORE_API bool LoadPluginV1(const PLGeneral::Url &cUrl, const PLGeneral::XmlElement &cPluginElement, bool bDelayedPluginLoading = true);
 
 
 	//[-------------------------------------------------------]

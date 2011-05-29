@@ -1,6 +1,7 @@
 >> 29.05.2011
 [CO]
 - Added "Stopwatch::Stopwatch(bool bStartAtOnce)" to make it possible to use the stopwatch in a more compact way
+- Added parameters to the plugin relevant "ClassManager"-methods to make it possible to e.g. disable delayed shared library loading
 
 
 
