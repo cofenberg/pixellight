@@ -1,7 +1,10 @@
 >> 29.05.2011
 [CO]
+- Added parameters to the plugin relevant "ClassManager"-methods to make it possible to e.g. disable delayed shared library loading
 - Added an option to "ConsoleApplication" to make it possible to configure whether or not it's allowed to perform delayed shared library loading to
   speed up the program start ("DelayedPluginLoading" within the configuration file)
+-> It looks like the delayed shared library loading is really working quite fine and it's finally fun again to do debugging because the program start
+   doesn't take half a minute.
 
 
 

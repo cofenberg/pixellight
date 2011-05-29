@@ -171,8 +171,8 @@ StringBufferUnicode *StringBufferManager::GetStringBufferUnicode(uint32 nLength)
 */
 void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 {
-	// [TODO] StringBuffer caching is currently experimental and may cause problems, so it's deactivated by default
-	/*
+	// [TODO] StringBuffer caching is currently experimental and may cause problems... under Linux I currently just get a segment fault if I try to start an appliction, so it's deactivated by default for Linux at the moment
+#ifdef WIN32
 	// Is the string buffer going to be destroyed if we release one more reference?
 	if (cStringBuffer.GetRefCount() < 2) {
 		// Ok, this is the reason why we can't use the "RefCount"-template in here - the string buffer manager may keep the string buffer
@@ -198,7 +198,7 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 							const uint32 nIndex = nStringLength*MaxStringsPerReuseLength + j;
 							if (!m_pStringBufferASCII[nIndex]) {
 								// Nope, our string buffer found a new home!
-								StringBufferASCII *pStringBufferASCII = (StringBufferASCII*)&cStringBuffer;
+								StringBufferASCII *pStringBufferASCII = static_cast<StringBufferASCII*>(&cStringBuffer);
 								m_pStringBufferASCII[nIndex] = pStringBufferASCII;
 								bBackuped = true;
 
@@ -231,7 +231,7 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 							const uint32 nIndex = nStringLength*MaxStringsPerReuseLength + j;
 							if (!m_pStringBufferUnicode[nIndex]) {
 								// Nope, our string buffer found a new home!
-								StringBufferUnicode *pStringBufferUnicode = (StringBufferUnicode*)&cStringBuffer;
+								StringBufferUnicode *pStringBufferUnicode = static_cast<StringBufferUnicode*>(&cStringBuffer);
 								m_pStringBufferUnicode[nIndex] = pStringBufferUnicode;
 								bBackuped = true;
 
@@ -253,10 +253,13 @@ void StringBufferManager::ReleaseStringBuffer(StringBuffer &cStringBuffer)
 		if (!bBackuped)
 			cStringBuffer.Release();	// Sorry, no more backup space left!
 	} else {
-	*/
 		// Just release the reference - after this, the string buffer will still be there because it's still referenced
 		cStringBuffer.Release();
-//	}
+	}
+#else
+	// Just release the reference - after this, the string buffer will still be there because it's still referenced
+	cStringBuffer.Release();
+#endif
 }
 
 

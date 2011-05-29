@@ -1,7 +1,12 @@
 >> 29.05.2011
 [CO]
 - Added "Stopwatch::Stopwatch(bool bStartAtOnce)" to make it possible to use the stopwatch in a more compact way
-- Added parameters to the plugin relevant "ClassManager"-methods to make it possible to e.g. disable delayed shared library loading
+- "StringBufferManager::ReleaseStringBuffer()": Activated the string buffer management under MS Windows because, especially when
+  debugging, this adds a real performance boost like e.g. 2 sec instead of 20 sec to start an application in debug mode.
+  (so, this string management is nothing optional - without it, it's just painful to debug more complex applications)
+  Under Linux, I currently just get a segment fault when starting an application with enabled string buffer management - so it's deactivated
+  under Linux for now because I don't have the time to do intensive debugging at the moment, but I really need to be able to do decend debugging
+  under MS Windows...
 
 
 
