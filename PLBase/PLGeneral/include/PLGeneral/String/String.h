@@ -51,12 +51,18 @@ class StringBuffer;
 *    String class
 *
 *  @remarks
-*    The string class uses a 'copy on change' technique - therefore copying one string
-*    into another is quite performant because the internal string buffer is shared
-*    as long as a string doesn't change. As result comparing strings 'can' also be very fast
-*    and the internal string buffer can be ASCII OR Unicode in a quite flexible way.
+*    Because strings are quite fundamental, there are several optimizations in place to make dealing
+*    with strings as fast as possible. The string class uses a 'copy on change' technique -
+*    therefore copying one string into another is quite performant because the internal string buffer
+*    is shared as long as a string doesn't change. As result comparing strings 'can' also be very fast
+*    and the internal string buffer can be ASCII OR Unicode in a quite flexible way. To
+*    enhance the string performance, the internal string buffers are managed by a string buffer
+*    manager to avoid to many memory allocations/deallocations. For an additional performance
+*    improvement, memory is traded for speed, meaning that additional characters are allocated
+*    within the internal string buffer manager for future use. This way, appending new characters
+*    to a string is usually quite fast.
 *
-*    As long as you DON'T save your source codes in an UTF8 format you can also use the ASCII
+*    As long as you don't save your source codes in an UTF8 format you can also use the ASCII
 *    extension Ansi, meaning characters between 128-256. But with an UTF8 format, this may cause
 *    serious problems and you should use Unicode instead ASCII for characters above 128 (using
 *    codepage based ASCII is not recommended) to avoid encoding troubles!
@@ -100,7 +106,7 @@ class String {
 		enum EFormat {
 			ASCII   = 0,	/**< ASCII, 1 byte per character (American Standard Code for Information Interchange, 0-128 defined, above undefined) */
 			Unicode = 1,	/**< Unicode, (sometimes called 'multi-byte' or 'wide character') normally two bytes (UTF-16) on Microsoft Windows per character, four bytes long on UNIX systems (UTF-32) */
-			UTF8    = 2		/**< UTF8, only used internal */
+			UTF8    = 2		/**< UTF8, only used internally */
 		};
 
 

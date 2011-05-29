@@ -7,6 +7,7 @@ Changes in PixelLight 0.9.7-R1 (not yet released)
 - Feature: Added plugin PLScriptBindings which exposes certain parts of PixelLight to script languages
 - Feature: Added support for non-power-of-two textures (NPOT)
 - Feature: Added delayed shared library loading for plugins to speed up the program start
+- Feature: Completion of the internal string buffer manager to improve the overall string performance
 - Change: Changed event emit, to emit an event named "MyEvent" call "MyEvent()" instead of "MyEvent.Emit()"
 
 
