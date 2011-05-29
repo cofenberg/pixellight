@@ -71,8 +71,7 @@ pl_implement_class(SceneLoaderProc)
 bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 {
 	// Start the stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Setup tokenizer
 	Tokenizer cTokenizer;
@@ -411,9 +410,6 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 		// Load the 'map'
 		LoadMapFile(sInstance, cContainer, sMapFilename);
 	}
-
-	// Stop the stopwatch
-	cStopwatch.Stop();
 
 	// Output the statistics
 	PL_LOG(Debug, '\n')

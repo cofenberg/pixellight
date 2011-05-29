@@ -1139,8 +1139,7 @@ bool SQCull::PerformQuery()
 		const bool bStartProcessResult = pSceneContext->StartProcess();
 
 		// Start stopwatch
-		Stopwatch cStopwatch;
-		cStopwatch.Start();
+		Stopwatch cStopwatch(true);
 
 		// Init visibility & last visited frame states
 		ResizeArrays();
@@ -1251,9 +1250,6 @@ bool SQCull::PerformQuery()
 				cRenderer.SetColorMask();
 			}
 		}
-
-		// Stop stopwatch
-		cStopwatch.Stop();
 
 
 		// [TODO]

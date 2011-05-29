@@ -43,6 +43,16 @@ inline Stopwatch::Stopwatch() :
 
 /**
 *  @brief
+*    Constructor
+*/
+inline Stopwatch::Stopwatch(bool bStartAtOnce)
+{
+	if (bStartAtOnce)
+		Start();
+}
+
+/**
+*  @brief
 *    Destructor
 */
 inline Stopwatch::~Stopwatch()

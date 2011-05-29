@@ -483,15 +483,11 @@ void RendererBackend::Update()
 	m_sStatistics.nIndexBufferLocks			= 0;
 
 	// Start the stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Update renderer surfaces
 	for (uint32 i=0; i<m_lstSurfaces.GetNumOfElements(); i++)
 		m_lstSurfaces[i]->Update();
-
-	// Stop the stopwatch
-	cStopwatch.Stop();
 
 	// Update profiling
 	Profiling *pProfiling = Profiling::GetInstance();

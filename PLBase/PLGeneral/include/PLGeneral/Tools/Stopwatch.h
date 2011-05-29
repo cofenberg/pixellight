@@ -43,6 +43,21 @@ namespace PLGeneral {
 /**
 *  @brief
 *    Stopwatch
+*
+*  @verbatim
+*    Usage example:
+*
+*    // Start the stopwatch
+*    Stopwatch cStopwatch(true);
+*
+*   // Do some stuff
+*
+*    // Measure elapsed time
+*   float fElapsedSeconds = cStopwatch.GetSeconds();
+*  @endverbatim
+*
+*  @note
+*    - The stopwatch implementation is just using "System::GetInstance()->GetMicroseconds()" and is therefore quite lightweight
 */
 class Stopwatch {
 
@@ -53,9 +68,18 @@ class Stopwatch {
 	public:
 		/**
 		*  @brief
-		*    Constructor
+		*    Default constructor
 		*/
 		inline Stopwatch();
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] bStartAtOnce
+		*    If this parameter is 'true', the stopwatch is started automatically at once
+		*/
+		inline Stopwatch(bool bStartAtOnce);
 
 		/**
 		*  @brief
@@ -78,6 +102,10 @@ class Stopwatch {
 		*
 		*  @return
 		*    The ellapsed time in microseconds since Start()
+		*
+		*  @note
+		*    - Often it's adequate to just request the past time using
+		*      e.g. "GetMilliseconds()" and not explicitly stopping the stopwatch
 		*/
 		PLGENERAL_API uint64 Stop();
 

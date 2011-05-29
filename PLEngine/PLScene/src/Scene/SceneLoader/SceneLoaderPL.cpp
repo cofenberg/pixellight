@@ -102,8 +102,7 @@ bool SceneLoaderPL::Save(SceneContainer &cContainer, File &cFile)
 bool SceneLoaderPL::SaveParams(SceneContainer &cContainer, File &cFile, bool bNoDefault)
 {
 	// Start the stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Create XML document
 	XmlDocument cDocument;
@@ -127,9 +126,6 @@ bool SceneLoaderPL::SaveParams(SceneContainer &cContainer, File &cFile, bool bNo
 
 	// Save scene
 	cDocument.Save(cFile);
-
-	// Stop the stopwatch
-	cStopwatch.Stop();
 
 	// Show statistics within the log
 	PL_LOG(Debug, '\n')
@@ -178,8 +174,7 @@ SceneLoaderPL::~SceneLoaderPL()
 bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneElement, File &cFile) const
 {
 	// Start the stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Get first and last scene row
 	uint32 nFirstSceneRow = 0, nLastSceneRow = 0;
@@ -236,9 +231,6 @@ bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneE
 
 	// Reset container active state
 	cContainer.SetActive(bActive);
-
-	// Stop the stopwatch
-	cStopwatch.Stop();
 
 	// Show statistics within the log
 	PL_LOG(Debug, '\n')

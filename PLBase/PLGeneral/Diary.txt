@@ -1,3 +1,9 @@
+>> 29.05.2011
+[CO]
+- Added "Stopwatch::Stopwatch(bool bStartAtOnce)" to make it possible to use the stopwatch in a more compact way
+
+
+
 >> 24.05.2011
 [CO]
 - The "DynLib" implementations were not unloading the dynamic OS library automatically. I thought about this issue to figure out whether

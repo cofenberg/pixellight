@@ -160,8 +160,7 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				cRenderer.SetColorMask(true, true, true, true);
 
 				// Start stopwatch
-				Stopwatch cStopwatch;
-				cStopwatch.Start();
+				Stopwatch cStopwatch(true);
 
 				// Begin the processing
 				if (m_pPostProcessor->BeginProcessing(cRenderer, *pFrontSurfaceTextureBuffer)) {
@@ -219,9 +218,6 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						m_pPostProcessor->DrawResult(cRenderer);
 					}
 				}
-
-				// Stop stopwatch
-				cStopwatch.Stop();
 
 				// Update profiling information
 				Profiling::GetInstance()->Set(GetClass()->GetClassName(), "PostProcessTime", String::Format("%.3f ms", cStopwatch.GetMilliseconds()));

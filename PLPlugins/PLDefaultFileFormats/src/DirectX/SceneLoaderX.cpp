@@ -70,8 +70,7 @@ pl_implement_class(SceneLoaderX)
 bool SceneLoaderX::Load(SceneContainer &cContainer, File &cFile)
 {
 	// Start the stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Deactivate the container during loading
 	bool bActive = cContainer.IsActive();
@@ -148,9 +147,6 @@ bool SceneLoaderX::Load(SceneContainer &cContainer, File &cFile)
 
 	// Reset container active state
 	cContainer.SetActive(bActive);
-
-	// Stop the stopwatch
-	cStopwatch.Stop();
 
 	// Show statistics within the log
 	PL_LOG(Debug, '\n')

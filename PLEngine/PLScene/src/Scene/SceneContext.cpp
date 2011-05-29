@@ -174,18 +174,14 @@ void SceneContext::Update()
 	Profiling *pProfiling = Profiling::GetInstance();
 	if (pProfiling->IsActive()) {
 		// Start the stopwatch
-		Stopwatch cStopwatch;
-		cStopwatch.Start();
+		Stopwatch cStopwatch(true);
 
 		// Emit event
 		EventUpdate();
 
-		// Stop the stopwatch
-		cStopwatch.Stop();
-
 		// Update the profiling data
-		pProfiling->Set("Scene context", "Updated elements", String::Format("%d", EventUpdate.GetNumOfConnects()));
 		pProfiling->Set("Scene context", "Update time",		 String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
+		pProfiling->Set("Scene context", "Updated elements", String::Format("%d", EventUpdate.GetNumOfConnects()));
 	} else {
 		// Emit event
 		EventUpdate();

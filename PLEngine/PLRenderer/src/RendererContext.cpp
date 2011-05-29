@@ -132,8 +132,7 @@ MaterialManager &RendererContext::GetMaterialManager()
 void RendererContext::Update()
 {
 	// Start stopwatch
-	Stopwatch cStopwatch;
-	cStopwatch.Start();
+	Stopwatch cStopwatch(true);
 
 	// Emit the update event
 	EventUpdate();
@@ -141,9 +140,6 @@ void RendererContext::Update()
 	// Update renderer
 	if (m_pRenderer)
 		m_pRenderer->Update();
-
-	// Stop stopwatch
-	cStopwatch.Stop();
 
 	// Update profiling information
 	Profiling *pProfiling = Profiling::GetInstance();
