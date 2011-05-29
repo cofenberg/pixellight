@@ -174,7 +174,7 @@ void Module::SetModuleInfo(const String &sName, const String &sVendor, const Str
 *  @brief
 *    Add class
 */
-void Module::AddClass(Class *pClass)
+void Module::AddClass(const Class *pClass)
 {
 	// Add class to list
 	m_lstClasses.Add(pClass);
@@ -184,7 +184,7 @@ void Module::AddClass(Class *pClass)
 *  @brief
 *    Remove class
 */
-void Module::RemoveClass(Class *pClass)
+void Module::RemoveClass(const Class *pClass)
 {
 	// Remove class from list
 	m_lstClasses.Remove(pClass);

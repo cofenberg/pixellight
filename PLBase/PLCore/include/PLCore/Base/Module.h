@@ -212,7 +212,7 @@ class Module {
 		*  @param[in] pClass
 		*    Pointer to class (must be valid)
 		*/
-		PLCORE_API void AddClass(Class *pClass);
+		PLCORE_API void AddClass(const Class *pClass);
 
 		/**
 		*  @brief
@@ -221,7 +221,7 @@ class Module {
 		*  @param[in] pClass
 		*    Pointer to class (must be valid)
 		*/
-		PLCORE_API void RemoveClass(Class *pClass);
+		PLCORE_API void RemoveClass(const Class *pClass);
 
 
 	//[-------------------------------------------------------]

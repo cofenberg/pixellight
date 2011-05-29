@@ -606,6 +606,12 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 		if (pOldClass->m_pClassImpl->IsDummy()) {
 			// It's a worthless dummy, replace it through the real thingy right now!
 
+			// The dummy and the real class are in different modules (this is just a security check)
+			if (pOldClass->m_pClassImpl->m_nModuleID != nModuleID) {
+				// Add the real class to the real module
+				CreateModule(nModuleID)->AddClass(pOldClass);
+			}
+
 			// Destroy the dummy class implementation
 			delete pOldClass->m_pClassImpl;
 
