@@ -942,10 +942,12 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 					const float fRadius = GetContainerBoundingSphere().GetRadius()*2;
 					mScale.SetScaleMatrix(fRadius, fRadius, fRadius);
 					mWorld *= mScale;
+					// [TODO] Remove the direct usage of fixed functions in here
 					pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
 
 					// Setup render states
 					cRenderer.SetTextureBuffer();
+					cRenderer.SetProgram();
 					cRenderer.SetRenderState(RenderState::CullMode,    Cull::None);
 					cRenderer.SetRenderState(RenderState::BlendEnable, true);
 					pFixedFunctions->SetColor(Color4(1.0f, 1.0f, 1.0f, 0.1f));

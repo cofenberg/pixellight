@@ -1,3 +1,11 @@
+>> 01.06.2011
+[CO]
+- "SceneNode::DrawDebug()": Using the debug flags "DebugContainerAABBox" and "DebugContainerSphere" together was not working properly.
+  Currently the sphere is drawn using fixed functions stuff, but the AABox was setting a GPU program which was then also used for drawing
+  the sphere which was of course not working.
+
+
+
 >> 22.04.2011
 [CO]
 - "SNBitmap3D" is now using "PLRenderer::DrawHelpers::DrawImage()" and is therefore finally fixed functions independent
