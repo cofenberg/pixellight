@@ -1,4 +1,11 @@
-﻿>> 22.05.2011
+﻿>> 02.06.2011
+[CO]
+-> After an university lecture etc. maraton of two weeks and some non script related PixelLight work, back to the script stuff. :)
+- "Script::SetGlobalVariable()" has now as parameter the more generic "PLCore::DynVar" instead of "PLGeneral::String"
+
+
+
+>> 22.05.2011
 [CO]
 - Woho, the demo "Scripts.scene" comes to live... "ScriptsScene.lua" is already up and running and is manipulating a scene
   node by using a Lua script. It's still everything experimental to see what's possible and how it may work as a whole

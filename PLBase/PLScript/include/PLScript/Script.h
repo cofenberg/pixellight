@@ -251,10 +251,10 @@ class Script : public PLCore::Object {
 		*
 		*  @param[in] sName
 		*    Name of the global variable
-		*  @param[in] sValue
+		*  @param[in] cValue
 		*    New value of the global variable
 		*/
-		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]

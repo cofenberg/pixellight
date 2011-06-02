@@ -96,7 +96,7 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 			System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" is \"" + sOriginalValue + "\"\n");
 
 			// Set the current value of the global variable
-			pScript->SetGlobalVariable("g_Factor", "42");
+			pScript->SetGlobalVariable("g_Factor", Var<int>(42));
 
 			// Get the current value of the global variable
 			String sValue = pScript->GetGlobalVariable("g_Factor");
@@ -104,7 +104,7 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 				System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" was changed successfully\n");
 
 			// Reset the original value
-			pScript->SetGlobalVariable("g_Factor", sOriginalValue);
+			pScript->SetGlobalVariable("g_Factor", Var<String>(sOriginalValue));
 		} else {
 			System::GetInstance()->GetConsole().Print("There's no global variable with the name \"g_Factor\"\n");
 		}

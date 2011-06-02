@@ -272,7 +272,7 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Get the type of the global variable (because we don't want to change it's type)
 	const ETypeID nType = GetGlobalVariableType(sName);
@@ -286,23 +286,23 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 		// Get the value to set
 		switch (nType) {
 			case TypeBool:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(sValue.GetBool()));
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(cValue.GetBool()));
 				break;
 
 			case TypeInt32:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Int32::New(sValue.GetInt()));
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Int32::New(cValue.GetInt()));
 				break;
 
 			case TypeUInt32:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Uint32::New(sValue.GetUInt32()));
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Uint32::New(cValue.GetUInt32()));
 				break;
 
 			case TypeDouble:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number::New(sValue.GetDouble()));
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number::New(cValue.GetDouble()));
 				break;
 
 			case TypeString:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::String::New(sValue));
+				m_cV8Context->Global()->Set(v8::String::New(sName), v8::String::New(cValue.GetString()));
 				break;
 		}
 	}

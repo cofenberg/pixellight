@@ -284,7 +284,7 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
@@ -292,11 +292,11 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
 		if (pPythonAttribute) {
 			if (PyString_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(sValue));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(cValue.GetString()));
 			else if (PyInt_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(sValue.GetInt()));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));
 			else if (PyFloat_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(sValue.GetDouble()));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(cValue.GetDouble()));
 		}
 	}
 }

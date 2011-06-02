@@ -391,7 +391,7 @@ String Script::GetGlobalVariable(const String &sName)
 	return sValue;
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
@@ -401,15 +401,15 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 			// Push the value of the global variable onto the Lua stack
 			switch (nType) {
 				case TypeBool:
-					lua_pushboolean(m_pLuaState, sValue.GetBool());
+					lua_pushboolean(m_pLuaState, cValue.GetBool());
 					break;
 
 				case TypeDouble:
-					lua_pushnumber(m_pLuaState, sValue.GetDouble());
+					lua_pushnumber(m_pLuaState, cValue.GetDouble());
 					break;
 
 				case TypeString:
-					lua_pushstring(m_pLuaState, sValue);
+					lua_pushstring(m_pLuaState, cValue.GetString());
 					break;
 			}
 
