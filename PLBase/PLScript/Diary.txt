@@ -8,6 +8,7 @@
   global variable if this is not desired)
 - "PLScriptBindings::SNMScript" now adds the global variable "this" to the script so that it's able to access "this" RTTI class instance,
   meaning the script scene node modifier
+- PLScriptV8 & PLScriptPython: "Script::SetGlobalVariable()" is now able to add new global variables
 
 
 

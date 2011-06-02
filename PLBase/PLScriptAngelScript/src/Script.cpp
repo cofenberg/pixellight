@@ -289,6 +289,7 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 				case asTYPEID_UINT64:	return TypeUInt64;
 				case asTYPEID_FLOAT:	return TypeFloat;
 				case asTYPEID_DOUBLE:	return TypeDouble;
+				// [TODO] Add Object* support
 
 				default:
 					if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
@@ -349,7 +350,7 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 		// Get the index of the global variable
 		const int nGlobalVarIndex = m_pAngelScriptModule->GetGlobalVarIndexByName(sName);
 
-		// Get the type of the global variable
+		// Get the type of the global variable because we don't want to change it's type
 		int nGlobalVarTypeID = asTYPEID_VOID;
 		if (m_pAngelScriptModule->GetGlobalVar(nGlobalVarIndex, nullptr, &nGlobalVarTypeID, nullptr) >= 0) {
 			// Get the address of the global variable
@@ -368,6 +369,7 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 					case asTYPEID_UINT64:	*static_cast<uint64*>(pGlobalVarAddress) = cValue.GetUInt64();					break;
 					case asTYPEID_FLOAT:	*static_cast<float*> (pGlobalVarAddress) = cValue.GetFloat();					break;
 					case asTYPEID_DOUBLE:	*static_cast<double*>(pGlobalVarAddress) = cValue.GetDouble();					break;
+					// [TODO] Add Object* support
 
 					default:
 						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))

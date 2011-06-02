@@ -245,6 +245,7 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 				return TypeDouble;
 			else if (cV8Object->IsString())
 				return TypeString;
+			// [TODO] Add Object* support
 		}
 	}
 
@@ -274,39 +275,36 @@ String Script::GetGlobalVariable(const String &sName)
 
 void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
-	// Get the type of the global variable (because we don't want to change it's type)
-	const ETypeID nTypeID = GetGlobalVariableTypeID(sName);
-	if (nTypeID != TypeInvalid) {
-		// Create a stack-allocated handle scope
-		v8::HandleScope cHandleScope;
+	// Get the type of the global variable because we don't want to change it's type
+	int nTypeID = GetGlobalVariableTypeID(sName);
+	if (nTypeID == TypeInvalid) {
+		// Ok, this must be a new global variable
+		nTypeID = cValue.GetTypeID();
+	}
 
-		// Enter our V8 context
-		v8::Context::Scope cContextScope(m_cV8Context);
+	// Create a stack-allocated handle scope
+	v8::HandleScope cHandleScope;
 
-		// Get the value to set
-		switch (nTypeID) {
-			case TypeBool:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(cValue.GetBool()));
-				break;
+	// Enter our V8 context
+	v8::Context::Scope cContextScope(m_cV8Context);
 
-			case TypeInt32:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Int32::New(cValue.GetInt()));
-				break;
-
-			case TypeUInt32:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Uint32::New(cValue.GetUInt32()));
-				break;
-
-			case TypeDouble:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number::New(cValue.GetDouble()));
-				break;
-
-			case TypeString:
-				m_cV8Context->Global()->Set(v8::String::New(sName), v8::String::New(cValue.GetString()));
-				break;
-		}
-	} else {
-		// [TODO] Add new global variable
+	// Set the value
+	switch (nTypeID) {
+		case TypeVoid:																														break;	// ? Yeah, that's really funny!
+		case TypeBool:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(cValue.GetBool()));						break;
+		case TypeDouble:	m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number ::New(cValue.GetDouble()));						break;
+		case TypeFloat:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Number ::New(cValue.GetFloat()));						break;
+		case TypeInt:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetInt()));							break;
+		case TypeInt16:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetInt()));							break;
+		case TypeInt32:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Int32  ::New(cValue.GetInt()));							break;
+		case TypeInt64:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetInt()));							break;	// [TODO] TypeInt64 is currently handled just as int
+		case TypeInt8:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetInt()));							break;
+		case TypeString:	m_cV8Context->Global()->Set(v8::String::New(sName), v8::String ::New(cValue.GetString()));						break;
+		case TypeUInt16:	m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetUInt16()));						break;
+		case TypeUInt32:	m_cV8Context->Global()->Set(v8::String::New(sName), v8::Uint32 ::New(cValue.GetUInt32()));						break;
+		case TypeUInt64:	m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(static_cast<uint32>(cValue.GetUInt64())));	break;// [TODO] TypeUInt64 is currently handled just as int
+		case TypeUInt8:		m_cV8Context->Global()->Set(v8::String::New(sName), v8::Integer::New(cValue.GetUInt8()));						break;
+		// [TODO] Add Object* support
 	}
 }
 
