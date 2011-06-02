@@ -95,7 +95,9 @@ Here some examples were it's useful to know how many fragments of an object are 
 
 \section{Rectangle textures}
 \hypertarget{Rectangle textures}{}
-The hardware texturing is limited to images with power-of-two dimensions and an optional 1-texel border. But there's also an special kind of textures called \emph{rectangle textures} without requiring power-of-two dimensions.
+Lookout, this section is only relevant for legacy GPU's/drivers. Nowadays, the power-of-two dimension restriction for textures is gone. If you don't care about support for legacy hardware without universal NPOT, just skip this section.
+
+In past days, the hardware texturing was limited to images with power-of-two dimensions and an optional 1-texel border. But there was also a special kind of textures called \emph{rectangle textures} without requiring power-of-two dimensions.
 
 Non-power-of-two dimensioned textures are useful for storing video images that do not have power-of-two dimensions - for instance the most ingame gui elements. Re-sampling artefacts are avoided and less texture memory may be required by using non-power-of-two dimensioned textures. Non-power-of-two dimensioned textures are also useful for shadow maps and window-space texturing.
 
