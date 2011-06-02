@@ -77,7 +77,9 @@ class RegEx {
 			MatchCaseSensitive	= 1,	/**< Match is case sensitive */
 			MatchGreedy			= 2,	/**< Match is greedy */
 			EncodingASCII		= 4,	/**< ASCII encoding, 1 byte per character (American Standard Code for Information Interchange, 0-128 defined, above undefined) */
-			EncodingUTF8		= 8		/**< UTF8  encoding (8-bit Unicode Transformation Format) with 1 to 6 bytes to encode one Unicode character */
+			EncodingUTF8		= 8,		/**< UTF8  encoding (8-bit Unicode Transformation Format) with 1 to 6 bytes to encode one Unicode character */
+			Multiline               = 16,    /** Multiline match*/
+			DotAll               = 32,    /** DotAll option*/
 		};
 
 

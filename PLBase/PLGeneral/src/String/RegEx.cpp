@@ -516,7 +516,12 @@ void RegEx::CompilePCRE()
 	FreePCRE();
 
 	// Set options
-	const int nOptions = (IsCaseSensitive() ? 0 : PCRE_CASELESS) | (IsGreedy() ? 0 : PCRE_UNGREEDY);
+	int nOptions = (IsCaseSensitive() ? 0 : PCRE_CASELESS) | (IsGreedy() ? 0 : PCRE_UNGREEDY);
+	if (((m_nFlags & Multiline) != 0))
+		nOptions |= PCRE_MULTILINE;
+
+	if (((m_nFlags & DotAll) != 0))
+		nOptions |= PCRE_DOTALL;
 
 	// Use ASCII or UTF8 encoding?
 	if (m_nFlags & EncodingUTF8) {
