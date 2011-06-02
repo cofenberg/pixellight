@@ -223,7 +223,7 @@ void SRPDeferredHBAO::DrawAO(const String &sShaderLanguage, VertexBuffer &cVerte
 
 			// NumDir
 			if (pGeneratedProgramUserData->pNumDir)
-				pGeneratedProgramUserData->pNumDir->Set(static_cast<int>(m_nNumberOfDirections));
+				pGeneratedProgramUserData->pNumDir->Set(static_cast<float>(m_nNumberOfDirections)); // (should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)
 
 			{ // Radius
 				// Calculate the radius to use

@@ -1,3 +1,25 @@
+>> 02.06.2011
+[CO]
+- A few months ago, when installing the "ATI Catalyst™ 10.3 driver" I noticed that the god-rays were not longer visible, but there was no
+  GPU shader compiler error. (my system: Notebook "GT725Q" with Windows 7 64 bit and ATI Mobility Radeon HD 4850 512MB)
+  After playing around with the shader source code I noticed that when I changed a "int" uniform into "float" the god-rays
+  were visible, again. I wasn't able to figure out what's going on and had no time for further investigations - figuring out graphics bugs
+  can be extremly time consuming and frustrating. So I just switched back to "ATI Catalyst™ 10.2 driver". When installing
+  "ATI Catalyst™ 10.4 driver" some time later, the "bug" was also not there, lucky me. But now, when I installed the latest
+  "ATI Catalyst™ 10.5 driver", the god-rays were gone, again. Now I had a more detailed look into it - and figured out that the HBAO shader
+  was also not working on this GPU driver version, same issue with "int" uniform. Over the time I had some ideas what may go on, but every time
+  I found another PixelLight shader using the same stuff, but was working. So, I have absolutely no glue why the shaders of "SRPDeferredGodRays"
+  and "SRPDeferredHBAO" fail to work when I change e.g. the "NumberOfSamples" fragment shader uniform from "float" into "int". It's the same for
+  the GLSL and Cg shader versions (of course, Cg compiles into GLSL in those cases). I tried the "GL_ARB_get_program_binary" extension, again, in
+  order to request the compiled shader from the GPU - but this extension still fails on my system and just returns nothing. :/
+  This really looks like a (GLSL shader compiler?) bug within the 10.3 and 10.5 ATI GPU driver version, because other GPU driver versions work well
+  and there's no such error on e.g. NVIDIA systems and the issue can't be reproduced in similar situations with other shaders. So, I had no other
+  choice then changing "int" into "float" and adding the source code comment
+    "(should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)"
+  ...
+
+
+
 >> 28.05.2011
 [CO]
 - "SNMPostProcess" is now using lazy evaluation of the internal post process manager... if this post process manager is never used during runtime,

@@ -180,7 +180,7 @@ void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 								// Set number of samples
 								if (pGeneratedProgramUserData->pNumberOfSamples)
-									pGeneratedProgramUserData->pNumberOfSamples->Set((NumberOfSamples > 0) ? NumberOfSamples : 1);
+									pGeneratedProgramUserData->pNumberOfSamples->Set(static_cast<float>((NumberOfSamples > 0) ? NumberOfSamples : 1));	// (should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)
 
 								// Set density
 								if (pGeneratedProgramUserData->pDensity)

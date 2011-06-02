@@ -51,7 +51,7 @@ in vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader,
 \n\
 // Uniforms\n\
 uniform int				NumSteps;			// Number of steps (for example 8)\n\
-uniform int				NumDir;				// Number of directions (for example 16)\n\
+uniform float			NumDir;				// Number of directions (for example 16) (should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)\n\
 uniform float			Radius;				// Radius of influence (for example 1)\n\
 uniform float			InvR;				// 1/Radius (for example 1)\n\
 uniform float			SqrR;				// Radius*Radius (for example 1)\n\
@@ -207,7 +207,7 @@ void main()\n\
 	float alpha = 2 * M_PI / NumDir;\n\
 \n\
 	// Calculate the AO\n\
-	for (int d=0; d<NumDir; d++) {\n\
+	for (int d=0; d<int(NumDir); d++) {\n\
 		float angle = alpha * d;\n\
 		vec2 dir = vec2(cos(angle), sin(angle));\n\
 		vec2 deltaUV = rotate_direction(dir, rand.xy) * step_size.xy;\n\

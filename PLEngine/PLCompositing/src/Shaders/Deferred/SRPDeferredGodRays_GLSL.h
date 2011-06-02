@@ -50,7 +50,7 @@ static const PLGeneral::String sDeferredGodRays_GLSL_FS = "\
 varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform int				NumberOfSamples;	// Number of samples, must be >0\n\
+uniform float			NumberOfSamples;	// Number of samples, must be >0 (should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)\n\
 uniform float			Density;			// Density, must be >0\n\
 uniform float			Weight;				// Weight\n\
 uniform float			Decay;				// Decay\n\
@@ -66,7 +66,7 @@ void main()\n\
 	vec2 deltaTexUV = texUV - LightPosition;\n\
 \n\
 	// Divide by number of samples and scale by control factor\n\
-	deltaTexUV *= 1.0/float(NumberOfSamples)*Density;\n\
+	deltaTexUV *= 1.0/NumberOfSamples*Density;\n\
 \n\
 	// Store initial sample\n\
 	vec3 color = texture2DRect(Map, VertexTexCoordVS).rgb;\n\
@@ -75,7 +75,7 @@ void main()\n\
 	float illuminationDecay = 1.0;\n\
 \n\
 	// Evaluate summation\n\
-	for (int i=0; i<NumberOfSamples; i++) {\n\
+	for (int i=0; i<int(NumberOfSamples); i++) {\n\
 		// Step sample location along ray\n\
 		texUV -= deltaTexUV;\n\
 \n\

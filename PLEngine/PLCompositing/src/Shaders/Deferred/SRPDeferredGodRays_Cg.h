@@ -61,7 +61,7 @@ struct FS_OUTPUT {\n\
 \n\
 // Programs\n\
 FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
-	 , uniform int         NumberOfSamples	// Number of samples, must be >0\n\
+	 , uniform float       NumberOfSamples	// Number of samples, must be >0 (should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)\n\
 	 , uniform float       Density		    // Density, must be >0\n\
 	 , uniform float       Weight		    // Weight\n\
 	 , uniform float       Decay		    // Decay\n\
@@ -85,7 +85,7 @@ FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
 	float illuminationDecay = 1;\n\
 \n\
 	// Evaluate summation\n\
-	for (int i=0; i<NumberOfSamples; i++) {\n\
+	for (int i=0; i<int(NumberOfSamples); i++) {\n\
 		// Step sample location along ray\n\
 		texUV -= deltaTexUV;\n\
 \n\
