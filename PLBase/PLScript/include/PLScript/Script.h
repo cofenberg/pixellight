@@ -253,6 +253,9 @@ class Script : public PLCore::Object {
 		*    Name of the global variable
 		*  @param[in] cValue
 		*    New value of the global variable
+		*
+		*  @note
+		*    - If there's no global variable with the given name, a new global variable is added to the script
 		*/
 		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue) = 0;
 

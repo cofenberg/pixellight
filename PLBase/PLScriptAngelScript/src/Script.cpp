@@ -375,6 +375,8 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 						break;
 				}
 			}
+		} else {
+			// [TODO] Add new global variable
 		}
 	}
 }

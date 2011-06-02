@@ -297,6 +297,8 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));
 			else if (PyFloat_Check(pPythonAttribute))
 				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(cValue.GetDouble()));
+		} else {
+			// [TODO] Add new global variable
 		}
 	}
 }

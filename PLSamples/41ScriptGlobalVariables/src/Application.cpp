@@ -105,6 +105,16 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 
 			// Reset the original value
 			pScript->SetGlobalVariable("g_Factor", Var<String>(sOriginalValue));
+
+			// The global variable "this" shouldn't exist, yet
+			if (pScript->IsGlobalVariable("this")) {
+				// Error, "this" should not happen...
+				System::GetInstance()->GetConsole().Print("Failed to add the global variable \"this\" because it's already there!?\n");
+			} else {
+				// Add global variable "this"
+				pScript->SetGlobalVariable("this", Var<String>("Jap, that's me!"));
+				System::GetInstance()->GetConsole().Print(pScript->IsGlobalVariable("this") ? "Global variable \"this\" was added successfully\n" : "Failed to add the global variable \"this\"\n");
+			}
 		} else {
 			System::GetInstance()->GetConsole().Print("There's no global variable with the name \"g_Factor\"\n");
 		}

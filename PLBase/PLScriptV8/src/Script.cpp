@@ -305,6 +305,8 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 				m_cV8Context->Global()->Set(v8::String::New(sName), v8::String::New(cValue.GetString()));
 				break;
 		}
+	} else {
+		// [TODO] Add new global variable
 	}
 }
 

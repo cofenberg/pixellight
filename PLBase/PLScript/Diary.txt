@@ -3,6 +3,9 @@
 -> After an university lecture etc. maraton of two weeks and some non script related PixelLight work, back to the script stuff. :)
 - "Script::SetGlobalVariable()" has now as parameter the more generic "PLCore::DynVar" instead of "PLGeneral::String"
 - Renamed "Script::GetGlobalVariableType()" into "Script::GetGlobalVariableTypeID()" so that it's similar to e.g. "PLCore::Var::GetTypeID()"
+- PLScriptLua: "Script::SetGlobalVariable()" now also supports "PLCore::Object*" and is able to add new global variables
+  (one can use e.g. "Script::IsGlobalVariable()" to check whether or not there's such a variable before setting one to avoid adding a new
+  global variable if this is not desired)
 
 
 
