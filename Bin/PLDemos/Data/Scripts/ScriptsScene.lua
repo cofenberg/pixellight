@@ -1,20 +1,37 @@
 --[-------------------------------------------------------]
 --[ Global variables                                      ]
 --[-------------------------------------------------------]
-timer = 0;
+soldierTimer = 0
+boxRotation = 0
 
 
 --[-------------------------------------------------------]
 --[ Global functions                                      ]
 --[-------------------------------------------------------]
 function Update()
+	UpdateBox()
+	UpdateSoldier()
+end
+
+function UpdateBox()
+	-- Update our box rotation
+	boxRotation = boxRotation + PL.Timing.GetTimeDifference()*10
+
+	-- Get the scene node we want to manipulate
+	local sceneNode = PL.Application.Scene.Get("Scene.BigBox")
+	if sceneNode ~= nil then
+		sceneNode.Rotation = "0 " .. boxRotation .. " 0"
+	end
+end
+
+function UpdateSoldier()
 	-- Update our timer
-	timer = timer + PL.Timing.GetTimeDifference()
+	soldierTimer = soldierTimer + PL.Timing.GetTimeDifference()
 
 	-- Time to do something?
-	if timer > 1 then
+	if soldierTimer > 1 then
 		-- Set back the timer
-		timer = timer - 1
+		soldierTimer = soldierTimer - 1
 
 		-- Get the scene node we want to manipulate
 		local sceneNode = PL.Application.Scene.Get("Scene.Soldier")
