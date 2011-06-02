@@ -6,6 +6,8 @@
 - PLScriptLua: "Script::SetGlobalVariable()" now also supports "PLCore::Object*" and is able to add new global variables
   (one can use e.g. "Script::IsGlobalVariable()" to check whether or not there's such a variable before setting one to avoid adding a new
   global variable if this is not desired)
+- "PLScriptBindings::SNMScript" now adds the global variable "this" to the script so that it's able to access "this" RTTI class instance,
+  meaning the script scene node modifier
 
 
 

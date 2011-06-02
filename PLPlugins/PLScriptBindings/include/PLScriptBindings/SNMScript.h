@@ -52,6 +52,9 @@ namespace PLScriptBindings {
 /**
 *  @brief
 *    Script scene node modifier
+*
+*  @note
+*    - Adds the global variable "this" to the script so that it's able to access "this" RTTI class instance
 */
 class SNMScript : public PLScene::SceneNodeModifier {
 
