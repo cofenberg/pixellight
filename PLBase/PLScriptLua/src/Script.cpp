@@ -346,7 +346,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return bGlobalVariable;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	ETypeID nType = TypeInvalid;
 
@@ -362,6 +362,10 @@ ETypeID Script::GetGlobalVariableType(const String &sName)
 			nType = TypeDouble;
 		else if (lua_isstring(m_pLuaState, -1))
 			nType = TypeString;
+		else if (lua_isuserdata(m_pLuaState, -1))
+			nType = TypeObjectPtr;	// [TODO] Do any type tests in here?
+		else if (lua_isnil(m_pLuaState, -1))
+			nType = TypeNull;
 
 		// Pop the global variable from the Lua state stack
 		lua_pop(m_pLuaState, 1);
@@ -396,10 +400,10 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 	// Is there a Lua state?
 	if (m_pLuaState) {
 		// Get the type of the global variable (because we don't want to change it's type)
-		const ETypeID nType = GetGlobalVariableType(sName);
-		if (nType != TypeInvalid) {
+		const ETypeID nTypeID = GetGlobalVariableTypeID(sName);
+		if (nTypeID != TypeInvalid) {
 			// Push the value of the global variable onto the Lua stack
-			switch (nType) {
+			switch (nTypeID) {
 				case TypeBool:
 					lua_pushboolean(m_pLuaState, cValue.GetBool());
 					break;

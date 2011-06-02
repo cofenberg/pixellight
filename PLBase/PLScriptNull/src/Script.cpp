@@ -107,7 +107,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return false;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// Nothing to do in here
 	return TypeInvalid;

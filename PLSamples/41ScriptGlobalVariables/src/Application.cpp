@@ -89,7 +89,7 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 		// Check whether or not "g_Factor" is a global variable
 		if (pScript->IsGlobalVariable("g_Factor")) {
 			// Get the type of the global variable
-			ETypeID nType = pScript->GetGlobalVariableType("g_Factor");
+			ETypeID nTypeID = pScript->GetGlobalVariableTypeID("g_Factor");
 
 			// Get the current value of the global variable
 			String sOriginalValue = pScript->GetGlobalVariable("g_Factor");

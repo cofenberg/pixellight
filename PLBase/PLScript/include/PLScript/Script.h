@@ -202,10 +202,10 @@ class Script : public PLCore::Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Returns a list of all global variables
+		*    Returns a list of all global variable names
 		*
 		*  @return
-		*    A list of all global variables
+		*    A list of all global variable names
 		*/
 		virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables() = 0;
 
@@ -223,15 +223,15 @@ class Script : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Returns the type a gobal variable
+		*    Returns the type ID a gobal variable
 		*
 		*  @param[in] sName
 		*    Name of the global variable
 		*
 		*  @return
-		*    The type of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
+		*    The type ID of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
 		*/
-		virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName) = 0;
+		virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName) = 0;
 
 		/**
 		*  @brief

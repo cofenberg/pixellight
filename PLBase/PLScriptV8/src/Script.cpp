@@ -219,10 +219,10 @@ const Array<String> &Script::GetGlobalVariables()
 
 bool Script::IsGlobalVariable(const String &sName)
 {
-	return (GetGlobalVariableType(sName) != TypeInvalid);
+	return (GetGlobalVariableTypeID(sName) != TypeInvalid);
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// Is there a V8 context?
 	if (!m_cV8Context.IsEmpty()) {
@@ -275,8 +275,8 @@ String Script::GetGlobalVariable(const String &sName)
 void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Get the type of the global variable (because we don't want to change it's type)
-	const ETypeID nType = GetGlobalVariableType(sName);
-	if (nType != TypeInvalid) {
+	const ETypeID nTypeID = GetGlobalVariableTypeID(sName);
+	if (nTypeID != TypeInvalid) {
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
@@ -284,7 +284,7 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 		v8::Context::Scope cContextScope(m_cV8Context);
 
 		// Get the value to set
-		switch (nType) {
+		switch (nTypeID) {
 			case TypeBool:
 				m_cV8Context->Global()->Set(v8::String::New(sName), v8::Boolean::New(cValue.GetBool()));
 				break;

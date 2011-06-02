@@ -2,6 +2,7 @@
 [CO]
 -> After an university lecture etc. maraton of two weeks and some non script related PixelLight work, back to the script stuff. :)
 - "Script::SetGlobalVariable()" has now as parameter the more generic "PLCore::DynVar" instead of "PLGeneral::String"
+- Renamed "Script::GetGlobalVariableType()" into "Script::GetGlobalVariableTypeID()" so that it's similar to e.g. "PLCore::Var::GetTypeID()"
 
 
 

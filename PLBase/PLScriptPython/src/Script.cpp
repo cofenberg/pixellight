@@ -244,7 +244,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {

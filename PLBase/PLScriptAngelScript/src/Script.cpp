@@ -266,7 +266,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return m_pAngelScriptModule ? (m_pAngelScriptModule->GetGlobalVarIndexByName(sName) >= 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {

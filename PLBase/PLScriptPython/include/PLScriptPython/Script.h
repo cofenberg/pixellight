@@ -99,7 +99,7 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		PLSCRIPTPYTHON_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTPYTHON_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
+		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName);
 		PLSCRIPTPYTHON_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
 		PLSCRIPTPYTHON_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue);
 
