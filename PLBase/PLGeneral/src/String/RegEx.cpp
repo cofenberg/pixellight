@@ -517,10 +517,9 @@ void RegEx::CompilePCRE()
 
 	// Set options
 	int nOptions = (IsCaseSensitive() ? 0 : PCRE_CASELESS) | (IsGreedy() ? 0 : PCRE_UNGREEDY);
-	if (((m_nFlags & Multiline) != 0))
+	if (m_nFlags & Multiline)
 		nOptions |= PCRE_MULTILINE;
-
-	if (((m_nFlags & DotAll) != 0))
+	if (m_nFlags & DotAll)
 		nOptions |= PCRE_DOTALL;
 
 	// Use ASCII or UTF8 encoding?

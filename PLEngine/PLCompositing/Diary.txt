@@ -16,7 +16,8 @@
   and there's no such error on e.g. NVIDIA systems and the issue can't be reproduced in similar situations with other shaders. So, I had no other
   choice then changing "int" into "float" and adding the source code comment
     "(should be of integer type, but that's causing troubles on some GPU drivers, see PLCompositing diary entry 02.06.2011 for more details)"
-  ...
+  -> Stephan Wezel just confirmed that god-rays are now working on his ATI system under Linux as well... wow, graphics programming, one must just
+     love it...
 
 
 
