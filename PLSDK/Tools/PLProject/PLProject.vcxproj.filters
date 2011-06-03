@@ -37,13 +37,13 @@
     <ClInclude Include="src\PublishWin32.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PLPluginInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\PLPluginPlatformInfo.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PLPluginClassInfo.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PLPluginInfo.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

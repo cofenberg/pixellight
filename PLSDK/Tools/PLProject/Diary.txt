@@ -1,4 +1,12 @@
 >> 03.06.2011
+[CO]
+- Switched PLProject back to the static versions of PLGeneral and PLCore, thank's to the new RTTI class parsing it's no longer required
+  to use the dynamic versions
+-> It appears that PLProject has now all the features we need for now
+
+
+
+>> 03.06.2011
 [SW]
 - Created an parser which parses the main source-file and the header files of an project for the information needed for a .plugin file
   This solves at least two problems:

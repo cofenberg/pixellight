@@ -33,8 +33,6 @@
 #include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Registry/Registry.h>
 #include <PLCore/Core.h>
-#include <PLCore/Base/Class.h>
-#include <PLCore/Base/Module.h>
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>

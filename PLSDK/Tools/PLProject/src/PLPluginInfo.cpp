@@ -101,7 +101,7 @@ void PLPluginInfo::SetPLVersion(const String &sPLVersion)
 
 /**
 *  @brief
-*    Set delayed flag, this flag indicates if delayed loading should be used for this plugin
+*    Set active flag, this flag indicates if the plugin is active or not
 */
 void PLPluginInfo::SetActive(bool bIsActive)
 {
