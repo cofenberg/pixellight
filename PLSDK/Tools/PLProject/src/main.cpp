@@ -38,6 +38,7 @@
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
+#include "PLPluginInfo.h"
 
 
 //[-------------------------------------------------------]
@@ -74,31 +75,13 @@ struct Project {
 	String sPath;					/**< Path to project*/
 	String sName;					/**< Project name */
 	String sSuffix;					/**< Project suffix */
-	String sModuleName;				/**< Module name (should be same as project name usually) */
-	String sModuleVersion;			/**< Module version */
-	String sModuleVendor;			/**< Vendor name */
-	String sModuleLicense;			/**< License */
-	String sModuleDescription;		/**< Module description */
 	bool   bModulePlugin;			/**< Is the module a plugin? */
-	bool   bModuleActive;			/**< Is the module active? */
-	bool   bModuleDelayed;			/**< Is the module delayed? */
-	String sLibWin32Release;		/**< Output file name for Win32 Release */
-	String sLibWin32Debug;			/**< Output file name for Win32 Debug */
-	String sLibWin64Release;		/**< Output file name for Win64 Release */
-	String sLibWin64Debug;			/**< Output file name for Win64 Debug */
-	String sLibLinuxRelease;		/**< Output file name for Linux Release */
-	String sLibLinuxDebug;			/**< Output file name for Linux Debug */
-	String sDependWin32Release;		/**< Dependencies for Win32 Release */
-	String sDependWin32Debug;		/**< Dependencies for Win32 Debug */
-	String sDependWin64Release;		/**< Dependencies for Win64 Release */
-	String sDependWin64Debug;		/**< Dependencies for Win64 Debug */
-	String sDependLinuxRelease;		/**< Dependencies for Linux Release */
-	String sDependLinuxDebug;		/**< Dependencies for Linux Debug */
 	String sMainSrc;				/**< Main source file */
 	String sSourcePath;				/**< Directory containing the project's source files */
 	String sIncludePath;			/**< Directory containing the project's include files */
 	String sOutputPath;				/**< Path to output directory */
 	String sOutputPlugin;			/**< Plugin output filename */
+	PLPluginInfo cPlPLuginInfo;		/**< Parser for generating information for .plugin files */
 };
 
 
@@ -327,148 +310,7 @@ bool ParseModule(Project &cProject)
 	String sMainSrc = cProject.sMainSrc;
 	Message(STATUS, "Parsing main source file at '" + sMainSrc + '\'');
 
-	// Open file
-	File cFile(sMainSrc);
-	if (!cFile.Open(File::FileRead | File::FileText)) {
-		Message(ERR, "Could not open file '" + sMainSrc + "'!");
-		return false;
-	}
-
-	// Setup regular expressions
-	RegEx cRegExModule("^\\s*pl_module\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	RegEx cRegExModulePlugin("^\\s*pl_module_plugin\\(\\s*\\\"(?<name>\\w*)\\\"\\s*\\)\\s*$");
-	RegEx cRegExVendor("^\\s*pl_module_vendor\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExLicense("^\\s*pl_module_license\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDescription("^\\s*pl_module_description\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExVersion("^\\s*pl_module_version\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin32Release("^\\s*pl_module_dependencies_win32_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin32Debug("^\\s*pl_module_dependencies_win32_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin64Release("^\\s*pl_module_dependencies_win64_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsWin64Debug("^\\s*pl_module_dependencies_win64_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsLinuxRelease("^\\s*pl_module_dependencies_linux_release\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExDepsLinuxDebug("^\\s*pl_module_dependencies_linux_debug\\s*\\(\\s*(?<text>\".*\")\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-	RegEx cRegExActive("^\\s*pl_module_active\\s*\\((?<num>\\d)\\)\\s*$");
-	RegEx cRegExDelayed("^\\s*pl_module_delayed\\s*\\((?<num>\\d)\\)\\s*$");
-
-	// Parse file
-	while (!cFile.IsEof()) {
-		// Read line
-		String sLine = cFile.GetS();
-		Message(DEBUG, sLine);
-
-		// Check for module definition, may start with "pl_module" or "pl_module_plugin"
-		bool bParseModule = false;
-		if (cRegExModule.Match(sLine)) {
-			bParseModule = true;
-			cProject.sModuleName = cRegExModule.GetNameResult("name");
-			cProject.bModulePlugin = false;
-			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
-
-		// Check for "pl_module_plugin"
-		} else if (cRegExModulePlugin.Match(sLine)) {
-			bParseModule = true;
-			cProject.sModuleName = cRegExModulePlugin.GetNameResult("name");
-			cProject.bModulePlugin = true;
-			Message(STATUS, "Module name = '" + cProject.sModuleName + '\'');
-			Message(STATUS, "This module is a plugin");
-		}
-
-		// Parse module?
-		if (bParseModule) {
-			// Parse module and the rest of the file
-			while (!cFile.IsEof()) {
-				// Read line
-				sLine = cFile.GetS();
-				Message(DEBUG, sLine);
-
-				// Check for pl_module_vendor
-				if (cRegExVendor.Match(sLine)) {
-					cProject.sModuleVendor = GetQuotedString(cRegExVendor.GetNameResult("text"));
-					Message(STATUS, "Vendor name = '" + cProject.sModuleVendor + '\'');
-
-				// Check for pl_module_license
-				} else if (cRegExLicense.Match(sLine)) {
-					cProject.sModuleLicense = GetQuotedString(cRegExLicense.GetNameResult("text"));
-					Message(STATUS, "License = '" + cProject.sModuleLicense + '\'');
-
-				// Check for pl_module_description
-				} else if (cRegExDescription.Match(sLine)) {
-					cProject.sModuleDescription = GetQuotedString(cRegExDescription.GetNameResult("text"));
-					Message(STATUS, "Description = '" + cProject.sModuleDescription + '\'');
-
-				// Check for pl_module_version
-				} else if (cRegExVersion.Match(sLine)) {
-					cProject.sModuleVersion = GetQuotedString(cRegExVersion.GetNameResult("text"));
-					Message(STATUS, "Version = '" + cProject.sModuleVersion + '\'');
-
-				// Check for pl_module_dependencies_win32_release
-				} else if (cRegExDepsWin32Release.Match(sLine)) {
-					cProject.sDependWin32Release = GetQuotedString(cRegExDepsWin32Release.GetNameResult("text"));
-					Message(STATUS, "Win32 release dependencies = '" + cProject.sDependWin32Release + '\'');
-
-				// Check for pl_module_dependencies_win32_debug
-				} else if (cRegExDepsWin32Debug.Match(sLine)) {
-					cProject.sDependWin32Debug = GetQuotedString(cRegExDepsWin32Debug.GetNameResult("text"));
-					Message(STATUS, "Win32 debug dependencies = '" + cProject.sDependWin32Debug + '\'');
-
-				// Check for pl_module_dependencies_win64_release
-				} else if (cRegExDepsWin64Release.Match(sLine)) {
-					cProject.sDependWin64Release = GetQuotedString(cRegExDepsWin64Release.GetNameResult("text"));
-					Message(STATUS, "Win64 release dependencies = '" + cProject.sDependWin64Release + '\'');
-
-				// Check for pl_module_dependencies_win64_debug
-				} else if (cRegExDepsWin64Debug.Match(sLine)) {
-					cProject.sDependWin64Debug = GetQuotedString(cRegExDepsWin64Debug.GetNameResult("text"));
-					Message(STATUS, "Win64 debug dependencies = '" + cProject.sDependWin64Debug + '\'');
-
-				// Check for pl_module_dependencies_linux_release
-				} else if (cRegExDepsLinuxRelease.Match(sLine)) {
-					cProject.sDependLinuxRelease = GetQuotedString(cRegExDepsLinuxRelease.GetNameResult("text"));
-					Message(STATUS, "Linux release dependencies = '" + cProject.sDependLinuxRelease + '\'');
-
-				// Check for pl_module_dependencies_linux_debug
-				} else if (cRegExDepsLinuxDebug.Match(sLine)) {
-					cProject.sDependLinuxDebug = GetQuotedString(cRegExDepsLinuxDebug.GetNameResult("text"));
-					Message(STATUS, "Linux debug dependencies = '" + cProject.sDependLinuxDebug + '\'');
-
-				// Check for pl_module_active
-				} else if (cRegExActive.Match(sLine)) {
-					String sActive = cRegExActive.GetNameResult("num");
-					cProject.bModuleActive = (sActive == "1");
-					Message(STATUS, String("Active = '") + (cProject.bModuleActive ? "yes" : "no") + '\'');
-
-				// Check for pl_module_delayed
-				} else if (cRegExDelayed.Match(sLine)) {
-					String sDelayed = cRegExDelayed.GetNameResult("num");
-					cProject.bModuleDelayed = (sDelayed == "1");
-					Message(STATUS, String("Delayed = '") + (cProject.bModuleDelayed ? "yes" : "no") + '\'');
-				}
-			}
-		}
-	}
-
-	// Close file
-	cFile.Close();
-
-	// Compose library names
-	if (cProject.bModulePlugin) {
-		// Compose file names
-		cProject.sLibWin32Release	= cProject.sName + cProject.sSuffix + ".dll";
-		cProject.sLibWin32Debug		= cProject.sName + cProject.sSuffix + "D.dll";
-		cProject.sLibWin64Release	= cProject.sName + cProject.sSuffix + "64.dll";
-		cProject.sLibWin64Debug		= cProject.sName + cProject.sSuffix + "D64.dll";
-		cProject.sLibLinuxRelease	= "lib" + cProject.sName + cProject.sSuffix + ".so";
-		cProject.sLibLinuxDebug		= "lib" + cProject.sName + cProject.sSuffix + "D.so";
-
-		// Output file names
-		Message(STATUS, "Win32 release library = '" + cProject.sLibWin32Release);
-		Message(STATUS, "Win32 debug   library = '" + cProject.sLibWin32Debug);
-		Message(STATUS, "Win64 release library = '" + cProject.sLibWin64Release);
-		Message(STATUS, "Win64 debug   library = '" + cProject.sLibWin64Debug);
-		Message(STATUS, "Linux release library = '" + cProject.sLibLinuxRelease);
-		Message(STATUS, "Linux debug   library = '" + cProject.sLibLinuxDebug);
-	}
-
+	cProject.cPlPLuginInfo.ParseMainModuleFile(cProject.sMainSrc);
 	// Done
 	return true;
 }
@@ -559,6 +401,7 @@ bool ParseProject(Project &cProject)
 		cProject.sIncludePath = sIncludePath;
 	}
 
+	cProject.cPlPLuginInfo.ParseIncludeFiles(sIncludePath);
 	// Add all source, header and inline files
 	Array<String> lstFiles;
 	Find(lstFiles, sSourcePath, "*.cpp", true);
@@ -585,181 +428,14 @@ bool CreatePluginFile(Project &cProject)
 	// Compose output filename
 	cProject.sOutputPlugin = cProject.sOutputPath + '/' + cProject.sName + cProject.sSuffix + ".plugin";
 	Message(STATUS, "Writing plugin file '" + cProject.sOutputPlugin + '\'');
+	// Set library name and suffix to the PLPLuginInfo parser
+	cProject.cPlPLuginInfo.SetLibraryName(cProject.sName);
+	cProject.cPlPLuginInfo.SetLibrarySuffix(cProject.sSuffix);
 
 	// Open plugin file
 	File cFile(cProject.sOutputPlugin);
 	if (cFile.Open(File::FileCreate | File::FileWrite | File::FileText)) {
-		// Get the filename of the shared library
-		String sSharedLibraryFilename;
-		#ifdef WIN32
-			#ifdef WIN64
-				#ifdef _DEBUG
-					sSharedLibraryFilename = cProject.sLibWin64Debug;
-				#else
-					sSharedLibraryFilename = cProject.sLibWin64Release;
-				#endif
-			#else
-				#ifdef _DEBUG
-					sSharedLibraryFilename = cProject.sLibWin32Debug;
-				#else
-					sSharedLibraryFilename = cProject.sLibWin32Release;
-				#endif
-			#endif
-		#endif
-		#ifdef LINUX
-			#ifdef _DEBUG
-				sSharedLibraryFilename = cProject.sLibLinuxDebug;
-			#else
-				sSharedLibraryFilename = cProject.sLibLinuxRelease;
-			#endif
-		#endif
-
-		// Get the absolute filename of the shared library
-		const Url cUrl(cProject.sOutputPlugin);
-		const String sAbsSharedLibraryFilename = (cUrl.IsAbsolute() ? cUrl : (System::GetInstance()->GetCurrentDir() + '/' + cUrl.GetUrl())).CutFilename() + sSharedLibraryFilename;
-
-		// Load the module
-		#ifdef WIN32
-			const Module *pModule = ClassManager::GetInstance()->LoadModule(sAbsSharedLibraryFilename);
-		#else
-			// [TODO] Currently this solution is not working under Linux because the so file can't be loaded (delayed is set to 0)... uff, maybe it's really required to parse the cpp file...
-			const Module *pModule = nullptr;
-		#endif
-
-		// Write plugin file
-		Write(cFile, "<?xml version=\"1.0\" ?>");
-		Write(cFile, "<Plugin Version=\"1\" PixelLightVersion=\"" + Core::GetVersion().ToString() + "\">");
-		Write(cFile, String("	<Active>") + (cProject.bModuleActive ? "1" : "0") + "</Active>");
-		Write(cFile, String("	<Delayed>") + (cProject.bModuleDelayed && pModule ? "1" : "0") + "</Delayed>");
-		Write(cFile, "	<Name>" + cProject.sModuleName + "</Name>");
-
-		// Version
-		if (cProject.sModuleVersion.GetLength())
-			Write(cFile, "	<Version>" + cProject.sModuleVersion + "</Version>");
-
-		// Vendor
-		if (cProject.sModuleVendor.GetLength())
-			Write(cFile, "	<Vendor>" + cProject.sModuleVendor + "</Vendor>");
-
-		// License
-		if (cProject.sModuleLicense.GetLength())
-			Write(cFile, "	<License>" + cProject.sModuleLicense + "</License>");
-
-		// Description
-		if (cProject.sModuleDescription.GetLength())
-			Write(cFile, "	<Description>" + cProject.sModuleDescription + "</Description>");
-
-		{ // Platform: Win32
-			Write(cFile, "	<Platform Name=\"Win32\">");
-
-			// Library: Release
-			if (cProject.sDependWin32Release.GetLength())
-				Write(cFile, "		<Library Type=\"Release\" Dependency=\"" + cProject.sDependWin32Release + "\">" + cProject.sLibWin32Release + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Release\">" + cProject.sLibWin32Release + "</Library>");
-
-			// Library: Debug
-			if (cProject.sDependWin32Debug.GetLength())
-				Write(cFile, "		<Library Type=\"Debug\" Dependency=\"" + cProject.sDependWin32Debug + "\">" + cProject.sLibWin32Debug + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Debug\">" + cProject.sLibWin32Debug + "</Library>");
-
-			// Platform end tag
-			Write(cFile, "	</Platform>");
-		}
-
-		{ // Platform: Win64
-			Write(cFile, "	<Platform Name=\"Win64\">");
-
-			// Library: Release
-			if (cProject.sDependWin64Release.GetLength())
-				Write(cFile, "		<Library Type=\"Release\" Dependency=\"" + cProject.sDependWin64Release + "\">" + cProject.sLibWin64Release + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Release\">" + cProject.sLibWin64Release + "</Library>");
-
-			// Library: Debug
-			if (cProject.sDependWin64Debug.GetLength())
-				Write(cFile, "		<Library Type=\"Debug\" Dependency=\"" + cProject.sDependWin64Debug + "\">" + cProject.sLibWin64Debug + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Debug\">" + cProject.sLibWin64Debug + "</Library>");
-
-			// Platform end tag
-			Write(cFile, "	</Platform>");
-		}
-
-		{ // Platform: Linux
-			Write(cFile, "	<Platform Name=\"Linux\">");
-
-			// Library: Release
-			if (cProject.sDependLinuxRelease.GetLength())
-				Write(cFile, "		<Library Type=\"Release\" Dependency=\"" + cProject.sDependLinuxRelease + "\">" + cProject.sLibLinuxRelease + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Release\">" + cProject.sLibLinuxRelease + "</Library>");
-
-			// Library: Debug
-			if (cProject.sDependLinuxDebug.GetLength())
-				Write(cFile, "		<Library Type=\"Debug\" Dependency=\"" + cProject.sDependLinuxDebug   + "\">" + cProject.sLibLinuxDebug   + "</Library>");
-			else
-				Write(cFile, "		<Library Type=\"Debug\">" + cProject.sLibLinuxDebug + "</Library>");
-
-			// Platform end tag
-			Write(cFile, "	</Platform>");
-		}
-
-		// Classes
-		if (pModule) {
-			// Get classes of module
-			const List<const Class*> &lstClasses = pModule->GetClasses();
-			if (lstClasses.GetNumOfElements()) {
-				// Classes start tag
-				Write(cFile, "	<Classes>");
-
-				// Iterate through all classes
-				Iterator<const Class*> cIterator = lstClasses.GetIterator();
-				while (cIterator.HasNext()) {
-					// Get the class instance
-					const Class *pClass = cIterator.Next();
-
-					// Class start tag
-					Write(cFile, String("		<Class Name=\"") + pClass->GetName() + "\" Namespace=\"" + pClass->GetNamespace() + "\" BaseClassName=\"" + pClass->GetBaseClassName() + "\" Description=\"" + pClass->GetDescription() + "\" HasConstructor=\"" + pClass->HasConstructor() + "\" HasDefaultConstructor=\"" + pClass->HasDefaultConstructor() + "\">");
-
-					{ // Properties
-						const HashMap<String, String> &mapProperties = pClass->GetProperties();
-						if (mapProperties.GetNumOfElements()) {
-							// Properties start tag
-							Write(cFile, "			<Properties>");
-
-							// Iterate over all RTTI class properties
-							Iterator<String> cIterator = pClass->GetProperties().GetKeyIterator();
-							while (cIterator.HasNext()) {
-								// Get the name of the current property
-								const String sName = cIterator.Next();
-
-								// Get the value of the current property
-								const String sValue = pClass->GetProperties().Get(sName);
-
-								// Write down the property
-								Write(cFile, String("				<Property Name=\"") + sName + "\">" + sValue + "</Property>");
-							}
-
-							// Properties end tag
-							Write(cFile, "			</Properties>");
-						}
-					}
-
-					// Class end tag
-					Write(cFile, "		</Class>");
-				}
-
-				// Classes end tag
-				Write(cFile, "	</Classes>");
-			}
-		}
-
-		// Plugin end tag
-		Write(cFile, "</Plugin>");
-
-		cFile.Close();
+		cProject.cPlPLuginInfo.Save(cFile);
 		return true;
 	} else {
 		// Close not open file
@@ -856,8 +532,11 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		cProject.sPath          = sPath;
 		cProject.sSuffix        = sSuffix;
 		cProject.bModulePlugin  = false;
-		cProject.bModuleActive  = true; // By default, projects are active
-		cProject.bModuleDelayed = true; // By default, projects are delayed
+		cProject.cPlPLuginInfo.SetActive(true); // By default, projects are active
+		cProject.cPlPLuginInfo.SetDelayed(true); // By default, projects are delayed
+		cProject.cPlPLuginInfo.SetPluginFileVersion("1");
+		cProject.cPlPLuginInfo.SetPLVersion(Core::GetVersion().ToString());
+		
 		if (ParseProject(cProject)) {
 			// Write plugin file
 			if (bWritePlugin && sOutputPath.GetLength() > 0) {
