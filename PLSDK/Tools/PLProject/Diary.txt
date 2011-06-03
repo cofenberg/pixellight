@@ -1,3 +1,20 @@
+>> 3.06.2011
+[SW]
+- Created an parser which parses the main source-file and the header files of an project for the information needed for a .plugin file
+  This solves at least two problems:
+    - The .plugin files are now created for all compiled plugins under linux.
+      The first used aproach was to load the compiled library which doesn't work under linux correctly due the different handling of
+      library search paths.
+    - The plugin file contained unwanted information. Under windows this was not much of a problem there where only additional
+      Property entries for inherited properties. Under linux the problem were worse.
+      The plugin files contained also information about classes which were'nt part of the project but of the linked pixellight libraries.
+      This broke the scenerederer because some plugins could not be loaded and it caused an segfault on exit in the ClassManager.
+- The parser has following features:
+    - It uses RegEx expressions to garther the needed informations form the files
+    - It uses the pixellight xml classes to generate the xml - document
+
+
+
 >> 29.05.2011
 [CO]
 - "PLProject.py": Added 

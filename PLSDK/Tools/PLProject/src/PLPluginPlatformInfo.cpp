@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPLuginPlatformInfo.h"
+#include "PLPluginPlatformInfo.h"
 #include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Xml/Xml.h>
 
@@ -41,7 +41,7 @@ using namespace PLGeneral;
 *  @brief
 *    Default constructor
 */
-PLPLuginPlatformInfo::PLPLuginPlatformInfo()
+PLPluginPlatformInfo::PLPluginPlatformInfo()
 {
 	// Setup defaults
 	m_lstPlatformNames.Add("Win32");
@@ -66,7 +66,7 @@ PLPLuginPlatformInfo::PLPLuginPlatformInfo()
 *  @brief
 *    Destructor
 */
-PLPLuginPlatformInfo::~PLPLuginPlatformInfo()
+PLPluginPlatformInfo::~PLPluginPlatformInfo()
 {
 
 }
@@ -75,7 +75,7 @@ PLPLuginPlatformInfo::~PLPLuginPlatformInfo()
 *  @brief
 *    Sets the name of the library.
 */
-void PLPLuginPlatformInfo::SetLibraryName(const PLGeneral::String &sLibraryName)
+void PLPluginPlatformInfo::SetLibraryName(const PLGeneral::String &sLibraryName)
 {
 	m_sLibraryName = sLibraryName;
 }
@@ -84,7 +84,7 @@ void PLPLuginPlatformInfo::SetLibraryName(const PLGeneral::String &sLibraryName)
 *  @brief
 *    Sets a library suffix. This String is appended after die library name
 */
-void PLPLuginPlatformInfo::SetSuffixName(const PLGeneral::String &sSuffix)
+void PLPluginPlatformInfo::SetSuffixName(const PLGeneral::String &sSuffix)
 {
 	m_sSuffix = sSuffix;
 }
@@ -93,7 +93,7 @@ void PLPLuginPlatformInfo::SetSuffixName(const PLGeneral::String &sSuffix)
 *  @brief
 *    Parse a line for platform specific bits
 */
-void PLPLuginPlatformInfo::ParseLine(const PLGeneral::String &sLine)
+void PLPluginPlatformInfo::ParseLine(const PLGeneral::String &sLine)
 {
 	// Try get dependencies
 	for(int i = 0; i < m_lstPlatformNames.GetNumOfElements(); ++i)
@@ -117,7 +117,7 @@ void PLPLuginPlatformInfo::ParseLine(const PLGeneral::String &sLine)
 *  @brief
 *    Appends the parsed information to the given xml element
 */
-void PLPLuginPlatformInfo::Save(PLGeneral::XmlElement &pParent)
+void PLPluginPlatformInfo::Save(PLGeneral::XmlElement &pParent)
 {
 	for(int i = 0; i < m_lstPlatformNames.GetNumOfElements(); ++i)
 	{
@@ -158,7 +158,7 @@ void PLPLuginPlatformInfo::Save(PLGeneral::XmlElement &pParent)
 *  @brief
 *    copy constructor
 */
-PLPLuginPlatformInfo::PLPLuginPlatformInfo(const PLPLuginPlatformInfo& other)
+PLPluginPlatformInfo::PLPluginPlatformInfo(const PLPluginPlatformInfo& other)
 {
 
 }
@@ -167,7 +167,7 @@ PLPLuginPlatformInfo::PLPLuginPlatformInfo(const PLPLuginPlatformInfo& other)
 *  @brief
 *    assignment operator
 */
-PLPLuginPlatformInfo& PLPLuginPlatformInfo::operator=(const PLPLuginPlatformInfo & other)
+PLPluginPlatformInfo& PLPluginPlatformInfo::operator=(const PLPluginPlatformInfo & other)
 {
 	return *this;
 }

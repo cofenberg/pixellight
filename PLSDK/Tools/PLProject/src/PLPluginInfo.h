@@ -28,13 +28,13 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
 #include <PLGeneral/Container/Array.h>
-#include "PLPLuginPlatformInfo.h"
+#include "PLPluginPlatformInfo.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class PLPLuginClassInfo;
+class PLPluginClassInfo;
 
 namespace PLGeneral {
 	class XmlElement;
@@ -238,8 +238,8 @@ class PLPluginInfo {
 		PLGeneral::String m_sPluginName;			/** Name of the plugin */
 		PLGeneral::String m_sModuleVersion;			/** Version of the module */
 
-		PLGeneral::Array<PLPLuginClassInfo*> m_lstClasses;	/** List of PLPLuginClassInfo instances */
-		PLPLuginPlatformInfo m_cPluginPlatformInfo;			/** Parser for the platform specific bits in an pl_module_plugin pl_module_end block*/
+		PLGeneral::Array<PLPluginClassInfo*> m_lstClasses;	/** List of PLPLuginClassInfo instances */
+		PLPluginPlatformInfo m_cPluginPlatformInfo;			/** Parser for the platform specific bits in an pl_module_plugin pl_module_end block*/
 };
 
 #endif // PLPLUGININFO_H

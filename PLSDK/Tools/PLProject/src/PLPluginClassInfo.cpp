@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPLuginClassInfo.h"
+#include "PLPluginClassInfo.h"
 #include <PLGeneral/String/Tokenizer.h>
 #include <PLGeneral/Xml/XmlElement.h>
 #include <PLGeneral/Xml/XmlText.h>
@@ -45,7 +45,7 @@ using namespace PLGeneral;
 *  @brief
 *    Default constructor
 */
-PLPLuginClassInfo::PLPLuginClassInfo()
+PLPluginClassInfo::PLPluginClassInfo()
 {
 
 }
@@ -54,7 +54,7 @@ PLPLuginClassInfo::PLPLuginClassInfo()
 *  @brief
 *    Destructor
 */
-PLPLuginClassInfo::~PLPLuginClassInfo()
+PLPluginClassInfo::~PLPluginClassInfo()
 {
 
 }
@@ -63,7 +63,7 @@ PLPLuginClassInfo::~PLPLuginClassInfo()
 *  @brief
 *    Appends the parsed information to the given xml element
 */
-void PLPLuginClassInfo::Save(PLGeneral::XmlElement &pParent)
+void PLPluginClassInfo::Save(PLGeneral::XmlElement &pParent)
 {
 	XmlElement *pClassElement = new XmlElement("Class");
 	pClassElement->SetAttribute("Name", m_sClassName);
@@ -102,7 +102,7 @@ void PLPLuginClassInfo::Save(PLGeneral::XmlElement &pParent)
 *  @brief
 *    Parse the given pl_class pl_class_end block
 */
-void PLPLuginClassInfo::ParsePlClassBlock(const PLGeneral::String &sPLClassBlock)
+void PLPluginClassInfo::ParsePlClassBlock(const PLGeneral::String &sPLClassBlock)
 {
 	m_sClassName = "";
 	m_sBaseClass = "";
@@ -167,7 +167,7 @@ void PLPLuginClassInfo::ParsePlClassBlock(const PLGeneral::String &sPLClassBlock
 *  @brief
 *    copy constructor
 */
-PLPLuginClassInfo::PLPLuginClassInfo(const PLPLuginClassInfo& other)
+PLPluginClassInfo::PLPluginClassInfo(const PLPluginClassInfo& other)
 {
 
 }
@@ -176,7 +176,7 @@ PLPLuginClassInfo::PLPLuginClassInfo(const PLPLuginClassInfo& other)
 *  @brief
 *    assignment operator
 */
-PLPLuginClassInfo& PLPLuginClassInfo::operator=(const PLPLuginClassInfo & other)
+PLPluginClassInfo& PLPluginClassInfo::operator=(const PLPluginClassInfo & other)
 {
 	return *this;
 }

@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLPluginInfo.h"
-#include "PLPLuginClassInfo.h"
+#include "PLPluginClassInfo.h"
 #include <PLGeneral/File/Directory.h>
 #include <PLGeneral/File/FileSearch.h>
 #include <PLGeneral/File/File.h>
@@ -59,7 +59,7 @@ PLPluginInfo::~PLPluginInfo()
 {
 	// Cleanup all PLPLuginClassInfo instances
 	for (int i = 0; i < m_lstClasses.GetNumOfElements(); ++i) {
-		PLPLuginClassInfo *pInfo = m_lstClasses[i];
+		PLPluginClassInfo *pInfo = m_lstClasses[i];
 		delete pInfo;
 	}
 	m_lstClasses.Clear();
@@ -223,7 +223,7 @@ void PLPluginInfo::ParseFile(const PLGeneral::String &sFilename)
 	if (cplclass_plclassendblock.Match(content)) {
 		content = cplclass_plclassendblock.GetResult(0);
 
-		PLPLuginClassInfo *pInfo = new PLPLuginClassInfo;
+		PLPluginClassInfo *pInfo = new PLPluginClassInfo;
 		pInfo->ParsePlClassBlock(content);
 		m_lstClasses.Add(pInfo);
 	}
@@ -383,7 +383,7 @@ void PLPluginInfo::AppendInformation(PLGeneral::XmlDocument &cDocument)
 	XmlElement *pClassesElement = new XmlElement("Classes");
 	cRootElement->LinkEndChild(*pClassesElement);
 
-	ConstIterator<PLPLuginClassInfo*> iter = m_lstClasses.GetConstIterator();
+	ConstIterator<PLPluginClassInfo*> iter = m_lstClasses.GetConstIterator();
 	while (iter.HasNext()) {
 		iter.Next()->Save(*pClassesElement);
 	}

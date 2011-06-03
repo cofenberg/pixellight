@@ -9,9 +9,9 @@ define_project(PLProject NOSUFFIX)
 add_sources(
 	src/main.cpp
 	src/Publish.cpp
-	src/PLPLuginClassInfo.cpp
+	src/PLPluginClassInfo.cpp
 	src/PLPluginInfo.cpp
-	src/PLPLuginPlatformInfo.cpp
+	src/PLPluginPlatformInfo.cpp
 )
 
 ##################################################
