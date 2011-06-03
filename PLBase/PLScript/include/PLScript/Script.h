@@ -202,10 +202,10 @@ class Script : public PLCore::Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Returns a list of all global variables
+		*    Returns a list of all global variable names
 		*
 		*  @return
-		*    A list of all global variables
+		*    A list of all global variable names
 		*/
 		virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables() = 0;
 
@@ -223,15 +223,15 @@ class Script : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Returns the type a gobal variable
+		*    Returns the type ID a gobal variable
 		*
 		*  @param[in] sName
 		*    Name of the global variable
 		*
 		*  @return
-		*    The type of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
+		*    The type ID of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
 		*/
-		virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName) = 0;
+		virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName) = 0;
 
 		/**
 		*  @brief
@@ -251,10 +251,15 @@ class Script : public PLCore::Object {
 		*
 		*  @param[in] sName
 		*    Name of the global variable
-		*  @param[in] sValue
+		*  @param[in] cValue
 		*    New value of the global variable
+		*
+		*  @note
+		*    - If there's no global variable with the given name, a new global variable is added to the script
+		*    - Please note that it depends on the used script language/API which data types are really available,
+		*      this means that "GetGlobalVariableTypeID()" may return another data type as the one you specified
 		*/
-		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]

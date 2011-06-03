@@ -98,9 +98,9 @@ class Script : public PLScript::Script {
 		//[-------------------------------------------------------]
 		PLSCRIPTNULL_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
 		PLSCRIPTNULL_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTNULL_API virtual PLCore::ETypeID GetGlobalVariableType(const PLGeneral::String &sName);
+		PLSCRIPTNULL_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName);
 		PLSCRIPTNULL_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTNULL_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+		PLSCRIPTNULL_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue);
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]

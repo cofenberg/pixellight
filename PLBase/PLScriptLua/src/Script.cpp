@@ -346,7 +346,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return bGlobalVariable;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	ETypeID nType = TypeInvalid;
 
@@ -362,6 +362,8 @@ ETypeID Script::GetGlobalVariableType(const String &sName)
 			nType = TypeDouble;
 		else if (lua_isstring(m_pLuaState, -1))
 			nType = TypeString;
+		else if (lua_isuserdata(m_pLuaState, -1))
+			nType = TypeObjectPtr;	// [TODO] Do any type tests in here?
 
 		// Pop the global variable from the Lua state stack
 		lua_pop(m_pLuaState, 1);
@@ -391,31 +393,39 @@ String Script::GetGlobalVariable(const String &sName)
 	return sValue;
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		// Get the type of the global variable (because we don't want to change it's type)
-		const ETypeID nType = GetGlobalVariableType(sName);
-		if (nType != TypeInvalid) {
-			// Push the value of the global variable onto the Lua stack
-			switch (nType) {
-				case TypeBool:
-					lua_pushboolean(m_pLuaState, sValue.GetBool());
-					break;
-
-				case TypeDouble:
-					lua_pushnumber(m_pLuaState, sValue.GetDouble());
-					break;
-
-				case TypeString:
-					lua_pushstring(m_pLuaState, sValue);
-					break;
-			}
-
-			// Push the name of the global variable onto the Lua stack - this sets the global variable
-			lua_setglobal(m_pLuaState, sName);
+		// Get the type of the global variable because we don't want to change it's type
+		int nTypeID = GetGlobalVariableTypeID(sName);
+		if (nTypeID == TypeInvalid) {
+			// Ok, this must be a new global variable
+			nTypeID = cValue.GetTypeID();
 		}
+
+		// Push the value of the global variable onto the Lua stack
+		switch (nTypeID) {
+			case TypeVoid:																								return;	// ? Yeah, that's really funny!
+			case TypeBool:		lua_pushboolean(m_pLuaState, cValue.GetBool());											break;
+			case TypeDouble:	lua_pushnumber (m_pLuaState, cValue.GetDouble());										break;
+			case TypeFloat:		lua_pushnumber (m_pLuaState, cValue.GetFloat());										break;
+			case TypeInt:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+			case TypeInt16:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+			case TypeInt32:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+			case TypeInt64:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;	// [TODO] TypeInt64 is currently handled just as long
+			case TypeInt8:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+			case TypeString:	lua_pushstring (m_pLuaState, cValue.GetString());										break;
+			case TypeUInt16:	lua_pushinteger(m_pLuaState, cValue.GetUInt16());										break;
+			case TypeUInt32:	lua_pushinteger(m_pLuaState, cValue.GetUInt32());										break;
+			case TypeUInt64:	lua_pushinteger(m_pLuaState, static_cast<lua_Integer>(cValue.GetUInt64()));				break;	// [TODO] TypeUInt64 is currently handled just as long
+			case TypeUInt8:		lua_pushinteger(m_pLuaState, cValue.GetUInt8());										break;
+			case TypeObjectPtr:	RTTIObjectPointer::LuaStackPush(*this, reinterpret_cast<Object*>(cValue.GetUIntPtr()));	break;
+			default:			lua_pushstring (m_pLuaState, cValue.GetString());										break;	// Unkown type
+		}
+
+		// Push the name of the global variable onto the Lua stack - this sets the global variable
+		lua_setglobal(m_pLuaState, sName);
 	}
 }
 

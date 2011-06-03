@@ -65,6 +65,10 @@ void SNMScript::SetScript(const String &sValue)
 
 		// Create the script instance
 		m_pScript = ScriptManager::GetInstance()->CreateFromFile(m_sScript);
+		if (m_pScript) {
+			// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
+			m_pScript->SetGlobalVariable("this", Var<Object*>(this));
+		}
 	}
 }
 

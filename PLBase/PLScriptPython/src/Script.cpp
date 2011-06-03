@@ -244,7 +244,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
@@ -257,6 +257,7 @@ ETypeID Script::GetGlobalVariableType(const String &sName)
 				return TypeInt32;
 			else if (PyFloat_Check(pPythonAttribute))
 				return TypeFloat;
+			// [TODO] Add Object* support
 		}
 	}
 
@@ -284,19 +285,39 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// Is there a Python module?
 	if (m_pPythonModule) {
-		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
+		// Request the Python attribute because we don't want to change it's type (results in borrowed reference, don't use Py_DECREF on it)
 		PyObject *pPythonAttribute = PyObject_GetAttrString(m_pPythonModule, sName);
 		if (pPythonAttribute) {
 			if (PyString_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(sValue));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(cValue.GetString()));
 			else if (PyInt_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(sValue.GetInt()));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));
 			else if (PyFloat_Check(pPythonAttribute))
-				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(sValue.GetDouble()));
+				PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(cValue.GetDouble()));
+			// [TODO] Add Object* support
+		} else {
+			// Ok, this must be a new global variable
+			switch (cValue.GetTypeID()) {
+				case TypeVoid:																									break;	// ? Yeah, that's really funny!
+				case TypeBool:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeDouble:	PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(cValue.GetDouble()));		break;
+				case TypeFloat:		PyObject_SetAttrString(m_pPythonModule, sName, PyFloat_FromDouble(cValue.GetDouble()));		break;
+				case TypeInt:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeInt16:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeInt32:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeInt64:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;	// [TODO] TypeInt64 is currently handled just as int
+				case TypeInt8:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeString:	PyObject_SetAttrString(m_pPythonModule, sName, PyString_FromString(cValue.GetString()));	break;
+				case TypeUInt16:	PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeUInt32:	PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				case TypeUInt64:	PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;	// [TODO] TypeUInt64 is currently handled just as int
+				case TypeUInt8:		PyObject_SetAttrString(m_pPythonModule, sName, PyInt_FromLong(cValue.GetInt()));			break;
+				// [TODO] Add Object* support
+			}
 		}
 	}
 }

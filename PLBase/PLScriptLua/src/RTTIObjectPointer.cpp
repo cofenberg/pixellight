@@ -26,7 +26,6 @@
 extern "C" {
 	#include <Lua/lua.h>
 }
-#include <PLGeneral/String/String.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"

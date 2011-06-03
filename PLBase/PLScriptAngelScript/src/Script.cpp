@@ -266,7 +266,7 @@ bool Script::IsGlobalVariable(const String &sName)
 	return m_pAngelScriptModule ? (m_pAngelScriptModule->GetGlobalVarIndexByName(sName) >= 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableType(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 {
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
@@ -289,6 +289,7 @@ ETypeID Script::GetGlobalVariableType(const String &sName)
 				case asTYPEID_UINT64:	return TypeUInt64;
 				case asTYPEID_FLOAT:	return TypeFloat;
 				case asTYPEID_DOUBLE:	return TypeDouble;
+				// [TODO] Add Object* support
 
 				default:
 					if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
@@ -342,14 +343,14 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const String &sValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
 {
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Get the index of the global variable
 		const int nGlobalVarIndex = m_pAngelScriptModule->GetGlobalVarIndexByName(sName);
 
-		// Get the type of the global variable
+		// Get the type of the global variable because we don't want to change it's type
 		int nGlobalVarTypeID = asTYPEID_VOID;
 		if (m_pAngelScriptModule->GetGlobalVar(nGlobalVarIndex, nullptr, &nGlobalVarTypeID, nullptr) >= 0) {
 			// Get the address of the global variable
@@ -357,24 +358,27 @@ void Script::SetGlobalVariable(const String &sName, const String &sValue)
 			if (pGlobalVarAddress) {
 				// Process the global variable depending on it's type
 				switch (nGlobalVarTypeID) {
-					case asTYPEID_BOOL:		*static_cast<bool*>  (pGlobalVarAddress) = sValue.GetBool();					break;
-					case asTYPEID_INT8:		*static_cast<int8*>  (pGlobalVarAddress) = static_cast<int8>(sValue.GetInt());	break;
-					case asTYPEID_INT16:	*static_cast<int16*> (pGlobalVarAddress) = static_cast<int16>(sValue.GetInt());	break;
-					case asTYPEID_INT32:	*static_cast<int32*> (pGlobalVarAddress) = sValue.GetInt();						break;
-					case asTYPEID_INT64:	*static_cast<int64*> (pGlobalVarAddress) = sValue.GetInt64();					break;
-					case asTYPEID_UINT8:	*static_cast<uint8*> (pGlobalVarAddress) = sValue.GetUInt8();					break;
-					case asTYPEID_UINT16:	*static_cast<uint16*>(pGlobalVarAddress) = sValue.GetUInt16();					break;
-					case asTYPEID_UINT32:	*static_cast<uint32*>(pGlobalVarAddress) = sValue.GetUInt32();					break;
-					case asTYPEID_UINT64:	*static_cast<uint64*>(pGlobalVarAddress) = sValue.GetUInt64();					break;
-					case asTYPEID_FLOAT:	*static_cast<float*> (pGlobalVarAddress) = sValue.GetFloat();					break;
-					case asTYPEID_DOUBLE:	*static_cast<double*>(pGlobalVarAddress) = sValue.GetDouble();					break;
+					case asTYPEID_BOOL:		*static_cast<bool*>  (pGlobalVarAddress) = cValue.GetBool();					break;
+					case asTYPEID_INT8:		*static_cast<int8*>  (pGlobalVarAddress) = static_cast<int8>(cValue.GetInt());	break;
+					case asTYPEID_INT16:	*static_cast<int16*> (pGlobalVarAddress) = static_cast<int16>(cValue.GetInt());	break;
+					case asTYPEID_INT32:	*static_cast<int32*> (pGlobalVarAddress) = cValue.GetInt();						break;
+					case asTYPEID_INT64:	*static_cast<int64*> (pGlobalVarAddress) = cValue.GetInt64();					break;
+					case asTYPEID_UINT8:	*static_cast<uint8*> (pGlobalVarAddress) = cValue.GetUInt8();					break;
+					case asTYPEID_UINT16:	*static_cast<uint16*>(pGlobalVarAddress) = cValue.GetUInt16();					break;
+					case asTYPEID_UINT32:	*static_cast<uint32*>(pGlobalVarAddress) = cValue.GetUInt32();					break;
+					case asTYPEID_UINT64:	*static_cast<uint64*>(pGlobalVarAddress) = cValue.GetUInt64();					break;
+					case asTYPEID_FLOAT:	*static_cast<float*> (pGlobalVarAddress) = cValue.GetFloat();					break;
+					case asTYPEID_DOUBLE:	*static_cast<double*>(pGlobalVarAddress) = cValue.GetDouble();					break;
+					// [TODO] Add Object* support
 
 					default:
 						if (nGlobalVarTypeID == m_pAngelScriptEngine->GetTypeIdByDecl("string"))
-							*static_cast<std::string*>(pGlobalVarAddress) = sValue;
+							*static_cast<std::string*>(pGlobalVarAddress) = cValue.GetString();
 						break;
 				}
 			}
+		} else {
+			// [TODO] Add new global variable
 		}
 	}
 }

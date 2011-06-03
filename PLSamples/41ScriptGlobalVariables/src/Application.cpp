@@ -89,14 +89,14 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 		// Check whether or not "g_Factor" is a global variable
 		if (pScript->IsGlobalVariable("g_Factor")) {
 			// Get the type of the global variable
-			ETypeID nType = pScript->GetGlobalVariableType("g_Factor");
+			ETypeID nTypeID = pScript->GetGlobalVariableTypeID("g_Factor");
 
 			// Get the current value of the global variable
 			String sOriginalValue = pScript->GetGlobalVariable("g_Factor");
 			System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" is \"" + sOriginalValue + "\"\n");
 
 			// Set the current value of the global variable
-			pScript->SetGlobalVariable("g_Factor", "42");
+			pScript->SetGlobalVariable("g_Factor", Var<int>(42));
 
 			// Get the current value of the global variable
 			String sValue = pScript->GetGlobalVariable("g_Factor");
@@ -104,7 +104,17 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 				System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" was changed successfully\n");
 
 			// Reset the original value
-			pScript->SetGlobalVariable("g_Factor", sOriginalValue);
+			pScript->SetGlobalVariable("g_Factor", Var<String>(sOriginalValue));
+
+			// The global variable "this" shouldn't exist, yet
+			if (pScript->IsGlobalVariable("this")) {
+				// Error, "this" should not happen...
+				System::GetInstance()->GetConsole().Print("Failed to add the global variable \"this\" because it's already there!?\n");
+			} else {
+				// Add global variable "this"
+				pScript->SetGlobalVariable("this", Var<String>("Jap, that's me!"));
+				System::GetInstance()->GetConsole().Print(pScript->IsGlobalVariable("this") ? "Global variable \"this\" was added successfully\n" : "Failed to add the global variable \"this\"\n");
+			}
 		} else {
 			System::GetInstance()->GetConsole().Print("There's no global variable with the name \"g_Factor\"\n");
 		}
