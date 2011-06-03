@@ -256,6 +256,8 @@ class Script : public PLCore::Object {
 		*
 		*  @note
 		*    - If there's no global variable with the given name, a new global variable is added to the script
+		*    - Please note that it depends on the used script language/API which data types are really available,
+		*      this means that "GetGlobalVariableTypeID()" may return another data type as the one you specified
 		*/
 		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue) = 0;
 

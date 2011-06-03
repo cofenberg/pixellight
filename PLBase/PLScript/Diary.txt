@@ -1,4 +1,11 @@
-﻿>> 02.06.2011
+﻿>> 03.06.2011
+[CO]
+- PLScriptBindings: Added "ScriptBindingSceneRendererTool"... The "making of" of the dungeon demo is now done via a
+  Lua script. Still experimental, but the wires begin to tie up.
+
+
+
+>> 02.06.2011
 [CO]
 -> After an university lecture etc. maraton of two weeks and some non script related PixelLight work, back to the script stuff. :)
 - "Script::SetGlobalVariable()" has now as parameter the more generic "PLCore::DynVar" instead of "PLGeneral::String"
