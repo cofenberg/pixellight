@@ -1,4 +1,4 @@
->> 3.06.2011
+>> 03.06.2011
 [SW]
 - Created an parser which parses the main source-file and the header files of an project for the information needed for a .plugin file
   This solves at least two problems:

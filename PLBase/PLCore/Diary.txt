@@ -1,3 +1,10 @@
+>> 03.06.2011
+[CO]
+-> Stephan Wezel made a PLProject refactoring (see PLProject diary for details), delayed shared library loading is now also working under Linux
+   because PLProject adds the class information into the plugin-file
+
+
+
 >> 29.05.2011
 [CO]
 - Added parameters to the plugin relevant "ClassManager"-methods to make it possible to e.g. disable delayed shared library loading

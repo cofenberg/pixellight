@@ -217,6 +217,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PLPluginClassInfo.cpp" />
+    <ClCompile Include="src\PLPluginInfo.cpp" />
+    <ClCompile Include="src\PLPluginPlatformInfo.cpp" />
     <ClCompile Include="src\Publish.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +228,9 @@
     <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\PLPluginClassInfo.h" />
+    <ClInclude Include="src\PLPluginInfo.h" />
+    <ClInclude Include="src\PLPluginPlatformInfo.h" />
     <ClInclude Include="src\PublishLinux.h" />
     <ClInclude Include="src\PublishWin32.h" />
   </ItemGroup>

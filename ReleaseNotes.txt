@@ -11,6 +11,7 @@ Changes in PixelLight 0.9.7-R1 (not yet released)
 - Change: Changed event emit, to emit an event named "MyEvent" call "MyEvent()" instead of "MyEvent.Emit()"
 - Bugfix/Workaround: God-rays and HBAO were not working on "ATI Catalyst™ 11.3 driver" and "ATI Catalyst™ 11.5 driver"
 - Bugfix: Using the scene node debug flags "DebugContainerAABBox" and "DebugContainerSphere" together produced an graphics error
+- Bugfix: PLProject is now using the PLGeneral XML classes to write down plugin-files, this way strings within those plugin-files are always correctly encoded
 
 
 Changes in PixelLight 0.9.6-R1 (released on April 23, 2011)

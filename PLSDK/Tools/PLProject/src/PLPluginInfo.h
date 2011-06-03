@@ -19,28 +19,27 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef PLPLUGININFO_H
-#define PLPLUGININFO_H
+
+#ifndef __PLPLUGININFO_H__
+#define __PLPLUGININFO_H__
 #pragma once
+
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
 #include "PLPluginPlatformInfo.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class PLPluginClassInfo;
-
 namespace PLGeneral {
+	class File;
 	class XmlElement;
 	class XmlDocument;
-	class File;
 }
+class PLPluginClassInfo;
 
 
 //[-------------------------------------------------------]
@@ -48,52 +47,53 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    class to parse source and header files to generate information which gets saved in .plugins files
+*    Class to parse source and header files to generate information which gets saved in .plugins files
 *
 *  @verbatim
 *    Usage example:
-*    String sLibraryName = "MyExamplePlugin"; // Name of the compiled library
-*    String sMainModulePath = "<projectPath>/source/MyExamplePlugin.cpp"; // Path to the source file which holds the pl_plugin_module definition
-*    String sIncludePath = "<projectPath>/include/"; // Path where the include files of the projekt are located
+*    String sLibraryName    = "MyExamplePlugin";							// Name of the compiled library
+*    String sMainModulePath = "<projectPath>/source/MyExamplePlugin.cpp";	// Path to the source file which holds the pl_plugin_module definition
+*    String sIncludePath    = "<projectPath>/include/";						// Path where the include files of the project are located
 *
-*    PLPluginInfo pluginInfo;
-*    pluginInfo.SetPluginFileVersion("1"); // Set version of the plugin file
-*    pluginInfo.SetDelayed(true); // Set delayed value.
-*    pluginInfo.SetActive(true); // Set active value.
-*    pluginInfo.SetPLVersion("PixelLight 0.9.7-R1"); // Set Version String of Pixellight
-*    pluginInfo.SetLibraryName(sLibraryName); // Set the name of the library to which the sources gets compiled
-*    pluginInfo.ParseMainModuleFile(sMainModulePath); // Let the class parse the main module source file for an pl_plugin_module pl_module_end block
-*    pluginInfo.ParseIncludeFiles(sIncludePath); // Let the class parse all include files at the given path for pl_class pl_class_end blocks
+*    PLPluginInfo cPluginInfo;
+*    cPluginInfo.SetPluginFileVersion("1");				// Set version of the plugin file
+*    cPluginInfo.SetDelayed(true);						// Set delayed value
+*    cPluginInfo.SetActive(true);						// Set active value
+*    cPluginInfo.SetPLVersion("PixelLight 0.9.7-R1");	// Set version string of PixelLight
+*    cPluginInfo.SetLibraryName(sLibraryName);			// Set the name of the library to which the sources gets compiled
+*    cPluginInfo.ParseMainModuleFile(sMainModulePath);	// Let the class parse the main module source file for an pl_plugin_module pl_module_end block
+*    cPluginInfo.ParseIncludeFiles(sIncludePath);		// Let the class parse all include files at the given path for pl_class pl_class_end blocks
 *
-*    pluginInfo.Save(File::StandardOutput); // print the result to the standard output
-* 
+*    cPluginInfo.Save(File::StandardOutput); // Print the result to the standard output
+*
 *    Example output:
-* <?xml version="1.0" ?>
-* <Plugin Version="1" PixelLightVersion="PixelLight 0.9.7-R1">
-*    <Active>1</Active>
-*    <Delayed>1</Delayed>
-*    <Name>MyExample</Name>
-*    <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
-*    <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
-*    <Description>Example Plugin Module Description</Description>
-*    <Platform Name="Win32">
-*        <Library Type="Release">MyExamplePlugin.dll</Library>
-*        <Library Type="Debug">MyExamplePluginD.dll</Library>
-*    </Platform>
-*    <Platform Name="Win64">
-*        <Library Type="Release">MyExamplePlugin64.dll</Library>
-*        <Library Type="Debug">MyExamplePluginD64.dll</Library>
-*    </Platform>
-*    <Platform Name="Linux">
-*        <Library Type="Release">libMyExamplePlugin.so</Library>
-*        <Library Type="Debug">libMyExamplePluginLD.so</Library>
-*    </Platform>
-*    <Classes>
-*        <Class Name="MyExamplePluginClass" Namespace="MyExamplePlugin Class Description" BaseClassName="PLRenderer::RendererBackend" Description="Example Plugin" HasConstructor="1" HasDefaultConstructor="0" />
-* </Plugin>
+*    <?xml version="1.0" ?>
+*    <Plugin Version="1" PixelLightVersion="PixelLight 0.9.7-R1">
+*       <Active>1</Active>
+*       <Delayed>1</Delayed>
+*       <Name>MyExample</Name>
+*       <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
+*       <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
+*       <Description>Example Plugin Module Description</Description>
+*       <Platform Name="Win32">
+*           <Library Type="Release">MyExamplePlugin.dll</Library>
+*           <Library Type="Debug">MyExamplePluginD.dll</Library>
+*       </Platform>
+*       <Platform Name="Win64">
+*           <Library Type="Release">MyExamplePlugin64.dll</Library>
+*           <Library Type="Debug">MyExamplePluginD64.dll</Library>
+*       </Platform>
+*       <Platform Name="Linux">
+*           <Library Type="Release">libMyExamplePlugin.so</Library>
+*           <Library Type="Debug">libMyExamplePluginLD.so</Library>
+*       </Platform>
+*       <Classes>
+*           <Class Name="MyExamplePluginClass" Namespace="MyExamplePlugin Class Description" BaseClassName="PLRenderer::RendererBackend" Description="Example Plugin" HasConstructor="1" HasDefaultConstructor="0" />
+*    </Plugin>
 *  @endverbatim
 */
 class PLPluginInfo {
+
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
@@ -113,32 +113,44 @@ class PLPluginInfo {
 
 		/**
 		*  @brief
-		*    Sets the name of the library.
+		*    Sets the name of the library
+		*
+		*  @param[in] sLibraryName
+		*    Name of the library
 		*/
 		void SetLibraryName(const PLGeneral::String &sLibraryName);
 
 		/**
 		*  @brief
-		*    Sets a library suffix. This String is appended after die library name
+		*    Sets a library suffix, this string is appended to the library name
+		*
+		*  @param[in] sLibrarySuffix
+		*    Library suffix
 		*/
 		void SetLibrarySuffix(const PLGeneral::String &sLibrarySuffix);
 
 		/**
 		*  @brief
 		*    Sets the version of the plugin file
+		*
+		*  @param[in] sPluginVersion
+		*    Version of the plugin file
 		*/
 		void SetPluginFileVersion(const PLGeneral::String &sPluginVersion);
 
 		/**
 		*  @brief
-		*    Sets the pixellight version string
+		*    Sets the PixelLight version string
+		*
+		*  @param[in] sPLVersion
+		*    PixelLight version string
 		*/
 		void SetPLVersion(const PLGeneral::String &sPLVersion);
 
 		/**
 		*  @brief
-		*    Set active flag. This flag indicates if the plugin is active or not.
-		* 
+		*    Set active flag, this flag indicates if the plugin is active or not
+		*
 		*  @note
 		*    - This value can be overwritten by the pl_module_active definition in the main source file of the parsed project
 		*/
@@ -146,8 +158,8 @@ class PLPluginInfo {
 
 		/**
 		*  @brief
-		*    Set delayed flag. This flag indicates if delayed loading should be used for this plugin.
-		* 
+		*    Set delayed flag, this flag indicates if delayed loading should be used for this plugin
+		*
 		*  @note
 		*    - This value can be overwritten by the pl_module_delayed definition in the main source file of the parsed project
 		*/
@@ -156,21 +168,42 @@ class PLPluginInfo {
 		/**
 		*  @brief
 		*    Saves the parsed information to the given file
+		*
+		*  @param[in] sFilename
+		*    Name of the file to write into
 		*/
-		void Save(const PLGeneral::String &sFilename);
-		void Save(PLGeneral::File &file);
+		void Save(const PLGeneral::String &sFilename) const;
+
+		/**
+		*  @brief
+		*    Saves the parsed information to the given file
+		*
+		*  @param[out] cFile
+		*    File to write in, must be opened and writable
+		*/
+		void Save(PLGeneral::File &cFile) const;
 
 		/**
 		*  @brief
 		*    Parses the found header files in the given include path for pl_class..pl_class_end blocks
+		*
+		*  @parse[in] sIncludePath
+		*    Include path to parse
 		*/
 		void ParseIncludeFiles(const PLGeneral::String &sIncludePath);
 
 		/**
 		*  @brief
 		*    Parses the given main module source file for pl_module_plugin..pl_module_end blocks
+		*
+		*  @parse[in] sMainModuleFilename
+		*    Filename of the main module to parse
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
 		*/
-		void ParseMainModuleFile(const PLGeneral::String &sMainModuleFilename);
+		bool ParseMainModuleFile(const PLGeneral::String &sMainModuleFilename);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -178,68 +211,109 @@ class PLPluginInfo {
 	private:
 		/**
 		*  @brief
-		*    copy constructor
+		*    Copy constructor
+		*
+		*  @param[in] cOther
+		*    Source to copy from
 		*/
-		PLPluginInfo(const PLPluginInfo& other);
+		PLPluginInfo(const PLPluginInfo &Other);
 
 		/**
 		*  @brief
-		*    assignment operator
+		*    Copy operator
+		*
+		*  @param[in] cOther
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
 		*/
-		PLPluginInfo& operator=(const PLPluginInfo& other);
+		PLPluginInfo &operator =(const PLPluginInfo &cOther);
 
 		/**
 		*  @brief
 		*    Parses a single file for an pl_class..pl_class_end block
+		*
+		*  @param[in] sFilename
+		*    Name of the file to parse
 		*/
 		void ParseFile(const PLGeneral::String &sFilename);
 
 		/**
 		*  @brief
 		*    Find files in a directory tree
+		*
+		*  @param[out] lstNames
+		*    Receives the found filenames
+		*  @param[in]  sPath
+		*    Path were to search
+		*  @param[in]  bRecursive
+		*    'true' to search recursive
 		*/
-		void Find(PLGeneral::Array<PLGeneral::String> &lstNames, const PLGeneral::String &sPath, const PLGeneral::String &sPattern, bool bRecursive);
+		void Find(PLGeneral::Array<PLGeneral::String> &lstNames, const PLGeneral::String &sPath, const PLGeneral::String &sPattern, bool bRecursive) const;
 
 		/**
 		*  @brief
-		*    Adds an XmlTextElement child to an XmlElement.
+		*    Adds an XmlTextElement child to an XmlElement
+		*
+		*  @param[out] cParent
+		*    Parent to add to
+		*  @param[in]  sName
+		*    XML element name
+		*  @param[in]  sValue
+		*    XML element value
 		*/
-		void AddTextXmlElement(PLGeneral::XmlElement* pParent, const PLGeneral::String &sName, const PLGeneral::String &sValue);
+		void AddTextXmlElement(PLGeneral::XmlElement &cParent, const PLGeneral::String &sName, const PLGeneral::String &sValue) const;
 
 		/**
 		*  @brief
 		*    Parses an pl_module_plugin..pl_module_end block
+		*
+		*  @param[in] sPluginModuleBlock
+		*    Block to parse
 		*/
 		void ParsePluginModuleBlock(const PLGeneral::String &sPluginModuleBlock);
 
 		/**
-		 * @brief
-		 *   Returns the complete content of a file as text
-		 * */
-		PLGeneral::String GetContentFormFile(const PLGeneral::String &sFilename);
+		*  @brief
+		*    Returns the complete content of a file as text
+		*
+		*  @param[in] sFilename
+		*    Filename of the file to get the content from
+		*
+		*  @return
+		*    The file content
+		*/
+		PLGeneral::String GetContentFromFile(const PLGeneral::String &sFilename) const;
 
 		/**
 		*  @brief
-		*    Appends the parsed information about a plugin to the given xml document
+		*    Appends the parsed information about a plugin to the given XML document
+		*
+		*  @param[out] cDocument
+		*    XML document to append to
 		*/
-		void AppendInformation(PLGeneral::XmlDocument &cDocument);
+		void AppendInformation(PLGeneral::XmlDocument &cDocument) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sPluginFileVersion;		/** Plugin version string */
-		PLGeneral::String m_sPLVersion;				/** Pixellight version string */
-		bool m_bIsActive;							/** Flag if the plugin is active */
-		bool m_bDelayed;							/** Flag if the delayed loading should be used */
-		PLGeneral::String m_sDescription;			/** Plugin description */
-		PLGeneral::String m_sVendor;				/** Plugin vendor information */
-		PLGeneral::String m_sLicense;				/** Plugin license information */
-		PLGeneral::String m_sPluginName;			/** Name of the plugin */
-		PLGeneral::String m_sModuleVersion;			/** Version of the module */
+		PLGeneral::String					 m_sPluginFileVersion;	/**< Plugin version string */
+		PLGeneral::String					 m_sPLVersion;			/**< PixelLight version string */
+		bool								 m_bIsActive;			/**< Flag if the plugin is active */
+		bool								 m_bDelayed;			/**< Flag if the delayed loading should be used */
+		PLGeneral::String					 m_sDescription;		/**< Plugin description */
+		PLGeneral::String					 m_sVendor;				/**< Plugin vendor information */
+		PLGeneral::String					 m_sLicense;			/**< Plugin license information */
+		PLGeneral::String					 m_sPluginName;			/**< Name of the plugin */
+		PLGeneral::String					 m_sModuleVersion;		/**< Version of the module */
+		PLGeneral::Array<PLPluginClassInfo*> m_lstClasses;			/**< List of PLPLuginClassInfo instances */
+		PLPluginPlatformInfo				 m_cPluginPlatformInfo;	/**< Parser for the platform specific bits in an pl_module_plugin pl_module_end block */
 
-		PLGeneral::Array<PLPluginClassInfo*> m_lstClasses;	/** List of PLPLuginClassInfo instances */
-		PLPluginPlatformInfo m_cPluginPlatformInfo;			/** Parser for the platform specific bits in an pl_module_plugin pl_module_end block*/
+
 };
 
-#endif // PLPLUGININFO_H
+
+#endif // __PLPLUGININFO_H__

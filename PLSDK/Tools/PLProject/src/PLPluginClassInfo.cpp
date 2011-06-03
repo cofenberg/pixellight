@@ -23,13 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPluginClassInfo.h"
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Xml/XmlElement.h>
-#include <PLGeneral/Xml/XmlText.h>
-#include <PLGeneral/Xml/XmlDocument.h>
 #include <PLGeneral/String/RegEx.h>
+#include <PLGeneral/String/Tokenizer.h>
+#include <PLGeneral/Xml/XmlText.h>
+#include <PLGeneral/Xml/XmlElement.h>
+#include <PLGeneral/Xml/XmlDocument.h>
 #include <PLGeneral/Container/ConstIterator.h>
+#include "PLPluginClassInfo.h"
 
 
 //[-------------------------------------------------------]
@@ -45,9 +45,10 @@ using namespace PLGeneral;
 *  @brief
 *    Default constructor
 */
-PLPluginClassInfo::PLPluginClassInfo()
+PLPluginClassInfo::PLPluginClassInfo() :
+	m_bHasConstructor(false),
+	m_bHasDefaultConstructor(false)
 {
-
 }
 
 /**
@@ -56,45 +57,50 @@ PLPluginClassInfo::PLPluginClassInfo()
 */
 PLPluginClassInfo::~PLPluginClassInfo()
 {
-
 }
 
 /**
 *  @brief
-*    Appends the parsed information to the given xml element
+*    Appends the parsed information to the given XML element
 */
-void PLPluginClassInfo::Save(PLGeneral::XmlElement &pParent)
+void PLPluginClassInfo::Save(XmlElement &cParent) const
 {
+	// Create the class XML element instance
 	XmlElement *pClassElement = new XmlElement("Class");
-	pClassElement->SetAttribute("Name", m_sClassName);
-	pClassElement->SetAttribute("Namespace", m_sNamespace);
-	pClassElement->SetAttribute("BaseClassName", m_sBaseClass);
-	pClassElement->SetAttribute("Description", m_sDescription);
-	pClassElement->SetAttribute("HasConstructor", m_bHasConstructor ? 1 : 0);
+	pClassElement->SetAttribute("Name",					 m_sClassName);
+	pClassElement->SetAttribute("Namespace",			 m_sNamespace);
+	pClassElement->SetAttribute("BaseClassName",		 m_sBaseClass);
+	pClassElement->SetAttribute("Description",			 m_sDescription);
+	pClassElement->SetAttribute("HasConstructor",		 m_bHasConstructor        ? 1 : 0);
 	pClassElement->SetAttribute("HasDefaultConstructor", m_bHasDefaultConstructor ? 1 : 0);
 
-	pParent.LinkEndChild(*pClassElement);
+	// Link the created XML class element instance to the provided parent
+	cParent.LinkEndChild(*pClassElement);
 
-	// Properties
-	if (m_mapProperties.IsEmpty())
-		return;
+	// Are there any properties?
+	if (!m_mapProperties.IsEmpty()) {
+		// Create the XML properties element instance
+		XmlElement *pPropertiesElement = new XmlElement("Properties");
 
-	ConstIterator<String> iter = m_mapProperties.GetConstKeyIterator();
+		// Iterate through the properties
+		ConstIterator<String> cIterator = m_mapProperties.GetConstKeyIterator();
+		while (cIterator.HasNext()) {
+			// Get the key and the value of the current property
+			const String &sKey   = cIterator.Next();
+			const String &sValue = m_mapProperties.Get(sKey);
 
-	XmlElement *pPropertiesElement = new XmlElement("Properties");
-	pClassElement->LinkEndChild(*pPropertiesElement);
+			// Create the XML property element instance
+			XmlElement *pElement = new XmlElement("Property");
+			pElement->SetAttribute("Name", sKey);
+			XmlText *pTextElement = new XmlText(sValue);
+			pElement->LinkEndChild(*pTextElement);
 
-	while (iter.HasNext()) {
-		const String &sKey = iter.Next();
-		const String &sValue = m_mapProperties.Get(sKey);
+			// Link the XML property element to the XML properties element
+			pPropertiesElement->LinkEndChild(*pElement);
+		}
 
-		XmlElement *pElement = new XmlElement("Property");
-		pElement->SetAttribute("Name", sKey);
-
-		XmlText *pTextElement = new XmlText(sValue);
-
-		pElement->LinkEndChild(*pTextElement);
-		pPropertiesElement->LinkEndChild(*pElement);
+		// Link the created XML properties element instance to the class element
+		pClassElement->LinkEndChild(*pPropertiesElement);
 	}
 }
 
@@ -102,82 +108,90 @@ void PLPluginClassInfo::Save(PLGeneral::XmlElement &pParent)
 *  @brief
 *    Parse the given pl_class pl_class_end block
 */
-void PLPluginClassInfo::ParsePlClassBlock(const PLGeneral::String &sPLClassBlock)
+void PLPluginClassInfo::ParsePLClassBlock(const String &sPLClassBlock)
 {
-	m_sClassName = "";
-	m_sBaseClass = "";
-	m_sDescription = "";
-	m_sNamespace = "";
-	m_bHasConstructor = false;
+	// Reset information
+	m_sClassName			 = "";
+	m_sNamespace			 = "";
+	m_sBaseClass			 = "";
+	m_sDescription			 = "";
+	m_bHasConstructor		 = false;
 	m_bHasDefaultConstructor = false;
 	m_mapProperties.Clear();
 
-	{
-		RegEx cplclassBlock("^\\s*pl_class\\s*\\((?<RTTIEXP>\\w*)\\s*,\\s*(?<name>\\w*)\\s*,\\s*\\\"(?<namespace>\\w*)\\\"\\s*,\\s*(?<baseclass>\\w*\\:\\:\\w*)\\s*,\\s*\\\"(?<description>.*)\\\"\\)", RegEx::Multiline);
-
-		if (cplclassBlock.Match(sPLClassBlock)) {
-			m_sClassName = cplclassBlock.GetNameResult("name");
-			m_sNamespace = cplclassBlock.GetNameResult("namespace");
-			m_sBaseClass = cplclassBlock.GetNameResult("baseclass");
-			m_sDescription = cplclassBlock.GetNameResult("description");
+	{ // Parse pl_class
+		RegEx cPLClassBlock("^\\s*pl_class\\s*\\((?<RTTIEXP>\\w*)\\s*,\\s*(?<name>\\w*)\\s*,\\s*\\\"(?<namespace>\\w*)\\\"\\s*,\\s*(?<baseclass>\\w*\\:\\:\\w*)\\s*,\\s*\\\"(?<description>.*)\\\"\\)", RegEx::Multiline);
+		if (cPLClassBlock.Match(sPLClassBlock)) {
+			m_sClassName   = cPLClassBlock.GetNameResult("name");
+			m_sNamespace   = cPLClassBlock.GetNameResult("namespace");
+			m_sBaseClass   = cPLClassBlock.GetNameResult("baseclass");
+			m_sDescription = cPLClassBlock.GetNameResult("description");
 		}
 	}
 
-	{
-		RegEx cplconstructorBlock("^\\s*(pl_constructor_\\d\\d?)", RegEx::Multiline);
-		RegEx cpldefaultconstructorBlock("^\\s*(pl_constructor_0)", RegEx::Multiline);
-
-		m_bHasConstructor = cplconstructorBlock.Match(sPLClassBlock);
-		if (m_bHasConstructor)
-			m_bHasDefaultConstructor = cpldefaultconstructorBlock.Match(sPLClassBlock);
+	{ // Parse constructor information
+		// Is there any constructor?
+		RegEx cPLConstructorBlock("^\\s*(pl_constructor_\\d\\d?)", RegEx::Multiline);
+		m_bHasConstructor = cPLConstructorBlock.Match(sPLClassBlock);
+		if (m_bHasConstructor) {
+			// Is there a default constructor?
+			RegEx cPLDefaultConstructorBlock("^\\s*(pl_constructor_0)", RegEx::Multiline);
+			m_bHasDefaultConstructor = cPLDefaultConstructorBlock.Match(sPLClassBlock);
+		}
 	}
 
-	{
-		RegEx cplpropertiesBlock("^\\s*(pl_properties.*pl_properties_end)", RegEx::Multiline | RegEx::DotAll);
-
-		if (cplpropertiesBlock.Match(sPLClassBlock)) {
-			String content = cplpropertiesBlock.GetResult(0);
-
+	{ // Parse property information
+		RegEx cPLPropertiesBlock("^\\s*(pl_properties.*pl_properties_end)", RegEx::Multiline | RegEx::DotAll);
+		if (cPLPropertiesBlock.Match(sPLClassBlock)) {
+			// Setup the tokenizer
 			Tokenizer cTokenizer;
-
 			cTokenizer.SetDelimiters("\r\n");
 			cTokenizer.SetSingleChars("");
 			cTokenizer.SetQuotes("");
-			cTokenizer.Start(content);
+			cTokenizer.Start(cPLPropertiesBlock.GetResult(0));
 
-			RegEx cplpropertyBlock("^\\s*(pl_property\\(\\\"(?<name>\\w*)\\\"\\s*,\\s*\\\"(?<value>.*)\\\"\\s*\\))", RegEx::Multiline);
-
+			// Parse all individual properties
+			RegEx cPLPropertyBlock("^\\s*(pl_property\\(\\\"(?<name>\\w*)\\\"\\s*,\\s*\\\"(?<value>.*)\\\"\\s*\\))", RegEx::Multiline);
 			String sToken = cTokenizer.GetNextToken();
-			while (sToken.GetLength() != 0) {
-				if (cplpropertyBlock.Match(sToken)) {
-					String sPropName = cplpropertyBlock.GetNameResult("name");
-					String sPropValue = cplpropertyBlock.GetNameResult("value");
-					m_mapProperties.Add(sPropName, sPropValue);
+			while (sToken.GetLength()) {
+				// Is this a property block?
+				if (cPLPropertyBlock.Match(sToken)) {
+					// Get the name and the value of the found property
+					const String sPropertyName  = cPLPropertyBlock.GetNameResult("name");
+					const String sPropertyValue = cPLPropertyBlock.GetNameResult("value");
+
+					// Add the found property to the properties list
+					m_mapProperties.Add(sPropertyName, sPropertyValue);
 				}
+
+				// Next, please!
 				sToken = cTokenizer.GetNextToken();
 			}
 		}
 	}
 }
 
+
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    copy constructor
+*    Copy constructor
 */
-PLPluginClassInfo::PLPluginClassInfo(const PLPluginClassInfo& other)
+PLPluginClassInfo::PLPluginClassInfo(const PLPluginClassInfo &cOther) :
+	m_bHasConstructor(false),
+	m_bHasDefaultConstructor(false)
 {
-
+	// No implementation because the copy constructor is never used
 }
 
 /**
 *  @brief
-*    assignment operator
+*    Copy operator
 */
-PLPluginClassInfo& PLPluginClassInfo::operator=(const PLPluginClassInfo & other)
+PLPluginClassInfo &PLPluginClassInfo::operator =(const PLPluginClassInfo &cOther)
 {
+	// No implementation because the copy operator is never used
 	return *this;
 }
-
