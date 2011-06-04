@@ -343,7 +343,8 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @param[in] nModuleID
 		*    Module ID
 		*  @param[in] pClassImpl
-		*    Pointer to class implementation (must be valid)
+		*    Pointer to class implementation (must be valid), if it's a dummy the
+		*    class manager takes over the control and will destroy it if it's no longer needed
 		*
 		*  @note
 		*    - Called automatically by the RTTI system (see "pl_class"-macro)
@@ -357,7 +358,8 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @param[in] nModuleID
 		*    Module ID
 		*  @param[in] pClassImpl
-		*    Pointer to class implementation (must be valid)
+		*    Pointer to class implementation (must be valid), if it's a dummy the
+		*    class manager takes over the control and will destroy it if it's no longer needed
 		*
 		*  @note
 		*    - Called automatically by the RTTI system (see "pl_class"-macro)

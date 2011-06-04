@@ -25,6 +25,9 @@
 - "Object::GetMethods()" no longer returns a list instance, instead a list instance to be filled has to be provided as parameter.
   This change avoids unnecessary copying around. Because the RTTI stuff is fundamental, it really has to be as performant as possible...
   even if this means that the interface of "Class::GetMethods()" is not identical to "Object::GetMethods()".
+- Stephan found a cleanup bug within my delayed shared library loading implementation... in the case that a class dummy can't be registered because there's
+  already a class dummy or even the real class, no one destroyed the created dummy class instance. This is now handled within "ClassManager::RegisterClass()".
+  Uff, simple principle, that many implementation bugs - not that I had expected it otherwise... but I really hope that was the last one.
 
 
 
