@@ -57,7 +57,6 @@ TestClass1::TestClass1() :
 	Float(this),
 	Enum(this),
 	Flags(this),
-	MethodPrintFloat(this),
 	m_fFloat(0.0f)
 {
 }

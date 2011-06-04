@@ -90,11 +90,12 @@ void Script::GetFormats(Array<String> &lstFormats) const
 */
 void Script::AddBinding(Object &cObject, const String &sNamespace)
 {
-	// Get a list of all RTTI methods of the given RTTI class instance
-	const List<DynFunc*> lstMethods = cObject.GetMethods();
+	// Get a list of all callable RTTI methods of the given RTTI class instance
+	List<DynFuncPtr> lstMethods;
+	cObject.GetMethods(lstMethods);
 
 	// Add all methods to this script
-	Iterator<DynFunc*> cIterator = lstMethods.GetIterator();
+	Iterator<DynFuncPtr> cIterator = lstMethods.GetIterator();
 	while (cIterator.HasNext()) {
 		// Get the dynamic function
 		DynFunc *pDynFunc = cIterator.Next();

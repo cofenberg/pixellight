@@ -213,9 +213,7 @@ bool TextureAniLoaderPL::Save(const TextureAni &cTextureAni, File &cFile)
 *  @brief
 *    Default constructor
 */
-TextureAniLoaderPL::TextureAniLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+TextureAniLoaderPL::TextureAniLoaderPL()
 {
 }
 

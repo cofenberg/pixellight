@@ -40,7 +40,6 @@
 namespace PLCore {
 	class Class;
 	class DynVar;
-	class DynFunc;
 	class DynEvent;
 	class DynEventHandler;
 	class DynConstructor;
@@ -161,29 +160,34 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get methods
+		*    Get callable methods
 		*
-		*  @return
-		*    List of methods
+		*  @param[out] lstMethods
+		*    Receives the list of callable methods, the given list is not cleared before new entries are added
 		*
 		*  @remarks
-		*    Use this function with caution, as the list is assembled and copied each time the function is called!
-		*    In general it is recommended to use GetClass()->GetMethods() to obtain a list of method descriptors
-		*    and then call GetMethod() from the descriptor to get access to the actual method
+		*    Performance warning: Use this function with caution, as the list is assembled and callable method
+		*    instances are created each time the function is called!
+		*    If you only need the method descriptors, use GetClass()->GetMethods() instead.
 		*/
-		PLCORE_API const PLGeneral::List<DynFunc*> GetMethods() const;
+		PLCORE_API void GetMethods(PLGeneral::List<DynFuncPtr> &lstMethods);
 
 		/**
 		*  @brief
-		*    Get method
+		*    Get callable method
 		*
 		*  @param[in] sName
 		*    Method name
 		*
 		*  @return
-		*    Method (can be a null pointer, if no method with that name could be found)
+		*    Callable method (can be a null pointer, if no method with that name could be found)
+		*
+		*  @remarks
+		*    Performance warning: Use this function with caution, as the callable method instance is
+		*    created each time the function is called!
+		*    If you only need the method descriptor, use GetClass()->GetMethod() instead.
 		*/
-		PLCORE_API DynFunc *GetMethod(const PLGeneral::String &sName) const;
+		PLCORE_API DynFuncPtr GetMethod(const PLGeneral::String &sName);
 
 		/**
 		*  @brief

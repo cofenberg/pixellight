@@ -109,9 +109,7 @@ bool TerrainLoaderPL::Save(SNTerrain &cSNTerrain, File &cFile)
 *  @brief
 *    Default constructor
 */
-TerrainLoaderPL::TerrainLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+TerrainLoaderPL::TerrainLoaderPL()
 {
 }
 

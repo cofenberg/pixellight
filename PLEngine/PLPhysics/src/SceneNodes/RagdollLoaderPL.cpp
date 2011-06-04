@@ -233,10 +233,7 @@ bool RagdollLoaderPL::Save(SNRagdoll &cSNRagdoll, File &cFile)
 *  @brief
 *    Default constructor
 */
-RagdollLoaderPL::RagdollLoaderPL() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+RagdollLoaderPL::RagdollLoaderPL()
 {
 }
 

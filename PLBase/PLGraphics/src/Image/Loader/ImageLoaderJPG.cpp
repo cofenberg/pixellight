@@ -378,11 +378,7 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 *  @brief
 *    Default constructor
 */
-ImageLoaderJPG::ImageLoaderJPG() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this),
-	MethodSaveParams(this)
+ImageLoaderJPG::ImageLoaderJPG()
 {
 }
 

@@ -721,10 +721,7 @@ bool MeshLoaderObj::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderObj::MeshLoaderObj() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderObj::MeshLoaderObj()
 {
 }
 

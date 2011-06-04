@@ -891,7 +891,7 @@ class MyClass : public PLCore::Object {
 	pl_class_end
 
 	public:
-		MyClass() : MethodMyMethod(this), MethodMyMethodParameter(this), MethodMyMethodParameters(this) {}
+		MyClass() {}
 		void MyMethod() {}
 		void MyMethodParameter(int nFirst) {}
 		bool MyMethodParameters(int nFirst, float fSecond) { return true; }
@@ -901,30 +901,9 @@ class MyClass : public PLCore::Object {
 // MyClass RTTI implementation
 pl_implement_class(MyClass)
 \end{lstlisting}
-Like the RTTI class attributes, the RTTI class methods are actually objects and their constructor needs a pointer back to their owner object. In the shown example, this is done within the default constructor by using \emph{MethodMyMethod(this)}, \emph{MethodMyMethodParameter(this)} and \emph{MethodMyMethodParameters(this)}. As you can see, a \emph{``Method``} was added automatically to the method object name and for example the method name \emph{MyMethod} was changed into \emph{MethodMyMethod}. If this wouldn't be done, there would occur a name conflict when using the C++ methods. When using for instance \begin{quote}PLCore::DynFunc *pDynFunc = pMyObject->GetMethod(``MyMethod``);\end{quote}, the method name is unchanged.
+Like the RTTI class attributes, the RTTI class methods are actually objects. Unlike RTTI class attributes, those objects are not automatically instanced per RTTI class instance. When defining the RTTI class methods, you don't need to give a pointer back to their owner object within your class constructor. This means that exposing C++ methods to the RTTI has no impact on the per RTTI class instance memory requirements.
 
-The following source~code~\ref{Code:CppLikeRTTIClassMethodUsage} shows how this RTTI class methods can be used by directly accessing the RTTI class method objects as if they were just usual C++ methods.
-\begin{lstlisting}[label=Code:CppLikeRTTIClassMethodUsage,caption={Accessing RTTI class method objects as if they were just usual C++ methods}]
-// Get RTTI class description
-const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
-if (pMyClass != nullptr) {
-	// Create an instance of the RTTI class
-	MyClass *pMyObject = (MyClass*)pMyClass->Create();
-
-	// Call a parameterless method of the RTTI class which doesn't return anything
-	pMyObject->MethodMyMethod();
-
-	// Call a method with one parameter of the RTTI class which doesn't return anything
-	pMyObject->MyMethodParameter(42);
-
-	// Call a method with two parameters of the RTTI class returning a boolean value
-	bool bResult = pMyObject->MyMethodParameters(42, 3.1415f);
-
-	// Cleanup
-	delete pMyObject;
-}
-\end{lstlisting}
-If the shown usage would be the only possible usage of the RTTI class methods, this all would be much effort without any benefits. As already exposed, RTTI class methods can also be accessed by using the generic \emph{PLCore::Class::GetMethod} method and the RTTI class method name as string parameter. If all went fine and there's a RTTI class method with the given name, you now have a pointer to an \emph{PLCore::DynFunc} instance. If there's no RTTI class method with the given name, a null pointer will be returned - therefore it's recommended to check whether or not the returned pointer is valid. After you received a valid generic dynamic function pointer, use \emph{PLCore::DynFunc::Call} to call the method as seen within source~code~\ref{Code:DynamicRTTIClassMethodUsage}.
+RTTI class methods can be accessed by using the generic \emph{PLCore::Class::GetMethod} method and the RTTI class method name as string parameter. If all went fine and there's a RTTI class method with the given name, you now have a pointer to an \emph{PLCore::DynFunc} instance. If there's no RTTI class method with the given name, a null pointer will be returned - therefore it's recommended to check whether or not the returned pointer is valid. After you received a valid generic dynamic function pointer, use \emph{PLCore::DynFunc::Call} to call the method as seen within source~code~\ref{Code:DynamicRTTIClassMethodUsage}.
 \begin{lstlisting}[label=Code:DynamicRTTIClassMethodUsage,caption={Dynamically calling RTTI class methods}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
@@ -932,8 +911,8 @@ if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	PLCore::Object *pMyObject = pMyClass->Create();
 
-	// Get a pointer to a RTTI class method
-	PLCore::DynFunc *pDynFunc = pMyObject->GetMethod("MyMethodParameter");
+	// Get a smart pointer to a RTTI class method
+	PLCore::DynFuncPtr pDynFunc = pMyObject->GetMethod("MyMethodParameter");
 	if (pDynFunc != nullptr) {
 		// Dynamic RTTI class method call
 		pDynFunc->Call("Param0=42");
@@ -990,7 +969,7 @@ class MyClass : public PLCore::Object {
 // MyClass RTTI implementation
 pl_implement_class(MyClass)
 \end{lstlisting}
-You may have noticed that the RTTI class constructors doesn't need to be initialized by using for example \emph{MyConstructor(this)} within a C++ constructor, as this is required for RTTI class attributes and RTTI class methods. The instance of the class can be created by using one of the offered \emph{PLCore::Class::Create} methods as shown within source~code~\ref{Code:RTTIClassInstantiationWithParameters}.
+You may have noticed that the RTTI class constructors doesn't need to be initialized by using for example \emph{MyConstructor(this)} within a C++ constructor, as this is required for RTTI class attributes. The instance of the class can be created by using one of the offered \emph{PLCore::Class::Create} methods as shown within source~code~\ref{Code:RTTIClassInstantiationWithParameters}.
 \begin{lstlisting}[label=Code:RTTIClassInstantiationWithParameters,caption={RTTI class instantiation with parameters}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");

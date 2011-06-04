@@ -706,10 +706,7 @@ bool MeshLoaderQ3Bsp::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderQ3Bsp::MeshLoaderQ3Bsp() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderQ3Bsp::MeshLoaderQ3Bsp()
 {
 }
 

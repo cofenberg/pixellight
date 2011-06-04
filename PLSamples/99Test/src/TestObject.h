@@ -249,7 +249,7 @@ class TestObject : public PLCore::Object {
 		/*****************************************************/
 		/* Method 'Test'                                     */
 		/*****************************************************/
-
+		private:	/* RTTI class methods are private to avoid misuse */
 		/* Method descriptor (contains metadata like name and signature) */
 		class MethodTest_Desc : public PLCore::FuncDesc {
 			public:
@@ -265,22 +265,23 @@ class TestObject : public PLCore::Object {
 				}
 				~MethodTest_Desc() {
 				}
-			private:
-				virtual PLCore::DynFunc *GetMethod(const Object *pObject) {
-					return &((TestObject*)pObject)->MethodTest;
+				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) {
+					return new MethodTest_Method(reinterpret_cast<_Self&>(cObject));
 				}
 		};
 
 		/* Method class */
 		class MethodTest_Method : public PLCore::Method<MethodTest_Desc> {
 			public:
-				MethodTest_Method(_Self *pObject) : PLCore::Method<MethodTest_Desc>(&_Self::Test, pObject) {
+				MethodTest_Method() : PLCore::Method<MethodTest_Desc>(&_Self::Test, nullptr) { /* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
+				}
+				MethodTest_Method(_Self &cObject) : PLCore::Method<MethodTest_Desc>(&_Self::Test, &cObject) {
 				}
 		};
 
 		/* Method itself */
-		MethodTest_Method MethodTest;
-
+		static MethodTest_Method MethodTest;
+		public:
 
 		/*****************************************************/
 		/* Event 'Event0'                                    */

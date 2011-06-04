@@ -735,15 +735,10 @@ void Application::TestObjects()
 
 	// Method: Test()
 	System::GetInstance()->GetConsole().Print("Calling MethodTest (7 times):\n");
-	cObject.MethodTest(10, 0.5f);
-	cObject.MethodTest.Call(PLCore::Params<void, int, float>(20, 1.1f));
-	cObject.MethodTest.Call(PLCore::Params<void, int, float>::FromString("Param0=20 Param1='1.1'"));
-	cObject.MethodTest.Call("Param0=40 Param1='2.1'");
+	cObject.CallMethod("Test", "Param0=200 Param1='0.753'");
 	XmlDocument cXmlParams;
 	cXmlParams.Parse("<?xml version=\"1.0\" ?><Call Param0=\"1\" Param1=\"2.5\"/>");
-	cObject.MethodTest.Call(PLCore::Params<void, int, float>::FromXml(*(XmlElement*)cXmlParams.GetFirstChildElement()));
-	cObject.MethodTest.Call(*(XmlElement*)cXmlParams.GetFirstChildElement());
-	cObject.CallMethod("Test", "Param0=200 Param1='0.753'");
+	cObject.CallMethod("Test", *(XmlElement*)cXmlParams.GetFirstChildElement());
 	System::GetInstance()->GetConsole().Print('\n');
 
 	// Events

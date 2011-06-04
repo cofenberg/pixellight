@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Func/DynFunc.h"
 #include "PLCore/Base/MemberDesc.h"
 
 
@@ -41,7 +42,6 @@ namespace PLCore {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Object;
-class DynFunc;
 
 
 //[-------------------------------------------------------]
@@ -108,12 +108,18 @@ class FuncDesc : public MemberDesc {
 	public:
 		/**
 		*  @brief
-		*    Get method
+		*    Get callable method
+		*
+		*  @param[in] cObject
+		*    RTTI class instance
 		*
 		*  @return
-		*    Pointer to method (can be a null pointer)
+		*    Smart pointer to callable method (can be a null pointer)
+		*
+		*  @note
+		*    - The default implementations returns a null pointer
 		*/
-		PLCORE_API virtual DynFunc *GetMethod(const Object *pObject) const;
+		PLCORE_API virtual DynFuncPtr GetMethod(Object &cObject) const;
 
 
 	//[-------------------------------------------------------]

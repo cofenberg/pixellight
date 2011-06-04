@@ -511,9 +511,8 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				} \
 				~NAME##_Desc() { \
 				} \
-			private: \
-				virtual PLCore::DynFunc *GetMethod(const Object *pObject) const { \
-					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->Method##NAME; \
+				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) const { \
+					return new NAME##_Method(reinterpret_cast<_Self&>(cObject)); \
 				} \
 		}; \
 
@@ -527,7 +526,9 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_method_meth(NAME) \
 		class NAME##_Method : public PLCore::Method<NAME##_Desc> { \
 			public: \
-				NAME##_Method(_Self *pObject) : PLCore::Method<NAME##_Desc>(&_Self::NAME, pObject) { \
+				NAME##_Method() : PLCore::Method<NAME##_Desc>(&_Self::NAME, nullptr) { /* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
+				} \
+				NAME##_Method(_Self &cObject) : PLCore::Method<NAME##_Desc>(&_Self::NAME, &cObject) { \
 				} \
 		}; \
 
@@ -539,7 +540,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *    Method name
 */
 #define __pl_method_decl(NAME) \
-		NAME##_Method Method##NAME; \
+		static NAME##_Method Method##NAME; /* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
 
 /**
 *  @brief
@@ -943,9 +944,11 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *    Method annotation
 */
 #define pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, DESCRIPTION, ANNOTATION) \
+	private: /* RTTI class methods are private to avoid misuse */ \
 	__pl_method_desc(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, DESCRIPTION, ANNOTATION) \
 	__pl_method_meth(NAME) \
 	__pl_method_decl(NAME) \
+	public: \
 
 #define pl_method_15(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \
 	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, __NT__, DESCRIPTION, ANNOTATION)

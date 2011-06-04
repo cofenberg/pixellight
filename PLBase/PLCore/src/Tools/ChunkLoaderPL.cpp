@@ -120,9 +120,7 @@ bool ChunkLoaderPL::Save(const Chunk &cChunk, File &cFile)
 *  @brief
 *    Default constructor
 */
-ChunkLoaderPL::ChunkLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+ChunkLoaderPL::ChunkLoaderPL()
 {
 }
 

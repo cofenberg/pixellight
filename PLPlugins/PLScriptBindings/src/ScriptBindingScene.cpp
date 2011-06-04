@@ -71,8 +71,7 @@ Object *ScriptBindingScene::Get(String sName)
 *  @brief
 *    Constructor
 */
-ScriptBindingScene::ScriptBindingScene() :
-	MethodGet(this)
+ScriptBindingScene::ScriptBindingScene()
 {
 }
 

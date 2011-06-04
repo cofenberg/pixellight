@@ -599,10 +599,7 @@ bool MeshLoaderSmd::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Constructor
 */
-MeshLoaderSmd::MeshLoaderSmd() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderSmd::MeshLoaderSmd()
 {
 }
 

@@ -460,9 +460,7 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderTGA::ImageLoaderTGA() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderTGA::ImageLoaderTGA()
 {
 }
 

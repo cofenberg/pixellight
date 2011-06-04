@@ -188,9 +188,7 @@ bool ChunkLoaderPLXml::Save(const Chunk &cChunk, File &cFile)
 *  @brief
 *    Default constructor
 */
-ChunkLoaderPLXml::ChunkLoaderPLXml() :
-	MethodLoad(this),
-	MethodSave(this)
+ChunkLoaderPLXml::ChunkLoaderPLXml()
 {
 }
 

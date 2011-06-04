@@ -57,8 +57,7 @@ void ScriptBindingSystemConsole::Print(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingSystemConsole::ScriptBindingSystemConsole() :
-	MethodPrint(this)
+ScriptBindingSystemConsole::ScriptBindingSystemConsole()
 {
 }
 

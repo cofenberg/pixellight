@@ -108,10 +108,6 @@ void MyRTTIClass::SetName(const String &sName)
 *    Constructor
 */
 MyRTTIClass::MyRTTIClass() :
-	MethodReturn42(this),
-	MethodIgnoreTheParameter(this),
-	MethodSaySomethingWise(this),
-	MethodGetSelf(this),
 	MySignal(this),
 	SlotOnMyEvent(this),
 	Name(this),

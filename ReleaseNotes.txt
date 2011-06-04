@@ -8,6 +8,7 @@ Changes in PixelLight 0.9.7-R1 (not yet released)
 - Feature: Added support for non-power-of-two textures (NPOT)
 - Feature: Added delayed shared library loading for plugins to speed up the program start and to reduce memory consumption
 - Feature: Completion of the internal string buffer manager to improve the overall string performance
+- Feature: Exposing C++ class methods to the RTTI has no longer an impact on the RTTI class instance memory requirements
 - Change: Changed event emit, to emit an event named "MyEvent" call "MyEvent()" instead of "MyEvent.Emit()"
 - Bugfix/Workaround: God-rays and HBAO were not working on "ATI Catalyst™ 11.3 driver" and "ATI Catalyst™ 11.5 driver"
 - Bugfix: Using the scene node debug flags "DebugContainerAABBox" and "DebugContainerSphere" together produced an graphics error

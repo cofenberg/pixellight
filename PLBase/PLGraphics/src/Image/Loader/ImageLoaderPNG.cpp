@@ -353,9 +353,7 @@ bool ImageLoaderPNG::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderPNG::ImageLoaderPNG() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderPNG::ImageLoaderPNG()
 {
 }
 

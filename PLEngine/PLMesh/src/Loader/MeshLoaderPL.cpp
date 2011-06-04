@@ -112,10 +112,7 @@ bool MeshLoaderPL::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderPL::MeshLoaderPL() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderPL::MeshLoaderPL()
 {
 }
 

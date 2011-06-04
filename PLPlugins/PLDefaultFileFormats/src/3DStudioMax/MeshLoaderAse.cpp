@@ -757,10 +757,7 @@ bool MeshLoaderAse::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderAse::MeshLoaderAse() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderAse::MeshLoaderAse()
 {
 }
 

@@ -310,9 +310,7 @@ bool EffectLoaderPL::Save(const Effect &cEffect, File &cFile)
 *  @brief
 *    Default constructor
 */
-EffectLoaderPL::EffectLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+EffectLoaderPL::EffectLoaderPL()
 {
 }
 

@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
+#include <PLGeneral/Base/SmartPtr.h>
 #include "PLCore/PLCore.h"
 
 
@@ -231,6 +232,12 @@ class DynFunc {
 
 
 };
+
+
+//[-------------------------------------------------------]
+//[ Type definitions                                      ]
+//[-------------------------------------------------------]
+typedef PLGeneral::SmartPtr<DynFunc> DynFuncPtr;
 
 
 //[-------------------------------------------------------]

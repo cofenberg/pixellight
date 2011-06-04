@@ -148,10 +148,7 @@ bool SceneLoaderPL::SaveParams(SceneContainer &cContainer, File &cFile, bool bNo
 *  @brief
 *    Default constructor
 */
-SceneLoaderPL::SceneLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this),
-	MethodSaveParams(this)
+SceneLoaderPL::SceneLoaderPL()
 {
 }
 

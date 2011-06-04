@@ -142,10 +142,7 @@ bool SceneRendererLoaderPL::SaveParams(SceneRenderer &cSceneRenderer, File &cFil
 *  @brief
 *    Default constructor
 */
-SceneRendererLoaderPL::SceneRendererLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this),
-	MethodSaveParams(this)
+SceneRendererLoaderPL::SceneRendererLoaderPL()
 {
 }
 

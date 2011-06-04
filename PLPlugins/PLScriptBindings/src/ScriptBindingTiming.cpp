@@ -61,9 +61,7 @@ float ScriptBindingTiming::GetFramesPerSecond()
 *  @brief
 *    Constructor
 */
-ScriptBindingTiming::ScriptBindingTiming() :
-	MethodGetTimeDifference(this),
-	MethodGetFramesPerSecond(this)
+ScriptBindingTiming::ScriptBindingTiming()
 {
 }
 

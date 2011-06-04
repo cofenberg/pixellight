@@ -301,9 +301,7 @@ bool ImageLoaderEXR::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderEXR::ImageLoaderEXR() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderEXR::ImageLoaderEXR()
 {
 }
 

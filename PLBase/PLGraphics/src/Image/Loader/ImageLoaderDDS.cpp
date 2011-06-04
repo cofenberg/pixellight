@@ -482,9 +482,7 @@ bool ImageLoaderDDS::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderDDS::ImageLoaderDDS() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderDDS::ImageLoaderDDS()
 {
 }
 

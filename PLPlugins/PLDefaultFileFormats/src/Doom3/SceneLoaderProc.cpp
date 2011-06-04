@@ -446,9 +446,7 @@ bool SceneLoaderProc::Save(SceneContainer &cContainer, File &cFile)
 SceneLoaderProc::SceneLoaderProc() :
 	SwapYZ(this),
 	Scale(this),
-	LoadMap(this),
-	MethodLoad(this),
-	MethodSave(this)
+	LoadMap(this)
 {
 }
 
