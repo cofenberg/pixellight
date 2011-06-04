@@ -126,6 +126,10 @@
     <ClInclude Include="src\ScriptBindingSample.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.as" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.js" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.lua" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.py" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
