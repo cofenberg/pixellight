@@ -504,13 +504,16 @@ void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const Str
 					// Get class name, there must be a name!
 					const String sClassName = pClassElement->GetAttribute("Name");
 					if (sClassName.GetLength()) {
-						
 						// Get namespace
 						const String sNamespace = pClassElement->GetAttribute("Namespace");
-						
-						// Check if class is already known
-						const Class *pClassInst = m_mapClasses.Get(sNamespace+"::"+sClassName);
-						if (!pClassInst) {
+
+						// Early escape test: Check if the class is already known
+						if (m_mapClasses.Get(sNamespace + "::" + sClassName)) {
+							// The class name is already used. This is not really an error because the
+							// class may have been loaded automatically through a shared library. The
+							// class dummy stuff should be transparent to the user, so just be silent
+							// in here.
+						} else {
 							// Create the dummy class implementation
 							ClassDummy *pClassDummy = new ClassDummy(nModuleID, sClassName, pClassElement->GetAttribute("Description"),
 								pClassElement->GetAttribute("Namespace"), pClassElement->GetAttribute("BaseClassName"), pClassElement->GetAttribute("HasConstructor").GetBool(), pClassElement->GetAttribute("HasDefaultConstructor").GetBool());
@@ -541,8 +544,6 @@ void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const Str
 
 							// Register at class manager
 							ClassManager::GetInstance()->RegisterClass(nModuleID, pClassDummy);
-						} else {
-							PL_LOG(Error, "Pluginfile of module '" + Url(sAbsFilename).GetFilename() + "': spezifies an already known class: '"+pClassInst->GetClassName()+"' ignore it");
 						}
 					}
 
@@ -617,24 +618,30 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 	Module *pModule = nullptr;
 	const Class *pOldClass = m_mapClasses.Get(pClassImpl->GetClassName());
 	if (pOldClass) {
-		// Is the implementation of the class currently a dummy?
+		// Is the already registered implementation of the class currently a dummy?
 		if (pOldClass->m_pClassImpl->IsDummy()) {
-			// It's a worthless dummy, replace it through the real thingy right now!
+			// Is the new given implementation also a dummy?
+			if (pClassImpl->IsDummy()) {
+				// We only need one dummy, destroy the given one because we're now responsible for the given object
+				delete pClassImpl;
+			} else {
+				// The current class implementation is a worthless dummy, replace it through the real thingy right now!
 
-			// The dummy and the real class are in different modules (this is just a security check)
-			if (pOldClass->m_pClassImpl->m_nModuleID != nModuleID) {
-				// Add the real class to the real module
-				CreateModule(nModuleID)->AddClass(pOldClass);
+				// The dummy and the real class are in different modules (this is just a security check)
+				if (pOldClass->m_pClassImpl->m_nModuleID != nModuleID) {
+					// Add the real class to the real module
+					CreateModule(nModuleID)->AddClass(pOldClass);
+				}
+
+				// Destroy the dummy class implementation
+				delete pOldClass->m_pClassImpl;
+
+				// Set the real class implementation
+				pOldClass->m_pClassImpl = pClassImpl;
+
+				// Tell the class implementation about the class instance wrapping it
+				pClassImpl->m_pClass = const_cast<Class*>(pOldClass);
 			}
-
-			// Destroy the dummy class implementation
-			delete pOldClass->m_pClassImpl;
-
-			// Set the real class implementation
-			pOldClass->m_pClassImpl = pClassImpl;
-
-			// Tell the class implementation about the class instance wrapping it
-			pClassImpl->m_pClass = const_cast<Class*>(pOldClass);
 
 			// We're done, get us out of this method right now!
 			return;
@@ -642,6 +649,9 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 			// It's no dummy, is the new class to register a dummy?
 			if (pClassImpl->IsDummy()) {
 				// Ok, the new class to register is a worthless dummy because we already have the real thingy, so just ignore it!
+
+				// Destroy the given dummy because we're now responsible for the given object
+				delete pClassImpl;
 
 				// We're done, get us out of this method right now!
 				return;

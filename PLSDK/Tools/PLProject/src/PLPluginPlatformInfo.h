@@ -19,8 +19,9 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef PLPLUGINPLATFORMINFO_H
-#define PLPLUGINPLATFORMINFO_H
+
+#ifndef __PLPLUGINPLATFORMINFO_H__
+#define __PLPLUGINPLATFORMINFO_H__
 #pragma once
 
 
@@ -28,8 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/HashMap.h>
 #include <PLGeneral/Container/Array.h>
+#include <PLGeneral/Container/HashMap.h>
 
 
 //[-------------------------------------------------------]
@@ -45,10 +46,10 @@ namespace PLGeneral {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    class to parse platform specific bits from an pl_module_plugin pl_module_end block
-*
+*    Class to parse platform specific bits from a pl_module_plugin pl_module_end block
 */
 class PLPluginPlatformInfo {
+
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
@@ -68,27 +69,40 @@ class PLPluginPlatformInfo {
 
 		/**
 		*  @brief
-		*    Sets the name of the library.
+		*    Sets the name of the library
+		*
+		*  @param[in] sLibraryName
+		*    Name of the library
 		*/
 		void SetLibraryName(const PLGeneral::String &sLibraryName);
 
 		/**
 		*  @brief
-		*    Sets a library suffix. This String is appended after die library name
+		*    Sets a library suffix, this string is appended to the library name
+		*
+		*  @param[in] sSuffix
+		*    Library suffix
 		*/
 		void SetSuffixName(const PLGeneral::String &sSuffix);
 
 		/**
 		*  @brief
 		*    Parse a line for platform specific bits
+		*
+		*  @param[in] sLine
+		*    Line to parse
 		*/
 		void ParseLine(const PLGeneral::String &sLine);
 
 		/**
 		*  @brief
-		*    Appends the parsed information to the given xml element
+		*    Appends the parsed information to the given XML element
+		*
+		*  @param[out] cParent
+		*    XML element to append to
 		*/
-		void Save(PLGeneral::XmlElement& pParent);
+		void Save(PLGeneral::XmlElement &cParent) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -96,27 +110,40 @@ class PLPluginPlatformInfo {
 	private:
 		/**
 		*  @brief
-		*    copy constructor
+		*    Copy constructor
+		*
+		*  @param[in] cOther
+		*    Source to copy from
 		*/
-		PLPluginPlatformInfo(const PLPluginPlatformInfo& other);
+		PLPluginPlatformInfo(const PLPluginPlatformInfo &cOther);
 
 		/**
 		*  @brief
-		*    assignment operator
+		*    Copy operator
+		*
+		*  @param[in] cOther
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
 		*/
-		PLPluginPlatformInfo& operator=(const PLPluginPlatformInfo& other);
+		PLPluginPlatformInfo &operator =(const PLPluginPlatformInfo &cOther);
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sLibraryName;													/** name of the compiled library */
-		PLGeneral::String m_sSuffix;														/** suffix which gets appended to name of the compiled library */
-		PLGeneral::Array<PLGeneral::String> m_lstPlatformNames;								/** List of supported platforms (e.g. win32, linux) */
-		PLGeneral::Array<PLGeneral::String> m_lstBuildTypes;								/** List of supported build types (release debug) */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryDependencies;	/** Library Dependency list for a specific platform and build type */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryPrefix;		/** Library prefix list for a specific platform and build type */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryPostfix;		/** Library postfix list for a specific platform and build type */
+		PLGeneral::String										 m_sLibraryName;			/**< Name of the compiled library */
+		PLGeneral::String										 m_sSuffix;					/**< Suffix which gets appended to name of the compiled library */
+		PLGeneral::Array<PLGeneral::String>						 m_lstPlatformNames;		/**< List of supported platforms (e.g. win32, linux) */
+		PLGeneral::Array<PLGeneral::String>						 m_lstBuildTypes;			/**< List of supported build types (release, debug) */
+		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryDependencies;	/**< Library dependency list for a specific platform and build type */
+		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryPrefix;		/**< Library prefix list for a specific platform and build type */
+		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryPostfix;		/**< Library postfix list for a specific platform and build type */
+
+
 };
 
-#endif // PLPLUGINPLATFORMINFO_H
+
+#endif // __PLPLUGINPLATFORMINFO_H__

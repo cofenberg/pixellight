@@ -1,3 +1,43 @@
+>> 04.06.2011
+[CO]
+- Adding a RTTI class method came with the cost of 8 bytes (32 bit build) per RTTI class instance. While e.g. RTTI class attributes really require
+  per RTTI class instance data, RTTI class methods don't need per RTTI class instance data... at least as long as such a method is not called. When
+  calling a RTTI class method, the RTTI class instance is required, but only then.
+  One may say: "8 bytes - who cares about a few bytes?", but considering that those 8 bytes are per method and per class instance this really sums up.
+  Until now, RTTI class methods were not used that often within PixelLight, so, this wasn't a real problem. For the script support, those RTTI class
+  methods play an important role and I'am quite sure that all over the place a lot of RTTI class methods will be added in order to use RTTI class
+  instances e.g. within scripts. With this in mind, those 8 bytes really hurt.
+  So, before I start to add a lot of RTTI class methods for script support, I stopped and had a look into how to reduce the RTTI class method per
+  instance memory costs. RTTI class methods are now static, meaning they only introduce a memory cost for the RTTI class itself which is not critical
+  because there's only one such class instance per class. :D
+  When requesting a callable RTTI class method, an instance of such an object is created on the fly. In short, memory was traded for additional memory
+  allocation/deallocation - but I really think it's ok and maybe there will be more internal optimisations later.
+  -> This change means, that something like
+       "cMyObject.MethodTest()" or "cMyObject.MethodTest.Call(PLCore::Params<void, int, float>(20, 1.1f))"
+     for calling the method "Test" though it's RTTI wrapper is no longer possible. But that's not really a loss because in those situations it's possible
+     to directly call the C++ method anyway.
+  -> This change also means that within constructors, it's no longer required to initialize RTTI class methods by writing e.g. "MethodLoad(this)". This makes
+     exposing methods to the RTTI easier because it's only required to add e.g.
+       pl_method_2(Load, bool, Chunk&, PLGeneral::File&, "Load method", "")
+     within the RTTI class definition in order to access the method "Load" though the RTTI.
+  -> And the most important meaning of this change: Add as many RTTI class methods as you want, your RTTI class instance won't grow into the kilobytes through that. :D
+- "Object::GetMethod()" returns now "DynFuncPtr" instead of "DynFunc*"
+- "Object::GetMethods()" no longer returns a list instance, instead a list instance to be filled has to be provided as parameter.
+  This change avoids unnecessary copying around. Because the RTTI stuff is fundamental, it really has to be as performant as possible...
+  even if this means that the interface of "Class::GetMethods()" is not identical to "Object::GetMethods()".
+- Stephan found a cleanup bug within my delayed shared library loading implementation... in the case that a class dummy can't be registered because there's
+  already a class dummy or even the real class, no one destroyed the created dummy class instance. This is now handled within "ClassManager::RegisterClass()".
+  Uff, simple principle, that many implementation bugs - not that I had expected it otherwise... but I really hope that was the last one.
+
+
+
+>> 03.06.2011
+[CO]
+-> Stephan Wezel made a PLProject refactoring (see PLProject diary for details), delayed shared library loading is now also working under Linux
+   because PLProject adds the class information into the plugin-file
+
+
+
 >> 29.05.2011
 [CO]
 - Added parameters to the plugin relevant "ClassManager"-methods to make it possible to e.g. disable delayed shared library loading

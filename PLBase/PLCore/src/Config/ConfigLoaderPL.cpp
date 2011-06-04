@@ -153,10 +153,7 @@ bool ConfigLoaderPL::SaveParams(const Config &cConfig, File &cFile, String sGrou
 *  @brief
 *    Default constructor
 */
-ConfigLoaderPL::ConfigLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this),
-	MethodSaveParams(this)
+ConfigLoaderPL::ConfigLoaderPL()
 {
 }
 

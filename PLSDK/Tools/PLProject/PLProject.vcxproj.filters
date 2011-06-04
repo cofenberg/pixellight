@@ -13,6 +13,15 @@
     <ClCompile Include="src\Publish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLPluginPlatformInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLPluginClassInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLPluginInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\PLProject.py">
@@ -26,6 +35,15 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PublishWin32.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PLPluginInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PLPluginPlatformInfo.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PLPluginClassInfo.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

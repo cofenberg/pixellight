@@ -149,9 +149,7 @@ bool SkinLoaderPL::Save(SNMesh &cSNMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-SkinLoaderPL::SkinLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+SkinLoaderPL::SkinLoaderPL()
 {
 }
 

@@ -425,9 +425,7 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderBMP::ImageLoaderBMP() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderBMP::ImageLoaderBMP()
 {
 }
 

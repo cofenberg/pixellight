@@ -436,9 +436,7 @@ bool EffectLoaderFX::Save(Effect &cEffect, File &cFile)
 *  @brief
 *    Default constructor
 */
-EffectLoaderFX::EffectLoaderFX() :
-	MethodLoad(this),
-	MethodSave(this)
+EffectLoaderFX::EffectLoaderFX()
 {
 }
 

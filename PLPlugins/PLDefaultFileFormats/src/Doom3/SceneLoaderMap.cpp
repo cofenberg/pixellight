@@ -67,9 +67,7 @@ bool SceneLoaderMap::Save(SceneContainer &cContainer, File &cFile)
 *  @brief
 *    Default constructor
 */
-SceneLoaderMap::SceneLoaderMap() :
-	MethodLoad(this),
-	MethodSave(this)
+SceneLoaderMap::SceneLoaderMap()
 {
 }
 

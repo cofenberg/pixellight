@@ -66,10 +66,7 @@ void ScriptBindingSample::SaySomethingWise()
 *  @brief
 *    Constructor
 */
-ScriptBindingSample::ScriptBindingSample() :
-	MethodReturn42(this),
-	MethodIgnoreTheParameter(this),
-	MethodSaySomethingWise(this)
+ScriptBindingSample::ScriptBindingSample()
 {
 }
 

@@ -158,9 +158,7 @@ bool SkyLoaderPL::Save(SNSky &cSky, File &cFile)
 *  @brief
 *    Default constructor
 */
-SkyLoaderPL::SkyLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+SkyLoaderPL::SkyLoaderPL()
 {
 }
 

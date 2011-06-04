@@ -153,9 +153,7 @@ bool ImageLoaderPPM::Save(const Image &cImage, File &cFile)
 *  @brief
 *    Default constructor
 */
-ImageLoaderPPM::ImageLoaderPPM() :
-	MethodLoad(this),
-	MethodSave(this)
+ImageLoaderPPM::ImageLoaderPPM()
 {
 }
 

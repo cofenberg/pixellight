@@ -148,10 +148,7 @@ bool MeshLoaderPLXml::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderPLXml::MeshLoaderPLXml() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderPLXml::MeshLoaderPLXml()
 {
 }
 

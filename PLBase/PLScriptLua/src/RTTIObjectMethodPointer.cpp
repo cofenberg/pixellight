@@ -123,7 +123,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 *  @brief
 *    Constructor
 */
-RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFunc *pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject),
+RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject),
 	m_pDynFunc(pDynFunc)
 {
 }

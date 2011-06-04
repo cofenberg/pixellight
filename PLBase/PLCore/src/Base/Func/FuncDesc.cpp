@@ -80,12 +80,12 @@ String FuncDesc::GetSignature() const
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Get method
+*    Get callable method
 */
-DynFunc *FuncDesc::GetMethod(const Object *pObject) const
+DynFuncPtr FuncDesc::GetMethod(Object &cObject) const
 {
 	// To be implemented in derived classes
-	return nullptr;
+	return DynFuncPtr(nullptr);
 }
 
 

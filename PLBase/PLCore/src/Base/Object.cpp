@@ -27,7 +27,6 @@
 #include "PLCore/Base/Var/VarDesc.h"
 #include "PLCore/Base/Var/DynVar.h"
 #include "PLCore/Base/Func/FuncDesc.h"
-#include "PLCore/Base/Func/DynFunc.h"
 #include "PLCore/Base/Event/EventDesc.h"
 #include "PLCore/Base/Event/EventHandlerDesc.h"
 #include "PLCore/Base/Event/DynEvent.h"
@@ -167,33 +166,27 @@ DynVar *Object::GetAttribute(const String &sName) const
 
 /**
 *  @brief
-*    Get methods
+*    Get callable methods
 */
-const List<DynFunc*> Object::GetMethods() const
+void Object::GetMethods(List<DynFuncPtr> &lstMethods)
 {
-	// Create method list
-	List<DynFunc*> lstMethods;
-
 	// Get class
 	Class *pClass = GetClass();
 	if (pClass) {
 		// Get descriptor list
 		const Container<FuncDesc*> &lstDescriptors = pClass->GetMethods();
 
-		// Get all methods for this instance and add them to the list
+		// Get all callable methods for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstMethods.Add(lstDescriptors[i]->GetMethod(this));
+			lstMethods.Add(lstDescriptors[i]->GetMethod(*this));
 	}
-
-	// Return method list
-	return lstMethods;
 }
 
 /**
 *  @brief
-*    Get method
+*    Get callable method
 */
-DynFunc *Object::GetMethod(const String &sName) const
+DynFuncPtr Object::GetMethod(const String &sName)
 {
 	// Get class
 	Class *pClass = GetClass();
@@ -201,13 +194,13 @@ DynFunc *Object::GetMethod(const String &sName) const
 		// Get descriptor
 		const FuncDesc *pDescriptor = pClass->GetMethod(sName);
 		if (pDescriptor) {
-			// Return method
-			return pDescriptor->GetMethod(this);
+			// Return callable method
+			return pDescriptor->GetMethod(*this);
 		}
 	}
 
 	// Could not find method
-	return nullptr;
+	return DynFuncPtr(nullptr);
 }
 
 /**
@@ -348,8 +341,8 @@ void Object::SetAttributeDefault(const String &sName)
 */
 void Object::CallMethod(const String &sName, DynParams &cParams)
 {
-	// Get method
-	DynFunc *pMethod = GetMethod(sName);
+	// Get callable method
+	DynFuncPtr pMethod = GetMethod(sName);
 	if (pMethod) {
 		// Call method
 		pMethod->Call(cParams);
@@ -362,8 +355,8 @@ void Object::CallMethod(const String &sName, DynParams &cParams)
 */
 void Object::CallMethod(const String &sName, const DynParams &cParams)
 {
-	// Get method
-	DynFunc *pMethod = GetMethod(sName);
+	// Get callable method
+	DynFuncPtr pMethod = GetMethod(sName);
 	if (pMethod) {
 		// Call method
 		pMethod->Call(cParams);
@@ -376,8 +369,8 @@ void Object::CallMethod(const String &sName, const DynParams &cParams)
 */
 void Object::CallMethod(const String &sName, const String &sParams)
 {
-	// Get method
-	DynFunc *pMethod = GetMethod(sName);
+	// Get callable method
+	DynFuncPtr pMethod = GetMethod(sName);
 	if (pMethod) {
 		// Call method
 		pMethod->Call(sParams);
@@ -390,8 +383,8 @@ void Object::CallMethod(const String &sName, const String &sParams)
 */
 void Object::CallMethod(const String &sName, const XmlElement &cElement)
 {
-	// Get method
-	DynFunc *pMethod = GetMethod(sName);
+	// Get callable method
+	DynFuncPtr pMethod = GetMethod(sName);
 	if (pMethod) {
 		// Call method
 		pMethod->Call(cElement);

@@ -136,9 +136,7 @@ bool GraphPathLoaderPL::Save(const GraphPath &cGraphPath, File &cFile)
 *  @brief
 *    Default constructor
 */
-GraphPathLoaderPL::GraphPathLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+GraphPathLoaderPL::GraphPathLoaderPL()
 {
 }
 

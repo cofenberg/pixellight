@@ -150,9 +150,7 @@ bool GraphLoaderPL::Save(const Graph &cGraph, File &cFile)
 *  @brief
 *    Default constructor
 */
-GraphLoaderPL::GraphLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+GraphLoaderPL::GraphLoaderPL()
 {
 }
 

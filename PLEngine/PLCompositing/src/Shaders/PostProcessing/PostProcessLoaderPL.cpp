@@ -158,9 +158,7 @@ bool PostProcessLoaderPL::Save(PostProcessManager &cPostProcessManager, File &cF
 *  @brief
 *    Default constructor
 */
-PostProcessLoaderPL::PostProcessLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+PostProcessLoaderPL::PostProcessLoaderPL()
 {
 }
 

@@ -140,7 +140,7 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 				// [TODO] Currently methods and signals may have name conflicts because their usage is identical (but that's a general 'problem'...)
 
 				// Is it a method?
-				DynFunc *pDynFunc = m_pRTTIObject->GetMethod(sName);
+				DynFuncPtr pDynFunc = m_pRTTIObject->GetMethod(sName);
 				if (pDynFunc) {
 					// It's a method... just put another user data instance on the Lua stack...
 					// The destruction of the new RTTIObjectMethodPointer instance is done by the Lua garbage collector

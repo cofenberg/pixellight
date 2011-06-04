@@ -491,10 +491,7 @@ bool MeshLoaderMd2::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderMd2::MeshLoaderMd2() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderMd2::MeshLoaderMd2()
 {
 }
 

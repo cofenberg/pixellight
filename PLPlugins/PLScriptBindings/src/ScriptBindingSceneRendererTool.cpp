@@ -65,8 +65,7 @@ bool ScriptBindingSceneRendererTool::SetPassAttribute(String sSceneRendererPassN
 *  @brief
 *    Constructor
 */
-ScriptBindingSceneRendererTool::ScriptBindingSceneRendererTool() :
-	MethodSetPassAttribute(this)
+ScriptBindingSceneRendererTool::ScriptBindingSceneRendererTool()
 {
 }
 

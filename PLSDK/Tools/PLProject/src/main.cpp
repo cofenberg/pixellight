@@ -33,8 +33,6 @@
 #include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Registry/Registry.h>
 #include <PLCore/Core.h>
-#include <PLCore/Base/Class.h>
-#include <PLCore/Base/Module.h>
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
@@ -72,16 +70,16 @@ static const int DEBUG		= 10;	/**< Debug message (only if debug mode is on) */
 *    Project infos
 */
 struct Project {
-	String sPath;					/**< Path to project*/
-	String sName;					/**< Project name */
-	String sSuffix;					/**< Project suffix */
-	bool   bModulePlugin;			/**< Is the module a plugin? */
-	String sMainSrc;				/**< Main source file */
-	String sSourcePath;				/**< Directory containing the project's source files */
-	String sIncludePath;			/**< Directory containing the project's include files */
-	String sOutputPath;				/**< Path to output directory */
-	String sOutputPlugin;			/**< Plugin output filename */
-	PLPluginInfo cPlPLuginInfo;		/**< Parser for generating information for .plugin files */
+	String		 sPath;			/**< Path to project*/
+	String		 sName;			/**< Project name */
+	String		 sSuffix;		/**< Project suffix */
+	bool		 bModulePlugin;	/**< Is the module a plugin? */
+	String		 sMainSrc;		/**< Main source file */
+	String		 sSourcePath;	/**< Directory containing the project's source files */
+	String		 sIncludePath;	/**< Directory containing the project's include files */
+	String		 sOutputPath;	/**< Path to output directory */
+	String		 sOutputPlugin;	/**< Plugin output filename */
+	PLPluginInfo cPLPluginInfo;	/**< Parser for generating information for .plugin files */
 };
 
 
@@ -307,12 +305,8 @@ bool ParseFiles(Project &cProject, Array<String> &lstFiles)
 bool ParseModule(Project &cProject)
 {
 	// Parse main source file
-	String sMainSrc = cProject.sMainSrc;
-	Message(STATUS, "Parsing main source file at '" + sMainSrc + '\'');
-
-	cProject.cPlPLuginInfo.ParseMainModuleFile(cProject.sMainSrc);
-	// Done
-	return true;
+	Message(STATUS, "Parsing main source file at '" + cProject.sMainSrc + '\'');
+	return cProject.cPLPluginInfo.ParseMainModuleFile(cProject.sMainSrc);
 }
 
 /**
@@ -401,7 +395,9 @@ bool ParseProject(Project &cProject)
 		cProject.sIncludePath = sIncludePath;
 	}
 
-	cProject.cPlPLuginInfo.ParseIncludeFiles(sIncludePath);
+	// Parse the found header files in the given include path for pl_class..pl_class_end blocks
+	cProject.cPLPluginInfo.ParseIncludeFiles(sIncludePath);
+
 	// Add all source, header and inline files
 	Array<String> lstFiles;
 	Find(lstFiles, sSourcePath, "*.cpp", true);
@@ -428,17 +424,21 @@ bool CreatePluginFile(Project &cProject)
 	// Compose output filename
 	cProject.sOutputPlugin = cProject.sOutputPath + '/' + cProject.sName + cProject.sSuffix + ".plugin";
 	Message(STATUS, "Writing plugin file '" + cProject.sOutputPlugin + '\'');
-	// Set library name and suffix to the PLPLuginInfo parser
-	cProject.cPlPLuginInfo.SetLibraryName(cProject.sName);
-	cProject.cPlPLuginInfo.SetLibrarySuffix(cProject.sSuffix);
+
+	// Set library name and suffix to the PLPluginInfo parser
+	cProject.cPLPluginInfo.SetLibraryName(cProject.sName);
+	cProject.cPLPluginInfo.SetLibrarySuffix(cProject.sSuffix);
 
 	// Open plugin file
 	File cFile(cProject.sOutputPlugin);
 	if (cFile.Open(File::FileCreate | File::FileWrite | File::FileText)) {
-		cProject.cPlPLuginInfo.Save(cFile);
+		// Save the parsed information to the given file
+		cProject.cPLPluginInfo.Save(cFile);
+
+		// Done
 		return true;
 	} else {
-		// Close not open file
+		// Error!
 		Message(ERR, "Could not write to file!");
 		return false;
 	}
@@ -508,15 +508,15 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		bError = false;
 
 		// Path
-		sPath = "C:\\workspace\\projekte\\PixelLight\\PLEngine\\PLSoundOpenAL";
-		// sPath = "C:\\workspace\\projekte\\PixelLight\\PLBase\\PLMath";
-		// sPath = "C:\\workspace\\projekte\\PixelLight\\Lab\\BaseTest";
+		sPath = "C:\\workspace\\projects\\PixelLight\\PLEngine\\PLSoundOpenAL";
+		// sPath = "C:\\workspace\\projects\\PixelLight\\PLBase\\PLMath";
+		// sPath = "C:\\workspace\\projects\\PixelLight\\Lab\\BaseTest";
 
 		// Suffix
 		sSuffix = "-dev";
 
 		// Output path
-		sOutputPath = "C:\\workspace\\projekte\\PixelLight\\Bin\\PLRuntime\\Plugins\\PLSound";
+		sOutputPath = "C:\\workspace\\projects\\PixelLight\\Bin\\PLRuntime\\Plugins\\PLSound";
 
 		// Write plugin
 		bWritePlugin = true;
@@ -532,11 +532,11 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		cProject.sPath          = sPath;
 		cProject.sSuffix        = sSuffix;
 		cProject.bModulePlugin  = false;
-		cProject.cPlPLuginInfo.SetActive(true); // By default, projects are active
-		cProject.cPlPLuginInfo.SetDelayed(true); // By default, projects are delayed
-		cProject.cPlPLuginInfo.SetPluginFileVersion("1");
-		cProject.cPlPLuginInfo.SetPLVersion(Core::GetVersion().ToString());
-		
+		cProject.cPLPluginInfo.SetActive(true); // By default, projects are active
+		cProject.cPLPluginInfo.SetDelayed(true); // By default, projects are delayed
+		cProject.cPLPluginInfo.SetPluginFileVersion("1");
+		cProject.cPLPluginInfo.SetPLVersion(Core::GetVersion().ToString());
+
 		if (ParseProject(cProject)) {
 			// Write plugin file
 			if (bWritePlugin && sOutputPath.GetLength() > 0) {

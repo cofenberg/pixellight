@@ -155,9 +155,7 @@ bool MaterialLoaderPL::Save(const Material &cMaterial, File &cFile)
 *  @brief
 *    Default constructor
 */
-MaterialLoaderPL::MaterialLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+MaterialLoaderPL::MaterialLoaderPL()
 {
 }
 

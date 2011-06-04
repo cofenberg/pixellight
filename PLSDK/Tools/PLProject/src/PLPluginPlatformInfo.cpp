@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPluginPlatformInfo.h"
-#include <PLGeneral/String/RegEx.h>
 #include <PLGeneral/Xml/Xml.h>
+#include <PLGeneral/String/RegEx.h>
+#include "PLPluginPlatformInfo.h"
 
 
 //[-------------------------------------------------------]
@@ -68,23 +68,22 @@ PLPluginPlatformInfo::PLPluginPlatformInfo()
 */
 PLPluginPlatformInfo::~PLPluginPlatformInfo()
 {
-
 }
 
 /**
 *  @brief
-*    Sets the name of the library.
+*    Sets the name of the library
 */
-void PLPluginPlatformInfo::SetLibraryName(const PLGeneral::String &sLibraryName)
+void PLPluginPlatformInfo::SetLibraryName(const String &sLibraryName)
 {
 	m_sLibraryName = sLibraryName;
 }
 
 /**
 *  @brief
-*    Sets a library suffix. This String is appended after die library name
+*    Sets a library suffix, this string is appended to the library name
 */
-void PLPluginPlatformInfo::SetSuffixName(const PLGeneral::String &sSuffix)
+void PLPluginPlatformInfo::SetSuffixName(const String &sSuffix)
 {
 	m_sSuffix = sSuffix;
 }
@@ -93,56 +92,45 @@ void PLPluginPlatformInfo::SetSuffixName(const PLGeneral::String &sSuffix)
 *  @brief
 *    Parse a line for platform specific bits
 */
-void PLPluginPlatformInfo::ParseLine(const PLGeneral::String &sLine)
+void PLPluginPlatformInfo::ParseLine(const String &sLine)
 {
 	// Try get dependencies
-	for(int i = 0; i < m_lstPlatformNames.GetNumOfElements(); ++i)
-	{
-		PLGeneral::String sPlatformName = m_lstPlatformNames[i];
-		for(int j = 0; j < m_lstBuildTypes.GetNumOfElements(); ++j)
-		{
-			PLGeneral::String sBuildType = m_lstBuildTypes[j];
-			
-			RegEx cDependencies("^\\s*pl_module_dependencies_" +sPlatformName.ToLower() +"_"+sBuildType.ToLower()+"\\s*\\(\\s*\\\"(?<text>.*)\\\"\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
-			
+	for (uint32 i=0; i<m_lstPlatformNames.GetNumOfElements(); i++) {
+		String sPlatformName = m_lstPlatformNames[i];
+		for (uint32 j=0; j<m_lstBuildTypes.GetNumOfElements(); j++) {
+			String sBuildType = m_lstBuildTypes[j];
+			RegEx cDependencies("^\\s*pl_module_dependencies_" + sPlatformName.ToLower() + '_' + sBuildType.ToLower() + "\\s*\\(\\s*\\\"(?<text>.*)\\\"\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
 			if (cDependencies.Match(sLine))
-			{
-				m_mapLibraryDependencies.Add(m_lstPlatformNames[i] + m_lstBuildTypes[j],cDependencies.GetNameResult("text"));
-			}
+				m_mapLibraryDependencies.Add(m_lstPlatformNames[i] + m_lstBuildTypes[j], cDependencies.GetNameResult("text"));
 		}
 	}
 }
 
 /**
 *  @brief
-*    Appends the parsed information to the given xml element
+*    Appends the parsed information to the given XML element
 */
-void PLPluginPlatformInfo::Save(PLGeneral::XmlElement &pParent)
+void PLPluginPlatformInfo::Save(XmlElement &pParent) const
 {
-	for(int i = 0; i < m_lstPlatformNames.GetNumOfElements(); ++i)
-	{
-		PLGeneral::String sPlatformName = m_lstPlatformNames[i];
-		
+	for (uint32 i=0; i<m_lstPlatformNames.GetNumOfElements(); i++) {
+		String sPlatformName = m_lstPlatformNames[i];
 		XmlElement *pPlatformElement = new XmlElement("Platform");
 		pPlatformElement->SetAttribute("Name", sPlatformName);
-		
-		for(int j = 0; j < m_lstBuildTypes.GetNumOfElements(); ++j)
-		{
-			PLGeneral::String sBuildType = m_lstBuildTypes[j];
+		for (uint32 j=0; j<m_lstBuildTypes.GetNumOfElements(); j++) {
+			String sBuildType = m_lstBuildTypes[j];
 			XmlElement *pLibrary = new XmlElement("Library");
 			pLibrary->SetAttribute("Type", sBuildType);
-			const PLGeneral::String &sDependecies = m_mapLibraryDependencies.Get(sPlatformName+sBuildType);
+			const String &sDependecies = m_mapLibraryDependencies.Get(sPlatformName + sBuildType);
 			if (sDependecies != m_mapLibraryDependencies.NullKey)
 				pLibrary->SetAttribute("Dependency", sDependecies);
-			
-			const PLGeneral::String &sLibPrefix = m_mapLibraryPrefix.Get(sPlatformName);
-			
-			PLGeneral::String sLibraryName = sLibPrefix;
+
+			const String &sLibPrefix = m_mapLibraryPrefix.Get(sPlatformName);
+
+			String sLibraryName = sLibPrefix;
 			sLibraryName += m_sLibraryName;
 			sLibraryName += m_sSuffix;
-			sLibraryName += m_mapLibraryPostfix
-.Get(sPlatformName+sBuildType);
-			
+			sLibraryName += m_mapLibraryPostfix.Get(sPlatformName + sBuildType);
+
 			XmlText *pTextElememt = new XmlText(sLibraryName);
 			pLibrary->LinkEndChild(*pTextElememt);
 			pPlatformElement->LinkEndChild(*pLibrary);
@@ -151,24 +139,25 @@ void PLPluginPlatformInfo::Save(PLGeneral::XmlElement &pParent)
 	}
 }
 
+
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    copy constructor
+*    Copy constructor
 */
-PLPluginPlatformInfo::PLPluginPlatformInfo(const PLPluginPlatformInfo& other)
+PLPluginPlatformInfo::PLPluginPlatformInfo(const PLPluginPlatformInfo &cOther)
 {
-
+	// No implementation because the copy constructor is never used
 }
 
 /**
 *  @brief
-*    assignment operator
+*    Copy operator
 */
-PLPluginPlatformInfo& PLPluginPlatformInfo::operator=(const PLPluginPlatformInfo & other)
+PLPluginPlatformInfo &PLPluginPlatformInfo::operator =(const PLPluginPlatformInfo &cOther)
 {
+	// No implementation because the copy operator is never used
 	return *this;
 }
-

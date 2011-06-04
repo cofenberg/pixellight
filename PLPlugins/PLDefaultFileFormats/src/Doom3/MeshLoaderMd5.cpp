@@ -141,10 +141,7 @@ bool MeshLoaderMd5::Save(Mesh &cMesh, File &cFile)
 *  @brief
 *    Default constructor
 */
-MeshLoaderMd5::MeshLoaderMd5() :
-	MethodLoad(this),
-	MethodLoadParams(this),
-	MethodSave(this)
+MeshLoaderMd5::MeshLoaderMd5()
 {
 }
 

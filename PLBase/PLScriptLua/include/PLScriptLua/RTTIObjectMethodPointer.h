@@ -28,15 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Func/DynFunc.h>
 #include "PLScriptLua/RTTIObjectPointer.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore {
-	class DynFunc;
-}
 
 
 //[-------------------------------------------------------]
@@ -89,9 +82,9 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*  @param[in] pRTTIObject
 		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*  @param[in] pDynFunc
-		*    Pointer to the RTTI object method to wrap, can be a null pointer
+		*    Smart pointer to the RTTI object method to wrap, can be a null pointer
 		*/
-		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFunc *pDynFunc);
+		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFuncPtr pDynFunc);
 
 		/**
 		*  @brief
@@ -111,7 +104,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::DynFunc *m_pDynFunc;	/**< Pointer to the RTTI object method to wrap, can be a null pointer */
+		PLCore::DynFuncPtr m_pDynFunc;	/**< Smart pointer to the RTTI object method to wrap, can be a null pointer */
 
 
 };

@@ -123,9 +123,7 @@ bool SkeletonAniLoaderMd5::Save(Skeleton &cSkeleton, File &cFile)
 *  @brief
 *    Default constructor
 */
-SkeletonAniLoaderMd5::SkeletonAniLoaderMd5() :
-	MethodLoad(this),
-	MethodSave(this)
+SkeletonAniLoaderMd5::SkeletonAniLoaderMd5()
 {
 }
 

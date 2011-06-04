@@ -175,9 +175,7 @@ bool SceneLoaderX::Save(SceneContainer &cContainer, File &cFile)
 *  @brief
 *    Default constructor
 */
-SceneLoaderX::SceneLoaderX() :
-	MethodLoad(this),
-	MethodSave(this)
+SceneLoaderX::SceneLoaderX()
 {
 }
 

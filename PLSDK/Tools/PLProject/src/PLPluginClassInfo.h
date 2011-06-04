@@ -19,15 +19,18 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef PLPLUGINCLASSINFO_H
-#define PLPLUGINCLASSINFO_H
+
+#ifndef __PLPLUGINCLASSINFO_H__
+#define __PLPLUGINCLASSINFO_H__
 #pragma once
+
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
 #include <PLGeneral/Container/HashMap.h>
+
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -36,14 +39,16 @@ namespace PLGeneral {
 	class XmlElement;
 }
 
+
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    class to parse an pl_class..pl_class_end block
+*    Class to parse an pl_class..pl_class_end block
 */
 class PLPluginClassInfo {
+
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
@@ -63,15 +68,22 @@ class PLPluginClassInfo {
 
 		/**
 		*  @brief
-		*    Appends the parsed information to the given xml element
+		*    Appends the parsed information to the given XML element
+		*
+		*  @param[in] cParent
+		*   XML element to append the parsed information to
 		*/
-		void Save(PLGeneral::XmlElement &pParent);
+		void Save(PLGeneral::XmlElement &cParent) const;
 
 		/**
 		*  @brief
 		*    Parse the given pl_class pl_class_end block
+		*
+		*  @param[in] sPLClassBlock
+		*    Block to parse
 		*/
-		void ParsePlClassBlock(const PLGeneral::String &sPLClassBlock);
+		void ParsePLClassBlock(const PLGeneral::String &sPLClassBlock);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -79,27 +91,40 @@ class PLPluginClassInfo {
 	private:
 		/**
 		*  @brief
-		*    copy constructor
+		*    Copy constructor
+		*
+		*  @param[in] cOther
+		*    Source to copy from
 		*/
-		PLPluginClassInfo(const PLPluginClassInfo& other);
+		PLPluginClassInfo(const PLPluginClassInfo &cOther);
 
 		/**
 		*  @brief
-		*    assignment operator
+		*    Copy operator
+		*
+		*  @param[in] cOther
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
 		*/
-		PLPluginClassInfo& operator=(const PLPluginClassInfo& other);
+		PLPluginClassInfo &operator =(const PLPluginClassInfo &cOther);
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sClassName;											/** Name of the class */
-		PLGeneral::String m_sNamespace;											/** Namespace in which the class is */
-		PLGeneral::String m_sBaseClass;											/** Name of the base class */
-		PLGeneral::String m_sDescription;										/** Class description */
-		bool m_bHasConstructor;													/** Flag which indicates if the class has at least one constructor known by the RTTI */
-		bool m_bHasDefaultConstructor;											/** Flag which indicates if the class has andefault constructor known by the RTTI */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;	/** List of class properties and theire value*/
+		PLGeneral::String										 m_sClassName;				/**< Name of the class */
+		PLGeneral::String										 m_sNamespace;				/**< Namespace in which the class is in */
+		PLGeneral::String										 m_sBaseClass;				/**< Name of the base class */
+		PLGeneral::String										 m_sDescription;			/**< Class description */
+		bool													 m_bHasConstructor;			/**< Flag which indicates whether or not the class has at least one constructor known to the RTTI */
+		bool													 m_bHasDefaultConstructor;	/**< Flag which indicates whether or not the class has a default constructor known to the RTTI */
+		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;			/**< List of class properties and their value */
+
+
 };
 
-#endif // PLPLUGINCLASSINFO_H
+
+#endif // __PLPLUGINCLASSINFO_H__

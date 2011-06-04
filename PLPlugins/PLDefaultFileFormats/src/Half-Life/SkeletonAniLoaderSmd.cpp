@@ -214,9 +214,7 @@ bool SkeletonAniLoaderSmd::Save(Skeleton &cSkeleton, File &cFile)
 *  @brief
 *    Default constructor
 */
-SkeletonAniLoaderSmd::SkeletonAniLoaderSmd() :
-	MethodLoad(this),
-	MethodSave(this)
+SkeletonAniLoaderSmd::SkeletonAniLoaderSmd()
 {
 }
 

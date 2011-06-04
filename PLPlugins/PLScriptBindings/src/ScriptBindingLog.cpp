@@ -81,13 +81,7 @@ void ScriptBindingLog::OutputDebug(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingLog::ScriptBindingLog() :
-	MethodOutputAlways(this),
-	MethodOutputCritical(this),
-	MethodOutputError(this),
-	MethodOutputWarning(this),
-	MethodOutputInfo(this),
-	MethodOutputDebug(this)
+ScriptBindingLog::ScriptBindingLog()
 {
 }
 

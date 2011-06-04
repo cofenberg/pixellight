@@ -65,8 +65,6 @@ RttiObject::RttiObject() :
 	Number(this),
 	State(this),
 	Float(this),
-	MethodTest(this),
-	MethodMyMethod(this),
 	Event0(this),
 	Event1(this),
 	SlotOnSomeEvent0(this)
@@ -87,8 +85,6 @@ RttiObject::RttiObject(int nValue) :
 	Number(this),
 	State(this),
 	Float(this),
-	MethodTest(this),
-	MethodMyMethod(this),
 	Event0(this),
 	Event1(this),
 	SlotOnSomeEvent0(this)
@@ -109,8 +105,6 @@ RttiObject::RttiObject(int nValue, float fValue) :
 	Number(this),
 	State(this),
 	Float(this),
-	MethodTest(this),
-	MethodMyMethod(this),
 	Event0(this),
 	Event1(this),
 	SlotOnSomeEvent0(this)

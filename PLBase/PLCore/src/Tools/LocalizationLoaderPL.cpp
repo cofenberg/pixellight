@@ -143,9 +143,7 @@ bool LocalizationLoaderPL::Save(const LocalizationGroup &cLocalizationGroup, Fil
 *  @brief
 *    Default constructor
 */
-LocalizationLoaderPL::LocalizationLoaderPL() :
-	MethodLoad(this),
-	MethodSave(this)
+LocalizationLoaderPL::LocalizationLoaderPL()
 {
 }
 
