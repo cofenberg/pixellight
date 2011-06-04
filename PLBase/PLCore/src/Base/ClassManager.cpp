@@ -504,39 +504,46 @@ void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const Str
 					// Get class name, there must be a name!
 					const String sClassName = pClassElement->GetAttribute("Name");
 					if (sClassName.GetLength()) {
+						
 						// Get namespace
 						const String sNamespace = pClassElement->GetAttribute("Namespace");
+						
+						// Check if class is already known
+						const Class *pClassInst = m_mapClasses.Get(sNamespace+"::"+sClassName);
+						if (!pClassInst) {
+							// Create the dummy class implementation
+							ClassDummy *pClassDummy = new ClassDummy(nModuleID, sClassName, pClassElement->GetAttribute("Description"),
+								pClassElement->GetAttribute("Namespace"), pClassElement->GetAttribute("BaseClassName"), pClassElement->GetAttribute("HasConstructor").GetBool(), pClassElement->GetAttribute("HasDefaultConstructor").GetBool());
 
-						// Create the dummy class implementation
-						ClassDummy *pClassDummy = new ClassDummy(nModuleID, sClassName, pClassElement->GetAttribute("Description"),
-							pClassElement->GetAttribute("Namespace"), pClassElement->GetAttribute("BaseClassName"), pClassElement->GetAttribute("HasConstructor").GetBool(), pClassElement->GetAttribute("HasDefaultConstructor").GetBool());
+							// Get properties element
+							const XmlElement *pPropertiesElement = pClassElement->GetFirstChildElement("Properties");
+							if (pPropertiesElement) {
+								// Iterate through all children and collect RTTI class meta information
+								const XmlElement *pPropertyElement = pPropertiesElement->GetFirstChildElement("Property");
+								while (pPropertyElement) {
+									// Get property name, there must be a name!
+									const String sPropertyName = pPropertyElement->GetAttribute("Name");
+									if (sPropertyName.GetLength()) {
+										// Get node value
+										String sValue;
+										const XmlNode *pValue = pPropertyElement->GetFirstChild();
+										if (pValue && pValue->GetType() == XmlNode::Text)
+											sValue = pValue->GetValue();
 
-						// Get properties element
-						const XmlElement *pPropertiesElement = pClassElement->GetFirstChildElement("Properties");
-						if (pPropertiesElement) {
-							// Iterate through all children and collect RTTI class meta information
-							const XmlElement *pPropertyElement = pPropertiesElement->GetFirstChildElement("Property");
-							while (pPropertyElement) {
-								// Get property name, there must be a name!
-								const String sPropertyName = pPropertyElement->GetAttribute("Name");
-								if (sPropertyName.GetLength()) {
-									// Get node value
-									String sValue;
-									const XmlNode *pValue = pPropertyElement->GetFirstChild();
-									if (pValue && pValue->GetType() == XmlNode::Text)
-										sValue = pValue->GetValue();
+										// Add property
+										pClassDummy->AddProperty(sPropertyName, sValue);
+									}
 
-									// Add property
-									pClassDummy->AddProperty(sPropertyName, sValue);
+									// Next property element, please
+									pPropertyElement = pPropertyElement->GetNextSiblingElement("Property");
 								}
-
-								// Next property element, please
-								pPropertyElement = pPropertyElement->GetNextSiblingElement("Property");
 							}
-						}
 
-						// Register at class manager
-						ClassManager::GetInstance()->RegisterClass(nModuleID, pClassDummy);
+							// Register at class manager
+							ClassManager::GetInstance()->RegisterClass(nModuleID, pClassDummy);
+						} else {
+							PL_LOG(Error, "Pluginfile of module '" + Url(sAbsFilename).GetFilename() + "': spezifies an already known class: '"+pClassInst->GetClassName()+"' ignore it");
+						}
 					}
 
 					// Next class element, please
