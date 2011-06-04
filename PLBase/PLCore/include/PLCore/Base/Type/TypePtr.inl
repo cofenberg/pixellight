@@ -44,7 +44,7 @@ class Type<T*> {
 		typedef T* _Type;
 
 		// Type ID
-		static const int TypeID = -1;
+		static const int TypeID = TypePtr;
 
 		// Get type name
 		static PLGeneral::String GetTypeName()

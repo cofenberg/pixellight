@@ -28,6 +28,7 @@
 - Stephan found a cleanup bug within my delayed shared library loading implementation... in the case that a class dummy can't be registered because there's
   already a class dummy or even the real class, no one destroyed the created dummy class instance. This is now handled within "ClassManager::RegisterClass()".
   Uff, simple principle, that many implementation bugs - not that I had expected it otherwise... but I really hope that was the last one.
+- The type ID of "TypePtr" and "TypeRef" was set to -1 instead of a unique value
 
 
 
