@@ -200,7 +200,7 @@ DynFuncPtr Object::GetMethod(const String &sName)
 	}
 
 	// Could not find method
-	return nullptr;
+	return DynFuncPtr(nullptr);
 }
 
 /**
