@@ -129,19 +129,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(bool *pbValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(float *pfValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(double *pfValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int8 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int16 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int32 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::int64 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLGeneral::String *psValue);
-		PLSCRIPTANGELSCRIPT_API virtual void GetReturn(PLCore::Object **ppObject);
+		PLSCRIPTANGELSCRIPT_API virtual bool GetReturn(bool nValue);
+		PLSCRIPTANGELSCRIPT_API virtual float GetReturn(float nValue);
+		PLSCRIPTANGELSCRIPT_API virtual double GetReturn(double nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 
 
 	//[-------------------------------------------------------]

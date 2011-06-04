@@ -96,7 +96,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @return
 		*    MyRTTIClass instance, always valid!
 		*/
-		PLCore::Object *GetMyRTTIClassInstance(PLCore::Object *pObject);
+		MyRTTIClass *GetMyRTTIClassInstance(MyRTTIClass *pObject);
 
 
 	//[-------------------------------------------------------]

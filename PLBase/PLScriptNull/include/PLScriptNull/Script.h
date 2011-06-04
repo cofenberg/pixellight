@@ -120,19 +120,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTNULL_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTNULL_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTNULL_API virtual bool EndCall();
-		PLSCRIPTNULL_API virtual void GetReturn(bool *pbValue);
-		PLSCRIPTNULL_API virtual void GetReturn(float *pfValue);
-		PLSCRIPTNULL_API virtual void GetReturn(double *pfValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int8 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int16 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int32 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::int64 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLGeneral::String *psValue);
-		PLSCRIPTNULL_API virtual void GetReturn(PLCore::Object **ppObject);
+		PLSCRIPTNULL_API virtual bool GetReturn(bool nValue);
+		PLSCRIPTNULL_API virtual float GetReturn(float nValue);
+		PLSCRIPTNULL_API virtual double GetReturn(double nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
+		PLSCRIPTNULL_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTNULL_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 
 
 	//[-------------------------------------------------------]

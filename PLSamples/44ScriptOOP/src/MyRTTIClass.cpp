@@ -59,7 +59,7 @@ void MyRTTIClass::SaySomethingWise()
 	System::GetInstance()->GetConsole().Print(String(Return42()) + " - wise enough?\n");
 }
 
-Object *MyRTTIClass::GetSelf()
+MyRTTIClass *MyRTTIClass::GetSelf()
 {
 	return this;
 }

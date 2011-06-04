@@ -205,82 +205,82 @@ bool Script::EndCall()
 	return true;
 }
 
-void Script::GetReturn(bool *pbValue)
+bool Script::GetReturn(bool nValue)
 {
 	// Nothing to do in here
-	*pbValue = false;
+	return false;
 }
 
-void Script::GetReturn(float *pfValue)
+float Script::GetReturn(float nValue)
 {
 	// Nothing to do in here
-	*pfValue = 0.0f;
+	return 0.0f;
 }
 
-void Script::GetReturn(double *pfValue)
+double Script::GetReturn(double nValue)
 {
 	// Nothing to do in here
-	*pfValue = 0.0;
+	return 0.0;
 }
 
-void Script::GetReturn(int8 *pnValue)
+int8 Script::GetReturn(int8 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(int16 *pnValue)
+int16 Script::GetReturn(int16 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(int32 *pnValue)
+int32 Script::GetReturn(int32 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(int64 *pnValue)
+int64 Script::GetReturn(int64 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(uint8 *pnValue)
+uint8 Script::GetReturn(uint8 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(uint16 *pnValue)
+uint16 Script::GetReturn(uint16 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(uint32 *pnValue)
+uint32 Script::GetReturn(uint32 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(uint64 *pnValue)
+uint64 Script::GetReturn(uint64 nValue)
 {
 	// Nothing to do in here
-	*pnValue = 0;
+	return 0;
 }
 
-void Script::GetReturn(String *psValue)
+String Script::GetReturn(String sValue)
 {
 	// Nothing to do in here
-	*psValue = "";
+	return "";
 }
 
-void Script::GetReturn(Object **ppObject)
+Object *Script::GetReturn(Object *nValue)
 {
 	// Nothing to do in here
-	*ppObject = nullptr;
+	return nullptr;
 }
 
 

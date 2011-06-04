@@ -322,25 +322,28 @@ class Script : public PLCore::Object {
 		*  @brief
 		*    Returns the result of a function call
 		*
-		*  @param[out] pnValue
-		*    Receives the result of a function call, the given pointer must be valid! (there's no security check!)
+		*  @param[in] nValue
+		*    Unused value... just there so the compiler can figure out the proper method
+		*
+		*  @return
+		*    The result of a function call
 		*
 		*  @note
 		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
 		*/
-		virtual void GetReturn(bool *pbValue) = 0;
-		virtual void GetReturn(float *pfValue) = 0;
-		virtual void GetReturn(double *pfValue) = 0;
-		virtual void GetReturn(PLGeneral::int8 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::int16 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::int32 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::int64 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::uint8 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::uint16 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::uint32 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::uint64 *pnValue) = 0;
-		virtual void GetReturn(PLGeneral::String *psValue) = 0;
-		virtual void GetReturn(PLCore::Object **ppObject) = 0;
+		virtual bool GetReturn(bool nValue) = 0;
+		virtual float GetReturn(float nValue) = 0;
+		virtual double GetReturn(double nValue) = 0;
+		virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue) = 0;
+		virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue) = 0;
+		virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue) = 0;
+		virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue) = 0;
+		virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue) = 0;
+		virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue) = 0;
+		virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue) = 0;
+		virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue) = 0;
+		virtual PLGeneral::String GetReturn(PLGeneral::String nValue) = 0;
+		virtual PLCore::Object *GetReturn(PLCore::Object *nValue) = 0;
 
 
 	//[-------------------------------------------------------]

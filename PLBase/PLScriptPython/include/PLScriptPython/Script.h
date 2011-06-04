@@ -121,19 +121,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTPYTHON_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTPYTHON_API virtual bool EndCall();
-		PLSCRIPTPYTHON_API virtual void GetReturn(bool *pbValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(float *pfValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(double *pfValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int8 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int16 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int32 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::int64 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLGeneral::String *psValue);
-		PLSCRIPTPYTHON_API virtual void GetReturn(PLCore::Object **ppObject);
+		PLSCRIPTPYTHON_API virtual bool GetReturn(bool nValue);
+		PLSCRIPTPYTHON_API virtual float GetReturn(float nValue);
+		PLSCRIPTPYTHON_API virtual double GetReturn(double nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
+		PLSCRIPTPYTHON_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 
 
 	//[-------------------------------------------------------]

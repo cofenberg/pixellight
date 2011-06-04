@@ -101,8 +101,7 @@ class FuncScriptPtr : public PLCore::Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8,
 				m_pScript->PushArgument(t15);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -235,8 +234,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 				m_pScript->PushArgument(t14);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -365,8 +363,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 				m_pScript->PushArgument(t13);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -491,8 +488,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 				m_pScript->PushArgument(t12);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -613,8 +609,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 				m_pScript->PushArgument(t11);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -731,8 +726,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public PLC
 				m_pScript->PushArgument(t10);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -845,8 +839,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public PLCore::
 				m_pScript->PushArgument(t9);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -955,8 +948,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public PLCore::Func
 				m_pScript->PushArgument(t8);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1061,8 +1053,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public PLCore::Func<R, 
 				m_pScript->PushArgument(t7);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1163,8 +1154,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public PLCore::Func<R, T0, 
 				m_pScript->PushArgument(t6);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1261,8 +1251,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public PLCore::Func<R, T0, T1, 
 				m_pScript->PushArgument(t5);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1355,8 +1344,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public PLCore::Func<R, T0, T1, T2, 
 				m_pScript->PushArgument(t4);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1445,8 +1433,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public PLCore::Func<R, T0, T1, T2, T3> 
 				m_pScript->PushArgument(t3);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1531,8 +1518,7 @@ class FuncScriptPtr<R, T0, T1, T2> : public PLCore::Func<R, T0, T1, T2> {
 				m_pScript->PushArgument(t2);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1613,8 +1599,7 @@ class FuncScriptPtr<R, T0, T1> : public PLCore::Func<R, T0, T1> {
 				m_pScript->PushArgument(t1);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1691,8 +1676,7 @@ class FuncScriptPtr<R, T0> : public PLCore::Func<R, T0> {
 				m_pScript->PushArgument(t0);
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
@@ -1765,8 +1749,7 @@ class FuncScriptPtr<R> : public PLCore::Func<R> {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, PLCore::Func<R>::GetSignature())) {
 				if (m_pScript->EndCall()) {
 					_R r = PLCore::DefaultValue<R>::Default();
-					m_pScript->GetReturn(&r);
-					return r;
+					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
 				}
 			}
 			return PLCore::DefaultValue<R>::Default();
