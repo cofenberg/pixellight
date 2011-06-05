@@ -1,3 +1,9 @@
+>> 05.06.2011
+[CO]
+- "SceneApplication": Exposed "GetRootScene()"-method to the RTTI
+
+
+
 >> 08.05.2011
 [CO]
 - Added "ScriptBindingLog" which is intended to bind some stuff from "PLGeneral::Log" to scripts - but just like "ScriptBindingTiming"

@@ -51,6 +51,20 @@ pl_implement_class(SceneApplication)
 
 
 //[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the root scene
+*/
+SceneContainer *SceneApplication::GetRootScene()
+{
+	// Return pointer to root scene container
+	return m_pRootScene;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -126,16 +140,6 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		// Setup log level
 		Log::GetInstance()->SetLogLevel(static_cast<uint8>(m_bEditModeEnabled ? Log::Debug : Log::Info));
 	}
-}
-
-/**
-*  @brief
-*    Returns the root scene
-*/
-SceneContainer *SceneApplication::GetRootScene() const
-{
-	// Return pointer to root scene container
-	return m_pRootScene;
 }
 
 /**
