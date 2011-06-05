@@ -417,7 +417,7 @@ bool SceneLoaderPL::SaveRec(SInstance &sInstance, const SceneContainer &cContain
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
 		// Get scene node
-		const SceneNode *pSceneNode = cContainer.Get(i);
+		const SceneNode *pSceneNode = cContainer.GetByIndex(i);
 
 		// Valid and save this scene node?
 		if (pSceneNode && !(pSceneNode->GetFlags() & SceneNode::Automatic)) {

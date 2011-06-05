@@ -175,11 +175,11 @@ void SceneContainer::CalculateAABoundingBox()
 	// If there are any scene nodes...
 	if (GetNumOfElements()) {
 		// Set first bounding box
-		cAABoundingBox = Get(static_cast<uint32>(0))->GetContainerAABoundingBox();
+		cAABoundingBox = GetByIndex(0)->GetContainerAABoundingBox();
 
 		// Combine all bounding boxes
 		for (uint32 i=1; i<GetNumOfElements(); i++)
-			cAABoundingBox.CombineAABoxes(Get(i)->GetContainerAABoundingBox());
+			cAABoundingBox.CombineAABoxes(GetByIndex(i)->GetContainerAABoundingBox());
 	}
 
 	// Set the final bounding box
@@ -262,7 +262,7 @@ SceneHierarchy *SceneContainer::CreateHierarchy(const String &sClass)
 
 					// Add scene nodes to the hierarchy
 					for (uint32 i=0; i<GetNumOfElements(); i++)
-						m_pHierarchy->AddSceneNode(*Get(i));
+						m_pHierarchy->AddSceneNode(*GetByIndex(i));
 
 					// Touch recursive
 					m_pHierarchy->GetRootNode().Touch(true);
@@ -396,7 +396,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 	// Is there already another scene node with the same name?
 	bool bNameOccupied = false;
 	if (sNameT.GetLength()) {
-		SceneNode *pSceneNode = Get(sNameT);
+		SceneNode *pSceneNode = GetByName(sNameT);
 		if (pSceneNode && pSceneNode != &cNode)
 			bNameOccupied = true; // Sorry, this name is already in use
 	}
@@ -407,7 +407,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 		if (sNameT.GetLength()) {
 			for (uint32 i=0; ; i++) {
 				const String sNewName = sNameT + static_cast<int>(i);
-				if (!Get(sNewName)) {
+				if (!GetByName(sNewName)) {
 					cNode.m_sName = sNewName;
 					m_mapElements.Add(sNewName, &cNode);
 					break;
@@ -416,7 +416,7 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 		} else {
 			for (uint32 i=0; ; i++) {
 				const String sNewName = cNode.GetClass()->GetClassName() + static_cast<int>(i);
-				if (!Get(sNewName)) {
+				if (!GetByName(sNewName)) {
 					cNode.m_sName = sNewName;
 					m_mapElements.Add(sNewName, &cNode);
 					break;
@@ -484,7 +484,7 @@ void SceneContainer::DeInitFunction()
 {
 	// De-initialize all scene nodes
 	for (uint32 i=0; i<GetNumOfElements(); i++)
-		Get(i)->DeInitSceneNode();
+		GetByIndex(i)->DeInitSceneNode();
 
 	// Cleanup
 	Clear();
@@ -500,7 +500,7 @@ void SceneContainer::OnActivate(bool bActivate)
 
 	// Loop through all scene nodes
 	for (uint32 i=0; i<GetNumOfElements(); i++)
-		Get(i)->OnActivate(bActivate);
+		GetByIndex(i)->OnActivate(bActivate);
 }
 
 
@@ -516,12 +516,12 @@ bool SceneContainer::DeInit()
 	return true;
 }
 
-SceneNode *SceneContainer::Get(uint32 nIndex) const
+SceneNode *SceneContainer::GetByIndex(uint32 nIndex) const
 {
 	return m_lstElements[nIndex];
 }
 
-SceneNode *SceneContainer::Get(const String &sName) const
+SceneNode *SceneContainer::GetByName(const String &sName) const
 {
 	// Name not empty and is '.' the first character?
 	if (sName.GetLength() && sName[static_cast<uint32>(0)] != '.') {
@@ -534,7 +534,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 
 			// Did a '.' follow?
 			if (sName[static_cast<uint32>(4)] == '.')
-				return Get(sName.GetSubstring(5));
+				return GetByName(sName.GetSubstring(5));
 		}
 
 		// Is the name 'Root' at the beginning?
@@ -546,7 +546,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 
 			// Did a '.' follow?
 			if (sName[static_cast<uint32>(4)] == '.')
-				return m_pSceneContext->GetRoot() ? m_pSceneContext->GetRoot()->Get(sName.GetSubstring(5)) : nullptr;
+				return m_pSceneContext->GetRoot() ? m_pSceneContext->GetRoot()->GetByName(sName.GetSubstring(5)) : nullptr;
 		}
 
 		// 'Parent' at the beginning?
@@ -559,7 +559,7 @@ SceneNode *SceneContainer::Get(const String &sName) const
 			// Did a '.' follow?
 			if (sName[static_cast<uint32>(6)] == '.') {
 				// Is there a parent container?
-				return GetContainer() ? GetContainer()->Get(sName.GetSubstring(7)) : nullptr;
+				return GetContainer() ? GetContainer()->GetByName(sName.GetSubstring(7)) : nullptr;
 			}
 		}
 
@@ -571,10 +571,10 @@ SceneNode *SceneContainer::Get(const String &sName) const
 			sContainerName.Insert(sName, 0, static_cast<uint32>(nIndex));
 
 			// Get the scene node and check whether it is a scene container
-			SceneNode *pSceneNode = Get(sContainerName);
+			SceneNode *pSceneNode = GetByName(sContainerName);
 			if (pSceneNode && (pSceneNode->m_nInternalFlags & ClassContainer)) {
 				// Change 'into' this scene container
-				return static_cast<SceneContainer*>(pSceneNode)->Get(sName.GetSubstring(nIndex+1));
+				return static_cast<SceneContainer*>(pSceneNode)->GetByName(sName.GetSubstring(nIndex+1));
 			}
 		} else {
 			// Search for a scene node with this name

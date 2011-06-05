@@ -672,7 +672,7 @@ void Animation::CheckEvent(int nPreviousFrame) const
 	// Are events enabled?
 	if (m_bEvents && m_pAnimationInfo && static_cast<int>(m_fFrame) != nPreviousFrame) {
 		for (uint32 i=0; i<m_pAnimationInfo->GetEventManager().GetNumOfElements(); i++) {
-			const AnimationEvent *pAnimationEvent = m_pAnimationInfo->GetEventManager().Get(i);
+			const AnimationEvent *pAnimationEvent = m_pAnimationInfo->GetEventManager().GetByIndex(i);
 			if (pAnimationEvent->GetFrame() == static_cast<uint32>(m_fFrame)) {
 				// Emit event
 				EventSpecialFrame(pAnimationEvent->GetID());

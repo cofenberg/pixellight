@@ -134,7 +134,7 @@ void SCMirror::UpdateVirtualCamera()
 	SNCamera *pCamera = SNCamera::GetCamera();
 	if (pCamera) {
 		// Get the 'virtual camera'
-		SNCamera *pVirtualCamera = static_cast<SNCamera*>(Get(CameraName.Get()));
+		SNCamera *pVirtualCamera = static_cast<SNCamera*>(GetByName(CameraName.Get()));
 		if (pVirtualCamera) {
 			pVirtualCamera->SetAutoUpdate(false);
 
@@ -450,7 +450,7 @@ void SCMirror::InitFunction()
 	m_pMeshHandler->SetMesh(pMesh);
 
 	// Create a virtual camera if required
-	if (!Get(CameraName.Get()) || !Get(CameraName.Get())->IsCamera()) {
+	if (!GetByName(CameraName.Get()) || !GetByName(CameraName.Get())->IsCamera()) {
 		CameraName.Set("Virtual camera");
 		SceneNode *pCameraNode = Create("PLScene::SNCamera", CameraName.Get());
 

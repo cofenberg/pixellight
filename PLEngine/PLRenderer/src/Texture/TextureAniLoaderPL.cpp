@@ -509,7 +509,7 @@ void TextureAniLoaderPL::AddAniInfoManager(XmlElement &cElement, const AniInfoMa
 	// Loop through all animation information
 	for (uint32 i=0; i<cAniInfoManager.GetNumOfElements(); i++) {
 		// Get animation information
-		const AniInfo *pAnimation = cAniInfoManager.Get(i);
+		const AniInfo *pAnimation = cAniInfoManager.GetByIndex(i);
 		if (pAnimation) {
 			XmlElement *pAnimationElement = new XmlElement("Animation");
 
@@ -565,7 +565,7 @@ void TextureAniLoaderPL::AddAniInfoManager(XmlElement &cElement, const AniInfoMa
 			const AnimationEventManager &cEventManager = pAnimation->GetEventManager();
 			for (uint32 nEvent=0; nEvent<cEventManager.GetNumOfElements(); nEvent++) {
 				// Get the event
-				const AnimationEvent *pEvent = cEventManager.Get(nEvent);
+				const AnimationEvent *pEvent = cEventManager.GetByIndex(nEvent);
 				if (pEvent) {
 					XmlElement *pEventElement = new XmlElement("Event");
 

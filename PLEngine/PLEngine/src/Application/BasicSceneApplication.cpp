@@ -124,7 +124,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 	CloseEditDialog();
 
 	// Disable the ingame GUI
-	SceneNode *pGui = pContainer->GetContainer()->Get("GUI");
+	SceneNode *pGui = pContainer->GetContainer()->GetByName("GUI");
 	if (pGui)
 		pGui->SetActive(false);
 
@@ -214,7 +214,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			// Is there a given start camera?
 			SceneNode *pCamera = nullptr;
 			if (m_sStartCamera.GetLength()) {
-				SceneNode *pStartCamera = pContainer->Get(m_sStartCamera);
+				SceneNode *pStartCamera = pContainer->GetByName(m_sStartCamera);
 				if (pStartCamera && pStartCamera->IsCamera())
 					pCamera = pStartCamera;
 			}
@@ -496,7 +496,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
 				SceneRenderer *pSceneRenderer = static_cast<SPScene*>(pPainter)->GetDefaultSceneRenderer();
 				if (pSceneRenderer) {
-					SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get("Begin");
+					SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByName("Begin");
 					if (pSceneRendererPass)
 						pSceneRendererPass->SetAttribute("ColorClear", cKeyValue.Value.GetString());
 				}

@@ -90,7 +90,7 @@ bool SQByName::PerformQueryRec(const SceneContainer &cContainer)
 	// Loop through all scene nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
 		// Get the scene node
-		SceneNode *pSceneNode = cContainer.Get(i);
+		SceneNode *pSceneNode = cContainer.GetByIndex(i);
 
 		// Does the name of this scene node match the given regular expression?
 		if (m_cRegEx.Match(pSceneNode->GetName())) {

@@ -415,7 +415,7 @@ bool SNMesh::GetSkeletonJointWorldPosition(const String &sJointName, Vector3 &vP
 			Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 			if (pSkeleton) {
 				// Is there a skeleton joint with the given name?
-				Joint *pJoint = pSkeleton->Get(sJointName);
+				Joint *pJoint = pSkeleton->GetByName(sJointName);
 				if (pJoint) {
 					// Get skeleton handler
 					Array<JointHandler> &lstJointHandlers = pSkeletonHandler->GetJointHandlers();

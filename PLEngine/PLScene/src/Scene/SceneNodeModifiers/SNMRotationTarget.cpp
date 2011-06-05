@@ -118,10 +118,10 @@ bool SNMRotationTarget::GetTargetPosition(Vector3 &vPos) const
 		// Get the target scene node
 		const SceneNode *pTarget;
 		if (GetSceneNode().GetContainer())
-			pTarget = GetSceneNode().GetContainer()->Get(Target.Get());
+			pTarget = GetSceneNode().GetContainer()->GetByName(Target.Get());
 		else {
 			// This must be the root :()
-			pTarget = static_cast<const SceneContainer&>(GetSceneNode()).Get(Target.Get());
+			pTarget = static_cast<const SceneContainer&>(GetSceneNode()).GetByName(Target.Get());
 		}
 		if (pTarget) {
 			// Set the position of the attached node

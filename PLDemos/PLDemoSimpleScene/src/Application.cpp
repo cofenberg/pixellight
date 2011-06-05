@@ -150,7 +150,7 @@ bool Application::OnUpdate()
 		SceneContainer *pSceneContainer = GetScene();
 		if (pSceneContainer) {
 			// Get the scene node with the name 'Light' (our 'white light')
-			SceneNode *pLight = pSceneContainer->Get("Light");
+			SceneNode *pLight = pSceneContainer->GetByName("Light");
 			if (pLight) {
 				// This variable is used for the light animation. Its just static you keep the implementation
 				// for a good demo overview completely within this function.

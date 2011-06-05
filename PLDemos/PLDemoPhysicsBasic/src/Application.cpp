@@ -112,16 +112,16 @@ void Application::UpdateMassTextNode()
 	SceneContainer *pRootContainer = GetRootScene();
 	if (pRootContainer) {
 		// Get the scene info text container
-		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pRootContainer->Get("InfoText"));
+		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pRootContainer->GetByName("InfoText"));
 		if (pSceneContainer) {
 			// Get the mass text scene node
-			SceneNode *pInfoTextNode = pSceneContainer->Get("Mass");
+			SceneNode *pInfoTextNode = pSceneContainer->GetByName("Mass");
 			if (pInfoTextNode) {
 				// Get the scene container
-				pSceneContainer = static_cast<SceneContainer*>(pRootContainer->Get("Scene"));
+				pSceneContainer = static_cast<SceneContainer*>(pRootContainer->GetByName("Scene"));
 				if (pSceneContainer) {
 					// Get the current mass of the small falling box
-					SceneNode *pSceneNode = pSceneContainer->Get("SmallBox");
+					SceneNode *pSceneNode = pSceneContainer->GetByName("SmallBox");
 					if (pSceneNode) {
 						const SceneNodeModifier *pModifier = pSceneNode->GetModifier("PLPhysics::SNMPhysicsBodyBox");
 						if (pModifier)
@@ -330,7 +330,7 @@ void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
 void Application::NotifyContact(ContactInformation &cContactInformation)
 {
 	// First PING!
-	SceneNode *pSceneNode = GetScene()->Get("ContactText_FirstBody");
+	SceneNode *pSceneNode = GetScene()->GetByName("ContactText_FirstBody");
 	if (pSceneNode) {
 		Vector3 vPosition;
 		cContactInformation.GetFirstBody().GetPosition(vPosition);
@@ -343,7 +343,7 @@ void Application::NotifyContact(ContactInformation &cContactInformation)
 	}
 
 	// Second PONG!
-	pSceneNode = GetScene()->Get("ContactText_SecondBody");
+	pSceneNode = GetScene()->GetByName("ContactText_SecondBody");
 	if (pSceneNode) {
 		Vector3 vPosition;
 		cContactInformation.GetSecondBody().GetPosition(vPosition);

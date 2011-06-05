@@ -181,7 +181,7 @@ void SNMPositionKeyframeAnimation::NotifyUpdate()
 		Matrix3x4 mTransform;
 		if (CoordinateSystem.Get().GetLength() && GetSceneNode().GetContainer()) {
 			// Get the scene container the position keys should be in
-			SceneNode *pTargetSceneNode = GetSceneNode().GetContainer()->Get(CoordinateSystem);
+			SceneNode *pTargetSceneNode = GetSceneNode().GetContainer()->GetByName(CoordinateSystem);
 			if (pTargetSceneNode && pTargetSceneNode->IsContainer()) {
 				// Get the transform matrix that transform from "the other scene container" into "this scene container"
 				static_cast<SceneContainer*>(pTargetSceneNode)->GetTransformMatrixTo(*GetSceneNode().GetContainer(), mTransform);

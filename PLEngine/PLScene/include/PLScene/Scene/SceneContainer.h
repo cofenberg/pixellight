@@ -59,7 +59,7 @@ class SceneQueryManager;
 *
 *  @note
 *    - The 'scene node space' axis aligned bounding box should always cover all scene nodes of this container
-*    - Within Get(<Name>) you can also use 'absolute names' instead of 'relative' names. 'Root.MyScene.MyNode'
+*    - Within GetByName(<Name>) you can also use 'absolute names' instead of 'relative' names. 'Root.MyScene.MyNode'
 *      for instance will return the scene node 'MyNode' within the scene container 'MyScene' which is a
 *      subnode of 'Root'. 'MyScene.MyNode' will return the node 'MyNode' of the container 'MyScene' which is
 *      an element of the current container. 'Parent.MyNode' will return the scene node 'MyNode' within the parent
@@ -347,8 +347,8 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool DeInit();
-		PLS_API virtual SceneNode *Get(PLGeneral::uint32 nIndex = 0) const;
-		PLS_API virtual SceneNode *Get(const PLGeneral::String &sName) const;
+		PLS_API virtual SceneNode *GetByIndex(PLGeneral::uint32 nIndex = 0) const;
+		PLS_API virtual SceneNode *GetByName(const PLGeneral::String &sName) const;
 
 
 	//[-------------------------------------------------------]

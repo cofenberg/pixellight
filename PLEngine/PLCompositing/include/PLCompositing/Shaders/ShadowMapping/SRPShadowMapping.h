@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/Pool.h>
-#include <PLGeneral/Base/ElementManager.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Compositing/SceneRendererPass.h>

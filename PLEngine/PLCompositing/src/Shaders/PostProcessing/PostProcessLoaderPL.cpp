@@ -126,7 +126,7 @@ bool PostProcessLoaderPL::Save(PostProcessManager &cPostProcessManager, File &cF
 
 	// Add all post processes
 	for (uint32 i=0; i<cPostProcessManager.GetNumOfElements(); i++) {
-		const PostProcess *pPP = cPostProcessManager.Get(i);
+		const PostProcess *pPP = cPostProcessManager.GetByIndex(i);
 		if (pPP) {
 			XmlElement *pPassElement = new XmlElement("Pass");
 

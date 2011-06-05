@@ -108,7 +108,7 @@ SNCellPortal::~SNCellPortal()
 SCCell *SNCellPortal::GetTargetCellInstance()
 {
 	if (!m_pTargetCell->GetElement() && m_sTargetCell.GetLength()) {
-		SceneNode *pCell = GetContainer()->Get(m_sTargetCell);
+		SceneNode *pCell = GetContainer()->GetByName(m_sTargetCell);
 		if (pCell && pCell->IsCell()) {
 			m_pTargetCell->SetElement(pCell);
 
@@ -136,7 +136,7 @@ const Matrix3x4 &SNCellPortal::GetWarpMatrix()
 		SceneContainer *pContainer = GetContainer();
 		if (pContainer) {
 			// Get the target cell
-			SceneNode *pTargetNode = pContainer->Get(m_sTargetCell);
+			SceneNode *pTargetNode = pContainer->GetByName(m_sTargetCell);
 			if (pTargetNode && pTargetNode->IsCell()) {
 				// Get transform matrix
 				pContainer->GetTransformMatrixTo(static_cast<SceneContainer&>(*pTargetNode), m_mWarp);

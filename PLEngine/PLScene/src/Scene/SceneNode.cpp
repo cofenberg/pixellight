@@ -461,7 +461,7 @@ void SceneNode::MoveTo(const Vector3 &vPosition)
 	} else {
 		Line cLine(m_cTransform.GetPosition(), vPosition);
 		for (uint32 i=0; i<GetContainer()->GetNumOfElements(); i++) {
-			SceneNode &cSceneNode = *GetContainer()->Get(i);
+			SceneNode &cSceneNode = *GetContainer()->GetByIndex(i);
 
 			// Is this an active cell-portal?
 			if (&cSceneNode != this && cSceneNode.IsActive() && cSceneNode.IsPortal() &&

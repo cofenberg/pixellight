@@ -211,9 +211,9 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 
 		// Start texture animation
 		if (pTextureAni->GetTextureAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().Get(static_cast<uint32>(0))); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().GetByIndex(0)); // Default animation
 		else
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().Get(1));
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetTextureAnimationManager().GetByIndex(1));
 		if (pAniInfo) {
 			m_pTextureAnimation->Start(*pAniInfo);
 			if (m_pTextureAnimation->GetCurrentFrame() == m_pTextureAnimation->GetNextFrame())
@@ -222,9 +222,9 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 
 		// Start matrix animation
 		if (pTextureAni->GetMatrixAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().Get(static_cast<uint32>(0))); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().GetByIndex(0)); // Default animation
 		else
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().Get(1));
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetMatrixAnimationManager().GetByIndex(1));
 		if (pAniInfo) {
 			m_pMatrixAnimation->Start(*pAniInfo);
 			if (m_pMatrixAnimation->GetCurrentFrame() == m_pMatrixAnimation->GetNextFrame())
@@ -233,9 +233,9 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 
 		// Start color animation
 		if (pTextureAni->GetColorAnimationManager().GetNumOfElements() == 1)
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().Get(static_cast<uint32>(0))); // Default animation
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().GetByIndex(0)); // Default animation
 		else
-			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().Get(1));
+			pAniInfo = static_cast<AnimationInfo*>(pTextureAni->GetColorAnimationManager().GetByIndex(1));
 		if (pAniInfo) {
 			m_pColorAnimation->Start(*pAniInfo);
 			if (m_pColorAnimation->GetCurrentFrame() == m_pColorAnimation->GetNextFrame())

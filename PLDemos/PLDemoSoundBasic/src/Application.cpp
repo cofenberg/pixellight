@@ -100,10 +100,10 @@ void Application::UpdateTimeScaleTextNode()
 	SceneContainer *pSceneContainer = GetScene();
 	if (pSceneContainer) {
 		// Get the scene info text container
-		SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pSceneContainer->Get("Parent.InfoText"));
+		SceneContainer *pInfoTextContainer = static_cast<SceneContainer*>(pSceneContainer->GetByName("Parent.InfoText"));
 		if (pInfoTextContainer) {
 			// Get the time scale text scene node
-			SceneNode *pInfoTextNode = pInfoTextContainer->Get("TimeScale");
+			SceneNode *pInfoTextNode = pInfoTextContainer->GetByName("TimeScale");
 			if (pInfoTextNode) {
 				pInfoTextNode->SetAttribute("Text", PLT("1/2/0=Decrease/increase/reset timescale (current: ") +
 					String::Format("%g)", Timing::GetInstance()->GetTimeScaleFactor()));

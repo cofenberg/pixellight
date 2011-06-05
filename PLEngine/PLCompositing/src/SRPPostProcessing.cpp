@@ -113,7 +113,7 @@ bool SRPPostProcessing::IsPostProcessingRequired(SNCamera &cCamera)
 
 			// Loop through all post processes
 			for (uint32 nPostProcess=0; nPostProcess<cPPM.GetNumOfElements(); nPostProcess++) {
-				PostProcess *pPostProcess = cPPM.Get(nPostProcess);
+				PostProcess *pPostProcess = cPPM.GetByIndex(nPostProcess);
 				if (pPostProcess->IsActive()) {
 					// Create post processor if there's currently no one
 					if (!m_pPostProcessor)
@@ -190,7 +190,7 @@ void SRPPostProcessing::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								// Loop through all post processes
 								bool bSetParameters = true;
 								for (uint32 nPostProcess=0; nPostProcess<cPPM.GetNumOfElements(); nPostProcess++) {
-									PostProcess *pPostProcess = cPPM.Get(nPostProcess);
+									PostProcess *pPostProcess = cPPM.GetByIndex(nPostProcess);
 									if (pPostProcess->IsActive()) {
 										// Set post process settings now?
 										if (bSetParameters) {

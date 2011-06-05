@@ -129,10 +129,10 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		SceneContainer *pRootScene = GetRootScene();
 		if (pRootScene) {
 			// Enable/disable standard edit features from the PixelLight scene graph (if the user hasn't changed anything :)
-			SceneNode *pSceneNode = pRootScene->Get("PLScene::SNEngineInformation0");
+			SceneNode *pSceneNode = pRootScene->GetByName("PLScene::SNEngineInformation0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
-			pSceneNode = pRootScene->Get("PLScene::SNConsole0");
+			pSceneNode = pRootScene->GetByName("PLScene::SNConsole0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
 		}

@@ -61,7 +61,7 @@ void SNMAnchor::SetAttachedNode(const String &sValue)
 {
 	if (m_sAttachedNode != sValue) {
 		m_sAttachedNode = sValue;
-		m_cAttachedNodeHandler.SetElement(GetSceneNode().GetContainer()->Get(m_sAttachedNode));
+		m_cAttachedNodeHandler.SetElement(GetSceneNode().GetContainer()->GetByName(m_sAttachedNode));
 	}
 }
 
@@ -139,7 +139,7 @@ void SNMAnchor::NotifyContainer()
 		// Get the attached scene node
 		SceneNode *pAttachedSceneNode = m_cAttachedNodeHandler.GetElement();
 		if (!pAttachedSceneNode && cSceneNode.GetContainer()) {
-			pAttachedSceneNode = cSceneNode.GetContainer()->Get(m_sAttachedNode);
+			pAttachedSceneNode = cSceneNode.GetContainer()->GetByName(m_sAttachedNode);
 			m_cAttachedNodeHandler.SetElement(pAttachedSceneNode);
 		}
 		if (pAttachedSceneNode && cSceneNode.GetContainer())
@@ -161,7 +161,7 @@ void SNMAnchor::NotifyPositionRotationUpdate()
 		// Get the attached scene node
 		SceneNode *pAttachedSceneNode = m_cAttachedNodeHandler.GetElement();
 		if (!pAttachedSceneNode && cOwnerSceneNode.GetContainer()) {
-			pAttachedSceneNode = cOwnerSceneNode.GetContainer()->Get(m_sAttachedNode);
+			pAttachedSceneNode = cOwnerSceneNode.GetContainer()->GetByName(m_sAttachedNode);
 			m_cAttachedNodeHandler.SetElement(pAttachedSceneNode);
 		}
 		if (pAttachedSceneNode) {
@@ -179,7 +179,7 @@ void SNMAnchor::NotifyPositionRotationUpdate()
 						const Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 						if (pSkeleton) {
 							// Is there a skeleton joint with the given name?
-							const Joint *pJoint = pSkeleton->Get(SkeletonJoint.Get());
+							const Joint *pJoint = pSkeleton->GetByName(SkeletonJoint.Get());
 							if (pJoint) {
 								// Get skeleton handler
 								const Array<JointHandler> &lstJointHandlers = pSkeletonHandler->GetJointHandlers();

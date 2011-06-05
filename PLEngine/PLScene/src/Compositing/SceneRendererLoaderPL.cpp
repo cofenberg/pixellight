@@ -111,7 +111,7 @@ bool SceneRendererLoaderPL::SaveParams(SceneRenderer &cSceneRenderer, File &cFil
 
 	// Add all scene renderer passes
 	for (uint32 i=0; i<cSceneRenderer.GetNumOfElements(); i++) {
-		const SceneRendererPass *pSceneRendererPass = cSceneRenderer.Get(i);
+		const SceneRendererPass *pSceneRendererPass = cSceneRenderer.GetByIndex(i);
 		if (pSceneRendererPass) {
 			XmlElement *pPassElement = new XmlElement("Pass");
 

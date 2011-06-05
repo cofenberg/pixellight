@@ -105,7 +105,7 @@ SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();
 	if (pSceneRenderer) {
 		// Return the requested scene renderer pass
-		return pSceneRenderer->Get(sName);
+		return pSceneRenderer->GetByName(sName);
 	}
 
 	// Error!
@@ -167,7 +167,7 @@ uint32 SceneRendererTool::SetAttribute(const String &sAttributeName, const Strin
 		// Loop through all scene renderer passes
 		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
 			// Get the current scene renderer pass
-			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByIndex(nPass);
 			if (pSceneRendererPass) {
 				// Get the attribute
 				DynVar *pDynVar = pSceneRendererPass->GetAttribute(sAttributeName);
@@ -198,7 +198,7 @@ void SceneRendererTool::SetValues(const String &sValues) const
 		// Loop through all scene renderer passes
 		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
 			// Get the current scene renderer pass
-			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByIndex(nPass);
 			if (pSceneRendererPass) {
 				// Set the values
 				pSceneRendererPass->SetValues(sValues);
@@ -219,7 +219,7 @@ void SceneRendererTool::SetDefaultValues() const
 		// Loop through all scene renderer passes
 		for (uint32 nPass=0; nPass<pSceneRenderer->GetNumOfElements(); nPass++) {
 			// Get the current scene renderer pass
-			SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get(nPass);
+			SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByIndex(nPass);
 			if (pSceneRendererPass) {
 				// Set the values
 				pSceneRendererPass->SetDefaultValues();

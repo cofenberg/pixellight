@@ -147,7 +147,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 		// Get direction vectors from the owner node or a special rotation node
 		const SceneNode *pRotationNode = &cSceneNode;
 		if (RotationNode.Get().GetLength() && cSceneNode.GetContainer()) {
-			const SceneNode *pSceneNode = cSceneNode.GetContainer()->Get(RotationNode.Get());
+			const SceneNode *pSceneNode = cSceneNode.GetContainer()->GetByName(RotationNode.Get());
 			if (pSceneNode)
 				pRotationNode = pSceneNode;
 		}
@@ -252,7 +252,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 			pAniManager = pMeshHandler->CreateMeshAnimationManager();
 		if (pAniManager) {
 			if (bIdle) {
-				if (IdleAnimation.Get().GetLength() && !pAniManager->Get(IdleAnimation.Get())) {
+				if (IdleAnimation.Get().GetLength() && !pAniManager->GetByName(IdleAnimation.Get())) {
 					pAniManager->Clear();
 					// Start 'idle'-animation
 					AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(IdleAnimation.Get());
@@ -263,7 +263,7 @@ void SNMPhysicsCharacterController::NotifyUpdate()
 					}
 				}
 			} else {
-				Animation *pAni = pAniManager->Get(WalkAnimation.Get());
+				Animation *pAni = pAniManager->GetByName(WalkAnimation.Get());
 				if (!pAni && WalkAnimation.Get().GetLength()) {
 					pAniManager->Clear();
 					// Start 'walk'-animation

@@ -106,7 +106,7 @@ SceneRendererPass *SceneRendererPass::GetFirstInstanceOfSceneRendererPassClass(c
 		// Loop through all scene renderer pass instances within the scene renderer
 		for (uint32 i=0; i<pSceneRenderer->GetNumOfElements(); i++) {
 			// Get the pass and check it's class name
-			SceneRendererPass *pPass = pSceneRenderer->Get(i);
+			SceneRendererPass *pPass = pSceneRenderer->GetByIndex(i);
 			if (pPass && pPass->IsInstanceOf(sClassName)) {
 				// Done
 				return pPass; 

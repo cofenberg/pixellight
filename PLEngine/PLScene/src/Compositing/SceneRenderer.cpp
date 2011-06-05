@@ -121,7 +121,7 @@ void SceneRenderer::DrawScene(Renderer &cRenderer, const SQCull &cCullQuery)
 	// Draw all scene renderer passes
 	for (uint32 i=0; i<GetNumOfElements(); i++) {
 		// Get the current pass
-		SceneRendererPass *pPass = Get(i);
+		SceneRendererPass *pPass = GetByIndex(i);
 
 		// Do ONLY take it into account if it's valid and active
 		if (pPass && pPass->IsActive())
