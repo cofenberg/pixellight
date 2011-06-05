@@ -19,9 +19,6 @@
     <ClCompile Include="src\ScriptBindingTiming.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScriptBindingScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\SNMScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -44,9 +41,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\ScriptBindingLog.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\SNMScript.h">

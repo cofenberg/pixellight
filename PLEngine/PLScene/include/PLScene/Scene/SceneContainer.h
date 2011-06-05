@@ -103,6 +103,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneContainer, "PLScene", PLScene::SceneNode, "Scene container node (group node) class which is using scene nodes")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_1(GetByName, SceneNode*, PLGeneral::String, "Returns a scene node by using the given name, can be a null pointer", "")
 		pl_attribute(Hierarchy,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
 		// Overwritten SceneNode variables
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,													ReadWrite,	GetSet,	"Flags",																"")
@@ -348,7 +349,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	public:
 		PLS_API virtual bool DeInit();
 		PLS_API virtual SceneNode *GetByIndex(PLGeneral::uint32 nIndex = 0) const;
-		PLS_API virtual SceneNode *GetByName(const PLGeneral::String &sName) const;
+		PLS_API virtual SceneNode *GetByName(PLGeneral::String sName) const;
 
 
 	//[-------------------------------------------------------]

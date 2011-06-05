@@ -42,30 +42,6 @@ pl_implement_class(MyRTTIClass)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
-//[-------------------------------------------------------]
-int MyRTTIClass::Return42() const
-{
-	return 42;
-}
-
-void MyRTTIClass::IgnoreTheParameter(float fValue) const
-{
-	System::GetInstance()->GetConsole().Print(String("Ignoring \"") + fValue + "\" ... D'OH!\n");
-}
-
-void MyRTTIClass::SaySomethingWise() const
-{
-	System::GetInstance()->GetConsole().Print(String(Return42()) + " - wise enough?\n");
-}
-
-MyRTTIClass *MyRTTIClass::GetSelf()
-{
-	return this;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI slot methods                              ]
 //[-------------------------------------------------------]
 void MyRTTIClass::OnMyEvent()
@@ -122,4 +98,40 @@ MyRTTIClass::MyRTTIClass() :
 */
 MyRTTIClass::~MyRTTIClass()
 {
+}
+
+/**
+*  @brief
+*    Returns 42
+*/
+int MyRTTIClass::Return42() const
+{
+	return 42;
+}
+
+/**
+*  @brief
+*    Ignores the provided parameter
+*/
+void MyRTTIClass::IgnoreTheParameter(float fValue) const
+{
+	System::GetInstance()->GetConsole().Print(String("Ignoring \"") + fValue + "\" ... D'OH!\n");
+}
+
+/**
+*  @brief
+*    Says something wise
+*/
+void MyRTTIClass::SaySomethingWise() const
+{
+	System::GetInstance()->GetConsole().Print(String(Return42()) + " - wise enough?\n");
+}
+
+/**
+*  @brief
+*    Returns a pointer to this instance
+*/
+MyRTTIClass *MyRTTIClass::GetSelf()
+{
+	return this;
 }
