@@ -521,7 +521,7 @@ SceneNode *SceneContainer::GetByIndex(uint32 nIndex) const
 	return m_lstElements[nIndex];
 }
 
-SceneNode *SceneContainer::GetByName(const String &sName) const
+SceneNode *SceneContainer::GetByName(String sName) const
 {
 	// Name not empty and is '.' the first character?
 	if (sName.GetLength() && sName[static_cast<uint32>(0)] != '.') {

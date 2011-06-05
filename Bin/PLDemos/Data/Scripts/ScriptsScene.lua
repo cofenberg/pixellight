@@ -18,7 +18,7 @@ function UpdateBox()
 	boxRotation = boxRotation + PL.Timing.GetTimeDifference()*10
 
 	-- Get the scene node we want to manipulate
-	local sceneNode = PL.Application.Scene.Get("Scene.BigBox")
+	local sceneNode = PL.GetApplication():GetScene():GetByName("BigBox")
 	if sceneNode ~= nil then
 		sceneNode.Rotation = "0 " .. boxRotation .. " 0"
 	end
@@ -34,7 +34,7 @@ function UpdateSoldier()
 		soldierTimer = soldierTimer - 1
 
 		-- Get the scene node we want to manipulate
-		local sceneNode = PL.Application.Scene.Get("Scene.Soldier")
+		local sceneNode = PL.GetApplication():GetScene():GetByName("Soldier")
 		if sceneNode ~= nil then
 			-- Toggle debug mode
 			if sceneNode.DebugFlags == 0 then

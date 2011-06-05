@@ -1,6 +1,32 @@
 ﻿>> 05.06.2011
 [CO]
 - PLScriptBindings: Added "ScriptBinding_PL"
+- Removed experimental "ScriptBindingScene" because it's no longer needed. Write e.g.
+      PL.GetApplication():GetScene():GetByName("Soldier")
+  within a Lua script to get the scene node "Soldier". Something like
+    PL.GetApplication():GetScene():GetByName("MySubscene"):GetByName("Soldier")
+  will work of course as well... WOW! Stefans RTTI is *really* powerful and most script bindings will come practically
+  for free... I just added
+      pl_method_1(GetByName, SceneNode*, PLGeneral::String, "Returns a scene node by using the given name, can be a null pointer", "")
+  within the RTTI class interface of "PLScene::SceneContainer" in order to be able to access the C++ method from inside a script.
+  To avoid issues when exposing C++ methods to the RTTI I'am afraid we need to change something like
+     void SetFilename(const PLGeneral::String &sValue)
+  into
+     void SetFilename(PLGeneral::String sValue)
+  because "const PLGeneral::String &" is of course a reference, and the RTTI is using it this way (which is correct!). This is becoming a problem
+  when there's no real "PLGeneral::String" instance on the method calling side... which is true for scripting. Before I start to hack around, I probably
+  just change it as seen above... there's no real need for passing in a string reference anyway because the string class internally just shares
+  a string buffer and therefore "copying" one string into another is blazing fast.
+  -> I'am sure the "PL.GetApplication()" way is the right one for PixelLight. It results in only a few global functions (they introduce script
+     initialization costs!) and the rest is completely dynamic by just using RTTI class instances (they introduce no script initialization costs!).
+	 Exposing new features to script languages only requires a single, simple line of C++ code, and this line is even not just there for scripting,
+	 it's generic. So, there's no need for thousands of "script proxies"/"script wrappers" in order to expose C++ stuff to scripting languages as seen
+	 in many other engines with script support.
+  -> In the next few days I should really spend more time on university stuff, but then I probably will start exposing the most important C++ methods
+     to the RTTI (exposing this stuff doesn't blow up the memory footprint of RTTI class instances). 
+	 When I'am done with it, the Lua support should already be quite usable... as for the Python, JavaScript and AngelScript support ... well,
+	 I first have to figure out how to access RTTI objects in a decent way using those script APIs. The strongly typed AngelScript already produced some
+	 headaches. For now, it's important to me that at least one scripting language is usable, so I focus on this point.
 
 
 
