@@ -93,7 +93,7 @@ void SPTexturePreview::OnPaint(Surface &cSurface)
 	Renderer &cRenderer = GetRenderer();
 
 	// Get the used texture
-	const Texture *pTexture = cRenderer.GetRendererContext().GetTextureManager().Get(m_sTexture);
+	const Texture *pTexture = cRenderer.GetRendererContext().GetTextureManager().GetByName(m_sTexture);
 	if (pTexture && pTexture->GetTextureBuffer()) {
 		// Set all render states to known default settings
 		cRenderer.GetRendererContext().GetEffectManager().Use();

@@ -98,7 +98,7 @@ void SPMaterialPreview::OnPaint(Surface &cSurface)
 	cRenderer.Clear();
 
 	// Get the used material
-	Material *pMaterial = cRenderer.GetRendererContext().GetMaterialManager().Get(m_sMaterial);
+	Material *pMaterial = cRenderer.GetRendererContext().GetMaterialManager().GetByName(m_sMaterial);
 	if (pMaterial) {
 		// Begin 2D mode
 		DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();

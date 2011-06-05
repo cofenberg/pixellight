@@ -163,7 +163,7 @@ bool SNMesh::LoadMesh(const String &sFilename, const String &sParams, const Stri
 			m_pMeshHandler = new MeshHandler();
 
 		// Mesh already loaded?
-		PLMesh::Mesh *pMesh = GetSceneContext()->GetMeshManager().Get(sFilename);
+		PLMesh::Mesh *pMesh = GetSceneContext()->GetMeshManager().GetByName(sFilename);
 		if (!pMesh) {
 			// Create and load mesh
 			pMesh = GetSceneContext()->GetMeshManager().LoadMesh(sFilename, sParams, sMethod, false, !(GetFlags() & DynamicMesh));

@@ -94,7 +94,7 @@ void SPEffectPreview::OnPaint(Surface &cSurface)
 	Renderer &cRenderer = GetRenderer();
 
 	// Get the used effect
-	Effect *pEffect = cRenderer.GetRendererContext().GetEffectManager().Get(m_sEffect);
+	Effect *pEffect = cRenderer.GetRendererContext().GetEffectManager().GetByName(m_sEffect);
 	if (pEffect) {
 		// Set all render states to known default settings
 		cRenderer.Reset();

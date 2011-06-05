@@ -351,7 +351,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 			m_pAnimationState = nullptr;
 		}
 
-		Texture *pTexture = cTextureManager.Get(sFilename);
+		Texture *pTexture = cTextureManager.GetByName(sFilename);
 		if (pTexture && !pTexture->IsAnimated()) {
 			SetResource(pTexture);
 		} else {
@@ -376,7 +376,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 		// Load texture
 		if (bReloadTexture) {
 			if (sExtension.GetLength()) {
-				if (cTextureManager.Get(sFilename))
+				if (cTextureManager.GetByName(sFilename))
 					SetResource(cTextureManager.LoadResource(sFilename));
 				else {
 					SetResource(cTextureManager.Create(sFilename));
@@ -426,7 +426,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 					}
 
 					// Check whether the texture is already within the texture manager
-					pTexture = bUseName ? cTextureManager.Get(sName) : nullptr;
+					pTexture = bUseName ? cTextureManager.GetByName(sName) : nullptr;
 					if (!pTexture) {
 						// Get the parameters
 						String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());
@@ -441,7 +441,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 
 			// Try to get/load the texture
 			} else {
-				pTexture = cTextureManager.Get(sFilename);
+				pTexture = cTextureManager.GetByName(sFilename);
 				if (!pTexture && sExtension.GetLength()) {
 					pTexture = cTextureManager.Create(sFilename);
 					if (pTexture && !pTexture->Load(sFilename)) {

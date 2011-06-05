@@ -378,10 +378,10 @@ void SCRenderToTexture::CreateSurfaceTexture()
 	// Add the texture
 	TextureManager &cTextureManager = cRenderer.GetRendererContext().GetTextureManager();
 	// If there's already a texture with this name we have to get another, still free resource name
-	if (cTextureManager.Get(m_sTextureName)) {
+	if (cTextureManager.GetByName(m_sTextureName)) {
 		// Find an unused resource name
 		String sName = m_sTextureName + "_0";
-		for (uint32 i=1; cTextureManager.Get(sName); i++)
+		for (uint32 i=1; cTextureManager.GetByName(sName); i++)
 			sName = m_sTextureName + '_' + static_cast<int>(i);
 
 		// We have found an unused name

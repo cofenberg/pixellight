@@ -322,12 +322,12 @@ void SceneLoaderX::ProcessMesh(SInstance &sInstance, XMesh &cXMesh, SNMesh &cMes
 
 	// Get an unused mesh name
 	String sMeshName = sResourceName;
-	if (cMeshManager.Get(sMeshName)) {
+	if (cMeshManager.GetByName(sMeshName)) {
 		int i = 0;
 		do {
 			sMeshName = sResourceName + '_' + i;
 			i++;
-		} while (cMeshManager.Get(sMeshName));
+		} while (cMeshManager.GetByName(sMeshName));
 	}
 
 	// Create the mesh

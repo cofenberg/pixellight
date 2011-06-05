@@ -127,7 +127,7 @@ void SoundManager::SetDopplerFactor(float fFactor)
 PLSound::Buffer *SoundManager::CreateSoundBuffer(const String &sFilename, bool bStream)
 {
 	// Is there already a sound buffer with this name?
-	PLSound::Buffer *pSB = Get(sFilename);
+	PLSound::Buffer *pSB = GetByName(sFilename);
 	return pSB ? pSB : new Buffer(*this, sFilename, bStream);
 }
 

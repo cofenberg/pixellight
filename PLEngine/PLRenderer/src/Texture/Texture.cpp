@@ -235,7 +235,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						PL_LOG(Debug, "Texture quality is 0, using default texture instead of '" + sFilename + "'...")
 
 						// Use the default texture
-						const Texture *pTexture = GetTextureManager().Get(TextureManager::Default);
+						const Texture *pTexture = GetTextureManager().GetByName(TextureManager::Default);
 						if (pTexture && pTexture->GetTextureBuffer()) {
 							// This texture is just sharing a texture buffer, so when this texture get's destroyed the texture buffer stays alive
 							m_bShareTextureBuffer = true;

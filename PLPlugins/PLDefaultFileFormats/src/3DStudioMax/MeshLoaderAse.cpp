@@ -284,7 +284,7 @@ bool MeshLoaderAse::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 							// Find an unused name
 							String sFinalMaterialName = sMaterialName;
 							int nLoop = 0;
-							while (cMaterialManager.Get(sFinalMaterialName))
+							while (cMaterialManager.GetByName(sFinalMaterialName))
 								sFinalMaterialName = sMaterialName + '_' + nLoop;
 
 							// Set the name

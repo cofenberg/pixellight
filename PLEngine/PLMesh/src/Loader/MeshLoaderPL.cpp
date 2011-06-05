@@ -493,12 +493,12 @@ bool MeshLoaderPL::ReadSkeleton(Mesh &cMesh, File &cFile) const
 //	if (!cMesh.GetSkeleton()) {
 //		sName = cMesh.GetName() + "_" + sSkeleton.szName;
 //	} else 
-	if (cSkeletonManager.Get(sSkeleton.szName)) {
+	if (cSkeletonManager.GetByName(sSkeleton.szName)) {
 		uint32 i = 0;
 		do {
 			sName = String::Format("%s_%d", sSkeleton.szName, i);
 			i++;
-		} while (cSkeletonManager.Get(sName));
+		} while (cSkeletonManager.GetByName(sName));
 	} else {
 		sName = sSkeleton.szName;
 	}

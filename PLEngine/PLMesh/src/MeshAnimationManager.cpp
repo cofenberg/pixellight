@@ -178,9 +178,9 @@ bool MeshAnimationManager::Apply(MeshHandler &cMeshHandler) const
 							// Get skeleton
 							const Skeleton *pSkeleton;
 							if (pAnimation->GetAnimation() && pAnimation->GetAnimation()->GetSourceName().GetLength())
-								pSkeleton = cSkeletonManager.Get(pAnimation->GetAnimation()->GetSourceName());
+								pSkeleton = cSkeletonManager.GetByName(pAnimation->GetAnimation()->GetSourceName());
 							else
-								pSkeleton = cSkeletonManager.Get(pAnimation->GetName());
+								pSkeleton = cSkeletonManager.GetByName(pAnimation->GetName());
 							if (pSkeleton) {
 								// Add animation
 								pSkeleton->ApplyJointStates(pSH->GetJointHandlers(),

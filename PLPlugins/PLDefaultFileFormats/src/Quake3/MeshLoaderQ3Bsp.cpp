@@ -470,7 +470,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 	for (uint32 i=0; i<lstMaterials.GetNumOfElements(); i++) {
 		// Create the material
 		Q3Bsp::Material *pMaterial = lstMaterials[i];
-		Material *pMat = cRendererContext.GetMaterialManager().Get(pMaterial->sName);
+		Material *pMat = cRendererContext.GetMaterialManager().GetByName(pMaterial->sName);
 		if (pMat) {
 			cMesh.AddMaterial(pMat);
 			continue;
@@ -538,7 +538,7 @@ bool MeshLoaderQ3Bsp::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		tBSPLightmap *pLightmap = &pLightmaps[pMaterial->nLightmapID];
 
 		String sLName = sFilenameT + "_L" + pMaterial->nLightmapID;
-		Texture *pTex = cRendererContext.GetTextureManager().Get(sLName);
+		Texture *pTex = cRendererContext.GetTextureManager().GetByName(sLName);
 		if (!pTex) {
 			float max, r, g, b;
 			uint8 *pImageData = &pLightmap->imageBits[0][0][0];

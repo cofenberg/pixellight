@@ -291,12 +291,12 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		//	if (!m_pMesh->GetSkeleton()) {
 		//		sName = cMesh.GetName() + "_" + sSkeleton.sName;
 		//	} else 
-			if (cSkeletonManager.Get(cMesh.GetName())) {
+			if (cSkeletonManager.GetByName(cMesh.GetName())) {
 				uint32 i = 0;
 				do {
 					sName = cMesh.GetName() + '_' + static_cast<int>(i);
 					i++;
-				} while (cSkeletonManager.Get(sName));
+				} while (cSkeletonManager.GetByName(sName));
 			} else {
 				sName = cMesh.GetName();
 			}

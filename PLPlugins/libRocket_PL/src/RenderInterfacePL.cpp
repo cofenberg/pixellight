@@ -235,7 +235,7 @@ bool RenderInterfacePL::GenerateTexture(Rocket::Core::TextureHandle& texture_han
 	TextureManager &cTextureManager = m_pRendererContext->GetTextureManager();
 
 	// Is there already such a texture?
-	Texture *pTexture = cTextureManager.Get(sTextureName);
+	Texture *pTexture = cTextureManager.GetByName(sTextureName);
 	if (!pTexture) {
 		// Create the texture right now!
 		pTexture = cTextureManager.Create(sTextureName);

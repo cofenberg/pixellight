@@ -146,7 +146,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				do {
 					sName = sModelName + '_' + static_cast<int>(nSurface+i);
 					i++;
-				} while (cMeshManager.Get(sName));
+				} while (cMeshManager.GetByName(sName));
 
 				// Create the mesh
 				Mesh *pMesh = cMeshManager.Create(sName);

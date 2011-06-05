@@ -774,12 +774,12 @@ bool MeshLoaderPLXml::ReadSkeleton(Mesh &cMesh, const XmlElement &cSkeletonEleme
 //	if (!cMesh.GetSkeleton()) {
 //		sUsedName = cMesh.GetName() + '_' + sName;
 //	} else 
-	if (cSkeletonManager.Get(sName)) {
+	if (cSkeletonManager.GetByName(sName)) {
 		uint32 i = 0;
 		do {
 			sUsedName = sName + '_' + i;
 			i++;
-		} while (cSkeletonManager.Get(sUsedName));
+		} while (cSkeletonManager.GetByName(sUsedName));
 	} else {
 		sUsedName = sName;
 	}

@@ -282,7 +282,7 @@ template <class AType> class ResourceManager {
 		*  @return
 		*    The corresponding object, a null pointer if there's no match
 		*/
-		virtual AType *Get(PLGeneral::uint32 nIndex = 0) const;
+		virtual AType *GetByIndex(PLGeneral::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -299,7 +299,7 @@ template <class AType> class ResourceManager {
 		*      for instance within SceneContainer to be able to use 'absolute names'
 		*      like 'Root.MyScene.MyNode', too.
 		*/
-		virtual AType *Get(const PLGeneral::String &sName) const;
+		virtual AType *GetByName(const PLGeneral::String &sName) const;
 
 
 	//[-------------------------------------------------------]
