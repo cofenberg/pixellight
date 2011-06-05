@@ -70,9 +70,9 @@ class MyRTTIClass : public PLCore::Object {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		int Return42();
-		void IgnoreTheParameter(float fValue);
-		void SaySomethingWise();
+		int Return42() const;
+		void IgnoreTheParameter(float fValue) const;
+		void SaySomethingWise() const;
 		MyRTTIClass *GetSelf();
 
 

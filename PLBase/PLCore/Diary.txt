@@ -1,6 +1,11 @@
 >> 05.06.2011
 [CO]
 - Exposed "ConsoleApplication" to the RTTI
+- Until now, C++ methods exposed to the RTTI had to be non-constant. Due to the script support, RTTI methods will now be heavily used and it's not that
+  comfortable to be forced to change a method signature just to be able to expose it to the RTTI. So, within the "__pl_method_meth"-macro I cast away the
+  const within the method pointer using a good old C-style cast to be as flexible as possible in here. I don't think that this introduces any security risks
+  because the RTTI method just points to the real C++ method, and in there the const is still there and the compiler will blame you as usual if a non mutable
+  member attribute is changed within a constant method.
 
 
 

@@ -46,9 +46,6 @@ pl_implement_class(ScriptBinding_PL)
 /**
 *  @brief
 *    Returns the application instance
-*
-*  @return
-*    The application instance, can be a null pointer (but "usually" it's no null pointer)
 */
 ConsoleApplication *ScriptBinding_PL::GetApplication()
 {

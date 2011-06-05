@@ -93,7 +93,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @return
 		*    Scene container, can be a null pointer
 		*/
-		PL_API PLScene::SceneContainer *GetScene();
+		PL_API PLScene::SceneContainer *GetScene() const;
 
 		/**
 		*  @brief

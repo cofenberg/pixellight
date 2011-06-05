@@ -57,7 +57,7 @@ pl_implement_class(SceneApplication)
 *  @brief
 *    Returns the root scene
 */
-SceneContainer *SceneApplication::GetRootScene()
+SceneContainer *SceneApplication::GetRootScene() const
 {
 	// Return pointer to root scene container
 	return m_pRootScene;

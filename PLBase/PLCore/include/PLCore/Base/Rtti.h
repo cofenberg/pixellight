@@ -526,9 +526,12 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_method_meth(NAME) \
 		class NAME##_Method : public PLCore::Method<NAME##_Desc> { \
 			public: \
-				NAME##_Method() : PLCore::Method<NAME##_Desc>(&_Self::NAME, nullptr) { /* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
+				/* Cast away the const within the method pointer using a good old C-style cast to be as flexible as possible in here, if this is not done, only non-const methods can be exposed to the RTTI which isn't that comfortable */ \
+				NAME##_Method() : PLCore::Method<NAME##_Desc>((NAME##_Desc::MethType::MemFuncType)(&_Self::NAME), nullptr) { \
+					/* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
 				} \
-				NAME##_Method(_Self &cObject) : PLCore::Method<NAME##_Desc>(&_Self::NAME, &cObject) { \
+				/* Cast away the const within the method pointer using a good old C-style cast to be as flexible as possible in here, if this is not done, only non-const methods can be exposed to the RTTI which isn't that comfortable */ \
+				NAME##_Method(_Self &cObject) : PLCore::Method<NAME##_Desc>((NAME##_Desc::MethType::MemFuncType)(&_Self::NAME), &cObject) { \
 				} \
 		}; \
 

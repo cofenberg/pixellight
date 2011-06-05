@@ -87,7 +87,7 @@ class SceneApplication : public RenderApplication {
 		*  @return
 		*    Pointer to root scene container, can be a null pointer
 		*/
-		PL_API PLScene::SceneContainer *GetRootScene();
+		PL_API PLScene::SceneContainer *GetRootScene() const;
 
 
 	//[-------------------------------------------------------]

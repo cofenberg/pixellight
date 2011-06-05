@@ -67,7 +67,7 @@ const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
 *  @brief
 *    Returns the scene container
 */
-SceneContainer *BasicSceneApplication::GetScene()
+SceneContainer *BasicSceneApplication::GetScene() const
 {
 	// This cast is safe because we 'know' it can ONLY be a scene container!
 	return static_cast<SceneContainer*>(m_cSceneContainerHandler.GetElement());
