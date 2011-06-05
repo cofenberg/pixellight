@@ -70,6 +70,8 @@ class BasicSceneApplication : public SceneApplication {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLEngine::SceneApplication, "Basic scene application class")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_0(GetScene, PLScene::SceneContainer*, "Returns the scene container (the 'concrete scene'), can be a null pointer", "")
+		pl_method_1(SetScene, void, PLScene::SceneContainer*, "Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)", "")
 	pl_class_end
 
 
@@ -78,6 +80,29 @@ class BasicSceneApplication : public SceneApplication {
 	//[-------------------------------------------------------]
 	public:
 		PL_API static const PLGeneral::String DefaultSceneRenderer;	/**< The used default (and very basic) scene renderer */
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the scene container (the 'concrete scene')
+		*
+		*  @return
+		*    Scene container, can be a null pointer
+		*/
+		PL_API PLScene::SceneContainer *GetScene();
+
+		/**
+		*  @brief
+		*    Sets the scene container (the 'concrete scene')
+		*
+		*  @param[in] pContainer
+		*    New scene container, can be a null pointer
+		*/
+		PL_API void SetScene(PLScene::SceneContainer *pContainer);
 
 
 	//[-------------------------------------------------------]
@@ -98,24 +123,6 @@ class BasicSceneApplication : public SceneApplication {
 		*    Destructor
 		*/
 		PL_API virtual ~BasicSceneApplication();
-
-		/**
-		*  @brief
-		*    Returns the scene container (the 'concrete scene')
-		*
-		*  @return
-		*    Scene container, can be a null pointer
-		*/
-		PL_API PLScene::SceneContainer *GetScene() const;
-
-		/**
-		*  @brief
-		*    Sets the scene container (the 'concrete scene')
-		*
-		*  @param[in] pContainer
-		*    New scene container, can be a null pointer
-		*/
-		PL_API void SetScene(PLScene::SceneContainer *pContainer);
 
 		/**
 		*  @brief

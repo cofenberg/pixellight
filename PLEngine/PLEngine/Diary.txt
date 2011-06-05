@@ -1,6 +1,7 @@
 >> 05.06.2011
 [CO]
 - "SceneApplication": Exposed "GetRootScene()"-method to the RTTI
+- "BasicSceneApplication": Exposed "GetScene()"-method and "SetScene()"-method to the RTTI
 
 
 
