@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSystemConsole.h                   *
+ *  File: ScriptBinding_PL_System_Console.cpp            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,76 +20,57 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
-#define __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
+#include "PLScriptBindings/ScriptBinding_PL_System_Console.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLGeneral;
 namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(ScriptBinding_PL_System_Console)
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+void ScriptBinding_PL_System_Console::Print(String sText)
+{
+	System::GetInstance()->GetConsole().Print(sText);
+}
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    System console script binding class
+*    Constructor
 */
-class ScriptBindingSystemConsole : public PLScript::ScriptBinding {
+ScriptBinding_PL_System_Console::ScriptBinding_PL_System_Console()
+{
+}
 
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBindingSystemConsole, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
-		pl_properties
-			pl_property("Namespace", "PL.System.Console")
-		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Print, void, PLGeneral::String, "Prints the given string into the system console",   "")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		void Print(PLGeneral::String sText);
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		ScriptBindingSystemConsole();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~ScriptBindingSystemConsole();
-
-
-};
+/**
+*  @brief
+*    Destructor
+*/
+ScriptBinding_PL_System_Console::~ScriptBinding_PL_System_Console()
+{
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScriptBindings
-
-
-#endif // __PLSCRIPTBINDINGS_SYSTEMCONSOLE_H__

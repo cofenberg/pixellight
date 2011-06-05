@@ -10,19 +10,19 @@
     <ClCompile Include="src\PLScriptBindings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScriptBindingLog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ScriptBindingSystemConsole.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ScriptBindingTiming.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\SNMScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ScriptBinding_PL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScriptBinding_PL_Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScriptBinding_PL_System_Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScriptBinding_PL_Timing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -31,19 +31,19 @@
     <None Include="..\..\PLBase\PLScript\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingSystemConsole.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingTiming.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingLog.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScriptBindings\SNMScript.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_System_Console.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_Timing.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_Log.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
