@@ -56,7 +56,7 @@ Object *ScriptBindingScene::Get(String sName)
 		// Get the root scene container
 		SceneContainer *pSceneContainer = pSceneApplication->GetRootScene();
 		if (pSceneContainer)
-			return pSceneContainer->Get(sName);
+			return pSceneContainer->GetByName(sName);
 	}
 
 	// Error!

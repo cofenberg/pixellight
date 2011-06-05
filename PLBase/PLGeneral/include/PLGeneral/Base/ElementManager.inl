@@ -74,7 +74,7 @@ template <class AType>
 AType *ElementManager<AType>::Create(const String &sName)
 {
 	// Check whether this element is already within the manager
-	AType *pElement = Get(sName);
+	AType *pElement = GetByName(sName);
 	if (pElement)
 		return pElement;
 
@@ -82,7 +82,7 @@ AType *ElementManager<AType>::Create(const String &sName)
 	if (!sName.GetLength()) {
 		// Find an unused element name
 		String sNewName = "0";
-		for (int i=1; Get(sNewName); i++)
+		for (int i=1; GetByName(sNewName); i++)
 			sNewName = i;
 
 		// Create and return the new element
@@ -114,7 +114,7 @@ bool ElementManager<AType>::Add(AType &cElement)
 		} else {
 			// Find an unused element name
 			String sNewName = "0";
-			for (int i=1; Get(sNewName); i++)
+			for (int i=1; GetByName(sNewName); i++)
 				sNewName = i;
 
 			// Set this name
@@ -364,7 +364,7 @@ ElementManager<AType> &ElementManager<AType>::operator =(const ElementManager<AT
 
 	// Copy elements
 	for (uint32 i=0; i<cSource.GetNumOfElements(); i++) {
-		const AType *pSourceElement = cSource.Get(i);
+		const AType *pSourceElement = cSource.GetByIndex(i);
 		AType *pElement = Create(static_cast<const Element<AType>*>(pSourceElement)->GetName());
 		*pElement = *pSourceElement;
 	}
@@ -378,7 +378,7 @@ ElementManager<AType> &ElementManager<AType>::operator =(const ElementManager<AT
 *    Returns the element at the given index
 */
 template <class AType>
-AType *ElementManager<AType>::Get(uint32 nIndex) const
+AType *ElementManager<AType>::GetByIndex(uint32 nIndex) const
 {
 	return m_lstElements[nIndex];
 }
@@ -388,7 +388,7 @@ AType *ElementManager<AType>::Get(uint32 nIndex) const
 *    Returns the element with the given name
 */
 template <class AType>
-AType *ElementManager<AType>::Get(const String &sName) const
+AType *ElementManager<AType>::GetByName(const String &sName) const
 {
 	// Search for an object with that name
 	return m_mapElements.Get(sName);
@@ -430,7 +430,7 @@ bool ElementManager<AType>::SetElementName(AType &cElement, const String &sName)
 	// Set new name?
 	if (cElement.m_sName != sName) {
 		// Check if the name is already used
-		if (Get(sName))
+		if (GetByName(sName))
 			return false; // Error!
 
 		// Remove the element from the name hash list
@@ -444,7 +444,7 @@ bool ElementManager<AType>::SetElementName(AType &cElement, const String &sName)
 		} else {
 			// Find an unused element name
 			String sNewName = "0";
-			for (int i=1; Get(sNewName); i++)
+			for (int i=1; GetByName(sNewName); i++)
 				sNewName = i;
 
 			// Set this name

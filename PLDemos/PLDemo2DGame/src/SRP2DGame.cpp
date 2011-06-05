@@ -126,7 +126,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 		// Draw solid
 		for (uint32 i=0; i<cSceneContainer.GetNumOfElements(); i++) {
-			SceneNode *pSceneNode = cSceneContainer.Get(i);
+			SceneNode *pSceneNode = cSceneContainer.GetByIndex(i);
 			if (pSceneNode->IsVisible()) {
 				// SNProjectile
 				if (pSceneNode->IsInstanceOf("SNProjectile")) {
@@ -157,7 +157,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 		// Draw debug - if we want to visualize some debug information :)
 		for (uint32 i=0; i<cSceneContainer.GetNumOfElements(); i++) {
-			SceneNode *pSceneNode = cSceneContainer.Get(i);
+			SceneNode *pSceneNode = cSceneContainer.GetByIndex(i);
 			if (pSceneNode->IsVisible() && (pSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) && (pSceneNode->GetDrawFunctionFlags() & SceneNode::UseDrawDebug))
 				pSceneNode->DrawDebug(cRenderer);
 		}

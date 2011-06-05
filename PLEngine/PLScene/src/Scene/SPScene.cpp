@@ -243,7 +243,7 @@ void SPScene::DrawPre(Renderer &cRenderer, SceneContainer &cContainer)
 
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
-		SceneNode *pNode = cContainer.Get(i);
+		SceneNode *pNode = cContainer.GetByIndex(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawPre)) {
 			if (pNode->IsContainer())
 				DrawPre(cRenderer, static_cast<SceneContainer&>(*pNode));
@@ -268,7 +268,7 @@ void SPScene::DrawSolid(Renderer &cRenderer, SceneContainer &cContainer)
 
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
-		SceneNode *pNode = cContainer.Get(i);
+		SceneNode *pNode = cContainer.GetByIndex(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawSolid)) {
 			if (pNode->IsContainer())
 				DrawSolid(cRenderer, static_cast<SceneContainer&>(*pNode));
@@ -293,7 +293,7 @@ void SPScene::DrawTransparent(Renderer &cRenderer, SceneContainer &cContainer)
 
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
-		SceneNode *pNode = cContainer.Get(i);
+		SceneNode *pNode = cContainer.GetByIndex(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawTransparent)) {
 			if (pNode->IsContainer())
 				DrawTransparent(cRenderer, static_cast<SceneContainer&>(*pNode));
@@ -318,7 +318,7 @@ void SPScene::DrawDebug(Renderer &cRenderer, SceneContainer &cContainer)
 
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
-		SceneNode *pNode = cContainer.Get(i);
+		SceneNode *pNode = cContainer.GetByIndex(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawDebug)) {
 			if (pNode->IsContainer()) {
 				DrawDebug(cRenderer, static_cast<SceneContainer&>(*pNode));
@@ -345,7 +345,7 @@ void SPScene::DrawPost(Renderer &cRenderer, SceneContainer &cContainer)
 
 	// Loop through all nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
-		SceneNode *pNode = cContainer.Get(i);
+		SceneNode *pNode = cContainer.GetByIndex(i);
 		if (pNode != pContainer && pNode->IsVisible() && (pNode->GetDrawFunctionFlags() & SceneNode::UseDrawPost)) {
 			if (pNode->IsContainer())
 				DrawPost(cRenderer, static_cast<SceneContainer&>(*pNode));

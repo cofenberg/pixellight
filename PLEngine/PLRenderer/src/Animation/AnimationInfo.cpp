@@ -211,7 +211,7 @@ AnimationInfo &AnimationInfo::operator =(const AnimationInfo &cSource)
 	// Copy events
 	m_cEventManager.Clear();
 	for (uint32 i=0; i<m_cEventManager.GetNumOfElements(); i++) {
-		const AnimationEvent *pAnimationEvent = m_cEventManager.Get(i);
+		const AnimationEvent *pAnimationEvent = m_cEventManager.GetByIndex(i);
 
 		// Added into a manager automatically
 		new AnimationEvent(pAnimationEvent->GetID(), pAnimationEvent->GetFrame(),

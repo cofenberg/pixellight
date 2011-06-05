@@ -91,7 +91,7 @@ PostProcessManager &SNMPostProcess::GetPostProcessManager()
 Parameter *SNMPostProcess::GetParameter(const String &sName, uint32 nIndex, bool bActiveOnly)
 {
 	// Get post process
-	const PostProcess *pPostProcess = GetPostProcessManager().Get(nIndex);
+	const PostProcess *pPostProcess = GetPostProcessManager().GetByIndex(nIndex);
 	if (pPostProcess && (!bActiveOnly || pPostProcess->IsActive())) {
 		// Get material
 		const Material *pMaterial = pPostProcess->GetMaterial();
@@ -112,7 +112,7 @@ bool SNMPostProcess::GetParameters(const String &sName, Array<Parameter*> &lstPa
 	// Loop through all post processes
 	PostProcessManager &cPostProcessManager = GetPostProcessManager();
 	for (uint32 nPostProcess=0; nPostProcess<cPostProcessManager.GetNumOfElements(); nPostProcess++) {
-		const PostProcess *pPostProcess = cPostProcessManager.Get(nPostProcess);
+		const PostProcess *pPostProcess = cPostProcessManager.GetByIndex(nPostProcess);
 		if (!bActiveOnly || pPostProcess->IsActive()) {
 			// Get material
 			const Material *pMaterial = pPostProcess->GetMaterial();
@@ -143,7 +143,7 @@ void SNMPostProcess::SetParameters()
 	PostProcessManager &cPostProcessManager = GetPostProcessManager();
 	const uint32 nNumOfPostProcesses = cPostProcessManager.GetNumOfElements();
 	for (uint32 nPostProcess=0; nPostProcess<nNumOfPostProcesses; nPostProcess++) {
-		const PostProcess *pPostProcess = cPostProcessManager.Get(nPostProcess);
+		const PostProcess *pPostProcess = cPostProcessManager.GetByIndex(nPostProcess);
 
 		// Get material
 		const Material *pMaterial = pPostProcess->GetMaterial();

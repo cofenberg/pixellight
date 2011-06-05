@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Application.h                                  *
+ *  File: ScriptBinding_PL.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,29 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_42_SCRIPTFUNCTORS_H__
-#define __PLSAMPLE_42_SCRIPTFUNCTORS_H__
+#ifndef __PLSCRIPTBINDINGS_PL_H__
+#define __PLSCRIPTBINDINGS_PL_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLScript/ScriptBinding.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class ConsoleApplication;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
@@ -36,17 +50,35 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Application class
+*    PixelLight script binding class
 */
-class Application : public PLCore::ConsoleApplication {
+class ScriptBinding_PL : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
+	pl_class(pl_rtti_export, ScriptBinding_PL, "PLScriptBindings", PLScript::ScriptBinding, "PixelLight script binding class")
+		pl_properties
+			pl_property("Namespace", "PL")
+		pl_properties_end
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_method_0(GetApplication, PLCore::ConsoleApplication*, "Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)", "")
 	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public RTTI methods                                   ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the application instance
+		*
+		*  @return
+		*    The application instance, can be a null pointer (but "usually" it's no null pointer)
+		*/
+		PLCore::ConsoleApplication *GetApplication();
 
 
 	//[-------------------------------------------------------]
@@ -57,85 +89,22 @@ class Application : public PLCore::ConsoleApplication {
 		*  @brief
 		*    Constructor
 		*/
-		Application();
+		ScriptBinding_PL();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~Application();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Performs a calculation by using a script
-		*
-		*  @param[in] sScriptFilename
-		*    Filename of the script to use
-		*  @param[in] fFirst
-		*    First number
-		*  @param[in] fSecond
-		*    Second number
-		*
-		*  @return
-		*    The result
-		*/
-		float DoCalculation(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
-
-		/**
-		*  @brief
-		*    A method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		int Method(int nFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private static functions                              ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    A static method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		static int StaticMethod(int nFirst);
-
-		/**
-		*  @brief
-		*    A static string method
-		*
-		*  @param[in] sFirst
-		*    First string
-		*
-		*  @return
-		*    The result
-		*/
-		static PLGeneral::String StaticStringMethod(PLGeneral::String sFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::ConsoleApplication functions  ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void Main();
+		virtual ~ScriptBinding_PL();
 
 
 };
 
 
-#endif // __PLSAMPLE_42_SCRIPTFUNCTORS_H__
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLScriptBindings
+
+
+#endif // __PLSCRIPTBINDINGS_PL_H__

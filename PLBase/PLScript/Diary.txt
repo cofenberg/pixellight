@@ -1,4 +1,18 @@
-﻿>> 03.06.2011
+﻿>> 05.06.2011
+[CO]
+- PLScriptBindings: Added "ScriptBinding_PL"
+
+
+
+>> 04.06.2011
+[CO]
+- PLScriptLua is now able to deal with RTTI class instances derived from "PLCore::Object" instead of just direct pointers
+  to "PLCore::Object". The current solution is not really a good one, but for now it works. I hope I'am able to figure out
+  a more waterproof solution.
+
+
+
+>> 03.06.2011
 [CO]
 - PLScriptBindings: Added "ScriptBindingSceneRendererTool"... The "making of" of the dungeon demo is now done via a
   Lua script. Still experimental, but the wires begin to tie up.

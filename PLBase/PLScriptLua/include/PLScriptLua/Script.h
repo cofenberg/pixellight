@@ -144,19 +144,19 @@ class Script : public PLScript::Script {
 		PLSCRIPTLUA_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTLUA_API virtual bool EndCall();
-		PLSCRIPTLUA_API virtual void GetReturn(bool *pbValue);
-		PLSCRIPTLUA_API virtual void GetReturn(float *pfValue);
-		PLSCRIPTLUA_API virtual void GetReturn(double *pfValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int8 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int16 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int32 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::int64 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint8 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint16 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint32 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::uint64 *pnValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLGeneral::String *psValue);
-		PLSCRIPTLUA_API virtual void GetReturn(PLCore::Object **ppObject);
+		PLSCRIPTLUA_API virtual bool GetReturn(bool nValue);
+		PLSCRIPTLUA_API virtual float GetReturn(float nValue);
+		PLSCRIPTLUA_API virtual double GetReturn(double nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
+		PLSCRIPTLUA_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTLUA_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 
 
 	//[-------------------------------------------------------]

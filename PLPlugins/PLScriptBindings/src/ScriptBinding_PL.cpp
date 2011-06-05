@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Application.cpp                                *
+ *  File: ScriptBinding_PL.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,21 +23,34 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLCore/Tools/Localization.h>
-#include "Application.h"
+#include <PLCore/Application/ConsoleApplication.h>
+#include "PLScriptBindings/ScriptBinding_PL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
+namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(Application)
+pl_implement_class(ScriptBinding_PL)
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the application instance
+*/
+ConsoleApplication *ScriptBinding_PL::GetApplication()
+{
+	return ConsoleApplication::GetApplication();
+}
 
 
 //[-------------------------------------------------------]
@@ -47,18 +60,20 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application()
+ScriptBinding_PL::ScriptBinding_PL()
 {
-	// Set application name and title
-	SetName("20Gui");
-	SetTitle(PLT("PLSample 20 - Gui"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
 *  @brief
 *    Destructor
 */
-Application::~Application()
+ScriptBinding_PL::~ScriptBinding_PL()
 {
 }
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLScriptBindings

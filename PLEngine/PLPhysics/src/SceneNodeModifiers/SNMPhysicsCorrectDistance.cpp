@@ -104,16 +104,16 @@ void SNMPhysicsCorrectDistance::NotifyUpdate()
 	// Get the target scene node
 	SceneNode *pTarget, *pBlendOutTarget;
 	if (cSceneNode.GetContainer()) {
-		pTarget = cSceneNode.GetContainer()->Get(Target.Get());
+		pTarget = cSceneNode.GetContainer()->GetByName(Target.Get());
 		if (BlendOutTarget.Get().GetLength())
-			pBlendOutTarget = cSceneNode.GetContainer()->Get(BlendOutTarget.Get());
+			pBlendOutTarget = cSceneNode.GetContainer()->GetByName(BlendOutTarget.Get());
 		else
 			pBlendOutTarget = pTarget;
 	} else {
 		// This must be the root :()
-		pTarget = static_cast<SceneContainer&>(GetSceneNode()).Get(Target.Get());
+		pTarget = static_cast<SceneContainer&>(GetSceneNode()).GetByName(Target.Get());
 		if (BlendOutTarget.Get().GetLength())
-			pBlendOutTarget = static_cast<SceneContainer&>(GetSceneNode()).Get(BlendOutTarget.Get());
+			pBlendOutTarget = static_cast<SceneContainer&>(GetSceneNode()).GetByName(BlendOutTarget.Get());
 		else
 			pBlendOutTarget = pTarget;
 	}

@@ -62,10 +62,10 @@ Graph::~Graph()
 GraphPath *Graph::FindShortestPath(uint32 nStartNode, uint32 nEndNode)
 {
 	// Get the start node
-	GraphNode *pStartNode = Get(nStartNode);
+	GraphNode *pStartNode = GetByIndex(nStartNode);
 	if (pStartNode) {
 		// Get the end node
-		GraphNode *pEndNode = Get(nEndNode);
+		GraphNode *pEndNode = GetByIndex(nEndNode);
 		if (pEndNode) {
 			// Total number of graph nodes and the priority queue
 			uint32 nNumOfNodes = m_lstElements.GetNumOfElements();

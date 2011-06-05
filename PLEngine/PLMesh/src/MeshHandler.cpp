@@ -463,7 +463,7 @@ void MeshHandler::DrawAnchorPoints(Font &cFont, const Color4 &cColor, const Matr
 		Vector3 vPos;
 		DrawHelpers &cDrawHelpers = m_pRenderer->GetDrawHelpers();
 		for (uint32 i=0; i<m_pMesh->GetAnchorPointManager().GetNumOfElements(); i++) {
-			const AnchorPoint *pAnchorPoint = m_pMesh->GetAnchorPointManager().Get(i);
+			const AnchorPoint *pAnchorPoint = m_pMesh->GetAnchorPointManager().GetByIndex(i);
 			if (pAnchorPoint) {
 				if (!pAnchorPoint->GetType()) { // Vertex
 					const float *pfVertex = static_cast<const float*>(m_pCurrentVertexBuffer->GetData(pAnchorPoint->GetID(), VertexBuffer::Position));
@@ -642,13 +642,13 @@ void MeshHandler::GetAnimationsList(Array<String> &lstAnimations) const
 		// Add all skeleton animations
 		const SkeletonManager &cSkeletonManager = pMesh->GetMeshManager()->GetSkeletonManager();
 		for (uint32 i=0; i<cSkeletonManager.GetNumOfElements(); i++)
-			lstAnimations.Add(cSkeletonManager.Get(i)->GetName());
+			lstAnimations.Add(cSkeletonManager.GetByIndex(i)->GetName());
 
 		// Add all morph target animations
 		if (m_pMesh) {
 			MorphTargetAniManager &cMTManager = m_pMesh->GetMorphTargetAnimationManager();
 			for (uint32 i=0; i<cMTManager.GetNumOfElements(); i++)
-				lstAnimations.Add(cMTManager.Get(i)->GetName());
+				lstAnimations.Add(cMTManager.GetByIndex(i)->GetName());
 		}
 	}
 }
@@ -665,13 +665,13 @@ AnimationInfo *MeshHandler::GetAnimationInfo(const String &sName, int nLogMessag
 		// Check parameter
 		if (sName.GetLength()) {
 			// First, check the skeleton manager
-			AnimationInfo *pInfo = pMesh->GetMeshManager()->GetSkeletonManager().Get(sName);
+			AnimationInfo *pInfo = pMesh->GetMeshManager()->GetSkeletonManager().GetByName(sName);
 			if (pInfo)
 				return pInfo;
 
 			// Check the morph target animations from the mesh
 			if (m_pMesh) {
-				pInfo = static_cast<MorphTargetAni*>(m_pMesh->GetMorphTargetAnimationManager().Get(sName));
+				pInfo = static_cast<MorphTargetAni*>(m_pMesh->GetMorphTargetAnimationManager().GetByName(sName));
 				if (pInfo)
 					return pInfo;
 			}
@@ -698,7 +698,7 @@ JointHandler *MeshHandler::GetJointHandler(const String &sJointName) const
 		const Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 		if (pSkeleton) {
 			// Get the requested joint of the skeleton
-			const Joint *pJoint = pSkeleton->Get(sJointName);
+			const Joint *pJoint = pSkeleton->GetByName(sJointName);
 			if (pJoint) {
 				// Get the base joint handler and return it
 				JointHandler &cJointHandler = pSkeletonHandler->GetJointHandlers()[pJoint->GetID()];
@@ -723,7 +723,7 @@ JointHandler *MeshHandler::GetBaseJointHandler(const String &sJointName) const
 		const Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 		if (pSkeleton) {
 			// Get the requested joint of the skeleton
-			const Joint *pJoint = pSkeleton->Get(sJointName);
+			const Joint *pJoint = pSkeleton->GetByName(sJointName);
 			if (pJoint) {
 				// Get the base joint handler and return it
 				JointHandler &cJointHandler = pSkeletonHandler->GetBaseJointHandlers()[pJoint->GetID()];

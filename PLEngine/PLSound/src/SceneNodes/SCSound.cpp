@@ -90,7 +90,7 @@ void SCSound::SetListener(const String &sValue)
 {
 	if (m_sListener != sValue) {
 		m_sListener = sValue;
-		m_cListenerNodeHandler.SetElement(Get(m_sListener));
+		m_cListenerNodeHandler.SetElement(GetByName(m_sListener));
 		NotifyUpdate();
 	}
 }
@@ -153,7 +153,7 @@ void SCSound::NotifyUpdate()
 		// Get the scene node used as listener
 		SceneNode *pListener = m_cListenerNodeHandler.GetElement();
 		if (!pListener) {
-			pListener = Get(m_sListener);
+			pListener = GetByName(m_sListener);
 			m_cListenerNodeHandler.SetElement(pListener);
 		}
 		if (pListener && pListener->GetContainer()) {

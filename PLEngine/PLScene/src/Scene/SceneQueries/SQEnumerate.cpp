@@ -72,7 +72,7 @@ bool SQEnumerate::PerformQueryRec(const SceneContainer &cContainer)
 	// Loop through all scene nodes
 	for (uint32 i=0; i<cContainer.GetNumOfElements(); i++) {
 		// Get the scene node
-		SceneNode *pSceneNode = cContainer.Get(i);
+		SceneNode *pSceneNode = cContainer.GetByIndex(i);
 
 		// Emit event
 		EventSceneNode(*this, *pSceneNode);

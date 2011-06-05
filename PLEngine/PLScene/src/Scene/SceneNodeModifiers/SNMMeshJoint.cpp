@@ -240,10 +240,10 @@ bool SNMMeshJoint::GetTargetRotation(Quaternion &qRot) const
 	// Get the target scene node
 	const SceneNode *pTarget;
 	if (GetSceneNode().GetContainer())
-		pTarget = GetSceneNode().GetContainer()->Get(RotationFrom.Get());
+		pTarget = GetSceneNode().GetContainer()->GetByName(RotationFrom.Get());
 	else {
 		// This must be the root :()
-		pTarget = static_cast<const SceneContainer&>(GetSceneNode()).Get(RotationFrom.Get());
+		pTarget = static_cast<const SceneContainer&>(GetSceneNode()).GetByName(RotationFrom.Get());
 	}
 	if (!pTarget)
 		return false; // Error - no valid target scene node, no target rotation :(
@@ -339,7 +339,7 @@ void SNMMeshJoint::NotifyUpdate()
 								if (pSkeletonHandler) {
 									const Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 									if (pSkeleton) {
-										const Joint *pParentJoint = pSkeleton->Get(nParent);
+										const Joint *pParentJoint = pSkeleton->GetByIndex(nParent);
 										if (pParentJoint)
 											pParentJointHandler = pMeshHandler->GetJointHandler(pParentJoint->GetName());
 									}

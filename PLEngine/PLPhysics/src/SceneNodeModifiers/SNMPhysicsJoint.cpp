@@ -113,7 +113,7 @@ SNMPhysicsBody *SNMPhysicsJoint::GetOwnerBodyModifier() const
 */
 SNMPhysicsBody *SNMPhysicsJoint::GetTargetBodyModifier() const
 {
-	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->Get(m_sTarget);
+	const SceneNode *pSceneNode = GetSceneNode().GetContainer()->GetByName(m_sTarget);
 	return pSceneNode ? reinterpret_cast<SNMPhysicsBody*>(pSceneNode->GetModifier("PLPhysics::SNMPhysicsBody")) : nullptr;
 }
 

@@ -106,7 +106,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 				float pitch = cTokenizer.GetNextToken().GetFloat();
 				float yaw   = cTokenizer.GetNextToken().GetFloat();
 
-				Joint *pJoint = cSkeleton.Get(nNode);
+				Joint *pJoint = cSkeleton.GetByIndex(nNode);
 				if (pJoint) {
 					pJoint->SetTranslation(vTranslation);
 					// [TODO] The result is wrong...
@@ -122,7 +122,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 
 			// Loop through all root joints
 			for (uint32 i=0; i<cSkeleton.GetRootJoints().GetNumOfElements(); i++) {
-				Joint *pJoint = cSkeleton.Get(cSkeleton.GetRootJoints()[i]);
+				Joint *pJoint = cSkeleton.GetByIndex(cSkeleton.GetRootJoints()[i]);
 				RecCalculateStates(cSkeleton, *pJoint, nullptr);
 			}
 			if (!cTokenizer.CompareToken("end")) {
@@ -150,7 +150,7 @@ bool SkeletonAniLoaderSmd::Load(Skeleton &cSkeleton, File &cFile)
 						float pitch = cTokenizer.GetNextToken().GetFloat();
 						float yaw   = cTokenizer.GetNextToken().GetFloat();
 
-						Joint *pJoint = cSkeleton.Get(nNode);
+						Joint *pJoint = cSkeleton.GetByIndex(nNode);
 						if (pJoint) {
 							// Make the animation frame relative to the base frame
 							Quaternion qQP = pJoint->GetRotation();
@@ -256,7 +256,7 @@ void SkeletonAniLoaderSmd::RecCalculateStates(const Skeleton &cSkeleton, Joint &
 
 	// Transform children
 	for (uint32 i=0; i<cJoint.GetChildren().GetNumOfElements(); i++)
-		RecCalculateStates(cSkeleton, *cSkeleton.Get(cJoint.GetChildren()[i]), &cJoint);
+		RecCalculateStates(cSkeleton, *cSkeleton.GetByIndex(cJoint.GetChildren()[i]), &cJoint);
 }
 
 

@@ -103,7 +103,7 @@ bool GraphLoaderPL::Save(const Graph &cGraph, File &cFile)
 	// Loop through all nodes
 	for (uint32 nNode=0; nNode<cGraph.GetNumOfElements(); nNode++) {
 		// Get the node
-		const GraphNode *pNode = cGraph.Get(nNode);
+		const GraphNode *pNode = cGraph.GetByIndex(nNode);
 		if (pNode) {
 			// Add node
 			XmlElement *pNodeElement = new XmlElement("Node");
@@ -183,7 +183,7 @@ bool GraphLoaderPL::LoadV1(Graph &cGraph, const XmlElement &cGraphElement) const
 		String sName = pXmlElement->GetAttribute("Name");
 
 		// Is there already a node with this name?
-		if (cGraph.Get(sName)) {
+		if (cGraph.GetByName(sName)) {
 			// Write a warning into the log
 			PL_LOG(Warning, "Name '" + sName + "' of graph node at row " + pXmlElement->GetRow() + ", column " + pXmlElement->GetColumn() + " is already used! (this node is ignored)")
 
@@ -223,7 +223,7 @@ bool GraphLoaderPL::LoadV1(Graph &cGraph, const XmlElement &cGraphElement) const
 			String sNeighbourName = pNeighbourElement->GetAttribute("Name");
 			if (sNeighbourName.GetLength()) {
 				// Get the neighbour node
-				GraphNode *pNeighbour = cGraph.Get(sNeighbourName);
+				GraphNode *pNeighbour = cGraph.GetByName(sNeighbourName);
 				if (pNeighbour && pNeighbour != pNode) {
 					// Try to get neighbour distance
 					float fDistance = -1.0f; // By default, calculate the distance automatically

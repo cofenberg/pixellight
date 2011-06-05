@@ -107,7 +107,7 @@ bool SkyLoaderPL::Save(SNSky &cSky, File &cFile)
 	// Loop through all layers
 	for (uint32 nLayer=0; nLayer<cSky.GetNumOfElements(); nLayer++) {
 		// Get the layer
-		const SkyLayer *pSkyLayer = cSky.Get(nLayer);
+		const SkyLayer *pSkyLayer = cSky.GetByIndex(nLayer);
 		if (pSkyLayer) {
 			// Create the layer element
 			XmlElement *pLayerElement = new XmlElement("Layer");

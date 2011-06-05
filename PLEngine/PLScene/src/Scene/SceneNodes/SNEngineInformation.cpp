@@ -147,7 +147,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 		cDrawHelpers.Begin2DMode(0.0f, 0.0f, 800.0f, 600.0f);
 
 			// Get group
-			ProfileGroup *pGroup = pProfiling->Get(pProfiling->GetSelectedGroup());
+			ProfileGroup *pGroup = pProfiling->GetByName(pProfiling->GetSelectedGroup());
 			if (pGroup) { // Draw selected group
 				// Draw the background material
 				PLRenderer::Material *pMaterial = GetProfilingMaterialHandler().GetResource();
@@ -176,7 +176,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 
 					// Draw all elements
 					for (uint32 i=0, nY=15; i<pGroup->GetNumOfElements(); i++, nY+=10)
-						cDrawHelpers.DrawText(*pFont, pGroup->Get(i)->GetName() + ": " + pGroup->Get(i)->GetText(), Color4::White, Vector2(10.0f, static_cast<float>(nY)));
+						cDrawHelpers.DrawText(*pFont, pGroup->GetByIndex(i)->GetName() + ": " + pGroup->GetByIndex(i)->GetText(), Color4::White, Vector2(10.0f, static_cast<float>(nY)));
 				}
 			} else { // Draw general information
 				// Draw the background material

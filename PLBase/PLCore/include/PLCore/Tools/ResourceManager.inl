@@ -74,7 +74,7 @@ template <class AType>
 AType *ResourceManager<AType>::Create(const PLGeneral::String &sName)
 {
 	// Check whether this resource is already within the manager
-	AType *pResource = Get(sName);
+	AType *pResource = GetByName(sName);
 	if (pResource)
 		return pResource;
 
@@ -82,7 +82,7 @@ AType *ResourceManager<AType>::Create(const PLGeneral::String &sName)
 	if (!sName.GetLength()) {
 		// Find an unused resource name
 		PLGeneral::String sNewName = '0';
-		for (int i=1; Get(sNewName); i++)
+		for (int i=1; GetByName(sNewName); i++)
 			sNewName = i;
 
 		// Create and return the new resource
@@ -262,7 +262,7 @@ template <class AType>
 AType *ResourceManager<AType>::LoadResource(const PLGeneral::String &sFilename)
 {
 	// IS there already a resource with this name?
-	AType *pResource = Get(sFilename);
+	AType *pResource = GetByName(sFilename);
 	if (pResource)
 		return pResource;
 
@@ -327,7 +327,7 @@ ResourceManager<AType> &ResourceManager<AType>::operator =(const ResourceManager
 
 	// Copy resources
 	for (PLGeneral::uint32 i=0; i<cSource.GetNumOfElements(); i++) {
-		const AType *pSourceResource = cSource.Get(i);
+		const AType *pSourceResource = cSource.GetByIndex(i);
 		AType *pResource = Create(static_cast<const Resource<AType>*>(pSourceResource)->GetName());
 		*pResource = *pSourceResource;
 	}
@@ -341,7 +341,7 @@ ResourceManager<AType> &ResourceManager<AType>::operator =(const ResourceManager
 *    Returns the resource at the given index
 */
 template <class AType>
-AType *ResourceManager<AType>::Get(PLGeneral::uint32 nIndex) const
+AType *ResourceManager<AType>::GetByIndex(PLGeneral::uint32 nIndex) const
 {
 	return m_lstResources[nIndex];
 }
@@ -351,7 +351,7 @@ AType *ResourceManager<AType>::Get(PLGeneral::uint32 nIndex) const
 *    Returns the resource with the given name
 */
 template <class AType>
-AType *ResourceManager<AType>::Get(const PLGeneral::String &sName) const
+AType *ResourceManager<AType>::GetByName(const PLGeneral::String &sName) const
 {
 	// Search for an object with that name
 	return m_mapResources.Get(sName);
@@ -393,7 +393,7 @@ bool ResourceManager<AType>::SetResourceName(AType &cResource, const PLGeneral::
 	// Set new name?
 	if (cResource.m_sName != sName) {
 		// Check if the name is already used
-		if (Get(sName))
+		if (GetByName(sName))
 			return false; // Error!
 
 		// Remove the resource from the name hash list
@@ -407,7 +407,7 @@ bool ResourceManager<AType>::SetResourceName(AType &cResource, const PLGeneral::
 		else {
 			// Find an unused resource name
 			PLGeneral::String sNewName = '0';
-			for (int i=1; Get(sNewName); i++)
+			for (int i=1; GetByName(sNewName); i++)
 				sNewName = i;
 
 			// Set this name
@@ -448,7 +448,7 @@ bool ResourceManager<AType>::Add(AType &cResource)
 		} else {
 			// Find an unused resource name
 			PLGeneral::String sNewName = '0';
-			for (int i=1; Get(sNewName); i++)
+			for (int i=1; GetByName(sNewName); i++)
 				sNewName = i;
 
 			// Set this name

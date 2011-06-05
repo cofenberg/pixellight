@@ -181,7 +181,7 @@ void SNPhysicsMouseInteraction::NotifyUpdate()
 				if (!pPhysicsForceLine) {
 					// Get the physics force line once by name and store it within a scene node handler
 					// (the scene node name changes, but we don't need to care about this when using handlers :)
-					pPhysicsForceLine = GetContainer()->Get(m_sForceLineName);
+					pPhysicsForceLine = GetContainer()->GetByName(m_sForceLineName);
 					m_cForceLineHandler.SetElement(pPhysicsForceLine);
 				}
 

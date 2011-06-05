@@ -83,7 +83,7 @@ void SkeletonHandler::DrawJointNames(Font &cFont, const Color4 &cColor, const Ma
 		// Draw joint names
 		DrawHelpers &cDrawHelpers = cFont.GetRenderer().GetDrawHelpers();
 		for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
-			const Joint        *pJoint        = pSkeleton->Get(i);
+			const Joint        *pJoint        = pSkeleton->GetByIndex(i);
 			const JointHandler &cJointHandler = m_lstJointHandlers[i];
 			if (&cJointHandler != &Array<JointHandler>::Null)
 				cDrawHelpers.DrawText(cFont, pJoint->GetName(), cColor, cJointHandler.GetTranslationAbsolute(), mWorldViewProjection, Font::CenterText);
@@ -102,7 +102,7 @@ void SkeletonHandler::DrawSkeleton(Renderer &cRenderer, const Color4 &cColor, co
 	if (pSkeleton) {
 		// Draw skeleton
 		for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
-			const Joint        *pJoint        = pSkeleton->Get(i);
+			const Joint        *pJoint        = pSkeleton->GetByIndex(i);
 			const JointHandler &cJointHandler = m_lstJointHandlers[i];
 			if (&cJointHandler != &Array<JointHandler>::Null) {
 				const JointHandler &cParentJointState = m_lstJointHandlers[pJoint->GetParent()];
@@ -136,7 +136,7 @@ JointHandler *SkeletonHandler::GetBaseJointHandler(const String &sJointName) con
 	const Skeleton *pSkeleton = GetResource();
 	if (pSkeleton) {
 		// Get the joint
-		const Joint *pJoint = pSkeleton->Get(sJointName);
+		const Joint *pJoint = pSkeleton->GetByName(sJointName);
 		if (pJoint) {
 			// Return the base joint handler for this joint
 			JointHandler &cJointHandler = m_lstBaseJointHandlers[pJoint->GetID()];
@@ -172,7 +172,7 @@ JointHandler *SkeletonHandler::GetJointHandler(const String &sJointName) const
 	const Skeleton *pSkeleton = GetResource();
 	if (pSkeleton) {
 		// Get the joint
-		const Joint *pJoint = pSkeleton->Get(sJointName);
+		const Joint *pJoint = pSkeleton->GetByName(sJointName);
 		if (pJoint) {
 			// Return the joint handler for this joint
 			JointHandler &cJointHandler = m_lstJointHandlers[pJoint->GetID()];
@@ -201,7 +201,7 @@ bool SkeletonHandler::ResetJointStates(bool bForceAll)
 	// Set all base joint states to null
 	for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
 		JointHandler &cJH    = m_lstJointHandlers[i];
-		Joint        *pJoint = pSkeleton->Get(i);
+		Joint        *pJoint = pSkeleton->GetByIndex(i);
 		cJH.SetElement(pJoint);
 
 		// Is this joint user controlled?
@@ -237,7 +237,7 @@ bool SkeletonHandler::ResetBaseJointStates()
 	// Set all base joint states to the skeleton 'orginal' base joint states
 	for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
 		JointHandler &cJH   = m_lstBaseJointHandlers[i];
-		Joint       *pJoint = pSkeleton->Get(i);
+		Joint       *pJoint = pSkeleton->GetByIndex(i);
 		cJH.SetElement(pJoint);
 		cJH.SetTranslation(pJoint->GetTranslation());
 		cJH.SetRotation(pJoint->GetRotation());
@@ -303,7 +303,7 @@ bool SkeletonHandler::ApplyJointStates(SkeletonHandler &cSkeletonHandler, float 
 				// We have to find the joint handler of this skeleton handler which has loaded
 				// the joint from this skeleton which has the same name as the joint the given
 				// joint handler has
-				const Joint *pJoint = pSkeleton->Get(cJH.GetElement()->GetName());
+				const Joint *pJoint = pSkeleton->GetByName(cJH.GetElement()->GetName());
 				if (pJoint) {
 					JointHandler *pJHBase = nullptr;
 					for (uint32 j=0; j<m_lstJointHandlers.GetNumOfElements(); j++) {

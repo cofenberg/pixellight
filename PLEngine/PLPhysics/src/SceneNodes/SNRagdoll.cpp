@@ -207,14 +207,14 @@ bool SNRagdoll::CreateRagdoll(SkeletonHandler *pSkeletonHandler)
 			// this 'physics joint' as a 'bone'.
 			const Array<JointHandler> &lstJointHandlers = pSkeletonHandler->GetJointHandlers();
 			for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
-				const PLMesh::Joint *pJoint = pSkeleton->Get(i);
+				const PLMesh::Joint *pJoint = pSkeleton->GetByIndex(i);
 				if (pJoint) {
 					const JointHandler &cJointHandler = lstJointHandlers[i];
 					if (&cJointHandler != &Array<JointHandler>::Null) {
-						const PLMesh::Joint *pParentJoint = pSkeleton->Get(pJoint->GetParent());
+						const PLMesh::Joint *pParentJoint = pSkeleton->GetByIndex(pJoint->GetParent());
 						if (pParentJoint) {
 							const JointHandler &cParentJointHandler = lstJointHandlers[pParentJoint->GetID()];
-							const PLMesh::Joint *pParentParentJoint = pSkeleton->Get(pParentJoint->GetParent());
+							const PLMesh::Joint *pParentParentJoint = pSkeleton->GetByIndex(pParentJoint->GetParent());
 
 							// Add the joint
 							RagdollJoint *pRagdollJoint = new RagdollJoint(this);
@@ -998,7 +998,7 @@ void SNRagdoll::NotifyUpdate()
 						// Get this body
 						const RagdollBody *pBody = m_lstBodies[i];
 
-						const PLMesh::Joint *pJoint = pSkeleton->Get(pBody->sName);
+						const PLMesh::Joint *pJoint = pSkeleton->GetByName(pBody->sName);
 						if (pJoint) {
 							const RagdollJoint *pJointProperty = GetJoint(pBody->sJoint);
 							if (pJointProperty) {

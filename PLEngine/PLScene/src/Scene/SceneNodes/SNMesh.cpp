@@ -163,7 +163,7 @@ bool SNMesh::LoadMesh(const String &sFilename, const String &sParams, const Stri
 			m_pMeshHandler = new MeshHandler();
 
 		// Mesh already loaded?
-		PLMesh::Mesh *pMesh = GetSceneContext()->GetMeshManager().Get(sFilename);
+		PLMesh::Mesh *pMesh = GetSceneContext()->GetMeshManager().GetByName(sFilename);
 		if (!pMesh) {
 			// Create and load mesh
 			pMesh = GetSceneContext()->GetMeshManager().LoadMesh(sFilename, sParams, sMethod, false, !(GetFlags() & DynamicMesh));
@@ -415,7 +415,7 @@ bool SNMesh::GetSkeletonJointWorldPosition(const String &sJointName, Vector3 &vP
 			Skeleton *pSkeleton = pSkeletonHandler->GetResource();
 			if (pSkeleton) {
 				// Is there a skeleton joint with the given name?
-				Joint *pJoint = pSkeleton->Get(sJointName);
+				Joint *pJoint = pSkeleton->GetByName(sJointName);
 				if (pJoint) {
 					// Get skeleton handler
 					Array<JointHandler> &lstJointHandlers = pSkeletonHandler->GetJointHandlers();

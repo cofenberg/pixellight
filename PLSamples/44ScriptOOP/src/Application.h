@@ -48,6 +48,14 @@ class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -96,7 +104,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @return
 		*    MyRTTIClass instance, always valid!
 		*/
-		PLCore::Object *GetMyRTTIClassInstance(PLCore::Object *pObject);
+		MyRTTIClass *GetMyRTTIClassInstance(MyRTTIClass *pObject);
 
 
 	//[-------------------------------------------------------]

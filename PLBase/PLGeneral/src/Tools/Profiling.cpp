@@ -222,7 +222,7 @@ String Profiling::GetSelectedGroup() const
 bool Profiling::SelectGroup(const String &sName)
 {
 	// Check given group name and check if there's a group with this name
-	if (sName.GetLength() && Get(sName)) {
+	if (sName.GetLength() && GetByName(sName)) {
 		// Select group
 		m_sGroupName = sName;
 
@@ -241,14 +241,14 @@ bool Profiling::SelectGroup(const String &sName)
 String Profiling::SelectNextGroup()
 {
 	// Get current group
-	const ProfileGroup *pGroup = Get(m_sGroupName);
+	const ProfileGroup *pGroup = GetByName(m_sGroupName);
 	if (pGroup) {
 		// Select the next group
 		const uint32 i = pGroup->GetID()+1;
-		m_sGroupName = i < GetNumOfElements() ? Get(i)->GetName() : "";
+		m_sGroupName = i < GetNumOfElements() ? GetByIndex(i)->GetName() : "";
 	} else {
 		// Select first group
-		pGroup = Get(static_cast<uint32>(0));
+		pGroup = GetByIndex(0);
 		if (pGroup)
 			m_sGroupName = pGroup->GetName();
 	}
@@ -264,14 +264,14 @@ String Profiling::SelectNextGroup()
 String Profiling::SelectPreviousGroup()
 {
 	// Get current group
-	const ProfileGroup *pGroup = Get(m_sGroupName);
+	const ProfileGroup *pGroup = GetByName(m_sGroupName);
 	if (pGroup) {
 		// Select the previous group
 		const uint32 i = pGroup->GetID();
-		m_sGroupName = i ? Get(i-1)->GetName() : "";
+		m_sGroupName = i ? GetByIndex(i-1)->GetName() : "";
 	} else {
 		// Select first group
-		pGroup = Get(GetNumOfElements()-1);
+		pGroup = GetByIndex(GetNumOfElements()-1);
 		if (pGroup)
 			m_sGroupName = pGroup->GetName();
 	}
@@ -289,12 +289,12 @@ bool Profiling::Set(const String &sGroup, const String &sElement, const String &
 	// Is the profiling system active and are the parameters ok?
 	if (m_bActive && sGroup.GetLength() && sElement.GetLength()) {
 		// Check if there's a group with this name
-		ProfileGroup *pGroup = Get(sGroup);
+		ProfileGroup *pGroup = GetByName(sGroup);
 		if (!pGroup)
 			pGroup = Create(sGroup);
 		if (pGroup) {
 			// Check if there's an element with this name
-			ProfileGroupElement *pGroupElement = pGroup->Get(sElement);
+			ProfileGroupElement *pGroupElement = pGroup->GetByName(sElement);
 			if (!pGroupElement)
 				pGroupElement = pGroup->Create(sElement);
 			if (pGroupElement) {
@@ -318,10 +318,10 @@ bool Profiling::Set(const String &sGroup, const String &sElement, const String &
 String Profiling::GetText(const String &sGroup, const String &sElement) const
 {
 	// Get group
-	const ProfileGroup *pGroup = Get(sGroup);
+	const ProfileGroup *pGroup = GetByName(sGroup);
 	if (pGroup) {
 		// Get element
-		const ProfileGroupElement *pGroupElement = pGroup->Get(sElement);
+		const ProfileGroupElement *pGroupElement = pGroup->GetByName(sElement);
 		if (pGroupElement)
 			return pGroupElement->GetText(); // Return text
 	}

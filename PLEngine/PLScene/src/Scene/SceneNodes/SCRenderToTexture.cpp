@@ -166,7 +166,7 @@ void SCRenderToTexture::SetPainter(const String &sValue)
 				pPainter->SetRootContainer(this);
 
 				// Tell the surface scene painter about the 'conrete scene'
-				SceneNode *pSceneNode = Get(m_sSceneName);
+				SceneNode *pSceneNode = GetByName(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
 					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 				else
@@ -215,7 +215,7 @@ void SCRenderToTexture::SetSceneName(const String &sValue)
 			SurfacePainter *pSurfacePainter = m_pSurfaceTextureBuffer->GetPainter();
 			if (pSurfacePainter && pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
 				SPScene *pPainter = static_cast<SPScene*>(pSurfacePainter);
-				SceneNode *pSceneNode = Get(m_sSceneName);
+				SceneNode *pSceneNode = GetByName(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
 					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 				else
@@ -367,7 +367,7 @@ void SCRenderToTexture::CreateSurfaceTexture()
 			pPainter->SetRootContainer(this);
 
 			// Tell the surface scene painter about the 'conrete scene'
-			SceneNode *pSceneNode = Get(m_sSceneName);
+			SceneNode *pSceneNode = GetByName(m_sSceneName);
 			pPainter->SetSceneContainer((pSceneNode && pSceneNode->IsContainer()) ? static_cast<SceneContainer*>(pSceneNode) : nullptr);
 
 			// Set default scene renderer
@@ -378,10 +378,10 @@ void SCRenderToTexture::CreateSurfaceTexture()
 	// Add the texture
 	TextureManager &cTextureManager = cRenderer.GetRendererContext().GetTextureManager();
 	// If there's already a texture with this name we have to get another, still free resource name
-	if (cTextureManager.Get(m_sTextureName)) {
+	if (cTextureManager.GetByName(m_sTextureName)) {
 		// Find an unused resource name
 		String sName = m_sTextureName + "_0";
-		for (uint32 i=1; cTextureManager.Get(sName); i++)
+		for (uint32 i=1; cTextureManager.GetByName(sName); i++)
 			sName = m_sTextureName + '_' + static_cast<int>(i);
 
 		// We have found an unused name
@@ -425,7 +425,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 			SNCamera *pCameraBackup = SNCamera::GetCamera();
 
 			// Set camera
-			SceneNode *pSceneNode = Get(CameraName.Get());
+			SceneNode *pSceneNode = GetByName(CameraName.Get());
 			if (pSceneNode && pSceneNode->IsCamera()) {
 				// If the camera is not active, we do not need to do anything in here...
 				if (!pSceneNode->IsActive())
@@ -442,7 +442,7 @@ void SCRenderToTexture::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// [HACK] If the painter has no scene container, check if the scene container exists now...
 			if (!pPainter->GetSceneContainer()) {
-				pSceneNode = Get(m_sSceneName);
+				pSceneNode = GetByName(m_sSceneName);
 				if (pSceneNode && pSceneNode->IsContainer())
 					pPainter->SetSceneContainer(static_cast<SceneContainer*>(pSceneNode));
 			}

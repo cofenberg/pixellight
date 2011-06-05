@@ -45,6 +45,12 @@ using namespace PLScene;
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(Application)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -90,7 +96,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 		case PLGUIKEY_F1:
 		{
 			// Get the info text scene node
-			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->Get("InfoText") : nullptr;
+			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->GetByName("InfoText") : nullptr;
 			if (pSceneNode) {
 				// Toggle the active state of the scene node
 				pSceneNode->SetActive(!pSceneNode->IsActive());

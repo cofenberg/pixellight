@@ -65,7 +65,7 @@ SPSampleTeapot::SPSampleTeapot(Renderer &cRenderer) : SurfacePainter(cRenderer),
 	m_pMeshHandler(new MeshHandler())
 {
 	// Get/create the 'teapot' mesh
-	Mesh *pMesh = m_pMeshManager->Get("MyTeapot");
+	Mesh *pMesh = m_pMeshManager->GetByName("MyTeapot");
 	if (!pMesh) {
 		pMesh = m_pMeshManager->CreateMesh("PLMesh::MeshCreatorTeapot", true, "");
 		if (pMesh) {

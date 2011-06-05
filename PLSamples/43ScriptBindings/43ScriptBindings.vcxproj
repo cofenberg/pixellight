@@ -108,6 +108,12 @@
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.as" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.js" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.lua" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\43ScriptBindings.py" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

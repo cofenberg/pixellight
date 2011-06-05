@@ -749,7 +749,7 @@ void World::UpdateSimulation()
 
 		// Loop through all physics elements to emit the 'Transform'-event of physics bodies
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			PLPhysics::Element *pElement = Get(i);
+			PLPhysics::Element *pElement = GetByIndex(i);
 			if (pElement && pElement->IsBody()) {
 				PLPhysics::Body *pBody = static_cast<PLPhysics::Body*>(pElement);
 				if (pBody->IsActive() && !pBody->IsFrozen()) {

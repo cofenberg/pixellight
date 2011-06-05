@@ -146,7 +146,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 				do {
 					sName = sModelName + '_' + static_cast<int>(nSurface+i);
 					i++;
-				} while (cMeshManager.Get(sName));
+				} while (cMeshManager.GetByName(sName));
 
 				// Create the mesh
 				Mesh *pMesh = cMeshManager.Create(sName);
@@ -289,7 +289,7 @@ bool SceneLoaderProc::Load(SceneContainer &cContainer, File &cFile)
 
 			// Center all scene nodes
 			for (uint32 nNode=0; nNode<pCell->GetNumOfElements(); nNode++) {
-				SceneNode &cSceneNode = *pCell->Get(nNode);
+				SceneNode &cSceneNode = *pCell->GetByIndex(nNode);
 				cSceneNode.GetTransform().SetPosition(cSceneNode.GetTransform().GetPosition()-vCenter);
 			}
 

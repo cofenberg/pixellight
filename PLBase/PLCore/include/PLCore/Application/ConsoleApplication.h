@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Version.h>
 #include <PLGeneral/Tools/CommandLine.h>
+#include "PLCore/Base/Object.h"
 #include "PLCore/Application/ApplicationContext.h"
 #include "PLCore/Config/Config.h"
 
@@ -62,7 +63,15 @@ namespace PLCore {
 *  @note
 *    - Implementation of the template method design pattern (although this class is not abstract)
 */
-class ConsoleApplication {
+class ConsoleApplication : public Object {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, ConsoleApplication, "PLCore", PLCore::Object, "Application class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]

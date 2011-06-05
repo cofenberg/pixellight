@@ -94,10 +94,10 @@ bool MeshLoaderMd5::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				// Make the joints relative
 				for (uint32 i=0; i<pSkeleton->GetNumOfElements(); i++) {
 					// Get this joint
-					Joint &cJoint = *pSkeleton->Get(i);
+					Joint &cJoint = *pSkeleton->GetByIndex(i);
 
 					// Get parent of this joint
-					Joint *pParentJoint = pSkeleton->Get(cJoint.GetParent());
+					Joint *pParentJoint = pSkeleton->GetByIndex(cJoint.GetParent());
 					if (pParentJoint) {
 						// Get relative joint state
 						Quaternion q = pParentJoint->GetRotationAbsolute();
@@ -283,7 +283,7 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 						// parent
 						} else if (cTokenizer.CompareToken("parent")) {
 							// Parent joint
-							Joint *pParent = pSkeleton->Get(cTokenizer.GetNextToken());
+							Joint *pParent = pSkeleton->GetByName(cTokenizer.GetNextToken());
 							if (pParent)
 								pJoint->SetParent(pParent->GetID());
 						}
@@ -411,7 +411,7 @@ bool MeshLoaderMd5::LoadV6(Mesh &cMesh, Tokenizer &cTokenizer, bool bStatic) con
 					for (uint32 j=0; j<nWeights; j++) {
 						Weight		  &cWeight  = cMesh.GetWeights()[lstVWeights[j]];
 						Matrix3x3	  &mRot     = lstJointMatrixes[cWeight.GetJoint()];
-						const Vector3 &vBindPos = pSkeleton->Get(cWeight.GetJoint())->GetTranslationAbsolute();
+						const Vector3 &vBindPos = pSkeleton->GetByIndex(cWeight.GetJoint())->GetTranslationAbsolute();
 						const Vector3 &vV       = lstWeights[lstVWeights[j]];
 						float		  fBias     = cWeight.GetBias();
 						vPos.x += (mRot.fM[0]*vV.x + mRot.fM[3]*vV.y + mRot.fM[6]*vV.z + vBindPos.x)*fBias;

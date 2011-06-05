@@ -108,7 +108,7 @@ int Element<AType>::GetID() const
 	if (m_pManager) {
 		// Try to find this element within the manager
 		for (uint32 i=0; i<m_pManager->GetNumOfElements(); i++) {
-			if (m_pManager->Get(i) == this)
+			if (m_pManager->GetByIndex(i) == this)
 				return i;
 		}
 	}

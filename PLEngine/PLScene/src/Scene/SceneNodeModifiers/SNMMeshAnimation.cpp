@@ -181,7 +181,7 @@ void SNMMeshAnimation::UpdateMesh()
 		if (!pAniManager)
 			pAniManager = pMeshHandler->CreateMeshAnimationManager();
 		if (pAniManager) {
-			Animation *pAni = pAniManager->Get(m_sName);
+			Animation *pAni = pAniManager->GetByName(m_sName);
 			if (!pAni) {
 				AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(m_sName);
 				if (pAniInfo) {

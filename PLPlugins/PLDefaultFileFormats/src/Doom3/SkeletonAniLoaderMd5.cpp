@@ -247,7 +247,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 	// Setup joints
 	uint32 nUsedJoints = 0;
 	for (uint32 nJoint=0; nJoint<pRefSkeleton->GetNumOfElements(); nJoint++) {
-		Joint *pRefJoint = pRefSkeleton->Get(nJoint);
+		Joint *pRefJoint = pRefSkeleton->GetByIndex(nJoint);
 		Md5Joint *pJointT = mapJoints.Get(pRefJoint->GetName());
 		if (pJointT) {
 			Skeleton::AniJoint &cAniJoint = lstJoints[nUsedJoints];
@@ -272,11 +272,11 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 
 	// Set the parents of the joints
 	for (uint32 nJoint=0; nJoint<lstJoints.GetNumOfElements(); nJoint++) {
-		Joint *pJoint          = cSkeleton.Get(nJoint);
-		Joint *pRefJoint       = pRefSkeleton->Get(pJoint->GetName());
-		Joint *pRefParentJoint = pRefSkeleton->Get(pRefJoint->GetParent());
+		Joint *pJoint          = cSkeleton.GetByIndex(nJoint);
+		Joint *pRefJoint       = pRefSkeleton->GetByName(pJoint->GetName());
+		Joint *pRefParentJoint = pRefSkeleton->GetByIndex(pRefJoint->GetParent());
 		if (pRefParentJoint) {
-			Joint *pParentJoint = cSkeleton.Get(pRefParentJoint->GetName());
+			Joint *pParentJoint = cSkeleton.GetByName(pRefParentJoint->GetName());
 			pJoint->SetParent(pParentJoint->GetID());
 		} else {
 			pJoint->SetParent(-1);
@@ -291,7 +291,7 @@ bool SkeletonAniLoaderMd5::LoadV6(Skeleton &cSkeleton, Tokenizer &cTokenizer, Sk
 		lstFrameKeysT.Resize(nUsedJoints*7);
 		uint32 nKey = 0;
 		for (uint32 nJoint=0; nJoint<lstJoints.GetNumOfElements(); nJoint++) {
-			Joint  *pJoint  = cSkeleton.Get(nJoint);
+			Joint  *pJoint  = cSkeleton.GetByIndex(nJoint);
 			Md5Joint *pJointT = mapJoints.Get(pJoint->GetName());
 			if (pJointT) {
 				// Get joint data (x, y, z, yaw, pitch, roll)
@@ -435,7 +435,7 @@ bool SkeletonAniLoaderMd5::LoadV10(Skeleton &cSkeleton, Tokenizer &cTokenizer) c
 		// baseframe
 		} else if (cTokenizer.CompareToken("baseframe")) {
 			for (uint32 i=0; i<nNumJoints; i++) {
-				Joint *pJoint = cSkeleton.Get(i);
+				Joint *pJoint = cSkeleton.GetByIndex(i);
 				// Pos
 				float fX = cTokenizer.GetNextToken().GetFloat();
 				float fY = cTokenizer.GetNextToken().GetFloat();
@@ -467,10 +467,10 @@ bool SkeletonAniLoaderMd5::LoadV10(Skeleton &cSkeleton, Tokenizer &cTokenizer) c
 	// Make the base joints relative
 	for (uint32 i=0; i<cSkeleton.GetNumOfElements(); i++) {
 		// Get this joint
-		Joint *pJoint = cSkeleton.Get(i);
+		Joint *pJoint = cSkeleton.GetByIndex(i);
 
 		// Get parent of this joint
-		Joint *pParentJoint = cSkeleton.Get(pJoint->GetParent());
+		Joint *pParentJoint = cSkeleton.GetByIndex(pJoint->GetParent());
 		if (pParentJoint) {
 			// Get relative joint state
 			Quaternion q = pParentJoint->GetRotationAbsolute();
@@ -492,10 +492,10 @@ bool SkeletonAniLoaderMd5::LoadV10(Skeleton &cSkeleton, Tokenizer &cTokenizer) c
 		for (uint32 i=0; i<cSkeleton.GetNumOfElements(); i++) {
 			// Get this joint
 			Skeleton::AniJoint &cAniJoint = lstJoints[i];
-			Joint *pJoint = cSkeleton.Get(i);
+			Joint *pJoint = cSkeleton.GetByIndex(i);
 
 			// Get parent of this joint
-			Joint *pParentJoint = cSkeleton.Get(pJoint->GetParent());
+			Joint *pParentJoint = cSkeleton.GetByIndex(pJoint->GetParent());
 
 			// Get joint absolute translation and rotation
 			uint32 nAnimatedComponents = cAniJoint.nAnimatedComponents;

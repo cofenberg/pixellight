@@ -261,6 +261,7 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\ScriptBindingSceneRendererTool.cpp" />
     <ClCompile Include="src\ScriptBindingSystemConsole.cpp" />
     <ClCompile Include="src\ScriptBindingTiming.cpp" />
+    <ClCompile Include="src\ScriptBinding_PL.cpp" />
     <ClCompile Include="src\SNMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +312,7 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScriptBindings\ScriptBindingSceneRendererTool.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBindingSystemConsole.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBindingTiming.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL.h" />
     <ClInclude Include="include\PLScriptBindings\SNMScript.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

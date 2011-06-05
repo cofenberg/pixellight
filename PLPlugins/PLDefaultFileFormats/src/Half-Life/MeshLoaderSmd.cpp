@@ -291,12 +291,12 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 		//	if (!m_pMesh->GetSkeleton()) {
 		//		sName = cMesh.GetName() + "_" + sSkeleton.sName;
 		//	} else 
-			if (cSkeletonManager.Get(cMesh.GetName())) {
+			if (cSkeletonManager.GetByName(cMesh.GetName())) {
 				uint32 i = 0;
 				do {
 					sName = cMesh.GetName() + '_' + static_cast<int>(i);
 					i++;
-				} while (cSkeletonManager.Get(sName));
+				} while (cSkeletonManager.GetByName(sName));
 			} else {
 				sName = cMesh.GetName();
 			}
@@ -331,7 +331,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 				float pitch = cTokenizer.GetNextToken().GetFloat();
 				float yaw   = cTokenizer.GetNextToken().GetFloat();
 
-				Joint *pJoint = pSkeleton->Get(nNode);
+				Joint *pJoint = pSkeleton->GetByIndex(nNode);
 				if (pJoint) {
 					pJoint->SetTranslation(vTranslation);
 					// [TODO] The result is wrong...
@@ -347,7 +347,7 @@ bool MeshLoaderSmd::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 
 			// Loop through all root joints
 			for (uint32 i=0; i<pSkeleton->GetRootJoints().GetNumOfElements(); i++) {
-				Joint *pJoint = pSkeleton->Get(pSkeleton->GetRootJoints()[i]);
+				Joint *pJoint = pSkeleton->GetByIndex(pSkeleton->GetRootJoints()[i]);
 				RecCalculateStates(*pSkeleton, *pJoint, nullptr);
 			}
 
@@ -641,7 +641,7 @@ void MeshLoaderSmd::RecCalculateStates(const Skeleton &cSkeleton, Joint &cJoint,
 
 	// Transform children
 	for (uint32 i=0; i<cJoint.GetChildren().GetNumOfElements(); i++)
-		RecCalculateStates(cSkeleton, *cSkeleton.Get(cJoint.GetChildren()[i]), &cJoint);
+		RecCalculateStates(cSkeleton, *cSkeleton.GetByIndex(cJoint.GetChildren()[i]), &cJoint);
 }
 
 

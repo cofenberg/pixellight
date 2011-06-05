@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{ecf19117-1b15-49c0-94fe-d5168c509359}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -27,5 +30,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.js">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.py">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.as">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -59,7 +59,7 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Texture animation
 	for (uint32 i=0; i<cSource.m_cTextureAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = static_cast<AnimationInfo*>(cSource.m_cTextureAnimationManager.Get(i));
+		const AnimationInfo *pAnimationInfo = static_cast<AnimationInfo*>(cSource.m_cTextureAnimationManager.GetByIndex(i));
 		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cTextureAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}
@@ -72,7 +72,7 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Matrix animation
 	for (uint32 i=0; i<cSource.m_cMatrixAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cMatrixAnimationManager.Get(i));
+		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cMatrixAnimationManager.GetByIndex(i));
 		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cMatrixAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}
@@ -87,7 +87,7 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 
 	// Color animation
 	for (uint32 i=0; i<cSource.m_cColorAnimationManager.GetNumOfElements(); i++) {
-		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cColorAnimationManager.Get(i));
+		const AnimationInfo *pAnimationInfo = static_cast<const AnimationInfo*>(cSource.m_cColorAnimationManager.GetByIndex(i));
 		AnimationInfo *pNewInfo = static_cast<AnimationInfo*>(m_cColorAnimationManager.Create());
 		*pNewInfo = *pAnimationInfo;
 	}

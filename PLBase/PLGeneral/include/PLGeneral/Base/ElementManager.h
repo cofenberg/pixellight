@@ -284,7 +284,7 @@ template <class AType> class ElementManager {
 		*  @return
 		*    The corresponding object, a null pointer if there's no match
 		*/
-		virtual AType *Get(uint32 nIndex = 0) const;
+		virtual AType *GetByIndex(uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ template <class AType> class ElementManager {
 		*      for instance within SceneContainer to be able to use 'absolute names'
 		*      like 'Root.MyScene.MyNode', too.
 		*/
-		virtual AType *Get(const String &sName) const;
+		virtual AType *GetByName(const String &sName) const;
 
 
 	//[-------------------------------------------------------]

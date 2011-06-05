@@ -44,6 +44,12 @@ using namespace PLScript;
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(Application)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -90,7 +96,7 @@ void Application::OOP(const String &sScriptFilename)
 		Script *pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(sScriptFilename).GetExtension()));
 		if (pScript) {
 			// Tell the script about "Application::GetMyRTTIClassInstance"
-			pScript->AddGlobalFunction("GetMyRTTIClassInstance", Functor<Object*, Object*>(&Application::GetMyRTTIClassInstance, this));
+			pScript->AddGlobalFunction("GetMyRTTIClassInstance", Functor<MyRTTIClass*, MyRTTIClass*>(&Application::GetMyRTTIClassInstance, this));
 
 			// Set the script source code
 			if (pScript->SetSourceCode(sSourceCode)) {
@@ -101,8 +107,8 @@ void Application::OOP(const String &sScriptFilename)
 				FuncScriptPtr<void>(pScript, "OOP").Call(Params<void>());
 
 				{ // Call the script function "UseCppRTTIObject"
-					Params<Object*, Object*> cParams(m_pMyRTTIClass);
-					FuncScriptPtr<Object*, Object*>(pScript, "UseCppRTTIObject").Call(cParams);
+					Params<MyRTTIClass*, MyRTTIClass*> cParams(m_pMyRTTIClass);
+					FuncScriptPtr<MyRTTIClass*, MyRTTIClass*>(pScript, "UseCppRTTIObject").Call(cParams);
 					if (cParams.Return != m_pMyRTTIClass)
 						System::GetInstance()->GetConsole().Print("Error, script returned invalid RTTI object instance!\n");
 				}
@@ -133,7 +139,7 @@ void Application::NotifyMySignal(String sParameter)
 *  @brief
 *    Returns the MyRTTIClass instance
 */
-Object *Application::GetMyRTTIClassInstance(Object *pObject)
+MyRTTIClass *Application::GetMyRTTIClassInstance(MyRTTIClass *pObject)
 {
 	return (pObject == m_pMyRTTIClass) ? m_pMyRTTIClass : nullptr;
 }

@@ -124,6 +124,10 @@
     <ClInclude Include="src\Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\41ScriptGlobalVariables.as" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\41ScriptGlobalVariables.js" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\41ScriptGlobalVariables.lua" />
+    <None Include="..\..\Bin\PLSamples\Data\Scripts\41ScriptGlobalVariables.py" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>

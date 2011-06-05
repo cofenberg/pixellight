@@ -774,12 +774,12 @@ bool MeshLoaderPLXml::ReadSkeleton(Mesh &cMesh, const XmlElement &cSkeletonEleme
 //	if (!cMesh.GetSkeleton()) {
 //		sUsedName = cMesh.GetName() + '_' + sName;
 //	} else 
-	if (cSkeletonManager.Get(sName)) {
+	if (cSkeletonManager.GetByName(sName)) {
 		uint32 i = 0;
 		do {
 			sUsedName = sName + '_' + i;
 			i++;
-		} while (cSkeletonManager.Get(sUsedName));
+		} while (cSkeletonManager.GetByName(sUsedName));
 	} else {
 		sUsedName = sName;
 	}
@@ -835,7 +835,7 @@ bool MeshLoaderPLXml::ReadSkeleton(Mesh &cMesh, const XmlElement &cSkeletonEleme
 			const XmlElement *pJointStateElement = pBaseFrameElement->GetFirstChildElement("JointState");
 			for (uint32 nJoint=0; pJointStateElement&&nJoint<nJoints; nJoint++) {
 				// Get the joint
-				Joint *pJoint = pSkeleton->Get(nJoint);
+				Joint *pJoint = pSkeleton->GetByIndex(nJoint);
 
 				{ // Read translation attribute
 					Vector3 vTranslation;
@@ -1614,7 +1614,7 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 		// Loop through all joints
 		for (uint32 i=0; i<cSkeleton.GetNumOfElements(); i++) {
 			// Get the current joint
-			const Joint *pJoint = cSkeleton.Get(i);
+			const Joint *pJoint = cSkeleton.GetByIndex(i);
 
 			// Add joint
 			XmlElement *pJointElement = new XmlElement("Joint");
@@ -1640,7 +1640,7 @@ bool MeshLoaderPLXml::WriteSkeleton(Skeleton &cSkeleton, uint32 nID, XmlElement 
 		// Loop through all joints
 		for (uint32 i=0; i<cSkeleton.GetNumOfElements(); i++) {
 			// Get the current joint
-			const Joint *pJoint = cSkeleton.Get(i);
+			const Joint *pJoint = cSkeleton.GetByIndex(i);
 
 			// Add joint state
 			XmlElement *pJointStateElement = new XmlElement("JointState");
@@ -1714,7 +1714,7 @@ bool MeshLoaderPLXml::WriteAnchorPoints(Mesh &cMesh, XmlElement &cMeshElement) c
 	// Loop through all anchor points
 	for (uint32 i=0; i<cMesh.GetAnchorPointManager().GetNumOfElements(); i++) {
 		// Get the current anchor point
-		const AnchorPoint *pAnchorPoint = cMesh.GetAnchorPointManager().Get(i);
+		const AnchorPoint *pAnchorPoint = cMesh.GetAnchorPointManager().GetByIndex(i);
 
 		// Add anchor point
 		XmlElement *pAnchorPointElement = new XmlElement("AnchorPoint");
@@ -1791,7 +1791,7 @@ bool MeshLoaderPLXml::WriteAnimations(const Mesh &cMesh, File &cFile, Stack<Mesh
 bool MeshLoaderPLXml::WriteMorphTargetAnimation(Mesh &cMesh, uint32 nAnimation, XmlElement &cMorphTargetAnimationsElement) const
 {
 	// Get the animation
-	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
+	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().GetByIndex(nAnimation);
 	if (pAni) {
 		// Add morph target animation
 		XmlElement *pMorphTargetAnimationElement = new XmlElement("MorphTargetAnimation");

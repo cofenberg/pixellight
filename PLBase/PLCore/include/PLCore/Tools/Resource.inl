@@ -108,7 +108,7 @@ int Resource<AType>::GetID() const
 	if (m_pManager) {
 		// Try to find this resource within the manager
 		for (PLGeneral::uint32 i=0; i<m_pManager->GetNumOfElements(); i++) {
-			if (m_pManager->Get(i) == this)
+			if (m_pManager->GetByIndex(i) == this)
 				return i;
 		}
 	}

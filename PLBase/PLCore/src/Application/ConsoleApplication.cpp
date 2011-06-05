@@ -48,6 +48,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(ConsoleApplication)
+
+
+//[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 ConsoleApplication *ConsoleApplication::g_pApplication = nullptr;	/**< Pointer to the current application instance */

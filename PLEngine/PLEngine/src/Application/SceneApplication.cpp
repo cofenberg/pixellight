@@ -45,6 +45,26 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(SceneApplication)
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the root scene
+*/
+SceneContainer *SceneApplication::GetRootScene() const
+{
+	// Return pointer to root scene container
+	return m_pRootScene;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -109,10 +129,10 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		SceneContainer *pRootScene = GetRootScene();
 		if (pRootScene) {
 			// Enable/disable standard edit features from the PixelLight scene graph (if the user hasn't changed anything :)
-			SceneNode *pSceneNode = pRootScene->Get("PLScene::SNEngineInformation0");
+			SceneNode *pSceneNode = pRootScene->GetByName("PLScene::SNEngineInformation0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
-			pSceneNode = pRootScene->Get("PLScene::SNConsole0");
+			pSceneNode = pRootScene->GetByName("PLScene::SNConsole0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
 		}
@@ -120,16 +140,6 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		// Setup log level
 		Log::GetInstance()->SetLogLevel(static_cast<uint8>(m_bEditModeEnabled ? Log::Debug : Log::Info));
 	}
-}
-
-/**
-*  @brief
-*    Returns the root scene
-*/
-SceneContainer *SceneApplication::GetRootScene() const
-{
-	// Return pointer to root scene container
-	return m_pRootScene;
 }
 
 /**

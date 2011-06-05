@@ -114,7 +114,7 @@ Mesh *MeshManager::CreateMesh()
 Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic)
 {
 	// Check whether this resource is already within the manager
-	Mesh *pResource = Get(sName);
+	Mesh *pResource = GetByName(sName);
 	if (pResource)
 		return pResource;
 
@@ -125,7 +125,7 @@ Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic)
 	else {
 		// Find an unused resource name
 		sNameT = "0";
-		for (int i=1; Get(sNameT); i++)
+		for (int i=1; GetByName(sNameT); i++)
 			sNameT = i;
 	}
 
@@ -178,7 +178,7 @@ Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic, const String &s
 Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, const String &sMethod, bool bReloadMesh, bool bStatic)
 {
 	// Is the mesh already loaded?
-	Mesh *pMesh = Get(sFilename);
+	Mesh *pMesh = GetByName(sFilename);
 	if (pMesh) {
 		// Reload this mesh?
 		if (bReloadMesh)
@@ -218,7 +218,7 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 				}
 
 				// Check whether the mesh is already within the mesh manager
-				pMesh = bUseName ? Get(sName) : nullptr;
+				pMesh = bUseName ? GetByName(sName) : nullptr;
 				if (!pMesh) {
 					// Get the parameters
 					String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());

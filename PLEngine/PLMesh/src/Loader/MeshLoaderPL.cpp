@@ -493,12 +493,12 @@ bool MeshLoaderPL::ReadSkeleton(Mesh &cMesh, File &cFile) const
 //	if (!cMesh.GetSkeleton()) {
 //		sName = cMesh.GetName() + "_" + sSkeleton.szName;
 //	} else 
-	if (cSkeletonManager.Get(sSkeleton.szName)) {
+	if (cSkeletonManager.GetByName(sSkeleton.szName)) {
 		uint32 i = 0;
 		do {
 			sName = String::Format("%s_%d", sSkeleton.szName, i);
 			i++;
-		} while (cSkeletonManager.Get(sName));
+		} while (cSkeletonManager.GetByName(sName));
 	} else {
 		sName = sSkeleton.szName;
 	}
@@ -547,7 +547,7 @@ bool MeshLoaderPL::ReadSkeleton(Mesh &cMesh, File &cFile) const
 			MeshFile::JointState cJointState;
 			if (!cFile.Read(&cJointState, 1, sizeof(MeshFile::JointState)))
 				return false; // Error!
-			Joint *pJoint = pSkeleton->Get(i);
+			Joint *pJoint = pSkeleton->GetByIndex(i);
 			pJoint->SetTranslation(Vector3(cJointState.fTranslation[0],
 				cJointState.fTranslation[1], cJointState.fTranslation[2]));
 			pJoint->SetRotation(Quaternion(cJointState.fRotation[0],
@@ -1088,7 +1088,7 @@ bool MeshLoaderPL::WriteSkeleton(File &cFile, Stack<MeshFile::Chunk> &cChunkStac
 		if (cFile.Write(&sSkeleton, 1, sizeof(sSkeleton))) {
 			// Write joints
 			for (uint32 i=0; i<sSkeleton.nJoints; i++) {
-				const Joint *pJoint = cSkeleton.Get(i);
+				const Joint *pJoint = cSkeleton.GetByIndex(i);
 				MeshFile::Joint sJoint;
 				String sName   = pJoint->GetName();
 				uint32 nLength = sName.GetLength();
@@ -1105,7 +1105,7 @@ bool MeshLoaderPL::WriteSkeleton(File &cFile, Stack<MeshFile::Chunk> &cChunkStac
 			// Write base frame
 			for (uint32 i=0; i<sSkeleton.nJoints; i++) {
 				MeshFile::JointState cJointState;
-				const Joint *pJoint = cSkeleton.Get(i);
+				const Joint *pJoint = cSkeleton.GetByIndex(i);
 				{ // Current
 					const Vector3 &vV = pJoint->GetTranslation();
 					cJointState.fTranslation[0] = vV.x;
@@ -1161,7 +1161,7 @@ bool MeshLoaderPL::WriteAnchorPoints(Mesh &cMesh, File &cFile, Stack<MeshFile::C
 		if (cFile.Write(&cAnchorPoints, 1, sizeof(cAnchorPoints))) {
 			// Write anchor points
 			for (uint32 i=0; i<cAnchorPoints.nAnchorPoints; i++) {
-				const AnchorPoint *pAnchorPoint = cMesh.GetAnchorPointManager().Get(i);
+				const AnchorPoint *pAnchorPoint = cMesh.GetAnchorPointManager().GetByIndex(i);
 				MeshFile::AnchorPoint sAnchorPoint;
 				String sName   = pAnchorPoint->GetName();
 				uint32 nLength = sName.GetLength();
@@ -1240,7 +1240,7 @@ bool MeshLoaderPL::WriteAnimations(const Mesh &cMesh, File &cFile, Stack<MeshFil
 bool MeshLoaderPL::WriteMorphTargetAnimation(Mesh &cMesh, File &cFile, Stack<MeshFile::Chunk> &cChunkStack, uint32 nAnimation) const
 {
 	// Get the animation
-	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().Get(nAnimation);
+	MorphTargetAni *pAni = cMesh.GetMorphTargetAnimationManager().GetByIndex(nAnimation);
 	if (pAni) {
 		// Start chunk
 		if (BeginChunk(cFile, cChunkStack, MeshFile::CHUNK_MORPHTARGETANIMATION)) {

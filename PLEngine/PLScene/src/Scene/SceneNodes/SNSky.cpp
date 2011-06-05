@@ -417,16 +417,16 @@ void SNSky::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 
 		// Draw solid sky layers
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(Get(i))->GetTransformMatrix());
-			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(GetByIndex(i))->GetTransformMatrix());
+			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(GetByIndex(i))->GetMeshHandler();
 			if (pMeshHandler)
 				pMeshHandler->Draw();
 		}
 
 		// Draw transparent sky layers
 		for (uint32 i=0; i<GetNumOfElements(); i++) {
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(Get(i))->GetTransformMatrix());
-			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld*static_cast<SkyLayer*>(GetByIndex(i))->GetTransformMatrix());
+			MeshHandler *pMeshHandler = static_cast<SkyLayer*>(GetByIndex(i))->GetMeshHandler();
 			if (pMeshHandler)
 				pMeshHandler->Draw(true);
 		}
@@ -529,7 +529,7 @@ void SNSky::NotifyUpdate()
 	// Update sky layers
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 	for (uint32 i=0; i<GetNumOfElements(); i++) {
-		MeshHandler *pMeshHandler = static_cast<SkyLayer*>(Get(i))->GetMeshHandler();
+		MeshHandler *pMeshHandler = static_cast<SkyLayer*>(GetByIndex(i))->GetMeshHandler();
 		if (pMeshHandler)
 			pMeshHandler->Update(fTimeDiff);
 	}

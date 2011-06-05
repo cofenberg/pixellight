@@ -49,9 +49,38 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(BasicSceneApplication)
+
+
+//[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
 const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the scene container
+*/
+SceneContainer *BasicSceneApplication::GetScene() const
+{
+	// This cast is safe because we 'know' it can ONLY be a scene container!
+	return static_cast<SceneContainer*>(m_cSceneContainerHandler.GetElement());
+}
+
+/**
+*  @brief
+*    Sets the scene container
+*/
+void BasicSceneApplication::SetScene(SceneContainer *pContainer)
+{
+	m_cSceneContainerHandler.SetElement(pContainer);
+}
 
 
 //[-------------------------------------------------------]
@@ -82,25 +111,6 @@ BasicSceneApplication::~BasicSceneApplication()
 
 /**
 *  @brief
-*    Returns the scene container
-*/
-SceneContainer *BasicSceneApplication::GetScene() const
-{
-	// This cast is safe because we 'know' it can ONLY be a scene container!
-	return static_cast<SceneContainer*>(m_cSceneContainerHandler.GetElement());
-}
-
-/**
-*  @brief
-*    Sets the scene container
-*/
-void BasicSceneApplication::SetScene(SceneContainer *pContainer)
-{
-	m_cSceneContainerHandler.SetElement(pContainer);
-}
-
-/**
-*  @brief
 *    Loads a scene
 */
 bool BasicSceneApplication::LoadScene(const String &sFilename)
@@ -114,7 +124,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 	CloseEditDialog();
 
 	// Disable the ingame GUI
-	SceneNode *pGui = pContainer->GetContainer()->Get("GUI");
+	SceneNode *pGui = pContainer->GetContainer()->GetByName("GUI");
 	if (pGui)
 		pGui->SetActive(false);
 
@@ -204,7 +214,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			// Is there a given start camera?
 			SceneNode *pCamera = nullptr;
 			if (m_sStartCamera.GetLength()) {
-				SceneNode *pStartCamera = pContainer->Get(m_sStartCamera);
+				SceneNode *pStartCamera = pContainer->GetByName(m_sStartCamera);
 				if (pStartCamera && pStartCamera->IsCamera())
 					pCamera = pStartCamera;
 			}
@@ -486,7 +496,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
 				SceneRenderer *pSceneRenderer = static_cast<SPScene*>(pPainter)->GetDefaultSceneRenderer();
 				if (pSceneRenderer) {
-					SceneRendererPass *pSceneRendererPass = pSceneRenderer->Get("Begin");
+					SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByName("Begin");
 					if (pSceneRendererPass)
 						pSceneRendererPass->SetAttribute("ColorClear", cKeyValue.Value.GetString());
 				}
