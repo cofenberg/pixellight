@@ -22,9 +22,6 @@
     <ClCompile Include="src\SNMScript.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ScriptBindingSceneRendererTool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ScriptBinding_PL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -44,9 +41,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\SNMScript.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingSceneRendererTool.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL.h">

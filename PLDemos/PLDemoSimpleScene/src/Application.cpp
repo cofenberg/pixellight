@@ -110,7 +110,7 @@ void Application::OnInit()
 	// "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
 	// within your application. We highly recommend to provide your end-user more abstract graphics settings as
 	// seen in, for example, many video games out there.
-	GetSceneRendererTool().SetPassAttribute("DeferredHBAO", "Flags", "Inactive");
+	GetSceneRendererTool()->SetPassAttribute("DeferredHBAO", "Flags", "Inactive");
 }
 
 

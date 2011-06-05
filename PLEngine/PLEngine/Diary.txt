@@ -3,6 +3,8 @@
 - "SceneApplication": Exposed "GetRootScene()"-method to the RTTI
 - "BasicSceneApplication": Exposed "GetScene()"-method and "SetScene()"-method to the RTTI
 - Exposed "SceneRendererTool" and it's "SetPassAttribute()"-method to the RTTI
+- "BasicSceneApplication": Exposed "GetSceneRendererTool()"-method to the RTTI (had to change the result from a reference
+  into a pointer for this)
 
 
 

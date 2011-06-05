@@ -152,7 +152,7 @@ void Application::OnInit()
 			}
 
 			// Add libRocket scene renderer pass instance
-			SceneRenderer *pSceneRenderer = GetSceneRendererTool().GetSceneRenderer();
+			SceneRenderer *pSceneRenderer = GetSceneRendererTool()->GetSceneRenderer();
 			if (pSceneRenderer) {
 				libRocket_PL::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
 				if (pSRPlibRocket)

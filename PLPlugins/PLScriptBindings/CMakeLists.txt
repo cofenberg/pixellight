@@ -12,7 +12,6 @@ add_sources(
 	src/ScriptBindingTiming.cpp
 	src/ScriptBindingSystemConsole.cpp
 	src/ScriptBinding_PL.cpp
-	src/ScriptBindingSceneRendererTool.cpp
 	src/SNMScript.cpp
 )
 

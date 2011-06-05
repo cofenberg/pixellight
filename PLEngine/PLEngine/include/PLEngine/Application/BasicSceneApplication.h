@@ -70,8 +70,9 @@ class BasicSceneApplication : public SceneApplication {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLEngine::SceneApplication, "Basic scene application class")
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetScene,	PLScene::SceneContainer*,								"Returns the scene container (the 'concrete scene'), can be a null pointer",										"")
-		pl_method_1(SetScene,	void,						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",	"")
+		pl_method_0(GetScene,				PLScene::SceneContainer*,								"Returns the scene container (the 'concrete scene'), can be a null pointer",										"")
+		pl_method_1(SetScene,				void,						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",	"")
+		pl_method_0(GetSceneRendererTool,	SceneRendererTool*,										"Returns the scene renderer tool, never a null pointer",															"")
 	pl_class_end
 
 
@@ -163,14 +164,14 @@ class BasicSceneApplication : public SceneApplication {
 		*
 		*  @remarks
 		*    Use "GetSceneRendererTool()" for a simplified interface to the scene renderer. By writing for example
-		*    "GetSceneRendererTool().SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
+		*    "GetSceneRendererTool()->SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
 		*    one can usually (on standard scene renderer configurations) set directly a background bitmap.
 		*
 		*    This component is initialized within the application framework initialization function "Init()" that is called prior to "Main()".
 		*    As a result, using the returned component instance prior to the application-specific initialization routine "OnInit()" will not
 		*    work.
 		*/
-		PL_API SceneRendererTool &GetSceneRendererTool();
+		PL_API SceneRendererTool *GetSceneRendererTool();
 
 		/**
 		*  @brief
@@ -182,7 +183,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @see
 		*    - Non-constant GetSceneRendererTool()
 		*/
-		PL_API const SceneRendererTool &GetSceneRendererTool() const;
+		PL_API const SceneRendererTool *GetSceneRendererTool() const;
 
 		/**
 		*  @brief

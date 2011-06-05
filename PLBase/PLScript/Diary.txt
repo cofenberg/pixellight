@@ -27,6 +27,9 @@
 	 When I'am done with it, the Lua support should already be quite usable... as for the Python, JavaScript and AngelScript support ... well,
 	 I first have to figure out how to access RTTI objects in a decent way using those script APIs. The strongly typed AngelScript already produced some
 	 headaches. For now, it's important to me that at least one scripting language is usable, so I focus on this point.
+- Removed experimental "ScriptBindingSceneRendererTool" because it's no longer needed. Write e.g.
+      PL.GetApplication():GetSceneRendererTool():SetPassAttribute("DeferredDOF", "Flags", "Inactive")
+  within a Lua script.
 
 
 
