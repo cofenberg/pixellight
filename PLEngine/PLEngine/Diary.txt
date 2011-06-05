@@ -2,6 +2,7 @@
 [CO]
 - "SceneApplication": Exposed "GetRootScene()"-method to the RTTI
 - "BasicSceneApplication": Exposed "GetScene()"-method and "SetScene()"-method to the RTTI
+- Exposed "SceneRendererTool" and it's "SetPassAttribute()"-method to the RTTI
 
 
 
