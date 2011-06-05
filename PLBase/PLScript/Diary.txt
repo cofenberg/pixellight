@@ -30,6 +30,9 @@
 - Removed experimental "ScriptBindingSceneRendererTool" because it's no longer needed. Write e.g.
       PL.GetApplication():GetSceneRendererTool():SetPassAttribute("DeferredDOF", "Flags", "Inactive")
   within a Lua script.
+- PLScriptBindings: Renamed "ScriptBindingLog" into "ScriptBinding_PL_Log", "ScriptBindingTiming" into "ScriptBinding_PL_Timing" and
+  "ScriptBindingSystemConsole" into "ScriptBinding_PL_System_Console" so one can directly see the resulting script namespace (I'am not sure whether or
+  not the current solution will stay this way)
 
 
 
