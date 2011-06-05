@@ -6,6 +6,8 @@
   const within the method pointer using a good old C-style cast to be as flexible as possible in here. I don't think that this introduces any security risks
   because the RTTI method just points to the real C++ method, and in there the const is still there and the compiler will blame you as usual if a non mutable
   member attribute is changed within a constant method.
+- *breaking change* "ResourceManager": Renamed "Get(uint32 nIndex)" into "GetByIndex(uint32 nIndex)" and "Get(const String &sName)" into
+  "GetByName(const String &sName)" (same change as in "PLGeneral::ElementManager")
 
 
 

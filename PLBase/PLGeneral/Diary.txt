@@ -3,8 +3,6 @@
 - *breaking change* "ElementManager": Renamed "Get(uint32 nIndex)" into "GetByIndex(uint32 nIndex)" and "Get(const String &sName)" into
   "GetByName(const String &sName)". There were already situations were the compiler wasn't able to distinguish between these two methods
   and upcoming changes/features would cause even more problems.
-- *breaking change* "ResourceManager": Renamed "Get(uint32 nIndex)" into "GetByIndex(uint32 nIndex)" and "Get(const String &sName)" into
-  "GetByName(const String &sName)"
 
 
 
