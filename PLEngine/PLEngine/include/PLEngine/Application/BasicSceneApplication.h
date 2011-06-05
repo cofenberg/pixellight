@@ -66,6 +66,14 @@ class BasicSceneApplication : public SceneApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLEngine::SceneApplication, "Basic scene application class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:

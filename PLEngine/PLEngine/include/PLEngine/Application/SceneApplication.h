@@ -68,6 +68,14 @@ class SceneApplication : public RenderApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, SceneApplication, "PLEngine", PLEngine::RenderApplication, "Scene application class")
+		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

@@ -46,6 +46,12 @@ using namespace PLEngine;
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(Application)
+
+
+//[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
 // A helper to be able to toggle between 'choose scene file at start' and 'load

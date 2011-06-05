@@ -49,6 +49,12 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(BasicSceneApplication)
+
+
+//[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
 const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
