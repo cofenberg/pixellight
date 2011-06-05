@@ -51,20 +51,6 @@ pl_implement_class(SceneApplication)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the root scene
-*/
-SceneContainer *SceneApplication::GetRootScene() const
-{
-	// Return pointer to root scene container
-	return m_pRootScene;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -99,6 +85,16 @@ SceneApplication::~SceneApplication()
 SceneContext *SceneApplication::GetSceneContext() const
 {
 	return m_pSceneContext;
+}
+
+/**
+*  @brief
+*    Returns the root scene
+*/
+SceneContainer *SceneApplication::GetRootScene() const
+{
+	// Return pointer to root scene container
+	return m_pRootScene;
 }
 
 /**

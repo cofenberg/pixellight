@@ -52,10 +52,10 @@ class MyRTTIClass : public PLCore::Object {
 		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		// Methods
-		pl_method_0(Return42,			int,			"Returns 42",							"")
-		pl_method_1(IgnoreTheParameter,	void, float,	"Ignores the provided parameter",		"")
-		pl_method_0(SaySomethingWise,	void,			"Says something wise",					"")
-		pl_method_0(GetSelf,			MyRTTIClass*,	"Returns a pointer to this instance",	"")
+		pl_method_0(Return42,			int,					"Returns 42",							"")
+		pl_method_1(IgnoreTheParameter,	void,			float,	"Ignores the provided parameter",		"")
+		pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
+		pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
 		// Signals
 		pl_signal_1(MySignal, PLGeneral::String, "My signal, automatically emitted after the name was changed", "")
 		// Slots
@@ -64,16 +64,6 @@ class MyRTTIClass : public PLCore::Object {
 		pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
 		pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		int Return42() const;
-		void IgnoreTheParameter(float fValue) const;
-		void SaySomethingWise() const;
-		MyRTTIClass *GetSelf();
 
 
 	//[-------------------------------------------------------]
@@ -106,6 +96,39 @@ class MyRTTIClass : public PLCore::Object {
 		*    Destructor
 		*/
 		virtual ~MyRTTIClass();
+
+		/**
+		*  @brief
+		*    Returns 42
+		*
+		*  @return
+		*    42
+		*/
+		int Return42() const;
+
+		/**
+		*  @brief
+		*    Ignores the provided parameter
+		*
+		*  @param[in] fValue
+		*    Parameter to ignore
+		*/
+		void IgnoreTheParameter(float fValue) const;
+
+		/**
+		*  @brief
+		*    Says something wise
+		*/
+		void SaySomethingWise() const;
+
+		/**
+		*  @brief
+		*    Returns a pointer to this instance
+		*
+		*  @return
+		*    A pointer to this instance, always valid!
+		*/
+		MyRTTIClass *GetSelf();
 
 
 	//[-------------------------------------------------------]

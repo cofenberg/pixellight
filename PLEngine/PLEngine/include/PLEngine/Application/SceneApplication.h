@@ -77,20 +77,6 @@ class SceneApplication : public RenderApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Returns the root scene
-		*
-		*  @return
-		*    Pointer to root scene container, can be a null pointer
-		*/
-		PL_API PLScene::SceneContainer *GetRootScene() const;
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -117,6 +103,15 @@ class SceneApplication : public RenderApplication {
 		*    The scene context, a null pointer on error
 		*/
 		PL_API PLScene::SceneContext *GetSceneContext() const;
+
+		/**
+		*  @brief
+		*    Returns the root scene
+		*
+		*  @return
+		*    Pointer to root scene container, can be a null pointer
+		*/
+		PL_API PLScene::SceneContainer *GetRootScene() const;
 
 		//[-------------------------------------------------------]
 		//[ Edit functions                                        ]
