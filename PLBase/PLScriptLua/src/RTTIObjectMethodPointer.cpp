@@ -74,6 +74,12 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 			// Is it nil?
 			if (lua_isnil(pLuaState, i)) {
 				sValue = "0";
+
+			// Is it boolean?
+			} else if (lua_isboolean(pLuaState, -1)) {
+				sValue = (lua_toboolean(pLuaState, -1) != 0) ? "1" : "0";
+
+			// ...
 			} else {
 				// If not just let Lua decide how to convert the stuff into a string... but only if it's no object pointer!
 				sValue = (cDynFunc.GetParameterTypeID(nNumOfArguments-1) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);

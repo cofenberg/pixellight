@@ -1,4 +1,10 @@
-﻿>> 05.06.2011
+﻿>> 06.06.2011
+[CO]
+- PLScriptLua: Something like "sceneNode:SetActive(true)" is now handled correctly, meaning the boolean value "true"
+
+
+
+>> 05.06.2011
 [CO]
 - PLScriptBindings: Added "ScriptBinding_PL"
 - Removed experimental "ScriptBindingScene" because it's no longer needed. Write e.g.
