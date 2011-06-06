@@ -127,7 +127,7 @@ SceneContainer::~SceneContainer()
 *  @brief
 *    Creates a new scene node
 */
-SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters)
+SceneNode *SceneContainer::Create(String sClass, String sName, String sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {

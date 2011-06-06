@@ -697,7 +697,7 @@ uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 *  @brief
 *    Adds a modifier
 */
-SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters)
+SceneNodeModifier *SceneNode::AddModifier(String sClass, String sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -749,7 +749,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 *  @brief
 *    Returns a modifier
 */
-SceneNodeModifier *SceneNode::GetModifier(const String &sClass, uint32 nIndex) const
+SceneNodeModifier *SceneNode::GetModifier(String sClass, uint32 nIndex) const
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;
