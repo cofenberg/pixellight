@@ -90,12 +90,12 @@ void SNLoadScreenBase::NotifyContainer()
 {
 	// Disconnect event handler
 	if (m_pContainer)
-		m_pContainer->EventLoadProgress.Disconnect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Disconnect(&EventHandlerLoadProgress);
 
 	// Connect event handler
 	m_pContainer = GetContainer();
 	if (m_pContainer)
-		m_pContainer->EventLoadProgress.Connect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Connect(&EventHandlerLoadProgress);
 }
 
 /**

@@ -223,8 +223,8 @@ bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneE
 		return false;
 	}
 
-	// Emit >100% load progress to inform that we're done
-	cContainer.EventLoadProgress(1.1f);
+	// Emit >100% load progress signal to inform that we're done
+	cContainer.SignalLoadProgress(1.1f);
 
 	// Reset container active state
 	cContainer.SetActive(bActive);
@@ -251,8 +251,8 @@ bool SceneLoaderPL::LoadRec(SInstance &sInstance, SceneContainer &cContainer, co
 	// Iterate through all children
 	const XmlElement *pElement = cParent.GetFirstChildElement();
 	while (pElement) {
-		// Emit load progress
-		sInstance.pContainer->EventLoadProgress(static_cast<float>(pElement->GetRow()-nFirstSceneRow)/static_cast<float>(nLastSceneRow-nFirstSceneRow));
+		// Emit load progress signal
+		sInstance.pContainer->SignalLoadProgress(static_cast<float>(pElement->GetRow()-nFirstSceneRow)/static_cast<float>(nLastSceneRow-nFirstSceneRow));
 
 		// Check value
 		const String sValue = pElement->GetValue();

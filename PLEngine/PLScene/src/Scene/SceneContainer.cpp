@@ -94,6 +94,7 @@ SceneContainer::SceneContainer() :
 	AABBMin(this),
 	AABBMax(this),
 	Filename(this),
+	SignalLoadProgress(this),
 	m_sHierarchy("PLScene::SHList"),
 	m_pSceneContext(nullptr),
 	m_pHierarchy(nullptr),

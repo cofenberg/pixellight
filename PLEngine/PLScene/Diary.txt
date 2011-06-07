@@ -1,6 +1,7 @@
 >> 07.06.2011
 [CO]
 - "PLScene::SceneNode" events are now implemented as RTTI signals
+- "PLScene::SceneContainer" events are now implemented as RTTI signals
 
 
 
