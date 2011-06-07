@@ -179,7 +179,7 @@ class Picking {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventSceneNode;
+		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventHandlerSceneNode;
 
 
 	//[-------------------------------------------------------]

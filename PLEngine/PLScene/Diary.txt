@@ -2,6 +2,7 @@
 [CO]
 - "PLScene::SceneNode" events are now implemented as RTTI signals
 - "PLScene::SceneContainer" events are now implemented as RTTI signals
+- "PLScene::SceneQuery" events are now implemented as RTTI signals
 
 
 

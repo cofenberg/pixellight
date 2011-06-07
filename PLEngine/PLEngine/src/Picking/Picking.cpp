@@ -50,7 +50,7 @@ namespace PLEngine {
 *    Constructor
 */
 Picking::Picking() :
-	EventSceneNode(&Picking::NotifySceneNode, this),
+	EventHandlerSceneNode(&Picking::NotifySceneNode, this),
 	m_pPickingResult(nullptr)
 {
 }
@@ -82,7 +82,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	// Trace line
 	SQLine *pQuery = static_cast<SQLine*>(cContainer.CreateQuery("PLScene::SQLine"));
 	if (pQuery) {
-		pQuery->EventSceneNode.Connect(&EventSceneNode);
+		pQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
 		pQuery->GetLine().Set(vLineStartPos, vLineEndPos);
 		pQuery->PerformQuery();
 		cContainer.DestroyQuery(*pQuery);

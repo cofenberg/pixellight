@@ -159,7 +159,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			SceneQuery *pSceneQuery = pContainer->CreateQuery("PLScene::SQEnumerate");
 			if (pSceneQuery) {
 				// Connect event handler
-				pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);
+				pSceneQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
 
 				// Perform the query
 				pSceneQuery->PerformQuery();
