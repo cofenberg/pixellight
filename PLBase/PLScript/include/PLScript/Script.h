@@ -72,10 +72,12 @@ class Script : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSCRIPT_RTTI_EXPORT, Script, "PLScript", PLCore::Object, "Abstract script base class")
+		// Properties
 		pl_properties
-			pl_property("Language", "Unknown")
-			pl_property("Formats",  "Unknown")
+			pl_property("Language",	"Unknown")
+			pl_property("Formats",	"Unknown")
 		pl_properties_end
+		// Attributes
 		pl_attribute(Name,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Name of this script, optional but recommended for better debugging",	"")
 	pl_class_end
 

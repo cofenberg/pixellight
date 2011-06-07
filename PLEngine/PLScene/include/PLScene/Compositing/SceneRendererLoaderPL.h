@@ -55,15 +55,18 @@ class SceneRendererLoaderPL : public SceneRendererLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneRendererLoaderPL, "PLScene", PLScene::SceneRendererLoader, "Scene renderer loader implementation for the PixelLight scene renderer XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"sr,SR")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, SceneRenderer&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, SceneRenderer&, PLGeneral::File&, "Save method. Default values are not written.", "")
-		pl_method_3(SaveParams, bool, SceneRenderer&, PLGeneral::File&, bool, "Save method. Parameters: No default values as 'bool'.", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,		bool,	SceneRenderer&,	PLGeneral::File&,			"Load method",												"")
+		pl_method_2(Save,		bool,	SceneRenderer&,	PLGeneral::File&,			"Save method. Default values are not written.",				"")
+		pl_method_3(SaveParams, bool,	SceneRenderer&,	PLGeneral::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
 	pl_class_end
 
 

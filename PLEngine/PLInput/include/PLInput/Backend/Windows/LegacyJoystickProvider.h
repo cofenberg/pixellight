@@ -51,7 +51,8 @@ class LegacyJoystickProvider : public Provider {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLINPUT_RTTI_EXPORT, LegacyJoystickProvider, "PLInput", PLInput::Provider, "Input provider for Windows legacy joystick API")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -46,8 +46,10 @@ class TestWidgetTimer : public PLGui::Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestWidgetTimer, "", PLGui::Widget, "Timer test widget")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_slot_0		(OnTimer,			 "Timer callback",		"");
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnTimer,	"Timer callback",	"");
 	pl_class_end
 
 

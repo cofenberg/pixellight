@@ -71,11 +71,13 @@ class SNPoint : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNPoint, "PLScene", PLScene::SceneNode, "Simple point scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Size,	float,					1.0f,										ReadWrite,	DirectValue,	"Point size",				"")
 		pl_attribute(Color,	PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Point color (r/g/b/a)",	"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",					"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

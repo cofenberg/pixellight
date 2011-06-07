@@ -54,9 +54,11 @@ class SNCoordinateAxis3D : public SNCoordinateAxis {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCoordinateAxis3D, "PLScene", PLScene::SNCoordinateAxis, "Scene node for 3D coordinate axis visualisation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Overwritten SceneNode variables
+		// Attributes
+			// Overwritten SceneNode attributes
 		pl_attribute(AABBMax,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -55,13 +55,16 @@ class SNMPostProcessWaves : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessWaves, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_slot_0		(OnSceneNodeUpdate,							"Slot for SceneNode::EventUpdate", "")
-		pl_attribute(Offset,	PLMath::Vector2,	PLMath::Vector2( 1.0f,  1.0f),	ReadWrite, DirectValue,	"Offset",								"")
-		pl_attribute(Speed,		PLMath::Vector2,	PLMath::Vector2(10.0f, 10.0f),	ReadWrite, DirectValue,	"Speed",								"")
-		pl_attribute(Scale,		PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),	ReadWrite, DirectValue,	"Scale",								"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Waves.pp",	ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(Offset,	PLMath::Vector2,	PLMath::Vector2( 1.0f,  1.0f),	ReadWrite,	DirectValue,	"Offset",								"")
+		pl_attribute(Speed,		PLMath::Vector2,	PLMath::Vector2(10.0f, 10.0f),	ReadWrite,	DirectValue,	"Speed",								"")
+		pl_attribute(Scale,		PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),	ReadWrite,	DirectValue,	"Scale",								"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Waves.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnSceneNodeUpdate,	"Slot for SceneNode::EventUpdate",	"")
 	pl_class_end
 
 

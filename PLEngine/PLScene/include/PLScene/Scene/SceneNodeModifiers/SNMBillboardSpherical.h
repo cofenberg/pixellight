@@ -67,7 +67,8 @@ class SNMBillboardSpherical : public SNMBillboard {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMBillboardSpherical, "PLScene", PLScene::SNMBillboard, "Spherical (point rotated) billboard scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

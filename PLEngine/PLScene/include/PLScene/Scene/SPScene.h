@@ -90,7 +90,8 @@ class SPScene : public PLRenderer::SurfacePainter {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SPScene, "PLScene", PLRenderer::SurfacePainter, "Scene graph surface painter class")
-		pl_constructor_1(ParameterConstructor, PLRenderer::Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLRenderer::Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

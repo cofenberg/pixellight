@@ -46,7 +46,8 @@ class TestWidget : public PLGui::Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestWidget, "", PLGui::Widget, "Very simple test widget")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -61,14 +61,17 @@ class SkeletonAniLoaderSmd : public PLMesh::SkeletonAniLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SkeletonAniLoaderSmd, "PLDefaultFileFormats", PLMesh::SkeletonAniLoader, "Mesh loader implementation for smd version 1")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"smd,SMD")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PLMesh::Skeleton&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PLMesh::Skeleton&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	PLMesh::Skeleton&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	PLMesh::Skeleton&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

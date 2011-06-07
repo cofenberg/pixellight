@@ -125,25 +125,31 @@ class RttiObject : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, RttiObject, "", PLCore::Object, "Samples RTTI class")
+		// Properties
 		pl_properties
-			pl_property	 ("PluginType",  "Widget")
-			pl_property  ("FileFormats", "avi mpg mp4")
+			pl_property("PluginType",	"Widget")
+			pl_property("FileFormats",	"avi mpg mp4")
 		pl_properties_end
-		pl_attribute	 (BoolValue,	bool,						 true, ReadWrite, DirectValue,	"Boolean value",			"")
-//		pl_attribute	 (IntValue,		int,						  200, ReadWrite, DirectValue,	"Integer value #1",			"")
-		pl_attribute	 (IntValue,		int,						  200, ReadWrite, GetSet,		"Integer value #1",			"")
-		pl_attribute	 (IntValue2,	int,						   10, ReadOnly,  DirectValue,	"Integer value #2",			"")
-		pl_attribute	 (Number,		pl_enum_type(RttiObject::NestedEnum),Inside1, ReadWrite, DirectValue,	"Enum number",				"")
-		pl_attribute	 (State,		pl_flag_type(Hallo::TestFlags),	0, ReadWrite, DirectValue,	"Flag number",				"")
-		pl_attribute	 (Float,		pl_enum_type(FamousNumbers), 3.1415f, ReadWrite, DirectValue,	"Famous number",			"")
-		pl_method_2		 (Test,			pl_ret_type(void),	int, float,								"Test method",				"")
-		pl_method_1		 (MyMethod,		pl_ret_type(bool),	PLGeneral::String&,						"Test",						"")
-		pl_signal_0		 (Event0,																	"Test event",				"")
-		pl_signal_2		 (Event1,							int,	int,							"Test event #2",			"")
-		pl_slot_1		 (OnSomeEvent0,						int,									"Test event handler",		"")
-		pl_constructor_0 (Create,																	"Default constructor",		"")
-		pl_constructor_1 (CreateValue,						int,									"Create with given value",	"")
-		pl_constructor_2 (CreateValues,						int, float,								"Create with two values",	"")
+		// Attributes
+		pl_attribute(BoolValue,	bool,									true,		ReadWrite,	DirectValue,	"Boolean value",	"")
+//		pl_attribute(IntValue,	int,									200,		ReadWrite,	DirectValue,	"Integer value #1",	"")
+		pl_attribute(IntValue,	int,									200,		ReadWrite,	GetSet,			"Integer value #1",	"")
+		pl_attribute(IntValue2,	int,									10,			ReadOnly,	DirectValue,	"Integer value #2",	"")
+		pl_attribute(Number,	pl_enum_type(RttiObject::NestedEnum),	Inside1,	ReadWrite,	DirectValue,	"Enum number",		"")
+		pl_attribute(State,		pl_flag_type(Hallo::TestFlags),			0,			ReadWrite,	DirectValue,	"Flag number",		"")
+		pl_attribute(Float,		pl_enum_type(FamousNumbers),			3.1415f,	ReadWrite,	DirectValue,	"Famous number",	"")
+		// Constructors
+		pl_constructor_0(Create,						"Default constructor",		"")
+		pl_constructor_1(CreateValue,	int,			"Create with given value",	"")
+		pl_constructor_2(CreateValues,	int,	float,	"Create with two values",	"")
+		// Methods
+		pl_method_2(Test,		pl_ret_type(void),	int, float,			"Test method",	"")
+		pl_method_1(MyMethod,	pl_ret_type(bool),	PLGeneral::String&,	"Test",			"")
+		// Signals
+		pl_signal_0(Event0,					"Test event",		"")
+		pl_signal_2(Event1,	int,	int,	"Test event #2",	"")
+		// Slots
+		pl_slot_1(OnSomeEvent0,	int,	"Test event handler",	"")
 	pl_class_end
 
 

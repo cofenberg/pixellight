@@ -64,8 +64,10 @@ class SNMBillboardCylindrical : public SNMBillboard {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMBillboardCylindrical, "PLScene", PLScene::SNMBillboard, "Cylindrical (axis aligned) billboard scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

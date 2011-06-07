@@ -69,8 +69,10 @@ class SNMPhysicsBodySphere : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodySphere, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics sphere body scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Radius,	float,	0.0f,	ReadWrite,	GetSet,	"Sphere radius, if null, a sphere 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

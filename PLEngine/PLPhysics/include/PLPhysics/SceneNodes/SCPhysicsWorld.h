@@ -65,7 +65,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SCPhysicsWorld, "PLPhysics", PLScene::SceneContainer, "Physics world scene node container")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(PhysicsAPI,			PLGeneral::String,	"PLPhysicsNewton::World",				ReadWrite,	DirectValue,	"Name of the physics API this world is using",																			"")
 		pl_attribute(SimulationActive,		bool,				true,									ReadWrite,	GetSet,			"Is the physics simulation currently active?",																			"")
 		pl_attribute(SimulationSpeed,		float,				1.0f,									ReadWrite,	GetSet,			"Physics simulation speed. A speed of <= 0 is NOT allowed! Do NOT make the factor 'too' (for example > 4) extreme.",	"Min='0.0001'")
@@ -82,6 +82,8 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		pl_attribute(Gravity,				PLMath::Vector3,	PLMath::Vector3(0.0f, -9.81f, 0.0f),	ReadWrite,	GetSet,			"Gravity vector",																										"")
 		pl_attribute(BuoyancyActive,		bool,				false,									ReadWrite,	GetSet,			"Is buoyancy force active?",																							"")
 		pl_attribute(BuoyancyPlaneY,		float,				0.0f,									ReadWrite,	GetSet,			"Buoyancy plane y position",																							"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

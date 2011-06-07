@@ -49,11 +49,14 @@ class TestClass3 : public TestClass2 {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(TESTPLUGIN_RTTI_EXPORT, TestClass3, "TestPlugin::AnotherNamespace", TestPlugin::TestClass2, "Namespace in namespace")
+		// Properties
 		pl_properties
-			pl_property("TestInfo", "This is class TestClass3")
+			pl_property("TestInfo",	"This is class TestClass3")
 		pl_properties_end
-		pl_constructor_0(Create, "Default constructor", "")
-		pl_attribute(DebugAttr, int, 0, ReadWrite, DirectValue, "", "")
+		// Attributes
+		pl_attribute(DebugAttr,	int,	0,	ReadWrite,	DirectValue,	"",	"")
+		// Constructors
+		pl_constructor_0(Create,	"Default constructor",	"")
 	pl_class_end
 
 

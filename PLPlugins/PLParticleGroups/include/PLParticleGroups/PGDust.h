@@ -51,7 +51,8 @@ class PGDust : public PGPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGDust, "PLParticleGroups", PLParticleGroups::PGPhysics, "Dust particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

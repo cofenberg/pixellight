@@ -55,14 +55,16 @@ class SNMPostProcessBloom : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessBloom, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(Luminance,		float,				0.08f,							 ReadWrite, DirectValue, "Luminance",							"")
-		pl_attribute(MiddleGray,	float,				0.18f,							 ReadWrite, DirectValue, "MiddleGray",							"")
-		pl_attribute(WhiteCutoff,	float,				0.99f,							 ReadWrite, DirectValue, "White cutoff",						"")
-		pl_attribute(BloomScale,	float,				1.2f,							 ReadWrite, DirectValue, "Bloom scale",							"")
-		pl_attribute(Strength,		PLMath::Vector2,	PLMath::Vector2(8.0f, 8.0f),	 ReadWrite, DirectValue, "Blur strength",						"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Bloom.pp",	 ReadWrite, ModifyAttr,	 "Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(Luminance,		float,				0.08f,							ReadWrite,	DirectValue,	"Luminance",							"")
+		pl_attribute(MiddleGray,	float,				0.18f,							ReadWrite,	DirectValue,	"MiddleGray",							"")
+		pl_attribute(WhiteCutoff,	float,				0.99f,							ReadWrite,	DirectValue,	"White cutoff",							"")
+		pl_attribute(BloomScale,	float,				1.2f,							ReadWrite,	DirectValue,	"Bloom scale",							"")
+		pl_attribute(Strength,		PLMath::Vector2,	PLMath::Vector2(8.0f, 8.0f),	ReadWrite,	DirectValue,	"Blur strength",						"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Bloom.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

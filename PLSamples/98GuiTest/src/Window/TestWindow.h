@@ -54,12 +54,14 @@ class TestWindow : public PLGui::Window {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestWindow, "", PLGui::Window, "Test window that show some functionality of class Window")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_slot_0(OnToggleFullscreen,						"Button callback", "")
-		pl_slot_0(OnToggleTitleBar,							"Button callback", "")
-		pl_slot_0(OnToggleBorder,							"Button callback", "")
-		pl_slot_1(OnToggleTopmost,		PLGui::ECheckState, "Button callback", "")
-		pl_slot_1(OnToggleTaskbar,		PLGui::ECheckState, "Button callback", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnToggleFullscreen,						"Button callback",	"")
+		pl_slot_0(OnToggleTitleBar,							"Button callback",	"")
+		pl_slot_0(OnToggleBorder,							"Button callback",	"")
+		pl_slot_1(OnToggleTopmost,		PLGui::ECheckState,	"Button callback",	"")
+		pl_slot_1(OnToggleTaskbar,		PLGui::ECheckState,	"Button callback",	"")
 	pl_class_end
 
 

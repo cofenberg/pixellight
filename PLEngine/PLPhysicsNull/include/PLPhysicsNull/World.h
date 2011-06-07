@@ -67,7 +67,8 @@ class World : public PLPhysics::World {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICSNULL_RTTI_EXPORT, World, "PLPhysicsNull", PLPhysics::World, "Null physics world base class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

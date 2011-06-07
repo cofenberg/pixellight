@@ -45,7 +45,8 @@ class Application : public PLGui::GuiApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLGui::GuiApplication, "Application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

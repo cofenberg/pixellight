@@ -71,17 +71,21 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderProc, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader for the Doom 3 'proc' format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"proc,PROC")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(SwapYZ,	bool,	true,	ReadWrite,	DirectValue,	"Swap y/z axis?",							"")
 		pl_attribute(Scale,		float,	0.01f,	ReadWrite,	DirectValue,	"Scale",									"")
 		pl_attribute(LoadMap,	bool,	true,	ReadWrite,	DirectValue,	"Load the 'map' file of this 'proc' file?",	"")
-		pl_method_2(Load, bool, PLScene::SceneContainer&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PLScene::SceneContainer&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

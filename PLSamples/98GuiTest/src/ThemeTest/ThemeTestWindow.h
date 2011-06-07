@@ -45,7 +45,8 @@ class ThemeTestWindow : public PLGui::Window {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ThemeTestWindow, "", PLGui::Window, "Test window that shows some theme functionality")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

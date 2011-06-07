@@ -84,10 +84,11 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPLightEffects, "PLCompositing", PLScene::SceneRendererPass, "Abstract scene renderer pass drawing light effects like lens flares")
+		// Attributes
 		pl_attribute(CoronaMaterial,	PLGeneral::String,		"Data/Effects/DefaultCorona.plfx",	ReadWrite,	GetSet,	"Corona material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(FlareMaterial,		PLGeneral::String,		"Data/Effects/DefaultFlare.plfx",	ReadWrite,	GetSet,	"Flare material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(BlendMaterial,		PLGeneral::String,		"Data/Effects/DefaultBlend.plfx",	ReadWrite,	GetSet,	"Blend material",	"Type='Material Effect Image TextureAni'")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",			"")
 	pl_class_end
 

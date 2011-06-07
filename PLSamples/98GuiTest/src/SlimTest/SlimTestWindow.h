@@ -55,9 +55,11 @@ class SlimTestWindow : public PLGui::Window {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SlimTestWindow, "", PLGui::Window, "Test window that show the new slim widgets")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_slot_0		(OnLeft,			 "Button callback", "")
-		pl_slot_0		(OnRight,			 "Button callback", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnLeft,	"Button callback",	"")
+		pl_slot_0(OnRight,	"Button callback",	"")
 	pl_class_end
 
 

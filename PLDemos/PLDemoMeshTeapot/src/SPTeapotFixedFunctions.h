@@ -45,7 +45,8 @@ class SPTeapotFixedFunctions : public SPTeapot {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SPTeapotFixedFunctions, "", SPTeapot, "Fixed functions teapot surface painter")
-		pl_constructor_1(ParameterConstructor, PLRenderer::Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLRenderer::Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

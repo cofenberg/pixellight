@@ -64,7 +64,8 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPLightEffectsFixedFunctions, "PLCompositing", PLCompositing::SRPLightEffects, "Fixed functions based scene renderer pass drawing light effects like lens flares")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

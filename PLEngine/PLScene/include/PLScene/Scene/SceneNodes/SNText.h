@@ -69,11 +69,12 @@ class SNText : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNText, "PLScene", PLScene::SceneNode, "Abstract text scene node")
+		// Attributes
 		pl_attribute(Text,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"Text do draw",																						"")
 		pl_attribute(Color,		PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Text color",																						"")
 		pl_attribute(Font,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"The used font, if empty the default font is used",													"")
 		pl_attribute(FontSize,	PLGeneral::uint32,		0,											ReadWrite,	GetSet,			"The font size, if null the default font size is used - use scene node scale for dynamic scale",	"Max='100'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																							"")
 	pl_class_end
 

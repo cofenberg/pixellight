@@ -54,9 +54,9 @@ pl_implement_class(SNMPostProcessCrazyBars)
 *    Constructor
 */
 SNMPostProcessCrazyBars::SNMPostProcessCrazyBars(PLScene::SceneNode &cSceneNode) : SNMPostProcess(cSceneNode),
-	SlotOnSceneNodeUpdate(this),
 	ColorScaleY(this),
 	Filename(this),
+	SlotOnSceneNodeUpdate(this),
 	m_fTimer(0.0f)
 {
 	// Overwrite the default setting of the filename

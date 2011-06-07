@@ -51,7 +51,8 @@ class ContainerWidget : public Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, ContainerWidget, "PLGui", PLGui::Widget, "Base class for container widgets")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

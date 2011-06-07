@@ -51,14 +51,17 @@ class GraphPathLoaderPL : public GraphPathLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMATH_RTTI_EXPORT, GraphPathLoaderPL, "PLMath", PLMath::GraphPathLoader, "Graph path loader implementation for the PixelLight graph path XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"path,PATH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, GraphPath&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const GraphPath&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	GraphPath&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	const GraphPath&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

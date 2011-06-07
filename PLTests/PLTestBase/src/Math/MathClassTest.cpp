@@ -55,12 +55,14 @@ class MathTestClass1 : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MathTestClass1, "", PLCore::Object, "Test class demonstrating the math features")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Vector2,	PLMath::Vector2,	PLMath::Vector2(0.0f, 1.0f),				ReadWrite,	DirectValue,	"2D vector",	"")
 		pl_attribute(Vector3,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 2.0f),			ReadWrite,	DirectValue,	"3D vector",	"")
 		pl_attribute(Vector4,	PLMath::Vector4,	PLMath::Vector4(0.0f, 1.0f, 2.0f, 3.0f),	ReadWrite,	DirectValue,	"4D vector",	"")
 		pl_attribute(Color3,	PLGraphics::Color3,	PLGraphics::Color3(0.0f, 1.0f, 2.0f),		ReadWrite,	DirectValue,	"RGB color",	"")
 		pl_attribute(Color4,	PLGraphics::Color4,	PLGraphics::Color4(0.0f, 1.0f, 2.0f, 3.0f),	ReadWrite,	DirectValue,	"RGBA color",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

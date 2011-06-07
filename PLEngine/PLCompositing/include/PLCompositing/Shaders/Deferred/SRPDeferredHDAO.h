@@ -82,15 +82,17 @@ class SRPDeferredHDAO : public SRPDeferredSSAO {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredHDAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering 'High Definition Ambient Occlusion' (HDAO), a 'Screen-Space Ambient Occlusion' (SSAO) technique")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(AORejectRadius,		float,					0.43f,		ReadWrite,	DirectValue,	"If either of a twin pair of sampled camera Z values is further away from the central pixel’s camera Z value than the “Reject Radius”, then the twin pair of samples will not contribute to the occlusion factor. This alleviates a common problem with SSAO, where distant objects can cause a halo of occlusion on the silhouette edges of close by objects.",	"Min='0.0'")
 		pl_attribute(AOAcceptRadius,		float,					0.00312f,	ReadWrite,	DirectValue,	"This works in a similar fashion to the “Reject Radius”. Again if either of a twin pair is closer to the central sample than the “Accept Radius”, then the twin pair of samples will not contribute to the occlusion factor. This can be particularly useful for avoiding unwanted occlusion on low density meshes.",												"Min='0.0'")
 		pl_attribute(NormalScale,			float,					0.3f,		ReadWrite,	DirectValue,	"Controls the influence of per fragment normal vectors.",																																																																											"Min='0.0'")
 		pl_attribute(AcceptAngle,			float,					0.98f,		ReadWrite,	DirectValue,	"Accept angle",																																																																																						"Min='0.0'")
 		pl_attribute(NumberOfRingGathers,	PLGeneral::uint32,		20,			ReadWrite,	DirectValue,	"Number of ring gathers",																																																																																			"Min='1' Max='20'")
 		pl_attribute(NumberOfRings,			PLGeneral::uint32,		4,			ReadWrite,	DirectValue,	"Number of rings",																																																																																					"Min='1' Max='4'")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,			"Flags",																																																																																							"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

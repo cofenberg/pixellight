@@ -56,8 +56,10 @@ class SNMRotationLinearAnimation : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMRotationLinearAnimation, "PLScene", PLScene::SNMTransform, "Linear rotation animation scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Velocity,	PLMath::Vector3,	PLMath::Vector3(0.0f, 10.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation velocity (degree, [0, 360])",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

@@ -57,7 +57,8 @@ class SHList : public SceneHierarchy {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SHList, "PLScene", PLScene::SceneHierarchy, "Scene hierarchy which is in fact a simple list (a special case of a tree :)")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -64,7 +64,8 @@ class GuiApplication : public PLCore::ConsoleApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, GuiApplication, "PLGui", PLCore::ConsoleApplication, "Gui application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

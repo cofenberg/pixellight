@@ -54,8 +54,8 @@ pl_implement_class(SNMPostProcessOldFilm)
 *    Constructor
 */
 SNMPostProcessOldFilm::SNMPostProcessOldFilm(PLScene::SceneNode &cSceneNode) : SNMPostProcess(cSceneNode),
-	SlotOnSceneNodeUpdate(this),
 	Filename(this),
+	SlotOnSceneNodeUpdate(this),
 	m_fScratchPos(0.0f)
 {
 	// Overwrite the default setting of the filename

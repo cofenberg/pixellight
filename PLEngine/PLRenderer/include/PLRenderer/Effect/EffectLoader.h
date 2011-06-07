@@ -52,8 +52,9 @@ class EffectLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, EffectLoader, "PLRenderer", PLCore::LoaderImpl, "Abstract effect loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Effect")
+			pl_property("Type",	"Effect")
 		pl_properties_end
 	pl_class_end
 

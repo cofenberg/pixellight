@@ -52,8 +52,9 @@ class TerrainLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, TerrainLoader, "PLScene", PLCore::LoaderImpl, "Abstract terrain loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Terrain")
+			pl_property("Type",	"Terrain")
 		pl_properties_end
 	pl_class_end
 

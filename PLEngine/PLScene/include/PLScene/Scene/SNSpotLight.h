@@ -98,14 +98,16 @@ class SNSpotLight : public SNPointLight {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNSpotLight, "PLScene", PLScene::SNPointLight, "Spot light scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(OuterAngle,	float,						45.0f,	ReadWrite,	GetSet,	"Outer cone angle in degree",									"")
 		pl_attribute(InnerAngle,	float,						35.0f,	ReadWrite,	GetSet,	"Inner cone angle in degree (smaller than the outer angle)",	"")
 		pl_attribute(ZNear,			float,						0.1f,	ReadWrite,	GetSet,	"Near clipping plane",											"")
 		pl_attribute(Aspect,		float,						1.0f,	ReadWrite,	GetSet,	"Aspect factor (only used if 'NoCone'-flag is set!)",			"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		0,		ReadWrite,	GetSet,	"Flags",														"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,		ReadWrite,	GetSet,	"Debug flags",													"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -51,12 +51,15 @@ class ScriptBinding_PL_Timing : public PLScript::ScriptBinding {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ScriptBinding_PL_Timing, "PLScriptBindings", PLScript::ScriptBinding, "Timing script binding class")
+		// Properties
 		pl_properties
-			pl_property("Namespace", "PL.Timing")
+			pl_property("Namespace",	"PL.Timing")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetTimeDifference, float, "Returns the past time since last frame (seconds)", "")
-		pl_method_0(GetFramesPerSecond, float, "Returns the current frames per second (FPS)", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_0(GetTimeDifference,	float,	"Returns the past time since last frame (seconds)",	"")
+		pl_method_0(GetFramesPerSecond,	float,	"Returns the current frames per second (FPS)",		"")
 	pl_class_end
 
 

@@ -72,13 +72,15 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNPhysicsMouseInteraction, "PLPhysics", PLScene::SceneNode, "Mouse physics interaction scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(InputSemantic,		PLGeneral::String,		"",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",								"")
 		pl_attribute(MaxPickingRange,	float,					0.0f,				ReadWrite,	DirectValue,	"Maximum picking range, if 0.0, there's no range limit (physics container space)",	"Min='0.0'")
 		pl_attribute(ThrowForce,		float,					2.0f,				ReadWrite,	DirectValue,	"Throw force",																		"Min='0.0'")
 		pl_attribute(ForceLineName,		PLGeneral::String,		"PhysicsForceLine",	ReadWrite,	GetSet,			"Name of the force visualization line node",										"")
-		// Overwritten PLScene::SceneNode variables
+			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCulling,			ReadWrite,	GetSet,			"Flags",																			"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

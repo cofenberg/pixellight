@@ -56,7 +56,8 @@ class SHKdTree : public SceneHierarchy {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SHKdTree, "PLScene", PLScene::SceneHierarchy, "Kd tree scene hierarchy (axis aligned binary tree)")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

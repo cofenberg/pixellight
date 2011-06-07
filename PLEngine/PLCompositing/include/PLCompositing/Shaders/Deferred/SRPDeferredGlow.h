@@ -90,13 +90,15 @@ class SRPDeferredGlow : public SRPDeferred {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGlow, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering glow effect")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(GlowFactor,		float,					1.0f,	ReadWrite,	DirectValue,	"Glow factor",																															"")
 		pl_attribute(GlowBlurPasses,	PLGeneral::uint32,		4,		ReadWrite,	DirectValue,	"Number of glow blur passes, should be a multiple of 2",																				"")
 		pl_attribute(GlowDownscale,		float,					8.0f,	ReadWrite,	DirectValue,	"Glow downscale factor, should be a multiple of 2",																						"Min='1.0'")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

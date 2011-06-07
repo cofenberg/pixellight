@@ -69,7 +69,9 @@ class BasicSceneApplication : public SceneApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLEngine::SceneApplication, "Basic scene application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
 		pl_method_0(GetScene,				PLScene::SceneContainer*,								"Returns the scene container (the 'concrete scene'), can be a null pointer",										"")
 		pl_method_1(SetScene,				void,						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",	"")
 		pl_method_0(GetSceneRendererTool,	SceneRendererTool*,										"Returns the scene renderer tool, never a null pointer",															"")

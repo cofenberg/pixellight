@@ -51,14 +51,17 @@ class PostProcessLoaderPL : public PostProcessLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, PostProcessLoaderPL, "PLCompositing", PLCompositing::PostProcessLoader, "Post process loader implementation for the PixelLight post process XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"pp,PP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PostProcessManager&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PostProcessManager&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	PostProcessManager&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	PostProcessManager&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

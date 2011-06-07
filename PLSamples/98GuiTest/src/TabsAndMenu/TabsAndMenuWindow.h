@@ -56,7 +56,8 @@ class TabsAndMenuWindow : public PLGui::Window {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TabsAndMenuWindow, "", PLGui::Window, "Test window with a menu and a tab container")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

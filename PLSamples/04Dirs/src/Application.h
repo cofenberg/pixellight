@@ -45,6 +45,7 @@ class Application : public PLCore::ConsoleApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
+		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 

@@ -114,13 +114,15 @@ class SoundManager : public PLSound::SoundManager {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SoundManager, "PLSoundFMOD", PLSound::SoundManager, "FMOD sound backend")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(BufferSize,	PLGeneral::uint32,				200,				ReadWrite,	DirectValue,	"FMOD internal mixing buffer size (in milliseconds)",																							"")
 		pl_attribute(Output,		pl_enum_type(ESoundcardDriver),	AUTODETECT,			ReadWrite,	DirectValue,	"The output system to be used",																													"")
 		pl_attribute(Driver,		PLGeneral::uint32,				0,					ReadWrite,	DirectValue,	"Selects a soundcard driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",	"")
 		pl_attribute(Mixer,			pl_enum_type(EQuality),			QUALITY_AUTODETECT,	ReadWrite,	DirectValue,	"Digital mixer type",																															"")
 		pl_attribute(OutputRate,	PLGeneral::uint32,				44100,				ReadWrite,	DirectValue,	"Output rate in hz between 4000 and 65535",																										"")
 		pl_attribute(Channels,		PLGeneral::uint32,				32,					ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are autodetected)",															"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

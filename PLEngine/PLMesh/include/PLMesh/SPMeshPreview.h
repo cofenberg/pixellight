@@ -59,7 +59,8 @@ class SPMeshPreview : public PLRenderer::SPPreview {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, SPMeshPreview, "PLMesh", PLRenderer::SPPreview, "Mesh preview surface painter class")
-		pl_constructor_1(ParameterConstructor, PLRenderer::Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLRenderer::Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

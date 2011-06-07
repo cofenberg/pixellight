@@ -86,6 +86,7 @@ class MeshCreator : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreator, "PLMesh", PLCore::Object, "Abstract mesh creator base class")
+		// Attributes
 		pl_attribute(DrawStyle,	pl_enum_type(EDrawStyle),	Fill,							ReadWrite,	DirectValue,	"Draw style",										"")
 		pl_attribute(Order,		bool,						0,								ReadWrite,	DirectValue,	"Geometry order (0=clockwise  1=counterclockwise)",	"")
 		pl_attribute(TexCoords,	bool,						true,							ReadWrite,	DirectValue,	"Generate texture coordinates?",					"")

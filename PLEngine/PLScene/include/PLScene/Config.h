@@ -90,10 +90,12 @@ class EngineGeneralConfig : public EngineConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, EngineGeneralConfig, "PLScene", PLScene::EngineConfigGroup, "Engine general configuration classes")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ConsoleActivated,		bool,				true,	ReadWrite,	DirectValue,	"Is the console active?",																				"")
 		pl_attribute(MaxTimeDifference,		float,				0.15f,	ReadWrite,	GetSet,			"The maximum time difference since the last frame in seconds",											"Min='0.0001'")
 		pl_attribute(FPSLimit,				float,				0.0f,	ReadWrite,	GetSet,			"FPS limit, 0 if there's no FPS limitation",															"Min='0.0'")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -137,13 +139,15 @@ class EngineDebugConfig : public EngineConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, EngineDebugConfig, "PLScene", PLScene::EngineConfigGroup, "Engine debug configuration classes")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ShowFPS,				bool,	false,	ReadWrite,	DirectValue,	"Show FPS?",						"")
 		pl_attribute(ShowCoordinateAxis,	bool,	false,	ReadWrite,	DirectValue,	"Show coordinate axis?",			"")
 		pl_attribute(ShowXZPlane,			bool,	false,	ReadWrite,	DirectValue,	"Show x/z plane?",					"")
 		pl_attribute(ShowXYPlane,			bool,	false,	ReadWrite,	DirectValue,	"Show x/y plane?",					"")
 		pl_attribute(ShowYZPlane,			bool,	false,	ReadWrite,	DirectValue,	"Show y/z plane?",					"")
 		pl_attribute(NormalScale,			float,	0.1f,	ReadWrite,	DirectValue,	"Scale of normals when visualized",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -177,7 +181,7 @@ class EngineGraphicConfig : public EngineConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, EngineGraphicConfig, "PLScene", PLScene::EngineConfigGroup, "Engine graphics configuration classes")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(RendererAPI,				PLGeneral::String,							"PLRendererOpenGL::Renderer",				ReadWrite,	DirectValue,	"The used renderer API",													"")
 		pl_attribute(RendererMode,				pl_enum_type(PLRenderer::Renderer::EMode),	PLRenderer::Renderer::ModeBoth,				ReadWrite,	DirectValue,	"The mode the renderer should run in (fixed functions, shaders or both)",	"")
 		pl_attribute(DefaultFontTexture,		PLGeneral::String,							"Data/Fonts/LinLibertine_Re-2.7.9.9.otf",	ReadWrite,	DirectValue,	"The default texture font",													"")
@@ -187,6 +191,8 @@ class EngineGraphicConfig : public EngineConfigGroup {
 		pl_attribute(SlopeScaleDepthBias,		float,										-0.1f,										ReadWrite,	DirectValue,	"[DEBUG] Slope scale depth bias",											"")
 		pl_attribute(DepthBias,					float,										-0.1f,										ReadWrite,	DirectValue,	"[DEBUG] Depth bias",														"")
 
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

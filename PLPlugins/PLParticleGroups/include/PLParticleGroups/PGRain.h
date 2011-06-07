@@ -51,7 +51,7 @@ class PGRain : public PGPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGRain, "PLParticleGroups", PLParticleGroups::PGPhysics, "Rain particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(EnergyPerSec,		PLGeneral::uint32,	30,							ReadWrite,	DirectValue,	"The energy consumption per second of one particle",					"")
 		pl_attribute(EnergyMin,			PLGeneral::uint32,	300,						ReadWrite,	DirectValue,	"Minimum of energy",													"")
 		pl_attribute(EnergyRange,		PLGeneral::uint32,	90,							ReadWrite,	DirectValue,	"EnergyMin + EnergyRange = particles energy",							"")
@@ -60,9 +60,11 @@ class PGRain : public PGPhysics {
 		pl_attribute(MediumSize,		PLGeneral::uint32,	5,							ReadWrite,	DirectValue,	"Medium size for each particles",										"")
 		pl_attribute(DownVsAwayRatio,	PLGeneral::uint32,	150,						ReadWrite,	DirectValue,	"150 -> every 150 particle fly randomly away instead of falling down",	"")
 		pl_attribute(BuildPerSec,		PLGeneral::uint32,	100,						ReadWrite,	DirectValue,	"Particle building speed",												"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,			PLGeneral::String,	"Data/Textures/PGRain.dds",	ReadWrite,	GetSet,			"Particle group material",												"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,			PLGeneral::uint32,	800,						ReadWrite,	GetSet,			"Number of particles",													"Min=1")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -102,6 +102,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneRendererPass, "PLScene", PLCore::Object, "Abstract scene renderer pass class")
+		// Attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																				"")
 		pl_attribute(Name,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Optional scene renderer pass name. If not defined, a name is chosen automatically",	"")
 	pl_class_end

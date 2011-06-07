@@ -99,10 +99,12 @@ class SceneNodeModifier : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneNodeModifier, "PLScene", PLCore::Object, "Abstract scene node modifier (other name: controller) class")
-		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
+		// Properties
 		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SceneNode")
+			pl_property("SceneNodeClass",	"PLScene::SceneNode")
 		pl_properties_end
+		// Attributes
+		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
 	pl_class_end
 
 

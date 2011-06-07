@@ -45,8 +45,10 @@ class SNProjectile : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNProjectile, "", PLScene::SceneNode, "Projectile scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Direction,	PLMath::Vector2,	PLMath::Vector2(0.0f, 0.0f),	ReadWrite,	DirectValue,	"Projectile direction",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

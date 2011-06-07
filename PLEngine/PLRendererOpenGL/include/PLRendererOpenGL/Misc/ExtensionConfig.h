@@ -51,8 +51,8 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, RendererOpenGLExtensionConfig, "PLRendererOpenGL", PLCore::ConfigGroup, "Renderer OpenGL extension configuration class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// WGL (Windows only)
+		// Attributes
+			// WGL (Windows only)
 		pl_attribute(WGL_EXT_swap_control,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_extensions_string,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_pbuffer,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
@@ -62,7 +62,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(WGL_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ATI_pixel_format_float,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_NV_float_buffer,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// EXT
+			// EXT
 		pl_attribute(GL_EXT_compiled_vertex_array,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_draw_range_elements,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_fog_coord,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
@@ -85,7 +85,7 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_EXT_framebuffer_blit,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_geometry_shader4,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_EXT_transform_feedback,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// ARB
+			// ARB
 		pl_attribute(GL_ARB_texture_float,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_color_buffer_float,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_multitexture,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
@@ -110,23 +110,25 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 		pl_attribute(GL_ARB_texture_rectangle,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ARB_uniform_buffer_object,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// ATI
+			// ATI
 		pl_attribute(GL_ATI_separate_stencil,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_ATI_draw_buffers,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// AMD
+			// AMD
 		pl_attribute(GL_AMD_vertex_shader_tessellator,	bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// NV
+			// NV
 		pl_attribute(GL_NV_texture_rectangle,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GL_NV_occlusion_query,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// SGIS
+			// SGIS
 		pl_attribute(GL_SGIS_generate_mipmap,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// HP
+			// HP
 		pl_attribute(GL_HP_occlusion_test,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		// GLX (Linux only)
+			// GLX (Linux only)
 		pl_attribute(GLX_SGIX_pbuffer,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_ATI_pixel_format_float,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_NV_float_buffer,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

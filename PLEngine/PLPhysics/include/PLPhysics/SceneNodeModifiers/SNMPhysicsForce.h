@@ -53,8 +53,10 @@ class SNMPhysicsForce : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsForce, "PLPhysics", PLPhysics::SNMPhysics, "Physics scene node modifier adding a force to the first found physics body of the owner scene node")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Force,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Force to add",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

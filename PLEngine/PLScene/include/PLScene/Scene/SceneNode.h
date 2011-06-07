@@ -191,17 +191,8 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 	pl_class(PLS_RTTI_EXPORT, SceneNode, "PLScene", PLCore::Object, "Abstract scene node (leaf node) class")
 		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconSceneNode.dds")
+			pl_property("Icon",	"Data/Textures/IconSceneNode.dds")
 		pl_properties_end
-		// Methods
-		pl_method_0(IsActive,		bool,														"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																						"")
-		pl_method_1(SetActive,		void,				bool,									"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																										"")
-		pl_method_0(IsVisible,		bool,														"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",	"")
-		pl_method_1(SetVisible,		void,				bool,									"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																													"")
-		pl_method_0(IsFrozen,		bool,														"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'.",																																																						"")
-		pl_method_1(SetFrozen,		void,				bool,									"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																										"")
-		pl_method_2(AddModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::String,	"Adds a modifier, modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier)",																			"")
-		pl_method_2(GetModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::uint32,	"Returns a modifier, modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",												"")
 		// Attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),		0,									ReadWrite,	GetSet,			"Flags",																															"")
 		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,									ReadWrite,	GetSet,			"Debug flags",																														"")
@@ -212,6 +203,15 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		pl_attribute(AABBMin,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum position of the 'scene node space' axis aligned bounding box",																"")
 		pl_attribute(AABBMax,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Maximum position of the 'scene node space' axis aligned bounding box",																"")
 		pl_attribute(Name,				PLGeneral::String,			"",									ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
+		// Methods
+		pl_method_0(IsActive,		bool,														"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																						"")
+		pl_method_1(SetActive,		void,				bool,									"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																										"")
+		pl_method_0(IsVisible,		bool,														"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",	"")
+		pl_method_1(SetVisible,		void,				bool,									"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																													"")
+		pl_method_0(IsFrozen,		bool,														"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'.",																																																						"")
+		pl_method_1(SetFrozen,		void,				bool,									"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																										"")
+		pl_method_2(AddModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::String,	"Adds a modifier, modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier)",																			"")
+		pl_method_2(GetModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::uint32,	"Returns a modifier, modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",												"")
 	pl_class_end
 
 

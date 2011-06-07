@@ -52,11 +52,13 @@ class MeshCreatorTriangle : public MeshCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorTriangle, "PLMesh", PLMesh::MeshCreator, "Triangle mesh creator class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(V1,		PLMath::Vector3,	PLMath::Vector3(-0.5f, -0.5f, 0.0f),	ReadWrite,	DirectValue,	"Vertex 1",			"")
 		pl_attribute(V2,		PLMath::Vector3,	PLMath::Vector3( 0.5f, -0.5f, 0.0f),	ReadWrite,	DirectValue,	"Vertex 2",			"")
 		pl_attribute(V3,		PLMath::Vector3,	PLMath::Vector3( 0.5f,  0.5f, 0.0f),	ReadWrite,	DirectValue,	"Vertex 3",			"")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3( 0.0f,  0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -51,14 +51,17 @@ class ChunkLoaderPLXml : public ChunkLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, ChunkLoaderPLXml, "PLCore", PLCore::ChunkLoader, "Chunk loader implementation for the PixelLight XML chunk file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"xchunk,XCHUNK")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
+		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, Chunk&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const Chunk&, PLGeneral::File&, "Save method", "")
+		// Methods
+		pl_method_2(Load,	bool,	Chunk&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	const Chunk&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

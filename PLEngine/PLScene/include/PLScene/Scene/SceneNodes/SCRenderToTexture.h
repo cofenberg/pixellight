@@ -117,7 +117,7 @@ class SCRenderToTexture : public SceneContainer {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SCRenderToTexture, "PLScene", PLScene::SceneContainer, "Render to texture scene container")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Cube,			bool,							false,					ReadWrite,	GetSet,			"Render to cube texture? If 'true', only 'Width' is used which must be a power of two",	"")
 		pl_attribute(Width,			PLGeneral::uint16,				512,					ReadWrite,	GetSet,			"Texture width",																		"Min='16'")
 		pl_attribute(Height,		PLGeneral::uint16,				512,					ReadWrite,	GetSet,			"Texture height",																		"Min='16'")
@@ -129,9 +129,11 @@ class SCRenderToTexture : public SceneContainer {
 		pl_attribute(SceneRenderer,	PLGeneral::String,				"Forward.sr",			ReadWrite,	GetSet,			"Name of the used scene renderer, only used if the painter is derived of 'SPScene'",	"")
 		pl_attribute(SceneName,		PLGeneral::String,				"Parent",				ReadWrite,	GetSet,			"Name of the scene to renderer, only used if the painter is derived of 'SPScene'",		"")
 		pl_attribute(CameraName,	PLGeneral::String,				"",						ReadWrite,	DirectValue,	"Name of the camera to use, only used if the painter is derived of 'SPScene'",			"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),			NoCulling|NoRecursion,	ReadWrite,	GetSet,			"Flags",																				"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),		0,						ReadWrite,	GetSet,			"Debug flags",																			"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

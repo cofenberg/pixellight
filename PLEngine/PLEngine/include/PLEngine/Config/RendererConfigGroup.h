@@ -116,24 +116,26 @@ class RendererConfig : public RendererConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, RendererConfig, "PLEngine", PLEngine::RendererConfigGroup, "Renderer configuration class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// General
+		// Attributes
+			// General
 		pl_attribute(Fullscreen,						bool,				false,	ReadWrite,	DirectValue,	"Fullscreen mode?",																																															"")
 		pl_attribute(ZBufferBits,						PLGeneral::uint32,	24,		ReadWrite,	DirectValue,	"Z buffer bits (just a hint)",																																												"")
 		pl_attribute(StencilBits,						PLGeneral::uint32,	8,		ReadWrite,	DirectValue,	"Stencil buffer bits (just a hint)",																																										"")
 		pl_attribute(MultisampleAntialiasingSamples,	PLGeneral::uint32,	4,		ReadWrite,	DirectValue,	"Number of multisample antialiasing samples per pixel (just a hint)",																																		"")
 		pl_attribute(DefaultShaderLanguage,				PLGeneral::String,	"",		ReadWrite,	DirectValue,	"The name of the default shader language of the renderer (for example \"GLSL\" or \"Cg\"), if the string is empty, the default is chosen by the renderer implementation, this information is just a hint",	"")
-		// Display mode
+			// Display mode
 		pl_attribute(DisplayWidth,						PLGeneral::uint32,	800,	ReadWrite,	DirectValue,	"Display width",																																															"")
 		pl_attribute(DisplayHeight,						PLGeneral::uint32,	600,	ReadWrite,	DirectValue,	"Display height",																																															"")
 		pl_attribute(DisplayColorBits,					PLGeneral::uint32,	32,		ReadWrite,	DirectValue,	"Color bits",																																																"")
 		pl_attribute(DisplayFrequency,					PLGeneral::uint32,	0,		ReadWrite,	DirectValue,	"Display frequency",																																														"")
-		// Misc
+			// Misc
 		pl_attribute(SwapInterval,						PLGeneral::uint32,	1,		ReadWrite,	DirectValue,	"The swap interval (vertical synchronisation)",																																								"")
 		pl_attribute(UseExtensions,						bool,				true,	ReadWrite,	DirectValue,	"Use extensions?",																																															"")
 		pl_attribute(TextureQuality,					float,				1.0f,	ReadWrite,	DirectValue,	"Texture quality",																																															"Min='0.0' Max='1.0'")
 		pl_attribute(TextureMipmaps,					bool,				true,	ReadWrite,	DirectValue,	"Use texture mipmaps by default?",																																											"")
 		pl_attribute(TextureCompression,				bool,				true,	ReadWrite,	DirectValue,	"Use texture compression by default?",																																										"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

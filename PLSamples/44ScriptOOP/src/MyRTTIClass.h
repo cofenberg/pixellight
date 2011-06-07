@@ -41,28 +41,34 @@
 class MyRTTIClass : public PLCore::Object {
 
 
+		// Properties
+		// Attributes
+		// Constructors
+		// Methods
+		// Signals
+		// Slots
+		
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, don't take it to serious")
-		// Properties
 		pl_properties
-			pl_property("MyProperty", "This is a property value")
+			pl_property("MyProperty",	"This is a property value")
 		pl_properties_end
+		// Attributes
+		pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
+		pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
 		// Constructors
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_0(Return42,			int,					"Returns 42",							"")
 		pl_method_1(IgnoreTheParameter,	void,			float,	"Ignores the provided parameter",		"")
 		pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
 		pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
 		// Signals
-		pl_signal_1(MySignal, PLGeneral::String, "My signal, automatically emitted after the name was changed", "")
+		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed",	"")
 		// Slots
-		pl_slot_0(OnMyEvent, "My slot", "")
-		// Attributes
-		pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
-		pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
+		pl_slot_0(OnMyEvent,	"My slot",	"")
 	pl_class_end
 
 

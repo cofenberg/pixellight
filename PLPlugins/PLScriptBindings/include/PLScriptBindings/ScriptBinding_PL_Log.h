@@ -51,16 +51,19 @@ class ScriptBinding_PL_Log : public PLScript::ScriptBinding {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ScriptBinding_PL_Log, "PLScriptBindings", PLScript::ScriptBinding, "Log script binding class")
+		// Properties
 		pl_properties
-			pl_property("Namespace", "PL.Log")
+			pl_property("Namespace",	"PL.Log")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(OutputAlways,   void, PLGeneral::String, "Writes the given string into the log ('always' log level)",   "")
-		pl_method_1(OutputCritical, void, PLGeneral::String, "Writes the given string into the log ('critical' log level)", "")
-		pl_method_1(OutputError,    void, PLGeneral::String, "Writes the given string into the log ('error' log level)",    "")
-		pl_method_1(OutputWarning,  void, PLGeneral::String, "Writes the given string into the log ('warning' log level)",  "")
-		pl_method_1(OutputInfo,     void, PLGeneral::String, "Writes the given string into the log ('info' log level)",     "")
-		pl_method_1(OutputDebug,    void, PLGeneral::String, "Writes the given string into the log ('debug' log level)",    "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_1(OutputAlways,	void,	PLGeneral::String,	"Writes the given string into the log ('always' log level)",	"")
+		pl_method_1(OutputCritical,	void,	PLGeneral::String,	"Writes the given string into the log ('critical' log level)",	"")
+		pl_method_1(OutputError,	void,	PLGeneral::String,	"Writes the given string into the log ('error' log level)",		"")
+		pl_method_1(OutputWarning,	void,	PLGeneral::String,	"Writes the given string into the log ('warning' log level)",	"")
+		pl_method_1(OutputInfo,		void,	PLGeneral::String,	"Writes the given string into the log ('info' log level)",		"")
+		pl_method_1(OutputDebug,	void,	PLGeneral::String,	"Writes the given string into the log ('debug' log level)",		"")
 	pl_class_end
 
 

@@ -72,11 +72,13 @@ class SNLoadScreenPL : public SNLoadScreenBase {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNLoadScreenPL, "PLScene", PLScene::SNLoadScreenBase, "Load screen scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ClearFlags,	pl_flag_type(EClearFlags),	Color|Depth,								ReadWrite,	DirectValue,	"Clear flags",				"")
 		pl_attribute(ClearColor,	PLGraphics::Color4,			PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Clear color (r/g/b/a)",	"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		NoCulling,									ReadWrite,	GetSet,			"Flags",					"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

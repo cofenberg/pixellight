@@ -55,7 +55,8 @@ class SNAntiPortal : public SNPortal {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNAntiPortal, "PLScene", PLScene::SNPortal, "Anti-portal scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -49,9 +49,11 @@ class TestConfigTest : public ConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestConfigTest, "", PLCore::ConfigGroup, "Configuration test class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Detail,	float,	1.0f,	ReadWrite,	DirectValue,	"Detail",					"")
 		pl_attribute(ShowFPS,	bool,	false,	ReadWrite,	DirectValue,	"Show Frames Per Second?",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -83,8 +85,10 @@ class TestConfigUser : public ConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestConfigUser, "", PLCore::ConfigGroup, "Configuration user class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Players,	int,	1,	ReadWrite,	DirectValue,	"Number of players",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

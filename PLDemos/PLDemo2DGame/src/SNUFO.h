@@ -45,9 +45,11 @@ class SNUFO : public PLSound::SNSound {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNUFO, "", PLSound::SNSound, "UFO scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Overwritten PLSound::SNSound variables
+		// Attributes
+			// Overwritten PLSound::SNSound attributes
 		pl_attribute(Sound,	PLGeneral::String,	"Data/Sounds/UFO.ogg",	ReadWrite,	GetSet,	"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

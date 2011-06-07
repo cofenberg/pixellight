@@ -88,8 +88,9 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsJoint, "PLPhysics", PLPhysics::SNMPhysics, "Abstract physics joint scene node modifier")
+		// Attributes
 		pl_attribute(Target,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined",	"")
-		// Overwritten PLScene::SceneNodeModifier variables
+			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																										"")
 	pl_class_end
 

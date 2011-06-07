@@ -55,16 +55,19 @@ class SNMPostProcessCrazyColors : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessCrazyColors, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_slot_0		(OnSceneNodeUpdate,							 "Slot for SceneNode::EventUpdate", "")
-		pl_attribute(ColorScaleX,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.0f,  2.0f), ReadWrite, DirectValue,	"Color scale x",						"")
-		pl_attribute(ColorSpeedX,	PLMath::Vector3,	PLMath::Vector3( 1.0f,  1.0f,  1.0f), ReadWrite, DirectValue,	"Color speed x",						"")
-		pl_attribute(ColorOffsetX,	PLMath::Vector3,	PLMath::Vector3(10.0f, 20.0f, 30.0f), ReadWrite, DirectValue,	"Color offset x",						"")
-		pl_attribute(ColorScaleY,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.0f,  2.0f), ReadWrite, DirectValue,	"Color scale y",						"")
-		pl_attribute(ColorSpeedY,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.5f,  3.0f), ReadWrite, DirectValue,	"Color speed y",						"")
-		pl_attribute(ColorOffsetY,	PLMath::Vector3,	PLMath::Vector3(10.0f, 20.0f, 30.0f), ReadWrite, DirectValue,	"Color offset y",						"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/CrazyColors.pp",  ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(ColorScaleX,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.0f,  2.0f),	ReadWrite,	DirectValue,	"Color scale x",						"")
+		pl_attribute(ColorSpeedX,	PLMath::Vector3,	PLMath::Vector3( 1.0f,  1.0f,  1.0f),	ReadWrite,	DirectValue,	"Color speed x",						"")
+		pl_attribute(ColorOffsetX,	PLMath::Vector3,	PLMath::Vector3(10.0f, 20.0f, 30.0f),	ReadWrite,	DirectValue,	"Color offset x",						"")
+		pl_attribute(ColorScaleY,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.0f,  2.0f),	ReadWrite,	DirectValue,	"Color scale y",						"")
+		pl_attribute(ColorSpeedY,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.5f,  3.0f),	ReadWrite,	DirectValue,	"Color speed y",						"")
+		pl_attribute(ColorOffsetY,	PLMath::Vector3,	PLMath::Vector3(10.0f, 20.0f, 30.0f),	ReadWrite,	DirectValue,	"Color offset y",						"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/CrazyColors.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnSceneNodeUpdate,	"Slot for SceneNode::EventUpdate",	"")
 	pl_class_end
 
 

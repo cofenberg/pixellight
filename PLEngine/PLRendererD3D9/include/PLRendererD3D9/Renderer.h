@@ -66,7 +66,8 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Renderer, "PLRendererD3D9", PLRenderer::RendererBackend, "Direct3D 9 renderer backend")
-		pl_constructor_5(DefaultConstructor, pl_enum_type(EMode), PLGeneral::uint32, PLGeneral::uint32, PLGeneral::uint32, PLGeneral::String, "Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter", "")
+		// Constructors
+		pl_constructor_5(DefaultConstructor,	pl_enum_type(EMode),	PLGeneral::uint32,	PLGeneral::uint32,	PLGeneral::uint32,	PLGeneral::String,	"Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter",	"")
 	pl_class_end
 
 

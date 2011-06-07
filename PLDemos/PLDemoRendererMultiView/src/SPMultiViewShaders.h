@@ -55,7 +55,8 @@ class SPMultiViewShaders : public SPMultiView {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SPMultiViewShaders, "", SPMultiView, "Shaders based multi view surface painter")
-		pl_constructor_1(ParameterConstructor, PLRenderer::Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLRenderer::Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

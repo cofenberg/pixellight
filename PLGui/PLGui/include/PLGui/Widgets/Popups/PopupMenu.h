@@ -51,7 +51,8 @@ class PopupMenu : public AbstractMenu {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, PopupMenu, "PLGui", PLGui::AbstractMenu, "Popup menu widget")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

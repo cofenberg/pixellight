@@ -69,8 +69,10 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyEllipsoid, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics ellipsoid body scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Radius,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Ellipsoid radius along each axis, if null, a ellipsoid 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0 0.0 0.0'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

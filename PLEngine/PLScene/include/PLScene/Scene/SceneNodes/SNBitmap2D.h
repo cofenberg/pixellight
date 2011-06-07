@@ -79,11 +79,13 @@ class SNBitmap2D : public SNBitmap {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNBitmap2D, "PLScene", PLScene::SNBitmap, "2D bitmap (overlay) scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Width,		float,					1.0f,		ReadWrite,	DirectValue,	"Bitmap width 'screen space' between 0.0 and 1.0",	"")
 		pl_attribute(Height,	float,					1.0f,		ReadWrite,	DirectValue,	"Bitmap height 'screen space' between 0.0 and 1.0",	"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	NoCulling,	ReadWrite,	GetSet,			"Flags",											"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

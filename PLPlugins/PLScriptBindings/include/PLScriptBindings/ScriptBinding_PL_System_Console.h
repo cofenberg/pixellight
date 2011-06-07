@@ -51,11 +51,14 @@ class ScriptBinding_PL_System_Console : public PLScript::ScriptBinding {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ScriptBinding_PL_System_Console, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
+		// Properties
 		pl_properties
-			pl_property("Namespace", "PL.System.Console")
+			pl_property("Namespace",	"PL.System.Console")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(Print, void, PLGeneral::String, "Prints the given string into the system console",   "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
+		// Methods
+		pl_method_1(Print,	void,	PLGeneral::String,	"Prints the given string into the system console",	"")
 	pl_class_end
 
 

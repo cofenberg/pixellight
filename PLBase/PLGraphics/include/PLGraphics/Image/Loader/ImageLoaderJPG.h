@@ -54,16 +54,19 @@ class ImageLoaderJPG : public ImageLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderJPG, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for JPEG (\"Joint Photographic Experts Group\") file formats")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"jpg,jpeg,jpe,jif,jfif,jfi,JPG,JPEG,JPE,JIF,JFIF,JFI")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, Image&, PLGeneral::File&, "Load method, no fancy upsampling and no interblock smoothing is applied", "")
-		pl_method_4(LoadParams, bool, Image&, PLGeneral::File&, bool, bool, "Load method. Parameters: First 'bool' parameter determines whether or not fancy upsampling is applied, second 'bool' parameter whether or not interblock smoothing is applied.", "")
-		pl_method_2(Save, bool, const Image&, PLGeneral::File&, "Save method, using 100% quality setting", "")
-		pl_method_3(SaveParams, bool, const Image&, PLGeneral::File&, PLGeneral::uint32, "Save method, quality (0...100) as first parameter", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,		bool,	Image&,			PLGeneral::File&,						"Load method, no fancy upsampling and no interblock smoothing is applied",																											"")
+		pl_method_4(LoadParams,	bool,	Image&,			PLGeneral::File&,	bool,	bool,		"Load method. Parameters: First 'bool' parameter determines whether or not fancy upsampling is applied, second 'bool' parameter whether or not interblock smoothing is applied.",	"")
+		pl_method_2(Save,		bool,	const Image&,	PLGeneral::File&,						"Save method, using 100% quality setting",																																			"")
+		pl_method_3(SaveParams,	bool,	const Image&,	PLGeneral::File&,	PLGeneral::uint32,	"Save method, quality (0...100) as first parameter",																																"")
 	pl_class_end
 
 

@@ -55,11 +55,13 @@ class SNMPostProcessLayer : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessLayer, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(LayerMap,	PLGeneral::String,	"Data/Textures/PostProcess/Spot.dds",		ReadWrite, DirectValue,	"Filename of the layer map to use",		"Type='Image'")
-		pl_attribute(Blend,		PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite, DirectValue,	"Blend factor",							"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Layer.pp",				ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(LayerMap,	PLGeneral::String,	"Data/Textures/PostProcess/Spot.dds",		ReadWrite,	DirectValue,	"Filename of the layer map to use",		"Type='Image'")
+		pl_attribute(Blend,		PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Blend factor",							"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Layer.pp",				ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

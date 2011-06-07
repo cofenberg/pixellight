@@ -51,11 +51,14 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyTerrain, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics terrain body scene node modifier")
+		// Properties
 		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SNTerrain")
+			pl_property("SceneNodeClass",	"PLScene::SNTerrain")
 		pl_properties_end
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Heigh field scale",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

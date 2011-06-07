@@ -88,15 +88,19 @@ class TestClass1 : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(TESTPLUGIN_RTTI_EXPORT, TestClass1, "TestPlugin", PLCore::Object, "Test class demonstrating the RTTI features")
+		// Properties
 		pl_properties
-			pl_property	 ("TestInfo",  "This is class TestClass1")
+			pl_property("TestInfo",	"This is class TestClass1")
 		pl_properties_end
-		pl_attribute(Int,	int,					10,			ReadWrite, DirectValue,	"Simple integer",	"")
-		pl_attribute(Float,	float,					3.1415f,	ReadWrite, GetSet,		"PI",				"")
-		pl_attribute(Enum,	pl_enum_type(TestEnum),	Beta,		ReadWrite, DirectValue,	"Enumeration test",	"")
-		pl_attribute(Flags,	pl_flag_type(TestFlags),	0,		ReadWrite, DirectValue,	"Flags test",		"")
-		pl_constructor_0(Create, "Default constructor", "")
-		pl_method_0(PrintFloat, pl_ret_type(void), "Print value of attribute Float", "")
+		// Attributes
+		pl_attribute(Int,	int,					10,			ReadWrite,	DirectValue,	"Simple integer",	"")
+		pl_attribute(Float,	float,					3.1415f,	ReadWrite,	GetSet,			"PI",				"")
+		pl_attribute(Enum,	pl_enum_type(TestEnum),	Beta,		ReadWrite,	DirectValue,	"Enumeration test",	"")
+		pl_attribute(Flags,	pl_flag_type(TestFlags),	0,		ReadWrite,	DirectValue,	"Flags test",		"")
+		// Constructors
+		pl_constructor_0(Create,	"Default constructor",	"")
+		// Methods
+		pl_method_0(PrintFloat,	pl_ret_type(void),	"Print value of attribute Float",	"")
 	pl_class_end
 
 

@@ -66,7 +66,8 @@ class SQSphere : public SceneQuery {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SQSphere, "PLScene", PLScene::SceneQuery, "Sphere intersection scene query class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

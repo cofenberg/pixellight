@@ -88,13 +88,14 @@ class SRPDeferredSSAO : public SRPDeferred {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSSAO, "PLCompositing", PLCompositing::SRPDeferred, "Abstract scene renderer pass for deferred rendering 'Screen-Space Ambient Occlusion' (SSAO)")
+		// Attributes
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",																																		"")
 		pl_attribute(Contrast,			float,					1.25f,	ReadWrite,	DirectValue,	"This value allows to scales up the ambient occlusion values",																																																				"Min='0.0'")
 		pl_attribute(BlurRadius,		float,					2.0f,	ReadWrite,	DirectValue,	"Blur kernel radius in pixel",																																																												"Min='0.0'")
 		pl_attribute(BlurSharpness,		float,					16.0f,	ReadWrite,	DirectValue,	"Controls the depth-dependent weight of the bilateral filter, to avoid bleeding across edges. A zero sharpness is a pure Gaussian blur. Increasing the blur sharpness removes bleeding by using lower weights for samples with large depth delta from the current pixel.",	"Min='0.0'")
 		pl_attribute(ResolutionScale,	float,					0.5f,	ReadWrite,	DirectValue,	"If less 1, the ambient occlusion is computed with a lower resolution and then stretched up to the full resolution. This can be used to trade visual quality for better performance.",																						"Min='0.0' Max='1.0'")
 		pl_attribute(SceneScale,		float,					1.0f,	ReadWrite,	DirectValue,	"Scene scale ",																																																																"Min='0.0'")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																																																	"")
 	pl_class_end
 

@@ -57,7 +57,8 @@ class SNGalaxyDemo : public SPARK_PL::SNSystem {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNGalaxyDemo, "", SPARK_PL::SNSystem, "Galaxy SPARK particle system demo scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

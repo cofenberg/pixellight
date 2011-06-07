@@ -70,7 +70,7 @@ class SNMOrbiting : public SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMOrbiting, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class for orbiting around a target scene node")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Target,		PLGeneral::String,	"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",								"")
 		pl_attribute(MinDistance,	float,				-1.0f,								ReadWrite,	GetSet,			"Minimum distance to the target, negative = no minimum, always <= 'MaxDistance'",		"")
 		pl_attribute(MaxDistance,	float,				-1.0f,								ReadWrite,	GetSet,			"Maximum distance to the target, negative = no maximum, always >= 'MinDistance'",		"")
@@ -78,6 +78,8 @@ class SNMOrbiting : public SceneNodeModifier {
 		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Target scene node position offset (same scene container space as target scene node)",	"")
 		pl_attribute(UpVector,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector (null vector for no limitation)",											"")
 		pl_attribute(Pan,			PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Pan",																					"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

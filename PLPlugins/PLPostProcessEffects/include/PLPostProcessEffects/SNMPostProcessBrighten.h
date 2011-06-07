@@ -55,11 +55,13 @@ class SNMPostProcessBrighten : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessBrighten, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(BlendColor, PLGraphics::Color3, PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite, DirectValue,	"Blending color",						"")
-		pl_attribute(Opacity,	 float,				 0.5f,									ReadWrite, DirectValue,	"Opacity of color",						"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,	 PLGeneral::String,	"Data/PostProcesses/Brighten.pp",		ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(BlendColor, PLGraphics::Color3, PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Blending color",						"")
+		pl_attribute(Opacity,	 float,				 0.5f,									ReadWrite,	DirectValue,	"Opacity of color",						"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	 PLGeneral::String,	"Data/PostProcesses/Brighten.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

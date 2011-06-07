@@ -53,11 +53,13 @@ class Script : public PLScript::Script {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSCRIPTPYTHON_RTTI_EXPORT, Script, "PLScriptPython", PLScript::Script, "Python (http://www.python.org/) script implementation")
+		// Properties
 		pl_properties
-			pl_property("Language", "Python")
-			pl_property("Formats",  "py,PY")
+			pl_property("Language",	"Python")
+			pl_property("Formats",	"py,PY")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

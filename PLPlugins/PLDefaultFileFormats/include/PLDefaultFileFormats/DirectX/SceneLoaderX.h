@@ -73,14 +73,17 @@ class SceneLoaderX : public PLScene::SceneLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderX, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader implementation for the x-format (DirectX)")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"x,X")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PLScene::SceneContainer&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PLScene::SceneContainer&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

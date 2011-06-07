@@ -102,19 +102,19 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneContainer, "PLScene", PLScene::SceneNode, "Scene container node (group node) class which is using scene nodes")
-		// Constructors
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Methods
-		pl_method_1(GetByName,	SceneNode*,	PLGeneral::String,											"Returns a scene node by using the given name, can be a null pointer",																																																																				"")
-		pl_method_3(Create,		SceneNode*,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
 		// Attributes
 		pl_attribute(Hierarchy,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
-		// Overwritten SceneNode attributes
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,													ReadWrite,	GetSet,	"Flags",																"")
 		pl_attribute(AABBMin,	PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,	"Minimum position of the 'scene node space' axis aligned bounding box",	"")
 		pl_attribute(AABBMax,	PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
-		// Overwritten Loadable attributes
+			// Overwritten Loadable attributes
 		pl_attribute(Filename,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_1(GetByName,	SceneNode*,	PLGeneral::String,											"Returns a scene node by using the given name, can be a null pointer",																																																																				"")
+		pl_method_3(Create,		SceneNode*,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
 	pl_class_end
 
 

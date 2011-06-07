@@ -52,7 +52,8 @@ class BitmapToggleButton : public AbstractToggleButton {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, BitmapToggleButton, "PLGui", PLGui::AbstractToggleButton, "A toggle button that displays images for each state")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// [TODO] Images...
 	pl_class_end
 

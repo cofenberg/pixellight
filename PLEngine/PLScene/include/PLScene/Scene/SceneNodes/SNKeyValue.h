@@ -54,9 +54,11 @@ class SNKeyValue : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNKeyValue, "PLScene", PLScene::SceneNode, "Key/value data scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Key,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Key",		"")
 		pl_attribute(Value,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Value",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

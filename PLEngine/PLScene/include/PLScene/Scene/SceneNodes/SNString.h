@@ -54,8 +54,10 @@ class SNString : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNString, "PLScene", PLScene::SceneNode, "String data scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(String,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"String",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -54,7 +54,8 @@ class ShadowMappingPSM : public ShadowMapping {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, ShadowMappingPSM, "PLCompositing", PLCompositing::ShadowMapping, "Perspective Shadow Mapping (PSM) class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

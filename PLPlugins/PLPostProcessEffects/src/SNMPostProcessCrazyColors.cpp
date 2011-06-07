@@ -54,13 +54,13 @@ pl_implement_class(SNMPostProcessCrazyColors)
 *    Constructor
 */
 SNMPostProcessCrazyColors::SNMPostProcessCrazyColors(PLScene::SceneNode &cSceneNode) : SNMPostProcess(cSceneNode),
-	SlotOnSceneNodeUpdate(this),
 	ColorScaleX(this),
 	ColorSpeedX(this),
 	ColorOffsetX(this),
 	ColorScaleY(this),
 	ColorSpeedY(this),
 	ColorOffsetY(this),
+	SlotOnSceneNodeUpdate(this),
 	Filename(this),
 	m_fTimer(0.0f)
 {

@@ -62,8 +62,10 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyBox, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics box body scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Dimension,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Box dimension, if null, axis align bounding box in 'scene node space' is used as default",	"Min='0.0 0.0 0.0'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

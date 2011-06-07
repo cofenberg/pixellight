@@ -52,13 +52,16 @@ class SNMCameraZoom : public SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMCameraZoom, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class implementing camera zoom")
+		// Properties
 		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SNCamera")
+			pl_property("SceneNodeClass",	"PLScene::SNCamera")
 		pl_properties_end
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(ZoomDegree,	float,	30.0f,	ReadWrite,	DirectValue,	"Zoom in degree, added to original camera FOV",												"")
 		pl_attribute(ZoomFactor,	float,	0.0f,	ReadWrite,	DirectValue,	"Target zoom factor [0..1]",																"")
 		pl_attribute(ZoomSpeed,		float,	4.0f,	ReadWrite,	DirectValue,	"Current zoom factor update speed, if 0, current factor is set to target factor at once",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

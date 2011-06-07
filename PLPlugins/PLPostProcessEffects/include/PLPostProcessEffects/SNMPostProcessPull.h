@@ -55,12 +55,14 @@ class SNMPostProcessPull : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessPull, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite, DirectValue,	"Warp point, (0, 0) = (left, lower)",	"")
-		pl_attribute(WarpScale,		float,				 -5.0f,								ReadWrite, DirectValue,	"Warp scale",							"")
-		pl_attribute(WarpDimension,	float,				500.0f,								ReadWrite, DirectValue,	"Warp dimension",						"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Pull.pp",		ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite,	DirectValue,	"Warp point, (0, 0) = (left, lower)",	"")
+		pl_attribute(WarpScale,		float,				 -5.0f,								ReadWrite,	DirectValue,	"Warp scale",							"")
+		pl_attribute(WarpDimension,	float,				500.0f,								ReadWrite,	DirectValue,	"Warp dimension",						"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Pull.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

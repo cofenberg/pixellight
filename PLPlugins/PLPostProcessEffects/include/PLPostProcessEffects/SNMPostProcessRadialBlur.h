@@ -55,12 +55,14 @@ class SNMPostProcessRadialBlur : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessRadialBlur, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite, DirectValue,	"Warp point",							"")
-		pl_attribute(BlurStart,		float,				 1.0f,								ReadWrite, DirectValue,	"Blur start",							"")
-		pl_attribute(BlurWidth,		float,				-0.2f,								ReadWrite, DirectValue,	"Blur width",							"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/RadialBlur.pp",	ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(WarpPoint,		PLMath::Vector2,	PLMath::Vector2(300.0f, 300.0f),	ReadWrite,	DirectValue,	"Warp point",							"")
+		pl_attribute(BlurStart,		float,				 1.0f,								ReadWrite,	DirectValue,	"Blur start",							"")
+		pl_attribute(BlurWidth,		float,				-0.2f,								ReadWrite,	DirectValue,	"Blur width",							"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/RadialBlur.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

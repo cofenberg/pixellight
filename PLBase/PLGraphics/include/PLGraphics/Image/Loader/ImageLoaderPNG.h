@@ -54,14 +54,17 @@ class ImageLoaderPNG : public ImageLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoaderPNG, "PLGraphics", PLGraphics::ImageLoader, "Image loader implementation for PNG file formats")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"png,PNG")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, Image&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const Image&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	Image&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	const Image&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

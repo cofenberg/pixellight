@@ -51,7 +51,8 @@ class SPMaterialPreview : public SPPreview {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, SPMaterialPreview, "PLRenderer", PLRenderer::SPPreview, "Material preview surface painter class")
-		pl_constructor_1(ParameterConstructor, Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

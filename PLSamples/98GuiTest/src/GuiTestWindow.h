@@ -46,19 +46,21 @@ class GuiTestWindow : public PLGui::Window {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, GuiTestWindow, "", PLGui::Window, "GuiTest main window")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_slot_2(OnTrayIcon, PLGeneral::uint32, const PLMath::Vector2i&, "Tray icon callback",	"")
-		pl_slot_0(OnNotify,				"Button callback", "")
-		pl_slot_0(OnWindow,				"Button callback", "")
-		pl_slot_0(OnSimpleTest,			"Button callback", "")
-		pl_slot_0(OnWindowTest,			"Button callback", "")
-		pl_slot_0(OnMouseOverTest,		"Button callback", "")
-		pl_slot_0(OnFocusTest,			"Button callback", "")
-		pl_slot_0(OnWidgetTest,			"Button callback", "")
-		pl_slot_0(OnDragDropTest,		"Button callback", "")
-		pl_slot_0(OnTabsAndMenuTest,	"Button callback", "")
-		pl_slot_0(OnSlimTest,			"Button callback", "")
-		pl_slot_0(OnThemeTest,			"Button callback", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_2(OnTrayIcon,			PLGeneral::uint32,	const PLMath::Vector2i&,	"Tray icon callback",	"")
+		pl_slot_0(OnNotify,																"Button callback",		"")
+		pl_slot_0(OnWindow,																"Button callback",		"")
+		pl_slot_0(OnSimpleTest,															"Button callback",		"")
+		pl_slot_0(OnWindowTest,															"Button callback",		"")
+		pl_slot_0(OnMouseOverTest,														"Button callback",		"")
+		pl_slot_0(OnFocusTest,															"Button callback",		"")
+		pl_slot_0(OnWidgetTest,															"Button callback",		"")
+		pl_slot_0(OnDragDropTest,														"Button callback",		"")
+		pl_slot_0(OnTabsAndMenuTest,													"Button callback",		"")
+		pl_slot_0(OnSlimTest,															"Button callback",		"")
+		pl_slot_0(OnThemeTest,															"Button callback",		"")
 	pl_class_end
 
 

@@ -105,13 +105,15 @@ class SNMPositionPath : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionPath, "PLScene", PLScene::SNMTransform, "Scene node modifier class moving the position of a scene node along a given path")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Filename,		PLGeneral::String,				"",		ReadWrite,	GetSet,			"Filename of the path the node should move on",									"Type='GraphPath'")
 		pl_attribute(Progress,		float,							0.0f,	ReadWrite,	DirectValue,	"Path progress (0-1, automatically wrapped into that range -> or node index)",	"")
 		pl_attribute(Speed,			float,							1.0f,	ReadWrite,	DirectValue,	"Path movement speed",															"")
 		pl_attribute(Interpolation,	pl_enum_type(EInterpolation),	Linear,	ReadWrite,	DirectValue,	"Interpolation type",															"")
-		// Overwritten SceneNodeModifier variables
+			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),			0,		ReadWrite,	GetSet,			"Flags",																		"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

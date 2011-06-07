@@ -90,11 +90,12 @@ class SNMPhysicsBody : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBody, "PLPhysics", PLPhysics::SNMPhysics, "Abstract physics body scene node modifier")
+		// Attributes
 		pl_attribute(Mass,				float,					0.0f,								ReadWrite,	GetSet,	"Mass of the physics body, 0=static body",				"Min='0.0'")
 		pl_attribute(CenterOfMass,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Relative center of mass",								"")
 		pl_attribute(PositionOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Position offset relative to the scene node (=origin)",	"")
 		pl_attribute(CollisionGroup,	PLGeneral::uint8,		0,									ReadWrite,	GetSet,	"The collision group the body is in (0-31)",			"Min='0' Max='31'")
-		// Overwritten PLScene::SceneNodeModifier variables
+			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",												"")
 	pl_class_end
 

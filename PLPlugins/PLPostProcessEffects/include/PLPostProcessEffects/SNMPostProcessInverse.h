@@ -54,9 +54,11 @@ class SNMPostProcessInverse : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessInverse, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename, PLGeneral::String, "Data/PostProcesses/Inverse.pp", ReadWrite, ModifyAttr, "Filename of the post process to use", "Type='PostProcess'")
+		// Attributes
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Inverse.pp",	ReadWrite,	ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

@@ -53,7 +53,8 @@ class ThemeTestWidget : public PLGui::Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ThemeTestWidget, "", PLGui::Widget, "Test widget that shows some theme functionality")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

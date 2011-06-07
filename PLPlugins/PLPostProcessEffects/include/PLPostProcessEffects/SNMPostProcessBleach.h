@@ -54,10 +54,12 @@ class SNMPostProcessBleach : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessBleach, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(Opacity,	float,				1.0f,							ReadWrite, DirectValue,	"Opacity",								"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Bleach.pp",	ReadWrite, ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(Opacity,	float,				1.0f,							ReadWrite,	DirectValue,	"Opacity",								"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Bleach.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

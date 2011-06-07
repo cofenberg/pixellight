@@ -60,14 +60,17 @@ class EffectLoaderFX : public PLRenderer::EffectLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, EffectLoaderFX, "PLDefaultFileFormats", PLRenderer::EffectLoader, "Effect loader implementation for FX (CgFX)")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"fx,FX")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PLRenderer::Effect&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PLRenderer::Effect&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	bool,	PLRenderer::Effect&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	bool,	PLRenderer::Effect&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

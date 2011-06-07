@@ -78,9 +78,11 @@ class SNMMeshUpdate : public SNMMesh {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMMeshUpdate, "PLScene", PLScene::SNMMesh, "Mesh scene node modifier which performs frequent mesh updates")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
-		// Overwritten SceneNodeModifier variables
+		// Attributes
+			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

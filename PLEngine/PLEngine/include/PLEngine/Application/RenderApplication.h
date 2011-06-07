@@ -76,7 +76,8 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLGui::GuiApplication, "Render application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

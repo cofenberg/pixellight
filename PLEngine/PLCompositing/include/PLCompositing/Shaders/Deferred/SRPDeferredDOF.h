@@ -92,7 +92,7 @@ class SRPDeferredDOF : public SRPDeferred {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredDOF, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering DOF effect")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(EffectWeight,		float,					1.0f,	ReadWrite,	DirectValue,	"Effect weight, 0 means that this effect has no influence, 1 for the intended influence",												"Min=0 Max=1")
 		pl_attribute(NearPlaneDepth,	float,					0.5f,	ReadWrite,	DirectValue,	"Everything closer than this is fully blurred (only used if IgnoreCameraSettings is set)",												"")
@@ -101,8 +101,10 @@ class SRPDeferredDOF : public SRPDeferred {
 		pl_attribute(BlurrinessCutoff,	float,					0.8f,	ReadWrite,	DirectValue,	"Blurriness cutoff constant for objects behind the focal plane (only used if IgnoreCameraSettings is set)",								"")
 		pl_attribute(BlurPasses,		PLGeneral::uint32,		2,		ReadWrite,	DirectValue,	"Number of blur passes, should be a multiple of 2",																						"")
 		pl_attribute(BlurDownscale,		float,					4.0f,	ReadWrite,	DirectValue,	"Blur downscale factor, should be a multiple of 2",																						"Min='1.0'")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

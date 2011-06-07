@@ -66,10 +66,12 @@ class ShaderLanguageGLSL : public ShaderLanguage {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDEREROPENGL_RTTI_EXPORT, ShaderLanguageGLSL, "PLRendererOpenGL", PLRendererOpenGL::ShaderLanguage, "Build in OpenGL GLSL shader language class")
+		// Properties
 		pl_properties
-			pl_property("ShaderLanguage", "GLSL")
+			pl_property("ShaderLanguage",	"GLSL")
 		pl_properties_end
-		pl_constructor_1(DefaultConstructor, PLRenderer::Renderer&, "Constructor with used renderer as parameter", "")
+		// Constructors
+		pl_constructor_1(DefaultConstructor,	PLRenderer::Renderer&,	"Constructor with used renderer as parameter",	"")
 	pl_class_end
 
 

@@ -95,14 +95,16 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Widget, "PLGui", PLCore::Object, "Widget base class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(ID,				PLGeneral::uint32,	0,						ReadWrite, GetSet, "Widget ID",			"")
-		pl_attribute(Name,				PLGeneral::String,	"",						ReadWrite, GetSet, "Widget name",		"")
-		pl_attribute(Title,				PLGeneral::String,	"No Title",				ReadWrite, GetSet, "Widget title",		"")
-		pl_attribute(Pos,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite, GetSet, "Widget position",	"")
-		pl_attribute(Size,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite, GetSet, "Widget size",		"")
-		pl_attribute(Topmost,			bool,				false,					ReadWrite, GetSet, "Topmost state",		"")
-		pl_attribute(BackgroundColor,	PLGraphics::Color4,	PLGraphics::Color4(),	ReadWrite, GetSet, "Background color",	"")
+		// Attributes
+		pl_attribute(ID,				PLGeneral::uint32,	0,						ReadWrite,	GetSet,	"Widget ID",		"")
+		pl_attribute(Name,				PLGeneral::String,	"",						ReadWrite,	GetSet,	"Widget name",		"")
+		pl_attribute(Title,				PLGeneral::String,	"No Title",				ReadWrite,	GetSet,	"Widget title",		"")
+		pl_attribute(Pos,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite,	GetSet,	"Widget position",	"")
+		pl_attribute(Size,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite,	GetSet,	"Widget size",		"")
+		pl_attribute(Topmost,			bool,				false,					ReadWrite,	GetSet,	"Topmost state",	"")
+		pl_attribute(BackgroundColor,	PLGraphics::Color4,	PLGraphics::Color4(),	ReadWrite,	GetSet,	"Background color",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

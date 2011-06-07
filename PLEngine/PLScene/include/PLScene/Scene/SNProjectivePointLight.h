@@ -70,10 +70,12 @@ class SNProjectivePointLight : public SNPointLight {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNProjectivePointLight, "PLScene", PLScene::SNPointLight, "Omnidirectional projective point light scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ProjectedMaterial,	PLGeneral::String,		"Data/Textures/DefaultCubeMap.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",				"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

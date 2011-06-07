@@ -56,8 +56,9 @@ class RagdollLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, RagdollLoader, "PLPhysics", PLCore::LoaderImpl, "Abstract ragdoll loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Ragdoll")
+			pl_property("Type",	"Ragdoll")
 		pl_properties_end
 	pl_class_end
 

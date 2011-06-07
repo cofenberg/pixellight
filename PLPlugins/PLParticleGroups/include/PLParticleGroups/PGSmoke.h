@@ -66,17 +66,19 @@ class PGSmoke : public SNParticleGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGSmoke, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Smoke particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Size,						float,				2.0f,										ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
 		pl_attribute(SizeTimeScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Size time scale",									"")
 		pl_attribute(Energie,					float,				1.0f,										ReadWrite,	DirectValue,	"Energie",											"")
 		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color",											"")
 		pl_attribute(PositionScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Position scale",									"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,					PLGeneral::String,	"Data/Textures/PGSmoke.dds",				ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,					PLGeneral::uint32,	20,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,	4,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
 		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,	4,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

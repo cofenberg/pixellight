@@ -74,10 +74,12 @@ class SNText3D : public SNText {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNText3D, "PLScene", PLScene::SNText, "3D (\"flat\") text scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(BackgroundMaterial,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Background material to use",	"Type='Material Effect Image TextureAni'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",						"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
