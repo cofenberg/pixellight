@@ -214,13 +214,13 @@ void SNMMeshJoint::OnActivate(bool bActivate)
 		UpdateJoint();
 
 		// Connect event handlers
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);

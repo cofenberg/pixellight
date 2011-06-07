@@ -104,7 +104,7 @@ void SNMAnchor::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.EventContainer.Connect(&EventHandlerContainer);
+		cSceneNode.SignalContainer.Connect(&EventHandlerContainer);
 		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
@@ -112,7 +112,7 @@ void SNMAnchor::OnActivate(bool bActivate)
 			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventContainer.Disconnect(&EventHandlerContainer);
+		cSceneNode.SignalContainer.Disconnect(&EventHandlerContainer);
 		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();

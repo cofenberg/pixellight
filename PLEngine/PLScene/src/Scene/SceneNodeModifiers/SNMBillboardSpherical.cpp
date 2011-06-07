@@ -74,10 +74,10 @@ void SNMBillboardSpherical::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	if (bActivate) {
 		// Connect event handler
-		GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
 	} else {
 		// Disconnect event handler
-		GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
 	}
 }
 

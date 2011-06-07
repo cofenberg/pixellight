@@ -145,9 +145,9 @@ void SNMPhysicsBodyBox::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 	else
-		GetSceneNode().EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 }
 
 

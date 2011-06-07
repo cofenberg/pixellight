@@ -223,8 +223,8 @@ bool SceneNode::SetContainer(SceneContainer &cSceneContainer)
 		// Add the scene node to the new parent container
 		cSceneContainer.Add(*this, GetName(), false);
 
-		// Emit event
-		EventContainer();
+		// Emit signal
+		SignalContainer();
 	}
 
 	// Done
@@ -362,8 +362,8 @@ void SceneNode::SetActive(bool bActive)
 			// Call the "OnActivate()"-method
 			OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
 
-			// Emit event
-			EventActive();
+			// Emit signal
+			SignalActive();
 		}
 	}
 }
@@ -394,8 +394,8 @@ void SceneNode::SetVisible(bool bVisible)
 		else
 			m_nFlags |=  Invisible;
 
-		// Emit event
-		EventVisible();
+		// Emit signal
+		SignalVisible();
 	}
 }
 
@@ -579,8 +579,8 @@ void SceneNode::SetAABoundingBox(const AABoundingBox &cAABoundingBox)
 		}
 	}
 
-	// Emit event
-	EventAABoundingBox();
+	// Emit signal
+	SignalAABoundingBox();
 }
 
 /**
@@ -868,8 +868,8 @@ PLInput::Controller *SceneNode::GetInputController() const
 */
 void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawPre(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawPre(cRenderer, pVisNode);
 }
 
 /**
@@ -878,8 +878,8 @@ void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawSolid(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawSolid(cRenderer, pVisNode);
 }
 
 /**
@@ -888,8 +888,8 @@ void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawTransparent(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawTransparent(cRenderer, pVisNode);
 }
 
 /**
@@ -899,9 +899,9 @@ void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Inform listeners?
-	if (!(m_nDebugFlags & DebugNoDrawEvent)) {
-		// Emit event
-		EventDrawDebug(cRenderer, pVisNode);
+	if (!(m_nDebugFlags & DebugNoDrawSignal)) {
+		// Emit signal
+		SignalDrawDebug(cRenderer, pVisNode);
 	}
 
 	// Draw
@@ -1063,8 +1063,8 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawPost(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawPost(cRenderer, pVisNode);
 }
 
 
@@ -1085,6 +1085,19 @@ SceneNode::SceneNode() :
 	AABBMin(this),
 	AABBMax(this),
 	Name(this),
+	SignalDestroy(this),
+	SignalActive(this),
+	SignalVisible(this),
+	SignalContainer(this),
+	SignalAABoundingBox(this),
+	SignalInit(this),
+	SignalDeInit(this),
+	SignalAddedToVisibilityTree(this),
+	SignalDrawPre(this),
+	SignalDrawSolid(this),
+	SignalDrawTransparent(this),
+	SignalDrawDebug(this),
+	SignalDrawPost(this),
 	EventHandlerPosition(&SceneNode::OnPosition, this),
 	EventHandlerRotation(&SceneNode::OnRotation, this),
 	EventHandlerScale	(&SceneNode::OnScale,    this),
@@ -1134,8 +1147,8 @@ void SceneNode::InitFunction()
 		// Scene node is initialized
 		m_nInternalFlags |= Initialized;
 
-		// Emit event
-		EventInit();
+		// Emit signal
+		SignalInit();
 
 		// Call the "OnActivate()"-method
 		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
@@ -1151,8 +1164,8 @@ void SceneNode::DeInitFunction()
 	// Set initialization flag
 	m_nInternalFlags &= ~Initialized;
 
-	// Emit event
-	EventDeInit();
+	// Emit signal
+	SignalDeInit();
 
 	// Clear modifiers
 	ClearModifiers();
@@ -1241,8 +1254,8 @@ void SceneNode::GetContainerBoundingSphere(Sphere &cSphere)
 */
 void SceneNode::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
-	// Emit event
-	EventAddedToVisibilityTree(cVisNode);
+	// Emit signal
+	SignalAddedToVisibilityTree(cVisNode);
 }
 
 
@@ -1348,8 +1361,8 @@ bool SceneNode::Delete(bool bProtectedToo)
 		// Set the 'I am going to die'-flag
 		m_nInternalFlags |= DestroyThis;
 
-		// Emit event
-		EventDestroy();
+		// Emit signal
+		SignalDestroy();
 
 		// Is this scene node within a container?
 		if (GetContainer()) {

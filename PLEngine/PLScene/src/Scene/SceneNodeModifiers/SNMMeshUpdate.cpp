@@ -82,10 +82,10 @@ void SNMMeshUpdate::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate) {
-			GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+			GetSceneNode().SignalAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 		} else {
-			GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+			GetSceneNode().SignalAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 		}
 	}

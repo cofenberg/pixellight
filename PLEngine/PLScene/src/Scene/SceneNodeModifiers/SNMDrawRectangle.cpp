@@ -82,9 +82,9 @@ void SNMDrawRectangle::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().EventDrawTransparent.Connect(&EventHandlerDrawTransparent);
+		GetSceneNode().SignalDrawTransparent.Connect(&EventHandlerDrawTransparent);
 	else
-		GetSceneNode().EventDrawTransparent.Disconnect(&EventHandlerDrawTransparent);
+		GetSceneNode().SignalDrawTransparent.Disconnect(&EventHandlerDrawTransparent);
 }
 
 

@@ -183,7 +183,7 @@ SCPhysicsWorld::SCPhysicsWorld() :
 	m_pWorld(nullptr)
 {
 	// Connect event handler
-	EventAABoundingBox.Connect(&EventHandlerAABoundingBox);
+	SignalAABoundingBox.Connect(&EventHandlerAABoundingBox);
 }
 
 /**

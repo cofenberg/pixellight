@@ -218,7 +218,7 @@ SNPortal::SNPortal() :
 	SetVertices("-1.0 -1.0 0.0 -1.0 1.0 0.0 1.0 1.0 0.0 1.0 -1.0 0.0");
 
 	// Connect event handlers
-	EventContainer.Connect(&EventHandlerContainerPositionRotationScale);
+	SignalContainer.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventPosition.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventRotation.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventScale.   Connect(&EventHandlerContainerPositionRotationScale);

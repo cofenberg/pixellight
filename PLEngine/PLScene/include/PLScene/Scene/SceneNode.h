@@ -153,7 +153,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*/
 		enum EDebugFlags {
 			DebugEnabled               = 1<<0,	/**< Debug mode is enabled (if this flag isn't set, no debug information is drawn at all) */
-			DebugNoDrawEvent           = 1<<1,	/**< Do not create a draw debug event */
+			DebugNoDrawSignal          = 1<<1,	/**< Do not create a draw debug signal */
 			DebugContainerAABBox       = 1<<2,	/**< Draw (the white) container space axis aligned bounding box */
 			DebugContainerSphere       = 1<<3,	/**< Draw container space bounding sphere */
 			DebugNoLocalCoordinateAxis = 1<<4,	/**< Do not draw the local coordinate axis */
@@ -163,7 +163,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		};
 		pl_enum(EDebugFlags)
 			pl_enum_value(DebugEnabled,					"Debug mode is enabled (if this flag isn't set, no debug information is drawn at all)")
-			pl_enum_value(DebugNoDrawEvent,				"Do not create a draw debug event")
+			pl_enum_value(DebugNoDrawSignal,			"Do not create a draw debug signal")
 			pl_enum_value(DebugContainerAABBox,			"Draw (the white) container space axis aligned bounding box")
 			pl_enum_value(DebugContainerSphere,			"Draw container space bounding sphere")
 			pl_enum_value(DebugNoLocalCoordinateAxis,	"Do not draw the local coordinate axis")
@@ -212,6 +212,20 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		pl_method_1(SetFrozen,		void,				bool,									"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																										"")
 		pl_method_2(AddModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::String,	"Adds a modifier, modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier)",																			"")
 		pl_method_2(GetModifier,	SceneNodeModifier*,	PLGeneral::String,	PLGeneral::uint32,	"Returns a modifier, modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",												"")
+		// Signals
+		pl_signal_0(SignalDestroy,																"Scene node destruction signal",																											"")
+		pl_signal_0(SignalActive,																"Scene node active state change signal",																									"")
+		pl_signal_0(SignalVisible,																"Scene node visible state change signal",																									"")
+		pl_signal_0(SignalContainer,															"Scene node parent container change signal",																								"")
+		pl_signal_0(SignalAABoundingBox,														"Scene node axis aligned bounding box change signal",																						"")
+		pl_signal_0(SignalInit,																	"Scene node initialization signal",																											"")
+		pl_signal_0(SignalDeInit,																"Scene node de-initialization change signal",																								"")
+		pl_signal_1(SignalAddedToVisibilityTree,	VisNode &,									"Scene node was added to a visibility tree signal. Visibility node representing this scene node within the visibility tree as parameter.",	"")
+		pl_signal_2(SignalDrawPre,					PLRenderer::Renderer &, const VisNode *,	"Scene node pre-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
+		pl_signal_2(SignalDrawSolid,				PLRenderer::Renderer &, const VisNode *,	"Scene node solid-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
+		pl_signal_2(SignalDrawTransparent,			PLRenderer::Renderer &, const VisNode *,	"Scene node transparent-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",	"")
+		pl_signal_2(SignalDrawDebug,				PLRenderer::Renderer &, const VisNode *,	"Scene node debug-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
+		pl_signal_2(SignalDrawPost,					PLRenderer::Renderer &, const VisNode *,	"Scene node post-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
 	pl_class_end
 
 
@@ -233,25 +247,6 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		PLS_API void SetAABBMin(const PLMath::Vector3 &vValue);
 		PLS_API const PLMath::Vector3 &GetAABBMax() const;
 		PLS_API void SetAABBMax(const PLMath::Vector3 &vValue);
-
-
-	//[-------------------------------------------------------]
-	//[ Events                                                ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<>											EventDestroy;				/**< Scene node destruction event */
-		PLCore::Event<>											EventActive;				/**< Scene node active state change event */
-		PLCore::Event<>											EventVisible;				/**< Scene node visible state change event */
-		PLCore::Event<>											EventContainer;				/**< Scene node parent container change event */
-		PLCore::Event<>											EventAABoundingBox;			/**< Scene node axis aligned bounding box change event */
-		PLCore::Event<>											EventInit;					/**< Scene node initialization event */
-		PLCore::Event<>											EventDeInit;				/**< Scene node de-initialization change event */
-		PLCore::Event<VisNode &>								EventAddedToVisibilityTree;	/**< Scene node was added to a visibility tree event. Visibility node representing this scene node within the visibility tree as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPre;				/**< Scene node pre-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawSolid;				/**< Scene node solid-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawTransparent;		/**< Scene node transparent-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawDebug;				/**< Scene node debug-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
-		PLCore::Event<PLRenderer::Renderer &, const VisNode *>	EventDrawPost;				/**< Scene node post-draw event. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter. */
 
 
 	//[-------------------------------------------------------]
@@ -773,7 +768,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    currently 'invisible'.
 		*
 		*  @note
-		*    - The default implementation only emits the EventDrawPre event
+		*    - The default implementation only emits the SignalDrawPre signal
 		*    - Should only be called if the draw function flag 'UseDrawPre' is set
 		*/
 		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
@@ -788,7 +783,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
-		*    - The default implementation only emits the EventDrawSolid event
+		*    - The default implementation only emits the SignalDrawSolid signal
 		*
 		*  @see
 		*    - DrawPre()
@@ -805,7 +800,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
-		*    - The default implementation only emits the EventDrawTransparent event
+		*    - The default implementation only emits the SignalDrawTransparent signal
 		*
 		*  @see
 		*    - DrawPre()
@@ -825,7 +820,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    - Should only be called if the 'UseDrawDebug' draw flag and the 'DebugEnabled' debug flag is set
 		*
 		*  @note
-		*    - Beside drawing scene node stuff, the default implementation emits the EventDrawDebug event
+		*    - Beside drawing scene node stuff, the default implementation emits the SignalDrawDebug signal
 		*
 		*  @see
 		*    - DrawPre()
@@ -842,7 +837,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    The current visibility node of this scene node, can be a null pointer
 		*
 		*  @note
-		*    - The default implementation only emits the EventDrawPost event
+		*    - The default implementation only emits the SignalDrawPost signal
 		*
 		*  @see
 		*    - DrawPre()
@@ -951,7 +946,7 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*    Visibility node which is representing this scene node within the visibility tree
 		*
 		*  @note
-		*    - The default implementation only emits the EventAddedToVisibilityTree event
+		*    - The default implementation only emits the SignalAddedToVisibilityTree signal
 		*    - You can use this method to get informed whether or not the scene node was, for example,
 		*      rendered to the screen in order to update only seen scene nodes
 		*    - You can use this method to manipulate the world matrix of the visibility node (for example useful for billboards)

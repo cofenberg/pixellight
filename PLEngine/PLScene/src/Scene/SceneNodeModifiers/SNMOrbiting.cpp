@@ -152,7 +152,7 @@ void SNMOrbiting::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
@@ -160,7 +160,7 @@ void SNMOrbiting::OnActivate(bool bActivate)
 			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();

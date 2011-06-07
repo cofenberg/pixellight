@@ -385,8 +385,8 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 	if (cNode.IsContainer())
 		static_cast<SceneContainer&>(cNode).m_pSceneContext = m_pSceneContext;
 
-	// Emit event
-	cNode.EventContainer();
+	// Emit signal
+	cNode.SignalContainer();
 
 	// Setup name
 	String sNameT = sName;

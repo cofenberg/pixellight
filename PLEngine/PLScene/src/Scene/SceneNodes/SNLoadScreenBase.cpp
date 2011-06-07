@@ -58,7 +58,7 @@ SNLoadScreenBase::SNLoadScreenBase() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Connect event handler
-	EventContainer.Connect(&EventHandlerContainer);
+	SignalContainer.Connect(&EventHandlerContainer);
 }
 
 /**
