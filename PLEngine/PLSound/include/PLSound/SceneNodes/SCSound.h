@@ -66,6 +66,8 @@ class SCSound : public PLScene::SceneContainer {
 		pl_attribute(Listener,	PLGeneral::String,	"",								ReadWrite,	GetSet,			"Name of the scene node used as listener",									"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(NotifyUpdate,	"Called when the scene node needs to be updated",	"")
 	pl_class_end
 
 
@@ -116,13 +118,6 @@ class SCSound : public PLScene::SceneContainer {
 		*    Called when the scene node needs to be updated
 		*/
 		void NotifyUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

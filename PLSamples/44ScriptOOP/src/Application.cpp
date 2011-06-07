@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : ConsoleApplication(),
-	EventHandlerMySignal(&Application::NotifyMySignal, this),
+	SlotNotifyMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
 	// Set application name and title
@@ -66,7 +66,7 @@ Application::Application() : ConsoleApplication(),
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Connect event handler
-	m_pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
+	m_pMyRTTIClass->MySignal.Connect(&SlotNotifyMySignal);
 }
 
 /**

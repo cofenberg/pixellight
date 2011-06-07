@@ -56,6 +56,9 @@ class Application : public PLEngine::BasicSceneApplication {
 	pl_class(pl_rtti_export, Application, "", PLEngine::BasicSceneApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_2(NotifyKeyDown,	PLGeneral::uint32,			PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_1(NotifyDrop,		const PLGui::DataObject&,						"Called when something was dropped down, dropped data object as first parameter",									"")
 	pl_class_end
 
 
@@ -152,14 +155,6 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLGeneral::uint32, PLGeneral::uint32> EventHandlerKeyDown;
-		PLCore::EventHandler<const PLGui::DataObject &>			   EventHandlerDrop;
 
 
 	//[-------------------------------------------------------]

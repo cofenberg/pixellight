@@ -178,15 +178,15 @@ SNMPhysicsBody::SNMPhysicsBody(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	PositionOffset(this),
 	CollisionGroup(this),
 	Flags(this),
+	SlotNotifyActive(this),
+	SlotNotifyPosition(this),
+	SlotNotifyRotation(this),
+	SlotNotifyTransform(this),
 	m_fMass(0.0f),
 	m_nCollisionGroup(0),
 	m_pWorldContainer(nullptr),
 	m_pBodyHandler(new ElementHandler()),
-	m_bListening(true),
-	EventHandlerActive   (&SNMPhysicsBody::NotifyActive,    this),
-	EventHandlerPosition (&SNMPhysicsBody::NotifyPosition,  this),
-	EventHandlerRotation (&SNMPhysicsBody::NotifyRotation,  this),
-	EventHandlerTransform(&SNMPhysicsBody::NotifyTransform, this)
+	m_bListening(true)
 {
 }
 
@@ -226,14 +226,14 @@ void SNMPhysicsBody::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handler
-		cSceneNode.SignalActive.Connect(&EventHandlerActive);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
+		cSceneNode.SignalActive.Connect(&SlotNotifyActive);
+		cSceneNode.GetTransform().EventPosition.Connect(&SlotNotifyPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(&SlotNotifyRotation);
 	} else {
 		// Disconnect event handler
-		cSceneNode.SignalActive. Disconnect(&EventHandlerActive);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
+		cSceneNode.SignalActive. Disconnect(&SlotNotifyActive);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&SlotNotifyPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&SlotNotifyRotation);
 	}
 
 	// Is there a PL physics body?
@@ -276,7 +276,7 @@ void SNMPhysicsBody::CreatePhysicsBody()
 		pBody->SetFrozen(!(GetFlags() & InitUnfrozen));
 
 		// Connect event handler
-		pBody->EventTransform.Connect(&EventHandlerTransform);
+		pBody->EventTransform.Connect(&SlotNotifyTransform);
 	}
 }
 

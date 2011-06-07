@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 
 
@@ -68,6 +67,8 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		pl_attribute(UpdateFunction,	PLGeneral::String,	"Update",	ReadWrite,	DirectValue,	"Name of the script function to be called for update",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(NotifyUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -115,13 +116,6 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void NotifyUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

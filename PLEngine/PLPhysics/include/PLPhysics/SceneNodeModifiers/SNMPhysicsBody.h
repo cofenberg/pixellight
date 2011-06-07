@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
 #include "PLPhysics/SceneNodeModifiers/SNMPhysics.h"
 
@@ -97,6 +96,11 @@ class SNMPhysicsBody : public SNMPhysics {
 		pl_attribute(CollisionGroup,	PLGeneral::uint8,		0,									ReadWrite,	GetSet,	"The collision group the body is in (0-31)",			"Min='0' Max='31'")
 			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",												"")
+		// Slots
+		pl_slot_0(NotifyActive,		"Called when the scene node active state changed",		"")
+		pl_slot_0(NotifyPosition,	"Called when the scene node position changed",			"")
+		pl_slot_0(NotifyRotation,	"Called when the scene node rotation changed",			"")
+		pl_slot_0(NotifyTransform,	"Called when the transform was changed by the physics",	"")
 	pl_class_end
 
 
@@ -226,16 +230,6 @@ class SNMPhysicsBody : public SNMPhysics {
 		*    Called when the transform was changed by the physics
 		*/
 		void NotifyTransform();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerActive;
-		PLCore::EventHandler<> EventHandlerPosition;
-		PLCore::EventHandler<> EventHandlerRotation;
-		PLCore::EventHandler<> EventHandlerTransform;
 
 
 	//[-------------------------------------------------------]

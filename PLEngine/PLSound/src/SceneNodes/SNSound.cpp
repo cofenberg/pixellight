@@ -165,16 +165,16 @@ SNSound::SNSound() :
 	MaxDistance(this),
 	RolloffFactor(this),
 	Flags(this),
+	SlotNotifyPosition(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_fReferenceDistance(1.0f),
 	m_fMaxDistance(10000.0f),
 	m_fRolloffFactor(1.0f),
-	EventHandlerPosition(&SNSound::NotifyPosition, this),
 	m_pSoundSourceHandler(new PLSound::ResourceHandler())
 {
 	// Connect event handler
-	GetTransform().EventPosition.Connect(&EventHandlerPosition);
+	GetTransform().EventPosition.Connect(&SlotNotifyPosition);
 }
 
 /**

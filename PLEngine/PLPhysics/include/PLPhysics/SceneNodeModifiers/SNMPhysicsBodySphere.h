@@ -73,6 +73,8 @@ class SNMPhysicsBodySphere : public SNMPhysicsBody {
 		pl_attribute(Radius,	float,	0.0f,	ReadWrite,	GetSet,	"Sphere radius, if null, a sphere 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_2(NotifyDrawDebug,	PLRenderer::Renderer&,	const PLScene::VisNode*,	"Called on scene node debug draw, the used renderer as first parameter, the current visibility node of this scene node as second parameter (can be a null pointer)",	"")
 	pl_class_end
 
 
@@ -118,13 +120,6 @@ class SNMPhysicsBodySphere : public SNMPhysicsBody {
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLRenderer::Renderer &, const PLScene::VisNode *> EventHandlerDrawDebug;
 
 
 	//[-------------------------------------------------------]

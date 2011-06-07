@@ -80,7 +80,7 @@ void SNMPhysicsBodySphere::SetRadius(float fValue)
 */
 SNMPhysicsBodySphere::SNMPhysicsBodySphere(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Radius(this),
-	EventHandlerDrawDebug(&SNMPhysicsBodySphere::NotifyDrawDebug, this),
+	SlotNotifyDrawDebug(this),
 	m_fRadius(0.0f)
 {
 }
@@ -152,9 +152,9 @@ void SNMPhysicsBodySphere::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
 }
 
 

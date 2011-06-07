@@ -77,7 +77,7 @@ void SNMPhysicsBodyBox::SetDimension(const Vector3 &vValue)
 */
 SNMPhysicsBodyBox::SNMPhysicsBodyBox(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Dimension(this),
-	EventHandlerDrawDebug(&SNMPhysicsBodyBox::NotifyDrawDebug, this),
+	SlotNotifyDrawDebug(this),
 	m_vDimension(0.0f, 0.0f, 0.0f)
 {
 }
@@ -145,9 +145,9 @@ void SNMPhysicsBodyBox::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
 }
 
 

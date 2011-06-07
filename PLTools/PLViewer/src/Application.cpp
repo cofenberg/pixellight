@@ -67,8 +67,8 @@ const String Application::DefaultScene = "";
 *    Constructor
 */
 Application::Application() :
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	EventHandlerDrop   (&Application::NotifyDrop,    this),
+	SlotNotifyKeyDown(this),
+	SlotNotifyDrop(this),
 	m_pFileDialog(nullptr)
 {
 	// Set no multiuser if standalone application
@@ -269,12 +269,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
-		pWidget->SignalDrop.   Connect(&EventHandlerDrop);
+		pWidget->SignalKeyDown.Connect(&SlotNotifyKeyDown);
+		pWidget->SignalDrop.   Connect(&SlotNotifyDrop);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
-			pWidget->GetContentWidget()->SignalDrop.   Connect(&EventHandlerDrop);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotNotifyKeyDown);
+			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotNotifyDrop);
 		}
 	}
 }

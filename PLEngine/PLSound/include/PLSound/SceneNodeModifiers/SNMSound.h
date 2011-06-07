@@ -94,6 +94,8 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,	"Flags",																										"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(NotifyPosition,	"Called when the scene node position changed",	"")
 	pl_class_end
 
 
@@ -188,13 +190,6 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		*    Loads/reloads the sound
 		*/
 		void Load();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerPosition;
 
 
 	//[-------------------------------------------------------]

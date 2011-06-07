@@ -71,7 +71,7 @@ pl_implement_class(SNSystem)
 SNSystem::SNSystem() :
 	ShaderLanguage(this),
 	Flags(this),
-	EventHandlerUpdate(&SNSystem::NotifyUpdate, this),
+	SlotNotifyUpdate(this),
 	m_pParticleSystem(nullptr),
 	m_bUpdate(false)
 {
@@ -213,9 +213,9 @@ void SNSystem::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotNotifyUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotNotifyUpdate);
 	}
 }
 

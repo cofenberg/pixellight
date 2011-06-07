@@ -98,6 +98,8 @@ class SNSound : public PLScene::SceneNode {
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,		"Flags",																										"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(NotifyPosition,	"Called when the scene node position changed",	"")
 	pl_class_end
 
 
@@ -182,13 +184,6 @@ class SNSound : public PLScene::SceneNode {
 		*    Called when the scene node position changed
 		*/
 		void NotifyPosition();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerPosition;
 
 
 	//[-------------------------------------------------------]

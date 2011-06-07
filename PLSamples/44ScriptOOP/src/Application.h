@@ -53,6 +53,8 @@ class Application : public PLCore::ConsoleApplication {
 	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_1(NotifyMySignal,	PLGeneral::String,	"Called on MySignal signal, a string as first parameter",	"")
 	pl_class_end
 
 
@@ -113,13 +115,6 @@ class Application : public PLCore::ConsoleApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLGeneral::String> EventHandlerMySignal;
 
 
 	//[-------------------------------------------------------]

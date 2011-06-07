@@ -80,7 +80,7 @@ void SNMPhysicsBodyEllipsoid::SetRadius(const Vector3 &vValue)
 */
 SNMPhysicsBodyEllipsoid::SNMPhysicsBodyEllipsoid(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Radius(this),
-	EventHandlerDrawDebug(&SNMPhysicsBodyEllipsoid::NotifyDrawDebug, this),
+	SlotNotifyDrawDebug(this),
 	m_vRadius(0.0f, 0.0f, 0.0f)
 {
 }
@@ -152,9 +152,9 @@ void SNMPhysicsBodyEllipsoid::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
 }
 
 

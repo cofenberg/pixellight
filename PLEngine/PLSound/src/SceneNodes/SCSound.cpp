@@ -108,7 +108,7 @@ SCSound::SCSound() :
 	Volume(this),
 	Pitch(this),
 	Listener(this),
-	EventHandlerUpdate(&SCSound::NotifyUpdate, this),
+	SlotNotifyUpdate(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_pSoundManager(nullptr)
@@ -213,9 +213,9 @@ void SCSound::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotNotifyUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotNotifyUpdate);
 	}
 }
 
