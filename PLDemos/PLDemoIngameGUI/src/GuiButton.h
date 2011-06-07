@@ -57,6 +57,8 @@ class GuiButton : public GuiBase {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, GuiButton, "", GuiBase, "Ingame Gui - Button")
+		// Signals
+		pl_signal_1(SignalPressed,	PLGeneral::uint32,	"Button has been pressed",	"")
 	pl_class_end
 
 
@@ -74,13 +76,6 @@ class GuiButton : public GuiBase {
 			AlignCenter,
 			AlignBlock
 		};
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<PLGeneral::uint32> EventPressed;	/**< Button has been pressed */
 
 
 	//[-------------------------------------------------------]

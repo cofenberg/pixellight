@@ -58,6 +58,7 @@ pl_implement_class(AbstractTooltip)
 AbstractTooltip::AbstractTooltip(Widget *pParent) : Widget(pParent),
 	Text(this),
 	Timeout(this),
+	SignalTimeout(this),
 	SlotOnTimer(this),
 	m_nTimeout(5000),
 	m_cTimer(*GetGui())
@@ -169,8 +170,8 @@ void AbstractTooltip::OnTimeout()
 */
 void AbstractTooltip::OnTimer()
 {
-	// Emit event
-	EventTimeout();
+	// Emit signal
+	SignalTimeout();
 
 	// Call virtual function
 	OnTimeout();

@@ -56,16 +56,11 @@ class AbstractTooltip : public Widget {
 		// Attributes
 		pl_attribute(Text,		PLGeneral::String,	"",		ReadWrite,	GetSet,	"Tooltip text",											"")
 		pl_attribute(Timeout,	PLGeneral::uint64,	5000,	ReadWrite,	GetSet,	"Time (in ms) after which the tooltip is blended out",	"")
+		// Signals
+		pl_signal_0(SignalTimeout,	"Timeout has been reached",	"")
 		// Slots
 		pl_slot_0(OnTimer,	"Timer callback",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<> EventTimeout;	/**< Timeout has been reached */
 
 
 	//[-------------------------------------------------------]

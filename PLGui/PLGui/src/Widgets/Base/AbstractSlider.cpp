@@ -60,6 +60,7 @@ AbstractSlider::AbstractSlider(Widget *pParent) : Widget(pParent),
 	Value(this),
 	StepSize(this),
 	StepSizeFast(this),
+	SignalChangeValue(this),
 	m_nMinValue(1),
 	m_nMaxValue(100),
 	m_nValue(1),
@@ -245,8 +246,8 @@ void AbstractSlider::DecreaseFast()
 */
 void AbstractSlider::OnChangeValue(int nValue)
 {
-	// Emit event
-	EventChangeValue(nValue);
+	// Emit signal
+	SignalChangeValue(nValue);
 }
 
 

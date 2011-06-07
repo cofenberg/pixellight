@@ -55,6 +55,7 @@ pl_implement_class(GuiButton)
 *    Constructor
 */
 GuiButton::GuiButton(Widget *pParent) : GuiBase(pParent),
+	SignalPressed(this),
 	m_pFont(Application::GuiFont),
 	m_cColor(Color4::White),
 	m_cMouseOverColor(Color4::White),
@@ -306,8 +307,8 @@ void GuiButton::OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2
 
 	// Button clicked?
 	if (m_bMouseOver && nButton == 0 && m_bMouseDown) {
-		// Send click-event
-		EventPressed(GetID());
+		// Send click-signal
+		SignalPressed(GetID());
 	}
 	m_bMouseDown = false;
 }

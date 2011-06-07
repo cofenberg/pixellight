@@ -58,14 +58,9 @@ class AbstractSlider : public Widget {
 		pl_attribute(Value,			int,	1,		ReadWrite,	GetSet,	"Current value",		"")
 		pl_attribute(StepSize,		int,	10,		ReadWrite,	GetSet,	"Standard step size",	"")
 		pl_attribute(StepSizeFast,	int,	50,		ReadWrite,	GetSet,	"Fast step size",		"")
+		// Signals
+		pl_signal_1(SignalChangeValue,	int,	"The current value has been changed",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<int> EventChangeValue;	/**< The current value has been changed */
 
 
 	//[-------------------------------------------------------]

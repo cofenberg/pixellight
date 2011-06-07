@@ -60,16 +60,11 @@ class AbstractToggleButton : public AbstractButton {
 		// Attributes
 		pl_attribute(PartiallyAllowed,	bool,						false,		ReadWrite,	GetSet,	"Is the third state (PartiallyChecked) allowed?",	"")
 		pl_attribute(State,				pl_enum_type(ECheckState),	NotChecked,	ReadWrite,	GetSet,	"Current check state",								"")
+		// Signals
+		pl_signal_1(SignalToggled,	ECheckState,	"The button has been toggled",	"")
 		// Slots
 		pl_slot_1(OnGroupActivate,	AbstractToggleButton*,	"Group callback",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<ECheckState> EventToggled;	/**< The button has been toggled */
 
 
 	//[-------------------------------------------------------]

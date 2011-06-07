@@ -62,6 +62,10 @@ pl_implement_class(AbstractMenu)
 *    Constructor
 */
 AbstractMenu::AbstractMenu(Widget *pParent) : Widget(pParent),
+	SignalItemSelected(this),
+	SignalItemClicked(this),
+	SignalSubmenuOpened(this),
+	SignalSubmenuClosed(this),
 	m_pMenu(nullptr),
 	m_nOrientation(Vertical),
 	m_nOpenSideHorizontal(SideRight),
@@ -198,8 +202,8 @@ void AbstractMenu::SetSelection(int nItem)
 		// Set selection
 		m_nSelection = nItem;
 
-		// Emit event
-		EventItemSelected(m_nSelection);
+		// Emit signal
+		SignalItemSelected(m_nSelection);
 
 		// Check selected item
 		if (pItem && bOpenSubmenu) {
@@ -274,8 +278,8 @@ void AbstractMenu::ClickItem(int nItem)
 */
 void AbstractMenu::OnItemClicked(MenuItem *pItem)
 {
-	// Emit event
-	EventItemClicked(pItem);
+	// Emit signal
+	SignalItemClicked(pItem);
 }
 
 
@@ -521,8 +525,8 @@ void AbstractMenu::OpenSubmenu(MenuItem *pItem, int nItem)
 		m_pPopupMenu->SetOpenSide(Horizontal, m_nOpenSideHorizontal);
 		m_pPopupMenu->SetOpenSide(Vertical,   m_nOpenSideVertical);
 
-		// Emit event
-		EventSubmenuOpened(m_pSelectedItem);
+		// Emit signal
+		SignalSubmenuOpened(m_pSelectedItem);
 
 		// Inform controller
 		m_pController->SetControlledMenu(m_pPopupMenu);
@@ -537,8 +541,8 @@ void AbstractMenu::CloseSubmenu()
 {
 	// Check if current item is valid
 	if (m_pSelectedItem) {
-		// Emit event
-		EventSubmenuClosed(m_pSelectedItem);
+		// Emit signal
+		SignalSubmenuClosed(m_pSelectedItem);
 
 		// Close popup menu
 		if (m_pPopupMenu) {

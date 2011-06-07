@@ -61,18 +61,13 @@ class AbstractButton : public Widget {
 		pl_attribute(Repeat,			bool,				false,						ReadWrite,	GetSet,	"If the button is hold down, emit clicks repeatedly",	"")
 		pl_attribute(RepeatDelay,		PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Initial delay (in ms) for repeated clicks",			"")
 		pl_attribute(RepeatInterval,	PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Interval (in ms) between repeated clicks",				"")
+		// Signals
+		pl_signal_0(SignalPressed,	"The button has been pressed down",						"")
+		pl_signal_0(SignalReleased,	"The button has been released",							"")
+		pl_signal_0(SignalClicked,	"The button has been clicked (pressed and released)",	"")
 		// Slots
 		pl_slot_0(OnTimer,	"Timer callback",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<> EventPressed;	/**< The button has been pressed down */
-		PLCore::Event<> EventReleased;	/**< The button has been released */
-		PLCore::Event<> EventClicked;	/**< The button has been clicked (pressed and released) */
 
 
 	//[-------------------------------------------------------]

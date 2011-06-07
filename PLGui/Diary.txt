@@ -1,6 +1,8 @@
 >> 07.06.2011
 [CO]
-- "PLGui::Widget" events are now implemented as RTTI signals
+- "Widget" events are now implemented as RTTI signals
+- PLGui: "AbstractButton", "AbstractMenu", "AbstractSlider", "AbstractToggleButton" and "AbstractTooltip"
+  events are now implemented as RTTI signals
 
 
 
