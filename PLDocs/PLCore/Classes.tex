@@ -10,6 +10,7 @@ A RTTI class is always derived from \emph{PLCore::Object} either directly or by 
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 };
@@ -19,6 +20,7 @@ class MyClass : public PLCore::Object {
 namespace MyNamespace {
 	class MyClass : public PLCore::Object {
 		pl_class(MY_RTTI_EXPORT, MyClass, "MyNamespace", PLCore::Object, "Description of my RTTI class")
+			// Constructors
 			pl_constructor_0(MyConstructor, "Default constructor", "")
 		pl_class_end
 	};
@@ -61,6 +63,7 @@ namespace MyNamespace1 {
 namespace MyNamespace2 {
 class MyClass : public PLCore::Object {
 	pl_class(MY_RTTI_EXPORT, MyClass, "MyNamespace1::MyNamespace2", PLCore::Object, "RTTI class within namespaces")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 };
@@ -251,9 +254,11 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyInt, int, 10, ReadWrite, DirectValue, "Simple integer", "")
 		pl_attribute(MyFloat, float, 3.1415f, ReadOnly, DirectValue, "PI", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -347,8 +352,10 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyInt, int, 42, ReadWrite, GetSet, "Simple integer", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Public methods
@@ -411,8 +418,10 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyFloat, float, 3.1415f, ReadWrite, DirectValue, "PI", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -424,9 +433,11 @@ class MyDerivedClass : public MyClass {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyDerivedClass, "", MyClass, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
-		// Overwritten MyClass attribute
+		// Attributes
+			// Overwritten MyClass attribute
 		pl_attribute(MyFloat, float, 2.71828f, ReadWrite, ModifyAttr, "Euler number", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -581,8 +592,10 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyEnumNumber, pl_enum_type(MyEnum), MyOne, ReadWrite, DirectValue, "My enumeration number", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -704,8 +717,10 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyEnumNumber, pl_enum_type(MyEnum), MyOne, ReadWrite, DirectValue, "My enumeration number", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -773,8 +788,10 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(MyFlagsNumber, pl_flag_type(MyFlags), MyFirstFlag|MySecondFlag, ReadWrite, DirectValue, "My flags number", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 
 	// Default constructor
@@ -884,7 +901,9 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Methods
 		pl_method_0(MyMethod, pl_ret_type(void), "My method", "")
 		pl_method_1(MyMethodParameter, pl_ret_type(void), int, "My method with given parameter", "")
 		pl_method_2(MyMethodParameters, bool, int, float, "My method with given parameters and return value", "")
@@ -953,6 +972,7 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
 		pl_constructor_1(MyConstructorParameter, int, "Create with given parameter", "")
 		pl_constructor_2(MyConstructorParameters, int, float, "Create with two parameters", "")
@@ -1003,7 +1023,9 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Signals
 		pl_signal_0(MySignal, "My signal", "")
 		pl_signal_1(MySignalParameter, int, "My signal with given parameter", "")
 	pl_class_end
@@ -1111,7 +1133,9 @@ class MyClass : public PLCore::Object {
 
 	// RTTI interface
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
 		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Slots
 		pl_slot_0(OnMyEvent, "My slot", "")
 		pl_slot_1(OnMyEventParameter, int, "My slot with given parameter", "")
 	pl_class_end
@@ -1195,11 +1219,13 @@ Source~code~\ref{Code:RTTIClassPropertiesDefinition} shows how a basic RTTI clas
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
-		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Properties
 		pl_properties
 			pl_property("MyFirstProperty",  "FirstValue")
 			pl_property("MySecondProperty", "SecondValue")
 		pl_properties_end
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
 	pl_class_end
 };
 \end{lstlisting}

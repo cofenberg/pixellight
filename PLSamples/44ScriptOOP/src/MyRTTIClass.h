@@ -52,6 +52,7 @@ class MyRTTIClass : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, don't take it to serious")
+		// Properties
 		pl_properties
 			pl_property("MyProperty",	"This is a property value")
 		pl_properties_end
