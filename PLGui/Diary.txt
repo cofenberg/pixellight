@@ -1,3 +1,9 @@
+>> 07.06.2011
+[CO]
+- "PLGui::Widget" events are now implemented as RTTI signals
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

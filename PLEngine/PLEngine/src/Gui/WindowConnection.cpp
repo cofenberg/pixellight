@@ -62,13 +62,13 @@ WindowConnection::WindowConnection(Renderer &cRenderer, Widget &cWidget, Widget 
 {
 	// Connect event handlers
 	Widget *pWidget = pEventWidget ? pEventWidget : &cWidget;
-	pWidget->EventDestroy.Connect(&EventHandlerDestroy);
-	pWidget->EventShow   .Connect(&EventHandlerShow);
-	pWidget->EventHide   .Connect(&EventHandlerHide);
-	pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-	// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+	pWidget->SignalDestroy.Connect(&EventHandlerDestroy);
+	pWidget->SignalShow   .Connect(&EventHandlerShow);
+	pWidget->SignalHide   .Connect(&EventHandlerHide);
+	pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
+	// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 	if (pWidget->GetContentWidget() != pWidget)
-		pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
+		pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
 }
 
 /**

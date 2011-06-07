@@ -69,7 +69,7 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 {
 	// [TODO] Window size change
 	// Connect event handler
-//	cWindow.EventSize.Connect(&EventHandlerSize);
+//	cWindow.SignalSize.Connect(&EventHandlerSize);
 
 	// Init
 	Init();

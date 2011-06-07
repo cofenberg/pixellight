@@ -91,7 +91,7 @@ libRocketAdapter::libRocketAdapter(RendererContext &cRendererContext, Widget *pW
 
 	// Connect event handler
 	if (pWidget)
-		pWidget->EventSize.Connect(&EventHandlerSize);
+		pWidget->SignalSize.Connect(&EventHandlerSize);
 }
 
 /**

@@ -79,14 +79,14 @@ void MousePicking::SetWidget(Widget *pWidget)
 {
 	// Disconnect event handler
 	if (m_pWidget)
-		m_pWidget->EventDestroy.Disconnect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Disconnect(&EventHandlerWidgetDestroy);
 
 	// Set new widget
 	m_pWidget = pWidget;
 
 	// Connect event handler
 	if (m_pWidget)
-		m_pWidget->EventDestroy.Connect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Connect(&EventHandlerWidgetDestroy);
 }
 
 /**

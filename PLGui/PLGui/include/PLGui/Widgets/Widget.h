@@ -105,53 +105,48 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		pl_attribute(BackgroundColor,	PLGraphics::Color4,	PLGraphics::Color4(),	ReadWrite,	GetSet,	"Background color",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Signals
+		pl_signal_2(SignalUserMessage,				PLGeneral::uint32,	void*,								"User message",																								"")
+		pl_signal_0(SignalOnThemeChanged,																	"Theme has been changed",																					"")
+		pl_signal_0(SignalUpdateContent,																	"Widget content has been changed",																			"")
+		pl_signal_1(SignalUpdateChildWidget,		Widget*,												"Child widget has been changed",																			"")
+		pl_signal_1(SignalAddChildWidget,			Widget*,												"Child widget has been added",																				"")
+		pl_signal_1(SignalRemoveChildWidget,		Widget*,												"Child widget has been removed",																			"")
+		pl_signal_0(SignalClose,																			"Widget shall be closed (ALT+F4 or X-Button pressed)",														"")
+		pl_signal_0(SignalCreate,																			"Widget has just been created",																				"")
+		pl_signal_0(SignalDestroy,																			"Widget is going to be destroyed",																			"")
+		pl_signal_0(SignalShow,																				"Widget gets shown",																						"")
+		pl_signal_0(SignalHide,																				"Widget gets hidden",																						"")
+		pl_signal_0(SignalEnable,																			"Widget gets enabled",																						"")
+		pl_signal_0(SignalDisable,																			"Widget gets disabled",																						"")
+		pl_signal_0(SignalGetFocus,																			"Widget gets focus",																						"")
+		pl_signal_0(SignalLooseFocus,																		"Widget looses focus",																						"")
+		pl_signal_1(SignalActivate,					bool,													"Widget has been activated or deactivated (focus-widget has changed)",										"")
+		pl_signal_1(SignalDrawBackground,			Graphics&,												"Widget background gets drawn, graphics object used for painting as parameter",								"")
+		pl_signal_1(SignalDraw,						Graphics&,												"Widget gets drawn, graphics object used for painting as parameter",										"")
+		pl_signal_1(SignalMove,						const PLMath::Vector2i&,								"Widget gets moved, new widget position as parameter",														"")
+		pl_signal_1(SignalSize,						const PLMath::Vector2i&,								"Widget gets resized, new widget size as parameter",														"")
+		pl_signal_1(SignalWindowState,				EWindowState,											"Window state has changed, new window state as parameter",													"")
+		pl_signal_0(SignalEnterFullscreen,																	"Widget enters fullscreen mode",																			"")
+		pl_signal_0(SignalLeaveFullscreen,																	"Widget leaves fullscreen mode",																			"")
+		pl_signal_1(SignalPreferredSize,			const PLMath::Vector2i&,								"Widget has calculated it's preferred size",																"")
+		pl_signal_0(SignalAdjustContent,																	"Widget content has to be adjusted",																		"")
+		pl_signal_0(SignalMouseEnter,																		"Mouse enters widget",																						"")
+		pl_signal_0(SignalMouseLeave,																		"Mouse leaves widget",																						"")
+		pl_signal_1(SignalMouseOver,				bool,													"Mouse-over widget has changed",																			"")
+		pl_signal_1(SignalMouseMove,				const PLMath::Vector2i&,								"Mouse moves inside the widget, mouse position within the widget as parameter",								"")
+		pl_signal_0(SignalMouseHover,																		"Mouse hovers over the widget",																				"")
+		pl_signal_1(SignalMousePosUpdate,			const PLMath::Vector2i&,								"Mouse position inside the widget has changed due to the movement of widget",								"")
+		pl_signal_2(SignalMouseButtonDown,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button is pressed, mouse button and mouse position within the widget as parameters",					"")
+		pl_signal_2(SignalMouseButtonUp,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button is released, mouse button and mouse position within the widget as parameters",				"")
+		pl_signal_2(SignalMouseButtonClick,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button has been clicked, mouse button and mouse position within the widget as parameters",			"")
+		pl_signal_2(SignalMouseButtonDoubleClick,	PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters",	"")
+		pl_signal_1(SignalMouseWheel,				int,													"Mouse wheel moved, mouse wheel movement as parameter",														"")
+		pl_signal_2(SignalKeyDown,					PLGeneral::uint32,			PLGeneral::uint32,			"Key gets pressed, pressed key and modifier keys pressed as parameters",									"")
+		pl_signal_2(SignalKeyUp,					PLGeneral::uint32,			PLGeneral::uint32,			"Key gets released, released key and modifier keys pressed as parameters",									"")
+		pl_signal_1(SignalHotkey,					PLGeneral::uint32,										"Hotkey pressed, hotkey ID as parameter",																	"")
+		pl_signal_1(SignalDrop,						const DataObject&,										"Data has been dropped onto the widget",																	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<PLGeneral::uint32, void *>					EventUserMessage;				/**< User message */
-		PLCore::Event<>												EventOnThemeChanged;			/**< Theme has been changed */
-		PLCore::Event<>												EventUpdateContent;				/**< Widget content has been changed */
-		PLCore::Event<Widget*>										EventUpdateChildWidget;			/**< Child widget has been changed */
-		PLCore::Event<Widget*>										EventAddChildWidget;			/**< Child widget has been added */
-		PLCore::Event<Widget*>										EventRemoveChildWidget;			/**< Child widget has been removed */
-		PLCore::Event<>												EventClose;						/**< Widget shall be closed (ALT+F4 or X-Button pressed) */
-		PLCore::Event<>												EventCreate;					/**< Widget has just been created */
-		PLCore::Event<>												EventDestroy;					/**< Widget is going to be destroyed */
-		PLCore::Event<>												EventShow;						/**< Widget gets shown */
-		PLCore::Event<>												EventHide;						/**< Widget gets hidden */
-		PLCore::Event<>												EventEnable;					/**< Widget gets enabled */
-		PLCore::Event<>												EventDisable;					/**< Widget gets disabled */
-		PLCore::Event<>												EventGetFocus;					/**< Widget gets focus */
-		PLCore::Event<>												EventLooseFocus;				/**< Widget looses focus */
-		PLCore::Event<bool>											EventActivate;					/**< Widget has been activated or deactivated (focus-widget has changed) */
-		PLCore::Event<Graphics&>									EventDrawBackground;			/**< Widget background gets drawn, graphics object used for painting as parameter */
-		PLCore::Event<Graphics&>									EventDraw;						/**< Widget gets drawn, graphics object used for painting as parameter */
-		PLCore::Event<const PLMath::Vector2i&>						EventMove;						/**< Widget gets moved, new widget position as parameter */
-		PLCore::Event<const PLMath::Vector2i&>						EventSize;						/**< Widget gets resized, new widget size as parameter */
-		PLCore::Event<EWindowState>									EventWindowState;				/**< Window state has changed, new window state as parameter */
-		PLCore::Event<>												EventEnterFullscreen;			/**< Widget enters fullscreen mode */
-		PLCore::Event<>												EventLeaveFullscreen;			/**< Widget leaves fullscreen mode */
-		PLCore::Event<const PLMath::Vector2i &>						EventPreferredSize;				/**< Widget has calculated it's preferred size */
-		PLCore::Event<>												EventAdjustContent;				/**< Widget content has to be adjusted */
-		PLCore::Event<>												EventMouseEnter;				/**< Mouse enters widget */
-		PLCore::Event<>												EventMouseLeave;				/**< Mouse leaves widget */
-		PLCore::Event<bool>											EventMouseOver;					/**< Mouse-over widget has changed */
-		PLCore::Event<const PLMath::Vector2i&>						EventMouseMove;					/**< Mouse moves inside the widget, mouse position within the widget as parameter */
-		PLCore::Event<>												EventMouseHover;				/**< Mouse hovers over the widget */
-		PLCore::Event<const PLMath::Vector2i&>						EventMousePosUpdate;			/**< Mouse position inside the widget has changed due to the movement of widget */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonDown;			/**< Mouse button is pressed, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonUp;				/**< Mouse button is released, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonClick;			/**< Mouse button has been clicked, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonDoubleClick;	/**< Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<int>											EventMouseWheel;				/**< Mouse wheel moved, mouse wheel movement as parameter */
-		PLCore::Event<PLGeneral::uint32, PLGeneral::uint32>			EventKeyDown;					/**< Key gets pressed, pressed key and modifier keys pressed as parameters */
-		PLCore::Event<PLGeneral::uint32, PLGeneral::uint32>			EventKeyUp;						/**< Key gets released, released key and modifier keys pressed as parameters */
-		PLCore::Event<PLGeneral::uint32>							EventHotkey;					/**< Hotkey pressed, hotkey ID as parameter */
-		PLCore::Event<const DataObject &>							EventDrop;						/**< Data has been dropped onto the widget */
 
 
 	//[-------------------------------------------------------]
@@ -725,7 +720,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    "Closing a widget" means sending it a message, that it shall close. This message is sent
 		*    automatically if you press the 'X'-Button or e.g. with "ALT+F4" on Windows. The default
 		*    behaviour of widgets is: nothing. The default behaviour of windows is: destroying the window.
-		*    You can control the behaviour by overriding OnClose() or hooking into EventClose.
+		*    You can control the behaviour by overriding OnClose() or hooking into SignalClose.
 		*/
 		PLGUI_API void Close();
 

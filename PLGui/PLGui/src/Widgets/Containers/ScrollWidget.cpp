@@ -84,7 +84,7 @@ ScrollWidget::ScrollWidget(Widget *pParent) : ContainerWidget(pParent),
 
 	// Create inner content widget
 	m_pInnerWidget = new Widget(m_pContentWidget);
-	m_pInnerWidget->EventSize.Connect(&SlotOnInnerWidgetSize);
+	m_pInnerWidget->SignalSize.Connect(&SlotOnInnerWidgetSize);
 	m_pInnerWidget->SetPos(Vector2i(0, 0));
 	m_pInnerWidget->SetSize(Vector2i(1280, 854));
 	m_pInnerWidget->SetVisible(true);

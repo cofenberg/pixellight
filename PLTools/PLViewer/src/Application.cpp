@@ -269,12 +269,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-		pWidget->EventDrop.   Connect(&EventHandlerDrop);
-		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+		pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
+		pWidget->SignalDrop.   Connect(&EventHandlerDrop);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
-			pWidget->GetContentWidget()->EventDrop.   Connect(&EventHandlerDrop);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
+			pWidget->GetContentWidget()->SignalDrop.   Connect(&EventHandlerDrop);
 		}
 	}
 }
