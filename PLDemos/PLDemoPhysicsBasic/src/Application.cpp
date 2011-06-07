@@ -623,7 +623,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Get the physics world
 				World *pPhysicsWorld = static_cast<SCPhysicsWorld*>(pSceneContainer)->GetWorld();
 				if (pPhysicsWorld)
-					pPhysicsWorld->EventContact.Connect(&EventHandlerContact);
+					pPhysicsWorld->SignalContact.Connect(&EventHandlerContact);
 			}
 
 			// Set scene container
