@@ -793,7 +793,7 @@ bool SceneNode::RemoveModifier(SceneNodeModifier &cModifier)
 *  @brief
 *    Removes a modifier
 */
-bool SceneNode::RemoveModifier(const String &sClass, uint32 nIndex)
+bool SceneNode::RemoveModifier(String sClass, uint32 nIndex)
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;
