@@ -196,6 +196,7 @@ text_shortcut("Scene_PLParticleGroups", "Demos\\Bin\\Data\\Scenes\\PLParticleGro
 text_shortcut("Scene_Mipmaps", "Demos\\Bin\\Data\\Scenes\\Mipmaps.scene");
 text_shortcut("Scene_ReflectionCubeMap", "Demos\\Bin\\Data\\Scenes\\ReflectionCubeMap.scene");
 text_shortcut("Scene_SceneNodeModifiers", "Demos\\Bin\\Data\\Scenes\\SceneNodeModifiers.scene");
+text_shortcut("Scene_Scripts", "Demos\\Bin\\Data\\Scenes\\Scripts.scene");
 
 
 // Scene exe shortcuts
@@ -217,3 +218,4 @@ scene_exe_shortcut("SceneExe_PLParticleGroups", "Demos\\Bin\\Data\\Scenes\\PLPar
 scene_exe_shortcut("SceneExe_Mipmaps", "Demos\\Bin\\Data\\Scenes\\Mipmaps.scene");
 scene_exe_shortcut("SceneExe_ReflectionCubeMap", "Demos\\Bin\\Data\\Scenes\\ReflectionCubeMap.scene");
 scene_exe_shortcut("SceneExe_SceneNodeModifiers", "Demos\\Bin\\Data\\Scenes\\SceneNodeModifiers.scene");
+scene_exe_shortcut("SceneExe_Scripts", "Demos\\Bin\\Data\\Scenes\\Scripts.scene");
