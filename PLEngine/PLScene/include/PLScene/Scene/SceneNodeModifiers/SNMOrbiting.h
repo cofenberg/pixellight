@@ -148,7 +148,7 @@ class SNMOrbiting : public SceneNodeModifier {
 		*  @brief
 		*    Called on scene node position or rotation change or update request
 		*/
-		void NotifyPositionRotationUpdate();
+		void OnPositionRotationUpdate();
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class SNMOrbiting : public SceneNodeModifier {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 
 
 	//[-------------------------------------------------------]

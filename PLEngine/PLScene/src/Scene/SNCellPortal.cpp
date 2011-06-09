@@ -85,7 +85,7 @@ void SNCellPortal::SetTargetCell(const String &sValue)
 SNCellPortal::SNCellPortal() :
 	TargetCell(this),
 	Flags(this),
-	EventHandlerCellContainerPositionRotationScale(&SNCellPortal::NotifyCellContainerPositionRotationScale, this),
+	EventHandlerCellContainerPositionRotationScale(&SNCellPortal::OnCellContainerPositionRotationScale, this),
 	m_pTargetCell(new SceneNodeHandler())
 {
 	// Set the internal portal flag
@@ -159,7 +159,7 @@ const Matrix3x4 &SNCellPortal::GetWarpMatrix()
 *  @brief
 *    Called when the target cell container, position, rotation or scale changed
 */
-void SNCellPortal::NotifyCellContainerPositionRotationScale()
+void SNCellPortal::OnCellContainerPositionRotationScale()
 {
 	// We need to recalculate the warp matrix
 	m_nInternalPortalFlags |= RecalculateWarpMatrix;

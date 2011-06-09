@@ -54,8 +54,8 @@ pl_implement_class(SNMPhysicsUpdateVelocity)
 *    Constructor
 */
 SNMPhysicsUpdateVelocity::SNMPhysicsUpdateVelocity(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
-	EventHandlerPosition(&SNMPhysicsUpdateVelocity::NotifyPosition, this),
-	EventHandlerRotation(&SNMPhysicsUpdateVelocity::NotifyRotation, this),
+	EventHandlerPosition(&SNMPhysicsUpdateVelocity::OnPosition, this),
+	EventHandlerRotation(&SNMPhysicsUpdateVelocity::OnRotation, this),
 	m_bPreviousPosition(false),
 	m_bPreviousRotation(false)
 {
@@ -96,7 +96,7 @@ void SNMPhysicsUpdateVelocity::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node position changed
 */
-void SNMPhysicsUpdateVelocity::NotifyPosition()
+void SNMPhysicsUpdateVelocity::OnPosition()
 {
 	// Get the scene node
 	const SceneNode &cSceneNode = GetSceneNode();
@@ -143,7 +143,7 @@ void SNMPhysicsUpdateVelocity::NotifyPosition()
 *  @brief
 *    Called when the scene node rotation changed
 */
-void SNMPhysicsUpdateVelocity::NotifyRotation()
+void SNMPhysicsUpdateVelocity::OnRotation()
 {
 	// Get the scene node
 	const SceneNode &cSceneNode = GetSceneNode();

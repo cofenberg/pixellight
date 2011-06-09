@@ -93,7 +93,7 @@ class SNSystem : public PLScene::SceneNode {
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 		// Slots
-		pl_slot_0(NotifyUpdate,	"Called when the scene node needs to be updated",	"")
+		pl_slot_0(OnUpdate,	"Called when the scene node needs to be updated",	"")
 	pl_class_end
 
 
@@ -215,7 +215,7 @@ class SNSystem : public PLScene::SceneNode {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

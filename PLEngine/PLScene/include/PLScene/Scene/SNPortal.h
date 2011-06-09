@@ -187,7 +187,7 @@ class SNPortal : public SceneNode {
 		*  @brief
 		*    Called when the scene node container, position, rotation or scale changed
 		*/
-		void NotifyContainerPositionRotationScale();
+		void OnContainerPositionRotationScale();
 
 
 	//[-------------------------------------------------------]

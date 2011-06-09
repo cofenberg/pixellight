@@ -80,7 +80,7 @@ class Application : public PLEngine::RenderApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]

@@ -141,13 +141,13 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 		/**
 		*  @brief
 		*    Called when the scene node axis aligned bounding box changed
 		*/
-		void NotifyAABoundingBox();
+		void OnAABoundingBox();
 
 
 	//[-------------------------------------------------------]

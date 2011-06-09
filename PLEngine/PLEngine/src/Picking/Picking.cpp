@@ -50,7 +50,7 @@ namespace PLEngine {
 *    Constructor
 */
 Picking::Picking() :
-	EventHandlerSceneNode(&Picking::NotifySceneNode, this),
+	EventHandlerSceneNode(&Picking::OnSceneNode, this),
 	m_pPickingResult(nullptr)
 {
 }
@@ -135,7 +135,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 *  @brief
 *    Called when a scene node was found
 */
-void Picking::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void Picking::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// First at all, call the picking filter function
 	if (m_pPickingResult->m_pSceneContainer && OnPickingCandidate(cSceneNode) && cSceneNode.GetMeshHandler()) {

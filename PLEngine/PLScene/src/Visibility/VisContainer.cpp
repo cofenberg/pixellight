@@ -80,7 +80,7 @@ const VisContainer::Projection &VisContainer::GetProjection() const
 *    Constructor
 */
 VisContainer::VisContainer(VisNode *pParent) : VisNode(pParent),
-	EventHandlerDestroy(&VisContainer::NotifyDestroy, this),
+	EventHandlerDestroy(&VisContainer::OnDestroy, this),
 	m_pQueryHandler(new SceneQueryHandler())
 {
 	m_sProjection.fZNear = m_sProjection.fZFar = 0.0f;
@@ -236,7 +236,7 @@ void VisContainer::FreeNodes()
 *  @brief
 *    Called when the scene node assigned with this visibililty container was destroyed
 */
-void VisContainer::NotifyDestroy()
+void VisContainer::OnDestroy()
 {
 	SceneNode *pSceneNode = GetSceneNode();
 	if (pSceneNode && pSceneNode->IsContainer()) {

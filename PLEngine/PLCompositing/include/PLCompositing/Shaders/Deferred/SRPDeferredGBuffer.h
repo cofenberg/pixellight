@@ -354,7 +354,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @param[in] cMaterial
 		*    Removed material
 		*/
-		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+		void OnMaterialRemoved(PLRenderer::Material &cMaterial);
 
 
 	//[-------------------------------------------------------]

@@ -53,8 +53,8 @@ pl_implement_class(SNProjectile)
 */
 SNProjectile::SNProjectile() :
 	Direction(this),
-	EventHandlerUpdate(&SNProjectile::NotifyUpdate, this),
-	EventHandlerSceneNode(&SNProjectile::NotifySceneNode, this)
+	EventHandlerUpdate(&SNProjectile::OnUpdate, this),
+	EventHandlerSceneNode(&SNProjectile::OnSceneNode, this)
 {
 	// Set the bounding box
 	SetAABoundingBox(AABoundingBox(-3.0f, -3.0f, -1.0f, 3.0f, 3.0f, 1.0f));
@@ -76,7 +76,7 @@ SNProjectile::~SNProjectile()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNProjectile::NotifyUpdate()
+void SNProjectile::OnUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -113,7 +113,7 @@ void SNProjectile::NotifyUpdate()
 *  @brief
 *    Called when a scene node was found
 */
-void SNProjectile::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void SNProjectile::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// Is this projectile still active?
 	if (IsActive()) {

@@ -64,9 +64,9 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
-	EventHandlerContact(&Application::NotifyContact, this),
+	EventHandlerKeyDown(&Application::OnKeyDown, this),
+	EventHandlerKeyUp  (&Application::OnKeyUp,   this),
+	EventHandlerContact(&Application::OnContact, this),
 	m_pLine(nullptr),
 	m_pFallingBox(nullptr),
 	m_bApplyForce(false),
@@ -221,7 +221,7 @@ Body *Application::GetPhysicsBody(SceneNode &cSceneNode) const
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed
@@ -304,7 +304,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a key is released
 */
-void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Apply a force to the small falling physics box?
@@ -327,7 +327,7 @@ void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a contact between two bodies was detected by the physics
 */
-void Application::NotifyContact(ContactInformation &cContactInformation)
+void Application::OnContact(ContactInformation &cContactInformation)
 {
 	// First PING!
 	SceneNode *pSceneNode = GetScene()->GetByName("ContactText_FirstBody");

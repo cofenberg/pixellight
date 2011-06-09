@@ -253,7 +253,7 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		*  @param[in] cMaterial
 		*    Removed material
 		*/
-		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+		void OnMaterialRemoved(PLRenderer::Material &cMaterial);
 
 
 	//[-------------------------------------------------------]

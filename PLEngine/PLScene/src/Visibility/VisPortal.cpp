@@ -60,7 +60,7 @@ VisContainer *VisPortal::GetTargetVisContainer() const
 *    Constructor
 */
 VisPortal::VisPortal() :
-	EventHandlerDestroy(&VisPortal::NotifyDestroy, this),
+	EventHandlerDestroy(&VisPortal::OnDestroy, this),
 	m_pTargetCell(nullptr)
 {
 }
@@ -79,7 +79,7 @@ VisPortal::~VisPortal()
 *  @brief
 *    Called when the scene node assigned with this visibililty container was destroyed
 */
-void VisPortal::NotifyDestroy()
+void VisPortal::OnDestroy()
 {
 	SceneNode *pSceneNode = GetSceneNode();
 	if (pSceneNode && pSceneNode->IsPortal() && pSceneNode->IsInstanceOf("PLScene::SNCellPortal")) {

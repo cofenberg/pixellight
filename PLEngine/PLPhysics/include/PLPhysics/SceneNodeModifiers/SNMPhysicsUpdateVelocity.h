@@ -108,13 +108,13 @@ class SNMPhysicsUpdateVelocity : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node position changed
 		*/
-		void NotifyPosition();
+		void OnPosition();
 
 		/**
 		*  @brief
 		*    Called when the scene node rotation changed
 		*/
-		void NotifyRotation();
+		void OnRotation();
 
 
 	//[-------------------------------------------------------]

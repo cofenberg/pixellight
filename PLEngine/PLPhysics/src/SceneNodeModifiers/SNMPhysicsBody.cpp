@@ -99,7 +99,7 @@ void SNMPhysicsBody::SetPositionOffset(const Vector3 &vValue)
 {
 	if (m_vPositionOffset != vValue) {
 		m_vPositionOffset = vValue;
-		NotifyPosition();
+		OnPosition();
 	}
 }
 
@@ -178,10 +178,10 @@ SNMPhysicsBody::SNMPhysicsBody(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	PositionOffset(this),
 	CollisionGroup(this),
 	Flags(this),
-	SlotNotifyActive(this),
-	SlotNotifyPosition(this),
-	SlotNotifyRotation(this),
-	SlotNotifyTransform(this),
+	SlotOnActive(this),
+	SlotOnPosition(this),
+	SlotOnRotation(this),
+	SlotOnTransform(this),
 	m_fMass(0.0f),
 	m_nCollisionGroup(0),
 	m_pWorldContainer(nullptr),
@@ -226,14 +226,14 @@ void SNMPhysicsBody::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handler
-		cSceneNode.SignalActive.Connect(&SlotNotifyActive);
-		cSceneNode.GetTransform().EventPosition.Connect(&SlotNotifyPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&SlotNotifyRotation);
+		cSceneNode.SignalActive.Connect(&SlotOnActive);
+		cSceneNode.GetTransform().EventPosition.Connect(&SlotOnPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(&SlotOnRotation);
 	} else {
 		// Disconnect event handler
-		cSceneNode.SignalActive. Disconnect(&SlotNotifyActive);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&SlotNotifyPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&SlotNotifyRotation);
+		cSceneNode.SignalActive. Disconnect(&SlotOnActive);
+		cSceneNode.GetTransform().EventPosition.Disconnect(&SlotOnPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(&SlotOnRotation);
 	}
 
 	// Is there a PL physics body?
@@ -244,8 +244,8 @@ void SNMPhysicsBody::OnActivate(bool bActivate)
 			// Is the physics body now active?
 			if (bActivate) {
 				// Synchronize the position and rotation of the physics body with the scene node
-				NotifyPosition();
-				NotifyRotation();
+				OnPosition();
+				OnRotation();
 			}
 
 			// Set physics body state
@@ -269,14 +269,14 @@ void SNMPhysicsBody::CreatePhysicsBody()
 		pBody->SetAutoFreeze(!(GetFlags() & NoAutoFreeze));
 		pBody->SetUseGravity(!(GetFlags() & NoGravity));
 		pBody->SetCollisionGroup(m_nCollisionGroup);
-		NotifyPosition();
-		NotifyRotation();
+		OnPosition();
+		OnRotation();
 
 		// Unfreeze body by default?
 		pBody->SetFrozen(!(GetFlags() & InitUnfrozen));
 
 		// Connect event handler
-		pBody->EventTransform.Connect(&SlotNotifyTransform);
+		pBody->EventTransform.Connect(&SlotOnTransform);
 	}
 }
 
@@ -288,7 +288,7 @@ void SNMPhysicsBody::CreatePhysicsBody()
 *  @brief
 *    Called when the scene node active state changed
 */
-void SNMPhysicsBody::NotifyActive()
+void SNMPhysicsBody::OnActive()
 {
 	// Is there a PL physics body?
 	Body *pBody = GetBody();
@@ -300,7 +300,7 @@ void SNMPhysicsBody::NotifyActive()
 *  @brief
 *    Called when the scene node position changed
 */
-void SNMPhysicsBody::NotifyPosition()
+void SNMPhysicsBody::OnPosition()
 {
 	// Do listening?
 	if (m_bListening) {
@@ -338,7 +338,7 @@ void SNMPhysicsBody::NotifyPosition()
 *  @brief
 *    Called when the scene node rotation changed
 */
-void SNMPhysicsBody::NotifyRotation()
+void SNMPhysicsBody::OnRotation()
 {
 	// Do listening and use rotation?
 	if (m_bListening && !(GetFlags() & NoRotation)) {
@@ -374,7 +374,7 @@ void SNMPhysicsBody::NotifyRotation()
 *  @brief
 *    Called when the transform was changed by the physics
 */
-void SNMPhysicsBody::NotifyTransform()
+void SNMPhysicsBody::OnTransform()
 {
 	// Is there a PL physics body and is the simulation currently active?
 	const Body *pBody = GetBody();

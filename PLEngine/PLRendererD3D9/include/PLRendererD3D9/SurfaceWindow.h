@@ -98,7 +98,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*  @param[in] vSize
 		*    New window size
 		*/
-		void NotifySize(const PLMath::Vector2i &vSize);
+		void OnSize(const PLMath::Vector2i &vSize);
 
 
 	//[-------------------------------------------------------]

@@ -57,8 +57,8 @@ class Application : public PLEngine::BasicSceneApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(NotifyKeyDown,	PLGeneral::uint32,			PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
-		pl_slot_1(NotifyDrop,		const PLGui::DataObject&,						"Called when something was dropped down, dropped data object as first parameter",									"")
+		pl_slot_2(OnKeyDown,	PLGeneral::uint32,			PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_1(OnDrop,		const PLGui::DataObject&,						"Called when something was dropped down, dropped data object as first parameter",									"")
 	pl_class_end
 
 
@@ -123,7 +123,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] cDataObject
 		*    Dropped data object
 		*/
-		void NotifyDrop(const PLGui::DataObject &cDataObject);
+		void OnDrop(const PLGui::DataObject &cDataObject);
 
 
 	//[-------------------------------------------------------]

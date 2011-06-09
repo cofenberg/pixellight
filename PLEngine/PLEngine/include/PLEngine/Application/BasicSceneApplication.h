@@ -282,7 +282,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @param[in] cSceneNode
 		*    Found scene node
 		*/
-		void NotifySceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
+		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
@@ -291,7 +291,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @param[in] fLoadProgress
 		*    Load progress (0.0-1.0)
 		*/
-		void NotifyLoadProgress(float fLoadProgress);
+		void OnLoadProgress(float fLoadProgress);
 
 
 	//[-------------------------------------------------------]

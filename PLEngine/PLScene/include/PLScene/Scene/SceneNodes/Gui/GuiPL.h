@@ -212,7 +212,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @brief
 		*    Called when the timer has fired
 		*/
-		void NotifyTimer();
+		void OnTimer();
 
 		/**
 		*  @brief

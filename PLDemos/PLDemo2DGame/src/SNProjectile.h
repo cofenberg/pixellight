@@ -77,7 +77,7 @@ class SNProjectile : public PLScene::SceneNode {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class SNProjectile : public PLScene::SceneNode {
 		*  @param[in] cSceneNode
 		*    Found scene node
 		*/
-		void NotifySceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
+		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
 
 	//[-------------------------------------------------------]

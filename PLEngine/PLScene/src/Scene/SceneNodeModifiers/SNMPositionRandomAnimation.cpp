@@ -54,7 +54,7 @@ SNMPositionRandomAnimation::SNMPositionRandomAnimation(SceneNode &cSceneNode) : 
 	Speed(this),
 	Radius(this),
 	FixPosition(this),
-	EventHandlerUpdate(&SNMPositionRandomAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMPositionRandomAnimation::OnUpdate, this),
 	m_fTimer(0.0f)
 {
 	// Set initial fixed position
@@ -93,7 +93,7 @@ void SNMPositionRandomAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPositionRandomAnimation::NotifyUpdate()
+void SNMPositionRandomAnimation::OnUpdate()
 {
 	// Update timer
 	m_fTimer += Timing::GetInstance()->GetTimeDifference()*Speed;

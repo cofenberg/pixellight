@@ -198,7 +198,7 @@ TextureHandler::AnimationState &TextureHandler::AnimationState::operator =(const
 *    Constructor
 */
 TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) :
-	EventHandlerUpdate(&AnimationState::NotifyUpdate, this),
+	EventHandlerUpdate(&AnimationState::OnUpdate, this),
 	m_pTextureHandler(&cTextureHandler),
 	m_pTextureAnimation(new Animation()),
 	m_pMatrixAnimation(new Animation()),
@@ -263,7 +263,7 @@ TextureHandler::AnimationState::~AnimationState()
 *  @brief
 *    Called on update
 */
-void TextureHandler::AnimationState::NotifyUpdate()
+void TextureHandler::AnimationState::OnUpdate()
 {
 	const TextureAni *pTextureAni = static_cast<const TextureAni*>(m_pTextureHandler->GetResource());
 	if (pTextureAni) {

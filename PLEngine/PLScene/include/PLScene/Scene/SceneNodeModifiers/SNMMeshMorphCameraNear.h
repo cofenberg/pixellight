@@ -100,7 +100,7 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -108,7 +108,7 @@ SNMPositionKeyframeAnimation::SNMPositionKeyframeAnimation(SceneNode &cSceneNode
 	Keys(this),
 	CoordinateSystem(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMPositionKeyframeAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMPositionKeyframeAnimation::OnUpdate, this),
 	m_pChunk(new Chunk()),
 	m_pAnimation(new Animation())
 {
@@ -168,7 +168,7 @@ void SNMPositionKeyframeAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPositionKeyframeAnimation::NotifyUpdate()
+void SNMPositionKeyframeAnimation::OnUpdate()
 {
 	// Are there any keys?
 	const float *pfData = reinterpret_cast<const float*>(m_pChunk->GetData());

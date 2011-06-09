@@ -91,7 +91,7 @@ void SCSound::SetListener(const String &sValue)
 	if (m_sListener != sValue) {
 		m_sListener = sValue;
 		m_cListenerNodeHandler.SetElement(GetByName(m_sListener));
-		NotifyUpdate();
+		OnUpdate();
 	}
 }
 
@@ -108,7 +108,7 @@ SCSound::SCSound() :
 	Volume(this),
 	Pitch(this),
 	Listener(this),
-	SlotNotifyUpdate(this),
+	SlotOnUpdate(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_pSoundManager(nullptr)
@@ -146,7 +146,7 @@ SoundManager *SCSound::GetSoundManager() const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SCSound::NotifyUpdate()
+void SCSound::OnUpdate()
 {
 	// Update the PL sound manager
 	if (m_pSoundManager) {
@@ -197,7 +197,7 @@ void SCSound::InitFunction()
 				if (m_pSoundManager->Init()) {
 					m_pSoundManager->SetVolume(m_fVolume);
 					m_pSoundManager->SetPitch (m_fPitch);
-					NotifyUpdate();
+					OnUpdate();
 				}
 			}
 		}
@@ -213,9 +213,9 @@ void SCSound::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&SlotNotifyUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&SlotNotifyUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }
 

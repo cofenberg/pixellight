@@ -67,7 +67,7 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
-		pl_slot_2(NotifyDrawDebug,	PLRenderer::Renderer&,	const PLScene::VisNode*,	"Called on scene node debug draw, the used renderer as first parameter, the current visibility node of this scene node as second parameter (can be a null pointer)",	"")
+		pl_slot_2(OnDrawDebug,	PLRenderer::Renderer&,	const PLScene::VisNode*,	"Called on scene node debug draw, the used renderer as first parameter, the current visibility node of this scene node as second parameter (can be a null pointer)",	"")
 	pl_class_end
 
 
@@ -112,7 +112,7 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode);
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode);
 
 
 	//[-------------------------------------------------------]

@@ -68,8 +68,8 @@ const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
 *    Constructor
 */
 BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
-	EventHandlerSceneNode   (&BasicSceneApplication::NotifySceneNode,    this),
-	EventHandlerLoadProgress(&BasicSceneApplication::NotifyLoadProgress, this),
+	EventHandlerSceneNode   (&BasicSceneApplication::OnSceneNode,    this),
+	EventHandlerLoadProgress(&BasicSceneApplication::OnLoadProgress, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false)
@@ -463,7 +463,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 *  @brief
 *    Called when a scene node was found
 */
-void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void BasicSceneApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// Is this a camera?
 	if (cSceneNode.IsCamera()) {
@@ -513,7 +513,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 *  @brief
 *    Called on load progress
 */
-void BasicSceneApplication::NotifyLoadProgress(float fLoadProgress)
+void BasicSceneApplication::OnLoadProgress(float fLoadProgress)
 {
 	// Call the 'update'-function so we can see the progress within the load screen
 	if (m_bHasLoadScreen)

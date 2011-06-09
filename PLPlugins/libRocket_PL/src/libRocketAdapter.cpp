@@ -53,7 +53,7 @@ namespace libRocket_PL {
 *    Default constructor
 */
 libRocketAdapter::libRocketAdapter(RendererContext &cRendererContext, Widget *pWidget) :
-	EventHandlerSize(&libRocketAdapter::NotifySize, this),
+	EventHandlerSize(&libRocketAdapter::OnSize, this),
 	m_pRocketContext(nullptr),
 	m_pRocketRenderInterface(nullptr),
 	m_pRocketSystemInterface(nullptr),
@@ -208,7 +208,7 @@ libRocketAdapter &libRocketAdapter::operator =(const libRocketAdapter &cSource)
 *  @brief
 *    Called when the size was changed
 */
-void libRocketAdapter::NotifySize(const Vector2i &vSize)
+void libRocketAdapter::OnSize(const Vector2i &vSize)
 {
 	// Set new libRocket context dimension
 	if (m_pRocketContext)

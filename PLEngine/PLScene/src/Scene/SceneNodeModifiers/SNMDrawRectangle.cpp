@@ -60,7 +60,7 @@ SNMDrawRectangle::SNMDrawRectangle(SceneNode &cSceneNode) : SNMDraw(cSceneNode),
 	Width(this),
 	Color(this),
 	Flags(this),
-	EventHandlerDrawTransparent(&SNMDrawRectangle::NotifyDrawTransparent, this)
+	EventHandlerDrawTransparent(&SNMDrawRectangle::OnDrawTransparent, this)
 {
 	// Set draw function flags
 	cSceneNode.SetDrawFunctionFlags(static_cast<uint8>(cSceneNode.GetDrawFunctionFlags() | SceneNode::UseDrawTransparent));
@@ -95,7 +95,7 @@ void SNMDrawRectangle::OnActivate(bool bActivate)
 *  @brief
 *    Called on scene node transparent draw
 */
-void SNMDrawRectangle::NotifyDrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMDrawRectangle::OnDrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Visibility node required
 	if (pVisNode) {

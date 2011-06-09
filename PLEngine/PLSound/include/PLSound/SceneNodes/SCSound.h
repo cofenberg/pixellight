@@ -67,7 +67,7 @@ class SCSound : public PLScene::SceneContainer {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_0(NotifyUpdate,	"Called when the scene node needs to be updated",	"")
+		pl_slot_0(OnUpdate,	"Called when the scene node needs to be updated",	"")
 	pl_class_end
 
 
@@ -117,7 +117,7 @@ class SCSound : public PLScene::SceneContainer {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -80,7 +80,7 @@ void SNMPhysicsBodyEllipsoid::SetRadius(const Vector3 &vValue)
 */
 SNMPhysicsBodyEllipsoid::SNMPhysicsBodyEllipsoid(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Radius(this),
-	SlotNotifyDrawDebug(this),
+	SlotOnDrawDebug(this),
 	m_vRadius(0.0f, 0.0f, 0.0f)
 {
 }
@@ -101,7 +101,7 @@ SNMPhysicsBodyEllipsoid::~SNMPhysicsBodyEllipsoid()
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMPhysicsBodyEllipsoid::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMPhysicsBodyEllipsoid::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Is there a PL physics body?
 	const Body *pBody = GetBody();
@@ -152,9 +152,9 @@ void SNMPhysicsBodyEllipsoid::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotOnDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotOnDrawDebug);
 }
 
 

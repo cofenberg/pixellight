@@ -165,13 +165,13 @@ class MousePicking : public Picking {
 		*  @brief
 		*    Called when a widget was destroyed
 		*/
-		void NotifyWidgetDestroy();
+		void OnWidgetDestroy();
 
 		/**
 		*  @brief
 		*    Called when a camera was destroyed
 		*/
-		void NotifyCameraDestroy();
+		void OnCameraDestroy();
 
 
 	//[-------------------------------------------------------]

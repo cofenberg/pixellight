@@ -167,7 +167,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*    Sets the movement vector
 		*
 		*  @param[in] vMovement
-		*    The new movement vector, if the length is >1, the vector is used in a normalized form inside NotifyUpdate()
+		*    The new movement vector, if the length is >1, the vector is used in a normalized form inside OnUpdate()
 		*
 		*  @see
 		*    - GetMovement()
@@ -214,7 +214,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -53,7 +53,7 @@ pl_implement_class(SNMBillboardSpherical)
 *    Constructor
 */
 SNMBillboardSpherical::SNMBillboardSpherical(SceneNode &cSceneNode) : SNMBillboard(cSceneNode),
-	EventHandlerAddedToVisibilityTree(&SNMBillboardSpherical::NotifyAddedToVisibilityTree, this)
+	EventHandlerAddedToVisibilityTree(&SNMBillboardSpherical::OnAddedToVisibilityTree, this)
 {
 }
 
@@ -123,7 +123,7 @@ void SNMBillboardSpherical::BuildTransformMatrix(const Matrix4x4 &mView, const M
 *  @brief
 *    Called when the owner scene node was added to a visibility tree
 */
-void SNMBillboardSpherical::NotifyAddedToVisibilityTree(VisNode &cVisNode)
+void SNMBillboardSpherical::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
 	// Get the new world transform matrix
 	Matrix3x4 mTransform;

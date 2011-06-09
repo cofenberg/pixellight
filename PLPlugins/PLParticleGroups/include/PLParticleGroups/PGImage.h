@@ -102,7 +102,7 @@ class PGImage : public SNParticleGroup {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

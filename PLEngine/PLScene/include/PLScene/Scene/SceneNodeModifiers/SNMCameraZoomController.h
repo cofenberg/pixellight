@@ -114,7 +114,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 		*  @param[in] pControl
 		*    The control causing the event
 		*/
-		void NotifyControl(PLInput::Control *pControl);
+		void OnControl(PLInput::Control *pControl);
 
 
 	//[-------------------------------------------------------]

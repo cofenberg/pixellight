@@ -49,8 +49,8 @@ pl_implement_class(SNLoadScreenBase)
 */
 SNLoadScreenBase::SNLoadScreenBase() :
 	Flags(this),
-	EventHandlerContainer   (&SNLoadScreenBase::NotifyContainer,	this),
-	EventHandlerLoadProgress(&SNLoadScreenBase::NotifyLoadProgress, this),
+	EventHandlerContainer   (&SNLoadScreenBase::OnContainer,	this),
+	EventHandlerLoadProgress(&SNLoadScreenBase::OnLoadProgress, this),
 	m_pContainer(nullptr),
 	m_fLoadProgress(0.0f)
 {
@@ -86,7 +86,7 @@ float SNLoadScreenBase::GetLoadProgress() const
 *  @brief
 *    Called when the scene node container changed
 */
-void SNLoadScreenBase::NotifyContainer()
+void SNLoadScreenBase::OnContainer()
 {
 	// Disconnect event handler
 	if (m_pContainer)
@@ -102,7 +102,7 @@ void SNLoadScreenBase::NotifyContainer()
 *  @brief
 *    Called on load progress
 */
-void SNLoadScreenBase::NotifyLoadProgress(float fLoadProgress)
+void SNLoadScreenBase::OnLoadProgress(float fLoadProgress)
 {
 	m_fLoadProgress = fLoadProgress;
 }

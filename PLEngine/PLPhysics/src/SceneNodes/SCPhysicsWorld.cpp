@@ -169,8 +169,8 @@ SCPhysicsWorld::SCPhysicsWorld() :
 	Gravity(this),
 	BuoyancyActive(this),
 	BuoyancyPlaneY(this),
-	EventHandlerUpdate(&SCPhysicsWorld::NotifyUpdate, this),
-	EventHandlerAABoundingBox(&SCPhysicsWorld::NotifyAABoundingBox, this),
+	EventHandlerUpdate(&SCPhysicsWorld::OnUpdate, this),
+	EventHandlerAABoundingBox(&SCPhysicsWorld::OnAABoundingBox, this),
 	m_bSimulationActive(true),
 	m_fSimulationSpeed(1.0f),
 	m_fSimulationQuality(1.0f),
@@ -221,7 +221,7 @@ World *SCPhysicsWorld::GetWorld() const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SCPhysicsWorld::NotifyUpdate()
+void SCPhysicsWorld::OnUpdate()
 {
 	// Update the PL physics simulation
 	if (m_pWorld && m_bSimulationActive)
@@ -232,7 +232,7 @@ void SCPhysicsWorld::NotifyUpdate()
 *  @brief
 *    Called when the scene node axis aligned bounding box changed
 */
-void SCPhysicsWorld::NotifyAABoundingBox()
+void SCPhysicsWorld::OnAABoundingBox()
 {
 	// Use the scene container bounding box for the world size
 	if (m_pWorld)

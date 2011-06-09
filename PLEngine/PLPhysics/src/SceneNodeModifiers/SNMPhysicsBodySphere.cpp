@@ -80,7 +80,7 @@ void SNMPhysicsBodySphere::SetRadius(float fValue)
 */
 SNMPhysicsBodySphere::SNMPhysicsBodySphere(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Radius(this),
-	SlotNotifyDrawDebug(this),
+	SlotOnDrawDebug(this),
 	m_fRadius(0.0f)
 {
 }
@@ -101,7 +101,7 @@ SNMPhysicsBodySphere::~SNMPhysicsBodySphere()
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMPhysicsBodySphere::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMPhysicsBodySphere::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Is there a PL physics body?
 	const Body *pBody = GetBody();
@@ -152,9 +152,9 @@ void SNMPhysicsBodySphere::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotOnDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotOnDrawDebug);
 }
 
 

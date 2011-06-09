@@ -45,7 +45,7 @@ namespace PLPlugin {
 *    Constructor
 */
 Application::Application() : RenderApplication("SPSampleTeapot"),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this)
+	EventHandlerKeyDown(&Application::OnKeyDown, this)
 {
 	// Set application title
 	SetTitle(PLT("PL teapot sample"));
@@ -67,7 +67,7 @@ Application::~Application()
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey)
+void Application::OnKeyDown(uint32 nKey)
 {
 	// Check whether the escape key was pressed
 	if (nKey == PLGUIKEY_ESCAPE)

@@ -67,8 +67,8 @@ const String Application::DefaultScene = "";
 *    Constructor
 */
 Application::Application() :
-	SlotNotifyKeyDown(this),
-	SlotNotifyDrop(this),
+	SlotOnKeyDown(this),
+	SlotOnDrop(this),
 	m_pFileDialog(nullptr)
 {
 	// Set no multiuser if standalone application
@@ -172,7 +172,7 @@ bool Application::LoadScene(const String &sFilename)
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	// Make a screenshot from the current render target
 	if (nKey == PLGUIKEY_F12)
@@ -198,7 +198,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when something was dropped down
 */
-void Application::NotifyDrop(const DataObject &cDataObject)
+void Application::OnDrop(const DataObject &cDataObject)
 {
 	// Load scene (if it's one :)
 	LoadScene(cDataObject.GetFiles()[0]);
@@ -269,12 +269,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&SlotNotifyKeyDown);
-		pWidget->SignalDrop.   Connect(&SlotNotifyDrop);
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalDrop.   Connect(&SlotOnDrop);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotNotifyKeyDown);
-			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotNotifyDrop);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotOnDrop);
 		}
 	}
 }

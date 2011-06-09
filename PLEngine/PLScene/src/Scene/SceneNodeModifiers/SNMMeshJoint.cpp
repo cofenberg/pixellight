@@ -179,8 +179,8 @@ SNMMeshJoint::SNMMeshJoint(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 	MaxDifference(this),
 	FallbackRotation(this),
 	Flags(this),
-	EventHandlerUpdate	 (&SNMMeshJoint::NotifyUpdate,    this),
-	EventHandlerDrawDebug(&SNMMeshJoint::NotifyDrawDebug, this)
+	EventHandlerUpdate	 (&SNMMeshJoint::OnUpdate,    this),
+	EventHandlerDrawDebug(&SNMMeshJoint::OnDrawDebug, this)
 {
 	// Create the mesh animation manager
 	MeshHandler *pMeshHandler = cSceneNode.GetMeshHandler();
@@ -308,7 +308,7 @@ void SNMMeshJoint::UpdateJoint()
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMeshJoint::NotifyUpdate()
+void SNMMeshJoint::OnUpdate()
 {
 	// Rotation source given?
 	if (RotationFrom.Get().GetLength()) {
@@ -436,7 +436,7 @@ void SNMMeshJoint::NotifyUpdate()
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMMeshJoint::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMMeshJoint::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Get the mesh handler
 	const MeshHandler *pMeshHandler = GetSceneNode().GetMeshHandler();

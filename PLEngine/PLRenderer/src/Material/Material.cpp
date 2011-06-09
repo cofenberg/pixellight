@@ -402,7 +402,7 @@ bool Material::SetupPass(uint32 nIndex) const
 *    Constructor
 */
 Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Resource<Material>(sName, &cManager),
-	EventHandlerParameterChanged(&Material::NotifyParameterChanged, this),
+	EventHandlerParameterChanged(&Material::OnParameterChanged, this),
 	m_pParameterManager(new ParameterManager(cManager.GetRendererContext())),
 	m_pFXHandler(nullptr)
 {
@@ -414,7 +414,7 @@ Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Res
 *  @brief
 *    Called when a parameter has been changed (created, destroyed, value changed)
 */
-void Material::NotifyParameterChanged(Parameter &cParameter)
+void Material::OnParameterChanged(Parameter &cParameter)
 {
 	// Emit event (=> pass on the event)
 	EventParameterChanged(cParameter);

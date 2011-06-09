@@ -206,7 +206,7 @@ SNPortal::SNPortal() :
 	Flags(this),
 	DebugFlags(this),
 	m_nInternalPortalFlags(RecalculateContainerPolygon),
-	EventHandlerContainerPositionRotationScale(&SNPortal::NotifyContainerPositionRotationScale, this)
+	EventHandlerContainerPositionRotationScale(&SNPortal::OnContainerPositionRotationScale, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|CastShadow|ReceiveShadow);
@@ -240,7 +240,7 @@ SNPortal::~SNPortal()
 *  @brief
 *    Called when the scene node container, position, rotation or scale changed
 */
-void SNPortal::NotifyContainerPositionRotationScale()
+void SNPortal::OnContainerPositionRotationScale()
 {
 	// We need to recalculate the container space portal polygon
 	m_nInternalPortalFlags |= RecalculateContainerPolygon;

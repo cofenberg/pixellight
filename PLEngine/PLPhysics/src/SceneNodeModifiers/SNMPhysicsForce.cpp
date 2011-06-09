@@ -53,7 +53,7 @@ pl_implement_class(SNMPhysicsForce)
 */
 SNMPhysicsForce::SNMPhysicsForce(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	Force(this),
-	EventHandlerUpdate(&SNMPhysicsForce::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMPhysicsForce::OnUpdate, this)
 {
 }
 
@@ -89,7 +89,7 @@ void SNMPhysicsForce::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPhysicsForce::NotifyUpdate()
+void SNMPhysicsForce::OnUpdate()
 {
 	const SNMPhysicsBody *pModifier = static_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 	if (pModifier) {

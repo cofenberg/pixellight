@@ -56,7 +56,7 @@ SNMMeshMorphCameraNear::SNMMeshMorphCameraNear(SceneNode &cSceneNode) : SNMMeshM
 	Distance(this),
 	InSpeed(this),
 	OutSpeed(this),
-	EventHandlerUpdate(&SNMMeshMorphCameraNear::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMMeshMorphCameraNear::OnUpdate, this)
 {
 }
 
@@ -92,7 +92,7 @@ void SNMMeshMorphCameraNear::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMeshMorphCameraNear::NotifyUpdate()
+void SNMMeshMorphCameraNear::OnUpdate()
 {
 	// Get camera
 	const SNCamera *pCamera = SNCamera::GetCamera();

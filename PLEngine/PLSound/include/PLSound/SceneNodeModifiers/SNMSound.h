@@ -95,7 +95,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
-		pl_slot_0(NotifyPosition,	"Called when the scene node position changed",	"")
+		pl_slot_0(OnPosition,	"Called when the scene node position changed",	"")
 	pl_class_end
 
 
@@ -183,7 +183,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		*  @brief
 		*    Called when the scene node position changed
 		*/
-		void NotifyPosition();
+		void OnPosition();
 
 		/**
 		*  @brief

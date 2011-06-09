@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
+	EventHandlerKeyDown(&Application::OnKeyDown, this),
 	m_nCurrentSelectedModifier(0)
 {
 	// Set application name and title
@@ -83,7 +83,7 @@ Application::~Application()
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed

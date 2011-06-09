@@ -354,7 +354,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @brief
 		*    Called when main window was destroyed
 		*/
-		void NotifyDestroy();
+		void OnDestroy();
 
 		/**
 		*  @brief
@@ -363,7 +363,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @param[in] bActivate
 		*    'true' if window is activated, else 'false'
 		*/
-		void NotifyActivate(bool bActivate);
+		void OnActivate(bool bActivate);
 
 
 };

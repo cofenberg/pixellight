@@ -131,7 +131,7 @@ class SNMDrawRectangle : public SNMDraw {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void OnDrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 
 
 	//[-------------------------------------------------------]

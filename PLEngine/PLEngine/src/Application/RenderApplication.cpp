@@ -65,8 +65,8 @@ pl_implement_class(RenderApplication)
 *    Constructor
 */
 RenderApplication::RenderApplication(const String &sSurfacePainter) : GuiApplication(),
-	EventHandlerDestroy       (&RenderApplication::NotifyDestroy,    this),
-	EventHandlerActivate	  (&RenderApplication::NotifyActivate,	 this),
+	EventHandlerDestroy       (&RenderApplication::OnDestroy,        this),
+	EventHandlerActivate	  (&RenderApplication::OnActivate,       this),
 	EventHandlerDisplayMode   (&RenderApplication::OnDisplayMode,    this),
 	EventHandlerFullscreenMode(&RenderApplication::OnFullscreenMode, this),
 	m_sSurfacePainter(sSurfacePainter),
@@ -488,7 +488,7 @@ bool RenderApplication::OnUpdate()
 *  @brief
 *    Called when main window was destroyed
 */
-void RenderApplication::NotifyDestroy()
+void RenderApplication::OnDestroy()
 {
 	// Get the main widget
 	const Widget *pWidget = GetMainWindow();
@@ -509,7 +509,7 @@ void RenderApplication::NotifyDestroy()
 *  @brief
 *    Called when main window was (de-)activated
 */
-void RenderApplication::NotifyActivate(bool bActivate)
+void RenderApplication::OnActivate(bool bActivate)
 {
 	// Activate input controller when window is active, otherwise stop input
 	if (m_pInputController)

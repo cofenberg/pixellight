@@ -78,7 +78,7 @@ class SNUFO : public PLSound::SNSound {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

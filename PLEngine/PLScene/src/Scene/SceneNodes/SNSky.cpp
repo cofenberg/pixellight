@@ -374,7 +374,7 @@ SNSky::SNSky() :
 	AABBMin(this),
 	AABBMax(this),
 	Filename(this),
-	EventHandlerUpdate(&SNSky::NotifyUpdate, this)
+	EventHandlerUpdate(&SNSky::OnUpdate, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|NoCulling);
@@ -524,7 +524,7 @@ bool SNSky::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, co
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNSky::NotifyUpdate()
+void SNSky::OnUpdate()
 {
 	// Update sky layers
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

@@ -110,7 +110,7 @@ const String SRPDeferredGBufferMaterial::ViewSpaceToWorldSpace		= "ViewSpaceToWo
 *    Default constructor
 */
 SRPDeferredGBufferMaterial::SRPDeferredGBufferMaterial(Material &cMaterial, ProgramGenerator &cProgramGenerator) :
-	EventHandlerParameterChanged(&SRPDeferredGBufferMaterial::NotifyParameterChanged, this),
+	EventHandlerParameterChanged(&SRPDeferredGBufferMaterial::OnParameterChanged, this),
 	// General
 	m_pMaterial(&cMaterial),
 	m_pProgramGenerator(&cProgramGenerator),
@@ -846,7 +846,7 @@ void SRPDeferredGBufferMaterial::SetupTextureFiltering(Renderer &cRenderer, uint
 *  @brief
 *    Called when a parameter has been changed (created, destroyed, value changed)
 */
-void SRPDeferredGBufferMaterial::NotifyParameterChanged(Parameter &cParameter)
+void SRPDeferredGBufferMaterial::OnParameterChanged(Parameter &cParameter)
 {
 	// The this cached material is now dirty!
 	m_bSynchronized = false;

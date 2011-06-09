@@ -96,7 +96,7 @@ class VisPortal : public VisNode {
 		*  @brief
 		*    Called when the scene node assigned with this visibililty portal was destroyed
 		*/
-		void NotifyDestroy();
+		void OnDestroy();
 
 
 	//[-------------------------------------------------------]

@@ -135,13 +135,13 @@ class SNMAnchor : public SceneNodeModifier {
 		*  @brief
 		*    Called when the scene node container changed
 		*/
-		void NotifyContainer();
+		void OnContainer();
 
 		/**
 		*  @brief
 		*    Called when the scene node position or rotation changed or on update request
 		*/
-		void NotifyPositionRotationUpdate();
+		void OnPositionRotationUpdate();
 
 
 	//[-------------------------------------------------------]

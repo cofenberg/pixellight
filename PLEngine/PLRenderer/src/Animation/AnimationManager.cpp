@@ -42,7 +42,7 @@ namespace PLRenderer {
 *    Constructor
 */
 AnimationManager::AnimationManager() :
-	EventHandlerFrameChange(&AnimationManager::NotifyFrameChange, this)
+	EventHandlerFrameChange(&AnimationManager::OnFrameChange, this)
 {
 	// Init data
 	SetManagerName("Animation manager");
@@ -80,7 +80,7 @@ Animation *AnimationManager::CreateElement(const String &sName)
 *  @brief
 *    Called when the frame of an animation manager animation has been changed
 */
-void AnimationManager::NotifyFrameChange()
+void AnimationManager::OnFrameChange()
 {
 	// Emit own event
 	EventAnimationFrameChange();

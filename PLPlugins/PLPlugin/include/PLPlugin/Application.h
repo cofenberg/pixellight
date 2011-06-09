@@ -75,7 +75,7 @@ class Application : public PLEngine::RenderApplication {
 		*  @param[in] nKey
 		*    Pressed key
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey);
+		void OnKeyDown(PLGeneral::uint32 nKey);
 
 
 	//[-------------------------------------------------------]

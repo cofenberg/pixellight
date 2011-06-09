@@ -85,7 +85,7 @@ SRPLighting::SRPLighting() :
 	ShaderLanguage(this),
 	LightingIntensity(this),
 	Flags(this),
-	EventHandlerMaterialRemoved(&SRPLighting::NotifyMaterialRemoved, this),
+	EventHandlerMaterialRemoved(&SRPLighting::OnMaterialRemoved, this),
 	m_pIgnoredLight(nullptr),
 	m_pProgramGenerator(nullptr)
 {
@@ -750,7 +750,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 *  @brief
 *    Called when a material is removed
 */
-void SRPLighting::NotifyMaterialRemoved(Material &cMaterial)
+void SRPLighting::OnMaterialRemoved(Material &cMaterial)
 {
 	// Is this material cached?
 	const uint64 nMaterialID = reinterpret_cast<uint64>(&cMaterial);

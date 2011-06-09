@@ -165,7 +165,7 @@ SNSound::SNSound() :
 	MaxDistance(this),
 	RolloffFactor(this),
 	Flags(this),
-	SlotNotifyPosition(this),
+	SlotOnPosition(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_fReferenceDistance(1.0f),
@@ -174,7 +174,7 @@ SNSound::SNSound() :
 	m_pSoundSourceHandler(new PLSound::ResourceHandler())
 {
 	// Connect event handler
-	GetTransform().EventPosition.Connect(&SlotNotifyPosition);
+	GetTransform().EventPosition.Connect(&SlotOnPosition);
 }
 
 /**
@@ -236,7 +236,7 @@ void SNSound::Load()
 		if (pSoundManager) {
 			Source *pSoundSource = pSoundManager->CreateSoundSource(pSoundManager->CreateSoundBuffer(m_sSound, (GetFlags() & Stream) != 0));
 			m_pSoundSourceHandler->SetResource(pSoundSource);
-			NotifyPosition();
+			OnPosition();
 			pSoundSource->SetVolume(m_fVolume);
 			pSoundSource->Set2D((GetFlags() & No3D) != 0);
 			pSoundSource->SetLooping(!(GetFlags() & NoLoop));
@@ -254,7 +254,7 @@ void SNSound::Load()
 *  @brief
 *    Called when the scene node position changed
 */
-void SNSound::NotifyPosition()
+void SNSound::OnPosition()
 {
 	// Update sound source position
 	if (GetContainer()) {

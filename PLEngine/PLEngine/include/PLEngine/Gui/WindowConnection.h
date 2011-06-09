@@ -251,19 +251,19 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @brief
 		*    Function that is called when the GUI widget is destroyed
 		*/
-		void NotifyDestroy();
+		void OnDestroy();
 
 		/**
 		*  @brief
 		*    Function that is called when the GUI widget is shown
 		*/
-		void NotifyShow();
+		void OnShow();
 
 		/**
 		*  @brief
 		*    Function that is called when the GUI widget is hidden
 		*/
-		void NotifyHide();
+		void OnHide();
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]

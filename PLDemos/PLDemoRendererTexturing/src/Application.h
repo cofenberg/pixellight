@@ -48,7 +48,7 @@ class Application : public PLEngine::RenderApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(NotifyKeyDown,	PLGeneral::uint32,	PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_2(OnKeyDown,	PLGeneral::uint32,	PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
 	pl_class_end
 
 
@@ -82,7 +82,7 @@ class Application : public PLEngine::RenderApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]

@@ -130,13 +130,13 @@ class SNMRotationTarget : public SNMTransform {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 
 		/**
 		*  @brief
 		*    Called on scene node position change or update request
 		*/
-		void NotifyPositionUpdate();
+		void OnPositionUpdate();
 
 
 	//[-------------------------------------------------------]

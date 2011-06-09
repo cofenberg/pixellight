@@ -62,7 +62,7 @@ PGRain::PGRain() :
 	BuildPerSec(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGRain::NotifyUpdate, this),
+	EventHandlerUpdate(&PGRain::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -155,7 +155,7 @@ void PGRain::InitParticle(Particle &cParticle) const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGRain::NotifyUpdate()
+void PGRain::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

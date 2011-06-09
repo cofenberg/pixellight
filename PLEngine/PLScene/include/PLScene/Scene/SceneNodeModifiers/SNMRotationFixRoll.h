@@ -101,7 +101,7 @@ class SNMRotationFixRoll : public SNMTransform {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

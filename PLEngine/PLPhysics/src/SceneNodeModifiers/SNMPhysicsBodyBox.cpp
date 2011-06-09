@@ -77,7 +77,7 @@ void SNMPhysicsBodyBox::SetDimension(const Vector3 &vValue)
 */
 SNMPhysicsBodyBox::SNMPhysicsBodyBox(SceneNode &cSceneNode) : SNMPhysicsBody(cSceneNode),
 	Dimension(this),
-	SlotNotifyDrawDebug(this),
+	SlotOnDrawDebug(this),
 	m_vDimension(0.0f, 0.0f, 0.0f)
 {
 }
@@ -98,7 +98,7 @@ SNMPhysicsBodyBox::~SNMPhysicsBodyBox()
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMPhysicsBodyBox::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMPhysicsBodyBox::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Is there a PL physics body?
 	const Body *pBody = GetBody();
@@ -145,9 +145,9 @@ void SNMPhysicsBodyBox::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(&SlotOnDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&SlotNotifyDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(&SlotOnDrawDebug);
 }
 
 

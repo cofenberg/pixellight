@@ -165,7 +165,7 @@ SNSpotLight::SNSpotLight() :
 	Aspect(this),
 	Flags(this),
 	DebugFlags(this),
-	EventHandlerPositionRotation(&SNSpotLight::NotifyPositionRotation, this),
+	EventHandlerPositionRotation(&SNSpotLight::OnPositionRotation, this),
 	m_fOuterAngle(45.0f),
 	m_fInnerAngle(35.0f),
 	m_fZNear(0.1f),
@@ -295,7 +295,7 @@ const Array<Vector3> &SNSpotLight::GetFrustumVertices()
 *  @brief
 *    Called when the scene node position or rotation changed
 */
-void SNSpotLight::NotifyPositionRotation()
+void SNSpotLight::OnPositionRotation()
 {
 	// We have to recalculate some stuff
 	m_nInternalLightFlags |= RecalculateViewMatrix;

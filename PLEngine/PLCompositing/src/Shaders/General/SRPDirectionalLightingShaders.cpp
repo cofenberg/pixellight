@@ -73,7 +73,7 @@ pl_implement_class(SRPDirectionalLightingShaders)
 SRPDirectionalLightingShaders::SRPDirectionalLightingShaders() :
 	ShaderLanguage(this),
 	Flags(this),
-	EventHandlerMaterialRemoved(&SRPDirectionalLightingShaders::NotifyMaterialRemoved, this),
+	EventHandlerMaterialRemoved(&SRPDirectionalLightingShaders::OnMaterialRemoved, this),
 	m_bGlowEnabled(false),
 	m_fDOFNearBlurDepth(0.0f),
 	m_fDOFFocalPlaneDepth(0.0f),
@@ -122,7 +122,7 @@ SNDirectionalLight *SRPDirectionalLightingShaders::GetUsedLight() const
 *  @brief
 *    Called when a material is removed
 */
-void SRPDirectionalLightingShaders::NotifyMaterialRemoved(Material &cMaterial)
+void SRPDirectionalLightingShaders::OnMaterialRemoved(Material &cMaterial)
 {
 	// Is this material cached?
 	const uint64 nMaterialID = reinterpret_cast<uint64>(&cMaterial);

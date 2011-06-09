@@ -54,7 +54,7 @@ pl_implement_class(SNMRotationFixRoll)
 SNMRotationFixRoll::SNMRotationFixRoll(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	UpVector(this),
 	Speed(this),
-	EventHandlerUpdate(&SNMRotationFixRoll::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMRotationFixRoll::OnUpdate, this)
 {
 }
 
@@ -90,7 +90,7 @@ void SNMRotationFixRoll::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMRotationFixRoll::NotifyUpdate()
+void SNMRotationFixRoll::OnUpdate()
 {
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();

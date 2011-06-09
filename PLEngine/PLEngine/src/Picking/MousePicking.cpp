@@ -47,8 +47,8 @@ namespace PLEngine {
 *    Constructor
 */
 MousePicking::MousePicking(PLGui::Widget *pWidget, SNCamera *pCamera) :
-	EventHandlerWidgetDestroy(&MousePicking::NotifyWidgetDestroy, this),
-	EventHandlerCameraDestroy(&MousePicking::NotifyCameraDestroy, this),
+	EventHandlerWidgetDestroy(&MousePicking::OnWidgetDestroy, this),
+	EventHandlerCameraDestroy(&MousePicking::OnCameraDestroy, this),
 	m_pWidget(pWidget),
 	m_pCamera(pCamera)
 {
@@ -179,7 +179,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 *  @brief
 *    Called when a widget was destroyed
 */
-void MousePicking::NotifyWidgetDestroy()
+void MousePicking::OnWidgetDestroy()
 {
 	m_pWidget = nullptr;
 }
@@ -188,7 +188,7 @@ void MousePicking::NotifyWidgetDestroy()
 *  @brief
 *    Called when a camera was destroyed
 */
-void MousePicking::NotifyCameraDestroy()
+void MousePicking::OnCameraDestroy()
 {
 	m_pCamera = nullptr;
 }

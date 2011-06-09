@@ -71,7 +71,7 @@ pl_implement_class(SNConsole)
 *    Default constructor
 */
 SNConsole::SNConsole() :
-	EventHandlerUpdate(&SNConsole::NotifyUpdate, this),
+	EventHandlerUpdate(&SNConsole::OnUpdate, this),
 	m_nRow(0),
 	m_nLastRow(0),
 	m_fPos(0.0f),
@@ -148,7 +148,7 @@ String SNConsole::GetDescription() const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNConsole::NotifyUpdate()
+void SNConsole::OnUpdate()
 {
 	// Ignore time scale
 	float fTimeDiff = Timing::GetInstance()->GetTimeDifference()/Timing::GetInstance()->GetTimeScaleFactor();

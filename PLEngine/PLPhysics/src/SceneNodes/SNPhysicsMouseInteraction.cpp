@@ -86,7 +86,7 @@ SNPhysicsMouseInteraction::SNPhysicsMouseInteraction() :
 	ThrowForce(this),
 	ForceLineName(this),
 	Flags(this),
-	EventHandlerUpdate(&SNPhysicsMouseInteraction::NotifyUpdate, this),
+	EventHandlerUpdate(&SNPhysicsMouseInteraction::OnUpdate, this),
 	m_sForceLineName("PhysicsForceLine"),
 	m_bPicking(false),
 	m_pPickedPhysicsBody(nullptr),
@@ -163,7 +163,7 @@ void SNPhysicsMouseInteraction::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNPhysicsMouseInteraction::NotifyUpdate()
+void SNPhysicsMouseInteraction::OnUpdate()
 {
 	// Get the used camera and check if input is active
 	SNCamera *pCamera = SNCamera::GetCamera();

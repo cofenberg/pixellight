@@ -95,7 +95,7 @@ class SNLoadScreenBase : public SceneNode {
 		*  @brief
 		*    Called when the scene node container changed
 		*/
-		void NotifyContainer();
+		void OnContainer();
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class SNLoadScreenBase : public SceneNode {
 		*  @param[in] fLoadProgress
 		*    Load progress (0.0-1.0)
 		*/
-		void NotifyLoadProgress(float fLoadProgress);
+		void OnLoadProgress(float fLoadProgress);
 
 
 	//[-------------------------------------------------------]

@@ -107,7 +107,7 @@ SNMScaleKeyframeAnimation::SNMScaleKeyframeAnimation(SceneNode &cSceneNode) : SN
 	FramesPerSecond(this),
 	Keys(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMScaleKeyframeAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMScaleKeyframeAnimation::OnUpdate, this),
 	m_pChunk(new Chunk()),
 	m_pAnimation(new Animation())
 {
@@ -167,7 +167,7 @@ void SNMScaleKeyframeAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMScaleKeyframeAnimation::NotifyUpdate()
+void SNMScaleKeyframeAnimation::OnUpdate()
 {
 	// Are there any keys?
 	const float *pfData = reinterpret_cast<const float*>(m_pChunk->GetData());

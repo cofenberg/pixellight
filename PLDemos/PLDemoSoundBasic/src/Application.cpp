@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() :
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this)
+	EventHandlerKeyDown(&Application::OnKeyDown, this)
 {
 	// Set application name and title
 	SetName("PLDemoSoundBasic");
@@ -181,7 +181,7 @@ bool Application::ChooseSoundAPI()
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed

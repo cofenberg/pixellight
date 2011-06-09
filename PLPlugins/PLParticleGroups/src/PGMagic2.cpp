@@ -58,7 +58,7 @@ PGMagic2::PGMagic2() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
-	EventHandlerUpdate(&PGMagic2::NotifyUpdate, this),
+	EventHandlerUpdate(&PGMagic2::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -149,7 +149,7 @@ void PGMagic2::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGMagic2::NotifyUpdate()
+void PGMagic2::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

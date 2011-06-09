@@ -83,7 +83,7 @@ void SNMScript::SetScript(const String &sValue)
 SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Script(this),
 	UpdateFunction(this),
-	SlotNotifyUpdate(this),
+	SlotOnUpdate(this),
 	m_pScript(nullptr)
 {
 }
@@ -109,9 +109,9 @@ void SNMScript::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&SlotNotifyUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&SlotNotifyUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }
 
@@ -123,7 +123,7 @@ void SNMScript::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMScript::NotifyUpdate()
+void SNMScript::OnUpdate()
 {
 	// Is there a script and script function?
 	if (m_pScript && UpdateFunction.Get().GetLength()) {

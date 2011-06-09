@@ -63,7 +63,7 @@ PGImage::PGImage() :
 	Material(this),
 	Particles(this),
 	Flags(this),
-	EventHandlerUpdate(&PGImage::NotifyUpdate, this),
+	EventHandlerUpdate(&PGImage::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -189,7 +189,7 @@ void PGImage::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGImage::NotifyUpdate()
+void PGImage::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

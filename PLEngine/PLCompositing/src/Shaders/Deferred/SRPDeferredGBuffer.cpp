@@ -77,7 +77,7 @@ SRPDeferredGBuffer::SRPDeferredGBuffer() :
 	ShaderLanguage(this),
 	TextureFiltering(this),
 	Flags(this),
-	EventHandlerMaterialRemoved(&SRPDeferredGBuffer::NotifyMaterialRemoved, this),
+	EventHandlerMaterialRemoved(&SRPDeferredGBuffer::OnMaterialRemoved, this),
 	m_pRenderTarget(nullptr),
 	m_pColorTarget1(nullptr),
 	m_pColorTarget2(nullptr),
@@ -395,7 +395,7 @@ SRPDeferredGBuffer::MeshBatch &SRPDeferredGBuffer::GetFreeMeshBatch()
 *  @brief
 *    Called when a material is removed
 */
-void SRPDeferredGBuffer::NotifyMaterialRemoved(Material &cMaterial)
+void SRPDeferredGBuffer::OnMaterialRemoved(Material &cMaterial)
 {
 	// Is this material cached?
 	const uint64 nMaterialID = reinterpret_cast<uint64>(&cMaterial);

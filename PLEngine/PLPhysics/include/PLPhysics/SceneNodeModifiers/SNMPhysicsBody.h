@@ -97,10 +97,10 @@ class SNMPhysicsBody : public SNMPhysics {
 			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",												"")
 		// Slots
-		pl_slot_0(NotifyActive,		"Called when the scene node active state changed",		"")
-		pl_slot_0(NotifyPosition,	"Called when the scene node position changed",			"")
-		pl_slot_0(NotifyRotation,	"Called when the scene node rotation changed",			"")
-		pl_slot_0(NotifyTransform,	"Called when the transform was changed by the physics",	"")
+		pl_slot_0(OnActive,		"Called when the scene node active state changed",		"")
+		pl_slot_0(OnPosition,	"Called when the scene node position changed",			"")
+		pl_slot_0(OnRotation,	"Called when the scene node rotation changed",			"")
+		pl_slot_0(OnTransform,	"Called when the transform was changed by the physics",	"")
 	pl_class_end
 
 
@@ -211,25 +211,25 @@ class SNMPhysicsBody : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node active state changed
 		*/
-		void NotifyActive();
+		void OnActive();
 
 		/**
 		*  @brief
 		*    Called when the scene node position changed
 		*/
-		void NotifyPosition();
+		void OnPosition();
 
 		/**
 		*  @brief
 		*    Called when the scene node rotation changed
 		*/
-		void NotifyRotation();
+		void OnRotation();
 
 		/**
 		*  @brief
 		*    Called when the transform was changed by the physics
 		*/
-		void NotifyTransform();
+		void OnTransform();
 
 
 	//[-------------------------------------------------------]

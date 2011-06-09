@@ -200,7 +200,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @brief
 				*    Called on update
 				*/
-				void NotifyUpdate();
+				void OnUpdate();
 
 
 			//[-------------------------------------------------------]

@@ -124,13 +124,13 @@ class SNMMeshUpdate : public SNMMesh {
 		*  @param[in] cVisNode
 		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
-		void NotifyAddedToVisibilityTree(VisNode &cVisNode);
+		void OnAddedToVisibilityTree(VisNode &cVisNode);
 
 		/**
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

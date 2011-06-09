@@ -211,7 +211,7 @@ class SNSpotLight : public SNPointLight {
 		*  @brief
 		*    Called when the scene node position or rotation changed
 		*/
-		void NotifyPositionRotation();
+		void OnPositionRotation();
 
 		/**
 		*  @brief

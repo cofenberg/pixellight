@@ -119,7 +119,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void NotifyKeyUp(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyUp(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]

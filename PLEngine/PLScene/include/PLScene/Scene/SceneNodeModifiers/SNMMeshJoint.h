@@ -168,7 +168,7 @@ class SNMMeshJoint : public SNMMesh {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class SNMMeshJoint : public SNMMesh {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 
 
 	//[-------------------------------------------------------]

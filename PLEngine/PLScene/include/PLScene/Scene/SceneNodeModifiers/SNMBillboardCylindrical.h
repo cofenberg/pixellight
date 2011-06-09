@@ -122,7 +122,7 @@ class SNMBillboardCylindrical : public SNMBillboard {
 		*  @param[in] cVisNode
 		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
-		void NotifyAddedToVisibilityTree(VisNode &cVisNode);
+		void OnAddedToVisibilityTree(VisNode &cVisNode);
 
 
 	//[-------------------------------------------------------]

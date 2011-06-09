@@ -65,7 +65,7 @@ PLGui::Font *Application::GuiFont = nullptr;
 *    Constructor
 */
 Application::Application() :
-	SlotNotifyKeyDown(this),
+	SlotOnKeyDown(this),
 	m_pIngameGui(nullptr)
 {
 	// Set application name and title
@@ -90,7 +90,7 @@ Application::~Application()
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	// Check whether the escape key was pressed
 	if (nKey == PLGUIKEY_ESCAPE)
@@ -126,10 +126,10 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&SlotNotifyKeyDown);
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotNotifyKeyDown);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
 	}
 }
 

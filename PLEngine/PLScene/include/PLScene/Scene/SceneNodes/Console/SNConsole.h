@@ -110,7 +110,7 @@ class SNConsole : public SNConsoleBase {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

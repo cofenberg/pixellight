@@ -81,8 +81,8 @@ SNMAnchor::SNMAnchor(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	JointPositionOffset(this),
 	JointRotationOffset(this),
 	Flags(this),
-	EventHandlerContainer			  (&SNMAnchor::NotifyContainer,				 this),
-	EventHandlerPositionRotationUpdate(&SNMAnchor::NotifyPositionRotationUpdate, this)
+	EventHandlerContainer			  (&SNMAnchor::OnContainer,				 this),
+	EventHandlerPositionRotationUpdate(&SNMAnchor::OnPositionRotationUpdate, this)
 {
 }
 
@@ -129,7 +129,7 @@ void SNMAnchor::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node container changed
 */
-void SNMAnchor::NotifyContainer()
+void SNMAnchor::OnContainer()
 {
 	// Is it allowed to change the container the attached node is in?
 	if (!(GetFlags() & NoContainerUpdate)) {
@@ -151,7 +151,7 @@ void SNMAnchor::NotifyContainer()
 *  @brief
 *    Called when the scene node position or rotation changed or on update request
 */
-void SNMAnchor::NotifyPositionRotationUpdate()
+void SNMAnchor::OnPositionRotationUpdate()
 {
 	// Is there anything to do in here?
 	if (!(GetFlags() & NoPosition) || !(GetFlags() & NoRotation)) {

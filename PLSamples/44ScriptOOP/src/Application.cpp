@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : ConsoleApplication(),
-	SlotNotifyMySignal(this),
+	SlotOnMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
 	// Set application name and title
@@ -66,7 +66,7 @@ Application::Application() : ConsoleApplication(),
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Connect event handler
-	m_pMyRTTIClass->MySignal.Connect(&SlotNotifyMySignal);
+	m_pMyRTTIClass->MySignal.Connect(&SlotOnMySignal);
 }
 
 /**
@@ -130,7 +130,7 @@ void Application::OOP(const String &sScriptFilename)
 *  @brief
 *    Called on MySignal signal
 */
-void Application::NotifyMySignal(String sParameter)
+void Application::OnMySignal(String sParameter)
 {
 	System::GetInstance()->GetConsole().Print(sParameter + " emitted MySignal signal\n");
 }

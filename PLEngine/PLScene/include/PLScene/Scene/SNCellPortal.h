@@ -161,7 +161,7 @@ class SNCellPortal : public SNPortal {
 		*  @brief
 		*    Called when the target cell container, position, rotation or scale changed
 		*/
-		void NotifyCellContainerPositionRotationScale();
+		void OnCellContainerPositionRotationScale();
 
 
 	//[-------------------------------------------------------]

@@ -56,7 +56,7 @@ PGMagic1::PGMagic1() :
 	BuildPerSec(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGMagic1::NotifyUpdate, this),
+	EventHandlerUpdate(&PGMagic1::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -104,7 +104,7 @@ void PGMagic1::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGMagic1::NotifyUpdate()
+void PGMagic1::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

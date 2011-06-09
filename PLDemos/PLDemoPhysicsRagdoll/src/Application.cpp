@@ -63,8 +63,8 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
+	EventHandlerKeyDown(&Application::OnKeyDown, this),
+	EventHandlerKeyUp  (&Application::OnKeyUp,   this),
 	m_pLine(nullptr),
 	m_pRagdoll(nullptr),
 	m_bApplyForce(false),
@@ -195,7 +195,7 @@ Body *Application::GetPhysicsBody() const
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed
@@ -252,7 +252,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a key is released
 */
-void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Apply a force to the ragdoll?

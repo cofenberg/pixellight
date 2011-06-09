@@ -52,7 +52,7 @@ pl_implement_class(SNMCameraZoomController)
 */
 SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCameraZoom(cSceneNode),
 	InputSemantic(this),
-	EventHandlerControl(&SNMCameraZoomController::NotifyControl, this),
+	EventHandlerControl(&SNMCameraZoomController::OnControl, this),
 	m_pController(new CameraZoomController())
 {
 	// Connect input control event handler
@@ -105,7 +105,7 @@ void SNMCameraZoomController::OnActivate(bool bActivate)
 *  @brief
 *    Called when a control event has occured
 */
-void SNMCameraZoomController::NotifyControl(Control *pControl)
+void SNMCameraZoomController::OnControl(Control *pControl)
 {
 	if (pControl == &m_pController->Zoom)
 		ZoomFactor = static_cast<Button*>(pControl)->IsPressed() ? 1.0f : 0.0f;

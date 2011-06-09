@@ -55,7 +55,7 @@ SNBomb::SNBomb() :
 	Killed(this),
 	Sound(this),
 	Flags(this),
-	EventHandlerUpdate(&SNBomb::NotifyUpdate, this),
+	EventHandlerUpdate(&SNBomb::OnUpdate, this),
 	m_fTimer(0.0f),
 	m_nFrame(0),
 	m_fFrame(0.0f),
@@ -96,7 +96,7 @@ char SNBomb::GetFrame() const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNBomb::NotifyUpdate()
+void SNBomb::OnUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

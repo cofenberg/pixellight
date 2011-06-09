@@ -76,7 +76,7 @@ pl_implement_class(GuiPL)
 */
 GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
 	InputSemantic(this),
-	EventHandlerTimer(&GuiPL::NotifyTimer, this),
+	EventHandlerTimer(&GuiPL::OnTimer, this),
 	m_pGui(pGui),
 	m_vScreenSize(1024, 768),
 	m_pRenderer(nullptr),
@@ -434,7 +434,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 *  @brief
 *    Called when the timer has fired
 */
-void GuiPL::NotifyTimer()
+void GuiPL::OnTimer()
 {
 	// Update ALL key repeat states
 	m_lstRepeatKeys.SetAll();

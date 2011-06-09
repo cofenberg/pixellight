@@ -54,7 +54,7 @@ class Application : public PLCore::ConsoleApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_1(NotifyMySignal,	PLGeneral::String,	"Called on MySignal signal, a string as first parameter",	"")
+		pl_slot_1(OnMySignal,	PLGeneral::String,	"Called on MySignal signal, a string as first parameter",	"")
 	pl_class_end
 
 
@@ -95,7 +95,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sParameter
 		*    Signal parameter
 		*/
-		void NotifyMySignal(PLGeneral::String sParameter);
+		void OnMySignal(PLGeneral::String sParameter);
 
 		/**
 		*  @brief

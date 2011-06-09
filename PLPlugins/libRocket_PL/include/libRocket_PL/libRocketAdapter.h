@@ -182,7 +182,7 @@ class libRocketAdapter {
 		*  @param[in] vSize
 		*    New size
 		*/
-		void NotifySize(const PLMath::Vector2i &vSize);
+		void OnSize(const PLMath::Vector2i &vSize);
 
 
 	//[-------------------------------------------------------]

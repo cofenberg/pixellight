@@ -62,7 +62,7 @@ PGSparkles::PGSparkles() :
 	BuildPerSec(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGSparkles::NotifyUpdate, this),
+	EventHandlerUpdate(&PGSparkles::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -152,7 +152,7 @@ void PGSparkles::InitParticle(Particle &cParticle) const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGSparkles::NotifyUpdate()
+void PGSparkles::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

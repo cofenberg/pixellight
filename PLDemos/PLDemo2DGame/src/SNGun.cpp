@@ -59,7 +59,7 @@ SNGun::SNGun() :
 	InputSemantic(this),
 	Sound(this),
 	Flags(this),
-	EventHandlerUpdate(&SNGun::NotifyUpdate, this),
+	EventHandlerUpdate(&SNGun::OnUpdate, this),
 	EventHandlerOnSceneNode(&SNGun::OnSceneNode, this),
 	m_pController(new GunController()),
 	m_nFrame(0),
@@ -136,7 +136,7 @@ void SNGun::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNGun::NotifyUpdate()
+void SNGun::OnUpdate()
 {
 	// Get the current time difference between the last frame and the current frame
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
