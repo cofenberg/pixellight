@@ -68,8 +68,8 @@ SPK_PLLineRendererShaders *SPK_PLLineRendererShaders::Create(PLRenderer::Rendere
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 SPK_PLLineRendererShaders::SPK_PLLineRendererShaders(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fLength, float fWidth) : SPK_PLLineRenderer(cRenderer, fLength, fWidth),
-	m_sShaderLanguage(sShaderLanguage),
 	m_pEventHandlerDirty(new PLCore::EventHandler<PLRenderer::Program*>(&SPK_PLLineRendererShaders::OnDirty, this)),
+	m_sShaderLanguage(sShaderLanguage),
 	m_pVertexShader(nullptr),
 	m_pFragmentShader(nullptr),
 	m_pProgram(nullptr),

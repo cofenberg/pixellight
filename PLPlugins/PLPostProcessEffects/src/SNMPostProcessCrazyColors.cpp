@@ -60,8 +60,8 @@ SNMPostProcessCrazyColors::SNMPostProcessCrazyColors(PLScene::SceneNode &cSceneN
 	ColorScaleY(this),
 	ColorSpeedY(this),
 	ColorOffsetY(this),
-	SlotOnSceneNodeUpdate(this),
 	Filename(this),
+	SlotOnSceneNodeUpdate(this),
 	m_fTimer(0.0f)
 {
 	// Overwrite the default setting of the filename
