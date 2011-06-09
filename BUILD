@@ -28,7 +28,7 @@ This document describes how to build PixelLight from the sources.
 
 If you want to build PixelLight on Windows, you have two choices:
 - Use the provided Microsoft Visual Studio solutions to build the engine
-- Use the cmake based build system
+- Use the CMake based build system
 
 If you want to create SDK packages or documentation or intend to e.g. use the mingw compiler or something
 like that, stick to the CMake path.
@@ -243,7 +243,7 @@ Readme.txt to determine where to obtain those libraries and where to put the res
 The library packages need to be unpacked and at the right position for your specific build type, e.g. on Linux
 and 32 Bit, put everything in the directory 'External\_Linux_x86_32'.
 
-The cmake based build will try to download the needed packages automatically from our homepage when you build a project
+The CMake based build will try to download the needed packages automatically from our homepage when you build a project
 that depends on an external. This will download and unpack all public externals for you in the right directory. The non-public
 externals must still be installed manually. You should also use the maketool flag '--syslibs' to use the libraries installed
 on your system rather than our own external packages whenever that is possible (however, not all externals can be used
@@ -322,7 +322,7 @@ Of course you can also set this variable e.g. inside your profile or bash-script
 2. Install the PixelLight SDK locally
 
 Installing means copying the files built by the project into your local linux system so that the libraries and apps
-can be found there. The cmake build script therefore provides you with an 'install' target that installs everything
+can be found there. The CMake build script therefore provides you with an 'install' target that installs everything
 on your local machine into the '/usr/local' directory.
 
 Change into the build directory, e.g.:
