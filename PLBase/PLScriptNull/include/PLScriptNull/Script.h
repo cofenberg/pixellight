@@ -55,7 +55,7 @@ class Script : public PLScript::Script {
 		// Properties
 		pl_properties
 			pl_property("Language",	"Null")
-			pl_property("Formats",	"null,NULL")
+			pl_property("Formats",	"")		// The null backend has no load and runnable scripts
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
