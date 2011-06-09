@@ -1,3 +1,11 @@
+>> 09.06.2011
+[CO]
+- "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings" and "44ScriptOOP" no longer have completely fixed
+  build in script filenames, instead, the script filename is constructed by using the filename extension of the found script languages. This
+  way the examples are more flexible regarding to removing/adding new script languages.
+
+
+
 >> 15.05.2011
 [CO]
 - Added "44ScriptOOP" (work in progress)

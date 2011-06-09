@@ -74,9 +74,9 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Performs some script stuff
+*    Runs a script
 */
-void Application::DoScriptStuff(const String &sScriptFilename)
+void Application::RunScript(const String &sScriptFilename)
 {
 	// Create the script instance
 	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
@@ -129,11 +129,14 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 		delete pScript;
 
 		// Print new line
-		System::GetInstance()->GetConsole().Print("--\n\n");
+		System::GetInstance()->GetConsole().Print("--\n");
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
 	}
+
+	// Print new line
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 
@@ -142,9 +145,26 @@ void Application::DoScriptStuff(const String &sScriptFilename)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Run some scripts
-	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.lua");
-	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.js");
-	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.as");
-	DoScriptStuff("Data/Scripts/41ScriptGlobalVariables.py");
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/41ScriptGlobalVariables." + sScriptLanguageExtension);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
+		System::GetInstance()->GetConsole().Print('\n');
+	}
 }

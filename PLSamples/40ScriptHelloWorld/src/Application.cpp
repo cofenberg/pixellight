@@ -75,9 +75,9 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Calls the hello world script
+*    Runs a script
 */
-void Application::SayHello(const String &sScriptFilename)
+void Application::RunScript(const String &sScriptFilename)
 {
 	// Create the script instance
 	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
@@ -89,7 +89,7 @@ void Application::SayHello(const String &sScriptFilename)
 		delete pScript;
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
 	}
 }
 
@@ -99,17 +99,26 @@ void Application::SayHello(const String &sScriptFilename)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	{ // Get a list of supported script languages
-		const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
-		System::GetInstance()->GetConsole().Print("Supported script languages:\n");
-		for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++)
-			System::GetInstance()->GetConsole().Print("- " + lstScriptLanguages[i] + '\n');
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/40ScriptHelloWorld." + sScriptLanguageExtension);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
 		System::GetInstance()->GetConsole().Print('\n');
 	}
-
-	// Run some scripts
-	SayHello("Data/Scripts/40ScriptHelloWorld.lua");
-	SayHello("Data/Scripts/40ScriptHelloWorld.js");
-	SayHello("Data/Scripts/40ScriptHelloWorld.as");
-	SayHello("Data/Scripts/40ScriptHelloWorld.py");
 }

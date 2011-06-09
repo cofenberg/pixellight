@@ -73,12 +73,12 @@ class Application : public PLCore::ConsoleApplication {
 	private:
 		/**
 		*  @brief
-		*    Calls the bindings script
+		*    Runs a script
 		*
 		*  @param[in] sScriptFilename
-		*    Filename of the script to use
+		*    Filename of the script to run
 		*/
-		void Bindings(const PLGeneral::String &sScriptFilename);
+		void RunScript(const PLGeneral::String &sScriptFilename);
 
 
 	//[-------------------------------------------------------]

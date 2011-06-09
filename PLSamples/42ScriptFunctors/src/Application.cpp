@@ -77,9 +77,9 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Performs a calculation by using a script
+*    Runs a script
 */
-float Application::DoCalculation(const String &sScriptFilename, float fFirst, float fSecond)
+float Application::RunScript(const String &sScriptFilename, float fFirst, float fSecond)
 {
 	float fResult = 0.0f;
 
@@ -180,18 +180,24 @@ float Application::DoCalculation(const String &sScriptFilename, float fFirst, fl
 
 				// Print message
 				System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+			} else {
+				// Error!
+				System::GetInstance()->GetConsole().Print("Failed to use the script source code \"" + sScriptFilename + "\" (see log for details)\n");
 			}
 
 			// Cleanup
 			delete pScript;
 
 			// Print new line
-			System::GetInstance()->GetConsole().Print("--\n\n");
+			System::GetInstance()->GetConsole().Print("--\n");
 		}
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
 	}
+
+	// Print new line
+	System::GetInstance()->GetConsole().Print('\n');
 
 	// Done
 	return fResult;
@@ -234,9 +240,26 @@ String Application::StaticStringMethod(String sFirst)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Run some scripts
-	DoCalculation("Data/Scripts/42ScriptFunctors.lua", 42.0f, 5.0f);
-	DoCalculation("Data/Scripts/42ScriptFunctors.js",  42.0f, 5.0f);
-	DoCalculation("Data/Scripts/42ScriptFunctors.as",  42.0f, 5.0f);
-	DoCalculation("Data/Scripts/42ScriptFunctors.py",  42.0f, 5.0f);
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/42ScriptFunctors." + sScriptLanguageExtension, 42.0f, 5.0f);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
+		System::GetInstance()->GetConsole().Print('\n');
+	}
 }

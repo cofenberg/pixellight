@@ -109,10 +109,7 @@
     <ClInclude Include="src\Application.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.as" />
-    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.js" />
     <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.lua" />
-    <None Include="..\..\Bin\PLSamples\Data\Scripts\44ScriptOOP.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
