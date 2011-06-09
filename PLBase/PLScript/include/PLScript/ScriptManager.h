@@ -82,10 +82,10 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 	public:
 		/**
 		*  @brief
-		*    Returns a list of supported script languages
+		*    Returns a list of the names of the supported script languages
 		*
 		*  @return
-		*    List of supported script languages
+		*    List of the names of the supported script languages
 		*/
 		PLSCRIPT_API const PLGeneral::Array<PLGeneral::String> &GetScriptLanguages();
 
@@ -112,6 +112,21 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*    'true' if the given script language is supported, else 'false'
 		*/
 		PLSCRIPT_API bool IsSupported(const PLGeneral::String &sScriptLanguage);
+
+		/**
+		*  @brief
+		*    Returns the filename extension of a given script language
+		*
+		*  @param[in] sScriptLanguage
+		*    Script language to return the filename extension from
+		*
+		*  @return
+		*    The filename extension of the given script language, empty string on error (possibly not supported script language)
+		*
+		*  @note
+		*    - If the script language has more than one filename extension, the first filename extension will be returned
+		*/
+		PLSCRIPT_API PLGeneral::String GetScriptLanguageExtension(const PLGeneral::String &sScriptLanguage);
 
 		/**
 		*  @brief

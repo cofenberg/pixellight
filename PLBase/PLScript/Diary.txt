@@ -5,6 +5,7 @@
   intuitively to use and there are tons of useful information all over the net how to integrate Lua into a "game engine". Lua is also the most compact
   of all of those mentioned script languages - the Windows dll is only 124 KiB while v8 (used for JavaScript) is 2,354 KiB! The syntax of Lua is also
   good to read and something like OOP can be done without totally unreadable tricks as required for JavaScript (did some OOP experiments within "44ScriptOOP").
+- Added "ScriptManager::GetScriptLanguageExtension()" which returns the filename extension of a given script language
 
 
 
