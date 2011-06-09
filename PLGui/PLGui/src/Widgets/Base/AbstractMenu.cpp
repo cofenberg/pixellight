@@ -62,10 +62,6 @@ pl_implement_class(AbstractMenu)
 *    Constructor
 */
 AbstractMenu::AbstractMenu(Widget *pParent) : Widget(pParent),
-	SignalItemSelected(this),
-	SignalItemClicked(this),
-	SignalSubmenuOpened(this),
-	SignalSubmenuClosed(this),
 	m_pMenu(nullptr),
 	m_nOrientation(Vertical),
 	m_nOpenSideHorizontal(SideRight),

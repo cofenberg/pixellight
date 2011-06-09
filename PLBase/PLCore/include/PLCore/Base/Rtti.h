@@ -588,7 +588,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_signal_evnt(NAME) \
 		class NAME##_Signal : public PLCore::Signal<NAME##_Desc> { \
 			public: \
-				NAME##_Signal(_Self *pObject) : PLCore::Signal<NAME##_Desc>(pObject) { \
+				NAME##_Signal() : PLCore::Signal<NAME##_Desc>() { \
 				} \
 		}; \
 

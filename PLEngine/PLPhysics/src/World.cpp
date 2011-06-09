@@ -63,8 +63,7 @@ World::~World()
 *  @brief
 *    Constructor
 */
-World::World() :
-	SignalContact(this)
+World::World()
 {
 }
 

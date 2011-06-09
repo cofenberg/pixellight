@@ -65,8 +65,6 @@ RttiObject::RttiObject() :
 	Number(this),
 	State(this),
 	Float(this),
-	Event0(this),
-	Event1(this),
 	SlotOnSomeEvent0(this)
 {
 	// [DEBUG]
@@ -85,8 +83,6 @@ RttiObject::RttiObject(int nValue) :
 	Number(this),
 	State(this),
 	Float(this),
-	Event0(this),
-	Event1(this),
 	SlotOnSomeEvent0(this)
 {
 	// [DEBUG]
@@ -105,8 +101,6 @@ RttiObject::RttiObject(int nValue, float fValue) :
 	Number(this),
 	State(this),
 	Float(this),
-	Event0(this),
-	Event1(this),
 	SlotOnSomeEvent0(this)
 {
 	// [DEBUG]

@@ -58,7 +58,6 @@ pl_implement_class(AbstractTooltip)
 AbstractTooltip::AbstractTooltip(Widget *pParent) : Widget(pParent),
 	Text(this),
 	Timeout(this),
-	SignalTimeout(this),
 	SlotOnTimer(this),
 	m_nTimeout(5000),
 	m_cTimer(*GetGui())

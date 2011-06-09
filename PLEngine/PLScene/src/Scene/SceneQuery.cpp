@@ -61,7 +61,6 @@ SceneContext *SceneQuery::GetSceneContext() const
 *    Constructor
 */
 SceneQuery::SceneQuery() :
-	SignalSceneNode(this),
 	m_nFlags(Recursive),
 	m_pSceneContainer(nullptr)
 {

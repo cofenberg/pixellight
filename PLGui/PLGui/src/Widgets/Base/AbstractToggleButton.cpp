@@ -57,7 +57,6 @@ pl_implement_class(AbstractToggleButton)
 AbstractToggleButton::AbstractToggleButton(Widget *pParent) : AbstractButton(pParent),
 	PartiallyAllowed(this),
 	State(this),
-	SignalToggled(this),
 	SlotOnGroupActivate(this),
 	m_pGroup(nullptr),
 	m_bPartiallyAllowed(false),

@@ -62,7 +62,6 @@ TestObject::TestObject() :
 	BoolValue(this),
 	IntValue(this),
 	IntValue2(this),
-	Event0(this),
 	EventHandler0(this)
 {
 }

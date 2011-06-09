@@ -1,3 +1,12 @@
+>> 09.06.2011
+[CO]
+- Until now, the constructor of RTTI signals was demanding a pointer back to their owner object. When looking at the "pl_slot_<x>"-macros, one could
+  see that this provided constructor parameter was not used and I have no glue why it's there - because signals are internally just events (as also stated
+  within the documentation). If there's need to know where an event came from, this information has to be provided in the event definition. Events should be as
+  lightweight as possible, so storing e.g. an additional pointer within the event instance would probably not be the best idea. 
+
+
+
 >> 05.06.2011
 [CO]
 - Exposed "ConsoleApplication" to the RTTI

@@ -55,7 +55,6 @@ pl_implement_class(GuiButton)
 *    Constructor
 */
 GuiButton::GuiButton(Widget *pParent) : GuiBase(pParent),
-	SignalPressed(this),
 	m_pFont(Application::GuiFont),
 	m_cColor(Color4::White),
 	m_cMouseOverColor(Color4::White),

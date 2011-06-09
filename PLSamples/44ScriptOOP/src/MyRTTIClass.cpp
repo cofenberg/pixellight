@@ -86,7 +86,6 @@ void MyRTTIClass::SetName(const String &sName)
 MyRTTIClass::MyRTTIClass() :
 	Name(this),
 	Level(this),
-	MySignal(this),
 	SlotOnMyEvent(this),
 	m_sName("Bob")
 {
