@@ -1,3 +1,9 @@
+>> 09.06.2011
+[CO]
+- Lua is now "recommended"
+
+
+
 >> 28.04.2011
 [CO]
 - Added AngelScript

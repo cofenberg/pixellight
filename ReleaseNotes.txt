@@ -1,9 +1,9 @@
 Changes in PixelLight 0.9.7-R1 (not yet released)
 - Feature: Added PLScript component which is a generic script language independent script interface
 - Feature: Added the script backend PLScriptLua which adds support for Lua
-- Feature: Added the script backend PLScriptV8 which adds support for JavaScript by using V8 (ECMA-262 compliant JavaScript engine)
-- Feature: Added the script backend PLScriptPython which adds support for Python
-- Feature: Added the script backend PLScriptAngelScript which adds support for AngelScript
+- Feature: Added the experimental (in Git repository) script backend PLScriptV8 which adds support for JavaScript by using V8 (ECMA-262 compliant JavaScript engine)
+- Feature: Added the experimental (in Git repository) script backend PLScriptPython which adds support for Python
+- Feature: Added the experimental (in Git repository) script backend PLScriptAngelScript which adds support for AngelScript
 - Feature: Added plugin PLScriptBindings which exposes certain parts of PixelLight to script languages
 - Feature: Added support for non-power-of-two textures (NPOT)
 - Feature: Added delayed shared library loading for plugins to speed up the program start and to reduce memory consumption
