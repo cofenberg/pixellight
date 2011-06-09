@@ -63,8 +63,8 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::OnKeyDown, this),
-	EventHandlerKeyUp  (&Application::OnKeyUp,   this),
+	SlotOnKeyDown(this),
+	SlotOnKeyUp(this),
 	m_pLine(nullptr),
 	m_pRagdoll(nullptr),
 	m_bApplyForce(false),
@@ -304,12 +304,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
-		pWidget->SignalKeyUp.  Connect(&EventHandlerKeyUp);
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalKeyUp.  Connect(&SlotOnKeyUp);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
-			pWidget->GetContentWidget()->SignalKeyUp.  Connect(&EventHandlerKeyUp);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyUp.  Connect(&SlotOnKeyUp);
 		}
 	}
 }

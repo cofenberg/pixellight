@@ -53,6 +53,8 @@ class SNBomb : public PLSound::SNSound {
 		pl_attribute(Flags,		pl_flag_type(EFlags),	NoCulling,						ReadWrite,	GetSet,			"Flags",																								"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node needs to be updated",	"")
 	pl_class_end
 
 
@@ -91,13 +93,6 @@ class SNBomb : public PLSound::SNSound {
 		*    Called when the scene node needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

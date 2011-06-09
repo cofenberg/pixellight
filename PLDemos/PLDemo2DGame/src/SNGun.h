@@ -59,6 +59,9 @@ class SNGun : public PLSound::SNSound {
 		pl_attribute(Flags,			pl_flag_type(EFlags),	NoLoop|NoStartPlayback,	ReadWrite,	GetSet,			"Flags",																								"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,														"Called when the scene node needs to be updated",																			"")
+		pl_slot_2(OnSceneNode,	PLScene::SceneQuery&,	PLScene::SceneNode&,	"Called when a scene node was found, query found the scene node as first parameter, found scene node as second parameter",	"")
 	pl_class_end
 
 
@@ -122,14 +125,6 @@ class SNGun : public PLSound::SNSound {
 		*    Found scene node
 		*/
 		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<>												EventHandlerUpdate;
-		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerOnSceneNode;
 
 
 	//[-------------------------------------------------------]

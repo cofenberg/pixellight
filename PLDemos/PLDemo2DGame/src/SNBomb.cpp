@@ -55,7 +55,7 @@ SNBomb::SNBomb() :
 	Killed(this),
 	Sound(this),
 	Flags(this),
-	EventHandlerUpdate(&SNBomb::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_fTimer(0.0f),
 	m_nFrame(0),
 	m_fFrame(0.0f),
@@ -172,8 +172,8 @@ void SNBomb::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }

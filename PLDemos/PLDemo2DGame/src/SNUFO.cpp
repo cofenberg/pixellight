@@ -53,7 +53,7 @@ pl_implement_class(SNUFO)
 */
 SNUFO::SNUFO() :
 	Sound(this),
-	EventHandlerUpdate(&SNUFO::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_fTimer(0.0f),
 	m_fBombTimer(0.0f)
 {
@@ -117,8 +117,8 @@ void SNUFO::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }

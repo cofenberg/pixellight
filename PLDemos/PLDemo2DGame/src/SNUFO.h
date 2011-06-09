@@ -50,6 +50,8 @@ class SNUFO : public PLSound::SNSound {
 		pl_attribute(Sound,	PLGeneral::String,	"Data/Sounds/UFO.ogg",	ReadWrite,	GetSet,	"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node needs to be updated",	"")
 	pl_class_end
 
 
@@ -79,13 +81,6 @@ class SNUFO : public PLSound::SNSound {
 		*    Called when the scene node needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

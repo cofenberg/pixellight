@@ -47,6 +47,8 @@ class Application : public PLEngine::RenderApplication {
 	pl_class(pl_rtti_export, Application, "", PLEngine::RenderApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_2(OnKeyDown,	PLGeneral::uint32,	PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
 	pl_class_end
 
 
@@ -95,13 +97,6 @@ class Application : public PLEngine::RenderApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreatePainter();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLGeneral::uint32, PLGeneral::uint32> EventHandlerKeyDown;
 
 
 };

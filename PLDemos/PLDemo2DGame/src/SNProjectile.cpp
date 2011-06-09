@@ -53,8 +53,8 @@ pl_implement_class(SNProjectile)
 */
 SNProjectile::SNProjectile() :
 	Direction(this),
-	EventHandlerUpdate(&SNProjectile::OnUpdate, this),
-	EventHandlerSceneNode(&SNProjectile::OnSceneNode, this)
+	SlotOnUpdate(this),
+	SlotOnSceneNode(this)
 {
 	// Set the bounding box
 	SetAABoundingBox(AABoundingBox(-3.0f, -3.0f, -1.0f, 3.0f, 3.0f, 1.0f));
@@ -94,7 +94,7 @@ void SNProjectile::OnUpdate()
 		SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 		if (pSceneQuery) {
 			// Connect event handler
-			pSceneQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
+			pSceneQuery->SignalSceneNode.Connect(&SlotOnSceneNode);
 
 			// Setup axis aligned bounding box
 			pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
@@ -155,9 +155,9 @@ void SNProjectile::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }
 

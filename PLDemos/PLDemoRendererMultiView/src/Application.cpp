@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : RenderApplication(),
-	EventHandlerKeyDown(&Application::OnKeyDown, this)
+	SlotOnKeyDown(this)
 {
 	// Set application name and title
 	SetName("PLDemoRendererMultiView");
@@ -102,10 +102,10 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	const DisplayMode *pDisplayMode = nullptr;
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
 
 		// Get the display mode to use
 		if (pWidget->IsInstanceOf("PLEngine::RenderWidget"))
