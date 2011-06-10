@@ -135,7 +135,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 *  @brief
 *    Constructor
 */
-RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject),
+RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject, TypeObjectMethodPointer),
 	m_pDynFunc(pDynFunc)
 {
 }
@@ -148,10 +148,37 @@ RTTIObjectMethodPointer::~RTTIObjectMethodPointer()
 {
 }
 
+/**
+*  @brief
+*    Returns the pointer to the RTTI object method to wrap
+*/
+DynFuncPtr RTTIObjectMethodPointer::GetDynFuncPtr() const
+{
+	return m_pDynFunc;
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual LuaUserData functions               ]
 //[-------------------------------------------------------]
+int RTTIObjectMethodPointer::IndexMetamethod(lua_State *pLuaState)
+{
+	// Error! A method can't be called like an object...
+	// [TODO] Write an error message into the log? (with current script line etc.)
+
+	// Error!
+	return 0;
+}
+
+int RTTIObjectMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
+{
+	// Error! A method can't be called like an object...
+	// [TODO] Write an error message into the log? (with current script line etc.)
+
+	// Done
+	return 0;
+}
+
 void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object and a RTTI object method?

@@ -60,17 +60,10 @@ class MyRTTIClass : public PLCore::Object {
 		pl_method_0(SaySomethingWise,	pl_ret_type(void),					"Says something wise",					"")
 		pl_method_0(GetSelf,			pl_ret_type(MyRTTIClass*),			"Returns a pointer to this instance",	"")
 		// Signals
-		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed",	"")
+		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed, message as first parameter",	"")
 		// Slots
-		pl_slot_0(OnMyEvent,	"My slot",	"")
+		pl_slot_1(OnMyEvent,	PLGeneral::String,	"My slot, message as first parameter",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI slot methods                              ]
-	//[-------------------------------------------------------]
-	public:
-		void OnMyEvent();
 
 
 	//[-------------------------------------------------------]
@@ -129,6 +122,15 @@ class MyRTTIClass : public PLCore::Object {
 		*    A pointer to this instance, always valid!
 		*/
 		MyRTTIClass *GetSelf();
+
+		/**
+		*  @brief
+		*    Called when my event was emitted
+		*
+		*  @param[in] sMessage
+		*    Message
+		*/
+		void OnMyEvent(PLGeneral::String sMessage);
 
 
 	//[-------------------------------------------------------]

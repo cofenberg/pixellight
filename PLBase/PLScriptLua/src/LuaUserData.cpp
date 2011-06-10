@@ -139,14 +139,28 @@ LuaUserData *LuaUserData::PopUserDataFromLuaStack(lua_State *pLuaState)
 
 
 //[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Return the Lua user data type
+*/
+LuaUserData::EType LuaUserData::GetType() const
+{
+	return m_nType;
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-LuaUserData::LuaUserData(Script &cScript) :
-	m_pScript(&cScript)
+LuaUserData::LuaUserData(Script &cScript, EType nType) :
+	m_pScript(&cScript),
+	m_nType(nType)
 {
 	// Get the Lua state
 	lua_State *pLuaState = m_pScript->GetLuaState();

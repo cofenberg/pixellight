@@ -92,11 +92,22 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*/
 		virtual ~RTTIObjectMethodPointer();
 
+		/**
+		*  @brief
+		*    Returns the pointer to the RTTI object method to wrap
+		*
+		*  @return
+		*    Pointer to the RTTI object method to wrap, can be a null pointer
+		*/
+		PLCore::DynFuncPtr GetDynFuncPtr() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
+		virtual int IndexMetamethod(lua_State *pLuaState);
+		virtual int NewIndexMetamethod(lua_State *pLuaState);
 		virtual void CallMetamethod(lua_State *pLuaState);
 
 

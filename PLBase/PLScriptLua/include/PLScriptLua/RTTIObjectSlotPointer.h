@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RTTIObjectPointer.h                            *
+ *  File: RTTIObjectSlotPointer.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
-#define __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScriptLua/LuaUserData.h"
+#include "PLScriptLua/RTTIObjectPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	class Object;
+	class DynEventHandler;
 }
 
 
@@ -50,28 +50,9 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    RTTI object pointer
+*    RTTI object slot pointer
 */
-class RTTIObjectPointer : public LuaUserData {
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Pushes an RTTI class instance onto the Lua stack
-		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, in case of a null pointer nil is pushed onto the Lua stack
-		*
-		*  @note
-		*    - The destruction of the new RTTIObjectPointer instance is done by the Lua garbage collector
-		*/
-		static void LuaStackPush(Script &cScript, PLCore::Object *pRTTIObject);
+class RTTIObjectSlotPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
@@ -86,25 +67,25 @@ class RTTIObjectPointer : public LuaUserData {
 		*    The owner script instance
 		*  @param[in] pRTTIObject
 		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] nType
-		*    The Lua user data type
+		*  @param[in] pDynEventHandler
+		*    Pointer to the RTTI object slot to wrap, can be a null pointer
 		*/
-		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject, EType nType = TypeObjectPointer);
+		RTTIObjectSlotPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEventHandler *pDynEventHandler);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~RTTIObjectPointer();
+		virtual ~RTTIObjectSlotPointer();
 
 		/**
 		*  @brief
-		*    Returns the pointer to the RTTI object to wrap
+		*    Returns the pointer to the RTTI object slot to wrap
 		*
 		*  @return
-		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*    Pointer to the RTTI object slot to wrap, can be a null pointer
 		*/
-		PLCore::Object *GetObject() const;
+		PLCore::DynEventHandler *GetDynEventHandler() const;
 
 
 	//[-------------------------------------------------------]
@@ -113,7 +94,6 @@ class RTTIObjectPointer : public LuaUserData {
 	protected:
 		virtual int IndexMetamethod(lua_State *pLuaState);
 		virtual int NewIndexMetamethod(lua_State *pLuaState);
-		virtual void CGMetamethod(lua_State *pLuaState);
 		virtual void CallMetamethod(lua_State *pLuaState);
 
 
@@ -121,7 +101,7 @@ class RTTIObjectPointer : public LuaUserData {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::Object *m_pRTTIObject;	/**< Pointer to the RTTI object to wrap, can be a null pointer */
+		PLCore::DynEventHandler *m_pDynEventHandler;	/**< Pointer to the RTTI object slot to wrap, can be a null pointer */
 
 
 };
@@ -133,4 +113,4 @@ class RTTIObjectPointer : public LuaUserData {
 } // PLScriptLua
 
 
-#endif // __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__

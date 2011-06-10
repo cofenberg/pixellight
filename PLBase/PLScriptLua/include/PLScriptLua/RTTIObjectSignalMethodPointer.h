@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RTTIObjectPointer.h                            *
+ *  File: RTTIObjectSignalMethodPointer.h                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
-#define __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTSIGNALMETHODPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTSIGNALMETHODPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScriptLua/LuaUserData.h"
+#include "PLScriptLua/RTTIObjectSignalPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	class Object;
+	class DynEventHandler;
 }
 
 
@@ -50,9 +50,24 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    RTTI object pointer
+*    RTTI object build in signal method pointer
 */
-class RTTIObjectPointer : public LuaUserData {
+class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Build in method
+		*/
+		enum EMethod {
+			MethodUnknown    = -1,	/**< Unknown method */
+			MethodConnect    = 0,	/**< Connect method */
+			MethodDisconnect = 1	/**< Disconnect method */
+		};
 
 
 	//[-------------------------------------------------------]
@@ -61,17 +76,15 @@ class RTTIObjectPointer : public LuaUserData {
 	public:
 		/**
 		*  @brief
-		*    Pushes an RTTI class instance onto the Lua stack
+		*    Returns the build in method defined by a given string
 		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, in case of a null pointer nil is pushed onto the Lua stack
+		*  @param[in] sMethod
+		*    String to return the build in method from
 		*
-		*  @note
-		*    - The destruction of the new RTTIObjectPointer instance is done by the Lua garbage collector
+		*  @return
+		*    The build in method defined by the given string
 		*/
-		static void LuaStackPush(Script &cScript, PLCore::Object *pRTTIObject);
+		static EMethod StringToMethod(const PLGeneral::String &sMethod);
 
 
 	//[-------------------------------------------------------]
@@ -86,25 +99,18 @@ class RTTIObjectPointer : public LuaUserData {
 		*    The owner script instance
 		*  @param[in] pRTTIObject
 		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] nType
-		*    The Lua user data type
+		*  @param[in] pDynEvent
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
+		*  @param[in] nMethod
+		*    Build in method
 		*/
-		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject, EType nType = TypeObjectPointer);
+		RTTIObjectSignalMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, EMethod nMethod);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~RTTIObjectPointer();
-
-		/**
-		*  @brief
-		*    Returns the pointer to the RTTI object to wrap
-		*
-		*  @return
-		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*/
-		PLCore::Object *GetObject() const;
+		virtual ~RTTIObjectSignalMethodPointer();
 
 
 	//[-------------------------------------------------------]
@@ -113,7 +119,6 @@ class RTTIObjectPointer : public LuaUserData {
 	protected:
 		virtual int IndexMetamethod(lua_State *pLuaState);
 		virtual int NewIndexMetamethod(lua_State *pLuaState);
-		virtual void CGMetamethod(lua_State *pLuaState);
 		virtual void CallMetamethod(lua_State *pLuaState);
 
 
@@ -121,7 +126,27 @@ class RTTIObjectPointer : public LuaUserData {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::Object *m_pRTTIObject;	/**< Pointer to the RTTI object to wrap, can be a null pointer */
+		EMethod m_nMethod;	/**< Build in method */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Returns a RTTI slot from the Lua stack without removing it
+		*
+		*  @param[in] pLuaState
+		*    Lua state
+		*
+		*  @return
+		*    The valid RTTI slot, null pointer on error
+		*
+		*  @note
+		*    - Performs also a signal/slot signature match
+		*/
+		PLCore::DynEventHandler *GetSlotFromLuaStack(lua_State *pLuaState);
 
 
 };
@@ -133,4 +158,4 @@ class RTTIObjectPointer : public LuaUserData {
 } // PLScriptLua
 
 
-#endif // __PLSCRIPTLUA_RTTIOBJECTPOINTER_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTSIGNALMETHODPOINTER_H__

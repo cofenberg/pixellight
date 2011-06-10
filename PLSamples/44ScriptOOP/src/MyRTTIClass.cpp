@@ -42,16 +42,6 @@ pl_implement_class(MyRTTIClass)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI slot methods                              ]
-//[-------------------------------------------------------]
-void MyRTTIClass::OnMyEvent()
-{
-	// Increase the level
-	Level = Level + 1;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public RTTI get/set functions                         ]
 //[-------------------------------------------------------]
 String MyRTTIClass::GetName()
@@ -133,4 +123,18 @@ void MyRTTIClass::SaySomethingWise() const
 MyRTTIClass *MyRTTIClass::GetSelf()
 {
 	return this;
+}
+
+/**
+*  @brief
+*    Called when my event was emitted
+*/
+void MyRTTIClass::OnMyEvent(String sMessage)
+{
+	// Increase the level
+	Level = Level + 1;
+
+	// If there's a message, write it into the console
+	if (sMessage.GetLength())
+		System::GetInstance()->GetConsole().Print("\"MyRTTIClass::OnMyEvent\" message: \"" + sMessage + "\"\n");
 }

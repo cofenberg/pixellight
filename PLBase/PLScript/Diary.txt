@@ -1,4 +1,13 @@
-﻿>> 09.06.2011
+﻿>> 10.06.2011
+[CO]
+- PLScriptLua: RTTI signals now have some build in methods. When writing e.g.
+    object.MySignal.Connect(object.OnMyEvent)
+  the RTTI slot "OnMyEvent" of our RTTI class instance "object" is connected with the RTTI signal "MySignal" of our RTTI class instance "object".
+  To disconnect, just use "Disconnect" instead of "Connect".
+		
+
+
+>> 09.06.2011
 [CO]
 - Lua is now an recommended external dependency and will be the script backend which is within the official PixelLight SDK. The answer for "Why Lua
   and not Python, JavaScript or AngelScript?!" is quite simple: Right now, the Lua backend is the most advanced one because Lua and it's C-API is mostly

@@ -69,8 +69,10 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*  @param[in] pDynEvent
 		*    Pointer to the RTTI object signal to wrap, can be a null pointer
+		*  @param[in] nType
+		*    The Lua user data type
 		*/
-		RTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
+		RTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, EType nType = TypeObjectSignalPointer);
 
 		/**
 		*  @brief
@@ -78,11 +80,22 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 		*/
 		virtual ~RTTIObjectSignalPointer();
 
+		/**
+		*  @brief
+		*    Returns the pointer to the RTTI object signal to wrap
+		*
+		*  @return
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
+		*/
+		PLCore::DynEvent *GetDynEvent() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
+		virtual int IndexMetamethod(lua_State *pLuaState);
+		virtual int NewIndexMetamethod(lua_State *pLuaState);
 		virtual void CallMetamethod(lua_State *pLuaState);
 
 

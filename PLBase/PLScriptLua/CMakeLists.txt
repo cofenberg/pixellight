@@ -13,6 +13,8 @@ add_sources(
 	src/RTTIObjectPointer.cpp
 	src/RTTIObjectMethodPointer.cpp
 	src/RTTIObjectSignalPointer.cpp
+	src/RTTIObjectSignalMethodPointer.cpp
+	src/RTTIObjectSlotPointer.cpp
 	src/Script.cpp
 )
 

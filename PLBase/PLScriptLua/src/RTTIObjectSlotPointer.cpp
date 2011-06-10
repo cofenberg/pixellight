@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RTTIObjectSignalPointer.cpp                    *
+ *  File: RTTIObjectSlotPointer.cpp                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,10 +26,7 @@
 extern "C" {
 	#include <Lua/lua.h>
 }
-#include <PLCore/Base/Object.h>
-#include "PLScriptLua/Script.h"
-#include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
-#include "PLScriptLua/RTTIObjectSignalPointer.h"
+#include "PLScriptLua/RTTIObjectSlotPointer.h"
 
 
 //[-------------------------------------------------------]
@@ -47,8 +44,8 @@ namespace PLScriptLua {
 *  @brief
 *    Constructor
 */
-RTTIObjectSignalPointer::RTTIObjectSignalPointer(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent, EType nType) : RTTIObjectPointer(cScript, pRTTIObject, nType),
-	m_pDynEvent(pDynEvent)
+RTTIObjectSlotPointer::RTTIObjectSlotPointer(Script &cScript, Object *pRTTIObject, DynEventHandler *pDynEventHandler) : RTTIObjectPointer(cScript, pRTTIObject, TypeObjectSlotPointer),
+	m_pDynEventHandler(pDynEventHandler)
 {
 }
 
@@ -56,73 +53,45 @@ RTTIObjectSignalPointer::RTTIObjectSignalPointer(Script &cScript, Object *pRTTIO
 *  @brief
 *    Destructor
 */
-RTTIObjectSignalPointer::~RTTIObjectSignalPointer()
+RTTIObjectSlotPointer::~RTTIObjectSlotPointer()
 {
 }
 
 /**
 *  @brief
-*    Returns the pointer to the RTTI object signal to wrap
+*    Returns the pointer to the RTTI object slot to wrap
 */
-DynEvent *RTTIObjectSignalPointer::GetDynEvent() const
+DynEventHandler *RTTIObjectSlotPointer::GetDynEventHandler() const
 {
-	return m_pDynEvent;
+	return m_pDynEventHandler;
 }
 
 
 //[-------------------------------------------------------]
 //[ Protected virtual LuaUserData functions               ]
 //[-------------------------------------------------------]
-int RTTIObjectSignalPointer::IndexMetamethod(lua_State *pLuaState)
+int RTTIObjectSlotPointer::IndexMetamethod(lua_State *pLuaState)
 {
-	// This method deals with build in signal methods
-
-	// There must be a string Lua stack (first argument is a user data)
-	if (lua_isstring(pLuaState, 2)) {
-		// Figure out the build in signal method to be called
-		const RTTIObjectSignalMethodPointer::EMethod nMethod = RTTIObjectSignalMethodPointer::StringToMethod(lua_tolstring(pLuaState, 2, nullptr));
-		if (nMethod != RTTIObjectSignalMethodPointer::MethodUnknown) {
-			// It's a build in signal method... just put another user data instance on the Lua stack...
-			// The destruction of the new RTTIObjectSignalMethodPointer instance is done by the Lua garbage collector
-			new RTTIObjectSignalMethodPointer(*m_pScript, m_pRTTIObject, m_pDynEvent, nMethod);
-
-			// Done
-			return 1;
-		} else {
-			// Error, this is no valid build in signal method!
-
-			// [TODO] Write an error message into the log? (with current script line etc.)
-		}
-	}
-
+	// Error! A slot can't be called like an object...
 	// [TODO] Write an error message into the log? (with current script line etc.)
 
 	// Error!
 	return 0;
 }
 
-int RTTIObjectSignalPointer::NewIndexMetamethod(lua_State *pLuaState)
+int RTTIObjectSlotPointer::NewIndexMetamethod(lua_State *pLuaState)
 {
-	// Error! A signal can't be called like an object...
+	// Error! A slot can't be called like an object...
 	// [TODO] Write an error message into the log? (with current script line etc.)
 
 	// Done
 	return 0;
 }
 
-void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
+void RTTIObjectSlotPointer::CallMetamethod(lua_State *pLuaState)
 {
-	// Is there a RTTI object and a RTTI object signal?
-	if (m_pRTTIObject && m_pDynEvent) {
-		// Get the number of arguments Lua gave to us
-		String sParams;
-		const int nNumOfArguments = lua_gettop(pLuaState) - 2;
-		for (int i=3; i<=2+nNumOfArguments; i++)
-			sParams += String("Param") + (i-3) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
-
-		// Emit the RTTI object signal
-		m_pDynEvent->Emit(sParams);
-	}
+	// Error! A slot can't be called like a function...
+	// [TODO] Write an error message into the log? (with current script line etc.)
 }
 
 
