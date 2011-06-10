@@ -64,5 +64,5 @@ add_dependencies(PixelLight Docs)
 ##################################################
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/PLDocs/FileFormats
-	DESTINATION ${PL_INSTALL_DOC}		COMPONENT Docs		PATTERN ".svn" EXCLUDE
+	DESTINATION ${PL_INSTALL_DOC}		COMPONENT Docs		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )

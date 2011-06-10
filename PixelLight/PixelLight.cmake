@@ -196,6 +196,23 @@ elseif(LINUX)
 	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")		# /usr/share/pixellight/BrowserPlugins
 endif()
 
+# Extensions of files to exclude when e.g. copying a directory
+set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user")
+if(NOT PL_PLUGIN_SCRIPT_LUA)
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")
+endif()
+if(NOT PL_PLUGIN_SCRIPT_V8)
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|js")
+endif()
+if(NOT PL_PLUGIN_SCRIPT_PYTHON)
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|py")
+endif()
+if(NOT PL_PLUGIN_SCRIPT_ANGELSCRIPT)
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|as")
+endif()
+set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS})")
+message(STATUS "Extensions of files to exclude when e.g. copying a directory: ${PL_EXCLUDE_FILE_EXTENSIONS}")
+
 
 ##################################################
 ## Macros
