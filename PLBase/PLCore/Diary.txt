@@ -1,3 +1,10 @@
+>> 10.06.2011
+[CO]
+- "DynParams": Added "GetReturnTypeID()", "GetNumOfParameters()" and "GetParameterTypeID()" in order to make it possible to get some more
+  information about parameters if one has just access to the "DynParams" interface
+
+
+
 >> 09.06.2011
 [CO]
 - Until now, the constructor of RTTI signals was demanding a pointer back to their owner object. When looking at the "pl_slot_<x>"-macros, one could

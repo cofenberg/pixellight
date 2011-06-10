@@ -81,6 +81,36 @@ class DynParams {
 		*/
 		PLCORE_API virtual PLGeneral::String GetSignature() const;
 
+		/**
+		*  @brief
+		*    Get the return type ID
+		*
+		*  @return
+		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()"), "TypeInvalid" if there's no return type
+		*/
+		PLCORE_API virtual int GetReturnTypeID() const;
+
+		/**
+		*  @brief
+		*    Return the number of parameters
+		*
+		*  @return
+		*    Number of parameters
+		*/
+		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
+
+		/**
+		*  @brief
+		*    Get a parameter type ID
+		*
+		*  @param[in] nIndex
+		*    Index of the parameter to return the type ID from
+		*
+		*  @return
+		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
+		*/
+		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
+
 
 };
 
