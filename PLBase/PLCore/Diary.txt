@@ -23,6 +23,24 @@
     int nResult = cFunctor("He ho!");
   As you can see, using a generic function is just like using any other functor, except that the target function has a generic signature. The user
   data pointer enables the user to pass on additional data... this is a quite common approach (although it also has to be used with precaution).
+- "DynEvent": Added "CreateGenericEventHandler()" which creates a generic event handler which is compatible with the dynamic event. Sadly this is only
+  possible for global functions and not for class methods because we don't have any class type information available. But for my use-case it will do the job.
+  Here's an example of a generic function:
+    void GenericFunction(DynParams &cDynParams, void *pUserData)
+    {
+        // Get the value of the first parameter
+        String sMessage = (cDynParams.GetParameterTypeID(0) == TypeString) ? *((String*)cDynParams.GetPointerToParameterValue(0)) : "";
+    }
+  And here's an example of how the new "DynEvent::CreateGenericEventHandler()"-method can be used:
+    Event<String> cMyEvent;
+    DynEventHandler *pDynEventHandler = cMyEvent.CreateGenericEventHandler(&GenericFunction);
+    if (pDynEventHandler) {
+        cMyEvent.Connect(pDynEventHandler);
+        cMyEvent("He ho!");
+        delete pDynEventHandler;
+    }
+  ... this means that if one has just access to the "DynEvent" interface, it's now possible to create an event handler which is informed when the event
+  is emitted.
 
 
 

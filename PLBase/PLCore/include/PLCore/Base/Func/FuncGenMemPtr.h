@@ -137,8 +137,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -246,8 +251,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -353,8 +363,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -458,8 +473,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -561,8 +581,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -662,8 +687,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : 
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -761,8 +791,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : publi
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -858,8 +893,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Fu
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(t0, t1, t2, t3, t4, t5, t6, t7, t8), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -953,8 +993,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<v
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6, T7>(t0, t1, t2, t3, t4, t5, t6, t7), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams(t0, t1, t2, t3, t4, t5, t6, t7);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1046,8 +1091,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6> : public Func<void,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5, T6>(t0, t1, t2, t3, t4, t5, t6), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5, T6> cParams(t0, t1, t2, t3, t4, t5, t6);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1137,8 +1187,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5> : public Func<void, T0,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4, T5>(t0, t1, t2, t3, t4, t5), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4, T5> cParams(t0, t1, t2, t3, t4, t5);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1226,8 +1281,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4> : public Func<void, T0, T1,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3, T4>(t0, t1, t2, t3, t4), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3, T4> cParams(t0, t1, t2, t3, t4);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1313,8 +1373,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3> : public Func<void, T0, T1, T2,
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2, T3>(t0, t1, t2, t3), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2, T3> cParams(t0, t1, t2, t3);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1398,8 +1463,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1, T2>(t0, t1, t2), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1, T2> cParams(t0, t1, t2);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1481,8 +1551,13 @@ class FuncGenMemPtr<CLASS, void, T0, T1> : public Func<void, T0, T1> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0, T1>(t0, t1), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0, T1> cParams(t0, t1);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1562,8 +1637,13 @@ class FuncGenMemPtr<CLASS, void, T0> : public Func<void, T0> {
 		}
 
 		virtual void operator ()(_T0 t0) {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void, T0>(t0), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void, T0> cParams(t0);
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1641,8 +1721,13 @@ class FuncGenMemPtr<CLASS, void> : public Func<void> {
 		}
 
 		virtual void operator ()() {
-			if (m_pMemFunc && m_pObject)
-				((*m_pObject).*m_pMemFunc)(Params<void>(), m_pUserData);
+			if (m_pMemFunc && m_pObject) {
+				// Get typed params
+				Params<void> cParams;
+
+				// Make the generic method call
+				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
+			}
 		}
 
 		virtual DynFunc *Clone() const {

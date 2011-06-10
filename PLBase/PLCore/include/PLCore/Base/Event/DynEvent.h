@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/SimpleList.h>
-#include <PLGeneral/String/String.h>
+#include "PLCore/Base/Func/Signature.h"
 #include "PLCore/PLCore.h"
 
 
@@ -66,6 +66,13 @@ namespace PLCore {
 *    - Implementation of the observer design pattern (this class is the subject/observable, the source)
 */
 class DynEvent {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		typedef Signature<void, DynParams&, void*>::FuncType FUNC;
 
 
 	//[-------------------------------------------------------]
@@ -158,6 +165,25 @@ class DynEvent {
 		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
 		*/
 		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
+
+		/**
+		*  @brief
+		*    Create a generic event handler which is compatible with this dynamic event
+		*
+		*  @param[in] pFunc
+		*    Function to be called by the dynamic event handler
+		*  @param[in] pUserData
+		*    Optional pointer to user data to pass on to the given generic function when the event was emitted, can be a null pointer
+		*
+		*  @return
+		*    The generic event handler which is compatible with this dynamic event, null pointer on error (delete the created instance if you no longer need it)
+		*
+		*  @note
+		*    - This method just creates an instance of the generic event handler and does not automatically connect it with this dynamic event
+		*    - Use typed instead of generic event handlers whenever possible, this method only exists for situations were no type information
+		*      is available at compile time
+		*/
+		PLCORE_API virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const;
 
 		/**
 		*  @brief
