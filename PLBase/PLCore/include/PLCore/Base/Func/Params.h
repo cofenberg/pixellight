@@ -231,6 +231,11 @@ class Params : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 16;
@@ -256,6 +261,29 @@ class Params : public DynParams {
 				case 14:	return Type<T14>::TypeID;
 				case 15:	return Type<T15>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				case 14:	return (void*)&Param14;
+				case 15:	return (void*)&Param15;
+				default:	return nullptr;
 			}
 		}
 
@@ -445,6 +473,29 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				case 14:	return (void*)&Param14;
+				case 15:	return (void*)&Param15;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -607,6 +658,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 15;
@@ -631,6 +687,28 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 				case 13:	return Type<T13>::TypeID;
 				case 14:	return Type<T14>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				case 14:	return (void*)&Param14;
+				default:	return nullptr;
 			}
 		}
 };
@@ -811,6 +889,28 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				case 14:	return (void*)&Param14;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -966,6 +1066,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 14;
@@ -989,6 +1094,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 				case 12:	return Type<T12>::TypeID;
 				case 13:	return Type<T13>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				default:	return nullptr;
 			}
 		}
 };
@@ -1160,6 +1286,27 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 				case 13:	return Type<T13>::TypeID;
 				default:	return TypeInvalid;
 			}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				case 13:	return (void*)&Param13;
+				default:	return nullptr;
+			}
+		}
 		}
 };
 
@@ -1309,6 +1456,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 13;
@@ -1331,6 +1483,26 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 				case 11:	return Type<T11>::TypeID;
 				case 12:	return Type<T12>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				default:	return nullptr;
 			}
 		}
 };
@@ -1495,6 +1667,26 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				case 12:	return (void*)&Param12;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -1636,6 +1828,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 12;
@@ -1657,6 +1854,25 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 				case 10:	return Type<T10>::TypeID;
 				case 11:	return Type<T11>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				default:	return nullptr;
 			}
 		}
 };
@@ -1813,6 +2029,25 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				case 11:	return (void*)&Param11;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -1947,6 +2182,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 11;
@@ -1967,6 +2207,24 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 				case 9:		return Type<T9> ::TypeID;
 				case 10:	return Type<T10>::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				default:	return nullptr;
 			}
 		}
 };
@@ -2115,6 +2373,24 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				case 10:	return (void*)&Param10;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -2242,6 +2518,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 10;
@@ -2261,6 +2542,23 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 				case 8:		return Type<T8> ::TypeID;
 				case 9:		return Type<T9> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				default:	return nullptr;
 			}
 		}
 };
@@ -2401,6 +2699,23 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				case 9:		return (void*)&Param9;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -2521,6 +2836,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 9;
@@ -2539,6 +2859,22 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 				case 7:		return Type<T7> ::TypeID;
 				case 8:		return Type<T8> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				default:	return nullptr;
 			}
 		}
 };
@@ -2671,6 +3007,22 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				case 8:		return (void*)&Param8;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -2784,6 +3136,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 8;
@@ -2801,6 +3158,21 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 				case 6:		return Type<T6> ::TypeID;
 				case 7:		return Type<T7> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				default:	return nullptr;
 			}
 		}
 };
@@ -2925,6 +3297,21 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				case 7:		return (void*)&Param7;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -3031,6 +3418,11 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 7;
@@ -3047,6 +3439,20 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 				case 5:		return Type<T5> ::TypeID;
 				case 6:		return Type<T6> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				default:	return nullptr;
 			}
 		}
 };
@@ -3163,6 +3569,20 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				case 6:		return (void*)&Param6;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -3262,6 +3682,11 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 6;
@@ -3277,6 +3702,19 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 				case 4:		return Type<T4> ::TypeID;
 				case 5:		return Type<T5> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				default:	return nullptr;
 			}
 		}
 };
@@ -3385,6 +3823,19 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				case 5:		return (void*)&Param5;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -3477,6 +3928,11 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 5;
@@ -3491,6 +3947,18 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 				case 3:		return Type<T3> ::TypeID;
 				case 4:		return Type<T4> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				default:	return nullptr;
 			}
 		}
 };
@@ -3591,6 +4059,18 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				case 4:		return (void*)&Param4;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -3676,6 +4156,11 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 4;
@@ -3689,6 +4174,17 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 				case 2:		return Type<T2> ::TypeID;
 				case 3:		return Type<T3> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				default:	return nullptr;
 			}
 		}
 };
@@ -3781,6 +4277,17 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				case 3:		return (void*)&Param3;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -3859,6 +4366,11 @@ class Params<R, T0, T1, T2> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 3;
@@ -3871,6 +4383,16 @@ class Params<R, T0, T1, T2> : public DynParams {
 				case 1:		return Type<T1> ::TypeID;
 				case 2:		return Type<T2> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				default:	return nullptr;
 			}
 		}
 };
@@ -3955,6 +4477,16 @@ class Params<void, T0, T1, T2> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				case 2:		return (void*)&Param2;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -4026,6 +4558,11 @@ class Params<R, T0, T1> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 2;
@@ -4037,6 +4574,15 @@ class Params<R, T0, T1> : public DynParams {
 				case 0:		return Type<T0> ::TypeID;
 				case 1:		return Type<T1> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				default:	return nullptr;
 			}
 		}
 };
@@ -4113,6 +4659,15 @@ class Params<void, T0, T1> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				case 1:		return (void*)&Param1;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -4177,6 +4732,11 @@ class Params<R, T0> : public DynParams {
 			return Type<R>::TypeID;
 		}
 
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
+		}
+
 		virtual PLGeneral::uint32 GetNumOfParameters() const
 		{
 			return 1;
@@ -4187,6 +4747,14 @@ class Params<R, T0> : public DynParams {
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
 				default:	return TypeInvalid;
+			}
+		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				default:	return nullptr;
 			}
 		}
 };
@@ -4255,6 +4823,14 @@ class Params<void, T0> : public DynParams {
 				default:	return TypeInvalid;
 			}
 		}
+
+		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		{
+			switch (nIndex) {
+				case 0:		return (void*)&Param0;
+				default:	return nullptr;
+			}
+		}
 };
 
 /**
@@ -4308,6 +4884,11 @@ class Params<R> : public DynParams {
 		virtual int GetReturnTypeID() const
 		{
 			return Type<R>::TypeID;
+		}
+
+		virtual void *GetPointerToReturnValue()
+		{
+			return (void*)&Return;
 		}
 };
 

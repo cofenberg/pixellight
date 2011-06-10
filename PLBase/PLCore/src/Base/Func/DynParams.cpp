@@ -79,6 +79,16 @@ int DynParams::GetReturnTypeID() const
 
 /**
 *  @brief
+*    Get a pointer to the return value
+*/
+void *DynParams::GetPointerToReturnValue()
+{
+	// No function
+	return nullptr;
+}
+
+/**
+*  @brief
 *    Return the number of parameters
 */
 uint32 DynParams::GetNumOfParameters() const
@@ -95,6 +105,16 @@ int DynParams::GetParameterTypeID(uint32 nIndex) const
 {
 	// No function
 	return TypeInvalid;
+}
+
+/**
+*  @brief
+*    Get a pointer to a parameter value
+*/
+void *DynParams::GetPointerToParameterValue(uint32 nIndex)
+{
+	// No function
+	return nullptr;
 }
 
 

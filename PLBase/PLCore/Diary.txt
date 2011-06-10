@@ -5,6 +5,24 @@
 - Added "FuncGenFunPtr" and "FuncGenMemPtr" using functions/methods with the signature "Signature<void, DynParams&, void*>". There are situations were it's not
   possible to, e.g. create a typed event handler because the types are unknown to compile time. Those two new functor implementations are using a generic
   function/method and pass the parameters by using "DynParams".
+- "DynParams": Added "GetPointerToReturnValue()" and "GetPointerToParameterValue()" to make it possible to set a return value or to get a parameter if one has
+  just access to the "DynParams" interface. It's of course no good idea to use generic void* pointers to access the data and whenever possible typed access should
+  be used instead... but there are situations were it's really required to be generic because the types are not known to compile time.
+  Here's an example of a generic function:
+    void GenericFunction(DynParams &cDynParams, void *pUserData)
+    {
+        // Get the value of the first parameter
+        String sMessage = (cDynParams.GetParameterTypeID(0) == TypeString) ? *((String*)cDynParams.GetPointerToParameterValue(0)) : "";
+
+        // Set return value
+        if (cDynParams.GetReturnTypeID() == TypeInt32)
+            *((int*)cDynParams.GetPointerToReturnValue()) = 42;
+    }
+  This function can then be used in the following way:
+    FuncGenFunPtr<int, String> cFunctor(&GenericFunction);
+    int nResult = cFunctor("He ho!");
+  As you can see, using a generic function is just like using any other functor, except that the target function has a generic signature. The user
+  data pointer enables the user to pass on additional data... this is a quite common approach (although it also has to be used with precaution).
 
 
 

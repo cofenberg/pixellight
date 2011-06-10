@@ -70,7 +70,7 @@ class FuncGenMemPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -130,7 +130,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -180,7 +180,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -239,7 +239,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -288,7 +288,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -346,7 +346,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -394,7 +394,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -451,7 +451,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -498,7 +498,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> 
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -554,7 +554,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -600,7 +600,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : pub
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -655,7 +655,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : 
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -700,7 +700,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public F
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -754,7 +754,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : publi
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -798,7 +798,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -851,7 +851,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Fu
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -894,7 +894,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -946,7 +946,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<v
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -988,7 +988,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1039,7 +1039,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6> : public Func<void,
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1080,7 +1080,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1130,7 +1130,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5> : public Func<void, T0,
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1170,7 +1170,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1219,7 +1219,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4> : public Func<void, T0, T1,
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1258,7 +1258,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1306,7 +1306,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3> : public Func<void, T0, T1, T2,
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1344,7 +1344,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1391,7 +1391,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1428,7 +1428,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1> : public Func<R, T0, T1> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1474,7 +1474,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1> : public Func<void, T0, T1> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1510,7 +1510,7 @@ class FuncGenMemPtr<CLASS, R, T0> : public Func<R, T0> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1555,7 +1555,7 @@ class FuncGenMemPtr<CLASS, void, T0> : public Func<void, T0> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1590,7 +1590,7 @@ class FuncGenMemPtr<CLASS, R> : public Func<R> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {
@@ -1634,7 +1634,7 @@ class FuncGenMemPtr<CLASS, void> : public Func<void> {
 		typedef typename MethodSignature<CLASS, void, DynParams&, void*>::MemFuncType MEMFUNC;
 
 	public:
-		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
+		FuncGenMemPtr(const MEMFUNC &pMemFunc, CLASS *pObject, void *pUserData = nullptr) : m_pMemFunc(pMemFunc), m_pObject(pObject), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenMemPtr() {

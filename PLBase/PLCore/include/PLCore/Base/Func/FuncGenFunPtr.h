@@ -71,7 +71,7 @@ class FuncGenFunPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -131,7 +131,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -181,7 +181,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -240,7 +240,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -289,7 +289,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -347,7 +347,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -395,7 +395,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -452,7 +452,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -499,7 +499,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -555,7 +555,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -601,7 +601,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -656,7 +656,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -701,7 +701,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -755,7 +755,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -799,7 +799,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -852,7 +852,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -895,7 +895,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -947,7 +947,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -989,7 +989,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1040,7 +1040,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1081,7 +1081,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1131,7 +1131,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1171,7 +1171,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1220,7 +1220,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1259,7 +1259,7 @@ class FuncGenFunPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1307,7 +1307,7 @@ class FuncGenFunPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1345,7 +1345,7 @@ class FuncGenFunPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1392,7 +1392,7 @@ class FuncGenFunPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1429,7 +1429,7 @@ class FuncGenFunPtr<R, T0, T1> : public Func<R, T0, T1> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1475,7 +1475,7 @@ class FuncGenFunPtr<void, T0, T1> : public Func<void, T0, T1> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1511,7 +1511,7 @@ class FuncGenFunPtr<R, T0> : public Func<R, T0> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1556,7 +1556,7 @@ class FuncGenFunPtr<void, T0> : public Func<void, T0> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1591,7 +1591,7 @@ class FuncGenFunPtr<R> : public Func<R> {
 		typedef typename Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
@@ -1635,7 +1635,7 @@ class FuncGenFunPtr<void> : public Func<void> {
 		typedef Signature<void, DynParams&, void*>::FuncType FUNC;
 
 	public:
-		FuncGenFunPtr(const FUNC &pFunc, void *pUserData) : m_pFunc(pFunc), m_pUserData(pUserData) {
+		FuncGenFunPtr(const FUNC &pFunc, void *pUserData = nullptr) : m_pFunc(pFunc), m_pUserData(pUserData) {
 		}
 
 		virtual ~FuncGenFunPtr() {
