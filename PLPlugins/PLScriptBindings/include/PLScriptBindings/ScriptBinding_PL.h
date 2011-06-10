@@ -66,7 +66,7 @@ class ScriptBinding_PL : public PLScript::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(GetApplication,	PLCore::ConsoleApplication*,	"Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)",	"")
+		pl_method_0(GetApplication,	pl_ret_type(PLCore::ConsoleApplication*),	"Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)",	"")
 	pl_class_end
 
 

@@ -69,8 +69,8 @@ class EffectLoaderFX : public PLRenderer::EffectLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	PLRenderer::Effect&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	PLRenderer::Effect&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLRenderer::Effect&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLRenderer::Effect&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

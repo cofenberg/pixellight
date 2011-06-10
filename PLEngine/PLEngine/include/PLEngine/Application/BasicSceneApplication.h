@@ -72,11 +72,11 @@ class BasicSceneApplication : public SceneApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(GetScene,				PLScene::SceneContainer*,								"Returns the scene container (the 'concrete scene'), can be a null pointer",										"")
-		pl_method_1(SetScene,				void,						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",	"")
-		pl_method_0(GetCamera,				PLScene::SNCamera*,										"Get scene camera, can be a null pointer",																			"")
-		pl_method_0(GetSceneRendererTool,	SceneRendererTool*,										"Returns the scene renderer tool, never a null pointer",															"")
-		pl_method_1(SetCamera,				void,						PLScene::SNCamera*,			"Sets the scene camera, new scene camera as first parameter (can be a null pointer)",								"")
+		pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),								"Returns the scene container (the 'concrete scene'), can be a null pointer",										"")
+		pl_method_1(SetScene,				pl_ret_type(void),						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",	"")
+		pl_method_0(GetCamera,				pl_ret_type(PLScene::SNCamera*),									"Get scene camera, can be a null pointer",																			"")
+		pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool*),									"Returns the scene renderer tool, never a null pointer",															"")
+		pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera, new scene camera as first parameter (can be a null pointer)",								"")
 	pl_class_end
 
 

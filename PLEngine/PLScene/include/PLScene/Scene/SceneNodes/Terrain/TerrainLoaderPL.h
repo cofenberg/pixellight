@@ -58,8 +58,8 @@ class TerrainLoaderPL : public TerrainLoader {
 			pl_property("Save",		"0")
 		pl_properties_end
 		// Methods
-		pl_method_2(Load,	bool,	SNTerrain&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	SNTerrain&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	SNTerrain&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNTerrain&,	PLGeneral::File&,	"Save method",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

@@ -71,8 +71,8 @@ class TextureAniLoaderPL : public TextureAniLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	TextureAni&,		PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	const TextureAni&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	TextureAni&,		PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const TextureAni&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

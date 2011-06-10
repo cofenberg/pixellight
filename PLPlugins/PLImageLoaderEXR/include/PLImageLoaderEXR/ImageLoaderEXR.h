@@ -65,8 +65,8 @@ class ImageLoaderEXR : public PLGraphics::ImageLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	PLGraphics::Image&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	const PLGraphics::Image&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLGraphics::Image&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const PLGraphics::Image&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

@@ -60,8 +60,8 @@ class PostProcessLoaderPL : public PostProcessLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	PostProcessManager&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	PostProcessManager&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PostProcessManager&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PostProcessManager&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

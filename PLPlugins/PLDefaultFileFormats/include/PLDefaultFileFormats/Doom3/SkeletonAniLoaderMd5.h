@@ -72,8 +72,8 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	PLMesh::Skeleton&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	PLMesh::Skeleton&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

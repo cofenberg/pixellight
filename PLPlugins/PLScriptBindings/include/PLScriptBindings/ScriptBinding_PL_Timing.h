@@ -58,8 +58,8 @@ class ScriptBinding_PL_Timing : public PLScript::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(GetTimeDifference,	float,	"Returns the past time since last frame (seconds)",	"")
-		pl_method_0(GetFramesPerSecond,	float,	"Returns the current frames per second (FPS)",		"")
+		pl_method_0(GetTimeDifference,	pl_ret_type(float),	"Returns the past time since last frame (seconds)",	"")
+		pl_method_0(GetFramesPerSecond,	pl_ret_type(float),	"Returns the current frames per second (FPS)",		"")
 	pl_class_end
 
 

@@ -60,8 +60,8 @@ class MaterialLoaderPL : public MaterialLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	Material&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	const Material&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Material&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Material&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

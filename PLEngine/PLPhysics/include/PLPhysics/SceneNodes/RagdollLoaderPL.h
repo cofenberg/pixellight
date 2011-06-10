@@ -60,9 +60,9 @@ class RagdollLoaderPL : public RagdollLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		bool,	SNRagdoll&,	PLGeneral::File&,			"Load method. By default, attach to world is allowed.",					"")
-		pl_method_3(LoadParams,	bool,	SNRagdoll&,	PLGeneral::File&,	bool,	"Load method. Parameters: Attach to world allowed state as 'bool'.",	"")
-		pl_method_2(Save,		bool,	SNRagdoll&,	PLGeneral::File&,			"Save method",															"")
+		pl_method_2(Load,		pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,			"Load method. By default, attach to world is allowed.",					"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,	bool,	"Load method. Parameters: Attach to world allowed state as 'bool'.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,			"Save method",															"")
 	pl_class_end
 
 

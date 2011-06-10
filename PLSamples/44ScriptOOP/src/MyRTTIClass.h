@@ -62,10 +62,10 @@ class MyRTTIClass : public PLCore::Object {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(Return42,			int,					"Returns 42",							"")
-		pl_method_1(IgnoreTheParameter,	void,			float,	"Ignores the provided parameter",		"")
-		pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
-		pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
+		pl_method_0(Return42,			pl_ret_type(int),					"Returns 42",							"")
+		pl_method_1(IgnoreTheParameter,	pl_ret_type(void),			float,	"Ignores the provided parameter",		"")
+		pl_method_0(SaySomethingWise,	pl_ret_type(void),					"Says something wise",					"")
+		pl_method_0(GetSelf,			pl_ret_type(MyRTTIClass*),			"Returns a pointer to this instance",	"")
 		// Signals
 		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed",	"")
 		// Slots

@@ -70,7 +70,7 @@ class SceneRendererTool : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SceneRendererTool, "PLEngine", PLCore::Object, "Class offering scene renderer tool functionality")
 		// Methods
-		pl_method_3(SetPassAttribute,	bool,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",	"")
+		pl_method_3(SetPassAttribute,	pl_ret_type(bool),	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",	"")
 	pl_class_end
 
 

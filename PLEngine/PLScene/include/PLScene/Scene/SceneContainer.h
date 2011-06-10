@@ -113,8 +113,8 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_1(GetByName,	SceneNode*,	PLGeneral::String,											"Returns a scene node by using the given name, can be a null pointer",																																																																				"")
-		pl_method_3(Create,		SceneNode*,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
+		pl_method_1(GetByName,	pl_ret_type(SceneNode*),	PLGeneral::String,											"Returns a scene node by using the given name, can be a null pointer",																																																																				"")
+		pl_method_3(Create,		pl_ret_type(SceneNode*),	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
 		// Signals
 		pl_signal_1(SignalLoadProgress,	float,	"Scene load progress signal. Current load progress as parameter - if not within 0-1 loading is done.",	"")
 	pl_class_end

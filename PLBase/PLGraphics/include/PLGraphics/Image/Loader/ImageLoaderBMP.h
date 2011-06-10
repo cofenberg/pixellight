@@ -64,8 +64,8 @@ class ImageLoaderBMP : public ImageLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	bool,	Image&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	bool,	const Image&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Image&,			PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Image&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

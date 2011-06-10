@@ -76,9 +76,9 @@ class SceneLoaderPL : public SceneLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		bool,	SceneContainer&,	PLGeneral::File&,			"Load method",												"")
-		pl_method_2(Save,		bool,	SceneContainer&,	PLGeneral::File&,			"Save method",												"")
-		pl_method_3(SaveParams,	bool,	SceneContainer&,	PLGeneral::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,			"Load method",												"")
+		pl_method_2(Save,		pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,			"Save method",												"")
+		pl_method_3(SaveParams,	pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
 	pl_class_end
 
 

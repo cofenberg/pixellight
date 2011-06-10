@@ -68,9 +68,9 @@ class ConfigLoaderPL : public ConfigLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		bool,	Config&,		PLGeneral::File&,								"Load method",																						"")
-		pl_method_2(Save,		bool,	const Config&,	PLGeneral::File&,								"Save method. Saves all configuration groups and includes default values, too.",					"")
-		pl_method_4(SaveParams,	bool,	const Config&,	PLGeneral::File&,	PLGeneral::String,	bool,	"Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	Config&,		PLGeneral::File&,								"Load method",																						"")
+		pl_method_2(Save,		pl_ret_type(bool),	const Config&,	PLGeneral::File&,								"Save method. Saves all configuration groups and includes default values, too.",					"")
+		pl_method_4(SaveParams,	pl_ret_type(bool),	const Config&,	PLGeneral::File&,	PLGeneral::String,	bool,	"Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.",	"")
 	pl_class_end
 
 

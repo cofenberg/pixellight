@@ -58,7 +58,7 @@ class ScriptBinding_PL_System_Console : public PLScript::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
 		// Methods
-		pl_method_1(Print,	void,	PLGeneral::String,	"Prints the given string into the system console",	"")
+		pl_method_1(Print,	pl_ret_type(void),	PLGeneral::String,	"Prints the given string into the system console",	"")
 	pl_class_end
 
 
