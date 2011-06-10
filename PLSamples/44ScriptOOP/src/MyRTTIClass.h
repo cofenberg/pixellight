@@ -41,13 +41,6 @@
 class MyRTTIClass : public PLCore::Object {
 
 
-		// Properties
-		// Attributes
-		// Constructors
-		// Methods
-		// Signals
-		// Slots
-		
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
