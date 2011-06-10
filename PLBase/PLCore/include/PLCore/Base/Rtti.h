@@ -399,8 +399,8 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 		\
 		template <typename BASE> class NAME##_ModAttr { \
 			public: \
-				typedef PLCore::StorageModifyAttr StorageType; \
-				typedef typename BASE::NAME##_Storage::BaseStorageType BaseStorageType; \
+				typedef PLCore::StorageModifyAttr						StorageType; \
+				typedef typename BASE::NAME##_Storage::BaseStorageType	BaseStorageType; \
 				static inline PLCore::Type<TYPE>::_Type Get(PLCore::Object *pObject) { \
 					return static_cast<BASE*>(pObject)->NAME.Get(); \
 				} \
@@ -454,9 +454,9 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *    Attribute storage type (DirectValue/GetSet/ModifyAttr)
 */
 #define __pl_attr_attr(NAME, TYPE, DEFAULT, ACCESS, STORAGE) \
-		typedef PLCore::SpecializeIfEqual<PLCore::Storage##STORAGE, PLCore::StorageGetSet,     NAME##_GetSet,  _Self>::Type NAME##_ClassGetSet; \
-		typedef PLCore::SpecializeIfEqual<PLCore::Storage##STORAGE, PLCore::StorageModifyAttr, NAME##_ModAttr, _Base>::Type NAME##_ClassModAttr; \
-		typedef PLCore::StorageChooser<PLCore::Storage##STORAGE, NAME##_ClassGetSet, NAME##_ClassModAttr>::Storage NAME##_Storage; \
+		typedef PLCore::SpecializeIfEqual<PLCore::Storage##STORAGE, PLCore::StorageGetSet,     NAME##_GetSet,  _Self>::Type	NAME##_ClassGetSet; \
+		typedef PLCore::SpecializeIfEqual<PLCore::Storage##STORAGE, PLCore::StorageModifyAttr, NAME##_ModAttr, _Base>::Type	NAME##_ClassModAttr; \
+		typedef PLCore::StorageChooser<PLCore::Storage##STORAGE, NAME##_ClassGetSet, NAME##_ClassModAttr>::Storage			NAME##_Storage; \
 		\
 		class NAME##_Attr : public PLCore::Attribute<TYPE, PLCore::Access##ACCESS, NAME##_Storage, NAME##_Desc> { \
 			public: \
@@ -499,10 +499,10 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_method_desc(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, DESCRIPTION, ANNOTATION) \
 		class NAME##_Desc : public PLCore::FuncDesc { \
 			public: \
-				typedef _Self																			ClassType; \
-				typedef PLCore::Functor<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>		FuncType; \
-				typedef PLCore::Signature<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	SigType; \
-				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature MethType; \
+				typedef _Self																																ClassType; \
+				typedef PLCore::Functor<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>															FuncType; \
+				typedef PLCore::Signature<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>														SigType; \
+				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<RET,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature	MethType; \
 			public: \
 				NAME##_Desc() : PLCore::FuncDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
 					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
@@ -618,10 +618,10 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define __pl_slot_desc(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, DESCRIPTION, ANNOTATION) \
 		class NAME##_Desc : public PLCore::EventHandlerDesc { \
 			public: \
-				typedef _Self																			ClassType; \
-				typedef PLCore::EventHandler<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	EventHandlerType; \
-				typedef PLCore::Signature<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	SigType; \
-				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature MethType; \
+				typedef _Self																																ClassType; \
+				typedef PLCore::EventHandler<T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>															EventHandlerType; \
+				typedef PLCore::Signature<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>														SigType; \
+				typedef PLCore::ClassTypelist< _Self, PLCore::Typelist<void,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15> >::TypeMethodSignature	MethType; \
 			public: \
 				NAME##_Desc() : PLCore::EventHandlerDesc(SigType::GetSignatureID(), #NAME, #DESCRIPTION, #ANNOTATION) { \
 					bool bRegister = static_cast<bool>(_Self::_RttiExport); \
@@ -678,7 +678,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 			public: \
 				typedef _Self																					ClassType; \
 				typedef PLCore::Params<Object*,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>			ParamType; \
-				typedef const PLCore::Params<Object*,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	ConstParamType; \
+				typedef const PLCore::Params<Object*,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>		ConstParamType; \
 				typedef PLCore::FuncConstructor<_Self,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>	ConstType; \
 				typedef PLCore::Signature<Object*,T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15>		SigType; \
 			public: \
