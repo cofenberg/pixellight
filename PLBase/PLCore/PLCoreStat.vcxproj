@@ -235,6 +235,8 @@
     <ClInclude Include="include\PLCore\Base\Func\FuncConstructor.h" />
     <ClInclude Include="include\PLCore\Base\Func\FuncDesc.h" />
     <ClInclude Include="include\PLCore\Base\Func\FuncFunPtr.h" />
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenFunPtr.h" />
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenMemPtr.h" />
     <ClInclude Include="include\PLCore\Base\Func\FuncMemPtr.h" />
     <ClInclude Include="include\PLCore\Base\Func\Functor.h" />
     <ClInclude Include="include\PLCore\Base\Func\Method.h" />

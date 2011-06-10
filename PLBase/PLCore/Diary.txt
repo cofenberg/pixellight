@@ -2,6 +2,9 @@
 [CO]
 - "DynParams": Added "GetReturnTypeID()", "GetNumOfParameters()" and "GetParameterTypeID()" in order to make it possible to get some more
   information about parameters if one has just access to the "DynParams" interface
+- Added "FuncGenFunPtr" and "FuncGenMemPtr" using functions/methods with the signature "Signature<void, DynParams&, void*>". There are situations were it's not
+  possible to, e.g. create a typed event handler because the types are unknown to compile time. Those two new functor implementations are using a generic
+  function/method and pass the parameters by using "DynParams".
 
 
 

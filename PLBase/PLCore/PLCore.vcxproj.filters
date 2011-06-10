@@ -390,6 +390,12 @@
     <ClInclude Include="include\PLCore\Base\Func\ConstructorDesc.h">
       <Filter>Base\Func</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenFunPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenMemPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl">
