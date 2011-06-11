@@ -43,20 +43,11 @@ namespace PLGeneral {
 	class Mutex;
 }
 namespace PLInput {
-	class InputManager;
 	class Provider;
 	class Device;
 	class Keyboard;
 	class Mouse;
 	class Control;
-}
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::InputManager>;
 }
 
 
@@ -309,6 +300,14 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::InputManager>;
+}
 
 
 #endif // __PLINPUT_INPUTMANAGER_H__

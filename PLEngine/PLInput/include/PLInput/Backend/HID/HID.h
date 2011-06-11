@@ -37,17 +37,8 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLInput {
-	class HID;
 	class HIDImpl;
 	class HIDDevice;
-}
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::HID>;
 }
 
 
@@ -131,6 +122,14 @@ class HID : public PLGeneral::Singleton<HID> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::HID>;
+}
 
 
 #endif // __PLINPUT_HID_H__

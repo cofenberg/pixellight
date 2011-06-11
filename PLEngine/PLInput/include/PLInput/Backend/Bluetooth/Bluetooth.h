@@ -37,17 +37,8 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLInput {
-	class Bluetooth;
 	class BTImpl;
 	class BTDevice;
-}
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::Bluetooth>;
 }
 
 
@@ -131,6 +122,14 @@ class Bluetooth : public PLGeneral::Singleton<Bluetooth> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+namespace PLGeneral {
+	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::Bluetooth>;
+}
 
 
 #endif // __PLINPUT_BLUETOOTH_H__

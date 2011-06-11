@@ -36,7 +36,6 @@
 #include "PLGui/Gui/ClipBoard.h"
 #include "PLGui/PLGuiDefinitions.h"
 
-
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
@@ -94,7 +93,6 @@ class Gui {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Widget;
-	friend class Window;
 	friend class Graphics;
 	friend class Image;
 	friend class Font;
