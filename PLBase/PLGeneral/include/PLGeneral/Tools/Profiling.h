@@ -39,13 +39,6 @@ namespace PLGeneral {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-class Profiling;
-PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<Profiling>;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -433,6 +426,12 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 
 
 };
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<Profiling>;
 
 
 //[-------------------------------------------------------]

@@ -50,12 +50,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::LoadableManager>;
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -490,6 +484,12 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::LoadableManager>;
 
 
 #endif // __PLCORE_LOADABLEMANAGER_H__

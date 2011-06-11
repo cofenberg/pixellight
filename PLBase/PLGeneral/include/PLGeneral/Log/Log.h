@@ -60,15 +60,8 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLGeneral {
-	class Log;
 	class LogFormater;
 }
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLGENERAL_TEMPLATE template class PLGENERAL_API PLGeneral::Singleton<PLGeneral::Log>;
 
 
 //[-------------------------------------------------------]
@@ -398,6 +391,13 @@ class Log : public Singleton<Log> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGeneral
+
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLGENERAL_TEMPLATE template class PLGENERAL_API PLGeneral::Singleton<PLGeneral::Log>;
 
 
 #endif // __PLGENERAL_LOG_H__

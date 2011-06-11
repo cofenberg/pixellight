@@ -45,15 +45,8 @@ namespace PLCore {
 	class Class;
 	class Module;
 	class ClassImpl;
-	class ClassManager;
 	template <typename T> class ModuleID;
 }
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ClassManager>;
 
 
 //[-------------------------------------------------------]
@@ -404,6 +397,12 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ClassManager>;
 
 
 #endif // __PLCORE_CLASSMANAGER_H__

@@ -49,12 +49,6 @@ namespace PLScript {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLSCRIPT_TEMPLATE template class PLSCRIPT_API PLGeneral::Singleton<PLScript::ScriptManager>;
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScript {
@@ -238,6 +232,12 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScript
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLSCRIPT_TEMPLATE template class PLSCRIPT_API PLGeneral::Singleton<PLScript::ScriptManager>;
 
 
 #endif // __PLSCRIPT_SCRIPTMANAGER_H__

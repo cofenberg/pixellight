@@ -34,15 +34,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-namespace PLMath {
-	class GraphPathManager;
-}
-PLMATH_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphPathManager>;
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLMath {
@@ -99,6 +90,12 @@ class GraphPathManager : public PLCore::ResourceManager<GraphPath>,
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLMath
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLMATH_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphPathManager>;
 
 
 #endif // __PLMATH_GRAPH_GRAPHPATHMANAGER_H__

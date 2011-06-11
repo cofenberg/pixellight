@@ -52,12 +52,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::Localization>;
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -276,6 +270,12 @@ class Localization : public PLGeneral::Singleton<Localization> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::Localization>;
 
 
 #endif // __PLCORE_LOCALIZATION_H__

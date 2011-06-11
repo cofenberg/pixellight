@@ -38,13 +38,6 @@ namespace PLGeneral {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-class Timing;
-PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<Timing>;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -493,6 +486,12 @@ class Timing : public Singleton<Timing> {
 
 
 };
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<Timing>;
 
 
 //[-------------------------------------------------------]

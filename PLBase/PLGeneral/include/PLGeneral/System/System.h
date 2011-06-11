@@ -43,15 +43,8 @@ namespace PLGeneral {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Thread;
-class System;
 class Console;
 class SystemImpl;
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<System>;
 
 
 //[-------------------------------------------------------]
@@ -483,6 +476,11 @@ class System : public Singleton<System> {
 
 
 };
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLGENERAL_TEMPLATE template class PLGENERAL_API Singleton<System>;
 
 
 //[-------------------------------------------------------]
