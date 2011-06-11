@@ -981,7 +981,9 @@ void SQCull::IssueOcclusionQuery(const SceneHierarchyNode &cHierarchyNode, bool 
 				m_bSetIdentityWorldMatrix = false;
 			}
 			const AABoundingBox &cAABB = cHierarchyNode.GetAABoundingBox();
-			cRenderer.GetDrawHelpers().DrawBox(Color4::White, cAABB.vMin, cAABB.vMax, false);
+			// [TODO] Update this code (currently unused)
+			// const Matrix4x4 mObjectSpaceToClipSpace = ...;
+			//cRenderer.GetDrawHelpers().DrawBox(Color4::White, cAABB.vMin, cAABB.vMax, mObjectSpaceToClipSpace);
 
 			// End occlusion test
 			pOcclusionQuery->EndOcclusionQuery();

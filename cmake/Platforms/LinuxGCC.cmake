@@ -76,6 +76,7 @@ endif()
 
 # Compiler flags
 set(LINUX_COMPILE_FLAGS
+	-std=c++0x												# Enable experimental support for the upcoming ISO C++ standard C++0x (see http://gcc.gnu.org/gcc-4.6/cxx0x_status.html)
 	-pthread												# Use pthreads
 	-ffor-scope												# If -ffor-scope is specified, the scope of variables declared in a for-init-statement is limited to the `for' loop itself, as specified by the C++ standard
 	-fno-rtti												# No C++ RTTI

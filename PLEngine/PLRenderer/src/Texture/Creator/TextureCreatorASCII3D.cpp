@@ -133,7 +133,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 		// Return the created texture
 		return pTexture;
 	} else {
-		PL_LOG(Error, "Can't open: " + ASCIIFilename)
+		PL_LOG(Error, "Can't open: " + ASCIIFilename.GetString())
 	}
 
 	// Error!
