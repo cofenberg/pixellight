@@ -35,6 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
+	class DynParams;
 	class DynEventHandler;
 }
 
@@ -130,6 +131,22 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static event callback functions               ]
+	//[-------------------------------------------------------]
+	private:
+		/*
+		*  @brief
+		*    Event callback function
+		*
+		*  @param[in] cDynParams
+		*    Dynamic parameters
+		*  @param[in] pUserData
+		*    Pointer to optional user data, can be a null pointer
+		*/
+		static void EventCallback(PLCore::DynParams &cDynParams, void *pUserData);
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -145,6 +162,7 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 		*
 		*  @note
 		*    - Performs also a signal/slot signature match
+		*    - m_pDynEvent must be valid
 		*/
 		PLCore::DynEventHandler *GetSlotFromLuaStack(lua_State *pLuaState);
 

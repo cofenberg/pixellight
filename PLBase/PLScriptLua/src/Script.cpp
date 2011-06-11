@@ -130,7 +130,7 @@ void Script::LuaStackDump()
 					break;
 
 				case LUA_TFUNCTION:
-					sValue = "Function";
+					sValue = lua_iscfunction(m_pLuaState, i) ? "C-function" : "Lua-function";
 					break;
 
 				case LUA_TUSERDATA:
@@ -997,6 +997,9 @@ void Script::Clear()
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
+		//  Destroy all registered event user data (a kind of "disconnect all slots at once")
+		DestroyEventUserData();
+
 		// Reset the source code
 		m_sSourceCode = "";
 
@@ -1097,6 +1100,52 @@ bool Script::CreateNestedTable(lua_State *pLuaState, const String &sTableName)
 
 	// Done
 	return true;
+}
+
+/**
+*  @brief
+*    Returns event user data key
+*/
+String Script::GetEventUserDataKey(DynEvent *pDynEvent, const void *pLuaPointer) const
+{
+	return String(pDynEvent) + String(const_cast<void*>(pLuaPointer));
+}
+
+/**
+*  @brief
+*    Returns event user data
+*/
+Script::EventUserData *Script::GetEventUserData(DynEvent *pDynEvent, const void *pLuaPointer) const
+{
+	return m_mapEventUserData.Get(GetEventUserDataKey(pDynEvent, pLuaPointer));
+}
+
+/**
+*  @brief
+*    Adds event user data
+*/
+void Script::AddEventUserData(DynEvent *pDynEvent, const void *pLuaPointer, EventUserData *pEventUserData)
+{
+	m_mapEventUserData.Add(GetEventUserDataKey(pDynEvent, pLuaPointer), pEventUserData);
+}
+
+/**
+*  @brief
+*    Destroys all registered event user data (a kind of "disconnect all slots at once")
+*/
+void Script::DestroyEventUserData()
+{
+	// Iterate through the map content
+	Iterator<String> cKeyIterator = m_mapEventUserData.GetKeyIterator();
+	while (cKeyIterator.HasNext()) {
+		// Get the event user data instance
+		EventUserData *pEventUserData = m_mapEventUserData.Get(cKeyIterator.Next());
+		
+		// Destroy the event user data
+		delete pEventUserData->pDynEventHandler;
+		luaL_unref(m_pLuaState, LUA_REGISTRYINDEX, pEventUserData->nLuaFunctionReference);
+		delete pEventUserData;
+	}
 }
 
 

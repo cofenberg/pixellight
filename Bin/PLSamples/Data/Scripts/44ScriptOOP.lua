@@ -103,6 +103,10 @@ function OOP()
 	PL.System.Console.Print("secondObject.GetPrivateX() = " .. secondObject.GetPrivateX() .. "\n")
 end
 
+function OnMyEvent(message)
+	PL.System.Console.Print("Lua slot function 'OnMyEvent()' = '" .. message .. "'\n")
+end
+
 function UseCppRTTIObject(cppRTTIObject)
 	if cppRTTIObject == nil then
 		PL.System.Console.Print("UseCppRTTIObject() was called with a null pointer as parameter\n")
@@ -132,6 +136,9 @@ function UseCppRTTIObject(cppRTTIObject)
 	else
 		-- Connect the RTTI slot of our RTTI class instance with the RTTI signal of our RTTI class instance
 		object.MySignal.Connect(object.OnMyEvent)
+	
+		-- Use the script function "OnMyEvent" as slot and connect it with the RTTI signal of our RTTI class instance
+		cppRTTIObject.MySignal.Connect(OnMyEvent)
 
 		-- Emit the RTTI signal of our RTTI class instance
 		object:MySignal("Lua GetMyRTTIClassInstance() worked\n")
