@@ -83,7 +83,7 @@
 	//   (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=45383)
 	// ... looked a few minutes for a solution, without success... (just defining it as 0 is no solution and will introduce other compiler errors!)
 	#error "Due to a bug in GCC 4.5.x ... 4.5.2 this GCC version is not supported. Please use a newer or older GCC version instead."
-#elif (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6))
+#elif ((__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6)) && !defined(__clang__))
 	/**
 	*  @brief
 	*    nullptr definition for compilers don't supporting this C++0x feature
