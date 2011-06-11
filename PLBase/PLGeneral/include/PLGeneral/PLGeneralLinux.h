@@ -77,7 +77,7 @@
 // GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++0x features are supported
 
 // "nullptr"-definition
-#if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ == 5 && __GNUC_PATCHLEVEL__ < 3))
+#if (__GNUC__ == 4 && __GNUC_MINOR__ == 5 && __GNUC_PATCHLEVEL__ < 3)
 	// There's a bug in GCC 4.5.x ... 4.5.2 causing compiler errors when using the nullptr-class solution from below:
 	//   "Bug 45383 - [4.5 Regression] Implicit conversion to pointer does no longer automatically generate operator== and operator!=."
 	//   (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=45383)
