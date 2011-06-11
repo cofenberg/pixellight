@@ -1286,6 +1286,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 				case 13:	return Type<T13>::TypeID;
 				default:	return TypeInvalid;
 			}
+		}
 
 		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
 		{
@@ -1306,7 +1307,6 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 				case 13:	return (void*)&Param13;
 				default:	return nullptr;
 			}
-		}
 		}
 };
 
