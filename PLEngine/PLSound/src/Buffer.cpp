@@ -85,7 +85,7 @@ Source *Buffer::GetSource(uint32 nIndex)
 *   Constructor
 */
 Buffer::Buffer(SoundManager &cSoundManager, const String &sName) :
-	Resource(cSoundManager, TypeBuffer), PLCore::Resource<Buffer>(sName, &cSoundManager)
+	PLSound::Resource(cSoundManager, TypeBuffer), PLCore::Resource<Buffer>(sName, &cSoundManager)
 {
 }
 
@@ -98,7 +98,7 @@ Buffer::Buffer(SoundManager &cSoundManager, const String &sName) :
 *    Copy constructor
 */
 Buffer::Buffer(const Buffer &cSource) :
-	Resource(cSource.GetSoundManager(), cSource.GetType()), PLCore::Resource<Buffer>(cSource.GetName(), &cSource.GetSoundManager())
+	PLSound::Resource(cSource.GetSoundManager(), cSource.GetType()), PLCore::Resource<Buffer>(cSource.GetName(), &cSource.GetSoundManager())
 {
 	// No implementation because the copy constructor is never used
 }

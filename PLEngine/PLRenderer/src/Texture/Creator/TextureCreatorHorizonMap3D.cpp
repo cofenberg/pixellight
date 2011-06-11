@@ -161,7 +161,7 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 			return pTexture;
 		}
 	} else {
-		PL_LOG(Error, "Can't open: " + Filename2D)
+		PL_LOG(Error, "Can't open: " + Filename2D.GetString())
 	}
 
 	// Error!
