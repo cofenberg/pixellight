@@ -35,7 +35,7 @@ extern "C" {
 #include "PLScriptLua/RTTIObjectPointer.h"
 
 
-// [TODO] Script slot (a script function is called when the signal is emitted), Enum
+// [TODO] Enum
 
 
 //[-------------------------------------------------------]

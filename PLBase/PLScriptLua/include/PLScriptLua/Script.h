@@ -35,6 +35,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLCore {
+	class DynEvent;
+	class DynEventHandler;
+}
 typedef struct lua_State lua_State;
 
 
@@ -52,6 +56,12 @@ namespace PLScriptLua {
 *    Lua (http://www.lua.org/) script implementation
 */
 class Script : public PLScript::Script {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class RTTIObjectSignalMethodPointer;
 
 
 	//[-------------------------------------------------------]
@@ -197,6 +207,32 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
+	//[ Private structures                                    ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    A global function
+		*/
+		struct GlobalFunction {
+			Script			  *pScript;		/**< Pointer to the owner script instance, always valid! */
+			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
+			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
+			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		};
+
+		/**
+		*  @brief
+		*    The structure is used to connect script functions with RTTI signals
+		*/
+		struct EventUserData {
+			PLCore::DynEventHandler *pDynEventHandler;		/**< The generic event handler, always valid! (delete the instance when no longer required) */
+			Script					*pScript;				/**< The owner script instance, always valid! */
+			int						 nLuaFunctionReference;	/**< The Lua-function or C-function to be called, never LUA_NOREF (use luaL_unref(<LuaState>, LUA_REGISTRYINDEX, <Reference>) when no longer required) */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -255,34 +291,72 @@ class Script : public PLScript::Script {
 		*/
 		bool CreateNestedTable(lua_State *pLuaState, const PLGeneral::String &sTableName);
 
-
-	//[-------------------------------------------------------]
-	//[ Private structures                                    ]
-	//[-------------------------------------------------------]
-	private:
+		//[-------------------------------------------------------]
+		//[ Event and event handler stuff                         ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    A global function
+		*    Returns event user data key
+		*
+		*  @param[in] pDynEvent
+		*    Dynamic event, must be valid
+		*  @param[in] pLuaPointer
+		*    Lua pointer to the function, must be valid
+		*
+		*  @return
+		*    Event user data key
 		*/
-		struct GlobalFunction {
-			Script			  *pScript;		/**< Pointer to the owner script instance, always valid! */
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
-		};
+		PLGeneral::String GetEventUserDataKey(PLCore::DynEvent *pDynEvent, const void *pLuaPointer) const;
+
+		/**
+		*  @brief
+		*    Returns event user data
+		*
+		*  @param[in] pDynEvent
+		*    Dynamic event, must be valid
+		*  @param[in] pLuaPointer
+		*    Lua pointer to the function, must be valid
+		*
+		*  @return
+		*    Event user data, can be a null pointer
+		*/
+		EventUserData *GetEventUserData(PLCore::DynEvent *pDynEvent, const void *pLuaPointer) const;
+
+		/**
+		*  @brief
+		*    Adds event user data
+		*
+		*  @param[in] pDynEvent
+		*    Dynamic event, must be valid
+		*  @param[in] pLuaPointer
+		*    Lua pointer to the function, must be valid
+		*  @param[in] pEventUserData
+		*   Event user data to add, must be valid
+		*
+		*  @note
+		*    - Do only call this method if the event user data is not yet added
+		*/
+		void AddEventUserData(PLCore::DynEvent *pDynEvent, const void *pLuaPointer, EventUserData *pEventUserData);
+
+		/**
+		*  @brief
+		*    Destroys all registered event user data (a kind of "disconnect all slots at once")
+		*/
+		void DestroyEventUserData();
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String					m_sSourceCode;			/**< Script source code */
-		lua_State						   *m_pLuaState;			/**< Lua state, can be a null pointer */
-		PLGeneral::String					m_sCurrentFunction;		/**< Name of the current function */
-		bool								m_bFunctionResult;		/**< Has the current function a result? */
-		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
-		PLGeneral::Array<GlobalFunction*>   m_lstGlobalFunctions;	/**< List of global functions */
-		PLGeneral::Array<PLGeneral::String> m_lstGlobalVariables;	/**< List of all global variables */
+		PLGeneral::String									   m_sSourceCode;			/**< Script source code */
+		lua_State											  *m_pLuaState;				/**< Lua state, can be a null pointer */
+		PLGeneral::String									   m_sCurrentFunction;		/**< Name of the current function */
+		bool												   m_bFunctionResult;		/**< Has the current function a result? */
+		PLGeneral::uint32									   m_nCurrentArgument;		/**< Current argument, used during function call */
+		PLGeneral::Array<GlobalFunction*>					   m_lstGlobalFunctions;	/**< List of global functions */
+		PLGeneral::Array<PLGeneral::String>					   m_lstGlobalVariables;	/**< List of all global variables */
+		PLGeneral::HashMap<PLGeneral::String, EventUserData*>  m_mapEventUserData;		/**< Map holding all event user data instances */
 
 
 };

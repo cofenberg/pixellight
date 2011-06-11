@@ -60,6 +60,7 @@ namespace PLScript {
 *      - Attributes
 *      - Methods
 *      - Signals
+*      - Slots
 *
 *    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*
 *    Please note that not each script language/API may make such a detailed data type distinction.
