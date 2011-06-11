@@ -203,10 +203,12 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingShaders, "PLCompositing", PLCompositing::SRPDirectionalLighting, "Shaders based diffuse only scene renderer pass implementation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
-		// Overwritten PLScene::SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -251,7 +253,7 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		*  @param[in] cMaterial
 		*    Removed material
 		*/
-		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+		void OnMaterialRemoved(PLRenderer::Material &cMaterial);
 
 
 	//[-------------------------------------------------------]

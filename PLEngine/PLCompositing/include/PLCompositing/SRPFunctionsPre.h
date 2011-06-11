@@ -54,7 +54,8 @@ class SRPFunctionsPre : public SRPFunctions {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPFunctionsPre, "PLCompositing", PLCompositing::SRPFunctions, "Scene renderer pass calling all 'pre'-draw functions")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

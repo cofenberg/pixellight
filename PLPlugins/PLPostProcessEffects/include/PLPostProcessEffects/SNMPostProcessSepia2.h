@@ -55,12 +55,14 @@ class SNMPostProcessSepia2 : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessSepia2, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(TintColor0, PLGraphics::Color4, PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.31f), ReadWrite, DirectValue, "Tint color 0 (red component)",		"")
-		pl_attribute(TintColor1, PLGraphics::Color4, PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.17f), ReadWrite, DirectValue, "Tint color 1 (green component)",		"")
-		pl_attribute(TintColor2, PLGraphics::Color4, PLGraphics::Color4(0.299f, 0.587f, 0.184f, -0.09f), ReadWrite, DirectValue, "Tint color 2 (blue component)",		"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,	PLGeneral::String,	 "Data/PostProcesses/Sepia2.pp",					 ReadWrite, ModifyAttr,	 "Filename of the post process to use",	"Type='PostProcess'")
+		// Attributes
+		pl_attribute(TintColor0,	PLGraphics::Color4,	PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.31f),	ReadWrite,	DirectValue,	"Tint color 0 (red component)",			"")
+		pl_attribute(TintColor1,	PLGraphics::Color4,	PLGraphics::Color4(0.299f, 0.587f, 0.184f,  0.17f),	ReadWrite,	DirectValue,	"Tint color 1 (green component)",		"")
+		pl_attribute(TintColor2,	PLGraphics::Color4,	PLGraphics::Color4(0.299f, 0.587f, 0.184f, -0.09f),	ReadWrite,	DirectValue,	"Tint color 2 (blue component)",		"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Sepia2.pp",						ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

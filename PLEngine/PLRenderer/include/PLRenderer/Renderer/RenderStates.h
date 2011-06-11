@@ -53,21 +53,22 @@ class RenderStates : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, RenderStates, "PLRenderer", PLCore::Object, "Render states RTTI wrapper class")
-		// Modes
+		// Attributes
+			// Modes
 		pl_attribute(FillMode,				pl_enum_type(Fill::Enum),				Fill::Solid,				ReadWrite,	GetSet,	"Fill mode",																			"")
 		pl_attribute(CullMode,				pl_enum_type(Cull::Enum),				Cull::CCW,					ReadWrite,	GetSet,	"Cull mode",																			"")
-		// Z buffer
+			// Z buffer
 		pl_attribute(ZEnable,				bool,									true,						ReadWrite,	GetSet,	"Enable/disable z buffer test",															"")
 		pl_attribute(ZWriteEnable,			bool,									true,						ReadWrite,	GetSet,	"Enable/disable z buffer writing",														"")
 		pl_attribute(ZFunc,					pl_enum_type(Compare::Enum),			Compare::LessEqual,			ReadWrite,	GetSet,	"Z buffer function",																	"")
 		pl_attribute(ZBias,					float,									0.0f,						ReadWrite,	GetSet,	"Z bias/polygon offset factor",															"")
 		pl_attribute(SlopeScaleDepthBias,	float,									0.0f,						ReadWrite,	GetSet,	"Slope scale bias/polygon offset factor",												"")
 		pl_attribute(DepthBias,				float,									0.0f,						ReadWrite,	GetSet,	"Depth bias/polygon offset units",														"")
-		// Blend
+			// Blend
 		pl_attribute(BlendEnable,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable blending",																"")
 		pl_attribute(SrcBlendFunc,			pl_enum_type(BlendFunc::Enum),			BlendFunc::SrcAlpha,		ReadWrite,	GetSet,	"Source blend function",																"")
 		pl_attribute(DstBlendFunc,			pl_enum_type(BlendFunc::Enum),			BlendFunc::InvSrcAlpha,		ReadWrite,	GetSet,	"Destination blend function",															"")
-		// Stencil
+			// Stencil
 		pl_attribute(StencilEnable,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable stencil test",															"")
 		pl_attribute(StencilFunc,			pl_enum_type(Compare::Enum),			Compare::Always,			ReadWrite,	GetSet,	"Stencil test passes if ((ref & mask) stencilfn (stencil & mask)) is true",				"")
 		pl_attribute(StencilRef,			PLGeneral::uint32,						0,							ReadWrite,	GetSet,	"Reference value used in stencil test",													"")
@@ -80,7 +81,7 @@ class RenderStates : public PLCore::Object {
 		pl_attribute(CCWStencilFail,		pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if ccw stencil test fails",										"")
 		pl_attribute(CCWStencilZFail,		pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if ccw stencil test passes and Z test fails",						"")
 		pl_attribute(CCWStencilPass,		pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if both ccw stencil and Z tests pass",							"")
-		// Point and line
+			// Point and line
 		pl_attribute(PointSize,				float,									1.0f,						ReadWrite,	GetSet,	"Point size when it is not specified for each vertex",									"")
 		pl_attribute(PointScaleEnable,		bool,									false,						ReadWrite,	GetSet,	"Controls computation of size for point primitives",									"")
 		pl_attribute(PointSizeMin,			float,									1.0f,						ReadWrite,	GetSet,	"Minimum size of point primitives",														"")
@@ -89,11 +90,11 @@ class RenderStates : public PLCore::Object {
 		pl_attribute(PointScaleB,			float,									0.0f,						ReadWrite,	GetSet,	"Controls for distance-based size attenuation for point primitives",					"")
 		pl_attribute(PointScaleC,			float,									0.0f,						ReadWrite,	GetSet,	"Controls for distance-based size attenuation for point primitives",					"")
 		pl_attribute(LineWidth,				float,									1.0f,						ReadWrite,	GetSet,	"Line width",																			"")
-		// Tessellation
+			// Tessellation
 		pl_attribute(TessellationFactor,	PLGeneral::uint32,						1,							ReadWrite,	GetSet,	"Tessellation factor",																	"Min=1")
 // [TODO] Linux GCC: "error: changes meaning of ‘TessellationMode’ from ‘class PLRenderer::TessellationMode"
 //		pl_attribute(TessellationMode,		pl_enum_type(TessellationMode::Enum),	TessellationMode::Discrete,	ReadWrite,	GetSet,	"Tessellation mode",																	"")
-		// Misc
+			// Misc
 		pl_attribute(PointSpriteEnable,		bool,									false,						ReadWrite,	GetSet,	"When true, use point texture mapping",													"")
 		pl_attribute(DitherEnable,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable dithering",																"")
 		pl_attribute(ScissorTestEnable,		bool,									false,						ReadWrite,	GetSet,	"Enable/disable the scissor test",														"")

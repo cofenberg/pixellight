@@ -64,15 +64,18 @@ class MeshLoaderMd5 : public PLMesh::MeshLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, MeshLoaderMd5, "PLDefaultFileFormats", PLMesh::MeshLoader, "Mesh loader implementation for Md5 (Doom3) version 6 and 10")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"md5mesh,MD5MESH")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PLMesh::Mesh&, PLGeneral::File&, "Load method. The loaded mesh is static.", "")
-		pl_method_3(LoadParams, bool, PLMesh::Mesh&, PLGeneral::File&, bool, "Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.", "")
-		pl_method_2(Save, bool, PLMesh::Mesh&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,		pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,			"Load method. The loaded mesh is static.",															"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,			"Save method",																						"")
 	pl_class_end
 
 

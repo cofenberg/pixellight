@@ -169,8 +169,8 @@ void AbstractTooltip::OnTimeout()
 */
 void AbstractTooltip::OnTimer()
 {
-	// Emit event
-	EventTimeout();
+	// Emit signal
+	SignalTimeout();
 
 	// Call virtual function
 	OnTimeout();

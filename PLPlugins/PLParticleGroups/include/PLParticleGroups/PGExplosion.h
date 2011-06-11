@@ -71,13 +71,15 @@ class PGExplosion : public PGPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGExplosion, "PLParticleGroups", PLParticleGroups::PGPhysics, "Explosion particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Mode,						pl_enum_type(EMode),	Repeat,								ReadWrite,	DirectValue,	"Explosion mode",									"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,					PLGeneral::String,		"Data/Textures/PGExplosion.dds",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,					PLGeneral::uint32,		5,									ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		4,									ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
 		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,		4,									ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -121,7 +123,7 @@ class PGExplosion : public PGPhysics {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

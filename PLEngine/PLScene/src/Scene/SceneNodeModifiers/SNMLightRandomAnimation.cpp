@@ -57,7 +57,7 @@ SNMLightRandomAnimation::SNMLightRandomAnimation(SceneNode &cSceneNode) : SceneN
 	FixColor(this),
 	Color(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMLightRandomAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMLightRandomAnimation::OnUpdate, this),
 	m_fTimer(0.0f)
 {
 }
@@ -94,7 +94,7 @@ void SNMLightRandomAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMLightRandomAnimation::NotifyUpdate()
+void SNMLightRandomAnimation::OnUpdate()
 {
 	// Update timer
 	m_fTimer += Timing::GetInstance()->GetTimeDifference()*Speed;

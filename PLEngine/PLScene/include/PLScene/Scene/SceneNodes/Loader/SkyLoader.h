@@ -52,8 +52,9 @@ class SkyLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkyLoader, "PLScene", PLCore::LoaderImpl, "Abstract sky loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Sky")
+			pl_property("Type",	"Sky")
 		pl_properties_end
 	pl_class_end
 

@@ -54,7 +54,7 @@ pl_implement_class(SNMRotationMoveDirection)
 SNMRotationMoveDirection::SNMRotationMoveDirection(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Offset(this),
 	UpVector(this),
-	EventHandlerUpdate(&SNMRotationMoveDirection::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMRotationMoveDirection::OnUpdate, this),
 	m_vLastPos(GetSceneNode().GetTransform().GetPosition())
 {
 }
@@ -91,7 +91,7 @@ void SNMRotationMoveDirection::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMRotationMoveDirection::NotifyUpdate()
+void SNMRotationMoveDirection::OnUpdate()
 {
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();

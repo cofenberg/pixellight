@@ -52,7 +52,8 @@ class LinuxProvider : public Provider {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLINPUT_RTTI_EXPORT, LinuxProvider, "PLInput", PLInput::Provider, "Standard input provider for Linux")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

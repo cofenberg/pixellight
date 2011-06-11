@@ -95,8 +95,10 @@ class SRPEmissiveFixedFunctions : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPEmissiveFixedFunctions, "PLCompositing", PLScene::SceneRendererPass, "Scene renderer pass for just rendering emissive meshes")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic2,	ReadWrite,	DirectValue,	"Texture filtering (no anisotropic = better performance)",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

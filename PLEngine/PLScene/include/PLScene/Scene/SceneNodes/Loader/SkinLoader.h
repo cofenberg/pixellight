@@ -52,6 +52,7 @@ class SkinLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkinLoader, "PLScene", PLCore::LoaderImpl, "Abstract skin loader base class (embedded within SNMesh)")
+		// Properties
 		pl_properties
 			pl_property("Type", "Skin")
 		pl_properties_end

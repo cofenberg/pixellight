@@ -40,6 +40,12 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
+//[ Class implementation                                  ]
+//[-------------------------------------------------------]
+pl_implement_class(SceneRendererTool)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -133,7 +139,7 @@ DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName
 *  @brief
 *    Sets a scene renderer pass attribute value using a string
 */
-bool SceneRendererTool::SetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName, const String &sValue) const
+bool SceneRendererTool::SetPassAttribute(String sSceneRendererPassName, String sAttributeName, String sValue) const
 {
 	// Get the scene renderer pass
 	SceneRendererPass *pSceneRendererPass = GetPass(sSceneRendererPassName);

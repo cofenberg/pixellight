@@ -51,7 +51,10 @@ class Application : public PLCore::ConsoleApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_1(OnMySignal,	PLGeneral::String,	"Called on MySignal signal, a string as first parameter",	"")
 	pl_class_end
 
 
@@ -78,12 +81,12 @@ class Application : public PLCore::ConsoleApplication {
 	private:
 		/**
 		*  @brief
-		*    Calls the OOP script
+		*    Runs a script
 		*
 		*  @param[in] sScriptFilename
-		*    Filename of the script to use
+		*    Filename of the script to run
 		*/
-		void OOP(const PLGeneral::String &sScriptFilename);
+		void RunScript(const PLGeneral::String &sScriptFilename);
 
 		/**
 		*  @brief
@@ -92,7 +95,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sParameter
 		*    Signal parameter
 		*/
-		void NotifyMySignal(PLGeneral::String sParameter);
+		void OnMySignal(PLGeneral::String sParameter);
 
 		/**
 		*  @brief
@@ -112,13 +115,6 @@ class Application : public PLCore::ConsoleApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLGeneral::String> EventHandlerMySignal;
 
 
 	//[-------------------------------------------------------]

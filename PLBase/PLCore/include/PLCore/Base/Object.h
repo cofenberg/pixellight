@@ -75,6 +75,7 @@ class Object : public ObjectBase {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class_internal(Object, "PLCore", /* No base class */, "Object base class")
+		// Properties
 		pl_properties
 		pl_properties_end
 	pl_class_end

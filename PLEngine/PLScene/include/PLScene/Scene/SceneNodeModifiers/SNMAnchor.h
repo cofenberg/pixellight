@@ -78,15 +78,17 @@ class SNMAnchor : public SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMAnchor, "PLScene", PLScene::SceneNodeModifier, "Scene node anchor modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(AttachedNode,			PLGeneral::String,		"",									ReadWrite,	GetSet,			"Name of the attached scene node",																				"")
 		pl_attribute(PositionOffset,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Position offset (node space)",																					"")
 		pl_attribute(RotationOffset,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation offset in degree (node space)",																		"")
 		pl_attribute(SkeletonJoint,			PLGeneral::String,		"",									ReadWrite,	DirectValue,	"If not empty, the attached node is relative to this skeleton joint (there must be a mesh handler + skeleton)",	"")
 		pl_attribute(JointPositionOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Joint position offset (joint space)",																			"")
 		pl_attribute(JointRotationOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Joint rotation offset in degree (joint space)",																"")
-		// Overwritten SceneNodeModifier variables
+			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,			"Flags",																										"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -133,13 +135,13 @@ class SNMAnchor : public SceneNodeModifier {
 		*  @brief
 		*    Called when the scene node container changed
 		*/
-		void NotifyContainer();
+		void OnContainer();
 
 		/**
 		*  @brief
 		*    Called when the scene node position or rotation changed or on update request
 		*/
-		void NotifyPositionRotationUpdate();
+		void OnPositionRotationUpdate();
 
 
 	//[-------------------------------------------------------]

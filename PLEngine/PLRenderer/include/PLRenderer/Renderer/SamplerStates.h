@@ -53,15 +53,16 @@ class SamplerStates : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, SamplerStates, "PLRenderer", PLCore::Object, "Sampler states RTTI wrapper class")
-		// Address modes
+		// Attributes
+			// Address modes
 		pl_attribute(AddressU,		pl_enum_type(TextureAddressing::Enum),	TextureAddressing::Wrap,	ReadWrite,	GetSet,	"Texture-address mode for the u/s coordinate",											"")
 		pl_attribute(AddressV,		pl_enum_type(TextureAddressing::Enum),	TextureAddressing::Wrap,	ReadWrite,	GetSet,	"Texture-address mode for the v/t coordinate",											"")
 		pl_attribute(AddressW,		pl_enum_type(TextureAddressing::Enum),	TextureAddressing::Wrap,	ReadWrite,	GetSet,	"Texture-address mode for the w/r coordinate",											"")
-		// Filter
+			// Filter
 		pl_attribute(MagFilter,		pl_enum_type(TextureFiltering::Enum),	TextureFiltering::Linear,	ReadWrite,	GetSet,	"Magnification filter",																	"")
 		pl_attribute(MinFilter,		pl_enum_type(TextureFiltering::Enum),	TextureFiltering::Linear,	ReadWrite,	GetSet,	"Minification filter",																	"")
 		pl_attribute(MipFilter,		pl_enum_type(TextureFiltering::Enum),	TextureFiltering::Linear,	ReadWrite,	GetSet,	"Mipmap filter to use during minification",												"")
-		// Filter
+			// Filter
 		pl_attribute(MipmapLODBias,	float,									0.0f,						ReadWrite,	GetSet,	"Mipmap level of detail (LOD) bias",													"")
 		pl_attribute(MaxMapLevel,	PLGeneral::uint32,						1000,						ReadWrite,	GetSet,	"LOD index of largest map to use. Values range from 0 to (n-1) where 0 is the largest",	"")
 		pl_attribute(MaxAnisotropy,	PLGeneral::uint32,						1,							ReadWrite,	GetSet,	"Maximum anisotropy",																	"")

@@ -52,7 +52,8 @@ class SPDefault : public SurfacePainter {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, SPDefault, "PLRenderer", PLRenderer::SurfacePainter, "This surface painter is called when the window content should be drawn")
-		pl_constructor_1(ParameterConstructor, Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

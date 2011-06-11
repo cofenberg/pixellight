@@ -81,15 +81,17 @@ class SNMPhysicsCharacter : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCharacter, "PLPhysics", PLPhysics::SNMPhysics, "Basic PL physics character scene node modifier class")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Speed,					float,					2.0f,	ReadWrite,	DirectValue,	"Speed",										"Min='0.0'")
 		pl_attribute(Acceleration,			float,					20.0f,	ReadWrite,	DirectValue,	"Acceleration",									"Min='0.0'")
 		pl_attribute(MaxAcceleration,		float,					30.0f,	ReadWrite,	DirectValue,	"Maximum acceleration",							"Min='0.0'")
 		pl_attribute(JumpForce,				float,					4.0f,	ReadWrite,	DirectValue,	"Jump force, if 0, jumping is not allowed",		"Min='0.0'")
 		pl_attribute(JumpReadyTime,			float,					0.5f,	ReadWrite,	DirectValue,	"Time to past until we can jump again",			"Min='0.0'")
 		pl_attribute(JumpGroundDistance,	float,					0.05f,	ReadWrite,	DirectValue,	"Minimum ground distance required for jumping",	"Min='0.001'")
-		// Overwritten PLScene::SceneNodeModifier variables
+			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",										"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -165,7 +167,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*    Sets the movement vector
 		*
 		*  @param[in] vMovement
-		*    The new movement vector, if the length is >1, the vector is used in a normalized form inside NotifyUpdate()
+		*    The new movement vector, if the length is >1, the vector is used in a normalized form inside OnUpdate()
 		*
 		*  @see
 		*    - GetMovement()
@@ -212,7 +214,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

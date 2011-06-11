@@ -52,11 +52,13 @@ class MeshCreatorCappedCylinder : public MeshCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorCappedCylinder, "PLMesh", PLMesh::MeshCreator, "Capped cylinder mesh creator class aligned along the x axis")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Length,	float,				1.0f,								ReadWrite,	DirectValue,	"The length of the capped cylinder",	"")
 		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"The height of the cylinder",			"")
 		pl_attribute(Quality,	PLGeneral::uint32,	3,									ReadWrite,	DirectValue,	"The quality/tesselation",				"")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",						"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -63,7 +63,8 @@ class SNBasicDemo : public SNSystem {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(SPARK_PL_RTTI_EXPORT, SNBasicDemo, "SPARK_PL", SPARK_PL::SNSystem, "Basic SPARK particle system demo scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

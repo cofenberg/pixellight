@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingTiming.cpp                        *
+ *  File: ScriptBinding_PL_Log.cpp                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include "PLScriptBindings/ScriptBindingTiming.h"
+#include <PLGeneral/Log/Log.h>
+#include "PLScriptBindings/ScriptBinding_PL_Log.h"
 
 
 //[-------------------------------------------------------]
@@ -37,20 +37,40 @@ namespace PLScriptBindings {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingTiming)
+pl_implement_class(ScriptBinding_PL_Log)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-float ScriptBindingTiming::GetTimeDifference()
+void ScriptBinding_PL_Log::OutputAlways(String sText)
 {
-	return Timing::GetInstance()->GetTimeDifference();
+	Log::GetInstance()->Output(Log::Always, sText);
 }
 
-float ScriptBindingTiming::GetFramesPerSecond()
+void ScriptBinding_PL_Log::OutputCritical(String sText)
 {
-	return Timing::GetInstance()->GetFramesPerSecond();
+	Log::GetInstance()->Output(Log::Critical, sText);
+}
+
+void ScriptBinding_PL_Log::OutputError(String sText)
+{
+	Log::GetInstance()->Output(Log::Error, sText);
+}
+
+void ScriptBinding_PL_Log::OutputWarning(String sText)
+{
+	Log::GetInstance()->Output(Log::Warning, sText);
+}
+
+void ScriptBinding_PL_Log::OutputInfo(String sText)
+{
+	Log::GetInstance()->Output(Log::Info, sText);
+}
+
+void ScriptBinding_PL_Log::OutputDebug(String sText)
+{
+	Log::GetInstance()->Output(Log::Debug, sText);
 }
 
 
@@ -61,7 +81,7 @@ float ScriptBindingTiming::GetFramesPerSecond()
 *  @brief
 *    Constructor
 */
-ScriptBindingTiming::ScriptBindingTiming()
+ScriptBinding_PL_Log::ScriptBinding_PL_Log()
 {
 }
 
@@ -69,7 +89,7 @@ ScriptBindingTiming::ScriptBindingTiming()
 *  @brief
 *    Destructor
 */
-ScriptBindingTiming::~ScriptBindingTiming()
+ScriptBinding_PL_Log::~ScriptBinding_PL_Log()
 {
 }
 

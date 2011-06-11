@@ -108,8 +108,8 @@ bool SQSphere::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 					// Touch this node
 					pSceneContext->TouchNode(*pSceneNode);
 
-					// Emit event
-					EventSceneNode(*this, *pSceneNode);
+					// Emit signal
+					SignalSceneNode(*this, *pSceneNode);
 					if (m_nFlags & StopQuery)
 						return false; // Stop the query right now
 

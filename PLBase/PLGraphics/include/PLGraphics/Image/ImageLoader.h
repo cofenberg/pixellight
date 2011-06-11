@@ -52,8 +52,9 @@ class ImageLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLGRAPHICS_RTTI_EXPORT, ImageLoader, "PLGraphics", PLCore::LoaderImpl, "Abstract image loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Image")
+			pl_property("Type",	"Image")
 		pl_properties_end
 	pl_class_end
 

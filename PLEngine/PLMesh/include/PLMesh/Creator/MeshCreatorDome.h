@@ -52,13 +52,15 @@ class MeshCreatorDome : public MeshCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorDome, "PLMesh", PLMesh::MeshCreator, "Dome mesh creator class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Dome radius",		"")
 		pl_attribute(DTheta,	float,				10.0f,								ReadWrite,	DirectValue,	"Number of slices",	"")
 		pl_attribute(DPhi,		float,				10.0f,								ReadWrite,	DirectValue,	"Number of rings",	"")
 		pl_attribute(HTile,		float,				1.0f,								ReadWrite,	DirectValue,	"Size of a slice",	"")
 		pl_attribute(VTile,		float,				1.0f,								ReadWrite,	DirectValue,	"Size of a ring",	"")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

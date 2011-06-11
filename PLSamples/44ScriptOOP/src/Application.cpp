@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : ConsoleApplication(),
-	EventHandlerMySignal(&Application::NotifyMySignal, this),
+	SlotOnMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
 	// Set application name and title
@@ -66,7 +66,7 @@ Application::Application() : ConsoleApplication(),
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Connect event handler
-	m_pMyRTTIClass->MySignal.Connect(&EventHandlerMySignal);
+	m_pMyRTTIClass->MySignal.Connect(&SlotOnMySignal);
 }
 
 /**
@@ -85,9 +85,9 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Calls the OOP script
+*    Runs a script
 */
-void Application::OOP(const String &sScriptFilename)
+void Application::RunScript(const String &sScriptFilename)
 {
 	// Get the script source code
 	const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sScriptFilename);
@@ -117,20 +117,26 @@ void Application::OOP(const String &sScriptFilename)
 				delete pScript;
 
 				// Print new line
-				System::GetInstance()->GetConsole().Print("--\n\n");
+				System::GetInstance()->GetConsole().Print("--\n");
+			} else {
+				// Error!
+				System::GetInstance()->GetConsole().Print("Failed to use the script source code \"" + sScriptFilename + "\" (see log for details)\n");
 			}
 		}
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
 	}
+
+	// Print new line
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 /**
 *  @brief
 *    Called on MySignal signal
 */
-void Application::NotifyMySignal(String sParameter)
+void Application::OnMySignal(String sParameter)
 {
 	System::GetInstance()->GetConsole().Print(sParameter + " emitted MySignal signal\n");
 }
@@ -150,9 +156,26 @@ MyRTTIClass *Application::GetMyRTTIClassInstance(MyRTTIClass *pObject)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Run some scripts
-	OOP("Data/Scripts/44ScriptOOP.lua");
-	OOP("Data/Scripts/44ScriptOOP.js");
-	OOP("Data/Scripts/44ScriptOOP.as");
-	OOP("Data/Scripts/44ScriptOOP.py");
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/44ScriptOOP." + sScriptLanguageExtension);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
+		System::GetInstance()->GetConsole().Print('\n');
+	}
 }

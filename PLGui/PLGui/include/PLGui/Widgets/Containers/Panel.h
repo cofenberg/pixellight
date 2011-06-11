@@ -52,8 +52,10 @@ class Panel : public ContainerWidget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Panel, "PLGui", PLGui::ContainerWidget, "Container widget that displays a raised or sunken panel")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute	(BorderStyle,	pl_enum_type(EBorderStyle),	RaisedBorder, ReadWrite, GetSet, "Border style", "")
+		// Attributes
+		pl_attribute(BorderStyle,	pl_enum_type(EBorderStyle),	RaisedBorder,	ReadWrite,	GetSet,	"Border style",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

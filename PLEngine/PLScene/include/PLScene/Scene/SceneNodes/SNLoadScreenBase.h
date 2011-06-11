@@ -55,7 +55,8 @@ class SNLoadScreenBase : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNLoadScreenBase, "PLScene", PLScene::SceneNode, "Abstract load screen base scene node")
-		// Overwritten SceneNode variables
+		// Attributes
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	NoCulling,	ReadWrite,	GetSet,	"Flags",	"")
 	pl_class_end
 
@@ -94,7 +95,7 @@ class SNLoadScreenBase : public SceneNode {
 		*  @brief
 		*    Called when the scene node container changed
 		*/
-		void NotifyContainer();
+		void OnContainer();
 
 		/**
 		*  @brief
@@ -103,7 +104,7 @@ class SNLoadScreenBase : public SceneNode {
 		*  @param[in] fLoadProgress
 		*    Load progress (0.0-1.0)
 		*/
-		void NotifyLoadProgress(float fLoadProgress);
+		void OnLoadProgress(float fLoadProgress);
 
 
 	//[-------------------------------------------------------]

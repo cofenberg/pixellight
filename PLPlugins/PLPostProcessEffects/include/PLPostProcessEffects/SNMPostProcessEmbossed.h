@@ -56,13 +56,15 @@ class SNMPostProcessEmbossed : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessEmbossed, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_attribute(StartColor,	PLGraphics::Color3,	PLGraphics::Color3(0.5f, 0.5f, 0.5f),	ReadWrite, DirectValue,	"Start color",								"")
-		pl_attribute(ColorScale,	PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),			ReadWrite, DirectValue,	"Color scale (for pixel kernel 0 and 1)",	"")
-		pl_attribute(PixelKernel0,	PLMath::Vector2,	PLMath::Vector2(-1.0f, -1.0f),			ReadWrite, DirectValue,	"Pixel kernel 0",							"")
-		pl_attribute(PixelKernel1,	PLMath::Vector2,	PLMath::Vector2( 1.0f,  1.0f),			ReadWrite, DirectValue,	"Pixel kernel 1",							"")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Embossed.pp",		ReadWrite, ModifyAttr,	"Filename of the post process to use",		"Type='PostProcess'")
+		// Attributes
+		pl_attribute(StartColor,	PLGraphics::Color3,	PLGraphics::Color3(0.5f, 0.5f, 0.5f),	ReadWrite,	DirectValue,	"Start color",								"")
+		pl_attribute(ColorScale,	PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),			ReadWrite,	DirectValue,	"Color scale (for pixel kernel 0 and 1)",	"")
+		pl_attribute(PixelKernel0,	PLMath::Vector2,	PLMath::Vector2(-1.0f, -1.0f),			ReadWrite,	DirectValue,	"Pixel kernel 0",							"")
+		pl_attribute(PixelKernel1,	PLMath::Vector2,	PLMath::Vector2( 1.0f,  1.0f),			ReadWrite,	DirectValue,	"Pixel kernel 1",							"")
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Embossed.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",		"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

@@ -207,6 +207,47 @@ Within our name convention for event handlers and RTTI slot names, there's a \em
 
 
 
+\section{RTTI interface}
+Within PixelLight, the RTTI class properties and members are always defined in the following order:
+\begin{itemize}
+\item Properties
+\item Attributes
+\item Constructors
+\item Methods
+\item Signals
+\item Slots
+\end{itemize}
+This way one knows exactly were to look for something. Further, within the RTTI class properties and members definitions, only tabs and no spaces are used to make it easier to write the definitions like a table. This makes it more comfortable for the eyes and brain to navigate to certain definition parts without to much searching around.
+
+Here's an example source code showing the common RTTI interface layout (without the word wrap):
+\begin{lstlisting}[caption=RTTI interface (without the word wrap)]
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, don't take it to serious")
+	// Properties
+	pl_properties
+		pl_property("MyProperty",	"This is a property value")
+	pl_properties_end
+	// Attributes
+	pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
+	pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
+	// Constructors
+	pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	// Methods
+	pl_method_0(Return42,			int,					"Returns 42",							"")
+	pl_method_1(IgnoreTheParameter,	void,			float,	"Ignores the provided parameter",		"")
+	pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
+	pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
+	// Signals
+	pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed",	"")
+	// Slots
+	pl_slot_0(OnMyEvent,	"My slot",	"")
+pl_class_end
+\end{lstlisting}
+
+
+
 \section{Reuseability and adding new stuff}
 Before you add new classes, functions an so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
 

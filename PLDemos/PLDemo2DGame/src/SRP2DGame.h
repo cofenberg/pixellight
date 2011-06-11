@@ -46,7 +46,8 @@ class SRP2DGame : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SRP2DGame, "", PLScene::SceneRendererPass, "Scene renderer pass 2D game")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

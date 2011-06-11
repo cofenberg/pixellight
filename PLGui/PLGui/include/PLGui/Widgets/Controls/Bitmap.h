@@ -52,8 +52,10 @@ class Bitmap : public Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Bitmap, "PLGui", PLGui::Widget, "Widget that displays a static image")
-		pl_constructor_0(DefaultConstructor,											"Default constructor",	"")
-		pl_attribute	(ImageName,			 PLGeneral::String,	"",	ReadWrite, GetSet,	"Image filename",		"")
+		// Attributes
+		pl_attribute(ImageName,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Image filename",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

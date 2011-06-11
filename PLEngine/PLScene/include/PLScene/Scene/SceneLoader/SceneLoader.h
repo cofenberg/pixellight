@@ -52,8 +52,9 @@ class SceneLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneLoader, "PLScene", PLCore::LoaderImpl, "Abstract scene loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Scene")
+			pl_property("Type",	"Scene")
 		pl_properties_end
 	pl_class_end
 

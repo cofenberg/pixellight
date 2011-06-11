@@ -56,7 +56,7 @@ class PGFountain : public SNParticleGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Fountain particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Steps,					PLGeneral::uint32,		8,								ReadWrite,	GetSet,	"Steps",					"")
 		pl_attribute(RaysPerStep,			PLGeneral::uint32,		6,								ReadWrite,	GetSet,	"Rays per step",			"")
 		pl_attribute(DropsPerRay,			PLGeneral::uint32,		50,								ReadWrite,	GetSet,	"Drops per ray",			"")
@@ -64,9 +64,11 @@ class PGFountain : public SNParticleGroup {
 		pl_attribute(AngleOfHighestStep,	float,					85.0f,							ReadWrite,	GetSet,	"Angle of highest step",	"")
 		pl_attribute(RandomAngleAddition,	float,					20.0f,							ReadWrite,	GetSet,	"Random angle addition",	"")
 		pl_attribute(AccFactor,				float,					0.11f,							ReadWrite,	GetSet,	"Acc factor",				"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,				PLGeneral::String,		"Data/Textures/PGFountain.dds",	ReadWrite,	GetSet,	"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,				PLGeneral::uint32,		600,							ReadWrite,	GetSet,	"Number of particles",		"Min=1")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -124,7 +126,7 @@ class PGFountain : public SNParticleGroup {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

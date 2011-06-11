@@ -31,10 +31,11 @@ extern "C" {
 #include "PLScriptLua/Script.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
+#include "PLScriptLua/RTTIObjectSlotPointer.h"
 #include "PLScriptLua/RTTIObjectPointer.h"
 
 
-// [TODO] Slot, Enum
+// [TODO] Script slot (a script function is called when the signal is emitted), Enum
 
 
 //[-------------------------------------------------------]
@@ -69,7 +70,7 @@ void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
 *  @brief
 *    Constructor
 */
-RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject) : LuaUserData(cScript),
+RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType nType) : LuaUserData(cScript, nType),
 	m_pRTTIObject(pRTTIObject)
 {
 }
@@ -158,6 +159,17 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 
 						// Done
 						return 1;
+					} else {
+						// Is it a slot?
+						DynEventHandler *pDynEventHandler = m_pRTTIObject->GetSlot(sName);
+						if (pDynEventHandler) {
+							// It's a slot... just put another user data instance on the Lua stack...
+							// The destruction of the new RTTIObjectSlotPointer instance is done by the Lua garbage collector
+							new RTTIObjectSlotPointer(*m_pScript, m_pRTTIObject, pDynEventHandler);
+
+							// Done
+							return 1;
+						}
 					}
 				}
 			}

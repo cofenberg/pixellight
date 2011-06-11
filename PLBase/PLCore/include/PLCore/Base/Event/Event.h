@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Func/FuncGenFunPtr.h"
 #include "PLCore/Base/Event/DynEvent.h"
 #include "PLCore/Base/Event/EventHandler.h"
 
@@ -132,6 +133,11 @@ class Event : public DynEvent {
 				case 15:	return Type<T15>::TypeID;
 				default:	return TypeInvalid;
 			}
+		}
+
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pFunc, pUserData));
 		}
 
 		virtual void Emit(DynParams &cParams) const
@@ -268,6 +274,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -398,6 +409,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -526,6 +542,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -652,6 +673,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -776,6 +802,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -898,6 +929,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1016,6 +1052,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1132,6 +1173,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1246,6 +1292,11 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1358,6 +1409,11 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1468,6 +1524,11 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1574,6 +1635,11 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1678,6 +1744,11 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1778,6 +1849,11 @@ class Event<T0, T1> : public DynEvent {
 				case 1:		return Type<T1> ::TypeID;
 				default:	return TypeInvalid;
 			}
+		}
+
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0, T1>(pFunc, pUserData));
 		}
 
 		virtual void Emit(DynParams &cParams) const
@@ -1882,6 +1958,11 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void, T0>(pFunc, pUserData));
+		}
+
 		virtual void Emit(DynParams &cParams) const
 		{
 			// Check signature
@@ -1977,6 +2058,11 @@ class Event<> : public DynEvent {
 		{
 			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
+		}
+
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		{
+			return new TypeHandler(new FuncGenFunPtr<void>(pFunc, pUserData));
 		}
 
 		virtual void Emit(DynParams &cParams) const

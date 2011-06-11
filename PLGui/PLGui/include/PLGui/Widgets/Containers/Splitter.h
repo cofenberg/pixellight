@@ -51,11 +51,13 @@ class Splitter : public Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Splitter, "PLGui", PLGui::Widget, "Container widget that splits an area into two sides")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute	(Orientation,		 pl_enum_type(EOrientation), Horizontal, ReadWrite, GetSet, "Orientation",							"")
-		pl_attribute	(Sizable,			 bool,						 true,		 ReadWrite, GetSet, "Is the widget sizable?",				"")
-		pl_attribute	(SizeLeft,			 SizeHint,					 SizeHint(), ReadWrite, GetSet, "Size of left (or top) container",		"")
-		pl_attribute	(SizeRight,			 SizeHint,					 SizeHint(), ReadWrite, GetSet, "Size of right (or bottom) container",	"")
+		// Attributes
+		pl_attribute(Orientation,	pl_enum_type(EOrientation),	Horizontal,	ReadWrite,	GetSet,	"Orientation",							"")
+		pl_attribute(Sizable,		bool,						true,		ReadWrite,	GetSet,	"Is the widget sizable?",				"")
+		pl_attribute(SizeLeft,		SizeHint,					SizeHint(),	ReadWrite,	GetSet,	"Size of left (or top) container",		"")
+		pl_attribute(SizeRight,		SizeHint,					SizeHint(),	ReadWrite,	GetSet,	"Size of right (or bottom) container",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

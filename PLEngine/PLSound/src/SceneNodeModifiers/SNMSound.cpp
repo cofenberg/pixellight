@@ -167,12 +167,12 @@ SNMSound::SNMSound(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	MaxDistance(this),
 	RolloffFactor(this),
 	Flags(this),
+	SlotOnPosition(this),
 	m_fVolume(1.0f),
 	m_fPitch(1.0f),
 	m_fReferenceDistance(1.0f),
 	m_fMaxDistance(10000.0f),
 	m_fRolloffFactor(1.0f),
-	EventHandlerPosition(&SNMSound::NotifyPosition, this),
 	m_pSoundSourceHandler(new PLSound::ResourceHandler())
 {
 }
@@ -207,9 +207,9 @@ void SNMSound::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().GetTransform().EventPosition.Connect(&EventHandlerPosition);
+		GetSceneNode().GetTransform().EventPosition.Connect(&SlotOnPosition);
 	else
-		GetSceneNode().GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
+		GetSceneNode().GetTransform().EventPosition.Disconnect(&SlotOnPosition);
 
 	// [TODO] Start/stop sound playback
 }
@@ -237,7 +237,7 @@ SCSound *SNMSound::GetSoundContainer() const
 *  @brief
 *    Called when the scene node position changed
 */
-void SNMSound::NotifyPosition()
+void SNMSound::OnPosition()
 {
 	// Update sound source position
 	if (GetSceneNode().GetContainer()) {
@@ -282,7 +282,7 @@ void SNMSound::Load()
 			pSoundSource->SetReferenceDistance(m_fReferenceDistance);
 			pSoundSource->SetMaxDistance(m_fMaxDistance);
 			pSoundSource->SetRolloffFactor(m_fRolloffFactor);
-			NotifyPosition();
+			OnPosition();
 			if (!(GetFlags() & NoStartPlayback))
 				pSoundSource->Play();
 		}

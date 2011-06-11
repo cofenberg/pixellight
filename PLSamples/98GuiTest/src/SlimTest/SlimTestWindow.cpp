@@ -94,13 +94,13 @@ SlimTestWindow::SlimTestWindow(Widget *pParent) : Window(pParent),
 		m_pButtonLeft = new Button(m_pButtonBox->GetContentWidget());
 		m_pButtonLeft->SetText("<<");
 		m_pButtonLeft->SetVisible(true);
-		m_pButtonLeft->EventClicked.Connect(&SlotOnLeft);
+		m_pButtonLeft->SignalClicked.Connect(&SlotOnLeft);
 
 		// Add right button
 		m_pButtonRight = new Button(m_pButtonBox->GetContentWidget());
 		m_pButtonRight->SetText(">>");
 		m_pButtonRight->SetVisible(true);
-		m_pButtonRight->EventClicked.Connect(&SlotOnRight);
+		m_pButtonRight->SignalClicked.Connect(&SlotOnRight);
 
 	// Add right container
 	m_pContainerRight = new ScrollWidget(GetContentWidget());

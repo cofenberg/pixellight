@@ -55,8 +55,10 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMDeactivationOnTimeout, "PLScene", PLScene::SceneNodeModifier, "Deactivation on timeout scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Timeout,	float,	5.0f,	ReadWrite,	GetSet,	"Timeout in seconds (if value set=restart)",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -103,7 +105,7 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

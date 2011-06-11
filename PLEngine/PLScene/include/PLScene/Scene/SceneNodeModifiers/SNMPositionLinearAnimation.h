@@ -78,10 +78,12 @@ class SNMPositionLinearAnimation : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionLinearAnimation, "PLScene", PLScene::SNMTransform, "Linear position animation scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(AutoVector,	pl_enum_type(EAutoVector),	None,								ReadWrite,	DirectValue,	"Automatic vector type",	"")
 		pl_attribute(Vector,		PLMath::Vector3,			PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Movement vector",			"")
 		pl_attribute(Speed,			float,						1.0f,								ReadWrite,	DirectValue,	"Movement speed",			"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -120,7 +122,7 @@ class SNMPositionLinearAnimation : public SNMTransform {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

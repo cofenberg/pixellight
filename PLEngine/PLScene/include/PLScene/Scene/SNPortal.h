@@ -75,8 +75,9 @@ class SNPortal : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNPortal, "PLScene", PLScene::SceneNode, "Abstract portal scene node")
+		// Attributes
 		pl_attribute(Vertices,		PLGeneral::String,			"-1.0 -1.0 0.0 -1.0 1.0 0.0 1.0 1.0 0.0 1.0 -1.0 0.0",	ReadWrite,	GetSet,	"Vertices (xyz, counterclockwise) defining the portal polygon. There should be at least 3 vertices.",	"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		CastShadow|ReceiveShadow,								ReadWrite,	GetSet,	"Flags",																								"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,														ReadWrite,	GetSet,	"Debug flags",																							"")
 	pl_class_end
@@ -186,7 +187,7 @@ class SNPortal : public SceneNode {
 		*  @brief
 		*    Called when the scene node container, position, rotation or scale changed
 		*/
-		void NotifyContainerPositionRotationScale();
+		void OnContainerPositionRotationScale();
 
 
 	//[-------------------------------------------------------]

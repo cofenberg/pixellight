@@ -53,7 +53,7 @@ SNMCameraZoom::SNMCameraZoom(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNo
 	ZoomDegree(this),
 	ZoomFactor(this),
 	ZoomSpeed(this),
-	EventHandlerUpdate(&SNMCameraZoom::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMCameraZoom::OnUpdate, this),
 	m_fOriginalFOV(cSceneNode.IsCamera() ? static_cast<SNCamera&>(cSceneNode).GetFOV() : 0.0f),
 	m_fCurrentZoomFactor(0.0f)
 {
@@ -91,7 +91,7 @@ void SNMCameraZoom::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMCameraZoom::NotifyUpdate()
+void SNMCameraZoom::OnUpdate()
 {
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();

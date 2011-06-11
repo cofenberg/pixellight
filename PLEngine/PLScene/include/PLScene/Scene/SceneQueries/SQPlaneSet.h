@@ -62,7 +62,8 @@ class SQPlaneSet : public SceneQuery {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SQPlaneSet, "PLScene", PLScene::SceneQuery, "Plane set volume intersection scene query class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -223,8 +223,8 @@ bool SceneNode::SetContainer(SceneContainer &cSceneContainer)
 		// Add the scene node to the new parent container
 		cSceneContainer.Add(*this, GetName(), false);
 
-		// Emit event
-		EventContainer();
+		// Emit signal
+		SignalContainer();
 	}
 
 	// Done
@@ -362,8 +362,8 @@ void SceneNode::SetActive(bool bActive)
 			// Call the "OnActivate()"-method
 			OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
 
-			// Emit event
-			EventActive();
+			// Emit signal
+			SignalActive();
 		}
 	}
 }
@@ -394,8 +394,8 @@ void SceneNode::SetVisible(bool bVisible)
 		else
 			m_nFlags |=  Invisible;
 
-		// Emit event
-		EventVisible();
+		// Emit signal
+		SignalVisible();
 	}
 }
 
@@ -579,8 +579,8 @@ void SceneNode::SetAABoundingBox(const AABoundingBox &cAABoundingBox)
 		}
 	}
 
-	// Emit event
-	EventAABoundingBox();
+	// Emit signal
+	SignalAABoundingBox();
 }
 
 /**
@@ -697,7 +697,7 @@ uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 *  @brief
 *    Adds a modifier
 */
-SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters)
+SceneNodeModifier *SceneNode::AddModifier(String sClass, String sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -749,7 +749,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 *  @brief
 *    Returns a modifier
 */
-SceneNodeModifier *SceneNode::GetModifier(const String &sClass, uint32 nIndex) const
+SceneNodeModifier *SceneNode::GetModifier(String sClass, uint32 nIndex) const
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;
@@ -793,7 +793,7 @@ bool SceneNode::RemoveModifier(SceneNodeModifier &cModifier)
 *  @brief
 *    Removes a modifier
 */
-bool SceneNode::RemoveModifier(const String &sClass, uint32 nIndex)
+bool SceneNode::RemoveModifier(String sClass, uint32 nIndex)
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;
@@ -868,8 +868,8 @@ PLInput::Controller *SceneNode::GetInputController() const
 */
 void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawPre(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawPre(cRenderer, pVisNode);
 }
 
 /**
@@ -878,8 +878,8 @@ void SceneNode::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawSolid(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawSolid(cRenderer, pVisNode);
 }
 
 /**
@@ -888,8 +888,8 @@ void SceneNode::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawTransparent(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawTransparent(cRenderer, pVisNode);
 }
 
 /**
@@ -899,9 +899,9 @@ void SceneNode::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Inform listeners?
-	if (!(m_nDebugFlags & DebugNoDrawEvent)) {
-		// Emit event
-		EventDrawDebug(cRenderer, pVisNode);
+	if (!(m_nDebugFlags & DebugNoDrawSignal)) {
+		// Emit signal
+		SignalDrawDebug(cRenderer, pVisNode);
 	}
 
 	// Draw
@@ -1063,8 +1063,8 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 */
 void SceneNode::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Emit event
-	EventDrawPost(cRenderer, pVisNode);
+	// Emit signal
+	SignalDrawPost(cRenderer, pVisNode);
 }
 
 
@@ -1134,8 +1134,8 @@ void SceneNode::InitFunction()
 		// Scene node is initialized
 		m_nInternalFlags |= Initialized;
 
-		// Emit event
-		EventInit();
+		// Emit signal
+		SignalInit();
 
 		// Call the "OnActivate()"-method
 		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
@@ -1151,8 +1151,8 @@ void SceneNode::DeInitFunction()
 	// Set initialization flag
 	m_nInternalFlags &= ~Initialized;
 
-	// Emit event
-	EventDeInit();
+	// Emit signal
+	SignalDeInit();
 
 	// Clear modifiers
 	ClearModifiers();
@@ -1241,8 +1241,8 @@ void SceneNode::GetContainerBoundingSphere(Sphere &cSphere)
 */
 void SceneNode::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
-	// Emit event
-	EventAddedToVisibilityTree(cVisNode);
+	// Emit signal
+	SignalAddedToVisibilityTree(cVisNode);
 }
 
 
@@ -1348,8 +1348,8 @@ bool SceneNode::Delete(bool bProtectedToo)
 		// Set the 'I am going to die'-flag
 		m_nInternalFlags |= DestroyThis;
 
-		// Emit event
-		EventDestroy();
+		// Emit signal
+		SignalDestroy();
 
 		// Is this scene node within a container?
 		if (GetContainer()) {

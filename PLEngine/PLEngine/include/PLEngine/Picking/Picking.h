@@ -136,7 +136,7 @@ class Picking {
 		*  @param[in] cSceneNode
 		*    Found scene node
 		*/
-		void NotifySceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
+		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
@@ -179,14 +179,14 @@ class Picking {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventSceneNode;
+		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventHandlerSceneNode;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PickingResult *m_pPickingResult;	/**< Current picking result, always valid! (used inside 'NotifySceneNode()') */
+		PickingResult *m_pPickingResult;	/**< Current picking result, always valid! (used inside 'OnSceneNode()') */
 
 
 };

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSystemConsole.cpp                 *
+ *  File: RTTIObjectSlotPointer.cpp                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,31 +23,18 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include "PLScriptBindings/ScriptBindingSystemConsole.h"
+extern "C" {
+	#include <Lua/lua.h>
+}
+#include "PLScriptLua/RTTIObjectSlotPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-namespace PLScriptBindings {
-
-
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(ScriptBindingSystemConsole)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
-//[-------------------------------------------------------]
-void ScriptBindingSystemConsole::Print(String sText)
-{
-	System::GetInstance()->GetConsole().Print(sText);
-}
+using namespace PLCore;
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -57,7 +44,8 @@ void ScriptBindingSystemConsole::Print(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBindingSystemConsole::ScriptBindingSystemConsole()
+RTTIObjectSlotPointer::RTTIObjectSlotPointer(Script &cScript, Object *pRTTIObject, DynEventHandler *pDynEventHandler) : RTTIObjectPointer(cScript, pRTTIObject, TypeObjectSlotPointer),
+	m_pDynEventHandler(pDynEventHandler)
 {
 }
 
@@ -65,12 +53,49 @@ ScriptBindingSystemConsole::ScriptBindingSystemConsole()
 *  @brief
 *    Destructor
 */
-ScriptBindingSystemConsole::~ScriptBindingSystemConsole()
+RTTIObjectSlotPointer::~RTTIObjectSlotPointer()
 {
+}
+
+/**
+*  @brief
+*    Returns the pointer to the RTTI object slot to wrap
+*/
+DynEventHandler *RTTIObjectSlotPointer::GetDynEventHandler() const
+{
+	return m_pDynEventHandler;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual LuaUserData functions               ]
+//[-------------------------------------------------------]
+int RTTIObjectSlotPointer::IndexMetamethod(lua_State *pLuaState)
+{
+	// Error! A slot can't be called like an object...
+	// [TODO] Write an error message into the log? (with current script line etc.)
+
+	// Error!
+	return 0;
+}
+
+int RTTIObjectSlotPointer::NewIndexMetamethod(lua_State *pLuaState)
+{
+	// Error! A slot can't be called like an object...
+	// [TODO] Write an error message into the log? (with current script line etc.)
+
+	// Done
+	return 0;
+}
+
+void RTTIObjectSlotPointer::CallMetamethod(lua_State *pLuaState)
+{
+	// Error! A slot can't be called like a function...
+	// [TODO] Write an error message into the log? (with current script line etc.)
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptBindings
+} // PLScriptLua

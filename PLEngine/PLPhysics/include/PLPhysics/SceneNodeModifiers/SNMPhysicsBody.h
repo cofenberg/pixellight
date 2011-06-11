@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
 #include "PLPhysics/SceneNodeModifiers/SNMPhysics.h"
 
@@ -90,12 +89,18 @@ class SNMPhysicsBody : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBody, "PLPhysics", PLPhysics::SNMPhysics, "Abstract physics body scene node modifier")
+		// Attributes
 		pl_attribute(Mass,				float,					0.0f,								ReadWrite,	GetSet,	"Mass of the physics body, 0=static body",				"Min='0.0'")
 		pl_attribute(CenterOfMass,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Relative center of mass",								"")
 		pl_attribute(PositionOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Position offset relative to the scene node (=origin)",	"")
 		pl_attribute(CollisionGroup,	PLGeneral::uint8,		0,									ReadWrite,	GetSet,	"The collision group the body is in (0-31)",			"Min='0' Max='31'")
-		// Overwritten PLScene::SceneNodeModifier variables
+			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",												"")
+		// Slots
+		pl_slot_0(OnActive,		"Called when the scene node active state changed",		"")
+		pl_slot_0(OnPosition,	"Called when the scene node position changed",			"")
+		pl_slot_0(OnRotation,	"Called when the scene node rotation changed",			"")
+		pl_slot_0(OnTransform,	"Called when the transform was changed by the physics",	"")
 	pl_class_end
 
 
@@ -206,35 +211,25 @@ class SNMPhysicsBody : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node active state changed
 		*/
-		void NotifyActive();
+		void OnActive();
 
 		/**
 		*  @brief
 		*    Called when the scene node position changed
 		*/
-		void NotifyPosition();
+		void OnPosition();
 
 		/**
 		*  @brief
 		*    Called when the scene node rotation changed
 		*/
-		void NotifyRotation();
+		void OnRotation();
 
 		/**
 		*  @brief
 		*    Called when the transform was changed by the physics
 		*/
-		void NotifyTransform();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerActive;
-		PLCore::EventHandler<> EventHandlerPosition;
-		PLCore::EventHandler<> EventHandlerRotation;
-		PLCore::EventHandler<> EventHandlerTransform;
+		void OnTransform();
 
 
 	//[-------------------------------------------------------]

@@ -154,7 +154,7 @@ SNRagdoll::SNRagdoll() :
 	InitFrozen(this),
 	Flags(this),
 	DebugFlags(this),
-	EventHandlerUpdate(&SNRagdoll::NotifyUpdate, this),
+	EventHandlerUpdate(&SNRagdoll::OnUpdate, this),
 	m_pWorldContainer(nullptr),
 	m_bEnabled(false),
 	m_pRagdollSkeletonHandler(nullptr),
@@ -972,7 +972,7 @@ void SNRagdoll::ApplyControlTorques()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNRagdoll::NotifyUpdate()
+void SNRagdoll::OnUpdate()
 {
 	MeshHandler *pMeshHandler = GetMeshHandler();
 	if (pMeshHandler) {

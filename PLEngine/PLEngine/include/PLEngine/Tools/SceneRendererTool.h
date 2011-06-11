@@ -28,19 +28,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/Base/Object.h>
 #include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
-	class String;
-}
-namespace PLCore {
-	class DynVar;
-}
 namespace PLRenderer {
 	class SurfacePainter;
 }
@@ -68,7 +62,16 @@ namespace PLEngine {
 *    "SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
 *    one can usually (on standard scene renderer configurations) set directly a background bitmap.
 */
-class SceneRendererTool {
+class SceneRendererTool : public PLCore::Object {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, SceneRendererTool, "PLEngine", PLCore::Object, "Class offering scene renderer tool functionality")
+		// Methods
+		pl_method_3(SetPassAttribute,	pl_ret_type(bool),	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -160,7 +163,7 @@ class SceneRendererTool {
 		*  @return
 		*    'true' if the attribute was set, else 'false'
 		*/
-		PL_API bool SetPassAttribute(const PLGeneral::String &sSceneRendererPassName, const PLGeneral::String &sAttributeName, const PLGeneral::String &sValue) const;
+		PL_API bool SetPassAttribute(PLGeneral::String sSceneRendererPassName, PLGeneral::String sAttributeName, PLGeneral::String sValue) const;
 
 		/**
 		*  @brief

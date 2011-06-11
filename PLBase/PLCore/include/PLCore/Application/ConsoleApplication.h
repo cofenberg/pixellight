@@ -70,7 +70,8 @@ class ConsoleApplication : public Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, ConsoleApplication, "PLCore", PLCore::Object, "Application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

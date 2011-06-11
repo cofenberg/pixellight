@@ -32,6 +32,9 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{03c373d6-f4f5-4998-8cb0-d2f401720102}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Tools">
+      <UniqueIdentifier>{2f07a929-c48d-4ca8-a53d-4745c923a1af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core.cpp">
@@ -84,24 +87,6 @@
     </ClCompile>
     <ClCompile Include="src\Base\Event\EventHandlerDesc.cpp">
       <Filter>Base\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Func\ConstructorDesc.cpp">
-      <Filter>Base\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Func\DynFunc.cpp">
-      <Filter>Base\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Func\DynParams.cpp">
-      <Filter>Base\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Func\FuncDesc.cpp">
-      <Filter>Base\Func</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Tools\ParamsParser.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp">
-      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="src\Base\Var\DynVar.cpp">
       <Filter>Base\Var</Filter>
@@ -162,6 +147,24 @@
     </ClCompile>
     <ClCompile Include="src\Tools\LoaderImpl.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Tools\ParamsParser.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp">
+      <Filter>Base\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\FuncDesc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\ConstructorDesc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\DynFunc.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Base\Func\DynParams.cpp">
+      <Filter>Base\Func</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,57 +245,6 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Event\Slot.h">
       <Filter>Base\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Constructor.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\ConstructorDesc.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\DynFunc.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\DynParams.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Func.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\FuncConstructor.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\FuncDesc.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\FuncFunPtr.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\FuncMemPtr.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Functor.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Method.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Params.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Func\Signature.h">
-      <Filter>Base\Func</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Tools\CompileError.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Tools\ParamsParser.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Tools\ParamsParserXml.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\Base\Tools\TypeTraits.h">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Type\DefaultValue.h">
       <Filter>Base\Type</Filter>
@@ -386,6 +338,63 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Tools\LoaderImpl.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\ParamsParser.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\ParamsParserXml.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\TypeTraits.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Tools\CompileError.h">
+      <Filter>Base\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\DynFunc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\DynParams.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Func.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncConstructor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncDesc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncFunPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncMemPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Functor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Method.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Params.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Signature.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\Constructor.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\ConstructorDesc.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenFunPtr.h">
+      <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\FuncGenMemPtr.h">
+      <Filter>Base\Func</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

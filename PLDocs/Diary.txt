@@ -1,3 +1,9 @@
+>> 07.06.2011
+[CO]
+- "CodingConventions"-documentation: Added "RTTI interface"-section
+
+
+
 >> 25.04.2011
 [CO]
 - PLScript documentation added

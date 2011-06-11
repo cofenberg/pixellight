@@ -98,6 +98,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkyLayer, "PLScene", PLCore::Object, "Sky layer")
+		// Attributes
 		pl_attribute(Type,		pl_enum_type(EType),	Unknown,							ReadWrite,	GetSet,	"Sky layer type",															"")
 		pl_attribute(Position,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer position",														"")
 		pl_attribute(Rotation,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer rotation",														"")
@@ -218,14 +219,16 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNSky, "PLScene", PLScene::SceneNode, "Sky scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Overwritten SceneNode variables
+		// Attributes
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCulling,											ReadWrite,	GetSet,		"Flags",																															"")
 		pl_attribute(MaxDrawDistance,	float,					-10000.0f,											ReadWrite,	ModifyAttr,	"Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other",	"")
 		pl_attribute(AABBMin,			PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,		"Minimum position of the 'scene node space' axis aligned bounding box",																"")
 		pl_attribute(AABBMax,			PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,		"Maximum position of the 'scene node space' axis aligned bounding box",																"")
-		// Overwritten Loadable variables
+			// Overwritten PLCore::Loadable attributes
 		pl_attribute(Filename,			PLGeneral::String,		"",													ReadWrite,	GetSet,		"Sky filename",																														"Type='Sky'")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -298,7 +301,7 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -51,7 +51,8 @@ class SPTexturePreview : public SPPreview {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, SPTexturePreview, "PLRenderer", PLRenderer::SPPreview, "Texture preview surface painter class")
-		pl_constructor_1(ParameterConstructor, Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

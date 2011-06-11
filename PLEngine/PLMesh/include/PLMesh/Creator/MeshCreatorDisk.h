@@ -52,12 +52,14 @@ class MeshCreatorDisk : public MeshCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorDisk, "PLMesh", PLMesh::MeshCreator, "Disk mesh creator class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(InnerRadius,	float,				0.0f,								ReadWrite,	DirectValue,	"Inner radius of the disk (may be zero)",											"")
 		pl_attribute(OuterRadius,	float,				0.5f,								ReadWrite,	DirectValue,	"Outer radius of the disk",															"")
 		pl_attribute(Slices,		PLGeneral::uint32,	20,									ReadWrite,	DirectValue,	"Number of subdivisions around the z-axis",											"")
 		pl_attribute(Loops,			PLGeneral::uint32,	1,									ReadWrite,	DirectValue,	"Number of concentric rings about the origin into which the disk is subdivided",	"")
 		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",																	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

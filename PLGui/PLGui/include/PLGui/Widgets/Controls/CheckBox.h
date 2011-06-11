@@ -51,7 +51,8 @@ class CheckBox : public AbstractToggleButton {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, CheckBox, "PLGui", PLGui::AbstractToggleButton, "A check box that can have two or three states")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -87,14 +87,17 @@ class TestClass2 : public DummyClass, public TestClass1 {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(TESTPLUGIN_RTTI_EXPORT, TestClass2, "TestPlugin", TestClass1, "Yet another test class demonstrating the RTTI features")
+		// Properties
 		pl_properties
-			pl_property	 ("TestInfo",  "This is class TestClass2")
+			pl_property("TestInfo",	"This is class TestClass2")
 		pl_properties_end
-		pl_attribute(Bool,	bool,	true,		ReadWrite, DirectValue,	"Boolean variable",	"")
-		// Overwritten TestClass1 variables
-		pl_attribute(Float,	float,	2.71828f,	ReadWrite, ModifyAttr,	"Euler number",		"")
-		pl_attribute(Flags,	pl_flag_type(TestFlags2),	32, ReadWrite, ModifyAttr,	"Flags test (extended)", "")
-		pl_constructor_0(Create, "Default constructor", "")
+		// Attributes
+		pl_attribute(Bool,	bool,						true,		ReadWrite,	DirectValue,	"Boolean variable",			"")
+			// Overwritten TestClass1 attributes
+		pl_attribute(Float,	float,						2.71828f,	ReadWrite,	ModifyAttr,		"Euler number",				"")
+		pl_attribute(Flags,	pl_flag_type(TestFlags2),	32,			ReadWrite,	ModifyAttr,		"Flags test (extended)",	"")
+		// Constructors
+		pl_constructor_0(Create,	"Default constructor",	"")
 	pl_class_end
 
 

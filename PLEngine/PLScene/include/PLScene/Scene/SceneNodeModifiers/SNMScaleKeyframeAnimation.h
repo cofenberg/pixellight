@@ -85,12 +85,14 @@ class SNMScaleKeyframeAnimation : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMScaleKeyframeAnimation, "PLScene", PLScene::SNMTransform, "Keyframe scale animation scene node modifier class")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Speed,				float,					1.0f,	ReadWrite,	DirectValue,	"Animation playback speed",					"")
 		pl_attribute(FramesPerSecond,	PLGeneral::uint32,		24,		ReadWrite,	DirectValue,	"Frames per second",						"")
 		pl_attribute(Keys,				PLGeneral::String,		"",		ReadWrite,	GetSet,			"Scale keys (x, y and z) chunk filename",	"")
-		// Overwritten SceneNodeModifier variables
+			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",									"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -155,7 +157,7 @@ class SNMScaleKeyframeAnimation : public SNMTransform {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

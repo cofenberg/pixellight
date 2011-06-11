@@ -69,11 +69,8 @@ class Signal : public DESC::EventType {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] pObject
-		*    Pointer to object to which the event belongs
 		*/
-		Signal(typename DESC::ClassType *pObject) :
+		Signal() :
 			DESC::EventType()
 		{
 			Desc.Dummy();

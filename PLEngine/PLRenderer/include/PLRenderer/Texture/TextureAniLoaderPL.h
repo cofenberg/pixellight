@@ -62,14 +62,17 @@ class TextureAniLoaderPL : public TextureAniLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, TextureAniLoaderPL, "PLRenderer", PLRenderer::TextureAniLoader, "Texture animation loader implementation for the PixelLight texture animation XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"tani,TANI")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, TextureAni&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const TextureAni&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	pl_ret_type(bool),	TextureAni&,		PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const TextureAni&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

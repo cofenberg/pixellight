@@ -57,7 +57,7 @@ void SNCellPortal::SetTargetCell(const String &sValue)
 		SceneNode *pCell = m_pTargetCell->GetElement();
 		if (pCell) {
 			// Disconnect event handlers
-			pCell->EventContainer.Disconnect(&EventHandlerCellContainerPositionRotationScale);
+			pCell->SignalContainer.Disconnect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventPosition.Disconnect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventRotation.Disconnect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventScale.   Disconnect(&EventHandlerCellContainerPositionRotationScale);
@@ -85,7 +85,7 @@ void SNCellPortal::SetTargetCell(const String &sValue)
 SNCellPortal::SNCellPortal() :
 	TargetCell(this),
 	Flags(this),
-	EventHandlerCellContainerPositionRotationScale(&SNCellPortal::NotifyCellContainerPositionRotationScale, this),
+	EventHandlerCellContainerPositionRotationScale(&SNCellPortal::OnCellContainerPositionRotationScale, this),
 	m_pTargetCell(new SceneNodeHandler())
 {
 	// Set the internal portal flag
@@ -113,7 +113,7 @@ SCCell *SNCellPortal::GetTargetCellInstance()
 			m_pTargetCell->SetElement(pCell);
 
 			// Connect event handlers
-			pCell->EventContainer.Connect(&EventHandlerCellContainerPositionRotationScale);
+			pCell->SignalContainer.Connect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventPosition. Connect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventRotation. Connect(&EventHandlerCellContainerPositionRotationScale);
 			pCell->GetTransform().EventScale.    Connect(&EventHandlerCellContainerPositionRotationScale);
@@ -159,7 +159,7 @@ const Matrix3x4 &SNCellPortal::GetWarpMatrix()
 *  @brief
 *    Called when the target cell container, position, rotation or scale changed
 */
-void SNCellPortal::NotifyCellContainerPositionRotationScale()
+void SNCellPortal::OnCellContainerPositionRotationScale()
 {
 	// We need to recalculate the warp matrix
 	m_nInternalPortalFlags |= RecalculateWarpMatrix;

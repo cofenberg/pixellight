@@ -75,11 +75,12 @@ class SNCoordinateAxis : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCoordinateAxis, "PLScene", PLScene::SceneNode, "Abstract base scene node for coordinate axis visualisation")
+		// Attributes
 		pl_attribute(Width,		float,					1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
 		pl_attribute(XColor,	PLGraphics::Color4,		PLGraphics::Color4(1.0f, 0.0f, 0.0f, 1.0f),	ReadWrite,	DirectValue,	"Color of the x-axis",										"")
 		pl_attribute(YColor,	PLGraphics::Color4,		PLGraphics::Color4(0.0f, 1.0f, 0.0f, 1.0f),	ReadWrite,	DirectValue,	"Color of the y-axis",										"")
 		pl_attribute(ZColor,	PLGraphics::Color4,		PLGraphics::Color4(0.0f, 0.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color of the z-axis",										"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",													"")
 	pl_class_end
 

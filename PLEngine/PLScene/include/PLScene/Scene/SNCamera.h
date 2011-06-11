@@ -107,18 +107,21 @@ class SNCamera : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCamera, "PLScene", PLScene::SceneNode, "PixelLight standard camera scene node")
+		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconCamera.dds")
+			pl_property("Icon",	"Data/Textures/IconCamera.dds")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(FOV,					float,						45.0f,		ReadWrite,	GetSet,	"Field of view in degree",																									"Min='10.0' Max='170.0'")
 		pl_attribute(Aspect,				float,						1.0f,		ReadWrite,	GetSet,	"Aspect factor",																											"")
 		pl_attribute(ZNear,					float,						0.01f,		ReadWrite,	GetSet,	"Near clipping plane",																										"")
 		pl_attribute(ZFar,					float,						1000.0f,	ReadWrite,	GetSet,	"Far clipping plane",																										"")
 		pl_attribute(SceneRendererFilename,	PLGeneral::String,			"",			ReadWrite,	GetSet,	"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,	"Flags",																													"")
 		pl_attribute(DebugFlags,			pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,	"Debug flags",																												"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -377,7 +380,7 @@ class SNCamera : public SceneNode {
 		*  @brief
 		*    Called when the scene node position or rotation changed
 		*/
-		void NotifyPositionRotation();
+		void OnPositionRotation();
 
 		/**
 		*  @brief

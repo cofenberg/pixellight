@@ -51,7 +51,8 @@ class RadioButton : public AbstractToggleButton {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, RadioButton, "PLGui", PLGui::AbstractToggleButton, "A radio button")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

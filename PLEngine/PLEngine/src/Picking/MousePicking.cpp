@@ -47,8 +47,8 @@ namespace PLEngine {
 *    Constructor
 */
 MousePicking::MousePicking(PLGui::Widget *pWidget, SNCamera *pCamera) :
-	EventHandlerWidgetDestroy(&MousePicking::NotifyWidgetDestroy, this),
-	EventHandlerCameraDestroy(&MousePicking::NotifyCameraDestroy, this),
+	EventHandlerWidgetDestroy(&MousePicking::OnWidgetDestroy, this),
+	EventHandlerCameraDestroy(&MousePicking::OnCameraDestroy, this),
 	m_pWidget(pWidget),
 	m_pCamera(pCamera)
 {
@@ -79,14 +79,14 @@ void MousePicking::SetWidget(Widget *pWidget)
 {
 	// Disconnect event handler
 	if (m_pWidget)
-		m_pWidget->EventDestroy.Disconnect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Disconnect(&EventHandlerWidgetDestroy);
 
 	// Set new widget
 	m_pWidget = pWidget;
 
 	// Connect event handler
 	if (m_pWidget)
-		m_pWidget->EventDestroy.Connect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Connect(&EventHandlerWidgetDestroy);
 }
 
 /**
@@ -106,14 +106,14 @@ void MousePicking::SetCamera(SNCamera *pCamera)
 {
 	// Disconnect event handler
 	if (m_pCamera)
-		m_pCamera->EventDestroy.Disconnect(&EventHandlerCameraDestroy);
+		m_pCamera->SignalDestroy.Disconnect(&EventHandlerCameraDestroy);
 
 	// Set new camera
 	m_pCamera = pCamera;
 
 	// Connect event handler
 	if (m_pCamera)
-		m_pCamera->EventDestroy.Connect(&EventHandlerCameraDestroy);
+		m_pCamera->SignalDestroy.Connect(&EventHandlerCameraDestroy);
 }
 
 /**
@@ -179,7 +179,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 *  @brief
 *    Called when a widget was destroyed
 */
-void MousePicking::NotifyWidgetDestroy()
+void MousePicking::OnWidgetDestroy()
 {
 	m_pWidget = nullptr;
 }
@@ -188,7 +188,7 @@ void MousePicking::NotifyWidgetDestroy()
 *  @brief
 *    Called when a camera was destroyed
 */
-void MousePicking::NotifyCameraDestroy()
+void MousePicking::OnCameraDestroy()
 {
 	m_pCamera = nullptr;
 }

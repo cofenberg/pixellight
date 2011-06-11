@@ -89,7 +89,7 @@ SNEngineInformation::SNEngineInformation() :
 	InfoFlags(this),
 	ProfilingMaterial(this),
 	Flags(this),
-	EventHandlerUpdate(&SNEngineInformation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNEngineInformation::OnUpdate, this),
 	m_sProfilingMaterial("Data/Effects/PLProfiling.plfx"),
 	m_bProfilingMaterial(false),
 	m_pProfilingMaterial(new MaterialHandler())
@@ -222,7 +222,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNEngineInformation::NotifyUpdate()
+void SNEngineInformation::OnUpdate()
 {
 	// Check profiling keys
 	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {

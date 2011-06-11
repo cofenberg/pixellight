@@ -51,7 +51,8 @@ class MenuBar : public AbstractMenu {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, MenuBar, "PLGui", PLGui::AbstractMenu, "Menu bar widget")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

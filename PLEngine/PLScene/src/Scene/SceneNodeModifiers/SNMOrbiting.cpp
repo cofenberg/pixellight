@@ -90,7 +90,7 @@ float SNMOrbiting::GetDistance()
 {
 	// Is the distance to the target scene node already initialized?
 	if (m_fDistance < 0.0f && IsActive())
-		NotifyPositionRotationUpdate();
+		OnPositionRotationUpdate();
 
 	// Return the distance
 	return m_fDistance;
@@ -123,8 +123,8 @@ SNMOrbiting::SNMOrbiting(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Offset(this),
 	UpVector(this),
 	Pan(this),
-	EventHandlerDrawDebug			  (&SNMOrbiting::NotifyDrawDebug,			   this),
-	EventHandlerPositionRotationUpdate(&SNMOrbiting::NotifyPositionRotationUpdate, this),
+	EventHandlerDrawDebug			  (&SNMOrbiting::OnDrawDebug,			   this),
+	EventHandlerPositionRotationUpdate(&SNMOrbiting::OnPositionRotationUpdate, this),
 	m_fMinDistance(-1),
 	m_fMaxDistance(-1),
 	m_fDistance(-1),
@@ -152,7 +152,7 @@ void SNMOrbiting::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
@@ -160,7 +160,7 @@ void SNMOrbiting::OnActivate(bool bActivate)
 			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
 		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
@@ -249,7 +249,7 @@ bool SNMOrbiting::GetTargetPosition(Vector3 &vPos) const
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMOrbiting::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMOrbiting::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Get the position of the target scene node
 	Vector3 vTargetPos;
@@ -268,7 +268,7 @@ void SNMOrbiting::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 *  @brief
 *    Called on scene node position or rotation change or update request
 */
-void SNMOrbiting::NotifyPositionRotationUpdate()
+void SNMOrbiting::OnPositionRotationUpdate()
 {
 	if (m_bPositionListening) {
 		// Get the position of the target scene node

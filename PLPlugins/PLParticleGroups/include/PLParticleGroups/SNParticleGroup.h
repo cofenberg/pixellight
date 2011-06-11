@@ -97,15 +97,17 @@ class SNParticleGroup : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, SNParticleGroup, "PLParticleGroups", PLScene::SceneNode, "Abstract particle group scene node")
+		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconParticles.dds")
+			pl_property("Icon",	"Data/Textures/IconParticles.dds")
 		pl_properties_end
+		// Attributes
 		pl_attribute(Material,					PLGeneral::String,		"Data/Effects/DefaultParticle.plfx",		ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(GlobalColor,				PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Global particle color",							"")
 		pl_attribute(Particles,					PLGeneral::uint32,		10,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
 		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
 		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
-		// Overwritten SceneNode variables
+			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,						pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",											"")
 	pl_class_end
 

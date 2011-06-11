@@ -157,7 +157,7 @@ class VisContainer : public VisNode {
 		*  @brief
 		*    Called when the scene node assigned with this visibililty container was destroyed
 		*/
-		void NotifyDestroy();
+		void OnDestroy();
 
 		/**
 		*  @brief

@@ -56,7 +56,7 @@ PGStretch::PGStretch() :
 	Color(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGStretch::NotifyUpdate, this),
+	EventHandlerUpdate(&PGStretch::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -104,7 +104,7 @@ void PGStretch::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGStretch::NotifyUpdate()
+void PGStretch::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

@@ -96,7 +96,7 @@ class AnimationManager : public PLGeneral::ElementManager<PLRenderer::Animation>
 		*  @brief
 		*    Called when the frame of an animation manager animation has been changed
 		*/
-		void NotifyFrameChange();
+		void OnFrameChange();
 
 
 	//[-------------------------------------------------------]

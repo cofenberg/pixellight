@@ -78,10 +78,7 @@ class FuncFunPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -89,7 +86,7 @@ class FuncFunPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -129,9 +126,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -139,7 +135,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -179,10 +175,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -190,7 +183,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -229,9 +222,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -239,7 +231,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -278,10 +270,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -289,7 +278,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -327,9 +316,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -337,7 +325,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -375,10 +363,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -386,7 +371,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -423,9 +408,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -433,7 +417,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -470,10 +454,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -481,7 +462,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -517,9 +498,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -527,7 +507,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -563,10 +543,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -574,7 +551,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -609,9 +586,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -619,7 +595,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -654,10 +630,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -665,7 +638,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0,
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -699,9 +672,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<voi
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -709,7 +681,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<voi
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -743,10 +715,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -754,7 +723,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1,
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -787,9 +756,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -797,7 +765,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -830,10 +798,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -841,7 +806,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2,
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -873,9 +838,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6, t7);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -883,7 +847,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -915,10 +879,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5, t6) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -926,7 +887,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3,
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -957,9 +918,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5, t6);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -967,7 +927,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -998,10 +958,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4,
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4, t5);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4, t5) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1009,7 +966,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4,
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1039,9 +996,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4, t5);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1049,7 +1005,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1079,10 +1035,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3, t4);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3, t4) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1090,7 +1043,7 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1119,9 +1072,8 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3, t4);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1129,7 +1081,7 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1158,10 +1110,7 @@ class FuncFunPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2, t3);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2, t3) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1169,7 +1118,7 @@ class FuncFunPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1197,9 +1146,8 @@ class FuncFunPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2, t3);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1207,7 +1155,7 @@ class FuncFunPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1235,10 +1183,7 @@ class FuncFunPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1, t2);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1, t2) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1246,7 +1191,7 @@ class FuncFunPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1273,9 +1218,8 @@ class FuncFunPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1, t2);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1283,7 +1227,7 @@ class FuncFunPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1310,10 +1254,7 @@ class FuncFunPtr<R, T0, T1> : public Func<R, T0, T1> {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0, t1);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0, t1) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1321,7 +1262,7 @@ class FuncFunPtr<R, T0, T1> : public Func<R, T0, T1> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1347,9 +1288,8 @@ class FuncFunPtr<void, T0, T1> : public Func<void, T0, T1> {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0, t1);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1357,7 +1297,7 @@ class FuncFunPtr<void, T0, T1> : public Func<void, T0, T1> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1383,10 +1323,7 @@ class FuncFunPtr<R, T0> : public Func<R, T0> {
 		}
 
 		virtual _R operator ()(_T0 t0) {
-			if (m_pFunc)
-				return (*m_pFunc)(t0);
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)(t0) : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1394,7 +1331,7 @@ class FuncFunPtr<R, T0> : public Func<R, T0> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1419,9 +1356,8 @@ class FuncFunPtr<void, T0> : public Func<void, T0> {
 		}
 
 		virtual void operator ()(_T0 t0) {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)(t0);
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1429,7 +1365,7 @@ class FuncFunPtr<void, T0> : public Func<void, T0> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1454,10 +1390,7 @@ class FuncFunPtr<R> : public Func<R> {
 		}
 
 		virtual _R operator ()() {
-			if (m_pFunc)
-				return (*m_pFunc)();
-			else
-				return DefaultValue<R>::Default();
+			return m_pFunc ? (*m_pFunc)() : DefaultValue<R>::Default();
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1465,7 +1398,7 @@ class FuncFunPtr<R> : public Func<R> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 /**
@@ -1489,9 +1422,8 @@ class FuncFunPtr<void> : public Func<void> {
 		}
 
 		virtual void operator ()() {
-			if (m_pFunc) {
+			if (m_pFunc)
 				(*m_pFunc)();
-			}
 		}
 
 		virtual DynFunc *Clone() const {
@@ -1499,7 +1431,7 @@ class FuncFunPtr<void> : public Func<void> {
 		}
 
 	private:
-		FUNC m_pFunc;	/**< Function pointer */
+		FUNC m_pFunc;	/**< Function pointer, can be a null pointer */
 };
 
 

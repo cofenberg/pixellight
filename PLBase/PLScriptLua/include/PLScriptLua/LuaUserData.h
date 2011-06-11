@@ -57,6 +57,23 @@ class LuaUserData : private PLGeneral::RefCount<LuaUserData> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Lua user data types
+		*/
+		enum EType {
+			TypeObjectPointer             = 0,	/**< Object pointer */
+			TypeObjectMethodPointer       = 1,	/**< Object method pointer */
+			TypeObjectSignalPointer       = 2,	/**< Object signal pointer */
+			TypeObjectSignalMethodPointer = 3,	/**< Object signal method pointer */
+			TypeObjectSlotPointer         = 4	/**< Object slot pointer */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
@@ -106,6 +123,20 @@ class LuaUserData : private PLGeneral::RefCount<LuaUserData> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Return the Lua user data type
+		*
+		*  @return
+		*    The Lua user data type
+		*/
+		EType GetType() const;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
@@ -115,8 +146,10 @@ class LuaUserData : private PLGeneral::RefCount<LuaUserData> {
 		*
 		*  @param[in] cScript
 		*    The owner script instance
+		*  @param[in] nType
+		*    The Lua user data type
 		*/
-		LuaUserData(Script &cScript);
+		LuaUserData(Script &cScript, EType nType);
 
 		/**
 		*  @brief
@@ -189,6 +222,13 @@ class LuaUserData : private PLGeneral::RefCount<LuaUserData> {
 	//[-------------------------------------------------------]
 	protected:
 		Script *m_pScript;	/**< The owner script instance, always valid! */
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		EType m_nType;	/**< The Lua user data type */
 
 
 	//[-------------------------------------------------------]

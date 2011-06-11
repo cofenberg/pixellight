@@ -56,7 +56,8 @@ class DragDropWidget : public PLGui::ContainerWidget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, DragDropWidget, "", PLGui::ContainerWidget, "Test widget that shows drag&drop functionality")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

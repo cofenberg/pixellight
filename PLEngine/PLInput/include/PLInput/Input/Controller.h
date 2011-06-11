@@ -75,16 +75,15 @@ class Controller : public PLCore::Object {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLINPUT_RTTI_EXPORT, Controller, "PLInput", PLCore::Object, "Input controller base class")
-		// Events
-		pl_signal_1(OnActivate,		bool,		"Controller has been activated or deactivated", "")
-		pl_signal_1(OnControl,		Control*,	"Control event has occured",					"")
-		pl_signal_0(OnChanged,					"Controller state has changed",					"")
-
 		// Attributes
-		pl_attribute(Type,			pl_enum_type(EControllerType),	ControllerVirtual,	ReadOnly,  GetSet, "Controller type",			"")
-		pl_attribute(Name,			PLGeneral::String,				"",					ReadOnly,  GetSet, "Controller name",			"")
-		pl_attribute(Description,	PLGeneral::String,				"",					ReadOnly,  GetSet, "Controller description",	"")
-		pl_attribute(Active,		bool,							true,				ReadWrite, GetSet, "State of controller",		"")
+		pl_attribute(Type,			pl_enum_type(EControllerType),	ControllerVirtual,	ReadOnly,	GetSet,	"Controller type",			"")
+		pl_attribute(Name,			PLGeneral::String,				"",					ReadOnly,	GetSet,	"Controller name",			"")
+		pl_attribute(Description,	PLGeneral::String,				"",					ReadOnly,	GetSet,	"Controller description",	"")
+		pl_attribute(Active,		bool,							true,				ReadWrite,	GetSet,	"State of controller",		"")
+		// Signals
+		pl_signal_1(OnActivate,	bool,		"Controller has been activated or deactivated",	"")
+		pl_signal_1(OnControl,	Control*,	"Control event has occured",					"")
+		pl_signal_0(OnChanged,				"Controller state has changed",					"")
 	pl_class_end
 
 

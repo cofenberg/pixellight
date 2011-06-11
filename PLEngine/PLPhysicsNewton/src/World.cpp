@@ -499,8 +499,8 @@ int World::OnAABBOverlap(const NewtonMaterial *pMaterial, const NewtonBody *pNew
 						// Create the 'ContactInformation'-instance on the runtime-stack
 						PLPhysics::ContactInformation cContactInformation(*pBody1, *pBody2);
 
-						// Emit event
-						cWorld.EventContact(cContactInformation);
+						// Emit signal
+						cWorld.SignalContact(cContactInformation);
 
 						// Return one the tell Newton the application wants to proccess this contact? (0=ignore, 1=use it)
 						return cContactInformation.IsContactIgnored() ? 0 : 1;

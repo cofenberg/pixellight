@@ -86,8 +86,10 @@ class RTTIObjectPointer : public LuaUserData {
 		*    The owner script instance
 		*  @param[in] pRTTIObject
 		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] nType
+		*    The Lua user data type
 		*/
-		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject);
+		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject, EType nType = TypeObjectPointer);
 
 		/**
 		*  @brief

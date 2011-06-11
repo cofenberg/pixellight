@@ -53,8 +53,8 @@ pl_implement_class(SNProjectile)
 */
 SNProjectile::SNProjectile() :
 	Direction(this),
-	EventHandlerUpdate(&SNProjectile::NotifyUpdate, this),
-	EventHandlerSceneNode(&SNProjectile::NotifySceneNode, this)
+	SlotOnUpdate(this),
+	SlotOnSceneNode(this)
 {
 	// Set the bounding box
 	SetAABoundingBox(AABoundingBox(-3.0f, -3.0f, -1.0f, 3.0f, 3.0f, 1.0f));
@@ -76,7 +76,7 @@ SNProjectile::~SNProjectile()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNProjectile::NotifyUpdate()
+void SNProjectile::OnUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -94,7 +94,7 @@ void SNProjectile::NotifyUpdate()
 		SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 		if (pSceneQuery) {
 			// Connect event handler
-			pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);
+			pSceneQuery->SignalSceneNode.Connect(&SlotOnSceneNode);
 
 			// Setup axis aligned bounding box
 			pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
@@ -113,7 +113,7 @@ void SNProjectile::NotifyUpdate()
 *  @brief
 *    Called when a scene node was found
 */
-void SNProjectile::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void SNProjectile::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// Is this projectile still active?
 	if (IsActive()) {
@@ -155,9 +155,9 @@ void SNProjectile::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }
 

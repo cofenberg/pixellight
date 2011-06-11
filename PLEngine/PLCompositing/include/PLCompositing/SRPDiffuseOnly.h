@@ -120,8 +120,9 @@ class SRPDiffuseOnly : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnly, "PLCompositing", PLScene::SceneRendererPass, "Abstract diffuse only scene renderer pass, can also be used as depth only renderer pass")
+		// Attributes
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",	"")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",				"")
 	pl_class_end
 

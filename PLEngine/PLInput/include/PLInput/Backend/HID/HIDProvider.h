@@ -51,7 +51,8 @@ class HIDProvider : public Provider {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLINPUT_RTTI_EXPORT, HIDProvider, "PLInput", PLInput::Provider, "Input provider for HID devices")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

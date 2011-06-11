@@ -8,11 +8,15 @@ boxRotation = 0
 --[-------------------------------------------------------]
 --[ Global functions                                      ]
 --[-------------------------------------------------------]
+--@brief
+--  Update function called by C++
 function Update()
 	UpdateBox()
 	UpdateSoldier()
 end
 
+--@brief
+--  Update the box
 function UpdateBox()
 	-- Update our box rotation
 	boxRotation = boxRotation + PL.Timing.GetTimeDifference()*10
@@ -24,6 +28,8 @@ function UpdateBox()
 	end
 end
 
+--@brief
+--  Update the soldier
 function UpdateSoldier()
 	-- Update our timer
 	soldierTimer = soldierTimer + PL.Timing.GetTimeDifference()

@@ -70,7 +70,7 @@ namespace PLMesh {
 *    Constructor
 */
 MeshHandler::MeshHandler() :
-	EventHandlerAnimationFrameChange(&MeshHandler::NotifyAnimationFrameChange, this),
+	EventHandlerAnimationFrameChange(&MeshHandler::OnAnimationFrameChange, this),
 	m_pRenderer(nullptr),
 	m_pMesh(nullptr),
 	m_pVertexBuffer(nullptr),
@@ -1549,7 +1549,7 @@ Material *MeshHandler::AddMaterial(Material *pMaterial)
 *  @brief
 *    Called when the frame of an animation manager animation has been changed
 */
-void MeshHandler::NotifyAnimationFrameChange()
+void MeshHandler::OnAnimationFrameChange()
 {
 	// Relevant data 'may' have been changed and we 'may' need to update the mesh
 	m_bMeshUpdateRequired = true;

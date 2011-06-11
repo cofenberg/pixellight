@@ -51,7 +51,8 @@ class BluetoothProvider : public Provider {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLINPUT_RTTI_EXPORT, BluetoothProvider, "PLInput", PLInput::Provider, "Input provider for Bluetooth devices")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

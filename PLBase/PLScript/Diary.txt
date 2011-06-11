@@ -1,4 +1,31 @@
-﻿>> 05.06.2011
+﻿>> 10.06.2011
+[CO]
+- PLScriptLua: RTTI signals now have some build in methods. When writing e.g.
+    object.MySignal.Connect(object.OnMyEvent)
+  the RTTI slot "OnMyEvent" of our RTTI class instance "object" is connected with the RTTI signal "MySignal" of our RTTI class instance "object".
+  To disconnect, just use "Disconnect" instead of "Connect".
+		
+
+
+>> 09.06.2011
+[CO]
+- Lua is now an recommended external dependency and will be the script backend which is within the official PixelLight SDK. The answer for "Why Lua
+  and not Python, JavaScript or AngelScript?!" is quite simple: Right now, the Lua backend is the most advanced one because Lua and it's C-API is mostly
+  intuitively to use and there are tons of useful information all over the net how to integrate Lua into a "game engine". Lua is also the most compact
+  of all of those mentioned script languages - the Windows dll is only 124 KiB while v8 (used for JavaScript) is 2,354 KiB! The syntax of Lua is also
+  good to read and something like OOP can be done without totally unreadable tricks as required for JavaScript (did some OOP experiments within "44ScriptOOP").
+- Added "ScriptManager::GetScriptLanguageExtension()" which returns the filename extension of a given script language
+- PLScriptNull: The null backend has no load and runnable scripts -> removed the "null" and "NULL" formats
+
+
+
+>> 06.06.2011
+[CO]
+- PLScriptLua: Something like "sceneNode:SetActive(true)" is now handled correctly, meaning the boolean value "true"
+
+
+
+>> 05.06.2011
 [CO]
 - PLScriptBindings: Added "ScriptBinding_PL"
 - Removed experimental "ScriptBindingScene" because it's no longer needed. Write e.g.
@@ -27,6 +54,12 @@
 	 When I'am done with it, the Lua support should already be quite usable... as for the Python, JavaScript and AngelScript support ... well,
 	 I first have to figure out how to access RTTI objects in a decent way using those script APIs. The strongly typed AngelScript already produced some
 	 headaches. For now, it's important to me that at least one scripting language is usable, so I focus on this point.
+- Removed experimental "ScriptBindingSceneRendererTool" because it's no longer needed. Write e.g.
+      PL.GetApplication():GetSceneRendererTool():SetPassAttribute("DeferredDOF", "Flags", "Inactive")
+  within a Lua script.
+- PLScriptBindings: Renamed "ScriptBindingLog" into "ScriptBinding_PL_Log", "ScriptBindingTiming" into "ScriptBinding_PL_Timing" and
+  "ScriptBindingSystemConsole" into "ScriptBinding_PL_System_Console" so one can directly see the resulting script namespace (I'am not sure whether or
+  not the current solution will stay this way)
 
 
 

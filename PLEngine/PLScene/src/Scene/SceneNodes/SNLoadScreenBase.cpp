@@ -49,8 +49,8 @@ pl_implement_class(SNLoadScreenBase)
 */
 SNLoadScreenBase::SNLoadScreenBase() :
 	Flags(this),
-	EventHandlerContainer   (&SNLoadScreenBase::NotifyContainer,	this),
-	EventHandlerLoadProgress(&SNLoadScreenBase::NotifyLoadProgress, this),
+	EventHandlerContainer   (&SNLoadScreenBase::OnContainer,	this),
+	EventHandlerLoadProgress(&SNLoadScreenBase::OnLoadProgress, this),
 	m_pContainer(nullptr),
 	m_fLoadProgress(0.0f)
 {
@@ -58,7 +58,7 @@ SNLoadScreenBase::SNLoadScreenBase() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Connect event handler
-	EventContainer.Connect(&EventHandlerContainer);
+	SignalContainer.Connect(&EventHandlerContainer);
 }
 
 /**
@@ -86,23 +86,23 @@ float SNLoadScreenBase::GetLoadProgress() const
 *  @brief
 *    Called when the scene node container changed
 */
-void SNLoadScreenBase::NotifyContainer()
+void SNLoadScreenBase::OnContainer()
 {
 	// Disconnect event handler
 	if (m_pContainer)
-		m_pContainer->EventLoadProgress.Disconnect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Disconnect(&EventHandlerLoadProgress);
 
 	// Connect event handler
 	m_pContainer = GetContainer();
 	if (m_pContainer)
-		m_pContainer->EventLoadProgress.Connect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Connect(&EventHandlerLoadProgress);
 }
 
 /**
 *  @brief
 *    Called on load progress
 */
-void SNLoadScreenBase::NotifyLoadProgress(float fLoadProgress)
+void SNLoadScreenBase::OnLoadProgress(float fLoadProgress)
 {
 	m_fLoadProgress = fLoadProgress;
 }

@@ -69,10 +69,11 @@ class SRPDebugWireframes : public SRPDebug {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDebugWireframes, "PLCompositing", PLCompositing::SRPDebug, "Abstract scene renderer pass drawing just simple wireframes")
+		// Attributes
 		pl_attribute(LineWidth,			float,					1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",										"Min='1.0'")
 		pl_attribute(LineColor,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 0.4f),	ReadWrite,	DirectValue,	"Line color",																					"")
 		pl_attribute(MaxDrawDistance,	float,					20.0f,										ReadWrite,	DirectValue,	"Maximum draw distance of wireframes to the camera, if less or equal 0, there's no limitation",	"")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																						"")
 	pl_class_end
 

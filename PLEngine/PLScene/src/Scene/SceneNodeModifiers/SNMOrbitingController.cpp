@@ -55,7 +55,7 @@ pl_implement_class(SNMOrbitingController)
 */
 SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
 	InputSemantic(this),
-	EventHandlerUpdate(&SNMOrbitingController::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMOrbitingController::OnUpdate, this),
 	m_pController(new OrbitingController())
 {
 }
@@ -112,7 +112,7 @@ void SNMOrbitingController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMOrbitingController::NotifyUpdate()
+void SNMOrbitingController::OnUpdate()
 {
 	// Check if input is active
 	if (m_pController->GetActive()) {

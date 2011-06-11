@@ -67,7 +67,8 @@ class World : public PLPhysics::World, public NxUserContactModify {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICSPHYSX_RTTI_EXPORT, World, "PLPhysicsPhysX", PLPhysics::World, "PhysX physics world base class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

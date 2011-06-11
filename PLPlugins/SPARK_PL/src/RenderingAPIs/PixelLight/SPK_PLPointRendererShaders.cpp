@@ -69,8 +69,8 @@ SPK_PLPointRendererShaders *SPK_PLPointRendererShaders::Create(PLRenderer::Rende
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 SPK_PLPointRendererShaders::SPK_PLPointRendererShaders(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fSize) : SPK_PLPointRenderer(cRenderer, fSize),
-	m_sShaderLanguage(sShaderLanguage),
 	m_pEventHandlerDirty(new PLCore::EventHandler<PLRenderer::Program*>(&SPK_PLPointRendererShaders::OnDirty, this)),
+	m_sShaderLanguage(sShaderLanguage),
 	m_pVertexShader(nullptr),
 	m_pFragmentShader(nullptr),
 	m_pProgram(nullptr),

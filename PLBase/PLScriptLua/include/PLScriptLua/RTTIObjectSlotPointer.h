@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSceneRendererTool.h               *
+ *  File: RTTIObjectSlotPointer.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,29 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTBINDINGS_SCENERENDERERTOOL_H__
-#define __PLSCRIPTBINDINGS_SCENERENDERERTOOL_H__
+#ifndef __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__
+#define __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include "PLScriptLua/RTTIObjectPointer.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class DynEventHandler;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScriptBindings {
+namespace PLScriptLua {
 
 
 //[-------------------------------------------------------]
@@ -42,28 +50,9 @@ namespace PLScriptBindings {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene renderer tool script binding class
+*    RTTI object slot pointer
 */
-class ScriptBindingSceneRendererTool : public PLScript::ScriptBinding {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBindingSceneRendererTool, "PLScriptBindings", PLScript::ScriptBinding, "Scene renderer tool script binding class")
-		pl_properties
-			pl_property("Namespace", "PL.Application.SceneRendererTool")
-		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_3(SetPassAttribute, bool, PLGeneral::String, PLGeneral::String, PLGeneral::String, "Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter", "")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		bool SetPassAttribute(PLGeneral::String sSceneRendererPassName, PLGeneral::String sAttributeName, PLGeneral::String sValue);
+class RTTIObjectSlotPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
@@ -73,14 +62,46 @@ class ScriptBindingSceneRendererTool : public PLScript::ScriptBinding {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynEventHandler
+		*    Pointer to the RTTI object slot to wrap, can be a null pointer
 		*/
-		ScriptBindingSceneRendererTool();
+		RTTIObjectSlotPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEventHandler *pDynEventHandler);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ScriptBindingSceneRendererTool();
+		virtual ~RTTIObjectSlotPointer();
+
+		/**
+		*  @brief
+		*    Returns the pointer to the RTTI object slot to wrap
+		*
+		*  @return
+		*    Pointer to the RTTI object slot to wrap, can be a null pointer
+		*/
+		PLCore::DynEventHandler *GetDynEventHandler() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual LuaUserData functions               ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual int IndexMetamethod(lua_State *pLuaState);
+		virtual int NewIndexMetamethod(lua_State *pLuaState);
+		virtual void CallMetamethod(lua_State *pLuaState);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCore::DynEventHandler *m_pDynEventHandler;	/**< Pointer to the RTTI object slot to wrap, can be a null pointer */
 
 
 };
@@ -89,7 +110,7 @@ class ScriptBindingSceneRendererTool : public PLScript::ScriptBinding {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptBindings
+} // PLScriptLua
 
 
-#endif // __PLSCRIPTBINDINGS_SCENERENDERERTOOL_H__
+#endif // __PLSCRIPTLUA_RTTIOBJECTSLOTPOINTER_H__

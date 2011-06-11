@@ -45,8 +45,9 @@ class TestClass1 : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, TestClass1, "", PLCore::Object, "Test class demonstrating the RTTI features")
-		pl_attribute(Int,	int,	10,			ReadWrite, DirectValue,	"Simple integer",	"")
-		pl_attribute(Float,	float,	3.1415f,	ReadWrite, DirectValue,	"PI",				"")
+		// Attributes
+		pl_attribute(Int,	int,	10,			ReadWrite,	DirectValue,	"Simple integer",	"")
+		pl_attribute(Float,	float,	3.1415f,	ReadWrite,	DirectValue,	"PI",				"")
 	pl_class_end
 
 

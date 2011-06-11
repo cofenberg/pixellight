@@ -53,7 +53,7 @@ pl_implement_class(SNMRotationLinearAnimation)
 */
 SNMRotationLinearAnimation::SNMRotationLinearAnimation(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Velocity(this),
-	EventHandlerUpdate(&SNMRotationLinearAnimation::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMRotationLinearAnimation::OnUpdate, this)
 {
 }
 
@@ -89,7 +89,7 @@ void SNMRotationLinearAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMRotationLinearAnimation::NotifyUpdate()
+void SNMRotationLinearAnimation::OnUpdate()
 {
 	// Is the velocity not null?
 	if (!Velocity.Get().IsNull()) {

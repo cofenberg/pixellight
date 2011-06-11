@@ -60,7 +60,8 @@ class SPTriangleShaders : public SPTriangle {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SPTriangleShaders, "", SPTriangle, "Shaders based triangle surface painter")
-		pl_constructor_1(ParameterConstructor, PLRenderer::Renderer&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLRenderer::Renderer&,	"Parameter constructor",	"")
 	pl_class_end
 
 

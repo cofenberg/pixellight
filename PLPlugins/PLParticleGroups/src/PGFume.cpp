@@ -60,7 +60,7 @@ PGFume::PGFume() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
-	EventHandlerUpdate(&PGFume::NotifyUpdate, this),
+	EventHandlerUpdate(&PGFume::OnUpdate, this),
 	m_bUpdate(false),
 	m_fParticleTime(0.0f),
 	m_bCreateNewParticles(true)
@@ -173,7 +173,7 @@ void PGFume::InitParticle(Particle &cParticle) const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGFume::NotifyUpdate()
+void PGFume::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

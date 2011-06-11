@@ -51,7 +51,7 @@ pl_implement_class(PGDust)
 *    Default constructor
 */
 PGDust::PGDust() :
-	EventHandlerUpdate(&PGDust::NotifyUpdate, this),
+	EventHandlerUpdate(&PGDust::OnUpdate, this),
 	m_bUpdate(false)
 {
 }
@@ -118,7 +118,7 @@ void PGDust::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGDust::NotifyUpdate()
+void PGDust::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

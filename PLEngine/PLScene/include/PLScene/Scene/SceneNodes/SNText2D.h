@@ -71,9 +71,11 @@ class SNText2D : public SNText {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNText2D, "PLScene", PLScene::SNText, "2D text scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Overwritten SceneNode variables
+		// Attributes
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

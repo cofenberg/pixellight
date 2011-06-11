@@ -60,7 +60,7 @@ SNMPhysicsCorrectDistance::SNMPhysicsCorrectDistance(SceneNode &cSceneNode) : SN
 	Target(this),
 	BlendOutTarget(this),
 	BlendOutDistance(this),
-	EventHandlerUpdate(&SNMPhysicsCorrectDistance::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMPhysicsCorrectDistance::OnUpdate, this)
 {
 }
 
@@ -96,7 +96,7 @@ void SNMPhysicsCorrectDistance::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPhysicsCorrectDistance::NotifyUpdate()
+void SNMPhysicsCorrectDistance::OnUpdate()
 {
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();

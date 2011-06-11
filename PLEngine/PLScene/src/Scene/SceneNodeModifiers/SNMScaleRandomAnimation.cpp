@@ -54,7 +54,7 @@ SNMScaleRandomAnimation::SNMScaleRandomAnimation(SceneNode &cSceneNode) : SNMTra
 	Speed(this),
 	Radius(this),
 	FixScale(this),
-	EventHandlerUpdate(&SNMScaleRandomAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMScaleRandomAnimation::OnUpdate, this),
 	m_fTimer(0.0f)
 {
 	// Set initial fixed scale
@@ -93,7 +93,7 @@ void SNMScaleRandomAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMScaleRandomAnimation::NotifyUpdate()
+void SNMScaleRandomAnimation::OnUpdate()
 {
 	// Update timer
 	m_fTimer += Timing::GetInstance()->GetTimeDifference()*Speed;

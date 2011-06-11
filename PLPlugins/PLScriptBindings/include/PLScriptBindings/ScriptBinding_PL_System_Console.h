@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingLog.h                             *
+ *  File: ScriptBinding_PL_System_Console.h              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTBINDINGS_LOG_H__
-#define __PLSCRIPTBINDINGS_LOG_H__
+#ifndef __PLSCRIPTBINDINGS_PL_SYSTEM_CONSOLE_H__
+#define __PLSCRIPTBINDINGS_PL_SYSTEM_CONSOLE_H__
 #pragma once
 
 
@@ -42,25 +42,23 @@ namespace PLScriptBindings {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Log script binding class
+*    System console script binding class
 */
-class ScriptBindingLog : public PLScript::ScriptBinding {
+class ScriptBinding_PL_System_Console : public PLScript::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBindingLog, "PLScriptBindings", PLScript::ScriptBinding, "Log script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL_System_Console, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
+		// Properties
 		pl_properties
-			pl_property("Namespace", "PL.Log")
+			pl_property("Namespace",	"PL.System.Console")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_1(OutputAlways,   void, PLGeneral::String, "Writes the given string into the log ('always' log level)",   "")
-		pl_method_1(OutputCritical, void, PLGeneral::String, "Writes the given string into the log ('critical' log level)", "")
-		pl_method_1(OutputError,    void, PLGeneral::String, "Writes the given string into the log ('error' log level)",    "")
-		pl_method_1(OutputWarning,  void, PLGeneral::String, "Writes the given string into the log ('warning' log level)",  "")
-		pl_method_1(OutputInfo,     void, PLGeneral::String, "Writes the given string into the log ('info' log level)",     "")
-		pl_method_1(OutputDebug,    void, PLGeneral::String, "Writes the given string into the log ('debug' log level)",    "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
+		// Methods
+		pl_method_1(Print,	pl_ret_type(void),	PLGeneral::String,	"Prints the given string into the system console",	"")
 	pl_class_end
 
 
@@ -68,12 +66,7 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		void OutputAlways(PLGeneral::String sText);
-		void OutputCritical(PLGeneral::String sText);
-		void OutputError(PLGeneral::String sText);
-		void OutputWarning(PLGeneral::String sText);
-		void OutputInfo(PLGeneral::String sText);
-		void OutputDebug(PLGeneral::String sText);
+		void Print(PLGeneral::String sText);
 
 
 	//[-------------------------------------------------------]
@@ -84,13 +77,13 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		ScriptBindingLog();
+		ScriptBinding_PL_System_Console();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ScriptBindingLog();
+		virtual ~ScriptBinding_PL_System_Console();
 
 
 };
@@ -102,4 +95,4 @@ class ScriptBindingLog : public PLScript::ScriptBinding {
 } // PLScriptBindings
 
 
-#endif // __PLSCRIPTBINDINGS_LOG_H__
+#endif // __PLSCRIPTBINDINGS_PL_SYSTEM_CONSOLE_H__

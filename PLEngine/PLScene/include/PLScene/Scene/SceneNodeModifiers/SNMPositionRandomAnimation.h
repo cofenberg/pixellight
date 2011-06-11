@@ -56,10 +56,12 @@ class SNMPositionRandomAnimation : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionRandomAnimation, "PLScene", PLScene::SNMTransform, "Random position animation scene node modifier class")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Speed,			float,				1.0f,								ReadWrite,	DirectValue,	"Animation speed",													"")
 		pl_attribute(Radius,		float,				10.0f,								ReadWrite,	DirectValue,	"Animation radius",													"")
 		pl_attribute(FixPosition,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Position, if default, the initial scene node position is used",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -98,7 +100,7 @@ class SNMPositionRandomAnimation : public SNMTransform {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -54,11 +54,11 @@ pl_implement_class(SNMPostProcessWaves)
 *    Constructor
 */
 SNMPostProcessWaves::SNMPostProcessWaves(PLScene::SceneNode &cSceneNode) : SNMPostProcess(cSceneNode),
-	SlotOnSceneNodeUpdate(this),
 	Offset(this),
 	Speed(this),
 	Scale(this),
 	Filename(this),
+	SlotOnSceneNodeUpdate(this),
 	m_fTimer(0.0f)
 {
 	// Overwrite the default setting of the filename

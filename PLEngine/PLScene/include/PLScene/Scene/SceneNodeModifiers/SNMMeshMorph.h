@@ -55,7 +55,9 @@ class SNMMeshMorph : public SNMMesh {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMMeshMorph, "PLScene", PLScene::SNMMesh, "Mesh scene node morph modifier class")
+		// Constructors
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Name,		PLGeneral::String,	"",		ReadWrite,	GetSet,			"Name of the morph target",		"")
 		pl_attribute(Weight,	float,				0.0f,	ReadWrite,	DirectValue,	"Morph target weight",			"")
 		pl_attribute(MinWeight,	float,				0.0f,	ReadWrite,	DirectValue,	"Minimum morph target weight",	"")

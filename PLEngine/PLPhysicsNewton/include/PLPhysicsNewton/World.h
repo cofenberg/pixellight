@@ -75,7 +75,7 @@ class World : public PLPhysics::World {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICSNEWTON_RTTI_EXPORT, World, "PLPhysicsNewton", PLPhysics::World, "Newton physics world base class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(CacheDirectory,		PLGeneral::String,	"",					ReadWrite,	DirectValue,	"Newton physics cache directory, if empty, no caching is used (best to avoid cache problems during development)",		"")
 
 		// [TODO] New RTTI usage
@@ -84,6 +84,8 @@ class World : public PLPhysics::World {
 		//DEFINE_VAR(PL_VAR_ENUM,		m_nThreadPriorityClass,	"",	"None",		"Physics thread priority class (use realtime priority class ONLY if you REALLY need it, 'None' = do not use a thread)",	"",	"Idle=0 BelowNormal=1 Normal=2 AboveNormal=3 High=4 Realtime=5 None=6")
 		//DEFINE_VAR(PL_VAR_ENUM,		m_nThreadPriority,		"",		"Normal",	"Physics thread priority within the priority class it is in",															"",	"Idle=0 Lowest=1 BelowNormal=2 Normal=3 AboveNormal=4 Highest=5 TimeCritical=6")
 
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

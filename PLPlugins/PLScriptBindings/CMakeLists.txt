@@ -8,11 +8,10 @@ define_project(PLScriptBindings)
 ##################################################
 add_sources(
 	src/PLScriptBindings.cpp
-	src/ScriptBindingLog.cpp
-	src/ScriptBindingTiming.cpp
-	src/ScriptBindingSystemConsole.cpp
 	src/ScriptBinding_PL.cpp
-	src/ScriptBindingSceneRendererTool.cpp
+	src/ScriptBinding_PL_Log.cpp
+	src/ScriptBinding_PL_Timing.cpp
+	src/ScriptBinding_PL_System_Console.cpp
 	src/SNMScript.cpp
 )
 

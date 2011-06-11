@@ -66,7 +66,7 @@ void SNMDeactivationOnTimeout::SetTimeout(float fValue)
 */
 SNMDeactivationOnTimeout::SNMDeactivationOnTimeout(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Timeout(this),
-	EventHandlerUpdate(&SNMDeactivationOnTimeout::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMDeactivationOnTimeout::OnUpdate, this),
 	m_fTimeout(5.0f),
 	m_fTimer(0.0f)
 {
@@ -104,7 +104,7 @@ void SNMDeactivationOnTimeout::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMDeactivationOnTimeout::NotifyUpdate()
+void SNMDeactivationOnTimeout::OnUpdate()
 {
 	// Still active?
 	if (m_fTimer < m_fTimeout) {

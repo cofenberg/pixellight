@@ -52,7 +52,8 @@ class ModSnap : public Modifier {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, ModSnap, "PLGui", PLGui::Modifier, "Modifier that snaps a widget to window borders")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

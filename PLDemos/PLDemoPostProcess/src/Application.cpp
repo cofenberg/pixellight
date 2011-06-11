@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
+	SlotOnKeyDown(this),
 	m_nCurrentSelectedModifier(0)
 {
 	// Set application name and title
@@ -83,7 +83,7 @@ Application::~Application()
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed
@@ -262,10 +262,10 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
 	}
 }
 

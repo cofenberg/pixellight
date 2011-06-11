@@ -727,7 +727,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @brief
 		*    Called when the frame of an animation manager animation has been changed
 		*/
-		void NotifyAnimationFrameChange();
+		void OnAnimationFrameChange();
 
 
 	//[-------------------------------------------------------]

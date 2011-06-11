@@ -98,8 +98,8 @@ bool WidgetHandler::SetWidget(Widget *pWidget)
 
 	// Register at widget
 	if (m_pWidget) {
-		// Register destroy-event
-		m_pWidget->EventDestroy.Connect(&EventHandlerDestroy);
+		// Register destroy-signal
+		m_pWidget->SignalDestroy.Connect(&EventHandlerDestroy);
 	}
 
 	// Error!
@@ -115,7 +115,7 @@ void WidgetHandler::Clear()
 	// Check status
 	if (m_pWidget) {
 		// Unregister from widget
-		m_pWidget->EventDestroy.Disconnect(&EventHandlerDestroy);
+		m_pWidget->SignalDestroy.Disconnect(&EventHandlerDestroy);
 
 		// Reset widget pointer
 		m_pWidget = nullptr;

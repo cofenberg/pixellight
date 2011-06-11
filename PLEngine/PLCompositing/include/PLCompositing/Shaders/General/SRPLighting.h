@@ -214,12 +214,14 @@ class SRPLighting : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPLighting, "PLCompositing", PLScene::SceneRendererPass, "Shaders based lighting scene renderer pass implementation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
 		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(LightingIntensity,	float,								1.0f,			ReadWrite,	DirectValue,	"General lighting intensity",																											"")
-		// Overwritten PLScene::SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",																																"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -344,7 +346,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*  @param[in] cMaterial
 		*    Removed material
 		*/
-		void NotifyMaterialRemoved(PLRenderer::Material &cMaterial);
+		void OnMaterialRemoved(PLRenderer::Material &cMaterial);
 
 
 	//[-------------------------------------------------------]

@@ -1,3 +1,10 @@
+>> 09.06.2011
+[CO]
+- Defined the string variable "PL_EXCLUDED_FILE_EXTENSIONS" within "PixelLight.cmake" containing the extensions of the files to exclude
+  when e.g. copying a directory. This way it's possible to exclude scripts from deactivated script languages.
+
+
+
 >> 24.12.2010
 [CO]
 - When using CMake to create Visual Studio 2010 project files a few month ago, I ran into a problem with UAC settings also described at

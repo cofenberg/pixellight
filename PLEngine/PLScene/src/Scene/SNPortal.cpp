@@ -206,7 +206,7 @@ SNPortal::SNPortal() :
 	Flags(this),
 	DebugFlags(this),
 	m_nInternalPortalFlags(RecalculateContainerPolygon),
-	EventHandlerContainerPositionRotationScale(&SNPortal::NotifyContainerPositionRotationScale, this)
+	EventHandlerContainerPositionRotationScale(&SNPortal::OnContainerPositionRotationScale, this)
 {
 	// Overwrite the default setting of the flags
 	SetFlags(GetFlags()|CastShadow|ReceiveShadow);
@@ -218,7 +218,7 @@ SNPortal::SNPortal() :
 	SetVertices("-1.0 -1.0 0.0 -1.0 1.0 0.0 1.0 1.0 0.0 1.0 -1.0 0.0");
 
 	// Connect event handlers
-	EventContainer.Connect(&EventHandlerContainerPositionRotationScale);
+	SignalContainer.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventPosition.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventRotation.Connect(&EventHandlerContainerPositionRotationScale);
 	GetTransform().EventScale.   Connect(&EventHandlerContainerPositionRotationScale);
@@ -240,7 +240,7 @@ SNPortal::~SNPortal()
 *  @brief
 *    Called when the scene node container, position, rotation or scale changed
 */
-void SNPortal::NotifyContainerPositionRotationScale()
+void SNPortal::OnContainerPositionRotationScale()
 {
 	// We need to recalculate the container space portal polygon
 	m_nInternalPortalFlags |= RecalculateContainerPolygon;

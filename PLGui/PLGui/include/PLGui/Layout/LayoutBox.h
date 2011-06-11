@@ -52,8 +52,10 @@ class LayoutBox : public Layout {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, LayoutBox, "PLGui", PLGui::Layout, "Box layout")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_attribute(Orientation, pl_enum_type(EOrientation), Horizontal, ReadWrite, GetSet, "Box orientation", "")
+		// Attributes
+		pl_attribute(Orientation,	pl_enum_type(EOrientation),	Horizontal,	ReadWrite,	GetSet,	"Box orientation",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

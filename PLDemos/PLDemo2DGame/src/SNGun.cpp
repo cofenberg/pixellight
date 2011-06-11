@@ -59,8 +59,8 @@ SNGun::SNGun() :
 	InputSemantic(this),
 	Sound(this),
 	Flags(this),
-	EventHandlerUpdate(&SNGun::NotifyUpdate, this),
-	EventHandlerOnSceneNode(&SNGun::OnSceneNode, this),
+	SlotOnUpdate(this),
+	SlotOnSceneNode(this),
 	m_pController(new GunController()),
 	m_nFrame(0),
 	m_fFrame(0.0f)
@@ -136,7 +136,7 @@ void SNGun::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNGun::NotifyUpdate()
+void SNGun::OnUpdate()
 {
 	// Get the current time difference between the last frame and the current frame
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -206,7 +206,7 @@ void SNGun::NotifyUpdate()
 	SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 	if (pSceneQuery) {
 		// Connect event handler
-		pSceneQuery->EventSceneNode.Connect(&EventHandlerOnSceneNode);
+		pSceneQuery->SignalSceneNode.Connect(&SlotOnSceneNode);
 
 		// Setup axis aligned bounding box
 		pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
@@ -242,8 +242,8 @@ void SNGun::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }

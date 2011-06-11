@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBindingSceneRendererTool.cpp             *
+ *  File: ScriptBinding_PL_System_Console.cpp            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,38 +23,30 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneContainer.h>
-#include <PLEngine/Application/BasicSceneApplication.h>
-#include "PLScriptBindings/ScriptBindingSceneRendererTool.h"
+#include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
+#include "PLScriptBindings/ScriptBinding_PL_System_Console.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
-using namespace PLScene;
-using namespace PLEngine;
 namespace PLScriptBindings {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBindingSceneRendererTool)
+pl_implement_class(ScriptBinding_PL_System_Console)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool ScriptBindingSceneRendererTool::SetPassAttribute(String sSceneRendererPassName, String sAttributeName, String sValue)
+void ScriptBinding_PL_System_Console::Print(String sText)
 {
-	// [TODO] Do any type checks?
-	// Get the basic scene application instance
-	BasicSceneApplication *pBasicSceneApplication = static_cast<BasicSceneApplication*>(BasicSceneApplication::GetApplication());
-
-	// Make the call
-	return pBasicSceneApplication ? pBasicSceneApplication->GetSceneRendererTool().SetPassAttribute(sSceneRendererPassName, sAttributeName, sValue) : false;
+	System::GetInstance()->GetConsole().Print(sText);
 }
 
 
@@ -65,7 +57,7 @@ bool ScriptBindingSceneRendererTool::SetPassAttribute(String sSceneRendererPassN
 *  @brief
 *    Constructor
 */
-ScriptBindingSceneRendererTool::ScriptBindingSceneRendererTool()
+ScriptBinding_PL_System_Console::ScriptBinding_PL_System_Console()
 {
 }
 
@@ -73,7 +65,7 @@ ScriptBindingSceneRendererTool::ScriptBindingSceneRendererTool()
 *  @brief
 *    Destructor
 */
-ScriptBindingSceneRendererTool::~ScriptBindingSceneRendererTool()
+ScriptBinding_PL_System_Console::~ScriptBinding_PL_System_Console()
 {
 }
 

@@ -109,7 +109,7 @@ const String SRPDirectionalLightingShadersMaterial::DOFParams						= "DOFParams"
 *    Default constructor
 */
 SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(RenderStates &cRenderStates, Material &cMaterial, ProgramGenerator &cProgramGenerator) :
-	EventHandlerParameterChanged(&SRPDirectionalLightingShadersMaterial::NotifyParameterChanged, this),
+	EventHandlerParameterChanged(&SRPDirectionalLightingShadersMaterial::OnParameterChanged, this),
 	// General
 	m_pRenderStates(&cRenderStates),
 	m_pMaterial(&cMaterial),
@@ -948,7 +948,7 @@ void SRPDirectionalLightingShadersMaterial::SetupTextureFiltering(Renderer &cRen
 *  @brief
 *    Called when a parameter has been changed (created, destroyed, value changed)
 */
-void SRPDirectionalLightingShadersMaterial::NotifyParameterChanged(Parameter &cParameter)
+void SRPDirectionalLightingShadersMaterial::OnParameterChanged(Parameter &cParameter)
 {
 	// The this cached material is now dirty!
 	m_bSynchronized = false;

@@ -64,9 +64,9 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
-	EventHandlerContact(&Application::NotifyContact, this),
+	SlotOnKeyDown(this),
+	SlotOnKeyUp(this),
+	SlotOnContact(this),
 	m_pLine(nullptr),
 	m_pFallingBox(nullptr),
 	m_bApplyForce(false),
@@ -221,7 +221,7 @@ Body *Application::GetPhysicsBody(SceneNode &cSceneNode) const
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed
@@ -304,7 +304,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a key is released
 */
-void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Apply a force to the small falling physics box?
@@ -327,7 +327,7 @@ void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a contact between two bodies was detected by the physics
 */
-void Application::NotifyContact(ContactInformation &cContactInformation)
+void Application::OnContact(ContactInformation &cContactInformation)
 {
 	// First PING!
 	SceneNode *pSceneNode = GetScene()->GetByName("ContactText_FirstBody");
@@ -389,12 +389,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-		pWidget->EventKeyUp.  Connect(&EventHandlerKeyUp);
-		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalKeyUp.  Connect(&SlotOnKeyUp);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
-			pWidget->GetContentWidget()->EventKeyUp.  Connect(&EventHandlerKeyUp);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyUp.  Connect(&SlotOnKeyUp);
 		}
 	}
 }
@@ -623,7 +623,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Get the physics world
 				World *pPhysicsWorld = static_cast<SCPhysicsWorld*>(pSceneContainer)->GetWorld();
 				if (pPhysicsWorld)
-					pPhysicsWorld->EventContact.Connect(&EventHandlerContact);
+					pPhysicsWorld->SignalContact.Connect(&SlotOnContact);
 			}
 
 			// Set scene container

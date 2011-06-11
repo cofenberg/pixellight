@@ -69,8 +69,12 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyEllipsoid, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics ellipsoid body scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Radius,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Ellipsoid radius along each axis, if null, a ellipsoid 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0 0.0 0.0'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_2(OnDrawDebug,	PLRenderer::Renderer&,	const PLScene::VisNode*,	"Called on scene node debug draw, the used renderer as first parameter, the current visibility node of this scene node as second parameter (can be a null pointer)",	"")
 	pl_class_end
 
 
@@ -115,14 +119,7 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLRenderer::Renderer &, const PLScene::VisNode *> EventHandlerDrawDebug;
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode);
 
 
 	//[-------------------------------------------------------]

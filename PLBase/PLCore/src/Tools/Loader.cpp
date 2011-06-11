@@ -217,16 +217,18 @@ void Loader::InitFormatsList()
 		// Parse formats all supported formats
 		const String sFormats = GetFormats();
 		if (sFormats.GetLength()) {
+			// Setup the tokenizer
 			Tokenizer cTokenizer;
 			cTokenizer.Start(sFormats);
 			cTokenizer.SetDelimiters(" ,\t\r\n");
 			cTokenizer.SetSingleChars("");
+
+			// Register the filename extensions of this loader
 			String sToken = cTokenizer.GetNextToken();
 			while (sToken.GetLength()) {
 				m_lstFormats.Add(sToken);
 				sToken = cTokenizer.GetNextToken();
 			}
-			cTokenizer.Stop();
 		}
 	}
 }

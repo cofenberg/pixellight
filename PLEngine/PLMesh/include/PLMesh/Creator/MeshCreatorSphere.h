@@ -52,10 +52,12 @@ class MeshCreatorSphere : public MeshCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorSphere, "PLMesh", PLMesh::MeshCreator, "Sphere mesh creator class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Sphere radius",							"")
 		pl_attribute(Detail,	PLGeneral::uint32,	20,									ReadWrite,	DirectValue,	"Sphere detail (must be a multiple of 2)",	"")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",							"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

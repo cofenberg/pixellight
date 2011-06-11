@@ -85,6 +85,7 @@ class LoaderImpl : public Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, LoaderImpl, "PLCore", PLCore::Object, "Abstract loader implementation base class, derive your concrete loader implementations from this class")
+		// Properties
 		pl_properties
 			pl_property("Type",		"Unknown")
 			pl_property("Formats",	"")

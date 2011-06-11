@@ -68,8 +68,8 @@ const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
 *    Constructor
 */
 BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
-	EventHandlerSceneNode   (&BasicSceneApplication::NotifySceneNode,    this),
-	EventHandlerLoadProgress(&BasicSceneApplication::NotifyLoadProgress, this),
+	EventHandlerSceneNode   (&BasicSceneApplication::OnSceneNode,    this),
+	EventHandlerLoadProgress(&BasicSceneApplication::OnLoadProgress, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false)
@@ -152,14 +152,14 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 			m_sDefaultSceneRenderer = DefaultSceneRenderer;
 
 			// Sets all scene renderer pass attribute values to their default value
-			GetSceneRendererTool().SetDefaultValues();
+			GetSceneRendererTool()->SetDefaultValues();
 
 			// Assign the first found camera scene node to your surface listener and look for
 			// known key/value data scene nodes
 			SceneQuery *pSceneQuery = pContainer->CreateQuery("PLScene::SQEnumerate");
 			if (pSceneQuery) {
 				// Connect event handler
-				pSceneQuery->EventSceneNode.Connect(&EventHandlerSceneNode);
+				pSceneQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
 
 				// Perform the query
 				pSceneQuery->PerformQuery();
@@ -233,7 +233,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 				// SceneRendererVariables
 				if (pKeyValue && pKeyValue->Key.GetString() == "SceneRendererVariables") {
 					// Sets scene renderer pass attribute values using a string
-					GetSceneRendererTool().SetValues(pKeyValue->Value.GetString());
+					GetSceneRendererTool()->SetValues(pKeyValue->Value.GetString());
 				}
 			}
 		}
@@ -262,20 +262,20 @@ SNCamera *BasicSceneApplication::GetCamera() const
 *  @brief
 *    Get scene renderer tool
 */
-SceneRendererTool &BasicSceneApplication::GetSceneRendererTool()
+SceneRendererTool *BasicSceneApplication::GetSceneRendererTool()
 {
 	// Return scene renderer tool
-	return m_cSceneRendererTool;
+	return &m_cSceneRendererTool;
 }
 
 /**
 *  @brief
 *    Get scene renderer tool
 */
-const SceneRendererTool &BasicSceneApplication::GetSceneRendererTool() const
+const SceneRendererTool *BasicSceneApplication::GetSceneRendererTool() const
 {
 	// Return scene renderer tool
-	return m_cSceneRendererTool;
+	return &m_cSceneRendererTool;
 }
 
 /**
@@ -373,7 +373,7 @@ void BasicSceneApplication::OnCreateRootScene()
 
 				// Connect event handler
 				if (pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer"))
-					static_cast<SceneContainer*>(pSceneContainerNode)->EventLoadProgress.Connect(&EventHandlerLoadProgress);
+					static_cast<SceneContainer*>(pSceneContainerNode)->SignalLoadProgress.Connect(&EventHandlerLoadProgress);
 
 				// Create the 'concrete scene'
 				OnCreateScene(*pSceneContainer);
@@ -463,7 +463,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 *  @brief
 *    Called when a scene node was found
 */
-void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void BasicSceneApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// Is this a camera?
 	if (cSceneNode.IsCamera()) {
@@ -513,7 +513,7 @@ void BasicSceneApplication::NotifySceneNode(SceneQuery &cQuery, SceneNode &cScen
 *  @brief
 *    Called on load progress
 */
-void BasicSceneApplication::NotifyLoadProgress(float fLoadProgress)
+void BasicSceneApplication::OnLoadProgress(float fLoadProgress)
 {
 	// Call the 'update'-function so we can see the progress within the load screen
 	if (m_bHasLoadScreen)

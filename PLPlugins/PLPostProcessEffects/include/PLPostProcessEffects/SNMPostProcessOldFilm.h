@@ -54,10 +54,13 @@ class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessOldFilm, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
-		pl_slot_0		(OnSceneNodeUpdate,							"Slot for SceneNode::EventUpdate", "")
-		// Overloaded SNMPostProcess variables
-		pl_attribute(Filename, PLGeneral::String, "Data/PostProcesses/OldFilm.pp", ReadWrite, ModifyAttr, "Filename of the post process to use", "Type='PostProcess'")
+		// Attributes
+			// Overloaded SNMPostProcess attributes
+		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/OldFilm.pp",	ReadWrite,	ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnSceneNodeUpdate,	"Slot for SceneNode::EventUpdate",	"")
 	pl_class_end
 
 

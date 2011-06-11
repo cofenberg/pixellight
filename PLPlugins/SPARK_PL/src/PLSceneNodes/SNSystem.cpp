@@ -71,7 +71,7 @@ pl_implement_class(SNSystem)
 SNSystem::SNSystem() :
 	ShaderLanguage(this),
 	Flags(this),
-	EventHandlerUpdate(&SNSystem::NotifyUpdate, this),
+	SlotOnUpdate(this),
 	m_pParticleSystem(nullptr),
 	m_bUpdate(false)
 {
@@ -213,9 +213,9 @@ void SNSystem::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }
 
@@ -245,7 +245,7 @@ void SNSystem::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNSystem::NotifyUpdate()
+void SNSystem::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if (m_pParticleSystem && ((GetFlags() & UpdateInvisible) || m_bUpdate)) {

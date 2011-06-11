@@ -76,7 +76,8 @@
 \section{PLScript}
 \begin{itemize}
 \item{Generic script language independent script interface\footnote{The PixelLight SDK comes with Null and Lua (\url{http://www.lua.org/}) backends, within the repository are also experimental JavaScript (using V8, a ECMA-262 compliant JavaScript engine, see \url{http://code.google.com/p/v8/})), Python (\url{http://www.python.org/}) and AngelScript (\url{http://www.angelcode.com/angelscript/}) backends.}}
-\item{Scripting is heavily using PLCore features like the RTTI, therefore adding script bindings or using RTTI objects within scripts is fairly straightforward}
+\item{Supported script features are global variables, global functions\footnote{C++ calls script and script calls C++} and RTTI objects\footnote{Properties, attributes, methods, signals}}
+\item{Scripting is heavily using PLCore features like the RTTI, therefore adding script bindings or using RTTI objects within scripts is fairly straightforward and don't require the writing of thousands of proxy/wrapper classes exposing C++ functionality to script languages}
 \item{Certain parts of PixelLight are exposed to script languages through the loose plugin \emph{PLScriptBindings}}
 \item{Scripting is completely optional, not mandatory}
 \end{itemize}

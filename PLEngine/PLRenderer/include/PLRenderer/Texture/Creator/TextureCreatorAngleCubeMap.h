@@ -54,8 +54,10 @@ class TextureCreatorAngleCubeMap : public TextureCreator {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, TextureCreatorAngleCubeMap, "PLRenderer", PLRenderer::TextureCreator, "Angle cube map (TextureBuffer::R8G8B8) texture creator class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Size,	PLGeneral::uint32,	256,	ReadWrite,	DirectValue,	"Texture size (must be a power of 2)",	"Min='8'")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

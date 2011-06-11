@@ -79,16 +79,19 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMLightRandomAnimation, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class for a random light color animation")
+		// Properties
 		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SNLight")
+			pl_property("SceneNodeClass",	"PLScene::SNLight")
 		pl_properties_end
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Speed,		float,					2.0f,									ReadWrite,	DirectValue,	"Animation speed",	"")
 		pl_attribute(Radius,	float,					0.5f,									ReadWrite,	DirectValue,	"Animation radius",	"")
 		pl_attribute(FixColor,	PLGraphics::Color3,		PLGraphics::Color3(0.5f, 0.5f, 0.5f),	ReadWrite,	DirectValue,	"Fix color",		"")
 		pl_attribute(Color,		PLGraphics::Color3,		PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color to apply",	"")
-		// Overwritten SceneNodeModifier variables
+			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",			"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -127,7 +130,7 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

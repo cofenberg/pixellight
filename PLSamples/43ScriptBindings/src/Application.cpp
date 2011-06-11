@@ -75,9 +75,9 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Calls the bindings script
+*    Runs a script
 */
-void Application::Bindings(const String &sScriptFilename)
+void Application::RunScript(const String &sScriptFilename)
 {
 	// Create the script instance
 	// -> The RTTI script binding "ScriptBindingSample" class instance methods will be automatically available to the script as simple global functions
@@ -93,11 +93,14 @@ void Application::Bindings(const String &sScriptFilename)
 		delete pScript;
 
 		// Print new line
-		System::GetInstance()->GetConsole().Print("--\n\n");
+		System::GetInstance()->GetConsole().Print("--\n");
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
 	}
+
+	// Print new line
+	System::GetInstance()->GetConsole().Print('\n');
 }
 
 
@@ -106,9 +109,26 @@ void Application::Bindings(const String &sScriptFilename)
 //[-------------------------------------------------------]
 void Application::Main()
 {
-	// Run some scripts
-	Bindings("Data/Scripts/43ScriptBindings.lua");
-	Bindings("Data/Scripts/43ScriptBindings.js");
-	Bindings("Data/Scripts/43ScriptBindings.as");
-	Bindings("Data/Scripts/43ScriptBindings.py");
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/43ScriptBindings." + sScriptLanguageExtension);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
+		System::GetInstance()->GetConsole().Print('\n');
+	}
 }

@@ -67,11 +67,13 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SNMPostProcess, "PLCompositing", PLScene::SceneNodeModifier, "Abstract camera scene node post process modifier class")
+		// Properties
+		pl_properties
+			pl_property("SceneNodeClass",	"PLScene::SNCamera")
+		pl_properties_end
+		// Attributes
 		pl_attribute(Filename,		PLGeneral::String,	"",		ReadWrite,	GetSet,			"Filename of the post process to use",														"Type='PostProcess'")
 		pl_attribute(EffectWeight,	float,				1.0f,	ReadWrite,	DirectValue,	"Effect weight, 0 means that this effect has no influence, 1 for the intended influence",	"Min=0 Max=1")
-		pl_properties
-			pl_property("SceneNodeClass", "PLScene::SNCamera")
-		pl_properties_end
 	pl_class_end
 
 

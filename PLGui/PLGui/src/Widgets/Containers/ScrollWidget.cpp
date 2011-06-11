@@ -76,15 +76,15 @@ ScrollWidget::ScrollWidget(Widget *pParent) : ContainerWidget(pParent),
 	m_pScrollBarX = new ScrollBar(this);
 	m_pScrollBarX->SetOrientation(Horizontal);
 	m_pScrollBarX->FitSize();
-	m_pScrollBarX->EventChangeValue.Connect(&SlotOnScrollBarXChanged);
+	m_pScrollBarX->SignalChangeValue.Connect(&SlotOnScrollBarXChanged);
 	m_pScrollBarY = new ScrollBar(this);
 	m_pScrollBarY->SetOrientation(Vertical);
 	m_pScrollBarY->FitSize();
-	m_pScrollBarY->EventChangeValue.Connect(&SlotOnScrollBarYChanged);
+	m_pScrollBarY->SignalChangeValue.Connect(&SlotOnScrollBarYChanged);
 
 	// Create inner content widget
 	m_pInnerWidget = new Widget(m_pContentWidget);
-	m_pInnerWidget->EventSize.Connect(&SlotOnInnerWidgetSize);
+	m_pInnerWidget->SignalSize.Connect(&SlotOnInnerWidgetSize);
 	m_pInnerWidget->SetPos(Vector2i(0, 0));
 	m_pInnerWidget->SetSize(Vector2i(1280, 854));
 	m_pInnerWidget->SetVisible(true);

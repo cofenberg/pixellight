@@ -76,7 +76,8 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLGui::GuiApplication, "Render application class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -353,7 +354,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @brief
 		*    Called when main window was destroyed
 		*/
-		void NotifyDestroy();
+		void OnDestroy();
 
 		/**
 		*  @brief
@@ -362,7 +363,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @param[in] bActivate
 		*    'true' if window is activated, else 'false'
 		*/
-		void NotifyActivate(bool bActivate);
+		void OnActivate(bool bActivate);
 
 
 };

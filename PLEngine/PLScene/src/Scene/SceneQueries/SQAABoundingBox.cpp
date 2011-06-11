@@ -108,8 +108,8 @@ bool SQAABoundingBox::PerformQueryRec(SceneHierarchyNode &cHierarchyNode)
 					// Touch the node
 					pSceneContext->TouchNode(*pSceneNode);
 
-					// Emit event
-					EventSceneNode(*this, *pSceneNode);
+					// Emit signal
+					SignalSceneNode(*this, *pSceneNode);
 					if (m_nFlags & StopQuery)
 						return false; // Stop the query right now
 

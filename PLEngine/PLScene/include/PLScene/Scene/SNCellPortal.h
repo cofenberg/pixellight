@@ -80,10 +80,12 @@ class SNCellPortal : public SNPortal {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCellPortal, "PLScene", PLScene::SNPortal, "Cell-portal scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(TargetCell,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Name of the cell this cell-portal links to (for instance 'Parent.Cell2')",	"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -159,7 +161,7 @@ class SNCellPortal : public SNPortal {
 		*  @brief
 		*    Called when the target cell container, position, rotation or scale changed
 		*/
-		void NotifyCellContainerPositionRotationScale();
+		void OnCellContainerPositionRotationScale();
 
 
 	//[-------------------------------------------------------]

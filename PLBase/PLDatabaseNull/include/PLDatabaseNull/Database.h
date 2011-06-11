@@ -52,7 +52,8 @@ class Database : public PLDatabase::Database {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLDATABASENULL_RTTI_EXPORT, Database, "PLDatabaseNull", PLDatabase::Database, "Null database implementation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -53,7 +53,7 @@ pl_implement_class(SNUFO)
 */
 SNUFO::SNUFO() :
 	Sound(this),
-	EventHandlerUpdate(&SNUFO::NotifyUpdate, this),
+	SlotOnUpdate(this),
 	m_fTimer(0.0f),
 	m_fBombTimer(0.0f)
 {
@@ -83,7 +83,7 @@ SNUFO::~SNUFO()
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNUFO::NotifyUpdate()
+void SNUFO::OnUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
@@ -117,8 +117,8 @@ void SNUFO::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
 	}
 }

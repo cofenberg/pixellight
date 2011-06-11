@@ -63,8 +63,8 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	EventHandlerKeyDown(&Application::NotifyKeyDown, this),
-	EventHandlerKeyUp  (&Application::NotifyKeyUp,   this),
+	SlotOnKeyDown(this),
+	SlotOnKeyUp(this),
 	m_pLine(nullptr),
 	m_pRagdoll(nullptr),
 	m_bApplyForce(false),
@@ -195,7 +195,7 @@ Body *Application::GetPhysicsBody() const
 *  @brief
 *    Called when a key is pressed down
 */
-void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Check whether the escape key was pressed
@@ -252,7 +252,7 @@ void Application::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
 *  @brief
 *    Called when a key is released
 */
-void Application::NotifyKeyUp(uint32 nKey, uint32 nModifiers)
+void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
 {
 	switch (nKey) {
 		// Apply a force to the ragdoll?
@@ -304,12 +304,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-		pWidget->EventKeyUp.  Connect(&EventHandlerKeyUp);
-		// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalKeyUp.  Connect(&SlotOnKeyUp);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
-			pWidget->GetContentWidget()->EventKeyUp.  Connect(&EventHandlerKeyUp);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyUp.  Connect(&SlotOnKeyUp);
 		}
 	}
 }

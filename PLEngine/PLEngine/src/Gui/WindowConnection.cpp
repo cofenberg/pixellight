@@ -48,10 +48,10 @@ namespace PLEngine {
 *    Constructor
 */
 WindowConnection::WindowConnection(Renderer &cRenderer, Widget &cWidget, Widget *pEventWidget) :
-	EventHandlerDestroy(&WindowConnection::NotifyDestroy, this),
-	EventHandlerShow   (&WindowConnection::NotifyShow,    this),
-	EventHandlerHide   (&WindowConnection::NotifyHide,    this),
-	EventHandlerKeyDown(&WindowConnection::NotifyKeyDown, this),
+	EventHandlerDestroy(&WindowConnection::OnDestroy, this),
+	EventHandlerShow   (&WindowConnection::OnShow,    this),
+	EventHandlerHide   (&WindowConnection::OnHide,    this),
+	EventHandlerKeyDown(&WindowConnection::OnKeyDown, this),
 	m_pRenderer(&cRenderer),
 	m_pWidget(&cWidget),
 	m_bFullscreenMode(false),
@@ -62,13 +62,13 @@ WindowConnection::WindowConnection(Renderer &cRenderer, Widget &cWidget, Widget 
 {
 	// Connect event handlers
 	Widget *pWidget = pEventWidget ? pEventWidget : &cWidget;
-	pWidget->EventDestroy.Connect(&EventHandlerDestroy);
-	pWidget->EventShow   .Connect(&EventHandlerShow);
-	pWidget->EventHide   .Connect(&EventHandlerHide);
-	pWidget->EventKeyDown.Connect(&EventHandlerKeyDown);
-	// [TODO] Linux: Currently we need to listen to the content widget key events as well ("focus follows mouse"-topic)
+	pWidget->SignalDestroy.Connect(&EventHandlerDestroy);
+	pWidget->SignalShow   .Connect(&EventHandlerShow);
+	pWidget->SignalHide   .Connect(&EventHandlerHide);
+	pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
+	// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 	if (pWidget->GetContentWidget() != pWidget)
-		pWidget->GetContentWidget()->EventKeyDown.Connect(&EventHandlerKeyDown);
+		pWidget->GetContentWidget()->SignalKeyDown.Connect(&EventHandlerKeyDown);
 }
 
 /**
@@ -346,7 +346,7 @@ void WindowConnection::InitWidget(bool bFullscreen)
 *  @brief
 *    Function that is called when the GUI widget is destroyed
 */
-void WindowConnection::NotifyDestroy()
+void WindowConnection::OnDestroy()
 {
 	// De-init window
 	DeInit();
@@ -356,7 +356,7 @@ void WindowConnection::NotifyDestroy()
 *  @brief
 *    Function that is called when the GUI widget is shown
 */
-void WindowConnection::NotifyShow()
+void WindowConnection::OnShow()
 {
 	// Activate the surface
 	if (GetSurface())
@@ -367,7 +367,7 @@ void WindowConnection::NotifyShow()
 *  @brief
 *    Function that is called when the GUI widget is hidden
 */
-void WindowConnection::NotifyHide()
+void WindowConnection::OnHide()
 {
 	// Deactivate the surface
 	if (GetSurface())
@@ -378,7 +378,7 @@ void WindowConnection::NotifyHide()
 *  @brief
 *    Called when a key is pressed down
 */
-void WindowConnection::NotifyKeyDown(uint32 nKey, uint32 nModifiers)
+void WindowConnection::OnKeyDown(uint32 nKey, uint32 nModifiers)
 {
 	// Fullscreen mode toggle allowed and ALT+ENTER pressed?
 	if (m_bToggleFullscreenMode && nKey == PLGUIKEY_RETURN && (nModifiers & PLGUIMOD_ALT) != 0)

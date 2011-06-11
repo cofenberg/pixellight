@@ -210,7 +210,7 @@ SNCamera::SNCamera() :
 	SceneRendererFilename(this),
 	Flags(this),
 	DebugFlags(this),
-	EventHandlerPositionRotation(&SNCamera::NotifyPositionRotation, this),
+	EventHandlerPositionRotation(&SNCamera::OnPositionRotation, this),
 	m_fFOV(45.0f),
 	m_fAspect(1.0f),
 	m_fZNear(0.01f),
@@ -496,7 +496,7 @@ bool SNCamera::GetViewportCorners(Vector3 &vUpperRight, Vector3 &vLowerRight, Ve
 *  @brief
 *    Called when the scene node position or rotation changed
 */
-void SNCamera::NotifyPositionRotation()
+void SNCamera::OnPositionRotation()
 {
 	// We have to recalculate some stuff
 	m_nInternalCameraFlags |= RecalculateViewMatrix;

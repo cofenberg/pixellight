@@ -49,9 +49,6 @@ pl_implement_class(Controller)
 *    Constructor
 */
 Controller::Controller(EControllerType nType, const String &sName, const String &sDescription) :
-	OnActivate(this),
-	OnControl(this),
-	OnChanged(this),
 	Type(this),
 	Name(this),
 	Description(this),

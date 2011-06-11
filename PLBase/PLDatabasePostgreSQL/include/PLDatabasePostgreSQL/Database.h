@@ -61,7 +61,8 @@ class Database : public PLDatabase::Database {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLDATABASEPOSTGRESQL_RTTI_EXPORT, Database, "PLDatabasePostgreSQL", PLDatabase::Database, "PostgreSQL 8.1.4 (http://www.postgresql.org/) database implementation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

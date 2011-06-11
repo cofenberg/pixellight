@@ -53,18 +53,19 @@ class FixedFunctionsRenderStates : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, FixedFunctionsRenderStates, "PLRenderer", PLCore::Object, "Fixed functions render states RTTI wrapper class")
-		// Fog
+		// Attributes
+			// Fog
 		pl_attribute(FogEnable,				bool,										false,										ReadWrite,	GetSet,	"Enable/disable fog",				"")
 		pl_attribute(FogColor,				PLGraphics::Color4,							PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"RGBA fog color",					"")
 		pl_attribute(FogDensity,			float,										1.0f,										ReadWrite,	GetSet,	"Fog density",						"")
 		pl_attribute(FogStart,				float,										0.0f,										ReadWrite,	GetSet,	"Fog start",						"")
 		pl_attribute(FogEnd,				float,										1.0f,										ReadWrite,	GetSet,	"Fog end",							"")
 		pl_attribute(FogMode,				pl_enum_type(FixedFunctions::Fog::Enum),	FixedFunctions::Fog::Exp,					ReadWrite,	GetSet,	"Fog mode",							"")
-		// Alpha test
+			// Alpha test
 		pl_attribute(AlphaTestEnable,		bool,										false,										ReadWrite,	GetSet,	"Enable/disable alpha test",		"")
 		pl_attribute(AlphaTestFunction,		pl_enum_type(Compare::Enum),				Compare::GreaterEqual,						ReadWrite,	GetSet,	"Alpha test comparison function",	"")
 		pl_attribute(AlphaTestReference,	float,										1.0f,										ReadWrite,	GetSet,	"Alpha test reference value",		"")
-		// Misc
+			// Misc
 		pl_attribute(Lighting,				bool,										true,										ReadWrite,	GetSet,	"Enable/disable lighting",			"")
 		pl_attribute(Ambient,				PLGraphics::Color4,							PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"General RGBA ambient color",		"")
 		pl_attribute(NormalizeNormals,		bool,										true,										ReadWrite,	GetSet,	"Enable/disable normalize normals",	"")

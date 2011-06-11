@@ -51,7 +51,8 @@ class MeshAnimationManagerHardware : public MeshAnimationManager {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshAnimationManagerHardware, "PLMesh", PLMesh::MeshAnimationManager, "This is a hardware manager for the mesh animation element")
-		pl_constructor_0(ParameterConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(ParameterConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

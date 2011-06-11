@@ -68,7 +68,8 @@ class SNMPhysicsUpdateVelocity : public SNMPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsUpdateVelocity, "PLPhysics", PLPhysics::SNMPhysics, "Updates the linear and angular velocity of physics bodies according to the scene node movement")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -107,13 +108,13 @@ class SNMPhysicsUpdateVelocity : public SNMPhysics {
 		*  @brief
 		*    Called when the scene node position changed
 		*/
-		void NotifyPosition();
+		void OnPosition();
 
 		/**
 		*  @brief
 		*    Called when the scene node rotation changed
 		*/
-		void NotifyRotation();
+		void OnRotation();
 
 
 	//[-------------------------------------------------------]

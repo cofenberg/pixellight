@@ -130,6 +130,10 @@ function UseCppRTTIObject(cppRTTIObject)
 	if object == nil then
 		PL.System.Console.Print("GetMyRTTIClassInstance() returned a null pointer\n")
 	else
+		-- Connect the RTTI slot of our RTTI class instance with the RTTI signal of our RTTI class instance
+		object.MySignal.Connect(object.OnMyEvent)
+
+		-- Emit the RTTI signal of our RTTI class instance
 		object:MySignal("Lua GetMyRTTIClassInstance() worked\n")
 		local self = object:GetSelf()
 		if self == nil then

@@ -1,3 +1,9 @@
+>> 07.06.2011
+[CO]
+- "PLPhysics::World" events are now implemented as RTTI signals
+
+
+
 >> 26.05.2011
 [CO]
 - "PLPhysics" was designed as a component one can use as a completely loose plugin, or link against it to have access to advanced features

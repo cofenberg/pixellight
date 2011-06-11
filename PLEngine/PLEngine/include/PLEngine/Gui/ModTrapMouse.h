@@ -52,7 +52,8 @@ class ModTrapMouse : public PLGui::Modifier {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, ModTrapMouse, "PLEngine", PLGui::Modifier, "Modifier which traps the mouse within the widget as soon as it gets active")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -254,8 +254,8 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 						// Create the 'ContactInformation'-instance on the runtime-stack
 						PLPhysics::ContactInformation cContactInformation(*pBody1, *pBody2);
 
-						// Emit event
-						EventContact(cContactInformation);
+						// Emit signal
+						SignalContact(cContactInformation);
 
 						// Is the contact marked to be ignored?
 						if (!cContactInformation.IsContactIgnored()) {

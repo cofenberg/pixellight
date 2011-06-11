@@ -51,12 +51,14 @@ class PGMagic1 : public PGPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGMagic1, "PLParticleGroups", PLParticleGroups::PGPhysics, "Magic particle group 1")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Size,			float,				0.2f,							ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(BuildPerSec,	PLGeneral::uint32,	100,							ReadWrite,	DirectValue,	"Particle building speed",	"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,		PLGeneral::String,	"Data/Textures/PGMagic1.dds",	ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,		PLGeneral::uint32,	200,							ReadWrite,	GetSet,			"Number of particles",		"Min=1")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -93,7 +95,7 @@ class PGMagic1 : public PGPhysics {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

@@ -88,7 +88,8 @@ class SRPDiffuseOnlyFixedFunctions : public SRPDiffuseOnly {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyFixedFunctions, "PLCompositing", PLCompositing::SRPDiffuseOnly, "Fixed functions based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

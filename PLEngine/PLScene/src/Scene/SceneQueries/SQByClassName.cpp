@@ -96,8 +96,8 @@ bool SQByClassName::PerformQueryRec(const SceneContainer &cContainer)
 
 		// Does the class name of this scene node match the given regular expression?
 		if (m_cRegEx.Match(pSceneNode->GetClass()->GetClassName())) {
-			// Emit event
-			EventSceneNode(*this, *pSceneNode);
+			// Emit signal
+			SignalSceneNode(*this, *pSceneNode);
 			if (m_nFlags & StopQuery)
 				return false; // Stop the query right now
 		} else {
@@ -108,8 +108,8 @@ bool SQByClassName::PerformQueryRec(const SceneContainer &cContainer)
 				while (pClass) {
 					// Does the name of this class match the given regular expression?
 					if (m_cRegEx.Match(pClass->GetClassName())) {
-						// Emit event
-						EventSceneNode(*this, *pSceneNode);
+						// Emit signal
+						SignalSceneNode(*this, *pSceneNode);
 						if (m_nFlags & StopQuery)
 							return false; // Stop the query right now
 

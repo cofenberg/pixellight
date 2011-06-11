@@ -324,7 +324,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @param[in] cParameter
 		*    The changed parameter
 		*/
-		void NotifyParameterChanged(Parameter &cParameter);
+		void OnParameterChanged(Parameter &cParameter);
 
 
 	//[-------------------------------------------------------]

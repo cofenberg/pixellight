@@ -310,7 +310,7 @@ class TestObject : public PLCore::Object {
 		/* Event class */
 		class Event0_Event : public PLCore::Signal<Event0_Desc> {
 			public:
-				Event0_Event(_Self *pObject) : PLCore::Signal<Event0_Desc>(pObject) {
+				Event0_Event() : PLCore::Signal<Event0_Desc>() {
 				}
 		};
 

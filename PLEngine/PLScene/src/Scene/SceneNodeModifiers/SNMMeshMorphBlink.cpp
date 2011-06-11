@@ -56,7 +56,7 @@ SNMMeshMorphBlink::SNMMeshMorphBlink(SceneNode &cSceneNode) : SNMMeshMorph(cScen
 	TimeRandom(this),
 	Direction(this),
 	Speed(this),
-	EventHandlerUpdate(&SNMMeshMorphBlink::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMMeshMorphBlink::OnUpdate, this)
 {
 }
 
@@ -92,7 +92,7 @@ void SNMMeshMorphBlink::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMeshMorphBlink::NotifyUpdate()
+void SNMMeshMorphBlink::OnUpdate()
 {
 	// Get time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();

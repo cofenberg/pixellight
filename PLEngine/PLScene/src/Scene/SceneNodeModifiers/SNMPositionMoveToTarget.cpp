@@ -54,7 +54,7 @@ pl_implement_class(SNMPositionMoveToTarget)
 SNMPositionMoveToTarget::SNMPositionMoveToTarget(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	Target(this),
 	Speed(this),
-	EventHandlerUpdate(&SNMPositionMoveToTarget::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMPositionMoveToTarget::OnUpdate, this)
 {
 }
 
@@ -137,7 +137,7 @@ bool SNMPositionMoveToTarget::GetTargetPosition(Vector3 &vPos) const
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPositionMoveToTarget::NotifyUpdate()
+void SNMPositionMoveToTarget::OnUpdate()
 {
 	// Get the position of the target scene node
 	Vector3 vTargetPos;

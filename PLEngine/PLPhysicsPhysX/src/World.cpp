@@ -632,8 +632,8 @@ bool World::onContactConstraint(NxU32 &nChangeFlags, const NxShape *pShape0, con
 					// Create the 'ContactInformation'-instance on the runtime-stack
 					PLPhysics::ContactInformation cContactInformation(*pBody0, *pBody1);
 
-					// Emit event
-					EventContact(cContactInformation);
+					// Emit signal
+					SignalContact(cContactInformation);
 
 					// Use this contact?
 					return !cContactInformation.IsContactIgnored();

@@ -45,7 +45,7 @@ namespace PLScript {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns a list of supported script languages
+*    Returns a list of the names of the supported script languages
 */
 const Array<String> &ScriptManager::GetScriptLanguages()
 {
@@ -70,6 +70,35 @@ bool ScriptManager::IsSupported(const String &sScriptLanguage)
 {
 	RegisterClasses();
 	return (m_mapScriptLanguages.Get(sScriptLanguage) != nullptr);
+}
+
+/**
+*  @brief
+*    Returns the filename extension of a given script language
+*/
+String ScriptManager::GetScriptLanguageExtension(const String &sScriptLanguage)
+{
+	RegisterClasses();
+
+	// Get the RTTI class of the given script language
+	const Class *pClass = m_mapScriptLanguages.Get(sScriptLanguage);
+	if (pClass) {
+		// Parse formats
+		const String sFormats = pClass->GetProperties().Get("Formats");
+		if (sFormats.GetLength()) {
+			// Setup the tokenizer
+			Tokenizer cTokenizer;
+			cTokenizer.Start(sFormats);
+			cTokenizer.SetDelimiters(" ,\t\r\n");
+			cTokenizer.SetSingleChars("");
+
+			// Return the first found filename extension
+			return cTokenizer.GetNextToken();
+		}
+	}
+
+	// Error!
+	return "";
 }
 
 /**
@@ -214,16 +243,18 @@ void ScriptManager::RegisterClasses()
 					// Parse formats
 					const String sFormats = pClass->GetProperties().Get("Formats");
 					if (sFormats.GetLength()) {
+						// Setup the tokenizer
 						Tokenizer cTokenizer;
 						cTokenizer.Start(sFormats);
 						cTokenizer.SetDelimiters(" ,\t\r\n");
 						cTokenizer.SetSingleChars("");
+
+						// Register the filename extensions of this script language
 						String sToken = cTokenizer.GetNextToken();
 						while (sToken.GetLength()) {
 							m_mapScriptLanguagesByExtension.Add(sToken, sLanguage);
 							sToken = cTokenizer.GetNextToken();
 						}
-						cTokenizer.Stop();
 					}
 				}
 			} else if (pClass->IsDerivedFrom(sScriptBindingClassString)) {

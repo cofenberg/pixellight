@@ -55,12 +55,15 @@ class SNArea : public SceneNode, public PLMath::PlaneSet {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNArea, "PLScene", PLScene::SceneNode, "An area is a set of planes defining a convex area in your scene")
+		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconArea.dds")
+			pl_property("Icon",	"Data/Textures/IconArea.dds")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Box,		PLGeneral::String,	"-0.5 -0.5 -0.5 0.5 0.5 0.5",	ReadWrite,	GetSet,	"Box min/max position (creates automatically the required planes)",	"")
 		pl_attribute(Planes,	PLGeneral::String,	"",								ReadWrite,	GetSet,	"Planes defining the (normally convex) area",						"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

@@ -56,8 +56,9 @@ class MeshLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshLoader, "PLMesh", PLCore::LoaderImpl, "Abstract mesh loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Mesh")
+			pl_property("Type",	"Mesh")
 		pl_properties_end
 	pl_class_end
 

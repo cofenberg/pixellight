@@ -45,8 +45,13 @@ class SNProjectile : public PLScene::SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNProjectile, "", PLScene::SceneNode, "Projectile scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Direction,	PLMath::Vector2,	PLMath::Vector2(0.0f, 0.0f),	ReadWrite,	DirectValue,	"Projectile direction",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,														"Called when the scene node needs to be updated",																			"")
+		pl_slot_2(OnSceneNode,	PLScene::SceneQuery&,	PLScene::SceneNode&,	"Called when a scene node was found, query found the scene node as first parameter, found scene node as second parameter",	"")
 	pl_class_end
 
 
@@ -75,7 +80,7 @@ class SNProjectile : public PLScene::SceneNode {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 		/**
 		*  @brief
@@ -86,15 +91,7 @@ class SNProjectile : public PLScene::SceneNode {
 		*  @param[in] cSceneNode
 		*    Found scene node
 		*/
-		void NotifySceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<>												EventHandlerUpdate;
-		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerSceneNode;
+		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
 
 	//[-------------------------------------------------------]

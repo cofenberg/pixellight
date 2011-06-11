@@ -60,7 +60,7 @@ PGSmoke::PGSmoke() :
 	Particles(this),
 	TextureAnimationColumns(this),
 	TextureAnimationRows(this),
-	EventHandlerUpdate(&PGSmoke::NotifyUpdate, this),
+	EventHandlerUpdate(&PGSmoke::OnUpdate, this),
 	m_bUpdate(false),
 	m_fParticleTime(0.0f),
 	m_bCreateNewParticles(true)
@@ -173,7 +173,7 @@ void PGSmoke::InitParticle(Particle &cParticle) const
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGSmoke::NotifyUpdate()
+void PGSmoke::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

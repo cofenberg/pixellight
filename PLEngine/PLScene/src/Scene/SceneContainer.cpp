@@ -127,7 +127,7 @@ SceneContainer::~SceneContainer()
 *  @brief
 *    Creates a new scene node
 */
-SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters)
+SceneNode *SceneContainer::Create(String sClass, String sName, String sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -385,8 +385,8 @@ bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode)
 	if (cNode.IsContainer())
 		static_cast<SceneContainer&>(cNode).m_pSceneContext = m_pSceneContext;
 
-	// Emit event
-	cNode.EventContainer();
+	// Emit signal
+	cNode.SignalContainer();
 
 	// Setup name
 	String sNameT = sName;

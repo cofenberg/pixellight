@@ -84,7 +84,7 @@ class SNLoadScreen : public SNLoadScreenBase {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNLoadScreen, "PLScene", PLScene::SNLoadScreenBase, "Load screen scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ClearFlags,	pl_flag_type(EClearFlags),	Color|Depth,									ReadWrite,	DirectValue,	"Clear flags",											"")
 		pl_attribute(ClearColor,	PLGraphics::Color4,			PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),		ReadWrite,	DirectValue,	"Clear color (r/g/b/a)",								"")
 		pl_attribute(Images,		PLGeneral::uint8,			4,												ReadWrite,	DirectValue,	"Number of images (1-4)",								"Min='1' Max='4'")
@@ -108,8 +108,10 @@ class SNLoadScreen : public SNLoadScreenBase {
 		pl_attribute(BarWidth,		float,						0.95f,											ReadWrite,	DirectValue,	"Bar width 'screen space' between 0.0 and 1.0",			"")
 		pl_attribute(BarHeight,		float,						0.066f,											ReadWrite,	DirectValue,	"Bar height 'screen space' between 0.0 and 1.0",		"")
 		pl_attribute(BarColor,		PLGraphics::Color4,			PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),		ReadWrite,	DirectValue,	"Bar color",											"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		NoCulling,										ReadWrite,	GetSet,			"Flags",												"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

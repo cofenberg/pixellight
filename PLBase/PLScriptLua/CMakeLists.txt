@@ -13,6 +13,8 @@ add_sources(
 	src/RTTIObjectPointer.cpp
 	src/RTTIObjectMethodPointer.cpp
 	src/RTTIObjectSignalPointer.cpp
+	src/RTTIObjectSignalMethodPointer.cpp
+	src/RTTIObjectSlotPointer.cpp
 	src/Script.cpp
 )
 
@@ -162,7 +164,7 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 							COMPONENT SDK		PATTERN ".svn" EXCLUDE
+	DESTINATION ${PL_INSTALL_INCLUDE} 							COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
 
 # Plugin file

@@ -52,8 +52,9 @@ class MaterialLoader : public PLCore::LoaderImpl {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, MaterialLoader, "PLRenderer", PLCore::LoaderImpl, "Abstract material loader base class")
+		// Properties
 		pl_properties
-			pl_property("Type", "Material")
+			pl_property("Type",	"Material")
 		pl_properties_end
 	pl_class_end
 

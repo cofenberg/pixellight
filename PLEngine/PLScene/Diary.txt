@@ -1,3 +1,11 @@
+>> 07.06.2011
+[CO]
+- "PLScene::SceneNode" events are now implemented as RTTI signals
+- "PLScene::SceneContainer" events are now implemented as RTTI signals
+- "PLScene::SceneQuery" events are now implemented as RTTI signals
+
+
+
 >> 01.06.2011
 [CO]
 - "SceneNode::DrawDebug()": Using the debug flags "DebugContainerAABBox" and "DebugContainerSphere" together was not working properly.

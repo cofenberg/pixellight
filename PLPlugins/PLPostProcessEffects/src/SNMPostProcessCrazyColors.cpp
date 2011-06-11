@@ -54,7 +54,6 @@ pl_implement_class(SNMPostProcessCrazyColors)
 *    Constructor
 */
 SNMPostProcessCrazyColors::SNMPostProcessCrazyColors(PLScene::SceneNode &cSceneNode) : SNMPostProcess(cSceneNode),
-	SlotOnSceneNodeUpdate(this),
 	ColorScaleX(this),
 	ColorSpeedX(this),
 	ColorOffsetX(this),
@@ -62,6 +61,7 @@ SNMPostProcessCrazyColors::SNMPostProcessCrazyColors(PLScene::SceneNode &cSceneN
 	ColorSpeedY(this),
 	ColorOffsetY(this),
 	Filename(this),
+	SlotOnSceneNodeUpdate(this),
 	m_fTimer(0.0f)
 {
 	// Overwrite the default setting of the filename

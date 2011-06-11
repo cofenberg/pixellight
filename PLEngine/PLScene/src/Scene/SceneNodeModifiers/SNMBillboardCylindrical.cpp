@@ -54,7 +54,7 @@ pl_implement_class(SNMBillboardCylindrical)
 */
 SNMBillboardCylindrical::SNMBillboardCylindrical(SceneNode &cSceneNode) : SNMBillboard(cSceneNode),
 	UpVector(this),
-	EventHandlerAddedToVisibilityTree(&SNMBillboardCylindrical::NotifyAddedToVisibilityTree, this)
+	EventHandlerAddedToVisibilityTree(&SNMBillboardCylindrical::OnAddedToVisibilityTree, this)
 {
 }
 
@@ -75,10 +75,10 @@ void SNMBillboardCylindrical::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	if (bActivate) {
 		// Connect event handler
-		GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
 	} else {
 		// Disconnect event handler
-		GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
 	}
 }
 
@@ -140,7 +140,7 @@ void SNMBillboardCylindrical::BuildTransformMatrix(const Matrix4x4 &mView, const
 *  @brief
 *    Called when the owner scene node was added to a visibility tree
 */
-void SNMBillboardCylindrical::NotifyAddedToVisibilityTree(VisNode &cVisNode)
+void SNMBillboardCylindrical::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
 	// Get the new world transform matrix
 	Matrix3x4 mTransform;

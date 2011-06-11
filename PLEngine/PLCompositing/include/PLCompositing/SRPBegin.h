@@ -144,13 +144,15 @@ class SRPBegin : public PLScene::SceneRendererPass {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPBegin, "PLCompositing", PLScene::SceneRendererPass, "First scene renderer pass")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(TextureFormat,	pl_enum_type(ETextureFormat),	PLRenderer::TextureBuffer::Unknown,			ReadWrite,	DirectValue,	"Render target texture format, unknown means no render to texture",	"")
 		pl_attribute(ClearFlags,	pl_flag_type(EClearFlags),		ClearColor|ClearDepth|ClearStencil,			ReadWrite,	DirectValue,	"Clear flags",														"")
 		pl_attribute(ColorClear,	PLGraphics::Color4,				PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Clear color (r/g/b/a)",											"")
 		pl_attribute(FillMode,		pl_enum_type(EFillMode),		SolidMode,									ReadWrite,	DirectValue,	"Fill mode",														"")
-		// Overwritten SceneRendererPass variables
+			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),			0,											ReadWrite,	GetSet,			"Flags",															"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

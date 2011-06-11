@@ -52,9 +52,11 @@ class SNMPhysicsBodyCylinder : public SNMPhysicsBody {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyCylinder, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics cylinder body scene node modifier")
-		pl_constructor_1(ParameterConstructor, PLScene::SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Radius,	float,	1.0f,	ReadWrite,	GetSet,	"Cylinder radius at the base",				"Min='0.0'")
 		pl_attribute(Height,	float,	1.0f,	ReadWrite,	GetSet,	"Cylinder height along the x local axis",	"Min='0.0'")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 

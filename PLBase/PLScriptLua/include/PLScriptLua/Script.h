@@ -58,11 +58,13 @@ class Script : public PLScript::Script {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSCRIPTLUA_RTTI_EXPORT, Script, "PLScriptLua", PLScript::Script, "Lua (http://www.lua.org/) script implementation")
+		// Properties
 		pl_properties
-			pl_property("Language", "Lua")
-			pl_property("Formats",  "lua,LUA")
+			pl_property("Language",	"Lua")
+			pl_property("Formats",	"lua,LUA")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

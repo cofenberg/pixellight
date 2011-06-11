@@ -56,7 +56,7 @@ pl_implement_class(SNMLookController)
 SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	InputSemantic(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMLookController::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMLookController::OnUpdate, this),
 	m_pController(new LookController())
 {
 	// Overwrite the default setting of the flags
@@ -112,7 +112,7 @@ void SNMLookController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMLookController::NotifyUpdate()
+void SNMLookController::OnUpdate()
 {
 	// [HACK][TODO] Currently it's not possible to define/script a control logic within the control connection to, for instance
 	// "pass through" a rotation value from a space mouse, but "passing" movements from the mouse only if, for example, the left

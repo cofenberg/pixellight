@@ -69,10 +69,12 @@ class SNMRotationTarget : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMRotationTarget, "PLScene", PLScene::SNMTransform, "Scene node modifier class rotating a scene node towards a target scene node")
-		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
+		// Attributes
 		pl_attribute(Target,	PLGeneral::String,		"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",	"")
 		pl_attribute(Offset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation offset to add in degree, [0, 360]",				"")
 		pl_attribute(UpVector,	PLMath::Vector3,		PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",												"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -128,13 +130,13 @@ class SNMRotationTarget : public SNMTransform {
 		*  @param[in] pVisNode
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
-		void NotifyDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
 
 		/**
 		*  @brief
 		*    Called on scene node position change or update request
 		*/
-		void NotifyPositionUpdate();
+		void OnPositionUpdate();
 
 
 	//[-------------------------------------------------------]

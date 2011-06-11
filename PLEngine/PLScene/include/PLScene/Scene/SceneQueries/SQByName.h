@@ -59,7 +59,8 @@ class SQByName : public SceneQuery {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SQByName, "PLScene", PLScene::SceneQuery, "Scene node enumeration by name scene query class")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

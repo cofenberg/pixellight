@@ -54,23 +54,20 @@ class AbstractButton : public Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, AbstractButton, "PLGui", PLGui::Widget, "Abstract base class for all kind of buttons")
-		pl_attribute	(Text,				 PLGeneral::String,	"",							ReadWrite, GetSet,	"Text that is displayed on the button",					"")
-		pl_attribute	(ImageName,			 PLGeneral::String,	"",							ReadWrite, GetSet,	"Image filename",										"")
-		pl_attribute	(ImageSize,			 PLMath::Vector2i,	PLMath::Vector2i(16, 16),	ReadWrite, GetSet,	"Image size",											"")
-		pl_attribute	(Repeat,			 bool,				false,						ReadWrite, GetSet,	"If the button is hold down, emit clicks repeatedly",	"")
-		pl_attribute	(RepeatDelay,		 PLGeneral::uint64,	500,						ReadWrite, GetSet,	"Initial delay (in ms) for repeated clicks",			"")
-		pl_attribute	(RepeatInterval,	 PLGeneral::uint64,	500,						ReadWrite, GetSet,	"Interval (in ms) between repeated clicks",				"")
-		pl_slot_0		(OnTimer,																				"Timer callback",										"")
+		// Attributes
+		pl_attribute(Text,				PLGeneral::String,	"",							ReadWrite,	GetSet,	"Text that is displayed on the button",					"")
+		pl_attribute(ImageName,			PLGeneral::String,	"",							ReadWrite,	GetSet,	"Image filename",										"")
+		pl_attribute(ImageSize,			PLMath::Vector2i,	PLMath::Vector2i(16, 16),	ReadWrite,	GetSet,	"Image size",											"")
+		pl_attribute(Repeat,			bool,				false,						ReadWrite,	GetSet,	"If the button is hold down, emit clicks repeatedly",	"")
+		pl_attribute(RepeatDelay,		PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Initial delay (in ms) for repeated clicks",			"")
+		pl_attribute(RepeatInterval,	PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Interval (in ms) between repeated clicks",				"")
+		// Signals
+		pl_signal_0(SignalPressed,	"The button has been pressed down",						"")
+		pl_signal_0(SignalReleased,	"The button has been released",							"")
+		pl_signal_0(SignalClicked,	"The button has been clicked (pressed and released)",	"")
+		// Slots
+		pl_slot_0(OnTimer,	"Timer callback",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<> EventPressed;	/**< The button has been pressed down */
-		PLCore::Event<> EventReleased;	/**< The button has been released */
-		PLCore::Event<> EventClicked;	/**< The button has been clicked (pressed and released) */
 
 
 	//[-------------------------------------------------------]

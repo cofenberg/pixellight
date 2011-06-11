@@ -1645,8 +1645,8 @@ void Widget::DrawBackground(Graphics &cGraphics)
 		cGraphics.DrawBox(m_cBackgroundColor, Vector2i(0, 0), GetSize(), 0, 0);
 	}
 
-	// Call event and virtual function
-	EventDrawBackground(cGraphics);
+	// Call signal and virtual function
+	SignalDrawBackground(cGraphics);
 	OnDrawBackground(cGraphics);
 }
 
@@ -1656,8 +1656,8 @@ void Widget::DrawBackground(Graphics &cGraphics)
 */
 void Widget::Draw(Graphics &cGraphics)
 {
-	// Call event and virtual function
-	EventDraw(cGraphics);
+	// Call signal and virtual function
+	SignalDraw(cGraphics);
 	OnDraw(cGraphics);
 }
 
@@ -1681,22 +1681,22 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 	switch (cMessage.GetType()) {
 		// Theme has been changed
 		case MessageOnThemeChanged:
-			// Call event and virtual function
-			EventOnThemeChanged();
+			// Call signal and virtual function
+			SignalOnThemeChanged();
 			OnThemeChanged();
 			break;
 
 		// Widget content has been changed
 		case MessageOnUpdateContent:
-			// Call event and virtual function
-			EventUpdateContent();
+			// Call signal and virtual function
+			SignalUpdateContent();
 			OnUpdateContent();
 			break;
 
 		// Child widget has been changed
 		case MessageOnUpdateChildWidget:
-			// Call event and virtual function
-			EventUpdateChildWidget(cMessage.GetChildWidget());
+			// Call signal and virtual function
+			SignalUpdateChildWidget(cMessage.GetChildWidget());
 			OnUpdateChildWidget(cMessage.GetChildWidget());
 
 			// Adjust content
@@ -1705,8 +1705,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Child widget has been added
 		case MessageOnAddChildWidget:
-			// Call event and virtual function
-			EventAddChildWidget(cMessage.GetChildWidget());
+			// Call signal and virtual function
+			SignalAddChildWidget(cMessage.GetChildWidget());
 			OnAddChildWidget(cMessage.GetChildWidget());
 
 			// Adjust content
@@ -1715,8 +1715,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Child widget has been removed
 		case MessageOnRemoveChildWidget:
-			// Call event and virtual function
-			EventRemoveChildWidget(cMessage.GetChildWidget());
+			// Call signal and virtual function
+			SignalRemoveChildWidget(cMessage.GetChildWidget());
 			OnRemoveChildWidget(cMessage.GetChildWidget());
 
 			// Adjust content
@@ -1725,71 +1725,71 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Widget shall be closed (ALT+F4 or X-Button pressed)
 		case MessageOnClose:
-			// Call event and virtual function
-			EventClose();
+			// Call signal and virtual function
+			SignalClose();
 			OnClose();
 			break;
 
 		// Widget has just been created
 		case MessageOnCreate:
-			// Call event and virtual function
-			EventCreate();
+			// Call signal and virtual function
+			SignalCreate();
 			OnCreate();
 			break;
 
 		// Widget is going to be destroyed
 		case MessageOnDestroy:
-			// Call event and virtual function
-			EventDestroy();
+			// Call signal and virtual function
+			SignalDestroy();
 			OnDestroy();
 			break;
 
 		// Widget gets shown
 		case MessageOnShow:
-			// Call event and virtual function
-			EventShow();
+			// Call signal and virtual function
+			SignalShow();
 			OnShow();
 			break;
 
 		// Widget gets hidden
 		case MessageOnHide:
-			// Call event and virtual function
-			EventHide();
+			// Call signal and virtual function
+			SignalHide();
 			OnHide();
 			break;
 
 		// Widget gets enabled
 		case MessageOnEnable:
-			// Call event and virtual function
-			EventEnable();
+			// Call signal and virtual function
+			SignalEnable();
 			OnEnable();
 			break;
 
 		// Widget gets disabled
 		case MessageOnDisable:
-			// Call event and virtual function
-			EventDisable();
+			// Call signal and virtual function
+			SignalDisable();
 			OnDisable();
 			break;
 
 		// Widget gets focus
 		case MessageOnGetFocus:
-			// Call event and virtual function
-			EventGetFocus();
+			// Call signal and virtual function
+			SignalGetFocus();
 			OnGetFocus();
 			break;
 
 		// Widget looses focus
 		case MessageOnLooseFocus:
-			// Call event and virtual function
-			EventLooseFocus();
+			// Call signal and virtual function
+			SignalLooseFocus();
 			OnLooseFocus();
 			break;
 
 		// Widget has been activated or deactivated (focus-widget has changed)
 		case MessageOnActivate:
-			// Call event and virtual function
-			EventActivate(cMessage.GetState());
+			// Call signal and virtual function
+			SignalActivate(cMessage.GetState());
 			OnActivate(cMessage.GetState());
 			break;
 
@@ -1807,8 +1807,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Widget gets moved, new widget position as parameter
 		case MessageOnMove:
-			// Call event and virtual function
-			EventMove(cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMove(cMessage.GetPosSize());
 			OnMove(cMessage.GetPosSize());
 			break;
 
@@ -1817,8 +1817,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 			// Save new size
 			m_vSize = cMessage.GetPosSize();
 
-			// Call event and virtual function
-			EventSize(cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalSize(cMessage.GetPosSize());
 			OnSize(cMessage.GetPosSize());
 
 			// Adjust content
@@ -1836,8 +1836,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 				m_pGui->SendMessage(GuiMessage::OnEnterFullscreen(this));
 			}
 
-			// Call event and virtual function
-			EventWindowState(nWindowState);
+			// Call signal and virtual function
+			SignalWindowState(nWindowState);
 			OnWindowState(nWindowState);
 
 			// Leave fullscreen mode?
@@ -1855,8 +1855,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Widget enters fullscreen mode
 		case MessageOnEnterFullscreen:
-			// Call event and virtual function
-			EventEnterFullscreen();
+			// Call signal and virtual function
+			SignalEnterFullscreen();
 			OnEnterFullscreen();
 
 			// Adjust content
@@ -1865,8 +1865,8 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Widget leaves fullscreen mode
 		case MessageOnLeaveFullscreen:
-			// Call event and virtual function
-			EventLeaveFullscreen();
+			// Call signal and virtual function
+			SignalLeaveFullscreen();
 			OnLeaveFullscreen();
 
 			// Adjust content
@@ -1875,92 +1875,92 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 
 		// Widget has calculated it's preferred size
 		case MessageOnPreferredSize:
-			// Call event and virtual function
-			EventPreferredSize(cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalPreferredSize(cMessage.GetPosSize());
 			m_vPreferredSize = OnPreferredSize(cMessage.GetPosSize());
 			break;
 
 		// Widget content has to be adjusted
 		case MessageOnAdjustContent:
-			// Call event and virtual function
-			EventAdjustContent();
+			// Call signal and virtual function
+			SignalAdjustContent();
 			OnAdjustContent();
 			break;
 
 		// Mouse enters widget
 		case MessageOnMouseEnter:
-			// Call event and virtual function
-			EventMouseEnter();
+			// Call signal and virtual function
+			SignalMouseEnter();
 			OnMouseEnter();
 			break;
 
 		// Mouse leaves widget
 		case MessageOnMouseLeave:
-			// Call event and virtual function
-			EventMouseLeave();
+			// Call signal and virtual function
+			SignalMouseLeave();
 			OnMouseLeave();
 			break;
 
 		// Mouse-over widget has changed
 		case MessageOnMouseOver:
-			// Call event and virtual function
-			EventMouseOver(cMessage.GetState());
+			// Call signal and virtual function
+			SignalMouseOver(cMessage.GetState());
 			OnMouseOver(cMessage.GetState());
 			break;
 
 		// Mouse moves inside the widget, mouse position within the widget as parameter
 		case MessageOnMouseMove:
-			// Call event and virtual function
-			EventMouseMove(cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMouseMove(cMessage.GetPosSize());
 			OnMouseMove(cMessage.GetPosSize());
 			break;
 
 		// Mouse hovers over the widget
 		case MessageOnMouseHover:
-			// Call event and virtual function
-			EventMouseHover();
+			// Call signal and virtual function
+			SignalMouseHover();
 			OnMouseHover();
 			break;
 
 		// Mouse position inside the widget has changed due to the movement of widget
 		case MessageOnMousePosUpdate:
-			// Call event and virtual function
-			EventMousePosUpdate(cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMousePosUpdate(cMessage.GetPosSize());
 			OnMousePosUpdate(cMessage.GetPosSize());
 			break;
 
 		// Mouse button is pressed, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDown:
-			// Call event and virtual function
-			EventMouseButtonDown(cMessage.GetMouseButton(), cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMouseButtonDown(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			OnMouseButtonDown(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			break;
 
 		// Mouse button is released, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonUp:
-			// Call event and virtual function
-			EventMouseButtonUp(cMessage.GetMouseButton(), cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMouseButtonUp(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			OnMouseButtonUp(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			break;
 
 		// Mouse button has been clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonClick:
-			// Call event and virtual function
-			EventMouseButtonClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMouseButtonClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			OnMouseButtonClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			break;
 
 		// Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters
 		case MessageOnMouseButtonDoubleClick:
-			// Call event and virtual function
-			EventMouseButtonDoubleClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
+			// Call signal and virtual function
+			SignalMouseButtonDoubleClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			OnMouseButtonDoubleClick(cMessage.GetMouseButton(), cMessage.GetPosSize());
 			break;
 
 		// Mouse wheel moved, mouse wheel movement as parameter
 		case MessageOnMouseWheel:
-			// Call event and virtual function
-			EventMouseWheel(cMessage.GetDelta());
+			// Call signal and virtual function
+			SignalMouseWheel(cMessage.GetDelta());
 			OnMouseWheel(cMessage.GetDelta());
 			break;
 
@@ -1973,23 +1973,23 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 				NextTabStop(!bShift);
 			}
 
-			// Call event and virtual function
-			EventKeyDown(cMessage.GetKey(), cMessage.GetModifiers());
+			// Call signal and virtual function
+			SignalKeyDown(cMessage.GetKey(), cMessage.GetModifiers());
 			OnKeyDown(cMessage.GetKey(), cMessage.GetModifiers());
 			break;
 		}
 
 		// Key gets released, released key and modifier keys pressed as parameters
 		case MessageOnKeyUp:
-			// Call event and virtual function
-			EventKeyUp(cMessage.GetKey(), cMessage.GetModifiers());
+			// Call signal and virtual function
+			SignalKeyUp(cMessage.GetKey(), cMessage.GetModifiers());
 			OnKeyUp(cMessage.GetKey(), cMessage.GetModifiers());
 			break;
 
 		// Hotkey pressed, hotkey ID as parameter
 		case MessageOnHotkey:
-			// Call event and virtual function
-			EventHotkey(cMessage.GetKey());
+			// Call signal and virtual function
+			SignalHotkey(cMessage.GetKey());
 			OnHotkey(cMessage.GetKey());
 			break;
 
@@ -2000,15 +2000,15 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 				m_pGui->SendMessage(GuiMessage::OnDrop(m_pParent, cMessage.GetDataObject()));
 			}
 
-			// Call event and virtual function
-			EventDrop(*cMessage.GetDataObject());
+			// Call signal and virtual function
+			SignalDrop(*cMessage.GetDataObject());
 			OnDrop(*cMessage.GetDataObject());
 			break;
 
 		// User message
 		case MessageOnUserMessage:
-			// Call event and virtual function
-			EventUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
+			// Call signal and virtual function
+			SignalUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
 			OnUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
 			break;
 	}
@@ -2028,8 +2028,8 @@ void Widget::OnThemeChanged()
 
 void Widget::OnUpdateContent()
 {
-	// UpdateContent event
-	EventUpdateContent();
+	// UpdateContent signal
+	SignalUpdateContent();
 
 	// Call virtual function from parent
 	if (m_pParent) {
@@ -2039,8 +2039,8 @@ void Widget::OnUpdateContent()
 
 void Widget::OnAdjustContent()
 {
-	// Emit event
-	EventAdjustContent();
+	// Emit signal
+	SignalAdjustContent();
 
 	// Apply layout
 	if (m_pLayout) {

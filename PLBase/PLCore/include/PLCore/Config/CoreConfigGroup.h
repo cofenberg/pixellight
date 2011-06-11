@@ -84,11 +84,13 @@ class CoreGeneralConfig : public CoreConfigGroup {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, CoreGeneralConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(UsePixelLightRuntime,	bool,				true,	ReadWrite,	DirectValue,	"Use plugins and data from the PixelLight runtime directory? It's recommended to set this to false for standalone releases.",	"")
 		pl_attribute(DelayedPluginLoading,	bool,				true,	ReadWrite,	DirectValue,	"'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'",					"")
 		pl_attribute(FirstRun,				bool,				true,	ReadWrite,	DirectValue,	"Is this the first application start?",																							"")
 		pl_attribute(Language,				PLGeneral::String,	"",		ReadWrite,	DirectValue,	"Current used language, if empty the current set OS locale language is used (for instance 'German'",							"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

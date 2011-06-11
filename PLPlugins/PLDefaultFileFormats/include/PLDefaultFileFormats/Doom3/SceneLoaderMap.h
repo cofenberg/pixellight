@@ -68,14 +68,17 @@ class SceneLoaderMap : public PLScene::SceneLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SceneLoaderMap, "PLDefaultFileFormats", PLScene::SceneLoader, "Scene loader for the standard 'map' format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"map,MAP")
 			pl_property("Load",		"1")
 			pl_property("Save",		"0")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, PLScene::SceneContainer&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, PLScene::SceneContainer&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

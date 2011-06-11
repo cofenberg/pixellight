@@ -176,7 +176,7 @@ PGFountain::PGFountain() :
 	AccFactor(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGFountain::NotifyUpdate, this),
+	EventHandlerUpdate(&PGFountain::OnUpdate, this),
 	m_bUpdate(false),
 	m_nSteps(8),
 	m_nRaysPerStep(6),
@@ -287,7 +287,7 @@ void PGFountain::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGFountain::NotifyUpdate()
+void PGFountain::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

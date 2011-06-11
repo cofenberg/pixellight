@@ -146,6 +146,16 @@ int DynEvent::GetParameterTypeID(uint32 nIndex) const
 
 /**
 *  @brief
+*    Create a generic event handler which is compatible with this dynamic event
+*/
+DynEventHandler *DynEvent::CreateGenericEventHandler(const FUNC &pFunc, void *pUserData) const
+{
+	// No function
+	return nullptr;
+}
+
+/**
+*  @brief
 *    Call function
 */
 void DynEvent::Emit(DynParams &cParams) const

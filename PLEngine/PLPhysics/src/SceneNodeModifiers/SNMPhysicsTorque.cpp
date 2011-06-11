@@ -53,7 +53,7 @@ pl_implement_class(SNMPhysicsTorque)
 */
 SNMPhysicsTorque::SNMPhysicsTorque(SceneNode &cSceneNode) : SNMPhysics(cSceneNode),
 	Torque(this),
-	EventHandlerUpdate(&SNMPhysicsTorque::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMPhysicsTorque::OnUpdate, this)
 {
 }
 
@@ -89,7 +89,7 @@ void SNMPhysicsTorque::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPhysicsTorque::NotifyUpdate()
+void SNMPhysicsTorque::OnUpdate()
 {
 	const SNMPhysicsBody *pModifier = static_cast<SNMPhysicsBody*>(GetSceneNode().GetModifier("PLPhysics::SNMPhysicsBody"));
 	if (pModifier) {

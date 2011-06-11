@@ -59,15 +59,18 @@ class ConfigLoaderPL : public ConfigLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLCORE_RTTI_EXPORT, ConfigLoaderPL, "PLCore", PLCore::ConfigLoader, "Config loader implementation for the PixelLight config XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"cfg,CFG")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, Config&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, const Config&, PLGeneral::File&, "Save method. Saves all configuration groups and includes default values, too.", "")
-		pl_method_4(SaveParams, bool, const Config&, PLGeneral::File&, PLGeneral::String, bool, "Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,		pl_ret_type(bool),	Config&,		PLGeneral::File&,								"Load method",																						"")
+		pl_method_2(Save,		pl_ret_type(bool),	const Config&,	PLGeneral::File&,								"Save method. Saves all configuration groups and includes default values, too.",					"")
+		pl_method_4(SaveParams,	pl_ret_type(bool),	const Config&,	PLGeneral::File&,	PLGeneral::String,	bool,	"Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.",	"")
 	pl_class_end
 
 

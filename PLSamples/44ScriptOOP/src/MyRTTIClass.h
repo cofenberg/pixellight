@@ -47,30 +47,23 @@ class MyRTTIClass : public PLCore::Object {
 	pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, don't take it to serious")
 		// Properties
 		pl_properties
-			pl_property("MyProperty", "This is a property value")
+			pl_property("MyProperty",	"This is a property value")
 		pl_properties_end
-		// Constructors
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		// Methods
-		pl_method_0(Return42,			int,					"Returns 42",							"")
-		pl_method_1(IgnoreTheParameter,	void,			float,	"Ignores the provided parameter",		"")
-		pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
-		pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
-		// Signals
-		pl_signal_1(MySignal, PLGeneral::String, "My signal, automatically emitted after the name was changed", "")
-		// Slots
-		pl_slot_0(OnMyEvent, "My slot", "")
 		// Attributes
 		pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
 		pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_0(Return42,			pl_ret_type(int),					"Returns 42",							"")
+		pl_method_1(IgnoreTheParameter,	pl_ret_type(void),			float,	"Ignores the provided parameter",		"")
+		pl_method_0(SaySomethingWise,	pl_ret_type(void),					"Says something wise",					"")
+		pl_method_0(GetSelf,			pl_ret_type(MyRTTIClass*),			"Returns a pointer to this instance",	"")
+		// Signals
+		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed, message as first parameter",	"")
+		// Slots
+		pl_slot_1(OnMyEvent,	PLGeneral::String,	"My slot, message as first parameter",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI slot methods                              ]
-	//[-------------------------------------------------------]
-	public:
-		void OnMyEvent();
 
 
 	//[-------------------------------------------------------]
@@ -129,6 +122,15 @@ class MyRTTIClass : public PLCore::Object {
 		*    A pointer to this instance, always valid!
 		*/
 		MyRTTIClass *GetSelf();
+
+		/**
+		*  @brief
+		*    Called when my event was emitted
+		*
+		*  @param[in] sMessage
+		*    Message
+		*/
+		void OnMyEvent(PLGeneral::String sMessage);
 
 
 	//[-------------------------------------------------------]

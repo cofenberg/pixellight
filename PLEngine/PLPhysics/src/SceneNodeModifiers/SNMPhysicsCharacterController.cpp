@@ -70,7 +70,7 @@ SNMPhysicsCharacterController::SNMPhysicsCharacterController(SceneNode &cSceneNo
 	RunAnimationSpeed(this),
 	RotationNode(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMPhysicsCharacterController::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMPhysicsCharacterController::OnUpdate, this),
 	m_bJumping(false),
 	m_pController(new PhysicsCharacterController())
 {
@@ -128,7 +128,7 @@ void SNMPhysicsCharacterController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPhysicsCharacterController::NotifyUpdate()
+void SNMPhysicsCharacterController::OnUpdate()
 {
 	// Current time difference
 	const float fTimeDiff = Timing::GetInstance()->GetTimeDifference()*10;

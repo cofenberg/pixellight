@@ -63,8 +63,8 @@ SPK_PLQuadRendererShaders *SPK_PLQuadRendererShaders::Create(PLRenderer::Rendere
 *    Constructor of SPK_PLQuadRendererShaders
 */
 SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, const String &sShaderLanguage, float fScaleX, float fScaleY) : SPK_PLQuadRenderer(cRenderer, fScaleX, fScaleY),
-	m_sShaderLanguage(sShaderLanguage),
 	m_pEventHandlerDirty(new PLCore::EventHandler<PLRenderer::Program*>(&SPK_PLQuadRendererShaders::OnDirty, this)),
+	m_sShaderLanguage(sShaderLanguage),
 	m_pVertexShader(nullptr),
 	m_pFragmentShader(nullptr),
 	m_pProgram(nullptr),

@@ -124,7 +124,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNRagdoll, "PLPhysics", PLScene::SNMesh, "Ragdoll scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(RagdollFilename,		PLGeneral::String,			"",				ReadWrite,	GetSet,			"Ragdoll filename, if no provided a default ragdoll is created",	"Type='Ragdoll'")
 		pl_attribute(ControllerEnabled,		bool,						false,			ReadWrite,	DirectValue,	"Is the PD-controller enabled?",									"")
 		pl_attribute(AttachToWorldEnabled,	bool,						false,			ReadWrite,	GetSet,			"Are joints allowed to be attached to the world? (fixed joints)",	"")
@@ -132,9 +132,11 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		pl_attribute(AutoFreeze,			bool,						true,			ReadWrite,	GetSet,			"Freeze the ragdoll automatically?",								"")
 		pl_attribute(UseGravity,			bool,						true,			ReadWrite,	GetSet,			"Does the gravity influence this ragdoll?",							"")
 		pl_attribute(InitFrozen,			bool,						true,			ReadWrite,	DirectValue,	"Is this ragdoll frozen on initialization?",						"")
-		// Overwritten PLScene::SceneNode variables
+			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),		DynamicMesh,	ReadWrite,	GetSet,			"Flags",															"")
 		pl_attribute(DebugFlags,			pl_flag_type(EDebugFlags),	0,				ReadWrite,	GetSet,			"Debug flags",														"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -561,7 +563,7 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 		/**
 		*  @brief

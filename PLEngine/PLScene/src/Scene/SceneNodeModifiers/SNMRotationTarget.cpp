@@ -62,8 +62,8 @@ SNMRotationTarget::SNMRotationTarget(SceneNode &cSceneNode) : SNMTransform(cScen
 	Target(this),
 	Offset(this),
 	UpVector(this),
-	EventHandlerPositionUpdate(&SNMRotationTarget::NotifyPositionUpdate, this),
-	EventHandlerDrawDebug	  (&SNMRotationTarget::NotifyDrawDebug,		 this)
+	EventHandlerPositionUpdate(&SNMRotationTarget::OnPositionUpdate, this),
+	EventHandlerDrawDebug	  (&SNMRotationTarget::OnDrawDebug,		 this)
 {
 }
 
@@ -88,14 +88,14 @@ void SNMRotationTarget::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(&EventHandlerPositionUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
@@ -163,7 +163,7 @@ bool SNMRotationTarget::GetTargetPosition(Vector3 &vPos) const
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMRotationTarget::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMRotationTarget::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Get the position of the target scene node
 	Vector3 vTargetPos;
@@ -182,7 +182,7 @@ void SNMRotationTarget::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVis
 *  @brief
 *    Called on scene node position change or update request
 */
-void SNMRotationTarget::NotifyPositionUpdate()
+void SNMRotationTarget::OnPositionUpdate()
 {
 	// Get the position of the target scene node
 	Vector3 vTargetPos;

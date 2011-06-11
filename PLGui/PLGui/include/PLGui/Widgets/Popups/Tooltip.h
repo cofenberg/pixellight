@@ -57,7 +57,8 @@ class Tooltip : public AbstractTooltip {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Tooltip, "PLGui", PLGui::AbstractTooltip, "A simple tooltip widget")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

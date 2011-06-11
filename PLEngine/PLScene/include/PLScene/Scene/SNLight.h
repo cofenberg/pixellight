@@ -76,14 +76,16 @@ class SNLight : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNLight, "PLScene", PLScene::SceneNode, "Abstract light scene node base class")
+		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconLight.dds")
+			pl_property("Icon",	"Data/Textures/IconLight.dds")
 		pl_properties_end
+		// Attributes
 		pl_attribute(Color,				PLGraphics::Color3,		PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Light color (r/g/b)",	"")
 		pl_attribute(CoronaSize,		float,					0.2f,									ReadWrite,	DirectValue,	"Corona size",			"")
 		pl_attribute(FlareSize,			float,					0.1f,									ReadWrite,	DirectValue,	"Lens flare size",		"")
 		pl_attribute(ScreenBrighten,	float,					0.3f,									ReadWrite,	DirectValue,	"Screen brighten",		"")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",				"")
 	pl_class_end
 

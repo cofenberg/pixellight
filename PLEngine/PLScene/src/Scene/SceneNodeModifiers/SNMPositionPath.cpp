@@ -102,8 +102,8 @@ SNMPositionPath::SNMPositionPath(SceneNode &cSceneNode) : SNMTransform(cSceneNod
 	Speed(this),
 	Interpolation(this),
 	Flags(this),
-	EventHandlerUpdate	 (&SNMPositionPath::NotifyUpdate,    this),
-	EventHandlerDrawDebug(&SNMPositionPath::NotifyDrawDebug, this),
+	EventHandlerUpdate	 (&SNMPositionPath::OnUpdate,    this),
+	EventHandlerDrawDebug(&SNMPositionPath::OnDrawDebug, this),
 	m_pPathHandler(new GraphPathHandler())
 {
 }
@@ -137,13 +137,13 @@ void SNMPositionPath::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.EventDrawDebug.Connect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.EventDrawDebug.Disconnect(&EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
@@ -158,7 +158,7 @@ void SNMPositionPath::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPositionPath::NotifyUpdate()
+void SNMPositionPath::OnUpdate()
 {
 	// Move the node on the path
 	const GraphPath *pPath = m_pPathHandler->GetResource();
@@ -175,7 +175,7 @@ void SNMPositionPath::NotifyUpdate()
 *  @brief
 *    Called on scene node debug draw
 */
-void SNMPositionPath::NotifyDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
+void SNMPositionPath::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Get the path
 	const GraphPath *pPath = m_pPathHandler->GetResource();

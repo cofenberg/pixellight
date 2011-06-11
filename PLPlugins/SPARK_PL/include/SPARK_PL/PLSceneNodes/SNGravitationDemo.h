@@ -64,7 +64,8 @@ class SNGravitationDemo : public SNSystem {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(SPARK_PL_RTTI_EXPORT, SNGravitationDemo, "SPARK_PL", SPARK_PL::SNSystem, "Gravitation SPARK particle system demo scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

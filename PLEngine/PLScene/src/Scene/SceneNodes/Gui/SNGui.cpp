@@ -52,7 +52,7 @@ pl_implement_class(SNGui)
 *    Default constructor
 */
 SNGui::SNGui() :
-	EventHandlerUpdate(&SNGui::NotifyUpdate, this),
+	EventHandlerUpdate(&SNGui::OnUpdate, this),
 	m_pGui(nullptr),
 	m_bFocus(true)
 {
@@ -108,7 +108,7 @@ void SNGui::SetFocus(bool bFocus)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void SNGui::NotifyUpdate()
+void SNGui::OnUpdate()
 {
 	// Get the PixelLight ingame GUI implementation
 	GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());

@@ -61,11 +61,13 @@ class Script : public PLScript::Script {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLSCRIPTANGELSCRIPT_RTTI_EXPORT, Script, "PLScriptAngelScript", PLScript::Script, "AngelScript (http://www.angelcode.com/angelscript/) script implementation")
+		// Properties
 		pl_properties
-			pl_property("Language", "AngelScript")
-			pl_property("Formats",  "as,AS")
+			pl_property("Language",	"AngelScript")
+			pl_property("Formats",	"as,AS")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

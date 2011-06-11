@@ -80,7 +80,7 @@ const VisContainer::Projection &VisContainer::GetProjection() const
 *    Constructor
 */
 VisContainer::VisContainer(VisNode *pParent) : VisNode(pParent),
-	EventHandlerDestroy(&VisContainer::NotifyDestroy, this),
+	EventHandlerDestroy(&VisContainer::OnDestroy, this),
 	m_pQueryHandler(new SceneQueryHandler())
 {
 	m_sProjection.fZNear = m_sProjection.fZFar = 0.0f;
@@ -131,7 +131,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			m_mapContainers.Add(cSceneNode.GetName(), pNewContainer);
 
 			// Connect event handler so we get informed if this visibility container is loosing it's scene node
-			cSceneNode.EventDestroy.Connect(&pNewContainer->EventHandlerDestroy);
+			cSceneNode.SignalDestroy.Connect(&pNewContainer->EventHandlerDestroy);
 
 			SQCull *pCullQuery = static_cast<SQCull*>(static_cast<SceneContainer&>(cSceneNode).CreateQuery("PLScene::SQCull"));
 			if (pCullQuery) {
@@ -171,7 +171,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			m_mapPortals.Add(cSceneNode.GetName(), pPortal);
 
 			// Connect event handler so we get informed if this visibility portal is loosing it's scene node
-			cSceneNode.EventDestroy.Connect(&pPortal->EventHandlerDestroy);
+			cSceneNode.SignalDestroy.Connect(&pPortal->EventHandlerDestroy);
 
 			// Get the target cell
 			SceneNode *pCell = reinterpret_cast<SceneNode*>(static_cast<SNCellPortal&>(cSceneNode).GetTargetCellInstance());
@@ -236,7 +236,7 @@ void VisContainer::FreeNodes()
 *  @brief
 *    Called when the scene node assigned with this visibililty container was destroyed
 */
-void VisContainer::NotifyDestroy()
+void VisContainer::OnDestroy()
 {
 	SceneNode *pSceneNode = GetSceneNode();
 	if (pSceneNode && pSceneNode->IsContainer()) {

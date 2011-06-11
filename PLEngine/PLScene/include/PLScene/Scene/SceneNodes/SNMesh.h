@@ -121,15 +121,18 @@ class SNMesh : public SceneNode {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMesh, "PLScene", PLScene::SceneNode, "An mesh is a special scene node that has a 3D mesh attached to it by default")
+		// Properties
 		pl_properties
-			pl_property("Icon", "Data/Textures/IconMesh.dds")
+			pl_property("Icon",	"Data/Textures/IconMesh.dds")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Mesh,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Mesh to use",													"Type='Mesh'")
 		pl_attribute(Skin,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		0,	ReadWrite,	GetSet,	"Flags",														"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,	ReadWrite,	GetSet,	"Debug flags",													"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

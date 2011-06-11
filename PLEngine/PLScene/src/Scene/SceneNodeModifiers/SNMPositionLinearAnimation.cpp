@@ -54,7 +54,7 @@ SNMPositionLinearAnimation::SNMPositionLinearAnimation(SceneNode &cSceneNode) : 
 	AutoVector(this),
 	Vector(this),
 	Speed(this),
-	EventHandlerUpdate(&SNMPositionLinearAnimation::NotifyUpdate, this)
+	EventHandlerUpdate(&SNMPositionLinearAnimation::OnUpdate, this)
 {
 }
 
@@ -90,7 +90,7 @@ void SNMPositionLinearAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPositionLinearAnimation::NotifyUpdate()
+void SNMPositionLinearAnimation::OnUpdate()
 {
 	// Get the scene node
 	SceneNode &cSceneNode = GetSceneNode();

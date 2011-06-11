@@ -245,8 +245,8 @@ void AbstractSlider::DecreaseFast()
 */
 void AbstractSlider::OnChangeValue(int nValue)
 {
-	// Emit event
-	EventChangeValue(nValue);
+	// Emit signal
+	SignalChangeValue(nValue);
 }
 
 

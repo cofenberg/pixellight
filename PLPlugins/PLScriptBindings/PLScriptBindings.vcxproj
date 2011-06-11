@@ -256,11 +256,10 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\PLScriptBindings.cpp" />
-    <ClCompile Include="src\ScriptBindingLog.cpp" />
-    <ClCompile Include="src\ScriptBindingSceneRendererTool.cpp" />
-    <ClCompile Include="src\ScriptBindingSystemConsole.cpp" />
-    <ClCompile Include="src\ScriptBindingTiming.cpp" />
     <ClCompile Include="src\ScriptBinding_PL.cpp" />
+    <ClCompile Include="src\ScriptBinding_PL_Log.cpp" />
+    <ClCompile Include="src\ScriptBinding_PL_System_Console.cpp" />
+    <ClCompile Include="src\ScriptBinding_PL_Timing.cpp" />
     <ClCompile Include="src\SNMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -306,11 +305,10 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingLog.h" />
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingSceneRendererTool.h" />
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingSystemConsole.h" />
-    <ClInclude Include="include\PLScriptBindings\ScriptBindingTiming.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_Log.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_System_Console.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_Timing.h" />
     <ClInclude Include="include\PLScriptBindings\SNMScript.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

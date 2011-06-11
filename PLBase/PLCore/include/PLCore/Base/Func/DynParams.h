@@ -81,6 +81,65 @@ class DynParams {
 		*/
 		PLCORE_API virtual PLGeneral::String GetSignature() const;
 
+		/**
+		*  @brief
+		*    Get the return type ID
+		*
+		*  @return
+		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()"), "TypeInvalid" if there's no return type
+		*/
+		PLCORE_API virtual int GetReturnTypeID() const;
+
+		/**
+		*  @brief
+		*    Get a pointer to the return value
+		*
+		*  @return
+		*    Pointer to the return value, null pointer if there's no return value
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, use typed access instead
+		*    - If you really need to use this generic method, use it at least very carefully and always use "GetReturnTypeID()" to check for the real type
+		*/
+		PLCORE_API virtual void *GetPointerToReturnValue();
+
+		/**
+		*  @brief
+		*    Return the number of parameters
+		*
+		*  @return
+		*    Number of parameters
+		*/
+		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
+
+		/**
+		*  @brief
+		*    Get a parameter type ID
+		*
+		*  @param[in] nIndex
+		*    Index of the parameter to return the type ID from
+		*
+		*  @return
+		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
+		*/
+		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
+
+		/**
+		*  @brief
+		*    Get a pointer to a parameter value
+		*
+		*  @param[in] nIndex
+		*    Index of the parameter to return a pointer to the value from
+		*
+		*  @return
+		*    Pointer to the parameter, null pointer on error
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, use typed access instead
+		*    - If you really need to use this generic method, use it at least very carefully and always use "GetParameterTypeID()" to check for the real type
+		*/
+		PLCORE_API virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex);
+
 
 };
 

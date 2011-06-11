@@ -51,14 +51,17 @@ class SkinLoaderPL : public SkinLoader {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkinLoaderPL, "PLScene", PLScene::SkinLoader, "Skin loader implementation for the PixelLight skin XML file format")
+		// Properties
 		pl_properties
 			pl_property("Formats",	"skin,SKIN")
 			pl_property("Load",		"1")
 			pl_property("Save",		"1")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_2(Load, bool, SNMesh&, PLGeneral::File&, "Load method", "")
-		pl_method_2(Save, bool, SNMesh&, PLGeneral::File&, "Save method", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	pl_ret_type(bool),	SNMesh&,	PLGeneral::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNMesh&,	PLGeneral::File&,	"Save method",	"")
 	pl_class_end
 
 

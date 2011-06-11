@@ -52,19 +52,15 @@ class AbstractSlider : public Widget {
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, AbstractSlider, "PLGui", PLGui::Widget, "Abstract base class for all kind of sliders, scrollbars etc.")
-		pl_attribute(MinValue,		int, 1,		ReadWrite, GetSet, "Minimum value",			"")
-		pl_attribute(MaxValue,		int, 100,	ReadWrite, GetSet, "Maximum value",			"")
-		pl_attribute(Value,			int, 1,		ReadWrite, GetSet, "Current value",			"")
-		pl_attribute(StepSize,		int, 10,	ReadWrite, GetSet, "Standard step size",	"")
-		pl_attribute(StepSizeFast,	int, 50,	ReadWrite, GetSet, "Fast step size",		"")
+		// Attributes
+		pl_attribute(MinValue,		int,	1,		ReadWrite,	GetSet,	"Minimum value",		"")
+		pl_attribute(MaxValue,		int,	100,	ReadWrite,	GetSet,	"Maximum value",		"")
+		pl_attribute(Value,			int,	1,		ReadWrite,	GetSet,	"Current value",		"")
+		pl_attribute(StepSize,		int,	10,		ReadWrite,	GetSet,	"Standard step size",	"")
+		pl_attribute(StepSizeFast,	int,	50,		ReadWrite,	GetSet,	"Fast step size",		"")
+		// Signals
+		pl_signal_1(SignalChangeValue,	int,	"The current value has been changed",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public events                                         ]
-	//[-------------------------------------------------------]
-	public:
-		PLCore::Event<int> EventChangeValue;	/**< The current value has been changed */
 
 
 	//[-------------------------------------------------------]

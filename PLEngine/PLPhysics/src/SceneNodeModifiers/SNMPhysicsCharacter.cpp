@@ -63,7 +63,7 @@ SNMPhysicsCharacter::SNMPhysicsCharacter(SceneNode &cSceneNode) : SNMPhysics(cSc
 	JumpReadyTime(this),
 	JumpGroundDistance(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMPhysicsCharacter::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMPhysicsCharacter::OnUpdate, this),
 	m_bRun(false),
 	m_bCreep(false),
 	m_fJumpReadyTimer(0.0f),
@@ -241,7 +241,7 @@ void SNMPhysicsCharacter::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMPhysicsCharacter::NotifyUpdate()
+void SNMPhysicsCharacter::OnUpdate()
 {
 	// Get the body
 	Body *pBody = GetPhysicsBody();

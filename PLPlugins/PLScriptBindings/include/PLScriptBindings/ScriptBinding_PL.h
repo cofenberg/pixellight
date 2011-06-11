@@ -59,11 +59,14 @@ class ScriptBinding_PL : public PLScript::ScriptBinding {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ScriptBinding_PL, "PLScriptBindings", PLScript::ScriptBinding, "PixelLight script binding class")
+		// Properties
 		pl_properties
-			pl_property("Namespace", "PL")
+			pl_property("Namespace",	"PL")
 		pl_properties_end
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
-		pl_method_0(GetApplication, PLCore::ConsoleApplication*, "Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_0(GetApplication,	pl_ret_type(PLCore::ConsoleApplication*),	"Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)",	"")
 	pl_class_end
 
 

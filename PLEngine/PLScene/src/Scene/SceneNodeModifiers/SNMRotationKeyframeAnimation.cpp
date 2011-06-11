@@ -107,7 +107,7 @@ SNMRotationKeyframeAnimation::SNMRotationKeyframeAnimation(SceneNode &cSceneNode
 	FramesPerSecond(this),
 	Keys(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMRotationKeyframeAnimation::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMRotationKeyframeAnimation::OnUpdate, this),
 	m_pChunk(new Chunk()),
 	m_pAnimation(new Animation())
 {
@@ -167,7 +167,7 @@ void SNMRotationKeyframeAnimation::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMRotationKeyframeAnimation::NotifyUpdate()
+void SNMRotationKeyframeAnimation::OnUpdate()
 {
 	// Are there any keys?
 	const float *pfData = reinterpret_cast<const float*>(m_pChunk->GetData());

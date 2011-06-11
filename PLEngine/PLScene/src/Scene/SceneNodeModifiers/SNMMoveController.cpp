@@ -55,7 +55,7 @@ pl_implement_class(SNMMoveController)
 SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	InputSemantic(this),
 	Speed(this),
-	EventHandlerUpdate(&SNMMoveController::NotifyUpdate, this),
+	EventHandlerUpdate(&SNMMoveController::OnUpdate, this),
 	m_pController(new MoveController())
 {
 }
@@ -109,7 +109,7 @@ void SNMMoveController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMoveController::NotifyUpdate()
+void SNMMoveController::OnUpdate()
 {
 	// Check if input is active
 	if (m_pController->GetActive()) {

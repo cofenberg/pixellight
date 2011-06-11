@@ -51,13 +51,15 @@ class PGSpring : public PGPhysics {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGSpring, "PLParticleGroups", PLParticleGroups::PGPhysics, "Spring particle group")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(Size,			float,				0.2f,							ReadWrite,	DirectValue,	"Size",						"Min='0.0001'")
 		pl_attribute(RotVelocity,	float,				1.0f,							ReadWrite,	DirectValue,	"Rotation velocity",		"")
 		pl_attribute(VelocityScale,	float,				1.0f,							ReadWrite,	DirectValue,	"Velocity scale",			"")
-		// Overwritten SNParticleGroup variables
+			// Overwritten SNParticleGroup attributes
 		pl_attribute(Material,		PLGeneral::String,	"Data/Textures/PGSpring.dds",	ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
 		pl_attribute(Particles,		PLGeneral::uint32,	20,								ReadWrite,	GetSet,			"Number of particles",		"Min=1")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -94,7 +96,7 @@ class PGSpring : public PGPhysics {
 		*  @brief
 		*    Called when the scene node needs to be updated
 		*/
-		void NotifyUpdate();
+		void OnUpdate();
 
 
 	//[-------------------------------------------------------]

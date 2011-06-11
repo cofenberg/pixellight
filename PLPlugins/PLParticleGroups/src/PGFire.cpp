@@ -55,7 +55,7 @@ PGFire::PGFire() :
 	Size(this),
 	Material(this),
 	Particles(this),
-	EventHandlerUpdate(&PGFire::NotifyUpdate, this),
+	EventHandlerUpdate(&PGFire::OnUpdate, this),
 	m_bUpdate(false)
 {
 	// Overwritten SNParticleGroup variables
@@ -103,7 +103,7 @@ void PGFire::OnAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node needs to be updated
 */
-void PGFire::NotifyUpdate()
+void PGFire::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	if ((GetFlags() & ForceUpdate) || m_bUpdate) {

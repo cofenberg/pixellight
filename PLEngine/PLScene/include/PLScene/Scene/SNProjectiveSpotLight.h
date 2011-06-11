@@ -74,10 +74,12 @@ class SNProjectiveSpotLight : public SNSpotLight {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNProjectiveSpotLight, "PLScene", PLScene::SNSpotLight, "Projective spot light scene node")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Attributes
 		pl_attribute(ProjectedMaterial,	PLGeneral::String,		"Data/Textures/PLLogo.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
-		// Overwritten SceneNode variables
+			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCone,						ReadWrite,	GetSet,	"Flags",				"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

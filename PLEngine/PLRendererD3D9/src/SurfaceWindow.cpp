@@ -63,13 +63,13 @@ SurfaceWindow::~SurfaceWindow()
 */
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
-	EventHandlerSize(&SurfaceWindow::NotifySize, this),
+	EventHandlerSize(&SurfaceWindow::OnSize, this),
 	m_pSwapChain(nullptr),
 	m_pBackBuffer(nullptr)
 {
 	// [TODO] Window size change
 	// Connect event handler
-//	cWindow.EventSize.Connect(&EventHandlerSize);
+//	cWindow.SignalSize.Connect(&EventHandlerSize);
 
 	// Init
 	Init();
@@ -79,7 +79,7 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 *  @brief
 *    Called when the window size has been changed
 */
-void SurfaceWindow::NotifySize(const Vector2i &vSize)
+void SurfaceWindow::OnSize(const Vector2i &vSize)
 {
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));

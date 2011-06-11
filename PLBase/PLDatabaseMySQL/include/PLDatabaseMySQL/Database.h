@@ -61,7 +61,8 @@ class Database : public PLDatabase::Database {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLDATABASEMYSQL_RTTI_EXPORT, Database, "PLDatabaseMySQL", PLDatabase::Database, "MySQL 5.0.24a (http://www.mysql.com/) database implementation")
-		pl_constructor_0(DefaultConstructor, "Default constructor", "")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 

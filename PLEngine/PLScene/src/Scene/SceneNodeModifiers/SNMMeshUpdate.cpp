@@ -57,8 +57,8 @@ pl_implement_class(SNMMeshUpdate)
 */
 SNMMeshUpdate::SNMMeshUpdate(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 	Flags(this),
-	EventHandlerAddedToVisibilityTree(&SNMMeshUpdate::NotifyAddedToVisibilityTree, this),
-	EventHandlerUpdate(&SNMMeshUpdate::NotifyUpdate, this),
+	EventHandlerAddedToVisibilityTree(&SNMMeshUpdate::OnAddedToVisibilityTree, this),
+	EventHandlerUpdate(&SNMMeshUpdate::OnUpdate, this),
 	m_bUpdate(true),	// Should be true so for example a valid bounding box, used for visibility detection, is calculated
 	m_bFirstUpdate(true)
 {
@@ -82,10 +82,10 @@ void SNMMeshUpdate::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate) {
-			GetSceneNode().EventAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+			GetSceneNode().SignalAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
 		} else {
-			GetSceneNode().EventAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+			GetSceneNode().SignalAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
 		}
 	}
@@ -99,7 +99,7 @@ void SNMMeshUpdate::OnActivate(bool bActivate)
 *  @brief
 *    Called when the owner scene node was added to a visibility tree
 */
-void SNMMeshUpdate::NotifyAddedToVisibilityTree(VisNode &cVisNode)
+void SNMMeshUpdate::OnAddedToVisibilityTree(VisNode &cVisNode)
 {
 	m_bUpdate = true;
 }
@@ -108,7 +108,7 @@ void SNMMeshUpdate::NotifyAddedToVisibilityTree(VisNode &cVisNode)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMeshUpdate::NotifyUpdate()
+void SNMMeshUpdate::OnUpdate()
 {
 	// If this scene node wasn't drawn at the last frame, we can skip some update stuff
 	MeshHandler *pMeshHandler = GetSceneNode().GetMeshHandler();

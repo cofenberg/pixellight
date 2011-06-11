@@ -317,7 +317,7 @@ class SRPDeferredGBufferMaterial {
 		*  @param[in] cParameter
 		*    The changed parameter
 		*/
-		void NotifyParameterChanged(PLRenderer::Parameter &cParameter);
+		void OnParameterChanged(PLRenderer::Parameter &cParameter);
 
 
 	//[-------------------------------------------------------]
