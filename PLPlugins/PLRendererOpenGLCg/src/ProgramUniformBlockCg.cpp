@@ -67,7 +67,7 @@ bool ProgramUniformBlockCg::SetUniformBuffer(PLRenderer::UniformBuffer *pUniform
 	// Is there an uniform buffer given?
 	if (pUniformBuffer) {
 		// The given uniform buffer must have at least the same number of bytes as this uniform block and the shader language must match!
-		if (cgGetParameterResourceSize(m_pCgParameter) <= pUniformBuffer->GetSize() && m_sShaderLanguage == pUniformBuffer->GetShaderLanguage()) {
+		if (cgGetParameterResourceSize(m_pCgParameter) <= static_cast<long>(pUniformBuffer->GetSize()) && m_sShaderLanguage == pUniformBuffer->GetShaderLanguage()) {
 			cgSetProgramBuffer(cgGetParameterProgram(m_pCgParameter), cgGetParameterBufferIndex(m_pCgParameter), static_cast<UniformBufferCg*>(pUniformBuffer)->GetCgBuffer());
 		} else {
 			// Error!

@@ -225,7 +225,7 @@ uint32 GraphicsPL::GetTextWidth(const PLGui::Font &cFont, const String &sText)
 		// Get the renderer font
 		PLRenderer::Font *pRendererFont = pFontPL->GetRendererFont();
 		if (pRendererFont)
-			return m_pRenderer->GetDrawHelpers().GetTextWidth(*pRendererFont, sText)*m_vScreenSize.x;
+			return static_cast<uint32>(m_pRenderer->GetDrawHelpers().GetTextWidth(*pRendererFont, sText)*m_vScreenSize.x);
 	}
 
 	// Error!
@@ -240,7 +240,7 @@ uint32 GraphicsPL::GetTextHeight(const PLGui::Font &cFont, const String &sText)
 		// Get the renderer font
 		PLRenderer::Font *pRendererFont = pFontPL->GetRendererFont();
 		if (pRendererFont)
-			return m_pRenderer->GetDrawHelpers().GetTextHeight(*pRendererFont)*m_vScreenSize.y;	// sText is not required
+			return static_cast<uint32>(m_pRenderer->GetDrawHelpers().GetTextHeight(*pRendererFont)*m_vScreenSize.y);	// sText is not required
 	}
 
 	// Error!

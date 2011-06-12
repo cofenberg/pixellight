@@ -69,7 +69,7 @@ bool ProgramUniformBlockGLSL::SetUniformBuffer(PLRenderer::UniformBuffer *pUnifo
 	// Is there an uniform buffer given?
 	if (pUniformBuffer) {
 		// The given uniform buffer must have at least the same number of bytes as this uniform block and the shader language must match!
-		if (m_nOpenGLUniformBlockSize <= pUniformBuffer->GetSize() && m_sShaderLanguage == pUniformBuffer->GetShaderLanguage()) {
+		if (m_nOpenGLUniformBlockSize <= static_cast<GLint>(pUniformBuffer->GetSize()) && m_sShaderLanguage == pUniformBuffer->GetShaderLanguage()) {
 			// Attach the buffer to the given UBO binding point
 			glBindBufferBaseEXT(GL_UNIFORM_BUFFER, nBindingPoint, static_cast<UniformBuffer*>(pUniformBuffer)->GetOpenGLUniformBuffer());
 		} else {
