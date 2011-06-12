@@ -275,8 +275,7 @@ bool MeshLODLevel::CreateOctree(uint32 nSubdivide, uint32 nMinGeometries, Array<
 	// Check if there are geometries
 	if (m_plstGeometries) {
 		// Check parameters
-		// [TODO] a check < 0 to an unsigned value doesn't make sense
-		if (nSubdivide < 0 || nMinGeometries < 1)
+		if (nMinGeometries < 1)
 			return false; // Error!
 
 		// Create octree

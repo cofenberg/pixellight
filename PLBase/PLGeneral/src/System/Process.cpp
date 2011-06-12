@@ -483,6 +483,8 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			// Error
 			return false;
 		}
+
+		// Done
 		return true;
 	#endif
 }

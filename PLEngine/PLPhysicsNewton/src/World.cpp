@@ -84,7 +84,7 @@ uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 bool World::MyCompareFunction::AreEqual(const BodyPair &sKey1, const BodyPair &sKey2)
 {
 	return ((sKey1.pBody1 == sKey2.pBody1 && sKey1.pBody2 == sKey2.pBody2) ||
-		    (sKey1.pBody1 == sKey2.pBody2 && sKey1.pBody2 == sKey2.pBody1) );
+		    (sKey1.pBody1 == sKey2.pBody2 && sKey1.pBody2 == sKey2.pBody1));
 }
 
 bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &sKey2)
@@ -766,7 +766,7 @@ void World::SetSimulationActive(bool bActive)
 	// State change?
 	if (m_bSimulationActive != bActive) {
 		// Set the new state
-	m_bSimulationActive = bActive;
+		m_bSimulationActive = bActive;
 
 		// Update the update object if required
 		if (m_pWorldUpdate) {
