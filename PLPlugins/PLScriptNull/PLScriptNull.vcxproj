@@ -273,7 +273,7 @@ copy build\release64\PLScriptNull64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScriptNull\PLScriptNullWindows.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\PLCore\Diary.txt" />
+    <None Include="..\..\PLBase\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>

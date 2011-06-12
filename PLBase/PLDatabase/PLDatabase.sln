@@ -2,13 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabase", "PLDatabase.vcxproj", "{D32C2CA0-8D6F-4801-98D1-78D871A00945}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseMySQL", "..\PLDatabaseMySQL\PLDatabaseMySQL.vcxproj", "{259F0649-8EBF-4167-BF30-499E9E006225}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseMySQL", "..\..\PLPlugins\PLDatabaseMySQL\PLDatabaseMySQL.vcxproj", "{259F0649-8EBF-4167-BF30-499E9E006225}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabasePostgreSQL", "..\PLDatabasePostgreSQL\PLDatabasePostgreSQL.vcxproj", "{AF78660F-3D4E-47D7-B742-866AFBED6A77}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "..\..\PLPlugins\PLDatabaseNull\PLDatabaseNull.vcxproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseSQLite", "..\PLDatabaseSQLite\PLDatabaseSQLite.vcxproj", "{2623883A-B5CC-4318-988C-B76A6DF6DC5E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabasePostgreSQL", "..\..\PLPlugins\PLDatabasePostgreSQL\PLDatabasePostgreSQL.vcxproj", "{AF78660F-3D4E-47D7-B742-866AFBED6A77}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseNull", "..\PLDatabaseNull\PLDatabaseNull.vcxproj", "{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDatabaseSQLite", "..\..\PLPlugins\PLDatabaseSQLite\PLDatabaseSQLite.vcxproj", "{2623883A-B5CC-4318-988C-B76A6DF6DC5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +34,14 @@ Global
 		{259F0649-8EBF-4167-BF30-499E9E006225}.Release|Win32.Build.0 = Release|Win32
 		{259F0649-8EBF-4167-BF30-499E9E006225}.Release|x64.ActiveCfg = Release|x64
 		{259F0649-8EBF-4167-BF30-499E9E006225}.Release|x64.Build.0 = Release|x64
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|Win32.Build.0 = Debug|Win32
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|x64.ActiveCfg = Debug|x64
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|x64.Build.0 = Debug|x64
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|Win32.ActiveCfg = Release|Win32
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|Win32.Build.0 = Release|Win32
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|x64.ActiveCfg = Release|x64
+		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|x64.Build.0 = Release|x64
 		{AF78660F-3D4E-47D7-B742-866AFBED6A77}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AF78660F-3D4E-47D7-B742-866AFBED6A77}.Debug|Win32.Build.0 = Debug|Win32
 		{AF78660F-3D4E-47D7-B742-866AFBED6A77}.Debug|x64.ActiveCfg = Debug|x64
@@ -50,14 +58,6 @@ Global
 		{2623883A-B5CC-4318-988C-B76A6DF6DC5E}.Release|Win32.Build.0 = Release|Win32
 		{2623883A-B5CC-4318-988C-B76A6DF6DC5E}.Release|x64.ActiveCfg = Release|x64
 		{2623883A-B5CC-4318-988C-B76A6DF6DC5E}.Release|x64.Build.0 = Release|x64
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|Win32.Build.0 = Debug|Win32
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|x64.ActiveCfg = Debug|x64
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Debug|x64.Build.0 = Debug|x64
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|Win32.ActiveCfg = Release|Win32
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|Win32.Build.0 = Release|Win32
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|x64.ActiveCfg = Release|x64
-		{E3A8E0BB-30EB-41B2-93C7-4C0284F09200}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

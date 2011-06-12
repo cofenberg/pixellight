@@ -297,8 +297,8 @@ copy build\release64\PLDatabasePostgreSQL64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLWindows.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLBase\PLDatabase\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLDatabase\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">

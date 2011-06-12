@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{2f2044d7-ff57-4af1-a46d-14ee45bf1cf3}</UniqueIdentifier>
+      <UniqueIdentifier>{6fcfd763-0e28-490b-82c8-0d7573276b0f}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
   </ItemGroup>
@@ -16,32 +16,32 @@
     <ClCompile Include="src\DatabaseQueryResult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLDatabasePostgreSQL.cpp">
+    <ClCompile Include="src\PLDatabaseMySQL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLDatabasePostgreSQL\Database.h">
+    <ClInclude Include="include\PLDatabaseMySQL\Database.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQuery.h">
+    <ClInclude Include="include\PLDatabaseMySQL\DatabaseQuery.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQueryResult.h">
+    <ClInclude Include="include\PLDatabaseMySQL\DatabaseQueryResult.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQL.h">
+    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLLinux.h">
+    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLLinux.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLWindows.h">
+    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLDatabase\Diary.txt" />
+    <None Include="..\..\PLBase\PLDatabase\Diary.txt" />
   </ItemGroup>
 </Project>

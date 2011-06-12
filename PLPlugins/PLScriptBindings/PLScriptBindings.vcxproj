@@ -263,7 +263,7 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\SNMScript.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\PLBase\PLScript\Diary.txt" />
+    <None Include="..\..\PLBase\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -2,46 +2,46 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{a063247c-0cd4-4bef-8bb8-f762107b690e}</UniqueIdentifier>
+      <UniqueIdentifier>{2f2044d7-ff57-4af1-a46d-14ee45bf1cf3}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\DatabaseQueryResult.cpp">
+    <ClCompile Include="src\Database.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DatabaseQuery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Database.cpp">
+    <ClCompile Include="src\DatabaseQueryResult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLDatabaseSQLite.cpp">
+    <ClCompile Include="src\PLDatabasePostgreSQL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLDatabaseSQLite\DatabaseQueryResult.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\Database.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\DatabaseQuery.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQuery.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\Database.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQueryResult.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLite.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteLinux.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLLinux.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteWindows.h">
+    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLDatabase\Diary.txt" />
+    <None Include="..\..\PLBase\PLDatabase\Diary.txt" />
   </ItemGroup>
 </Project>

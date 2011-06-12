@@ -280,7 +280,7 @@ copy ..\..\External\_Windows_x86_64\Python\bin\python27.dll ..\..\Bin\PLRuntime\
     <ClInclude Include="include\PLScriptPython\PLScriptPythonWindows.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\PLCore\Diary.txt" />
+    <None Include="..\..\PLBase\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>

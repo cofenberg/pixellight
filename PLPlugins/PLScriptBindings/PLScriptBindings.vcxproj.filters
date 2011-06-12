@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\PLBase\PLScript\Diary.txt" />
+    <None Include="..\..\PLBase\PLCore\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptBindings\SNMScript.h">

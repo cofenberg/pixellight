@@ -277,8 +277,8 @@ copy build\release64\PLDatabaseNull64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLDatabaseNull\PLDatabaseNullWindows.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLBase\PLDatabase\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLDatabase\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">

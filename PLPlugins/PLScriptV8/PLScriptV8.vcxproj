@@ -277,7 +277,7 @@ copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
     <ClInclude Include="include\PLScriptV8\PLScriptV8Windows.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\PLCore\Diary.txt" />
+    <None Include="..\..\PLBase\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
