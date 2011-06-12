@@ -219,6 +219,7 @@ class Params : public DynParams {
 			Param13 = cParams.Param13;
 			Param14 = cParams.Param14;
 			Param15 = cParams.Param15;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -439,6 +440,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			Param13 = cParams.Param13;
 			Param14 = cParams.Param14;
 			Param15 = cParams.Param15;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -646,6 +648,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			Param12 = cParams.Param12;
 			Param13 = cParams.Param13;
 			Param14 = cParams.Param14;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -856,6 +859,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			Param12 = cParams.Param12;
 			Param13 = cParams.Param13;
 			Param14 = cParams.Param14;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1054,6 +1058,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			Param11 = cParams.Param11;
 			Param12 = cParams.Param12;
 			Param13 = cParams.Param13;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1255,6 +1260,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			Param11 = cParams.Param11;
 			Param12 = cParams.Param12;
 			Param13 = cParams.Param13;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1444,6 +1450,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			Param10 = cParams.Param10;
 			Param11 = cParams.Param11;
 			Param12 = cParams.Param12;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1636,6 +1643,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			Param10 = cParams.Param10;
 			Param11 = cParams.Param11;
 			Param12 = cParams.Param12;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1816,6 +1824,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			Param9  = cParams.Param9;
 			Param10 = cParams.Param10;
 			Param11 = cParams.Param11;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -1999,6 +2008,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			Param9  = cParams.Param9;
 			Param10 = cParams.Param10;
 			Param11 = cParams.Param11;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2170,6 +2180,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			Param8  = cParams.Param8;
 			Param9  = cParams.Param9;
 			Param10 = cParams.Param10;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2344,6 +2355,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			Param8  = cParams.Param8;
 			Param9  = cParams.Param9;
 			Param10 = cParams.Param10;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2506,6 +2518,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			Param7 = cParams.Param7;
 			Param8 = cParams.Param8;
 			Param9 = cParams.Param9;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2671,6 +2684,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			Param7 = cParams.Param7;
 			Param8 = cParams.Param8;
 			Param9 = cParams.Param9;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2824,6 +2838,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			Param6 = cParams.Param6;
 			Param7 = cParams.Param7;
 			Param8 = cParams.Param8;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -2980,6 +2995,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			Param6 = cParams.Param6;
 			Param7 = cParams.Param7;
 			Param8 = cParams.Param8;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3124,6 +3140,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			Param5 = cParams.Param5;
 			Param6 = cParams.Param6;
 			Param7 = cParams.Param7;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3271,6 +3288,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			Param5 = cParams.Param5;
 			Param6 = cParams.Param6;
 			Param7 = cParams.Param7;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3406,6 +3424,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			Param4 = cParams.Param4;
 			Param5 = cParams.Param5;
 			Param6 = cParams.Param6;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3544,6 +3563,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			Param4 = cParams.Param4;
 			Param5 = cParams.Param5;
 			Param6 = cParams.Param6;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3670,6 +3690,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			Param3 = cParams.Param3;
 			Param4 = cParams.Param4;
 			Param5 = cParams.Param5;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3799,6 +3820,7 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			Param3 = cParams.Param3;
 			Param4 = cParams.Param4;
 			Param5 = cParams.Param5;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -3916,6 +3938,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			Param2 = cParams.Param2;
 			Param3 = cParams.Param3;
 			Param4 = cParams.Param4;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4036,6 +4059,7 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			Param2 = cParams.Param2;
 			Param3 = cParams.Param3;
 			Param4 = cParams.Param4;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4144,6 +4168,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			Param1 = cParams.Param1;
 			Param2 = cParams.Param2;
 			Param3 = cParams.Param3;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4255,6 +4280,7 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			Param1 = cParams.Param1;
 			Param2 = cParams.Param2;
 			Param3 = cParams.Param3;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4354,6 +4380,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 			Param0 = cParams.Param0;
 			Param1 = cParams.Param1;
 			Param2 = cParams.Param2;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4456,6 +4483,7 @@ class Params<void, T0, T1, T2> : public DynParams {
 			Param0 = cParams.Param0;
 			Param1 = cParams.Param1;
 			Param2 = cParams.Param2;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4546,6 +4574,7 @@ class Params<R, T0, T1> : public DynParams {
 			Return = cParams.Return;
 			Param0 = cParams.Param0;
 			Param1 = cParams.Param1;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4639,6 +4668,7 @@ class Params<void, T0, T1> : public DynParams {
 		{
 			Param0 = cParams.Param0;
 			Param1 = cParams.Param1;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4720,6 +4750,7 @@ class Params<R, T0> : public DynParams {
 		{
 			Return = cParams.Return;
 			Param0 = cParams.Param0;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4804,6 +4835,7 @@ class Params<void, T0> : public DynParams {
 		Params &operator =(const Params &cParams)
 		{
 			Param0 = cParams.Param0;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4874,6 +4906,7 @@ class Params<R> : public DynParams {
 		Params &operator =(const Params &cParams)
 		{
 			Return = cParams.Return;
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
@@ -4924,6 +4957,7 @@ class Params<void> : public DynParams {
 
 		Params &operator =(const Params &cParams)
 		{
+			return *this;
 		}
 
 		virtual PLGeneral::String GetSignature() const
