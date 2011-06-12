@@ -176,7 +176,7 @@ class Tokenizer {
 		*    Comment start tag
 		*
 		*  @remarks
-		*    Default: "/*"
+		*    Default is slash-star ("/ *" without the space in the middle, just written with a space to keep C++ compilers happy).
 		*/
 		PLGENERAL_API void SetCommentStartTag(const String &sCommentStartTag);
 
