@@ -362,6 +362,9 @@ void Application::OnContact(ContactInformation &cContactInformation)
 //[-------------------------------------------------------]
 void Application::OnInit()
 {
+	// Call base implementation
+	BasicSceneApplication::OnInit();
+
 	// Valid default physics API given?
 	String sClassName = m_cCommandLine.GetValue("PhysicsAPI");
 	if (sClassName.GetLength()) {

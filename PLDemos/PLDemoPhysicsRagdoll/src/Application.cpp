@@ -277,6 +277,9 @@ void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
 //[-------------------------------------------------------]
 void Application::OnInit()
 {
+	// Call base implementation
+	BasicSceneApplication::OnInit();
+
 	// Valid default physics API given?
 	String sClassName = m_cCommandLine.GetValue("PhysicsAPI");
 	if (sClassName.GetLength()) {

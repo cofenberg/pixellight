@@ -247,6 +247,9 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 //[-------------------------------------------------------]
 void Application::OnInit()
 {
+	// Call base implementation
+	BasicSceneApplication::OnInit();
+
 	// Valid default sound API given?
 	String sClassName = m_cCommandLine.GetValue("SoundAPI");
 	if (sClassName.GetLength()) {
