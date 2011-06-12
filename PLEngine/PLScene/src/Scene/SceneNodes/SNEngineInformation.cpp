@@ -340,51 +340,54 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	}
 
 	// Show planes
-	if ((InfoFlags & Planes) &&
-		cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXZPlane").GetBool() ||
-		cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXYPlane").GetBool() ||
-		cConfig.GetVar("PLScene::EngineDebugConfig", "ShowYZPlane").GetBool()) {
-		// Get the projection matrix and the current view matrix
-		Matrix4x4 mProjection;
-		Matrix4x4 mCurrentView;
-		{
-			SNCamera *pCamera = SNCamera::GetCamera();
-			if (pCamera) {
-				mProjection = pCamera->GetProjectionMatrix(cRenderer.GetViewport());
-				mCurrentView = pCamera->GetViewMatrix();
+	if (InfoFlags & Planes) {
+		// Check whether or not any plane visualization is enabled
+		const bool bShowXZPlane = cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXZPlane").GetBool();
+		const bool bShowXYPlane = cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXYPlane").GetBool();
+		const bool bShowYZPlane = cConfig.GetVar("PLScene::EngineDebugConfig", "ShowYZPlane").GetBool();
+		if (bShowXZPlane || bShowXYPlane || bShowYZPlane) {
+			// Get the projection matrix and the current view matrix
+			Matrix4x4 mProjection;
+			Matrix4x4 mCurrentView;
+			{
+				SNCamera *pCamera = SNCamera::GetCamera();
+				if (pCamera) {
+					mProjection = pCamera->GetProjectionMatrix(cRenderer.GetViewport());
+					mCurrentView = pCamera->GetViewMatrix();
+				}
 			}
-		}
-		Matrix4x4 mViewProjection = mProjection*mCurrentView;
+			Matrix4x4 mViewProjection = mProjection*mCurrentView;
 
-		cRenderer.GetRendererContext().GetEffectManager().Use();
-		cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
-		cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
-		cRenderer.SetRenderState(RenderState::BlendEnable,  true);
-		if (cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXZPlane").GetBool()) {
-			cDrawHelpers.DrawQuad(Color4(0.0f, 1.0f, 0.0f, 0.5f),
-								  Vector3( 10000.0f, 0.0f, -10000.0f),
-								  Vector3(-10000.0f, 0.0f, -10000.0f),
-								  Vector3( 10000.0f, 0.0f,  10000.0f),
-								  Vector3(-10000.0f, 0.0f,  10000.0f),
-								  mViewProjection, 0.0f);
+			cRenderer.GetRendererContext().GetEffectManager().Use();
+			cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
+			cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
+			cRenderer.SetRenderState(RenderState::BlendEnable,  true);
+			if (bShowXZPlane) {
+				cDrawHelpers.DrawQuad(Color4(0.0f, 1.0f, 0.0f, 0.5f),
+									  Vector3( 10000.0f, 0.0f, -10000.0f),
+									  Vector3(-10000.0f, 0.0f, -10000.0f),
+									  Vector3( 10000.0f, 0.0f,  10000.0f),
+									  Vector3(-10000.0f, 0.0f,  10000.0f),
+									  mViewProjection, 0.0f);
+			}
+			if (bShowXYPlane) {
+				cDrawHelpers.DrawQuad(Color4(0.0f, 0.0f, 1.0f, 0.5f),
+									  Vector3( 10000.0f,  10000.0f, 0.0f),
+									  Vector3(-10000.0f,  10000.0f, 0.0f),
+									  Vector3( 10000.0f, -10000.0f, 0.0f),
+									  Vector3(-10000.0f, -10000.0f, 0.0f),
+									  mViewProjection, 0.0f);
+			}
+			if (bShowYZPlane) {
+				cDrawHelpers.DrawQuad(Color4(1.0f, 0.0f, 0.0f, 0.5f),
+									  Vector3(0.0f,  10000.0f, -10000.0f),
+									  Vector3(0.0f,  10000.0f,  10000.0f),
+									  Vector3(0.0f, -10000.0f, -10000.0f),
+									  Vector3(0.0f, -10000.0f,  10000.0f),
+									  mViewProjection, 0.0f);
+			}
+			cRenderer.SetRenderState(RenderState::ZWriteEnable, true);
 		}
-		if (cConfig.GetVar("PLScene::EngineDebugConfig", "ShowXYPlane").GetBool()) {
-			cDrawHelpers.DrawQuad(Color4(0.0f, 0.0f, 1.0f, 0.5f),
-								  Vector3( 10000.0f,  10000.0f, 0.0f),
-								  Vector3(-10000.0f,  10000.0f, 0.0f),
-								  Vector3( 10000.0f, -10000.0f, 0.0f),
-								  Vector3(-10000.0f, -10000.0f, 0.0f),
-								  mViewProjection, 0.0f);
-		}
-		if (cConfig.GetVar("PLScene::EngineDebugConfig", "ShowYZPlane").GetBool()) {
-			cDrawHelpers.DrawQuad(Color4(1.0f, 0.0f, 0.0f, 0.5f),
-								  Vector3(0.0f,  10000.0f, -10000.0f),
-								  Vector3(0.0f,  10000.0f,  10000.0f),
-								  Vector3(0.0f, -10000.0f, -10000.0f),
-								  Vector3(0.0f, -10000.0f,  10000.0f),
-								  mViewProjection, 0.0f);
-		}
-		cRenderer.SetRenderState(RenderState::ZWriteEnable, true);
 	}
 
 	// Draw FPS
