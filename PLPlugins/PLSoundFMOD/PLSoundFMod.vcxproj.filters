@@ -36,6 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLSound\Diary.txt" />
+    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
   </ItemGroup>
 </Project>

@@ -265,8 +265,8 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\PLRuntime\Plugin
     <ClInclude Include="include\PLSoundFMOD\Source.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLSound\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">

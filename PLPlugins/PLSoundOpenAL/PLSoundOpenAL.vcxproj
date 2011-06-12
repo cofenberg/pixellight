@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A2D389A5-6BD4-4B63-B513-FE55C70683B7}</ProjectGuid>
+    <ProjectGuid>{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -31,6 +31,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -88,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/FMODEx/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/OpenAL/include/;../../External/_Windows_x86_32/libogg/include/;../../External/_Windows_x86_32/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,20 +105,22 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundFMODExD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundOpenALD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/OpenAL/lib/;../../External/_Windows_x86_32/libogg/lib/;../../External/_Windows_x86_32/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLSoundFMODEx.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLSoundOpenAL.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundFMODExD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundOpenALD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLSoundFMODExD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundOpenALD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -128,7 +131,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/FMODEx/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/OpenAL/include/;../../External/_Windows_x86_64/libogg/include/;../../External/_Windows_x86_64/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -143,19 +146,20 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLSoundD64.lib;fmodex64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundFMODExD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneralD64.lib;PLCore64D.lib;PLMathD64.lib;PLSoundD64.lib;OpenAL64.lib;libogg_static64.lib;libvorbis_static64.lib;libvorbisfile_static64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundOpenALD64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/OpenAL/lib/;../../External/_Windows_x86_64/libogg/lib/;../../External/_Windows_x86_64/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLSoundFMODEx64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLSoundOpenAL64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundFMODExD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundOpenALD64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug64\PLSoundOpenALD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -168,7 +172,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/FMODEx/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/OpenAL/include/;../../External/_Windows_x86_32/libogg/include/;../../External/_Windows_x86_32/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -188,9 +192,10 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundFMODEx.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundOpenAL.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/OpenAL/lib/;../../External/_Windows_x86_32/libogg/lib/;../../External/_Windows_x86_32/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -198,12 +203,13 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLSoundFMODEx.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundOpenAL.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLSoundFMODEx.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundOpenAL.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -218,7 +224,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/FMODEx/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/OpenAL/include/;../../External/_Windows_x86_64/libogg/include/;../../External/_Windows_x86_64/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -234,39 +240,50 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\PLRuntime\Pl
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLSound64.lib;fmodex64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundFMODEx64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLSound64.lib;OpenAL64.lib;libogg_static64.lib;libvorbis_static64.lib;libvorbisfile_static64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundOpenAL64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/OpenAL/lib/;../../External/_Windows_x86_64/libogg/lib/;../../External/_Windows_x86_64/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundFMODEx64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundOpenAL64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLSoundFMODEx64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release64\PLSoundOpenAL64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Buffer.cpp" />
-    <ClCompile Include="src\PLSoundFMODEx.cpp" />
+    <ClCompile Include="src\Ogg.cpp" />
+    <ClCompile Include="src\PLSoundOpenAL.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\Source.cpp" />
+    <ClCompile Include="src\Stream.cpp" />
+    <ClCompile Include="src\StreamOgg.cpp" />
+    <ClCompile Include="src\StreamWav.cpp" />
+    <ClCompile Include="src\Wav.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLSoundFMODEx\Buffer.h" />
-    <ClInclude Include="include\PLSoundFMODEx\PLSoundFMODEx.h" />
-    <ClInclude Include="include\PLSoundFMODEx\SoundManager.h" />
-    <ClInclude Include="include\PLSoundFMODEx\Source.h" />
+    <ClInclude Include="include\PLSoundOpenAL\Buffer.h" />
+    <ClInclude Include="include\PLSoundOpenAL\Ogg.h" />
+    <ClInclude Include="include\PLSoundOpenAL\PLSoundOpenAL.h" />
+    <ClInclude Include="include\PLSoundOpenAL\SoundManager.h" />
+    <ClInclude Include="include\PLSoundOpenAL\Source.h" />
+    <ClInclude Include="include\PLSoundOpenAL\Stream.h" />
+    <ClInclude Include="include\PLSoundOpenAL\StreamOgg.h" />
+    <ClInclude Include="include\PLSoundOpenAL\StreamWav.h" />
+    <ClInclude Include="include\PLSoundOpenAL\Wav.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLSound\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">

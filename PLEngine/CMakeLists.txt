@@ -45,18 +45,6 @@ endif()
 if(PL_PLUGIN_RENDERER_D3D11 AND WIN32)
 	add_subdirectory(PLRendererD3D11)
 endif()
-if(PL_PLUGIN_SOUND_NULL)
-	add_subdirectory(PLSoundNull)
-endif()
-if(PL_PLUGIN_SOUND_OPENAL)
-	add_subdirectory(PLSoundOpenAL)
-endif()
-if(PL_PLUGIN_SOUND_FMOD)
-	add_subdirectory(PLSoundFMOD)
-endif()
-if(PL_PLUGIN_SOUND_FMODEX)
-	add_subdirectory(PLSoundFMODEx)
-endif()
 
 ##################################################
 ## Dependencies

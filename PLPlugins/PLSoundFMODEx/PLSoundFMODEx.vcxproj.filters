@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{1d0c72c4-4c5f-44bc-8f7f-69669c76f22f}</UniqueIdentifier>
+      <UniqueIdentifier>{b78c5d68-2ea9-4d4a-85d5-767a3260c86d}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
   </ItemGroup>
@@ -10,7 +10,7 @@
     <ClCompile Include="src\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLSoundNull.cpp">
+    <ClCompile Include="src\PLSoundFMODEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SoundManager.cpp">
@@ -21,21 +21,21 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLSoundNull\Buffer.h">
+    <ClInclude Include="include\PLSoundFMODEx\Buffer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLSoundNull\PLSoundNull.h">
+    <ClInclude Include="include\PLSoundFMODEx\PLSoundFMODEx.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLSoundNull\SoundManager.h">
+    <ClInclude Include="include\PLSoundFMODEx\SoundManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLSoundNull\Source.h">
+    <ClInclude Include="include\PLSoundFMODEx\Source.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLSound\Diary.txt" />
+    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
   </ItemGroup>
 </Project>

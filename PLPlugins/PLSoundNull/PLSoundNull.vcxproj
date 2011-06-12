@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}</ProjectGuid>
+    <ProjectGuid>{ADE24217-6386-494F-A654-6DF7E7498B5D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -31,7 +31,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -89,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/OpenAL/include/;../../External/_Windows_x86_32/libogg/include/;../../External/_Windows_x86_32/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -105,22 +104,19 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundOpenALD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/OpenAL/lib/;../../External/_Windows_x86_32/libogg/lib/;../../External/_Windows_x86_32/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundNullD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLSoundOpenAL.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLSoundNullD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundOpenALD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundNullD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLSoundOpenALD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug\PLSoundNullD.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -131,7 +127,7 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/OpenAL/include/;../../External/_Windows_x86_64/libogg/include/;../../External/_Windows_x86_64/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -146,20 +142,19 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCore64D.lib;PLMathD64.lib;PLSoundD64.lib;OpenAL64.lib;libogg_static64.lib;libvorbis_static64.lib;libvorbisfile_static64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundOpenALD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/OpenAL/lib/;../../External/_Windows_x86_64/libogg/lib/;../../External/_Windows_x86_64/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLSoundD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundNullD64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLSoundOpenAL64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLSoundNullD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundOpenALD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundNullD64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLSoundOpenALD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\debug64\PLSoundNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -172,7 +167,7 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_32/OpenAL/include/;../../External/_Windows_x86_32/libogg/include/;../../External/_Windows_x86_32/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -192,10 +187,9 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;OpenAL32.lib;libogg_static.lib;libvorbis_static.lib;libvorbisfile_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundOpenAL.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/OpenAL/lib/;../../External/_Windows_x86_32/libogg/lib/;../../External/_Windows_x86_32/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundNull.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,13 +197,11 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLSoundOpenAL.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundNull.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLSoundOpenAL.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\OpenAL\bin\OpenAL32.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release\PLSoundNull.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
@@ -224,7 +216,7 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;../../External/_Windows_x86_64/OpenAL/include/;../../External/_Windows_x86_64/libogg/include/;../../External/_Windows_x86_64/libvorbis/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../PLSound/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -240,50 +232,39 @@ copy ..\..\External\_Windows_x86_32\OpenAL\bin\wrap_oal.dll ..\..\Bin\PLRuntime\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLSound64.lib;OpenAL64.lib;libogg_static64.lib;libvorbis_static64.lib;libvorbisfile_static64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLSoundOpenAL64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/OpenAL/lib/;../../External/_Windows_x86_64/libogg/lib/;../../External/_Windows_x86_64/libvorbis/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>LIBCMT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLSound64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLSoundNull64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLSoundOpenAL64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLSoundNull64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLSoundOpenAL64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
+      <Command>copy build\release64\PLSoundNull64.dll ..\..\Bin\PLRuntime\Plugins\PLSound\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLSound --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Buffer.cpp" />
-    <ClCompile Include="src\Ogg.cpp" />
-    <ClCompile Include="src\PLSoundOpenAL.cpp" />
+    <ClCompile Include="src\PLSoundNull.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\Source.cpp" />
-    <ClCompile Include="src\Stream.cpp" />
-    <ClCompile Include="src\StreamOgg.cpp" />
-    <ClCompile Include="src\StreamWav.cpp" />
-    <ClCompile Include="src\Wav.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLSoundOpenAL\Buffer.h" />
-    <ClInclude Include="include\PLSoundOpenAL\Ogg.h" />
-    <ClInclude Include="include\PLSoundOpenAL\PLSoundOpenAL.h" />
-    <ClInclude Include="include\PLSoundOpenAL\SoundManager.h" />
-    <ClInclude Include="include\PLSoundOpenAL\Source.h" />
-    <ClInclude Include="include\PLSoundOpenAL\Stream.h" />
-    <ClInclude Include="include\PLSoundOpenAL\StreamOgg.h" />
-    <ClInclude Include="include\PLSoundOpenAL\StreamWav.h" />
-    <ClInclude Include="include\PLSoundOpenAL\Wav.h" />
+    <ClInclude Include="include\PLSoundNull\Buffer.h" />
+    <ClInclude Include="include\PLSoundNull\PLSoundNull.h" />
+    <ClInclude Include="include\PLSoundNull\SoundManager.h" />
+    <ClInclude Include="include\PLSoundNull\Source.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLSound\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">
