@@ -82,8 +82,8 @@ template <class AType> bool Singleton<AType>::HasInstance()
 */
 template <class AType> Singleton<AType>::Singleton()
 {
-	// Register instance
-	__Instance = reinterpret_cast<AType*>(this);
+	// Register instance - Don't use reinterpret_cast in here or hell breaks loose when starting programs
+	__Instance = static_cast<AType*>(this);
 }
 
 /**

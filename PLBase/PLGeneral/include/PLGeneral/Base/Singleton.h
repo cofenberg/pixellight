@@ -137,7 +137,8 @@ template <class AType> class PLGENERAL_TMPL Singleton {
 				~__Destruction_Guard()
 				{
 					if (Singleton<AType>::__Instance) {
-						delete reinterpret_cast<Singleton<AType>*>(Singleton<AType>::__Instance);
+						// Don't use reinterpret_cast in here or hell breaks loose when starting programs
+						delete static_cast<Singleton<AType>*>(Singleton<AType>::__Instance);
 					}
 				}
 				inline void init() {}
