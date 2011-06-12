@@ -68,13 +68,30 @@ namespace PLGui {
 *  @brief
 *    Provides access to static instance of system GUI
 */
-class SystemGui : public Gui, public Singleton<SystemGui> {
+class SystemGui : public Singleton<SystemGui> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Singleton<SystemGui>;
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the instance of the system GUI
+		*
+		*  @return
+		*    The instance of the system GUI, null pointer on terrible error
+		*/
+		Gui *GetGui() const
+		{
+			return m_pGui;
+		}
 
 
 	//[-------------------------------------------------------]
@@ -85,7 +102,9 @@ class SystemGui : public Gui, public Singleton<SystemGui> {
 		*  @brief
 		*    Constructor
 		*/
-		SystemGui() {};
+		SystemGui() : m_pGui(new Gui())
+		{
+		}
 
 		/**
 		*  @brief
@@ -94,13 +113,18 @@ class SystemGui : public Gui, public Singleton<SystemGui> {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		SystemGui(const SystemGui &cSource) {};
+		SystemGui(const SystemGui &cSource) : m_pGui(new Gui())
+		{
+		}
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SystemGui() {};
+		virtual ~SystemGui()
+		{
+			delete m_pGui;
+		}
 
 		/**
 		*  @brief
@@ -112,7 +136,17 @@ class SystemGui : public Gui, public Singleton<SystemGui> {
 		*  @return
 		*    Reference to this instance
 		*/
-		SystemGui &operator =(const SystemGui &cSource) { return *this; };
+		SystemGui &operator =(const SystemGui &cSource)
+		{
+			return *this;
+		}
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		Gui *m_pGui;	/**< GUI instance, always valid! */
 
 
 };
@@ -128,7 +162,7 @@ class SystemGui : public Gui, public Singleton<SystemGui> {
 Gui *Gui::GetSystemGui()
 {
 	// Return pointer to system GUI
-	return SystemGui::GetInstance();
+	return SystemGui::GetInstance()->GetGui();
 }
 
 
