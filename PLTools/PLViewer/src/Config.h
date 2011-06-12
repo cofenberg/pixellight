@@ -46,7 +46,7 @@ class PLViewerConfig : public PLCore::ConfigGroup {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, PLViewerConfig, "", PLCore::ConfigGroup, "PLViewer general configuration classes")
 		// Attributes
-		pl_attribute(DefaultScene,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Default scene",	"")
+		pl_attribute(DefaultFilename,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Default resource (e.g. scene or script)",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

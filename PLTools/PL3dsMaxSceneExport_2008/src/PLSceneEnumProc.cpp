@@ -527,7 +527,7 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				// Add the 'Group' element
 				XmlElement *pGroupElement = new XmlElement("Group");
 				pGroupElement->SetAttribute("Class", "PLViewerConfig");
-				pGroupElement->SetAttribute("DefaultScene", String("Data\\Scenes\\") + g_SEOptions.sFilenameOnly.c_str() + ".scene");
+				pGroupElement->SetAttribute("DefaultFilename", String("Data\\Scenes\\") + g_SEOptions.sFilenameOnly.c_str() + ".scene");
 
 				// Link 'Group' element
 				pConfigElement->LinkEndChild(*pGroupElement);

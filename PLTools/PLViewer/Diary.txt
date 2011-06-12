@@ -1,3 +1,9 @@
+>> 12.06.2011
+[CO]
+- Changed within "PLViewerConfig" the setting "DefaultScene" into the more generic "DefaultFilename"
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

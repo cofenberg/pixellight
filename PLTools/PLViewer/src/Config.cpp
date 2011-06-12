@@ -40,7 +40,7 @@ pl_implement_class(PLViewerConfig)
 *    Default constructor
 */
 PLViewerConfig::PLViewerConfig() :
-	DefaultScene(this)
+	DefaultFilename(this)
 {
 }
 
