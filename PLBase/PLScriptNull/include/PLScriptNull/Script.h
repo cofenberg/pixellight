@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/Script.h>
+#include <PLCore/Script/Script.h>
 #include "PLScriptNull/PLScriptNull.h"
 
 
@@ -45,13 +45,13 @@ namespace PLScriptNull {
 *  @brief
 *    Null script implementation
 */
-class Script : public PLScript::Script {
+class Script : public PLCore::Script {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTNULL_RTTI_EXPORT, Script, "PLScriptNull", PLScript::Script, "Null script implementation")
+	pl_class(PLSCRIPTNULL_RTTI_EXPORT, Script, "PLScriptNull", PLCore::Script, "Null script implementation")
 		// Properties
 		pl_properties
 			pl_property("Language",	"Null")
@@ -80,7 +80,7 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScript::Script functions             ]
+	//[ Public virtual PLCore::Script functions               ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]

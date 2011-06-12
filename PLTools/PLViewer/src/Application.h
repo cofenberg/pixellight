@@ -66,7 +66,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static const PLGeneral::String DefaultScene;	/**< The used default scene loaded at start, if empty a file dialog will appear */
+		static const PLGeneral::String DefaultFilename;	/**< The used default resource loaded at start, if empty a file dialog will appear */
 
 
 	//[-------------------------------------------------------]
@@ -87,12 +87,12 @@ class Application : public PLEngine::BasicSceneApplication {
 
 		/**
 		*  @brief
-		*    Openes a file dialog in which the user can choose a scene
+		*    Openes a file dialog in which the user can choose a resource
 		*
 		*  @return
-		*    The chooen scene
+		*    The chooen resource
 		*/
-		PLGeneral::String ChooseScene();
+		PLGeneral::String ChooseFilename();
 
 		/**
 		*  @brief

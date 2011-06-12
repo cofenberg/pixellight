@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLCore/Script/ScriptBinding.h>
 
 
 //[-------------------------------------------------------]
@@ -38,13 +38,13 @@
 *  @brief
 *    Sample script binding class, don't take it to serious
 */
-class ScriptBindingSample : public PLScript::ScriptBinding {
+class ScriptBindingSample : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBindingSample, "", PLScript::ScriptBinding, "Sample script binding class, don't take it to serious")
+	pl_class(pl_rtti_export, ScriptBindingSample, "", PLCore::ScriptBinding, "Sample script binding class, don't take it to serious")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"Sample")

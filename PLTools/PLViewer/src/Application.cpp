@@ -54,9 +54,9 @@ pl_implement_class(Application)
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-// A helper to be able to toggle between 'choose scene file at start' and 'load
-// default scene at start' (quite comfortable if you make many experiments :)
-const String Application::DefaultScene = "";
+// A helper to be able to toggle between 'choose resource file at start' and 'load
+// default resource at start' (quite comfortable if you make many experiments :)
+const String Application::DefaultFilename = "";
 
 
 //[-------------------------------------------------------]
@@ -86,7 +86,7 @@ Application::Application() :
 	// This application accepts all the standard parameters that are defined in the application
 	// base class (such as --help etc.). The last parameter however is the filename to load, so add that.
 	m_cCommandLine.AddFlag("Standalone", "-s", "--standalone", "Standalone application, write log and configuration into the directory the executable is in", false);
-	m_cCommandLine.AddArgument("Filename", "Scene filename", "", false);
+	m_cCommandLine.AddArgument("Filename", "Resource (e.g. scene or script) filename", "", false);
 }
 
 /**
@@ -100,21 +100,21 @@ Application::~Application()
 
 /**
 *  @brief
-*    Openes a file dialog in which the user can choose a scene
+*    Openes a file dialog in which the user can choose a resource
 */
-String Application::ChooseScene()
+String Application::ChooseFilename()
 {
 	// [TODO] PLGui
 	return "";
 	/*
-	// Create and show a file choose dialog in which the user can select a scene file which should be loaded
+	// Create and show a file choose dialog in which the user can select a resource file which should be loaded
 	if (m_pFileDialog && m_pFileDialog->IsVisible())
 		return "";
 
 	// Create the choose file dialog
 	if (!m_pFileDialog) {
 		m_pFileDialog = new DialogChooseFile();
-		m_pFileDialog->SetTitle(PLT("Choose scene"));
+		m_pFileDialog->SetTitle(PLT("Choose resource"));
 
 		// Add 'scene' file filter
 		m_pFileDialog->AddFiltersFromLoadableType("Scene", true, false);
@@ -220,30 +220,30 @@ void Application::OnInitLog()
 
 void Application::OnInit()
 {
-	// Scene filename given?
-	String sSceneFilename = m_cCommandLine.GetValue("Filename");
-	if (!sSceneFilename.GetLength()) {
-		// Get the filename of the default scene by using the PLViewer configuration
-		const String sConfigDefaultScene = GetConfig().GetVar("PLViewerConfig", "DefaultScene");
-		if (sConfigDefaultScene.GetLength()) {
-			// Set the default scene
-			sSceneFilename = sConfigDefaultScene;
+	// Filename given?
+	String sFilename = m_cCommandLine.GetValue("Filename");
+	if (!sFilename.GetLength()) {
+		// Get the filename of the default by using the PLViewer configuration
+		const String sConfigDefault = GetConfig().GetVar("PLViewerConfig", "DefaultFilename");
+		if (sConfigDefault.GetLength()) {
+			// Set the default filename
+			sFilename = sConfigDefault;
 		} else {
-			// Load a default scene on start?
-			if (DefaultScene.GetLength()) {
-				// Set the default scene
-				sSceneFilename = DefaultScene;
+			// Load a default resource on start?
+			if (DefaultFilename.GetLength()) {
+				// Set the default filename
+				sFilename = DefaultFilename;
 			} else {
-				// Choose the scene filename
-				sSceneFilename = ChooseScene();
+				// Choose the filename
+				sFilename = ChooseFilename();
 			}
 		}
 	}
 
-	// Is there a scene name given?
-	if (sSceneFilename.GetLength()) {
+	// Is there a name given?
+	if (sFilename.GetLength()) {
 		// Load scene
-		if (!LoadScene(sSceneFilename)) {
+		if (!LoadScene(sFilename)) {
 			// Present the user an sweet 'ERROR!!!'-message
 			// [TODO] PLGui
 			// pWindow->GetGui()->MessageBox("Error", "Failed to load the given scene, the program will terminate now.\nHave a look into the log for detailed information.");

@@ -20,22 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPT_H__
-#define __PLSCRIPT_SCRIPT_H__
+#ifndef __PLCORE_SCRIPT_H__
+#define __PLCORE_SCRIPT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
-#include "PLScript/PLScript.h"
+#include "PLCore/Base/Object.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -66,13 +65,13 @@ namespace PLScript {
 *    Please note that not each script language/API may make such a detailed data type distinction.
 *    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
 */
-class Script : public PLCore::Object {
+class Script : public Object {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, Script, "PLScript", PLCore::Object, "Abstract script base class")
+	pl_class(PLCORE_RTTI_EXPORT, Script, "PLCore", PLCore::Object, "Abstract script base class")
 		// Properties
 		pl_properties
 			pl_property("Language",	"Unknown")
@@ -91,7 +90,7 @@ class Script : public PLCore::Object {
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~Script();
+		PLCORE_API virtual ~Script();
 
 		/**
 		*  @brief
@@ -100,7 +99,7 @@ class Script : public PLCore::Object {
 		*  @return
 		*    The name of the script language the script is using (for example "Lua" or "JavaScript")
 		*/
-		PLSCRIPT_API PLGeneral::String GetScriptLanguage() const;
+		PLCORE_API PLGeneral::String GetScriptLanguage() const;
 
 		/**
 		*  @brief
@@ -109,7 +108,7 @@ class Script : public PLCore::Object {
 		*  @param[out] lstFormats
 		*    List of file formats this script supports (the given list is not cleared before new entries are added)
 		*/
-		PLSCRIPT_API void GetFormats(PLGeneral::Array<PLGeneral::String> &lstFormats) const;
+		PLCORE_API void GetFormats(PLGeneral::Array<PLGeneral::String> &lstFormats) const;
 
 		/**
 		*  @brief
@@ -123,7 +122,7 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
-		PLSCRIPT_API void AddBinding(PLCore::Object &cObject, const PLGeneral::String &sNamespace = "");
+		PLCORE_API void AddBinding(Object &cObject, const PLGeneral::String &sNamespace = "");
 
 		/**
 		*  @brief
@@ -135,7 +134,7 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
-		PLSCRIPT_API void AddBindings();
+		PLCORE_API void AddBindings();
 
 
 	//[-------------------------------------------------------]
@@ -162,7 +161,7 @@ class Script : public PLCore::Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -234,7 +233,7 @@ class Script : public PLCore::Object {
 		*  @return
 		*    The type ID of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
 		*/
-		virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName) = 0;
+		virtual ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName) = 0;
 
 		/**
 		*  @brief
@@ -262,7 +261,7 @@ class Script : public PLCore::Object {
 		*    - Please note that it depends on the used script language/API which data types are really available,
 		*      this means that "GetGlobalVariableTypeID()" may return another data type as the one you specified
 		*/
-		virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue) = 0;
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const DynVar &cValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
@@ -306,7 +305,7 @@ class Script : public PLCore::Object {
 		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
 		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
 		virtual void PushArgument(const PLGeneral::String &sString) = 0;
-		virtual void PushArgument(PLCore::Object *pObject) = 0;
+		virtual void PushArgument(Object *pObject) = 0;
 
 		/**
 		*  @brief
@@ -346,7 +345,7 @@ class Script : public PLCore::Object {
 		virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue) = 0;
 		virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue) = 0;
 		virtual PLGeneral::String GetReturn(PLGeneral::String nValue) = 0;
-		virtual PLCore::Object *GetReturn(PLCore::Object *nValue) = 0;
+		virtual Object *GetReturn(Object *nValue) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -357,7 +356,7 @@ class Script : public PLCore::Object {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API Script();
+		PLCORE_API Script();
 
 		/**
 		*  @brief
@@ -378,7 +377,7 @@ class Script : public PLCore::Object {
 		*    which also adds the name of the script to the given
 		*    text.
 		*/
-		PLSCRIPT_API bool LogOutput(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText);
+		PLCORE_API bool LogOutput(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -413,7 +412,7 @@ class Script : public PLCore::Object {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLCore
 
 
-#endif // __PLSCRIPT_SCRIPT_H__
+#endif // __PLCORE_SCRIPT_H__

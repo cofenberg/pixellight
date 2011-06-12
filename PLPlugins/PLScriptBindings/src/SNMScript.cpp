@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/Script.h>
-#include <PLScript/FuncScriptPtr.h>
-#include <PLScript/ScriptManager.h>
+#include <PLCore/Script/Script.h>
+#include <PLCore/Script/FuncScriptPtr.h>
+#include <PLCore/Script/ScriptManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLScriptBindings/SNMScript.h"
 
@@ -35,7 +35,6 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
-using namespace PLScript;
 using namespace PLScene;
 namespace PLScriptBindings {
 

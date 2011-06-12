@@ -24,17 +24,16 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Log/Log.h>
-#include <PLCore/Base/Class.h>
-#include "PLScript/ScriptManager.h"
-#include "PLScript/Script.h"
+#include "PLCore/Base/Class.h"
+#include "PLCore/Script/ScriptManager.h"
+#include "PLCore/Script/Script.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
-namespace PLScript {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -171,4 +170,4 @@ Script &Script::operator =(const Script &cSource)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLCore

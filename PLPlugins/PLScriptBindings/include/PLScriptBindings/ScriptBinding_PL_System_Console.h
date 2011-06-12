@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLCore/Script/ScriptBinding.h>
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLScriptBindings {
 *  @brief
 *    System console script binding class
 */
-class ScriptBinding_PL_System_Console : public PLScript::ScriptBinding {
+class ScriptBinding_PL_System_Console : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBinding_PL_System_Console, "PLScriptBindings", PLScript::ScriptBinding, "System console script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL_System_Console, "PLScriptBindings", PLCore::ScriptBinding, "System console script binding class")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"PL.System.Console")

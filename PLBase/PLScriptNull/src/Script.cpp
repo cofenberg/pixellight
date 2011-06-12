@@ -61,7 +61,7 @@ Script::~Script()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLScript::Script functions             ]
+//[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {

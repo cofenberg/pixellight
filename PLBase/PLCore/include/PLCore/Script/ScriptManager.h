@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTMANAGER_H__
-#define __PLSCRIPT_SCRIPTMANAGER_H__
+#ifndef __PLCORE_SCRIPTMANAGER_H__
+#define __PLCORE_SCRIPTMANAGER_H__
 #pragma once
 
 
@@ -31,26 +31,21 @@
 #include <PLGeneral/Base/Singleton.h>
 #include <PLGeneral/Container/Array.h>
 #include <PLGeneral/Container/HashMap.h>
-#include <PLCore/Base/Event/EventHandler.h>
-#include "PLScript/PLScript.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore {
-	class Class;
-}
-namespace PLScript {
-	class Script;
-	class ScriptBinding;
-}
+#include "PLCore/Base/Event/EventHandler.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Class;
+class Script;
+class ScriptBinding;
 
 
 //[-------------------------------------------------------]
@@ -80,7 +75,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @return
 		*    List of the names of the supported script languages
 		*/
-		PLSCRIPT_API const PLGeneral::Array<PLGeneral::String> &GetScriptLanguages();
+		PLCORE_API const PLGeneral::Array<PLGeneral::String> &GetScriptLanguages();
 
 		/**
 		*  @brief
@@ -92,7 +87,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @return
 		*    Script language, empty string on error (possibly not supported filename extension)
 		*/
-		PLSCRIPT_API PLGeneral::String GetScriptLanguageByExtension(const PLGeneral::String &sExtension);
+		PLCORE_API PLGeneral::String GetScriptLanguageByExtension(const PLGeneral::String &sExtension);
 
 		/**
 		*  @brief
@@ -104,7 +99,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @return
 		*    'true' if the given script language is supported, else 'false'
 		*/
-		PLSCRIPT_API bool IsSupported(const PLGeneral::String &sScriptLanguage);
+		PLCORE_API bool IsSupported(const PLGeneral::String &sScriptLanguage);
 
 		/**
 		*  @brief
@@ -119,7 +114,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @note
 		*    - If the script language has more than one filename extension, the first filename extension will be returned
 		*/
-		PLSCRIPT_API PLGeneral::String GetScriptLanguageExtension(const PLGeneral::String &sScriptLanguage);
+		PLCORE_API PLGeneral::String GetScriptLanguageExtension(const PLGeneral::String &sScriptLanguage);
 
 		/**
 		*  @brief
@@ -128,7 +123,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @return
 		*    List of all script binding instances
 		*/
-		PLSCRIPT_API const PLGeneral::Array<ScriptBinding*> &GetScriptBindings();
+		PLCORE_API const PLGeneral::Array<ScriptBinding*> &GetScriptBindings();
 
 		/**
 		*  @brief
@@ -142,7 +137,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @return
 		*    The created script instance, null pointer on error
 		*/
-		PLSCRIPT_API Script *Create(const PLGeneral::String &sScriptLanguage, bool bAddBindings = true);
+		PLCORE_API Script *Create(const PLGeneral::String &sScriptLanguage, bool bAddBindings = true);
 
 		/**
 		*  @brief
@@ -159,7 +154,7 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @note
 		*    - Convenience method
 		*/
-		PLSCRIPT_API Script *CreateFromFile(const PLGeneral::String &sFilename, bool bAddBindings = true);
+		PLCORE_API Script *CreateFromFile(const PLGeneral::String &sFilename, bool bAddBindings = true);
 
 
 	//[-------------------------------------------------------]
@@ -170,13 +165,13 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptManager();
+		PLCORE_API ScriptManager();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptManager();
+		PLCORE_API virtual ~ScriptManager();
 
 
 	//[-------------------------------------------------------]
@@ -191,11 +186,11 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 		*    Class to register, must be valid!
 		*
 		*  @note
-		*    - If the class is not derived from 'PLScript::Script' it is ignored
+		*    - If the class is not derived from 'PLCore::Script' it is ignored
 		*    - The given class must be a new one, so this function did not check whether the
 		*      class is already registered
 		*/
-		void OnClassLoaded(const PLCore::Class *pClass);
+		void OnClassLoaded(const Class *pClass);
 
 		/**
 		*  @brief
@@ -208,17 +203,17 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 	//[ Private slots                                         ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<const PLCore::Class*> SlotClassLoaded;
+		EventHandler<const Class*> SlotClassLoaded;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<const PLCore::Class*>						m_lstNewClasses;					/**< New classes to register as soon as required */
+		PLGeneral::Array<const Class*>								m_lstNewClasses;					/**< New classes to register as soon as required */
 		// Script languages
 		PLGeneral::Array<PLGeneral::String>							m_lstScriptLanguages;				/**< List of script languages */
-		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*> m_mapScriptLanguages;				/**< Map of script languages (key = class name) */
+		PLGeneral::HashMap<PLGeneral::String, const Class*>			m_mapScriptLanguages;				/**< Map of script languages (key = class name) */
 		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>	m_mapScriptLanguagesByExtension;	/**< Map of script languages by extension (key = extension) */
 		// Script bindings
 		PLGeneral::Array<ScriptBinding*>							m_lstScriptBindings;				/**< List of script bindings */
@@ -230,13 +225,13 @@ class ScriptManager : public PLGeneral::Singleton<ScriptManager> {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLCore
 
 
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLSCRIPT_TEMPLATE template class PLSCRIPT_API PLGeneral::Singleton<PLScript::ScriptManager>;
+PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ScriptManager>;
 
 
-#endif // __PLSCRIPT_SCRIPTMANAGER_H__
+#endif // __PLCORE_SCRIPTMANAGER_H__
