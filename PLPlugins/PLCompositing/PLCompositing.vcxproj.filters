@@ -606,6 +606,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLScene\Diary.txt" />
+    <None Include="Diary.txt" />
   </ItemGroup>
 </Project>

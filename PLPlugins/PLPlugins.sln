@@ -66,6 +66,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLCg", "PLRen
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLES", "PLRendererOpenGLES\PLRendererOpenGLES.vcxproj", "{D757706B-9792-4101-BF6C-E8838292EC48}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCompositing", "PLCompositing\PLCompositing.vcxproj", "{A4EFCE15-1178-484A-A59F-343AE41DDD52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -334,6 +336,14 @@ Global
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.ActiveCfg = Release|Win32
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.Build.0 = Release|Win32
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|x64.ActiveCfg = Release|Win32
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Debug|Win32.Build.0 = Debug|Win32
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Debug|x64.ActiveCfg = Debug|x64
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Debug|x64.Build.0 = Debug|x64
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Release|Win32.ActiveCfg = Release|Win32
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Release|Win32.Build.0 = Release|Win32
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Release|x64.ActiveCfg = Release|x64
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

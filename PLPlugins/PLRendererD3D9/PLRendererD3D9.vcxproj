@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -129,7 +129,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\PLRuntime\Plugin
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -169,7 +169,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\PLRuntime\Plugin
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -220,7 +220,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\PLRuntime\Plugin
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -312,7 +312,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\PLRuntime\Plugin
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLRenderer\PLRenderer.vcxproj">
+    <ProjectReference Include="..\..\PLEngine\PLRenderer\PLRenderer.vcxproj">
       <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

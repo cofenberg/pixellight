@@ -12,6 +12,7 @@ add_custom_target(Plugins)
 ## Projects
 ##################################################
 add_subdirectory(PLScriptBindings)
+add_subdirectory(PLCompositing)
 if(PL_PLUGIN_ENGINE_DEFAULTFF)
 	add_subdirectory(PLDefaultFileFormats)
 endif()
