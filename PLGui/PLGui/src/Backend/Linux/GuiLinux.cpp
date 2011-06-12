@@ -576,6 +576,7 @@ int GuiLinux::ErrorHandler(Display *pDisplay, XErrorEvent *pError)
 	printf("  Major op-code: %d\n", pError->request_code);
 	printf("  Minor op-code: %d\n", pError->minor_code);
 	printf("\n");
+	return 0;
 }
 
 

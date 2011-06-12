@@ -912,7 +912,7 @@ int _vscwprintf(const wchar_t *format, va_list argptr)
     return lenCur-1;
 }
 #endif
-/**end of the own vsnwprintf function
+/**end of the own vsnwprintf function */
 /*****************************************************************************************/
 
 int _vscprintf(const char *fmt,va_list ap)

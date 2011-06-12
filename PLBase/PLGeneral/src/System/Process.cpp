@@ -481,7 +481,9 @@ bool Process::CreateProcessRedirectIO(const String &sCommand, const String &sArg
 			m_cFileError .Assign(m_cPipeError .GetReadHandle());
 		} else {
 			// Error
+			return false;
 		}
+		return true;
 	#endif
 }
 

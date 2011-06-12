@@ -431,8 +431,8 @@ void FixedFunctions::UpdateShaderOpenGLTextureMatrix(uint32 nStage)
 		glLoadMatrixf(m_mTextureMatrix[nStage]);
 	} else {
 		// If the previous texture buffer was a rectangle one, now reset the texture matrix
-		if (m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage] && m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage]->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle ||
-			m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage] && !m_pRendererOpenGL->GetTextureBuffer(nStage)) {
+		if ((m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage] && m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage]->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle) ||
+			(m_pRendererOpenGL->m_ppPrevTextureBuffer[nStage] && !m_pRendererOpenGL->GetTextureBuffer(nStage))) {
 			glMatrixMode(GL_TEXTURE);
 			m_mTextureMatrix[nStage] = m_mOriginalTexture[nStage];
 			glLoadMatrixf(m_mTextureMatrix[nStage]);

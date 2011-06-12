@@ -367,6 +367,7 @@ inline AABoundingBox &AABoundingBox::operator -=(const Vector3 &vV)
 {
 	vMin -= vV;
 	vMax -= vV;
+	return *this;
 }
 
 /**
@@ -377,6 +378,7 @@ inline AABoundingBox &AABoundingBox::operator -=(float fS)
 {
 	vMin -= fS;
 	vMax -= fS;
+	return *this;
 }
 
 /**
@@ -405,6 +407,7 @@ inline AABoundingBox &AABoundingBox::operator *=(const Vector3 &vV)
 {
 	vMin *= vV;
 	vMax *= vV;
+	return *this;
 }
 
 /**
@@ -415,6 +418,7 @@ inline AABoundingBox &AABoundingBox::operator *=(float fS)
 {
 	vMin *= fS;
 	vMax *= fS;
+	return *this;
 }
 
 /**
@@ -443,6 +447,7 @@ inline AABoundingBox &AABoundingBox::operator /=(const Vector3 &vV)
 {
 	vMin /= vV;
 	vMax /= vV;
+	return *this;
 }
 
 /**
@@ -453,6 +458,7 @@ inline AABoundingBox &AABoundingBox::operator /=(float fS)
 {
 	vMin /= fS;
 	vMax /= fS;
+	return *this;
 }
 
 

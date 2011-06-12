@@ -75,8 +75,8 @@ uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 //[-------------------------------------------------------]
 bool World::MyCompareFunction::AreEqual(const BodyPair &sKey1, const BodyPair &sKey2)
 {
-	return (sKey1.pBody1 == sKey2.pBody1 && sKey1.pBody2 == sKey2.pBody2 ||
-		    sKey1.pBody1 == sKey2.pBody2 && sKey1.pBody2 == sKey2.pBody1);
+	return ((sKey1.pBody1 == sKey2.pBody1 && sKey1.pBody2 == sKey2.pBody2) ||
+		    (sKey1.pBody1 == sKey2.pBody2 && sKey1.pBody2 == sKey2.pBody1) );
 }
 
 bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &sKey2)
@@ -203,7 +203,7 @@ PLPhysics::Body *World::CreateBodyChamferCylinder(float fRadius, float fHeight, 
 PLPhysics::Joint *World::CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const Vector3 &vPivotPoint, const Vector3 &vPinDir)
 {
 	// Check parameters
-	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
+	if (pParentBody == pChildBody || (!pParentBody && !pChildBody))
 		return nullptr; // Error!
 
 	// Create the physics joint
@@ -213,7 +213,7 @@ PLPhysics::Joint *World::CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics
 PLPhysics::Joint *World::CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const Vector3 &vPivotPoint, const Vector3 &vPinDir)
 {
 	// Check parameters
-	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
+	if (pParentBody == pChildBody || (!pParentBody && !pChildBody))
 		return nullptr; // Error!
 
 	// Create the physics joint
@@ -223,7 +223,7 @@ PLPhysics::Joint *World::CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysi
 PLPhysics::Joint *World::CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const Vector3 &vPivotPoint, const Vector3 &vPinDir)
 {
 	// Check parameters
-	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
+	if (pParentBody == pChildBody || (!pParentBody && !pChildBody))
 		return nullptr; // Error!
 
 	// Create the physics joint
@@ -234,7 +234,7 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 											  const Vector3 &vPinDir1, const Vector3 &vPinDir2)
 {
 	// Check parameters
-	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
+	if (pParentBody == pChildBody || (!pParentBody && !pChildBody))
 		return nullptr; // Error!
 
 	// Create the physics joint
@@ -244,7 +244,7 @@ PLPhysics::Joint *World::CreateJointUniversal(PLPhysics::Body *pParentBody, PLPh
 PLPhysics::Joint *World::CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const Vector3 &vPivotPoint, const Vector3 &vPinDir)
 {
 	// Check parameters
-	if (pParentBody == pChildBody || !pParentBody && !pChildBody)
+	if (pParentBody == pChildBody || (!pParentBody && !pChildBody))
 		return nullptr; // Error!
 
 	// Create the physics joint

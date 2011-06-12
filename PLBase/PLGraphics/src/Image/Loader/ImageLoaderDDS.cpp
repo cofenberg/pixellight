@@ -114,7 +114,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 		// Note that if "nSize" is "DDS " this is not a valid dds file according
 		// to the file spec. Some broken tool out there seems to produce files
 		// with this value in the size field, so we support reading them...
-		sHeader.nSize == 124 || sHeader.nSize != MCHAR4('D', 'D', 'S', ' ')) {
+		(sHeader.nSize == 124 || sHeader.nSize != MCHAR4('D', 'D', 'S', ' '))) {
 
 		// Get the color format and compression
 		EDataFormat  nDataFormat = DataByte;

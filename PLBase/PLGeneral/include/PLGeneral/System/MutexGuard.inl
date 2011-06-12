@@ -109,6 +109,7 @@ MutexGuard::MutexGuard(const MutexGuard &cSource) :
 MutexGuard &MutexGuard::operator =(const MutexGuard &cSource)
 {
 	// Not implemented
+	return *this;
 }
 
 

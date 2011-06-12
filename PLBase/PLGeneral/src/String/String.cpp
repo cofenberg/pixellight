@@ -2116,7 +2116,7 @@ bool String::IsValidInteger() const
 		const char *pszASCII = GetASCII();
 
 		// Skip spaces and tabs
-		while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
+		while (nLength > 0 && (*pszASCII == ' ' || *pszASCII == '\t')) {
 			pszASCII++;
 			nLength--;
 		}
@@ -2143,7 +2143,7 @@ bool String::IsValidInteger() const
 					return true; // Valid integer
 
 				// Skip spaces and tabs
-				while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
+				while (nLength > 0 && (*pszASCII == ' ' || *pszASCII == '\t')) {
 					pszASCII++;
 					nLength--;
 				}
@@ -2167,7 +2167,7 @@ bool String::IsValidFloat() const
 		const char *pszASCII = GetASCII();
 
 		// Skip spaces and tabs
-		while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
+		while (nLength > 0 && (*pszASCII == ' ' || *pszASCII == '\t')) {
 			pszASCII++;
 			nLength--;
 		}
@@ -2226,7 +2226,7 @@ bool String::IsValidFloat() const
 							return true; // Valid float
 
 						// Skip spaces and tabs
-						while (nLength > 0 && *pszASCII == ' ' || *pszASCII == '\t') {
+						while (nLength > 0 && (*pszASCII == ' ' || *pszASCII == '\t')) {
 							pszASCII++;
 							nLength--;
 						}

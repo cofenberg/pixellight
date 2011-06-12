@@ -1276,7 +1276,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							bool bAPISwapY = false;
 							if (m_cCurrentSurface.GetSurface())
 								bAPISwapY = m_cCurrentSurface.GetSurface()->IsAPISwapY();
-							if (!bAPISwapY &&  GetRenderState(PLRenderer::RenderState::InvCullMode) || bAPISwapY && !GetRenderState(PLRenderer::RenderState::InvCullMode))
+							if ((!bAPISwapY &&  GetRenderState(PLRenderer::RenderState::InvCullMode)) || (bAPISwapY && !GetRenderState(PLRenderer::RenderState::InvCullMode)))
 								nValue = (nValue == PLRenderer::Cull::CW) ? PLRenderer::Cull::CCW : PLRenderer::Cull::CW;
 
 							// Set the state
@@ -1887,7 +1887,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 				case PLRenderer::RenderState::TessellationFactor:
 					if (!IsGL_AMD_vertex_shader_tessellator())
 						return false; // Error, tessellation not supported!
-					if (nValue < 0 || nValue > m_sCapabilities.nMaxTessellationFactor)
+					if (nValue > m_sCapabilities.nMaxTessellationFactor)
 						return false; // Error, invalid value!
 					glTessellationFactorAMD(Tools::UInt32ToFloat(nValue));
 					break;
@@ -1960,7 +1960,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 						bool bAPISwapY = false;
 						if (m_cCurrentSurface.GetSurface())
 							bAPISwapY = m_cCurrentSurface.GetSurface()->IsAPISwapY();
-						if (!bAPISwapY && nValue || bAPISwapY && !nValue) { // Invert current active cull mode
+						if ((!bAPISwapY && nValue) || (bAPISwapY && !nValue)) { // Invert current active cull mode
 							switch (GetRenderState(PLRenderer::RenderState::CullMode)) {
 								case PLRenderer::Cull::CW:
 									nValue = PLRenderer::Cull::CCW;
@@ -2615,8 +2615,8 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 				m_pFixedFunctions->UpdateCurrentOpenGLTextureMatrix(nStage);
 			} else {
 				// If the previous texture buffer was a rectangle one, now reset the texture matrix
-				if (m_ppPrevTextureBuffer[nStage] && m_ppPrevTextureBuffer[nStage]->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle ||
-					m_ppPrevTextureBuffer[nStage] && !m_ppCurrentTextureBuffer[nStage]) {
+				if ((m_ppPrevTextureBuffer[nStage] && m_ppPrevTextureBuffer[nStage]->GetType() == PLRenderer::Resource::TypeTextureBufferRectangle) ||
+					(m_ppPrevTextureBuffer[nStage] && !m_ppCurrentTextureBuffer[nStage])) {
 					m_pFixedFunctions->UpdateCurrentOpenGLTextureMatrix(nStage);
 				}
 			}
