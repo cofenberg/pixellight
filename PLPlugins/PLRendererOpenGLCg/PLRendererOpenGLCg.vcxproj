@@ -287,9 +287,8 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
     <ClInclude Include="include\PLRendererOpenGLCg\VertexShaderCg.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLRenderer\Diary.txt" />
-    <None Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">

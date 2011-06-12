@@ -75,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLRenderer\Diary.txt" />
-    <None Include="Readme.txt" />
+    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
   </ItemGroup>
 </Project>

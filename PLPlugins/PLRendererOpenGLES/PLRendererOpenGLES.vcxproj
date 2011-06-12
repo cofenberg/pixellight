@@ -172,8 +172,8 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\PLRunti
     <ClInclude Include="include\PLRendererOpenGLES\VertexShaderGLSL.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLRenderer\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C0D186EB-1C83-45AE-A253-B809CCCF741F}</ProjectGuid>
+    <ProjectGuid>{0A965754-5BE1-459A-A284-D4826DC549AB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/DirectX11/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,19 +104,19 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererNullD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DXGI.lib;d3d11.lib;d3dx11.lib;PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLRendererD3D11D.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/DirectX11/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLRendererNullD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLRendererD3D11D.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLRendererNullD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLRendererD3D11D.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLRendererNullD.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\debug\PLRendererD3D11D.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
@@ -127,7 +127,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/DirectX11/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -142,19 +142,19 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererNullD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLRendererD3D11D64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/DirectX11/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLRendererNullD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLRendererD3D11D64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLRendererNullD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLRendererD3D11D64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLRendererNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\debug64\PLRendererD3D11D64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
@@ -167,7 +167,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_32/DirectX11/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -187,9 +187,9 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererNull.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;PLGeneral.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLRendererD3D11.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/DirectX11/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -197,11 +197,11 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLRendererNull.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLRendererD3D11.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLRendererNull.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\release\PLRendererD3D11.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
@@ -216,7 +216,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../../External/_Windows_x86_64/DirectX11/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <StringPooling>true</StringPooling>
@@ -233,30 +233,29 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererNull64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;d3dx11.lib;PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLRendererD3D1164.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/DirectX11/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLRendererNull64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLRendererD3D1164.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLRendererNull64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
+      <Command>copy build\release64\PLRendererD3D1164.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\FixedFunctions.cpp" />
     <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\OcclusionQuery.cpp" />
-    <ClCompile Include="src\PLRendererNull.cpp" />
+    <ClCompile Include="src\PLRendererD3D11.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\SurfaceTextureBuffer.cpp" />
     <ClCompile Include="src\SurfaceWindow.cpp" />
@@ -268,26 +267,24 @@
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLRendererNull\FixedFunctions.h" />
-    <ClInclude Include="include\PLRendererNull\FontManager.h" />
-    <ClInclude Include="include\PLRendererNull\IndexBuffer.h" />
-    <ClInclude Include="include\PLRendererNull\OcclusionQuery.h" />
-    <ClInclude Include="include\PLRendererNull\PLRendererNull.h" />
-    <ClInclude Include="include\PLRendererNull\PLRendererNullLinux.h" />
-    <ClInclude Include="include\PLRendererNull\PLRendererNullWindows.h" />
-    <ClInclude Include="include\PLRendererNull\Renderer.h" />
-    <ClInclude Include="include\PLRendererNull\SurfaceTextureBuffer.h" />
-    <ClInclude Include="include\PLRendererNull\SurfaceWindow.h" />
-    <ClInclude Include="include\PLRendererNull\TextureBuffer1D.h" />
-    <ClInclude Include="include\PLRendererNull\TextureBuffer2D.h" />
-    <ClInclude Include="include\PLRendererNull\TextureBuffer3D.h" />
-    <ClInclude Include="include\PLRendererNull\TextureBufferCube.h" />
-    <ClInclude Include="include\PLRendererNull\TextureBufferRectangle.h" />
-    <ClInclude Include="include\PLRendererNull\VertexBuffer.h" />
+    <ClInclude Include="include\PLRendererD3D11\FontManager.h" />
+    <ClInclude Include="include\PLRendererD3D11\IndexBuffer.h" />
+    <ClInclude Include="include\PLRendererD3D11\OcclusionQuery.h" />
+    <ClInclude Include="include\PLRendererD3D11\PLRendererD3D11.h" />
+    <ClInclude Include="include\PLRendererD3D11\PLRendererD3D11Windows.h" />
+    <ClInclude Include="include\PLRendererD3D11\Renderer.h" />
+    <ClInclude Include="include\PLRendererD3D11\SurfaceTextureBuffer.h" />
+    <ClInclude Include="include\PLRendererD3D11\SurfaceWindow.h" />
+    <ClInclude Include="include\PLRendererD3D11\TextureBuffer1D.h" />
+    <ClInclude Include="include\PLRendererD3D11\TextureBuffer2D.h" />
+    <ClInclude Include="include\PLRendererD3D11\TextureBuffer3D.h" />
+    <ClInclude Include="include\PLRendererD3D11\TextureBufferCube.h" />
+    <ClInclude Include="include\PLRendererD3D11\TextureBufferRectangle.h" />
+    <ClInclude Include="include\PLRendererD3D11\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLRenderer\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">
