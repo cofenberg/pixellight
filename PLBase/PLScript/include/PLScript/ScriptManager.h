@@ -44,7 +44,6 @@ namespace PLCore {
 namespace PLScript {
 	class Script;
 	class ScriptBinding;
-	class ScriptManager;
 }
 
 

@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include <PLGeneral/Container/List.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/Gui/FontManager.h"
 #include "PLGui/Gui/CursorManager.h"
@@ -41,7 +40,6 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLGeneral {
-	class String;
 	class Mutex;
 }
 namespace PLGui {
