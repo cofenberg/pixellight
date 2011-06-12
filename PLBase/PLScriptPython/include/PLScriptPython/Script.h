@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLScriptPython/Python.h"
-#include <PLScript/Script.h>
+#include <PLCore/Script/Script.h>
 #include "PLScriptPython/PLScriptPython.h"
 
 
@@ -46,13 +46,13 @@ namespace PLScriptPython {
 *  @brief
 *    Python (http://www.python.org/) script implementation
 */
-class Script : public PLScript::Script {
+class Script : public PLCore::Script {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTPYTHON_RTTI_EXPORT, Script, "PLScriptPython", PLScript::Script, "Python (http://www.python.org/) script implementation")
+	pl_class(PLSCRIPTPYTHON_RTTI_EXPORT, Script, "PLScriptPython", PLCore::Script, "Python (http://www.python.org/) script implementation")
 		// Properties
 		pl_properties
 			pl_property("Language",	"Python")
@@ -81,7 +81,7 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScript::Script functions             ]
+	//[ Public virtual PLCore::Script functions               ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]

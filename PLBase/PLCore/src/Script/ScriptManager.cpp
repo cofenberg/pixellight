@@ -24,20 +24,19 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/File/Url.h>
-#include <PLCore/Base/Class.h>
-#include <PLCore/Base/ClassManager.h>
-#include <PLCore/Tools/LoadableManager.h>
-#include "PLScript/Script.h"
-#include "PLScript/ScriptBinding.h"
-#include "PLScript/ScriptManager.h"
+#include "PLCore/Base/Class.h"
+#include "PLCore/Base/ClassManager.h"
+#include "PLCore/Tools/LoadableManager.h"
+#include "PLCore/Script/Script.h"
+#include "PLCore/Script/ScriptBinding.h"
+#include "PLCore/Script/ScriptManager.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
-using namespace PLCore;
-namespace PLScript {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -176,7 +175,7 @@ ScriptManager::ScriptManager() :
 
 	{ // Register all script languages
 		List<const Class*> lstClasses;
-		ClassManager::GetInstance()->GetClasses(lstClasses, "PLScript::Script", Recursive, NoBase, NoAbstract);
+		ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::Script", Recursive, NoBase, NoAbstract);
 		Iterator<const Class*> cIterator = lstClasses.GetIterator();
 		while (cIterator.HasNext())
 			m_lstNewClasses.Add(cIterator.Next());
@@ -184,7 +183,7 @@ ScriptManager::ScriptManager() :
 
 	{ // Register all script bindings
 		List<const Class*> lstClasses;
-		ClassManager::GetInstance()->GetClasses(lstClasses, "PLScript::ScriptBinding", Recursive, NoBase, NoAbstract);
+		ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::ScriptBinding", Recursive, NoBase, NoAbstract);
 		Iterator<const Class*> cIterator = lstClasses.GetIterator();
 		while (cIterator.HasNext())
 			m_lstNewClasses.Add(cIterator.Next());
@@ -231,8 +230,8 @@ void ScriptManager::RegisterClasses()
 			const Class *pClass = cIterator.Next();
 
 			// Check parameter and base class
-			static const String sScriptClassString = "PLScript::Script";
-			static const String sScriptBindingClassString = "PLScript::ScriptBinding";
+			static const String sScriptClassString = "PLCore::Script";
+			static const String sScriptBindingClassString = "PLCore::ScriptBinding";
 			if (pClass->IsDerivedFrom(sScriptClassString)) {
 				// Register script language
 				const String sLanguage = pClass->GetProperties().Get("Language");
@@ -272,4 +271,4 @@ void ScriptManager::RegisterClasses()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLCore

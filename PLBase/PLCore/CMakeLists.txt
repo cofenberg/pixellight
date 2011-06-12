@@ -4,6 +4,12 @@
 define_project(PLCore)
 
 ##################################################
+## Prerequisites
+##################################################
+# Create 'Plugins/PLScript' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLScript)
+
+##################################################
 ## Source files
 ##################################################
 add_sources(
@@ -50,6 +56,9 @@ add_sources(
 	src/Tools/LocalizationLoaderPL.cpp
 	src/Application/ApplicationContext.cpp
 	src/Application/ConsoleApplication.cpp
+	src/Script/Script.cpp
+	src/Script/ScriptManager.cpp
+	src/Script/ScriptBinding.cpp
 )
 
 ##################################################

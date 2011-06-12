@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/Script.h>
+#include <PLCore/Script/Script.h>
 #include "PLScriptLua/PLScriptLua.h"
 
 
@@ -55,7 +55,7 @@ namespace PLScriptLua {
 *  @brief
 *    Lua (http://www.lua.org/) script implementation
 */
-class Script : public PLScript::Script {
+class Script : public PLCore::Script {
 
 
 	//[-------------------------------------------------------]
@@ -67,7 +67,7 @@ class Script : public PLScript::Script {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTLUA_RTTI_EXPORT, Script, "PLScriptLua", PLScript::Script, "Lua (http://www.lua.org/) script implementation")
+	pl_class(PLSCRIPTLUA_RTTI_EXPORT, Script, "PLScriptLua", PLCore::Script, "Lua (http://www.lua.org/) script implementation")
 		// Properties
 		pl_properties
 			pl_property("Language",	"Lua")
@@ -114,7 +114,7 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScript::Script functions             ]
+	//[ Public virtual PLCore::Script functions               ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]

@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLCore {
 	class Script;
 }
 
@@ -123,7 +123,7 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	private:
 		PLGeneral::String  m_sScript;	/**< Script to use */
-		PLScript::Script  *m_pScript;	/**< Used script instance, can be a null pointer */
+		PLCore::Script    *m_pScript;	/**< Used script instance, can be a null pointer */
 
 
 };

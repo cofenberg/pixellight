@@ -35,6 +35,9 @@
     <Filter Include="Base\Tools">
       <UniqueIdentifier>{2f07a929-c48d-4ca8-a53d-4745c923a1af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{134cc1b1-918d-4e22-b54c-ee3eee17a00a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core.cpp">
@@ -165,6 +168,15 @@
     </ClCompile>
     <ClCompile Include="src\Base\Func\DynParams.cpp">
       <Filter>Base\Func</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptBinding.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptManager.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\Script.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -395,6 +407,18 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Base\Func\FuncGenMemPtr.h">
       <Filter>Base\Func</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Script\Script.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Script\ScriptBinding.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Script\ScriptManager.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Script\FuncScriptPtr.h">
+      <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

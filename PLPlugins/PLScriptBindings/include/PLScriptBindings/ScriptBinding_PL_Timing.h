@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLCore/Script/ScriptBinding.h>
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLScriptBindings {
 *  @brief
 *    Timing script binding class
 */
-class ScriptBinding_PL_Timing : public PLScript::ScriptBinding {
+class ScriptBinding_PL_Timing : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBinding_PL_Timing, "PLScriptBindings", PLScript::ScriptBinding, "Timing script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL_Timing, "PLScriptBindings", PLCore::ScriptBinding, "Timing script binding class")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"PL.Timing")

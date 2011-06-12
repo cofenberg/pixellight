@@ -33,7 +33,7 @@ PL_WARNING_PUSH
 PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "v8.h")
 	#include <V8/v8.h>
 PL_WARNING_POP
-#include <PLScript/Script.h>
+#include <PLCore/Script/Script.h>
 #include "PLScriptV8/PLScriptV8.h"
 
 
@@ -50,13 +50,13 @@ namespace PLScriptV8 {
 *  @brief
 *    V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) script implementation
 */
-class Script : public PLScript::Script {
+class Script : public PLCore::Script {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTV8_RTTI_EXPORT, Script, "PLScriptV8", PLScript::Script, "V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) script implementation")
+	pl_class(PLSCRIPTV8_RTTI_EXPORT, Script, "PLScriptV8", PLCore::Script, "V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) script implementation")
 		// Properties
 		pl_properties
 			pl_property("Language",	"JavaScript")
@@ -85,7 +85,7 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScript::Script functions             ]
+	//[ Public virtual PLCore::Script functions               ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]

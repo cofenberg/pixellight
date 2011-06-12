@@ -1,3 +1,22 @@
+>> 12.06.2011
+[CO]
+- Merged PLScript into PLCore. When starting PLScript on "25.04.2011" I had no real idea were the script voyage would end. Back then, I decided to
+  create an own project for script support - this has proven to be useful when starting a new component. Now that the Lua backend of PLScript has
+  nearly all features I wanted I start to play around with it a little more... and it's a little bit annoying to add PLScript to the VC project solutions.
+  Right now, PLScript consists just of a handful of classes and it doesn't look as if a lot more script classes will come. The "magic" happens in the RTTI
+  system and within the general PLCore infrastructure. Scripts exist to make the world a little bit less complex, so, it's probably a good idea to make using
+  scripts within the PixelLight C++ API less complex as well by directly adding the scripting-feature into PLCore. The PLScript documentation will still be an
+  own document because the PLCore documentation is already comprehensive and contains more advanced stuff which will probably shock many people which are just
+  looking for e.g. "How to use Lua within PixelLight". *g*
+
+
+
+>> 11.06.2011
+[CO]
+- PLScriptLua: A Lua script can now connect a RTTI signal with a Lua function
+
+
+
 >> 10.06.2011
 [CO]
 - "DynParams": Added "GetReturnTypeID()", "GetNumOfParameters()" and "GetParameterTypeID()" in order to make it possible to get some more
@@ -41,6 +60,10 @@
     }
   ... this means that if one has just access to the "DynEvent" interface, it's now possible to create an event handler which is informed when the event
   is emitted.
+- PLScriptLua: RTTI signals now have some build in methods. When writing e.g.
+    object.MySignal.Connect(object.OnMyEvent)
+  the RTTI slot "OnMyEvent" of our RTTI class instance "object" is connected with the RTTI signal "MySignal" of our RTTI class instance "object".
+  To disconnect, just use "Disconnect" instead of "Connect".
 
 
 
@@ -50,6 +73,19 @@
   see that this provided constructor parameter was not used and I have no glue why it's there - because signals are internally just events (as also stated
   within the documentation). If there's need to know where an event came from, this information has to be provided in the event definition. Events should be as
   lightweight as possible, so storing e.g. an additional pointer within the event instance would probably not be the best idea. 
+- PLScript: Lua is now an recommended external dependency and will be the script backend which is within the official PixelLight SDK. The answer for "Why Lua
+  and not Python, JavaScript or AngelScript?!" is quite simple: Right now, the Lua backend is the most advanced one because Lua and it's C-API is mostly
+  intuitively to use and there are tons of useful information all over the net how to integrate Lua into a "game engine". Lua is also the most compact
+  of all of those mentioned script languages - the Windows dll is only 124 KiB while v8 (used for JavaScript) is 2,354 KiB! The syntax of Lua is also
+  good to read and something like OOP can be done without totally unreadable tricks as required for JavaScript (did some OOP experiments within "44ScriptOOP").
+- PLScript: Added "ScriptManager::GetScriptLanguageExtension()" which returns the filename extension of a given script language
+- PLScriptNull: The null backend has no load and runnable scripts -> removed the "null" and "NULL" formats
+
+
+
+>> 06.06.2011
+[CO]
+- PLScriptLua: Something like "sceneNode:SetActive(true)" is now handled correctly, meaning the boolean value "true"
 
 
 
@@ -63,6 +99,39 @@
   member attribute is changed within a constant method.
 - *breaking change* "ResourceManager": Renamed "Get(uint32 nIndex)" into "GetByIndex(uint32 nIndex)" and "Get(const String &sName)" into
   "GetByName(const String &sName)" (same change as in "PLGeneral::ElementManager")
+- PLScriptBindings: Added "ScriptBinding_PL"
+- PLScript: Removed experimental "ScriptBindingScene" because it's no longer needed. Write e.g.
+      PL.GetApplication():GetScene():GetByName("Soldier")
+  within a Lua script to get the scene node "Soldier". Something like
+    PL.GetApplication():GetScene():GetByName("MySubscene"):GetByName("Soldier")
+  will work of course as well... WOW! Stefans RTTI is *really* powerful and most script bindings will come practically
+  for free... I just added
+      pl_method_1(GetByName, SceneNode*, PLGeneral::String, "Returns a scene node by using the given name, can be a null pointer", "")
+  within the RTTI class interface of "PLScene::SceneContainer" in order to be able to access the C++ method from inside a script.
+  To avoid issues when exposing C++ methods to the RTTI I'am afraid we need to change something like
+     void SetFilename(const PLGeneral::String &sValue)
+  into
+     void SetFilename(PLGeneral::String sValue)
+  because "const PLGeneral::String &" is of course a reference, and the RTTI is using it this way (which is correct!). This is becoming a problem
+  when there's no real "PLGeneral::String" instance on the method calling side... which is true for scripting. Before I start to hack around, I probably
+  just change it as seen above... there's no real need for passing in a string reference anyway because the string class internally just shares
+  a string buffer and therefore "copying" one string into another is blazing fast.
+  -> I'am sure the "PL.GetApplication()" way is the right one for PixelLight. It results in only a few global functions (they introduce script
+     initialization costs!) and the rest is completely dynamic by just using RTTI class instances (they introduce no script initialization costs!).
+	 Exposing new features to script languages only requires a single, simple line of C++ code, and this line is even not just there for scripting,
+	 it's generic. So, there's no need for thousands of "script proxies"/"script wrappers" in order to expose C++ stuff to scripting languages as seen
+	 in many other engines with script support.
+  -> In the next few days I should really spend more time on university stuff, but then I probably will start exposing the most important C++ methods
+     to the RTTI (exposing this stuff doesn't blow up the memory footprint of RTTI class instances). 
+	 When I'am done with it, the Lua support should already be quite usable... as for the Python, JavaScript and AngelScript support ... well,
+	 I first have to figure out how to access RTTI objects in a decent way using those script APIs. The strongly typed AngelScript already produced some
+	 headaches. For now, it's important to me that at least one scripting language is usable, so I focus on this point.
+- PLScript: Removed experimental "ScriptBindingSceneRendererTool" because it's no longer needed. Write e.g.
+      PL.GetApplication():GetSceneRendererTool():SetPassAttribute("DeferredDOF", "Flags", "Inactive")
+  within a Lua script.
+- PLScriptBindings: Renamed "ScriptBindingLog" into "ScriptBinding_PL_Log", "ScriptBindingTiming" into "ScriptBinding_PL_Timing" and
+  "ScriptBindingSystemConsole" into "ScriptBinding_PL_System_Console" so one can directly see the resulting script namespace (I'am not sure whether or
+  not the current solution will stay this way)
 
 
 
@@ -97,6 +166,9 @@
   already a class dummy or even the real class, no one destroyed the created dummy class instance. This is now handled within "ClassManager::RegisterClass()".
   Uff, simple principle, that many implementation bugs - not that I had expected it otherwise... but I really hope that was the last one.
 - The type ID of "TypePtr" and "TypeRef" was set to -1 instead of an unique value
+- PLScriptLua is now able to deal with RTTI class instances derived from "PLCore::Object" instead of just direct pointers
+  to "PLCore::Object". The current solution is not really a good one, but for now it works. I hope I'am able to figure out
+  a more waterproof solution.
 
 
 
@@ -104,6 +176,22 @@
 [CO]
 -> Stephan Wezel made a PLProject refactoring (see PLProject diary for details), delayed shared library loading is now also working under Linux
    because PLProject adds the class information into the plugin-file
+- PLScriptBindings: Added "ScriptBindingSceneRendererTool"... The "making of" of the dungeon demo is now done via a
+  Lua script. Still experimental, but the wires begin to tie up.
+
+
+
+>> 02.06.2011
+[CO]
+-> After an university lecture etc. maraton of two weeks and some non script related PixelLight work, back to the script stuff. :)
+- PLScript: "Script::SetGlobalVariable()" has now as parameter the more generic "PLCore::DynVar" instead of "PLGeneral::String"
+- PLScript: Renamed "Script::GetGlobalVariableType()" into "Script::GetGlobalVariableTypeID()" so that it's similar to e.g. "PLCore::Var::GetTypeID()"
+- PLScriptLua: "Script::SetGlobalVariable()" now also supports "PLCore::Object*" and is able to add new global variables
+  (one can use e.g. "Script::IsGlobalVariable()" to check whether or not there's such a variable before setting one to avoid adding a new
+  global variable if this is not desired)
+- "PLScriptBindings::SNMScript" now adds the global variable "this" to the script so that it's able to access "this" RTTI class instance,
+  meaning the script scene node modifier
+- PLScriptV8 & PLScriptPython: "Script::SetGlobalVariable()" is now able to add new global variables
 
 
 
@@ -185,9 +273,24 @@
 
 
 
+>> 22.05.2011
+[CO]
+- PLScript: Woho, the demo "Scripts.scene" comes to live... "ScriptsScene.lua" is already up and running and is manipulating a scene
+  node by using a Lua script. It's still everything experimental to see what's possible and how it may work as a whole
+  system.
+- Added PLScriptBindings plugin which exposes certain parts of PixelLight to script languages. This means that the script bindings
+  are a 100% loose plugin and are not within the core. First I thought about adding some basic script bindings directly into PLScript and
+  other script bindings into the PLEngine project which brings together the individual components to an easy usable framework. But
+  this way the standard PixelLight script bindings would be scattered over multiple projects and there would also be the risk that the
+  completly optional script support may accidentally grow into the core over the time. This way, it will probably also easier for other
+  people to contribute to the script bindings part.
+
+
+
 >> 21.05.2011
 [CO]
 - "TypeObjectPtr" & "TypePtr" & "TypeRef": "ConvertFromVar()" is now using "GetUIntPtr()" instead of "GetInt()" (this was a [TODO] point)
+- PLScript: Worked on "PLCore::Object*" support
 
 
 
@@ -202,18 +305,83 @@
   into e.g. "void EmitString(const PLGeneral::String &sParams)" because it felt unnatural to me and by the way, "DynEvent" is quite similar to "DynFunc" -
   at least within the usage. Whenever possible I try to avoid such breaking changes, but sometimes they are required to avoid that stuff gets uggly.
   So, to call e.g. an event named "MyEvent" call "MyEvent()" (if you have ever used boost, you are already familiar with this way :) instead of "MyEvent.Emit()".
+- PLScriptLua: Calling RTTI object methods within Lua scripts is working... currently only slow progress because the university is using most of my available
+  time. But I still try to get the script support up and running until the next scheduled PixelLight release. :D
+- PLScriptLua: Calling RTTI object signals within Lua scripts is working
+
+
+
+>> 17.05.2011
+[CO]
+- PLScript: Added "Script::PushArgument(PLCore::Object *pObject)" and an experimental Lua implementation to get an idea how to access RTTI objects
+  directly within scripts *work in progress*
 
 
 
 >> 13.05.2011
 [CO]
 - "PLCoreDefinitions.h": Added "TypeInvalid"
+- PLScript: "Script:" Added support for global variables. At first I thought about adding "GetGlobalVariable()" & "SetGlobalVariable()" versions
+  for the supported primitive data types - but this would result in a total copy'n'past overkill within the internal implementations. Those
+  string methods should do the job (the internal implementations try to don't change the script variable type).
+- PLScript: Renamed "Script::AddDynamicFunction()" into "Script::AddGlobalFunction()" and "Script::RemoveAllDynamicFunctions()" into "Script::RemoveAllGlobalFunctions()"
 
 
 
 >> 12.05.2011
 [CO]
 - Added "GetNumOfParameters()" and "GetParameterTypeID()" to "DynFunc" to make it possible to request some more information about the dynamic function
+- Added "PLScriptLua::Script::LuaStackDump()" which writes the current Lua stack content into the log
+
+
+
+>> 11.05.2011
+[CO]
+- PLScript: The "ScriptManager" creates now instances of all found "ScriptBinding" classes
+- PLScript: Added "Script::AddBindings()" to bind all available "ScriptBinding" instances at once
+- PLScript: By default, "ScriptManager::Create()" and "ScriptManager::CreateFromFile()" binds all available "ScriptBinding" instances at once
+
+
+
+>> 08.05.2011
+[CO]
+- PLScript: The AngelScript add on source codes are now within "External\Optional\AngelScript\add_on" directory instead within the to download external package.
+  CMake told me that it wasn't able to find those add on source codes... because it was checking BEFORE downloading and extracting the external package. Maybe
+  it's possible to change the CMake script... but that's somewhat too dangerous for me and usually really time consuming to get it right.
+
+
+
+>> 07.05.2011
+[CO]
+- Implemented "PLScriptPython::Script::AddDynamicFunction()" namespace by using Python dictionaries... probably not the best solution but for
+  now I just want to have it up and running to get an idea of concepts multiple scripting languages are sharing. Maybe I'll replace "namespace"
+  later by "module".
+- Implemented "PLScriptV8::Script::AddDynamicFunction()" namespace by using V8 object template
+- Implemented "PLScriptAngelScript::Script::AddDynamicFunction()" namespace. It looks like that AngelScript (2.20.2) has currently no support
+  for namespaces... so right now I'am doing an ugly hack: e.g. "PL.Timing.GetTimeDifference()" is written within scripts as "PL_Timing_GetTimeDifference()". :/
+-> Ok, the namespace support for global functions is now implemented within all script backends... although I'am really not happy with the current
+   AngelScript solution (e.g. "PL_Timing_GetTimeDifference()" instead of "PL.Timing.GetTimeDifference()") and Python solution
+   e.g. "PL[’Timing’][’GetTimeDifference’]()" instead of "PL.Timing.GetTimeDifference()"). It's really time consuming to do the research into multiple script
+   API's at the same time and on those two issues I already spend several hours without a decent solution. So, if there's someone who knows a better solution...
+-> Right now my candidates for the "recommended PixelLight script language" are JavaScript and Lua. Lua is quite compact while JavaScript is a web-standard which
+   could be somewhat beneficial for PixelLight, especially regarding to the browser plugin. AngelScript looks somethat unfinished although I like the API in
+   general. Python is just a monster. *g*
+- PLScript: "Script": Added string versions of "PushArgument()" and "GetReturn()". Adding support for this within PLScriptAngelScript was some hard work because unlike
+  JavaScript (V8), Python and Lua, within AngelScript strings are just "add_on" and not everything is documented as detailed as I wished for and I wasn't able
+  to find real help via google as well. So I had to guess, review the AngelScript source codes and perform some debugging... I really hope that I didn't miss
+  anything...
+
+
+
+>> 06.05.2011
+[CO]
+- PLScript: Added "ScriptBinding" which is actually a blank RTTI class. RTTI classes which are only used for "script binding" should be
+  derived from this class. This doesn't mean that it will be impossible to bind any other RTTI class instance to a script - but usually
+  it's useful to have such an abstract base class...
+- PLScript: "Script::AddDynamicFunction()": Added namespace as last optional parameter (backend implementations will follow)
+- PLScript: Added "Script::AddBinding()" which adds a script binding to connect the given RTTI class instance with this script (currently only RTTI
+  methods are used)
+- Implemented "PLScriptLua::Script::AddDynamicFunction()" namespace by using Lua tables
 
 
 
@@ -221,6 +389,19 @@
 [CO]
 - "DynFunc": Added "GetReturnTypeID()" to make it possible to figure out the return type (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")
   of a dynamic function
+- Python backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- V8 (JavaScript) backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+-> The Lua, Python, AngelScript and JavaScript backends are now equal in the implemented behaviour. It's possible to call script functions
+   from the C++ side, and it's also possible to call C++ functions from the script side. I'am quite sure that this isn't everything one
+   requires when working with script engines, but it's a start. I have to take a break for a couple of days due to university stuff, then
+   I continue working on PLScript.
+
+
+
+>> 01.05.2011
+[CO]
+- AngelScript backend: Implemented "AddDynamicFunction()" and "RemoveAllDynamicFunctions()"
+- Python backend: Calling Python functions is working
 
 
 
@@ -235,6 +416,11 @@
   back to the script API. I really hope that those "CallWithReturn()" template methods don't backfire... right now it appears that there are no side
   effects during template instantiation. I could have added the string return directly into the already existing methods, but I wasn't comfortable
   with that.
+- PLScript: Added script support for functors/functoids so that it's possible to call C++ functions or member methods from inside scripts...
+  as well as other script functions because the functors are hiding this detail.
+  The method "Script::AddDynamicFunction()" is used to register functors while "Script::RemoveAllDynamicFunctions()" can be used to remove
+  all registerd functors. The Lua implementation is already working. Please note that this is still highly experimental and I don't know
+  whether or not the script interfaces are completly changed later.
 
 
 
@@ -246,6 +432,36 @@
   must only be done once and then the signature can just be reused. So, the internal signature string is now static to enhance performance. I
   double-checked the change, used the debugger a few times on it to see and think through the performed steps and tested the existing PixelLight
   projects as well. It looks like that this change has no side effects.
+- PLScript: Added "GetScriptLanguage()", "GetSourceCode()" and "SetSourceCode()" to "Script" (similar to "PLRenderer::Shader")
+- PLScript: Added "FuncScriptPtr" which is a version of "PLCore::FuncFunPtr"/"PLCore::FuncMemPtr" for script functions. This means that script functions
+  can be called in the same way as all other functions/methods (e.g. RTTI methods) can be called. This template is using
+  the "Script" methods "BeginCall()", "PushArgument()", "EndCall()" and "GetReturn()" to call script functions. Calling Lua and AngelScript
+  functions is already implemented and working. Those mentioned script function calling methods are currently public although it's not recommended
+  to call them without using "FuncScriptPtr", but currently I see no change to hide those methods from the user. But this is just my first attempt to
+  get things up and running... next stop: Implementing the same for Python and JavaScript. (calling C/C++ methods from scripts will follow as well)
+- PLScript: Calling JavaScript functions is working... although the implementation is currently somewhat poor... having some issues getting into the V8-API...
+
+
+
+>> 28.04.2011
+[CO]
+- PLScript: As requested within the PixelLight forum at: http://dev.pixellight.org/forum/viewtopic.php?f=3&t=45
+  ... I'll also added a script backend for AngelScript (like the others, just a skeleton right now!). Ok, four script languages should really
+  be enough to get a good script interface.
+
+
+
+>> 26.04.2011
+[CO]
+- PLScript: Compiled 32 bit versions of Lua, Python and V8 (JavaScript engine) for Windows and Linux. Configurated everything so that the script
+  projects can be compiled and are able to run.
+  Next stop: Concrete script implementations :D
+
+
+
+>> 25.04.2011
+[CO]
+- Started the PLScript project. As usual there's a null backend and I'll implement backends for Lua, JavaScript and Python in parallel.
 
 
 

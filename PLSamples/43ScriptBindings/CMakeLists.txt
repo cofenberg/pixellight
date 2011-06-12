@@ -18,7 +18,6 @@ add_sources(
 add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLScript/include
 )
 
 ##################################################
@@ -34,7 +33,6 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLScript
 )
 
 ##################################################
@@ -102,7 +100,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLScript)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -20,22 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPT_SCRIPTBINDING_H__
-#define __PLSCRIPT_SCRIPTBINDING_H__
+#ifndef __PLCORE_SCRIPTBINDING_H__
+#define __PLCORE_SCRIPTBINDING_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
-#include "PLScript/PLScript.h"
+#include "PLCore/Base/Object.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScript {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -57,13 +56,13 @@ namespace PLScript {
 *    Each script binding should have the followig property:
 *    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
 */
-class ScriptBinding : public PLCore::Object {
+class ScriptBinding : public Object {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPT_RTTI_EXPORT, ScriptBinding, "PLScript", PLCore::Object, "Abstract script binding class")
+	pl_class(PLCORE_RTTI_EXPORT, ScriptBinding, "PLCore", PLCore::Object, "Abstract script binding class")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"")
@@ -79,7 +78,7 @@ class ScriptBinding : public PLCore::Object {
 		*  @brief
 		*    Destructor
 		*/
-		PLSCRIPT_API virtual ~ScriptBinding();
+		PLCORE_API virtual ~ScriptBinding();
 
 
 	//[-------------------------------------------------------]
@@ -90,7 +89,7 @@ class ScriptBinding : public PLCore::Object {
 		*  @brief
 		*    Constructor
 		*/
-		PLSCRIPT_API ScriptBinding();
+		PLCORE_API ScriptBinding();
 
 		/**
 		*  @brief
@@ -99,7 +98,7 @@ class ScriptBinding : public PLCore::Object {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		PLSCRIPT_API ScriptBinding(const ScriptBinding &cSource);
+		PLCORE_API ScriptBinding(const ScriptBinding &cSource);
 
 		/**
 		*  @brief
@@ -111,7 +110,7 @@ class ScriptBinding : public PLCore::Object {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLSCRIPT_API ScriptBinding &operator =(const ScriptBinding &cSource);
+		PLCORE_API ScriptBinding &operator =(const ScriptBinding &cSource);
 
 
 };
@@ -120,7 +119,7 @@ class ScriptBinding : public PLCore::Object {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScript
+} // PLCore
 
 
-#endif // __PLSCRIPT_SCRIPTBINDING_H__
+#endif // __PLCORE_SCRIPTBINDING_H__

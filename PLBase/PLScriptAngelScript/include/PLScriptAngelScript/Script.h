@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/Script.h>
+#include <PLCore/Script/Script.h>
 #include "PLScriptAngelScript/PLScriptAngelScript.h"
 
 
@@ -54,13 +54,13 @@ namespace PLScriptAngelScript {
 *  @brief
 *    AngelScript (http://www.angelcode.com/angelscript/) script implementation
 */
-class Script : public PLScript::Script {
+class Script : public PLCore::Script {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLSCRIPTANGELSCRIPT_RTTI_EXPORT, Script, "PLScriptAngelScript", PLScript::Script, "AngelScript (http://www.angelcode.com/angelscript/) script implementation")
+	pl_class(PLSCRIPTANGELSCRIPT_RTTI_EXPORT, Script, "PLScriptAngelScript", PLCore::Script, "AngelScript (http://www.angelcode.com/angelscript/) script implementation")
 		// Properties
 		pl_properties
 			pl_property("Language",	"AngelScript")
@@ -89,7 +89,7 @@ class Script : public PLScript::Script {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLScript::Script functions             ]
+	//[ Public virtual PLCore::Script functions               ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]

@@ -26,9 +26,9 @@
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLScript/Script.h>
-#include <PLScript/FuncScriptPtr.h>
-#include <PLScript/ScriptManager.h>
+#include <PLCore/Script/Script.h>
+#include <PLCore/Script/FuncScriptPtr.h>
+#include <PLCore/Script/ScriptManager.h>
 #include "Application.h"
 
 
@@ -37,7 +37,6 @@
 //[-------------------------------------------------------]
 using namespace PLGeneral;
 using namespace PLCore;
-using namespace PLScript;
 
 
 //[-------------------------------------------------------]

@@ -19,7 +19,6 @@ add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLScript/include
 	${PYTHON_INCLUDE_DIRS}
 )
 
@@ -36,7 +35,6 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLScript
 	${PYTHON_LIBRARIES}
 )
 
@@ -109,7 +107,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Python PLGeneral PLCore PLScript)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Python PLGeneral PLCore)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

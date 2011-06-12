@@ -179,8 +179,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemo_libRocket", "PLDemos
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2012", "PLTools\PL3dsMaxSceneExport_2012\PL3dsMaxSceneExport_2012.vcxproj", "{80B9A7E3-F548-4A1B-A419-5A2A40EADD87}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScript", "PLBase\PLScript\PLScript.vcxproj", "{471F0ED9-B02B-48D0-9726-1CC5B58422BB}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptLua", "PLBase\PLScriptLua\PLScriptLua.vcxproj", "{E3C926F2-923B-465B-AF4F-65DF673134D1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptNull", "PLBase\PLScriptNull\PLScriptNull.vcxproj", "{6B86A8F5-5FCA-4061-8A84-5BF5DF3AAAE1}"
@@ -190,36 +188,20 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptV8", "PLBase\PLScriptV8\PLScriptV8.vcxproj", "{2FA707BB-2C35-409D-81A9-C00976786D0F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "42ScriptFunctors", "PLSamples\42ScriptFunctors\42ScriptFunctorsInternal.vcxproj", "{C2C34ED6-8009-4EC5-A654-98F813E5283C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptAngelScript", "PLBase\PLScriptAngelScript\PLScriptAngelScript.vcxproj", "{384D6889-29E9-4996-A142-0F1A8BE5513A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "40ScriptHelloWorld", "PLSamples\40ScriptHelloWorld\40ScriptHelloWorldInternal.vcxproj", "{098A1BD1-467B-4AC7-B9BA-1C36BC1CB1A0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "41ScriptGlobalVariables", "PLSamples\41ScriptGlobalVariables\41ScriptGlobalVariablesInternal.vcxproj", "{6E239D0D-49F7-40A9-826A-5F2161D3A010}"
-	ProjectSection(ProjectDependencies) = postProject
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "43ScriptBindings", "PLSamples\43ScriptBindings\43ScriptBindingsInternal.vcxproj", "{6FA23096-D3B0-4200-BDE3-B1784B904595}"
-	ProjectSection(ProjectDependencies) = postProject
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "44ScriptOOP", "PLSamples\44ScriptOOP\44ScriptOOPInternal.vcxproj", "{A4B3D573-C088-4F79-94CB-CEABF8499EF5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptBindings", "PLPlugins\PLScriptBindings\PLScriptBindings.vcxproj", "{7A493195-2B4D-4F1E-9454-A971CEB6D986}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CC92EBB3-44C5-429C-992C-CF71C8C69D29} = {CC92EBB3-44C5-429C-992C-CF71C8C69D29}
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB} = {471F0ED9-B02B-48D0-9726-1CC5B58422BB}
 	EndProjectSection
 EndProject
 Global
@@ -1144,17 +1126,6 @@ Global
 		{80B9A7E3-F548-4A1B-A419-5A2A40EADD87}.Release|Win32.Build.0 = Release|Win32
 		{80B9A7E3-F548-4A1B-A419-5A2A40EADD87}.Release|x64.ActiveCfg = Release|x64
 		{80B9A7E3-F548-4A1B-A419-5A2A40EADD87}.Release|x64.Build.0 = Release|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Debug|Win32.Build.0 = Debug|Win32
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Debug|x64.ActiveCfg = Debug|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Debug|x64.Build.0 = Debug|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Hybrid|Win32.ActiveCfg = Release|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Hybrid|x64.ActiveCfg = Release|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Hybrid|x64.Build.0 = Release|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Release|Win32.ActiveCfg = Release|Win32
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Release|Win32.Build.0 = Release|Win32
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Release|x64.ActiveCfg = Release|x64
-		{471F0ED9-B02B-48D0-9726-1CC5B58422BB}.Release|x64.Build.0 = Release|x64
 		{E3C926F2-923B-465B-AF4F-65DF673134D1}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E3C926F2-923B-465B-AF4F-65DF673134D1}.Debug|Win32.Build.0 = Debug|Win32
 		{E3C926F2-923B-465B-AF4F-65DF673134D1}.Debug|x64.ActiveCfg = Debug|x64

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLCore/Script/ScriptBinding.h>
 
 
 //[-------------------------------------------------------]
@@ -44,13 +44,13 @@ namespace PLScriptBindings {
 *  @brief
 *    Log script binding class
 */
-class ScriptBinding_PL_Log : public PLScript::ScriptBinding {
+class ScriptBinding_PL_Log : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBinding_PL_Log, "PLScriptBindings", PLScript::ScriptBinding, "Log script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL_Log, "PLScriptBindings", PLCore::ScriptBinding, "Log script binding class")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"PL.Log")

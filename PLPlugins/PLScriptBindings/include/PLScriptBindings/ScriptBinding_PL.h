@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScript/ScriptBinding.h>
+#include <PLCore/Script/ScriptBinding.h>
 
 
 //[-------------------------------------------------------]
@@ -52,13 +52,13 @@ namespace PLScriptBindings {
 *  @brief
 *    PixelLight script binding class
 */
-class ScriptBinding_PL : public PLScript::ScriptBinding {
+class ScriptBinding_PL : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBinding_PL, "PLScriptBindings", PLScript::ScriptBinding, "PixelLight script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL, "PLScriptBindings", PLCore::ScriptBinding, "PixelLight script binding class")
 		// Properties
 		pl_properties
 			pl_property("Namespace",	"PL")

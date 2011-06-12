@@ -258,6 +258,9 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Base\Var\DynVar.cpp" />
     <ClCompile Include="src\Base\Var\VarDesc.cpp" />
     <ClCompile Include="src\Base\TypeInfo\DynTypeInfo.cpp" />
+    <ClCompile Include="src\Script\Script.cpp" />
+    <ClCompile Include="src\Script\ScriptBinding.cpp" />
+    <ClCompile Include="src\Script\ScriptManager.cpp" />
     <ClCompile Include="src\Tools\Chunk.cpp" />
     <ClCompile Include="src\Tools\ChunkLoader.cpp" />
     <ClCompile Include="src\Tools\ChunkLoaderPL.cpp" />
@@ -333,6 +336,10 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\Base\Var\VarStorage.h" />
     <ClInclude Include="include\PLCore\Base\TypeInfo\DynTypeInfo.h" />
     <ClInclude Include="include\PLCore\Base\TypeInfo\TypeInfo.h" />
+    <ClInclude Include="include\PLCore\Script\FuncScriptPtr.h" />
+    <ClInclude Include="include\PLCore\Script\Script.h" />
+    <ClInclude Include="include\PLCore\Script\ScriptBinding.h" />
+    <ClInclude Include="include\PLCore\Script\ScriptManager.h" />
     <ClInclude Include="include\PLCore\Tools\Chunk.h" />
     <ClInclude Include="include\PLCore\Tools\ChunkLoader.h" />
     <ClInclude Include="include\PLCore\Tools\ChunkLoaderPL.h" />

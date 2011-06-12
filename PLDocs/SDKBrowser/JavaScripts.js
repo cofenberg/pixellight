@@ -115,7 +115,6 @@ shortcut("Dir_PLGeneral", "include\\PLGeneral\\");
 shortcut("Dir_PLCore", "include\\PLCore\\");
 shortcut("Dir_PLMath", "include\\PLMath\\");
 shortcut("Dir_PLGraphics", "include\\PLGraphics\\");
-shortcut("Dir_PLScript", "include\\PLScript\\");
 shortcut("Dir_PLDatabase", "include\\PLDatabase\\");
 shortcut("Dir_PLNetwork", "include\\PLNetwork\\");
 shortcut("Dir_PLIRC", "include\\PLIRC\\");
