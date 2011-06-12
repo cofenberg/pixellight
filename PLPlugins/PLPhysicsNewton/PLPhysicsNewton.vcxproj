@@ -311,8 +311,8 @@ copy build\release64\PLPhysicsNewton64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLPhysicsNewton\WorldUpdate.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PLEngine\PLPhysics\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLPhysics\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{95dd5189-8db7-4f53-b44e-35659c4cf154}</UniqueIdentifier>
+      <UniqueIdentifier>{d04c2c92-8233-4ec8-87e9-b4d9f0985f81}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
   </ItemGroup>
@@ -61,7 +61,7 @@
     <ClCompile Include="src\JointUpVector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLPhysicsNewton.cpp">
+    <ClCompile Include="src\PLPhysicsNull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SensorAABoundingBox.cpp">
@@ -73,95 +73,83 @@
     <ClCompile Include="src\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WorldThread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\WorldUpdate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLPhysicsNewton\BodyBox.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyCapsule.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyCapsule.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyChamferCylinder.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyChamferCylinder.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyCone.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyCone.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyConvexHull.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyConvexHull.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyCylinder.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyCylinder.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyEllipsoid.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyEllipsoid.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyImpl.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyImpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyMesh.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyMesh.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodySphere.h">
+    <ClInclude Include="include\PLPhysicsNull\BodySphere.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\BodyTerrain.h">
+    <ClInclude Include="include\PLPhysicsNull\BodyTerrain.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointBall.h">
+    <ClInclude Include="include\PLPhysicsNull\JointBall.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointCorkscrew.h">
+    <ClInclude Include="include\PLPhysicsNull\JointCorkscrew.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointHinge.h">
+    <ClInclude Include="include\PLPhysicsNull\JointHinge.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointImpl.h">
+    <ClInclude Include="include\PLPhysicsNull\JointImpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointSlider.h">
+    <ClInclude Include="include\PLPhysicsNull\JointSlider.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointUniversal.h">
+    <ClInclude Include="include\PLPhysicsNull\JointUniversal.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\JointUpVector.h">
+    <ClInclude Include="include\PLPhysicsNull\JointUpVector.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\PLPhysicsNewton.h">
+    <ClInclude Include="include\PLPhysicsNull\PLPhysicsNull.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\PLPhysicsNewtonLinux.h">
+    <ClInclude Include="include\PLPhysicsNull\PLPhysicsNullLinux.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\PLPhysicsNewtonWindows.h">
+    <ClInclude Include="include\PLPhysicsNull\PLPhysicsNullWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\SensorAABoundingBox.h">
+    <ClInclude Include="include\PLPhysicsNull\SensorAABoundingBox.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\SensorRaycast.h">
+    <ClInclude Include="include\PLPhysicsNull\SensorRaycast.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\World.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\WorldThread.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysicsNewton\WorldUpdate.h">
+    <ClInclude Include="include\PLPhysicsNull\World.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLPhysics\Diary.txt" />
+    <None Include="..\..\PLEngine\PLPhysics\Diary.txt" />
   </ItemGroup>
 </Project>

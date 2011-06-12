@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4AD09FE5-8D6F-4CC3-87AC-CB36672830BA}</ProjectGuid>
+    <ProjectGuid>{4C8185BB-6E90-4C4D-BAEE-4585E14A61B9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -87,10 +87,9 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_32/ODE/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSODE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/Foundation/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/Physics/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/PhysXLoader/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSPHYSX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -105,21 +104,21 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysicsPhysXD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLPhysicsODED.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLPhysicsPhysXD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLPhysicsODED.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsPhysXD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
@@ -129,10 +128,9 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_64/ODE/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSODE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/Foundation/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/Physics/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/PhysXLoader/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSPHYSX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -146,35 +144,34 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysicsPhysXD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLPhysicsODED.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLPhysicsPhysXD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLPhysicsODED.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsPhysXD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
 ..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_32/ODE/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSODE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/Foundation/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/Physics/include/;../../External/_Windows_x86_32/PhysX/include/PhysX/PhysXLoader/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSPHYSX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -193,9 +190,9 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysicsPhysX.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,13 +200,13 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLPhysicsODE.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsPhysX.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
@@ -219,14 +216,13 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_64/ODE/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSODE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;../PLPhysics/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/Foundation/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/Physics/include/;../../External/_Windows_x86_64/PhysX/include/PhysX/PhysXLoader/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSPHYSX_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -241,25 +237,41 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysicsPhysX.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLPhysicsODE.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsPhysX.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
+copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
 ..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLPhysicsPhysX\_ErrorStream.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\BodyBox.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\BodyImpl.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\BodyMesh.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\BodySphere.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\JointBall.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\JointHinge.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\JointImpl.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\JointSlider.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\JointUniversal.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\PLPhysicsPhysX.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\PLPhysicsPhysXLinux.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\PLPhysicsPhysXWindows.h" />
+    <ClInclude Include="include\PLPhysicsPhysX\World.h" />
+  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BodyBox.cpp" />
     <ClCompile Include="src\BodyImpl.cpp" />
@@ -270,27 +282,12 @@ copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
     <ClCompile Include="src\JointImpl.cpp" />
     <ClCompile Include="src\JointSlider.cpp" />
     <ClCompile Include="src\JointUniversal.cpp" />
-    <ClCompile Include="src\PLPhysicsODE.cpp" />
+    <ClCompile Include="src\PLPhysicsPhysX.cpp" />
     <ClCompile Include="src\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLPhysicsODE\BodyBox.h" />
-    <ClInclude Include="include\PLPhysicsODE\BodyImpl.h" />
-    <ClInclude Include="include\PLPhysicsODE\BodyMesh.h" />
-    <ClInclude Include="include\PLPhysicsODE\BodySphere.h" />
-    <ClInclude Include="include\PLPhysicsODE\JointBall.h" />
-    <ClInclude Include="include\PLPhysicsODE\JointHinge.h" />
-    <ClInclude Include="include\PLPhysicsODE\JointImpl.h" />
-    <ClInclude Include="include\PLPhysicsODE\JointSlider.h" />
-    <ClInclude Include="include\PLPhysicsODE\JointUniversal.h" />
-    <ClInclude Include="include\PLPhysicsODE\PLPhysicsODE.h" />
-    <ClInclude Include="include\PLPhysicsODE\PLPhysicsODELinux.h" />
-    <ClInclude Include="include\PLPhysicsODE\PLPhysicsODEWindows.h" />
-    <ClInclude Include="include\PLPhysicsODE\World.h" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\..\PLEngine\PLPhysics\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="..\PLPhysics\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PLBase\PLCore\PLCore.vcxproj">
