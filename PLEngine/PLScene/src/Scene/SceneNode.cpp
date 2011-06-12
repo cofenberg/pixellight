@@ -340,7 +340,7 @@ void SceneNode::SetActive(bool bActive)
 	// Is it currently allowed to change this state?
 	if (!(m_nInternalFlags & DestroyThis)) {
 		// Change active state?
-		if (bActive && (m_nFlags & Inactive) || !bActive && !(m_nFlags & Inactive)) {
+		if ((bActive && (m_nFlags & Inactive)) || (!bActive && !(m_nFlags & Inactive))) {
 			// Set the flag
 			if (bActive)
 				m_nFlags &= ~Inactive;
@@ -387,7 +387,7 @@ bool SceneNode::IsVisible() const
 void SceneNode::SetVisible(bool bVisible)
 {
 	// Change visible state?
-	if (bVisible && (m_nFlags & Invisible) || !bVisible && !(m_nFlags & Invisible)) {
+	if ((bVisible && (m_nFlags & Invisible)) || (!bVisible && !(m_nFlags & Invisible))) {
 		// Set the flag
 		if (bVisible)
 			m_nFlags &= ~Invisible;
