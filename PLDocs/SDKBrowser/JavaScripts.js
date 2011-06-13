@@ -140,6 +140,7 @@ shortcut("Dir_PLDemoMeshTeapot", "Demos\\PLDemoMeshTeapot\\");
 shortcut("Dir_PLDemoRendererRTT", "Demos\\PLDemoRendererRTT\\");
 shortcut("Dir_PLDemoRendererMultiView", "Demos\\PLDemoRendererMultiView\\");
 shortcut("Dir_PLDemoSimpleScene", "Demos\\PLDemoSimpleScene\\");
+shortcut("Dir_PLDemoScriptApplication", "Demos\\PLDemoScriptApplication\\");
 shortcut("Dir_PLDemoPicking", "Demos\\PLDemoPicking\\");
 shortcut("Dir_PLDemoSPARK_PL", "Demos\\PLDemoSPARK_PL\\");
 shortcut("Dir_PLDemoPhysicsBasic", "Demos\\PLDemoPhysicsBasic\\");
@@ -162,6 +163,7 @@ shortcut("Exe_PLDemoMeshTeapot", "Demos\\Bin\\PLDemoMeshTeapot.exe");
 shortcut("Exe_PLDemoRendererRTT", "Demos\\Bin\\PLDemoRendererRTT.exe");
 shortcut("Exe_PLDemoRendererMultiView", "Demos\\Bin\\PLDemoRendererMultiView.exe");
 shortcut("Exe_PLDemoSimpleScene", "Demos\\Bin\\PLDemoSimpleScene.exe");
+shortcut("Exe_PLDemoScriptApplication", "Demos\\Bin\\PLDemoScriptApplication.exe");
 shortcut("Exe_PLDemoPicking", "Demos\\Bin\\PLDemoPicking.exe");
 shortcut("Exe_PLDemoSPARK_PL", "Demos\\Bin\\PLDemoSPARK_PL.exe");
 shortcut("Exe_PLDemoPhysicsBasic", "Demos\\Bin\\PLDemoPhysicsBasic.exe");
@@ -196,6 +198,10 @@ text_shortcut("Scene_Mipmaps", "Demos\\Bin\\Data\\Scenes\\Mipmaps.scene");
 text_shortcut("Scene_ReflectionCubeMap", "Demos\\Bin\\Data\\Scenes\\ReflectionCubeMap.scene");
 text_shortcut("Scene_SceneNodeModifiers", "Demos\\Bin\\Data\\Scenes\\SceneNodeModifiers.scene");
 text_shortcut("Scene_Scripts", "Demos\\Bin\\Data\\Scenes\\Scripts.scene");
+
+
+// Script text shortcuts
+text_shortcut("Script_Lua_PLDemoSimpleScene", "Demos\\Bin\\Data\\Scripts\\PLDemoSimpleScene.lua");
 
 
 // Scene exe shortcuts

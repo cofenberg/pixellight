@@ -3,6 +3,7 @@
 - Added "ScriptedApplication.<extension>" files for an example of a scripted stand-alone application which can be e.g. started by using the tool PLViewer.
   Currently only the Lua script is implemented because the Python, JavaScript and AngelScript script backends are currently experimental and there's for
   instance RTTI object support still missing.
+- Added the C++ demo "PLDemoScriptApplication" showing how to use "PLEngine::ScriptApplication" in order to load in and execute a scripted stand-alone application
 
 
 
