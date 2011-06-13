@@ -1,6 +1,7 @@
 >> 13.06.2011
 [CO]
 - "SceneRendererTool": Added "SetSceneRenderer()"
+- Added "ScriptApplication", this class can load in and execute a given script out of the box
 
 
 

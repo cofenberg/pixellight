@@ -28,8 +28,6 @@
 #include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include <PLCore/Script/Script.h>
-#include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
@@ -74,8 +72,7 @@ const String Application::DefaultFilename = "";
 Application::Application() :
 	SlotOnKeyDown(this),
 	SlotOnDrop(this),
-	m_pFileDialog(nullptr),
-	m_pScript(nullptr)
+	m_pFileDialog(nullptr)
 {
 	// Set no multiuser if standalone application
 	#ifdef STANDALONE
@@ -102,45 +99,6 @@ Application::Application() :
 Application::~Application()
 {
 	// PLGui will destroy the file dialog automatically...
-}
-
-/**
-*  @brief
-*    Returns the base directory of the application
-*/
-String Application::GetBaseDirectory() const
-{
-	return m_sCurrentSceneBaseDirectory;
-}
-
-/**
-*  @brief
-*    Sets the base directory of the application
-*/
-void Application::SetBaseDirectory(String sBaseDirectory)
-{
-	// Is the given base directory absolute?
-	if (!Url(sBaseDirectory).IsAbsolute()) {
-		// Nope - if there's currently a script running, use it's absolute filename as start point
-		if (m_pScript) {
-			// Get the directory the script is in
-			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
-
-			// Construct the application base directory
-			sBaseDirectory = sDirectory + sBaseDirectory;
-		}
-	}
-
-	// Remove the current application base directory from the loadable manager
-	if (m_sCurrentSceneBaseDirectory.GetLength())
-		PLCore::LoadableManager::GetInstance()->RemoveBaseDir(m_sCurrentSceneBaseDirectory);
-
-	// Set the new application base directory
-	m_sCurrentSceneBaseDirectory = sBaseDirectory;
-
-	// Add the given base directory to the loadable manager
-	if (m_sCurrentSceneBaseDirectory.GetLength())
-		PLCore::LoadableManager::GetInstance()->AddBaseDir(m_sCurrentSceneBaseDirectory);
 }
 
 /**
@@ -251,54 +209,7 @@ bool Application::LoadScene(const String &sFilename)
 	}
 
 	// Load the scene
-	return BasicSceneApplication::LoadScene(sFilename);
-}
-
-/**
-*  @brief
-*    Loads a script
-*/
-bool Application::LoadScript(const String &sFilename)
-{
-	// Destroy the currently used script
-	DestroyScript();
-
-	// Create the script instance
-	m_pScript = ScriptManager::GetInstance()->CreateFromFile(sFilename);
-	if (m_pScript) {
-		// Backup the script filename
-		m_sScriptFilename = sFilename;
-
-		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
-		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
-
-		// Call the initialize script function
-		FuncScriptPtr<void>(m_pScript, "OnInit").Call(Params<void>());
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Destroys the currently used script
-*/
-void Application::DestroyScript()
-{
-	// Is there a script?
-	if (m_pScript) {
-		// Call the de-initialize script function
-		FuncScriptPtr<void>(m_pScript, "OnDeInit").Call(Params<void>());
-
-		// Destroy the used script instance
-		delete m_pScript;
-		m_pScript = nullptr;
-		m_sScriptFilename = "";
-	}
+	return ScriptApplication::LoadScene(sFilename);
 }
 
 /**
@@ -348,14 +259,11 @@ void Application::OnInitLog()
 		SetMultiUser(false);
 
 	// Call base implementation
-	BasicSceneApplication::OnInitLog();
+	ScriptApplication::OnInitLog();
 }
 
 void Application::OnInit()
 {
-	// Call base implementation
-	BasicSceneApplication::OnInit();
-
 	// Filename given?
 	String sFilename = m_cCommandLine.GetValue("Filename");
 	if (!sFilename.GetLength()) {
@@ -376,6 +284,15 @@ void Application::OnInit()
 		}
 	}
 
+	// Anything to load in?
+	if (sFilename.GetLength()) {
+		// Reset the current script file, else "ScriptApplication::OnInit()" will load and start the script given to it's constructor
+		m_sScriptFilename = "";
+	}
+
+	// Call base implementation
+	ScriptApplication::OnInit();
+
 	// Is there a name given?
 	if (sFilename.GetLength()) {
 		// Load resource (if it's one :)
@@ -389,15 +306,6 @@ void Application::OnInit()
 	Exit(1);
 }
 
-void Application::DeInit()
-{
-	// Destroy the currently used script
-	DestroyScript();
-
-	// Call base implementation
-	BasicSceneApplication::DeInit();
-}
-
 
 //[-------------------------------------------------------]
 //[ Private virtual PLGui::GuiApplication functions       ]
@@ -405,7 +313,7 @@ void Application::DeInit()
 void Application::OnCreateMainWindow()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
+	ScriptApplication::OnCreateMainWindow();
 
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
@@ -418,66 +326,4 @@ void Application::OnCreateMainWindow()
 			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotOnDrop);
 		}
 	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLEngine::RenderApplication functions ]
-//[-------------------------------------------------------]
-bool Application::OnUpdate()
-{
-	// Is there a script?
-	if (m_pScript) {
-		// Call the update script function
-		FuncScriptPtr<void>(m_pScript, "OnUpdate").Call(Params<void>());
-	}
-
-	// Call base implementation
-	return BasicSceneApplication::OnUpdate();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
-//[-------------------------------------------------------]
-void Application::OnCreateScene(SceneContainer &cContainer)
-{
-	// Set scene container flags
-	cContainer.SetFlags(SceneNode::NoCulling | SceneNode::NoPause);
-
-	// Setup scene surface painter
-	SurfacePainter *pPainter = GetPainter();
-	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
-		pSPScene->SetRootContainer(cContainer.GetContainer());
-		pSPScene->SetSceneContainer(&cContainer);
-	}
-
-	// [TODO] PLGui
-	/*
-	// Within the parent container...
-	SceneContainer *pContainer = cContainer.GetContainer();
-	if (pContainer) {
-		// Create a 'ingame'-GUI scene node
-		const SNGui *pGuiSceneNode = static_cast<SNGui*>(pContainer->Create("PLScene::SNGui", "GUI"));
-		if (pGuiSceneNode) {
-			// Setup the GUI
-			Gui *pGui = static_cast<Gui*>(pGuiSceneNode->GetGui());
-			if (pGui) {
-				pGui->SetTooltipEnabled(false);
-				pGui->SetMouseVisible(false);
-
-				// Create ingame GUI container
-				Window *pGuiContainer = new GuiContainer(*this, pGui);
-				pGuiContainer->SetSize(1024, 768);
-				pGuiContainer->SetBackgroundColor(PLGraphics::Color4::Transparent);
-				pGuiContainer->SetFocus(true);
-				pGuiContainer->SetVisible(true);
-			}
-		}
-	}
-	*/
-
-	// Set scene container
-	SetScene(&cContainer);
 }

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLEngine/Application/BasicSceneApplication.h>
+#include <PLEngine/Application/ScriptApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -37,9 +37,6 @@
 namespace PLGui {
 	class DataObject;
 	class DialogChooseFile;
-}
-namespace PLCore {
-	class Script;
 }
 
 
@@ -50,18 +47,15 @@ namespace PLCore {
 *  @brief
 *    Application class
 */
-class Application : public PLEngine::BasicSceneApplication {
+class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLEngine::BasicSceneApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLEngine::ScriptApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_0(GetBaseDirectory,	pl_ret_type(PLGeneral::String),						"Returns the base directory of the application",										"")
-		pl_method_1(SetBaseDirectory,	pl_ret_type(void),				PLGeneral::String,	"Sets the base directory of the application, base directory as the first parameter",	"")
 		// Slots
 		pl_slot_2(OnKeyDown,	PLGeneral::uint32,			PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
 		pl_slot_1(OnDrop,		const PLGui::DataObject&,						"Called when something was dropped down, dropped data object as first parameter",									"")
@@ -90,24 +84,6 @@ class Application : public PLEngine::BasicSceneApplication {
 		*    Destructor
 		*/
 		virtual ~Application();
-
-		/**
-		*  @brief
-		*    Returns the base directory of the application
-		*
-		*  @return
-		*    The base directory of the application
-		*/
-		PLGeneral::String GetBaseDirectory() const;
-
-		/**
-		*  @brief
-		*    Sets the base directory of the application
-		*
-		*  @param[in] sBaseDirectory
-		*    The base directory of the application
-		*/
-		void SetBaseDirectory(PLGeneral::String sBaseDirectory);
 
 		/**
 		*  @brief
@@ -152,24 +128,6 @@ class Application : public PLEngine::BasicSceneApplication {
 
 		/**
 		*  @brief
-		*    Loads a script
-		*
-		*  @param[in] sFilename
-		*    Filename of the script to load
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool LoadScript(const PLGeneral::String &sFilename);
-
-		/**
-		*  @brief
-		*    Destroys the currently used script
-		*/
-		void DestroyScript();
-
-		/**
-		*  @brief
 		*    Called when a key is pressed down
 		*
 		*  @param[in] nKey
@@ -195,7 +153,6 @@ class Application : public PLEngine::BasicSceneApplication {
 	private:
 		virtual void OnInitLog();
 		virtual void OnInit();
-		virtual void DeInit();
 
 
 	//[-------------------------------------------------------]
@@ -206,27 +163,10 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::RenderApplication functions ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::BasicSceneApplication functions ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::DialogChooseFile *m_pFileDialog;					/**< File dialog, can be a null pointer */
-		PLGeneral::String		 m_sCurrentSceneBaseDirectory;	/**< Base directory of the currently loaded scene */
-		PLCore::Script			*m_pScript;						/**< Used script instance, can be a null pointer */
-		PLGeneral::String		 m_sScriptFilename;				/**< Filename of the used script */
+		PLGui::DialogChooseFile *m_pFileDialog;	/**< File dialog, can be a null pointer */
 
 
 };

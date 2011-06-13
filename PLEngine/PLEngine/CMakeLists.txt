@@ -17,6 +17,7 @@ add_sources(
 	src/Application/RenderApplication.cpp
 	src/Application/SceneApplication.cpp
 	src/Application/BasicSceneApplication.cpp
+	src/Application/ScriptApplication.cpp
 	src/Config/RendererConfigGroup.cpp
 	src/Gui/WindowConnection.cpp
 	src/Gui/RenderWidget.cpp

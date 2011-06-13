@@ -256,6 +256,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Application\BasicSceneApplication.cpp" />
     <ClCompile Include="src\Application\RenderApplication.cpp" />
     <ClCompile Include="src\Application\SceneApplication.cpp" />
+    <ClCompile Include="src\Application\ScriptApplication.cpp" />
     <ClCompile Include="src\PLEngine.cpp" />
     <ClCompile Include="src\Picking\MousePicking.cpp" />
     <ClCompile Include="src\Picking\Picking.cpp" />
@@ -273,6 +274,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
     <ClInclude Include="include\PLEngine\Application\RenderApplication.h" />
     <ClInclude Include="include\PLEngine\Application\SceneApplication.h" />
+    <ClInclude Include="include\PLEngine\Application\ScriptApplication.h" />
     <ClInclude Include="include\PLEngine\PLEngine.h" />
     <ClInclude Include="include\PLEngine\PLEngineLinux.h" />
     <ClInclude Include="include\PLEngine\PLEngineWindows.h" />

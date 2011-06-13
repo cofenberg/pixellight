@@ -66,6 +66,9 @@
     <ClCompile Include="src\Tools\Screenshot.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\ScriptApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Tools\Screenshot.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Application\ScriptApplication.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
