@@ -1,3 +1,9 @@
+>> 13.06.2011
+[CO]
+- PLViewer can now also run scripted stand-alone applications instead of just showing scenes
+
+
+
 >> 12.06.2011
 [CO]
 - Changed within "PLViewerConfig" the setting "DefaultScene" into the more generic "DefaultFilename"

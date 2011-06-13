@@ -1,3 +1,9 @@
+>> 13.06.2011
+[CO]
+- "SceneRendererTool": Added "SetSceneRenderer()"
+
+
+
 >> 05.06.2011
 [CO]
 - "SceneApplication": Exposed "GetRootScene()"-method to the RTTI

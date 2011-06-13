@@ -107,9 +107,31 @@ void BasicSceneApplication::SetScene(SceneContainer *pContainer)
 
 /**
 *  @brief
+*    Clears the scene, after calling this method the scene is empty
+*/
+void BasicSceneApplication::ClearScene()
+{
+	// Get the scene container holding our scene
+	SceneContainer *pContainer = GetScene();
+	if (pContainer) {
+		// Clear the old scene
+		pContainer->Clear();
+
+		// Cleanup the scene context right now to ensure that all 'delete this'-marked scene nodes are really gone!
+		// If this is not done, we may get problems with for example the names of dynamic textures because there may
+		// occure name conflicts if multiple render-to-texture scene containers want to render into a same named texture...
+		// Topics like 'the new scene is using resources that are already loaded in' must be handled on another level, e.g.
+		// by delaying the unloading of currently unreferenced resources.
+		if (m_pSceneContext)
+			m_pSceneContext->Cleanup();
+	}
+}
+
+/**
+*  @brief
 *    Loads a scene
 */
-bool BasicSceneApplication::LoadScene(const String &sFilename)
+bool BasicSceneApplication::LoadScene(String sFilename)
 {
 	// Get the scene container holding our scene
 	SceneContainer *pContainer = GetScene();
@@ -124,16 +146,8 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 	if (pGui)
 		pGui->SetActive(false);
 
-	// Clear the old scene
-	pContainer->Clear();
-
-	// Cleanup the scene context right now to ensure that all 'delete this'-marked scene nodes are really gone!
-	// If this is not done, we may get problems with for example the names of dynamic textures because there may
-	// occure name conflicts if multiple render-to-texture scene containers want to render into a same named texture...
-	// Topics like 'the new scene is using resources that are already loaded in' must be handled on another level, e.g.
-	// by delaying the unloading of currently unreferenced resources.
-	if (m_pSceneContext)
-		m_pSceneContext->Cleanup();
+	// Clear the scene, after calling this method the scene is empty
+	ClearScene();
 
 	// Load the scene
 	bool bResult = pContainer->Load(sFilename);
@@ -146,8 +160,6 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 		// Get scene surface painter
 		SurfacePainter *pPainter = GetPainter();
 		if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-			SPScene *pSPScene = static_cast<SPScene*>(pPainter);
-
 			// Reset to default scene renderer
 			m_sDefaultSceneRenderer = DefaultSceneRenderer;
 
@@ -168,44 +180,8 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 				pContainer->DestroyQuery(*pSceneQuery);
 			}
 
-			// Check renderer API and version number, if legacy hardware is used we can only
-			// use a quite primitive scene renderer!
-			RendererContext *pRendererContext = GetRendererContext();
-			if (pRendererContext) {
-				Renderer &cRenderer = pRendererContext->GetRenderer();
-
-				// OpenGL
-				uint32 nVersion = 0;
-				if (cRenderer.GetAPI(&nVersion) == "OpenGL") {
-					if (nVersion < 14) {
-						m_sDefaultSceneRenderer = DefaultSceneRenderer;
-						PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-										"At least a OpenGL 1.4 compatible graphics card is recommended.")
-					}
-
-				// Direct3D
-				} else if (cRenderer.GetAPI(&nVersion) == "Direct3D") {
-					if (nVersion < 900) {
-						m_sDefaultSceneRenderer = DefaultSceneRenderer;
-						PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-										"At least a Direct3D 9 compatible graphics card is recommended.")
-					}
-				}
-			}
-
-			// Set the desired default scene renderer, but first, set to 'none' so we have default settings
-			// within our default scene renderer
-			pSPScene->SetDefaultSceneRenderer("");
-			pSPScene->SetDefaultSceneRenderer(m_sDefaultSceneRenderer);
-
-			// Check the default scene renderer, maybe someone gave us an 'invalid' one...
-			if (!pSPScene->GetDefaultSceneRenderer()) {
-				// Jap, it's an 'invalid' one -> write an error into the log...
-				PL_LOG(Error, "Failed to set scene renderer '" + m_sDefaultSceneRenderer + "'! '" + DefaultSceneRenderer + "' is used as fallback.")
-
-				// ... and use instead an usually always available very basic scene renderer
-				pSPScene->SetDefaultSceneRenderer(DefaultSceneRenderer);
-			}
+			// Set the used scene renderer
+			GetSceneRendererTool()->SetSceneRenderer(pContainer, m_sDefaultSceneRenderer, DefaultSceneRenderer);
 
 			// Is there a given start camera?
 			SceneNode *pCamera = nullptr;

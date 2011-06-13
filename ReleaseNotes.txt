@@ -5,6 +5,8 @@ Changes in PixelLight 0.9.7-R1 (not yet released)
 - Feature: Added the experimental (in Git repository) script backend PLScriptPython which adds support for Python
 - Feature: Added the experimental (in Git repository) script backend PLScriptAngelScript which adds support for AngelScript
 - Feature: Added plugin PLScriptBindings which exposes certain parts of PixelLight to script languages
+- Feature: The tool PLViewer can now also run scripted stand-alone applications instead of just showing scenes
+- Feature: Added demo Lua script "PLDemoSimpleScene.lua" which is a Lua port of the C++ PixelLight SDK demo "PLDemoSimpleScene"
 - Feature: Added support for non-power-of-two textures (NPOT)
 - Feature: Added delayed shared library loading for plugins to speed up the program start and to reduce memory consumption
 - Feature: Completion of the internal string buffer manager to improve the overall string performance

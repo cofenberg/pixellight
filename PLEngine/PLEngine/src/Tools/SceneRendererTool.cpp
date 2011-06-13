@@ -23,9 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Log/Log.h>
+#include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Scene/SPScene.h>
+#include <PLScene/Scene/SceneContainer.h>
 #include "PLEngine/Tools/SceneRendererTool.h"
 
 
@@ -99,6 +102,66 @@ SceneRenderer *SceneRendererTool::GetSceneRenderer() const
 
 	// Error!
 	return nullptr;
+}
+
+/**
+*  @brief
+*    Sets the used scene renderer
+*/
+bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, String sFilename, String sFallbackFilename)
+{
+	// Is there a surface painter and is it an "SPScene"-instance?
+	if (pSceneContainer && m_pSurfacePainter && m_pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
+		// Get and setup the "SPScene"-instance of the surface painter
+		SPScene *pSPScene = static_cast<SPScene*>(m_pSurfacePainter);
+		pSPScene->SetRootContainer(pSceneContainer->GetContainer());
+		pSPScene->SetSceneContainer(pSceneContainer);
+
+		// Check renderer API and version number, if legacy hardware is used we can only
+		// use a quite primitive scene renderer!
+		String sSceneRendererFilename = sFilename;
+		{
+			// [TODO] Detect required capabilities of a scene renderer?
+
+			// OpenGL
+			uint32 nVersion = 0;
+			if (m_pSurfacePainter->GetRenderer().GetAPI(&nVersion) == "OpenGL") {
+				if (nVersion < 14) {
+					sSceneRendererFilename = sFallbackFilename;
+					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
+									"At least a OpenGL 1.4 compatible graphics card is recommended. A fallback fill be used.")
+				}
+
+			// Direct3D
+			} else if (m_pSurfacePainter->GetRenderer().GetAPI(&nVersion) == "Direct3D") {
+				if (nVersion < 900) {
+					sSceneRendererFilename = sFallbackFilename;
+					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
+									"At least a Direct3D 9 compatible graphics card is recommended. A fallback fill be used.")
+				}
+			}
+		}
+
+		// Set the desired default scene renderer, but first, set to 'none' so we have default settings
+		// within our default scene renderer
+		pSPScene->SetDefaultSceneRenderer("");
+		pSPScene->SetDefaultSceneRenderer(sSceneRendererFilename);
+
+		// Check the default scene renderer, maybe someone gave us an 'invalid' one...
+		if (!pSPScene->GetDefaultSceneRenderer()) {
+			// Jap, it's an 'invalid' one -> write an error into the log...
+			PL_LOG(Error, "Failed to set scene renderer '" + sFilename + "'! '" + sFallbackFilename + "' is used as fallback.")
+
+			// ... and use instead an usually always available very basic scene renderer
+			pSPScene->SetDefaultSceneRenderer(sFallbackFilename);
+		}
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
 }
 
 /**

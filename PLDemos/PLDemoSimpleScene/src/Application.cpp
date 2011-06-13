@@ -103,14 +103,17 @@ void Application::OnInit()
 	// Call base implementation
 	BasicSceneApplication::OnInit();
 
-	// Configure the compositing system by using the comfort scene renderer tool.
-	// We're setting the attribute "Flags" of the scene renderer step named "DeferredHBAO" to the value "Inactive" -
-	// this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
-	// internally "just" the generic PixelLight RTTI is used. PixelLight itself doesn't offer such settings as
-	// "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
-	// within your application. We highly recommend to provide your end-user more abstract graphics settings as
-	// seen in, for example, many video games out there.
-	GetSceneRendererTool()->SetPassAttribute("DeferredHBAO", "Flags", "Inactive");
+	// Set the used scene renderer (optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as second parameter)
+	if (GetSceneRendererTool()->SetSceneRenderer(GetScene(), "Deferred.sr", "FixedFunctions.sr")) {
+		// Configure the compositing system by using the comfort scene renderer tool.
+		// We're setting the attribute "Flags" of the scene renderer step named "DeferredSPAAO" to the value "Inactive" -
+		// this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
+		// internally "just" the generic PixelLight RTTI is used. PixelLight itself doesn't offer such settings as
+		// "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
+		// within your application. We highly recommend to provide your end-user more abstract graphics settings as
+		// seen in, for example, many video games out there.
+		GetSceneRendererTool()->SetPassAttribute("DeferredSPAAO", "Flags", "Inactive");
+	}
 }
 
 
@@ -150,8 +153,8 @@ bool Application::OnUpdate()
 		SceneContainer *pSceneContainer = GetScene();
 		if (pSceneContainer) {
 			// Get the scene node with the name 'Light' (our 'white light')
-			SceneNode *pLight = pSceneContainer->GetByName("Light");
-			if (pLight) {
+			SceneNode *pLightSceneNode = pSceneContainer->GetByName("Light");
+			if (pLightSceneNode) {
 				// This variable is used for the light animation. Its just static you keep the implementation
 				// for a good demo overview completely within this function.
 				static float fLightTimer = 0.0f;
@@ -160,7 +163,7 @@ bool Application::OnUpdate()
 				// and universal because you haven't to care about the concrete class type - just set the
 				// variable values. For performance critical situations it's recommened to avoid using this RTTI
 				// functions to set your variables and use the conrete provided class interfaces instead.
-				pLight->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
+				pLightSceneNode->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
 					Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
 
 				// Update the light timer by using the time difference between the last and the current frame
@@ -182,66 +185,31 @@ bool Application::OnUpdate()
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
-	// Create a camera
-	SceneNode *pCamera = cContainer.Create("PLScene::SNCamera", "FreeCamera", "Position=\"1 2 -3\" Rotation=\"25 210 0\"");
-	if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
+	// Create a camera scene node
+	SceneNode *pCameraSceneNode = cContainer.Create("PLScene::SNCamera", "FreeCamera", "Position=\"1 2 -3\" Rotation=\"25 210 0\"");
+	if (pCameraSceneNode && pCameraSceneNode->IsInstanceOf("PLScene::SNCamera")) {
 		// Make this to our main scene camera
-		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
+		SetCamera(reinterpret_cast<SNCamera*>(pCameraSceneNode));
 	}
 
 	// Create a scene node with the soldier mesh which can produce a shadow
-	SceneNode *pSceneNode = cContainer.Create("PLScene::SNMesh", "Soldier", "Flags=\"CastShadow|ReceiveShadow\" Position=\"0.0 0.1 -5.0\" Scale=\"0.008 0.008 0.008\" Mesh=\"Data/Meshes/Soldier.mesh\"");
-	if (pSceneNode) {
-		// Rotate the soldier
-		pSceneNode->AddModifier("PLScene::SNMRotationLinearAnimation", "Velocity=\"0 10 0\"");
+	SceneNode *pSoldierSceneNode = cContainer.Create("PLScene::SNMesh", "Soldier", "Flags=\"CastShadow|ReceiveShadow\" Position=\"0.0 0.1 -5.0\" Scale=\"0.008 0.008 0.008\" Mesh=\"Data/Meshes/Soldier.mesh\"");
+	if (pSoldierSceneNode) {
+		// Add a scene node modifier which will constantly rotate the soldier
+		pSoldierSceneNode->AddModifier("PLScene::SNMRotationLinearAnimation", "Velocity=\"0 10 0\"");
 
-		// Playback the animation named "walk_0" letting the soldier walk
-		pSceneNode->AddModifier("PLScene::SNMMeshAnimation", "Name=\"walk_0\"");
+		// Add a scene node modifier which will playback the animation named "walk_0" letting the soldier walk
+		pSoldierSceneNode->AddModifier("PLScene::SNMMeshAnimation", "Name=\"walk_0\"");
 
-		// Animate the morph target named "blink" letting the soldier blink from time to time
-		pSceneNode->AddModifier("PLScene::SNMMeshMorphBlink", "Name=\"blink\"");
+		// Add a scene node modifier which will animate the morph target named "blink" letting the soldier blink from time to time
+		pSoldierSceneNode->AddModifier("PLScene::SNMMeshMorphBlink", "Name=\"blink\"");
 	}
 
-	// Create a light source to illuminate the scene - this light can cast shadows
+	// Create a light source scene node to illuminate the scene - this light can cast shadows
 	cContainer.Create("PLScene::SNPointLight", "Light", "Flags=\"CastShadow|Flares|Corona\" Range=\"4\"");
 
-	// Create the floor
+	// Create the floor scene node
 	cContainer.Create("PLScene::SNMesh", "Floor", "Flags=\"CastShadow|ReceiveShadow\" Position=\"0.0 0.0 -5.0\" Rotation=\"0.0 180.0 0.0\" Scale=\"4.0 0.1 4.0\" Mesh=\"Default\"");
-
-	// Setup scene surface painter
-	SurfacePainter *pPainter = GetPainter();
-	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
-		pSPScene->SetRootContainer(cContainer.GetContainer());
-		pSPScene->SetSceneContainer(&cContainer);
-
-		// Check renderer API and version number, if legacy hardware is used we can only
-		// use a quite primitive scene renderer!
-		String sSceneRenderer = "Deferred.sr";
-		RendererContext *pRendererContext = GetRendererContext();
-		if (pRendererContext) {
-			Renderer &cRenderer = pRendererContext->GetRenderer();
-
-			// OpenGL
-			uint32 nVersion = 0;
-			if (cRenderer.GetAPI(&nVersion) == "OpenGL") {
-				if (nVersion < 14) {
-					sSceneRenderer = DefaultSceneRenderer;
-					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-									"At least a OpenGL 1.4 compatible graphics card is recommended.")
-				}
-
-			// Direct3D
-			} else if (cRenderer.GetAPI(&nVersion) == "Direct3D") {
-				if (nVersion < 900) {
-					sSceneRenderer = DefaultSceneRenderer;
-					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
-									"At least a Direct3D 9 compatible graphics card is recommended.")
-				}
-			}
-		}
-		pSPScene->SetDefaultSceneRenderer(sSceneRenderer);
-	}
 
 	// Set scene container
 	SetScene(&cContainer);

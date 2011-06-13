@@ -40,6 +40,7 @@ namespace PLRenderer {
 }
 namespace PLScene {
 	class SceneRenderer;
+	class SceneContainer;
 	class SceneRendererPass;
 }
 
@@ -70,7 +71,8 @@ class SceneRendererTool : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SceneRendererTool, "PLEngine", PLCore::Object, "Class offering scene renderer tool functionality")
 		// Methods
-		pl_method_3(SetPassAttribute,	pl_ret_type(bool),	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",	"")
+		pl_method_3(SetSceneRenderer,	pl_ret_type(bool),	PLScene::SceneContainer*,	PLGeneral::String,	PLGeneral::String,	"Sets the used scene renderer, scene container to render as first parameter, filename of the scene renderer to use as second parameter, optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as third parameter. Returns 'true' if all went fine, else 'false'.",	"")
+		pl_method_3(SetPassAttribute,	pl_ret_type(bool),	PLGeneral::String,			PLGeneral::String,	PLGeneral::String,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",																									"")
 	pl_class_end
 
 
@@ -122,6 +124,22 @@ class SceneRendererTool : public PLCore::Object {
 		*    - Same as "SceneRenderer *pSceneRenderer = ((SPScene*)GetPainter())->GetDefaultSceneRenderer()" (with security checks!)
 		*/
 		PL_API PLScene::SceneRenderer *GetSceneRenderer() const;
+
+		/**
+		*  @brief
+		*    Sets the used scene renderer
+		*
+		*  @param[in] pSceneContainer
+		*    Scene container to render, if null, this method will return an error
+		*  @param[in] sFilename
+		*    Filename of the scene renderer to use
+		*  @param[in] sFallbackFilename
+		*    Optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PL_API bool SetSceneRenderer(PLScene::SceneContainer *pSceneContainer, PLGeneral::String sFilename, PLGeneral::String sFallbackFilename = "");
 
 		/**
 		*  @brief

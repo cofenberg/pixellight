@@ -82,7 +82,7 @@ bool ProgramUniformBlockGLSL::SetUniformBuffer(PLRenderer::UniformBuffer *pUnifo
 	}
 
 	// Is the uniform block already asociated with this binding point? (this test safes some graphics API calls)
-	if (m_nBindingPoint != nBindingPoint) {
+	if (m_nBindingPoint != static_cast<int>(nBindingPoint)) {
 		// Associate the uniform block with the given binding point
 		m_nBindingPoint = nBindingPoint;
 		glUniformBlockBinding(m_nOpenGLProgram, m_nUniformBlockIndex, m_nBindingPoint);

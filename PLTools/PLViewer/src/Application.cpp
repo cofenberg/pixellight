@@ -23,10 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Log/Log.h>
 #include <PLGeneral/File/Url.h>
 #include <PLGeneral/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
+#include <PLCore/Script/Script.h>
+#include <PLCore/Script/FuncScriptPtr.h>
+#include <PLCore/Script/ScriptManager.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>
@@ -39,6 +43,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGui;
 using namespace PLRenderer;
 using namespace PLScene;
@@ -69,7 +74,8 @@ const String Application::DefaultFilename = "";
 Application::Application() :
 	SlotOnKeyDown(this),
 	SlotOnDrop(this),
-	m_pFileDialog(nullptr)
+	m_pFileDialog(nullptr),
+	m_pScript(nullptr)
 {
 	// Set no multiuser if standalone application
 	#ifdef STANDALONE
@@ -96,6 +102,45 @@ Application::Application() :
 Application::~Application()
 {
 	// PLGui will destroy the file dialog automatically...
+}
+
+/**
+*  @brief
+*    Returns the base directory of the application
+*/
+String Application::GetBaseDirectory() const
+{
+	return m_sCurrentSceneBaseDirectory;
+}
+
+/**
+*  @brief
+*    Sets the base directory of the application
+*/
+void Application::SetBaseDirectory(String sBaseDirectory)
+{
+	// Is the given base directory absolute?
+	if (!Url(sBaseDirectory).IsAbsolute()) {
+		// Nope - if there's currently a script running, use it's absolute filename as start point
+		if (m_pScript) {
+			// Get the directory the script is in
+			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
+
+			// Construct the application base directory
+			sBaseDirectory = sDirectory + sBaseDirectory;
+		}
+	}
+
+	// Remove the current application base directory from the loadable manager
+	if (m_sCurrentSceneBaseDirectory.GetLength())
+		PLCore::LoadableManager::GetInstance()->RemoveBaseDir(m_sCurrentSceneBaseDirectory);
+
+	// Set the new application base directory
+	m_sCurrentSceneBaseDirectory = sBaseDirectory;
+
+	// Add the given base directory to the loadable manager
+	if (m_sCurrentSceneBaseDirectory.GetLength())
+		PLCore::LoadableManager::GetInstance()->AddBaseDir(m_sCurrentSceneBaseDirectory);
 }
 
 /**
@@ -137,37 +182,125 @@ String Application::ChooseFilename()
 
 /**
 *  @brief
-*    Loads a scene
+*    Loads a resource
 */
-bool Application::LoadScene(const String &sFilename)
+bool Application::LoadResource(const String &sFilename)
 {
-	// Remove the base directory of the previously loaded scene from the loadable manager
-	if (m_sCurrentSceneBaseDirectory.GetLength())
-		PLCore::LoadableManager::GetInstance()->RemoveBaseDir(m_sCurrentSceneBaseDirectory);
-	m_sCurrentSceneBaseDirectory = "";
+	// Get file extension
+	const String sExtension = Url(sFilename).GetExtension();
+	if (sExtension.GetLength()) {
+		// Is the given filename a supported scene?
+		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene")) {
+			// Is the given resource a scene?
+			if (LoadScene(sFilename)) {
+				// Done, get us out of here right now!
+				return true;
+			} else {
+				// Write an error message into the log
+				PL_LOG(Error, "Failed to load the scene \"" + sFilename + '\"')
+			}
 
-	{ // Add the base directory of the scene to load is in
-		// Validate path
-		const String sDirectory = Url(sFilename).Collapse().CutFilename();
+		// Is the given file a supported script?
+		} else if (ScriptManager::GetInstance()->GetScriptLanguageByExtension(sExtension).GetLength()) {
+			// Load the script
+			if (LoadScript(sFilename)) {
+				// Done, get us out of here right now!
+				return true;
+			} else {
+				// Write an error message into the log
+				PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
+			}
 
-		// Search for "/Data/Scenes/" and get the prefix of that
-		int nIndex = sDirectory.IndexOf("/Data/Scenes/");
-		if (nIndex >= 0)
-			m_sCurrentSceneBaseDirectory = sDirectory.GetSubstring(0, nIndex);
-		m_sCurrentSceneBaseDirectory = "file://" + m_sCurrentSceneBaseDirectory + '/';
-
-		// Add the base directory of the current scene to the loadable manager
-		PLCore::LoadableManager::GetInstance()->AddBaseDir(m_sCurrentSceneBaseDirectory);
+		// Unknown file-type
+		} else {
+			// Write an error message into the log
+			PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file-type is unknown")
+		}
+	} else {
+		// Write an error message into the log
+		PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file has no extension")
 	}
 
-	// Load the scene
-	return BasicSceneApplication::LoadScene(sFilename);
+	// Error!
+	return false;
 }
 
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Loads a scene
+*/
+bool Application::LoadScene(const String &sFilename)
+{
+	{ // Make the directory of the scene to load in to the application base directory
+		// Validate path
+		const String sDirectory = Url(sFilename).Collapse().CutFilename();
+
+		// Search for "/Data/Scenes/" and get the prefix of that
+		String sBaseDirectory;
+		int nIndex = sDirectory.IndexOf("/Data/Scenes/");
+		if (nIndex >= 0)
+			sBaseDirectory = sDirectory.GetSubstring(0, nIndex);
+		sBaseDirectory = "file://" + sBaseDirectory + '/';
+
+		// Set the base directory of the application
+		SetBaseDirectory(sBaseDirectory);
+	}
+
+	// Load the scene
+	return BasicSceneApplication::LoadScene(sFilename);
+}
+
+/**
+*  @brief
+*    Loads a script
+*/
+bool Application::LoadScript(const String &sFilename)
+{
+	// Destroy the currently used script
+	DestroyScript();
+
+	// Create the script instance
+	m_pScript = ScriptManager::GetInstance()->CreateFromFile(sFilename);
+	if (m_pScript) {
+		// Backup the script filename
+		m_sScriptFilename = sFilename;
+
+		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
+		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
+
+		// Call the initialize script function
+		FuncScriptPtr<void>(m_pScript, "OnInit").Call(Params<void>());
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
+*    Destroys the currently used script
+*/
+void Application::DestroyScript()
+{
+	// Is there a script?
+	if (m_pScript) {
+		// Call the de-initialize script function
+		FuncScriptPtr<void>(m_pScript, "OnDeInit").Call(Params<void>());
+
+		// Destroy the used script instance
+		delete m_pScript;
+		m_pScript = nullptr;
+		m_sScriptFilename = "";
+	}
+}
+
 /**
 *  @brief
 *    Called when a key is pressed down
@@ -200,13 +333,13 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 */
 void Application::OnDrop(const DataObject &cDataObject)
 {
-	// Load scene (if it's one :)
-	LoadScene(cDataObject.GetFiles()[0]);
+	// Load resource (if it's one :)
+	LoadResource(cDataObject.GetFiles()[0]);
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::ConsoleApplication functions ]
+//[ Private virtual PLCore::ConsoleApplication functions  ]
 //[-------------------------------------------------------]
 void Application::OnInitLog()
 {
@@ -220,6 +353,9 @@ void Application::OnInitLog()
 
 void Application::OnInit()
 {
+	// Call base implementation
+	BasicSceneApplication::OnInit();
+
 	// Filename given?
 	String sFilename = m_cCommandLine.GetValue("Filename");
 	if (!sFilename.GetLength()) {
@@ -242,19 +378,24 @@ void Application::OnInit()
 
 	// Is there a name given?
 	if (sFilename.GetLength()) {
-		// Load scene
-		if (!LoadScene(sFilename)) {
-			// Present the user an sweet 'ERROR!!!'-message
-			// [TODO] PLGui
-			// pWindow->GetGui()->MessageBox("Error", "Failed to load the given scene, the program will terminate now.\nHave a look into the log for detailed information.");
-
-			// Set exit code to error
-			Exit(1);
-		}
+		// Load resource (if it's one :)
+		if (LoadResource(sFilename))
+			return; // Done, get us out of here right now!
 	} else {
-		// No scene given
-		Exit(1);
+		// Error, no scene given
 	}
+
+	// Set exit code to error
+	Exit(1);
+}
+
+void Application::DeInit()
+{
+	// Destroy the currently used script
+	DestroyScript();
+
+	// Call base implementation
+	BasicSceneApplication::DeInit();
 }
 
 
@@ -277,6 +418,22 @@ void Application::OnCreateMainWindow()
 			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotOnDrop);
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLEngine::RenderApplication functions ]
+//[-------------------------------------------------------]
+bool Application::OnUpdate()
+{
+	// Is there a script?
+	if (m_pScript) {
+		// Call the update script function
+		FuncScriptPtr<void>(m_pScript, "OnUpdate").Call(Params<void>());
+	}
+
+	// Call base implementation
+	return BasicSceneApplication::OnUpdate();
 }
 
 
