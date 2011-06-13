@@ -64,6 +64,7 @@ class PhysicsMouseInteraction;
 *    - If there's a scene node for instance named 'PhysicsForceLine' (default value of the variable 'ForceLineName')
 *      within the same scene container, it's variables 'StartPosition' and 'EndPosition' will be manipulated so you can see
 *      the applied 'picking force'
+*    - Please note that this scene node will be removed in the future
 */
 class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 

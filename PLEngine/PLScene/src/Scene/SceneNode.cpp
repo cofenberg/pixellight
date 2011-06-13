@@ -676,7 +676,7 @@ const Sphere &SceneNode::GetContainerBoundingSphere()
 *  @brief
 *    Returns the number of modifiers
 */
-uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
+uint32 SceneNode::GetNumOfModifiers(String sClass) const
 {
 	// Return total number of modifiers?
 	if (!sClass.GetLength())

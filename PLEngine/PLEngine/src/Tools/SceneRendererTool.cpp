@@ -168,7 +168,7 @@ bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, String
 *  @brief
 *    Gets a scene renderer pass
 */
-SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
+SceneRendererPass *SceneRendererTool::GetPass(String sName) const
 {
 	// Get the scene renderer
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();
@@ -226,7 +226,7 @@ bool SceneRendererTool::SetPassAttribute(String sSceneRendererPassName, String s
 *  @brief
 *    Sets scene renderer pass attribute values using a string
 */
-uint32 SceneRendererTool::SetAttribute(const String &sAttributeName, const String &sValue) const
+uint32 SceneRendererTool::SetAttribute(String sAttributeName, String sValue) const
 {
 	uint32 nNumOfSetAttributes = 0;
 
@@ -259,7 +259,7 @@ uint32 SceneRendererTool::SetAttribute(const String &sAttributeName, const Strin
 *  @brief
 *    Sets scene renderer pass attribute values using a string
 */
-void SceneRendererTool::SetValues(const String &sValues) const
+void SceneRendererTool::SetValues(String sValues) const
 {
 	// Get the scene renderer
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();

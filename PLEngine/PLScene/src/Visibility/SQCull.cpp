@@ -980,8 +980,8 @@ void SQCull::IssueOcclusionQuery(const SceneHierarchyNode &cHierarchyNode, bool 
 					pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);
 				m_bSetIdentityWorldMatrix = false;
 			}
-			const AABoundingBox &cAABB = cHierarchyNode.GetAABoundingBox();
 			// [TODO] Update this code (currently unused)
+			//const AABoundingBox &cAABB = cHierarchyNode.GetAABoundingBox();
 			// const Matrix4x4 mObjectSpaceToClipSpace = ...;
 			//cRenderer.GetDrawHelpers().DrawBox(Color4::White, cAABB.vMin, cAABB.vMax, mObjectSpaceToClipSpace);
 

@@ -204,16 +204,21 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		pl_attribute(AABBMax,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Maximum position of the 'scene node space' axis aligned bounding box",																"")
 		pl_attribute(Name,				PLGeneral::String,			"",									ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
 		// Methods
-		pl_method_0(GetContainer,	pl_ret_type(SceneContainer*),												"Returns the scene container the scene node is in or a null pointer if this is the root node",																																																										"")
-		pl_method_0(IsActive,		pl_ret_type(bool),															"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																						"")
-		pl_method_1(SetActive,		pl_ret_type(void),					bool,									"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																										"")
-		pl_method_0(IsVisible,		pl_ret_type(bool),															"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",	"")
-		pl_method_1(SetVisible,		pl_ret_type(void),					bool,									"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																													"")
-		pl_method_0(IsFrozen,		pl_ret_type(bool),															"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'.",																																																						"")
-		pl_method_1(SetFrozen,		pl_ret_type(void),					bool,									"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																										"")
-		pl_method_2(AddModifier,	pl_ret_type(SceneNodeModifier*),	PLGeneral::String,	PLGeneral::String,	"Adds a modifier, modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier)",																			"")
-		pl_method_2(GetModifier,	pl_ret_type(SceneNodeModifier*),	PLGeneral::String,	PLGeneral::uint32,	"Returns a modifier, modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",												"")
-		pl_method_2(RemoveModifier,	pl_ret_type(bool),					PLGeneral::String,	PLGeneral::uint32,	"Removes a modifier, modifier class name of the modifier to remove as first parameter, modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns 'true' if all went fine, else 'false' (maybe invalid modifier).",										"")
+		pl_method_0(GetContainer,		pl_ret_type(SceneContainer*),												"Returns the scene container the scene node is in or a null pointer if this is the root node",																																																										"")
+		pl_method_0(GetRootContainer,	pl_ret_type(SceneContainer*),												"Returns the scene root container, (this scene container can be the root scene container) a null pointer on error",																																																					"")
+		pl_method_0(GetAbsoluteName,	pl_ret_type(PLGeneral::String),												"Returns the unique absolute name of the scene node (for instance 'Root.MyScene.MyNode')",																																																											"")
+		pl_method_0(IsActive,			pl_ret_type(bool),															"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																						"")
+		pl_method_1(SetActive,			pl_ret_type(void),					bool,									"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																										"")
+		pl_method_0(IsVisible,			pl_ret_type(bool),															"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",	"")
+		pl_method_1(SetVisible,			pl_ret_type(void),					bool,									"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																													"")
+		pl_method_0(IsFrozen,			pl_ret_type(bool),															"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'.",																																																						"")
+		pl_method_1(SetFrozen,			pl_ret_type(void),					bool,									"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																										"")
+		pl_method_1(GetNumOfModifiers,	pl_ret_type(PLGeneral::uint32),		PLGeneral::String,						"Returns the number of modifiers, optional modifier class name to return the number of instances from as first parameter (if empty return the total number of modifiers)",																																							"")
+		pl_method_2(AddModifier,		pl_ret_type(SceneNodeModifier*),	PLGeneral::String,	PLGeneral::String,	"Adds a modifier, modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier)",																			"")
+		pl_method_2(GetModifier,		pl_ret_type(SceneNodeModifier*),	PLGeneral::String,	PLGeneral::uint32,	"Returns a modifier, modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",												"")
+		pl_method_2(RemoveModifier,		pl_ret_type(bool),					PLGeneral::String,	PLGeneral::uint32,	"Removes a modifier, modifier class name of the modifier to remove as first parameter, modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns 'true' if all went fine, else 'false' (maybe invalid modifier).",										"")
+		pl_method_0(ClearModifiers,		pl_ret_type(void),															"Clears all modifiers",																																																																												"")
+		pl_method_1(Delete,				pl_ret_type(bool),					bool,									"Deletes this scene node. If the first parameter is 'true' the scene node will also be deleted when it's protected. Returns 'true' when all went fine, else 'false'.",																																								"")
 		// Signals
 		pl_signal_0(SignalDestroy,															"Scene node destruction signal",																											"")
 		pl_signal_0(SignalActive,															"Scene node active state change signal",																									"")
@@ -639,12 +644,12 @@ class SceneNode : public PLCore::Object, public PLGeneral::Element<SceneNode> {
 		*
 		*  @param[in] sClass
 		*    Modifier class name to return the number of instances from, if empty
-		*    return the total number of modifier.
+		*    return the total number of modifiers
 		*
 		*  @return
 		*    Number of modifiers
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfModifiers(const PLGeneral::String &sClass = "") const;
+		PLS_API PLGeneral::uint32 GetNumOfModifiers(PLGeneral::String sClass = "") const;
 
 		/**
 		*  @brief
