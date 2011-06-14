@@ -66,6 +66,10 @@ class ScriptApplication : public BasicSceneApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, ScriptApplication, "PLEngine", PLEngine::BasicSceneApplication, "Script application class")
+		// Attributes
+		pl_attribute(OnInitFunction,	PLGeneral::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should initialize itself",		"")
+		pl_attribute(OnUpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should update itself",			"")
+		pl_attribute(OnDeInitFunction,	PLGeneral::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should de-initialize itself",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,						"Default constructor",														"")
 		pl_constructor_1(ConstructorParameter,	PLGeneral::String,	"Constructor with the filename of the script to load as first parameter",	"")
@@ -131,7 +135,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    The default implementation does the following tasks:
 		*    - Everything that BasicSceneApplication::OnInit() does
 		*    - Load the script given to the constructor
-		*    - Call optional "OnInit" script function
+		*    - Call optional <OnInitFunction> script function
 		*    - Return and go on with Main()
 		*/
 		PL_API virtual void OnInit();
@@ -142,7 +146,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call optional "OnDeInit" script function
+		*    - Call optional <OnDeInitFunction> script function
 		*    - Destroy the script
 		*    - Everything that BasicSceneApplication::OnDeInit() does
 		*/
@@ -163,7 +167,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call optional "OnUpdate" script function
+		*    - Call optional <OnUpdateFunction> script function
 		*    - Everything that BasicSceneApplication::OnUpdate() does
 		*/
 		PL_API virtual bool OnUpdate();
@@ -184,7 +188,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - Calls the optional script function "OnInit"
+		*    - Calls the optional script function <OnInitFunction>
 		*/
 		PL_API bool LoadScript(const PLGeneral::String &sFilename);
 
@@ -193,7 +197,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    Destroys the currently used script
 		*
 		*  @note
-		*    - Calls the optional script function "OnDeInit"
+		*    - Calls the optional script function <OnDeInitFunction>
 		*/
 		PL_API void DestroyScript();
 

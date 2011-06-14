@@ -2,6 +2,9 @@
 [CO]
 - "ScriptApplication": Changed "DeInit()" into "OnDeInit()" to be consistent with "OnInit()". Unlike the other application classes, the
   script application is using the "On"-methods because the script to be executed is the actual application.
+- "PLEngine::ScriptApplication" and "PLScriptBindings::SNMScript" have now both the script entry points "OnInit()", "OnUpdate()" and "OnDeInit()".
+  The name of the optional script function called by C++ by one of these entry points is an RTTI atribute, meaning that e.g. a scipt can manipulate
+  it's own entry points! Wow, the script-stuff is getting pretty flexible. *g*
 
 
 

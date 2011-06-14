@@ -67,6 +67,10 @@ void SNMScript::SetScript(const String &sValue)
 		if (m_pScript) {
 			// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
 			m_pScript->SetGlobalVariable("this", Var<Object*>(this));
+
+			// Call the initialize script function, but only when it's really there because it's optional
+			if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
+				FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
 		}
 	}
 }
@@ -81,7 +85,9 @@ void SNMScript::SetScript(const String &sValue)
 */
 SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Script(this),
-	UpdateFunction(this),
+	OnInitFunction(this),
+	OnUpdateFunction(this),
+	OnDeInitFunction(this),
 	SlotOnUpdate(this),
 	m_pScript(nullptr)
 {
@@ -93,9 +99,15 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 */
 SNMScript::~SNMScript()
 {
-	// Destroy the used script
-	if (m_pScript)
+	// Is there a script?
+	if (m_pScript) {
+		// Call the de-initialize script function, but only when it's really there because it's optional
+		if (m_pScript->IsGlobalFunction(OnDeInitFunction.Get()))
+			FuncScriptPtr<void>(m_pScript, OnDeInitFunction.Get()).Call(Params<void>());
+
+		// Destroy the used script instance
 		delete m_pScript;
+	}
 }
 
 
@@ -124,10 +136,10 @@ void SNMScript::OnActivate(bool bActivate)
 */
 void SNMScript::OnUpdate()
 {
-	// Is there a script and script function?
-	if (m_pScript && UpdateFunction.Get().GetLength()) {
+	// Is there a script? If so, do also check whether or not our optional global script function is there.
+	if (m_pScript && m_pScript->IsGlobalFunction(OnUpdateFunction.Get())) {
 		// Call the update script function
-		FuncScriptPtr<void>(m_pScript, UpdateFunction.Get()).Call(Params<void>());
+		FuncScriptPtr<void>(m_pScript, OnUpdateFunction.Get()).Call(Params<void>());
 	}
 }
 

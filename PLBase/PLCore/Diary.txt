@@ -9,6 +9,9 @@
   useful. When using optional global script functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
 - PLScriptBindings: Changed the default value of "UpdateFunction", containing the name of the script function to be called, from "Update" into "OnUpdate"
  (same name as in "PLEngine::ScriptApplication")
+- "PLEngine::ScriptApplication" and "PLScriptBindings::SNMScript" have now both the script entry points "OnInit()", "OnUpdate()" and "OnDeInit()".
+  The name of the optional script function called by C++ by one of these entry points is an RTTI atribute, meaning that e.g. a scipt can manipulate
+  it's own entry points! Wow, the script-stuff is getting pretty flexible. *g*
 
 
 

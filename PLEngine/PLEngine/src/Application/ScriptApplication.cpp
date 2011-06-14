@@ -53,6 +53,9 @@ pl_implement_class(ScriptApplication)
 *    Default constructor
 */
 ScriptApplication::ScriptApplication() : BasicSceneApplication(),
+	OnInitFunction(this),
+	OnUpdateFunction(this),
+	OnDeInitFunction(this),
 	m_pScript(nullptr)
 {
 	// Set application title
@@ -64,6 +67,9 @@ ScriptApplication::ScriptApplication() : BasicSceneApplication(),
 *    Constructor
 */
 ScriptApplication::ScriptApplication(String sScriptFilename) : BasicSceneApplication(),
+	OnInitFunction(this),
+	OnUpdateFunction(this),
+	OnDeInitFunction(this),
 	m_sScriptFilename(sScriptFilename),
 	m_pScript(nullptr)
 {
@@ -161,9 +167,9 @@ void ScriptApplication::OnDeInit()
 bool ScriptApplication::OnUpdate()
 {
 	// Is there a script? If so, do also check whether or not our optional global script function is there.
-	if (m_pScript && m_pScript->IsGlobalFunction("OnUpdate")) {
+	if (m_pScript && m_pScript->IsGlobalFunction(OnUpdateFunction.Get())) {
 		// Call the update script function
-		FuncScriptPtr<void>(m_pScript, "OnUpdate").Call(Params<void>());
+		FuncScriptPtr<void>(m_pScript, OnUpdateFunction.Get()).Call(Params<void>());
 	}
 
 	// Call base implementation
@@ -193,8 +199,8 @@ bool ScriptApplication::LoadScript(const String &sFilename)
 		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
 
 		// Call the initialize script function, but only when it's really there because it's optional
-		if (m_pScript->IsGlobalFunction("OnInit"))
-			FuncScriptPtr<void>(m_pScript, "OnInit").Call(Params<void>());
+		if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
+			FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
 
 		// Done
 		return true;
@@ -213,8 +219,8 @@ void ScriptApplication::DestroyScript()
 	// Is there a script?
 	if (m_pScript) {
 		// Call the de-initialize script function, but only when it's really there because it's optional
-		if (m_pScript->IsGlobalFunction("OnDeInit"))
-			FuncScriptPtr<void>(m_pScript, "OnDeInit").Call(Params<void>());
+		if (m_pScript->IsGlobalFunction(OnDeInitFunction.Get()))
+			FuncScriptPtr<void>(m_pScript, OnDeInitFunction.Get()).Call(Params<void>());
 
 		// Destroy the used script instance
 		delete m_pScript;

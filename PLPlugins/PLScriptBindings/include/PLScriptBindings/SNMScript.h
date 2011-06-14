@@ -63,8 +63,10 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMScript, "PLScriptBindings", PLScene::SceneNodeModifier, "Script scene node modifier")
 		// Attributes
-		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use",										"")
-		pl_attribute(UpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the script function to be called for update",	"")
+		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use",																								"")
+		pl_attribute(OnInitFunction,	PLGeneral::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should initialize itself",		"")
+		pl_attribute(OnUpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should update itself",			"")
+		pl_attribute(OnDeInitFunction,	PLGeneral::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should de-initialize itself",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
