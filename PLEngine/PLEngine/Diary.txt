@@ -7,6 +7,16 @@
   it's own entry points! Wow, the script-stuff is getting pretty flexible. *g*
 - "BasicSceneApplication": "LoadScene()" is now virtual
 - "BasicSceneApplication": Added signal "SignalSceneLoadingFinished" which is emitted after a scene has been loaded successfully
+- "BasicSceneApplication::ScriptApplication": I had to add a few more parameters to the "script loading"-constructor in order to have a proper
+  configurated application. Well, ok, there was no real need because writing e.g.
+    ScriptApplication cScriptApplication;
+    cScriptApplication.SetName("MyScriptApplication");
+    cScriptApplication.SetTitle("My script application");
+    cScriptApplication.SetAppDataSubdir(System::GetInstance()->GetDataDirName("MyDirectory"));
+    return cScriptApplication.Run(sFilename, lstArguments);
+  will work as well, but the single liner
+    return ScriptApplication("Data/Scripts/PLDemoSimpleScene.lua").Run(sFilename, lstArguments);
+  is just more impressive. *g*
 
 
 

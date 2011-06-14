@@ -80,7 +80,7 @@ class BasicSceneApplication : public SceneApplication {
 		pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool*),									"Returns the scene renderer tool, never a null pointer",																												"")
 		pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera, new scene camera as first parameter (can be a null pointer)",																					"")
 		// Signals
-		pl_signal_0(SignalSceneLoadingFinished,	"Scene loading has been finished successfully")
+		pl_signal_0(SignalSceneLoadingFinished,	"Scene loading has been finished successfully",	"")
 	pl_class_end
 
 

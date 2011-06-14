@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/File/Url.h>
+#include <PLGeneral/System/System.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
@@ -64,17 +65,22 @@ ScriptApplication::ScriptApplication() : BasicSceneApplication(),
 
 /**
 *  @brief
-*    Constructor
+*    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
 */
-ScriptApplication::ScriptApplication(String sScriptFilename) : BasicSceneApplication(),
+ScriptApplication::ScriptApplication(String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : BasicSceneApplication(),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
 	m_sScriptFilename(sScriptFilename),
 	m_pScript(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight script application");
+	// Get the script filename without directory
+	const String sScriptFilenameOnly = Url(sScriptFilename).GetFilename();
+
+	// Set application name and title
+	SetName(sName.GetLength() ? sName : sScriptFilenameOnly);
+	SetTitle(sTitle.GetLength() ? sTitle : ("PixelLight script application \"" + sScriptFilenameOnly + '\"'));
+	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

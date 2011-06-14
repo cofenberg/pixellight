@@ -71,8 +71,8 @@ class ScriptApplication : public BasicSceneApplication {
 		pl_attribute(OnUpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should update itself",			"")
 		pl_attribute(OnDeInitFunction,	PLGeneral::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should de-initialize itself",	"")
 		// Constructors
-		pl_constructor_0(DefaultConstructor,						"Default constructor",														"")
-		pl_constructor_1(ConstructorParameter,	PLGeneral::String,	"Constructor with the filename of the script to load as first parameter",	"")
+		pl_constructor_0(DefaultConstructor,																					"Default constructor",																																																															"")
+		pl_constructor_4(ConstructorParameter,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 		// Methods
 		pl_method_0(GetBaseDirectory,	pl_ret_type(PLGeneral::String),						"Returns the base directory of the application",										"")
 		pl_method_1(SetBaseDirectory,	pl_ret_type(void),				PLGeneral::String,	"Sets the base directory of the application, base directory as the first parameter",	"")
@@ -91,12 +91,27 @@ class ScriptApplication : public BasicSceneApplication {
 
 		/**
 		*  @brief
-		*    Constructor
+		*    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
 		*
 		*  @param[in] sScriptFilename
 		*    Filename of the script to load
+		*  @param[in] sName
+		*    Optional name of the application, if empty string a name is constructed automatically by using the filename of the script
+		*  @param[in] sTitle
+		*    Optional title of the application, if empty string a title is constructed automatically by using the filename of the script
+		*  @param[in] sAppDataSubdir
+		*    Optional subdirectory for application data files, if empty string a directory is constructed automatically by using the filename of the script
+		*
+		*  @remarks
+		*  @verbatim
+		*    Usage example:
+		*    int PLMain(const String &sFilename, const Array<String> &lstArguments)
+		*    {
+		*        return ScriptApplication("Data/Scripts/PLDemoSimpleScene.lua").Run(sFilename, lstArguments);
+		*    }
+		*  @endverbatim
 		*/
-		PL_API ScriptApplication(PLGeneral::String sScriptFilename);
+		PL_API ScriptApplication(PLGeneral::String sScriptFilename, PLGeneral::String sName = "", PLGeneral::String sTitle = "", PLGeneral::String sAppDataSubdir = "");
 
 		/**
 		*  @brief
