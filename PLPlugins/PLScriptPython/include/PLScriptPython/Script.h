@@ -87,6 +87,7 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
+		PLSCRIPTPYTHON_API virtual bool IsGlobalFunction(const PLGeneral::String &sName);
 		PLSCRIPTPYTHON_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
 		PLSCRIPTPYTHON_API virtual bool RemoveAllGlobalFunctions();
 

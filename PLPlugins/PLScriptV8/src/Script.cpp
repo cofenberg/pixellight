@@ -69,6 +69,24 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
+bool Script::IsGlobalFunction(const String &sName)
+{
+	// Is there a V8 context?
+	if (!m_cV8Context.IsEmpty()) {
+		// Create a stack-allocated handle scope
+		v8::HandleScope cHandleScope;
+
+		// Enter our V8 context
+		v8::Context::Scope cContextScope(m_cV8Context);
+
+		// Check the V8 function
+		return m_cV8Context->Global()->Get(v8::String::New(sName))->IsFunction();
+	}
+
+	// The global script function does not exist
+	return false;
+}
+
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a V8 context?

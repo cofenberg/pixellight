@@ -160,8 +160,8 @@ void ScriptApplication::OnDeInit()
 */
 bool ScriptApplication::OnUpdate()
 {
-	// Is there a script?
-	if (m_pScript) {
+	// Is there a script? If so, do also check whether or not our optional global script function is there.
+	if (m_pScript && m_pScript->IsGlobalFunction("OnUpdate")) {
 		// Call the update script function
 		FuncScriptPtr<void>(m_pScript, "OnUpdate").Call(Params<void>());
 	}
@@ -192,8 +192,9 @@ bool ScriptApplication::LoadScript(const String &sFilename)
 		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
 		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
 
-		// Call the initialize script function
-		FuncScriptPtr<void>(m_pScript, "OnInit").Call(Params<void>());
+		// Call the initialize script function, but only when it's really there because it's optional
+		if (m_pScript->IsGlobalFunction("OnInit"))
+			FuncScriptPtr<void>(m_pScript, "OnInit").Call(Params<void>());
 
 		// Done
 		return true;
@@ -211,8 +212,9 @@ void ScriptApplication::DestroyScript()
 {
 	// Is there a script?
 	if (m_pScript) {
-		// Call the de-initialize script function
-		FuncScriptPtr<void>(m_pScript, "OnDeInit").Call(Params<void>());
+		// Call the de-initialize script function, but only when it's really there because it's optional
+		if (m_pScript->IsGlobalFunction("OnDeInit"))
+			FuncScriptPtr<void>(m_pScript, "OnDeInit").Call(Params<void>());
 
 		// Destroy the used script instance
 		delete m_pScript;

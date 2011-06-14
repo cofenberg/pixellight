@@ -4,6 +4,9 @@
   "OnDeInit()"... but those two methods are actually called by the "ConsoleApplication::Run()"-method. I had a look into this diary to see the intended behaviour
   and found the description within the "06.08.2010"-entry from Stefan Buschmann (I'am really glad that we're writing diaries :). The implementation is correct,
   but the documentation wasn't. Fixed that.
+- "Script:" Added "IsGlobalFunction()" so one can check whether or not there's a certain global script function before calling it. Background: When calling a global
+  script function, the script backend usually writes an error into the log when the given global script function wasn't found. I still think that this behaviour is
+  useful. When using optional global script functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
 
 
 

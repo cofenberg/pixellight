@@ -90,6 +90,12 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
+bool Script::IsGlobalFunction(const String &sName)
+{
+	// Is there a Python module dictionary? If so, request the Python function (results in borrowed reference, don't use Py_DECREF on it).
+	return (m_pPythonDictionary && PyDict_GetItemString(m_pPythonDictionary, sName));
+}
+
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Python module?

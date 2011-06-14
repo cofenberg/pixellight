@@ -63,6 +63,12 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
+bool Script::IsGlobalFunction(const String &sName)
+{
+	// The global script function does not exist
+	return false;
+}
+
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Nothing to do in here

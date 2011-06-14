@@ -57,6 +57,7 @@ namespace PLEngine {
 *
 *  @note
 *    - If a script filename was given to the constructor, the script is started within the "OnInit()"-method
+*    - Adds the global variable "this" to the script so that it's able to access "this" RTTI class instance
 */
 class ScriptApplication : public BasicSceneApplication {
 
@@ -130,7 +131,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    The default implementation does the following tasks:
 		*    - Everything that BasicSceneApplication::OnInit() does
 		*    - Load the script given to the constructor
-		*    - Call "OnInit" script function
+		*    - Call optional "OnInit" script function
 		*    - Return and go on with Main()
 		*/
 		PL_API virtual void OnInit();
@@ -141,7 +142,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call "OnDeInit" script function
+		*    - Call optional "OnDeInit" script function
 		*    - Destroy the script
 		*    - Everything that BasicSceneApplication::OnDeInit() does
 		*/
@@ -162,7 +163,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call "OnUpdate" script function
+		*    - Call optional "OnUpdate" script function
 		*    - Everything that BasicSceneApplication::OnUpdate() does
 		*/
 		PL_API virtual bool OnUpdate();
@@ -183,7 +184,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - Calls the script function "OnInit"
+		*    - Calls the optional script function "OnInit"
 		*/
 		PL_API bool LoadScript(const PLGeneral::String &sFilename);
 
@@ -192,7 +193,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    Destroys the currently used script
 		*
 		*  @note
-		*    - Calls the script function "OnDeInit"
+		*    - Calls the optional script function "OnDeInit"
 		*/
 		PL_API void DestroyScript();
 

@@ -158,6 +158,24 @@ void Script::LuaStackDump()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
+bool Script::IsGlobalFunction(const String &sName)
+{
+	bool bIsGlobalFunction = false;	// By default, the global script function does not exist
+
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Push the function to be called onto the Lua state stack
+		lua_getglobal(m_pLuaState, sName);
+		bIsGlobalFunction = lua_isfunction(m_pLuaState, -1);
+
+		// Remove the function name from the Lua state runtime stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Done
+	return bIsGlobalFunction;
+}
+
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there a Lua state?

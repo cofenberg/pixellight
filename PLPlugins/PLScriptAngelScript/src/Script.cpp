@@ -84,6 +84,12 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
+bool Script::IsGlobalFunction(const String &sName)
+{
+	// There must be a valid AngelScript engine and module instance
+	return (m_pAngelScriptEngine && m_pAngelScriptModule && m_pAngelScriptModule->GetFunctionIdByName(sName) >= 0);
+}
+
 bool Script::AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace)
 {
 	// Is there already a AngelScript engine instance?

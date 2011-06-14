@@ -146,6 +146,23 @@ class Script : public Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
+		*    Returns whether or not the given name belongs to a global function
+		*
+		*  @param[in] sName
+		*    Name of the global function
+		*
+		*  @return
+		*    'true' if the given name belongs to a global function, else 'false'
+		*
+		*  @remarks
+		*    When calling a global script function, the script backend usually writes an error into the
+		*    log when the given global script function wasn't found. So, when using optional global script
+		*    functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
+		*/
+		virtual bool IsGlobalFunction(const PLGeneral::String &sName) = 0;
+
+		/**
+		*  @brief
 		*    Adds a global function to the script
 		*
 		*  @param[in] sFunction
@@ -280,6 +297,9 @@ class Script : public Object {
 		*
 		*  @note
 		*    - It's not recommended to use this method directly, use "FuncScriptPtr" instead
+		*
+		*  @see
+		*    - Have a look at "IsGlobalFunction()" for additional information
 		*/
 		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
 
