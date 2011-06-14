@@ -1,3 +1,10 @@
+>> 14.06.2011
+[CO]
+- "ScriptApplication": Changed "DeInit()" into "OnDeInit()" to be consistent with "OnInit()". Unlike the other application classes, the
+  script application is using the "On"-methods because the script to be executed is the actual application.
+
+
+
 >> 13.06.2011
 [CO]
 - "SceneRendererTool": Added "SetSceneRenderer()"

@@ -297,7 +297,7 @@ void BasicSceneApplication::SetCamera(SNCamera *pCamera)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Initialization function that is called prior to Main()
+*    Initialization function that is called prior to OnInit()
 */
 bool BasicSceneApplication::Init()
 {

@@ -122,14 +122,49 @@ class ScriptApplication : public BasicSceneApplication {
 	//[ Protected virtual PLCore::ConsoleApplication functions]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Called when application should initialize itself
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that BasicSceneApplication::OnInit() does
+		*    - Load the script given to the constructor
+		*    - Call "OnInit" script function
+		*    - Return and go on with Main()
+		*/
 		PL_API virtual void OnInit();
-		PL_API virtual void DeInit();
+
+		/**
+		*  @brief
+		*    Called when application should de-initialize itself
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Call "OnDeInit" script function
+		*    - Destroy the script
+		*    - Everything that BasicSceneApplication::OnDeInit() does
+		*/
+		PL_API virtual void OnDeInit();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual RenderApplication functions         ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Function that is called once per update loop
+		*
+		*  @return
+		*    'true' when the update was performed, else 'false'
+		*    (an implementation has blocked the update due some own criterion)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Call "OnUpdate" script function
+		*    - Everything that BasicSceneApplication::OnUpdate() does
+		*/
 		PL_API virtual bool OnUpdate();
 
 
@@ -146,12 +181,18 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Calls the script function "OnInit"
 		*/
 		PL_API bool LoadScript(const PLGeneral::String &sFilename);
 
 		/**
 		*  @brief
 		*    Destroys the currently used script
+		*
+		*  @note
+		*    - Calls the script function "OnDeInit"
 		*/
 		PL_API void DestroyScript();
 

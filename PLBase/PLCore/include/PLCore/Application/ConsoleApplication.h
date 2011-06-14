@@ -387,7 +387,7 @@ class ConsoleApplication : public Object {
 	protected:
 		/**
 		*  @brief
-		*    Initialization function that is called prior to Main()
+		*    Initialization function that is called prior to OnInit()
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' which will stop the application
@@ -416,7 +416,7 @@ class ConsoleApplication : public Object {
 
 		/**
 		*  @brief
-		*    De-initialization function that is called after Main()
+		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
@@ -528,6 +528,7 @@ class ConsoleApplication : public Object {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - none (implement in derived classes)
+		*    - Return and go on with DeInit()
 		*/
 		PLCORE_API virtual void OnDeInit();
 

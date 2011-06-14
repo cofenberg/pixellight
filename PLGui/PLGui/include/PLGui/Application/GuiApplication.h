@@ -113,7 +113,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 	protected:
 		/**
 		*  @brief
-		*    Initialization function that is called prior to Main()
+		*    Initialization function that is called prior to OnInit()
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' which will stop the application
@@ -122,7 +122,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    The default implementation does the following tasks:
 		*    - Everything that ConsoleApplication::Init() does
 		*    - Call OnCreateMainWindow()
-		*    - Return and go on with Main()
+		*    - Return and go on with OnInit()
 		*/
 		PLGUI_API virtual bool Init();
 
@@ -139,7 +139,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 
 		/**
 		*  @brief
-		*    De-initialization function that is called after Main()
+		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:

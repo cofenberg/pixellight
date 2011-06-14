@@ -284,6 +284,10 @@ void SceneApplication::DeInit()
 //[-------------------------------------------------------]
 //[ Protected virtual RenderApplication functions         ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Function that is called once per update loop
+*/
 bool SceneApplication::OnUpdate()
 {
 	// Update the root scene container - we need to do this before drawing the first frame

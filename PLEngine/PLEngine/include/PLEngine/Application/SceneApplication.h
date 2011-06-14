@@ -229,7 +229,7 @@ class SceneApplication : public RenderApplication {
 	protected:
 		/**
 		*  @brief
-		*    Initialization function that is called prior to Main()
+		*    Initialization function that is called prior to OnInit()
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' which will stop the application
@@ -240,13 +240,13 @@ class SceneApplication : public RenderApplication {
 		*    - Create scene context
 		*    - Set default virtual input controller of scene context
 		*    - Call OnCreateRootScene()
-		*    - Return and go on with Main()
+		*    - Return and go on with OnInit()
 		*/
 		PL_API virtual bool Init();
 
 		/**
 		*  @brief
-		*    De-initialization function that is called after Main()
+		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
@@ -261,6 +261,19 @@ class SceneApplication : public RenderApplication {
 	//[ Protected virtual RenderApplication functions         ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Function that is called once per update loop
+		*
+		*  @return
+		*    'true' when the update was performed, else 'false'
+		*    (an implementation has blocked the update due some own criterion)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Update the scene context
+		*    - Everything that RenderApplication::OnUpdate() does
+		*/
 		PL_API virtual bool OnUpdate();
 
 

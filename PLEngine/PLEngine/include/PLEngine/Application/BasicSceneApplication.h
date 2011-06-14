@@ -236,7 +236,7 @@ class BasicSceneApplication : public SceneApplication {
 	protected:
 		/**
 		*  @brief
-		*    Initialization function that is called prior to Main()
+		*    Initialization function that is called prior to OnInit()
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' which will stop the application
@@ -246,7 +246,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    - Everything that SceneApplication::Init() does
 		*    - Initialize scene renderer tool
 		*    - Initialize screenshot tool
-		*    - Return and go on with Main()
+		*    - Return and go on with OnInit()
 		*/
 		PL_API virtual bool Init();
 

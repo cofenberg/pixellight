@@ -117,7 +117,7 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Initialization function that is called prior to Main()
+*    Initialization function that is called prior to OnInit()
 */
 bool GuiApplication::Init()
 {
@@ -151,7 +151,7 @@ void GuiApplication::Main()
 
 /**
 *  @brief
-*    De-initialization function that is called after Main()
+*    De-initialization function that is called after OnDeInit()
 */
 void GuiApplication::DeInit()
 {

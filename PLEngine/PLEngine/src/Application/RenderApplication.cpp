@@ -250,7 +250,7 @@ Surface *RenderApplication::GetSurface(const Widget *pWidget) const
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Initialization function that is called prior to Main()
+*    Initialization function that is called prior to OnInit()
 */
 bool RenderApplication::Init()
 {
@@ -316,7 +316,7 @@ void RenderApplication::Main()
 
 /**
 *  @brief
-*    De-initialization function that is called after Main()
+*    De-initialization function that is called after OnDeInit()
 */
 void RenderApplication::DeInit()
 {

@@ -397,7 +397,7 @@ int ConsoleApplication::Run(const String &sExecutableFilename, const Array<Strin
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Initialization function that is called prior to Main()
+*    Initialization function that is called prior to OnInit()
 */
 bool ConsoleApplication::Init()
 {
@@ -444,7 +444,7 @@ void ConsoleApplication::Main()
 
 /**
 *  @brief
-*    De-initialization function that is called after Main()
+*    De-initialization function that is called after OnDeInit()
 */
 void ConsoleApplication::DeInit()
 {

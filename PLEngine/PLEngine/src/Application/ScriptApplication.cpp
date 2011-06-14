@@ -123,6 +123,10 @@ void ScriptApplication::SetBaseDirectory(String sBaseDirectory)
 //[-------------------------------------------------------]
 //[ Proteced virtual PLCore::ConsoleApplication functions ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when application should initialize itself
+*/
 void ScriptApplication::OnInit()
 {
 	// Call base implementation
@@ -133,19 +137,27 @@ void ScriptApplication::OnInit()
 		LoadScript(m_sScriptFilename);
 }
 
-void ScriptApplication::DeInit()
+/**
+*  @brief
+*    Called when application should de-initialize itself
+*/
+void ScriptApplication::OnDeInit()
 {
 	// Destroy the currently used script
 	DestroyScript();
 
 	// Call base implementation
-	BasicSceneApplication::DeInit();
+	BasicSceneApplication::OnDeInit();
 }
 
 
 //[-------------------------------------------------------]
 //[ Proteced virtual RenderApplication functions          ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Function that is called once per update loop
+*/
 bool ScriptApplication::OnUpdate()
 {
 	// Is there a script?
