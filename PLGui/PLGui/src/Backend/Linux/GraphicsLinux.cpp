@@ -74,7 +74,7 @@ GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow)
 */
 GraphicsLinux::GraphicsLinux(Graphics &cGraphics) : GraphicsImpl(cGraphics)
 {
-	// Get linux GUI
+	// Get Linux GUI
 	GuiLinux *pGuiLinux = static_cast<GuiLinux*>(cGraphics.GetGui()->GetImpl());
 	m_pDisplay = pGuiLinux->m_pDisplay;
 	m_nScreen = DefaultScreen(m_pDisplay);

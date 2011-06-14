@@ -172,7 +172,7 @@ String SystemLinux::GetUserHomeDir() const
 
 String SystemLinux::GetUserDataDir() const
 {
-	// Use home directory on linux
+	// Use home directory on Linux
 	return GetUserHomeDir();
 }
 

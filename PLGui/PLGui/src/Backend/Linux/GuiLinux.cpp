@@ -469,7 +469,7 @@ Vector2i GuiLinux::GetScreenSize() const
 
 bool GuiLinux::HasTaskbar()
 {
-	// Let's assume that linux usually has a task bar ...
+	// Let's assume that Linux usually has a task bar ...
 	return true;
 }
 

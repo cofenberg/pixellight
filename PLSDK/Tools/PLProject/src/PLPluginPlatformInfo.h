@@ -136,7 +136,7 @@ class PLPluginPlatformInfo {
 	private:
 		PLGeneral::String										 m_sLibraryName;			/**< Name of the compiled library */
 		PLGeneral::String										 m_sSuffix;					/**< Suffix which gets appended to name of the compiled library */
-		PLGeneral::Array<PLGeneral::String>						 m_lstPlatformNames;		/**< List of supported platforms (e.g. win32, linux) */
+		PLGeneral::Array<PLGeneral::String>						 m_lstPlatformNames;		/**< List of supported platforms (e.g. Win32, Linux) */
 		PLGeneral::Array<PLGeneral::String>						 m_lstBuildTypes;			/**< List of supported build types (release, debug) */
 		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryDependencies;	/**< Library dependency list for a specific platform and build type */
 		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapLibraryPrefix;		/**< Library prefix list for a specific platform and build type */

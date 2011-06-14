@@ -365,6 +365,16 @@ class ConsoleApplication : public Object {
 		*  @param[in] lstArguments
 		*    List of arguments to the program
 		*
+		*  @remarks
+		*    The implementation does the following tasks:
+		*    - Connect Linux signals
+		*    - Fill application context
+		*    - Call Init()
+		*    - Call OnInit()
+		*    - Call Main()
+		*    - Call OnDeInit()
+		*    - Call DeInit()
+		*
 		*  @return
 		*    Exit code
 		*/
@@ -390,8 +400,7 @@ class ConsoleApplication : public Object {
 		*    - Call OnInitConfig()
 		*    - Call OnInitPlugins()
 		*    - Call OnInitData()
-		*    - Call OnInit()
-		*    - Return and go on with Main()
+		*    - Return and go on with OnInit()
 		*/
 		PLCORE_API virtual bool Init();
 
@@ -411,7 +420,6 @@ class ConsoleApplication : public Object {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call OnDeInit()
 		*    - Save configuration
 		*    - Close log
 		*/
@@ -504,6 +512,17 @@ class ConsoleApplication : public Object {
 
 		/**
 		*  @brief
+		*    Called when application should initialize itself
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Reset timing class
+		*    - Return and go on with Main()
+		*/
+		PLCORE_API virtual void OnInit();
+
+		/**
+		*  @brief
 		*    Called when application should de-initialize itself
 		*
 		*  @remarks
@@ -511,16 +530,6 @@ class ConsoleApplication : public Object {
 		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnDeInit();
-
-		/**
-		*  @brief
-		*    Called when application should initialize itself
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Reset timing class
-		*/
-		PLCORE_API virtual void OnInit();
 
 		/**
 		*  @brief

@@ -68,7 +68,7 @@ TrayIconWidgetLinux::TrayIconWidgetLinux(Widget *pParent) : Widget(pParent, true
 	// Make sure that the window is not destroyed automatically by Gui, as it is managed by TrayIcon and will be deleted with it
 	//   This is done by the 'true' in Widget(pParent, BaseWidget, true)
 
-	// Get linux implementations
+	// Get Linux implementations
 	GuiLinux	*pGuiLinux	  = static_cast<GuiLinux*>   (m_pGui->GetImpl());
 	WidgetLinux *pWidgetLinux = static_cast<WidgetLinux*>(m_pWidgetImpl);
 

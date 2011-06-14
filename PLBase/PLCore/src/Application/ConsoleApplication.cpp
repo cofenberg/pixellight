@@ -354,7 +354,7 @@ void ConsoleApplication::Exit(int nResult)
 */
 int ConsoleApplication::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Connect linux signals
+	// Connect Linux signals
 	#ifdef LINUX
 		signal(SIGINT,  ConsoleApplication::SignalHandler);
 		signal(SIGTERM, ConsoleApplication::SignalHandler);
@@ -439,6 +439,7 @@ bool ConsoleApplication::Init()
 */
 void ConsoleApplication::Main()
 {
+	// No default implementation
 }
 
 /**
@@ -730,6 +731,7 @@ void ConsoleApplication::OnInit()
 */
 void ConsoleApplication::OnDeInit()
 {
+	// No default implementation
 }
 
 /**
