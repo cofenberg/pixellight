@@ -1,4 +1,5 @@
 -- Scripted stand-alone application -> This is a Lua port of the C++ PixelLight SDK demo "PLDemoSimpleScene"
+-- -> The global variable "this" points to the RTTI application class instance invoking the script
 
 
 --[-------------------------------------------------------]
@@ -17,10 +18,10 @@ function OnInit()
 	-- At this point, the core components of the application are ready to be used.
 
 	-- Set the application base directory relative to the filename of this running Lua script
-	PL.GetApplication():SetBaseDirectory("../../")
+	this:SetBaseDirectory("../../")
 
 	-- Set the used scene renderer (optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as second parameter)
-	if PL.GetApplication():GetSceneRendererTool():SetSceneRenderer(PL.GetApplication():GetScene(), "Deferred.sr", "FixedFunctions.sr") == true then
+	if this:GetSceneRendererTool():SetSceneRenderer(this:GetScene(), "Deferred.sr", "FixedFunctions.sr") == true then
 		-- Configure the compositing system by using the comfort scene renderer tool.
 		-- We're setting the attribute "Flags" of the scene renderer step named "DeferredSPAAO" to the value "Inactive" -
 		-- this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
@@ -28,7 +29,7 @@ function OnInit()
 		-- "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
 		-- within your application. We highly recommend to provide your end-user more abstract graphics settings as
 		-- seen in, for example, many video games out there.
-		PL.GetApplication():GetSceneRendererTool():SetPassAttribute("DeferredSPAAO", "Flags", "Inactive")
+		this:GetSceneRendererTool():SetPassAttribute("DeferredSPAAO", "Flags", "Inactive")
 	end
 
 	-- Create the scene
@@ -39,7 +40,7 @@ end
 --  Called by C++ when the application should update itself
 function OnUpdate()
 	-- Get the scene container
-	local sceneContainer = PL.GetApplication():GetScene()
+	local sceneContainer = this:GetScene()
 	if sceneContainer ~= nil then
 		-- Get the scene node with the name 'Light' (our 'white light')
 		local lightSceneNode = sceneContainer:GetByName("Light")
@@ -64,16 +65,16 @@ end
 --  Function which creates the scene
 function CreateScene()
 	-- Clear the scene, after calling this method the scene is empty (Background: The script can be restarted... :)
-	PL.GetApplication():ClearScene()
+	this:ClearScene()
 
 	-- Get the scene container
-	local sceneContainer = PL.GetApplication():GetScene()
+	local sceneContainer = this:GetScene()
 	if sceneContainer ~= nil then
 		-- Create a camera scene node
 		local camera = sceneContainer:Create("PLScene::SNCamera", "FreeCamera", "Position='1 2 -3' Rotation='25 210 0'")
 
 		-- Make this to our main scene camera
-		PL.GetApplication():SetCamera(camera)
+		this:SetCamera(camera)
 
 		-- Create a scene node with the soldier mesh which can produce a shadow
 		local soldierSceneNode = sceneContainer:Create("PLScene::SNMesh", "Soldier", "Flags='CastShadow|ReceiveShadow' Position='0.0 0.1 -5.0' Scale='0.008 0.008 0.008' Mesh='Data/Meshes/Soldier.mesh'")

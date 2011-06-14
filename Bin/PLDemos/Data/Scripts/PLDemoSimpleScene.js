@@ -1,4 +1,5 @@
 // Scripted stand-alone application -> This is a JavaScript port of the C++ PixelLight SDK demo "PLDemoSimpleScene"
+// -> The global variable "this" points to the RTTI application class instance invoking the script
 
 
 //[-------------------------------------------------------]
