@@ -147,7 +147,7 @@ class Log : public Singleton<Log> {
 		*    Should the [LogLevel] prefix be shown?
 		*
 		*  @see
-		*    - IsConsolOutputActive()
+		*    - IsVerbose()
 		*/
 		PLGENERAL_API void SetVerbose(bool bVerbose, bool bVerboseLogLevelPrefix = true);
 
