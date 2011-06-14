@@ -7,6 +7,8 @@
 - "Script:" Added "IsGlobalFunction()" so one can check whether or not there's a certain global script function before calling it. Background: When calling a global
   script function, the script backend usually writes an error into the log when the given global script function wasn't found. I still think that this behaviour is
   useful. When using optional global script functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
+- PLScriptBindings: Changed the default value of "UpdateFunction", containing the name of the script function to be called, from "Update" into "OnUpdate"
+ (same name as in "PLEngine::ScriptApplication")
 
 
 
