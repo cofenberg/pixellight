@@ -134,32 +134,6 @@ class BasicSceneApplication : public SceneApplication {
 
 		/**
 		*  @brief
-		*    Loads a scene
-		*
-		*  @param[in] sFilename
-		*    Filename of the scene to load
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*
-		*  @remarks
-		*    This function will use the current set scene container (the 'concrete scene') to load
-		*    in given scene data. It will temporarily add a new base path so all scene data can be found
-		*    even if the scene to load is not within the application directory.
-		*    Supported 'SNKeyValue' information:
-		*      Key                       Value
-		*      'SceneRenderer'           'Class name of the scene renderer to use'
-		*      'SceneRendererVariables'  '<Variable>=<Value>'
-		*      'ClearColor'              '<red> <green> <blue> <alpha>' (all floating point values from 0-1)
-		*      'StartCamera'             '<name of the start camera scene node>' (name is relative to the loaded scene container)
-		*
-		*  @note
-		*    - If currently the edit dialog is opened, it will be closed automatically to avoid update problems
-		*/
-		PL_API bool LoadScene(PLGeneral::String sFilename);
-
-		/**
-		*  @brief
 		*    Get scene camera
 		*
 		*  @return
@@ -228,6 +202,32 @@ class BasicSceneApplication : public SceneApplication {
 		*    - Sets this camera also within the 'SPScene' surface painter instance
 		*/
 		PL_API virtual void SetCamera(PLScene::SNCamera *pCamera);
+
+		/**
+		*  @brief
+		*    Loads a scene
+		*
+		*  @param[in] sFilename
+		*    Filename of the scene to load
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    This function will use the current set scene container (the 'concrete scene') to load
+		*    in given scene data. It will temporarily add a new base path so all scene data can be found
+		*    even if the scene to load is not within the application directory.
+		*    Supported 'SNKeyValue' information:
+		*      Key                       Value
+		*      'SceneRenderer'           'Class name of the scene renderer to use'
+		*      'SceneRendererVariables'  '<Variable>=<Value>'
+		*      'ClearColor'              '<red> <green> <blue> <alpha>' (all floating point values from 0-1)
+		*      'StartCamera'             '<name of the start camera scene node>' (name is relative to the loaded scene container)
+		*
+		*  @note
+		*    - If currently the edit dialog is opened, it will be closed automatically to avoid update problems
+		*/
+		PL_API virtual bool LoadScene(PLGeneral::String sFilename);
 
 
 	//[-------------------------------------------------------]

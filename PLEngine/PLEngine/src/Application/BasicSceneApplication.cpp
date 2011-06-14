@@ -129,8 +129,71 @@ void BasicSceneApplication::ClearScene()
 
 /**
 *  @brief
-*    Loads a scene
+*    Get scene camera
 */
+SNCamera *BasicSceneApplication::GetCamera() const
+{
+	// This cast is safe because we 'know' it can ONLY be a camera!
+	return reinterpret_cast<SNCamera*>(m_cCameraHandler.GetElement());
+}
+
+/**
+*  @brief
+*    Get scene renderer tool
+*/
+SceneRendererTool *BasicSceneApplication::GetSceneRendererTool()
+{
+	// Return scene renderer tool
+	return &m_cSceneRendererTool;
+}
+
+/**
+*  @brief
+*    Get scene renderer tool
+*/
+const SceneRendererTool *BasicSceneApplication::GetSceneRendererTool() const
+{
+	// Return scene renderer tool
+	return &m_cSceneRendererTool;
+}
+
+/**
+*  @brief
+*    Get screenshot tool
+*/
+Screenshot &BasicSceneApplication::GetScreenshotTool()
+{
+	// Return screenshot tool
+	return m_cScreenshot;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual BasicSceneApplication functions        ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Sets the scene camera
+*/
+void BasicSceneApplication::SetCamera(SNCamera *pCamera)
+{
+	// Deactivate the current camera
+	if (m_cCameraHandler.GetElement())
+		m_cCameraHandler.GetElement()->SetActive(false);
+
+	// Set new camera
+	m_cCameraHandler.SetElement(reinterpret_cast<SceneNode*>(pCamera));
+
+	// Get scene surface painter... and inform it about the new set camera
+	SurfacePainter *pPainter = GetPainter();
+	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene"))
+		static_cast<SPScene*>(pPainter)->SetCamera(pCamera);
+
+	// Activate the new camera
+	if (pCamera)
+		reinterpret_cast<SceneNode*>(pCamera)->SetActive(true);
+}
+
 bool BasicSceneApplication::LoadScene(String sFilename)
 {
 	// Get the scene container holding our scene
@@ -222,73 +285,6 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 
 	// Done
 	return bResult;
-}
-
-/**
-*  @brief
-*    Get scene camera
-*/
-SNCamera *BasicSceneApplication::GetCamera() const
-{
-	// This cast is safe because we 'know' it can ONLY be a camera!
-	return reinterpret_cast<SNCamera*>(m_cCameraHandler.GetElement());
-}
-
-/**
-*  @brief
-*    Get scene renderer tool
-*/
-SceneRendererTool *BasicSceneApplication::GetSceneRendererTool()
-{
-	// Return scene renderer tool
-	return &m_cSceneRendererTool;
-}
-
-/**
-*  @brief
-*    Get scene renderer tool
-*/
-const SceneRendererTool *BasicSceneApplication::GetSceneRendererTool() const
-{
-	// Return scene renderer tool
-	return &m_cSceneRendererTool;
-}
-
-/**
-*  @brief
-*    Get screenshot tool
-*/
-Screenshot &BasicSceneApplication::GetScreenshotTool()
-{
-	// Return screenshot tool
-	return m_cScreenshot;
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual BasicSceneApplication functions        ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Sets the scene camera
-*/
-void BasicSceneApplication::SetCamera(SNCamera *pCamera)
-{
-	// Deactivate the current camera
-	if (m_cCameraHandler.GetElement())
-		m_cCameraHandler.GetElement()->SetActive(false);
-
-	// Set new camera
-	m_cCameraHandler.SetElement(reinterpret_cast<SceneNode*>(pCamera));
-
-	// Get scene surface painter... and inform it about the new set camera
-	SurfacePainter *pPainter = GetPainter();
-	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene"))
-		static_cast<SPScene*>(pPainter)->SetCamera(pCamera);
-
-	// Activate the new camera
-	if (pCamera)
-		reinterpret_cast<SceneNode*>(pCamera)->SetActive(true);
 }
 
 

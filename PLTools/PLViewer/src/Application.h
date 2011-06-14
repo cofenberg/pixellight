@@ -113,21 +113,6 @@ class Application : public PLEngine::ScriptApplication {
 	private:
 		/**
 		*  @brief
-		*    Loads a scene
-		*
-		*  @param[in] sFilename
-		*    Filename of the scene to load
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*
-		*  @note
-		*    - Similar to PLEngine::BasicSceneApplication::LoadScene, but sets the base path the scene is in, as the new current system directory
-		*/
-		bool LoadScene(const PLGeneral::String &sFilename);
-
-		/**
-		*  @brief
 		*    Called when a key is pressed down
 		*
 		*  @param[in] nKey
@@ -160,6 +145,13 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateMainWindow();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLEngine::BasicSceneApplication functions ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool LoadScene(PLGeneral::String sFilename);
 
 
 	//[-------------------------------------------------------]

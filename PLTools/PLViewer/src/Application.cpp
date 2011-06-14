@@ -189,31 +189,6 @@ bool Application::LoadResource(const String &sFilename)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Loads a scene
-*/
-bool Application::LoadScene(const String &sFilename)
-{
-	{ // Make the directory of the scene to load in to the application base directory
-		// Validate path
-		const String sDirectory = Url(sFilename).Collapse().CutFilename();
-
-		// Search for "/Data/Scenes/" and get the prefix of that
-		String sBaseDirectory;
-		int nIndex = sDirectory.IndexOf("/Data/Scenes/");
-		if (nIndex >= 0)
-			sBaseDirectory = sDirectory.GetSubstring(0, nIndex);
-		sBaseDirectory = "file://" + sBaseDirectory + '/';
-
-		// Set the base directory of the application
-		SetBaseDirectory(sBaseDirectory);
-	}
-
-	// Load the scene
-	return ScriptApplication::LoadScene(sFilename);
-}
-
-/**
-*  @brief
 *    Called when a key is pressed down
 */
 void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
@@ -326,4 +301,29 @@ void Application::OnCreateMainWindow()
 			pWidget->GetContentWidget()->SignalDrop.   Connect(&SlotOnDrop);
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLEngine::BasicSceneApplication functions ]
+//[-------------------------------------------------------]
+bool Application::LoadScene(String sFilename)
+{
+	{ // Make the directory of the scene to load in to the application base directory
+		// Validate path
+		const String sDirectory = Url(sFilename).Collapse().CutFilename();
+
+		// Search for "/Data/Scenes/" and get the prefix of that
+		String sBaseDirectory;
+		int nIndex = sDirectory.IndexOf("/Data/Scenes/");
+		if (nIndex >= 0)
+			sBaseDirectory = sDirectory.GetSubstring(0, nIndex);
+		sBaseDirectory = "file://" + sBaseDirectory + '/';
+
+		// Set the base directory of the application
+		SetBaseDirectory(sBaseDirectory);
+	}
+
+	// Call base implementation
+	return ScriptApplication::LoadScene(sFilename);
 }
