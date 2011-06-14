@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Log/Log.h>
 #include <PLGeneral/System/System.h>
 #include <PLGeneral/System/Console.h>
 #include <PLCore/Tools/Localization.h>
@@ -57,6 +58,13 @@ Application::Application() : ConsoleApplication()
 	SetName("41ScriptGlobalVariables");
 	SetTitle(PLT("PLSample 41 - Global script variables"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
+
+	// Bring the log into the verbose mode so that the log also writes log entries
+	// directly into the console. This way, we can e.g. see script errors at once.
+	Log::GetInstance()->SetVerbose(true);
+
+	// Do only show us error messages within the log
+	Log::GetInstance()->SetLogLevel(Log::Error);
 }
 
 /**
@@ -131,7 +139,7 @@ void Application::RunScript(const String &sScriptFilename)
 		System::GetInstance()->GetConsole().Print("--\n");
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\" (see log for details)\n");
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
 	}
 
 	// Print new line
@@ -160,7 +168,7 @@ void Application::Main()
 			RunScript("Data/Scripts/41ScriptGlobalVariables." + sScriptLanguageExtension);
 		} else {
 			// This script language has no filename extension?!
-			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + " has no filename extension\n");
+			System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
 		}
 
 		// Write a new line into the console
