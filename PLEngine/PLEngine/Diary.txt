@@ -6,6 +6,7 @@
   The name of the optional script function called by C++ by one of these entry points is an RTTI atribute, meaning that e.g. a scipt can manipulate
   it's own entry points! Wow, the script-stuff is getting pretty flexible. *g*
 - "BasicSceneApplication": "LoadScene()" is now virtual
+- "BasicSceneApplication": Added signal "SignalSceneLoadingFinished" which is emitted after a scene has been loaded successfully
 
 
 

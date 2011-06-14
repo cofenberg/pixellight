@@ -277,6 +277,9 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 			}
 		}
 		m_lstPostKeys.Clear();
+
+		// Emit the scene loading has been finished successfully event
+		SignalSceneLoadingFinished();
 	}
 
 	// Enable the ingame GUI
