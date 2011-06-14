@@ -80,6 +80,7 @@ class BasicSceneApplication : public SceneApplication {
 		pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool*),									"Returns the scene renderer tool, never a null pointer",																												"")
 		pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera, new scene camera as first parameter (can be a null pointer)",																					"")
 		// Signals
+		pl_signal_0(SignalCameraSet,			"A new camera has been set",					"")
 		pl_signal_0(SignalSceneLoadingFinished,	"Scene loading has been finished successfully",	"")
 	pl_class_end
 
@@ -202,6 +203,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @note
 		*    - Deactivates automatically the current set camera and activates the new camera
 		*    - Sets this camera also within the 'SPScene' surface painter instance
+		*    - Emits the "SignalCameraSet"-signal
 		*/
 		PL_API virtual void SetCamera(PLScene::SNCamera *pCamera);
 

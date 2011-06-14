@@ -192,6 +192,9 @@ void BasicSceneApplication::SetCamera(SNCamera *pCamera)
 	// Activate the new camera
 	if (pCamera)
 		reinterpret_cast<SceneNode*>(pCamera)->SetActive(true);
+
+	// Emit signal
+	SignalCameraSet();
 }
 
 bool BasicSceneApplication::LoadScene(String sFilename)

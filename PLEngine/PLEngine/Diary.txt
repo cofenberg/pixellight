@@ -17,6 +17,7 @@
   will work as well, but the single liner
     return ScriptApplication("Data/Scripts/PLDemoSimpleScene.lua").Run(sFilename, lstArguments);
   is just more impressive. *g*
+- "BasicSceneApplication": Added signal "SignalCameraSet" which is emitted when a new camera has been set
 
 
 
