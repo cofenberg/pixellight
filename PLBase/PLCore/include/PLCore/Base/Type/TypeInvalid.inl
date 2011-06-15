@@ -41,7 +41,8 @@ class Type< InvalidType<T> > {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef T _Type;
+		typedef T _Type;		/**< Real type */
+		typedef T _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeInvalid;
@@ -65,7 +66,8 @@ class Type< InvalidType< InvalidType<T> > > {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef T _Type;
+		typedef T _Type;		/**< Real type */
+		typedef T _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeInvalid;

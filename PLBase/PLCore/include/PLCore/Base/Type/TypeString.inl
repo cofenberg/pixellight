@@ -41,7 +41,8 @@ class Type<PLGeneral::String> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::String _Type;
+		typedef PLGeneral::String _Type;		/**< Real type */
+		typedef PLGeneral::String _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeString;
@@ -226,6 +227,17 @@ class Type<PLGeneral::String> {
 			return sString;
 		}
 
+		// Convert real to storage type
+		static PLGeneral::String ConvertRealToStorage(PLGeneral::String sValue)
+		{
+			return sValue;
+		}
+
+		// Convert storage to real type
+		static PLGeneral::String ConvertStorageToReal(PLGeneral::String sValue)
+		{
+			return sValue;
+		}
 
 };
 

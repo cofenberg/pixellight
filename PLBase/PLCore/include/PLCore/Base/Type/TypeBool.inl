@@ -41,7 +41,8 @@ class Type<bool> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef bool _Type;
+		typedef bool _Type;			/**< Real type */
+		typedef bool _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeBool;
@@ -226,6 +227,17 @@ class Type<bool> {
 			return sString.GetBool();
 		}
 
+		// Convert real to storage type
+		static bool ConvertRealToStorage(bool bValue)
+		{
+			return bValue;
+		}
+
+		// Convert storage to real type
+		static bool ConvertStorageToReal(bool bValue)
+		{
+			return bValue;
+		}
 
 };
 

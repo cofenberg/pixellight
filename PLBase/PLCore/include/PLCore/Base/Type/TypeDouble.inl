@@ -41,7 +41,8 @@ class Type<double> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef double _Type;
+		typedef double _Type;			/**< Real type */
+		typedef double _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeDouble;
@@ -226,6 +227,17 @@ class Type<double> {
 			return sString.GetDouble();
 		}
 
+		// Convert real to storage type
+		static double ConvertRealToStorage(double dValue)
+		{
+			return dValue;
+		}
+
+		// Convert storage to real type
+		static double ConvertStorageToReal(double dValue)
+		{
+			return dValue;
+		}
 
 };
 

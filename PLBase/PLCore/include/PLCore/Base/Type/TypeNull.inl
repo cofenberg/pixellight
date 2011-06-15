@@ -41,7 +41,8 @@ class Type<NullType> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef NullType _Type;
+		typedef NullType _Type;			/**< Real type */
+		typedef NullType _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeNull;

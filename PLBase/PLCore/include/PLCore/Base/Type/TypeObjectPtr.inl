@@ -47,7 +47,8 @@ class Type<Object*> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef Object *_Type;
+		typedef Object *_Type;			/**< Real type */
+		typedef Object *_StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeObjectPtr;
@@ -237,6 +238,17 @@ class Type<Object*> {
 			return reinterpret_cast<Object*>(sString.GetUIntPtr());
 		}
 
+		// Convert real to storage type
+		static Object *ConvertRealToStorage(Object *pValue)
+		{
+			return pValue;
+		}
+
+		// Convert storage to real type
+		static Object *ConvertStorageToReal(Object *pValue)
+		{
+			return pValue;
+		}
 
 };
 

@@ -42,7 +42,8 @@ class Type< FlagType<ENUM> > {
 	public:
 		// Type
 		typedef typename ENUM::_BaseType _BaseType;
-		typedef typename ENUM::_BaseType _Type;
+		typedef typename ENUM::_BaseType _Type;			/**< Real type */
+		typedef typename ENUM::_BaseType _StorageType;	/**< Storage type, for this type identical to the real type */
 		typedef typename ENUM::_Type	 _EnumType;
 
 		// Type ID
@@ -281,6 +282,17 @@ class Type< FlagType<ENUM> > {
 			return nFlags;
 		}
 
+		// Convert real to storage type
+		static _StorageType ConvertRealToStorage(_Type nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type
+		static _Type ConvertStorageToReal(_StorageType nValue)
+		{
+			return nValue;
+		}
 
 };
 

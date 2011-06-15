@@ -41,7 +41,8 @@ class Type<T&> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef T& _Type;
+		typedef T& _Type;			/**< Real type */
+		typedef T* _StorageType;	/**< Storage type... We really can't use "&" in here because references can't copy each other, they're copying the referenced value instead! */
 
 		// Type ID
 		static const int TypeID = TypeRef;
@@ -228,6 +229,18 @@ class Type<T&> {
 		static T &ConvertFromString(const PLGeneral::String &sString)
 		{
 			return *reinterpret_cast<T*>(sString.GetUIntPtr());
+		}
+
+		// Convert real to storage type
+		static T *ConvertRealToStorage(T &cValue)
+		{
+			return &cValue;
+		}
+
+		// Convert storage to real type
+		static T &ConvertStorageToReal(T *pValue)
+		{
+			return *pValue;
 		}
 
 };

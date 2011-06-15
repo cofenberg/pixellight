@@ -41,7 +41,8 @@ class Type<PLGeneral::int8> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::int8 _Type;
+		typedef PLGeneral::int8 _Type;			/**< Real type */
+		typedef PLGeneral::int8 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const PLGeneral::uint32 TypeID = TypeInt8;
@@ -226,6 +227,17 @@ class Type<PLGeneral::int8> {
 			return static_cast<PLGeneral::int8>(sString.GetInt());
 		}
 
+		// Convert real to storage type
+		static PLGeneral::int8 ConvertRealToStorage(PLGeneral::int8 nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type
+		static PLGeneral::int8 ConvertStorageToReal(PLGeneral::int8 nValue)
+		{
+			return nValue;
+		}
 
 };
 

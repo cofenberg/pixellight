@@ -41,7 +41,8 @@ class Type<void> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef void _Type;
+		typedef void _Type;			/**< Real type */
+		typedef void _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeVoid;

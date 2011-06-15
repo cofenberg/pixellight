@@ -41,7 +41,8 @@ class Type<PLGeneral::int64> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::int64 _Type;
+		typedef PLGeneral::int64 _Type;			/**< Real type */
+		typedef PLGeneral::int64 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const PLGeneral::uint32 TypeID = TypeInt64;
@@ -226,6 +227,17 @@ class Type<PLGeneral::int64> {
 			return sString.GetInt();
 		}
 
+		// Convert real to storage type
+		static PLGeneral::int64 ConvertRealToStorage(PLGeneral::int64 nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type
+		static PLGeneral::int64 ConvertStorageToReal(PLGeneral::int64 nValue)
+		{
+			return nValue;
+		}
 
 };
 

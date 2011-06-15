@@ -148,10 +148,10 @@ class Event : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-						cP.Param15);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
 			}
 		}
 
@@ -163,10 +163,10 @@ class Event : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-						cP.Param15);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
 			}
 		}
 
@@ -287,9 +287,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
 			}
 		}
 
@@ -301,9 +302,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
 			}
 		}
 
@@ -422,9 +424,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
 			}
 		}
 
@@ -436,9 +439,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
 			}
 		}
 
@@ -555,9 +559,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12));
 			}
 		}
 
@@ -569,9 +574,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12));
 			}
 		}
 
@@ -686,9 +692,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
 			}
 		}
 
@@ -700,9 +706,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
 			}
 		}
 
@@ -815,9 +821,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
 			}
 		}
 
@@ -829,9 +835,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
 			}
 		}
 
@@ -942,8 +948,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
 			}
 		}
 
@@ -955,8 +962,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
 			}
 		}
 
@@ -1065,8 +1073,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8));
 			}
 		}
 
@@ -1078,8 +1087,9 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8));
 			}
 		}
 
@@ -1186,8 +1196,8 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
 			}
 		}
 
@@ -1199,8 +1209,8 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
 			}
 		}
 
@@ -1305,8 +1315,8 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
 			}
 		}
 
@@ -1318,8 +1328,8 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
 			}
 		}
 
@@ -1422,8 +1432,8 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
 			}
 		}
 
@@ -1435,8 +1445,8 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
 			}
 		}
 
@@ -1537,7 +1547,8 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4));
 			}
 		}
 
@@ -1549,7 +1560,8 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4));
 			}
 		}
 
@@ -1648,7 +1660,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
 			}
 		}
 
@@ -1660,7 +1672,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
 			}
 		}
 
@@ -1757,7 +1769,7 @@ class Event<T0, T1, T2> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
 			}
 		}
 
@@ -1769,7 +1781,7 @@ class Event<T0, T1, T2> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
 			}
 		}
 
@@ -1864,7 +1876,7 @@ class Event<T0, T1> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
 			}
 		}
 
@@ -1876,7 +1888,7 @@ class Event<T0, T1> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0,  cP.Param1);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
 			}
 		}
 
@@ -1971,7 +1983,7 @@ class Event<T0> : public DynEvent {
 				TypeParams &cP = static_cast<TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
 			}
 		}
 
@@ -1983,7 +1995,7 @@ class Event<T0> : public DynEvent {
 				const TypeParams &cP = static_cast<const TypeParams&>(cParams);
 
 				// Emit event
-				(*this)(cP.Param0);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
 			}
 		}
 

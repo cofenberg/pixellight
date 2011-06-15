@@ -53,7 +53,8 @@ class Type<PLGraphics::Color4> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGraphics::Color4 _Type;
+		typedef PLGraphics::Color4 _Type;			/**< Real type */
+		typedef PLGraphics::Color4 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = 2002;
@@ -240,6 +241,18 @@ class Type<PLGraphics::Color4> {
 			PLGraphics::Color4 cColor;
 			cColor.FromString(sString);
 			return cColor;
+		}
+
+		// Convert real to storage type (reference is enough in here)
+		static PLGraphics::Color4 &ConvertRealToStorage(PLGraphics::Color4 &cValue)
+		{
+			return cValue;
+		}
+
+		// Convert storage to real type (reference is enough in here)
+		static PLGraphics::Color4 &ConvertStorageToReal(PLGraphics::Color4 &cValue)
+		{
+			return cValue;
 		}
 
 

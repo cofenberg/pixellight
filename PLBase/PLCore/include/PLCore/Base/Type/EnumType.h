@@ -62,7 +62,8 @@ class EnumType {
 	//[-------------------------------------------------------]
 	public:
 		typedef typename ENUM::_BaseType _BaseType;
-		typedef typename ENUM::_Type	 _Type;
+		typedef typename ENUM::_Type	 _Type;			/**< Real type */
+		typedef typename ENUM::_Type	 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 
 	//[-------------------------------------------------------]
@@ -118,7 +119,8 @@ class FlagType {
 	//[-------------------------------------------------------]
 	public:
 		typedef typename PLGeneral::uint32 _BaseType;
-		typedef typename ENUM::_Type       _Type;
+		typedef typename ENUM::_Type       _Type;			/**< Real type */
+		typedef typename ENUM::_Type       _StorageType;	/**< Storage type, for this type identical to the real type */
 
 
 	//[-------------------------------------------------------]

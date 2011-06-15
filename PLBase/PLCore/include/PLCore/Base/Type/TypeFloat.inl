@@ -41,7 +41,8 @@ class Type<float> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef float _Type;
+		typedef float _Type;		/**< Real type */
+		typedef float _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeFloat;
@@ -226,6 +227,17 @@ class Type<float> {
 			return sString.GetFloat();
 		}
 
+		// Convert real to storage type
+		static float ConvertRealToStorage(float fValue)
+		{
+			return fValue;
+		}
+
+		// Convert storage to real type
+		static float ConvertStorageToReal(float fValue)
+		{
+			return fValue;
+		}
 
 };
 

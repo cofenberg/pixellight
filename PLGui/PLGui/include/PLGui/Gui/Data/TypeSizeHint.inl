@@ -54,6 +54,8 @@ class Type<PLGui::SizeHint> {
 	public:
 		// Type
 		typedef PLGui::SizeHint _Type;
+		typedef PLGui::SizeHint _RealType;
+		typedef PLGui::SizeHint _StorageType;
 
 		// Type ID
 		static const int TypeID = 2201;
@@ -244,6 +246,18 @@ class Type<PLGui::SizeHint> {
 			PLGui::SizeHint cSize;
 			cSize.FromString(sString);
 			return cSize;
+		}
+
+		// Convert real to storage type (reference is enough in here)
+		static PLGui::SizeHint &ConvertRealToStorage(PLGui::SizeHint &nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type (reference is enough in here)
+		static PLGui::SizeHint &ConvertStorageToReal(PLGui::SizeHint &nValue)
+		{
+			return nValue;
 		}
 
 

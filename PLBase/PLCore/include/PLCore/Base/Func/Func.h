@@ -141,10 +141,10 @@ class Func : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-									cP.Param15);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -157,10 +157,10 @@ class Func : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-									cP.Param15);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -272,10 +272,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-						cP.Param15);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -288,10 +288,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14,
-						cP.Param15);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -408,9 +408,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -423,9 +424,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -535,9 +537,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -550,9 +553,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13, cP.Param14);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -668,9 +672,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -683,9 +688,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -793,9 +799,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -808,9 +815,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12, cP.Param13);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -923,9 +931,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+																  Type<T12>::ConvertStorageToReal(cP.Param12)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -938,9 +947,10 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11, cP.Param12);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1046,9 +1056,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1061,9 +1072,10 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11, cP.Param12);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
+						Type<T12>::ConvertStorageToReal(cP.Param12));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1174,9 +1186,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1189,9 +1201,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10, cP.Param11);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1295,9 +1307,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1310,9 +1322,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10, cP.Param11);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1421,9 +1433,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1436,9 +1448,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-									cP.Param10);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1540,9 +1552,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1555,9 +1567,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9,
-						cP.Param10);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1664,8 +1676,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1678,8 +1691,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1779,8 +1793,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1793,8 +1808,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8,  cP.Param9);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1899,8 +1915,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+																  Type<T8> ::ConvertStorageToReal(cP.Param8)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -1913,8 +1930,9 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2012,8 +2030,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2026,8 +2045,9 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7,  cP.Param8);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
+						Type<T8> ::ConvertStorageToReal(cP.Param8));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2130,8 +2150,8 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2144,8 +2164,8 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6,  cP.Param7);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2241,8 +2261,8 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2255,8 +2275,8 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6, T7>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6,  cP.Param7);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2357,8 +2377,8 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2371,8 +2391,8 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5,  cP.Param6);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2466,8 +2486,8 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2480,8 +2500,8 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5, T6>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5,  cP.Param6);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2580,8 +2600,8 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 					static_cast<Params<R, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2594,8 +2614,8 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 					static_cast<const Params<R, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-									cP.Param5);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2687,8 +2707,8 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 					static_cast<Params<void, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2701,8 +2721,8 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 					static_cast<const Params<void, T0, T1, T2, T3, T4, T5>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4,
-						cP.Param5);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2798,7 +2818,8 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 				Params<R, T0, T1, T2, T3, T4> &cP = static_cast<Params<R, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+																  Type<T4> ::ConvertStorageToReal(cP.Param4)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2810,7 +2831,8 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 				const Params<R, T0, T1, T2, T3, T4> &cP = static_cast<const Params<R, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2899,7 +2921,8 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 				Params<void, T0, T1, T2, T3, T4> &cP = static_cast<Params<void, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -2911,7 +2934,8 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 				const Params<void, T0, T1, T2, T3, T4> &cP = static_cast<const Params<void, T0, T1, T2, T3, T4>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3,  cP.Param4);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
+						Type<T4> ::ConvertStorageToReal(cP.Param4));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3005,7 +3029,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 				Params<R, T0, T1, T2, T3> &cP = static_cast<Params<R, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3017,7 +3041,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 				const Params<R, T0, T1, T2, T3> &cP = static_cast<const Params<R, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3104,7 +3128,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 				Params<void, T0, T1, T2, T3> &cP = static_cast<Params<void, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3116,7 +3140,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 				const Params<void, T0, T1, T2, T3> &cP = static_cast<const Params<void, T0, T1, T2, T3>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2,  cP.Param3);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3208,7 +3232,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 				Params<R, T0, T1, T2> &cP = static_cast<Params<R, T0, T1, T2>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3220,7 +3244,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 				const Params<R, T0, T1, T2> &cP = static_cast<const Params<R, T0, T1, T2>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3305,7 +3329,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 				Params<void, T0, T1, T2> &cP = static_cast<Params<void, T0, T1, T2>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3317,7 +3341,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 				const Params<void, T0, T1, T2> &cP = static_cast<const Params<void, T0, T1, T2>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1,  cP.Param2);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3407,7 +3431,7 @@ class Func<R, T0, T1> : public DynFunc {
 				Params<R, T0, T1> &cP = static_cast<Params<R, T0, T1>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0,  cP.Param1);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3419,7 +3443,7 @@ class Func<R, T0, T1> : public DynFunc {
 				const Params<R, T0, T1> &cP = static_cast<const Params<R, T0, T1>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3502,7 +3526,7 @@ class Func<void, T0, T1> : public DynFunc {
 				Params<void, T0, T1> &cP = static_cast<Params<void, T0, T1>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3514,7 +3538,7 @@ class Func<void, T0, T1> : public DynFunc {
 				const Params<void, T0, T1> &cP = static_cast<const Params<void, T0, T1>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0,  cP.Param1);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3602,7 +3626,7 @@ class Func<R, T0> : public DynFunc {
 				Params<R, T0> &cP = static_cast<Params<R, T0>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)(cP.Param0);
+				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0)));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3614,7 +3638,7 @@ class Func<R, T0> : public DynFunc {
 				const Params<R, T0> &cP = static_cast<const Params<R, T0>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3696,7 +3720,7 @@ class Func<void, T0> : public DynFunc {
 				Params<void, T0> &cP = static_cast<Params<void, T0>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3708,7 +3732,7 @@ class Func<void, T0> : public DynFunc {
 				const Params<void, T0> &cP = static_cast<const Params<void, T0>&>(cParams);
 
 				// Call function
-				(*this)(cP.Param0);
+				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 
@@ -3793,7 +3817,7 @@ class Func<R> : public DynFunc {
 				Params<R> &cP = static_cast<Params<R>&>(cParams);
 
 				// Call function
-				cP.Return = (*this)();
+				cP.Return = Type<R>::ConvertRealToStorage((*this)());
 			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
 		}
 

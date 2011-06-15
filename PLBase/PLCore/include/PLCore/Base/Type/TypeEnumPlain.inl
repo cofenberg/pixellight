@@ -41,7 +41,8 @@ class Type< EnumTypePlain<ENUM> > {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef ENUM _Type;
+		typedef ENUM _Type;			/**< Real type */
+		typedef ENUM _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = Type<int>::TypeID;
@@ -226,6 +227,17 @@ class Type< EnumTypePlain<ENUM> > {
 			return static_cast<ENUM>(Type<int>::ConvertFromString(sString));
 		}
 
+		// Convert real to storage type
+		static _StorageType ConvertRealToStorage(_Type nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type
+		static _Type ConvertStorageToReal(_StorageType nValue)
+		{
+			return nValue;
+		}
 
 };
 

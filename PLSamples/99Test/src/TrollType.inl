@@ -47,7 +47,8 @@ class Type<TrollType> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef TrollType _Type;
+		typedef TrollType _Type;		/**< Real type */
+		typedef TrollType _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = 100101;
@@ -246,6 +247,18 @@ class Type<TrollType> {
 			else if (sString.CompareNoCase("many"))		cTroll.SetValue(3);
 			else										cTroll.SetValue(-1);
 			return cTroll;
+		}
+
+		// Convert real to storage type (reference is enough in here)
+		static TrollType &ConvertRealToStorage(TrollType &cValue)
+		{
+			return cValue;
+		}
+
+		// Convert storage to real type (reference is enough in here)
+		static TrollType &ConvertStorageToReal(TrollType &cValue)
+		{
+			return cValue;
 		}
 
 

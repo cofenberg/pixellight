@@ -41,7 +41,8 @@ class Type<int> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef int _Type;
+		typedef int _Type;			/**< Real type */
+		typedef int _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeInt;
@@ -226,6 +227,17 @@ class Type<int> {
 			return sString.GetInt();
 		}
 
+		// Convert real to storage type
+		static int ConvertRealToStorage(int nValue)
+		{
+			return nValue;
+		}
+
+		// Convert storage to real type
+		static int ConvertStorageToReal(int nValue)
+		{
+			return nValue;
+		}
 
 };
 

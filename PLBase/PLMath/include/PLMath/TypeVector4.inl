@@ -53,7 +53,8 @@ class Type<PLMath::Vector4> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLMath::Vector4 _Type;
+		typedef PLMath::Vector4 _Type;			/**< Real type */
+		typedef PLMath::Vector4 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = 1002;
@@ -240,6 +241,18 @@ class Type<PLMath::Vector4> {
 			PLMath::Vector4 vVector;
 			vVector.FromString(sString);
 			return vVector;
+		}
+
+		// Convert real to storage type (reference is enough in here)
+		static PLMath::Vector4 &ConvertRealToStorage(PLMath::Vector4 &vValue)
+		{
+			return vValue;
+		}
+
+		// Convert storage to real type (reference is enough in here)
+		static PLMath::Vector4 &ConvertStorageToReal(PLMath::Vector4 &vValue)
+		{
+			return vValue;
 		}
 
 
