@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/LookController.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMLookController.h"

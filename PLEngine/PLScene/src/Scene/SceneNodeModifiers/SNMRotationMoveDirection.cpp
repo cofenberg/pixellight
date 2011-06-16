@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/EulerAngles.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMRotationMoveDirection.h"
 

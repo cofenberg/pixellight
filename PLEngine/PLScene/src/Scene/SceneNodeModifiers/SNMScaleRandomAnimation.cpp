@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMScaleRandomAnimation.h"
 

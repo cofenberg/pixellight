@@ -37,7 +37,6 @@
 #include <PLRenderer/Effect/EffectManager.h>
 #include "PLScene/Visibility/SQCull.h"
 #include "PLScene/Visibility/VisContainer.h"
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMPositionPath.h"
 

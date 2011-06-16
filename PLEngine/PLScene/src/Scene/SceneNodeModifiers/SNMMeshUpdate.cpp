@@ -27,7 +27,6 @@
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/SkeletonHandler.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshUpdate.h"
 

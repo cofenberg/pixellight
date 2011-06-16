@@ -29,7 +29,6 @@
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include "PLScene/Visibility/VisNode.h"
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMDrawRectangle.h"
 
 
