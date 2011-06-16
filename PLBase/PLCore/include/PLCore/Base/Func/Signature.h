@@ -70,74 +70,121 @@ class SignatureString {
 				PLGeneral::String sType;
 
 				// Return type
-				sSignature = Type<R>::GetTypeName() + '(';
+				sSignature = Type<R>::GetTypeName();
+				sSignature += '(';
 
 				// Type 0
 				sType = Type<T0>::GetTypeName();
-				if (sType != "") sSignature += sType;
+				if (sType.GetLength())
+					sSignature += sType;
 
 				// Type 1
 				sType = Type<T1>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 2
 				sType = Type<T2>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 3
 				sType = Type<T3>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 4
 				sType = Type<T4>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 5
 				sType = Type<T5>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 6
 				sType = Type<T6>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 7
 				sType = Type<T7>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 8
 				sType = Type<T8>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 9
 				sType = Type<T9>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 10
 				sType = Type<T10>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 11
 				sType = Type<T11>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 12
 				sType = Type<T12>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 13
 				sType = Type<T13>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 14
 				sType = Type<T14>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Type 15
 				sType = Type<T15>::GetTypeName();
-				if (sType != "") sSignature += "," + sType;
+				if (sType.GetLength()) {
+					sSignature += ',';
+					sSignature += sType;
+				}
 
 				// Done
-				sSignature = sSignature + ')';
+				sSignature += ')';
 				return sSignature;
 			}
 		}

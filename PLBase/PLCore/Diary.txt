@@ -33,6 +33,8 @@
   encounter any compiler issues, just use an up-to-date compiler (if there's one :) instead of spending time to hack around compiler bugs.
 - "Func.h": Removed debug-output in case of a signature mismatch. The "new" RTTI 2 is now working since over a year within PixelLight and does really a fantastic job. I assume it's
   about time to remove this scaffold (which, over the time caused some debug/release include issues).
+- Minor "SignatureString::GetSignatureID()" implementation change to make the life of the string class a little bit more comfortable. I know, this doesn't really have a directly
+  measurable impact... but when I see something that can be optimized without messing everything up (especially when it's within the core), I do it because in the end, all sums up...
 
 
 
