@@ -1,5 +1,5 @@
 -- Scripted stand-alone application -> This is a Lua port of the C++ PixelLight SDK demo "PLDemoSimpleScene"
--- -> The global variable "this" points to the RTTI application class instance invoking the script
+-- -> The global variable "this" points to the RTTI application class instance invoking the script (usually the same as "PL.GetApplication()")
 
 
 --[-------------------------------------------------------]
