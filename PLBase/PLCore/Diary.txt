@@ -1,3 +1,29 @@
+>> 16.06.2011
+[CO]
+- There was an issue when using a reference type as RTTI method result... this was the reason why I hadn't yet exposed methods like
+    SceneNode &GetSceneNode() const;
+  to the RTTI. It took me several hours to wrap my head around the type traits Stefan wrote (no critics, the system is really genial... but the topic is just not really
+  my expertice, I'am more the graphics programmer type :) and several more hours for attempts and experiments to get reference types as return values up and running.
+  When I finally had an working solution, I reduced my number of code changes to the bare minimum in order to reduce the risk to introduce new bugs or to mess everything
+  up. I really had to do a change in order to be able to continue exposing methods to the RTTI... the alternative to just forbid the usage of pointers wasn't a real
+  solution for me.
+  The problem was the following: The internal system stores within the parameters class the parameters, and also copies them around like
+    cP.Return = (*this)(cP.Param0);
+  as long as the type is no reference, everything is just fine. But as soon as there was a reference type hell broke loose because a when copying one reference into another,
+  not the address of the referenced object is copied but instead the value. Within the system, this reference behaviour results in another behaviour as the desired one. My
+  solution is the introduction of a "storage" type within the type definitions. Usually, meaning for 99% of all types, the storage type is identical to the real type. For
+  reference types, the real type is a reference (as before) - but the storage type is a pointer. This way it's possible to internally copy around the parameter in the correct
+  way. There are also the two new type methods "ConvertRealToStorage()" and "ConvertStorageToReal()" which are used to convert the types when necessary. I hope the compiler
+  is clever enough to notice when this results in copying one variable into itself without any further change - in this case, this change would introduce no new additional work
+  to be done. The example code from above now looks like this
+    cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0>::ConvertStorageToReal(cP.Param0)));
+  and from the outside, as long as not accessing "Return", "Param0" etc. directly, the user will not notice that his reference is internally handled as pointer. With this change,
+  it's now possible to expose methods with a reference type as result to the RTTI - meaning to also enable it's usage within scripts.
+  ... the last days were really exhausting because due to university, I had to get into the topic and solve the issue at night and during lectures. But I really wanted to have this
+  issue solved within the upcoming PixelLight 0.9.7 release because it's quite fundamental for scripting. Now that it's up and running, I think it was worth the effort. :D
+
+
+
 >> 14.06.2011
 [CO]
 - "ConsoleApplication": The "Init()"-method documentation stated that it's calling "OnInit()", and the "DeInit()"-method documentation stated that it's calling

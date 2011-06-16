@@ -99,6 +99,7 @@ class Type<TrollType> {
 	// Public static type information
 	public:
 		typedef TrollType _Type;
+		typedef TrollType _StorageType;
 		static const int TypeID = 100101;
 		static PLGeneral::String GetTypeName() {
 			return "troll";
@@ -211,6 +212,12 @@ class Type<TrollType> {
 			else if (sString.CompareNoCase("many"))		cTroll.SetValue(3);
 			else										cTroll.SetValue(-1);
 			return cTroll;
+		}
+		static TrollType &ConvertRealToStorage(TrollType &cValue) {
+			return cValue;
+		}
+		static TrollType &ConvertStorageToReal(TrollType &cValue) {
+			return cValue;
 		}
 
 };

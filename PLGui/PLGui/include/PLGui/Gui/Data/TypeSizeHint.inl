@@ -53,8 +53,7 @@ class Type<PLGui::SizeHint> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGui::SizeHint _Type;
-		typedef PLGui::SizeHint _RealType;
+		typedef PLGui::SizeHint _Type;			/**< Real type */
 		typedef PLGui::SizeHint _StorageType;
 
 		// Type ID
