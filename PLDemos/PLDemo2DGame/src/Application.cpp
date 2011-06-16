@@ -148,7 +148,7 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				}
 
 				// Enable/disable render to texture for the post processing feature
-				GetSceneRendererTool()->SetPassAttribute("Begin", "Flags", bRenderToTexture ? "" : "Inactive");
+				GetSceneRendererTool().SetPassAttribute("Begin", "Flags", bRenderToTexture ? "" : "Inactive");
 			}
 			break;
 		}

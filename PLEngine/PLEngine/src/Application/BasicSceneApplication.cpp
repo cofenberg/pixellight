@@ -141,20 +141,20 @@ SNCamera *BasicSceneApplication::GetCamera() const
 *  @brief
 *    Get scene renderer tool
 */
-SceneRendererTool *BasicSceneApplication::GetSceneRendererTool()
+SceneRendererTool &BasicSceneApplication::GetSceneRendererTool()
 {
 	// Return scene renderer tool
-	return &m_cSceneRendererTool;
+	return m_cSceneRendererTool;
 }
 
 /**
 *  @brief
 *    Get scene renderer tool
 */
-const SceneRendererTool *BasicSceneApplication::GetSceneRendererTool() const
+const SceneRendererTool &BasicSceneApplication::GetSceneRendererTool() const
 {
 	// Return scene renderer tool
-	return &m_cSceneRendererTool;
+	return m_cSceneRendererTool;
 }
 
 /**
@@ -230,7 +230,7 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 			m_sDefaultSceneRenderer = DefaultSceneRenderer;
 
 			// Sets all scene renderer pass attribute values to their default value
-			GetSceneRendererTool()->SetDefaultValues();
+			GetSceneRendererTool().SetDefaultValues();
 
 			// Assign the first found camera scene node to your surface listener and look for
 			// known key/value data scene nodes
@@ -247,7 +247,7 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 			}
 
 			// Set the used scene renderer
-			GetSceneRendererTool()->SetSceneRenderer(pContainer, m_sDefaultSceneRenderer, DefaultSceneRenderer);
+			GetSceneRendererTool().SetSceneRenderer(pContainer, m_sDefaultSceneRenderer, DefaultSceneRenderer);
 
 			// Is there a given start camera?
 			SceneNode *pCamera = nullptr;
@@ -275,7 +275,7 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 				// SceneRendererVariables
 				if (pKeyValue && pKeyValue->Key.GetString() == "SceneRendererVariables") {
 					// Sets scene renderer pass attribute values using a string
-					GetSceneRendererTool()->SetValues(pKeyValue->Value.GetString());
+					GetSceneRendererTool().SetValues(pKeyValue->Value.GetString());
 				}
 			}
 		}

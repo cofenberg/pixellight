@@ -104,7 +104,7 @@ void Application::OnInit()
 	BasicSceneApplication::OnInit();
 
 	// Set the used scene renderer (optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as second parameter)
-	if (GetSceneRendererTool()->SetSceneRenderer(GetScene(), "Deferred.sr", "FixedFunctions.sr")) {
+	if (GetSceneRendererTool().SetSceneRenderer(GetScene(), "Deferred.sr", "FixedFunctions.sr")) {
 		// Configure the compositing system by using the comfort scene renderer tool.
 		// We're setting the attribute "Flags" of the scene renderer step named "DeferredSPAAO" to the value "Inactive" -
 		// this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
@@ -112,7 +112,7 @@ void Application::OnInit()
 		// "low graphics quality" because the framework can't decide automatically for you what is considered "low quality"
 		// within your application. We highly recommend to provide your end-user more abstract graphics settings as
 		// seen in, for example, many video games out there.
-		GetSceneRendererTool()->SetPassAttribute("DeferredSPAAO", "Flags", "Inactive");
+		GetSceneRendererTool().SetPassAttribute("DeferredSPAAO", "Flags", "Inactive");
 	}
 }
 

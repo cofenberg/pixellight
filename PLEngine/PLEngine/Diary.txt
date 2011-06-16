@@ -1,3 +1,10 @@
+>> 16.06.2011
+[CO]
+- Now that it's supported by the RTTI, switched back the return type from "BasicSceneApplication::GetSceneRendererTool()" into a reference
+  (had changed it a couple of days before into a pointer to be able to make some first experiments with scripts)
+
+
+
 >> 14.06.2011
 [CO]
 - "ScriptApplication": Changed "DeInit()" into "OnDeInit()" to be consistent with "OnInit()". Unlike the other application classes, the
