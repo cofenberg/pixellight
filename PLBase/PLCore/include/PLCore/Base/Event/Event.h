@@ -82,12 +82,6 @@ class Event : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -222,12 +216,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -360,12 +348,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -496,12 +478,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -630,12 +606,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -760,12 +730,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -888,12 +852,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1014,12 +972,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1138,12 +1090,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1258,12 +1204,6 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5, T6> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1376,12 +1316,6 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4, T5> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1492,12 +1426,6 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3, T4> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1606,12 +1534,6 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2, T3> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1716,12 +1638,6 @@ class Event<T0, T1, T2> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1, T2> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1824,12 +1740,6 @@ class Event<T0, T1> : public DynEvent {
 
 		virtual void operator ()(_T0 t0, _T1 t1) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0, T1> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -1932,12 +1842,6 @@ class Event<T0> : public DynEvent {
 
 		virtual void operator ()(_T0 t0) const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void, T0> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
@@ -2036,12 +1940,6 @@ class Event<> : public DynEvent {
 
 		virtual void operator ()() const
 		{
-			// [HACK] This is currently necessary to avoid the following strange compiler error:
-			//		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
-			#ifdef GCC
-				static Functor<void> DummyFunctor;
-			#endif
-
 			// Iterate through all event handlers
 			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {

@@ -22,6 +22,15 @@
   ... the last days were really exhausting because due to university, I had to get into the topic and solve the issue at night and during lectures. But I really wanted to have this
   issue solved within the upcoming PixelLight 0.9.7 release because it's quite fundamental for scripting. Now that it's up and running, I think it was worth the effort. :D
 - PLScriptLua: Added "TypeRef" support for method results
+- ... now that I have GCC 4.6.1 installed, removed the following hack within Event.h
+    // [HACK] This is currently necessary to avoid the following strange compiler error:
+    //		    undefined reference to `vtable for PLCore::Functor<void, PLCore::Module const*, ...>
+    #ifdef GCC
+        static Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> DummyFunctor;
+    #endif
+  in order to check whether or not this is still the case... made a fresh build without the hack and there were no more problems. :)
+  So, I let the hack out... there's no point in supporting buggy old compilers. For example in GCC 4.5.2 the nullptr emulation was no longer working due to a GCC bug. So, if you
+  encounter any compiler issues, just use an up-to-date compiler (if there's one :) instead of spending time to hack around compiler bugs.
 
 
 
