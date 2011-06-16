@@ -21,6 +21,7 @@
   it's now possible to expose methods with a reference type as result to the RTTI - meaning to also enable it's usage within scripts.
   ... the last days were really exhausting because due to university, I had to get into the topic and solve the issue at night and during lectures. But I really wanted to have this
   issue solved within the upcoming PixelLight 0.9.7 release because it's quite fundamental for scripting. Now that it's up and running, I think it was worth the effort. :D
+- PLScriptLua: Added "TypeRef" support for method results
 
 
 

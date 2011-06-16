@@ -111,6 +111,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());											break;
 
 			// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
+			case TypeRef:
 			case TypePtr:
 			case TypeObjectPtr:
 				RTTIObjectPointer::LuaStackPush(cScript, Type<Object*>::ConvertFromString(sReturn));
