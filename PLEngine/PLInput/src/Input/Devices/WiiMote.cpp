@@ -194,9 +194,9 @@ WiiMote::WiiMote(const String &sName, DeviceImpl *pImpl) : Device(sName, "WiiMot
 	}
 
 	// Connect to HIDDevice events
-	m_pConnectionDevice->EventOnConnect.Connect		(&EventHandlerOnDeviceConnect);
-	m_pConnectionDevice->EventOnDisconnect.Connect	(&EventHandlerOnDeviceDisconnect);
-	m_pConnectionDevice->EventOnRead.Connect		(&EventHandlerOnDeviceRead);
+	m_pConnectionDevice->EventOnConnect.Connect		(EventHandlerOnDeviceConnect);
+	m_pConnectionDevice->EventOnDisconnect.Connect	(EventHandlerOnDeviceDisconnect);
+	m_pConnectionDevice->EventOnRead.Connect		(EventHandlerOnDeviceRead);
 
 	// Connect to device
 	m_pConnectionDevice->Open(ControlPort, InterruptPort);

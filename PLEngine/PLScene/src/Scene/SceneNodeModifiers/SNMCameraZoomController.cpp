@@ -55,7 +55,7 @@ SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCam
 	m_pController(new CameraZoomController())
 {
 	// Connect input control event handler
-	m_pController->OnControl.Connect(&EventHandlerControl);
+	m_pController->OnControl.Connect(EventHandlerControl);
 }
 
 /**

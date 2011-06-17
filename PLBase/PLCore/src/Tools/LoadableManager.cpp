@@ -477,7 +477,7 @@ LoadableManager::LoadableManager() :
 	SlotClassLoaded(&LoadableManager::OnClassLoaded, this)
 {
 	// The loadable manager MUST be informed if new classes are registered in order to register new loadable types!
-	ClassManager::GetInstance()->EventClassLoaded.Connect(&SlotClassLoaded);
+	ClassManager::GetInstance()->EventClassLoaded.Connect(SlotClassLoaded);
 
 	// Register all loaders
 	List<const Class*> lstClasses;

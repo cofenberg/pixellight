@@ -922,7 +922,7 @@ void Gui::UpdateMouseOverWidget()
 			// Create timer if it has not yet been created
 			if (!m_pHoverTimer && m_nHoverTime > 0) {
 				m_pHoverTimer = new Timer(*this);
-				m_pHoverTimer->EventFire.Connect(&EventHandlerOnHoverTimer);
+				m_pHoverTimer->EventFire.Connect(EventHandlerOnHoverTimer);
 			}
 
 			// Start timer

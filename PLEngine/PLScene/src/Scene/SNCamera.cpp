@@ -225,8 +225,8 @@ SNCamera::SNCamera() :
 	m_nInternalFlags |= ClassCamera;
 
 	// Connect event handlers
-	GetTransform().EventPosition.Connect(&EventHandlerPositionRotation);
-	GetTransform().EventRotation.Connect(&EventHandlerPositionRotation);
+	GetTransform().EventPosition.Connect(EventHandlerPositionRotation);
+	GetTransform().EventRotation.Connect(EventHandlerPositionRotation);
 }
 
 /**

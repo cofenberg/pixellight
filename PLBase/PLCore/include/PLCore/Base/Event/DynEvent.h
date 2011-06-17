@@ -95,19 +95,19 @@ class DynEvent {
 		*  @brief
 		*    Connect event handler to the event
 		*
-		*  @param[in] pHandler
+		*  @param[in] cHandler
 		*    Event handler
 		*/
-		PLCORE_API void Connect(DynEventHandler *pHandler);
+		PLCORE_API void Connect(DynEventHandler &cHandler);
 
 		/**
 		*  @brief
 		*    Disconnect event handler from the event
 		*
-		*  @param[in] pHandler
+		*  @param[in] cHandler
 		*    Event handler
 		*/
-		PLCORE_API void Disconnect(DynEventHandler *pHandler);
+		PLCORE_API void Disconnect(DynEventHandler &cHandler);
 
 		/**
 		*  @brief

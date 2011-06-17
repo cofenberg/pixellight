@@ -615,7 +615,7 @@ MeshAnimationManager *MeshHandler::CreateMeshAnimationManager(const String &sNam
 				m_pMeshAnimationManager = static_cast<MeshAnimationManager*>(pObject);
 
 				// Connect event handler
-				m_pMeshAnimationManager->EventAnimationFrameChange.Connect(&EventHandlerAnimationFrameChange);
+				m_pMeshAnimationManager->EventAnimationFrameChange.Connect(EventHandlerAnimationFrameChange);
 
 				// Return the new mesh animation manager
 				return m_pMeshAnimationManager;

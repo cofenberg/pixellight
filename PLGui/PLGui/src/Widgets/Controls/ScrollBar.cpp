@@ -68,7 +68,7 @@ ScrollBar::ScrollBar(Widget *pParent) : AbstractSlider(pParent),
 	SetBackgroundColor(Color4::Transparent);
 
 	// Connect timer callback
-	m_cTimer.EventFire.Connect(&SlotOnTimer);
+	m_cTimer.EventFire.Connect(SlotOnTimer);
 
 	// Init data for button 'minus'
 	m_sButtonMinus.vPos1		= Vector2i::Zero;

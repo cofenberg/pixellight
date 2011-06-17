@@ -135,7 +135,7 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;
+		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;	/**< Dirty event handler, always valid pointer */
 
 
 	//[-------------------------------------------------------]

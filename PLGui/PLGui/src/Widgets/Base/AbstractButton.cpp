@@ -74,7 +74,7 @@ AbstractButton::AbstractButton(Widget *pParent) : Widget(pParent),
 	m_cTimer(*pParent->GetGui())
 {
 	// Connect timer event
-	m_cTimer.EventFire.Connect(&SlotOnTimer);
+	m_cTimer.EventFire.Connect(SlotOnTimer);
 
 	// We accept focus and tabstop
 	SetFocusStyle(AcceptFocus);

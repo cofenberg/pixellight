@@ -183,7 +183,7 @@ SCPhysicsWorld::SCPhysicsWorld() :
 	m_pWorld(nullptr)
 {
 	// Connect event handler
-	SignalAABoundingBox.Connect(&EventHandlerAABoundingBox);
+	SignalAABoundingBox.Connect(EventHandlerAABoundingBox);
 }
 
 /**
@@ -303,9 +303,9 @@ void SCPhysicsWorld::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
 	}
 }
 

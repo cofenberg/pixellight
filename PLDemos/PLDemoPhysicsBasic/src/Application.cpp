@@ -392,12 +392,12 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
-		pWidget->SignalKeyUp.  Connect(&SlotOnKeyUp);
+		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
+		pWidget->SignalKeyUp.  Connect(SlotOnKeyUp);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
-			pWidget->GetContentWidget()->SignalKeyUp.  Connect(&SlotOnKeyUp);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyUp.  Connect(SlotOnKeyUp);
 		}
 	}
 }
@@ -626,7 +626,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// Get the physics world
 				World *pPhysicsWorld = static_cast<SCPhysicsWorld*>(pSceneContainer)->GetWorld();
 				if (pPhysicsWorld)
-					pPhysicsWorld->SignalContact.Connect(&SlotOnContact);
+					pPhysicsWorld->SignalContact.Connect(SlotOnContact);
 			}
 
 			// Set scene container

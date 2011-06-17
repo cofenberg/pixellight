@@ -295,7 +295,7 @@ void SRPDebugWireframesShaders::Draw(Renderer &cRenderer, const SQCull &cCullQue
 					m_pProgram->SetFragmentShader(m_pFragmentShader);
 
 					// Add our nark which will inform us as soon as the program gets dirty
-					m_pProgram->EventDirty.Connect(&EventHandlerDirty);
+					m_pProgram->EventDirty.Connect(EventHandlerDirty);
 
 					// Get attributes and uniforms
 					OnDirty(m_pProgram);

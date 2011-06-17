@@ -58,7 +58,7 @@ SNLoadScreenBase::SNLoadScreenBase() :
 	SetFlags(GetFlags()|NoCulling);
 
 	// Connect event handler
-	SignalContainer.Connect(&EventHandlerContainer);
+	SignalContainer.Connect(EventHandlerContainer);
 }
 
 /**
@@ -90,12 +90,12 @@ void SNLoadScreenBase::OnContainer()
 {
 	// Disconnect event handler
 	if (m_pContainer)
-		m_pContainer->SignalLoadProgress.Disconnect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Disconnect(EventHandlerLoadProgress);
 
 	// Connect event handler
 	m_pContainer = GetContainer();
 	if (m_pContainer)
-		m_pContainer->SignalLoadProgress.Connect(&EventHandlerLoadProgress);
+		m_pContainer->SignalLoadProgress.Connect(EventHandlerLoadProgress);
 }
 
 /**

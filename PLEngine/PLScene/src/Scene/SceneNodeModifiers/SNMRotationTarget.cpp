@@ -88,18 +88,18 @@ void SNMRotationTarget::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.SignalDrawDebug.Connect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionUpdate);
+		cSceneNode.SignalDrawDebug.Connect(EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Connect(EventHandlerPositionUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Connect(&EventHandlerPositionUpdate);
+			pSceneContext->EventUpdate.Connect(EventHandlerPositionUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.SignalDrawDebug.Disconnect(&EventHandlerDrawDebug);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionUpdate);
+		cSceneNode.SignalDrawDebug.Disconnect(EventHandlerDrawDebug);
+		cSceneNode.GetTransform().EventPosition.Disconnect(EventHandlerPositionUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerPositionUpdate);
+			pSceneContext->EventUpdate.Disconnect(EventHandlerPositionUpdate);
 	}
 }
 

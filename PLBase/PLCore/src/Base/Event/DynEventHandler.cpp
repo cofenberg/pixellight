@@ -54,7 +54,7 @@ DynEventHandler::~DynEventHandler()
 {
 	// Disconnect all events
 	while (!m_lstEvents.IsEmpty())
-		m_lstEvents[0]->Disconnect(this);
+		m_lstEvents[0]->Disconnect(*this);
 }
 
 

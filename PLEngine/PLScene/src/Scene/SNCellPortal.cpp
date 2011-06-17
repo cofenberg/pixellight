@@ -57,10 +57,10 @@ void SNCellPortal::SetTargetCell(const String &sValue)
 		SceneNode *pCell = m_pTargetCell->GetElement();
 		if (pCell) {
 			// Disconnect event handlers
-			pCell->SignalContainer.Disconnect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventPosition.Disconnect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventRotation.Disconnect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventScale.   Disconnect(&EventHandlerCellContainerPositionRotationScale);
+			pCell->SignalContainer.Disconnect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventPosition.Disconnect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventRotation.Disconnect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventScale.   Disconnect(EventHandlerCellContainerPositionRotationScale);
 
 			// Clear target cell handler
 			m_pTargetCell->SetElement();
@@ -113,10 +113,10 @@ SCCell *SNCellPortal::GetTargetCellInstance()
 			m_pTargetCell->SetElement(pCell);
 
 			// Connect event handlers
-			pCell->SignalContainer.Connect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventPosition. Connect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventRotation. Connect(&EventHandlerCellContainerPositionRotationScale);
-			pCell->GetTransform().EventScale.    Connect(&EventHandlerCellContainerPositionRotationScale);
+			pCell->SignalContainer.Connect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventPosition. Connect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventRotation. Connect(EventHandlerCellContainerPositionRotationScale);
+			pCell->GetTransform().EventScale.    Connect(EventHandlerCellContainerPositionRotationScale);
 		}
 	}
 

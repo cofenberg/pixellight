@@ -338,7 +338,7 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 						m_pBloomProgram->SetFragmentShader(m_pBloomFragmentShader);
 
 						// Add our nark which will inform us as soon as the program gets dirty
-						m_pBloomProgram->EventDirty.Connect(&EventHandlerDirty);
+						m_pBloomProgram->EventDirty.Connect(EventHandlerDirty);
 
 						// Get attributes and uniforms
 						OnDirty(m_pBloomProgram);

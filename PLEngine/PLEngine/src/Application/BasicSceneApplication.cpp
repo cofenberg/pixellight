@@ -237,7 +237,7 @@ bool BasicSceneApplication::LoadScene(String sFilename)
 			SceneQuery *pSceneQuery = pContainer->CreateQuery("PLScene::SQEnumerate");
 			if (pSceneQuery) {
 				// Connect event handler
-				pSceneQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
+				pSceneQuery->SignalSceneNode.Connect(EventHandlerSceneNode);
 
 				// Perform the query
 				pSceneQuery->PerformQuery();
@@ -351,7 +351,7 @@ void BasicSceneApplication::OnCreateRootScene()
 
 				// Connect event handler
 				if (pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer"))
-					static_cast<SceneContainer*>(pSceneContainerNode)->SignalLoadProgress.Connect(&EventHandlerLoadProgress);
+					static_cast<SceneContainer*>(pSceneContainerNode)->SignalLoadProgress.Connect(EventHandlerLoadProgress);
 
 				// Create the 'concrete scene'
 				OnCreateScene(*pSceneContainer);

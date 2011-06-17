@@ -172,7 +172,7 @@ SRPDeferredGBufferMaterial::SRPDeferredGBufferMaterial(Material &cMaterial, Prog
 	m_pEmissiveMap(nullptr)
 {
 	// Connect event handler
-	m_pMaterial->EventParameterChanged.Connect(&EventHandlerParameterChanged);
+	m_pMaterial->EventParameterChanged.Connect(EventHandlerParameterChanged);
 }
 
 /**

@@ -99,7 +99,7 @@ TabsAndMenuWindow::TabsAndMenuWindow(Widget *pParent) : Window(pParent),
 
 	// Create menu bar
 	m_pMenuBar = new MenuBar(GetContentWidget());
-	m_pMenuBar->SignalItemClicked.Connect(&EventHandlerMenuItemClicked);
+	m_pMenuBar->SignalItemClicked.Connect(EventHandlerMenuItemClicked);
 	m_pMenuBar->SetMenu(&m_cMenu);
 	m_pMenuBar->SetVisible(true);
 

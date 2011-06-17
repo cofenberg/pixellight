@@ -81,7 +81,7 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 	// Create a tray icon
 	m_cTrayIcon.SetTooltip(L"Hallo!!");
 	m_cTrayIcon.SetIcon(Image(*Gui::GetSystemGui()));
-	m_cTrayIcon.EventMouseButtonDown.Connect(&EventHandlerTrayClicked);
+	m_cTrayIcon.EventMouseButtonDown.Connect(EventHandlerTrayClicked);
 
 	// Create some widgets
 	m_pLabel = new Label(GetContentWidget());
@@ -153,9 +153,9 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 		m_pBitmapToggleButton->SetVisible(true);
 
 	// Connect event handlers to button
-	m_pButton->SignalClicked .Connect(&EventHandlerClicked);
-	m_pButton->SignalPressed .Connect(&EventHandlerPressed);
-	m_pButton->SignalReleased.Connect(&EventHandlerReleased);
+	m_pButton->SignalClicked .Connect(EventHandlerClicked);
+	m_pButton->SignalPressed .Connect(EventHandlerPressed);
+	m_pButton->SignalReleased.Connect(EventHandlerReleased);
 
 	// Create menu
 	Menu *pMenuFile = new Menu(*GetGui());
@@ -225,8 +225,8 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 		m_pPopupMenu->SetVisible(true);
 
 	// Connect event handlers to menus
-	m_pMenuBar->SignalItemClicked.Connect(&EventHandlerMenu);
-	m_pPopupMenu->SignalItemClicked.Connect(&EventHandlerMenu);
+	m_pMenuBar->SignalItemClicked.Connect(EventHandlerMenu);
+	m_pPopupMenu->SignalItemClicked.Connect(EventHandlerMenu);
 }
 
 /**

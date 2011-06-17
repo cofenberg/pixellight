@@ -139,7 +139,7 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;
+		PLCore::EventHandler<PLRenderer::Program*> *m_pEventHandlerDirty;	/**< Dirty event handler, always valid pointer */
 
 
 	//[-------------------------------------------------------]

@@ -1,6 +1,10 @@
 >> 17.06.2011
 [CO]
 - "Script": Added support for "Object&"
+- "DynEvent": "Connect()" and "Disconnect()" required a pointer as parameter, but there was no documentation whether or not a null pointer was allowed.
+  When providing a null pointer, the implementation crashed because there was no test for a null pointer. Before I start adding pointless pointer
+  checks, I just change the methods so their using references as parameters as done in other PixelLight parts. By the way, connecting event handlers
+  looks now also the same as when doing the same in Lua scripts. *g*
 
 
 

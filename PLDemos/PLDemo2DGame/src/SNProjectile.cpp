@@ -94,7 +94,7 @@ void SNProjectile::OnUpdate()
 		SQAABoundingBox *pSceneQuery = static_cast<SQAABoundingBox*>(GetContainer()->CreateQuery("PLScene::SQAABoundingBox"));
 		if (pSceneQuery) {
 			// Connect event handler
-			pSceneQuery->SignalSceneNode.Connect(&SlotOnSceneNode);
+			pSceneQuery->SignalSceneNode.Connect(SlotOnSceneNode);
 
 			// Setup axis aligned bounding box
 			pSceneQuery->GetAABoundingBox() = GetContainerAABoundingBox();
@@ -155,9 +155,9 @@ void SNProjectile::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

@@ -243,7 +243,7 @@ TextureHandler::AnimationState::AnimationState(TextureHandler &cTextureHandler) 
 		}
 
 		// Connect event handler
-		pTextureAni->GetTextureManager().GetRendererContext().EventUpdate.Connect(&EventHandlerUpdate);
+		pTextureAni->GetTextureManager().GetRendererContext().EventUpdate.Connect(EventHandlerUpdate);
 	}
 }
 

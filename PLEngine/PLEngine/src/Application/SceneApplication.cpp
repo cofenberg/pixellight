@@ -251,7 +251,7 @@ bool SceneApplication::Init()
 			m_pSceneContext->SetDefaultInputController(GetInputController());
 
 			// Connect the input controller found event handler to the corresponding scene context event
-			m_pSceneContext->EventInputControllerFound.Connect(&EventHandlerInputControllerFound);
+			m_pSceneContext->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
 
 			// Create root scene
 			OnCreateRootScene();
