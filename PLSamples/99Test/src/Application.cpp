@@ -482,8 +482,8 @@ void Application::TestEvents()
 	PLCore::Event<int, int, int, int, int, int, int, int, int, int, int, int, int, int, int> MyEvent2;
 	PLCore::EventHandler<int, int> MyHandler(&TestHandler);
 	PLCore::EventHandler<int, int, int, int, int, int, int, int, int, int, int, int, int, int, int> MyHandler2(&TestHandler2);
-	MyEvent.Connect(&MyHandler);
-	MyEvent2.Connect(&MyHandler2);
+	MyEvent.Connect(MyHandler);
+	MyEvent2.Connect(MyHandler2);
 
 	// Call events
 	System::GetInstance()->GetConsole().Print("Calling events:\n");
@@ -750,9 +750,9 @@ void Application::TestObjects()
 	// Events
 		// Connect event handlers
 	PLCore::EventHandler<int, int> cEventHandler(&TestHandler);
-	cObject.Event1.Connect(&cEventHandler);
+	cObject.Event1.Connect(cEventHandler);
 	PLCore::EventHandler<> cEventHandler2(&TestHandler3);
-	cObject.Event0.Connect(&cEventHandler2);
+	cObject.Event0.Connect(cEventHandler2);
 
 		// Get signature
 	System::GetInstance()->GetConsole().Print("Checking signature of cObject.Event1 (void(int, int)):\n");

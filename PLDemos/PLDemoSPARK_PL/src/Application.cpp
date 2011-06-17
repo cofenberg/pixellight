@@ -101,10 +101,10 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
 	}
 }
 

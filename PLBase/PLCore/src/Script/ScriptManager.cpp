@@ -171,7 +171,7 @@ ScriptManager::ScriptManager() :
 	SlotClassLoaded(&ScriptManager::OnClassLoaded, this)
 {
 	// The script manager MUST be informed if new classes are registered in order to register new script languages!
-	ClassManager::GetInstance()->EventClassLoaded.Connect(&SlotClassLoaded);
+	ClassManager::GetInstance()->EventClassLoaded.Connect(SlotClassLoaded);
 
 	{ // Register all script languages
 		List<const Class*> lstClasses;

@@ -1096,9 +1096,9 @@ SceneNode::SceneNode() :
 	m_pFirstSceneHierarchyNodeItem(nullptr)
 {
 	// Connect transform event handlers
-	m_cTransform.EventPosition.Connect(&EventHandlerPosition);
-	m_cTransform.EventRotation.Connect(&EventHandlerRotation);
-	m_cTransform.EventScale   .Connect(&EventHandlerScale);
+	m_cTransform.EventPosition.Connect(EventHandlerPosition);
+	m_cTransform.EventRotation.Connect(EventHandlerRotation);
+	m_cTransform.EventScale   .Connect(EventHandlerScale);
 }
 
 /**

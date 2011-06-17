@@ -95,84 +95,84 @@ GuiTestWindow::GuiTestWindow(Widget *pParent) : Window(pParent),
 	GetContentWidget()->GetLayoutHints().SetPadding(SizeHint(SizeHint::Pixel, 25));
 
 	// Connect tray icon event
-	m_cTrayIcon.EventMouseButtonClick.Connect(&SlotOnTrayIcon);
+	m_cTrayIcon.EventMouseButtonClick.Connect(SlotOnTrayIcon);
 
 	// Add button for 'Notify'
 	Button *pButton = new Button(GetContentWidget());
 	pButton->SetText("Notify Me");
 	pButton->SetVisible(true);
 	pButton->SetEnabled(false);
-	pButton->SignalClicked.Connect(&SlotOnNotify);
+	pButton->SignalClicked.Connect(SlotOnNotify);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Display notification message\"");
 
 	// Add button for 'Window'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Window");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnWindow);
+	pButton->SignalClicked.Connect(SlotOnWindow);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Create an empty window\"");
 
 	// Add button for 'Simple Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Simple Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnSimpleTest);
+	pButton->SignalClicked.Connect(SlotOnSimpleTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Show test with simple widgets\"");
 
 	// Add button for 'Window Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Window Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnWindowTest);
+	pButton->SignalClicked.Connect(SlotOnWindowTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Show test window\"");
 
 	// Add button for 'Mouse-Over Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Mouse-Over Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnMouseOverTest);
+	pButton->SignalClicked.Connect(SlotOnMouseOverTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test mouse-over functionality\"");
 
 	// Add button for 'Focus Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Focus Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnFocusTest);
+	pButton->SignalClicked.Connect(SlotOnFocusTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test focus functionality\"");
 
 	// Add button for 'Focus Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Widget Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnWidgetTest);
+	pButton->SignalClicked.Connect(SlotOnWidgetTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test widgets\"");
 
 	// Add button for 'Drag&Drop Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Drag&Drop Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnDragDropTest);
+	pButton->SignalClicked.Connect(SlotOnDragDropTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test drag&drop functionality\"");
 
 	// Add button for 'Tabs&Menu Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Tabs&Menu Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnTabsAndMenuTest);
+	pButton->SignalClicked.Connect(SlotOnTabsAndMenuTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test tabs and menus\"");
 
 	// Add button for 'Slim Widgets Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Slim Widgets Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnSlimTest);
+	pButton->SignalClicked.Connect(SlotOnSlimTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test slim widgets\"");
 
 	// Add button for 'Theme Test'
 	pButton = new Button(GetContentWidget());
 	pButton->SetText("Theme Test");
 	pButton->SetVisible(true);
-	pButton->SignalClicked.Connect(&SlotOnThemeTest);
+	pButton->SignalClicked.Connect(SlotOnThemeTest);
 	pButton->AddModifier("PLGui::ModTooltip", "Tooltip=\"Test theme functionality\"");
 
 	// Set size

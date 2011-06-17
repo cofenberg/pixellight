@@ -226,14 +226,14 @@ void SNMPhysicsBody::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handler
-		cSceneNode.SignalActive.Connect(&SlotOnActive);
-		cSceneNode.GetTransform().EventPosition.Connect(&SlotOnPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&SlotOnRotation);
+		cSceneNode.SignalActive.Connect(SlotOnActive);
+		cSceneNode.GetTransform().EventPosition.Connect(SlotOnPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(SlotOnRotation);
 	} else {
 		// Disconnect event handler
-		cSceneNode.SignalActive. Disconnect(&SlotOnActive);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&SlotOnPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&SlotOnRotation);
+		cSceneNode.SignalActive. Disconnect(SlotOnActive);
+		cSceneNode.GetTransform().EventPosition.Disconnect(SlotOnPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(SlotOnRotation);
 	}
 
 	// Is there a PL physics body?
@@ -276,7 +276,7 @@ void SNMPhysicsBody::CreatePhysicsBody()
 		pBody->SetFrozen(!(GetFlags() & InitUnfrozen));
 
 		// Connect event handler
-		pBody->EventTransform.Connect(&SlotOnTransform);
+		pBody->EventTransform.Connect(SlotOnTransform);
 	}
 }
 

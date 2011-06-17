@@ -79,9 +79,9 @@ void SNMPostProcessOldFilm::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&SlotOnSceneNodeUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnSceneNodeUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&SlotOnSceneNodeUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnSceneNodeUpdate);
 	}
 }
 

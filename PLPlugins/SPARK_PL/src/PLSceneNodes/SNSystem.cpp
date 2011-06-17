@@ -213,9 +213,9 @@ void SNSystem::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(&SlotOnUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(&SlotOnUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

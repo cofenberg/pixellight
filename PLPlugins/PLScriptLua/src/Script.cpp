@@ -596,6 +596,12 @@ void Script::PushArgument(Object *pObject)
 	m_nCurrentArgument++;
 }
 
+void Script::PushArgument(Object &cObject)
+{
+	RTTIObjectPointer::LuaStackPush(*this, &cObject);
+	m_nCurrentArgument++;
+}
+
 bool Script::EndCall()
 {
 	// Is there a Lua state?
@@ -935,6 +941,13 @@ Object *Script::GetReturn(Object *nValue)
 
 	// Done
 	return nValue;
+}
+
+Object &Script::GetReturn(Object &nValue)
+{
+	// ... please note that in here, we can't return a null pointer...
+	Object *pObject = GetReturn(&nValue);
+	return pObject ? *pObject : nValue;
 }
 
 

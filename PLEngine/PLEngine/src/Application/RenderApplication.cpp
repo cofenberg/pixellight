@@ -364,10 +364,10 @@ void RenderApplication::OnCreateMainWindow()
 	pWindow->Activate();
 
 	// Connect event handler
-	pWindow->SignalActivate     .Connect(&EventHandlerActivate);
-	pWindow->SignalDestroy      .Connect(&EventHandlerDestroy);
-	pWindow->EventDisplayMode   .Connect(&EventHandlerDisplayMode);
-	pWindow->EventFullscreenMode.Connect(&EventHandlerFullscreenMode);
+	pWindow->SignalActivate     .Connect(EventHandlerActivate);
+	pWindow->SignalDestroy      .Connect(EventHandlerDestroy);
+	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
+	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
 
 	// Set main window
 	SetMainWindow(pWindow);

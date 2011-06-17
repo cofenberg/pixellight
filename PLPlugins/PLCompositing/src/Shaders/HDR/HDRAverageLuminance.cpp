@@ -250,7 +250,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				m_pDownsampleLogProgram->SetFragmentShader(m_pDownsampleLogFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDownsampleLogProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDownsampleLogProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleLogProgram);
@@ -262,7 +262,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				m_pDownsampleProgram->SetFragmentShader(m_pDownsampleFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDownsampleProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDownsampleProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleProgram);
@@ -274,7 +274,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 				m_pDownsampleExpProgram->SetFragmentShader(m_pDownsampleExpFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDownsampleExpProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDownsampleExpProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleExpProgram);

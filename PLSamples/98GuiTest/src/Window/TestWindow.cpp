@@ -91,32 +91,32 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 	m_pButtonFullscreen = new Button(GetContentWidget());
 	m_pButtonFullscreen->SetText("Fullscreen Mode");
 	m_pButtonFullscreen->SetVisible(true);
-	m_pButtonFullscreen->SignalClicked.Connect(&SlotOnToggleFullscreen);
+	m_pButtonFullscreen->SignalClicked.Connect(SlotOnToggleFullscreen);
 
 	// Add button to toggle title bar visibility
 	m_pButtonTitleBar = new Button(GetContentWidget());
 	m_pButtonTitleBar->SetText("Title Bar");
 	m_pButtonTitleBar->SetVisible(true);
-	m_pButtonTitleBar->SignalClicked.Connect(&SlotOnToggleTitleBar);
+	m_pButtonTitleBar->SignalClicked.Connect(SlotOnToggleTitleBar);
 
 	// Add button to toggle border visibility
 	m_pButtonBorder = new Button(GetContentWidget());
 	m_pButtonBorder->SetText("Border");
 	m_pButtonBorder->SetVisible(true);
-	m_pButtonBorder->SignalClicked.Connect(&SlotOnToggleBorder);
+	m_pButtonBorder->SignalClicked.Connect(SlotOnToggleBorder);
 
 	// Add button to toggle topmost-state
 	m_pButtonTopmost = new ToggleButton(GetContentWidget());
 	m_pButtonTopmost->SetText("Stay On Top");
 	m_pButtonTopmost->SetVisible(true);
-	m_pButtonTopmost->SignalToggled.Connect(&SlotOnToggleTopmost);
+	m_pButtonTopmost->SignalToggled.Connect(SlotOnToggleTopmost);
 
 	// Add button to toggle taskbar-visibility
 	m_pButtonTaskbar = new ToggleButton(GetContentWidget());
 	m_pButtonTaskbar->SetText("Show In Taskbar");
 	m_pButtonTaskbar->SetState(IsShowInTaskbar() ? Checked : NotChecked);
 	m_pButtonTaskbar->SetVisible(true);
-	m_pButtonTaskbar->SignalToggled.Connect(&SlotOnToggleTaskbar);
+	m_pButtonTaskbar->SignalToggled.Connect(SlotOnToggleTaskbar);
 
 	// Set size
 	SetSize(Vector2i(640, 480));

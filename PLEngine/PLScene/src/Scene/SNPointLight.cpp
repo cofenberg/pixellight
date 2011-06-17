@@ -100,7 +100,7 @@ SNPointLight::SNPointLight() :
 	DirtyAABoundingBox();
 
 	// Connect event handler
-	GetTransform().EventPosition.Connect(&EventHandlerPosition);
+	GetTransform().EventPosition.Connect(EventHandlerPosition);
 }
 
 /**

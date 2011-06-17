@@ -173,7 +173,7 @@ SRPDirectionalLightingShadersMaterial::SRPDirectionalLightingShadersMaterial(Ren
 	m_pEdgeRampMap(nullptr)
 {
 	// Connect event handler
-	m_pMaterial->EventParameterChanged.Connect(&EventHandlerParameterChanged);
+	m_pMaterial->EventParameterChanged.Connect(EventHandlerParameterChanged);
 }
 
 /**

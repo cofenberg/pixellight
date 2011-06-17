@@ -90,7 +90,7 @@ void AbstractToggleButton::SetGroup(ButtonGroup *pGroup)
 {
 	// Remove event handler from old group
 	if (m_pGroup) {
-		m_pGroup->EventActivate.Disconnect(&SlotOnGroupActivate);
+		m_pGroup->EventActivate.Disconnect(SlotOnGroupActivate);
 	}
 
 	// Set group
@@ -98,7 +98,7 @@ void AbstractToggleButton::SetGroup(ButtonGroup *pGroup)
 
 	// Connect event handler to new group
 	if (m_pGroup) {
-		m_pGroup->EventActivate.Connect(&SlotOnGroupActivate);
+		m_pGroup->EventActivate.Connect(SlotOnGroupActivate);
 	}
 }
 

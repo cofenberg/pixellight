@@ -178,8 +178,8 @@ SNSpotLight::SNSpotLight() :
 	m_nInternalLightFlags |= RecalculateFrustumVertices;
 
 	// Connect event handlers
-	GetTransform().EventPosition.Connect(&EventHandlerPositionRotation);
-	GetTransform().EventRotation.Connect(&EventHandlerPositionRotation);
+	GetTransform().EventPosition.Connect(EventHandlerPositionRotation);
+	GetTransform().EventRotation.Connect(EventHandlerPositionRotation);
 }
 
 /**

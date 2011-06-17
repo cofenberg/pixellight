@@ -79,14 +79,14 @@ void MousePicking::SetWidget(Widget *pWidget)
 {
 	// Disconnect event handler
 	if (m_pWidget)
-		m_pWidget->SignalDestroy.Disconnect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Disconnect(EventHandlerWidgetDestroy);
 
 	// Set new widget
 	m_pWidget = pWidget;
 
 	// Connect event handler
 	if (m_pWidget)
-		m_pWidget->SignalDestroy.Connect(&EventHandlerWidgetDestroy);
+		m_pWidget->SignalDestroy.Connect(EventHandlerWidgetDestroy);
 }
 
 /**
@@ -106,14 +106,14 @@ void MousePicking::SetCamera(SNCamera *pCamera)
 {
 	// Disconnect event handler
 	if (m_pCamera)
-		m_pCamera->SignalDestroy.Disconnect(&EventHandlerCameraDestroy);
+		m_pCamera->SignalDestroy.Disconnect(EventHandlerCameraDestroy);
 
 	// Set new camera
 	m_pCamera = pCamera;
 
 	// Connect event handler
 	if (m_pCamera)
-		m_pCamera->SignalDestroy.Connect(&EventHandlerCameraDestroy);
+		m_pCamera->SignalDestroy.Connect(EventHandlerCameraDestroy);
 }
 
 /**

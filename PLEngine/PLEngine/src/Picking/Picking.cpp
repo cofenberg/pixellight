@@ -82,7 +82,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	// Trace line
 	SQLine *pQuery = static_cast<SQLine*>(cContainer.CreateQuery("PLScene::SQLine"));
 	if (pQuery) {
-		pQuery->SignalSceneNode.Connect(&EventHandlerSceneNode);
+		pQuery->SignalSceneNode.Connect(EventHandlerSceneNode);
 		pQuery->GetLine().Set(vLineStartPos, vLineEndPos);
 		pQuery->PerformQuery();
 		cContainer.DestroyQuery(*pQuery);

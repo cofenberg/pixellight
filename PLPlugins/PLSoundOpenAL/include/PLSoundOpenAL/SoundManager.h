@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <ogg/os_types.h>
 #include <PLSound/SoundManager.h>
 #include "PLSoundOpenAL/PLSoundOpenAL.h"
-#include <ogg/config_types.h>
 
 
 //[-------------------------------------------------------]

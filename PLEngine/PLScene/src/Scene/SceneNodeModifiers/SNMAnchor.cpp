@@ -104,20 +104,20 @@ void SNMAnchor::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.SignalContainer.Connect(&EventHandlerContainer);
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.SignalContainer.Connect(EventHandlerContainer);
+		cSceneNode.GetTransform().EventPosition.Connect(EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Connect(EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Connect(&EventHandlerPositionRotationUpdate);
+			pSceneContext->EventUpdate.Connect(EventHandlerPositionRotationUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.SignalContainer.Disconnect(&EventHandlerContainer);
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerPositionRotationUpdate);
+		cSceneNode.SignalContainer.Disconnect(EventHandlerContainer);
+		cSceneNode.GetTransform().EventPosition.Disconnect(EventHandlerPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Disconnect(EventHandlerPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Disconnect(&EventHandlerPositionRotationUpdate);
+			pSceneContext->EventUpdate.Disconnect(EventHandlerPositionRotationUpdate);
 	}
 }
 

@@ -152,9 +152,9 @@ void SNMPhysicsBodySphere::OnActivate(bool bActivate)
 
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawDebug.Connect(&SlotOnDrawDebug);
+		GetSceneNode().SignalDrawDebug.Connect(SlotOnDrawDebug);
 	else
-		GetSceneNode().SignalDrawDebug.Disconnect(&SlotOnDrawDebug);
+		GetSceneNode().SignalDrawDebug.Disconnect(SlotOnDrawDebug);
 }
 
 

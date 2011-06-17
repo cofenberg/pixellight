@@ -247,7 +247,7 @@ bool Material::AddMaterial(Material &cMaterial)
 	pMaterialHandler->SetResource(&cMaterial);
 	if (m_lstMaterials.Add(pMaterialHandler)) {
 		// Connect event handler
-		cMaterial.EventParameterChanged.Connect(&EventHandlerParameterChanged);
+		cMaterial.EventParameterChanged.Connect(EventHandlerParameterChanged);
 
 		// Done
 		return true;
@@ -282,7 +282,7 @@ bool Material::RemoveMaterial(uint32 nIndex)
 		// Disconnect event handler
 		Material *pMaterial = pMaterialHandler->GetResource();
 		if (pMaterial)
-			pMaterial->EventParameterChanged.Disconnect(&EventHandlerParameterChanged);
+			pMaterial->EventParameterChanged.Disconnect(EventHandlerParameterChanged);
 
 		// Remove the material from the list
 		m_lstMaterials.RemoveAtIndex(nIndex);
@@ -310,7 +310,7 @@ bool Material::RemoveAllMaterials()
 			// Disconnect event handler
 			Material *pMaterial = pMaterialHandler->GetResource();
 			if (pMaterial)
-				pMaterial->EventParameterChanged.Disconnect(&EventHandlerParameterChanged);
+				pMaterial->EventParameterChanged.Disconnect(EventHandlerParameterChanged);
 
 			// Destroy the material handler
 			delete pMaterialHandler;
@@ -407,7 +407,7 @@ Material::Material(MaterialManager &cManager, const String &sName) : PLCore::Res
 	m_pFXHandler(nullptr)
 {
 	// Connect event handler
-	m_pParameterManager->EventParameterChanged.Connect(&EventHandlerParameterChanged);
+	m_pParameterManager->EventParameterChanged.Connect(EventHandlerParameterChanged);
 }
 
 /**

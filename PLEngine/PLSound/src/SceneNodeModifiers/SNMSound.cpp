@@ -207,9 +207,9 @@ void SNMSound::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().GetTransform().EventPosition.Connect(&SlotOnPosition);
+		GetSceneNode().GetTransform().EventPosition.Connect(SlotOnPosition);
 	else
-		GetSceneNode().GetTransform().EventPosition.Disconnect(&SlotOnPosition);
+		GetSceneNode().GetTransform().EventPosition.Disconnect(SlotOnPosition);
 
 	// [TODO] Start/stop sound playback
 }

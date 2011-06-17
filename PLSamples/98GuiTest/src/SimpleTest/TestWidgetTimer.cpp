@@ -61,7 +61,7 @@ TestWidgetTimer::TestWidgetTimer(Widget *pParent) : Widget(pParent),
 	m_cTimer(*GetGui())
 {
 	// Connect to timer
-	m_cTimer.EventFire.Connect(&SlotOnTimer);
+	m_cTimer.EventFire.Connect(SlotOnTimer);
 
 	// Set default color to grey
 	SetBackgroundColor(Color4(0.7f, 0.7f, 0.7f, 1.0f));

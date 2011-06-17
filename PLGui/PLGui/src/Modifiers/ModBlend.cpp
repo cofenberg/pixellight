@@ -108,7 +108,7 @@ void ModBlend::OnAttach(Widget &cWidget)
 {
 	// Create timer
 	m_pTimer = new Timer(*cWidget.GetGui());
-	m_pTimer->EventFire.Connect(&SlotOnTimer);
+	m_pTimer->EventFire.Connect(SlotOnTimer);
 }
 
 void ModBlend::OnDetach(Widget &cWidget)

@@ -102,10 +102,10 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	const DisplayMode *pDisplayMode = nullptr;
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(&SlotOnKeyDown);
+		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
 		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(&SlotOnKeyDown);
+			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
 
 		// Get the display mode to use
 		if (pWidget->IsInstanceOf("PLEngine::RenderWidget"))

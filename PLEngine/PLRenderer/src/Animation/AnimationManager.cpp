@@ -66,7 +66,7 @@ Animation *AnimationManager::CreateElement(const String &sName)
 	Animation *pAnimation = new Animation(sName, this);
 
 	// Connect event handler
-	pAnimation->EventFrameChange.Connect(&EventHandlerFrameChange);
+	pAnimation->EventFrameChange.Connect(EventHandlerFrameChange);
 
 	// Return the new animation
 	return pAnimation;

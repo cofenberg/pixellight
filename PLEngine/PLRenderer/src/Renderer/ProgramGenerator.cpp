@@ -223,7 +223,7 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 						pGeneratedProgram->pUserData			= nullptr;
 
 						// Add our nark which will inform us as soon as the program gets dirty
-						pProgram->EventDirty.Connect(&EventHandlerDirty);
+						pProgram->EventDirty.Connect(EventHandlerDirty);
 
 						// Add the created program to the cache of the program generator
 						m_lstPrograms.Add(pGeneratedProgram);

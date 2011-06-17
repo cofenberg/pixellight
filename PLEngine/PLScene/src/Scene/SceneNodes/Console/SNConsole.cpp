@@ -440,7 +440,7 @@ void SNConsole::InitFunction()
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext)
-		pSceneContext->EventUpdate.Connect(&EventHandlerUpdate);
+		pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
 }
 
 

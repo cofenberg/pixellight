@@ -234,7 +234,7 @@ void SRPDeferredDOF::CalculateDepthBlur(const String &sShaderLanguage, VertexBuf
 				m_pDepthBlurProgram->SetFragmentShader(m_pDepthBlurFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDepthBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDepthBlurProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDepthBlurProgram);
@@ -398,7 +398,7 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 				m_pDownscaleProgram->SetFragmentShader(m_pDownscaleFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDownscaleProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDownscaleProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownscaleProgram);
@@ -410,7 +410,7 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 				m_pBlurProgram->SetFragmentShader(m_pBlurFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pBlurProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pBlurProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pBlurProgram);
@@ -564,7 +564,7 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 				m_pDebugProgram->SetFragmentShader(m_pDebugFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pDebugProgram->EventDirty.Connect(&EventHandlerDirty);
+				m_pDebugProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDebugProgram);
@@ -798,7 +798,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 															m_pResultProgram->SetFragmentShader(m_pResultFragmentShader);
 
 															// Add our nark which will inform us as soon as the program gets dirty
-															m_pResultProgram->EventDirty.Connect(&EventHandlerDirty);
+															m_pResultProgram->EventDirty.Connect(EventHandlerDirty);
 
 															// Get attributes and uniforms
 															OnDirty(m_pResultProgram);

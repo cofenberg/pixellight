@@ -174,7 +174,7 @@ SNSound::SNSound() :
 	m_pSoundSourceHandler(new PLSound::ResourceHandler())
 {
 	// Connect event handler
-	GetTransform().EventPosition.Connect(&SlotOnPosition);
+	GetTransform().EventPosition.Connect(SlotOnPosition);
 }
 
 /**

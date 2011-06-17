@@ -84,7 +84,7 @@ void Application::OnInit()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget)
-		pWidget->SignalKeyDown.Connect(&EventHandlerKeyDown);
+		pWidget->SignalKeyDown.Connect(EventHandlerKeyDown);
 }
 
 

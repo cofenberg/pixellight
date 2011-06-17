@@ -145,7 +145,7 @@ SPK_PLQuadRendererShaders::SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRend
 				m_pProgram->SetFragmentShader(m_pFragmentShader);
 
 				// Add our nark which will inform us as soon as the program gets dirty
-				m_pProgram->EventDirty.Connect(m_pEventHandlerDirty);
+				m_pProgram->EventDirty.Connect(*m_pEventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pProgram);

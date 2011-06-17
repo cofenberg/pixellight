@@ -114,7 +114,7 @@ void RTTIObjectSignalMethodPointer::CallMetamethod(lua_State *pLuaState)
 				DynEventHandler *pDynEventHandler = GetSlotFromLuaStack(pLuaState);
 				if (pDynEventHandler) {
 					// Connect the RTTI slot with the RTTI signal
-					m_pDynEvent->Connect(pDynEventHandler);
+					m_pDynEvent->Connect(*pDynEventHandler);
 				}
 				break;
 			}
@@ -126,7 +126,7 @@ void RTTIObjectSignalMethodPointer::CallMetamethod(lua_State *pLuaState)
 				DynEventHandler *pDynEventHandler = GetSlotFromLuaStack(pLuaState);
 				if (pDynEventHandler) {
 					// Disconnect the RTTI slot with the RTTI signal
-					m_pDynEvent->Disconnect(pDynEventHandler);
+					m_pDynEvent->Disconnect(*pDynEventHandler);
 
 					// The generic event handler stays alive, this is not really a problem and speeds up a reconnect (the owner script will destroy the instances)
 				}

@@ -65,15 +65,15 @@ DynEvent::~DynEvent()
 *  @brief
 *    Connect event handler to the event
 */
-void DynEvent::Connect(DynEventHandler *pHandler)
+void DynEvent::Connect(DynEventHandler &cHandler)
 {
 	// The handler must not be connected already
-	if (!pHandler->m_lstEvents.IsElement(this)) {
+	if (!cHandler.m_lstEvents.IsElement(this)) {
 		// Signatures must match!
-		if (pHandler->GetSignature() == GetSignature()) {
+		if (cHandler.GetSignature() == GetSignature()) {
 			// Connect handler
-			m_lstHandlers.Add(pHandler);
-			pHandler->m_lstEvents.Add(this);
+			m_lstHandlers.Add(&cHandler);
+			cHandler.m_lstEvents.Add(this);
 		}
 	}
 }
@@ -82,12 +82,12 @@ void DynEvent::Connect(DynEventHandler *pHandler)
 *  @brief
 *    Disconnect a handler from the event
 */
-void DynEvent::Disconnect(DynEventHandler *pHandler)
+void DynEvent::Disconnect(DynEventHandler &cHandler)
 {
 	// Disconnect handler
-	if (m_lstHandlers.IsElement(pHandler)) {
-		m_lstHandlers.Remove(pHandler);
-		pHandler->m_lstEvents.Remove(this);
+	if (m_lstHandlers.IsElement(&cHandler)) {
+		m_lstHandlers.Remove(&cHandler);
+		cHandler.m_lstEvents.Remove(this);
 	}
 }
 

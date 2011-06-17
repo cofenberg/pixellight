@@ -156,6 +156,7 @@ class Script : public PLCore::Script {
 		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint64 nValue);
 		PLSCRIPTLUA_API virtual void PushArgument(const PLGeneral::String &sString);
 		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object *pObject);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object &cObject);
 		PLSCRIPTLUA_API virtual bool EndCall();
 		PLSCRIPTLUA_API virtual bool GetReturn(bool nValue);
 		PLSCRIPTLUA_API virtual float GetReturn(float nValue);
@@ -170,6 +171,7 @@ class Script : public PLCore::Script {
 		PLSCRIPTLUA_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
 		PLSCRIPTLUA_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
 		PLSCRIPTLUA_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
+		PLSCRIPTLUA_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
 
 
 	//[-------------------------------------------------------]

@@ -71,7 +71,7 @@ SpaceMouse::SpaceMouse(const String &sName, DeviceImpl *pImpl) : Device(sName, "
 		m_pHIDDevice = static_cast<HIDDevice*>(pImpl);
 
 		// Connect to HIDDevice events
-		m_pHIDDevice->EventOnRead.Connect(&EventHandlerOnDeviceRead);
+		m_pHIDDevice->EventOnRead.Connect(EventHandlerOnDeviceRead);
 
 		// Connect to HID device
 		m_pHIDDevice->Open();

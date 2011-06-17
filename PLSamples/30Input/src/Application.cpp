@@ -165,14 +165,14 @@ void Application::TestInput(const String &sDevice)
 	Device *pDevice = InputManager::GetInstance()->GetDevice("Keyboard");
 	if (pDevice) {
 		// Connect event handler
-		pDevice->OnControl.Connect(&EventHandlerOnControlExit);
+		pDevice->OnControl.Connect(EventHandlerOnControlExit);
 	}
 
 	// Get device
 	pDevice = InputManager::GetInstance()->GetDevice(sDevice);
 	if (pDevice) {
 		// Connect event handler
-		pDevice->OnControl.Connect(&EventHandlerOnControl);
+		pDevice->OnControl.Connect(EventHandlerOnControl);
 
 		// Main loop
 		m_bExit = false;
@@ -290,7 +290,7 @@ void Application::TestConnections()
 	Device *pDevice = InputManager::GetInstance()->GetDevice("Keyboard");
 	if (pDevice) {
 		// Connect event handler
-		pDevice->OnControl.Connect(&EventHandlerOnControlExit);
+		pDevice->OnControl.Connect(EventHandlerOnControlExit);
 	}
 
 	// Create virtual controller
@@ -301,7 +301,7 @@ void Application::TestConnections()
 	pDevice = reinterpret_cast<Device*>(pVirtualController);
 	if (pDevice) {
 		// Connect event handler
-		pDevice->OnControl.Connect(&EventHandlerOnControl);
+		pDevice->OnControl.Connect(EventHandlerOnControl);
 
 		// Main loop
 		m_bExit = false;

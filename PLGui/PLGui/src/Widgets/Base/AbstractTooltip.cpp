@@ -63,7 +63,7 @@ AbstractTooltip::AbstractTooltip(Widget *pParent) : Widget(pParent),
 	m_cTimer(*GetGui())
 {
 	// Connect to timer
-	m_cTimer.EventFire.Connect(&SlotOnTimer);
+	m_cTimer.EventFire.Connect(SlotOnTimer);
 }
 
 /**

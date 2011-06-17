@@ -78,12 +78,12 @@ void SNMPhysicsUpdateVelocity::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handler
-		cSceneNode.GetTransform().EventPosition.Connect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Connect(&EventHandlerRotation);
+		cSceneNode.GetTransform().EventPosition.Connect(EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Connect(EventHandlerRotation);
 	} else {
 		// Disconnect event handler
-		cSceneNode.GetTransform().EventPosition.Disconnect(&EventHandlerPosition);
-		cSceneNode.GetTransform().EventRotation.Disconnect(&EventHandlerRotation);
+		cSceneNode.GetTransform().EventPosition.Disconnect(EventHandlerPosition);
+		cSceneNode.GetTransform().EventRotation.Disconnect(EventHandlerRotation);
 	}
 }
 

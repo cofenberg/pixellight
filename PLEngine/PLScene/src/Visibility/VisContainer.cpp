@@ -131,7 +131,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			m_mapContainers.Add(cSceneNode.GetName(), pNewContainer);
 
 			// Connect event handler so we get informed if this visibility container is loosing it's scene node
-			cSceneNode.SignalDestroy.Connect(&pNewContainer->EventHandlerDestroy);
+			cSceneNode.SignalDestroy.Connect(pNewContainer->EventHandlerDestroy);
 
 			SQCull *pCullQuery = static_cast<SQCull*>(static_cast<SceneContainer&>(cSceneNode).CreateQuery("PLScene::SQCull"));
 			if (pCullQuery) {
@@ -171,7 +171,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			m_mapPortals.Add(cSceneNode.GetName(), pPortal);
 
 			// Connect event handler so we get informed if this visibility portal is loosing it's scene node
-			cSceneNode.SignalDestroy.Connect(&pPortal->EventHandlerDestroy);
+			cSceneNode.SignalDestroy.Connect(pPortal->EventHandlerDestroy);
 
 			// Get the target cell
 			SceneNode *pCell = reinterpret_cast<SceneNode*>(static_cast<SNCellPortal&>(cSceneNode).GetTargetCellInstance());

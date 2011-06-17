@@ -66,7 +66,7 @@ Application::Application() : ConsoleApplication(),
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Connect event handler
-	m_pMyRTTIClass->MySignal.Connect(&SlotOnMySignal);
+	m_pMyRTTIClass->MySignal.Connect(SlotOnMySignal);
 
 	// Bring the log into the verbose mode so that the log also writes log entries
 	// directly into the console. This way, we can e.g. see script errors at once.

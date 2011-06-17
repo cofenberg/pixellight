@@ -101,14 +101,14 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 {
 	// Disconnect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Disconnect(&EventHandlerOnDestroy);
+		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerOnDestroy);
 
 	// Set pointer to main window
 	m_pMainWindow = pMainWindow;
 
 	// Connect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Connect(&EventHandlerOnDestroy);
+		m_pMainWindow->SignalDestroy.Connect(EventHandlerOnDestroy);
 }
 
 

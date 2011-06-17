@@ -95,7 +95,7 @@ GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
 		}
 
 		// Connect event handler to the key autorepeat timer and start the timer
-		m_pKeyTimer->EventFire.Connect(&EventHandlerTimer);
+		m_pKeyTimer->EventFire.Connect(EventHandlerTimer);
 		m_pKeyTimer->Start(150);
 	}
 

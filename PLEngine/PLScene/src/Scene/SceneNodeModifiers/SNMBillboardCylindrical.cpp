@@ -74,10 +74,10 @@ void SNMBillboardCylindrical::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	if (bActivate) {
 		// Connect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Connect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Connect(EventHandlerAddedToVisibilityTree);
 	} else {
 		// Disconnect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(&EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(EventHandlerAddedToVisibilityTree);
 	}
 }
 

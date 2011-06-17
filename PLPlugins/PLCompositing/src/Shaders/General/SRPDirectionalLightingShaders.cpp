@@ -314,7 +314,7 @@ void SRPDirectionalLightingShaders::Draw(Renderer &cRenderer, const SQCull &cCul
 	// Create the program generator if there's currently no instance of it
 	if (!m_pProgramGenerator || m_pProgramGenerator->GetShaderLanguage() != sShaderLanguage) {
 		// If not already done: Connect event handler - if it's already connected to this event, nothing happens
-		cRenderer.GetRendererContext().GetMaterialManager().EventResourceRemoved.Connect(&EventHandlerMaterialRemoved);
+		cRenderer.GetRendererContext().GetMaterialManager().EventResourceRemoved.Connect(EventHandlerMaterialRemoved);
 
 		// If there's an previous instance of the program generator, destroy it first
 		if (m_pProgramGenerator) {
