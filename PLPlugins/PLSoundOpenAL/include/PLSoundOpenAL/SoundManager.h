@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLSound/SoundManager.h>
 #include "PLSoundOpenAL/PLSoundOpenAL.h"
+#include <ogg/config_types.h>
 
 
 //[-------------------------------------------------------]
@@ -82,12 +83,12 @@ class SoundManager : public PLSound::SoundManager {
 	public:
 		// From PLGeneral::File
 		static size_t read_func(void *ptr, size_t size, size_t nmemb, void *datasource);
-		static int seek_func(void *datasource, PLGeneral::int64 offset, int whence);
+		static int seek_func(void *datasource, ogg_int64_t offset, int whence);
 		static int close_func(void *datasource);
 		static long tell_func(void *datasource);
 		// From memory
 		static size_t read_func_mem(void *ptr, size_t size, size_t nmemb, void *datasource);
-		static int seek_func_mem(void *datasource, PLGeneral::int64 offset, int whence);
+		static int seek_func_mem(void *datasource, ogg_int64_t offset, int whence);
 		static int close_func_mem(void *datasource);
 		static long tell_func_mem(void *datasource);
 
