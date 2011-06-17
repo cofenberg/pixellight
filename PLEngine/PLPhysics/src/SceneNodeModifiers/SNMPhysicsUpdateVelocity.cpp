@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include <PLScene/Scene/SceneNode.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsUpdateVelocity.h"

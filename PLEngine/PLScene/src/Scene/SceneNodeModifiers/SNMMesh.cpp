@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMesh.h"
 
 

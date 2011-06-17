@@ -26,7 +26,6 @@
 #include <PLRenderer/Animation/Animation.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshAnimationManager.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshAnimation.h"
 
 

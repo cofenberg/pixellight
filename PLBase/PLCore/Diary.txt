@@ -31,6 +31,15 @@
   in order to check whether or not this is still the case... made a fresh build without the hack and there were no more problems. :)
   So, I let the hack out... there's no point in supporting buggy old compilers. For example in GCC 4.5.2 the nullptr emulation was no longer working due to a GCC bug. So, if you
   encounter any compiler issues, just use an up-to-date compiler (if there's one :) instead of spending time to hack around compiler bugs.
+- "Func.h": Removed debug-output in case of a signature mismatch. The "new" RTTI 2 is now working since over a year within PixelLight and does really a fantastic job. I assume it's
+  about time to remove this scaffold (which, over the time caused some debug/release include issues).
+- Minor "SignatureString::GetSignatureID()" implementation change to make the life of the string class a little bit more comfortable. I know, this doesn't really have a directly
+  measurable impact... but when I see something that can be optimized without messing everything up (especially when it's within the core), I do it because in the end, all sums up...
+- Removed
+    typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> _Func;
+  etc. in e.g.
+    FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
+  because it really looks like dead code (wasn't able to find any usage of it).
 
 
 

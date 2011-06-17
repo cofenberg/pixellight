@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Class.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifier.h"
 
 

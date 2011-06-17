@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Material/Material.h>
 #include <PLRenderer/Material/Parameter.h>
-#include <PLScene/Scene/SceneNode.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLCompositing/Shaders/PostProcessing/PostProcessManager.h"
 #include "PLCompositing/SceneNodeModifiers/SNMPostProcess.h"

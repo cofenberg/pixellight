@@ -26,7 +26,6 @@
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Matrix4x4.h>
 #include "PLScene/Visibility/VisNode.h"
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMBillboardSpherical.h"
 
 

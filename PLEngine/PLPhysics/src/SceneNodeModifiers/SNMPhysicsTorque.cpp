@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNode.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h"

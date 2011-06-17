@@ -27,7 +27,6 @@
 #include <PLGeneral/Log/Log.h>
 #include <PLCore/Tools/Chunk.h>
 #include <PLRenderer/Animation/Animation.h>
-#include "PLScene/Scene/SceneNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMScaleKeyframeAnimation.h"
 

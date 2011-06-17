@@ -34,16 +34,6 @@
 #include "PLCore/Base/Func/DynFunc.h"
 
 
-// [DEBUG]
-#ifdef _DEBUG
-	#include <PLGeneral/System/System.h>
-	#include <PLGeneral/System/Console.h>
-	#define DEBUG_MESSAGE(MSG)	{ PLGeneral::System::GetInstance()->GetConsole().Print(MSG); }
-#else
-	#define DEBUG_MESSAGE(MSG)
-#endif
-
-
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
@@ -145,7 +135,7 @@ class Func : public DynFunc {
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -161,7 +151,7 @@ class Func : public DynFunc {
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -276,7 +266,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -292,7 +282,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14), Type<T15>::ConvertStorageToReal(cP.Param15));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -412,7 +402,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -428,7 +418,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -541,7 +531,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -557,7 +547,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13), Type<T14>::ConvertStorageToReal(cP.Param14));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -676,7 +666,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 																  Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -692,7 +682,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -803,7 +793,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -819,7 +809,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12), Type<T13>::ConvertStorageToReal(cP.Param13));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -935,7 +925,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 																  Type<T12>::ConvertStorageToReal(cP.Param12)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -951,7 +941,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1060,7 +1050,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1076,7 +1066,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11),
 						Type<T12>::ConvertStorageToReal(cP.Param12));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1189,7 +1179,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1204,7 +1194,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1310,7 +1300,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1325,7 +1315,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10), Type<T11>::ConvertStorageToReal(cP.Param11));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1436,7 +1426,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1451,7 +1441,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1555,7 +1545,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1570,7 +1560,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9),  Type<T10>::ConvertStorageToReal(cP.Param10));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1679,7 +1669,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1694,7 +1684,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1796,7 +1786,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1811,7 +1801,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8),  Type<T9> ::ConvertStorageToReal(cP.Param9));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -1918,7 +1908,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 																  Type<T8> ::ConvertStorageToReal(cP.Param8)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -1933,7 +1923,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2033,7 +2023,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2048,7 +2038,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7),
 						Type<T8> ::ConvertStorageToReal(cP.Param8));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2152,7 +2142,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2166,7 +2156,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2263,7 +2253,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2277,7 +2267,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6),  Type<T7> ::ConvertStorageToReal(cP.Param7));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2379,7 +2369,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2393,7 +2383,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2488,7 +2478,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2502,7 +2492,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5),  Type<T6> ::ConvertStorageToReal(cP.Param6));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2602,7 +2592,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2616,7 +2606,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2709,7 +2699,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2723,7 +2713,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4),  Type<T5> ::ConvertStorageToReal(cP.Param5));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2820,7 +2810,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 																  Type<T4> ::ConvertStorageToReal(cP.Param4)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2833,7 +2823,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -2923,7 +2913,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -2936,7 +2926,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3),
 						Type<T4> ::ConvertStorageToReal(cP.Param4));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3030,7 +3020,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3042,7 +3032,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3129,7 +3119,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3141,7 +3131,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2),  Type<T3> ::ConvertStorageToReal(cP.Param3));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3233,7 +3223,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3245,7 +3235,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3330,7 +3320,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3342,7 +3332,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1),  Type<T2> ::ConvertStorageToReal(cP.Param2));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3432,7 +3422,7 @@ class Func<R, T0, T1> : public DynFunc {
 
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3444,7 +3434,7 @@ class Func<R, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3527,7 +3517,7 @@ class Func<void, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3539,7 +3529,7 @@ class Func<void, T0, T1> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0),  Type<T1> ::ConvertStorageToReal(cP.Param1));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3627,7 +3617,7 @@ class Func<R, T0> : public DynFunc {
 
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)(Type<T0> ::ConvertStorageToReal(cP.Param0)));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3639,7 +3629,7 @@ class Func<R, T0> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3721,7 +3711,7 @@ class Func<void, T0> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3733,7 +3723,7 @@ class Func<void, T0> : public DynFunc {
 
 				// Call function
 				(*this)(Type<T0> ::ConvertStorageToReal(cP.Param0));
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3818,7 +3808,7 @@ class Func<R> : public DynFunc {
 
 				// Call function
 				cP.Return = Type<R>::ConvertRealToStorage((*this)());
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3827,7 +3817,7 @@ class Func<R> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)
@@ -3896,7 +3886,7 @@ class Func<void> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const DynParams &cParams)
@@ -3905,7 +3895,7 @@ class Func<void> : public DynFunc {
 			if (cParams.GetSignature() == GetSignature()) {
 				// Call function
 				(*this)();
-			} else DEBUG_MESSAGE("ERROR: Signature mismatch!\n  Expected: " + GetSignature() + "\n  Found:    " + cParams.GetSignature() + '\n');
+			}
 		}
 
 		virtual void Call(const PLGeneral::String &sParams)

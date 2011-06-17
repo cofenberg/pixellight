@@ -67,7 +67,6 @@ class FuncFunPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 		typedef typename Type<T15>::_Type _T15;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FuncType FUNC;
 
 	public:
@@ -115,7 +114,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
 		typedef typename Type<T15>::_Type _T15;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FuncType FUNC;
 
 	public:
@@ -164,7 +162,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FuncType FUNC;
 
 	public:
@@ -211,7 +208,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
 		typedef typename Type<T14>::_Type _T14;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FuncType FUNC;
 
 	public:
@@ -259,7 +255,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FuncType FUNC;
 
 	public:
@@ -305,7 +300,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
 		typedef typename Type<T13>::_Type _T13;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FuncType FUNC;
 
 	public:
@@ -352,7 +346,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FuncType FUNC;
 
 	public:
@@ -397,7 +390,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
 		typedef typename Type<T12>::_Type _T12;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FuncType FUNC;
 
 	public:
@@ -443,7 +435,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FuncType FUNC;
 
 	public:
@@ -487,7 +478,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
 		typedef typename Type<T11>::_Type _T11;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FuncType FUNC;
 
 	public:
@@ -532,7 +522,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FuncType FUNC;
 
 	public:
@@ -575,7 +564,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
 		typedef typename Type<T10>::_Type _T10;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FuncType FUNC;
 
 	public:
@@ -619,7 +607,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0,
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FuncType FUNC;
 
 	public:
@@ -661,7 +648,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<voi
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
 		typedef typename Type<T9> ::_Type _T9;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FuncType FUNC;
 
 	public:
@@ -704,7 +690,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1,
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FuncType FUNC;
 
 	public:
@@ -745,7 +730,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
 		typedef typename Type<T8> ::_Type _T8;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FuncType FUNC;
 
 	public:
@@ -787,7 +771,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2,
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6, T7> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6, T7>::FuncType FUNC;
 
 	public:
@@ -827,7 +810,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
 		typedef typename Type<T7> ::_Type _T7;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6, T7> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>::FuncType FUNC;
 
 	public:
@@ -868,7 +850,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3,
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
-		typedef Func<R, T0, T1, T2, T3, T4, T5, T6> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5, T6>::FuncType FUNC;
 
 	public:
@@ -907,7 +888,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
 		typedef typename Type<T6> ::_Type _T6;
-		typedef Func<void, T0, T1, T2, T3, T4, T5, T6> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5, T6>::FuncType FUNC;
 
 	public:
@@ -947,7 +927,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4,
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
-		typedef Func<R, T0, T1, T2, T3, T4, T5> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4, T5>::FuncType FUNC;
 
 	public:
@@ -985,7 +964,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
 		typedef typename Type<T5> ::_Type _T5;
-		typedef Func<void, T0, T1, T2, T3, T4, T5> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4, T5>::FuncType FUNC;
 
 	public:
@@ -1024,7 +1002,6 @@ class FuncFunPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
-		typedef Func<R, T0, T1, T2, T3, T4> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3, T4>::FuncType FUNC;
 
 	public:
@@ -1061,7 +1038,6 @@ class FuncFunPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
 		typedef typename Type<T4> ::_Type _T4;
-		typedef Func<void, T0, T1, T2, T3, T4> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3, T4>::FuncType FUNC;
 
 	public:
@@ -1099,7 +1075,6 @@ class FuncFunPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
-		typedef Func<R, T0, T1, T2, T3> _Func;
 		typedef typename Signature<R, T0, T1, T2, T3>::FuncType FUNC;
 
 	public:
@@ -1135,7 +1110,6 @@ class FuncFunPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
 		typedef typename Type<T3> ::_Type _T3;
-		typedef Func<void, T0, T1, T2, T3> _Func;
 		typedef typename Signature<void, T0, T1, T2, T3>::FuncType FUNC;
 
 	public:
@@ -1172,7 +1146,6 @@ class FuncFunPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
-		typedef Func<R, T0, T1, T2> _Func;
 		typedef typename Signature<R, T0, T1, T2>::FuncType FUNC;
 
 	public:
@@ -1207,7 +1180,6 @@ class FuncFunPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
 		typedef typename Type<T2> ::_Type _T2;
-		typedef Func<void, T0, T1, T2> _Func;
 		typedef typename Signature<void, T0, T1, T2>::FuncType FUNC;
 
 	public:
@@ -1243,7 +1215,6 @@ class FuncFunPtr<R, T0, T1> : public Func<R, T0, T1> {
 		typedef typename Type<R>  ::_Type _R;
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
-		typedef Func<R, T0, T1> _Func;
 		typedef typename Signature<R, T0, T1>::FuncType FUNC;
 
 	public:
@@ -1277,7 +1248,6 @@ class FuncFunPtr<void, T0, T1> : public Func<void, T0, T1> {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
-		typedef Func<void, T0, T1> _Func;
 		typedef typename Signature<void, T0, T1>::FuncType FUNC;
 
 	public:
@@ -1312,7 +1282,6 @@ class FuncFunPtr<R, T0> : public Func<R, T0> {
 	public:
 		typedef typename Type<R>  ::_Type _R;
 		typedef typename Type<T0> ::_Type _T0;
-		typedef Func<R, T0> _Func;
 		typedef typename Signature<R, T0>::FuncType FUNC;
 
 	public:
@@ -1345,7 +1314,6 @@ template <typename T0>
 class FuncFunPtr<void, T0> : public Func<void, T0> {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
-		typedef Func<void, T0> _Func;
 		typedef typename Signature<void, T0>::FuncType FUNC;
 
 	public:
@@ -1379,7 +1347,6 @@ template <typename R>
 class FuncFunPtr<R> : public Func<R> {
 	public:
 		typedef typename Type<R>  ::_Type _R;
-		typedef Func<R> _Func;
 		typedef typename Signature<R>::FuncType FUNC;
 
 	public:
@@ -1411,7 +1378,6 @@ class FuncFunPtr<R> : public Func<R> {
 template <>
 class FuncFunPtr<void> : public Func<void> {
 	public:
-		typedef Func<void> _Func;
 		typedef Signature<void>::FuncType FUNC;
 
 	public:

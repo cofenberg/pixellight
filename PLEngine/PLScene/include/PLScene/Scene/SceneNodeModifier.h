@@ -28,20 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Object.h>
-#include "PLScene/PLScene.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLInput {
-	class Controller;
-}
-namespace PLScene {
-	class SceneNode;
-	class SceneContext;
-}
+#include "PLScene/Scene/SceneNode.h"
 
 
 //[-------------------------------------------------------]
@@ -106,8 +93,9 @@ class SceneNodeModifier : public PLCore::Object {
 		// Attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
 		// Methods
-		pl_method_0(IsActive,	pl_ret_type(bool),			"Returns whether the scene node modifier is active or not. Returns 'true' if the scene node modifier is active, else 'false'.",														"")
-		pl_method_1(SetActive,	pl_ret_type(void),	bool,	"Sets whether the scene node modifier is active or not. 'true' as first parameter if the scene node modifier should be active, else 'false' (sets/unsets the 'Inactive'-flag).",	"")
+		pl_method_0(GetSceneNode,	pl_ret_type(SceneNode&),	"Returns the owner scene node",																																						"")
+		pl_method_0(IsActive,		pl_ret_type(bool),			"Returns whether the scene node modifier is active or not. Returns 'true' if the scene node modifier is active, else 'false'.",														"")
+		pl_method_1(SetActive,		pl_ret_type(void),	bool,	"Sets whether the scene node modifier is active or not. 'true' as first parameter if the scene node modifier should be active, else 'false' (sets/unsets the 'Inactive'-flag).",	"")
 	pl_class_end
 
 
