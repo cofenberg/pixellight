@@ -76,6 +76,7 @@ endif()
 
 # Compiler flags
 set(LINUX_COMPILE_FLAGS
+	${LINUX_COMPILE_FLAGS}
 	-std=c++0x												# Enable experimental support for the upcoming ISO C++ standard C++0x (see http://gcc.gnu.org/gcc-4.6/cxx0x_status.html)
 	-pthread												# Use pthreads
 	-ffor-scope												# If -ffor-scope is specified, the scope of variables declared in a for-init-statement is limited to the `for' loop itself, as specified by the C++ standard
@@ -92,6 +93,7 @@ set(LINUX_COMPILE_FLAGS
 	-Wsign-promo											# Warn when overload resolution chooses a promotion from unsigned or enumerated type to a signed type, over a conversion to an unsigned type of the same size
 #	-Wold-style-cast										# Warn if an old-style (C-style) cast is used - just set it to look for c-style casts because some used libs produce c-style warnings and we can't change that
 )
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
 	## Debug 
@@ -122,7 +124,6 @@ endif()
 ##################################################
 ## Linker flags 
 ##################################################
-
 # Check if an 32Bit build should be made on an 64Bit host (CMAKE_SIZEOF_VOID_P has the value 8 on 64Bit Systems at least on x86 systems)
 if ((CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
 	message(STATUS "Add linker flags for 32Bit on 64Bit host")
@@ -134,5 +135,6 @@ endif()
 
 # Linker flags
 set(LINUX_LINKER_FLAGS
+	${LINUX_LINKER_FLAGS}
 	-Wl,--as-needed		# Quote from http://www.gentoo.org/proj/en/qa/asneeded.xml : "The flag tells the linker to link in the produced binary only the libraries containing symbols actually used by the binary itself"
 )
