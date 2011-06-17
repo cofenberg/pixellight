@@ -87,6 +87,14 @@ class SNLight : public SceneNode {
 		pl_attribute(ScreenBrighten,	float,					0.3f,									ReadWrite,	DirectValue,	"Screen brighten",		"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",				"")
+		// Methods
+		pl_method_0(IsRenderLight,			pl_ret_type(bool),	"Returns whether this is a render light or not. Returns 'true' if this is a render light, else 'false'.",																		"")
+		pl_method_0(IsEffectLight,			pl_ret_type(bool),	"Returns whether this scene node is a effect light (SNEffectLight) or not. Returns 'true' if this scene node is a effect light, else 'false'.",									"")
+		pl_method_0(IsPointLight,			pl_ret_type(bool),	"Returns whether this scene node is a point light (SNPointLight) or not. Returns 'true' if this scene node is a point light, else 'false'.",									"")
+		pl_method_0(IsProjectivePointLight,	pl_ret_type(bool),	"Returns whether this scene node is a projective point light (SNProjectivePointLight) or not. Returns 'true' if this scene node is a projective point light, else 'false'.",	"")
+		pl_method_0(IsSpotLight,			pl_ret_type(bool),	"Returns whether this scene node is a spot light (SNSpotLight) or not. Returns 'true' if this scene node is a spot light, else 'false'.",										"")
+		pl_method_0(IsProjectiveSpotLight,	pl_ret_type(bool),	"Returns whether this scene node is a projective spot light (SNProjectiveSpotLight) or not. Returns 'true' if this scene node is a projective spot light, else 'false'.",		"")
+		pl_method_0(IsDirectionalLight,		pl_ret_type(bool),	"Returns whether this scene node is a directional light (SNDirectionalLight) or not. Returns 'true' if this scene node is a directional light, else 'false'.",					"")
 	pl_class_end
 
 
