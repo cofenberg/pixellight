@@ -17,8 +17,8 @@ add_sources(
 	src/Focus/FocusWidget.cpp
 	src/Window/TestWindow.cpp
 	src/WidgetTest/WidgetTestWindow.cpp
-	src/DragDrop/DragDropWindow.cpp
-	src/DragDrop/DragDropWidget.cpp
+#	src/DragDrop/DragDropWindow.cpp
+#	src/DragDrop/DragDropWidget.cpp
 	src/TabsAndMenu/TabsAndMenuWindow.cpp
 #	src/SlimTest/SlimTestWindow.cpp
 	src/ThemeTest/ThemeTestWindow.cpp

@@ -82,19 +82,19 @@ DragDropWidget::DragDropWidget(Widget *pParent) : ContainerWidget(pParent),
 
 	// Add button 'Clear'
 	m_pButtonClear = new Button(GetContentWidget());
-	m_pButtonClear->SignalClicked.Connect(&EventHandlerClear);
+	m_pButtonClear->SignalClicked.Connect(EventHandlerClear);
 	m_pButtonClear->SetText("Clear");
 	m_pButtonClear->SetVisible(true);
 
 	// Add button 'Copy'
 	m_pButtonCopy = new Button(GetContentWidget());
-	m_pButtonCopy->SignalClicked.Connect(&EventHandlerCopy);
+	m_pButtonCopy->SignalClicked.Connect(EventHandlerCopy);
 	m_pButtonCopy->SetText("Copy");
 	m_pButtonCopy->SetVisible(true);
 
 	// Add button 'Paste'
 	m_pButtonPaste = new Button(GetContentWidget());
-	m_pButtonPaste->SignalClicked.Connect(&EventHandlerPaste);
+	m_pButtonPaste->SignalClicked.Connect(EventHandlerPaste);
 	m_pButtonPaste->SetText("Paste");
 	m_pButtonPaste->SetVisible(true);
 

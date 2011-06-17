@@ -64,12 +64,6 @@
     <ClCompile Include="src\Window\TestWindow.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\DragDrop\DragDropWidget.cpp">
-      <Filter>Source Files\DragDrop</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DragDrop\DragDropWindow.cpp">
-      <Filter>Source Files\DragDrop</Filter>
-    </ClCompile>
     <ClCompile Include="src\TabsAndMenu\TabsAndMenuWindow.cpp">
       <Filter>Source Files\TabsAndMenu</Filter>
     </ClCompile>
@@ -90,6 +84,12 @@
     </ClCompile>
     <ClCompile Include="src\WidgetTest\WidgetTestWindow.cpp">
       <Filter>Source Files\WidgetTest</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DragDrop\DragDropWindow.cpp">
+      <Filter>Source Files\DragDrop</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DragDrop\DragDropWidget.cpp">
+      <Filter>Source Files\DragDrop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

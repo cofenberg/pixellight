@@ -127,11 +127,9 @@
     <ClCompile Include="src\SimpleTest\TestWidgetTimer.cpp" />
     <ClCompile Include="src\Window\TestWindow.cpp" />
     <ClCompile Include="src\DragDrop\DragDropWidget.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\DragDrop\DragDropWindow.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\TabsAndMenu\TabsAndMenuWindow.cpp" />
