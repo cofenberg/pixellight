@@ -203,6 +203,11 @@ void Script::PushArgument(Object *pObject)
 	// Nothing to do in here
 }
 
+void Script::PushArgument(Object &cObject)
+{
+	// Nothing to do in here
+}
+
 bool Script::EndCall()
 {
 	// Nothing to do in here
@@ -287,6 +292,13 @@ Object *Script::GetReturn(Object *nValue)
 {
 	// Nothing to do in here
 	return nullptr;
+}
+
+Object &Script::GetReturn(Object &nValue)
+{
+	// ... please note that in here, we can't return a null pointer...
+	Object *pObject = GetReturn(&nValue);
+	return pObject ? *pObject : nValue;
 }
 
 

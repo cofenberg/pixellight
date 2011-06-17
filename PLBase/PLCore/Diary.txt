@@ -1,3 +1,9 @@
+>> 17.06.2011
+[CO]
+- "Script": Added support for "Object&"
+
+
+
 >> 16.06.2011
 [CO]
 - There was an issue when using a reference type as RTTI method result... this was the reason why I hadn't yet exposed methods like

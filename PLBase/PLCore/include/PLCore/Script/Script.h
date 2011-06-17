@@ -61,7 +61,7 @@ namespace PLCore {
 *      - Signals
 *      - Slots
 *
-*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*
+*    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*, PLCore::Object&
 *    Please note that not each script language/API may make such a detailed data type distinction.
 *    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
 */
@@ -326,6 +326,7 @@ class Script : public Object {
 		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
 		virtual void PushArgument(const PLGeneral::String &sString) = 0;
 		virtual void PushArgument(Object *pObject) = 0;
+		virtual void PushArgument(Object &cObject) = 0;
 
 		/**
 		*  @brief
@@ -366,6 +367,7 @@ class Script : public Object {
 		virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue) = 0;
 		virtual PLGeneral::String GetReturn(PLGeneral::String nValue) = 0;
 		virtual Object *GetReturn(Object *nValue) = 0;
+		virtual Object &GetReturn(Object &nValue) = 0;
 
 
 	//[-------------------------------------------------------]

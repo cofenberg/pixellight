@@ -524,6 +524,11 @@ void Script::PushArgument(Object *pObject)
 	// [TODO] Implement me
 }
 
+void Script::PushArgument(Object &cObject)
+{
+	// [TODO] Implement me
+}
+
 bool Script::EndCall()
 {
 	if (m_pAngelScriptContext) {
@@ -632,6 +637,13 @@ Object *Script::GetReturn(Object *nValue)
 {
 	// [TODO] Implement me
 	return nullptr;
+}
+
+Object &Script::GetReturn(Object &nValue)
+{
+	// ... please note that in here, we can't return a null pointer...
+	Object *pObject = GetReturn(&nValue);
+	return pObject ? *pObject : nValue;
 }
 
 
