@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/Container/Array.h>
 #include <PLCore/Base/Func/DynFunc.h>
 #include "PLScriptLua/RTTIObjectPointer.h"
 
@@ -56,17 +57,33 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*  @brief
 		*    Returns the current Lua function parameters on the Lua stack as string
 		*
-		*  @param[in] cScript
+		*  @param[in]  cScript
 		*    The owner script instance
-		*  @param[in] cDynSignature
+		*  @param[in]  cDynSignature
 		*    Dynamic signature of the function to be called
-		*  @param[in] bIsMethod
+		*  @param[in]  bIsMethod
 		*    'true' if the dynamic function is a method, 'false' if it's a global function
+		*  @param[out] lstTempStrings
+		*    List were temporary strings can be put onto, see remarks below for details (the given list is not cleared, new entries are just added)
 		*
 		*  @return
 		*    The current Lua function parameters on the Lua stack as string
+		*
+		*  @remarks
+		*    Strings are somewhat of a special case... It's possible that there's a RTTI method with
+		*    a "Object*(const PLGeneral::String&)"-signature meaning that the parameter is a reference.
+		*    Within scripts, strings are fundamental and therefore it should be possible to use such a
+		*    RTTI method by writing for instance
+		*      this:GetSceneNode():GetByName("Soldier")
+		*    so that the script programmer doesn't need to care whether or not the required RTTI method
+		*    parameter is in fact a reference instead of a string. Of course, a real reference a parameter
+		*    should still also be possible as well.
+		*    To solve this issue, whenever the script programmer provides a string, but a RTTI method is
+		*    expecting a reference or a pointer, this given string is stored within a string-list on the
+		*    heap during the function call to that the reference/pointer has a valid address. That's what
+		*    the "lstTempStrings"-parameter of this method is for.
 		*/
-		static PLGeneral::String GetLuaFunctionParametersAsString(Script &cScript, PLCore::DynSignature &cDynSignature, bool bIsMethod);
+		static PLGeneral::String GetLuaFunctionParametersAsString(Script &cScript, PLCore::DynSignature &cDynSignature, bool bIsMethod, PLGeneral::Array<PLGeneral::String> &lstTempStrings);
 
 		/**
 		*  @brief

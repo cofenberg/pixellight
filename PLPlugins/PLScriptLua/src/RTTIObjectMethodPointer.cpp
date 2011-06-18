@@ -46,16 +46,18 @@ namespace PLScriptLua {
 *  @brief
 *    Returns the current Lua function parameters on the Lua stack as string
 */
-String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript, DynSignature &cDynSignature, bool bIsMethod)
+String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript, DynSignature &cDynSignature, bool bIsMethod, Array<String> &lstTempStrings)
 {
 	// Get the Lua state
 	lua_State *pLuaState = cScript.GetLuaState();
 
 	// Get the number of arguments Lua gave to us
 	String sParams;
-	const int nOffset = bIsMethod ? 2 : 0;
-	const int nNumOfArguments = lua_gettop(pLuaState) - nOffset;
-	for (int i=1+nOffset; i<=nOffset+nNumOfArguments; i++) {
+	const int nOffset				= bIsMethod ? 2 : 0;
+	const int nNumOfArguments		= lua_gettop(pLuaState) - nOffset;
+	const int nIndexOfFirstArgument	= 1+nOffset;
+	for (int i=nIndexOfFirstArgument; i<=nOffset+nNumOfArguments; i++) {
+		const uint32 nParameterIndex = nIndexOfFirstArgument - i;
 		String sValue;
 
 		// Is it user data?
@@ -79,15 +81,33 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 			} else if (lua_isboolean(pLuaState, -1)) {
 				sValue = (lua_toboolean(pLuaState, -1) != 0) ? "1" : "0";
 
+			// Is it string?
+			} else if (lua_isstring(pLuaState, -1)) {
+				sValue = lua_tolstring(pLuaState, i, nullptr);
+
+				// Strings are somewhat of a special case... see method documentation for details
+				const int nTypeID = cDynSignature.GetParameterTypeID(nParameterIndex);
+				switch (nTypeID) {
+					case TypeRef:
+						// Give the RTTI method a reference to the temporaty string
+						sValue = Type<String&>::ConvertToString(lstTempStrings.Add(sValue));
+						break;
+
+					case TypePtr:
+						// Give the RTTI method a pointer to the temporaty string
+						sValue = Type<String*>::ConvertToString(&lstTempStrings.Add(sValue));
+						break;
+				}
+
 			// ...
 			} else {
 				// If not just let Lua decide how to convert the stuff into a string... but only if it's no object pointer!
-				sValue = (cDynSignature.GetParameterTypeID(nNumOfArguments-1) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);
+				sValue = (cDynSignature.GetParameterTypeID(nParameterIndex) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);
 			}
 		}
 
 		// Add the Lua argument to the parameter string
-		sParams += String("Param") + (i-1+nOffset) + "=\"" + sValue + "\" ";
+		sParams += String("Param") + (nParameterIndex) + "=\"" + sValue + "\" ";
 	}
 
 	// Return the parameters string
@@ -104,7 +124,8 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 	lua_State *pLuaState = cScript.GetLuaState();
 
 	// Get the current Lua function parameters on the Lua stack as string
-	const String sParams = GetLuaFunctionParametersAsString(cScript, cDynFunc, bIsMethod);
+	Array<String> lstTempStrings;
+	const String sParams = GetLuaFunctionParametersAsString(cScript, cDynFunc, bIsMethod, lstTempStrings);
 
 	// Get the global function
 	const String sReturn = cDynFunc.CallWithReturn(sParams);

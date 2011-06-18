@@ -116,7 +116,8 @@ void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
 	// Is there a RTTI object and a RTTI object signal?
 	if (m_pRTTIObject && m_pDynEvent) {
 		// Get the current Lua function parameters on the Lua stack as string
-		const String sParams = RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(*m_pScript, *m_pDynEvent, true);
+		Array<String> lstTempStrings;
+		const String sParams = RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(*m_pScript, *m_pDynEvent, true, lstTempStrings);
 
 		// Emit the RTTI object signal
 		m_pDynEvent->Emit(sParams);

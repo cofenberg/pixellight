@@ -7,6 +7,17 @@
 - PLScriptLua: Added new static method "RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()" which returns the current Lua function parameters on the Lua
   stack as string. This was my motivation for the "DynSignature"-interface because this new method is used by "RTTIObjectMethodPointer" and "RTTIObjectSignalPointer"
   and type ID information is used internally.
+- PLScriptLua: Solved another reference issue. Well, not directly an issue with references in general, more an issue about their usage in scripts with strings.
+  Strings are somewhat of a special case, at least within their usage. It's possible that there's a RTTI method with a "Object*(const PLGeneral::String&)"-signature
+  meaning that the parameter is a reference. Within scripts, strings are fundamental and therefore it should be possible to use such a RTTI method by writing for instance
+    this:GetSceneNode():GetByName("Soldier")
+  so that the script programmer doesn't need to care whether or not the required RTTI method parameter is in fact a reference instead of a string. Of course, a real
+  reference a parameter should still also be possible as well. To solve this issue, whenever the script programmer provides a string, but a RTTI method is expecting
+  a reference or a pointer, this given string is stored within a string-list on the heap during the function call. By doing so, the reference/pointer has a valid address.
+  -> Some weeks ago, I was afraid that we can't keep the "const PLGeneral::String&"-concept and had to change it into "PLGeneral::String" in order to use such methods
+     within scripts. But the solution within PLScriptLua solves this issue and the PixelLight interfaces don't need to be rewritten. The solution also introduces no
+	 extreme runtime overhead because the string class is quite optimized internally and is using e.g. the "copy-on-write"-concept. So, those temporary strings on the
+	 runtime stack don't really hurt much.
 
 
 

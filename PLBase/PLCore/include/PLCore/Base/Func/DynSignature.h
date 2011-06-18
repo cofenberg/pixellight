@@ -74,7 +74,7 @@ class DynSignature {
 		*    Get signature as string
 		*
 		*  @return
-		*    Signature
+		*    Signature (e.g. "void(int,float)")
 		*/
 		PLCORE_API virtual PLGeneral::String GetSignature() const;
 
