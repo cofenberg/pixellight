@@ -20,6 +20,12 @@
 	 runtime stack don't really hurt much.
 - "PLScriptLua::RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()": If a RTTI signature demands more parameters as the script programmer provided, we need to add
   the missing parameters because if there's a reference parameter it really needs a valid address
+- "Script": Added namespace support for global variables. By using namespaces, one can e.g. define that all script variables an editor is able to show have to be
+  within a "public"-Namespace (just an example, there's no such thing fixed build in within PLCore!). In this editor-example, the user is then able to get and set script
+  variables just like RTTI attributes, but the other script variables which are e.g. within the global namespace are hidden.
+  Currently, this namespace support is only implemented within PLScriptLua... the next scheduled PixelLight release is near and so I really have to work focused.
+- "Script": Due to namespace support for global variables, I had to change the "GetGlobalVariables()"-signature. This method no longer returns a list of found global variables,
+  instead a list to be filled up has to be provided as parameter.
 
 
 

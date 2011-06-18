@@ -101,31 +101,30 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
-const Array<String> &Script::GetGlobalVariables()
+void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
-	// Return a reference to the list of all global variables - we never fill the list
-	return m_lstGlobalVariables;
+	// Nothing to do in here
 }
 
-bool Script::IsGlobalVariable(const String &sName)
+bool Script::IsGlobalVariable(const String &sName, const String &sNamespace)
 {
 	// Nothing to do in here
 	return false;
 }
 
-ETypeID Script::GetGlobalVariableTypeID(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName, const String &sNamespace)
 {
 	// Nothing to do in here
 	return TypeInvalid;
 }
 
-String Script::GetGlobalVariable(const String &sName)
+String Script::GetGlobalVariable(const String &sName, const String &sNamespace)
 {
 	// Nothing to do in here
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace)
 {
 	// Nothing to do in here
 }

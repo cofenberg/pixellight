@@ -99,11 +99,11 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTNULL_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
-		PLSCRIPTNULL_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTNULL_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName);
-		PLSCRIPTNULL_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTNULL_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue);
+		PLSCRIPTNULL_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTNULL_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTNULL_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTNULL_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTNULL_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
@@ -170,8 +170,7 @@ class Script : public PLCore::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String					m_sSourceCode;			/**< Script source code */
-		PLGeneral::Array<PLGeneral::String>	m_lstGlobalVariables;	/**< List of all global variables */
+		PLGeneral::String m_sSourceCode;	/**< Script source code */
 
 
 };

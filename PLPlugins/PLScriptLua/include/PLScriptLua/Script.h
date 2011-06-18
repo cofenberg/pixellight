@@ -133,11 +133,11 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTLUA_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
-		PLSCRIPTLUA_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTLUA_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName);
-		PLSCRIPTLUA_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTLUA_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue);
+		PLSCRIPTLUA_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
@@ -279,20 +279,35 @@ class Script : public PLCore::Script {
 		*  @brief
 		*    Creates a nested Lua table
 		*
-		*  @param[in] pLuaState
-		*    Lua state
 		*  @param[in] sTableName
-		*    Lua table name (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
+		*    Lua table name (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on), if empty string, the global Lua table is pushed onto the Lua stack
 		*
 		*  @note
 		*    - Creates all required subtables
 		*    - Leaves the deepest table on the Lua stack
 		*    - Already existing Lua tables are not overwritten
+		*    - m_pLuaState must be valid
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (error within the given Lua table name?)
 		*/
-		bool CreateNestedTable(lua_State *pLuaState, const PLGeneral::String &sTableName);
+		bool CreateNestedTable(const PLGeneral::String &sTableName);
+
+		/**
+		*  @brief
+		*    Gets a nested Lua table
+		*
+		*  @param[in] sTableName
+		*    Lua table name (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on), if empty string, the global Lua table is pushed onto the Lua stack
+		*
+		*  @note
+		*    - Leaves the deepest table on the Lua stack
+		*    - m_pLuaState must be valid
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (error within the given Lua table name?)
+		*/
+		bool GetNestedTable(const PLGeneral::String &sTableName);
 
 		//[-------------------------------------------------------]
 		//[ Event and event handler stuff                         ]
@@ -358,7 +373,6 @@ class Script : public PLCore::Script {
 		bool												   m_bFunctionResult;		/**< Has the current function a result? */
 		PLGeneral::uint32									   m_nCurrentArgument;		/**< Current argument, used during function call */
 		PLGeneral::Array<GlobalFunction*>					   m_lstGlobalFunctions;	/**< List of global functions */
-		PLGeneral::Array<PLGeneral::String>					   m_lstGlobalVariables;	/**< List of all global variables */
 		PLGeneral::HashMap<PLGeneral::String, EventUserData*>  m_mapEventUserData;		/**< Map holding all event user data instances */
 
 

@@ -248,11 +248,8 @@ bool Script::SetSourceCode(const String &sSourceCode)
 				// Get the global function
 				GlobalFunction *psGlobalFunction = m_lstGlobalFunctions[i];
 
-				// Is the function within a namespace? (= Lua table)
-				if (psGlobalFunction->sNamespace.GetLength()) {
-					// Create a nested Lua table
-					CreateNestedTable(m_pLuaState, psGlobalFunction->sNamespace);
-
+				// Create a nested Lua table
+				if (CreateNestedTable(psGlobalFunction->sNamespace)) {
 					// Table key
 					lua_pushstring(m_pLuaState, psGlobalFunction->sFunction);		// Push the function name onto the Lua stack
 
@@ -265,11 +262,6 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 					// Pop the table from the Lua stack
 					lua_pop(m_pLuaState, 1);
-				} else {
-					// Store a pointer to the global function in the c-closure
-					lua_pushlightuserdata(m_pLuaState, psGlobalFunction);
-					lua_pushcclosure(m_pLuaState, &Script::LuaFunctionCallback, 1);
-					lua_setglobal(m_pLuaState, psGlobalFunction->sFunction);
 				}
 			}
 
@@ -307,56 +299,55 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
-const Array<String> &Script::GetGlobalVariables()
+void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
-	// Fill the list of all global variables right now?
-	if (m_lstGlobalVariables.IsEmpty() && m_pLuaState) {
-		// Push the global Lua table onto the stack
-		lua_getglobal(m_pLuaState, "_G");
-		if (lua_istable(m_pLuaState, -1)) {
-			// Push the first key onto the Lua stack
-			lua_pushnil(m_pLuaState);
+	// Is there a Lua state? If so, get a nested Lua table
+	if (m_pLuaState && GetNestedTable(sNamespace)) {
+		// Push the first key onto the Lua stack
+		lua_pushnil(m_pLuaState);
 
-			// Iterate through the Lua table
-			while (lua_next(m_pLuaState, 1) != 0) {
-				// Lua stack content: The 'key' is at index -2 and the 'value' at index -1
+		// Iterate through the Lua table
+		while (lua_next(m_pLuaState, 1) != 0) {
+			// Lua stack content: The 'key' is at index -2 and the 'value' at index -1
 
-				// Check the 'key' type (at index -2) - must be a string
-				if (lua_isstring(m_pLuaState, -2)) {
-					// Check whether or not the 'value' (at index -1) is a global variable
-					// (something like "_VERSION" is passing this test as well, but that's probably ok because it's just a Lua build in global variable)
-					if (lua_isnumber(m_pLuaState, -1) || lua_isstring(m_pLuaState, -1)) {
-						// Add the global variable to our list
-						m_lstGlobalVariables.Add(lua_tostring(m_pLuaState, -2));
-					}
+			// Check the 'key' type (at index -2) - must be a string
+			if (lua_isstring(m_pLuaState, -2)) {
+				// Check whether or not the 'value' (at index -1) is a global variable
+				// (something like "_VERSION" is passing this test as well, but that's probably ok because it's just a Lua build in global variable)
+				if (lua_isnumber(m_pLuaState, -1) || lua_isstring(m_pLuaState, -1)) {
+					// Add the global variable to our list
+					lstGlobalVariables.Add(lua_tostring(m_pLuaState, -2));
 				}
-
-				// Next, please (removes 'value'; keeps 'key' for next iteration)
-				lua_pop(m_pLuaState, 1);
 			}
+
+			// Next, please (removes 'value'; keeps 'key' for next iteration)
+			lua_pop(m_pLuaState, 1);
 		}
 
-		// Pop the global Lua table from the stack
+		// Pop the table from the Lua stack
 		lua_pop(m_pLuaState, 1);
 	}
-
-	// Return a reference to the list of all global variables
-	return m_lstGlobalVariables;
 }
 
-bool Script::IsGlobalVariable(const String &sName)
+bool Script::IsGlobalVariable(const String &sName, const String &sNamespace)
 {
 	bool bGlobalVariable = false;
 
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Push the global variable onto the Lua state stack
-		lua_getglobal(m_pLuaState, sName);
+	// Is there a Lua state? If so, get a nested Lua table
+	if (m_pLuaState && GetNestedTable(sNamespace)) {
+		// Table key
+		lua_pushstring(m_pLuaState, sName);	// Push the variable name onto the Lua stack
 
-		// Check the type of the global variable
+		// This function pops the key from the stack - this gets the variable
+		lua_gettable(m_pLuaState, -2);
+
+		// Check the type of the variable
 		bGlobalVariable = (lua_isnumber(m_pLuaState, -1) || lua_isstring(m_pLuaState, -1));
 
-		// Pop the global variable from the Lua state stack
+		// Pop the variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
 		lua_pop(m_pLuaState, 1);
 	}
 
@@ -364,16 +355,19 @@ bool Script::IsGlobalVariable(const String &sName)
 	return bGlobalVariable;
 }
 
-ETypeID Script::GetGlobalVariableTypeID(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName, const String &sNamespace)
 {
 	ETypeID nType = TypeInvalid;
 
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Push the global variable onto the Lua state stack
-		lua_getglobal(m_pLuaState, sName);
+	// Is there a Lua state? If so, get a nested Lua table
+	if (m_pLuaState && GetNestedTable(sNamespace)) {
+		// Table key
+		lua_pushstring(m_pLuaState, sName);	// Push the variable name onto the Lua stack
 
-		// Check the type of the global variable
+		// This function pops the key from the stack - this gets the variable
+		lua_gettable(m_pLuaState, -2);
+
+		// Check the type of the variable
 		if (lua_isboolean(m_pLuaState, -1))
 			nType = TypeBool;
 		else if (lua_isnumber(m_pLuaState, -1))
@@ -383,7 +377,10 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 		else if (lua_isuserdata(m_pLuaState, -1))
 			nType = TypeObjectPtr;	// [TODO] Do any type tests in here?
 
-		// Pop the global variable from the Lua state stack
+		// Pop the variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
 		lua_pop(m_pLuaState, 1);
 	}
 
@@ -391,19 +388,25 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 	return nType;
 }
 
-String Script::GetGlobalVariable(const String &sName)
+String Script::GetGlobalVariable(const String &sName, const String &sNamespace)
 {
 	String sValue;
 
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Push the global variable onto the Lua state stack
-		lua_getglobal(m_pLuaState, sName);
+	// Is there a Lua state? If so, get a nested Lua table
+	if (m_pLuaState && GetNestedTable(sNamespace)) {
+		// Table key
+		lua_pushstring(m_pLuaState, sName);	// Push the variable name onto the Lua stack
 
-		// Get the value of the global variable as string
+		// This function pops the key from the stack - this gets the variable
+		lua_gettable(m_pLuaState, -2);
+
+		// Get the value of the variable as string
 		sValue = lua_tostring(m_pLuaState, -1);
 
-		// Pop the global variable from the Lua state stack
+		// Pop the variable from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
 		lua_pop(m_pLuaState, 1);
 	}
 
@@ -411,43 +414,52 @@ String Script::GetGlobalVariable(const String &sName)
 	return sValue;
 }
 
-void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		// Get the type of the global variable because we don't want to change it's type
+		// Get the type of the variable because we don't want to change it's type
 		int nTypeID = GetGlobalVariableTypeID(sName);
 		if (nTypeID == TypeInvalid) {
-			// Ok, this must be a new global variable
+			// Ok, this must be a new variable
 			nTypeID = cValue.GetTypeID();
 		}
 
-		// Push the value of the global variable onto the Lua stack
-		switch (nTypeID) {
-			case TypeVoid:																								return;	// ? Yeah, that's really funny!
-			case TypeBool:		lua_pushboolean(m_pLuaState, cValue.GetBool());											break;
-			case TypeDouble:	lua_pushnumber (m_pLuaState, cValue.GetDouble());										break;
-			case TypeFloat:		lua_pushnumber (m_pLuaState, cValue.GetFloat());										break;
-			case TypeInt:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
-			case TypeInt16:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
-			case TypeInt32:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
-			case TypeInt64:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;	// [TODO] TypeInt64 is currently handled just as long
-			case TypeInt8:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
-			case TypeString:	lua_pushstring (m_pLuaState, cValue.GetString());										break;
-			case TypeUInt16:	lua_pushinteger(m_pLuaState, cValue.GetUInt16());										break;
-			case TypeUInt32:	lua_pushinteger(m_pLuaState, cValue.GetUInt32());										break;
-			case TypeUInt64:	lua_pushinteger(m_pLuaState, static_cast<lua_Integer>(cValue.GetUInt64()));				break;	// [TODO] TypeUInt64 is currently handled just as long
-			case TypeUInt8:		lua_pushinteger(m_pLuaState, cValue.GetUInt8());										break;
+		// Create a nested Lua table
+		if (CreateNestedTable(sNamespace)) {
+			// Table key
+			lua_pushstring(m_pLuaState, sName);	// Push the variable name onto the Lua stack
 
-			// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
-			case TypePtr:
-			case TypeObjectPtr:	RTTIObjectPointer::LuaStackPush(*this, reinterpret_cast<Object*>(cValue.GetUIntPtr()));	break;
+			// Table value: Push the value of the variable onto the Lua stack
+			switch (nTypeID) {
+				case TypeVoid:																								return;	// ? Yeah, that's really funny!
+				case TypeBool:		lua_pushboolean(m_pLuaState, cValue.GetBool());											break;
+				case TypeDouble:	lua_pushnumber (m_pLuaState, cValue.GetDouble());										break;
+				case TypeFloat:		lua_pushnumber (m_pLuaState, cValue.GetFloat());										break;
+				case TypeInt:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+				case TypeInt16:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+				case TypeInt32:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+				case TypeInt64:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;	// [TODO] TypeInt64 is currently handled just as long
+				case TypeInt8:		lua_pushinteger(m_pLuaState, cValue.GetInt());											break;
+				case TypeString:	lua_pushstring (m_pLuaState, cValue.GetString());										break;
+				case TypeUInt16:	lua_pushinteger(m_pLuaState, cValue.GetUInt16());										break;
+				case TypeUInt32:	lua_pushinteger(m_pLuaState, cValue.GetUInt32());										break;
+				case TypeUInt64:	lua_pushinteger(m_pLuaState, static_cast<lua_Integer>(cValue.GetUInt64()));				break;	// [TODO] TypeUInt64 is currently handled just as long
+				case TypeUInt8:		lua_pushinteger(m_pLuaState, cValue.GetUInt8());										break;
 
-			default:			lua_pushstring (m_pLuaState, cValue.GetString());										break;	// Unkown type
+				// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
+				case TypePtr:
+				case TypeObjectPtr:	RTTIObjectPointer::LuaStackPush(*this, reinterpret_cast<Object*>(cValue.GetUIntPtr()));	break;
+
+				default:			lua_pushstring (m_pLuaState, cValue.GetString());										break;	// Unkown type
+			}
+
+			// This function pops both the key and the value from the stack - this sets the variable
+			lua_settable(m_pLuaState, -3);
+
+			// Pop the table from the Lua stack
+			lua_pop(m_pLuaState, 1);
 		}
-
-		// Push the name of the global variable onto the Lua stack - this sets the global variable
-		lua_setglobal(m_pLuaState, sName);
 	}
 }
 
@@ -1064,9 +1076,6 @@ void Script::Clear()
 		m_sCurrentFunction = "";
 		m_bFunctionResult  = false;
 		m_nCurrentArgument = 0;
-
-		// Clear the list of all global variables
-		m_lstGlobalVariables.Clear();
 	}
 }
 
@@ -1074,59 +1083,138 @@ void Script::Clear()
 *  @brief
 *    Creates a nested Lua table
 */
-bool Script::CreateNestedTable(lua_State *pLuaState, const String &sTableName)
+bool Script::CreateNestedTable(const String &sTableName)
 {
-	// Loop through all components within the given nested Lua table name
-	uint32 nPartBegin = 0;
-	while (nPartBegin<=sTableName.GetLength()) {
-		// Find the next "." within the given nested Lua table name
-		int nPartEnd = sTableName.IndexOf(".", nPartBegin);
-		if (nPartEnd < 0)
-			nPartEnd = sTableName.GetLength();
+	// Is there a table name?
+	if (sTableName.GetLength()) {
+		// Loop through all components within the given nested Lua table name
+		uint32 nPartBegin = 0;
+		while (nPartBegin<=sTableName.GetLength()) {
+			// Find the next "." within the given nested Lua table name
+			int nPartEnd = sTableName.IndexOf(".", nPartBegin);
+			if (nPartEnd < 0)
+				nPartEnd = sTableName.GetLength();
 
-		// Get the current Lua table name
-		const String sSubTableName = sTableName.GetSubstring(nPartBegin, nPartEnd - nPartBegin);
+			// Get the current Lua table name
+			const String sSubTableName = sTableName.GetSubstring(nPartBegin, nPartEnd - nPartBegin);
 
-		// Each table must have a name!
-		if (!sSubTableName.GetLength())
-			return false;	// Error!
+			// Each table must have a name!
+			if (!sSubTableName.GetLength())
+				return false;	// Error!
 
-		// Does the Lua table already exist within the current Lua table?
-		if (nPartBegin) {
-			// We're already within a Lua table
-			lua_pushstring(pLuaState, sSubTableName);
-			lua_gettable(pLuaState, -2);
-			if (!lua_isnil(pLuaState, -1))
-				lua_remove(pLuaState, -2);
-		} else {
-			// Currently we're in global space
-			lua_pushstring(pLuaState, sSubTableName);
-			lua_gettable(pLuaState, LUA_GLOBALSINDEX);
-		}
-
-		// Lua table found?
-		if (lua_isnil(pLuaState, -1)) {
-			// Nope, create a new one
-
-			// Pop nil from the Lua stack
-			lua_pop(pLuaState, 1);
-
-			// Create new Lua table on the Lua stack
-			lua_newtable(pLuaState);
-			lua_pushstring(pLuaState, sSubTableName);
-			lua_pushvalue(pLuaState, -2);	// Pushes a copy of the element at the given valid index onto the stack
+			// Does the Lua table already exist within the current Lua table?
 			if (nPartBegin) {
 				// We're already within a Lua table
-				lua_settable(pLuaState, -4);
-				lua_remove(pLuaState, -2);
+				lua_pushstring(m_pLuaState, sSubTableName);
+				lua_gettable(m_pLuaState, -2);
+				if (!lua_isnil(m_pLuaState, -1))
+					lua_remove(m_pLuaState, -2);
 			} else {
 				// Currently we're in global space
-				lua_settable(pLuaState, LUA_GLOBALSINDEX);
+				lua_pushstring(m_pLuaState, sSubTableName);
+				lua_gettable(m_pLuaState, LUA_GLOBALSINDEX);
 			}
-		}
 
-		// Skip "."
-		nPartBegin = nPartEnd + 1;
+			// Lua table found?
+			if (lua_isnil(m_pLuaState, -1)) {
+				// Nope, create a new one
+
+				// Pop nil from the Lua stack
+				lua_pop(m_pLuaState, 1);
+
+				// Create new Lua table on the Lua stack
+				lua_newtable(m_pLuaState);
+				lua_pushstring(m_pLuaState, sSubTableName);
+				lua_pushvalue(m_pLuaState, -2);	// Pushes a copy of the element at the given valid index onto the stack
+				if (nPartBegin) {
+					// We're already within a Lua table
+					lua_settable(m_pLuaState, -4);
+					lua_remove(m_pLuaState, -2);
+				} else {
+					// Currently we're in global space
+					lua_settable(m_pLuaState, LUA_GLOBALSINDEX);
+				}
+			}
+
+			// Skip "."
+			nPartBegin = nPartEnd + 1;
+		}
+	} else {
+		// No table name given, so just push the global Lua table onto the stack
+		lua_getglobal(m_pLuaState, "_G");
+		if (!lua_istable(m_pLuaState, -1))
+			return false;	// Error!
+	}
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Gets a nested Lua table
+*/
+bool Script::GetNestedTable(const String &sTableName)
+{
+	// Is there a table name?
+	if (sTableName.GetLength()) {
+		// Loop through all components within the given nested Lua table name
+		uint32 nPartBegin = 0;
+		while (nPartBegin<=sTableName.GetLength()) {
+			// Find the next "." within the given nested Lua table name
+			int nPartEnd = sTableName.IndexOf(".", nPartBegin);
+			if (nPartEnd < 0)
+				nPartEnd = sTableName.GetLength();
+
+			// Get the current Lua table name
+			const String sSubTableName = sTableName.GetSubstring(nPartBegin, nPartEnd - nPartBegin);
+
+			// Each table must have a name!
+			if (!sSubTableName.GetLength())
+				return false;	// Error!
+
+			// Does the Lua table already exist within the current Lua table?
+			if (nPartBegin) {
+				// We're already within a Lua table
+				lua_pushstring(m_pLuaState, sSubTableName);
+				lua_gettable(m_pLuaState, -2);
+				if (!lua_isnil(m_pLuaState, -1))
+					lua_remove(m_pLuaState, -2);
+			} else {
+				// Currently we're in global space
+				lua_pushstring(m_pLuaState, sSubTableName);
+				lua_gettable(m_pLuaState, LUA_GLOBALSINDEX);
+			}
+
+			// Lua table found?
+			if (lua_isnil(m_pLuaState, -1)) {
+				// Nope, don't create a new one in here
+
+				// Pop nil from the Lua stack
+				lua_pop(m_pLuaState, 1);
+
+				// Cleanup the Lua stack
+				if (nPartBegin) {
+					// We're already within a Lua table
+
+					// Pop the table from the Lua stack
+					lua_pop(m_pLuaState, 1);
+				} else {
+					// Currently we're in global space
+				}
+
+				// Error!
+				return false;
+			}
+
+			// Skip "."
+			nPartBegin = nPartEnd + 1;
+		}
+	} else {
+		// No table name given, so just push the global Lua table onto the stack
+		lua_getglobal(m_pLuaState, "_G");
+		if (!lua_istable(m_pLuaState, -1))
+			return false;	// Error!
 	}
 
 	// Done

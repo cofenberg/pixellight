@@ -104,11 +104,11 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables();
-		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName);
-		PLSCRIPTV8_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName);
-		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue);
+		PLSCRIPTV8_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
@@ -268,7 +268,6 @@ class Script : public PLCore::Script {
 		v8::Persistent<v8::Value>					 m_cV8CurrentResult;	/**< Current V8 function */
 		PLGeneral::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
 		PLGeneral::Array<GlobalFunction*>			 m_lstGlobalFunctions;	/**< List of global functions */
-		PLGeneral::Array<PLGeneral::String>			 m_lstGlobalVariables;	/**< List of all global variables */
 
 
 };

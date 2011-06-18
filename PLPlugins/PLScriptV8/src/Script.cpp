@@ -202,10 +202,14 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
-const Array<String> &Script::GetGlobalVariables()
+void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
-	// Fill the list of all global variables right now?
-	if (m_lstGlobalVariables.IsEmpty() && !m_cV8Context.IsEmpty()) {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return;	// Not implemented, yet. Get us out of here right now!
+
+	// Is there a V8 context?
+	if (!m_cV8Context.IsEmpty()) {
 		// Create a stack-allocated handle scope
 		v8::HandleScope cHandleScope;
 
@@ -224,24 +228,25 @@ const Array<String> &Script::GetGlobalVariables()
 					const String sName = *v8::String::AsciiValue(cV8PropertyName->ToString());
 					if (IsGlobalVariable(sName)) {
 						// Add the global variable to the list
-						m_lstGlobalVariables.Add(sName);
+						lstGlobalVariables.Add(sName);
 					}
 				}
 			}
 		}
 	}
-
-	// Return a reference to the list of all global variables
-	return m_lstGlobalVariables;
 }
 
-bool Script::IsGlobalVariable(const String &sName)
+bool Script::IsGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	return (GetGlobalVariableTypeID(sName) != TypeInvalid);
 }
 
-ETypeID Script::GetGlobalVariableTypeID(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Is there a V8 context?
 	if (!m_cV8Context.IsEmpty()) {
 		// Create a stack-allocated handle scope
@@ -271,8 +276,10 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 	return TypeInvalid;
 }
 
-String Script::GetGlobalVariable(const String &sName)
+String Script::GetGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Is there a V8 context?
 	if (!m_cV8Context.IsEmpty()) {
 		// Create a stack-allocated handle scope
@@ -291,8 +298,10 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Get the type of the global variable because we don't want to change it's type
 	int nTypeID = GetGlobalVariableTypeID(sName);
 	if (nTypeID == TypeInvalid) {
@@ -743,9 +752,6 @@ void Script::Clear()
 
 	// Clear the V8 arguments list
 	m_lstV8Arguments.Clear();
-
-	// Clear the list of all global variables
-	m_lstGlobalVariables.Clear();
 }
 
 /**

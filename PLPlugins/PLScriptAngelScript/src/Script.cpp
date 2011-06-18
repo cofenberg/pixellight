@@ -247,10 +247,14 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
-const Array<String> &Script::GetGlobalVariables()
+void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
-	// Fill the list of all global variables right now?
-	if (m_lstGlobalVariables.IsEmpty() && m_pAngelScriptEngine && m_pAngelScriptModule) {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return;	// Not implemented, yet. Get us out of here right now!
+
+	// There must be a valid AngelScript engine and module instance
+	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Get the number of global variables
 		const int nNumOfGlobalVariables = m_pAngelScriptModule->GetGlobalVarCount();
 
@@ -259,21 +263,22 @@ const Array<String> &Script::GetGlobalVariables()
 			// Get the information about the global variable
 			const char *pszGlobalVariableName = nullptr;
 			if (m_pAngelScriptModule->GetGlobalVar(i, &pszGlobalVariableName, nullptr, nullptr) >= 0 && pszGlobalVariableName)
-				m_lstGlobalVariables.Add(pszGlobalVariableName);
+				lstGlobalVariables.Add(pszGlobalVariableName);
 		}
 	}
-
-	// Return a reference to the list of all global variables
-	return m_lstGlobalVariables;
 }
 
-bool Script::IsGlobalVariable(const String &sName)
+bool Script::IsGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	return m_pAngelScriptModule ? (m_pAngelScriptModule->GetGlobalVarIndexByName(sName) >= 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableTypeID(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Get the index of the global variable
@@ -309,8 +314,10 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 	return TypeInvalid;
 }
 
-String Script::GetGlobalVariable(const String &sName)
+String Script::GetGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Get the index of the global variable
@@ -349,8 +356,10 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Get the index of the global variable
@@ -764,9 +773,6 @@ void Script::Clear()
 
 	// Reset the current argument
 	m_nCurrentArgument = 0;
-
-	// Clear the list of all global variables
-	m_lstGlobalVariables.Clear();
 }
 
 /**

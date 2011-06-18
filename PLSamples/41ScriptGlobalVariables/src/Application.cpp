@@ -92,11 +92,21 @@ void Application::RunScript(const String &sScriptFilename)
 		System::GetInstance()->GetConsole().Print("-- " + pScript->GetScriptLanguage() + " script language --\n");
 
 		{ // Enumerate all global variables
-			// Get a list of all global variables
-			const Array<String> &lstGlobalVariables = pScript->GetGlobalVariables();
-			System::GetInstance()->GetConsole().Print(String("Number of global variables: ") + lstGlobalVariables.GetNumOfElements() + '\n');
-			for (uint32 i=0; i<lstGlobalVariables.GetNumOfElements(); i++)
-				System::GetInstance()->GetConsole().Print(String("- Global variable ") + i + ": \"" + lstGlobalVariables[i] + "\"\n");
+			{ // Get a list of all global variables in the global namespace
+				Array<String> lstGlobalVariables;
+				pScript->GetGlobalVariables(lstGlobalVariables);
+				System::GetInstance()->GetConsole().Print(String("Number of global variables in the global namespace: ") + lstGlobalVariables.GetNumOfElements() + '\n');
+				for (uint32 i=0; i<lstGlobalVariables.GetNumOfElements(); i++)
+					System::GetInstance()->GetConsole().Print(String("- Global variable ") + i + ": \"" + lstGlobalVariables[i] + "\"\n");
+			}
+
+			{ // Get a list of all global variables in the "PublicVariables"-namespace
+				Array<String> lstGlobalVariables;
+				pScript->GetGlobalVariables(lstGlobalVariables, "PublicVariables");
+				System::GetInstance()->GetConsole().Print(String("Number of global variables in the \"PublicVariables\"-namespace: ") + lstGlobalVariables.GetNumOfElements() + '\n');
+				for (uint32 i=0; i<lstGlobalVariables.GetNumOfElements(); i++)
+					System::GetInstance()->GetConsole().Print(String("- Global variable ") + i + ": \"" + lstGlobalVariables[i] + "\"\n");
+			}
 		}
 
 		// Check whether or not "g_Factor" is a global variable

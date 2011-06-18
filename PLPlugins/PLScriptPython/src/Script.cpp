@@ -225,10 +225,14 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
-const Array<String> &Script::GetGlobalVariables()
+void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
-	// Fill the list of all global variables right now?
-	if (m_lstGlobalVariables.IsEmpty() && m_pPythonDictionary) {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return;	// Not implemented, yet. Get us out of here right now!
+
+	// Is there a Python dictionary?
+	if (m_pPythonDictionary) {
 		// Iterate through the global dictionary of the Python module (results in borrowed references, don't use Py_DECREF on them)
 		PyObject *pPythonKey = nullptr, *pPythonValue = nullptr;
 		Py_ssize_t nPos = 0;
@@ -236,22 +240,23 @@ const Array<String> &Script::GetGlobalVariables()
 			// Is this Python object a global variable? (something like "__name__" is passing this test as well, but that's probably ok because it's just a Python build in global variable)
 			if (PyString_Check(pPythonValue) || PyInt_Check(pPythonValue) || PyFloat_Check(pPythonValue)) {
 				// Add the global variable to the list
-				m_lstGlobalVariables.Add(PyString_AsString(pPythonKey));
+				lstGlobalVariables.Add(PyString_AsString(pPythonKey));
 			}
 		}
 	}
-
-	// Return a reference to the list of all global variables
-	return m_lstGlobalVariables;
 }
 
-bool Script::IsGlobalVariable(const String &sName)
+bool Script::IsGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	return m_pPythonModule ? (PyObject_HasAttrString(m_pPythonModule, sName) != 0) : false;
 }
 
-ETypeID Script::GetGlobalVariableTypeID(const String &sName)
+ETypeID Script::GetGlobalVariableTypeID(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
@@ -271,8 +276,10 @@ ETypeID Script::GetGlobalVariableTypeID(const String &sName)
 	return TypeInvalid;
 }
 
-String Script::GetGlobalVariable(const String &sName)
+String Script::GetGlobalVariable(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Request the Python attribute (results in borrowed reference, don't use Py_DECREF on it)
@@ -291,8 +298,10 @@ String Script::GetGlobalVariable(const String &sName)
 	return "";
 }
 
-void Script::SetGlobalVariable(const String &sName, const DynVar &cValue)
+void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+
 	// Is there a Python module?
 	if (m_pPythonModule) {
 		// Request the Python attribute because we don't want to change it's type (results in borrowed reference, don't use Py_DECREF on it)
@@ -808,9 +817,6 @@ void Script::Clear()
 			delete [] m_pPythonTableOfFunctions;
 			m_pPythonTableOfFunctions = nullptr;
 		}
-
-		// Clear the list of all global variables
-		m_lstGlobalVariables.Clear();
 	}
 }
 

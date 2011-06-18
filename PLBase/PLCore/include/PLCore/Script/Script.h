@@ -50,7 +50,7 @@ namespace PLCore {
 *    - "Formats":  File format extensions this script can load in (for example: "js" or "lua")
 *
 *    Supported script features:
-*    - Global variables
+*    - Global variables (with namespace support)
 *    - Global functions
 *      - C++ calls script
 *      - Script calls C++ (with namespace support)
@@ -221,12 +221,14 @@ class Script : public Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Returns a list of all global variable names
+		*    Adds the names of found global variables to a given list
 		*
-		*  @return
-		*    A list of all global variable names
+		*  @param[out] lstGlobalVariables
+		*    List to be filled with the names (without namespace) of the found global variables, the given list is not cleared before new entries are added
+		*  @param[in]  sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*/
-		virtual const PLGeneral::Array<PLGeneral::String> &GetGlobalVariables() = 0;
+		virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -234,11 +236,13 @@ class Script : public Object {
 		*
 		*  @param[in] sName
 		*    Name of the global variable
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    'true' if the given name belongs to a global variable, else 'false'
 		*/
-		virtual bool IsGlobalVariable(const PLGeneral::String &sName) = 0;
+		virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -246,11 +250,13 @@ class Script : public Object {
 		*
 		*  @param[in] sName
 		*    Name of the global variable
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    The type ID of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
 		*/
-		virtual ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName) = 0;
+		virtual ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -258,11 +264,13 @@ class Script : public Object {
 		*
 		*  @param[in] sName
 		*    Name of the global variable
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    The current value of the global variable
 		*/
-		virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName) = 0;
+		virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -272,13 +280,15 @@ class Script : public Object {
 		*    Name of the global variable
 		*  @param[in] cValue
 		*    New value of the global variable
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @note
 		*    - If there's no global variable with the given name, a new global variable is added to the script
 		*    - Please note that it depends on the used script language/API which data types are really available,
 		*      this means that "GetGlobalVariableTypeID()" may return another data type as the one you specified
 		*/
-		virtual void SetGlobalVariable(const PLGeneral::String &sName, const DynVar &cValue) = 0;
+		virtual void SetGlobalVariable(const PLGeneral::String &sName, const DynVar &cValue, const PLGeneral::String &sNamespace = "") = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
