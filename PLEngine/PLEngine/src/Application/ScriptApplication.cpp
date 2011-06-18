@@ -105,17 +105,19 @@ String ScriptApplication::GetBaseDirectory() const
 *  @brief
 *    Sets the base directory of the application
 */
-void ScriptApplication::SetBaseDirectory(String sBaseDirectory)
+void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 {
+	String sNewBaseDirectory = sBaseDirectory;
+
 	// Is the given base directory absolute?
-	if (!Url(sBaseDirectory).IsAbsolute()) {
+	if (!Url(sNewBaseDirectory).IsAbsolute()) {
 		// Nope - if there's currently a script running, use it's absolute filename as start point
 		if (m_pScript) {
 			// Get the directory the script is in
 			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
 
 			// Construct the application base directory
-			sBaseDirectory = sDirectory + sBaseDirectory;
+			sNewBaseDirectory = sDirectory + sNewBaseDirectory;
 		}
 	}
 
@@ -124,7 +126,7 @@ void ScriptApplication::SetBaseDirectory(String sBaseDirectory)
 		LoadableManager::GetInstance()->RemoveBaseDir(m_sCurrentSceneBaseDirectory);
 
 	// Set the new application base directory
-	m_sCurrentSceneBaseDirectory = sBaseDirectory;
+	m_sCurrentSceneBaseDirectory = sNewBaseDirectory;
 
 	// Add the given base directory to the loadable manager
 	if (m_sCurrentSceneBaseDirectory.GetLength())

@@ -388,7 +388,7 @@ AType *ElementManager<AType>::GetByIndex(uint32 nIndex) const
 *    Returns the element with the given name
 */
 template <class AType>
-AType *ElementManager<AType>::GetByName(String sName) const
+AType *ElementManager<AType>::GetByName(const String &sName) const
 {
 	// Search for an object with that name
 	return m_mapElements.Get(sName);

@@ -108,7 +108,7 @@ SceneRenderer *SceneRendererTool::GetSceneRenderer() const
 *  @brief
 *    Sets the used scene renderer
 */
-bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, String sFilename, String sFallbackFilename)
+bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, const String &sFilename, const String &sFallbackFilename)
 {
 	// Is there a surface painter and is it an "SPScene"-instance?
 	if (pSceneContainer && m_pSurfacePainter && m_pSurfacePainter->IsInstanceOf("PLScene::SPScene")) {
@@ -168,7 +168,7 @@ bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, String
 *  @brief
 *    Gets a scene renderer pass
 */
-SceneRendererPass *SceneRendererTool::GetPass(String sName) const
+SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
 {
 	// Get the scene renderer
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();
@@ -202,7 +202,7 @@ DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName
 *  @brief
 *    Sets a scene renderer pass attribute value using a string
 */
-bool SceneRendererTool::SetPassAttribute(String sSceneRendererPassName, String sAttributeName, String sValue) const
+bool SceneRendererTool::SetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName, const String &sValue) const
 {
 	// Get the scene renderer pass
 	SceneRendererPass *pSceneRendererPass = GetPass(sSceneRendererPassName);
@@ -226,7 +226,7 @@ bool SceneRendererTool::SetPassAttribute(String sSceneRendererPassName, String s
 *  @brief
 *    Sets scene renderer pass attribute values using a string
 */
-uint32 SceneRendererTool::SetAttribute(String sAttributeName, String sValue) const
+uint32 SceneRendererTool::SetAttribute(const String &sAttributeName, const String &sValue) const
 {
 	uint32 nNumOfSetAttributes = 0;
 
@@ -259,7 +259,7 @@ uint32 SceneRendererTool::SetAttribute(String sAttributeName, String sValue) con
 *  @brief
 *    Sets scene renderer pass attribute values using a string
 */
-void SceneRendererTool::SetValues(String sValues) const
+void SceneRendererTool::SetValues(const String &sValues) const
 {
 	// Get the scene renderer
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();

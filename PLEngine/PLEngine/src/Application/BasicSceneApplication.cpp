@@ -197,7 +197,7 @@ void BasicSceneApplication::SetCamera(SNCamera *pCamera)
 	SignalCameraSet();
 }
 
-bool BasicSceneApplication::LoadScene(String sFilename)
+bool BasicSceneApplication::LoadScene(const String &sFilename)
 {
 	// Get the scene container holding our scene
 	SceneContainer *pContainer = GetScene();

@@ -676,7 +676,7 @@ const Sphere &SceneNode::GetContainerBoundingSphere()
 *  @brief
 *    Returns the number of modifiers
 */
-uint32 SceneNode::GetNumOfModifiers(String sClass) const
+uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 {
 	// Return total number of modifiers?
 	if (!sClass.GetLength())
@@ -697,7 +697,7 @@ uint32 SceneNode::GetNumOfModifiers(String sClass) const
 *  @brief
 *    Adds a modifier
 */
-SceneNodeModifier *SceneNode::AddModifier(String sClass, String sParameters)
+SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -749,7 +749,7 @@ SceneNodeModifier *SceneNode::AddModifier(String sClass, String sParameters)
 *  @brief
 *    Returns a modifier
 */
-SceneNodeModifier *SceneNode::GetModifier(String sClass, uint32 nIndex) const
+SceneNodeModifier *SceneNode::GetModifier(const String &sClass, uint32 nIndex) const
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;
@@ -793,7 +793,7 @@ bool SceneNode::RemoveModifier(SceneNodeModifier &cModifier)
 *  @brief
 *    Removes a modifier
 */
-bool SceneNode::RemoveModifier(String sClass, uint32 nIndex)
+bool SceneNode::RemoveModifier(const String &sClass, uint32 nIndex)
 {
 	if (sClass.GetLength()) {
 		uint32 nInstances = 0;

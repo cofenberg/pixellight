@@ -127,7 +127,7 @@ SceneContainer::~SceneContainer()
 *  @brief
 *    Creates a new scene node
 */
-SceneNode *SceneContainer::Create(String sClass, String sName, String sParameters)
+SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -521,7 +521,7 @@ SceneNode *SceneContainer::GetByIndex(uint32 nIndex) const
 	return m_lstElements[nIndex];
 }
 
-SceneNode *SceneContainer::GetByName(String sName) const
+SceneNode *SceneContainer::GetByName(const String &sName) const
 {
 	// Name not empty and is '.' the first character?
 	if (sName.GetLength() && sName[static_cast<uint32>(0)] != '.') {

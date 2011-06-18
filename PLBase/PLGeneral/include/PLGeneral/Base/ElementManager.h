@@ -301,7 +301,7 @@ template <class AType> class ElementManager {
 		*      for instance within SceneContainer to be able to use 'absolute names'
 		*      like 'Root.MyScene.MyNode', too.
 		*/
-		virtual AType *GetByName(String sName) const;
+		virtual AType *GetByName(const String &sName) const;
 
 
 	//[-------------------------------------------------------]

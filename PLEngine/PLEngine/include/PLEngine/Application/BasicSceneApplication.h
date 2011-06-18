@@ -75,7 +75,7 @@ class BasicSceneApplication : public SceneApplication {
 		pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),								"Returns the scene container (the 'concrete scene'), can be a null pointer",																							"")
 		pl_method_1(SetScene,				pl_ret_type(void),						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'), new scene container as first parameter (can be a null pointer)",														"")
 		pl_method_0(ClearScene,				pl_ret_type(void),													"Clears the scene, after calling this method the scene is empty",																										"")
-		pl_method_1(LoadScene,				pl_ret_type(bool),						PLGeneral::String,			"Loads a scene, filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
+		pl_method_1(LoadScene,				pl_ret_type(bool),						const PLGeneral::String&,	"Loads a scene, filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
 		pl_method_0(GetCamera,				pl_ret_type(PLScene::SNCamera*),									"Get scene camera, can be a null pointer",																																"")
 		pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool&),									"Returns the scene renderer tool",																																		"")
 		pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera, new scene camera as first parameter (can be a null pointer)",																					"")
@@ -232,7 +232,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    - If currently the edit dialog is opened, it will be closed automatically to avoid update problems
 		*    - Emits the "SignalSceneLoadingFinished"-signal when the scene loading has been finished successfully
 		*/
-		PL_API virtual bool LoadScene(PLGeneral::String sFilename);
+		PL_API virtual bool LoadScene(const PLGeneral::String &sFilename);
 
 
 	//[-------------------------------------------------------]
