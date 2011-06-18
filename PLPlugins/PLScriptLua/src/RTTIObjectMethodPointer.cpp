@@ -53,11 +53,11 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 
 	// Get the number of arguments Lua gave to us
 	String sParams;
+	uint32 nParameterIndex = 0;
 	const int nOffset				= bIsMethod ? 2 : 0;
 	const int nNumOfArguments		= lua_gettop(pLuaState) - nOffset;
 	const int nIndexOfFirstArgument	= 1+nOffset;
-	for (int i=nIndexOfFirstArgument; i<=nOffset+nNumOfArguments; i++) {
-		const uint32 nParameterIndex = i - nIndexOfFirstArgument;
+	for (int i=nIndexOfFirstArgument; i<=nOffset+nNumOfArguments; i++, nParameterIndex++) {
 		String sValue;
 
 		// Is it user data?
@@ -108,6 +108,24 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 
 		// Add the Lua argument to the parameter string
 		sParams += String("Param") + (nParameterIndex) + "=\"" + sValue + "\" ";
+	}
+
+	// Does the RTTI signature demand more parameters as the script programmer provided?
+	if (nParameterIndex < cDynSignature.GetNumOfParameters()) {
+		// Add the missing parameters by using an empty string
+		for (; nParameterIndex<cDynSignature.GetNumOfParameters(); nParameterIndex++) {
+			String sValue = "";
+
+			// Strings are somewhat of a special case... see method documentation for details
+			// In here, TypePtr is not interesting because it automatically results in a null pointer
+			if (cDynSignature.GetParameterTypeID(nParameterIndex) == TypeRef) {
+				// Give the RTTI method a reference to the temporaty string
+				sValue = Type<String&>::ConvertToString(lstTempStrings.Add(sValue));
+			}
+
+			// Add the dummy to the parameter string
+			sParams += String("Param") + (nParameterIndex) + "=\"" + sValue + "\" ";
+		}
 	}
 
 	// Return the parameters string

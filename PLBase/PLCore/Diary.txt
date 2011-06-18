@@ -18,6 +18,8 @@
      within scripts. But the solution within PLScriptLua solves this issue and the PixelLight interfaces don't need to be rewritten. The solution also introduces no
 	 extreme runtime overhead because the string class is quite optimized internally and is using e.g. the "copy-on-write"-concept. So, those temporary strings on the
 	 runtime stack don't really hurt much.
+- "PLScriptLua::RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()": If a RTTI signature demands more parameters as the script programmer provided, we need to add
+  the missing parameters because if there's a reference parameter it really needs a valid address
 
 
 
