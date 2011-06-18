@@ -1,3 +1,10 @@
+>> 18.06.2011
+[CO]
+- "SceneNode": Renamed "RemoveModifier(SceneNodeModifier &cModifier)" into "RemoveModifierByReference(SceneNodeModifier &cModifier)" in order
+  to make it possible to expose it to the RTTI
+
+
+
 >> 07.06.2011
 [CO]
 - "PLScene::SceneNode" events are now implemented as RTTI signals

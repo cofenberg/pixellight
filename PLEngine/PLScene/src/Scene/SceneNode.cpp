@@ -773,9 +773,9 @@ SceneNodeModifier *SceneNode::GetModifier(const String &sClass, uint32 nIndex) c
 
 /**
 *  @brief
-*    Removes a modifier
+*    Removes a modifier by using a given reference to the modifier to remove
 */
-bool SceneNode::RemoveModifier(SceneNodeModifier &cModifier)
+bool SceneNode::RemoveModifierByReference(SceneNodeModifier &cModifier)
 {
 	// Check parameter
 	if (&cModifier.GetSceneNode() != this)
