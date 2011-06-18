@@ -57,7 +57,7 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 	const int nNumOfArguments		= lua_gettop(pLuaState) - nOffset;
 	const int nIndexOfFirstArgument	= 1+nOffset;
 	for (int i=nIndexOfFirstArgument; i<=nOffset+nNumOfArguments; i++) {
-		const uint32 nParameterIndex = nIndexOfFirstArgument - i;
+		const uint32 nParameterIndex = i - nIndexOfFirstArgument;
 		String sValue;
 
 		// Is it user data?
