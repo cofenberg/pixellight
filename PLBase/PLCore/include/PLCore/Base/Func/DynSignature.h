@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DynEventHandler.h                              *
+ *  File: DynSignature.h                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,16 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_DYNEVENTHANDLER_H__
-#define __PLCORE_DYNEVENTHANDLER_H__
+#ifndef __PLCORE_DYNSIGNATURE_H__
+#define __PLCORE_DYNSIGNATURE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/SimpleList.h>
-#include "PLCore/Base/Func/DynSignature.h"
+#include <PLGeneral/String/String.h>
+#include "PLCore/PLCore.h"
 
 
 //[-------------------------------------------------------]
@@ -39,33 +39,13 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class DynEvent;
-class DynParams;
-class EventHandlerDesc;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Virtual base class for event handlers
-*
-*  @remarks
-*    This is the virtual base class to access event handlers dynamically.
-*
-*  @note
-*    - Implementation of the observer design pattern (this class is the observer, the destination)
+*    Virtual base class for signatures
 */
-class DynEventHandler : public DynSignature {
-
-
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class DynEvent;
+class DynSignature {
 
 
 	//[-------------------------------------------------------]
@@ -76,34 +56,57 @@ class DynEventHandler : public DynSignature {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API DynEventHandler();
+		PLCORE_API DynSignature();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~DynEventHandler();
+		PLCORE_API virtual ~DynSignature();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual DynEventHandler functions              ]
+	//[ Public virtual DynSignature functions                 ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Get event handler descriptor
+		*    Get signature as string
 		*
 		*  @return
-		*    Descriptor (can be a null pointer)
+		*    Signature
 		*/
-		PLCORE_API virtual const EventHandlerDesc *GetDesc() const;
+		PLCORE_API virtual PLGeneral::String GetSignature() const;
 
+		/**
+		*  @brief
+		*    Get the return type ID
+		*
+		*  @return
+		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()"), "TypeInvalid" if there's no return type
+		*/
+		PLCORE_API virtual int GetReturnTypeID() const;
 
-	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
-	//[-------------------------------------------------------]
-	protected:
-		PLGeneral::SimpleList<DynEvent*> m_lstEvents;	/**< List of events */
+		/**
+		*  @brief
+		*    Return the number of parameters
+		*
+		*  @return
+		*    Number of parameters
+		*/
+		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
+
+		/**
+		*  @brief
+		*    Get a parameter type ID
+		*
+		*  @param[in] nIndex
+		*    Index of the parameter to return the type ID from
+		*
+		*  @return
+		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
+		*/
+		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
 
 
 };
@@ -115,4 +118,4 @@ class DynEventHandler : public DynSignature {
 } // PLCore
 
 
-#endif // __PLCORE_DYNEVENTHANDLER_H__
+#endif // __PLCORE_DYNSIGNATURE_H__

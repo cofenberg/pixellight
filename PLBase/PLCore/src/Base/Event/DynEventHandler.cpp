@@ -71,16 +71,6 @@ const EventHandlerDesc *DynEventHandler::GetDesc() const
 	return nullptr;
 }
 
-/**
-*  @brief
-*    Get signature as string
-*/
-String DynEventHandler::GetSignature() const
-{
-	// No function
-	return "";
-}
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

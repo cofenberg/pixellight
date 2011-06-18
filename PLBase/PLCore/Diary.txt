@@ -1,3 +1,12 @@
+>> 18.06.2011
+[CO]
+- Added "DynSignature"-interface and derived "DynEvent", "DynEventHandler", "DynFunc" and "DynParams" from this new interface. Previously, those interfaces had
+  only a "GetSignature()"-method in order to request the signature description as string. With the introduction of script support there was a need to get concrete
+  type ID information of return and parameters for proper exchange of data between script and C++. Of course, it would have been possible to just parse the already
+  available signature-string, but this would have been a little bit uncomfortable.
+
+
+
 >> 17.06.2011
 [CO]
 - "Script": Added support for "Object&"

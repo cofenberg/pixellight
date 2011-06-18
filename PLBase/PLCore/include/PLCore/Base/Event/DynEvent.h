@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGeneral/Container/SimpleList.h>
 #include "PLCore/Base/Func/Signature.h"
-#include "PLCore/PLCore.h"
+#include "PLCore/Base/Func/DynSignature.h"
 
 
 //[-------------------------------------------------------]
@@ -40,9 +40,9 @@ namespace PLGeneral {
 	class XmlElement;
 }
 namespace PLCore {
+	class EventDesc;
 	class DynParams;
 	class DynEventHandler;
-	class EventDesc;
 }
 
 
@@ -65,7 +65,7 @@ namespace PLCore {
 *  @note
 *    - Implementation of the observer design pattern (this class is the subject/observable, the source)
 */
-class DynEvent {
+class DynEvent : public DynSignature {
 
 
 	//[-------------------------------------------------------]
@@ -135,36 +135,6 @@ class DynEvent {
 		*    Descriptor (can be a null pointer)
 		*/
 		PLCORE_API virtual const EventDesc *GetDesc() const;
-
-		/**
-		*  @brief
-		*    Get signature as string
-		*
-		*  @return
-		*    Signature as string
-		*/
-		PLCORE_API virtual PLGeneral::String GetSignature() const;
-
-		/**
-		*  @brief
-		*    Return the number of parameters
-		*
-		*  @return
-		*    Number of parameters
-		*/
-		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
-
-		/**
-		*  @brief
-		*    Get a parameter type ID
-		*
-		*  @param[in] nIndex
-		*    Index of the parameter to return the type ID from
-		*
-		*  @return
-		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
-		*/
-		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
 
 		/**
 		*  @brief

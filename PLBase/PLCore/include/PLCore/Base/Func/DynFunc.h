@@ -28,9 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include <PLGeneral/Base/SmartPtr.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/Base/Func/DynSignature.h"
 
 
 //[-------------------------------------------------------]
@@ -40,8 +39,8 @@ namespace PLGeneral {
 	class XmlElement;
 }
 namespace PLCore {
-	class DynParams;
 	class FuncDesc;
+	class DynParams;
 }
 
 
@@ -63,7 +62,7 @@ namespace PLCore {
 *    It is a virtual interface that allows you to call a function or function like object
 *    regardless of it's actual type (e.g. static function, method of an object or function object).
 */
-class DynFunc {
+class DynFunc : public DynSignature {
 
 
 	//[-------------------------------------------------------]
@@ -89,45 +88,6 @@ class DynFunc {
 		*    Descriptor (can be a null pointer)
 		*/
 		PLCORE_API virtual const FuncDesc *GetDesc() const;
-
-		/**
-		*  @brief
-		*    Get signature as string
-		*
-		*  @return
-		*    Signature as string
-		*/
-		PLCORE_API virtual PLGeneral::String GetSignature() const;
-
-		/**
-		*  @brief
-		*    Get the return type ID
-		*
-		*  @return
-		*    Return type ID (e.g. "TypeNull" for "void()" or "TypeInt" for "int()")
-		*/
-		PLCORE_API virtual int GetReturnTypeID() const;
-
-		/**
-		*  @brief
-		*    Return the number of parameters
-		*
-		*  @return
-		*    Number of parameters
-		*/
-		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
-
-		/**
-		*  @brief
-		*    Get a parameter type ID
-		*
-		*  @param[in] nIndex
-		*    Index of the parameter to return the type ID from
-		*
-		*  @return
-		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
-		*/
-		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
 
 		/**
 		*  @brief

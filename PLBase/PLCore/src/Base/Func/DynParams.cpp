@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/Type/Type.h"
 #include "PLCore/Base/Func/DynParams.h"
 
 
@@ -59,52 +58,12 @@ DynParams::~DynParams()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Get signature as string
-*/
-String DynParams::GetSignature() const
-{
-	// No parameters
-	return "";
-}
-
-/**
-*  @brief
-*    Get the return type ID
-*/
-int DynParams::GetReturnTypeID() const
-{
-	// No function
-	return TypeInvalid;
-}
-
-/**
-*  @brief
 *    Get a pointer to the return value
 */
 void *DynParams::GetPointerToReturnValue()
 {
 	// No function
 	return nullptr;
-}
-
-/**
-*  @brief
-*    Return the number of parameters
-*/
-uint32 DynParams::GetNumOfParameters() const
-{
-	// No function
-	return 0;
-}
-
-/**
-*  @brief
-*    Get a parameter type ID
-*/
-int DynParams::GetParameterTypeID(uint32 nIndex) const
-{
-	// No function
-	return TypeInvalid;
 }
 
 /**

@@ -186,6 +186,7 @@
     <ClCompile Include="src\Base\Func\ConstructorDesc.cpp" />
     <ClCompile Include="src\Base\Func\DynFunc.cpp" />
     <ClCompile Include="src\Base\Func\DynParams.cpp" />
+    <ClCompile Include="src\Base\Func\DynSignature.cpp" />
     <ClCompile Include="src\Base\Func\FuncDesc.cpp" />
     <ClCompile Include="src\Base\Tools\ParamsParser.cpp" />
     <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="include\PLCore\Base\Func\ConstructorDesc.h" />
     <ClInclude Include="include\PLCore\Base\Func\DynFunc.h" />
     <ClInclude Include="include\PLCore\Base\Func\DynParams.h" />
+    <ClInclude Include="include\PLCore\Base\Func\DynSignature.h" />
     <ClInclude Include="include\PLCore\Base\Func\Func.h" />
     <ClInclude Include="include\PLCore\Base\Func\FuncConstructor.h" />
     <ClInclude Include="include\PLCore\Base\Func\FuncDesc.h" />

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DynFunc.cpp                                    *
+ *  File: DynSignature.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Base/Func/DynFunc.h"
-#include "PLCore/Base/Func/DynParams.h"
+#include "PLCore/Base/Type/Type.h"
+#include "PLCore/Base/Func/DynSignature.h"
 
 
 //[-------------------------------------------------------]
@@ -39,122 +39,62 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Constructor
+*/
+DynSignature::DynSignature()
+{
+}
+
+/**
+*  @brief
 *    Destructor
 */
-DynFunc::~DynFunc()
+DynSignature::~DynSignature()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Public virtual DynFunc functions                      ]
+//[ Public virtual DynSignature functions                 ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Get function descriptor
+*    Get signature as string
 */
-const FuncDesc *DynFunc::GetDesc() const
+String DynSignature::GetSignature() const
 {
-	// No descriptor by default
-	return nullptr;
-}
-
-/**
-*  @brief
-*    Call function
-*/
-void DynFunc::Call(DynParams &cParams)
-{
-	// No function
-}
-
-/**
-*  @brief
-*    Call function
-*/
-void DynFunc::Call(const DynParams &cParams)
-{
-	// No function
-}
-
-/**
-*  @brief
-*    Call function
-*/
-void DynFunc::Call(const String &sParams)
-{
-	// No function
-}
-
-/**
-*  @brief
-*    Call function
-*/
-void DynFunc::Call(const XmlElement &cElement)
-{
-	// No function
-}
-
-/**
-*  @brief
-*    Call function with return as string
-*/
-String DynFunc::CallWithReturn(const String &sParams)
-{
-	// No function
+	// No parameters
 	return "";
 }
 
 /**
 *  @brief
-*    Call function with return as string
+*    Get the return type ID
 */
-String DynFunc::CallWithReturn(const XmlElement &cElement)
+int DynSignature::GetReturnTypeID() const
 {
 	// No function
-	return "";
+	return TypeInvalid;
 }
 
 /**
 *  @brief
-*    Clone function object
+*    Return the number of parameters
 */
-DynFunc *DynFunc::Clone() const
+uint32 DynSignature::GetNumOfParameters() const
 {
 	// No function
-	return nullptr;
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Default constructor
-*/
-DynFunc::DynFunc()
-{
+	return 0;
 }
 
 /**
 *  @brief
-*    Copy constructor
+*    Get a parameter type ID
 */
-DynFunc::DynFunc(const DynFunc &cDynFunc)
+int DynSignature::GetParameterTypeID(uint32 nIndex) const
 {
-	// No implementation because the copy constructor is never used
-}
-
-/**
-*  @brief
-*    Copy operator
-*
-*/
-DynFunc &DynFunc::operator =(const DynFunc &cDynFunc)
-{
-	// No implementation because the copy operator is never used
-	return *this;
+	// No function
+	return TypeInvalid;
 }
 
 

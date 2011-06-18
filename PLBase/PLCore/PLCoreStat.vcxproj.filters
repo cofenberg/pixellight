@@ -175,6 +175,9 @@
     <ClCompile Include="src\Script\Script.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="src\Base\Func\DynSignature.cpp">
+      <Filter>Base\Func</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Core.h">
@@ -413,6 +416,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Script\Script.h">
       <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Base\Func\DynSignature.h">
+      <Filter>Base\Func</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

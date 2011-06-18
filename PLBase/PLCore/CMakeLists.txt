@@ -31,6 +31,7 @@ add_sources(
 	src/Base/Func/DynFunc.cpp
 	src/Base/Func/DynParams.cpp
 	src/Base/Func/FuncDesc.cpp
+	src/Base/Func/DynSignature.cpp
 	src/Base/Tools/ParamsParser.cpp
 	src/Base/Tools/ParamsParserXml.cpp
 	src/Base/TypeInfo/DynTypeInfo.cpp
