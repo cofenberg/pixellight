@@ -82,9 +82,9 @@ Class *Object::GetClass() const
 
 /**
 *  @brief
-*    Check if object is instance of a given class
+*    Check if object is instance of a given class by using a given class reference
 */
-bool Object::IsInstanceOf(const Class &cClass) const
+bool Object::IsInstanceOfByReference(const Class &cClass) const
 {
 	// Get class
 	const Class *pClass = GetClass();
@@ -104,7 +104,7 @@ bool Object::IsInstanceOf(const Class &cClass) const
 
 /**
 *  @brief
-*    Check if object is instance of a given class
+*    Check if object is instance of a given class by using a class name
 */
 bool Object::IsInstanceOf(const String &sClass) const
 {
@@ -112,7 +112,7 @@ bool Object::IsInstanceOf(const String &sClass) const
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sClass);
 	if (pClass) {
 		// Check class
-		return IsInstanceOf(*pClass);
+		return IsInstanceOfByReference(*pClass);
 	}
 
 	// Class could not be found

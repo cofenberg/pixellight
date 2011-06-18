@@ -78,6 +78,15 @@ class Object : public ObjectBase {
 		// Properties
 		pl_properties
 		pl_properties_end
+		// Methods
+		pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const PLGeneral::String&,								"Check if object is instance of a given class, class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
+		pl_method_2(SetAttribute,			pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Set attribute value, attribute name as first parameter, attribute value as second parameter",																											"")
+		pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const PLGeneral::String&,								"Set attribute to it's default value, attribute name as first parameter",																																"")
+		pl_method_2(CallMethod,				pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Call method, method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter",																				"")
+		pl_method_1(SetValues,				pl_ret_type(void),				const PLGeneral::String&,								"Set attribute values as a string, string containing attributes and values as first parameter",																											"")
+		pl_method_0(SetDefaultValues,		pl_ret_type(void),																		"Set all attributes to default",																																										"")
+		pl_method_0(ToString,				pl_ret_type(PLGeneral::String),															"Get object as string. Returns string representation of object.",																																		"")
+		pl_method_1(FromString,				pl_ret_type(void),				const PLGeneral::String&,								"Set object from string, string representation of object as first parameter",																															"")
 	pl_class_end
 
 
@@ -111,7 +120,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Check if object is instance of a given class
+		*    Check if object is instance of a given class by using a given class reference
 		*
 		*  @param[in] cClass
 		*    Class
@@ -119,7 +128,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    'true' if the object is an instance of the class or one of it's derived classes, else 'false'
 		*/
-		PLCORE_API bool IsInstanceOf(const Class &cClass) const;
+		PLCORE_API bool IsInstanceOfByReference(const Class &cClass) const;
 
 		/**
 		*  @brief

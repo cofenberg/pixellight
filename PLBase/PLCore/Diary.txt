@@ -27,6 +27,11 @@
 - "Script": Due to namespace support for global variables, I had to change the "GetGlobalVariables()"-signature. This method no longer returns a list of found global variables,
   instead a list to be filled up has to be provided as parameter.
 - "Script": Added support for global script functions which are inside a namespace. Currently, this namespace support is only implemented within PLScriptLua.
+- "pl_class_internal"-macro: Added "__pl_rtti_export(PLCORE_RTTI_EXPORT)" within the RTTI macro to make it possible to expose "Object"-methods to the RTTI
+- "Object": Renamed "IsInstanceOf(const Class &cClass)" into "IsInstanceOfByReference(const Class &cClass)" to make it possible to expose the
+  "IsInstanceOf(const PLGeneral::String &sClass)" method to the RTTI (this version of the method is the more often used one)
+- "Object": Exposed several methods to the RTTI... this makes it for instance possible to construct the names of methods/attributes etc. to be called from inside a script
+   dynamically inside the script...
 
 
 
