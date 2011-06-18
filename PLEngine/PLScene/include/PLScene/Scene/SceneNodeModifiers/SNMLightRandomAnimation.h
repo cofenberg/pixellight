@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLGraphics/Color/Color3.h>
 #include "PLScene/Scene/SceneNodeModifier.h"
 
@@ -92,6 +91,8 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",			"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -131,13 +132,6 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

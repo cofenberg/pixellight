@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifier.h"
 
 
@@ -59,6 +58,8 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 		pl_attribute(Timeout,	float,	5.0f,	ReadWrite,	GetSet,	"Timeout in seconds (if value set=restart)",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -106,13 +107,6 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

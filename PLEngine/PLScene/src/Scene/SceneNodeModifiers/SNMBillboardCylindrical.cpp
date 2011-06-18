@@ -53,7 +53,7 @@ pl_implement_class(SNMBillboardCylindrical)
 */
 SNMBillboardCylindrical::SNMBillboardCylindrical(SceneNode &cSceneNode) : SNMBillboard(cSceneNode),
 	UpVector(this),
-	EventHandlerAddedToVisibilityTree(&SNMBillboardCylindrical::OnAddedToVisibilityTree, this)
+	SlotOnAddedToVisibilityTree(this)
 {
 }
 
@@ -74,10 +74,10 @@ void SNMBillboardCylindrical::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	if (bActivate) {
 		// Connect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Connect(EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Connect(SlotOnAddedToVisibilityTree);
 	} else {
 		// Disconnect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(SlotOnAddedToVisibilityTree);
 	}
 }
 

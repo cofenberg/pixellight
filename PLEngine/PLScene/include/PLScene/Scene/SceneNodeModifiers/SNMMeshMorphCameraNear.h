@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshMorph.h"
 
 
@@ -62,6 +61,8 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 		pl_attribute(OutSpeed,	float,				2.0f,	ReadWrite,	DirectValue,	"Blend out speed",																								"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -101,13 +102,6 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 };

@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector3.h>
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMBillboard.h"
 
 
@@ -68,6 +67,8 @@ class SNMBillboardCylindrical : public SNMBillboard {
 		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_1(OnAddedToVisibilityTree,	VisNode&,	"Called when the owner scene node was added to a visibility tree, visibility node which is representing the owner scene node within the visibility tree as first parameter",	"")
 	pl_class_end
 
 
@@ -123,13 +124,6 @@ class SNMBillboardCylindrical : public SNMBillboard {
 		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
 		void OnAddedToVisibilityTree(VisNode &cVisNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<VisNode &> EventHandlerAddedToVisibilityTree;
 
 
 };

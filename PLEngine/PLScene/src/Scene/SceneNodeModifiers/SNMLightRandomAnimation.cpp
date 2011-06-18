@@ -57,7 +57,7 @@ SNMLightRandomAnimation::SNMLightRandomAnimation(SceneNode &cSceneNode) : SceneN
 	FixColor(this),
 	Color(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMLightRandomAnimation::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_fTimer(0.0f)
 {
 }
@@ -80,9 +80,9 @@ void SNMLightRandomAnimation::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

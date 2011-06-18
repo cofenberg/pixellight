@@ -65,7 +65,7 @@ void SNMDeactivationOnTimeout::SetTimeout(float fValue)
 */
 SNMDeactivationOnTimeout::SNMDeactivationOnTimeout(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Timeout(this),
-	EventHandlerUpdate(&SNMDeactivationOnTimeout::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_fTimeout(5.0f),
 	m_fTimer(0.0f)
 {
@@ -89,9 +89,9 @@ void SNMDeactivationOnTimeout::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

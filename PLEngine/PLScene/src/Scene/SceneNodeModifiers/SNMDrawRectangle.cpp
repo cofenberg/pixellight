@@ -59,7 +59,7 @@ SNMDrawRectangle::SNMDrawRectangle(SceneNode &cSceneNode) : SNMDraw(cSceneNode),
 	Width(this),
 	Color(this),
 	Flags(this),
-	EventHandlerDrawTransparent(&SNMDrawRectangle::OnDrawTransparent, this)
+	SlotOnDrawTransparent(this)
 {
 	// Set draw function flags
 	cSceneNode.SetDrawFunctionFlags(static_cast<uint8>(cSceneNode.GetDrawFunctionFlags() | SceneNode::UseDrawTransparent));
@@ -81,9 +81,9 @@ void SNMDrawRectangle::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	if (bActivate)
-		GetSceneNode().SignalDrawTransparent.Connect(EventHandlerDrawTransparent);
+		GetSceneNode().SignalDrawTransparent.Connect(SlotOnDrawTransparent);
 	else
-		GetSceneNode().SignalDrawTransparent.Disconnect(EventHandlerDrawTransparent);
+		GetSceneNode().SignalDrawTransparent.Disconnect(SlotOnDrawTransparent);
 }
 
 

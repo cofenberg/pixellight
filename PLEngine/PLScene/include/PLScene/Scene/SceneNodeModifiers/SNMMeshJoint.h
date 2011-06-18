@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMMesh.h"
 
@@ -98,6 +97,9 @@ class SNMMeshJoint : public SNMMesh {
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,			"Flags",																				"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,												"Called when the scene node modifier needs to be updated",																												"")
+		pl_slot_2(OnDrawDebug,	PLRenderer::Renderer&,	const VisNode*,	"Called on scene node debug draw, the used renderer as first parameter, the current visibility node of this scene node (can be a null pointer) as second parameter",	"")
 	pl_class_end
 
 
@@ -180,14 +182,6 @@ class SNMMeshJoint : public SNMMesh {
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void OnDrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<>										  EventHandlerUpdate;
-		PLCore::EventHandler<PLRenderer::Renderer &, const VisNode *> EventHandlerDrawDebug;
 
 
 	//[-------------------------------------------------------]

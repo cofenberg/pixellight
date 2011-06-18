@@ -65,6 +65,8 @@ class SNMCameraZoomController : public SNMCameraZoom {
 		pl_attribute(InputSemantic,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slot
+		pl_slot_1(OnControl,	PLInput::Control*,	"Called when a control event has occured, the control causing the event as first parameter",	"")
 	pl_class_end
 
 
@@ -115,13 +117,6 @@ class SNMCameraZoomController : public SNMCameraZoom {
 		*    The control causing the event
 		*/
 		void OnControl(PLInput::Control *pControl);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<PLInput::Control*> EventHandlerControl;
 
 
 	//[-------------------------------------------------------]

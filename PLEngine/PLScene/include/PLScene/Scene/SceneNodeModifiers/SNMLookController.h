@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
@@ -81,6 +80,8 @@ class SNMLookController : public SNMTransform {
 		pl_attribute(Flags,			pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,			"Flags",												"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -128,13 +129,6 @@ class SNMLookController : public SNMTransform {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]

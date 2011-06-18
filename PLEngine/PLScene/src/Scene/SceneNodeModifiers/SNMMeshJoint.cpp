@@ -179,8 +179,8 @@ SNMMeshJoint::SNMMeshJoint(SceneNode &cSceneNode) : SNMMesh(cSceneNode),
 	MaxDifference(this),
 	FallbackRotation(this),
 	Flags(this),
-	EventHandlerUpdate	 (&SNMMeshJoint::OnUpdate,    this),
-	EventHandlerDrawDebug(&SNMMeshJoint::OnDrawDebug, this)
+	SlotOnUpdate(this),
+	SlotOnDrawDebug(this)
 {
 	// Create the mesh animation manager
 	MeshHandler *pMeshHandler = cSceneNode.GetMeshHandler();
@@ -214,16 +214,16 @@ void SNMMeshJoint::OnActivate(bool bActivate)
 		UpdateJoint();
 
 		// Connect event handlers
-		cSceneNode.SignalDrawDebug.Connect(EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Connect(SlotOnDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.SignalDrawDebug.Disconnect(EventHandlerDrawDebug);
+		cSceneNode.SignalDrawDebug.Disconnect(SlotOnDrawDebug);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

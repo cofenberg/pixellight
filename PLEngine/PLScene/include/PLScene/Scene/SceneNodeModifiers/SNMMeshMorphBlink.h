@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMMeshMorph.h"
 
 
@@ -63,6 +62,8 @@ class SNMMeshMorphBlink : public SNMMeshMorph {
 		pl_attribute(Speed,			float,	6.0f,	ReadWrite,	DirectValue,	"Animation speed",										"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -102,13 +103,6 @@ class SNMMeshMorphBlink : public SNMMeshMorph {
 		*    Called when the scene node modifier needs to be updated
 		*/
 		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 };

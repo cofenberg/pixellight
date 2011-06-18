@@ -52,7 +52,7 @@ pl_implement_class(SNMBillboardSpherical)
 *    Constructor
 */
 SNMBillboardSpherical::SNMBillboardSpherical(SceneNode &cSceneNode) : SNMBillboard(cSceneNode),
-	EventHandlerAddedToVisibilityTree(&SNMBillboardSpherical::OnAddedToVisibilityTree, this)
+	SlotOnAddedToVisibilityTree(this)
 {
 }
 
@@ -73,10 +73,10 @@ void SNMBillboardSpherical::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	if (bActivate) {
 		// Connect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Connect(EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Connect(SlotOnAddedToVisibilityTree);
 	} else {
 		// Disconnect event handler
-		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(EventHandlerAddedToVisibilityTree);
+		GetSceneNode().SignalAddedToVisibilityTree.Disconnect(SlotOnAddedToVisibilityTree);
 	}
 }
 

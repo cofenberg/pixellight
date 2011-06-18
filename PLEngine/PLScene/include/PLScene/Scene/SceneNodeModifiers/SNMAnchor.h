@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
 #include "PLScene/Scene/SceneNodeHandler.h"
 #include "PLScene/Scene/SceneNodeModifier.h"
@@ -89,6 +88,9 @@ class SNMAnchor : public SceneNodeModifier {
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,			"Flags",																										"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnContainer,				"Called when the scene node container changed",									"")
+		pl_slot_0(OnPositionRotationUpdate,	"Called when the scene node position or rotation changed or on update request",	"")
 	pl_class_end
 
 
@@ -142,14 +144,6 @@ class SNMAnchor : public SceneNodeModifier {
 		*    Called when the scene node position or rotation changed or on update request
 		*/
 		void OnPositionRotationUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerContainer;
-		PLCore::EventHandler<> EventHandlerPositionRotationUpdate;
 
 
 	//[-------------------------------------------------------]

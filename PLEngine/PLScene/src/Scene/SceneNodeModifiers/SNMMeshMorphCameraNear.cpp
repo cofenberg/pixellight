@@ -56,7 +56,7 @@ SNMMeshMorphCameraNear::SNMMeshMorphCameraNear(SceneNode &cSceneNode) : SNMMeshM
 	Distance(this),
 	InSpeed(this),
 	OutSpeed(this),
-	EventHandlerUpdate(&SNMMeshMorphCameraNear::OnUpdate, this)
+	SlotOnUpdate(this)
 {
 }
 
@@ -78,9 +78,9 @@ void SNMMeshMorphCameraNear::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

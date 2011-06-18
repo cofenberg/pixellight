@@ -55,7 +55,7 @@ pl_implement_class(SNMLookController)
 SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	InputSemantic(this),
 	Flags(this),
-	EventHandlerUpdate(&SNMLookController::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_pController(new LookController())
 {
 	// Overwrite the default setting of the flags
@@ -97,9 +97,9 @@ void SNMLookController::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

@@ -53,7 +53,7 @@ SNMCameraZoom::SNMCameraZoom(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNo
 	ZoomDegree(this),
 	ZoomFactor(this),
 	ZoomSpeed(this),
-	EventHandlerUpdate(&SNMCameraZoom::OnUpdate, this),
+	SlotOnUpdate(this),
 	m_fOriginalFOV(cSceneNode.IsCamera() ? static_cast<SNCamera&>(cSceneNode).GetFOV() : 0.0f),
 	m_fCurrentZoomFactor(0.0f)
 {
@@ -77,9 +77,9 @@ void SNMCameraZoom::OnActivate(bool bActivate)
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 

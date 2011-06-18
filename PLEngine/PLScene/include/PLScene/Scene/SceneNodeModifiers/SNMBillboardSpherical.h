@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMBillboard.h"
 
 
@@ -69,6 +68,8 @@ class SNMBillboardSpherical : public SNMBillboard {
 	pl_class(PLS_RTTI_EXPORT, SNMBillboardSpherical, "PLScene", PLScene::SNMBillboard, "Spherical (point rotated) billboard scene node modifier class")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_1(OnAddedToVisibilityTree,	VisNode&,	"Called when the owner scene node was added to a visibility tree, visibility node which is representing the owner scene node within the visibility tree as first parameter",	"")
 	pl_class_end
 
 
@@ -124,13 +125,6 @@ class SNMBillboardSpherical : public SNMBillboard {
 		*    Visibility node which is representing the owner scene node within the visibility tree
 		*/
 		void OnAddedToVisibilityTree(VisNode &cVisNode);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<VisNode &> EventHandlerAddedToVisibilityTree;
 
 
 };

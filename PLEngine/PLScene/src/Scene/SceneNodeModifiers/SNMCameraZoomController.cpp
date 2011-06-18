@@ -51,11 +51,11 @@ pl_implement_class(SNMCameraZoomController)
 */
 SNMCameraZoomController::SNMCameraZoomController(SceneNode &cSceneNode) : SNMCameraZoom(cSceneNode),
 	InputSemantic(this),
-	EventHandlerControl(&SNMCameraZoomController::OnControl, this),
+	SlotOnControl(this),
 	m_pController(new CameraZoomController())
 {
 	// Connect input control event handler
-	m_pController->OnControl.Connect(EventHandlerControl);
+	m_pController->OnControl.Connect(SlotOnControl);
 }
 
 /**

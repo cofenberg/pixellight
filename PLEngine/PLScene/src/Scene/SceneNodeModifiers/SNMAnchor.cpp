@@ -81,8 +81,8 @@ SNMAnchor::SNMAnchor(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	JointPositionOffset(this),
 	JointRotationOffset(this),
 	Flags(this),
-	EventHandlerContainer			  (&SNMAnchor::OnContainer,				 this),
-	EventHandlerPositionRotationUpdate(&SNMAnchor::OnPositionRotationUpdate, this)
+	SlotOnContainer(this),
+	SlotOnPositionRotationUpdate(this)
 {
 }
 
@@ -104,20 +104,20 @@ void SNMAnchor::OnActivate(bool bActivate)
 	SceneNode &cSceneNode = GetSceneNode();
 	if (bActivate) {
 		// Connect event handlers
-		cSceneNode.SignalContainer.Connect(EventHandlerContainer);
-		cSceneNode.GetTransform().EventPosition.Connect(EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Connect(EventHandlerPositionRotationUpdate);
+		cSceneNode.SignalContainer.Connect(SlotOnContainer);
+		cSceneNode.GetTransform().EventPosition.Connect(SlotOnPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Connect(SlotOnPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Connect(EventHandlerPositionRotationUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnPositionRotationUpdate);
 	} else {
 		// Disconnect event handlers
-		cSceneNode.SignalContainer.Disconnect(EventHandlerContainer);
-		cSceneNode.GetTransform().EventPosition.Disconnect(EventHandlerPositionRotationUpdate);
-		cSceneNode.GetTransform().EventRotation.Disconnect(EventHandlerPositionRotationUpdate);
+		cSceneNode.SignalContainer.Disconnect(SlotOnContainer);
+		cSceneNode.GetTransform().EventPosition.Disconnect(SlotOnPositionRotationUpdate);
+		cSceneNode.GetTransform().EventRotation.Disconnect(SlotOnPositionRotationUpdate);
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
-			pSceneContext->EventUpdate.Disconnect(EventHandlerPositionRotationUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnPositionRotationUpdate);
 	}
 }
 
