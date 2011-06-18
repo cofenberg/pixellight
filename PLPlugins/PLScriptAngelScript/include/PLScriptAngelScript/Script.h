@@ -95,7 +95,7 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLGeneral::String &sName);
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
 		PLSCRIPTANGELSCRIPT_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
 		PLSCRIPTANGELSCRIPT_API virtual bool RemoveAllGlobalFunctions();
 
@@ -117,7 +117,7 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature);
+		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "");
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(bool bValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);

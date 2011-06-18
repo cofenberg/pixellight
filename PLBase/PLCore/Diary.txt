@@ -26,6 +26,7 @@
   Currently, this namespace support is only implemented within PLScriptLua... the next scheduled PixelLight release is near and so I really have to work focused.
 - "Script": Due to namespace support for global variables, I had to change the "GetGlobalVariables()"-signature. This method no longer returns a list of found global variables,
   instead a list to be filled up has to be provided as parameter.
+- "Script": Added support for global script functions which are inside a namespace. Currently, this namespace support is only implemented within PLScriptLua.
 
 
 

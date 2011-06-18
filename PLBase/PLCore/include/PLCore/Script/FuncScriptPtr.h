@@ -78,11 +78,14 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -108,12 +111,13 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -147,11 +151,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -173,12 +180,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -212,11 +220,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -241,12 +252,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -279,11 +291,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -304,12 +319,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -342,11 +358,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -370,12 +389,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -407,11 +427,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -431,12 +454,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -468,11 +492,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -495,12 +522,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -531,11 +559,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -554,12 +585,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -590,11 +622,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -616,12 +651,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -651,11 +687,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -673,12 +712,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -708,11 +748,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -733,12 +776,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -767,11 +811,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -788,12 +835,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -822,11 +870,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -846,12 +897,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -879,11 +931,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -899,12 +954,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -932,11 +988,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -955,12 +1014,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -987,11 +1047,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1006,12 +1069,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1038,11 +1102,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1060,12 +1127,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1091,11 +1159,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1109,12 +1180,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1140,11 +1212,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1161,12 +1236,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1191,11 +1267,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1208,12 +1287,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1238,11 +1318,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1258,12 +1341,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1287,11 +1371,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1303,12 +1390,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1332,11 +1420,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1351,12 +1442,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1379,11 +1471,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1394,12 +1489,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1422,11 +1518,14 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1440,12 +1539,13 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1467,11 +1567,14 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1481,12 +1584,13 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1508,11 +1612,14 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1525,12 +1632,13 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1551,11 +1659,14 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->PushArgument(t2);
@@ -1564,12 +1675,13 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1590,11 +1702,14 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0, _T1 t1) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				if (m_pScript->EndCall()) {
@@ -1606,12 +1721,13 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1631,11 +1747,14 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0, _T1 t1) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
 				m_pScript->EndCall();
@@ -1643,12 +1762,13 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1668,11 +1788,14 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()(_T0 t0) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				if (m_pScript->EndCall()) {
 					_R r = DefaultValue<R>::Default();
@@ -1683,12 +1806,13 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1707,23 +1831,27 @@ class FuncScriptPtr<void, T0> : public Func<void, T0> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()(_T0 t0) {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->EndCall();
 			}
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1742,11 +1870,14 @@ class FuncScriptPtr<R> : public Func<R> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual _R operator ()() {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R>::GetSignature())) {
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R>::GetSignature(), m_sNamespace)) {
 				if (m_pScript->EndCall()) {
 					_R r = DefaultValue<R>::Default();
 					return (R)m_pScript->GetReturn(r);	// C-style cast to be as flexible as possible in here
@@ -1756,12 +1887,13 @@ class FuncScriptPtr<R> : public Func<R> {
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1777,21 +1909,25 @@ class FuncScriptPtr<void> : public Func<void> {
 		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
+		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		}
+
 		virtual ~FuncScriptPtr() {
 		}
 
 		virtual void operator ()() {
-			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void>::GetSignature()))
+			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void>::GetSignature(), m_sNamespace))
 				m_pScript->EndCall();
 		}
 
 		virtual DynFunc *Clone() const {
-			return new FuncScriptPtr(m_pScript, m_sFunction);
+			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
 	private:
-		Script			  *m_pScript;	/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;	/**< Name of the script function to use */
+		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
+		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 

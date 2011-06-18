@@ -51,9 +51,9 @@ namespace PLCore {
 *
 *    Supported script features:
 *    - Global variables (with namespace support)
-*    - Global functions
+*    - Global functions (with namespace support)
 *      - C++ calls script
-*      - Script calls C++ (with namespace support)
+*      - Script calls C++
 *    - RTTI objects
 *      - Properties
 *      - Attributes
@@ -150,6 +150,8 @@ class Script : public Object {
 		*
 		*  @param[in] sName
 		*    Name of the global function
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    'true' if the given name belongs to a global function, else 'false'
@@ -159,7 +161,7 @@ class Script : public Object {
 		*    log when the given global script function wasn't found. So, when using optional global script
 		*    functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
 		*/
-		virtual bool IsGlobalFunction(const PLGeneral::String &sName) = 0;
+		virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -301,6 +303,8 @@ class Script : public Object {
 		*    Name of the function to call
 		*  @param[in] sFunctionSignature
 		*    Signature of the function to call (e.g. "void(int,float)")
+		*  @param[in] sNamespace
+		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -311,7 +315,7 @@ class Script : public Object {
 		*  @see
 		*    - Have a look at "IsGlobalFunction()" for additional information
 		*/
-		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature) = 0;
+		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "") = 0;
 
 		/**
 		*  @brief

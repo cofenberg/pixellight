@@ -84,8 +84,12 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
-bool Script::IsGlobalFunction(const String &sName)
+bool Script::IsGlobalFunction(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return false;	// Not implemented, yet. Get us out of here right now!
+
 	// There must be a valid AngelScript engine and module instance
 	return (m_pAngelScriptEngine && m_pAngelScriptModule && m_pAngelScriptModule->GetFunctionIdByName(sName) >= 0);
 }
@@ -398,8 +402,12 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const 
 	}
 }
 
-bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
+bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return false;	// Error! Not implemented, yet. Get us out of here right now!
+
 	// There must be a valid AngelScript engine and module instance
 	if (m_pAngelScriptEngine && m_pAngelScriptModule) {
 		// Is there already a context instance that will execute the script?

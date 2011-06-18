@@ -36,3 +36,5 @@ function ReturnMyString(s)
 {
 	return CppStringFunction(s);
 }
+
+// [TODO] Global function within a namespace

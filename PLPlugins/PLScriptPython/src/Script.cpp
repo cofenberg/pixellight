@@ -90,8 +90,12 @@ Script::~Script()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
-bool Script::IsGlobalFunction(const String &sName)
+bool Script::IsGlobalFunction(const String &sName, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return false;	// Not implemented, yet. Get us out of here right now!
+
 	// Is there a Python module dictionary? If so, request the Python function (results in borrowed reference, don't use Py_DECREF on it).
 	return (m_pPythonDictionary && PyDict_GetItemString(m_pPythonDictionary, sName));
 }
@@ -337,8 +341,12 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const 
 	}
 }
 
-bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
+bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature, const String &sNamespace)
 {
+	// [TODO] Add namespace support
+	if (sNamespace.GetLength())
+		return false;	// Error! Not implemented, yet. Get us out of here right now!
+
 	// Is there a Python module dictionary?
 	if (m_pPythonDictionary) {
 		// Request the Python function (results in borrowed reference, don't use Py_DECREF on it)

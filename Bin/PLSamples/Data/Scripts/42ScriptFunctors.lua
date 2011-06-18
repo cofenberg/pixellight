@@ -31,3 +31,10 @@ end
 function ReturnMyString(s)
 	return CppStringFunction(s)
 end
+
+-- Global function within a namespace
+PublicFunctions = {			-- Create the "PublicFunctions"-namespace
+	SayHello = function()	-- Create the function "SayHello" within the "PublicFunctions"-namespace
+		return "Hello there, I'am in a namespace!"
+	end
+}

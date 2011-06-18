@@ -158,17 +158,25 @@ void Script::LuaStackDump()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Script functions               ]
 //[-------------------------------------------------------]
-bool Script::IsGlobalFunction(const String &sName)
+bool Script::IsGlobalFunction(const String &sName, const String &sNamespace)
 {
 	bool bIsGlobalFunction = false;	// By default, the global script function does not exist
 
-	// Is there a Lua state?
-	if (m_pLuaState) {
-		// Push the function to be called onto the Lua state stack
-		lua_getglobal(m_pLuaState, sName);
+	// Is there a Lua state? If so, get a nested Lua table
+	if (m_pLuaState && GetNestedTable(sNamespace)) {
+		// Table key
+		lua_pushstring(m_pLuaState, sName);	// Push the function name onto the Lua stack
+
+		// This function pops the key from the stack - this gets the function
+		lua_gettable(m_pLuaState, -2);
+
+		// Is it a function?
 		bIsGlobalFunction = lua_isfunction(m_pLuaState, -1);
 
-		// Remove the function name from the Lua state runtime stack
+		// Pop the function from the Lua state stack
+		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
 		lua_pop(m_pLuaState, 1);
 	}
 
@@ -463,28 +471,39 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const 
 	}
 }
 
-bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature)
+bool Script::BeginCall(const String &sFunctionName, const String &sFunctionSignature, const String &sNamespace)
 {
 	// Is there a Lua state?
 	if (m_pLuaState) {
-		// Push the function to be called onto the Lua state stack
-		lua_getglobal(m_pLuaState, sFunctionName);
-		if (lua_isfunction(m_pLuaState, -1)) {
-			// Backup the name of the current function (we may need it for error log output)
-			m_sCurrentFunction = sFunctionName;
+		// Get a nested Lua table
+		if (GetNestedTable(sNamespace)) {
+			// Table key
+			lua_pushstring(m_pLuaState, sFunctionName);	// Push the function name onto the Lua stack
 
-			// Has the current function a result?
-			m_bFunctionResult = !sFunctionSignature.Compare("void(", 0, 5);
+			// Push the function to be called onto the Lua state stack
+			lua_gettable(m_pLuaState, -2);
+			if (lua_isfunction(m_pLuaState, -1)) {
+				// Backup the name of the current function (we may need it for error log output)
+				m_sCurrentFunction = sFunctionName;
 
-			// Current argument is 0
-			m_nCurrentArgument = 0;
+				// Has the current function a result?
+				m_bFunctionResult = !sFunctionSignature.Compare("void(", 0, 5);
 
-			// Done
-			return true;
+				// Current argument is 0
+				m_nCurrentArgument = 0;
+
+				// Done
+				return true;
+			} else {
+				// Error!
+				if (sNamespace.GetLength())
+					LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found within the namespace '" + sNamespace + '\'');
+				else
+					LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found");
+			}
 		} else {
 			// Error!
-			LogOutput(Log::Error, "The function '" + sFunctionName + "' was not found");
-			lua_pop(m_pLuaState, 1);	// Remove the function name from the Lua state runtime stack
+			LogOutput(Log::Error, "The namespace '" + sNamespace + "' of the function '" + sFunctionName + "' was not found");
 		}
 	}
 
@@ -641,6 +660,10 @@ bool Script::EndCall()
 			// Report Lua errors
 			ReportErrors();
 		} else {
+			// If there's no function result we need to pop the table from the Lua stack right now, else this is done within the "GetReturn()"-method
+			if (!m_bFunctionResult)
+				lua_pop(m_pLuaState, -1);
+
 			// Done
 			return true;
 		}
@@ -664,6 +687,9 @@ bool Script::GetReturn(bool nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a boolean");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = false;
@@ -687,6 +713,9 @@ float Script::GetReturn(float nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0.0f;
@@ -710,6 +739,9 @@ double Script::GetReturn(double nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0.0;
@@ -733,6 +765,9 @@ int8 Script::GetReturn(int8 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -756,6 +791,9 @@ int16 Script::GetReturn(int16 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -779,6 +817,9 @@ int32 Script::GetReturn(int32 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -803,6 +844,9 @@ int64 Script::GetReturn(int64 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -826,6 +870,9 @@ uint8 Script::GetReturn(uint8 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -849,6 +896,9 @@ uint16 Script::GetReturn(uint16 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -872,6 +922,9 @@ uint32 Script::GetReturn(uint32 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -896,6 +949,9 @@ uint64 Script::GetReturn(uint64 nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a number");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = 0;
@@ -919,6 +975,9 @@ String Script::GetReturn(String nValue)
 			LogOutput(Log::Error, "Function '" + m_sCurrentFunction + "' must return a string");
 		}
 		lua_pop(m_pLuaState, 1);
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = "";
@@ -946,6 +1005,9 @@ Object *Script::GetReturn(Object *nValue)
 			}
 			lua_pop(m_pLuaState, 1);
 		}
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, -1);
 	} else {
 		// Error!
 		nValue = nullptr;

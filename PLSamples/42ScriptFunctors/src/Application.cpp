@@ -187,6 +187,17 @@ float Application::RunScript(const String &sScriptFilename, float fFirst, float 
 
 				// Print message
 				System::GetInstance()->GetConsole().Print('\'' + sScriptFilename + "' input was " + fFirst + " and " + fSecond + ", result is " + fResult + '\n');
+
+				{ // Call the script function "SayHello" which is inside the "PublicFunctions"-namespace
+					// Get the typed dynamic parameters
+					Params<String> cParams;
+
+					// Call the script function
+					FuncScriptPtr<String>(pScript, "SayHello", "PublicFunctions").Call(cParams);
+
+					// Get the result
+					System::GetInstance()->GetConsole().Print("The script function \"SayHello\" which is inside the \"PublicFunctions\"-namespace says \"" + cParams.Return + "\"\n");
+				}
 			} else {
 				// Error!
 				System::GetInstance()->GetConsole().Print("Failed to use the script source code \"" + sScriptFilename + "\"\n");
