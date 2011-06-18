@@ -28,6 +28,7 @@ extern "C" {
 }
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
 
@@ -114,11 +115,8 @@ void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object and a RTTI object signal?
 	if (m_pRTTIObject && m_pDynEvent) {
-		// Get the number of arguments Lua gave to us
-		String sParams;
-		const int nNumOfArguments = lua_gettop(pLuaState) - 2;
-		for (int i=3; i<=2+nNumOfArguments; i++)
-			sParams += String("Param") + (i-3) + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
+		// Get the current Lua function parameters on the Lua stack as string
+		const String sParams = RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(*m_pScript, *m_pDynEvent, true);
 
 		// Emit the RTTI object signal
 		m_pDynEvent->Emit(sParams);

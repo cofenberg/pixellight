@@ -54,6 +54,22 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	public:
 		/**
 		*  @brief
+		*    Returns the current Lua function parameters on the Lua stack as string
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] cDynSignature
+		*    Dynamic signature of the function to be called
+		*  @param[in] bIsMethod
+		*    'true' if the dynamic function is a method, 'false' if it's a global function
+		*
+		*  @return
+		*    The current Lua function parameters on the Lua stack as string
+		*/
+		static PLGeneral::String GetLuaFunctionParametersAsString(Script &cScript, PLCore::DynSignature &cDynSignature, bool bIsMethod);
+
+		/**
+		*  @brief
 		*    Calls the current Lua stack dynamic function
 		*
 		*  @param[in] cScript

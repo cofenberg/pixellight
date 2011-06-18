@@ -4,6 +4,9 @@
   only a "GetSignature()"-method in order to request the signature description as string. With the introduction of script support there was a need to get concrete
   type ID information of return and parameters for proper exchange of data between script and C++. Of course, it would have been possible to just parse the already
   available signature-string, but this would have been a little bit uncomfortable.
+- PLScriptLua: Added new static method "RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()" which returns the current Lua function parameters on the Lua
+  stack as string. This was my motivation for the "DynSignature"-interface because this new method is used by "RTTIObjectMethodPointer" and "RTTIObjectSignalPointer"
+  and type ID information is used internally.
 
 
 

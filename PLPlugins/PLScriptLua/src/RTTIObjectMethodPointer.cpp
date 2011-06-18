@@ -44,9 +44,9 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Calls the current Lua stack dynamic function
+*    Returns the current Lua function parameters on the Lua stack as string
 */
-int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, bool bIsMethod)
+String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript, DynSignature &cDynSignature, bool bIsMethod)
 {
 	// Get the Lua state
 	lua_State *pLuaState = cScript.GetLuaState();
@@ -82,13 +82,29 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 			// ...
 			} else {
 				// If not just let Lua decide how to convert the stuff into a string... but only if it's no object pointer!
-				sValue = (cDynFunc.GetParameterTypeID(nNumOfArguments-1) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);
+				sValue = (cDynSignature.GetParameterTypeID(nNumOfArguments-1) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);
 			}
 		}
 
 		// Add the Lua argument to the parameter string
 		sParams += String("Param") + (i-1+nOffset) + "=\"" + sValue + "\" ";
 	}
+
+	// Return the parameters string
+	return sParams;
+}
+
+/**
+*  @brief
+*    Calls the current Lua stack dynamic function
+*/
+int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, bool bIsMethod)
+{
+	// Get the Lua state
+	lua_State *pLuaState = cScript.GetLuaState();
+
+	// Get the current Lua function parameters on the Lua stack as string
+	const String sParams = GetLuaFunctionParametersAsString(cScript, cDynFunc, bIsMethod);
 
 	// Get the global function
 	const String sReturn = cDynFunc.CallWithReturn(sParams);
