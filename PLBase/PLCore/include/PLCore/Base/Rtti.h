@@ -861,6 +861,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 #define pl_class_internal(CLASS, NAMESPACE, BASECLASS, DESCRIPTION) \
 	__pl_class(CLASS, NAMESPACE, PLCore::ObjectBase, #BASECLASS, DESCRIPTION) \
 	__pl_guard(CLASS) \
+	__pl_rtti_export(PLCORE_RTTI_EXPORT) \
 
 /**
 *  @brief
