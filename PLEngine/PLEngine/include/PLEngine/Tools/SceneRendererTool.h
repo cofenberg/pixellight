@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCENERENDERERTOOL_H__
-#define __PLENGINE_SCENERENDERERTOOL_H__
+#ifndef __PLENGINE_TOOLS_SCENERENDERERTOOL_H__
+#define __PLENGINE_TOOLS_SCENERENDERERTOOL_H__
 #pragma once
 
 
@@ -264,4 +264,4 @@ class SceneRendererTool : public PLCore::Object {
 } // PLEngine
 
 
-#endif // __PLENGINE_SCENERENDERERTOOL_H__
+#endif // __PLENGINE_TOOLS_SCENERENDERERTOOL_H__

@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCREENSHOT_H__
-#define __PLENGINE_SCREENSHOT_H__
+#ifndef __PLENGINE_TOOLS_SCREENSHOT_H__
+#define __PLENGINE_TOOLS_SCREENSHOT_H__
 #pragma once
 
 
@@ -226,4 +226,4 @@ class Screenshot : public PLCore::Object {
 } // PLEngine
 
 
-#endif // __PLENGINE_SCREENSHOT_H__
+#endif // __PLENGINE_TOOLS_SCREENSHOT_H__

@@ -29,6 +29,9 @@ add_sources(
 	src/Picking/MousePicking.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
+    src/Tools/Camcorder.cpp
+    src/Tools/SNMPositionKeyframeRecord.cpp
+    src/Tools/SNMRotationKeyframeRecord.cpp
 	src/PLEngine.cpp
 )
 

@@ -1,5 +1,13 @@
 >> 19.06.2011
 [CO]
+- Moved the application component "Camcorder" (together with "SNMPositionKeyframeRecord" and "SNMRotationKeyframeRecord") from the dungeon demo into the
+  tools directory of PLEngine. The camcorder is nothing that can only be used within the dungeon demo, recording and playing back something is more or less
+  generic.
+
+
+
+>> 19.06.2011
+[CO]
 - "SceneRendererTool": Renamed "GetPass()" into "GetPassByName()" and added "GetPassByIndex()" and "GetNumOfPasses()"
 
 

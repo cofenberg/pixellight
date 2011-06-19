@@ -69,6 +69,15 @@
     <ClCompile Include="src\Application\ScriptApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tools\SNMRotationKeyframeRecord.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\Camcorder.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\SNMPositionKeyframeRecord.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
@@ -124,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Application\ScriptApplication.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\Camcorder.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\SNMPositionKeyframeRecord.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\SNMRotationKeyframeRecord.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

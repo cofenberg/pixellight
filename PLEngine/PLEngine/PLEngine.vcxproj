@@ -267,8 +267,11 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Gui\RenderWindow.cpp" />
     <ClCompile Include="src\Gui\WindowConnection.cpp" />
     <ClCompile Include="src\Config\RendererConfigGroup.cpp" />
+    <ClCompile Include="src\Tools\Camcorder.cpp" />
     <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
     <ClCompile Include="src\Tools\Screenshot.cpp" />
+    <ClCompile Include="src\Tools\SNMPositionKeyframeRecord.cpp" />
+    <ClCompile Include="src\Tools\SNMRotationKeyframeRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
@@ -287,8 +290,11 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLEngine\Gui\RenderWindow.h" />
     <ClInclude Include="include\PLEngine\Gui\WindowConnection.h" />
     <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h" />
+    <ClInclude Include="include\PLEngine\Tools\Camcorder.h" />
     <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
     <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />
+    <ClInclude Include="include\PLEngine\Tools\SNMPositionKeyframeRecord.h" />
+    <ClInclude Include="include\PLEngine\Tools\SNMRotationKeyframeRecord.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
