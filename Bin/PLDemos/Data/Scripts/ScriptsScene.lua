@@ -1,5 +1,5 @@
 -- This script is called by the scene "Scripts.scene"
--- -> The global variable "this" points to the RTTI scene node modifier class instance invoking the script
+-- -> The global variable "this" points to the C++ RTTI scene node modifier class instance invoking the script
 
 
 --[-------------------------------------------------------]

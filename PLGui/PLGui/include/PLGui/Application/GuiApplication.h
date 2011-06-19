@@ -66,6 +66,9 @@ class GuiApplication : public PLCore::ConsoleApplication {
 	pl_class(PLGUI_RTTI_EXPORT, GuiApplication, "PLGui", PLCore::ConsoleApplication, "Gui application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_0(GetMainWindow,	pl_ret_type(Widget*),				"Get main window. Returns pointer to the main window of the application, a null pointer on error.",					"")
+		pl_method_1(SetMainWindow,	pl_ret_type(void),		Widget*,	"Set main window, pointer to the main window of the application (a null pointer is also valid) as first parameter",	"")
 	pl_class_end
 
 
@@ -93,7 +96,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    Get main window
 		*
 		*  @return
-		*    Pointer to the main window of the application, a null pointer on error
+		*    
 		*/
 		PLGUI_API Widget *GetMainWindow() const;
 

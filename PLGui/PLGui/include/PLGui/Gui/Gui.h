@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Object.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/Gui/FontManager.h"
@@ -85,7 +86,7 @@ namespace PLGui {
 *  @note
 *    - Implementation of the bridge design pattern, this class is the abstraction
 */
-class Gui {
+class Gui : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
@@ -99,6 +100,15 @@ class Gui {
 	friend class TrayIcon;
 	friend class ClipBoard;
 	friend class Timer;
+
+
+	//[-------------------------------------------------------]
+	//[ Class definition                                      ]
+	//[-------------------------------------------------------]
+	pl_class(PLGUI_RTTI_EXPORT, Gui, "PLGui", PLCore::Object, "Main GUI class")
+		// Methods
+		pl_method_1(SetMouseVisible,	pl_ret_type(void),	bool,	"Set mouse cursor visibility, 'true' as first parameter if the mouse cursor shall be visible",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]

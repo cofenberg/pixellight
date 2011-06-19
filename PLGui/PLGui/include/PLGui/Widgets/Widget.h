@@ -105,6 +105,10 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		pl_attribute(BackgroundColor,	PLGraphics::Color4,	PLGraphics::Color4(),	ReadWrite,	GetSet,	"Background color",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_0(GetGui,				pl_ret_type(Gui*),				"Get owner GUI. Returns pointer to GUI object, can be a null pointer.",														"")
+		pl_method_0(GetContentWidget,	pl_ret_type(Widget*),			"Get content widget, can be a null pointer",																				"")
+		pl_method_1(SetTrapMouse,		pl_ret_type(void),		bool,	"Trap mouse inside the widget, 'true' as first parameter if the mouse should be trapped inside the widget, else 'false'",	"")
 		// Signals
 		pl_signal_2(SignalUserMessage,				PLGeneral::uint32,	void*,								"User message",																								"")
 		pl_signal_0(SignalOnThemeChanged,																	"Theme has been changed",																					"")

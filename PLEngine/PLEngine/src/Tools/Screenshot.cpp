@@ -43,6 +43,12 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
+//[ Class implementation                                  ]
+//[-------------------------------------------------------]
+pl_implement_class(Screenshot)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -147,7 +153,7 @@ bool Screenshot::SaveScreenshot(const String &sFilename) const
 *  @brief
 *    Save screenshot by using the surface painter of the current render target surface
 */
-bool Screenshot::SaveScreenshot(const String &sFilename, uint16 nWidth, uint16 nHeight, TextureBuffer::EPixelFormat nFormat, uint32 nFlags) const
+bool Screenshot::SaveCustomScreenshot(const String &sFilename, uint16 nWidth, uint16 nHeight, TextureBuffer::EPixelFormat nFormat, uint32 nFlags) const
 {
 	bool bResult = false; // Error by default
 

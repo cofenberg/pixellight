@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Object.h>
 #include "PLEngine/PLEngine.h"
 
 
@@ -53,7 +54,19 @@ namespace PLEngine {
 *  @brief
 *    Class offering screenshot functionality
 */
-class Screenshot {
+class Screenshot : public PLCore::Object {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, Screenshot, "PLEngine", PLCore::Object, "Class offering screenshot functionality")
+		// Methods
+		pl_method_0(GetScreenshotDirectory,	pl_ret_type(PLGeneral::String),								"Get screenshot directory in which the screenshots are saved",																																																															"")
+		pl_method_1(SetScreenshotDirectory,	pl_ret_type(void),				const PLGeneral::String&,	"Set screenshot directory, directory in which the screenshots are saved as first parameter (if set to \"\", the current directory will be used)",																																										"")
+		pl_method_1(SaveScreenshot,			pl_ret_type(bool),				const PLGeneral::String&,	"Save screenshot from current render target, screenshot filename (e.g. \"Screenshot.png\") as first parameter (if string is empty, GetScreenshotFilename() will be used). Returns 'true' if all went fine, else 'false'. Uses the dimension of the current render target.",												"")
+		pl_method_1(GetScreenshotFilename,	pl_ret_type(PLGeneral::String),	const PLGeneral::String&,	"Get a screenshot filename recommendation, file name extension (for example \"png\") as first parameter. Returns the recommended screenshot filename, empty string on error. The screenshot filename is automatically generated: \"/_Screenshots/Screenshot_0.png\", \"/_Screenshots/Screenshot_1.png\" and so on...",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -75,7 +88,7 @@ class Screenshot {
 		*  @brief
 		*    Destructor
 		*/
-		PL_API ~Screenshot();
+		PL_API virtual ~Screenshot();
 
 		/**
 		*  @brief
@@ -175,8 +188,8 @@ class Screenshot {
 		*    'current' hardware supports dimensions up to 8192x8192. Use the renderer capabilities to figure
 		*    out the maximum supported rectangle texture dimension.
 		*/
-		PL_API bool SaveScreenshot(const PLGeneral::String &sFilename, PLGeneral::uint16 nWidth, PLGeneral::uint16 nHeight,
-								   PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags) const;
+		PL_API bool SaveCustomScreenshot(const PLGeneral::String &sFilename, PLGeneral::uint16 nWidth, PLGeneral::uint16 nHeight,
+										 PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags) const;
 
 		/**
 		*  @brief
