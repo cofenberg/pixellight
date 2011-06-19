@@ -1,3 +1,9 @@
+>> 19.06.2011
+[CO]
+- "SceneRendererTool": Renamed "GetPass()" into "GetPassByName()" and added "GetPassByIndex()" and "GetNumOfPasses()"
+
+
+
 >> 16.06.2011
 [CO]
 - Now that it's supported by the RTTI, switched back the return type from "BasicSceneApplication::GetSceneRendererTool()" into a reference

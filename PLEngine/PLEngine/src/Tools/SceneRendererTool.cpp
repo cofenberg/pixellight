@@ -166,9 +166,43 @@ bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, const 
 
 /**
 *  @brief
-*    Gets a scene renderer pass
+*    Returns the number of scene renderer passes
 */
-SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
+uint32 SceneRendererTool::GetNumOfPasses() const
+{
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Return the requested scene renderer pass
+		return pSceneRenderer->GetNumOfElements();
+	}
+
+	// Error!
+	return 0;
+}
+
+/**
+*  @brief
+*    Gets a scene renderer pass by index
+*/
+SceneRendererPass *SceneRendererTool::GetPassByIndex(uint32 nIndex) const
+{
+	// Get the scene renderer
+	SceneRenderer *pSceneRenderer = GetSceneRenderer();
+	if (pSceneRenderer) {
+		// Return the requested scene renderer pass
+		return pSceneRenderer->GetByIndex(nIndex);
+	}
+
+	// Error!
+	return nullptr;
+}
+
+/**
+*  @brief
+*    Gets a scene renderer pass by name
+*/
+SceneRendererPass *SceneRendererTool::GetPassByName(const String &sName) const
 {
 	// Get the scene renderer
 	SceneRenderer *pSceneRenderer = GetSceneRenderer();
@@ -188,7 +222,7 @@ SceneRendererPass *SceneRendererTool::GetPass(const String &sName) const
 DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName) const
 {
 	// Get the scene renderer pass
-	SceneRendererPass *pSceneRendererPass = GetPass(sSceneRendererPassName);
+	SceneRendererPass *pSceneRendererPass = GetPassByName(sSceneRendererPassName);
 	if (pSceneRendererPass) {
 		// Get the attribute
 		return pSceneRendererPass->GetAttribute(sAttributeName);
@@ -205,7 +239,7 @@ DynVar *SceneRendererTool::GetPassAttribute(const String &sSceneRendererPassName
 bool SceneRendererTool::SetPassAttribute(const String &sSceneRendererPassName, const String &sAttributeName, const String &sValue) const
 {
 	// Get the scene renderer pass
-	SceneRendererPass *pSceneRendererPass = GetPass(sSceneRendererPassName);
+	SceneRendererPass *pSceneRendererPass = GetPassByName(sSceneRendererPassName);
 	if (pSceneRendererPass) {
 		// Get the attribute
 		DynVar *pDynVar = pSceneRendererPass->GetAttribute(sAttributeName);

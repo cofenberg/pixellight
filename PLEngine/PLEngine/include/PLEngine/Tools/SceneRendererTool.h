@@ -72,7 +72,9 @@ class SceneRendererTool : public PLCore::Object {
 	pl_class(PL_RTTI_EXPORT, SceneRendererTool, "PLEngine", PLCore::Object, "Class offering scene renderer tool functionality")
 		// Methods
 		pl_method_3(SetSceneRenderer,	pl_ret_type(bool),							PLScene::SceneContainer*,	const PLGeneral::String&,	const PLGeneral::String&,	"Sets the used scene renderer, scene container to render as first parameter, filename of the scene renderer to use as second parameter, optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as third parameter. Returns 'true' if all went fine, else 'false'.",									"")
-		pl_method_1(GetPass,			pl_ret_type(PLScene::SceneRendererPass*),	const PLGeneral::String&,															"Gets a scene renderer pass. Name of the scene renderer pass to return as first parameter. The requested scene renderer pass as result, a null pointer on error.",																																													"")
+		pl_method_0(GetNumOfPasses,		pl_ret_type(PLGeneral::uint32),																									"Returns the number of scene renderer passes",																																																																										"")
+		pl_method_1(GetPassByIndex,		pl_ret_type(PLScene::SceneRendererPass*),	PLGeneral::uint32,																	"Gets a scene renderer pass by index. Index of the scene renderer pass to return as first parameter. The requested scene renderer pass as result, a null pointer on error.",																																										"")
+		pl_method_1(GetPassByName,		pl_ret_type(PLScene::SceneRendererPass*),	const PLGeneral::String&,															"Gets a scene renderer pass by name. Name of the scene renderer pass to return as first parameter. The requested scene renderer pass as result, a null pointer on error.",																																											"")
 		pl_method_3(SetPassAttribute,	pl_ret_type(bool),							const PLGeneral::String&,	const PLGeneral::String&,	const PLGeneral::String&,	"Sets a scene renderer pass attribute value using a string, name of the scene renderer pass as first parameter, name of the scene renderer pass attribute as second parameter and value to set as third parameter",																																	"")
 		pl_method_2(SetAttribute,		pl_ret_type(PLGeneral::uint32),				const PLGeneral::String&,	const PLGeneral::String&,								"Sets scene renderer pass attribute values using a string. Name of the scene renderer pass attribute (e.g. \"AmbientColor\") as first parameter, value to set (e.g. \"0.2 0.2 0.2\") as second parameter. Unlike \"SetPassAttribute()\", \"SetAttribute()\" sets the <AttributeName>-attribute from all scene renderer passes to the given value.",	"")
 		pl_method_1(SetValues,			pl_ret_type(void),							const PLGeneral::String&,															"Values to set (e.g.: \"ColorClear=\"0 0 0 0\" AmbientColor=\"0.2 0.2 0.2\"\") as first parameter. Unlike \"SetPassAttribute()\" and \"SetAttribute()\", \"SetValues()\" sets multiple attributes from all scene renderer passes to the given value at once.",																						"")
@@ -147,7 +149,28 @@ class SceneRendererTool : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Gets a scene renderer pass
+		*    Returns the number of scene renderer passes
+		*
+		*  @return
+		*    The number of scene renderer passes
+		*/
+		PL_API PLGeneral::uint32 GetNumOfPasses() const;
+
+		/**
+		*  @brief
+		*    Gets a scene renderer pass by index
+		*
+		*  @param[in] nIndex
+		*    Index of the scene renderer pass to return
+		*
+		*  @return
+		*    The requested scene renderer pass, a null pointer on error
+		*/
+		PL_API PLScene::SceneRendererPass *GetPassByIndex(PLGeneral::uint32 nIndex) const;
+
+		/**
+		*  @brief
+		*    Gets a scene renderer pass by name
 		*
 		*  @param[in] sName
 		*    Name of the scene renderer pass to return
@@ -155,7 +178,7 @@ class SceneRendererTool : public PLCore::Object {
 		*  @return
 		*    The requested scene renderer pass, a null pointer on error
 		*/
-		PL_API PLScene::SceneRendererPass *GetPass(const PLGeneral::String &sName) const;
+		PL_API PLScene::SceneRendererPass *GetPassByName(const PLGeneral::String &sName) const;
 
 		/**
 		*  @brief
