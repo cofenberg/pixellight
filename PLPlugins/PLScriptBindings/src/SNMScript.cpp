@@ -55,23 +55,21 @@ String SNMScript::GetScript() const
 
 void SNMScript::SetScript(const String &sValue)
 {
-	if (m_sScript != sValue) {
-		m_sScript = sValue;
+	// Backup the given string
+	m_sScript = sValue;
 
-		// Destroy the used script
-		if (m_pScript)
-			delete m_pScript;
+	// Destroy the used script
+	DestroyScript();
 
-		// Create the script instance
-		m_pScript = ScriptManager::GetInstance()->CreateFromFile(m_sScript);
-		if (m_pScript) {
-			// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
-			m_pScript->SetGlobalVariable("this", Var<Object*>(this));
+	// Create the script instance
+	m_pScript = ScriptManager::GetInstance()->CreateFromFile(m_sScript);
+	if (m_pScript) {
+		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
+		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
 
-			// Call the initialize script function, but only when it's really there because it's optional
-			if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
-				FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
-		}
+		// Call the initialize script function, but only when it's really there because it's optional
+		if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
+			FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
 	}
 }
 
@@ -99,15 +97,17 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 */
 SNMScript::~SNMScript()
 {
-	// Is there a script?
-	if (m_pScript) {
-		// Call the de-initialize script function, but only when it's really there because it's optional
-		if (m_pScript->IsGlobalFunction(OnDeInitFunction.Get()))
-			FuncScriptPtr<void>(m_pScript, OnDeInitFunction.Get()).Call(Params<void>());
+	// Destroy the used script
+	DestroyScript();
+}
 
-		// Destroy the used script instance
-		delete m_pScript;
-	}
+/**
+*  @brief
+*    Returns the instance of the used script
+*/
+Script *SNMScript::GetScriptInstance() const
+{
+	return m_pScript;
 }
 
 
@@ -130,6 +130,24 @@ void SNMScript::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Destroys the script
+*/
+void SNMScript::DestroyScript()
+{
+	// Is there a script?
+	if (m_pScript) {
+		// Call the de-initialize script function, but only when it's really there because it's optional
+		if (m_pScript->IsGlobalFunction(OnDeInitFunction.Get()))
+			FuncScriptPtr<void>(m_pScript, OnDeInitFunction.Get()).Call(Params<void>());
+
+		// Destroy the used script instance
+		delete m_pScript;
+		m_pScript = nullptr;
+	}
+}
+
 /**
 *  @brief
 *    Called when the scene node modifier needs to be updated

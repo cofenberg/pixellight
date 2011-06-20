@@ -63,12 +63,14 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMScript, "PLScriptBindings", PLScene::SceneNodeModifier, "Script scene node modifier")
 		// Attributes
-		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use",																								"")
+		pl_attribute(Script,			PLGeneral::String,	"",			ReadWrite,	GetSet,			"Script to use (set the script again in order to reload it)",													"")
 		pl_attribute(OnInitFunction,	PLGeneral::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should initialize itself",		"")
 		pl_attribute(OnUpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should update itself",			"")
 		pl_attribute(OnDeInitFunction,	PLGeneral::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should de-initialize itself",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Methods
+		pl_method_0(GetScriptInstance,	pl_ret_type(PLCore::Script*),	"Returns the instance of the used script (can be a null pointer)",	"")
 		// Slots
 		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
@@ -101,6 +103,15 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		*/
 		virtual ~SNMScript();
 
+		/**
+		*  @brief
+		*    Returns the instance of the used script
+		*
+		*  @return
+		*    The instance of the used script, can be a null pointer (don't destroy the returned instance!)
+		*/
+		PLCore::Script *GetScriptInstance() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNodeModifier functions         ]
@@ -113,6 +124,12 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Destroys the script
+		*/
+		void DestroyScript();
+
 		/**
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
