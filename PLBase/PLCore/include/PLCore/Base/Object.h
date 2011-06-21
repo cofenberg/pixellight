@@ -61,6 +61,43 @@ namespace PLCore {
 *    Internal Object base class
 */
 class ObjectBase {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	public:
+		// Properties
+		pl_properties
+		pl_properties_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLCORE_API ObjectBase();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~ObjectBase();
+
+		/**
+		*  @brief
+		*    Get class
+		*
+		*  @return
+		*    Class of the object (should never be a null pointer, unless something is *terribly* wrong ;-) )
+		*/
+		PLCORE_API virtual Class *GetClass() const;
+
+
 };
 
 
@@ -74,10 +111,8 @@ class Object : public ObjectBase {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class_internal(Object, "PLCore", /* No base class */, "Object base class")
-		// Properties
-		pl_properties
-		pl_properties_end
+	pl_class_internal(PLCORE_RTTI_EXPORT, Object, "PLCore", /* No base class */, "Object base class")
+	#ifdef PLCORE_EXPORTS
 		// Methods
 		pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const PLGeneral::String&,								"Check if object is instance of a given class, class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
 		pl_method_2(SetAttribute,			pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Set attribute value, attribute name as first parameter, attribute value as second parameter",																											"")
@@ -87,6 +122,7 @@ class Object : public ObjectBase {
 		pl_method_0(SetDefaultValues,		pl_ret_type(void),																		"Set all attributes to default",																																										"")
 		pl_method_0(ToString,				pl_ret_type(PLGeneral::String),															"Get object as string. Returns string representation of object.",																																		"")
 		pl_method_1(FromString,				pl_ret_type(void),				const PLGeneral::String&,								"Set object from string, string representation of object as first parameter",																															"")
+	#endif
 	pl_class_end
 
 
@@ -109,15 +145,6 @@ class Object : public ObjectBase {
 		//[-------------------------------------------------------]
 		//[ Class and members                                     ]
 		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Get class
-		*
-		*  @return
-		*    Class of the object (should never be a null pointer, unless something is *terribly* wrong ;-) )
-		*/
-		PLCORE_API virtual Class *GetClass() const;
-
 		/**
 		*  @brief
 		*    Check if object is instance of a given class by using a given class reference

@@ -514,6 +514,8 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) const { \
 					return new NAME##_Method(reinterpret_cast<_Self&>(cObject)); \
 				} \
+			private: \
+				FuncType m_cFunctor; \
 		}; \
 
 /**
@@ -534,16 +536,6 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				NAME##_Method(_Self &cObject) : PLCore::Method<NAME##_Desc>((NAME##_Desc::MethType::MemFuncType)(&_Self::NAME), &cObject) { \
 				} \
 		}; \
-
-/**
-*  @brief
-*    Create method variable
-*
-*  @param[in] NAME
-*    Method name
-*/
-#define __pl_method_decl(NAME) \
-		static NAME##_Method Method##NAME; /* There are no automatic RTTI class method instances per RTTI class instance because there's no need for it and this safes RTTI class instance memory */ \
 
 /**
 *  @brief
@@ -845,6 +837,8 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *  @brief
 *    Declare class - internal (only for PLCore::Object)
 *
+*  @param[in] EXPORT
+*    Export definition (must be defined as either 1 or 0)
 *  @param[in] CLASS
 *    Class name (without namespace)
 *  @param[in] NAMESPACE
@@ -858,10 +852,11 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 *    This macro is only used for PLCore::Object. As this is the base class for all
 *    RTTI classes, the virtual function GetClass() can not be overwritten here.
 */
-#define pl_class_internal(CLASS, NAMESPACE, BASECLASS, DESCRIPTION) \
+#define pl_class_internal(EXPORT, CLASS, NAMESPACE, BASECLASS, DESCRIPTION) \
 	__pl_class(CLASS, NAMESPACE, PLCore::ObjectBase, #BASECLASS, DESCRIPTION) \
 	__pl_guard(CLASS) \
-	__pl_rtti_export(PLCORE_RTTI_EXPORT) \
+	__pl_getclass() \
+	__pl_rtti_export(EXPORT) \
 
 /**
 *  @brief
@@ -951,7 +946,6 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 	private: /* RTTI class methods are private to avoid misuse */ \
 	__pl_method_desc(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, DESCRIPTION, ANNOTATION) \
 	__pl_method_meth(NAME) \
-	__pl_method_decl(NAME) \
 	public: \
 
 #define pl_method_15(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \

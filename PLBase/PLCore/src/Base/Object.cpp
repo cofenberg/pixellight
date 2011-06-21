@@ -52,6 +52,35 @@ pl_implement_class(Object)
 
 
 //[-------------------------------------------------------]
+//[ Public ObjectBase functions                           ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+ObjectBase::ObjectBase()
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+ObjectBase::~ObjectBase()
+{
+}
+
+/**
+*  @brief
+*    Get class
+*/
+Class *ObjectBase::GetClass() const
+{
+	return nullptr;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -68,16 +97,6 @@ Object::Object()
 */
 Object::~Object()
 {
-}
-
-/**
-*  @brief
-*    Get class
-*/
-Class *Object::GetClass() const
-{
-	// Return class for PLCore::Object
-	return _Class::GetSingleton()->GetClass();
 }
 
 /**

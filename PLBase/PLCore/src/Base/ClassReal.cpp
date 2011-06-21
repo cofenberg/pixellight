@@ -471,12 +471,12 @@ Object *ClassReal::Create(const String &sName, const DynParams &cParams) const
 */
 void ClassReal::AddMember(MemberDesc *pMemberDesc)
 {
-	// De-initialize class
-	if (m_bInitialized)
-		DeInitClass();
-
 	// Check if pointer is valid
 	if (pMemberDesc) {
+		// De-initialize class
+		if (m_bInitialized)
+			DeInitClass();
+
 		// Add member to list
 		m_lstOwnMembers.Add(pMemberDesc);
 	}
