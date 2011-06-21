@@ -4,3 +4,73 @@
 
 
 \section{Overview}
+Please note that this document is currently just a rough draft.
+
+This PLScript document is intended for script programmers. Because Lua is shipped with the official PixelLight SDK, this script language will be used within the examples. Please note that the PixelLight script API is script language independent. In fact, there's not even such a PixelLight script API. Everything that is connected to the RTTI of PixelLight can be accessed through script languages as long as the script backend has support for RTTI objects.
+
+Within the PLCore documentation, there a lot of inside detail information on how the RTTI works. The script support itself is implemented within PLCore because scripting is heavily using PLCore features like the RTTI. Therefore adding script bindings or using RTTI objects within scripts is fairly straightforward and don't require the writing of thousands of proxy/wrapper classes exposing C++ functionality to script languages.
+
+Certain non-RTTI parts of PixelLight are exposed to script languages through the loose plugin \emph{PLScriptBindings}. Please note that within PixelLight, scripting is completely optional, not mandatory - unlike some other engines out there were one is only able to use scripting. So, you can use scripting, but you are not forced to do so.
+
+In general, the abstract script interface of PixelLight supports the following script features:
+\begin{itemize}
+\item{Global variables (with namespace support)}
+\item{Global functions, C++ calls script and script calls C++ (with namespace support)}
+\item{RTTI objects}
+\end{itemize}
+
+The access to RTTI objects makes the script support quite powerful and universal. You're able to access properties (constant RTTI class information), attributes (aka variables), methods (functions within an object), signals (aka events) and slots (aka event handlers).
+
+Supported primitive data types are: \begin{quote}bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*, PLCore::Object\&\end{quote}
+
+Please note that not each script language/API may make such a detailed data type distinction. Because strings are fundamental within scripts, PLGeneral::String is supported as well. But if you're a 100\% script programmer, without writing own new C++ components, the mentioned information is probably already too technically.
+
+In general, the script support of PixelLight can be subdivided into the two following use-cases:
+\begin{itemize}
+\item{A C++ component is using an own script instance in a highly specialized way. The script scene node modifier is a good example for this. Such a script scene node modifier is is attached to a scene node and is adding logic trough a script.}
+\item{A scripted stand-alone application, meaning that the complete application logic is implemented within for instance Lua and can be executed by PLViewer or custom applications. This doesn't mean that it's 100\% script only because the more complex stuff will probably done by used C++ components, but the wires are tied up by a script.}
+\end{itemize}
+
+
+
+
+\section{Global variables}
+[TODO]
+
+
+
+
+\section{Global functions}
+[TODO]
+
+
+
+
+\section{RTTI objects}
+
+
+\subsection{Properties}
+[TODO]
+
+
+\subsection{Attributes}
+[TODO]
+
+
+\subsection{Methods}
+[TODO]
+
+
+\subsection{Signals}
+[TODO]
+There are two fixed build in script functions for signals:
+\begin{itemize}
+\item{Connect}
+\item{Disconnect}
+\end{itemize}
+
+
+
+
+\subsection{Slots}
+[TODO]
