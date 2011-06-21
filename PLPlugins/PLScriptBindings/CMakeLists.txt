@@ -11,6 +11,7 @@ add_sources(
 	src/ScriptBinding_PL.cpp
 	src/ScriptBinding_PL_Log.cpp
 	src/ScriptBinding_PL_Timing.cpp
+	src/ScriptBinding_PL_System.cpp
 	src/ScriptBinding_PL_System_Console.cpp
 	src/SNMScript.cpp
 )
