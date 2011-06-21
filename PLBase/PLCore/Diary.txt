@@ -1,3 +1,21 @@
+>> 21.06.2011
+- When testing the Dungeon demo under Linux, I noticed that the "Object" RTTI methods (but only those?) were not exported correctly when using GCC. Found the "bug" within my
+  change from "04.06.2011" when I removed the per instance cost of RTTI methods... the RTTI method instantiation was wrong. I still think that this is the right way because
+  tons of those methods will come in the future!
+  After a look into how Stefan did it with the RTTI constructors I was able to fix the issue, more or less. It looks like now, that more stuff is connected to the RTTI the
+  template instantiation issue strikes back (we already had it multiple times under Linux). Interesting that everything runs that smoothly under MS Windows.
+  Maybe it's better to do as many RTTI related definitions as possible in the cpp files instead of the header files? As far as I can see, for constructor and method definitions
+  this wouldn't be problem - except that the RTTI stuff would be more scattered over two files (although there's already "pl_implement_class" in the cpp files...).   
+  This would probably also make the life of the compiler a little bit easier... the more complex derived classes from derived classes get, the more work for the compiler
+  (the slow down is really notable when compiling). Right now, I don't want to work too much on the RTTI - I already did way more changes as I wanted. It's not
+  really my field and I'll have other stuff on my TODO-list (but I really had to do something about the most important issues to be able to go on with other parts in a decent way).
+  So a kind of patchwork has do to the job for now: In important RTTI classes, I'll added a define around the constructor and method definitions so that they are only considered
+  when compiling the project they are in. This solved my current template instantiation issue under Linux - for now.
+  Ps. By the way, I just noticed that the Windows version of the Dungeon executable is after this change only 230 KiB instead of 395 KiB... I assume that this massive template
+  instantiation within the header files really has a notable impact on everything. :/
+
+
+
 >> 18.06.2011
 [CO]
 - Added "DynSignature"-interface and derived "DynEvent", "DynEventHandler", "DynFunc" and "DynParams" from this new interface. Previously, those interfaces had

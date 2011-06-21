@@ -110,14 +110,16 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		pl_attribute(AABBMax,	PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
 			// Overwritten Loadable attributes
 		pl_attribute(Filename,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_1(Clear,					pl_ret_type(bool),			bool,																				"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																								"")
-		pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLGeneral::uint32,																	"Returns a scene node by using the given index, result can be a null pointer",																																																																		"")
-		pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLGeneral::String&,															"Returns a scene node by using the given name, result can be a null pointer",																																																																		"")
-		pl_method_3(Create,					pl_ret_type(SceneNode*),	const PLGeneral::String&,	const PLGeneral::String&,	const PLGeneral::String&,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
-		pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																								"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																			"")
+		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
+			// Constructors
+			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			// Methods
+			pl_method_1(Clear,					pl_ret_type(bool),			bool,																				"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																								"")
+			pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLGeneral::uint32,																	"Returns a scene node by using the given index, result can be a null pointer",																																																																		"")
+			pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLGeneral::String&,															"Returns a scene node by using the given name, result can be a null pointer",																																																																		"")
+			pl_method_3(Create,					pl_ret_type(SceneNode*),	const PLGeneral::String&,	const PLGeneral::String&,	const PLGeneral::String&,	"Creates a new scene node, name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
+			pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																								"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																			"")
+		#endif
 		// Signals
 		pl_signal_1(SignalLoadProgress,	float,	"Scene load progress signal. Current load progress as parameter - if not within 0-1 loading is done.",	"")
 	pl_class_end

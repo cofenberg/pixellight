@@ -103,12 +103,14 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		pl_attribute(Size,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite,	GetSet,	"Widget size",		"")
 		pl_attribute(Topmost,			bool,				false,					ReadWrite,	GetSet,	"Topmost state",	"")
 		pl_attribute(BackgroundColor,	PLGraphics::Color4,	PLGraphics::Color4(),	ReadWrite,	GetSet,	"Background color",	"")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_0(GetGui,				pl_ret_type(Gui*),				"Get owner GUI. Returns pointer to GUI object, can be a null pointer.",														"")
-		pl_method_0(GetContentWidget,	pl_ret_type(Widget*),			"Get content widget, can be a null pointer",																				"")
-		pl_method_1(SetTrapMouse,		pl_ret_type(void),		bool,	"Trap mouse inside the widget, 'true' as first parameter if the mouse should be trapped inside the widget, else 'false'",	"")
+		#ifdef PLGUI_EXPORTS	// The following is only required when compiling PLGui
+			// Constructors
+			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			// Methods
+			pl_method_0(GetGui,				pl_ret_type(Gui*),				"Get owner GUI. Returns pointer to GUI object, can be a null pointer.",														"")
+			pl_method_0(GetContentWidget,	pl_ret_type(Widget*),			"Get content widget, can be a null pointer",																				"")
+			pl_method_1(SetTrapMouse,		pl_ret_type(void),		bool,	"Trap mouse inside the widget, 'true' as first parameter if the mouse should be trapped inside the widget, else 'false'",	"")
+		#endif
 		// Signals
 		pl_signal_2(SignalUserMessage,				PLGeneral::uint32,	void*,								"User message",																								"")
 		pl_signal_0(SignalOnThemeChanged,																	"Theme has been changed",																					"")

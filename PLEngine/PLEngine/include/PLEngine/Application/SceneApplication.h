@@ -71,10 +71,12 @@ class SceneApplication : public RenderApplication {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SceneApplication, "PLEngine", PLEngine::RenderApplication, "Scene application class")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_0(GetRootScene,	pl_ret_type(PLScene::SceneContainer*),	"Returns the root scene container, can be a null pointer",	"")
+		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
+			// Constructors
+			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			// Methods
+			pl_method_0(GetRootScene,	pl_ret_type(PLScene::SceneContainer*),	"Returns the root scene container, can be a null pointer",	"")
+		#endif
 	pl_class_end
 
 

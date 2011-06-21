@@ -112,17 +112,17 @@ class Object : public ObjectBase {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class_internal(PLCORE_RTTI_EXPORT, Object, "PLCore", /* No base class */, "Object base class")
-	#ifdef PLCORE_EXPORTS
-		// Methods
-		pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const PLGeneral::String&,								"Check if object is instance of a given class, class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
-		pl_method_2(SetAttribute,			pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Set attribute value, attribute name as first parameter, attribute value as second parameter",																											"")
-		pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const PLGeneral::String&,								"Set attribute to it's default value, attribute name as first parameter",																																"")
-		pl_method_2(CallMethod,				pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Call method, method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter",																				"")
-		pl_method_1(SetValues,				pl_ret_type(void),				const PLGeneral::String&,								"Set attribute values as a string, string containing attributes and values as first parameter",																											"")
-		pl_method_0(SetDefaultValues,		pl_ret_type(void),																		"Set all attributes to default",																																										"")
-		pl_method_0(ToString,				pl_ret_type(PLGeneral::String),															"Get object as string. Returns string representation of object.",																																		"")
-		pl_method_1(FromString,				pl_ret_type(void),				const PLGeneral::String&,								"Set object from string, string representation of object as first parameter",																															"")
-	#endif
+		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
+			// Methods
+			pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const PLGeneral::String&,								"Check if object is instance of a given class, class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
+			pl_method_2(SetAttribute,			pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Set attribute value, attribute name as first parameter, attribute value as second parameter",																											"")
+			pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const PLGeneral::String&,								"Set attribute to it's default value, attribute name as first parameter",																																"")
+			pl_method_2(CallMethod,				pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Call method, method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter",																				"")
+			pl_method_1(SetValues,				pl_ret_type(void),				const PLGeneral::String&,								"Set attribute values as a string, string containing attributes and values as first parameter",																											"")
+			pl_method_0(SetDefaultValues,		pl_ret_type(void),																		"Set all attributes to default",																																										"")
+			pl_method_0(ToString,				pl_ret_type(PLGeneral::String),															"Get object as string. Returns string representation of object.",																																		"")
+			pl_method_1(FromString,				pl_ret_type(void),				const PLGeneral::String&,								"Set object from string, string representation of object as first parameter",																															"")
+		#endif
 	pl_class_end
 
 
