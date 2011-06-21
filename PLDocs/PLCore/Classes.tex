@@ -1062,8 +1062,8 @@ if (pMyClass != nullptr) {
 	PLCore::EventHandler<int> cMyEventHandlerParameter(MyFunctionParameter);
 
 	// Connect one of the event handler with the MySignal signal, the other with MySignalParameter
-	pMyObject->MySignal.Connect(&cMyEventHandler);
-	pMyObject->MySignalParameter.Connect(&cMyEventHandlerParameter);
+	pMyObject->MySignal.Connect(cMyEventHandler);
+	pMyObject->MySignalParameter.Connect(cMyEventHandlerParameter);
 
 	// Emit the MySignal signal, MyFunction will be called
 	pMyObject->MySignal();
@@ -1100,10 +1100,10 @@ if (pMyClass != nullptr) {
 	// Connect one of the event handler with the MySignal signal, the other with MySignalParameter
 	PLCore::DynEvent *pMySignal = pMyObject->GetSignal("MySignal");
 	if (pMySignal != nullptr)
-		pMySignal->Connect(&cMyEventHandler);
+		pMySignal->Connect(cMyEventHandler);
 	PLCore::DynEvent *pMySignalParameter = pMyObject->GetSignal("MySignalParameter");
 	if (pMySignalParameter != nullptr)
-		pMySignalParameter->Connect(&cMyEventHandlerParameter);
+		pMySignalParameter->Connect(cMyEventHandlerParameter);
 
 	// Emit the MySignal signal, MyFunction will be called
 	if (pMySignal != nullptr)
@@ -1166,8 +1166,8 @@ if (pMyClass != nullptr) {
 	PLCore::Event<int> cMyEventParameter;
 
 	// Connect one of the slots with the cMyEvent event, the other with cMyEventParameter
-	cMyEvent.Connect(&pMyObject->SlotOnMyEvent);
-	cMyEventParameter.Connect(&pMyObject->SlotOnMyEventParameter);
+	cMyEvent.Connect(pMyObject->SlotOnMyEvent);
+	cMyEventParameter.Connect(pMyObject->SlotOnMyEventParameter);
 
 	// Emit the cMyEvent event, MyClass::OnMyEvent will be called
 	cMyEvent();
@@ -1192,8 +1192,8 @@ if (pMyClass != nullptr) {
 	PLCore::Event<int> cMyEventParameter;
 
 	// Connect one of the slots with the cMyEvent event, the other with cMyEventParameter
-	cMyEvent.Connect(pMyObject->GetSlot("OnMyEvent"));
-	cMyEventParameter.Connect(pMyObject->GetSlot("OnMyEventParameter"));
+	cMyEvent.Connect(*pMyObject->GetSlot("OnMyEvent"));
+	cMyEventParameter.Connect(*pMyObject->GetSlot("OnMyEventParameter"));
 
 	// Emit the cMyEvent event, MyClass::OnMyEvent will be called
 	cMyEvent();
@@ -1205,7 +1205,7 @@ if (pMyClass != nullptr) {
 	delete pMyObject;
 }
 \end{lstlisting}
-As you can see, this example is nearly identical to source~code~\ref{Code:RTTISlotsUsage}, the only difference is that for instance \emph{pMyObject->GetSlot(''OnMyEvent'')} is used to receive a pointer to a slot. Because signals are just events within objects, and a slots are just event handlers within an objects, slots can also be connected to signals \ldots \begin{quote}pMyObject0->GetSignal(''MySignal'')->Connect(pMyObject1->GetSlot(''OnMySignal''));\end{quote}. If the signature of \emph{MySignal} and \emph{OnMySignal} doesn't match, nothing will happen.
+As you can see, this example is nearly identical to source~code~\ref{Code:RTTISlotsUsage}, the only difference is that for instance \emph{pMyObject->GetSlot(''OnMyEvent'')} is used to receive a pointer to a slot. Because signals are just events within objects, and a slots are just event handlers within an objects, slots can also be connected to signals \ldots \begin{quote}pMyObject0->GetSignal(''MySignal'')->Connect(*pMyObject1->GetSlot(''OnMySignal''));\end{quote}. If the signature of \emph{MySignal} and \emph{OnMySignal} doesn't match, nothing will happen.
 
 
 
