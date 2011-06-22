@@ -2,7 +2,13 @@
 
 
 \paragraph{Motivation}
+This script document is intended for script programmers. While this document also talkes about some quite basic stuff, the targeted audience has already some fundemantal programming experience. If you're totally new to the field of programming in general it's hightly recommended to read other beginner literature first \footnote{For example \emph{Programming in Lua (first edition)} which is online available at \url{http://www.lua.org/pil/} if you're just interessted in scripting using Lua}.
+
 The reason for creating the script interface was to have a minimalistic and universal interface to work with script languages. Instead of implementing an own script system we use a backend design pattern to use already available common implementations like \emph{JavaScript}.
+
+Please note that the purpose of this document is not to describe each and every possible global function, RTTI classes, methods, attributes and so on. Due to the highly plugin driven architecture this would be impossible anyway. Script language support was added to PixelLight in the release 0.9.7 - so  it's a young component. At the moment, you'll have to look into the C++ source codes\footnote{Shouldn't be hard to find the stuff accessible by scripts, just look for \emph{pl\_class}} so see what can be accessed by the script. This is definitly not optimal and in the future it's propably possible to access a dynamic realtime script API documentation which is using RTTI information. An editor should also include a script editor with build in automatic script API documentation and autocomplete. This way, such a documentation would automatically be always up-to-date and would also contain your own, custom extensions. For problems and questions, please use the offical PixelLight forum at \url{http://dev.pixellight.org/forum/}.
+
+
 
 
 \section{External Dependences}
