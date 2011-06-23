@@ -75,7 +75,7 @@ I hope you got the idea why using namespaces, even in scripts, is a good thing.
 
 \section{Global variables}
 \label{Script_GlobalVariables}
-There's nothing fancy about global variables, so this section is quite handy. When using Lua, just assign somewhere within your script, as seen in source~code~\ref{Code:GlobalVariables}, a value to a name and et voila, you've created a new global variable\footnote{Lua is loosely typed, the type of a variable depends on the value assigned to it and can be changed everytime by just assigning another value with another type to it}.
+There's nothing fancy about global variables, so this section is quite handy. When using Lua, just assign somewhere within your script, as seen in source~code~\ref{Code:GlobalVariables}, a value to a name and et voilà, you've created a new global variable\footnote{Lua is loosely typed, the type of a variable depends on the value assigned to it and can be changed every time by just assigning another value with another type to it}.
 \begin{lstlisting}[float=htb,label=Code:GlobalVariables,caption={Global variables}]
 -- Create the global variable "Health"
 Health = 42
@@ -113,7 +113,7 @@ From the C++ side, it's possible to interact with global function. Such global f
 
 
 \paragraph{Global functions added by the C++ host}
-Beside writing own global functions directly within the script, the C++ side is able to add global function during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduct script initialization cost and also trash the global script namespace, altough there's namespace support to reduce the propabiliy of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using RTTI objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the RTTI object approach is not adding script initialization cost.
+Beside writing own global functions directly within the script, the C++ side is able to add global function during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduce script initialization cost and also trash the global script namespace, although there's namespace support to reduce the probability of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using RTTI objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the RTTI object approach is not adding script initialization cost.
 
 
 \paragraph{Functions used as callbacks}
@@ -151,7 +151,7 @@ MyMovie(MyCallbackFunction)
 \section{Object-oriented programming (OOP)}
 First at all, please note that this section has nothing to do with PixelLight RTTI objects which are explained in section~\ref{Script_RTTIObjects}.
 
-Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proofen to be useful.
+Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
 \begin{lstlisting}[label=Code:OOPSkeleton,caption={Object-oriented programming (OOP) Lua skeleton}]
 --[-------------------------------------------------------]
 --[ Includes                                              ]
@@ -232,17 +232,17 @@ Wait a moment, the class definition within source~code~\ref{Code:OOPSkeleton} ju
 
 That's true, Lua has no build in OOP support, but that's no reason to don't use OOP. It's possible to realize OOP by using, yes your guess was right, tables. Even information hiding is possible.
 
-At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all within a script? Shouldn't make a script language make the life of a programmer much easier? Why can't we just use variables and functions and be happy?''\end{quote} The answer is short: No one is forcing you to use OOP. If you're unformfortable or unfamiliar with OOP and don't want to get into the topic, then don't. If your scripted application gets bigger and you want a powerful tool to write well structured, reusable script code without a totally flooded global space due to tousends of global variables and functions, use the mentioned OOP approach. Personally, I wouldn't want to work without OOP because I'am a lazy person.
+At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all within a script? Shouldn't make a script language make the life of a programmer much easier? Why can't we just use variables and functions and be happy?''\end{quote} The answer is short: No one is forcing you to use OOP. If you're uncomfortable or unfamiliar with OOP and don't want to get into the topic, then don't. If your scripted application gets bigger and you want a powerful tool to write well structured, reusable script code without a totally flooded global space due to thousands of global variables and functions, use the mentioned OOP approach. Personally, I wouldn't want to work without OOP because I'am a lazy person.
 
 
 
 
 \section{RTTI objects}
 \label{Script_RTTIObjects}
-RTTI objects is were the scripting gets really interessting because it's possible to direcly access and manipulate PixelLight RTTI objects by using a script. Within the Lua script backend, RTTI objects are realized by using the \emph{user data} feature of Lua. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the RTTI system of PixelLight.
+RTTI objects is were the scripting gets really interesting because it's possible to directly access and manipulate PixelLight RTTI objects by using a script. Within the Lua script backend, RTTI objects are realized by using the \emph{user data} feature of Lua. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the RTTI system of PixelLight.
 
 \paragraph{this}
-PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. Of course, the type of the RTTI object depends on the use-case. For example when running a scripted stand-alone application by using \emph{PLViewer}, \emph{this} points to an instance of the \emph{PLEngine::ScriptApplication} RTTI class. Another example would be the script scene node modifier called \emph{PLScriptBindings::SNMScript} where \emph{this} points to an instance of \emph{PLScriptBindings::SNMScript}. All RTTI objects are derived from the base class \emph{PLCore::Object} and therefore share a common featue set. To check the RTTI object type just write within a Lua script \emph{myRTTIObject:IsInstanceOf("PLEngine::ScriptApplication")} in order to figure out whether the RTTI object you currently dealing with is an instance of \emph{PLEngine::ScriptApplication}. In case you've wondered why it's called \emph{this} and not \emph{self} as it's commonly named in Lua scripts: The answer is that PixelLight is using a generic script language independent script interface. Components like \emph{PLEngine::ScriptApplication} or \emph{PLScriptBindings::SNMScript} don't use e.g. Lua directly, they're only using the generic script language independent script interface. Not every script language is using \emph{self} to identify \emph{this instance}. PixelLight itself is writtin in C++, so the name \emph{this} was obviously a better choice then \emph{self} becaues this way, there are not to many different names descriping one and the same concept.
+PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. Of course, the type of the RTTI object depends on the use-case. For example when running a scripted stand-alone application by using \emph{PLViewer}, \emph{this} points to an instance of the \emph{PLEngine::ScriptApplication} RTTI class. Another example would be the script scene node modifier called \emph{PLScriptBindings::SNMScript} where \emph{this} points to an instance of \emph{PLScriptBindings::SNMScript}. All RTTI objects are derived from the base class \emph{PLCore::Object} and therefore share a common feature set. To check the RTTI object type just write within a Lua script \emph{myRTTIObject:IsInstanceOf("PLEngine::ScriptApplication")} in order to figure out whether the RTTI object you currently dealing with is an instance of \emph{PLEngine::ScriptApplication}. In case you've wondered why it's called \emph{this} and not \emph{self} as it's commonly named in Lua scripts: The answer is that PixelLight is using a generic script language independent script interface. Components like \emph{PLEngine::ScriptApplication} or \emph{PLScriptBindings::SNMScript} don't use e.g. Lua directly, they're only using the generic script language independent script interface. Not every script language is using \emph{self} to identify \emph{this instance}. PixelLight itself is written in C++, so the name \emph{this} was obviously a better choice then \emph{self} because this way, there are not to many different names describing one and the same concept.
 
 
 \subsection{Properties}
