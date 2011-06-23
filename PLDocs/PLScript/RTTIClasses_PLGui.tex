@@ -1,0 +1,43 @@
+\chapter{PLGui RTTI classes}
+
+
+
+
+\section{PLGui::Gui class}
+
+
+\subsection{Methods}
+
+\paragraph{SetMouseVisible(<bool>)}
+Write \emph{<RTTI object>:SetMouseVisible(<bool>)} in order to set the mouse cursor visibility. \emph{true} as first parameter if the mouse cursor shall be visible.
+
+
+
+
+\section{PLGui::Widget class}
+
+
+\subsection{Methods}
+
+\paragraph{<RTTI object> GetGui()}
+Write \emph{<RTTI object>:GetGui()} in order to get the owner GUI. Returns pointer to GUI object, can be a null pointer.
+
+\paragraph{<RTTI object> GetContentWidget()}
+Write \emph{<RTTI object>:GetContentWidget()} in order to get the content widget, can be a null pointer.
+
+\paragraph{SetTrapMouse(<bool>)}
+Write \emph{<RTTI object>:SetTrapMouse(<bool>)} in order to trap the mouse inside the widget. \emph{true} as first parameter if the mouse should be trapped inside the widget, else \emph{false}.
+
+
+
+
+\section{PLGui::GuiApplication class}
+
+
+\subsection{Methods}
+
+\paragraph{<RTTI object> GetMainWindow()}
+Write \emph{<RTTI object>:GetMainWindow()} in order to get the main window. Returns pointer to the main window of the application, a null pointer on error.
+
+\paragraph{SetMainWindow(<RTTI object>)}
+Write \emph{<RTTI object>:SetMainWindow(<RTTI object>)} in order to set the main window, pointer to the main window of the application (a null pointer is also valid) as first parameter.

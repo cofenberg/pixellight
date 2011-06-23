@@ -1,0 +1,90 @@
+\chapter{PLEngine RTTI classes}
+
+
+
+
+\section{PLEngine::RenderApplication class}
+
+
+\subsection{Methods}
+
+\paragraph{<RTTI object> GetPainter()}
+Write \emph{<RTTI object>:GetPainter()} in order to get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).
+
+\paragraph{SetPainter()}
+Write \emph{<RTTI object>:SetPainter(<RTTI object>)} in order to set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.
+
+\paragraph{<RTTI object> GetInputController()}
+Write \emph{<RTTI object>:GetInputController()} in order to get the virtual input controller (can be a null pointer).
+
+\paragraph{SetInputController(SetInputController)}
+Write \emph{<RTTI object>:SetInputController(SetInputController)} in order to set the virtual input controller. Virtual input controller (can be a null pointer) as first parameter.
+
+\paragraph{<bool> IsFullscreen()}
+Write \emph{<RTTI object>:IsFullscreen()} in order to check whether or not the main window is currently fullscreen or not. Returns \emph{true} if the main window is currently fullscreen, else \emph{false}.
+
+\paragraph{SetFullscreen(<bool>)}
+Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the main window is currently fullscreen or not. \emph{true} as first parameter if the main window is currently fullscreen, else \emph{false}.
+
+\paragraph{<bool> Update(<bool>)}
+Write \emph{<RTTI object>:Update(<bool>)} in order to update the application. Force update at once? as first parameter (do this only if you really need it!). Returns \emph{true} when the update was performed, else \emph{false} (maybe there's a frame rate limitation and the update wasn't forced). This method is called continously from the main loop of the application. It is called either by the \emph{OnRun()}-method of an Application, or from the outside, if the application is embedded in another application's main loop (which is the case for e.g. browser plugins).
+
+
+
+
+\section{PLEngine::SceneApplication class}
+
+
+\subsection{Methods}
+
+\paragraph{<RTTI object> GetRootScene()}
+Write \emph{<RTTI object>:GetRootScene()} in order to get the root scene container, can be a null pointer.
+
+
+
+
+\section{PLEngine::BasicSceneApplication class}
+
+
+\subsection{Methods}
+
+\paragraph{<RTTI object> GetScene()}
+Write \emph{<RTTI object>:GetScene()} in order to get the scene container (the \emph{concrete scene}), can be a null pointer.
+
+\paragraph{SetScene(<RTTI object>)}
+Write \emph{<RTTI object>:SetScene(<RTTI object>)} in order to set the scene container (the \emph{concrete scene}). New scene container as first parameter (can be a null pointer).
+
+\paragraph{ClearScene()}
+Write \emph{<RTTI object>:ClearScene()} in order to clear the scene, after calling this method the scene is empty.
+
+\paragraph{<bool> LoadScene(<string>)}
+Write \emph{<RTTI object>:LoadScene(<string>)} in order to load a scene. Filename of the scene to load as first argument. Returns \emph{true} if all went fine, else \emph{false}. This method will completly replace the current scene.
+
+\paragraph{<RTTI object> GetCamera()}
+Write \emph{<RTTI object>:GetCamera()} in order to get the scene camera, can be a null pointer.
+
+\paragraph{SetCamera(<RTTI object>)}
+Write \emph{<RTTI object>:SetCamera(<RTTI object>)} in order to set the scene camera. New scene camera as first parameter (can be a null pointer).
+
+\paragraph{<RTTI object> GetSceneRendererTool()}
+Write \emph{<RTTI object>:GetSceneRendererTool()} in order to get the scene renderer tool.
+
+\paragraph{<RTTI object> GetRootScene()}
+Write \emph{<RTTI object>:GetRootScene()} in order to 
+
+\paragraph{<RTTI object> GetScreenshotTool()}
+Write \emph{<RTTI object>:GetScreenshotTool()} in order to get the screenshot tool.
+
+
+
+
+\section{PLEngine::ScriptApplication class}
+
+
+\subsection{Methods}
+
+\paragraph{<string> GetBaseDirectory()}
+Write \emph{<RTTI object>:GetBaseDirectory()} in order to get the base directory of the application.
+
+\paragraph{SetBaseDirectory(<string>)}
+Write \emph{<RTTI object>:SetBaseDirectory(<string>)} in order to set the base directory of the application. Base directory as the first parameter.

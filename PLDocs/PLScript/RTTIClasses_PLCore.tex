@@ -1,0 +1,33 @@
+\chapter{PLCore RTTI classes}
+
+
+
+
+\section{PLCore::Object class}
+
+
+\subsection{Methods}
+
+\paragraph{<bool> IsInstanceOf(<string>)}
+Write \emph{<RTTI object>:IsInstanceOf(<string>)} in order to check if object is instance of a given class. Class name (with namespace) as first parameter. Returns \emph{true} if the object is an instance of the class or one of it's derived classes, else \emph{false}.
+
+\paragraph{SetAttribute(<string>, <string>)}
+Write \emph{<RTTI object>:SetAttribute(<string>, <string>)} in order to set an attribute value. Attribute name as first parameter, attribute value as second parameter.
+
+\paragraph{SetAttributeDefault(<string>)}
+Write \emph{<RTTI object>:SetAttributeDefault(<string>)} in order to set an attribute to it's default value. Attribute name as first parameter.
+
+\paragraph{CallMethod(<string>, <string>)}
+Write \emph{<RTTI object>:CallMethod(<string>, <string>} in order to call a method. Method name as first parameter, parameters as string (e.g. ''Param0='x' Param1='y' '') as second parameter.
+
+\paragraph{SetValues(<string>)}
+Write \emph{<RTTI object>:SetValues(<string>)} in order to set multiple attribute values as a string at once. String containing attributes and values as first parameter (e.g. ''Name='Bob' Position='1 2 3' '').
+
+\paragraph{SetDefaultValues()}
+Write \emph{<RTTI object>:SetDefaultValues()} in order to set all attributes to default.
+
+\paragraph{<string> ToString()}
+Write \emph{<RTTI object>:ToString()} in order to get the object as string. Returns string representation of object.
+
+\paragraph{FromString(<string>)}
+Write \emph{<RTTI object>:FromString(<string>)} in order to set the object from string. String representation of object as first parameter.
