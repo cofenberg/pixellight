@@ -66,27 +66,83 @@ PublicVariables = {
 }
 \end{lstlisting}
 
-When writing a script, it's probably a good idea to use such a \emph{public}-namespace to mark that those script content should be visible to e.g. an editor while other stuff is for internal purposes only. I hope you got the idea why using namespaces, even in scripts, is a good thing.
+When writing a script, it's probably a good idea to use such a \emph{public}-namespace to mark that those script content should be visible to e.g. an editor while other stuff is for internal purposes only. The Lua script language does also have the concept of local variables by writing the keyword \emph{local} in front of the variable declaration (see section~\ref{Script_GlobalVariables} for details). Local variables are invisible to the C++ side, so, they can also be used to realize script internal variables.
+
+I hope you got the idea why using namespaces, even in scripts, is a good thing.
 
 
 
 
 \section{Global variables}
+\label{Script_GlobalVariables}
 There's nothing fancy about global variables, so this section is quite handy. When using Lua, just assign somewhere within your script, as seen in source~code~\ref{Code:GlobalVariables}, a value to a name and et voila, you've created a new global variable\footnote{Lua is loosely typed, the type of a variable depends on the value assigned to it and can be changed everytime by just assigning another value with another type to it}.
 \begin{lstlisting}[float=htb,label=Code:GlobalVariables,caption={Global variables}]
-halfTheTruth = 21
+-- Create the global variable "Health"
+Health = 42
+-- Create the global variable "Gold"
+Gold = 21
 \end{lstlisting}
+
+Lua does also have the concept of local variables by writing the keyword \emph{local} in front of the variable declaration as seen within source~code~\ref{Code:LocalVariables}.
+\begin{lstlisting}[float=htb,label=Code:LocalVariables,caption={Local variables}]
+-- Create the global variable "Health"
+Health = 42
+-- Create the local variable "Gold"
+local Gold = 21
+\end{lstlisting}
+From the C++ side, it's possible to interact with global variables while local variables can not be seen. So, while the C++ side can access your global variable \emph{Health}, it can't access your local variable \emph{Gold}.
+
+\paragraph{Global variables added by the C++ host}
+The C++ side is also able to create new, or to delete existing global variables. Whether or not this is in general useful is up to you. PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. If you want to know more about the global \emph{this} variable, have a look into section~\ref{Script_RTTIObjects}.
+
 
 
 
 
 \section{Global functions}
-[TODO]
-
-
-
-source~code~\ref{Code:GlobalFunctions}
+\label{Script_GlobalFunctions}
+As soon as your script grows over a hand full of source code lines, the need for function arises. Within Lua, global functions look as seen in source~code~\ref{Code:GlobalFunctions}.
 \begin{lstlisting}[float=htb,label=Code:GlobalFunctions,caption={Global functions}]
+function MyFunction()
+	-- ... do some fancy stuff...
+end
+\end{lstlisting}
+The global function \emph{MyFunction} can then be called by writing \emph{MyFunction()}.
+
+From the C++ side, it's possible to interact with global function. Such global functions are usually used as script entry points and typical names for such global functions used as entry points are \emph{OnInit}, \emph{OnUpdate} and \emph{OnDeInit} which are called after as script has been loaded, when a script should perform an update step and shortly before a script is going to die. Please note that this was only an example of the naming convention used within PixelLight. Within the script system there are no such fixed build in names and you're free to choose your own entry point names. But in general, it makes the life easier to always use the same function names for the same purpose.
+
+
+\paragraph{Global functions added by the C++ host}
+Beside writing own global functions directly within the script, the C++ side is able to add global function during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduct script initialization cost and also trash the global script namespace, altough there's namespace support to reduce the propabiliy of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using RTTI objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the RTTI object approach is not adding script initialization cost.
+
+
+\paragraph{Functions used as callbacks}
+Just calling global function directly is not the only possible way to use them. Global functions can also be used as slots, meaning that when the signal they are connected with is emitted, the global function is called. Please note that this is also true for local functions, local functions can be used as slots as well. See section~\ref{Script_RTTIObjects_Signals} for information about signals and section~\ref{Script_RTTIObjects_Slots} for details about slots.
+
+As seen within the following source~code~\ref{Code:VariableWithAFunctionAsValue}, within Lua it's also possible to use a function as a value of a variable.
+\begin{lstlisting}[float=htb,label=Code:VariableWithAFunctionAsValue,caption={Variable with a function as value}]
+function MyFunction()
+	-- ... do some fancy stuff...
+end
+myVariable = MyFunction
+\end{lstlisting}
+Therefore, a function can also be used as callback, name it \emph{slot} if you want. This way, a function pointer can be passed around within your script which can become really handy. Imagine that there's a movie script which accepts such a function pointer as parameter. As soon as the movie playback has been finished this given function is called. The script which is using the movie script can then react on this signal/event and change for instance into an interactive mode. Source~code~\ref{Code:FunctionAsCallback} summes this up.
+\begin{lstlisting}[float=htb,label=Code:FunctionAsCallback,caption={Function as callback}]
+function MyCallbackFunction()
+	-- ... do some fancy stuff...
+end
+
+function MyMovie(callbackFunction)
+	-- ... do some fancy stuff...
+
+	-- Movie playback has been finished
+	if callbackFunction ~= nil then
+		callbackFunction()
+	end
+end
+
+-- Playback a movie
+MyMovie(MyCallbackFunction)
 \end{lstlisting}
 
 
@@ -143,7 +199,7 @@ MyClass = {
 		--@brief
 		--  Very secret stuff is happening in this private method
 		local function MyPrivateMethod()
-			-- ...
+			-- ... do some fancy stuff...
 		end
 
 
@@ -153,14 +209,14 @@ MyClass = {
 		--@brief
 		--  A public method
 		function this.MyPublicMethod()
-			-- ...
+			-- ... do some fancy stuff...
 		end
 
 
 		--[-------------------------------------------------------]
 		--[ Public class constructor implementation               ]
 		--[-------------------------------------------------------]
-		-- ...
+		-- ... do some fancy stuff...
 
 
 		-- Return the created class instance
@@ -183,7 +239,10 @@ At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all w
 
 \section{RTTI objects}
 \label{Script_RTTIObjects}
-RTTI objects is were the scripting gets really interessting because it's possible to direcly access and manipulate PixelLight RTTI objects by using a script.
+RTTI objects is were the scripting gets really interessting because it's possible to direcly access and manipulate PixelLight RTTI objects by using a script. Within the Lua script backend, RTTI objects are realized by using the \emph{user data} feature of Lua. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the RTTI system of PixelLight.
+
+\paragraph{this}
+PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. Of course, the type of the RTTI object depends on the use-case. For example when running a scripted stand-alone application by using \emph{PLViewer}, \emph{this} points to an instance of the \emph{PLEngine::ScriptApplication} RTTI class. Another example would be the script scene node modifier called \emph{PLScriptBindings::SNMScript} where \emph{this} points to an instance of \emph{PLScriptBindings::SNMScript}. All RTTI objects are derived from the base class \emph{PLCore::Object} and therefore share a common featue set. To check the RTTI object type just write within a Lua script \emph{myRTTIObject:IsInstanceOf("PLEngine::ScriptApplication")} in order to figure out whether the RTTI object you currently dealing with is an instance of \emph{PLEngine::ScriptApplication}. In case you've wondered why it's called \emph{this} and not \emph{self} as it's commonly named in Lua scripts: The answer is that PixelLight is using a generic script language independent script interface. Components like \emph{PLEngine::ScriptApplication} or \emph{PLScriptBindings::SNMScript} don't use e.g. Lua directly, they're only using the generic script language independent script interface. Not every script language is using \emph{self} to identify \emph{this instance}. PixelLight itself is writtin in C++, so the name \emph{this} was obviously a better choice then \emph{self} becaues this way, there are not to many different names descriping one and the same concept.
 
 
 \subsection{Properties}
@@ -202,8 +261,11 @@ methods (functions within an object)
 
 
 \subsection{Signals}
+\label{Script_RTTIObjects_Signals}
 [TODO]
 signals (aka events)
+
+Within a script, signals can be connected to an RTTI object slot or to a global function (section~\ref{Script_GlobalFunctions} for details) with then is used as a script slot.
 
 There are two fixed build in script functions for signals:
 \begin{itemize}
@@ -215,5 +277,6 @@ There are two fixed build in script functions for signals:
 
 
 \subsection{Slots}
+\label{Script_RTTIObjects_Slots}
 [TODO]
 slots (aka event handlers)
