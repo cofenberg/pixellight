@@ -1,6 +1,7 @@
 >> 23.06.2011
 [CO]
 - Worked on the script documentation
+- Removed "\pagenumbering{roman}"-setting ("arabic" is used by default) because those page numbers are a little bit hard to read. I don't know why this was set.
 
 
 
