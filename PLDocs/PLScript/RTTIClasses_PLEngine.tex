@@ -17,8 +17,8 @@ Write \emph{<RTTI object>:SetPainter(<RTTI object>)} in order to set the surface
 \paragraph{<RTTI object> GetInputController()}
 Write \emph{<RTTI object>:GetInputController()} in order to get the virtual input controller (can be a null pointer).
 
-\paragraph{SetInputController(SetInputController)}
-Write \emph{<RTTI object>:SetInputController(SetInputController)} in order to set the virtual input controller. Virtual input controller (can be a null pointer) as first parameter.
+\paragraph{SetInputController(<RTTI object>)}
+Write \emph{<RTTI object>:SetInputController(<RTTI object>)} in order to set the virtual input controller. Virtual input controller (can be a null pointer) as first parameter.
 
 \paragraph{<bool> IsFullscreen()}
 Write \emph{<RTTI object>:IsFullscreen()} in order to check whether or not the main window is currently fullscreen or not. Returns \emph{true} if the main window is currently fullscreen, else \emph{false}.
@@ -76,9 +76,30 @@ Write \emph{<RTTI object>:GetRootScene()} in order to
 Write \emph{<RTTI object>:GetScreenshotTool()} in order to get the screenshot tool.
 
 
+\subsection{Signals}
+
+\paragraph{SignalCameraSet}
+A new camera has been set.
+
+\paragraph{SignalSceneLoadingFinished}
+Scene loading has been finished successfully.
+
+
 
 
 \section{PLEngine::ScriptApplication class}
+
+
+\subsection{Attributes}
+
+\paragraph{OnInitFunction}
+Name of the optional script function called by C++ when the application should initialize itself. Default is \emph{OnInit}.
+
+\paragraph{OnUpdateFunction}
+Name of the optional script function called by C++ when the application should update itself. Default is \emph{OnUpdate}.
+
+\paragraph{OnDeInitFunction}
+Name of the optional script function called by C++ when the application should de-initialize itself. Default is \emph{OnDeInit}.
 
 
 \subsection{Methods}

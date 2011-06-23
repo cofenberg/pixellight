@@ -6,6 +6,36 @@
 \section{PLScene::SceneNode class}
 
 
+\subsection{Attributes}
+
+\paragraph{Flags}
+Flags.
+
+\paragraph{DebugFlags}
+Debug flags.
+
+\paragraph{Position}
+Position.
+
+\paragraph{Rotation}
+Rotation as Euler angles in degree, [0, 360].
+
+\paragraph{Scale}
+Scale.
+
+\paragraph{MaxDrawDistance}
+Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other.
+
+\paragraph{AABBMin}
+Minimum position of the 'scene node space' axis aligned bounding box.
+
+\paragraph{AABBMax}
+Maximum position of the 'scene node space' axis aligned bounding box.
+
+\paragraph{Name}
+Optional scene node name. If not defined, a name is chosen automatically.
+
+
 \subsection{Methods}
 
 \paragraph{<RTTI object> GetContainer()}
@@ -87,9 +117,42 @@ Write \emph{<RTTI object>:Delete(<bool>)} in order to delete this scene node. If
 Write \emph{<RTTI object>:GetInputController()} in order to get the input controller. Returns the input controller (can be a null pointer).
 
 
+\subsection{Signals}
+
+\paragraph{SignalDestroy}
+Scene node destruction signal.
+
+\paragraph{SignalActive}
+Scene node active state change signal.
+
+\paragraph{SignalVisible}
+Scene node visible state change signal.
+
+\paragraph{SignalContainer}
+Scene node parent container change signal.
+
+\paragraph{SignalAABoundingBox}
+Scene node axis aligned bounding box change signal.
+
+\paragraph{SignalInit}
+Scene node initialization signal.
+
+\paragraph{SignalDeInit}
+Scene node de-initialization change signal.
+
+\paragraph{SignalAddedToVisibilityTree}
+Scene node was added to a visibility tree signal. Visibility node representing this scene node within the visibility tree as parameter.
+
+
 
 
 \section{PLScene::SceneNodeModifier class}
+
+
+\subsection{Attributes}
+
+\paragraph{Flags}
+Flags.
 
 
 \subsection{Methods}
@@ -112,6 +175,15 @@ Write \emph{<RTTI object>:GetInputController()} in order to get the input contro
 \section{PLScene::SceneContainer class}
 
 
+\subsection{Attributes}
+
+\paragraph{Hierarchy}
+Class name of the scene container hierarchy.
+
+\paragraph{Filename}
+Filename of the file to load the container from.
+
+
 \subsection{Methods}
 
 \paragraph{<bool> Clear(<bool>)}
@@ -128,3 +200,9 @@ Write \emph{<RTTI object>:Create(<string>, <string>, <string>)} in order to crea
 
 \paragraph{CalculateAABoundingBox()}
 Write \emph{<RTTI object>:CalculateAABoundingBox()} in order to calculate and sets the axis align bounding box in \emph{scene node space}. Because the \emph{scene node space} axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.
+
+
+\subsection{Signals}
+
+\paragraph{SignalLoadProgress}
+Scene load progress signal. Current load progress as parameter - if not within 0-1 loading is done.
