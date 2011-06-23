@@ -108,7 +108,7 @@ class Gui : public PLCore::Object {
 	pl_class(PLGUI_RTTI_EXPORT, Gui, "PLGui", PLCore::Object, "Main GUI class")
 		#ifdef PLGUI_EXPORTS	// The following is only required when compiling PLGui
 			// Methods
-			pl_method_1(SetMouseVisible,	pl_ret_type(void),	bool,	"Set mouse cursor visibility, 'true' as first parameter if the mouse cursor shall be visible",	"")
+			pl_method_1(SetMouseVisible,	pl_ret_type(void),	bool,	"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",	"")
 		#endif
 	pl_class_end
 

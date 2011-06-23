@@ -75,7 +75,7 @@ class SceneApplication : public RenderApplication {
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetRootScene,	pl_ret_type(PLScene::SceneContainer*),	"Returns the root scene container, can be a null pointer",	"")
+			pl_method_0(GetRootScene,	pl_ret_type(PLScene::SceneContainer*),	"Returns the root scene container, can be a null pointer.",	"")
 		#endif
 	pl_class_end
 

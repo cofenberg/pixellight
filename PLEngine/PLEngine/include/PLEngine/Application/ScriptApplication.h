@@ -75,8 +75,8 @@ class ScriptApplication : public BasicSceneApplication {
 			pl_constructor_0(DefaultConstructor,																					"Default constructor",																																																															"")
 			pl_constructor_4(ConstructorParameter,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 			// Methods
-			pl_method_0(GetBaseDirectory,	pl_ret_type(PLGeneral::String),								"Returns the base directory of the application",										"")
-			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLGeneral::String&,	"Sets the base directory of the application, base directory as the first parameter",	"")
+			pl_method_0(GetBaseDirectory,	pl_ret_type(PLGeneral::String),								"Returns the base directory of the application.",										"")
+			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLGeneral::String&,	"Sets the base directory of the application. Base directory as the first parameter.",	"")
 		#endif
 	pl_class_end
 

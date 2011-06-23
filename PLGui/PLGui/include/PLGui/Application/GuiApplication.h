@@ -68,8 +68,8 @@ class GuiApplication : public PLCore::ConsoleApplication {
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetMainWindow,	pl_ret_type(Widget*),				"Get main window. Returns pointer to the main window of the application, a null pointer on error.",					"")
-			pl_method_1(SetMainWindow,	pl_ret_type(void),		Widget*,	"Set main window, pointer to the main window of the application (a null pointer is also valid) as first parameter",	"")
+			pl_method_0(GetMainWindow,	pl_ret_type(Widget*),				"Get the main window. Returns pointer to the main window of the application, a null pointer on error.",						"")
+			pl_method_1(SetMainWindow,	pl_ret_type(void),		Widget*,	"Set the main window, pointer to the main window of the application (a null pointer is also valid) as first parameter.",	"")
 		#endif
 	pl_class_end
 

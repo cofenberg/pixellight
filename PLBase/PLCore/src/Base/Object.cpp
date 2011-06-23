@@ -452,7 +452,7 @@ String Object::GetValues(EDefaultValue nDefaultValue) const
 
 /**
 *  @brief
-*    Set attribute values as a string
+*    Set multiple attribute values as a string at once
 */
 void Object::SetValues(const String &sVars)
 {
