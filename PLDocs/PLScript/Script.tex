@@ -246,37 +246,168 @@ PixelLight components using scripts dynamically add a global variable named \emp
 
 
 \subsection{Properties}
-[TODO]
-properties (constant RTTI class information)
+Within PixelLight, RTTI class properties are constant RTTI class information which are defined within C++ as seen in source~code~\ref{Code:RTTIClassPropertiesDefinition} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIClassPropertiesDefinition,caption={Defining a new RTTI class with properties (C++)}]
+#include <PLCore/Base/Object.h>
+class MyClass : public PLCore::Object {
+	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Properties
+		pl_properties
+			pl_property("MyFirstProperty",  "FirstValue")
+			pl_property("MySecondProperty", "SecondValue")
+		pl_properties_end
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
+	pl_class_end
+};
+\end{lstlisting}
+
+Within a script language, these properties can be accessed by writing \emph{<property value> = <RTTI object>.<property name>}. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to get the value of the property with the name \emph{MyFirstProperty} then just write \begin{quote}value = myRTTIObject.MyFirstProperty\end{quote}
 
 
 \subsection{Attributes}
-[TODO]
-attributes (variables within an object)
+Within PixelLight, RTTI class attributes are member variables of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIClassWithAttributes} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIClassWithAttributes,caption={Defining a new RTTI class with attributes (C++)}]
+// Class definition of MyClass
+#include <PLCore/Base/Object.h>
+class MyClass : public PLCore::Object {
+
+	// RTTI interface
+	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description")
+		// Attributes
+		pl_attribute(MyInt, int, 10, ReadWrite, DirectValue, "Simple integer", "")
+		pl_attribute(MyFloat, float, 3.1415f, ReadOnly, DirectValue, "PI", "")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
+	pl_class_end
+
+	// Default constructor
+	public:
+		MyClass() : MyInt(this), MyFloat(this) {}
+
+};
+
+// MyClass RTTI implementation (not done within headers)
+pl_implement_class(MyClass)
+\end{lstlisting}
+
+Within a script language, these attributes can be accessed by writing \emph{<attribute value> = <RTTI object>.<attribute name>} to read a value and by writing \emph{<RTTI object>.<attribute name> = <attribute value>} to write a value. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to get the value of the attribute with the name \emph{MyInt} then just write \begin{quote}value = myRTTIObject.MyInt\end{quote}
 
 
 \subsection{Methods}
-[TODO]
-methods (functions within an object)
+Within PixelLight, RTTI class methods are member functions of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIMethods} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIMethods,caption={Definition of RTTI class methods with parameters (C++)}]
+// Class definition of MyClass
+#include <PLCore/Base/Object.h>
+class MyClass : public PLCore::Object {
 
+	// RTTI interface
+	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Methods
+		pl_method_0(MyMethod, pl_ret_type(void), "My method", "")
+		pl_method_1(MyMethodParameter, pl_ret_type(void), int, "My method with given parameter", "")
+		pl_method_2(MyMethodParameters, bool, int, float, "My method with given parameters and return value", "")
+	pl_class_end
 
-\subsection{Signals}
-\label{Script_RTTIObjects_Signals}
-[TODO]
-signals (aka events)
+	public:
+		MyClass() {}
+		void MyMethod() {}
+		void MyMethodParameter(int nFirst) {}
+		bool MyMethodParameters(int nFirst, float fSecond) { return true; }
 
-Within a script, signals can be connected to an RTTI object slot or to a global function (section~\ref{Script_GlobalFunctions} for details) with then is used as a script slot.
+};
 
-There are two fixed build in script functions for signals:
-\begin{itemize}
-\item{Connect}
-\item{Disconnect}
-\end{itemize}
+// MyClass RTTI implementation
+pl_implement_class(MyClass)
+\end{lstlisting}
 
+Within a script language, these methods can be accessed by writing \emph{<result> = <RTTI object>:<method name>(<parameters>)}. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to call the method with the name \emph{MyMethodParameters} then just write \begin{quote}result = myRTTIObject:MyMethodParameters(42, 21.21)\end{quote}
 
+Please note that the result of such an RTTI object method call can be an RTTI object. You're able to call methods of this returned RTTI object as well... and from RTTI objects returned by this call and so on.
 
 
 \subsection{Slots}
 \label{Script_RTTIObjects_Slots}
-[TODO]
-slots (aka event handlers)
+Within PixelLight, RTTI class slots are event handlers within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISlots} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTISlots,caption={Definition of RTTI class slots with parameters (C++)}]
+// Class definition of MyClass
+#include <PLCore/Base/Object.h>
+class MyClass : public PLCore::Object {
+
+	// RTTI interface
+	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Slots
+		pl_slot_0(OnMyEvent, "My slot", "")
+		pl_slot_1(OnMyEventParameter, int, "My slot with given parameter", "")
+	pl_class_end
+
+	// Public methods
+	public:
+		MyClass() : SlotOnMyEvent(this), SlotOnMyEventParameter(this) {}
+		void OnMyEvent() {}
+		void OnMyEventParameter(int nValue) {}
+
+};
+
+// MyClass RTTI implementation
+pl_implement_class(MyClass)
+\end{lstlisting}
+
+Within a script language, these slots can be connect to and disconnect from a RTTI class signal. Have a look at the following section~\ref{Script_RTTIObjects_Signals} to see how this can be done.
+
+
+\subsection{Signals}
+\label{Script_RTTIObjects_Signals}
+Within PixelLight, RTTI class signals are events within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISignalDefinition} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTISignalDefinition,caption={Defining a RTTI class with signals (C++)}]
+// Class definition of MyClass
+#include <PLCore/Base/Object.h>
+class MyClass : public PLCore::Object {
+
+	// RTTI interface
+	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
+		// Constructors
+		pl_constructor_0(MyConstructor, "Default constructor", "")
+		// Signals
+		pl_signal_0(MySignal, "My signal", "")
+		pl_signal_1(MySignalParameter, int, "My signal with given parameter", "")
+	pl_class_end
+
+	// Public methods
+	public:
+		MyClass() {}
+
+};
+
+// MyClass RTTI implementation
+pl_implement_class(MyClass)
+\end{lstlisting}
+
+Within a script language, these signals can be accessed by writing \emph{<RTTI object>:<signal name>(<parameters>)} to emit the signal. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to emit the signal with the name \emph{MySignalParameter} then just write \begin{quote}myRTTIObject:MySignalParameter(42)\end{quote}
+
+Within a script, signals can be connected to an RTTI object slot (see section~\ref{Script_RTTIObjects_Slots} for details) or to a global function (section~\ref{Script_GlobalFunctions} for information about global functions) with then is used as a script slot. There are two fixed build in script methods for signals:
+\begin{itemize}
+\item{\emph{Connect} is used to connect a slot, which is provided as parameter, to the signal}
+\item{\emph{Disconnect} is used to disconnect a slot, which is provided as parameter, from the signal}
+\end{itemize}
+
+For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to connect the RTTI class slot with the name \emph{MySlot} of the same RTTI object to a signal with the name \emph{MySignalParameter}, then just write \begin{quote}myRTTIObject.MySignalParameter.Connect(myRTTIObject.MySlot)\end{quote}
+
+As mentioned before, global as well as local script functions can also be used as slots. If the RTTI class signal is emitted, the global script function will be called. Source~code~\ref{Code:FunctionAsSlot} shows how this can be used in practice.
+\begin{lstlisting}[float=htb,label=Code:FunctionAsSlot,caption={Function as slot}]
+-- Global script function which is used as slot
+function MySlotFunction()
+	-- ... do some fancy stuff...
+end
+
+-- Use the script function "MySlotFunction" as slot and
+-- connect it with the RTTI signal of our RTTI class instance
+myRTTIObject.MySignalParameter.Connect(MySlotFunction)
+
+-- Emit the RTTI signal
+myRTTIObject:MySignalParameter(42)
+\end{lstlisting}
