@@ -1,4 +1,13 @@
+>> 27.06.2011
+[CO]
+- "PLScriptLua::RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()": Added some quotation mark checks. If the string content is "Name="Bob"" the resulting parameter
+  string will be "Param0="Name="Bob""" and the parser will have troubles with it and will take "Name=" instead of "Name="Bob"" for the value of "Param0". After this change,
+  the resulting parameter string is now "Param0='Name="Bob"'".
+
+
+
 >> 21.06.2011
+[CO]
 - When testing the Dungeon demo under Linux, I noticed that the "Object" RTTI methods (but only those?) were not exported correctly when using GCC. Found the "bug" within my
   change from "04.06.2011" when I removed the per instance cost of RTTI methods... the RTTI method instantiation was wrong. I still think that this is the right way because
   tons of those methods will come in the future!

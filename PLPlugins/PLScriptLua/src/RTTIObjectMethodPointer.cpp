@@ -58,7 +58,7 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 	const int nNumOfArguments		= lua_gettop(pLuaState) - nOffset;
 	const int nIndexOfFirstArgument	= 1+nOffset;
 	for (int i=nIndexOfFirstArgument; i<=nOffset+nNumOfArguments; i++, nParameterIndex++) {
-		String sValue;
+		const String sPrefix = String("Param") + nParameterIndex;
 
 		// Is it user data?
 		if (lua_isuserdata(pLuaState, i)) {
@@ -70,44 +70,65 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 				pObject = reinterpret_cast<RTTIObjectPointer*>(pLuaUserData)->GetObject();
 			}
 
-			// Convert the object pointer to a string
-			sValue = pObject ? Type<Object*>::ConvertToString(pObject) : "0";
-		} else {
-			// Is it nil?
-			if (lua_isnil(pLuaState, i)) {
-				sValue = "0";
+			// Add the Lua argument to the parameter string
+			if (pObject)
+				sParams += sPrefix + '=' + Type<Object*>::ConvertToString(pObject) + ' ';
+			else
+				sParams += sPrefix + "=0 ";
 
-			// Is it boolean?
-			} else if (lua_isboolean(pLuaState, -1)) {
-				sValue = (lua_toboolean(pLuaState, -1) != 0) ? "1" : "0";
+		// Is it nil?
+		} else if (lua_isnil(pLuaState, i)) {
+			// Add the Lua argument to the parameter string
+			sParams += sPrefix + "=0 ";
 
-			// Is it string?
-			} else if (lua_isstring(pLuaState, -1)) {
-				sValue = lua_tolstring(pLuaState, i, nullptr);
+		// Is it boolean?
+		} else if (lua_isboolean(pLuaState, -1)) {
+			// Add the Lua argument to the parameter string
+			sParams += sPrefix + ((lua_toboolean(pLuaState, -1) != 0) ? "=1 " : "=0 ");
 
-				// Strings are somewhat of a special case... see method documentation for details
-				const int nTypeID = cDynSignature.GetParameterTypeID(nParameterIndex);
-				switch (nTypeID) {
-					case TypeRef:
-						// Give the RTTI method a reference to the temporaty string
-						sValue = Type<String&>::ConvertToString(lstTempStrings.Add(sValue));
-						break;
+		// Is it string?
+		} else if (lua_isstring(pLuaState, -1)) {
+			// Strings are somewhat of a special case... see method documentation for details
+			const int nTypeID = cDynSignature.GetParameterTypeID(nParameterIndex);
+			switch (nTypeID) {
+				case TypeRef:
+					// Give the RTTI method a reference to the temporaty string and add the Lua argument to the parameter string
+					sParams += sPrefix + '=' + Type<String&>::ConvertToString(lstTempStrings.Add(lua_tolstring(pLuaState, i, nullptr))) + ' ';
+					break;
 
-					case TypePtr:
-						// Give the RTTI method a pointer to the temporaty string
-						sValue = Type<String*>::ConvertToString(&lstTempStrings.Add(sValue));
-						break;
+				case TypePtr:
+					// Give the RTTI method a pointer to the temporaty string and add the Lua argument to the parameter string
+					sParams += sPrefix + '=' + Type<String*>::ConvertToString(&lstTempStrings.Add(lua_tolstring(pLuaState, i, nullptr))) + ' ';
+					break;
+
+				default:
+				{
+					// It's a blank string, look out with the used quotation mark!
+					// If the string content is "Name="Bob"" the resulting parameter string will be Param0="Name="Bob"" and the
+					// parser will have troubles with it and will take "Name=" instead of "Name="Bob"" for the value of "Param0"
+
+					// Get the string
+					const String sValue = lua_tolstring(pLuaState, i, nullptr);
+
+					// Check for " within the string
+					if (sValue.IndexOf('\"') > -1)
+						sParams += sPrefix + "='" + sValue + "' ";		// Use ' as quotation mark
+					else
+						sParams += sPrefix + "=\"" + sValue + "\" ";	// Use " as quotation mark
+					break;
 				}
-
-			// ...
-			} else {
-				// If not just let Lua decide how to convert the stuff into a string... but only if it's no object pointer!
-				sValue = (cDynSignature.GetParameterTypeID(nParameterIndex) == Type<Object*>::TypeID) ? "0" : lua_tolstring(pLuaState, i, nullptr);
 			}
-		}
 
-		// Add the Lua argument to the parameter string
-		sParams += String("Param") + (nParameterIndex) + "=\"" + sValue + "\" ";
+		// ...
+		} else {
+			// If not just let Lua decide how to convert the stuff into a string... but only if it's no object pointer!
+
+			// Add the Lua argument to the parameter string
+			if ((cDynSignature.GetParameterTypeID(nParameterIndex) == Type<Object*>::TypeID))
+				sParams += sPrefix + "=0 ";
+			else
+				sParams += sPrefix + "=\"" + lua_tolstring(pLuaState, i, nullptr) + "\" ";
+		}
 	}
 
 	// Does the RTTI signature demand more parameters as the script programmer provided?
