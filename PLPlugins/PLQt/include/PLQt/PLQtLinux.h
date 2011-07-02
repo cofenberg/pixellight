@@ -27,22 +27,23 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <QtCore/qglobal.h>
+
+
+//[-------------------------------------------------------]
 //[ Import/Export                                         ]
 //[-------------------------------------------------------]
 #ifdef PLQT_EXPORTS
-	#ifdef HAVE_VISIBILITY_ATTR
-		// To export classes, methods and variables
-		#define PLQT_API __attribute__ ((visibility("default")))
-	#else
-		// To export classes, methods and variables
-		#define PLQT_API
-	#endif
+	// To export classes, methods and variables
+	#define PLQT_API Q_DECL_EXPORT
 
 	// To export RTTI elements
 	#define PLQT_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
-	#define PLQT_API
+	#define PLQT_API Q_DECL_IMPORT
 
 	// To import RTTI elements
 	#define PLQT_RTTI_EXPORT 0

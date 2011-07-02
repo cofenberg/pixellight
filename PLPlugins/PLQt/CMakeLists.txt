@@ -4,10 +4,81 @@
 define_project(PLQt)
 
 ##################################################
+## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
+##################################################
+# Include files with Qt relevant information
+SET(INC_FILES
+	include/PLQt/QPLContext.h
+	include/PLQt/Application.h
+	include/PLQt/QPLDebugDialog.h
+	include/PLQt/QPLRenderWindow.h
+	include/PLQt/QPLSceneContext.h
+	include/PLQt/QPLInputHandler.h
+	include/PLQt/DataModels/TreeItemBase.h
+	include/PLQt/DataModels/TreeModelBase.h
+	include/PLQt/DataModels/SceneNodeInfoModel.h
+	include/PLQt/DataModels/SceneGraphTreeModel.h
+	include/PLQt/DataModels/PLIntrospectionModel.h
+	include/PLQt/DataModels/SceneNodeInfoDelegate.h
+	include/PLQt/DataModels/SceneGraphNodeTreeItemBase.h
+	include/PLQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h
+	include/PLQt/DataModels/PLTreeItems/PLDynVarFloatTreeItem.h
+	include/PLQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h
+	include/PLQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h
+	include/PLQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h
+	include/PLQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h
+	include/PLQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h
+	include/PLQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h
+	include/PLQt/External/qtcolorbutton.h
+)
+
+# Qt .ui files
+SET(UI_FILES
+	include/PLQt/QPLDebugDialog.ui
+)
+
+# Find Qt4 libraries and set all required variables
+FIND_PACKAGE(Qt4 REQUIRED)
+
+# Add Qt CMake macros and variables
+# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+INCLUDE(${QT_USE_FILE})
+
+# Run uic on .ui files
+QT4_WRAP_UI(UI_SRCS ${UI_FILES})
+
+# Run moc
+QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+
+##################################################
 ## Source files
 ##################################################
 add_sources(
 	src/PLQt.cpp
+	src/QPLContext.cpp
+	src/Application.cpp
+	src/QPLSceneContext.cpp
+	src/QPLRenderWindow.cpp
+	src/QPLInputHandler.cpp
+	src/DataModels/TreeItemBase.cpp
+	src/DataModels/TreeModelBase.cpp
+	src/DataModels/SceneNodeInfoModel.cpp
+	src/DataModels/SceneGraphTreeModel.cpp
+	src/DataModels/PLIntrospectionModel.cpp
+	src/DataModels/SceneNodeInfoDelegate.cpp
+	src/DataModels/SceneGraphNodeTreeItemBase.cpp
+	src/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarFloatTreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarColorTreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarStringTreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarVector3TreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.cpp
+	src/DataModels/SceneRendererDataModel/SceneRendererDataModel.cpp
+	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp
+	src/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.cpp
+	src/External/qtcolorbutton.cpp
+	${UI_SRCS}	# Add source produced by uic
+	${MOC_SRCS}	# Add source produced by moc
 )
 
 ##################################################
@@ -27,6 +98,10 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLEngine/include
 	${QT_INCLUDE_DIRS}
+
+	# We need the following to be able to include headers produced by uic in our code
+	# (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_BINARY_DIR}
 )
 
 ##################################################

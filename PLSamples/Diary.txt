@@ -1,3 +1,11 @@
+>> 02.07.2011
+[CO]
+- Added "80QtHelloWorld", basing on PLQt "Demo1"/"Demo2" (https://sourceforge.net/projects/pixellight/) from Stephan Wezel
+- Added "81QtScene", basing on PLQt "DemoScene" (https://sourceforge.net/projects/pixellight/) from Stephan Wezel
+- Added "82QtInputHandling", basing on PLQt "DemoInputHandling" (https://sourceforge.net/projects/pixellight/) from Stephan Wezel
+
+
+
 >> 14.06.2011
 [CO]
 - Enabled the log verbose mode within the script samples. By doing so, script errors can be seen at once within the console.

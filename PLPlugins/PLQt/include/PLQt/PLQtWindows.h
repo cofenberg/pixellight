@@ -27,17 +27,23 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <QtCore/qglobal.h>
+
+
+//[-------------------------------------------------------]
 //[ Import/Export                                         ]
 //[-------------------------------------------------------]
 #ifdef PLQT_EXPORTS
 	// To export classes, methods and variables
-	#define PLQT_API __declspec(dllexport)
+	#define PLQT_API Q_DECL_EXPORT
 
 	// To export RTTI elements
 	#define PLQT_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
-	#define PLQT_API __declspec(dllimport)
+	#define PLQT_API Q_DECL_IMPORT
 
 	// To import RTTI elements
 	#define PLQT_RTTI_EXPORT 0

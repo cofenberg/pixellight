@@ -89,7 +89,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLInput/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -131,7 +131,7 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\P
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLInput/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -173,7 +173,7 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\P
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLInput/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -224,7 +224,7 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\P
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../../PLEngine/PLInput/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;SPK_CORE_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>

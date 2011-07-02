@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
-#include <Qt/QtCore/QString>
+#include <QtCore/QString>
 
 
 //[-------------------------------------------------------]
