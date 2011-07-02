@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLGENERAL_QTSTRINGADAPTER_H__
-#define __PLGENERAL_QTSTRINGADAPTER_H__
+#ifndef __PLQT_QTSTRINGADAPTER_H__
+#define __PLQT_QTSTRINGADAPTER_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/String/String.h>
-#include <QtCore/QString>
+#include <Qt/QtCore/QString>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLQt {
 
 
 //[-------------------------------------------------------]
@@ -67,11 +67,11 @@ class QtStringAdapter {
 		*  @return
 		*    A PLGeneral::String version from the given QString
 		*/
-		static String QtToPL(const QString &sString)
+		static PLGeneral::String QtToPL(const QString &sString)
 		{
 			// While PixelLight is build with "wchar_t is treated as built-in type", Qt is not - therefore we pass
 			// over the string by using UTF8 to avoid the need to recompile PixelLight/Qt with other compiler settings
-			return String::FromUTF8(sString.toUtf8().constData());
+			return PLGeneral::String::FromUTF8(sString.toUtf8().constData());
 		}
 
 		/**
@@ -84,14 +84,14 @@ class QtStringAdapter {
 		*  @return
 		*    A QString version from the given PLGeneral::String
 		*/
-		static QString PLToQt(const String &sString)
+		static QString PLToQt(const PLGeneral::String &sString)
 		{
 			// Check the internal PixelLight string format
 			switch (sString.GetFormat()) {
-				case String::ASCII:
+				case PLGeneral::String::ASCII:
 					return QString::fromAscii(sString.GetASCII());
 
-				case String::Unicode:
+				case PLGeneral::String::Unicode:
 					// While PixelLight is build with "wchar_t is treated as built-in type", Qt is not - therefore we pass
 					// over the string by using UTF8 to avoid the need to recompile PixelLight/Qt with other compiler settings
 					return QString::fromUtf8(sString.GetUTF8());
@@ -108,7 +108,7 @@ class QtStringAdapter {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLGeneral
+} // PLQt
 
 
-#endif // __PLGENERAL_QTSTRINGADAPTER_H__
+#endif // __PLQT_QTSTRINGADAPTER_H__

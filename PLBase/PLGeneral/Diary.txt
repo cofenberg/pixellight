@@ -1,3 +1,9 @@
+>> 02.07.2011
+[CO]
+- Moved "QtStringAdapter" from PLGeneral into PLQt
+
+
+
 >> 05.06.2011
 [CO]
 - *breaking change* "ElementManager": Renamed "Get(uint32 nIndex)" into "GetByIndex(uint32 nIndex)" and "Get(const String &sName)" into

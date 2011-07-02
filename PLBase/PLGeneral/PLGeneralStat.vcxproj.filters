@@ -73,9 +73,6 @@
     <ClInclude Include="include\PLGeneral\String\ParseTools.h">
       <Filter>String</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLGeneral\String\QtStringAdapter.h">
-      <Filter>String</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLGeneral\String\RegEx.h">
       <Filter>String</Filter>
     </ClInclude>

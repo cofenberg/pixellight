@@ -216,7 +216,6 @@
     <ClInclude Include="include\PLGeneral\String\BufferedReaderFile.h" />
     <ClInclude Include="include\PLGeneral\String\BufferedReaderString.h" />
     <ClInclude Include="include\PLGeneral\String\ParseTools.h" />
-    <ClInclude Include="include\PLGeneral\String\QtStringAdapter.h" />
     <ClInclude Include="include\PLGeneral\String\RegEx.h" />
     <ClInclude Include="include\PLGeneral\String\String.h" />
     <ClInclude Include="include\PLGeneral\String\StringBuffer.h" />

@@ -7,6 +7,7 @@
     <ClInclude Include="include\PLQt\PLQt.h" />
     <ClInclude Include="include\PLQt\PLQtLinux.h" />
     <ClInclude Include="include\PLQt\PLQtWindows.h" />
+    <ClInclude Include="include\PLQt\QtStringAdapter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

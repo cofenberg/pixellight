@@ -265,6 +265,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\PLRuntime\
     <ClInclude Include="include\PLQt\PLQt.h" />
     <ClInclude Include="include\PLQt\PLQtLinux.h" />
     <ClInclude Include="include\PLQt\PLQtWindows.h" />
+    <ClInclude Include="include\PLQt\QtStringAdapter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
