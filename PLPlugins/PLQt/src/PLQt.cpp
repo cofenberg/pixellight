@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AUTHORS                                        *
+ *  File: PLQt.cpp                                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,17 @@
 \*********************************************************/
 
 
-== Core team ==
-Stefan Buschmann (sbusch, [SB], s.buschmann@pixellight.org, http://www.game-coder.de) - Lead developer and Admin
-Christian Ofenberg (cofenberg, [CO], c.ofenberg@pixellight.org, http://www.ablazespace.de) - Lead developer and assisting artist
-Jens Dörholt (j.doerholt@pixellight.org, http://www.3dimensionen.de) - Lead artist
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/ModuleMain.h>
 
 
-== Contributors ==
-Stephan Wezel (FireFly, thewolfwillcome, [SW]) - Contributions to the Linux port and initiator of the PLQt project
-Kevin Eilers - (anjin-san) Admin
-Florian Schlögl (FlorianS) - Wiki moderator
-
-
-If we've forgotten you in the above list, please contact us! (contact@pixellight.org)
+//[-------------------------------------------------------]
+//[ Plugin implementation                                 ]
+//[-------------------------------------------------------]
+pl_module_plugin("PLQt")
+	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_description("Qt (4.7.0) adapter and frontend for PixelLight")
+pl_module_end

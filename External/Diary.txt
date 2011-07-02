@@ -1,3 +1,9 @@
+>> 02.07.2011
+[CO]
+- Added Qt within the "Recommended"-section because the editor will be Qt based
+
+
+
 >> 09.06.2011
 [CO]
 - Lua is now "recommended"

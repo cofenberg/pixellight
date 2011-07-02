@@ -206,6 +206,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCompositing", "PLPlugins\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDemoScriptApplication", "PLDemos\PLDemoScriptApplication\PLDemoScriptApplicationInternal.vcxproj", "{767E7EDC-2887-4142-B80D-C66A726D0AC8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLQt", "PLPlugins\PLQt\PLQt.vcxproj", "{2D6CCF89-1496-44C8-9CA0-828A899CE03F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CC92EBB3-44C5-429C-992C-CF71C8C69D29} = {CC92EBB3-44C5-429C-992C-CF71C8C69D29}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1250,6 +1255,17 @@ Global
 		{767E7EDC-2887-4142-B80D-C66A726D0AC8}.Release|Win32.Build.0 = Release|Win32
 		{767E7EDC-2887-4142-B80D-C66A726D0AC8}.Release|x64.ActiveCfg = Release|x64
 		{767E7EDC-2887-4142-B80D-C66A726D0AC8}.Release|x64.Build.0 = Release|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Debug|Win32.Build.0 = Debug|Win32
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Debug|x64.ActiveCfg = Debug|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Debug|x64.Build.0 = Debug|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Hybrid|Win32.ActiveCfg = Release|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Hybrid|x64.ActiveCfg = Release|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Hybrid|x64.Build.0 = Release|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Release|Win32.ActiveCfg = Release|Win32
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Release|Win32.Build.0 = Release|Win32
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Release|x64.ActiveCfg = Release|x64
+		{2D6CCF89-1496-44C8-9CA0-828A899CE03F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

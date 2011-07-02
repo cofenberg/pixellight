@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: AUTHORS                                        *
+ *  File: PLQtWindows.h                                  *
+ *      Windows definitions for PLQt
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +21,27 @@
 \*********************************************************/
 
 
-== Core team ==
-Stefan Buschmann (sbusch, [SB], s.buschmann@pixellight.org, http://www.game-coder.de) - Lead developer and Admin
-Christian Ofenberg (cofenberg, [CO], c.ofenberg@pixellight.org, http://www.ablazespace.de) - Lead developer and assisting artist
-Jens Dörholt (j.doerholt@pixellight.org, http://www.3dimensionen.de) - Lead artist
+#ifndef __PLQT_WINDOWS_H__
+#define __PLQT_WINDOWS_H__
+#pragma once
 
 
-== Contributors ==
-Stephan Wezel (FireFly, thewolfwillcome, [SW]) - Contributions to the Linux port and initiator of the PLQt project
-Kevin Eilers - (anjin-san) Admin
-Florian Schlögl (FlorianS) - Wiki moderator
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLQT_EXPORTS
+	// To export classes, methods and variables
+	#define PLQT_API __declspec(dllexport)
+
+	// To export RTTI elements
+	#define PLQT_RTTI_EXPORT 1
+#else
+	// To import classes, methods and variables
+	#define PLQT_API __declspec(dllimport)
+
+	// To import RTTI elements
+	#define PLQT_RTTI_EXPORT 0
+#endif
 
 
-If we've forgotten you in the above list, please contact us! (contact@pixellight.org)
+#endif // __PLQT_WINDOWS_H__

@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: AUTHORS                                        *
+ *  File: PLQt.h                                         *
+ *      Main header file of this project
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +21,32 @@
 \*********************************************************/
 
 
-== Core team ==
-Stefan Buschmann (sbusch, [SB], s.buschmann@pixellight.org, http://www.game-coder.de) - Lead developer and Admin
-Christian Ofenberg (cofenberg, [CO], c.ofenberg@pixellight.org, http://www.ablazespace.de) - Lead developer and assisting artist
-Jens Dörholt (j.doerholt@pixellight.org, http://www.3dimensionen.de) - Lead artist
+/**
+*  @mainpage PLQt
+*
+*  @section intro_sec Introduction
+*
+*  This is the PLQt reference.
+*/
 
 
-== Contributors ==
-Stephan Wezel (FireFly, thewolfwillcome, [SW]) - Contributions to the Linux port and initiator of the PLQt project
-Kevin Eilers - (anjin-san) Admin
-Florian Schlögl (FlorianS) - Wiki moderator
+#ifndef __PLQT_H__
+#define __PLQT_H__
+#pragma once
 
 
-If we've forgotten you in the above list, please contact us! (contact@pixellight.org)
+//[-------------------------------------------------------]
+//[ OS definitions                                        ]
+//[-------------------------------------------------------]
+// Windows platform
+#ifdef WIN32
+	#include "PLQt/PLQtWindows.h"
+#endif
+
+// Linux platform
+#ifdef LINUX
+	#include "PLQt/PLQtLinux.h"
+#endif
+
+
+#endif // __PLQT_H__

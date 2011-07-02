@@ -18,6 +18,7 @@ add_subdirectory(libogg)
 add_subdirectory(libvorbis)
 add_subdirectory(Newton)
 add_subdirectory(Lua)
+add_subdirectory(Qt)
 
 ##################################################
 ## Dependencies
