@@ -29,6 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/QAbstractItemModel>
+// only needed for compiler which doesn't have nullptr as an builtin type
+#include <PLGeneral/PLGeneral.h>
 
 
 //[-------------------------------------------------------]

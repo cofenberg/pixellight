@@ -37,12 +37,14 @@ SET(UI_FILES
 	include/PLQt/QPLDebugDialog.ui
 )
 
-# Find Qt4 libraries and set all required variables
-FIND_PACKAGE(Qt4 REQUIRED)
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Find Qt4 libraries and set all required variables
+	FIND_PACKAGE(Qt4 REQUIRED)
 
-# Add Qt CMake macros and variables
-# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-INCLUDE(${QT_USE_FILE})
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
+endif()
 
 # Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})
@@ -60,6 +62,7 @@ add_sources(
 	src/QPLSceneContext.cpp
 	src/QPLRenderWindow.cpp
 	src/QPLInputHandler.cpp
+	src/QPLDebugDialog.cpp
 	src/DataModels/TreeItemBase.cpp
 	src/DataModels/TreeModelBase.cpp
 	src/DataModels/SceneNodeInfoModel.cpp
@@ -97,12 +100,17 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLEngine/include
-	${QT_INCLUDE_DIRS}
 
 	# We need the following to be able to include headers produced by uic in our code
-	# (CMAKE_BINARY_DIR holds a path to the build directory, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-	${CMAKE_BINARY_DIR}
+	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_CURRENT_BINARY_DIR}
 )
+
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+	add_include_directories(
+		${QT_INCLUDE_DIRS}
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -232,7 +240,7 @@ endif()
 
 # External dependencies, but only when not using system-libs
 # [TODO] Uncomment this as soon as there's support for system-libs
-#if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/QtCore4.dll "${PL_BIN_DIR}/PLRuntime/"
@@ -240,13 +248,13 @@ endif()
 		)
 	endif()
 	if(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		#add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			# [TODO]
 			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtCore4.so "${PL_BIN_DIR}/PLRuntime"
 			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtGui4.so "${PL_BIN_DIR}/PLRuntime"
-		)
+#		)
 	endif()
-#endif()
+endif()
 
 # Copy the QT libraries so that the user can use everything "out of the box"
 if(WIN32)
@@ -256,11 +264,11 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+#	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 		# [TODO]
 		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtCore4.so "${PL_BIN_DIR}/Lib"
 		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtGui4.so "${PL_BIN_DIR}/Lib"
-	)
+#	)
 endif()
 
 ##################################################
@@ -278,11 +286,12 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
-
-# Copy the QT stuff into the SDK so that the user can use everything "out of the box"
-install(DIRECTORY ${QT_INCLUDE_DIRS}/Qt
-	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
-)
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Copy the QT stuff into the SDK so that the user can use everything "out of the box"
+	install(DIRECTORY ${QT_INCLUDE_DIRS}/Qt
+		DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+	)
+endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 if(WIN32)
 	install(FILES	${PL_BIN_DIR}/PLRuntime/QtCore4.dll
 					${PL_BIN_DIR}/PLRuntime/QtGui4.dll

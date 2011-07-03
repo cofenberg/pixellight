@@ -3,11 +3,34 @@
 ##################################################
 define_project(82QtInputHandling NOSUFFIX)
 
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Find Qt4 libraries and set all required variables
+	FIND_PACKAGE(Qt4 REQUIRED)
+
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
+endif()
+
+##################################################
+## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
+##################################################
+# Include files with Qt relevant information
+SET(INC_FILES
+	src/MyRenderWindow.h
+)
+
+# Run moc
+QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+
 ##################################################
 ## Source files
 ##################################################
 add_sources(
 	src/Main.cpp
+	src/MySceneContext.cpp
+	src/MyRenderWindow.cpp
+	${MOC_SRCS}
 )
 
 ##################################################
@@ -25,8 +48,13 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
 	${CMAKE_SOURCE_DIR}/PLEngine/PLEngine/include
 	${CMAKE_SOURCE_DIR}/PLPlugins/PLQt/include
-	${QT_INCLUDE_DIRS}
 )
+
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+	add_include_directories(
+		${QT_INCLUDE_DIRS}
+	)
+endif()
 
 ##################################################
 ## Library directories
