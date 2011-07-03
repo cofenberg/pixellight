@@ -37,9 +37,16 @@ else()
 	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/ CACHE INTERNAL "")
 	if(WIN32)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/QtGui4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/qtmain.lib CACHE INTERNAL "")
+
+		# Set "FindQt4.cmake"-variables
+		set(QT_QMAKE_EXECUTABLE ${QT_INCLUDE_DIRS}../../bin/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
 	elseif(LINUX)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore4.so ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtGui4.so CACHE INTERNAL "")
 	endif()
+
+	# Set "FindQt4.cmake"-variables
+	set(QT_BINARY_DIR 	${QT_INCLUDE_DIRS}../../bin/ CACHE INTERNAL "")	# Path to "bin" of Qt4
+	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
 
 	##################################################
 	## Check
