@@ -37,14 +37,12 @@ SET(UI_FILES
 	include/PLQt/QPLDebugDialog.ui
 )
 
-if(CMAKETOOLS_USE_SYSTEM_LIBS)
-	# Find Qt4 libraries and set all required variables
-	FIND_PACKAGE(Qt4 REQUIRED)
+# Find Qt4 libraries and set all required variables
+FIND_PACKAGE(Qt4 REQUIRED)
 
-	# Add Qt CMake macros and variables
-	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-	INCLUDE(${QT_USE_FILE})
-endif()
+# Add Qt CMake macros and variables
+# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+INCLUDE(${QT_USE_FILE})
 
 # Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})

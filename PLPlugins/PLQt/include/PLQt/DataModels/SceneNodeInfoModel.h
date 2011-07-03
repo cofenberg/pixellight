@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGeneral/PLGeneral.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
 #include "PLQt/DataModels/PLIntrospectionModel.h"
-// only needed for compiler which doesn't have nullptr as an builtin type
-#include <PLGeneral/PLGeneral.h>
+
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]

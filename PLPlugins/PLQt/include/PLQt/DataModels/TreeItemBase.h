@@ -31,8 +31,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QModelIndex>
-// only needed for compiler which doesn't have nullptr as an builtin type
-#include <PLGeneral/PLGeneral.h>
+#include <PLGeneral/PLGeneral.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
 
 
 //[-------------------------------------------------------]

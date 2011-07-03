@@ -10,8 +10,8 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
 	##################################################
-	# [TODO] Doesn't work when because the additional include paths gets added directly via the include_directories makro
-	# when using QT_USE_FILE. Currently the Projects which needs Qt uses find_package(Qt4) and INCLUDE(${QT_USE_FILE}) directly when
+	# [TODO] Doesn't work when the additional include paths are added directly via the include_directories macro
+	# when using QT_USE_FILE. Currently, the projects which need Qt are using find_package(Qt4) and INCLUDE(${QT_USE_FILE}) directly when
 	# CMAKETOOLS_USE_SYSTEM_LIBS is set
 # 	find_package(Qt4)
 # 	SET(QT_USE_QTGUI 1)
@@ -19,10 +19,10 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 # 	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
 # 	INCLUDE(${QT_USE_FILE})
 # 	
-# 	# The find module from cmake itself doesn't add the XXX_LIBRARIES var and XXX_INCLUDE_DIR var to the cache, which is the correct behaviour.
-# 	# This vars should normaly only be visible within the cmake file in which the find module was called.
-# 	# Otherwise the vars would be visible for all other projects if wanted or not
-# 	# We want this, because this vars are used in other cmake files, which doesn't include this file, so we add the vars to the cache
+# 	# The find module from cmake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
+# 	# This variables should normaly only be visible within the cmake file in which the find module was called.
+# 	# Otherwise the variables would be visible for all other projects if wanted or not.
+# 	# We want this, because this variables are used in other cmake files, which doesn't include this file, so we add the variables to the cache.
 # 	set(QT_LIBRARIES ${QT_LIBRARIES} CACHE INTERNAL "")
 # 	set(QT_INCLUDE_DIRS ${QT_INCLUDES} CACHE INTERNAL "")
 else()
