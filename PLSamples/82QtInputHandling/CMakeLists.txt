@@ -9,9 +9,13 @@ define_project(82QtInputHandling NOSUFFIX)
 # Find Qt4 libraries and set all required variables
 FIND_PACKAGE(Qt4 REQUIRED)
 
-# Add Qt CMake macros and variables
-# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-INCLUDE(${QT_USE_FILE})
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Only use QT_USE_FILE when using the system version of Qt4 otherwise the var QT_LIBRARIES (set by the Qt external project) gets overwritten
+	# when the cmake module FindQt4.cmake finds qt4 libs in the system.
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
+endif()
 
 # Include files with Qt relevant information
 SET(INC_FILES

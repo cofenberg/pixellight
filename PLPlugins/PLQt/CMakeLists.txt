@@ -40,9 +40,13 @@ SET(UI_FILES
 # Find Qt4 libraries and set all required variables
 FIND_PACKAGE(Qt4 REQUIRED)
 
-# Add Qt CMake macros and variables
-# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-INCLUDE(${QT_USE_FILE})
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Only use QT_USE_FILE when using the system version of Qt4 otherwise the var QT_LIBRARIES (set by the Qt external project) gets overwritten
+	# when the cmake module FindQt4.cmake finds qt4 libs in the system.
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
+endif()
 
 # Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})
@@ -237,7 +241,6 @@ if(WIN32)
 endif()
 
 # External dependencies, but only when not using system-libs
-# [TODO] Uncomment this as soon as there's support for system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -246,11 +249,11 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		)
 	endif()
 	if(LINUX)
-		#add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			# [TODO]
-			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtCore4.so "${PL_BIN_DIR}/PLRuntime"
-			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtGui4.so "${PL_BIN_DIR}/PLRuntime"
-#		)
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/PLRuntime"
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/PLRuntime"
+		)
 	endif()
 endif()
 
@@ -262,11 +265,10 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-#	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		# [TODO]
-		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtCore4.so "${PL_BIN_DIR}/Lib"
-		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../lib/libQtGui4.so "${PL_BIN_DIR}/Lib"
-#	)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/Lib"
+	)
 endif()
 
 ##################################################
@@ -286,7 +288,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 )
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	# Copy the QT stuff into the SDK so that the user can use everything "out of the box"
-	install(DIRECTORY ${QT_INCLUDE_DIRS}/Qt
+	install(DIRECTORY ${QT_INCLUDE_DIRS}
 		DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
@@ -301,14 +303,12 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-					# [TODO]
-	install(FILES	# ${PL_BIN_DIR}/PLRuntime/libQtCore4.so
-					# ${PL_BIN_DIR}/PLRuntime/libQtGui4.so
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
+					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
-					# [TODO]
-	install(FILES	# ${PL_BIN_DIR}/PLRuntime/libQtCore4.so
-					# ${PL_BIN_DIR}/PLRuntime/libQtGui4.so
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
+					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
 endif()

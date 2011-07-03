@@ -26,6 +26,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLQt/PLQt.h"
+
+
+//[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class QKeyEvent;
@@ -45,13 +51,14 @@ namespace PLQt {
 *  @brief
 *    Input handler interface
 */
-class InputHandler {
+class PLQT_API InputHandler {
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual InputHandler functions                 ]
 	//[-------------------------------------------------------]
 	public:
+		virtual ~InputHandler(){}
 		virtual void mousePressEvent(QMouseEvent*) = 0;
 		virtual void mouseReleaseEvent(QMouseEvent*) = 0;
 		virtual void mouseMoveEvent(QMouseEvent*) = 0;
