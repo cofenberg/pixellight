@@ -709,12 +709,6 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 				} \
 		}; \
 
-/**
-*  @brief
-*    Shorter macro for NullType
-*/
-#define __NT__	PLCore::NullType
-
 
 //[-------------------------------------------------------]
 //[ RTTI macros                                           ]
@@ -949,52 +943,52 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 	public: \
 
 #define pl_method_15(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_14(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_13(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_12(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_11(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_10(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_9(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, T8, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_8(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, T7, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_7(NAME, RET, T0, T1, T2, T3, T4, T5, T6, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, T6, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_6(NAME, RET, T0, T1, T2, T3, T4, T5, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, T5, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_5(NAME, RET, T0, T1, T2, T3, T4, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, T4, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_4(NAME, RET, T0, T1, T2, T3, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, T3, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, T3, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_3(NAME, RET, T0, T1, T2, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, T2, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, T2, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_2(NAME, RET, T0, T1, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, T1, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, T1, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_1(NAME, RET, T0, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, T0, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, T0, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_method_0(NAME, RET, DESCRIPTION, ANNOTATION) \
-	pl_method_16(NAME, RET, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_method_16(NAME, RET, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 /**
 *  @brief
@@ -1015,52 +1009,52 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 	__pl_signal_decl(NAME) \
 
 #define pl_signal_15(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_14(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_13(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_12(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_11(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_10(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_9(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_8(NAME, T0, T1, T2, T3, T4, T5, T6, T7, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_7(NAME, T0, T1, T2, T3, T4, T5, T6, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, T6, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_6(NAME, T0, T1, T2, T3, T4, T5, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, T5, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_5(NAME, T0, T1, T2, T3, T4, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, T4, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, T4, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_4(NAME, T0, T1, T2, T3, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, T3, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, T3, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_3(NAME, T0, T1, T2, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, T2, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, T2, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_2(NAME, T0, T1, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, T1, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, T1, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_1(NAME, T0, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, T0, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, T0, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_signal_0(NAME, DESCRIPTION, ANNOTATION) \
-	pl_signal_16(NAME, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_signal_16(NAME, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 /**
 *  @brief
@@ -1081,52 +1075,52 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 	__pl_slot_decl(NAME) \
 
 #define pl_slot_15(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_14(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_13(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_12(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_11(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_10(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_9(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_8(NAME, T0, T1, T2, T3, T4, T5, T6, T7, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_7(NAME, T0, T1, T2, T3, T4, T5, T6, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, T6, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_6(NAME, T0, T1, T2, T3, T4, T5, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, T5, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_5(NAME, T0, T1, T2, T3, T4, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, T4, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, T4, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_4(NAME, T0, T1, T2, T3, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, T3, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, T3, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_3(NAME, T0, T1, T2, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, T2, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, T2, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_2(NAME, T0, T1, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, T1, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, T1, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_1(NAME, T0, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, T0, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, T0, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_slot_0(NAME, DESCRIPTION, ANNOTATION) \
-	pl_slot_16(NAME, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_slot_16(NAME, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 /**
 *  @brief
@@ -1146,52 +1140,52 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 	__pl_constructor_cons(NAME) \
 
 #define pl_constructor_15(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_14(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_13(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_12(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_11(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_10(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_9(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, T8, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_8(NAME, T0, T1, T2, T3, T4, T5, T6, T7, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, T7, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_7(NAME, T0, T1, T2, T3, T4, T5, T6, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, T6, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_6(NAME, T0, T1, T2, T3, T4, T5, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, T5, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_5(NAME, T0, T1, T2, T3, T4, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, T4, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, T4, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_4(NAME, T0, T1, T2, T3, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, T3, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, T3, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_3(NAME, T0, T1, T2, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, T2, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, T2, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_2(NAME, T0, T1, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, T1, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, T1, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_1(NAME, T0, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, T0, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, T0, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 #define pl_constructor_0(NAME, DESCRIPTION, ANNOTATION) \
-	pl_constructor_16(NAME, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, __NT__, DESCRIPTION, ANNOTATION)
+	pl_constructor_16(NAME, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, PLCore::NullType, DESCRIPTION, ANNOTATION)
 
 /**
 *  @brief

@@ -1,3 +1,15 @@
+>> 03.07.2011
+[CO]
+- Within "Rtti.h", "__NT__" ("#define __NT__	PLCore::NullType") was defined... which usually stands for "Windows NT" in system headers. Until now, there were
+  no problems with that, but today this changed when using Qt to compile something under Linux.
+  Within the Qt header file "qglobal.h" there's the following line
+    "#elif !defined(SAG_COM) && (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__))"
+  ... and now, when including a PixelLight header using the RTTI before a Qt header is included, Windows headers are included inside Qt. I thought about renaming
+  "#define __NT__	PLCore::NullType" into "_PLNT_" or so, but on the other hand, maybe there's an OS header using "_PLNT_" or another definition as well? To avoid
+  any further troubles in here, I just removed this definition.
+
+
+
 >> 27.06.2011
 [CO]
 - "PLScriptLua::RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()": Added some quotation mark checks. If the string content is "Name="Bob"" the resulting parameter
