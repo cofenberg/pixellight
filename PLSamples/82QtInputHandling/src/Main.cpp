@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
 #include <PLCore/ModuleMain.h>
 #include <PLQt/Application.h>
 #include "MySceneContext.h"
@@ -51,11 +50,10 @@ pl_module_end
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int main(int argc, char **argv)
 {
 	// Create an "PLQt::Application"-instance
-	int argc = 0;
-	PLQt::Application cApplication(argc, nullptr);
+	PLQt::Application cApplication(argc, argv);
 
 	// Create the scene context
 	MySceneContext cContext;
