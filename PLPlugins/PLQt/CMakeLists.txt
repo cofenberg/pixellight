@@ -249,8 +249,8 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	endif()
 	if(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/PLRuntime"
-			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/PLRuntime"
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore.so "${PL_BIN_DIR}/PLRuntime"
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui.so "${PL_BIN_DIR}/PLRuntime"
 		)
 	endif()
 endif()
@@ -266,8 +266,8 @@ if(WIN32)
 endif()
 if(LINUX)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui.so "${PL_BIN_DIR}/Lib"
 	)
 endif()
 
