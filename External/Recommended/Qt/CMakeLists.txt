@@ -13,6 +13,8 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	# [TODO] Doesn't work when the additional include paths are added directly via the include_directories macro
 	# when using QT_USE_FILE. Currently, the projects which need Qt are using find_package(Qt4) and INCLUDE(${QT_USE_FILE}) directly when
 	# CMAKETOOLS_USE_SYSTEM_LIBS is set
+	# -> It would really be good if it would be possible to do the following only once in here (as done for non system libraries) instead of
+	#    for every project cmake file over and over again
 # 	find_package(Qt4)
 # 	SET(QT_USE_QTGUI 1)
 # 	# Add Qt CMake macros and variables
@@ -34,19 +36,26 @@ else()
 	##################################################
 	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
-	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/ CACHE INTERNAL "")
+	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt CACHE INTERNAL "")
 	if(WIN32)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/QtGui4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/qtmain.lib CACHE INTERNAL "")
 
 		# Set "FindQt4.cmake"-variables
-		set(QT_QMAKE_EXECUTABLE ${QT_INCLUDE_DIRS}../../bin/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
+		set(QT_QMAKE_EXECUTABLE ${QT_INCLUDE_DIRS}/../../bin/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
 	elseif(LINUX)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore4.so ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtGui4.so CACHE INTERNAL "")
 	endif()
 
 	# Set "FindQt4.cmake"-variables
-	set(QT_BINARY_DIR 	${QT_INCLUDE_DIRS}../../bin/ CACHE INTERNAL "")	# Path to "bin" of Qt4
-	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
+	set(QT_BINARY_DIR 	${QT_INCLUDE_DIRS}/../../bin/ CACHE INTERNAL "")	# Path to "bin" of Qt4
+	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}/../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
+
+	# Find Qt4 libraries and set all required variables
+	FIND_PACKAGE(Qt4 REQUIRED)
+
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
 
 	##################################################
 	## Check

@@ -37,13 +37,15 @@ add_subdirectory(98GuiTest)
 	add_subdirectory(42ScriptFunctors)
 	add_subdirectory(43ScriptBindings)
 	add_subdirectory(44ScriptOOP)
-	add_subdirectory(80QtHelloWorld)
-	add_subdirectory(81QtScene)
-	add_subdirectory(82QtInputHandling)
 #	add_subdirectory(21GuiWidgets)
 #	add_subdirectory(99Test)
 #	add_subdirectory(99TestPlugin)
 #endif()
+if(PL_PLUGIN_ENGINE_QT)
+	add_subdirectory(80QtHelloWorld)
+	add_subdirectory(81QtScene)
+	add_subdirectory(82QtInputHandling)
+endif()
 
 ##################################################
 ## Dependencies

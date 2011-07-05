@@ -6,12 +6,15 @@ define_project(80QtHelloWorld NOSUFFIX)
 ##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
-# Find Qt4 libraries and set all required variables
-FIND_PACKAGE(Qt4 REQUIRED)
+# When not using system libraries, the following stuff will only be defined once in the external Qt cmake file
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# Find Qt4 libraries and set all required variables
+	FIND_PACKAGE(Qt4 REQUIRED)
 
-# Add Qt CMake macros and variables
-# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-INCLUDE(${QT_USE_FILE})
+	# Add Qt CMake macros and variables
+	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
+	INCLUDE(${QT_USE_FILE})
+endif()
 
 ##################################################
 ## Source files
