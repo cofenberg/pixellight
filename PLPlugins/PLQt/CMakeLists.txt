@@ -240,7 +240,6 @@ if(WIN32)
 endif()
 
 # External dependencies, but only when not using system-libs
-# [TODO] Uncomment this as soon as there's support for system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -249,11 +248,10 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		)
 	endif()
 	if(LINUX)
-		#add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			# [TODO]
-			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore4.so "${PL_BIN_DIR}/PLRuntime"
-			# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui4.so "${PL_BIN_DIR}/PLRuntime"
-#		)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/PLRuntime"
+			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/PLRuntime"
+		)
 	endif()
 endif()
 
@@ -267,11 +265,10 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-#	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		# [TODO]
-		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore4.so "${PL_BIN_DIR}/Lib"
-		# COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui4.so "${PL_BIN_DIR}/Lib"
-#	)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtCore.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}../../lib/libQtGui.so "${PL_BIN_DIR}/Lib"
+	)
 endif()
 
 ##################################################
@@ -308,14 +305,12 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-					# [TODO]
-	install(FILES	# ${PL_BIN_DIR}/PLRuntime/libQtCore4.so
-					# ${PL_BIN_DIR}/PLRuntime/libQtGui4.so
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
+					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
-					# [TODO]
-	install(FILES	# ${PL_BIN_DIR}/PLRuntime/libQtCore4.so
-					# ${PL_BIN_DIR}/PLRuntime/libQtGui4.so
+	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
+					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
 endif()
