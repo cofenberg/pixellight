@@ -31,6 +31,9 @@ else()
 	# Build external
 	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
 
+	# Directory for Qt stuff directly within PL's Git repository
+	set(LOCAL_QT_DIR "${CMAKE_SOURCE_DIR}/External/Recommended/Qt/${CMAKETOOLS_CONFIG_NAME}_${CMAKETOOLS_TARGET_ARCH}" CACHE INTERNAL "")
+
 	##################################################
 	## Build external
 	##################################################
@@ -41,16 +44,16 @@ else()
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/QtGui4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/qtmain.lib CACHE INTERNAL "")
 
 		# Set "FindQt4.cmake"-variables
-		set(QT_QMAKE_EXECUTABLE ${QT_INCLUDE_DIRS}/../../bin/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
+		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
 	elseif(LINUX)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore.so ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtGui.so CACHE INTERNAL "")
 
 		# Set "FindQt4.cmake"-variables
-		set(QT_QMAKE_EXECUTABLE ${QT_INCLUDE_DIRS}/../../bin/qmake CACHE INTERNAL "")	# Tell Qt were to find qmake
+		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake CACHE INTERNAL "")	# Tell Qt were to find qmake
 	endif()
 
 	# Set "FindQt4.cmake"-variables
-	set(QT_BINARY_DIR 	${QT_INCLUDE_DIRS}/../../bin/ CACHE INTERNAL "")	# Path to "bin" of Qt4
+	set(QT_BINARY_DIR 	${LOCAL_QT_DIR}/ 			  CACHE INTERNAL "")	# Path to "bin" of Qt4
 	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}/../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
 	SET(QT_EXTERNAL_DIR ${CMAKETOOLS_CURRENT_LIB_DIR} CACHE INTERNAL "")
 

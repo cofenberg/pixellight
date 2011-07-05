@@ -1,3 +1,19 @@
+>> 05.07.2011
+[CO]
+- When using Qt/PLQt, the used CMake Qt script requires "moc", "qmake", "rcc" and "uic" in order to run CMake.
+  Sadly, this happens before "Qt.tar.gz" can be automatically downloaded and extracted. Right now, it looks like that
+  there's no other option then to put those Qt tools directly into the Git repository of PixelLight. The directory
+  "External\Recommended\Qt\Windows_x86" containing the MS Windows version of the required Qt tools is already
+  there. It should be sufficient to just provide the 32 bit version (I want to keep the Git repository as compact as possible).
+  I'am not extremely happy with this solution, but the alternatives I was able to figure out were even worse:
+  - Force the user to download and extract "Qt.tar.gz" manually into the proper external dependencies directory
+  - Force the user to download and install Qt on the system
+  -> It's probably a good idea to keep "moc", "qmake", "rcc" and "uic" within "Qt.tar.gz" as well... because at least "moc"
+     and "uic" will also be required directly within the SDK and this way, a 64 bit SDK would contain 64 bit version of
+	 those tools (not absolutly required, but nice to have).
+
+
+
 >> 02.07.2011
 [CO]
 - Added Qt within the "Recommended"-section because the editor will be Qt based
