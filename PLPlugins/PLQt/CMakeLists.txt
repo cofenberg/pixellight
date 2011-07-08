@@ -293,24 +293,46 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 if(WIN32)
+	# Copy shared libraries
 	install(FILES	${PL_BIN_DIR}/PLRuntime/QtCore4.dll
 					${PL_BIN_DIR}/PLRuntime/QtGui4.dll
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
+
+	# Copy libraries
 	install(FILES	${PL_BIN_DIR}/Lib/QtCore4.lib
 					${PL_BIN_DIR}/Lib/QtGui4.lib
 					${PL_BIN_DIR}/Lib/qtmain.lib
 					${PL_BIN_DIR}/Lib/qtmaind.lib
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
+
+	# Copy tools
+	install(FILES	"${QT_INCLUDE_DIRS}/../../bin/moc.exe"
+					"${QT_INCLUDE_DIRS}/../../bin/uic.exe"
+					"${QT_INCLUDE_DIRS}/../../bin/Copyright.txt"
+					"${QT_INCLUDE_DIRS}/../../bin/LICENSE.LGPL"
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
+	)
 endif()
 if(LINUX)
+	# Copy shared libraries
 	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
 					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
+
+	# Copy libraries
 	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
 					${PL_BIN_DIR}/PLRuntime/libQtGui.so
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
+	)
+
+	# Copy tools
+	install(FILES	"${QT_INCLUDE_DIRS}/../../bin/moc"
+					"${QT_INCLUDE_DIRS}/../../bin/uic"
+					"${QT_INCLUDE_DIRS}/../../bin/Copyright.txt"
+					"${QT_INCLUDE_DIRS}/../../bin/LICENSE.LGPL"
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
 endif()
