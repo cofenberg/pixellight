@@ -291,6 +291,12 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	install(DIRECTORY "${QT_INCLUDE_DIRS}/.."
 		DESTINATION "${PL_INSTALL_INCLUDE}/Qt/Qt" 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 	)
+
+	# Copy the copyright information into the include directory
+	install(FILES	"${QT_INCLUDE_DIRS}/../../Readme.txt"
+					"${QT_INCLUDE_DIRS}/../../LICENSE.LGPL"
+		DESTINATION "${PL_INSTALL_INCLUDE}/Qt"	COMPONENT SDK
+	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 if(WIN32)
 	# Copy shared libraries
@@ -310,8 +316,8 @@ if(WIN32)
 	# Copy tools
 	install(FILES	"${QT_INCLUDE_DIRS}/../../bin/moc.exe"
 					"${QT_INCLUDE_DIRS}/../../bin/uic.exe"
-					"${QT_INCLUDE_DIRS}/../../bin/Copyright.txt"
-					"${QT_INCLUDE_DIRS}/../../bin/LICENSE.LGPL"
+					"${QT_INCLUDE_DIRS}/../../Readme.txt"
+					"${QT_INCLUDE_DIRS}/../../LICENSE.LGPL"
 		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
 endif()
@@ -331,8 +337,8 @@ if(LINUX)
 	# Copy tools
 	install(FILES	"${QT_INCLUDE_DIRS}/../../bin/moc"
 					"${QT_INCLUDE_DIRS}/../../bin/uic"
-					"${QT_INCLUDE_DIRS}/../../bin/Copyright.txt"
-					"${QT_INCLUDE_DIRS}/../../bin/LICENSE.LGPL"
+					"${QT_INCLUDE_DIRS}/../../Readme.txt"
+					"${QT_INCLUDE_DIRS}/../../LICENSE.LGPL"
 		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
 endif()
