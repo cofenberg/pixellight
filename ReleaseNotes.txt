@@ -1,4 +1,5 @@
 Changes in PixelLight 0.9.8-R1 (not yet released)
+- Feature: The adapter project "PLQt", used to bring PixelLight and Qt together, is now part of the SDK (use PixelLight to e.g. render into one or multiple Qt widgets)
 
 
 Changes in PixelLight 0.9.7-R1 (released on June 23, 2011)
