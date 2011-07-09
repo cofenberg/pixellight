@@ -10,7 +10,6 @@
 ##################################################
 ## Libraries 
 ##################################################
-
 # X11 libraries
 set(LINUX_X11_LIBS
 	X11														# X-Lib
@@ -89,10 +88,17 @@ set(LINUX_COMPILE_FLAGS
 	# Some dialect-options of gcc: http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html
 	-Wnon-virtual-dtor										# Warn when a class has virtual functions and accessible non-virtual destructor, in which case it would be possible but unsafe to delete an instance of a derived class through a pointer to the base class. This warning is also enabled if -Weffc++ is specified.
 	-Wreorder												# Warn when the order of member initializers given in the code does not match the order in which they must be executed
-	-Wstrict-null-sentinel									# Warn also about the use of an uncasted NULL as sentinel
 	-Wsign-promo											# Warn when overload resolution chooses a promotion from unsigned or enumerated type to a signed type, over a conversion to an unsigned type of the same size
 #	-Wold-style-cast										# Warn if an old-style (C-style) cast is used - just set it to look for c-style casts because some used libs produce c-style warnings and we can't change that
 )
+
+# gcc only options, not known/supported by clang
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+    set(LINUX_COMPILE_FLAGS
+	${LINUX_COMPILE_FLAGS}
+	-Wstrict-null-sentinel									# Warn also about the use of an uncasted NULL as sentinel
+    )
+endif()
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
@@ -112,12 +118,19 @@ else()
 		-O3													# Very aggressive transformations (long compile times, but usally best runtime performance!)
 		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 		-fomit-frame-pointer								# Don't keep the frame pointer in a register for functions that don't need one
+	)
+	
+	# gcc only options, not known/supported by clang
+	if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+	    set(LINUX_COMPILE_FLAGS
+		${LINUX_COMPILE_FLAGS}
 		-funroll-all-loops									# Perform the optimization of loop unrolling
 		-fpeel-loops										# Peels the loops for that there is enough information that they do not roll much (from profile feedback)
 		-ftree-vectorize									# Enable the vectorizer
 		# The following flag usage is basing on information from http://software.intel.com/en-us/forums/showthread.php?t=66902
 		--param max-unroll-times=4
-	)
+	    )
+	endif()
 endif()
 
 
