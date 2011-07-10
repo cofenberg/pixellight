@@ -277,25 +277,51 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	install(DIRECTORY "${QT_EXTERNAL_DIR}/include/Qt"
 		DESTINATION "${PL_INSTALL_INCLUDE}/Qt" 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 	)
+
+	# Copy the copyright information into the include directory
+	install(FILES	"${QT_EXTERNAL_DIR}/Readme.txt"
+					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
+		DESTINATION "${PL_INSTALL_INCLUDE}/Qt"	COMPONENT SDK
+	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 
 if(WIN32)
+	# Copy shared libraries
 	install(FILES	${PL_BIN_DIR}/PLRuntime/QtCore4.dll
 					${PL_BIN_DIR}/PLRuntime/QtGui4.dll
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
+
+	# Copy libraries
 	install(FILES	${PL_BIN_DIR}/Lib/QtCore4.lib
 					${PL_BIN_DIR}/Lib/QtGui4.lib
 					${PL_BIN_DIR}/Lib/qtmain.lib
 					${PL_BIN_DIR}/Lib/qtmaind.lib
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
+
+	# Copy tools
+	install(FILES	"${QT_EXTERNAL_DIR}/bin/moc.exe"
+					"${QT_EXTERNAL_DIR}/bin/uic.exe"
+					"$${QT_EXTERNAL_DIR}/Readme.txt"
+					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
+	)
 endif()
 if(LINUX)
+	# Copy shared libraries
 	install(FILES	${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
 					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
 					${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3
 					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
+	)
+
+	# Copy tools
+	install(FILES	"${QT_EXTERNAL_DIR}/bin/moc"
+					"${QT_EXTERNAL_DIR}/bin/uic"
+					"${QT_EXTERNAL_DIR}/Readme.txt"
+					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
 endif()
