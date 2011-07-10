@@ -303,7 +303,7 @@ if(WIN32)
 	# Copy tools
 	install(FILES	"${QT_EXTERNAL_DIR}/bin/moc.exe"
 					"${QT_EXTERNAL_DIR}/bin/uic.exe"
-					"$${QT_EXTERNAL_DIR}/Readme.txt"
+					"${QT_EXTERNAL_DIR}/Readme.txt"
 					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
 		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
