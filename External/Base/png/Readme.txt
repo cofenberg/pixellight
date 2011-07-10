@@ -1,4 +1,4 @@
-libpng 1.4.5
+libpng 1.4.8
 - License: "png", see "LICENSE"
 - PNG image loading library
 - Used by image loaders in PLGraphics
