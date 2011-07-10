@@ -581,7 +581,6 @@ INPUT                  = PixelLight.h \
                          ../../PLBase/PLGraphics/include \
                          ../../PLBase/PLDatabase/include \
                          ../../PLGui/PLGui/include \
-                         ../../PLGui/PLXmlText/include \
                          ../../PLEngine/PLInput/include \
                          ../../PLEngine/PLRenderer/include \
                          ../../PLEngine/PLMesh/include \
@@ -689,9 +688,6 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLGui/PLGui/include/PLGui/PLGuiLinux.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
                          ../../PLGui/PLGui/include/PLGui/Backend/ \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlText.h \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextLinux.h \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextWindows.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInput.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputWindows.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputWindowsIncludes.h \

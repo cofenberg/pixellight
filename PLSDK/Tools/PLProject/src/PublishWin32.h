@@ -43,7 +43,6 @@ const static PLGeneral::String sRuntimeSharedLibraries[] =
 	"PLEngine.dll",
 	"PLPhysics.dll",
 	"PLSound.dll",
-	"PLXmlText.dll",	// [TODO] Do always copy this? (not required by every project...)
 	""
 };
 const static PLGeneral::String sRuntimeDataFiles[] =

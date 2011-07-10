@@ -116,11 +116,6 @@ _pixellight_find_lib(PL_PLGUI PLGui/PLGui.h PLGui PLGui/PLGui/include)
 #message("PLGui include: ${PL_PLGUI_INCLUDE_DIR}")
 #message("PLGui library: ${PL_PLGUI_LIBRARY}")
 
-# PLXmlText
-_pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText PLGui/PLXmlText/include)
-#message("PLXmlText include: ${PL_PLXMLTEXT_INCLUDE_DIR}")
-#message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
-
 
 # PLEngine
 
@@ -176,6 +171,11 @@ _pixellight_find_lib(PL_PLIRC PLIRC/PLIRC.h PLIRC PLPlugins/PLIRC/include)
 _pixellight_find_lib(PL_PLJABBER PLJabber/PLJabber.h PLJabber PLPlugins/PLJabber/include)
 #message("PLJabber include: ${PL_PLJABBER_INCLUDE_DIR}")
 #message("PLJabber library: ${PL_PLJABBER_LIBRARY}")
+
+# PLXmlText
+_pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText PLPlugins/PLXmlText/include)
+#message("PLXmlText include: ${PL_PLXMLTEXT_INCLUDE_DIR}")
+#message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
 
 
 # Set PixelLight_FOUND variable based on PLGeneral (we need at least that lib)
