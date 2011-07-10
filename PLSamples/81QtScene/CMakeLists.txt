@@ -51,6 +51,7 @@ add_libs(
 	PLScene
 	PLEngine
 	PLQt
+	${QT_LIBRARIES}
 )
 
 ##################################################
