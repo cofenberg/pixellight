@@ -7,30 +7,34 @@ define_external_project(Qt)
 ## INCLUDES AND LIBRARIES
 ##################################################
 if(CMAKETOOLS_USE_SYSTEM_LIBS)
+	# remove some Qt related variables from the cache
+	# Without removing the variables from the cache FindQt4 won't search e.g. for the qmake again. But this is necessary when toggeling the CMAKETOOLS_USE_SYSTEM_LIBS variable
+	# otherwise not the qmake and Qt libs are selected which are installed system wide.
+	unset(QT_QMAKE_EXECUTABLE CACHE)
+	unset(QT_LIBRARIES CACHE)
+	unset(QT_INCLUDE_DIRS CACHE)
+	unset(QT_BINARY_DIR CACHE)
+	unset(QT_LIBRARY_DIR CACHE)
 	##################################################
 	## Use system libraries
 	##################################################
-	# [TODO] Doesn't work when the additional include paths are added directly via the include_directories macro
-	# when using QT_USE_FILE. Currently, the projects which need Qt are using find_package(Qt4) and INCLUDE(${QT_USE_FILE}) directly when
-	# CMAKETOOLS_USE_SYSTEM_LIBS is set
-	# -> It would really be good if it would be possible to do the following only once in here (as done for non system libraries) instead of
-	#    for every project cmake file over and over again
-# 	find_package(Qt4)
-# 	SET(QT_USE_QTGUI 1)
-# 	# Add Qt CMake macros and variables
-# 	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-# 	INCLUDE(${QT_USE_FILE})
-# 	
-# 	# The find module from cmake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
-# 	# This variables should normaly only be visible within the cmake file in which the find module was called.
-# 	# Otherwise the variables would be visible for all other projects if wanted or not.
-# 	# We want this, because this variables are used in other cmake files, which doesn't include this file, so we add the variables to the cache.
-# 	set(QT_LIBRARIES ${QT_LIBRARIES} CACHE INTERNAL "")
-# 	set(QT_INCLUDE_DIRS ${QT_INCLUDES} CACHE INTERNAL "")
+	find_package(Qt4 REQUIRED)
+	
+	include(${QT_USE_FILE})
+	
+	# The find module from cmake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
+	# This variables should normaly only be visible within the cmake file in which the find module was called.
+	# Otherwise the variables would be visible for all other projects if wanted or not.
+	# We want this, because this variables are used in other cmake files, which doesn't include this file, so we add the variables to the cache.
+ 	set(QT_LIBRARIES ${QT_LIBRARIES} CACHE INTERNAL "")
+ 	set(QT_INCLUDE_DIRS ${QT_INCLUDE_DIR} CACHE INTERNAL "")
 else()
 	# Build external
 	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
 
+	get_filename_component(QT_EXTERNAL_ABS "${CMAKETOOLS_CURRENT_LIB_DIR}/.." ABSOLUTE )
+	set(QT_EXTERNAL_DIR ${QT_EXTERNAL_ABS} CACHE INTERNAL "")
+	
 	# Directory for Qt stuff directly within PL's Git repository
 	set(LOCAL_QT_DIR "${CMAKE_SOURCE_DIR}/External/Recommended/Qt/${CMAKETOOLS_CONFIG_NAME}_${CMAKETOOLS_TARGET_ARCH}" CACHE INTERNAL "")
 
@@ -39,7 +43,8 @@ else()
 	##################################################
 	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
-	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt CACHE INTERNAL "")
+	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/QtCore ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/QtGui ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt CACHE INTERNAL "")
+
 	if(WIN32)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/QtGui4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/qtmain.lib CACHE INTERNAL "")
 
@@ -55,8 +60,7 @@ else()
 	# Set "FindQt4.cmake"-variables
 	set(QT_BINARY_DIR 	${LOCAL_QT_DIR}/ 			  CACHE INTERNAL "")	# Path to "bin" of Qt4
 	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}/../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
-	SET(QT_EXTERNAL_DIR ${CMAKETOOLS_CURRENT_LIB_DIR} CACHE INTERNAL "")
-
+	
 	# Find Qt4 libraries and set all required variables
 	FIND_PACKAGE(Qt4 REQUIRED)
 

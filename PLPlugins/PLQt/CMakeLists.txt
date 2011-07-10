@@ -37,16 +37,6 @@ SET(UI_FILES
 	include/PLQt/QPLDebugDialog.ui
 )
 
-# When not using system libraries, the following stuff will only be defined once in the external Qt cmake file
-if(CMAKETOOLS_USE_SYSTEM_LIBS)
-	# Find Qt4 libraries and set all required variables
-	FIND_PACKAGE(Qt4 REQUIRED)
-
-	# Add Qt CMake macros and variables
-	# (QT_USE_FILE is a variable defined by FIND_PACKAGE(Qt4) that contains a path to CMake script)
-	INCLUDE(${QT_USE_FILE})
-endif()
-
 # Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 
@@ -105,13 +95,8 @@ add_include_directories(
 	# We need the following to be able to include headers produced by uic in our code
 	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
 	${CMAKE_CURRENT_BINARY_DIR}
+	${QT_INCLUDE_DIRS}
 )
-
-if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
-	add_include_directories(
-		${QT_INCLUDE_DIRS}
-	)
-endif()
 
 ##################################################
 ## Library directories
@@ -249,8 +234,14 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	endif()
 	if(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore.so "${PL_BIN_DIR}/PLRuntime"
-			 COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui.so "${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so"			"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4"		"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7"		"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3"	"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so"			"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4"			"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7"		"${PL_BIN_DIR}/PLRuntime"
+			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3"		"${PL_BIN_DIR}/PLRuntime"
 		)
 	endif()
 endif()
@@ -258,16 +249,10 @@ endif()
 # Copy the QT libraries so that the user can use everything "out of the box"
 if(WIN32)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/QtCore4.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/QtGui4.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/qtmain.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/qtmaind.lib "${PL_BIN_DIR}/Lib"
-	)
-endif()
-if(LINUX)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtCore.so "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../lib/libQtGui.so "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtCore4.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtGui4.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmain.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmaind.lib "${PL_BIN_DIR}/Lib"
 	)
 endif()
 
@@ -286,12 +271,14 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
+
+# Copy the QT stuff into the SDK so that the user can use everything "out of the box", but only when not using system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
-	# Copy the QT stuff into the SDK so that the user can use everything "out of the box"
-	install(DIRECTORY "${QT_INCLUDE_DIRS}/.."
-		DESTINATION "${PL_INSTALL_INCLUDE}/Qt/Qt" 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+	install(DIRECTORY "${QT_EXTERNAL_DIR}/include/Qt"
+		DESTINATION "${PL_INSTALL_INCLUDE}/Qt" 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+
 if(WIN32)
 	install(FILES	${PL_BIN_DIR}/PLRuntime/QtCore4.dll
 					${PL_BIN_DIR}/PLRuntime/QtGui4.dll
@@ -305,12 +292,10 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
-					${PL_BIN_DIR}/PLRuntime/libQtGui.so
+	install(FILES	${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
+					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
+					${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3
+					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
-	)
-	install(FILES	${PL_BIN_DIR}/PLRuntime/libQtCore.so
-					${PL_BIN_DIR}/PLRuntime/libQtGui.so
-		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
 endif()
