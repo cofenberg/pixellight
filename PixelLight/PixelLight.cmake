@@ -239,6 +239,11 @@ elseif(LINUX)
 endif()
 
 # Extensions of files to exclude when e.g. copying a directory
+# sdf	= VisualStudio 2010 file
+# ncb	= VisualStudio 2010 file
+# suo	= VisualStudio 2010 file
+# user	= VisualStudio 2010 file
+# *.*~	= Backup file ending used by some editors under Linux
 set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user|.*~")
 if(NOT PL_PLUGIN_SCRIPT_LUA)
 	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")

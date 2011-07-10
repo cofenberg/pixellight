@@ -10,6 +10,7 @@
 ##################################################
 ## Libraries 
 ##################################################
+
 # X11 libraries
 set(LINUX_X11_LIBS
 	X11														# X-Lib
@@ -92,7 +93,7 @@ set(LINUX_COMPILE_FLAGS
 #	-Wold-style-cast										# Warn if an old-style (C-style) cast is used - just set it to look for c-style casts because some used libs produce c-style warnings and we can't change that
 )
 
-# gcc only options, not known/supported by clang
+# gcc only compiler flags, not known/supported by clang
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
     set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
@@ -120,7 +121,7 @@ else()
 		-fomit-frame-pointer								# Don't keep the frame pointer in a register for functions that don't need one
 	)
 	
-	# gcc only options, not known/supported by clang
+	# gcc only compiler flags, not known/supported by clang
 	if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
 	    set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
@@ -137,6 +138,7 @@ endif()
 ##################################################
 ## Linker flags 
 ##################################################
+
 # Check if an 32Bit build should be made on an 64Bit host (CMAKE_SIZEOF_VOID_P has the value 8 on 64Bit Systems at least on x86 systems)
 if ((CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
 	message(STATUS "Add linker flags for 32Bit on 64Bit host")
