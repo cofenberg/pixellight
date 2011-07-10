@@ -12,8 +12,6 @@ add_custom_target(Network)
 ## Projects
 ##################################################
 add_subdirectory(PLNetwork)
-add_subdirectory(PLIRC)
-add_subdirectory(PLJabber)
 
 ##################################################
 ## Dependencies

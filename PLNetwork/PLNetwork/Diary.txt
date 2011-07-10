@@ -1,3 +1,10 @@
+>> 10.07.2011
+[CO]
+- Moved PLIRC and PLJabber from the PLNetwork directory into the PLPlugins directory because it's nothing the PixelLight core is
+  using and in fact, until now it isn't used at all. So, this is definitivly a plugin/extension/addon.
+
+
+
 /*********************************************************\
  *  The entries below are in german only
 \*********************************************************/

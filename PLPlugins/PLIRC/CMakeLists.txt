@@ -1,18 +1,18 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLJabber)
+define_project(PLIRC)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/InputStream.cpp
-	src/JabberClient.cpp
-	src/JabberConnection.cpp
-	src/JabberID.cpp
-	src/OutputStream.cpp
-	src/PLJabber.cpp
+	src/Channel.cpp
+	src/IRCClient.cpp
+	src/IRCConnection.cpp
+	src/PLIRC.cpp
+	src/Topic.cpp
+	src/User.cpp
 )
 
 ##################################################
@@ -38,12 +38,20 @@ add_libs(
 	PLGeneral
 	PLCore
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_libs(
+		${WIN32_WSOCK32_LIB}
+	)
+endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLJABBER_EXPORTS
+	PLIRC_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -108,7 +116,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore)
-add_dependencies(Network                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
