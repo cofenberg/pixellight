@@ -122,24 +122,6 @@ _pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText PLGui/PLXmlTex
 #message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
 
 
-# PLNetwork
-
-# PLNetwork
-_pixellight_find_lib(PL_PLNETWORK PLNetwork/PLNetwork.h PLNetwork PLNetwork/PLNetwork/include)
-#message("PLNetwork include: ${PL_PLNETWORK_INCLUDE_DIR}")
-#message("PLNetwork library: ${PL_PLNETWORK_LIBRARY}")
-
-# PLIRC
-_pixellight_find_lib(PL_PLIRC PLIRC/PLIRC.h PLIRC PLNetwork/PLIRC/include)
-#message("PLIRC include: ${PL_PLIRC_INCLUDE_DIR}")
-#message("PLIRC library: ${PL_PLIRC_LIBRARY}")
-
-# PLJabber
-_pixellight_find_lib(PL_PLJABBER PLJabber/PLJabber.h PLJabber PLNetwork/PLJabber/include)
-#message("PLJabber include: ${PL_PLJABBER_INCLUDE_DIR}")
-#message("PLJabber library: ${PL_PLJABBER_LIBRARY}")
-
-
 # PLEngine
 
 # PLEngine
@@ -181,6 +163,19 @@ _pixellight_find_lib(PL_PLSCENE PLScene/PLScene.h PLScene PLEngine/PLScene/inclu
 _pixellight_find_lib(PL_PLSOUND PLSound/PLSound.h PLSound PLEngine/PLSound/include)
 #message("PLSound include: ${PL_PLSOUND_INCLUDE_DIR}")
 #message("PLSound library: ${PL_PLSOUND_LIBRARY}")
+
+
+# Plugins
+
+# PLIRC
+_pixellight_find_lib(PL_PLIRC PLIRC/PLIRC.h PLIRC PLPlugins/PLIRC/include)
+#message("PLIRC include: ${PL_PLIRC_INCLUDE_DIR}")
+#message("PLIRC library: ${PL_PLIRC_LIBRARY}")
+
+# PLJabber
+_pixellight_find_lib(PL_PLJABBER PLJabber/PLJabber.h PLJabber PLPlugins/PLJabber/include)
+#message("PLJabber include: ${PL_PLJABBER_INCLUDE_DIR}")
+#message("PLJabber library: ${PL_PLJABBER_LIBRARY}")
 
 
 # Set PixelLight_FOUND variable based on PLGeneral (we need at least that lib)

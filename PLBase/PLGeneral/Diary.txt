@@ -1,3 +1,16 @@
+>> 10.07.2011
+[CO]
+- Moved PLIRC and PLJabber from the PLNetwork directory into the PLPlugins directory because it's nothing the PixelLight core is
+  using and in fact, until now it isn't used at all. So, this is definitively a plugin/extension/addon.
+- Removed PLNetwork project. It has now been empty since "23.10.2009" and there are no signs that this will change in the near feature.
+  The basic stuff like sockets were already within the PLGeneral project and even some more hight level constructs like server-client
+  classes. Since the public release of PixelLight, there were several user questions asking why PLNetwork is empty, and why there's an empty
+  project at all. So, to avoid this confused (but understandable) question in the future, PLNetwork is now gone. If there's really
+  need for an individual network component in the future, the project can be added in no time.
+-> Moved the entries of the PLNetwork diary into the PLGeneral diary
+
+
+
 >> 02.07.2011
 [CO]
 - Moved "QtStringAdapter" from PLGeneral into PLQt
@@ -585,6 +598,13 @@
   zu haben. Die Netzwerk-Basisklassen bieten selber nur ein minimales Framework um Socket herum an, und durch die
   Überarbeitung wurde auch alles noch einmal deutlich schlanker und eleganter, so dass letztlich nur 5 zusätzliche
   Klassen herausgekommen sind, die PLGeneral daher auch nicht unnötig aufblähen sollten :-)
+PLNetwork:
+- Netzwerk-Basisklassen nach PLGeneral verschoben. Dieses Projekt ist damit zwar erstmal leer, bleibt jedoch erhalten,
+  da ich mir sicher bin, das man dafür später noch Verwendung haben wird. Beispielsweise könnten hier Basisklassen
+  für typische Netzwerk-Komponenten erstellt werden (z.B. Messenger, Chat, ...), welche dann von spezialisierten Backends
+  wie PLIRC oder PLJabber implementiert werden. Auch wird es natürlich Basisklassen für die Netzwerksynchronisation brauchen,
+  welche später die Grundlage für die tatsächliche Netzwerkfunktionalität in der Engine bieten wird. Daher ist es denke
+  ich sinnvoll, dieses Projekt gleich beizubehalten, wenn es auch derzeit nicht genutzt wird.
 
 
 
@@ -593,6 +613,13 @@
 - String: Neue Methode RemoveLineEndings() eingebaut, die Markierungen für das Zeilenende ("\r" oder "\r\n") am
   Endes des Strings löscht. Das ist insbesondere dann wichtig, wenn in einem Netzwerkprotokoll die Zeilenenden
   entscheidend sind und daher Strings nicht gleich "bereinigt" werden sollten.
+PLNetwork:
+- Buffer: Option m_bRemoveDelimiters hinzugefügt. Damit kann festgelegt werden, ob die Zeilenenden in einem
+  Protokoll automatisch entfernt werden sollen, oder in den zurückgegebenen Strings drin bleiben sollen. In manchen
+  Protokollen ist es wichtig, dass diese Zeichen nicht entfernt werden, da z.B. eine Leerzeile eine besondere
+  Bedeutung hat. Wenn die Zeilenenden aber entfernt werden, könnte nicht mehr zwischen eine leeren Zeile ("\r\n") und
+  einem leeren String ("") unterschieden werden, der zurückgegeben wird um anzuzeigen, dass noch keine weitere Zeile
+  gelesen wurde.
 
 
 
@@ -917,6 +944,8 @@
 
 >> 23.08.2008
 [CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+PLNetwork:
 - Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
 
 
@@ -1389,6 +1418,8 @@ PLGeneral:
 [CO]
 - LogFormaterConsole: Nutzt wieder 'printf' direkt anstatt 'File::StandardOutput' da es ansonnsten dank der statischen
   De-initialisierungs Reihenfolge in PLSampleChat einen Crash beim beenden geben kann :/
+PLNetwork:
+- Copy-Operators und Copy-Constructors hinzugefügt
 
 
 
@@ -1469,6 +1500,10 @@ PLGeneral:
   zukünftig wie es aussieht in PLCore liegen wird, wird das Localization-System wohl auch mit in PLCore wandern müssen. Bei
   Zeiten sollten wir mal für das Localization-System ein Loader Plugin schreiben das die Sprachen/Übersetzungen aus einer
   Datenbank ausliest. *g*
+PLNetwork:
+- 'SocketAddress' und 'Socket' heraus genommen da diese mittlerweile in PLGeneral liegen. (oder gabs einen speziellen Grund wieso
+  das auch dort noch lag?) Wenn ich das richtig sehe gibts kein 'Socket::Create()' mehr und das wird inter automatisch erzeugt,
+  darum entfernte ich die entsprechenden Funktions aufrufe.
 
 
 
@@ -1555,6 +1590,10 @@ PLGeneral:
   "TiXmlBase::PutString()" wurde mittlerweile in "TiXmlBase::EncodeString()" umbenannt und öffentlich gemacht - darum
   haben wir nun nur noch 3 anstatt 4 eigene Änderungen in TinyXML. :D
   Für Linux und VC7 müsste man das noch übersetzen.
+PLNetwork:
+- Warnung "warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead.
+  To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details." beseitigt indem ich 'strncpy'
+  durch 'MemoryManager::Copy' ersetzte - da wird nicht lange gezögert *g*
 
 
 
@@ -2410,6 +2449,8 @@ Alle Projekte:
 PLGeneral:
 - XmlAttribute: QueryIntValue() & QueryDoubleValue() ändern den Wert der übergebenen Variable im Fehlerfall nicht, damit
   ist das Verhalten vergleichbar zu den ähnlichen Funktionen in XmlElement
+PLNetwork:
+- Wo möglich/sinnig Zeiger durch Referenzen ersetzt
 
 
 
@@ -2593,6 +2634,25 @@ Alle Projekte:
 PLGeneral:
 - String: In der Funktions-Beschreibung von GetLength() fehlte eine ganz entscheidende Information, 'terminating zero'
   ist in der Länge nicht enthalten. Überall anderst stand das bereits wenn ich nix übersehen hab.
+PLNetwork:
+- Im Server-Destruktor muss man noch zur Sicherheit 'StopHost()' aufrufen da dieser Aufruf vom Host-Destruktor aus
+  dummerweise in der Host Implementation von StopHost() landet und daher wenns mal mies läuft nicht sauber aufgeräumt wird
+- Im Destruktor von Socket() wird nun zur Sicherheit 'Close()' aufgerufen... etwas später nach merkwürdigen 'Problemen'
+  merkte ich das ich nicht ganz verstanden hatte was bei Sockets abgeht. Natürlich darf man das hier NICHT automatisch
+  schließen. Damit ich das nicht nochmal mache fügte ich ein entsprechendes Kommentar in diesem Destruktor ein. *g*
+  Das gleiche in der Create()-Funktion wo es ebenfalls nicht angebracht ist automatisch Close() aufzurufen.
+- Socket::Close() liefert nun anstatt 'int' ein 'bool' zurück welches nur angibt ob alles gut ging oder nicht, denn mit der
+  Implementations abhängigen Fehler ID sollte der User nicht in Kontakt kommen bzw. er kann damit im allgemeinen nix
+  anfangen da er nix von der konkreten Implementation weis. (bzw. wissen sollte *g*)
+  Das gleiche beim Rückgabewert der Bind() und Listen() Funktionen.
+- Socket::Create() gibt nun einen Fehler-Code zurück
+- Socket::m_nSocket ist nun auf INVALID_SOCKET wenn 'ungültig'
+- Connection::OnReceive(): Der übergebene Buffer mit den erhaltenen Daten ist nun 'const' da dieser Buffer selbst nicht
+  direkt manipuliert werden 'sollte' (könnte wenns dumm läuft irgendwann mal unfeine Seiteneffekte erzeugen)
+- Stellte auf PLBool um damit das erstmal Einheitlich ist
+- Erweiterte die Kommentare so das möglichst keine Fragen mehr offen bleiben was z.B. Parameter machen/was zurückgegeben
+  wird etc. Einiges muss man aber bei Zeiten auf jeden Fall noch genauer Beschreiben, vorallem ein paar kleine hintergrund
+  Informationen.
 
 
 
@@ -2608,6 +2668,14 @@ PLGeneral:
 - Neue abstrakte Basis-Klasse eingeführt: 'Iterable': Alles was einen Iterator Implementiert sollte von dieser Klasse
   abgeleitet sein. 'Map', 'Heap' und 'Container' sind somit nun also von 'Iterable' abgeleitet - so bekommt man eine noch
   etwas schickere und stimmigere Klassen-Hierarchie. :)
+
+
+
+>> 21.04.2007
+[CO]
+PLNetwork:
+- Socket::Recv() in Socket::Receive() umbenannt (man spart nicht wirklich was und muss sich nen kürzel merken)
+- Klassen Beschreibungen anhand von Stefans Konzept vom 08.03.2007 hinzugefügt/erweitert
 
 
 
@@ -2632,6 +2700,13 @@ Alle Projekte:
   virtuellen-Funktionen 'NULL' statt '0' verwendet wurde. Wenn ich mich recht erinnere sah man das 'früher' häufiger,
   heute aber nicht mehr wirklich oft.
 - Nahm '-U__GNUG__' Linux Compiler Definition aus allen CMake-Dateien heraus
+PLNetwork:
+- Sobald man in 'PLGeneralLinuxIncludes.h' das von z.B. 'gethostbyname' benötigte '#include <netdb.h>' einband bekam man
+  in '/usr/include/netdb.h:661' einen merkwürdigen Compiler-Fehler.
+  Stephan und ich fanden zusammen über herumstochern heraus das die Compiler Option '-U__GNUG__' dafür verantwortlich ist,
+  nahm man diese jedoch heraus wurde 'NULL' zu '__null' umdefiniert und man bekam bei virtuellen-Funktionen Probleme wenn
+  '= NULL' verwendet wurde, daher die '= NULL zu = 0'-Änderungen von oben. :)
+- PLNetwork & PLNetworkIRC lassen sich nun auch unter Linux übersetzen
 
 
 
@@ -2647,6 +2722,8 @@ Alle Projekte:
 >> 09.04.2007
 [CO]
 - Nahm weitere 'return' heraus
+PLNetwork:
+- Nahm weitere 'return' heraus
 
 
 
@@ -2657,6 +2734,8 @@ Alle Projekte:
 - ZipSearchHandle::CheckFileInDirectory(): Hier wird nun 'm_pZipDir->m_bCaseSensitive' berücksichtigt
 - ZipDirectory: Neue Funktion: IsCaseSensitive() wird von ZipSearchHandle::CheckFileInDirectory() benötigt
 - Base::IsVarDefault(): Arbeitet nun Case-Sensitive da PL generell Case-Sensitive ist
+PLNetwork:
+- Formte einge Codes um so das man weniger 'return' benötigt was die Sache etwas übersichtlicher macht
 
 
 
@@ -2664,6 +2743,27 @@ Alle Projekte:
 [CO]
 - Dort wo in der String Klasse 'isdigit()' oder 'isalpha()' verwendet wird, wird zur Sicherheit auf 'unsigned char' gecasted
   da man sonst schnell ein Assert bekommen kann wenn man z.B. 'ß' im String stehen hat. :(
+
+
+
+>> 31.03.2007
+[CO]
+PLNetwork:
+- Host::RemoveConnection(): Hm, hier fehlte das austragen der Connection aus der Liste (absicht?)
+- OS/Standard-Header werden nun nur noch in den Implementationen eingebunden
+- Ein paar Sicherheits-Tests in 'Socket'-Klasse eingebaut
+- Globale 'Initialize()'-Funktion entfernt da es etwas unhandlich ist das Manuell aufzurufen. Das läuft nun wie bei Image
+  über einen globalen Guard.
+
+
+
+>> 29.03.2007
+[CO]
+PLNetwork:
+- Einige einfache Stellen auf unsere String-Klasse umgestellt
+- Connection: SendMsg() ist durch unsere String Klasse nun überflüssig
+- Connection: In Send() gabs wenn ich das richtig sah ein Speicherleck da der Daten-Speicher nicht wieder freigegeben wurde
+  - durch die String Klasse natürlich nun kein Thema mehr :)
 
 
 
@@ -2794,6 +2894,22 @@ Alle Projekte: PLBase:
   also überall 'using namespace' in cpp sobald etwas einmal benötigt wird.
 - Kleine 'Wrapper'-Klasse im Tools-Ordner hinzugefügt für Dinge wie z.B. 'memset' die wir in Headern oder Inline-Implementationen
   nutzen. (was nur sehr selten der Fall ist!)
+
+
+
+>> 09.03.2007
+[CO]
+Neues Projekt: PLNetwork:
+Stefan schickte mir gestern per E-Mail PLNetwork das er vor 3 Jahren oder so schon mal geschrieben und immer mal wieder kurz
+aktualisiert hatte. Wie besprochen Integrierte ich dieses Projekt in PixelLight. Machte auch ein paar erste kleine Änderungen
+die Funktionsmäßig aben nix ändern sollten: (solche Änderungen sind ganz nebenbei optimal zum in etwas einarbeiten *g*)
+- Host: Ersetzte die stl vector Klasse durch unsere List Klasse
+- Socket::Close(): Hier stimmte glaube ich etwas nicht ganz, da z.B. gleich bei 'closesocket' die Funktion verlassen wurde, und
+  etwas weiter unten dann (nicht wirklich *g*) die Variablen zurückgesetzt wurden
+- Änderte ein paar Variablen wie z.B. 'Port' in uint32 damit man gleich von vorne an keine negativen Werte bekommen kann
+- Passte hier und da minimal den Code Style an die anderen Projekte an
+- Machte hier gleich die Änderungen die wir für alle Projekte machen wollen, also nur 'using namespace...' in cpp, ein Header
+  hat selbst wirklich ALLES zu definieren/includieren was er selbst braucht - inklusive des Lib-Headers der eigenen Lib
 
 
 

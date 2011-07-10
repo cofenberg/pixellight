@@ -580,9 +580,6 @@ INPUT                  = PixelLight.h \
                          ../../PLBase/PLMath/include \
                          ../../PLBase/PLGraphics/include \
                          ../../PLBase/PLDatabase/include \
-                         ../../PLNetwork/PLNetwork/include \
-                         ../../PLNetwork/PLIRC/include \
-                         ../../PLNetwork/PLJabber/include \
                          ../../PLGui/PLGui/include \
                          ../../PLGui/PLXmlText/include \
                          ../../PLEngine/PLInput/include \
@@ -686,17 +683,6 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabase.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseWindows.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseLinux.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetwork.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkWindows.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkLinux.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkWindowsIncludes.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkLinuxIncludes.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRC.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRCWindows.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRCLinux.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabber.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabberWindows.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabberLinux.h \
                          ../../PLGui/PLGui/include/PLGui/PLGui.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiWindows.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
