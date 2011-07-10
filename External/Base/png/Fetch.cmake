@@ -11,8 +11,8 @@ include(${CMAKETOOLS_DIR}/External/Fetch.cmake)
 if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	# Download libjpeg
 	external_fetch_http(
-		"http://heanet.dl.sourceforge.net/project/libpng/libpng14/1.4.5/libpng-1.4.5.tar.gz"
-		"dd4175393720ae041c67ace87cf6d212"
+		"http://heanet.dl.sourceforge.net/project/libpng/libpng14/1.4.8/libpng-1.4.8.tar.gz"
+		"49c6e05be5fa88ed815945d7ca7d4aa9"
 		${CMAKETOOLS_CURRENT_DOWNLOAD_DIR}/
 	)
 endif()
