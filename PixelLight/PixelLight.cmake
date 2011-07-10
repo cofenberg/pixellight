@@ -239,7 +239,7 @@ elseif(LINUX)
 endif()
 
 # Extensions of files to exclude when e.g. copying a directory
-set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user")
+set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user|.*~")
 if(NOT PL_PLUGIN_SCRIPT_LUA)
 	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")
 endif()
