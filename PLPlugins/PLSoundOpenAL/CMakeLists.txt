@@ -158,7 +158,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.12.854		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.13.0		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.1			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
@@ -203,7 +203,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	elseif(LINUX)
 		install(FILES ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libopenal.so
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libopenal.so.1
-					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libopenal.so.1.12.854
+					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libopenal.so.1.13.0
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so.0
 					  ${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/libogg.so.0.7.1
