@@ -14,7 +14,7 @@
 
 
 /*********************************************************\
- *  The entries below are in german only
+ *  The entries below are in German only
 \*********************************************************/
 
 
