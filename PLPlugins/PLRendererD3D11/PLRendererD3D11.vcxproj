@@ -117,7 +117,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLRendererD3D11D.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,7 +155,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\PLRendererD3D11D64.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -202,7 +202,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release\PLRendererD3D11.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -247,7 +247,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\PLRendererD3D1164.dll ..\..\Bin\PLRuntime\Plugins\PLRenderer\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLRenderer --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -303,7 +303,7 @@
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

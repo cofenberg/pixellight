@@ -26,14 +26,21 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGeneral/Main.h>
+#include <PLGeneral/Log/Log.h>
+#include <PLGeneral/System/System.h>
+#include <PLGeneral/System/Console.h>
+#include <PLCore/Core.h>
 #include <PLCore/ModuleMain.h>
-#include "Application.h"
+#include <PLCore/Script/Script.h>
+#include <PLCore/Script/FuncScriptPtr.h>
+#include <PLCore/Script/ScriptManager.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
@@ -47,10 +54,71 @@ pl_module_end
 
 
 //[-------------------------------------------------------]
+//[ Global functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Runs a script
+*/
+void RunScript(const String &sScriptFilename)
+{
+	// Create the script instance
+	Script *pScript = ScriptManager::GetInstance()->CreateFromFile(sScriptFilename);
+	if (pScript) {
+		// Call the script function "SayHello"
+		FuncScriptPtr<void>(pScript, "SayHello").Call(Params<void>());
+
+		// Cleanup
+		delete pScript;
+	} else {
+		// Error!
+		System::GetInstance()->GetConsole().Print("Failed to load the script \"" + sScriptFilename + "\"\n");
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
 int PLMain(const String &sFilename, const Array<String> &lstArguments)
 {
-	Application cApplication;
-	return cApplication.Run(sFilename, lstArguments);
+	// Get PixelLight runtime directory
+	const String sPLDirectory = Core::GetRuntimeDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
+		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
+	}
+
+	// Bring the log into the verbose mode so that the log also writes log entries
+	// directly into the console. This way, we can e.g. see script errors at once.
+	Log::GetInstance()->SetVerbose(true);
+
+	// Do only show us error messages within the log
+	Log::GetInstance()->SetLogLevel(Log::Error);
+
+	// Get a list of supported script languages
+	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+		// Get the name of the found script language
+		const String sScriptLanguage = lstScriptLanguages[i];
+
+		// Write the name of the found script language into the console
+		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+
+		// Get the filename extension of the found script language
+		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+		if (sScriptLanguageExtension.GetLength()) {
+			// Run a script
+			RunScript("Data/Scripts/40ScriptHelloWorld." + sScriptLanguageExtension);
+		} else {
+			// This script language has no filename extension?!
+			System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
+		}
+
+		// Write a new line into the console
+		System::GetInstance()->GetConsole().Print('\n');
+	}
+
+	// Done
+	return 0;
 }

@@ -308,7 +308,7 @@ if(PL_NATIVE_PLPROJECT)
 		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/PLTools/PLProject${CMAKE_EXECUTABLE_SUFFIX}")
 	endif()
 else()
-	set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/PLSDK/Tools/PLProject/src/PLProject.py")
+	set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/PLTools/PLProject/src/PLProject.py")
 endif()
 
 # Configure use of inline assembly

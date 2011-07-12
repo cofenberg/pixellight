@@ -118,7 +118,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLSoundD.dll ..\..\Bin\PLRuntime\
 copy build\debug\PLSoundD.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -156,7 +156,7 @@ copy build\debug\PLSoundD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLSoundD64.dll ..\..\Bin\PLRuntime\
 copy build\debug64\PLSoundD64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -203,7 +203,7 @@ copy build\debug64\PLSoundD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLSound.dll ..\..\Bin\PLRuntime\
 copy build\release\PLSound.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -247,7 +247,7 @@ copy build\release\PLSound.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLSound64.dll ..\..\Bin\PLRuntime\
 copy build\release64\PLSound64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

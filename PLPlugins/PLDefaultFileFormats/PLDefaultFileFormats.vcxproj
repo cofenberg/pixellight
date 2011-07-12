@@ -118,7 +118,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLDefaultFileFormatsD.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -157,7 +157,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\PLDefaultFileFormatsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -205,7 +205,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release\PLDefaultFileFormats.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -250,7 +250,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\PLDefaultFileFormats64.dll ..\..\Bin\PLRuntime\Plugins\PLScene\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScene --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

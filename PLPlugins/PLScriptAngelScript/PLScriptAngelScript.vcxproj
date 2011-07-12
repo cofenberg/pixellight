@@ -122,7 +122,7 @@
       <Command>copy build\debug\PLScriptAngelScriptD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptAngelScriptD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -165,7 +165,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <Command>copy build\debug64\PLScriptAngelScriptD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptAngelScriptD64.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -215,7 +215,7 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <Command>copy build\release\PLScriptAngelScript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptAngelScript.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -262,7 +262,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\PL
       <Command>copy build\release64\PLScriptAngelScript64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptAngelScript64.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -290,7 +290,7 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\PL
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

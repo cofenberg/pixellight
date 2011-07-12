@@ -1,17 +1,13 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLProject NOSUFFIX)
+define_project(PLUpgrade NOSUFFIX)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
 	src/main.cpp
-	src/Publish.cpp
-	src/PLPluginClassInfo.cpp
-	src/PLPluginInfo.cpp
-	src/PLPluginPlatformInfo.cpp
 )
 
 ##################################################
@@ -20,7 +16,6 @@ add_sources(
 add_include_directories(
 	src
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 )
 
 ##################################################
@@ -34,9 +29,7 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	${ZLIB_LIBRARIES}
 	PLGeneralStat
-	PLCoreStat
 )
 if(WIN32)
 	##################################################
@@ -52,7 +45,6 @@ endif()
 ##################################################
 add_compile_defs(
 	PLGENERAL_STATIC
-	PLCORE_STATIC
 )
 if(WIN32)
 	##################################################
@@ -111,12 +103,12 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneralStat PLCoreStat)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneralStat)
 add_dependencies(SDKTools ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -125,14 +117,16 @@ add_dependencies(SDKTools ${CMAKETOOLS_CURRENT_TARGET})
 
 # Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/PLRuntime"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/PLTools"
 )
 
 ##################################################
 ## Install
 ##################################################
 
-# Executable
-install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT SDK
-)
+if(WIN32)
+	# Executable
+	install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
+		RUNTIME DESTINATION "${PL_INSTALL_ROOT}/Tools"		COMPONENT SDK
+	)
+endif()

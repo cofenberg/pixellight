@@ -1,11 +1,26 @@
->> 20.12.2010
+/*********************************************************\
+ *  General diary for anything non directly per project related
+\*********************************************************/
+
+
+
+>> 12.07.2011
 [CO]
-- PLProject now also writes the used PixelLight version into the plugin-file
+- Moved PLInstall into the tools directory
+- Moved PLUpgrade into the tools directory
+- Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
+- Moved "diff" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindDiff.cmake")
+- Moved "VisualStudio"-directory from the "PLSDK"-directory into the "PLTools"-directory
+- Moved "FindPixelLight.cmake"-directory from the "PLSDK"-directory into the "PLTools"-directory
+- Moved this diary from "Diary.txt" into the root directory... this diary was always used for general stuff which didn't fit
+  into any other per project diary, so, it's probably right in the root directory...
+- Removed "PLSDK"... it's getting really full within the root directory and it's not always clear to me why there are certain detail
+  splits so that CMake stuff or general tools are distributed all over the Git repository.
 
 
 
 /*********************************************************\
- *  The entries below are in german only
+ *  The entries below are in German only
 \*********************************************************/
 
 

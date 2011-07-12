@@ -122,7 +122,7 @@
       <Command>copy build\debug\PLScriptV8D.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptV8D.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -165,7 +165,7 @@ copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <Command>copy build\debug64\PLScriptV8D64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptV8D64.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -215,7 +215,7 @@ copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <Command>copy build\release\PLScriptV8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptV8.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -262,7 +262,7 @@ copy ..\..\External\_Windows_x86_32\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
       <Command>copy build\release64\PLScriptV864.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptV864.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -281,7 +281,7 @@ copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\PLRuntime\Plugins\PL
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

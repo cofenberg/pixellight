@@ -118,7 +118,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLScriptBindingsD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -157,7 +157,7 @@ copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLScriptBindingsD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -205,7 +205,7 @@ copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLScriptBindings.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -250,7 +250,7 @@ copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLScriptBindings64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -300,7 +300,7 @@ copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
       <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
