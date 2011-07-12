@@ -7,7 +7,7 @@
 
 # Search for sfk
 set(SFK_EXECUTABLE)
-find_program(SFK_EXECUTABLE NAMES sfk.exe PATHS ${CMAKE_SOURCE_DIR}/PLSDK/UsedTools/sfk)
+find_program(SFK_EXECUTABLE NAMES sfk.exe PATHS ${CMAKE_SOURCE_DIR}/cmake/UsedTools/sfk)
 if(SFK_EXECUTABLE)
 	set(SFK_FOUND ON)
 else()

@@ -2,6 +2,7 @@
 [CO]
 - Moved PLInstall into the tools directory
 - Moved PLUpgrade into the tools directory
+- Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
 
 
 

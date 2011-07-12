@@ -100,7 +100,7 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	  Used to create chm documentations from the html help files created by Doxygen.
 	-> The Doxygen files refer to "htmlhelp/hhc.exe" inside this directory, therefore the unpacked exe is also in the repository
 
-- "UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
+- "cmake\UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
 	- "Swiss File Knife": file management, search, text processing
 	- Directly used by the CMake scripts
 

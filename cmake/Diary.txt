@@ -1,3 +1,9 @@
+>> 12.07.2011
+[CO]
+- Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
+
+
+
 >> 09.06.2011
 [CO]
 - Defined the string variable "PL_EXCLUDED_FILE_EXTENSIONS" within "PixelLight.cmake" containing the extensions of the files to exclude
