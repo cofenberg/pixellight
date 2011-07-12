@@ -16,6 +16,7 @@
   into any other per project diary, so, it's probably right in the root directory...
 - Removed "PLSDK"... it's getting really full within the root directory and it's not always clear to me why there are certain detail
   splits so that CMake stuff or general tools are distributed all over the Git repository.
+- Updated out-of-date Microsoft HTML Help Compiler (hhc.exe) related information
 
 
 
