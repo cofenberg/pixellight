@@ -2,6 +2,8 @@
 [CO]
 - Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
 - Moved "diff" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindDiff.cmake")
+- Removed "Modules\FindSubversion.cmake", it's been a while since we switched from Subversion to Git :D
+- Removed some remaining ".svn"-excludes
 
 
 
