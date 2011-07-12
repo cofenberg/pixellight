@@ -48,3 +48,7 @@ add_dependencies(PixelLight Tools)
 ##################################################
 ## Install
 ##################################################
+
+install(FILES	${CMAKE_SOURCE_DIR}/PLTools/FindPixelLight.cmake
+	DESTINATION ${PL_INSTALL_ROOT}/Tools		COMPONENT SDK
+)
