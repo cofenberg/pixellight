@@ -117,7 +117,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLPhysicsNullD.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -155,7 +155,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -202,7 +202,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release\PLPhysicsNull.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -246,7 +246,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\PLPhysicsNull64.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -321,7 +321,7 @@
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

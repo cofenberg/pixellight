@@ -15,7 +15,7 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Common)
 
 # Copy file format samples
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/Doc/FileFormats")
-copy_files("${CMAKE_SOURCE_DIR}/PLDocs/FileFormats/*.*" "${PL_BIN_DIR}/Doc/FileFormats" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/PLDocs/FileFormats/*.*" "${PL_BIN_DIR}/Doc/FileFormats")
 
 # Create title file used within the PixelLight documentations
 configure_file("${CMAKE_SOURCE_DIR}/PLDocs/Common/Title.tex.in" "${CMAKE_SOURCE_DIR}/PLDocs/Common/Title.tex")
@@ -36,7 +36,6 @@ add_subdirectory(PLGeneral)
 add_subdirectory(PLCore)
 add_subdirectory(PLMath)
 add_subdirectory(PLGraphics)
-add_subdirectory(PLNetwork)
 add_subdirectory(PLScript)
 add_subdirectory(PLDatabase)
 add_subdirectory(PLGui)

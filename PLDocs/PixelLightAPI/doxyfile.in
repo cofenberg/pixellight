@@ -580,11 +580,7 @@ INPUT                  = PixelLight.h \
                          ../../PLBase/PLMath/include \
                          ../../PLBase/PLGraphics/include \
                          ../../PLBase/PLDatabase/include \
-                         ../../PLNetwork/PLNetwork/include \
-                         ../../PLNetwork/PLIRC/include \
-                         ../../PLNetwork/PLJabber/include \
                          ../../PLGui/PLGui/include \
-                         ../../PLGui/PLXmlText/include \
                          ../../PLEngine/PLInput/include \
                          ../../PLEngine/PLRenderer/include \
                          ../../PLEngine/PLMesh/include \
@@ -686,26 +682,12 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabase.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseWindows.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseLinux.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetwork.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkWindows.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkLinux.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkWindowsIncludes.h \
-                         ../../PLNetwork/PLNetwork/include/PLNetwork/PLNetworkLinuxIncludes.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRC.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRCWindows.h \
-                         ../../PLNetwork/PLIRC/include/PLIRC/PLIRCLinux.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabber.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabberWindows.h \
-                         ../../PLNetwork/PLJabber/include/PLJabber/PLJabberLinux.h \
                          ../../PLGui/PLGui/include/PLGui/PLGui.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiWindows.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiLinux.h \
                          ../../PLGui/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
                          ../../PLGui/PLGui/include/PLGui/Backend/ \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlText.h \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextLinux.h \
-                         ../../PLGui/PLXmlText/include/PLXmlText/PLXmlTextWindows.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInput.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputWindows.h \
                          ../../PLEngine/PLInput/include/PLInput/PLInputWindowsIncludes.h \
@@ -986,7 +968,7 @@ CHM_FILE               = PixelLightAPI.chm
 # the HTML help compiler (hhc.exe). If non-empty doxygen will try to run 
 # the HTML help compiler on the generated index.hhp.
 
-HHC_LOCATION           = ../../../../../../PLSDK/UsedTools/htmlhelp/hhc.exe
+HHC_LOCATION           = ../hhc.exe
 
 # If the GENERATE_HTMLHELP tag is set to YES, the GENERATE_CHI flag 
 # controls if a separate .chi index file is generated (YES) or that 

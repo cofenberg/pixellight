@@ -204,8 +204,8 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 if(WIN32)
 	# Copy the Qt dlls so that the user can use everything "out of the box"
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../bin/QtCore4.dll "${PL_BIN_DIR}/PLRuntime"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_INCLUDE_DIRS}/../../bin/QtGui4.dll "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtCore4.dll "${PL_BIN_DIR}/PLRuntime"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtGui4.dll "${PL_BIN_DIR}/PLRuntime"
 	)
 endif()
 
@@ -303,7 +303,7 @@ if(WIN32)
 	# Copy tools
 	install(FILES	"${QT_EXTERNAL_DIR}/bin/moc.exe"
 					"${QT_EXTERNAL_DIR}/bin/uic.exe"
-					"$${QT_EXTERNAL_DIR}/Readme.txt"
+					"${QT_EXTERNAL_DIR}/Readme.txt"
 					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
 		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)

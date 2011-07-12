@@ -8,7 +8,6 @@ define_project(43ScriptBindings NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
 	src/ScriptBindingSample.cpp
 )
 

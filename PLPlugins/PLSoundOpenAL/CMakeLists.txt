@@ -156,17 +156,17 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		)
 	elseif(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so				"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.13.0		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so					"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0				"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.1			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0			"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0.4.5		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3		"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.4	"${PL_BIN_DIR}/PLRuntime/Plugins/PLSound/"
 		)
 	endif()

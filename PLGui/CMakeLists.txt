@@ -12,9 +12,6 @@ add_custom_target(Gui)
 ## Projects
 ##################################################
 add_subdirectory(PLGui)
-if(NOT CMAKETOOLS_MINIMAL)
-	add_subdirectory(PLXmlText)
-endif()
 
 ##################################################
 ## Dependencies

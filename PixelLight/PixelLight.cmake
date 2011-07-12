@@ -123,6 +123,7 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_ENGINE_LIBROCKET			"1" CACHE BOOL "Build plugin 'libRocket_PL'?")
 	set (PL_PLUGIN_ENGINE_QT				"1" CACHE BOOL "Build plugin 'PLQt'?")
 	set (PL_PLUGIN_ENGINE_POSTPROCESS		"1" CACHE BOOL "Build plugin 'PLPostProcessEffects'?")
+	set (PL_PLUGIN_GUI_XMLTEXT				"1" CACHE BOOL "Build plugin 'PLXmlText'?")
 else()
 	# Minimal build
 	set (PL_PLUGIN_SCRIPT_NULL 				"1" CACHE BOOL "Build plugin 'PLScriptNull'?")
@@ -163,6 +164,7 @@ else()
 	set (PL_PLUGIN_ENGINE_LIBROCKET			"0" CACHE BOOL "Build plugin 'libRocket_PL'?")
 	set (PL_PLUGIN_ENGINE_QT				"0" CACHE BOOL "Build plugin 'PLQt'?")	
 	set (PL_PLUGIN_ENGINE_POSTPROCESS		"0" CACHE BOOL "Build plugin 'PLPostProcessEffects'?")
+	set (PL_PLUGIN_GUI_XMLTEXT				"0" CACHE BOOL "Build plugin 'PLXmlText'?")
 	set (PL_BROWSER_PLUGIN_ACTIVEX			"0" CACHE BOOL "Build browser plugin 'PLPluginActiveX'?")
 	set (PL_BROWSER_PLUGIN_MOZILLA			"0" CACHE BOOL "Build browser plugin 'PLPluginMozilla'?")
 	set (PL_EXPORTER_3DSMAX_2008			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'?")
@@ -239,6 +241,11 @@ elseif(LINUX)
 endif()
 
 # Extensions of files to exclude when e.g. copying a directory
+# sdf	= VisualStudio 2010 file
+# ncb	= VisualStudio 2010 file
+# suo	= VisualStudio 2010 file
+# user	= VisualStudio 2010 file
+# *.*~	= Backup file ending used by some editors under Linux
 set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user|.*~")
 if(NOT PL_PLUGIN_SCRIPT_LUA)
 	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")
@@ -296,12 +303,12 @@ endmacro(pl_create_plugin_description src dest)
 # Set path to PLProject
 if(PL_NATIVE_PLPROJECT)
 	if(CMAKE_BUILD_TYPE MATCHES "Debug")
-		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/PLRuntime/PLProjectD${CMAKE_EXECUTABLE_SUFFIX}")
+		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/PLTools/PLProjectD${CMAKE_EXECUTABLE_SUFFIX}")
 	else()
-		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/PLRuntime/PLProject${CMAKE_EXECUTABLE_SUFFIX}")
+		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/PLTools/PLProject${CMAKE_EXECUTABLE_SUFFIX}")
 	endif()
 else()
-	set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/PLSDK/Tools/PLProject/src/PLProject.py")
+	set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/PLTools/PLProject/src/PLProject.py")
 endif()
 
 # Configure use of inline assembly

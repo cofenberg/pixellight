@@ -12,9 +12,9 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLSamples)
 
 # Copy runtime data
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/PLSamples/PLGui")
-copy_files("${CMAKE_SOURCE_DIR}/Bin/PLSamples/PLGui/*.*" "${PL_BIN_DIR}/PLSamples/PLGui" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLSamples/PLGui/*.*" "${PL_BIN_DIR}/PLSamples/PLGui")
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/PLSamples/Data")
-copy_files("${CMAKE_SOURCE_DIR}/Bin/PLSamples/Data/*.*" "${PL_BIN_DIR}/PLSamples/Data" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLSamples/Data/*.*" "${PL_BIN_DIR}/PLSamples/Data")
 
 ##################################################
 ## Target

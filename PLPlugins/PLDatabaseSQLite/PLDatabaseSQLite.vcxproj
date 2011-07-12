@@ -121,7 +121,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLDatabaseSQLiteD.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@ copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLDatabaseSQLiteD64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -212,7 +212,7 @@ copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLDatabaseSQLite.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -258,7 +258,7 @@ copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLDatabaseSQLite64.dll ..\..\Bin\PLRuntime\Plugins\PLDatabase\
 copy build\release64\PLDatabaseSQLite64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLDatabase --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -281,7 +281,7 @@ copy build\release64\PLDatabaseSQLite64.lib ..\..\Bin\Lib\
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

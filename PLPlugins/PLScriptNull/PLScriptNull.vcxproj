@@ -121,7 +121,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLScriptNullD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptNullD.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@ copy build\debug\PLScriptNullD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLScriptNullD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptNullD64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -212,7 +212,7 @@ copy build\debug64\PLScriptNullD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLScriptNull.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptNull.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -258,7 +258,7 @@ copy build\release\PLScriptNull.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLScriptNull64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptNull64.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -277,7 +277,7 @@ copy build\release64\PLScriptNull64.lib ..\..\Bin\Lib\
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

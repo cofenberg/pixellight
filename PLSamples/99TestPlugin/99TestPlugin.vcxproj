@@ -118,7 +118,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\99TestPluginD.dll ..\..\Bin\PLSamples\Plugins\
 copy build\debug\99TestPluginD.lib ..\..\Bin\Lib
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -166,7 +166,7 @@ copy build\debug\99TestPluginD.lib ..\..\Bin\Lib
     <PostBuildEvent>
       <Command>copy build\release\99TestPlugin.dll ..\..\Bin\PLSamples\Plugins\
 copy build\release\99TestPlugin.lib ..\..\Bin\Lib
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -204,7 +204,7 @@ copy build\release\99TestPlugin.lib ..\..\Bin\Lib
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\99TestPluginD64.dll ..\..\Bin\PLSamples\Plugins\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -248,7 +248,7 @@ copy build\release\99TestPlugin.lib ..\..\Bin\Lib
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\99TestPlugin64.dll ..\..\Bin\PLSamples\Plugins\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

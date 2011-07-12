@@ -327,7 +327,7 @@ FunctionEnd
 
 Function PixelLightFinish
   ; Call PLUpgrade
-  ExecWait "$INSTDIR\PLUpgrade.exe"
+  ExecWait "$INSTDIR\Tools\PLUpgrade.exe"
 
   ; Install Autodesk 3ds Max exporter
   StrCmp $PLInstallExporter "0" noExporter
@@ -438,7 +438,7 @@ Section "Uninstall"
   DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\@CPACK_PACKAGE_INSTALL_DIRECTORY@"
 
   ;Remove left-overs
-  Delete "$INSTDIR\PLUpgrade.log"
+  Delete "$INSTDIR\Tools\PLUpgrade.log"
   RMDir /r "$INSTDIR\Samples"
   RMDir "$INSTDIR\Prerequisites"
 

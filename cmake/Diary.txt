@@ -1,3 +1,12 @@
+>> 12.07.2011
+[CO]
+- Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
+- Moved "diff" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindDiff.cmake")
+- Removed "Modules\FindSubversion.cmake", it's been a while since we switched from Subversion to Git :D
+- Removed some remaining ".svn"-excludes
+
+
+
 >> 09.06.2011
 [CO]
 - Defined the string variable "PL_EXCLUDED_FILE_EXTENSIONS" within "PixelLight.cmake" containing the extensions of the files to exclude
@@ -35,7 +44,7 @@
 
 
 /*********************************************************\
- *  The entries below are in german only
+ *  The entries below are in German only
 \*********************************************************/
 
 

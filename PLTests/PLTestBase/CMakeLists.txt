@@ -12,7 +12,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLTests/PLTestBase)
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLTests/PLTestBase/Plugins)
 
 # Copy test data
-copy_files("${CMAKE_SOURCE_DIR}/Bin/PLTests/PLTestBase/*.*" "${PL_BIN_DIR}/PLTests/PLTestBase" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLTests/PLTestBase/*.*" "${PL_BIN_DIR}/PLTests/PLTestBase")
 
 ##################################################
 ## Source files

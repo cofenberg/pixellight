@@ -95,17 +95,16 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	- MiKTeX (http://miktex.org/)
 	- Used to create the LaTex documentations.
 
-- htmlhelp.exe
-	- MS HTML Help Workshop (http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp)
-	  Used to create chm documentations from the html help files created by Doxygen.
-	-> The Doxygen files refer to "htmlhelp/hhc.exe" inside this directory, therefore the unpacked exe is also in the repository
-
-- "UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
+- "cmake\UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
 	- "Swiss File Knife": file management, search, text processing
 	- Directly used by the CMake scripts
 
-- "UsedTools\diff"-directory
+- "cmake\UsedTools\diff"-directory
 	- Some diff binaries directly used by the CMake scripts
+
+- The CMake system automatically searches for an installed Microsoft HTML Help Compiler (hhc.exe)
+	- MS HTML Help Workshop (http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp)
+	  Used to create chm documentations from the html help files created by Doxygen.
 
 
 1.2.2. Create MSVC solutions and build
