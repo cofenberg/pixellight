@@ -4,6 +4,7 @@
 - Moved PLUpgrade into the tools directory
 - Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
 - Moved "diff" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindDiff.cmake")
+- Moved "VisualStudio"-directory from the "PLSDK"-directory into the "PLTools"-directory
 
 
 
