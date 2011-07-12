@@ -49,21 +49,41 @@ else()
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/QtGui4.lib ${CMAKETOOLS_CURRENT_LIB_DIR}/qtmain.lib CACHE INTERNAL "")
 
 		# Set "FindQt4.cmake"-variables
-		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake.exe CACHE INTERNAL "")	# Tell Qt were to find qmake
+		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake.exe)	# Tell Qt were to find qmake
 	elseif(LINUX)
 		set(QT_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore.so ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtGui.so CACHE INTERNAL "")
 
 		# Set "FindQt4.cmake"-variables
-		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake CACHE INTERNAL "")	# Tell Qt were to find qmake
+		set(QT_QMAKE_EXECUTABLE ${LOCAL_QT_DIR}/qmake)	# Tell Qt were to find qmake
 	endif()
 
 	# Set "FindQt4.cmake"-variables
-	set(QT_BINARY_DIR 	${LOCAL_QT_DIR}/ 			  CACHE INTERNAL "")	# Path to "bin" of Qt4
-	set(QT_LIBRARY_DIR	${QT_INCLUDE_DIRS}/../../lib/ CACHE INTERNAL "")	# Path to "lib" of Qt4
+	
+	# unset QT_QMAKE_EXECUTABLE_LAST otherwise FindQt4.cmake triggers an query to qmake for the Qt library path.
+	# The Qt library path is hardcoded into qmake, but we can't relay on the reported path of qmake because the harcoded path is absolut
+	# and will always not match with the location of the Qt libs which are bundled with Pixellight as an External package
+	unset(QT_QMAKE_EXECUTABLE_LAST CACHE)
+	
+	# We have to set following variables otherwise the FindQt4.cmake won't find either the executables uic, rcc, moc and the qt library path
+	# The QT_INCLUDE_DIR path has also be set, because this var is an additional condition that FindQt4.cmake sets QT_FOUND to true
+	set(QT_INCLUDE_DIR	${QT_EXTERNAL_DIR}/include/							)	# Path to "include" of Qt4
+	set(QT_BINARY_DIR 	${LOCAL_QT_DIR}/									)	# Path to "bin" of Qt4
+	set(QT_LIBRARY_DIR	${QT_EXTERNAL_DIR}/lib/								)	# Path to "lib" of Qt4
+	# We have to set both QT_QTCORE_LIBRARY and QT_QTCORE_LIBRARY_RELEASE (we could also set QT_QTCORE_LIBRARY_DEBUG instead of QT_QTCORE_LIBRARY_RELEASE).
+	# QT_QTCORE_LIBRARY is used to determine if qmake should be queried for the library path to the Qt libs (which has the problems described above why unsetting QT_QMAKE_EXECUTABLE_LAST).
+	# QT_QTCORE_LIBRARY_RELEASE must be set because this var is used in FindQt4 to determine if the path to the Qt libs is found
+	if(WIN32)
+		set(QT_QTCORE_LIBRARY ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib		)	# Path to QtCore lib	
+		set(QT_QTCORE_LIBRARY_RELEASE ${CMAKETOOLS_CURRENT_LIB_DIR}/QtCore4.lib)	# Path to QtCore lib (release version)
+	elseif(LINUX)
+		set(QT_QTCORE_LIBRARY ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore.so		)	# Path to QtCore lib	
+		set(QT_QTCORE_LIBRARY_RELEASE ${CMAKETOOLS_CURRENT_LIB_DIR}/libQtCore.so)	# Path to QtCore lib (release version)
+	endif()
+	
+	
 	
 	# Find Qt4 libraries and set all required variables
 	FIND_PACKAGE(Qt4 REQUIRED)
-
 	##################################################
 	## Check
 	##################################################
