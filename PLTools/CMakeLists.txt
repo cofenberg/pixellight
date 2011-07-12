@@ -19,6 +19,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLTools)
 ## Projects
 ##################################################
 add_subdirectory(PLProject)
+add_subdirectory(PLUpgrade)
 if(WIN32)
 	add_subdirectory(PLInstall)
 endif()

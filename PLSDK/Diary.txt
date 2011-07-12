@@ -1,6 +1,7 @@
 >> 12.07.2011
 [CO]
 - Moved PLInstall into the tools directory
+- Moved PLUpgrade into the tools directory
 
 
 
