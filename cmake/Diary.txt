@@ -1,6 +1,7 @@
 >> 12.07.2011
 [CO]
 - Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
+- Moved "diff" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindDiff.cmake")
 
 
 

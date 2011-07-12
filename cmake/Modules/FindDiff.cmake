@@ -12,7 +12,7 @@
 
 # Search for diff
 set(DIFF_EXECUTABLE)
-find_program(DIFF_EXECUTABLE NAMES diff diff.exe PATHS ${CMAKE_SOURCE_DIR}/PLSDK/UsedTools/diff)
+find_program(DIFF_EXECUTABLE NAMES diff diff.exe PATHS ${CMAKE_SOURCE_DIR}/cmake/UsedTools/diff)
 if(DIFF_EXECUTABLE)
 	set(DIFF_FOUND ON)
 else()
@@ -29,7 +29,7 @@ endif()
 
 # Search for patch
 set(PATCH_EXECUTABLE)
-find_program(PATCH_EXECUTABLE NAMES patch patch.exe PATHS ${CMAKE_SOURCE_DIR}/PLSDK/UsedTools/diff)
+find_program(PATCH_EXECUTABLE NAMES patch patch.exe PATHS ${CMAKE_SOURCE_DIR}/cmake/UsedTools/diff)
 if(PATCH_EXECUTABLE)
 	set(PATCH_FOUND ON)
 else()

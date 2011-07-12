@@ -104,7 +104,7 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	- "Swiss File Knife": file management, search, text processing
 	- Directly used by the CMake scripts
 
-- "UsedTools\diff"-directory
+- "cmake\UsedTools\diff"-directory
 	- Some diff binaries directly used by the CMake scripts
 
 
