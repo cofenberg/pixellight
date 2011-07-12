@@ -117,7 +117,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneralStat PLCoreStat)
-add_dependencies(SDKTools ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
