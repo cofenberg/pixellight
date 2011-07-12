@@ -12,9 +12,6 @@ add_custom_target(SDKTools)
 ## Projects
 ##################################################
 add_subdirectory(PLUpgrade)
-if(WIN32)
-	add_subdirectory(PLInstall)
-endif()
 
 ##################################################
 ## Dependencies
