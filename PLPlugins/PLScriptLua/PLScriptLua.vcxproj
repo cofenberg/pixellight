@@ -122,7 +122,7 @@
       <Command>copy build\debug\PLScriptLuaD.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug\PLScriptLuaD.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -165,7 +165,7 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <Command>copy build\debug64\PLScriptLuaD64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\debug64\PLScriptLuaD64.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -215,7 +215,7 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <Command>copy build\release\PLScriptLua.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release\PLScriptLua.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -262,7 +262,7 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
       <Command>copy build\release64\PLScriptLua64.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
 copy build\release64\PLScriptLua64.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugins\PLScript\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLScript --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -295,7 +295,7 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\PLRuntime\Plugin
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

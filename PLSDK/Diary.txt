@@ -1,9 +1,3 @@
->> 20.12.2010
-[CO]
-- PLProject now also writes the used PixelLight version into the plugin-file
-
-
-
 /*********************************************************\
  *  The entries below are in German only
 \*********************************************************/

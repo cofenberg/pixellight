@@ -120,7 +120,7 @@
       <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
     <PostBuildEvent>
       <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -210,7 +210,7 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
       <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
 copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -256,7 +256,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\PLRuntime\Plugins\
     <PostBuildEvent>
       <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\PLRuntime\Plugins\PLPhysics\
 copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
-..\..\Bin\PLRuntime\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime\Plugins\PLPhysics --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -309,7 +309,7 @@ copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLSDK\Tools\PLProject\PLProject.vcxproj">
+    <ProjectReference Include="..\..\PLTools\PLProject\PLProject.vcxproj">
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

@@ -1,3 +1,10 @@
+>> 12.07.2011
+[CO]
+- Moved the PLProject executable from the runtime directory into the tools directory... it's a tool used as post-compile step, but nothing
+  shipped with applications...
+
+
+
 >> 03.06.2011
 [CO]
 - Switched PLProject back to the static versions of PLGeneral and PLCore, thank's to the new RTTI class parsing it's no longer required
@@ -52,6 +59,12 @@
   I know, it's not that good if the version number suddenly goes down instead of up. In the long term I'am sure this will as be
   useful as it's already within e.g. the Autodesk 3ds Max scene exporter because you know exactly to which PixelLight version a
   PixelLight component/tool belonging to.
+
+
+
+>> 20.12.2010
+[CO]
+- PLProject now also writes the used PixelLight version into the plugin-file
 
 
 
