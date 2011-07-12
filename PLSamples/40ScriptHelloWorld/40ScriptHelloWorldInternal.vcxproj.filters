@@ -10,17 +10,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Application.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

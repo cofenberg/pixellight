@@ -8,7 +8,6 @@ define_project(41ScriptGlobalVariables NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
 )
 
 ##################################################
