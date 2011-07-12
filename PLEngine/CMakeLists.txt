@@ -9,7 +9,7 @@ project(Engine)
 
 # Copy runtime data
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/PLRuntime/Data")
-copy_files("${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Data/*.zip" "${PL_BIN_DIR}/PLRuntime/Data" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLRuntime/Data/*.zip" "${PL_BIN_DIR}/PLRuntime/Data")
 
 ##################################################
 ## Target

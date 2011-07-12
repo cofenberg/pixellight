@@ -81,7 +81,7 @@ install(FILES	${CMAKE_SOURCE_DIR}/AUTHORS
 # Microsoft Visual C++ Redistributables
 if(WIN32)
 	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/VC2010_Redistributable
-		DESTINATION ${PL_INSTALL_ROOT}		COMPONENT SDK		PATTERN ".svn" EXCLUDE
+		DESTINATION ${PL_INSTALL_ROOT}		COMPONENT SDK
 	)
 endif()
 

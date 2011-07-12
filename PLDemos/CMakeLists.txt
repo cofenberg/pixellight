@@ -17,7 +17,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLDemos)
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLDemos/Data)
 
 # Copy runtime data
-copy_files("${CMAKE_SOURCE_DIR}/Bin/PLDemos/Data/*" "${PL_BIN_DIR}/PLDemos/Data" EXCLUDE "\\\\.svn")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLDemos/Data/*" "${PL_BIN_DIR}/PLDemos/Data")
 
 ##################################################
 ## Projects
