@@ -29,7 +29,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/PLPlugins/PLRendererOpenGL/include
 	${CG_INCLUDE_DIRS}
 	${OPENGL_INCLUDE_DIRS}

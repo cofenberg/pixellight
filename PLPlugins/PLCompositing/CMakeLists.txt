@@ -88,11 +88,11 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
-	${CMAKE_SOURCE_DIR}/PLGui/PLGui/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLInput/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGui/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLInput/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
 )
 
 ##################################################

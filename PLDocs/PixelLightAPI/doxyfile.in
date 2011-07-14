@@ -580,14 +580,14 @@ INPUT                  = PixelLight.h \
                          ../../PLBase/PLMath/include \
                          ../../PLBase/PLGraphics/include \
                          ../../PLBase/PLDatabase/include \
-                         ../../PLGui/PLGui/include \
-                         ../../PLEngine/PLInput/include \
-                         ../../PLEngine/PLRenderer/include \
-                         ../../PLEngine/PLMesh/include \
-                         ../../PLEngine/PLScene/include \
-                         ../../PLEngine/PLSound/include \
-                         ../../PLEngine/PLPhysics/include \
-                         ../../PLEngine/PLEngine/include
+                         ../../PLBase/PLGui/include \
+                         ../../PLBase/PLInput/include \
+                         ../../PLBase/PLRenderer/include \
+                         ../../PLBase/PLMesh/include \
+                         ../../PLBase/PLScene/include \
+                         ../../PLBase/PLSound/include \
+                         ../../PLBase/PLPhysics/include \
+                         ../../PLBase/PLEngine/include
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -682,39 +682,39 @@ EXCLUDE                = ../../PLBase/PLGeneral/include/PLGeneral/FileSystem/Win
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabase.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseWindows.h \
                          ../../PLBase/PLDatabase/include/PLDatabase/PLDatabaseLinux.h \
-                         ../../PLGui/PLGui/include/PLGui/PLGui.h \
-                         ../../PLGui/PLGui/include/PLGui/PLGuiWindows.h \
-                         ../../PLGui/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
-                         ../../PLGui/PLGui/include/PLGui/PLGuiLinux.h \
-                         ../../PLGui/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
-                         ../../PLGui/PLGui/include/PLGui/Backend/ \
-                         ../../PLEngine/PLInput/include/PLInput/PLInput.h \
-                         ../../PLEngine/PLInput/include/PLInput/PLInputWindows.h \
-                         ../../PLEngine/PLInput/include/PLInput/PLInputWindowsIncludes.h \
-                         ../../PLEngine/PLInput/include/PLInput/PLInputLinux.h \
-                         ../../PLEngine/PLInput/include/PLInput/PLInputLinuxIncludes.h \
-                         ../../PLEngine/PLInput/include/PLInput/Backend/ \
-                         ../../PLEngine/PLRenderer/include/PLRenderer/PLRenderer.h \
-                         ../../PLEngine/PLRenderer/include/PLRenderer/PLRendererWindows.h \
-                         ../../PLEngine/PLRenderer/include/PLRenderer/PLRendererLinux.h \
-                         ../../PLEngine/PLRenderer/include/PLRenderer/Renderer/Backend/ \
-                         ../../PLEngine/PLMesh/include/PLMesh/PLMesh.h \
-                         ../../PLEngine/PLMesh/include/PLMesh/PLMeshWindows.h \
-                         ../../PLEngine/PLMesh/include/PLMesh/PLMeshLinux.h \
-                         ../../PLEngine/PLScene/include/PLScene/PLScene.h \
-                         ../../PLEngine/PLScene/include/PLScene/PLSceneWindows.h \
-                         ../../PLEngine/PLScene/include/PLScene/PLSceneLinux.h \
-                         ../../PLEngine/PLSound/include/PLSound/PLSound.h \
-                         ../../PLEngine/PLSound/include/PLSound/PLSoundWindows.h \
-                         ../../PLEngine/PLSound/include/PLSound/PLSoundLinux.h \
-                         ../../PLEngine/PLPhysics/include/PLPhysics/PLPhysics.h \
-                         ../../PLEngine/PLPhysics/include/PLPhysics/PLPhysicsWindows.h \
-                         ../../PLEngine/PLPhysics/include/PLPhysics/PLPhysicsLinux.h \
-                         ../../PLEngine/PLPhysics/include/PLPhysics/BodyImpl.h \
-                         ../../PLEngine/PLPhysics/include/PLPhysics/JointImpl.h \
-                         ../../PLEngine/PLEngine/include/PLEngine/PLEngine.h \
-                         ../../PLEngine/PLEngine/include/PLEngine/PLEngineWindows.h \
-                         ../../PLEngine/PLEngine/include/PLEngine/PLEngineLinux.h \
+                         ../../PLBase/PLGui/include/PLGui/PLGui.h \
+                         ../../PLBase/PLGui/include/PLGui/PLGuiWindows.h \
+                         ../../PLBase/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
+                         ../../PLBase/PLGui/include/PLGui/PLGuiLinux.h \
+                         ../../PLBase/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
+                         ../../PLBase/PLGui/include/PLGui/Backend/ \
+                         ../../PLBase/PLInput/include/PLInput/PLInput.h \
+                         ../../PLBase/PLInput/include/PLInput/PLInputWindows.h \
+                         ../../PLBase/PLInput/include/PLInput/PLInputWindowsIncludes.h \
+                         ../../PLBase/PLInput/include/PLInput/PLInputLinux.h \
+                         ../../PLBase/PLInput/include/PLInput/PLInputLinuxIncludes.h \
+                         ../../PLBase/PLInput/include/PLInput/Backend/ \
+                         ../../PLBase/PLRenderer/include/PLRenderer/PLRenderer.h \
+                         ../../PLBase/PLRenderer/include/PLRenderer/PLRendererWindows.h \
+                         ../../PLBase/PLRenderer/include/PLRenderer/PLRendererLinux.h \
+                         ../../PLBase/PLRenderer/include/PLRenderer/Renderer/Backend/ \
+                         ../../PLBase/PLMesh/include/PLMesh/PLMesh.h \
+                         ../../PLBase/PLMesh/include/PLMesh/PLMeshWindows.h \
+                         ../../PLBase/PLMesh/include/PLMesh/PLMeshLinux.h \
+                         ../../PLBase/PLScene/include/PLScene/PLScene.h \
+                         ../../PLBase/PLScene/include/PLScene/PLSceneWindows.h \
+                         ../../PLBase/PLScene/include/PLScene/PLSceneLinux.h \
+                         ../../PLBase/PLSound/include/PLSound/PLSound.h \
+                         ../../PLBase/PLSound/include/PLSound/PLSoundWindows.h \
+                         ../../PLBase/PLSound/include/PLSound/PLSoundLinux.h \
+                         ../../PLBase/PLPhysics/include/PLPhysics/PLPhysics.h \
+                         ../../PLBase/PLPhysics/include/PLPhysics/PLPhysicsWindows.h \
+                         ../../PLBase/PLPhysics/include/PLPhysics/PLPhysicsLinux.h \
+                         ../../PLBase/PLPhysics/include/PLPhysics/BodyImpl.h \
+                         ../../PLBase/PLPhysics/include/PLPhysics/JointImpl.h \
+                         ../../PLBase/PLEngine/include/PLEngine/PLEngine.h \
+                         ../../PLBase/PLEngine/include/PLEngine/PLEngineWindows.h \
+                         ../../PLBase/PLEngine/include/PLEngine/PLEngineLinux.h \
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 

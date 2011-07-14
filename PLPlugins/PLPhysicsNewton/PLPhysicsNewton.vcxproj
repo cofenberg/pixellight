@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLPhysics/include/;../../External/_Windows_x86_32/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../../PLBase/PLMesh/include/;../../PLBase/PLScene/include/;../../PLBase/PLPhysics/include/;../../External/_Windows_x86_32/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSNEWTON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -129,7 +129,7 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Pl
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLPhysics/include/;../../External/_Windows_x86_64/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../../PLBase/PLMesh/include/;../../PLBase/PLScene/include/;../../PLBase/PLPhysics/include/;../../External/_Windows_x86_64/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICSNEWTON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -170,7 +170,7 @@ copy build\debug64\PLPhysicsNewtonD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLPhysics/include/;../../External/_Windows_x86_32/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../../PLBase/PLMesh/include/;../../PLBase/PLScene/include/;../../PLBase/PLPhysics/include/;../../External/_Windows_x86_32/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSNEWTON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -221,7 +221,7 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\PLRuntime\Pl
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../../PLEngine/PLMesh/include/;../../PLEngine/PLScene/include/;../../PLEngine/PLPhysics/include/;../../External/_Windows_x86_64/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../../PLBase/PLMesh/include/;../../PLBase/PLScene/include/;../../PLBase/PLPhysics/include/;../../External/_Windows_x86_64/Newton/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICSNEWTON_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -311,7 +311,7 @@ copy build\release64\PLPhysicsNewton64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLPhysicsNewton\WorldUpdate.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\PLEngine\PLPhysics\Diary.txt" />
+    <None Include="..\..\PLBase\PLPhysics\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -335,23 +335,23 @@ copy build\release64\PLPhysicsNewton64.lib ..\..\Bin\Lib\
       <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLInput\PLInput.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLInput\PLInput.vcxproj">
       <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLMesh\PLMesh.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLMesh\PLMesh.vcxproj">
       <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLPhysics\PLPhysics.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLPhysics\PLPhysics.vcxproj">
       <Project>{4156a4dd-014c-4150-9330-f975dce3bfb4}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLRenderer\PLRenderer.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLRenderer\PLRenderer.vcxproj">
       <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLScene\PLScene.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLScene\PLScene.vcxproj">
       <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

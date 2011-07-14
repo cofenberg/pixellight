@@ -131,7 +131,7 @@
     <ClCompile>
       <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -171,7 +171,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/_Windows_x86_64/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/_Windows_x86_64/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -217,7 +217,7 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -274,7 +274,7 @@ copy "build\release_2008\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\PLTools\3dsMax\
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/Max2008/_Windows_x86_64/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/Max2008/_Windows_x86_64/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SECURE_SCL=0;WIN32;WIN64;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -322,7 +322,7 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\PLTools\3dsM
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -367,7 +367,7 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\PLTools\3dsM
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLEngine/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;WIN64;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>

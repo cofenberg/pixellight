@@ -1,38 +1,79 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLEngine)
+define_project(PLPhysics)
 
 ##################################################
 ## Prerequisites
 ##################################################
 
-# Create 'Plugins/PLEngine' directory
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLEngine)
+# Create 'Plugins/PLScene' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLPhysics)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Application/RenderApplication.cpp
-	src/Application/SceneApplication.cpp
-	src/Application/BasicSceneApplication.cpp
-	src/Application/ScriptApplication.cpp
-	src/Config/RendererConfigGroup.cpp
-	src/Gui/WindowConnection.cpp
-	src/Gui/RenderWidget.cpp
-	src/Gui/PreviewWidget.cpp
-	src/Gui/RenderWindow.cpp
-	src/Gui/ModTrapMouse.cpp
-	src/Picking/Picking.cpp
-	src/Picking/PickingResult.cpp
-	src/Picking/MousePicking.cpp
-	src/Tools/Screenshot.cpp
-	src/Tools/SceneRendererTool.cpp
-    src/Tools/Camcorder.cpp
-    src/Tools/SNMPositionKeyframeRecord.cpp
-    src/Tools/SNMRotationKeyframeRecord.cpp
-	src/PLEngine.cpp
+	src/SceneNodes/RagdollLoaderPL.cpp
+	src/SceneNodes/RagdollLoader.cpp
+	src/SceneNodes/SCPhysicsWorld.cpp
+	src/SceneNodes/RagdollBody.cpp
+	src/SceneNodes/SNRagdoll.cpp
+	src/SceneNodes/RagdollJoint.cpp
+	src/SceneNodes/PhysicsMouseInteraction.cpp
+	src/SceneNodes/SNPhysicsMouseInteraction.cpp
+	src/SceneNodeModifiers/SNMPhysics.cpp
+	src/SceneNodeModifiers/SNMPhysicsBody.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyBox.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCapsule.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyChamferCylinder.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCone.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyConvexHull.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCylinder.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyEllipsoid.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyMesh.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodySphere.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyTerrain.cpp
+	src/SceneNodeModifiers/SNMPhysicsCharacter.cpp
+	src/SceneNodeModifiers/SNMPhysicsCharacterController.cpp
+	src/SceneNodeModifiers/PhysicsCharacterController.cpp
+	src/SceneNodeModifiers/SNMPhysicsCorrectDistance.cpp
+	src/SceneNodeModifiers/SNMPhysicsForce.cpp
+	src/SceneNodeModifiers/SNMPhysicsJoint.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointBall.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointCorkscrew.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointHinge.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointSlider.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointUniversal.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointUpVector.cpp
+	src/SceneNodeModifiers/SNMPhysicsTorque.cpp
+	src/SceneNodeModifiers/SNMPhysicsUpdateVelocity.cpp
+	src/Sensor.cpp
+	src/SensorRaycast.cpp
+	src/SensorAABoundingBox.cpp
+	src/JointHinge.cpp
+	src/BodyChamferCylinder.cpp
+	src/BodyEllipsoid.cpp
+	src/BodyCone.cpp
+	src/BodySphere.cpp
+	src/BodyConvexHull.cpp
+	src/JointCorkscrew.cpp
+	src/BodyBox.cpp
+	src/BodyMesh.cpp
+	src/BodyCapsule.cpp
+	src/JointUpVector.cpp
+	src/JointUniversal.cpp
+	src/ElementHandler.cpp
+	src/JointBall.cpp
+	src/PLPhysics.cpp
+	src/BodyTerrain.cpp
+	src/Joint.cpp
+	src/JointSlider.cpp
+	src/BodyCylinder.cpp
+	src/World.cpp
+	src/Element.cpp
+	src/Body.cpp
+	src/ContactInformation.cpp
 )
 
 ##################################################
@@ -41,14 +82,14 @@ add_sources(
 add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/PLGui/PLGui/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLInput/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGui/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLInput/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
 )
 
 ##################################################
@@ -64,30 +105,20 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLMath
 	PLGraphics
+	PLMath
 	PLGui
 	PLInput
 	PLRenderer
 	PLMesh
 	PLScene
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_libs(
-		${WIN32_USER32_LIB}
-		${WIN32_ADVAPI32_LIB}
-		${WIN32_WINMM_LIB}
-	)
-endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLENGINE_EXPORTS
+	PLPHYSICS_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -147,11 +178,12 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGraphics PLCore PLMath PLGui PLInput PLRenderer PLMesh PLScene)
 add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -191,4 +223,9 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+)
+
+# Plugin file
+install(FILES ${PL_BIN_DIR}/PLRuntime/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_SHARED}			COMPONENT Runtime
 )

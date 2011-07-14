@@ -1,55 +1,38 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLMesh)
+define_project(PLEngine)
+
+##################################################
+## Prerequisites
+##################################################
+
+# Create 'Plugins/PLEngine' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLEngine)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Creator/MeshCreatorTriangle.cpp
-	src/Creator/MeshCreatorDome.cpp
-	src/Creator/MeshCreatorCappedCylinder.cpp
-	src/Creator/MeshCreatorFlashlight.cpp
-	src/Creator/MeshCreatorPartialDisk.cpp
-	src/Creator/MeshCreatorSphere.cpp
-	src/Creator/MeshCreatorSuperEllipse.cpp
-	src/Creator/MeshCreatorCylinder.cpp
-	src/Creator/MeshCreatorQuad.cpp
-	src/Creator/MeshCreatorDisk.cpp
-	src/Creator/MeshCreatorTorus.cpp
-	src/Creator/MeshCreatorBezierPatch.cpp
-	src/Creator/MeshCreatorTeapot.cpp
-	src/Creator/MeshCreatorCube.cpp
-	src/Creator/MeshCreator.cpp
-	src/Loader/MeshLoader.cpp
-	src/Loader/MeshLoaderPL.cpp
-	src/Loader/MeshLoaderPLXml.cpp
-	src/Loader/MeshFile.cpp
-	src/Loader/SkeletonAniLoader.cpp
-	src/SPMeshPreview.cpp
-	src/MeshMorphTarget.cpp
-	src/JointHandler.cpp
-	src/SkeletonHandler.cpp
-	src/MeshLODLevel.cpp
-	src/Joint.cpp
-	src/MorphTargetAni.cpp
-	src/JointState.cpp
-	src/Weight.cpp
-	src/MeshHandler.cpp
-	src/Geometry.cpp
-	src/MeshOctree.cpp
-	src/VertexWeights.cpp
-	src/MeshAnimationManager.cpp
-	src/MeshAnimationManagerSoftware.cpp
-	src/MeshAnimationManagerHardware.cpp
-	src/JointAni.cpp
-	src/SkeletonManager.cpp
-	src/AnchorPoint.cpp
-	src/Skeleton.cpp
-	src/MeshManager.cpp
-	src/Mesh.cpp
-	src/PLMesh.cpp
+	src/Application/RenderApplication.cpp
+	src/Application/SceneApplication.cpp
+	src/Application/BasicSceneApplication.cpp
+	src/Application/ScriptApplication.cpp
+	src/Config/RendererConfigGroup.cpp
+	src/Gui/WindowConnection.cpp
+	src/Gui/RenderWidget.cpp
+	src/Gui/PreviewWidget.cpp
+	src/Gui/RenderWindow.cpp
+	src/Gui/ModTrapMouse.cpp
+	src/Picking/Picking.cpp
+	src/Picking/PickingResult.cpp
+	src/Picking/MousePicking.cpp
+	src/Tools/Screenshot.cpp
+	src/Tools/SceneRendererTool.cpp
+    src/Tools/Camcorder.cpp
+    src/Tools/SNMPositionKeyframeRecord.cpp
+    src/Tools/SNMRotationKeyframeRecord.cpp
+	src/PLEngine.cpp
 )
 
 ##################################################
@@ -59,9 +42,13 @@ add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGui/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLInput/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
 )
 
 ##################################################
@@ -77,16 +64,30 @@ add_link_directories(
 add_libs(
 	PLGeneral
 	PLCore
-	PLGraphics
 	PLMath
+	PLGraphics
+	PLGui
+	PLInput
 	PLRenderer
+	PLMesh
+	PLScene
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_libs(
+		${WIN32_USER32_LIB}
+		${WIN32_ADVAPI32_LIB}
+		${WIN32_WINMM_LIB}
+	)
+endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLMESH_EXPORTS
+	PLENGINE_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -150,7 +151,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLGraphics PLMath PLRenderer)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
 add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

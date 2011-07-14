@@ -87,6 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\PLEngine\PLPhysics\Diary.txt" />
+    <None Include="..\..\PLBase\PLPhysics\Diary.txt" />
   </ItemGroup>
 </Project>
