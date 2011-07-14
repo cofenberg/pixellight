@@ -21,7 +21,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLSound/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLSound/include
 	${FMODEX_INCLUDE_DIRS}
 )
 

@@ -1,128 +1,69 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLGui)
+define_project(PLInput)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Gui/Base/GuiMessage.cpp
-	src/Gui/Base/MessageFilter.cpp
-	src/Gui/Base/MessageFilterRule.cpp
-	src/Gui/Base/MessageFilterDebug.cpp
-	src/Gui/Base/WidgetFunctions.cpp
-	src/Gui/Data/ButtonGroup.cpp
-	src/Gui/Data/DataObject.cpp
-	src/Gui/Data/LayoutHints.cpp
-	src/Gui/Data/GraphicsHint.cpp
-	src/Gui/Data/SizeHint.cpp
-	src/Gui/Resources/Cursor.cpp
-	src/Gui/Resources/Font.cpp
-	src/Gui/Resources/FontInfo.cpp
-	src/Gui/Resources/Graphics.cpp
-	src/Gui/Resources/Image.cpp
-	src/Gui/Resources/Menu.cpp
-	src/Gui/Resources/MenuItem.cpp
-	src/Gui/Resources/MenuSeparator.cpp
-	src/Gui/Resources/Timer.cpp
-	src/Gui/Resources/TimerThread.cpp
-	src/Gui/Gui.cpp
-	src/Gui/Screen.cpp
-	src/Gui/TrayIcon.cpp
-	src/Gui/WidgetHandler.cpp
-	src/Gui/ClipBoard.cpp
-	src/Gui/FontManager.cpp
-	src/Gui/CursorManager.cpp
-	src/Backend/GraphicsImpl.cpp
-	src/Backend/GuiImpl.cpp
-	src/Backend/WidgetImpl.cpp
-	src/Backend/ImageImpl.cpp
-	src/Backend/FontImpl.cpp
-	src/Backend/CursorImpl.cpp
-	src/Backend/TrayIconImpl.cpp
-	src/Backend/ClipBoardImpl.cpp
-	src/Widgets/Layout/Box.cpp
-	src/Widgets/Base/AbstractButton.cpp
-	src/Widgets/Base/AbstractMenu.cpp
-	src/Widgets/Base/AbstractSlider.cpp
-	src/Widgets/Base/AbstractToggleButton.cpp
-	src/Widgets/Base/AbstractTooltip.cpp
-	src/Widgets/Containers/ContainerWidget.cpp
-	src/Widgets/Containers/ScrollWidget.cpp
-#	src/Widgets/Containers/WindowContainer.cpp
-#	src/Widgets/Containers/TabContainer.cpp
-	src/Widgets/Containers/Border.cpp
-	src/Widgets/Containers/Panel.cpp
-	src/Widgets/Containers/Splitter.cpp
-	src/Widgets/Controls/Label.cpp
-	src/Widgets/Controls/Bitmap.cpp
-	src/Widgets/Controls/Button.cpp
-	src/Widgets/Controls/BitmapButton.cpp
-	src/Widgets/Controls/ToggleButton.cpp
-	src/Widgets/Controls/BitmapToggleButton.cpp
-	src/Widgets/Controls/SystemButton.cpp
-	src/Widgets/Controls/CheckBox.cpp
-	src/Widgets/Controls/RadioButton.cpp
-#	src/Widgets/Controls/TabBar.cpp
-#	src/Widgets/Controls/TabBarEntry.cpp
-#	src/Widgets/Controls/TabBarButton.cpp
-	src/Widgets/Controls/MenuBar.cpp
-	src/Widgets/Controls/Slider.cpp
-	src/Widgets/Controls/ScrollBar.cpp
-	src/Widgets/Windows/Window.cpp
-#	src/Widgets/Windows/AppWindow.cpp
-#	src/Widgets/Windows/Dialog.cpp
-#	src/Widgets/Windows/MessageBox.cpp
-	src/Widgets/Popups/PopupMenu.cpp
-	src/Widgets/Popups/Tooltip.cpp
-	src/Widgets/Slim/SlimEntry.cpp
-	src/Widgets/Widget.cpp
-	src/Modifiers/Modifier.cpp
-	src/Modifiers/ModClose.cpp
-	src/Modifiers/ModFullscreen.cpp
-	src/Modifiers/ModBlend.cpp
-	src/Modifiers/ModTimeout.cpp
-	src/Modifiers/ModTooltip.cpp
-	src/Modifiers/ModSnap.cpp
-	src/Layout/Layout.cpp
-	src/Layout/LayoutBox.cpp
-	src/Themes/Theme.cpp
-	src/Themes/ThemeDesktop.cpp
-	src/Themes/ThemeIngame.cpp
-	src/Application/GuiApplication.cpp
-	src/PLGui.cpp
+	src/PLInput.cpp
+	src/Input/InputManager.cpp
+	src/Input/Controller.cpp
+	src/Input/Devices/Device.cpp
+	src/Input/Devices/Mouse.cpp
+	src/Input/Devices/Keyboard.cpp
+	src/Input/Devices/Joystick.cpp
+	src/Input/Devices/SpaceMouse.cpp
+	src/Input/Devices/WiiMote.cpp
+	src/Input/Controls/Control.cpp
+	src/Input/Controls/Button.cpp
+	src/Input/Controls/Axis.cpp
+	src/Input/Controls/Effect.cpp
+	src/Input/Controls/LED.cpp
+	src/Input/Connection/Connection.cpp
+	src/Input/Virtual/VirtualController.cpp
+	src/Input/Virtual/VirtualStandardController.cpp
+	src/Backend/DeviceImpl.cpp
+	src/Backend/UpdateDevice.cpp
+	src/Backend/ConnectionDevice.cpp
+	src/Backend/Provider.cpp
+	src/Backend/HID/HIDProvider.cpp
+	src/Backend/HID/HID.cpp
+	src/Backend/HID/HIDImpl.cpp
+	src/Backend/HID/HIDDevice.cpp
+	src/Backend/HID/HIDCapability.cpp
+	src/Backend/Bluetooth/BluetoothProvider.cpp
+	src/Backend/Bluetooth/Bluetooth.cpp
+	src/Backend/Bluetooth/BTImpl.cpp
+	src/Backend/Bluetooth/BTDevice.cpp
 )
 if(WIN32)
 	##################################################
 	## Win32
 	##################################################
 	add_sources(
-		src/Backend/Windows/GraphicsWindows.cpp
-		src/Backend/Windows/GuiWindows.cpp
-		src/Backend/Windows/ImageWindows.cpp
-		src/Backend/Windows/FontWindows.cpp
-		src/Backend/Windows/ToolsWindows.cpp
-		src/Backend/Windows/WidgetWindows.cpp
-		src/Backend/Windows/CursorWindows.cpp
-		src/Backend/Windows/TrayIconWindows.cpp
-		src/Backend/Windows/ClipBoardWindows.cpp
+		src/Backend/Windows/LegacyJoystickProvider.cpp
+		src/Backend/Windows/LegacyJoystickDevice.cpp
+		src/Backend/Windows/RawInputProvider.cpp
+		src/Backend/Windows/RawInputDevice.cpp
+		src/Backend/Windows/RawInput.cpp
+		src/Backend/HID/HIDWindows.cpp
+		src/Backend/HID/HIDDeviceWindows.cpp
 	)
 elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
 	add_sources(
-		src/Backend/Linux/GraphicsLinux.cpp
-		src/Backend/Linux/GuiLinux.cpp
-		src/Backend/Linux/ImageLinux.cpp
-		src/Backend/Linux/FontLinux.cpp
-		src/Backend/Linux/ToolsLinux.cpp
-		src/Backend/Linux/WidgetLinux.cpp
-		src/Backend/Linux/CursorLinux.cpp
-		src/Backend/Linux/TrayIconLinux.cpp
-		src/Backend/Linux/TrayIconWidgetLinux.cpp
-		src/Backend/Linux/ClipBoardLinux.cpp
+		src/Backend/Linux/LinuxProvider.cpp
+		src/Backend/Linux/LinuxKeyboardDevice.cpp
+		src/Backend/Linux/LinuxMouseDevice.cpp
+		src/Backend/Linux/LinuxEventDevice.cpp
+		src/Backend/HID/HIDLinux.cpp
+		src/Backend/HID/HIDDeviceLinux.cpp
+		src/Backend/Bluetooth/BTLinux.cpp
+		src/Backend/Bluetooth/BTDeviceLinux.cpp
 	)
 endif()
 
@@ -134,8 +75,16 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 )
+if(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_include_directories(
+		/usr/include/dbus-1.0
+		/usr/lib/dbus-1.0/include
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -151,15 +100,15 @@ add_libs(
 	PLGeneral
 	PLCore
 	PLMath
-	PLGraphics
 )
 if(WIN32)
 	##################################################
 	## Win32
 	##################################################
 	add_libs(
-		${WIN32_STANDARD_LIBS}
-		${WIN32_GDI_LIBS}
+		${WIN32_USER32_LIB}
+		${WIN32_WINMM_LIB}
+		${WIN32_SETUPAPI_LIB}
 	)
 elseif(LINUX)
 	##################################################
@@ -167,6 +116,7 @@ elseif(LINUX)
 	##################################################
 	add_libs(
 		${LINUX_X11_LIBS}
+		dbus-1
 	)
 endif()
 
@@ -174,7 +124,7 @@ endif()
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLGUI_EXPORTS
+	PLINPUT_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -238,8 +188,8 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLMath PLGraphics)
-add_dependencies(Gui	                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath)
+add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build

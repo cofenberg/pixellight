@@ -62,7 +62,7 @@ add_include_directories(
 	${CMAKE_BINARY_DIR}
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include/
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include/
-	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include/
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include/
 	${MAX2008_INCLUDE_DIRS}
 )
 

@@ -66,6 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\PLEngine\PLSound\Diary.txt" />
+    <None Include="..\..\PLBase\PLSound\Diary.txt" />
   </ItemGroup>
 </Project>

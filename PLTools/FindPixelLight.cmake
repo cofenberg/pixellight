@@ -120,7 +120,7 @@ _pixellight_find_lib(PL_PLGUI PLGui/PLGui.h PLGui PLGui/PLGui/include)
 # PLEngine
 
 # PLEngine
-_pixellight_find_lib(PL_PLENGINE PLEngine/PLEngine.h PLEngine PLEngine/PLEngine/include)
+_pixellight_find_lib(PL_PLENGINE PLEngine/PLEngine.h PLEngine PLBase/PLEngine/include)
 #message("PLEngine include: ${PL_PLENGINE_INCLUDE_DIR}")
 #message("PLEngine library: ${PL_PLENGINE_LIBRARY}")
 
@@ -130,32 +130,32 @@ _pixellight_find_lib(PL_PLCOMPOSITING PLCompositing/PLCompositing.h PLCompositin
 #message("PLCompositing library: ${PL_PLCOMPOSITING_LIBRARY}")
 
 # PLInput
-_pixellight_find_lib(PL_PLINPUT PLInput/PLInput.h PLInput PLEngine/PLInput/include)
+_pixellight_find_lib(PL_PLINPUT PLInput/PLInput.h PLInput PLBase/PLInput/include)
 #message("PLInput include: ${PL_PLINPUT_INCLUDE_DIR}")
 #message("PLInput library: ${PL_PLINPUT_LIBRARY}")
 
 # PLMesh
-_pixellight_find_lib(PL_PLMESH PLMesh/PLMesh.h PLMesh PLEngine/PLMesh/include)
+_pixellight_find_lib(PL_PLMESH PLMesh/PLMesh.h PLMesh PLBase/PLMesh/include)
 #message("PLMesh include: ${PL_PLMESH_INCLUDE_DIR}")
 #message("PLMesh library: ${PL_PLMESH_LIBRARY}")
 
 # PLPhysics
-_pixellight_find_lib(PL_PLPHYSICS PLPhysics/PLPhysics.h PLPhysics PLEngine/PLPhysics/include)
+_pixellight_find_lib(PL_PLPHYSICS PLPhysics/PLPhysics.h PLPhysics PLBase/PLPhysics/include)
 #message("PLPhysics include: ${PL_PLPHYSICS_INCLUDE_DIR}")
 #message("PLPhysics library: ${PL_PLPHYSICS_LIBRARY}")
 
 # PLRenderer
-_pixellight_find_lib(PL_PLRENDERER PLRenderer/PLRenderer.h PLRenderer PLEngine/PLRenderer/include)
+_pixellight_find_lib(PL_PLRENDERER PLRenderer/PLRenderer.h PLRenderer PLBase/PLRenderer/include)
 #message("PLRenderer include: ${PL_PLRENDERER_INCLUDE_DIR}")
 #message("PLRenderer library: ${PL_PLRENDERER_LIBRARY}")
 
 # PLScene
-_pixellight_find_lib(PL_PLSCENE PLScene/PLScene.h PLScene PLEngine/PLScene/include)
+_pixellight_find_lib(PL_PLSCENE PLScene/PLScene.h PLScene PLBase/PLScene/include)
 #message("PLScene include: ${PL_PLSCENE_INCLUDE_DIR}")
 #message("PLScene library: ${PL_PLSCENE_LIBRARY}")
 
 # PLSound
-_pixellight_find_lib(PL_PLSOUND PLSound/PLSound.h PLSound PLEngine/PLSound/include)
+_pixellight_find_lib(PL_PLSOUND PLSound/PLSound.h PLSound PLBase/PLSound/include)
 #message("PLSound include: ${PL_PLSOUND_INCLUDE_DIR}")
 #message("PLSound library: ${PL_PLSOUND_LIBRARY}")
 

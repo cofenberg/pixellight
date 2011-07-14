@@ -4,6 +4,17 @@
 
 
 
+>> 14.07.2011
+[CO]
+- Moved PLGui, PLInput, PLRenderer, PLMesh, PLScene, PLPhysics, PLSound and PLEngine into the PLBase directory
+  -> Until now, the PixelLight base projects were split up into the three different directories "PLBase", "PLGui" and "PLEngine" and it
+     was not always clear to me why e.g. "PLGraphics" is a "PLBase"-project while "PLInput" or "PLRenderer" is a "PLEngine"-project altought they
+     are basic stuff as well. To simplify the structure of the Git repository, I moved the "PLGui"- and "PLEngine"-projects into the "PLBase"-directory
+	 because those project indeed form together the base of PixelLight (no change within the resulting build SDK). Everything else is just optional
+	 pluggin-in and therefore within the "PLPlugin"-directory. Those two distinctions should do the trick.
+
+
+
 >> 12.07.2011
 [CO]
 - Moved PLInstall into the tools directory

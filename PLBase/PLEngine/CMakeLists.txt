@@ -1,71 +1,39 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLInput)
+define_project(PLEngine)
+
+##################################################
+## Prerequisites
+##################################################
+
+# Create 'Plugins/PLEngine' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLEngine)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/PLInput.cpp
-	src/Input/InputManager.cpp
-	src/Input/Controller.cpp
-	src/Input/Devices/Device.cpp
-	src/Input/Devices/Mouse.cpp
-	src/Input/Devices/Keyboard.cpp
-	src/Input/Devices/Joystick.cpp
-	src/Input/Devices/SpaceMouse.cpp
-	src/Input/Devices/WiiMote.cpp
-	src/Input/Controls/Control.cpp
-	src/Input/Controls/Button.cpp
-	src/Input/Controls/Axis.cpp
-	src/Input/Controls/Effect.cpp
-	src/Input/Controls/LED.cpp
-	src/Input/Connection/Connection.cpp
-	src/Input/Virtual/VirtualController.cpp
-	src/Input/Virtual/VirtualStandardController.cpp
-	src/Backend/DeviceImpl.cpp
-	src/Backend/UpdateDevice.cpp
-	src/Backend/ConnectionDevice.cpp
-	src/Backend/Provider.cpp
-	src/Backend/HID/HIDProvider.cpp
-	src/Backend/HID/HID.cpp
-	src/Backend/HID/HIDImpl.cpp
-	src/Backend/HID/HIDDevice.cpp
-	src/Backend/HID/HIDCapability.cpp
-	src/Backend/Bluetooth/BluetoothProvider.cpp
-	src/Backend/Bluetooth/Bluetooth.cpp
-	src/Backend/Bluetooth/BTImpl.cpp
-	src/Backend/Bluetooth/BTDevice.cpp
+	src/Application/RenderApplication.cpp
+	src/Application/SceneApplication.cpp
+	src/Application/BasicSceneApplication.cpp
+	src/Application/ScriptApplication.cpp
+	src/Config/RendererConfigGroup.cpp
+	src/Gui/WindowConnection.cpp
+	src/Gui/RenderWidget.cpp
+	src/Gui/PreviewWidget.cpp
+	src/Gui/RenderWindow.cpp
+	src/Gui/ModTrapMouse.cpp
+	src/Picking/Picking.cpp
+	src/Picking/PickingResult.cpp
+	src/Picking/MousePicking.cpp
+	src/Tools/Screenshot.cpp
+	src/Tools/SceneRendererTool.cpp
+    src/Tools/Camcorder.cpp
+    src/Tools/SNMPositionKeyframeRecord.cpp
+    src/Tools/SNMRotationKeyframeRecord.cpp
+	src/PLEngine.cpp
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_sources(
-		src/Backend/Windows/LegacyJoystickProvider.cpp
-		src/Backend/Windows/LegacyJoystickDevice.cpp
-		src/Backend/Windows/RawInputProvider.cpp
-		src/Backend/Windows/RawInputDevice.cpp
-		src/Backend/Windows/RawInput.cpp
-		src/Backend/HID/HIDWindows.cpp
-		src/Backend/HID/HIDDeviceWindows.cpp
-	)
-elseif(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_sources(
-		src/Backend/Linux/LinuxProvider.cpp
-		src/Backend/Linux/LinuxKeyboardDevice.cpp
-		src/Backend/Linux/LinuxMouseDevice.cpp
-		src/Backend/Linux/LinuxEventDevice.cpp
-		src/Backend/HID/HIDLinux.cpp
-		src/Backend/HID/HIDDeviceLinux.cpp
-		src/Backend/Bluetooth/BTLinux.cpp
-		src/Backend/Bluetooth/BTDeviceLinux.cpp
-	)
-endif()
 
 ##################################################
 ## Include directories
@@ -75,16 +43,13 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGui/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLInput/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
 )
-if(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_include_directories(
-		/usr/include/dbus-1.0
-		/usr/lib/dbus-1.0/include
-	)
-endif()
 
 ##################################################
 ## Library directories
@@ -100,6 +65,12 @@ add_libs(
 	PLGeneral
 	PLCore
 	PLMath
+	PLGraphics
+	PLGui
+	PLInput
+	PLRenderer
+	PLMesh
+	PLScene
 )
 if(WIN32)
 	##################################################
@@ -107,16 +78,8 @@ if(WIN32)
 	##################################################
 	add_libs(
 		${WIN32_USER32_LIB}
+		${WIN32_ADVAPI32_LIB}
 		${WIN32_WINMM_LIB}
-		${WIN32_SETUPAPI_LIB}
-	)
-elseif(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_libs(
-		${LINUX_X11_LIBS}
-		dbus-1
 	)
 endif()
 
@@ -124,7 +87,7 @@ endif()
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLINPUT_EXPORTS
+	PLENGINE_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -188,8 +151,8 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath)
-add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build

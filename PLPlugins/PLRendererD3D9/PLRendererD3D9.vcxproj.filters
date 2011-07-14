@@ -99,6 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
+    <None Include="..\..\PLBase\PLRenderer\Diary.txt" />
   </ItemGroup>
 </Project>

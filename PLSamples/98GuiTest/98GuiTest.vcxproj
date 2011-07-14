@@ -54,7 +54,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src/;../../PLBase/PLGeneral/include;../../PLBase/PLMath/include;../../PLBase/PLGraphics/include;../../PLBase/PLCore/include;../../PLGui/PLGui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/;../../PLBase/PLGeneral/include;../../PLBase/PLMath/include;../../PLBase/PLGraphics/include;../../PLBase/PLCore/include;../../PLBase/PLGui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -81,7 +81,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>src/;../../PLBase/PLGeneral/include;../../PLBase/PLMath/include;../../PLBase/PLGraphics/include;../../PLBase/PLCore/include;../../PLGui/PLGui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src/;../../PLBase/PLGeneral/include;../../PLBase/PLMath/include;../../PLBase/PLGraphics/include;../../PLBase/PLCore/include;../../PLBase/PLGui/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>false</FunctionLevelLinking>
@@ -178,7 +178,7 @@
       <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLGui\PLGui\PLGui.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLGui\PLGui.vcxproj">
       <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CC92EBB3-44C5-429C-992C-CF71C8C69D29}</ProjectGuid>
+    <ProjectGuid>{4156A4DD-014C-4150-9330-F975DCE3BFB4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -88,8 +88,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -101,25 +101,24 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngineD.dll</OutputFile>
+      <OutputFile>$(OutDir)PLPhysicsD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLEngineD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLPhysicsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngineD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLEngineD.dll ..\..\Bin\PLRuntime\
-copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
-</Command>
+      <Command>copy build\debug\PLPhysicsD.dll ..\..\Bin\PLRuntime\
+copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,8 +127,8 @@ copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -141,24 +140,23 @@ copy build\debug\PLEngineD.lib ..\..\Bin\Lib\
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngineD64.dll</OutputFile>
+      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysicsD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLEngineD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLPhysicsD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngineD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysicsD64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLEngineD64.dll ..\..\Bin\PLRuntime\
-copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
-</Command>
+      <Command>copy build\debug64\PLPhysicsD64.dll ..\..\Bin\PLRuntime\
+copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -169,8 +167,8 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -190,7 +188,7 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngine.dll</OutputFile>
+      <OutputFile>$(OutDir)PLPhysics.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -199,13 +197,13 @@ copy build\debug64\PLEngineD64.lib ..\..\Bin\Lib\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLEngine.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysics.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLEngine.dll ..\..\Bin\PLRuntime\
-copy build\release\PLEngine.lib ..\..\Bin\Lib\
-</Command>
+      <Command>copy build\release\PLPhysics.dll ..\..\Bin\PLRuntime\
+copy build\release\PLPhysics.lib ..\..\Bin\Lib\
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -218,8 +216,8 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLGui/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -234,8 +232,8 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLEngine64.dll</OutputFile>
+      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLPhysics64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -243,58 +241,142 @@ copy build\release\PLEngine.lib ..\..\Bin\Lib\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLEngine64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLPhysics64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLEngine64.dll ..\..\Bin\PLRuntime\
-copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
-</Command>
+      <Command>copy build\release64\PLPhysics64.dll ..\..\Bin\PLRuntime\
+copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLRuntime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application\BasicSceneApplication.cpp" />
-    <ClCompile Include="src\Application\RenderApplication.cpp" />
-    <ClCompile Include="src\Application\SceneApplication.cpp" />
-    <ClCompile Include="src\Application\ScriptApplication.cpp" />
-    <ClCompile Include="src\PLEngine.cpp" />
-    <ClCompile Include="src\Picking\MousePicking.cpp" />
-    <ClCompile Include="src\Picking\Picking.cpp" />
-    <ClCompile Include="src\Picking\PickingResult.cpp" />
-    <ClCompile Include="src\Gui\ModTrapMouse.cpp" />
-    <ClCompile Include="src\Gui\PreviewWidget.cpp" />
-    <ClCompile Include="src\Gui\RenderWidget.cpp" />
-    <ClCompile Include="src\Gui\RenderWindow.cpp" />
-    <ClCompile Include="src\Gui\WindowConnection.cpp" />
-    <ClCompile Include="src\Config\RendererConfigGroup.cpp" />
-    <ClCompile Include="src\Tools\Camcorder.cpp" />
-    <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
-    <ClCompile Include="src\Tools\Screenshot.cpp" />
-    <ClCompile Include="src\Tools\SNMPositionKeyframeRecord.cpp" />
-    <ClCompile Include="src\Tools\SNMRotationKeyframeRecord.cpp" />
+    <ClCompile Include="src\Body.cpp" />
+    <ClCompile Include="src\BodyBox.cpp" />
+    <ClCompile Include="src\BodyCapsule.cpp" />
+    <ClCompile Include="src\BodyChamferCylinder.cpp" />
+    <ClCompile Include="src\BodyCone.cpp" />
+    <ClCompile Include="src\BodyConvexHull.cpp" />
+    <ClCompile Include="src\BodyCylinder.cpp" />
+    <ClCompile Include="src\BodyEllipsoid.cpp" />
+    <ClCompile Include="src\BodyMesh.cpp" />
+    <ClCompile Include="src\BodySphere.cpp" />
+    <ClCompile Include="src\BodyTerrain.cpp" />
+    <ClCompile Include="src\ContactInformation.cpp" />
+    <ClCompile Include="src\Element.cpp" />
+    <ClCompile Include="src\ElementHandler.cpp" />
+    <ClCompile Include="src\Joint.cpp" />
+    <ClCompile Include="src\JointBall.cpp" />
+    <ClCompile Include="src\JointCorkscrew.cpp" />
+    <ClCompile Include="src\JointHinge.cpp" />
+    <ClCompile Include="src\JointSlider.cpp" />
+    <ClCompile Include="src\JointUniversal.cpp" />
+    <ClCompile Include="src\JointUpVector.cpp" />
+    <ClCompile Include="src\PLPhysics.cpp" />
+    <ClCompile Include="src\Sensor.cpp" />
+    <ClCompile Include="src\SensorAABoundingBox.cpp" />
+    <ClCompile Include="src\SensorRaycast.cpp" />
+    <ClCompile Include="src\World.cpp" />
+    <ClCompile Include="src\SceneNodes\PhysicsMouseInteraction.cpp" />
+    <ClCompile Include="src\SceneNodes\RagdollBody.cpp" />
+    <ClCompile Include="src\SceneNodes\RagdollJoint.cpp" />
+    <ClCompile Include="src\SceneNodes\RagdollLoader.cpp" />
+    <ClCompile Include="src\SceneNodes\RagdollLoaderPL.cpp" />
+    <ClCompile Include="src\SceneNodes\SCPhysicsWorld.cpp" />
+    <ClCompile Include="src\SceneNodes\SNPhysicsMouseInteraction.cpp" />
+    <ClCompile Include="src\SceneNodes\SNRagdoll.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\PhysicsCharacterController.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysics.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBody.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyBox.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyCapsule.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyChamferCylinder.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyCone.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyConvexHull.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyCylinder.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyEllipsoid.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyMesh.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodySphere.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyTerrain.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacter.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacterController.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCorrectDistance.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsForce.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJoint.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointBall.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointCorkscrew.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointHinge.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointSlider.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointUniversal.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJointUpVector.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsTorque.cpp" />
+    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsUpdateVelocity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\RenderApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\SceneApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\ScriptApplication.h" />
-    <ClInclude Include="include\PLEngine\PLEngine.h" />
-    <ClInclude Include="include\PLEngine\PLEngineLinux.h" />
-    <ClInclude Include="include\PLEngine\PLEngineWindows.h" />
-    <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />
-    <ClInclude Include="include\PLEngine\Picking\Picking.h" />
-    <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />
-    <ClInclude Include="include\PLEngine\Gui\ModTrapMouse.h" />
-    <ClInclude Include="include\PLEngine\Gui\PreviewWidget.h" />
-    <ClInclude Include="include\PLEngine\Gui\RenderWidget.h" />
-    <ClInclude Include="include\PLEngine\Gui\RenderWindow.h" />
-    <ClInclude Include="include\PLEngine\Gui\WindowConnection.h" />
-    <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h" />
-    <ClInclude Include="include\PLEngine\Tools\Camcorder.h" />
-    <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
-    <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />
-    <ClInclude Include="include\PLEngine\Tools\SNMPositionKeyframeRecord.h" />
-    <ClInclude Include="include\PLEngine\Tools\SNMRotationKeyframeRecord.h" />
+    <ClInclude Include="include\PLPhysics\Body.h" />
+    <ClInclude Include="include\PLPhysics\BodyBox.h" />
+    <ClInclude Include="include\PLPhysics\BodyCapsule.h" />
+    <ClInclude Include="include\PLPhysics\BodyChamferCylinder.h" />
+    <ClInclude Include="include\PLPhysics\BodyCone.h" />
+    <ClInclude Include="include\PLPhysics\BodyConvexHull.h" />
+    <ClInclude Include="include\PLPhysics\BodyCylinder.h" />
+    <ClInclude Include="include\PLPhysics\BodyEllipsoid.h" />
+    <ClInclude Include="include\PLPhysics\BodyImpl.h" />
+    <ClInclude Include="include\PLPhysics\BodyMesh.h" />
+    <ClInclude Include="include\PLPhysics\BodySphere.h" />
+    <ClInclude Include="include\PLPhysics\BodyTerrain.h" />
+    <ClInclude Include="include\PLPhysics\ContactInformation.h" />
+    <ClInclude Include="include\PLPhysics\Element.h" />
+    <ClInclude Include="include\PLPhysics\ElementHandler.h" />
+    <ClInclude Include="include\PLPhysics\Joint.h" />
+    <ClInclude Include="include\PLPhysics\JointBall.h" />
+    <ClInclude Include="include\PLPhysics\JointCorkscrew.h" />
+    <ClInclude Include="include\PLPhysics\JointHinge.h" />
+    <ClInclude Include="include\PLPhysics\JointImpl.h" />
+    <ClInclude Include="include\PLPhysics\JointSlider.h" />
+    <ClInclude Include="include\PLPhysics\JointUniversal.h" />
+    <ClInclude Include="include\PLPhysics\JointUpVector.h" />
+    <ClInclude Include="include\PLPhysics\PLPhysics.h" />
+    <ClInclude Include="include\PLPhysics\PLPhysicsLinux.h" />
+    <ClInclude Include="include\PLPhysics\PLPhysicsWindows.h" />
+    <ClInclude Include="include\PLPhysics\Sensor.h" />
+    <ClInclude Include="include\PLPhysics\SensorAABoundingBox.h" />
+    <ClInclude Include="include\PLPhysics\SensorRaycast.h" />
+    <ClInclude Include="include\PLPhysics\World.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\PhysicsMouseInteraction.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\RagdollBody.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\RagdollJoint.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\RagdollLoader.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\RagdollLoaderPL.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\SCPhysicsWorld.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\SNPhysicsMouseInteraction.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodes\SNRagdoll.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\PhysicsCharacterController.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysics.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBody.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyBox.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyCapsule.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyChamferCylinder.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyCone.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyConvexHull.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyCylinder.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyEllipsoid.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyMesh.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodySphere.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyTerrain.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacter.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacterController.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCorrectDistance.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsForce.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJoint.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointBall.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointCorkscrew.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointHinge.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointSlider.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointUniversal.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJointUpVector.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsTorque.h" />
+    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsUpdateVelocity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -315,10 +397,6 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     </ProjectReference>
     <ProjectReference Include="..\..\PLBase\PLMath\PLMath.vcxproj">
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\PLGui\PLGui\PLGui.vcxproj">
-      <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PLInput\PLInput.vcxproj">

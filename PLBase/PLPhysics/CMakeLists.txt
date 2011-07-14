@@ -1,55 +1,79 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLMesh)
+define_project(PLPhysics)
+
+##################################################
+## Prerequisites
+##################################################
+
+# Create 'Plugins/PLScene' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins/PLPhysics)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Creator/MeshCreatorTriangle.cpp
-	src/Creator/MeshCreatorDome.cpp
-	src/Creator/MeshCreatorCappedCylinder.cpp
-	src/Creator/MeshCreatorFlashlight.cpp
-	src/Creator/MeshCreatorPartialDisk.cpp
-	src/Creator/MeshCreatorSphere.cpp
-	src/Creator/MeshCreatorSuperEllipse.cpp
-	src/Creator/MeshCreatorCylinder.cpp
-	src/Creator/MeshCreatorQuad.cpp
-	src/Creator/MeshCreatorDisk.cpp
-	src/Creator/MeshCreatorTorus.cpp
-	src/Creator/MeshCreatorBezierPatch.cpp
-	src/Creator/MeshCreatorTeapot.cpp
-	src/Creator/MeshCreatorCube.cpp
-	src/Creator/MeshCreator.cpp
-	src/Loader/MeshLoader.cpp
-	src/Loader/MeshLoaderPL.cpp
-	src/Loader/MeshLoaderPLXml.cpp
-	src/Loader/MeshFile.cpp
-	src/Loader/SkeletonAniLoader.cpp
-	src/SPMeshPreview.cpp
-	src/MeshMorphTarget.cpp
-	src/JointHandler.cpp
-	src/SkeletonHandler.cpp
-	src/MeshLODLevel.cpp
+	src/SceneNodes/RagdollLoaderPL.cpp
+	src/SceneNodes/RagdollLoader.cpp
+	src/SceneNodes/SCPhysicsWorld.cpp
+	src/SceneNodes/RagdollBody.cpp
+	src/SceneNodes/SNRagdoll.cpp
+	src/SceneNodes/RagdollJoint.cpp
+	src/SceneNodes/PhysicsMouseInteraction.cpp
+	src/SceneNodes/SNPhysicsMouseInteraction.cpp
+	src/SceneNodeModifiers/SNMPhysics.cpp
+	src/SceneNodeModifiers/SNMPhysicsBody.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyBox.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCapsule.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyChamferCylinder.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCone.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyConvexHull.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyCylinder.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyEllipsoid.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyMesh.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodySphere.cpp
+	src/SceneNodeModifiers/SNMPhysicsBodyTerrain.cpp
+	src/SceneNodeModifiers/SNMPhysicsCharacter.cpp
+	src/SceneNodeModifiers/SNMPhysicsCharacterController.cpp
+	src/SceneNodeModifiers/PhysicsCharacterController.cpp
+	src/SceneNodeModifiers/SNMPhysicsCorrectDistance.cpp
+	src/SceneNodeModifiers/SNMPhysicsForce.cpp
+	src/SceneNodeModifiers/SNMPhysicsJoint.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointBall.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointCorkscrew.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointHinge.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointSlider.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointUniversal.cpp
+	src/SceneNodeModifiers/SNMPhysicsJointUpVector.cpp
+	src/SceneNodeModifiers/SNMPhysicsTorque.cpp
+	src/SceneNodeModifiers/SNMPhysicsUpdateVelocity.cpp
+	src/Sensor.cpp
+	src/SensorRaycast.cpp
+	src/SensorAABoundingBox.cpp
+	src/JointHinge.cpp
+	src/BodyChamferCylinder.cpp
+	src/BodyEllipsoid.cpp
+	src/BodyCone.cpp
+	src/BodySphere.cpp
+	src/BodyConvexHull.cpp
+	src/JointCorkscrew.cpp
+	src/BodyBox.cpp
+	src/BodyMesh.cpp
+	src/BodyCapsule.cpp
+	src/JointUpVector.cpp
+	src/JointUniversal.cpp
+	src/ElementHandler.cpp
+	src/JointBall.cpp
+	src/PLPhysics.cpp
+	src/BodyTerrain.cpp
 	src/Joint.cpp
-	src/MorphTargetAni.cpp
-	src/JointState.cpp
-	src/Weight.cpp
-	src/MeshHandler.cpp
-	src/Geometry.cpp
-	src/MeshOctree.cpp
-	src/VertexWeights.cpp
-	src/MeshAnimationManager.cpp
-	src/MeshAnimationManagerSoftware.cpp
-	src/MeshAnimationManagerHardware.cpp
-	src/JointAni.cpp
-	src/SkeletonManager.cpp
-	src/AnchorPoint.cpp
-	src/Skeleton.cpp
-	src/MeshManager.cpp
-	src/Mesh.cpp
-	src/PLMesh.cpp
+	src/JointSlider.cpp
+	src/BodyCylinder.cpp
+	src/World.cpp
+	src/Element.cpp
+	src/Body.cpp
+	src/ContactInformation.cpp
 )
 
 ##################################################
@@ -58,10 +82,14 @@ add_sources(
 add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLGui/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLInput/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
 )
 
 ##################################################
@@ -79,14 +107,18 @@ add_libs(
 	PLCore
 	PLGraphics
 	PLMath
+	PLGui
+	PLInput
 	PLRenderer
+	PLMesh
+	PLScene
 )
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLMESH_EXPORTS
+	PLPHYSICS_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -146,12 +178,13 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLRuntime)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLGraphics PLMath PLRenderer)
-add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGraphics PLCore PLMath PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(Base                      	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -190,4 +223,9 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+)
+
+# Plugin file
+install(FILES ${PL_BIN_DIR}/PLRuntime/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_SHARED}			COMPONENT Runtime
 )

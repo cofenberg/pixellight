@@ -42,10 +42,10 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLMesh/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLScene/include
-	${CMAKE_SOURCE_DIR}/PLEngine/PLPhysics/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLMesh/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLScene/include
+	${CMAKE_SOURCE_DIR}/PLBase/PLPhysics/include
 	${NEWTON_INCLUDE_DIRS}
 )
 

@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_32/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_32/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -131,7 +131,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_64/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_64/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -172,7 +172,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_32/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_32/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -225,7 +225,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLEngine/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_64/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../PLBase/PLGeneral/include/;../../PLBase/PLCore/include/;../../PLBase/PLMath/include/;../../PLBase/PLGraphics/include/;../../PLBase/PLRenderer/include/;../PLRendererOpenGL/include/;../../External/_Windows_x86_64/Cg/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -287,7 +287,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
     <ClInclude Include="include\PLRendererOpenGLCg\VertexShaderCg.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\PLEngine\PLRenderer\Diary.txt" />
+    <None Include="..\..\PLBase\PLRenderer\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -311,7 +311,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\PLRuntime\Plugins\
       <Project>{6095b420-b473-42e4-a3fd-c95a9652b680}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\..\PLEngine\PLRenderer\PLRenderer.vcxproj">
+    <ProjectReference Include="..\..\PLBase\PLRenderer\PLRenderer.vcxproj">
       <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
