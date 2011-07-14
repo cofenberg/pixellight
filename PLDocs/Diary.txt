@@ -1,3 +1,9 @@
+>> 14.07.2011
+[CO]
+- Renamed the "UML"-directory into the more general "Diagrams"
+
+
+
 >> 23.06.2011
 [CO]
 - Worked on the script documentation
