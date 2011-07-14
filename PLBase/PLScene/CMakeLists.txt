@@ -272,7 +272,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGraphics PLCore PLMath PLGui PLInput PLRenderer PLMesh)
-add_dependencies(Engine                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
