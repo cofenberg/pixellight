@@ -1,4 +1,10 @@
-﻿/*********************************************************\
+﻿>> 15.07.2011
+[CO]
+- Moved "98GuiTest", "99Test" and "99TestPlugin" from the "PLSamples"-directory into the "PLTests"-directory
+
+
+
+/*********************************************************\
  *  The entries below are in German only
 \*********************************************************/
 

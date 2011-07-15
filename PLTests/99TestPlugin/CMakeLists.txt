@@ -1,27 +1,31 @@
 ##################################################
 ## Project
 ##################################################
-define_project(99Test NOSUFFIX)
+define_project(99TestPlugin)
+
+##################################################
+## Prerequisites
+##################################################
+
+# Create Plugins directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLTests/Plugins)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Main.cpp
-	src/Application.cpp
-	src/RttiObject.cpp
-	src/TestObject.cpp
-	src/TrollType.cpp
+	src/99TestPlugin.cpp
 	src/TestClass1.cpp
+	src/TestClass2.cpp
+	src/TestClass3.cpp
 )
 
 ##################################################
 ## Include directories
 ##################################################
 add_include_directories(
+	include
 	${CMAKE_SOURCE_DIR}/PLBase/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLMath/include
-	${CMAKE_SOURCE_DIR}/PLBase/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/PLBase/PLCore/include
 )
 
@@ -37,14 +41,15 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLGeneral
-	PLMath
-	PLGraphics
 	PLCore
 )
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
+add_compile_defs(
+	TESTPLUGIN_EXPORTS
+)
 if(WIN32)
 	##################################################
 	## Win32
@@ -102,19 +107,34 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/PLTests/Plugins)
 
 ##################################################
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore)
-add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(Tests ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
 ##################################################
 
-# Executable
+# Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/PLSamples"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/PLTests/Plugins"
 )
+if(LINUX)
+	# Create relative symbolic links
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLTests/Plugins"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/PLTests/Plugins"
+	)
+endif()
+
+# Import library
+if(WIN32)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} "${PL_BIN_DIR}/Lib"
+	)
+endif()

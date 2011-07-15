@@ -74,7 +74,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\98GuiTestD.exe ..\..\Bin\PLSamples\</Command>
+      <Command>copy build\debug\98GuiTestD.exe ..\..\Bin\PLTests\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -112,7 +112,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\98GuiTest.exe ..\..\Bin\PLSamples\</Command>
+      <Command>copy build\release\98GuiTest.exe ..\..\Bin\PLTests\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -20,6 +20,9 @@ add_custom_target(Tests)
 ##################################################
 add_subdirectory(PLTest)
 add_subdirectory(PLTestBase)
+#	add_subdirectory(98GuiTest)
+#	add_subdirectory(99Test)
+#	add_subdirectory(99TestPlugin)
 
 ##################################################
 ## Dependencies

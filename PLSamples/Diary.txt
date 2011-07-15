@@ -1,3 +1,9 @@
+>> 15.07.2011
+[CO]
+- Moved "98GuiTest", "99Test" and "99TestPlugin" from the "PLSamples"-directory into the "PLTests"-directory
+
+
+
 >> 12.07.2011
 [CO]
 - "40ScriptHelloWorld", "41ScriptGlobalVariables" and "43ScriptBindings" don't need an application class -> removed it to keep the samples

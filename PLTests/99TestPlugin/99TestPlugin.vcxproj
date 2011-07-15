@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\99TestPluginD.dll ..\..\Bin\PLSamples\Plugins\
+      <Command>copy build\debug\99TestPluginD.dll ..\..\Bin\PLTests\Plugins\
 copy build\debug\99TestPluginD.lib ..\..\Bin\Lib
-..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLTests\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -164,9 +164,9 @@ copy build\debug\99TestPluginD.lib ..\..\Bin\Lib
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\99TestPlugin.dll ..\..\Bin\PLSamples\Plugins\
+      <Command>copy build\release\99TestPlugin.dll ..\..\Bin\PLTests\Plugins\
 copy build\release\99TestPlugin.lib ..\..\Bin\Lib
-..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLTests\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -203,8 +203,8 @@ copy build\release\99TestPlugin.lib ..\..\Bin\Lib
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\99TestPluginD64.dll ..\..\Bin\PLSamples\Plugins\
-..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+      <Command>copy build\debug64\99TestPluginD64.dll ..\..\Bin\PLTests\Plugins\
+..\..\Bin\PLTools\PLProjectD.exe . --output-path ..\..\Bin\PLTests\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -247,8 +247,8 @@ copy build\release\99TestPlugin.lib ..\..\Bin\Lib
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\99TestPlugin64.dll ..\..\Bin\PLSamples\Plugins\
-..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLSamples\Plugins --write-plugin
+      <Command>copy build\release64\99TestPlugin64.dll ..\..\Bin\PLTests\Plugins\
+..\..\Bin\PLTools\PLProject.exe . --output-path ..\..\Bin\PLTests\Plugins --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
