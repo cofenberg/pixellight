@@ -211,9 +211,6 @@ if(WIN32)
 	set(PL_INSTALL_SAMPLES			"Samples")								# C:\Programme\PixelLight\Samples
 	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin")							# C:\Programme\PixelLight\Samples\Bin
 	set(PL_INSTALL_SAMPLES_PLUGINS	"Samples/Bin/Plugins")					# C:\Programme\PixelLight\Samples\Bin\Plugins
-	set(PL_INSTALL_DEMOS			"Demos")								# C:\Programme\PixelLight\Demos
-	set(PL_INSTALL_DEMOS_BIN		"Demos/Bin")							# C:\Programme\PixelLight\Demos\Bin
-	set(PL_INSTALL_DEMOS_PLUGINS	"Demos/Bin/Plugins")					# C:\Programme\PixelLight\Demos\Bin\Plugins
 	set(PL_INSTALL_TOOLS			"Tools")								# C:\Programme\PixelLight\Tools
 	set(PL_INSTALL_TOOLS_BIN		"Tools")								# C:\Programme\PixelLight\Tools
 	set(PL_INSTALL_TOOLS_PLUGINS	"Tools/Plugins")						# C:\Programme\PixelLight\Tools\Plugins
@@ -231,9 +228,6 @@ elseif(LINUX)
 	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")				# /usr/share/pixellight/Samples
 	set(PL_INSTALL_SAMPLES_BIN		"share/pixellight/Samples/Bin")			# /usr/share/pixellight/Samples/Bin
 	set(PL_INSTALL_SAMPLES_PLUGINS	"share/pixellight/Samples/Bin/Plugins")	# /usr/share/pixellight/Samples/Bin/Plugins
-	set(PL_INSTALL_DEMOS			"share/pixellight/Demos")				# /usr/share/pixellight/Demos
-	set(PL_INSTALL_DEMOS_BIN		"share/pixellight/Demos/Bin")			# /usr/share/pixellight/Demos/Bin
-	set(PL_INSTALL_DEMOS_PLUGINS	"share/pixellight/Demos/Bin/Plugins")	# /usr/share/pixellight/Demos/Bin/Plugins
 	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")				# /usr/share/pixellight/Tools
 	set(PL_INSTALL_TOOLS_BIN		"bin")									# /usr/bin
 	set(PL_INSTALL_TOOLS_PLUGINS	"share/pixellight/Tools/Plugins")		# /usr/share/pixellight/Tools/Plugins

@@ -37,12 +37,12 @@
 		<param name="Local" value="tools.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Demo applications">
-		<param name="Local" value="demo_applications.html">
+		<param name="Name" value="Sample applications">
+		<param name="Local" value="sample_applications.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Demo scenes">
-		<param name="Local" value="demo_scenes.html">
+		<param name="Name" value="Sample scenes">
+		<param name="Local" value="sample_scenes.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="License">

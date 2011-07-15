@@ -291,7 +291,7 @@ Or use maketool to do it for you:
 2.5.  Running from a local build and installing
 -----------------------------------------------
 
-Once you have built PixelLight, you may want to run e.g. the samples or demo applications.
+Once you have built PixelLight, you may want to run e.g. the sample applications.
 In order for this to work correctly, PixelLight must know where to search for data files and plugins, which is not
 always an easy task on linux systems.
 
@@ -335,10 +335,10 @@ Update libraries: (This has to be done as root! Use e.g. sudo or su for this tas
   (if this is not done, new dynamic libs may not be found correctly)
 
 If you used this way, you will find the PixelLight runtime in /usr/local/share/pixellight/Runtime,
-and the demos e.g. in /usr/local/share/pixellight/Demos.
+and the samples e.g. in /usr/local/share/pixellight/Samples.
 
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
 
-  cd Bin-Linux/Demos
-  ./PLDemoRendererTriangle
+  cd Bin-Linux/Samples
+  ./50RendererTriangle

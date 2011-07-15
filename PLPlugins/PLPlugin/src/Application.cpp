@@ -48,7 +48,7 @@ Application::Application() : RenderApplication("SPSampleTeapot"),
 	EventHandlerKeyDown(&Application::OnKeyDown, this)
 {
 	// Set application title
-	SetTitle(PLT("PL teapot sample"));
+	SetTitle(PLT("PL plugin sample"));
 }
 
 /**
