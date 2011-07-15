@@ -10,6 +10,10 @@ project(Tests)
 # Create PLTests directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLTests)
 
+# Copy runtime data
+file(MAKE_DIRECTORY "${PL_BIN_DIR}/PLTests/Data")
+copy_files("${CMAKE_SOURCE_DIR}/Bin/PLTests/Data/*.*" "${PL_BIN_DIR}/PLTests/Data")
+
 ##################################################
 ## Target
 ##################################################
