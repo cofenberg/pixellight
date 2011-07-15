@@ -109,7 +109,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    Usage example:
 		*    int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		*    {
-		*        return ScriptApplication("Data/Scripts/PLDemoSimpleScene.lua").Run(sFilename, lstArguments);
+		*        return ScriptApplication("Data/Scripts/45ScriptApplication.lua").Run(sFilename, lstArguments);
 		*    }
 		*  @endverbatim
 		*/

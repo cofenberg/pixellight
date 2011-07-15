@@ -13,16 +13,16 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SNFireDemo.cpp">
+    <ClCompile Include="src\SNFireSample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SNGravitationDemo.cpp">
+    <ClCompile Include="src\SNGravitationSample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SNGalaxyDemo.cpp">
+    <ClCompile Include="src\SNGalaxySample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SNBasicDemo.cpp">
+    <ClCompile Include="src\SNBasicSample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,16 +30,16 @@
     <ClInclude Include="src\Application.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SNFireDemo.h">
+    <ClInclude Include="src\SNFireSample.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SNGalaxyDemo.h">
+    <ClInclude Include="src\SNGalaxySample.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SNGravitationDemo.h">
+    <ClInclude Include="src\SNGravitationSample.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SNBasicDemo.h">
+    <ClInclude Include="src\SNBasicSample.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
