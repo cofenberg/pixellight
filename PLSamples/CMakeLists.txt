@@ -25,7 +25,6 @@ add_custom_target(Samples)
 ##################################################
 add_subdirectory(01Application)
 add_subdirectory(02CommandLine)
-add_subdirectory(98GuiTest)
 add_subdirectory(03Signals)
 add_subdirectory(04Dirs)
 add_subdirectory(05NetworkChat)
