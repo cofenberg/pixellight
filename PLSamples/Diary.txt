@@ -1,3 +1,9 @@
+>> 16.07.2011
+[CO]
+- "20Gui" & "30Input": There was a special SDK version of the VC project missing
+
+
+
 >> 15.07.2011
 [CO]
 - Moved "98GuiTest", "99Test" and "99TestPlugin" from the "PLSamples"-directory into the "PLTests"-directory
