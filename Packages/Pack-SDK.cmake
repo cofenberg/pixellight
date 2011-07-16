@@ -17,9 +17,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CMAKE_MODULE_PATH		${CMAKE_SOURCE_DIR}/Packages/SDK)
 	set(CPACK_PL_PACKAGE_PATH	${CMAKE_SOURCE_DIR}/Packages)
 	if(MSVC10)
-		# Microsoft Visual C++ 2010 Redistributable
-		set(CPACK_PL_VC_MESSAGE	"In order to install PixelLight on your computer, you will need the Microsoft Visual C++ 2010 Redestributable package. Do you want to install it now?")
-		set(CPACK_PL_VC_REDIST	"VC10\\\\vcredist_x86.exe")
+		include(${CMAKE_SOURCE_DIR}/External/Base/VC2010/Package.cmake  ${CMAKETOOLS_DIR}/CMakeTools_Packs.cmake)
 	endif()
 
 	##################################################
@@ -246,8 +244,11 @@ set_target_properties(Pack-SDK PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Pack-SDK	PixelLight Docs)
-add_dependencies(Pack		Pack-SDK)
+add_dependencies(Pack-SDK		PixelLight Docs)
+if(WIN32)
+	add_dependencies(Pack-SDK	External-VC2010)
+endif()
+add_dependencies(Pack			Pack-SDK)
 
 ##################################################
 ## Post-Build

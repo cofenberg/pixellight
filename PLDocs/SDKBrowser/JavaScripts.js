@@ -99,11 +99,10 @@ shortcut("Doc_PL3dsMaxModelExport", "Doc\\PL3dsMaxModelExport.pdf");
 
 // Directory shortcuts
 // Misc
-shortcut("Dir_Doc",						"Doc\\");
-shortcut("Dir_Lib",						"Lib\\");
-shortcut("Dir_Runtime",					"Runtime\\");
-shortcut("Dir_BrowserPlugins",			"BrowserPlugins\\");
-shortcut("Dir_VC2010_Redistributable",	"VC2010_Redistributable\\");
+shortcut("Dir_Doc",				"Doc\\");
+shortcut("Dir_Lib",				"Lib\\");
+shortcut("Dir_Runtime",			"Runtime\\");
+shortcut("Dir_BrowserPlugins",	"BrowserPlugins\\");
 // Tools
 shortcut("Dir_Tools",			"Tools\\");
 shortcut("Dir_Tools_PLViewer",	"Tools\\PLViewer\\");

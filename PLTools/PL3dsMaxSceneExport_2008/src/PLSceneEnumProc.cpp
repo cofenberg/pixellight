@@ -493,7 +493,7 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				"msvcp90.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\..\\VC2010_Redistributable\\"+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\..\\Runtime\\VC2010_Redistributable\\"+sFiles[i];
 				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}

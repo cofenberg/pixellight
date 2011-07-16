@@ -11,16 +11,8 @@ add_custom_target(External-Optional)
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(DirectX9)
-add_subdirectory(DirectX11)
 add_subdirectory(FMOD)
 add_subdirectory(FMODEx)
-add_subdirectory(PhysX)
-add_subdirectory(Max2008)
-add_subdirectory(Max2009)
-add_subdirectory(Max2010)
-add_subdirectory(Max2011)
-add_subdirectory(Max2012)
 add_subdirectory(lib3ds)
 add_subdirectory(OpenEXR)
 add_subdirectory(xulrunnersdk)
@@ -34,6 +26,16 @@ add_subdirectory(libRocket)
 add_subdirectory(V8)
 add_subdirectory(Python)
 add_subdirectory(AngelScript)
+if(WIN32)
+	add_subdirectory(DirectX9)
+	add_subdirectory(DirectX11)
+	add_subdirectory(PhysX)
+	add_subdirectory(Max2008)
+	add_subdirectory(Max2009)
+	add_subdirectory(Max2010)
+	add_subdirectory(Max2011)
+	add_subdirectory(Max2012)
+endif()
 
 ##################################################
 ## Dependencies

@@ -1,3 +1,9 @@
+>> 16.07.2011
+[CO]
+- Added "VC2010Redistributable" containing "vcredist_x86.exe", "msvcr100.dll" and "msvcp100.dll" within the downloadable external package
+
+
+
 >> 05.07.2011
 [CO]
 - When using Qt/PLQt, the used CMake Qt script requires "moc", "qmake", "rcc" and "uic" in order to run CMake.
