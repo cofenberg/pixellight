@@ -17,10 +17,10 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 
 	# For Windows, copy the required dlls into the runtime directory
 	if(WIN32)
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtCore4.dll" "${PL_BIN_DIR}/../Bin/PLRuntime")	# Bin
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtGui4.dll"  "${PL_BIN_DIR}/../Bin/PLRuntime")	# Bin
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtCore4.dll" "${PL_BIN_DIR}/PLRuntime")			# Bin-Windows
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtGui4.dll"  "${PL_BIN_DIR}/PLRuntime")			# Bin-Windows
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtCore4.dll" "${PL_BIN_DIR}/../Bin/Runtime")	# Bin
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtGui4.dll"  "${PL_BIN_DIR}/../Bin/Runtime")	# Bin
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtCore4.dll" "${PL_BIN_DIR}/Runtime")			# Bin-Windows
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/QtGui4.dll"  "${PL_BIN_DIR}/Runtime")			# Bin-Windows
 	endif()
 endif()
 

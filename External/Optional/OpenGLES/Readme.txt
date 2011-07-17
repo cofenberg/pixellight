@@ -12,7 +12,7 @@ OpenGL ES 2.0
 - Internally for testing OpenGL ES 2.0 on a desktop PC we're using "OpenGL ES 2.0 Emulator v1.2 [23-Jul-2010]"
 	- OpenGL ES 2.0 Emulator from ARM (http://www.malideveloper.com/tools/software-development/opengl-es-20-emulator.php)
 	- Here's what you need for the Windows platform and where to put the files:
-		- "Bin\PLRuntime\Plugins\PLRenderer"
+		- "Bin\Runtime\Plugins\PLRenderer"
 			- "libEGL.dll"
 			- "libGLESv2.dll"
 		- "External\_Windows_x86_32\OpenGLES\include\GLES2"

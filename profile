@@ -12,6 +12,6 @@
 # Execute this script:
 #   source ./profile     (OR:)
 #   . ./profile
-export PL_RUNTIME="$PWD/Bin-Linux/PLRuntime"
+export PL_RUNTIME="$PWD/Bin-Linux/Runtime"
 echo "Setting PixelLight runtime variable:"
 echo "  PL_RUNTIME = '$PL_RUNTIME'"

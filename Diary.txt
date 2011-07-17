@@ -4,6 +4,16 @@
 
 
 
+>> 17.07.2011
+[CO]
+- I noticed multiple times that over the years an inconsistency in the general naming structure has been introduced. Right at the beginning of the development
+  we put a "PL" in front of structure directories. Over the time some directories without "PL" were introduced, like "External" instead of "PLExternal". Further,
+  while there was e.g. a directory called "PLBase", the CMake project within this directory was named "project(Base)". That's somewhat confusing.
+  So I decided to remove the "PL" in front of the structure directories (within the resulting SDK there were no such prefixes as well).
+  -> "PLBase"->"Base", "PLDocs"->"Docs", "PLPlugins"->"Plugins", "PLSamples"->"Samples", "PLTools"->"Tools", "PLTests"->"Tests", "PLRuntime"->"Runtime"
+
+
+
 >> 14.07.2011
 [CO]
 - Moved PLGui, PLInput, PLRenderer, PLMesh, PLScene, PLPhysics, PLSound and PLEngine into the PLBase directory

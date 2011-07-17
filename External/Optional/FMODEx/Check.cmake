@@ -17,8 +17,8 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 
 	# For Windows, copy the required dlls into the runtime directory
 	if(WIN32)
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/fmodex.dll" "${PL_BIN_DIR}/../Bin/PLRuntime/Plugins/PLSound")	# Bin
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/fmodex.dll" "${PL_BIN_DIR}/PLRuntime/Plugins/PLSound")		# Bin-Windows
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/fmodex.dll" "${PL_BIN_DIR}/../Bin/Runtime/Plugins/PLSound")	# Bin
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/fmodex.dll" "${PL_BIN_DIR}/Runtime/Plugins/PLSound")		# Bin-Windows
 	endif()
 endif()
 

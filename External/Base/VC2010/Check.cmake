@@ -16,12 +16,12 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	external_check_unpack()
 
 	# Copy the required dlls into the runtime directory
-	file(MAKE_DIRECTORY "${PL_BIN_DIR}/../Bin/PLRuntime/VC2010_Redistributable")	# Bin
-	file(MAKE_DIRECTORY "${PL_BIN_DIR}/PLRuntime/VC2010_Redistributable")			# Bin-Windows
-	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcr100.dll"	"${PL_BIN_DIR}/../Bin/PLRuntime/VC2010_Redistributable")	# Bin
-	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcr100.dll"	"${PL_BIN_DIR}/PLRuntime/VC2010_Redistributable")			# Bin-Windows
-	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcp100.dll"	"${PL_BIN_DIR}/../Bin/PLRuntime/VC2010_Redistributable")	# Bin
-	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcp100.dll" "${PL_BIN_DIR}/PLRuntime/VC2010_Redistributable")			# Bin-Windows
+	file(MAKE_DIRECTORY "${PL_BIN_DIR}/../Bin/Runtime/VC2010_Redistributable")	# Bin
+	file(MAKE_DIRECTORY "${PL_BIN_DIR}/Runtime/VC2010_Redistributable")			# Bin-Windows
+	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcr100.dll"	"${PL_BIN_DIR}/../Bin/Runtime/VC2010_Redistributable")	# Bin
+	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcr100.dll"	"${PL_BIN_DIR}/Runtime/VC2010_Redistributable")			# Bin-Windows
+	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcp100.dll"	"${PL_BIN_DIR}/../Bin/Runtime/VC2010_Redistributable")	# Bin
+	external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/msvcp100.dll" "${PL_BIN_DIR}/Runtime/VC2010_Redistributable")			# Bin-Windows
 endif()
 
 # Done

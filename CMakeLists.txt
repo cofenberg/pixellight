@@ -28,8 +28,8 @@ configure_file("PixelLight/PixelLight.h.in" "${CMAKE_BINARY_DIR}/PixelLight.h")
 set(PL_BIN_DIR "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_CONFIG_NAME}")
 file(MAKE_DIRECTORY ${PL_BIN_DIR})
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Lib)
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime)
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/Plugins)
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime)
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins)
 
 # Copy copyright and notes
 copy_file(${CMAKE_SOURCE_DIR}/AUTHORS			${PL_BIN_DIR})
@@ -41,8 +41,8 @@ copy_file(${CMAKE_SOURCE_DIR}/ReleaseNotes.txt	${PL_BIN_DIR})
 
 # Copy Microsoft Visual C++ Redistributables
 if(WIN32)
-	file(MAKE_DIRECTORY ${PL_BIN_DIR}/PLRuntime/VC2010_Redistributable)
-	copy_files("${CMAKE_SOURCE_DIR}/Bin/PLRuntime/VC2010_Redistributable/*.*" "${PL_BIN_DIR}/PLRuntime/VC2010_Redistributable")
+	file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/VC2010_Redistributable)
+	copy_files("${CMAKE_SOURCE_DIR}/Bin/Runtime/VC2010_Redistributable/*.*" "${PL_BIN_DIR}/Runtime/VC2010_Redistributable")
 endif()
 
 ##################################################
@@ -54,12 +54,12 @@ add_custom_target(PixelLight)
 ## Projects
 ##################################################
 add_subdirectory(External)
-add_subdirectory(PLBase)
-add_subdirectory(PLPlugins)
-add_subdirectory(PLSamples)
-add_subdirectory(PLTests)
-add_subdirectory(PLTools)
-add_subdirectory(PLDocs)
+add_subdirectory(Base)
+add_subdirectory(Plugins)
+add_subdirectory(Samples)
+add_subdirectory(Tests)
+add_subdirectory(Tools)
+add_subdirectory(Docs)
 
 ##################################################
 ## Install
@@ -77,7 +77,7 @@ install(FILES	${CMAKE_SOURCE_DIR}/AUTHORS
 
 # Microsoft Visual C++ Redistributables
 if(WIN32)
-	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/PLRuntime/VC2010_Redistributable
+	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/Runtime/VC2010_Redistributable
 		DESTINATION ${PL_INSTALL_ROOT}/Runtime	COMPONENT SDK
 	)
 endif()

@@ -3,5 +3,5 @@ This directory contains our CMake framework that is used to build PixelLight its
 If you're looking for information on how to build PixelLight, have a look at 'BUILD' in the root directory of this
 source tree.
 
-If you're looking for a CMake script to use PixelLight in other projects, have a look at 'PLTools/CMake' which contains
+If you're looking for a CMake script to use PixelLight in other projects, have a look at 'Tools' which contains
 a FindPixelLight script for CMake.
