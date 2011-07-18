@@ -75,31 +75,31 @@ text_shortcut("License_cc_by_nc_sa_3",	"cc-by-nc-sa-3.txt");
 
 // Documentation shortcuts
 shortcut("Doc_ReleaseNotes",		"ReleaseNotes.txt");
-shortcut("Doc_CodingConventions",	"Doc\\CodingConventions.pdf");
-shortcut("Doc_PLFeatures",			"Doc\\PLFeatures.pdf");
-shortcut("Doc_PLGeneral",			"Doc\\PLGeneral.pdf");
-shortcut("Doc_PLCore",				"Doc\\PLCore.pdf");
-shortcut("Doc_PLMath",				"Doc\\PLMath.pdf");
-shortcut("Doc_PLGraphics",			"Doc\\PLGraphics.pdf");
-shortcut("Doc_PLScript",			"Doc\\PLScript.pdf");
-shortcut("Doc_PLDatabase",			"Doc\\PLDatabase.pdf");
-shortcut("Doc_PLGui",				"Doc\\PLGui.pdf");
-shortcut("Doc_PLInput",				"Doc\\PLInput.pdf");
-shortcut("Doc_PLRenderer",			"Doc\\PLRenderer.pdf");
-shortcut("Doc_PLMesh",				"Doc\\PLMesh.pdf");
-shortcut("Doc_PLScene",				"Doc\\PLScene.pdf");
-shortcut("Doc_PLCompositing",		"Doc\\PLCompositing.pdf");
-shortcut("Doc_PLSound",				"Doc\\PLSound.pdf");
-shortcut("Doc_PLPhysics",			"Doc\\PLPhysics.pdf");
-shortcut("Doc_PLEngine",			"Doc\\PLEngine.pdf");
-shortcut("Doc_PixelLightAPI",		"Doc\\PixelLightAPI.chm");
-shortcut("Doc_PL3dsMaxSceneExport",	"Doc\\PL3dsMaxSceneExport.pdf");
-shortcut("Doc_PL3dsMaxModelExport", "Doc\\PL3dsMaxModelExport.pdf");
+shortcut("Doc_CodingConventions",	"Docs\\CodingConventions.pdf");
+shortcut("Doc_PLFeatures",			"Docs\\PLFeatures.pdf");
+shortcut("Doc_PLGeneral",			"Docs\\PLGeneral.pdf");
+shortcut("Doc_PLCore",				"Docs\\PLCore.pdf");
+shortcut("Doc_PLMath",				"Docs\\PLMath.pdf");
+shortcut("Doc_PLGraphics",			"Docs\\PLGraphics.pdf");
+shortcut("Doc_PLScript",			"Docs\\PLScript.pdf");
+shortcut("Doc_PLDatabase",			"Docs\\PLDatabase.pdf");
+shortcut("Doc_PLGui",				"Docs\\PLGui.pdf");
+shortcut("Doc_PLInput",				"Docs\\PLInput.pdf");
+shortcut("Doc_PLRenderer",			"Docs\\PLRenderer.pdf");
+shortcut("Doc_PLMesh",				"Docs\\PLMesh.pdf");
+shortcut("Doc_PLScene",				"Docs\\PLScene.pdf");
+shortcut("Doc_PLCompositing",		"Docs\\PLCompositing.pdf");
+shortcut("Doc_PLSound",				"Docs\\PLSound.pdf");
+shortcut("Doc_PLPhysics",			"Docs\\PLPhysics.pdf");
+shortcut("Doc_PLEngine",			"Docs\\PLEngine.pdf");
+shortcut("Doc_PixelLightAPI",		"Docs\\PixelLightAPI.chm");
+shortcut("Doc_PL3dsMaxSceneExport",	"Docs\\PL3dsMaxSceneExport.pdf");
+shortcut("Doc_PL3dsMaxModelExport", "Docs\\PL3dsMaxModelExport.pdf");
 
 
 // Directory shortcuts
 // Misc
-shortcut("Dir_Doc",				"Doc\\");
+shortcut("Dir_Docs",			"Docs\\");
 shortcut("Dir_Lib",				"Lib\\");
 shortcut("Dir_Runtime",			"Runtime\\");
 shortcut("Dir_BrowserPlugins",	"BrowserPlugins\\");

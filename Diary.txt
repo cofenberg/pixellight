@@ -4,6 +4,12 @@
 
 
 
+>> 18.07.2011
+[CO]
+- Documents: Noticed that within the runtime directory it's named "Doc" while it's called "Docs" in other places. Renamed "Doc" into "Docs".
+
+
+
 >> 17.07.2011
 [CO]
 - I noticed multiple times that over the years an inconsistency in the general naming structure has been introduced. Right at the beginning of the development

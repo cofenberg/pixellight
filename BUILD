@@ -205,7 +205,7 @@ After the project files were generated, the project can be compiled by writing
 Here's a list of the most important "maketool"-commands:
 - Create project files:		 		./maketool setup
 - Compile the project:				./maketool build
-- Compile the documentation:		./maketool doc
+- Compile the documentation:		./maketool docs
 - Generate an installable package:	./maketool pack
 - Delete the build directories:		./maketool clean
 
@@ -277,7 +277,7 @@ To create the documentation, build project 'Docs':
   make Docs
 
 Or use maketool to do it for you:
-  ./maketool doc
+  ./maketool docs
 
 
 The create the PixelLight SDK and create a debian installation file, build project 'Pack':

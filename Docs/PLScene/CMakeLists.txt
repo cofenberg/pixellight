@@ -24,7 +24,7 @@ add_dependencies(Docs Docs-PLScene)
 
 # PDF
 add_custom_command(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_PDF} "${PL_BIN_DIR}/Doc"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_PDF} "${PL_BIN_DIR}/Docs"
 )
 
 ##################################################
@@ -33,5 +33,5 @@ add_custom_command(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
 
 # PDF
 install(FILES ${CMAKETOOLS_CURRENT_TARGET_PDF}
-	DESTINATION ${PL_INSTALL_DOC}		COMPONENT Docs
+	DESTINATION ${PL_INSTALL_DOCS}		COMPONENT Docs
 )
