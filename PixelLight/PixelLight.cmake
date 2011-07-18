@@ -204,7 +204,7 @@ if(WIN32)
 	set(PL_INSTALL_SHARED			"Runtime")								# C:\Programme\PixelLight\Runtime
 	set(PL_INSTALL_LIB				"Lib")									# C:\Programme\PixelLight\Lib
 	set(PL_INSTALL_INCLUDE			"Include")								# C:\Programme\PixelLight\Include
-	set(PL_INSTALL_DOC				"Doc")									# C:\Programme\PixelLight\Doc
+	set(PL_INSTALL_DOCS				"Docs")									# C:\Programme\PixelLight\Docs
 	set(PL_INSTALL_RUNTIME			"Runtime")								# C:\Programme\PixelLight\Runtime
 	set(PL_INSTALL_RUNTIME_BIN		"Runtime")								# C:\Programme\PixelLight\Runtime
 	set(PL_INSTALL_RUNTIME_PLUGINS	"Runtime/Plugins")						# C:\Programme\PixelLight\Runtime\Plugins
@@ -221,7 +221,7 @@ elseif(LINUX)
 	set(PL_INSTALL_SHARED			"lib")									# /usr/lib
 	set(PL_INSTALL_LIB				"lib")									# /usr/lib
 	set(PL_INSTALL_INCLUDE			"include")								# /usr/include
-	set(PL_INSTALL_DOC				"share/doc/pixellight")					# /usr/share/doc/pixellight
+	set(PL_INSTALL_DOCS				"share/docs/pixellight")				# /usr/share/docs/pixellight
 	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")				# /usr/share/pixellight/Runtime
 	set(PL_INSTALL_RUNTIME_BIN		"bin")									# /usr/bin
 	set(PL_INSTALL_RUNTIME_PLUGINS	"share/pixellight/Runtime/Plugins")		# /usr/share/pixellight/Runtime/Plugins
