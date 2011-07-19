@@ -48,7 +48,7 @@ class SNBomb : public PLSound::SNSound {
 		// Attributes
 		pl_attribute(Killed,	bool,					false,							ReadWrite,	DirectValue,	"Killed?",																								"")
 			// Overwritten PLSound::SNSound attributes
-		pl_attribute(Sound,		PLGeneral::String,		"Data/Sounds/Explosion.ogg",	ReadWrite,	GetSet,			"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
+		pl_attribute(Sound,		PLCore::String,			"Data/Sounds/Explosion.ogg",	ReadWrite,	GetSet,			"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	NoCulling,						ReadWrite,	GetSet,			"Flags",																								"")
 		// Constructors

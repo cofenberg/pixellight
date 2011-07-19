@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/FastPool.h>
+#include <PLCore/Container/FastPool.h>
 #include "PLTestBase/General/ContainerTestCase.h"
 
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class TestFastPoolElement : public PLGeneral::FastPoolElement<TestFastPoolElement> {
+class TestFastPoolElement : public PLCore::FastPoolElement<TestFastPoolElement> {
 	public:
 		int i;
 		TestFastPoolElement() : i(0) {}

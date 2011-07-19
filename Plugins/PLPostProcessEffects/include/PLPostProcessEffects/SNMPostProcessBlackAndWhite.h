@@ -59,7 +59,7 @@ class SNMPostProcessBlackAndWhite : public PLCompositing::SNMPostProcess {
 		pl_attribute(LuminanceConvert,	PLGraphics::Color3,	PLGraphics::Color3(0.299f, 0.587f, 0.184f),	ReadWrite,	DirectValue,	"Luminance convert",													"")
 		pl_attribute(MiddleIntensity,	float,				0.5f,										ReadWrite,	DirectValue,	"If intensity is below this value, pixel is black, white otherwise",	"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,			PLGeneral::String,	"Data/PostProcesses/BlackAndWhite.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",									"Type='PostProcess'")
+		pl_attribute(Filename,			PLCore::String,		"Data/PostProcesses/BlackAndWhite.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",									"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

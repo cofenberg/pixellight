@@ -71,7 +71,7 @@ class SNMOrbiting : public SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMOrbiting, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class for orbiting around a target scene node")
 		// Attributes
-		pl_attribute(Target,		PLGeneral::String,	"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",								"")
+		pl_attribute(Target,		PLCore::String,		"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",								"")
 		pl_attribute(MinDistance,	float,				-1.0f,								ReadWrite,	GetSet,			"Minimum distance to the target, negative = no minimum, always <= 'MaxDistance'",		"")
 		pl_attribute(MaxDistance,	float,				-1.0f,								ReadWrite,	GetSet,			"Maximum distance to the target, negative = no maximum, always >= 'MinDistance'",		"")
 		pl_attribute(Distance,		float,				-1.0f,								ReadWrite,	GetSet,			"Distance to the target, negative = not initialized yet",								"")

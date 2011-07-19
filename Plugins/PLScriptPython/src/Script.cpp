@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLScriptPython/PythonContext.h"
 #include "PLScriptPython/Script.h"
 #include <Python/graminit.h>	// Python parse-mode flags (e.g. "file_input")
@@ -39,7 +39,6 @@ PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "Py_XDE
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScriptPython {
 

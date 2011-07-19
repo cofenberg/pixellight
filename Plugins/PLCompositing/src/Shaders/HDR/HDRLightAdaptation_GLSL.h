@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sHDRLightAdaptation_GLSL_VS = "\
+static const PLCore::String sHDRLightAdaptation_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\
@@ -37,7 +37,7 @@ void main()\n\
 
 
 // GLSL fragment shader source code
-static const PLGeneral::String sHDRLightAdaptation_GLSL_FS = "\
+static const PLCore::String sHDRLightAdaptation_GLSL_FS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\

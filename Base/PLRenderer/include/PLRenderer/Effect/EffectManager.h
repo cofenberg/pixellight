@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLRenderer/Effect/Effect.h"
 #include "PLRenderer/Effect/EffectHandler.h"
 
@@ -72,7 +72,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLGeneral::String Default;	/**< Default effect, ('Default') dynamically created within the 'EffectManager'-constructor */
+		PLRENDERER_API static const PLCore::String Default;	/**< Default effect, ('Default') dynamically created within the 'EffectManager'-constructor */
 
 
 	//[-------------------------------------------------------]
@@ -116,7 +116,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Use(const PLGeneral::String &sName = Default);
+		PLRENDERER_API bool Use(const PLCore::String &sName = Default);
 
 
 	//[-------------------------------------------------------]
@@ -151,7 +151,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Effect *CreateResource(const PLGeneral::String &sName);
+		virtual Effect *CreateResource(const PLCore::String &sName);
 
 
 };

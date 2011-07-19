@@ -27,7 +27,7 @@
 #include <stdarg.h>
 #ifdef LINUX
 	// Under Linux, we need this for '_vscprintf' :(
-	#include <PLGeneral/PLGeneralLinuxWrapper.h>
+	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
 #include "PLTest/TestCase.h"
 
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

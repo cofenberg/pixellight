@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLTest/PLTest.h"
 
 
@@ -96,7 +96,7 @@ class TestManager {
 		*  @return
 		*    The number of succeeded test cases
 		*/
-		PLTEST_API PLGeneral::uint32 GetSucceededTestCases() const;
+		PLTEST_API PLCore::uint32 GetSucceededTestCases() const;
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class TestManager {
 		*  @return
 		*    The number of failed test cases
 		*/
-		PLTEST_API PLGeneral::uint32 GetFailedTestCases() const;
+		PLTEST_API PLCore::uint32 GetFailedTestCases() const;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class TestManager {
 		*  @return
 		*    The number of test test cases
 		*/
-		PLTEST_API PLGeneral::uint32 GetTestCases() const;
+		PLTEST_API PLCore::uint32 GetTestCases() const;
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class TestManager {
 		*  @return
 		*    The number of succeeded tasks
 		*/
-		PLTEST_API PLGeneral::uint32 GetSucceededTasks() const;
+		PLTEST_API PLCore::uint32 GetSucceededTasks() const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class TestManager {
 		*  @return
 		*    The number of failed tasks
 		*/
-		PLTEST_API PLGeneral::uint32 GetFailedTasks() const;
+		PLTEST_API PLCore::uint32 GetFailedTasks() const;
 
 		/**
 		*  @brief
@@ -141,18 +141,18 @@ class TestManager {
 		*  @return
 		*    The number of tasks
 		*/
-		PLTEST_API PLGeneral::uint32 GetTasks() const;
+		PLTEST_API PLCore::uint32 GetTasks() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		char			  *m_pszName;				/**< Name of the test manager */
-		PLGeneral::uint32  m_nSucceededTestCases;	/**< Number of succeeded test cases */
-		PLGeneral::uint32  m_nFailedTestCases;		/**< Number of failed test cases */
-		PLGeneral::uint32  m_nSucceededTasks;		/**< Number of succeeded tasks */
-		PLGeneral::uint32  m_nFailedTasks;			/**< Number of failed tasks */
+		char		   *m_pszName;				/**< Name of the test manager */
+		PLCore::uint32  m_nSucceededTestCases;	/**< Number of succeeded test cases */
+		PLCore::uint32  m_nFailedTestCases;		/**< Number of failed test cases */
+		PLCore::uint32  m_nSucceededTasks;		/**< Number of succeeded tasks */
+		PLCore::uint32  m_nFailedTasks;			/**< Number of failed tasks */
 
 
 };

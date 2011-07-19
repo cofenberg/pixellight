@@ -132,7 +132,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Allocate(EElementType nElementType, PLGeneral::uint32 nNumOfComponentsPerElement, PLGeneral::uint32 nNumOfElements);
+		PLCORE_API bool Allocate(EElementType nElementType, uint32 nNumOfComponentsPerElement, uint32 nNumOfElements);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API PLGeneral::uint8 *GetData();
+		PLCORE_API uint8 *GetData();
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API const PLGeneral::uint8 *GetData() const;
+		PLCORE_API const uint8 *GetData() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API PLGeneral::uint8 *GetElementComponentData(PLGeneral::uint32 nElement, PLGeneral::uint32 nComponent);
+		PLCORE_API uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent);
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API const PLGeneral::uint8 *GetElementComponentData(PLGeneral::uint32 nElement, PLGeneral::uint32 nComponent) const;
+		PLCORE_API const uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent) const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of components per element
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfComponentsPerElement() const;
+		PLCORE_API uint32 GetNumOfComponentsPerElement() const;
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of elements
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfElements() const;
+		PLCORE_API uint32 GetNumOfElements() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of bytes per component of an element
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfBytesPerElementComponent() const;
+		PLCORE_API uint32 GetNumOfBytesPerElementComponent() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of bytes per element
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfBytesPerElement() const;
+		PLCORE_API uint32 GetNumOfBytesPerElement() const;
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The total number of bytes of the chunk data
 		*/
-		PLCORE_API PLGeneral::uint32 GetTotalNumOfBytes() const;
+		PLCORE_API uint32 GetTotalNumOfBytes() const;
 
 		/**
 		*  @brief
@@ -247,7 +247,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The total number of components within the chunk
 		*/
-		PLCORE_API PLGeneral::uint32 GetTotalNumOfComponents() const;
+		PLCORE_API uint32 GetTotalNumOfComponents() const;
 
 
 	//[-------------------------------------------------------]
@@ -280,11 +280,11 @@ class Chunk : public Loadable {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ESemantic		   m_nSemantic;						/**< Semantic */
-		EElementType	   m_nElementType;					/**< Element typ */
-		PLGeneral::uint32  m_nNumOfComponentsPerElement;	/**< Number of components per element */
-		PLGeneral::uint32  m_nNumOfElements;				/**< Number of elements */
-		PLGeneral::uint8  *m_pData;							/**< The data, can be a null pointer */
+		ESemantic	  m_nSemantic;					/**< Semantic */
+		EElementType  m_nElementType;				/**< Element typ */
+		uint32		  m_nNumOfComponentsPerElement;	/**< Number of components per element */
+		uint32		  m_nNumOfElements;				/**< Number of elements */
+		uint8		 *m_pData;						/**< The data, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -292,7 +292,7 @@ class Chunk : public Loadable {
 	//[-------------------------------------------------------]
 	public:
 		PLCORE_API virtual bool Unload();
-		PLCORE_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLCORE_API virtual String GetLoadableTypeName() const;
 
 
 };

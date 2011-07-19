@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLScene/Scene/SceneContext.h>
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLScene;

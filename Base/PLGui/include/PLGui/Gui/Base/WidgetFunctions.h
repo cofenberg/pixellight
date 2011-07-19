@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLGui/PLGui.h"
 #include "PLGui/PLGuiDefinitions.h"
 
@@ -362,7 +362,7 @@ class WidgetFunctions {
 		*  @param[in] vPos
 		*    Mouse position within the widget
 		*/
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -373,7 +373,7 @@ class WidgetFunctions {
 		*  @param[in] vPos
 		*    Mouse position within the widget
 		*/
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -384,7 +384,7 @@ class WidgetFunctions {
 		*  @param[in] vPos
 		*    Mouse position within the widget
 		*/
-		PLGUI_API virtual void OnMouseButtonClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -395,7 +395,7 @@ class WidgetFunctions {
 		*  @param[in] vPos
 		*    Mouse position within the widget
 		*/
-		PLGUI_API virtual void OnMouseButtonDoubleClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDoubleClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -419,7 +419,7 @@ class WidgetFunctions {
 		*    - Because of a possible autorepeat the key may be 'pressed' multiple times
 		*      before the 'OnKeyUp'-function is called
 		*/
-		PLGUI_API virtual void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		PLGUI_API virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -430,7 +430,7 @@ class WidgetFunctions {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		PLGUI_API virtual void OnKeyUp(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		PLGUI_API virtual void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -439,7 +439,7 @@ class WidgetFunctions {
 		*  @param[in] nHotkey
 		*    Hotkey ID
 		*/
-		PLGUI_API virtual void OnHotkey(PLGeneral::uint32 nHotkey);
+		PLGUI_API virtual void OnHotkey(PLCore::uint32 nHotkey);
 
 		/**
 		*  @brief
@@ -459,7 +459,7 @@ class WidgetFunctions {
 		*  @param[in] pDataPtr
 		*    Data pointer
 		*/
-		PLGUI_API virtual void OnUserMessage(PLGeneral::uint32 nData, void *pDataPtr);
+		PLGUI_API virtual void OnUserMessage(PLCore::uint32 nData, void *pDataPtr);
 
 
 };

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGui/PLGui.h"
 
 

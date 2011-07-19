@@ -66,12 +66,12 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SCPhysicsWorld, "PLPhysics", PLScene::SceneContainer, "Physics world scene node container")
 		// Attributes
-		pl_attribute(PhysicsAPI,			PLGeneral::String,	"PLPhysicsNewton::World",				ReadWrite,	DirectValue,	"Name of the physics API this world is using",																			"")
+		pl_attribute(PhysicsAPI,			PLCore::String,		"PLPhysicsNewton::World",				ReadWrite,	DirectValue,	"Name of the physics API this world is using",																			"")
 		pl_attribute(SimulationActive,		bool,				true,									ReadWrite,	GetSet,			"Is the physics simulation currently active?",																			"")
 		pl_attribute(SimulationSpeed,		float,				1.0f,									ReadWrite,	GetSet,			"Physics simulation speed. A speed of <= 0 is NOT allowed! Do NOT make the factor 'too' (for example > 4) extreme.",	"Min='0.0001'")
 		pl_attribute(SimulationQuality,		float,				1.0f,									ReadWrite,	GetSet,			"Physics simulation quality. 1 means best realistic behavior, 0 for the fastest possible configuration.",				"Min='0.0' Max='1.0'")
 		pl_attribute(FrameRate,				float,				60.0f,									ReadWrite,	GetSet,			"Frame frate the simulation runs on: smaller=more performance, larger=more accurate simulation",						"Min='60.0' Max='1000.0'")
-		pl_attribute(CacheDirectory,		PLGeneral::String,	"",										ReadWrite,	DirectValue,	"Physics cache directory, if empty, no caching is used (best to avoid cache problems during development)",				"")
+		pl_attribute(CacheDirectory,		PLCore::String,		"",										ReadWrite,	DirectValue,	"Physics cache directory, if empty, no caching is used (best to avoid cache problems during development)",				"")
 
 		// [TODO] New RTTI usage
 	//	DEFINE_VAR(PL_VAR_ENUM,		m_nThreadPriorityClass,	"",	"",							,							"Idle=0 BelowNormal=1 Normal=2 AboveNormal=3 High=4 Realtime=5 None=6")
@@ -166,8 +166,8 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		float			   m_fSimulationSpeed;		/**< Physics simulation speed. A speed of <= 0 is NOT allowed! Do NOT make the factor 'too' (for example > 4) extreme. */
 		float			   m_fSimulationQuality;	/**< Physics simulation quality. 1 means best realistic behavior, 0 for the fastest possible configuration. */
 		float			   m_fFrameRate;			/**< Frame frate the simulation runs on: smaller=more performance, larger=more accurate simulation */
-		PLGeneral::uint32  m_nThreadPriorityClass;	/**< Physics thread priority class (use realtime priority class ONLY if you REALLY need it, 'None' = do not use a thread) */
-		PLGeneral::uint32  m_nThreadPriority;		/**< Physics thread priority within the priority class it is in */
+		PLCore::uint32	   m_nThreadPriorityClass;	/**< Physics thread priority class (use realtime priority class ONLY if you REALLY need it, 'None' = do not use a thread) */
+		PLCore::uint32	   m_nThreadPriority;		/**< Physics thread priority within the priority class it is in */
 		PLMath::Vector3    m_vGravity;				/**< Gravity vector */
 		bool			   m_bBuoyancyActive;		/**< Is buoyancy force active? */
 		float			   m_fBuoyancyPlaneY;		/**< Buoyancy plane y position */
@@ -187,8 +187,8 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLPHYSICS_API virtual bool Load(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLPHYSICS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLPHYSICS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 
 
 };

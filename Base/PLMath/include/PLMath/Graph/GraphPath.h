@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include "PLMath/Vector3.h"
 
 
@@ -71,7 +71,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @param[in] pManager
 		*    Resource manager using this resource, can be a null pointer
 		*/
-		PLMATH_API GraphPath(const PLGeneral::String &sName, PLCore::ResourceManager<GraphPath> *pManager = nullptr);
+		PLMATH_API GraphPath(const PLCore::String &sName, PLCore::ResourceManager<GraphPath> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @return
 		*    Number of path nodes
 		*/
-		PLMATH_API PLGeneral::uint32 GetNumOfNodes() const;
+		PLMATH_API PLCore::uint32 GetNumOfNodes() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMATH_API bool RemoveNode(PLGeneral::uint32 nNode = 0);
+		PLMATH_API bool RemoveNode(PLCore::uint32 nNode = 0);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @return
 		*    The path node, a null pointer if there was an error
 		*/
-		PLMATH_API const GraphNode *GetNode(PLGeneral::uint32 nID = 0) const;
+		PLMATH_API const GraphNode *GetNode(PLCore::uint32 nID = 0) const;
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 		*  @return
 		*    The path node, a null pointer if there was an error
 		*/
-		PLMATH_API GraphNode *GetNode(PLGeneral::uint32 nID = 0);
+		PLMATH_API GraphNode *GetNode(PLCore::uint32 nID = 0);
 
 		//[-------------------------------------------------------]
 		//[ Tools                                                 ]
@@ -241,9 +241,9 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Graph						 *m_pOwnerGraph;	/**< Owner graph, can be a null pointer */
-		bool						  m_bClosed;		/**< Is the path closed? */
-		PLGeneral::Array<GraphNode*>  m_lstNodes;		/**< Node list */
+		Graph					  *m_pOwnerGraph;	/**< Owner graph, can be a null pointer */
+		bool					   m_bClosed;		/**< Is the path closed? */
+		PLCore::Array<GraphNode*>  m_lstNodes;		/**< Node list */
 
 
 	//[-------------------------------------------------------]
@@ -258,7 +258,7 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 	//[-------------------------------------------------------]
 	public:
 		PLMATH_API virtual bool Unload();
-		PLMATH_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLMATH_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

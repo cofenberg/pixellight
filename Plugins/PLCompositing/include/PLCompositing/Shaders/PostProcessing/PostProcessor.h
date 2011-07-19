@@ -230,7 +230,7 @@ class PostProcessor {
 		bool									 m_bFirstPostProcess;	/**< Is this the first active post process? */
 		float									 m_fExtentX;			/**< Current x extension of the quad */
 		float									 m_fExtentY;			/**< Current y extension of the quad */
-		PLGeneral::uint32						 m_nFixedFillModeBackup;
+		PLCore::uint32						 	 m_nFixedFillModeBackup;
 
 		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Can be a null pointer */
 		bool							  m_bClearRenderTarget[2];

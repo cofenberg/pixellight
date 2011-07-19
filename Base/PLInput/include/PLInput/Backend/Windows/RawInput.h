@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
-#include <PLGeneral/System/Thread.h>
+#include <PLCore/System/Thread.h>
+#include <PLCore/Core/Singleton.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLInput/PLInputWindowsIncludes.h"
 
 
@@ -51,7 +51,7 @@ class RawInputDevice;
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLINPUT_TEMPLATE template class PLINPUT_API PLGeneral::Singleton<RawInput>;
+PLINPUT_TEMPLATE template class PLINPUT_API PLCore::Singleton<RawInput>;
 
 
 //[-------------------------------------------------------]
@@ -61,13 +61,13 @@ PLINPUT_TEMPLATE template class PLINPUT_API PLGeneral::Singleton<RawInput>;
 *  @brief
 *    Wrapper for the Raw-Input API on Windows
 */
-class RawInput : public PLGeneral::Singleton<RawInput> {
+class RawInput : public PLCore::Singleton<RawInput> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<RawInput>;
+	friend class PLCore::Singleton<RawInput>;
 
 
 	//[-------------------------------------------------------]
@@ -99,7 +99,7 @@ class RawInput : public PLGeneral::Singleton<RawInput> {
 		*    The virtual mouse device named "Mouse" catches all events from all mouse devices.
 		*    All other devices represent real devices and have names given from Windows.
 		*/
-		PLINPUT_API const PLGeneral::List<RawInputDevice*> &GetDevices() const;
+		PLINPUT_API const PLCore::List<RawInputDevice*> &GetDevices() const;
 
 
 	//[-------------------------------------------------------]
@@ -175,16 +175,16 @@ class RawInput : public PLGeneral::Singleton<RawInput> {
 	//[-------------------------------------------------------]
 	private:
 		// Raw-Input system
-		WNDCLASS												m_cWndClass;		/**< Window class */
-		HWND													m_hWnd;				/**< Window that will receive input messages */
-		PLGeneral::Thread										m_cThread;			/**< Raw-Input thread */
-		bool													m_bThreadFinished;	/**< Finished-flag for thread */
+		WNDCLASS											m_cWndClass;		/**< Window class */
+		HWND												m_hWnd;				/**< Window that will receive input messages */
+		PLCore::Thread										m_cThread;			/**< Raw-Input thread */
+		bool												m_bThreadFinished;	/**< Finished-flag for thread */
 
 		// Raw-Input devices
-		PLGeneral::List<RawInputDevice*>						m_lstDevices;		/**< List of input devices */
-		PLGeneral::HashMap<PLGeneral::uint32, RawInputDevice*>	m_mapDevices;		/**< Hash map: HANDLE -> Raw-Input device */
-		RawInputDevice										   *m_pDeviceKeyboard;	/**< Virtual keyboard device (all events from all keyboards) */
-		RawInputDevice										   *m_pDeviceMouse;		/**< Virtual mouse device (all events from all mice) */
+		PLCore::List<RawInputDevice*>						m_lstDevices;		/**< List of input devices */
+		PLCore::HashMap<PLCore::uint32, RawInputDevice*>	m_mapDevices;		/**< Hash map: HANDLE -> Raw-Input device */
+		RawInputDevice									   *m_pDeviceKeyboard;	/**< Virtual keyboard device (all events from all keyboards) */
+		RawInputDevice									   *m_pDeviceMouse;		/**< Virtual mouse device (all events from all mice) */
 
 
 };

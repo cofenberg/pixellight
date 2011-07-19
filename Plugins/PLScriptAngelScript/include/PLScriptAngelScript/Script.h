@@ -95,56 +95,56 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
 		PLSCRIPTANGELSCRIPT_API virtual bool RemoveAllGlobalFunctions();
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetSourceCode() const;
-		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetSourceCode() const;
+		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(bool bValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::int64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLGeneral::uint64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLCore::String &sString);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object &cObject);
 		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
 		PLSCRIPTANGELSCRIPT_API virtual bool GetReturn(bool nValue);
 		PLSCRIPTANGELSCRIPT_API virtual float GetReturn(float nValue);
 		PLSCRIPTANGELSCRIPT_API virtual double GetReturn(double nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetReturn(PLCore::String nValue);
 		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
 
@@ -208,7 +208,7 @@ class Script : public PLCore::Script {
 		*  @return
 		*    AngelScript function declaration (e.g. "void MyFunction(int,float)")
 		*/
-		PLGeneral::String GetAngelScriptFunctionDeclaration(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, bool bCppToAngelScript) const;
+		PLCore::String GetAngelScriptFunctionDeclaration(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, bool bCppToAngelScript) const;
 
 
 	//[-------------------------------------------------------]
@@ -220,9 +220,9 @@ class Script : public PLCore::Script {
 		*    A global function
 		*/
 		struct GlobalFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+			PLCore::String   sFunction;		/**< Function name used inside the script to call the global function */
+			PLCore::DynFunc *pDynFunc;		/**< Dynamic function to be called, always valid, destroy when done */
+			PLCore::String   sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
 
 
@@ -230,12 +230,12 @@ class Script : public PLCore::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String					m_sSourceCode;			/**< Script source code */
-		asIScriptEngine					   *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer, managed by AngelScriptContext */
-		asIScriptModule					   *m_pAngelScriptModule;	/**< AngelScript module instance, can be a null pointer */
-		asIScriptContext				   *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
-		PLGeneral::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
-		PLGeneral::Array<GlobalFunction*>   m_lstGlobalFunctions;	/**< List of global functions */
+		PLCore::String					m_sSourceCode;			/**< Script source code */
+		asIScriptEngine				   *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer, managed by AngelScriptContext */
+		asIScriptModule				   *m_pAngelScriptModule;	/**< AngelScript module instance, can be a null pointer */
+		asIScriptContext			   *m_pAngelScriptContext;	/**< AngelScript context instance, can be a null pointer */
+		PLCore::uint32					m_nCurrentArgument;		/**< Current argument, used during function call */
+		PLCore::Array<GlobalFunction*>  m_lstGlobalFunctions;	/**< List of global functions */
 
 
 };

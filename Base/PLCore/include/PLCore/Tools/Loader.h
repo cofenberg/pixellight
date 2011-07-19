@@ -28,9 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Container/Array.h"
 
 
 //[-------------------------------------------------------]
@@ -110,7 +109,7 @@ class Loader {
 		*  @return
 		*    The name of the loadable type
 		*/
-		PLCORE_API PLGeneral::String GetTypeName() const;
+		PLCORE_API String GetTypeName() const;
 
 		/**
 		*  @brief
@@ -119,7 +118,7 @@ class Loader {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfFormats();
+		PLCORE_API uint32 GetNumOfFormats();
 
 		/**
 		*  @brief
@@ -131,7 +130,7 @@ class Loader {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API PLGeneral::String GetFormat(PLGeneral::uint32 nIndex);
+		PLCORE_API String GetFormat(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -143,7 +142,7 @@ class Loader {
 		*  @return
 		*    'true' if the format is supported, else 'false'
 		*/
-		PLCORE_API bool IsFormatSupported(const PLGeneral::String &sExtension);
+		PLCORE_API bool IsFormatSupported(const String &sExtension);
 
 		/**
 		*  @brief
@@ -152,7 +151,7 @@ class Loader {
 		*  @return
 		*    The formats string
 		*/
-		PLCORE_API PLGeneral::String GetFormats() const;
+		PLCORE_API String GetFormats() const;
 
 		/**
 		*  @brief
@@ -161,7 +160,7 @@ class Loader {
 		*  @return
 		*    The description string
 		*/
-		PLCORE_API PLGeneral::String GetDescription() const;
+		PLCORE_API String GetDescription() const;
 
 		/**
 		*  @brief
@@ -233,10 +232,10 @@ class Loader {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const Class							*m_pClass;			/**< Loader implementation class, must be derived from "PLCore::LoaderImpl", always valid! */
-		LoaderImpl							*m_pLoaderImpl;		/**< Loader implementation class instance, can be a null pointer */
-		LoadableType						*m_pLoadableType;	/**< Loadable type, can be a null pointer */
-		PLGeneral::Array<PLGeneral::String>  m_lstFormats;		/**< List of parsed formats */
+		const Class	  *m_pClass;		/**< Loader implementation class, must be derived from "PLCore::LoaderImpl", always valid! */
+		LoaderImpl	  *m_pLoaderImpl;	/**< Loader implementation class instance, can be a null pointer */
+		LoadableType  *m_pLoadableType;	/**< Loadable type, can be a null pointer */
+		Array<String>  m_lstFormats;	/**< List of parsed formats */
 
 
 };

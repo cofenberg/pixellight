@@ -61,7 +61,7 @@ Element::~Element()
 *  @brief
 *    Constructor
 */
-Element::Element(World &cWorld) : PLGeneral::Element<Element>("", &cWorld)
+Element::Element(World &cWorld) : PLCore::Element<Element>("", &cWorld)
 {
 }
 

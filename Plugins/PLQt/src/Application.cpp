@@ -24,15 +24,15 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Core.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/FileSearch.h>
+#include <PLCore/String/String.h>
+#include <PLCore/System/System.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/System/System.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/Renderer.h>
@@ -45,7 +45,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLQt {
 

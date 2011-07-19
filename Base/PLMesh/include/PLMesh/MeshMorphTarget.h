@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLMath/Plane.h>
 #include "PLMesh/PLMesh.h"
 
@@ -113,7 +113,7 @@ class MeshMorphTarget {
 		*  @return
 		*    Name of this morph target
 		*/
-		PLMESH_API PLGeneral::String GetName() const;
+		PLMESH_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class MeshMorphTarget {
 		*    - The name muse be unique, if the owner mesh has already a morph target
 		*      with this name, the given name is changed automatically
 		*/
-		PLMESH_API void SetName(const PLGeneral::String &sName);
+		PLMESH_API void SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class MeshMorphTarget {
 		*    - If there are vertex ID's they will be used for the vertex buffer to skip
 		*      null deltas
 		*/
-		PLMESH_API PLGeneral::Array<PLGeneral::uint32> &GetVertexIDs();
+		PLMESH_API PLCore::Array<PLCore::uint32> &GetVertexIDs();
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class MeshMorphTarget {
 		*  @see
 		*    - BuildTrianglePlaneList()
 		*/
-		PLMESH_API PLGeneral::Array<PLMath::Plane> &GetTrianglePlaneList();
+		PLMESH_API PLCore::Array<PLMath::Plane> &GetTrianglePlaneList();
 
 		/**
 		*  @brief
@@ -284,18 +284,18 @@ class MeshMorphTarget {
 	//[-------------------------------------------------------]
 	private:
 		// Internal data
-		PLGeneral::String  m_sName;								/**< Name of the morph target */
-		bool			   m_bRelative;							/**< Is this morph target relative to the basis morph target? */
-		Mesh			  *m_pMesh;								/**< Owner mesh, can be a null pointer */
+		PLCore::String  m_sName;							/**< Name of the morph target */
+		bool		    m_bRelative;						/**< Is this morph target relative to the basis morph target? */
+		Mesh		   *m_pMesh;							/**< Owner mesh, can be a null pointer */
 
 		// Only used if relative
-		PLGeneral::Array<PLGeneral::uint32> m_lstVertexIDs;		/**< Vertex ID's */
+		PLCore::Array<PLCore::uint32> m_lstVertexIDs;		/**< Vertex ID's */
 
 		// Vertex data
-		PLRenderer::VertexBuffer *m_pVertexBuffer;				/**< A vertex buffer, can be a null pointer */
+		PLRenderer::VertexBuffer *m_pVertexBuffer;			/**< A vertex buffer, can be a null pointer */
 
 		// Precalculated data
-		PLGeneral::Array<PLMath::Plane> m_lstTrianglePlanes;	/**< List of triangle planes */
+		PLCore::Array<PLMath::Plane> m_lstTrianglePlanes;	/**< List of triangle planes */
 
 
 };

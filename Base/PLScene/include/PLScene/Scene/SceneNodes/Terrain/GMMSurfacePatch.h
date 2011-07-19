@@ -90,7 +90,7 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*  @param[out] nOffset
 		*    Will receive the offset
 		*/
-		PLS_API void ComputeVariance(PLGeneral::uint32 &nOffset);
+		PLS_API void ComputeVariance(PLCore::uint32 &nOffset);
 
 		/**
 		*  @brief
@@ -138,7 +138,7 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Create(PLGeneral::uint32 nXOffset, PLGeneral::uint32 nYOffset, PLGeneral::uint32 &nOffset);
+		bool Create(PLCore::uint32 nXOffset, PLCore::uint32 nYOffset, PLCore::uint32 &nOffset);
 
 		/**
 		*  @brief
@@ -160,15 +160,15 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool				m_bActive;			/**< Is the patch active? */
-		PLGeneral::uint32	m_nLevel;			/**< Current geo mip map level */
-		PLMath::Vector3		m_vCenter;			/**< Patch center */
-		PLGeneral::uint32	m_nOffset;			/**< Surface vertex offset */
-		PLGeneral::uint32	m_nXOffset;			/**< X offset in the height map */
-		PLGeneral::uint32	m_nYOffset;			/**< Y offset in the height map */
-		float			   *m_pVariance;		/**< Height variance for each level, can be a null pointer */
-		GMMSurface		   *m_pGMMSurface;		/**< Owner GMM surface of this patch (always valid!) */
-		GMMSurfacePatch	   *m_pNeighbour[4];	/**< Neighbour patches, can be a null pointer */
+		bool			 m_bActive;			/**< Is the patch active? */
+		PLCore::uint32	 m_nLevel;			/**< Current geo mip map level */
+		PLMath::Vector3	 m_vCenter;			/**< Patch center */
+		PLCore::uint32	 m_nOffset;			/**< Surface vertex offset */
+		PLCore::uint32	 m_nXOffset;		/**< X offset in the height map */
+		PLCore::uint32	 m_nYOffset;		/**< Y offset in the height map */
+		float			*m_pVariance;		/**< Height variance for each level, can be a null pointer */
+		GMMSurface		*m_pGMMSurface;		/**< Owner GMM surface of this patch (always valid!) */
+		GMMSurfacePatch	*m_pNeighbour[4];	/**< Neighbour patches, can be a null pointer */
 
 
 };

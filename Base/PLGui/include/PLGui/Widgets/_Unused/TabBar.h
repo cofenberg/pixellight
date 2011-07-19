@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Container/List.h>
 #include <PLCore/Base/Event/Event.h>
-#include <PLGeneral/Container/List.h>
 #include "PLGui/Widgets/Widget.h"
 #include "PLGui/Widgets/Controls/TabBarEntry.h"
 
@@ -120,7 +120,7 @@ class TabBar : public Widget {
 		*  @return
 		*    TabBar options (combination of ETabBarOption values)
 		*/
-		PLGUI_API PLGeneral::uint32 GetOptions() const;
+		PLGUI_API PLCore::uint32 GetOptions() const;
 
 		/**
 		*  @brief
@@ -129,7 +129,7 @@ class TabBar : public Widget {
 		*  @param[in] nOptions
 		*    TabBar options
 		*/
-		PLGUI_API void SetOptions(PLGeneral::uint32 nOptions);
+		PLGUI_API void SetOptions(PLCore::uint32 nOptions);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class TabBar : public Widget {
 		*  @remarks
 		*    see SetTabWidth()
 		*/
-		PLGUI_API PLGeneral::uint32 GetTabWidth() const;
+		PLGUI_API PLCore::uint32 GetTabWidth() const;
 
 		/**
 		*  @brief
@@ -156,7 +156,7 @@ class TabBar : public Widget {
 		*    - If side is SideLeft or SideRight, or StaticTabSize is set, tabs have a static size.
 		*      In that case, every tab will get exactly the width set by nWidth.
 		*/
-		PLGUI_API void SetTabWidth(PLGeneral::uint32 nWidth);
+		PLGUI_API void SetTabWidth(PLCore::uint32 nWidth);
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class TabBar : public Widget {
 		*  @return
 		*    Tab height
 		*/
-		PLGUI_API PLGeneral::uint32 GetTabHeight() const;
+		PLGUI_API PLCore::uint32 GetTabHeight() const;
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class TabBar : public Widget {
 		*  @param[in] nHeight
 		*    Tab height
 		*/
-		PLGUI_API void SetTabHeight(PLGeneral::uint32 nHeight);
+		PLGUI_API void SetTabHeight(PLCore::uint32 nHeight);
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class TabBar : public Widget {
 		*    Tab
 		*
 		*  @remarks
-		*    See CloseTab(PLGeneral::uint32 nTab)
+		*    See CloseTab(PLCore::uint32 nTab)
 		*/
 		PLGUI_API void CloseTab(TabBarEntry *pTab);
 
@@ -213,7 +213,7 @@ class TabBar : public Widget {
 		*    the tab but only generate the event. Do actually remove a tab,
 		*    use RemoveTab().
 		*/
-		PLGUI_API void CloseTab(PLGeneral::uint32 nTab);
+		PLGUI_API void CloseTab(PLCore::uint32 nTab);
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class TabBar : public Widget {
 		*  @return
 		*    List of tabs
 		*/
-		PLGUI_API const PLGeneral::Container<TabBarEntry*> &GetTabs() const;
+		PLGUI_API const PLCore::Container<TabBarEntry*> &GetTabs() const;
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class TabBar : public Widget {
 		*  @return
 		*    New tab entry
 		*/
-		PLGUI_API TabBarEntry *AddTab(const PLGeneral::String &sText);
+		PLGUI_API TabBarEntry *AddTab(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -248,7 +248,7 @@ class TabBar : public Widget {
 		*  @return
 		*    New tab entry
 		*/
-		PLGUI_API TabBarEntry *AddTab(const PLGeneral::String &sText, const Image &cIcon);
+		PLGUI_API TabBarEntry *AddTab(const PLCore::String &sText, const Image &cIcon);
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class TabBar : public Widget {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API bool RemoveTab(PLGeneral::uint32 nTab);
+		PLGUI_API bool RemoveTab(PLCore::uint32 nTab);
 
 		/**
 		*  @brief
@@ -403,19 +403,19 @@ class TabBar : public Widget {
 	//[-------------------------------------------------------]
 	public:
 		// TabBar data
-		ESide							m_nSide;			/**< Side the tabbar is positioned on */
-		PLGeneral::uint32				m_nOptions;			/**< TabBar options (ETabBarOption) */
-		PLGeneral::uint32				m_nTabWidth;		/**< Tab width */
-		PLGeneral::uint32				m_nTabHeight;		/**< Tab height */
-		PLGeneral::List<TabBarEntry*>	m_lstTabs;			/**< List of tabs */
-		int								m_nSelection;		/**< Index of currently selected tab */
-		int								m_nMouseSelection;	/**< Index of tab currently selected by the mouse */
-		int								m_nScrollingPos;	/**< First displayed tab (scrolling) */
+		ESide						m_nSide;			/**< Side the tabbar is positioned on */
+		PLCore::uint32				m_nOptions;			/**< TabBar options (ETabBarOption) */
+		PLCore::uint32				m_nTabWidth;		/**< Tab width */
+		PLCore::uint32				m_nTabHeight;		/**< Tab height */
+		PLCore::List<TabBarEntry*>	m_lstTabs;			/**< List of tabs */
+		int							m_nSelection;		/**< Index of currently selected tab */
+		int							m_nMouseSelection;	/**< Index of tab currently selected by the mouse */
+		int							m_nScrollingPos;	/**< First displayed tab (scrolling) */
 
 		// Child widgets
-		TabBarButton				   *m_pButtonCreate;	/**< Button to create a new tab */
-		TabBarButton				   *m_pButtonNext;		/**< Button to scroll (next) */
-		TabBarButton				   *m_pButtonPrev;		/**< Button to scroll (previous) */
+		TabBarButton			   *m_pButtonCreate;	/**< Button to create a new tab */
+		TabBarButton			   *m_pButtonNext;		/**< Button to scroll (next) */
+		TabBarButton			   *m_pButtonPrev;		/**< Button to scroll (previous) */
 
 
 };

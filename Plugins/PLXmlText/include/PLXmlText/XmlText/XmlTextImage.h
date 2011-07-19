@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLMath/Vector2i.h>
 #include "PLXmlText/PLXmlText.h"
 #include "PLXmlText/XmlText/XmlTextElement.h"
@@ -82,7 +82,7 @@ class XmlTextImage : public XmlTextElement {
 	//[ Protected virtual XmlTextElement functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
 
 
@@ -91,9 +91,9 @@ class XmlTextImage : public XmlTextElement {
 	//[-------------------------------------------------------]
 	private:
 		// Image data
-		PLGeneral::String	 m_sFilename;	/**< Image filename */
-		PLMath::Vector2i	 m_vSize;		/**< Image size */
-		PLGui::Image		*m_pImage;		/**< Image, can be a null pointer */
+		PLCore::String	  m_sFilename;	/**< Image filename */
+		PLMath::Vector2i  m_vSize;		/**< Image size */
+		PLGui::Image	 *m_pImage;		/**< Image, can be a null pointer */
 
 
 };

@@ -29,7 +29,7 @@ set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/PLPluginActiveX_i.h PROP
 ##################################################
 add_include_directories(
 	src
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLPlugin/include
 	${CMAKE_CURRENT_BINARY_DIR}
 )
@@ -86,7 +86,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGui PLRenderer PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLGui PLRenderer PLScene)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

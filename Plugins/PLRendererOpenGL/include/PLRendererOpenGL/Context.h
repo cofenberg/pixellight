@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class ValueType> class Array;
 }
 namespace PLRenderer {
@@ -87,7 +87,7 @@ class Context {
 		*  @return
 		*    'true' if all went fine and at least one display mode was found, else 'false'
 		*/
-		virtual bool QueryDisplayModes(PLGeneral::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) = 0;
+		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) = 0;
 
 
 	//[-------------------------------------------------------]

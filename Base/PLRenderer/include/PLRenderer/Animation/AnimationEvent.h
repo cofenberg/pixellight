@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementManager.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -52,7 +52,7 @@ class AnimationEventManager;
 *  @brief
 *    Animation event
 */
-class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
+class AnimationEvent : public PLCore::Element<AnimationEvent> {
 
 
 	//[-------------------------------------------------------]
@@ -76,7 +76,7 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 		*    - If you provide the pointer to the owner manager the animation
 		*      event will check in the animation event manager name list
 		*/
-		PLRENDERER_API AnimationEvent(int nID, PLGeneral::uint32 nFrame, AnimationEventManager *pManager = nullptr, const PLGeneral::String &sName = "");
+		PLRENDERER_API AnimationEvent(int nID, PLCore::uint32 nFrame, AnimationEventManager *pManager = nullptr, const PLCore::String &sName = "");
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 		*  @return
 		*    The frame which will cause this event
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFrame() const;
+		PLRENDERER_API PLCore::uint32 GetFrame() const;
 
 		/**
 		*  @brief
@@ -112,19 +112,19 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 		*  @param[in] nFrame
 		*    Frame causing this event
 		*/
-		PLRENDERER_API void SetFrame(PLGeneral::uint32 nFrame);
+		PLRENDERER_API void SetFrame(PLCore::uint32 nFrame);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		int				  m_nID;	/**< Event ID */
-		PLGeneral::uint32 m_nFrame;	/**< Frame causing this event */
+		int			   m_nID;		/**< Event ID */
+		PLCore::uint32 m_nFrame;	/**< Frame causing this event */
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGeneral::Element functions           ]
+	//[ Public virtual PLCore::Element functions              ]
 	//[-------------------------------------------------------]
 	public:
 		PLRENDERER_API virtual AnimationEvent &operator =(const AnimationEvent &cSource);
@@ -136,14 +136,14 @@ class AnimationEvent : public PLGeneral::Element<AnimationEvent> {
 *  @brief
 *    Animation event manager
 */
-class AnimationEventManager : public PLGeneral::ElementManager<AnimationEvent> {
+class AnimationEventManager : public PLCore::ElementManager<AnimationEvent> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AnimationEvent *CreateElement(const PLGeneral::String &sName);
+		virtual AnimationEvent *CreateElement(const PLCore::String &sName);
 
 
 };

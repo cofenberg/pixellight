@@ -75,7 +75,7 @@ class Database : public PLCore::Object {
 		*  @return
 		*    The database instance, a null pointer on error
 		*/
-		PLDATABASE_API static Database *Create(const PLGeneral::String &sClass);
+		PLDATABASE_API static Database *Create(const PLCore::String &sClass);
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +95,7 @@ class Database : public PLCore::Object {
 		*  @return
 		*    The version of the database implementation
 		*/
-		virtual PLGeneral::String GetVersion() const = 0;
+		virtual PLCore::String GetVersion() const = 0;
 
 		/**
 		*  @brief
@@ -113,8 +113,7 @@ class Database : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Connect(const PLGeneral::String &sServer, const PLGeneral::String &sUserName,
-							 const PLGeneral::String &sUserPassword, const PLGeneral::String &sDatabase) = 0;
+		virtual bool Connect(const PLCore::String &sServer, const PLCore::String &sUserName, const PLCore::String &sUserPassword, const PLCore::String &sDatabase) = 0;
 
 		/**
 		*  @brief

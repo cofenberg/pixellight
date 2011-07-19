@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
 #include "PLCore/PLCoreDefinitions.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/Var/VarDesc.h"
@@ -32,7 +31,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

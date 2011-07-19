@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4127) // "conditional expression is constant" (within "v8.h")
 	#include <V8/v8.h>
@@ -91,56 +91,56 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
 		PLSCRIPTV8_API virtual bool RemoveAllGlobalFunctions();
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual PLGeneral::String GetSourceCode() const;
-		PLSCRIPTV8_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTV8_API virtual PLCore::String GetSourceCode() const;
+		PLSCRIPTV8_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTV8_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
 		PLSCRIPTV8_API virtual void PushArgument(bool bValue);
 		PLSCRIPTV8_API virtual void PushArgument(float fValue);
 		PLSCRIPTV8_API virtual void PushArgument(double fValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int8 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int16 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int32 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::int64 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint8 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint16 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLGeneral::uint64 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int8 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int16 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int32 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int64 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint8 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint16 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint32 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint64 nValue);
+		PLSCRIPTV8_API virtual void PushArgument(const PLCore::String &sString);
 		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object &cObject);
 		PLSCRIPTV8_API virtual bool EndCall();
 		PLSCRIPTV8_API virtual bool GetReturn(bool nValue);
 		PLSCRIPTV8_API virtual float GetReturn(float nValue);
 		PLSCRIPTV8_API virtual double GetReturn(double nValue);
-		PLSCRIPTV8_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
-		PLSCRIPTV8_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTV8_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
+		PLSCRIPTV8_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
+		PLSCRIPTV8_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
+		PLSCRIPTV8_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
+		PLSCRIPTV8_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
+		PLSCRIPTV8_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
+		PLSCRIPTV8_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
+		PLSCRIPTV8_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
+		PLSCRIPTV8_API virtual PLCore::String GetReturn(PLCore::String nValue);
 		PLSCRIPTV8_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 		PLSCRIPTV8_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
 
@@ -171,9 +171,9 @@ class Script : public PLCore::Script {
 		*    A global function
 		*/
 		struct GlobalFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+			PLCore::String   sFunction;		/**< Function name used inside the script to call the global function */
+			PLCore::DynFunc *pDynFunc;		/**< Dynamic function to be called, always valid, destroy when done */
+			PLCore::String   sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
 
 		/**
@@ -182,8 +182,8 @@ class Script : public PLCore::Script {
 		*/
 		class V8Namespace {
 			public:
-				v8::Local<v8::ObjectTemplate>						cV8ObjectTemplate;	/**< V8 object template representing this namespace */
-				PLGeneral::HashMap<PLGeneral::String, V8Namespace > mapNamespaces;		/**< Map of nested namespaces */
+				v8::Local<v8::ObjectTemplate>				  cV8ObjectTemplate;	/**< V8 object template representing this namespace */
+				PLCore::HashMap<PLCore::String, V8Namespace > mapNamespaces;		/**< Map of nested namespaces */
 				bool operator ==(const V8Namespace &cOther) { return false; }
 		};
 
@@ -236,11 +236,11 @@ class Script : public PLCore::Script {
 		*  @remarks
 		*    The text is written to the log only if the current
 		*    log level is greater or equal to the specified value.
-		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    This method is an extension of "PLCore::Log::Output()"
 		*    which also adds the name of the script to the given
 		*    text and the "v8::TryCatch" line and expection.
 		*/
-		bool LogOutputTryCatch(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText, const v8::TryCatch &cTryCatch);
+		bool LogOutputTryCatch(PLCore::uint8 nLogLevel, const PLCore::String &sText, const v8::TryCatch &cTryCatch);
 
 		/**
 		*  @brief
@@ -255,19 +255,19 @@ class Script : public PLCore::Script {
 		*  @param[in] sNamespace
 		*    Namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*/
-		void AddV8Function(V8Namespace &cV8Namespace, const PLGeneral::String &sFunction, v8::Local<v8::ObjectTemplate> cV8Function, const PLGeneral::String &sNamespace) const;
+		void AddV8Function(V8Namespace &cV8Namespace, const PLCore::String &sFunction, v8::Local<v8::ObjectTemplate> cV8Function, const PLCore::String &sNamespace) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String							 m_sSourceCode;			/**< Script source code */
-		v8::Persistent<v8::Context>					 m_cV8Context;			/**< V8 context */
-		PLGeneral::String							 m_sCurrentFunction;	/**< Name of the current function */
-		v8::Persistent<v8::Value>					 m_cV8CurrentResult;	/**< Current V8 function */
-		PLGeneral::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
-		PLGeneral::Array<GlobalFunction*>			 m_lstGlobalFunctions;	/**< List of global functions */
+		PLCore::String							  m_sSourceCode;		/**< Script source code */
+		v8::Persistent<v8::Context>				  m_cV8Context;			/**< V8 context */
+		PLCore::String							  m_sCurrentFunction;	/**< Name of the current function */
+		v8::Persistent<v8::Value>				  m_cV8CurrentResult;	/**< Current V8 function */
+		PLCore::Array<v8::Persistent<v8::Value> > m_lstV8Arguments;		/**< Current V8 arguments */
+		PLCore::Array<GlobalFunction*>			  m_lstGlobalFunctions;	/**< List of global functions */
 
 
 };

@@ -35,12 +35,12 @@ namespace PLMath {
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-const PLGeneral::uint16 Half::Zero							= 0x0000;
-const PLGeneral::uint16 Half::One							= 0x3C00;
-const float				Half::SmallestPositive				= 5.96046448e-08f;
-const float				Half::SmallestPositiveNormalized	= 6.10351562e-05f;
-const float				Half::LargestPositive				= 65504.0f;
-const float				Half::Epsilon						= 0.00097656f;
+const PLCore::uint16 Half::Zero							= 0x0000;
+const PLCore::uint16 Half::One							= 0x3C00;
+const float			 Half::SmallestPositive				= 5.96046448e-08f;
+const float			 Half::SmallestPositiveNormalized	= 6.10351562e-05f;
+const float			 Half::LargestPositive				= 65504.0f;
+const float			 Half::Epsilon						= 0.00097656f;
 
 
 //[-------------------------------------------------------]

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
 #include "PLGui/PLGui.h"
 
 
@@ -66,7 +66,7 @@ class DataObject {
 		*  @param[in] sString
 		*    String
 		*/
-		PLGUI_API DataObject(const PLGeneral::String &sString);
+		PLGUI_API DataObject(const PLCore::String &sString);
 
 		/**
 		*  @brief
@@ -75,7 +75,7 @@ class DataObject {
 		*  @param[in] lstFiles
 		*    List of file names
 		*/
-		PLGUI_API DataObject(const PLGeneral::Container<PLGeneral::String> &lstFiles);
+		PLGUI_API DataObject(const PLCore::Container<PLCore::String> &lstFiles);
 
 		/**
 		*  @brief
@@ -84,7 +84,7 @@ class DataObject {
 		*  @param[in] nValue
 		*    Data value
 		*/
-		PLGUI_API DataObject(PLGeneral::uint32 nValue);
+		PLGUI_API DataObject(PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class DataObject {
 		*  @param[in] nSize
 		*    Size of data buffer
 		*/
-		PLGUI_API DataObject(PLGeneral::uint8 *pData, PLGeneral::uint32 nSize);
+		PLGUI_API DataObject(PLCore::uint8 *pData, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class DataObject {
 		*  @return
 		*    String, empty string if data type is other than DataString
 		*/
-		PLGUI_API PLGeneral::String GetString() const;
+		PLGUI_API PLCore::String GetString() const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class DataObject {
 		*  @param[in] sString
 		*    String
 		*/
-		PLGUI_API void Set(const PLGeneral::String &sString);
+		PLGUI_API void Set(const PLCore::String &sString);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class DataObject {
 		*  @return
 		*    List of file names, empty list if data type is other than DataFiles
 		*/
-		PLGUI_API const PLGeneral::Container<PLGeneral::String> &GetFiles() const;
+		PLGUI_API const PLCore::Container<PLCore::String> &GetFiles() const;
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class DataObject {
 		*  @param[in] lstFiles
 		*    List of file names
 		*/
-		PLGUI_API void Set(const PLGeneral::Container<PLGeneral::String> &lstFiles);
+		PLGUI_API void Set(const PLCore::Container<PLCore::String> &lstFiles);
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class DataObject {
 		*  @return
 		*    Data value, 0 if data type is other than DataCustom
 		*/
-		PLGUI_API PLGeneral::uint32 GetValue() const;
+		PLGUI_API PLCore::uint32 GetValue() const;
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class DataObject {
 		*  @param[in] nValue
 		*    Data value
 		*/
-		PLGUI_API void Set(PLGeneral::uint32 nValue);
+		PLGUI_API void Set(PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -206,7 +206,7 @@ class DataObject {
 		*  @return
 		*    Size of custom data, 0 if data type is other than DataBinary
 		*/
-		PLGUI_API PLGeneral::uint32 GetBinarySize() const;
+		PLGUI_API PLCore::uint32 GetBinarySize() const;
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class DataObject {
 		*  @return
 		*    Data pointer, a null pointer if data type is other than DataBinary
 		*/
-		PLGUI_API PLGeneral::uint8 *GetBinaryData() const;
+		PLGUI_API PLCore::uint8 *GetBinaryData() const;
 
 		/**
 		*  @brief
@@ -230,7 +230,7 @@ class DataObject {
 		*    A new buffer of the given size will be allocated and the data will be copied to that buffer.
 		*    The class takes care of deleting the allocated memory later.
 		*/
-		PLGUI_API void Set(PLGeneral::uint8 *pData, PLGeneral::uint32 nSize);
+		PLGUI_API void Set(PLCore::uint8 *pData, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -243,12 +243,12 @@ class DataObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		EDataType							 m_nDataType;	/**< Data type */
-		PLGeneral::String					 m_sString;		/**< String data */
-		PLGeneral::Array<PLGeneral::String>	 m_lstFiles;	/**< List of file names */
-		PLGeneral::uint32					 m_nValue;		/**< Custom data */
-		PLGeneral::uint8					*m_pData;		/**< Binary data buffer */
-		PLGeneral::uint32					 m_nDataSize;	/**< Binary data buffer size */
+		EDataType						 m_nDataType;	/**< Data type */
+		PLCore::String					 m_sString;		/**< String data */
+		PLCore::Array<PLCore::String>	 m_lstFiles;	/**< List of file names */
+		PLCore::uint32					 m_nValue;		/**< Custom data */
+		PLCore::uint8					*m_pData;		/**< Binary data buffer */
+		PLCore::uint32					 m_nDataSize;	/**< Binary data buffer size */
 
 
 };

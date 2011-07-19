@@ -28,12 +28,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementManager.h>
-#include <PLCore/Tools/Resource.h>
-#include <PLCore/Tools/ResourceHandler.h>
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementManager.h>
+#include <PLCore/Container/Resource.h>
+#include <PLCore/Container/ResourceHandler.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLMesh/JointAni.h"
 #include "PLMesh/Joint.h"
 
@@ -51,8 +51,7 @@ namespace PLMesh {
 *  @brief
 *    Hierarchical skeleton class
 */
-class Skeleton : public PLCore::Resource<Skeleton>,
-	public PLGeneral::ElementManager<Joint>, public JointAni {
+class Skeleton : public PLCore::Resource<Skeleton>, public PLCore::ElementManager<Joint>, public JointAni {
 
 
 	//[-------------------------------------------------------]
@@ -84,7 +83,7 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 		*  @note
 		*    Must be called after joint parent/child manipulation
 		*/
-		PLMESH_API const PLGeneral::Array<PLGeneral::uint32> &GetRootJoints() const;
+		PLMESH_API const PLCore::Array<PLCore::uint32> &GetRootJoints() const;
 
 		/**
 		*  @brief
@@ -109,7 +108,7 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		Skeleton(PLCore::ResourceManager<Skeleton> &cManager, const PLGeneral::String &sName);
+		Skeleton(PLCore::ResourceManager<Skeleton> &cManager, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -127,14 +126,14 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<PLGeneral::uint32> m_lstRootJoints;	/**< Array of root joint indices */
+		PLCore::Array<PLCore::uint32> m_lstRootJoints;	/**< Array of root joint indices */
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Joint *CreateElement(const PLGeneral::String &sName);
+		virtual Joint *CreateElement(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -142,7 +141,7 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API Skeleton &operator =(const Skeleton &cSource);
-		PLMESH_API virtual PLGeneral::String GetSourceName() const;
+		PLMESH_API virtual PLCore::String GetSourceName() const;
 
 
 	//[-------------------------------------------------------]
@@ -150,7 +149,7 @@ class Skeleton : public PLCore::Resource<Skeleton>,
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API virtual bool Unload();
-		PLMESH_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLMESH_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

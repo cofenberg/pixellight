@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Core/Singleton.h>
+#include <PLCore/Container/List.h>
 #include "PLInput/PLInput.h"
 
 
@@ -55,13 +55,13 @@ namespace PLInput {
 *  @brief
 *    Class for accessing Bluetooth devices
 */
-class Bluetooth : public PLGeneral::Singleton<Bluetooth> {
+class Bluetooth : public PLCore::Singleton<Bluetooth> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<Bluetooth>;
+	friend class PLCore::Singleton<Bluetooth>;
 
 
 	//[-------------------------------------------------------]
@@ -81,7 +81,7 @@ class Bluetooth : public PLGeneral::Singleton<Bluetooth> {
 		*  @return
 		*    Device list
 		*/
-		PLINPUT_API const PLGeneral::List<BTDevice*> &GetDevices() const;
+		PLINPUT_API const PLCore::List<BTDevice*> &GetDevices() const;
 
 
 	//[-------------------------------------------------------]
@@ -111,8 +111,8 @@ class Bluetooth : public PLGeneral::Singleton<Bluetooth> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		BTImpl						*m_pBTImpl;		/**< Platform specific Bluetooth implementation */
-		PLGeneral::List<BTDevice*>	 m_lstDevices;	/**< List of devices */
+		BTImpl					*m_pBTImpl;		/**< Platform specific Bluetooth implementation */
+		PLCore::List<BTDevice*>	 m_lstDevices;	/**< List of devices */
 
 
 };
@@ -127,7 +127,7 @@ class Bluetooth : public PLGeneral::Singleton<Bluetooth> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::Bluetooth>;
 }
 

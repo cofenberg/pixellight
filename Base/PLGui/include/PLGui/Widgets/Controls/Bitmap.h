@@ -53,7 +53,7 @@ class Bitmap : public Widget {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Bitmap, "PLGui", PLGui::Widget, "Widget that displays a static image")
 		// Attributes
-		pl_attribute(ImageName,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Image filename",	"")
+		pl_attribute(ImageName,	PLCore::String,	"",	ReadWrite,	GetSet,	"Image filename",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -103,7 +103,7 @@ class Bitmap : public Widget {
 		*  @return
 		*    Image that is displayed on the button
 		*/
-		PLGUI_API PLGeneral::String GetImageName() const;
+		PLGUI_API PLCore::String GetImageName() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class Bitmap : public Widget {
 		*  @param[in] sImage
 		*    Image that is displayed on the button
 		*/
-		PLGUI_API void SetImageName(const PLGeneral::String &sImage);
+		PLGUI_API void SetImageName(const PLCore::String &sImage);
 
 
 	//[-------------------------------------------------------]

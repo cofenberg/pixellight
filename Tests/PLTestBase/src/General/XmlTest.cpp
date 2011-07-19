@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/File.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/File.h>
 #include "PLTestBase/General/XmlTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

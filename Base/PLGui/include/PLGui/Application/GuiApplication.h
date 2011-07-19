@@ -85,7 +85,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*  @param[in] sGuiFilename
 		*    Filename of GUI to load, can be empty
 		*/
-		PLGUI_API GuiApplication(const PLGeneral::String &sGuiFilename = "");
+		PLGUI_API GuiApplication(const PLCore::String &sGuiFilename = "");
 
 		/**
 		*  @brief

@@ -65,7 +65,7 @@ class Buffer : public Resource {
 		*  @return
 		*    Number of buffer elements
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfElements() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfElements() const;
 
 		/**
 		*  @brief
@@ -74,7 +74,7 @@ class Buffer : public Resource {
 		*  @return
 		*    Buffer size (in bytes)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetSize() const;
+		PLRENDERER_API PLCore::uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Buffer : public Resource {
 		*  @return
 		*    0 if the buffer is currently unlocked, else the lock count is returned
 		*/
-		PLRENDERER_API PLGeneral::uint16 GetLockCount() const;
+		PLRENDERER_API PLCore::uint16 GetLockCount() const;
 
 
 	//[-------------------------------------------------------]
@@ -149,8 +149,7 @@ class Buffer : public Resource {
 		*      within the system memory
 		*    - It the buffer is still locked, it's forced to be unlocked immediately if all went fine
 		*/
-		virtual bool Allocate(PLGeneral::uint32 nElements, Usage::Enum nUsage = Usage::Dynamic,
-							  bool bManaged = true, bool bKeepData = false) = 0;
+		virtual bool Allocate(PLCore::uint32 nElements, Usage::Enum nUsage = Usage::Dynamic, bool bManaged = true, bool bKeepData = false) = 0;
 
 		/**
 		*  @brief
@@ -185,7 +184,7 @@ class Buffer : public Resource {
 		*      will become invalid!
 		*    - Do NOT delete the returned data!
 		*/
-		virtual void *Lock(PLGeneral::uint32 nFlag = Lock::ReadWrite) = 0;
+		virtual void *Lock(PLCore::uint32 nFlag = Lock::ReadWrite) = 0;
 
 		/**
 		*  @brief
@@ -199,7 +198,7 @@ class Buffer : public Resource {
 		*    - This function will only work if the buffer is locked (see Lock())
 		*    - Note that the vertex element type size depends on the used API.
 		*      For instance color, OpenGL will use 4*float to save the color value,
-		*      but Direct3D will handle colors as PLGeneral::uint32! Therefore you should use this
+		*      but Direct3D will handle colors as PLCore::uint32! Therefore you should use this
 		*      function carefully! We recommend to use the special functions provided by the
 		*      vertex buffer interface to manipulate the vertex buffer data.
 		*    - Do NOT delete the returned data!
@@ -250,12 +249,12 @@ class Buffer : public Resource {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nElements;		/**< Number of buffer elements */
-		PLGeneral::uint32 m_nSize;			/**< Buffer size (in bytes) */
-		Usage::Enum		  m_nUsage;			/**< Usage flag */
-		bool			  m_bManaged;		/**< Is the buffer managed? */
-		PLGeneral::uint16 m_nLockCount;		/**< Lock count */
-		PLGeneral::uint64 m_nLockStartTime;	/**< Time where the buffer was locked */
+		PLCore::uint32 m_nElements;			/**< Number of buffer elements */
+		PLCore::uint32 m_nSize;				/**< Buffer size (in bytes) */
+		Usage::Enum	   m_nUsage;			/**< Usage flag */
+		bool		   m_bManaged;			/**< Is the buffer managed? */
+		PLCore::uint16 m_nLockCount;		/**< Lock count */
+		PLCore::uint64 m_nLockStartTime;	/**< Time where the buffer was locked */
 
 
 	//[-------------------------------------------------------]

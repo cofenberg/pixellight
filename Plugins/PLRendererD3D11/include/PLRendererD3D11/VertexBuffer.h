@@ -102,7 +102,7 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @note
 		*    - This function is used by the renderer when SetVertexBuffer() was called
 		*/
-		bool MakeCurrent(PLGeneral::uint32 nOffset = 0);
+		bool MakeCurrent(PLCore::uint32 nOffset = 0);
 
 		/**
 		*  @brief
@@ -114,27 +114,27 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*  @see
 		*    - See vertex offset parameter in MakeCurrent()
 		*/
-		PLGeneral::uint32 GetVertexOffset() const;
+		PLCore::uint32 GetVertexOffset() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint8 *m_pData;			/**< Dynamic buffer (none VBO) */
-		void			 *m_pLockedData;	/**< Locked data */
+		PLCore::uint8 *m_pData;			/**< Dynamic buffer (none VBO) */
+		void		  *m_pLockedData;	/**< Locked data */
 		// Offsets
-		int				  m_nOffset[NumOfSemantics][MaxPipelineChannels];
-		PLGeneral::uint32 m_nVertexOffset;
+		int			   m_nOffset[NumOfSemantics][MaxPipelineChannels];
+		PLCore::uint32 m_nVertexOffset;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::VertexBuffer functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void *GetData(PLGeneral::uint32 nIndex, PLGeneral::uint32 nSemantic, PLGeneral::uint32 nChannel = 0);
-		virtual PLGraphics::Color4 GetColor(PLGeneral::uint32 nIndex, PLGeneral::uint32 nChannel = 0);
-		virtual bool SetColor(PLGeneral::uint32 nIndex, const PLGraphics::Color4 &cColor, PLGeneral::uint32 nChannel = 0);
+		virtual void *GetData(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel = 0);
+		virtual PLGraphics::Color4 GetColor(PLCore::uint32 nIndex, PLCore::uint32 nChannel = 0);
+		virtual bool SetColor(PLCore::uint32 nIndex, const PLGraphics::Color4 &cColor, PLCore::uint32 nChannel = 0);
 
 
 	//[-------------------------------------------------------]
@@ -149,9 +149,9 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
 		virtual bool Clear();
-		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
 		virtual void *GetData();
 		virtual bool Unlock();
 

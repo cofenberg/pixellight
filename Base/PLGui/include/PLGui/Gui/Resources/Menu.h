@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLGui/Gui/Resources/MenuItem.h"
 
 
@@ -80,7 +80,7 @@ class Menu : public MenuItem {
 		*  @return
 		*    List of items
 		*/
-		PLGUI_API const PLGeneral::Container<MenuItem*> &GetItems() const;
+		PLGUI_API const PLCore::Container<MenuItem*> &GetItems() const;
 
 		/**
 		*  @brief
@@ -92,7 +92,7 @@ class Menu : public MenuItem {
 		*  @return
 		*    Index of item, or -1
 		*/
-		PLGUI_API PLGeneral::int32 GetShortcutItem(char nShortcut) const;
+		PLGUI_API PLCore::int32 GetShortcutItem(char nShortcut) const;
 
 		/**
 		*  @brief
@@ -120,7 +120,7 @@ class Menu : public MenuItem {
 		*    If nIndex is greater or equal to the number of elements in the menu,
 		*    the new item will be added at the end of the menu.
 		*/
-		PLGUI_API void AddItemAtIndex(PLGeneral::uint32 nIndex, MenuItem *pItem, bool bDelete = true);
+		PLGUI_API void AddItemAtIndex(PLCore::uint32 nIndex, MenuItem *pItem, bool bDelete = true);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Menu : public MenuItem {
 		*  @return
 		*    Item
 		*/
-		PLGUI_API MenuItem *AddItem(const PLGeneral::String &sText);
+		PLGUI_API MenuItem *AddItem(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class Menu : public MenuItem {
 		*  @return
 		*    Item
 		*/
-		PLGUI_API MenuItem *AddItem(const PLGeneral::String &sText, const Image &cIcon);
+		PLGUI_API MenuItem *AddItem(const PLCore::String &sText, const Image &cIcon);
 
 		/**
 		*  @brief
@@ -191,8 +191,8 @@ class Menu : public MenuItem {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::List<MenuItem*> m_lstItems;		/**< List of menu items */
-		PLGeneral::List<MenuItem*> m_lstNoDeletion;	/**< List of menu items that are not automatically deleted */
+		PLCore::List<MenuItem*> m_lstItems;			/**< List of menu items */
+		PLCore::List<MenuItem*> m_lstNoDeletion;	/**< List of menu items that are not automatically deleted */
 
 
 };

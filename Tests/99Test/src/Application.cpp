@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 #include <PLCore/Base/ClassManager.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Module.h>
@@ -49,7 +49,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/Event/EventDesc.h"
 
@@ -31,7 +30,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

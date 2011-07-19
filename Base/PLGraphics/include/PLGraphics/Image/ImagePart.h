@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -126,7 +126,7 @@ class ImagePart {
 		*  @return
 		*    Semantics ID
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetSemantics() const;
+		PLGRAPHICS_API PLCore::uint32 GetSemantics() const;
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class ImagePart {
 		*  @param[in] nSemantics
 		*    Semantics ID
 		*/
-		PLGRAPHICS_API void SetSemantics(PLGeneral::uint32 nSemantics);
+		PLGRAPHICS_API void SetSemantics(PLCore::uint32 nSemantics);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class ImagePart {
 		*  @return
 		*    Number of mipmaps
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetNumOfMipmaps() const;
+		PLGRAPHICS_API PLCore::uint32 GetNumOfMipmaps() const;
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class ImagePart {
 		*  @return
 		*    Image buffer, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImageBuffer *GetMipmap(PLGeneral::uint32 nIndex) const;
+		PLGRAPHICS_API ImageBuffer *GetMipmap(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class ImagePart {
 		*  @return
 		*    List of mipmaps
 		*/
-		PLGRAPHICS_API const PLGeneral::Container<ImageBuffer*> &GetMipmaps() const;
+		PLGRAPHICS_API const PLCore::Container<ImageBuffer*> &GetMipmaps() const;
 
 		/**
 		*  @brief
@@ -217,8 +217,8 @@ class ImagePart {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32			   m_nSemantics;	/**< Semantics ID */
-		PLGeneral::Array<ImageBuffer*> m_lstMipmaps;	/**< Mipmaps */
+		PLCore::uint32			    m_nSemantics;	/**< Semantics ID */
+		PLCore::Array<ImageBuffer*> m_lstMipmaps;	/**< Mipmaps */
 
 
 };

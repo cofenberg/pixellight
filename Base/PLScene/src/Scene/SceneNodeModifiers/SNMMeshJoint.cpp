@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Container/Stack.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Container/Stack.h>
 #include <PLMath/EulerAngles.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Font.h>
@@ -44,7 +44,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

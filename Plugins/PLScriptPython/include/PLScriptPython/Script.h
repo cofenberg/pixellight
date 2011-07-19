@@ -87,56 +87,56 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTPYTHON_API virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
 		PLSCRIPTPYTHON_API virtual bool RemoveAllGlobalFunctions();
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTPYTHON_API virtual PLGeneral::String GetSourceCode() const;
-		PLSCRIPTPYTHON_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTPYTHON_API virtual PLCore::String GetSourceCode() const;
+		PLSCRIPTPYTHON_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTPYTHON_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTPYTHON_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTPYTHON_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTPYTHON_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
 		PLSCRIPTPYTHON_API virtual void PushArgument(bool bValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(float fValue);
 		PLSCRIPTPYTHON_API virtual void PushArgument(double fValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int8 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int16 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int32 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::int64 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint8 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint16 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(PLGeneral::uint64 nValue);
-		PLSCRIPTPYTHON_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::int8 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::int16 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::int32 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::int64 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::uint8 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::uint16 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::uint32 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::uint64 nValue);
+		PLSCRIPTPYTHON_API virtual void PushArgument(const PLCore::String &sString);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTPYTHON_API virtual void PushArgument(PLCore::Object &cObject);
 		PLSCRIPTPYTHON_API virtual bool EndCall();
 		PLSCRIPTPYTHON_API virtual bool GetReturn(bool nValue);
 		PLSCRIPTPYTHON_API virtual float GetReturn(float nValue);
 		PLSCRIPTPYTHON_API virtual double GetReturn(double nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
-		PLSCRIPTPYTHON_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
+		PLSCRIPTPYTHON_API virtual PLCore::String GetReturn(PLCore::String nValue);
 		PLSCRIPTPYTHON_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 		PLSCRIPTPYTHON_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
 
@@ -193,7 +193,7 @@ class Script : public PLCore::Script {
 		*    A string containing the Python error description, empty string if there
 		*    wasn't an error or there was an error in receiving the error description
 		*/
-		PLGeneral::String GetPythonErrorDescription() const;
+		PLCore::String GetPythonErrorDescription() const;
 
 		/**
 		*  @brief
@@ -212,11 +212,11 @@ class Script : public PLCore::Script {
 		*  @remarks
 		*    The text is written to the log only if the current
 		*    log level is greater or equal to the specified value.
-		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    This method is an extension of "PLCore::Log::Output()"
 		*    which also adds the name of the script to the given
 		*    text and the "sErrorDescription" content.
 		*/
-		bool LogOutputWithErrorDescription(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText, const PLGeneral::String &sErrorDescription);
+		bool LogOutputWithErrorDescription(PLCore::uint8 nLogLevel, const PLCore::String &sText, const PLCore::String &sErrorDescription);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class Script : public PLCore::Script {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool AddPythonFunction(PyObject *pPythonDictionary, const PLGeneral::String &sFunction, PyObject *pPythonFunction, const PLGeneral::String &sNamespace) const;
+		bool AddPythonFunction(PyObject *pPythonDictionary, const PLCore::String &sFunction, PyObject *pPythonFunction, const PLCore::String &sNamespace) const;
 
 
 	//[-------------------------------------------------------]
@@ -258,9 +258,9 @@ class Script : public PLCore::Script {
 		*    A global function
 		*/
 		struct GlobalFunction {
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+			PLCore::String   sFunction;		/**< Function name used inside the script to call the global function */
+			PLCore::DynFunc *pDynFunc;		/**< Dynamic function to be called, always valid, destroy when done */
+			PLCore::String   sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
 
 
@@ -268,15 +268,15 @@ class Script : public PLCore::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String					m_sSourceCode;				/**< Script source code */
-		PyObject						   *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject						   *m_pPythonDictionary;		/**< Python dictionary of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject						   *m_pPythonFunction;			/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
-		PyObject						   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
-		PLGeneral::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */
-		PyObject						   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
-		PLGeneral::Array<GlobalFunction*>   m_lstGlobalFunctions;		/**< List of global functions */
-		PyMethodDef						   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
+		PLCore::String					m_sSourceCode;				/**< Script source code */
+		PyObject					   *m_pPythonModule;			/**< Python module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject					   *m_pPythonDictionary;		/**< Python dictionary of the module, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject					   *m_pPythonFunction;			/**< Current Python function, can be a null pointer (borrowed reference, don't use Py_DECREF on it) */
+		PyObject					   *m_pPythonTuple;				/**< Python tuple, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLCore::uint32					m_nCurrentArgument;			/**< Current argument, used during function call */
+		PyObject					   *m_pPythonFunctionResult;	/**< Python function result, used during function call, can be a null pointer (own reference, use Py_DECREF on it) */
+		PLCore::Array<GlobalFunction*>  m_lstGlobalFunctions;		/**< List of global functions */
+		PyMethodDef					   *m_pPythonTableOfFunctions;	/**< Python table of functions, can be a null pointer */
 
 
 };

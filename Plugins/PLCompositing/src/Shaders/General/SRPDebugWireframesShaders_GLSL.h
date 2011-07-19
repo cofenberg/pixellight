@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLGeneral::String sDebugWireframes_GLSL_VS = "\
+static const PLCore::String sDebugWireframes_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
 \n\
@@ -37,7 +37,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLGeneral::String sDebugWireframes_GLSL_FS = "\
+static const PLCore::String sDebugWireframes_GLSL_FS = "\
 // Uniforms\n\
 uniform lowp vec4 Color;	// Color\n\
 \n\

@@ -103,7 +103,7 @@ class LayoutBox : public Layout {
 
 		// Internal data
 		PLMath::Vector2i *m_pSizes;			/**< Data space used for calculations */
-		PLGeneral::uint32 m_nWidgets;		/**< Number of widgets that are in the layout */
+		PLCore::uint32	  m_nWidgets;		/**< Number of widgets that are in the layout */
 
 
 };

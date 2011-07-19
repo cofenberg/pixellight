@@ -28,25 +28,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
 #include "PLCore/PLCoreDefinitions.h"
+#include "PLCore/Core/Singleton.h"
+#include "PLCore/Container/List.h"
+#include "PLCore/Container/HashMap.h"
 #include "PLCore/Base/Event/Event.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class Url;
-}
-namespace PLCore {
-	class Class;
-	class Module;
-	class ClassImpl;
-	template <typename T> class ModuleID;
-}
 
 
 //[-------------------------------------------------------]
@@ -56,19 +42,29 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Url;
+class Class;
+class Module;
+class ClassImpl;
+template <typename T> class ModuleID;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Manager providing access to RTTI classes
 */
-class ClassManager : public PLGeneral::Singleton<ClassManager> {
+class ClassManager : public Singleton<ClassManager> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<ClassManager>;
+	friend class Singleton<ClassManager>;
 	friend class ModuleID<int>;
 	friend class ClassReal;
 	friend class ClassDummy;
@@ -95,7 +91,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    List of modules
 		*/
-		PLCORE_API const PLGeneral::List<const Module*> &GetModules() const;
+		PLCORE_API const List<const Module*> &GetModules() const;
 
 		/**
 		*  @brief
@@ -107,7 +103,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    Pointer to module (can be a null pointer)
 		*/
-		PLCORE_API const Module *GetModule(PLGeneral::uint32 nModuleID) const;
+		PLCORE_API const Module *GetModule(uint32 nModuleID) const;
 
 		/**
 		*  @brief
@@ -124,7 +120,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @note
 		*    - If the module was already loaded, this module instance is returned instead
 		*/
-		PLCORE_API const Module *LoadModule(const PLGeneral::String &sAbsFilename, bool bForceBuildTypeMatch = false);
+		PLCORE_API const Module *LoadModule(const String &sAbsFilename, bool bForceBuildTypeMatch = false);
 
 		/**
 		*  @brief
@@ -143,7 +139,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @remarks
 		*     This function scans for '.plugin'-files and registers the plugins if all went fine.
 		*/
-		PLCORE_API bool ScanPlugins(const PLGeneral::String &sPath, ERecursive nRecursive = Recursive, bool bDelayedPluginLoading = true);
+		PLCORE_API bool ScanPlugins(const String &sPath, ERecursive nRecursive = Recursive, bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -157,7 +153,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool LoadPlugin(const PLGeneral::String &sFilename, bool bDelayedPluginLoading = true);
+		PLCORE_API bool LoadPlugin(const String &sFilename, bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -190,7 +186,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    List of classes
 		*/
-		PLCORE_API const PLGeneral::List<const Class*> &GetClasses() const;
+		PLCORE_API const List<const Class*> &GetClasses() const;
 
 		/**
 		*  @brief
@@ -213,7 +209,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    The found classes will be added to the list that is passed as the first argument to the function.
 		*    The class list is not automatically cleared by this function.
 		*/
-		PLCORE_API void GetClasses(PLGeneral::List<const Class*> &lstClasses, const PLGeneral::String &sClass, ERecursive nRecursive = Recursive, EIncludeBase nIncludeBase = IncludeBase, EIncludeAbstract nIncludeAbstract = IncludeAbstract, PLGeneral::uint32 nModuleID = 0) const;
+		PLCORE_API void GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive = Recursive, EIncludeBase nIncludeBase = IncludeBase, EIncludeAbstract nIncludeAbstract = IncludeAbstract, uint32 nModuleID = 0) const;
 
 		/**
 		*  @brief
@@ -225,7 +221,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    Pointer to the class, or a null pointer on error
 		*/
-		PLCORE_API const Class *GetClass(const PLGeneral::String &sClass) const;
+		PLCORE_API const Class *GetClass(const String &sClass) const;
 
 
 	//[-------------------------------------------------------]
@@ -272,7 +268,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    Unique module ID for a new module
 		*/
-		PLCORE_API PLGeneral::uint32 GetUniqueModuleID();
+		PLCORE_API uint32 GetUniqueModuleID();
 
 		/**
 		*  @brief
@@ -288,7 +284,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*    If a module with that ID already exists, the function will return a pointer to it.
 		*    Otherwise it will create a new module and assign it to the given ID.
 		*/
-		PLCORE_API Module *CreateModule(PLGeneral::uint32 nModuleID);
+		PLCORE_API Module *CreateModule(uint32 nModuleID);
 
 		/**
 		*  @brief
@@ -301,7 +297,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @param[in] bForceBuildTypeMatch
 		*    'true' to force a build type match, else 'false'
 		*/
-		PLCORE_API void LoadModuleDelayed(const PLGeneral::XmlElement &cPluginElement, const PLGeneral::String &sAbsFilename, bool bForceBuildTypeMatch = false);
+		PLCORE_API void LoadModuleDelayed(const XmlElement &cPluginElement, const String &sAbsFilename, bool bForceBuildTypeMatch = false);
 
 		/**
 		*  @brief
@@ -318,7 +314,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @param[in] sDescription
 		*    Module description
 		*/
-		PLCORE_API void RegisterModule(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sVendor, const PLGeneral::String &sLicense, const PLGeneral::String &sDescription);
+		PLCORE_API void RegisterModule(uint32 nModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription);
 
 		/**
 		*  @brief
@@ -342,7 +338,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @note
 		*    - Called automatically by the RTTI system (see "pl_class"-macro)
 		*/
-		PLCORE_API void RegisterClass(PLGeneral::uint32 nModuleID, ClassImpl *pClassImpl);
+		PLCORE_API void RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl);
 
 		/**
 		*  @brief
@@ -357,7 +353,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @note
 		*    - Called automatically by the RTTI system (see "pl_class"-macro)
 		*/
-		PLCORE_API void UnregisterClass(PLGeneral::uint32 nModuleID, ClassImpl *pClassImpl);
+		PLCORE_API void UnregisterClass(uint32 nModuleID, ClassImpl *pClassImpl);
 
 		/**
 		*  @brief
@@ -373,7 +369,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool LoadPluginV1(const PLGeneral::Url &cUrl, const PLGeneral::XmlElement &cPluginElement, bool bDelayedPluginLoading = true);
+		PLCORE_API bool LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElement, bool bDelayedPluginLoading = true);
 
 
 	//[-------------------------------------------------------]
@@ -381,13 +377,12 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 	//[-------------------------------------------------------]
 	private:
 		// Modules
-		PLGeneral::uint32									 m_nModuleID;	/**< Module ID counter */
-		PLGeneral::List<const Module*>						 m_lstModules;	/**< List of all modules */
-		PLGeneral::HashMap<PLGeneral::uint32, const Module*> m_mapModules;	/**< Hash-map of module IDs to modules */
-
+		uint32							m_nModuleID;	/**< Module ID counter */
+		List<const Module*>				m_lstModules;	/**< List of all modules */
+		HashMap<uint32, const Module*>	m_mapModules;	/**< Hash-map of module IDs to modules */
 		// Classes
-		PLGeneral::List<const Class*>						 m_lstClasses;	/**< List of all classes */
-		PLGeneral::HashMap<PLGeneral::String, const Class*>	 m_mapClasses;	/**< Hash-map of class names to classes (with namespace) */
+		List<const Class*>				m_lstClasses;	/**< List of all classes */
+		HashMap<String, const Class*>	m_mapClasses;	/**< Hash-map of class names to classes (with namespace) */
 
 
 };
@@ -402,7 +397,7 @@ class ClassManager : public PLGeneral::Singleton<ClassManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::ClassManager>;
+PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::ClassManager>;
 
 
 #endif // __PLCORE_CLASSMANAGER_H__

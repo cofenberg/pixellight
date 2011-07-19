@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/Url.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/String/Tokenizer.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Material/MaterialManager.h>
 #include "PLMesh/Creator/MeshCreator.h"
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 namespace PLMesh {
 

@@ -216,45 +216,45 @@ class IntegralType {
 };
 
 template <>
-class IntegralType<PLGeneral::uint8> {
+class IntegralType<uint8> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::uint8 Type;
+		typedef uint8 Type;
 };
 
 template <>
-class IntegralType<PLGeneral::uint16> {
+class IntegralType<uint16> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::uint16 Type;
+		typedef uint16 Type;
 };
 
 template <>
-class IntegralType<PLGeneral::uint32> {
+class IntegralType<uint32> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::uint32 Type;
+		typedef uint32 Type;
 };
 
 template <>
-class IntegralType<PLGeneral::int8> {
+class IntegralType<int8> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::int8 Type;
+		typedef int8 Type;
 };
 
 template <>
-class IntegralType<PLGeneral::int16> {
+class IntegralType<int16> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::int16 Type;
+		typedef int16 Type;
 };
 
 template <>
-class IntegralType<PLGeneral::int32> {
+class IntegralType<int32> {
 	public:
 		enum { IsIntegral = 1 };
-		typedef PLGeneral::int32 Type;
+		typedef int32 Type;
 };
 
 /**

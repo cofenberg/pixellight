@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	// [HACK] There are missing forward declarations within the SPARK headers...
@@ -140,9 +140,9 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 	//[ Protected definitions                                 ]
 	//[-------------------------------------------------------]
 	protected:
-		static const PLGeneral::uint32 NumOfVerticesPerParticle;	/**< Number of vertices per particle */
-		static const PLGeneral::uint32 NumOfIndicesPerParticle;		/**< Number of indices per particle */
-		static const std::string	   PLBufferName;
+		static const PLCore::uint32 NumOfVerticesPerParticle;	/**< Number of vertices per particle */
+		static const PLCore::uint32 NumOfIndicesPerParticle;	/**< Number of indices per particle */
+		static const std::string	PLBufferName;
 
 
 	//[-------------------------------------------------------]
@@ -183,11 +183,11 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 		PLRenderer::TextureHandler	*m_pTextureHandler;	/**< Texture handler, always valid! */
 
 		// Curent vertex buffer data - not nice, but more performant as passing them around all over the place
-		PLGeneral::uint32		  m_nCurrentVertexSize;
+		PLCore::uint32		  	  m_nCurrentVertexSize;
 		float					 *m_pfCurrentPosition;
 		float					 *m_pfCurrentTexCoord;
 		PLRenderer::VertexBuffer *m_pCurrentVertexBuffer;
-		PLGeneral::uint32		  m_nCurrentVertex;
+		PLCore::uint32		  	  m_nCurrentVertex;
 
 
 };

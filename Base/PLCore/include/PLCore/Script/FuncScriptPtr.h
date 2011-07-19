@@ -75,10 +75,10 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		typedef typename Type<T15>::_Type _T15;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -115,9 +115,9 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -148,10 +148,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Type<T15>::_Type _T15;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -184,9 +184,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -217,10 +217,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Type<T14>::_Type _T14;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -256,9 +256,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -288,10 +288,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Type<T14>::_Type _T14;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -323,9 +323,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -355,10 +355,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		typedef typename Type<T13>::_Type _T13;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -393,9 +393,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -424,10 +424,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		typedef typename Type<T13>::_Type _T13;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -458,9 +458,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -489,10 +489,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		typedef typename Type<T12>::_Type _T12;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -526,9 +526,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -556,10 +556,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		typedef typename Type<T12>::_Type _T12;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -589,9 +589,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -619,10 +619,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		typedef typename Type<T11>::_Type _T11;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -655,9 +655,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -684,10 +684,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		typedef typename Type<T11>::_Type _T11;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -716,9 +716,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -745,10 +745,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		typedef typename Type<T10>::_Type _T10;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -780,9 +780,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -808,10 +808,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		typedef typename Type<T10>::_Type _T10;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -839,9 +839,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -867,10 +867,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		typedef typename Type<T9> ::_Type _T9;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -901,9 +901,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -928,10 +928,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		typedef typename Type<T9> ::_Type _T9;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -958,9 +958,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -985,10 +985,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		typedef typename Type<T8> ::_Type _T8;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1018,9 +1018,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1044,10 +1044,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		typedef typename Type<T8> ::_Type _T8;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1073,9 +1073,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1099,10 +1099,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		typedef typename Type<T7> ::_Type _T7;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1131,9 +1131,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1156,10 +1156,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		typedef typename Type<T7> ::_Type _T7;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1184,9 +1184,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1209,10 +1209,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		typedef typename Type<T6> ::_Type _T6;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1240,9 +1240,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1264,10 +1264,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		typedef typename Type<T6> ::_Type _T6;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1291,9 +1291,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1315,10 +1315,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		typedef typename Type<T5> ::_Type _T5;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1345,9 +1345,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1368,10 +1368,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		typedef typename Type<T5> ::_Type _T5;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1394,9 +1394,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1417,10 +1417,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		typedef typename Type<T4> ::_Type _T4;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1446,9 +1446,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1468,10 +1468,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		typedef typename Type<T4> ::_Type _T4;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1493,9 +1493,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1515,10 +1515,10 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		typedef typename Type<T3> ::_Type _T3;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1543,9 +1543,9 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1564,10 +1564,10 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		typedef typename Type<T3> ::_Type _T3;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1588,9 +1588,9 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1609,10 +1609,10 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		typedef typename Type<T2> ::_Type _T2;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1636,9 +1636,9 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1656,10 +1656,10 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		typedef typename Type<T2> ::_Type _T2;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1679,9 +1679,9 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1699,10 +1699,10 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 		typedef typename Type<T1> ::_Type _T1;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1725,9 +1725,9 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1744,10 +1744,10 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 		typedef typename Type<T1> ::_Type _T1;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1766,9 +1766,9 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1785,10 +1785,10 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 		typedef typename Type<T0> ::_Type _T0;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1810,9 +1810,9 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1828,10 +1828,10 @@ class FuncScriptPtr<void, T0> : public Func<void, T0> {
 		typedef typename Type<T0> ::_Type _T0;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1849,9 +1849,9 @@ class FuncScriptPtr<void, T0> : public Func<void, T0> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1867,10 +1867,10 @@ class FuncScriptPtr<R> : public Func<R> {
 		typedef typename Type<R>  ::_Type _R;
 
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1891,9 +1891,9 @@ class FuncScriptPtr<R> : public Func<R> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 /**
@@ -1906,10 +1906,10 @@ class FuncScriptPtr<R> : public Func<R> {
 template <>
 class FuncScriptPtr<void> : public Func<void> {
 	public:
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
+		FuncScriptPtr(Script *pScript, const String &sFunction) : m_pScript(pScript), m_sFunction(sFunction) {
 		}
 
-		FuncScriptPtr(Script *pScript, const PLGeneral::String &sFunction, const PLGeneral::String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
+		FuncScriptPtr(Script *pScript, const String &sFunction, const String &sNamespace) : m_pScript(pScript), m_sFunction(sFunction), m_sNamespace(sNamespace) {
 		}
 
 		virtual ~FuncScriptPtr() {
@@ -1925,9 +1925,9 @@ class FuncScriptPtr<void> : public Func<void> {
 		}
 
 	private:
-		Script			  *m_pScript;		/**< Script instance the function is in, can be a null pointer */
-		PLGeneral::String  m_sFunction;		/**< Name of the script function to use */
-		PLGeneral::String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+		Script *m_pScript;		/**< Script instance the function is in, can be a null pointer */
+		String  m_sFunction;	/**< Name of the script function to use */
+		String  m_sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 };
 
 

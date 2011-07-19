@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceHandler.h>
 #include <PLCore/Base/Event/EventHandler.h>
+#include <PLCore/Container/ResourceHandler.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLRenderer/PLRenderer.h"
@@ -258,7 +258,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Load(TextureManager &cTextureManager, const PLGeneral::String &sFilename, bool bReloadTexture = false);
+		PLRENDERER_API bool Load(TextureManager &cTextureManager, const PLCore::String &sFilename, bool bReloadTexture = false);
 
 		/**
 		*  @brief
@@ -282,7 +282,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 		*  @note
 		*    - The texture handlers texture transformation matrix is also set!
 		*/
-		PLRENDERER_API bool Bind(PLGeneral::uint32 nStage = 0) const;
+		PLRENDERER_API bool Bind(PLCore::uint32 nStage = 0) const;
 
 		/**
 		*  @brief

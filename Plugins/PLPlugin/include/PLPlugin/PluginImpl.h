@@ -11,7 +11,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLPlugin/PLPlugin.h"
 #ifdef WIN32
 	#include "PLPlugin/PLPluginWin32Includes.h"
@@ -75,7 +75,7 @@ class PluginImpl {
 		*  @return
 		*    System handle for the plugin window
 		*/
-		PLPLUGIN_API PLGeneral::handle GetWindowHandle() const;
+		PLPLUGIN_API PLCore::handle GetWindowHandle() const;
 
 		/**
 		*  @brief
@@ -84,7 +84,7 @@ class PluginImpl {
 		*  @return
 		*    System handle for the device context
 		*/
-		PLPLUGIN_API PLGeneral::handle GetDeviceContext() const;
+		PLPLUGIN_API PLCore::handle GetDeviceContext() const;
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class PluginImpl {
 		*  @return
 		*    Width
 		*/
-		PLPLUGIN_API PLGeneral::uint32 GetWidth() const;
+		PLPLUGIN_API PLCore::uint32 GetWidth() const;
 
 		/**
 		*  @brief
@@ -102,7 +102,7 @@ class PluginImpl {
 		*  @return
 		*    Height
 		*/
-		PLPLUGIN_API PLGeneral::uint32 GetHeight() const;
+		PLPLUGIN_API PLCore::uint32 GetHeight() const;
 
 
 	//[-------------------------------------------------------]

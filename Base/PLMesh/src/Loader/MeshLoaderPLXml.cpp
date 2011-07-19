@@ -23,12 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Container/Stack.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/String/ParseTools.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Container/Stack.h>
+#include <PLCore/String/Tokenizer.h>
+#include <PLCore/String/ParseTools.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Animation/AnimationEvent.h>
@@ -47,7 +47,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 namespace PLMesh {

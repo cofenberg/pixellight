@@ -71,12 +71,12 @@ class GMMSurfaceLevel {
 		*    GMM surface level body piece
 		**/
 		struct BodyPiece {
-			PLGeneral::uint32		*pnIndexBuffer;			/**< Can be a null pointer */
-			PLGeneral::uint32		 nIndexBufferSize;
+			PLCore::uint32			*pnIndexBuffer;			/**< Can be a null pointer */
+			PLCore::uint32			 nIndexBufferSize;
 			PLRenderer::IndexBuffer *pIndexBuffer;			/**< Can be a null pointer */
 
-			PLGeneral::uint32		*pnCornerIndexBuffer;	/**< Can be a null pointer */
-			PLGeneral::uint32		 nCornerIndexSize;
+			PLCore::uint32			*pnCornerIndexBuffer;	/**< Can be a null pointer */
+			PLCore::uint32			 nCornerIndexSize;
 			PLRenderer::IndexBuffer *pCornerIndexBuffer;	/**< Can be a null pointer */
 		};
 
@@ -85,8 +85,8 @@ class GMMSurfaceLevel {
 		*    GMM surface level linking piece
 		**/
 		struct LinkingPiece {
-			PLGeneral::uint32		*pnIndexBuffer[4];		/**< Can be a null pointer */
-			PLGeneral::uint32		 nIndexBufferSize[4];
+			PLCore::uint32			*pnIndexBuffer[4];		/**< Can be a null pointer */
+			PLCore::uint32			 nIndexBufferSize[4];
 			PLRenderer::IndexBuffer *pIndexBuffer[4];		/**< Can be a null pointer */
 		};
 
@@ -119,7 +119,7 @@ class GMMSurfaceLevel {
 		*  @param[in] nPatchSize
 		*    Patch size
 		*/
-		PLS_API void BuildBodies(PLGeneral::uint32 nLevel, PLGeneral::uint32 nPatchSize);
+		PLS_API void BuildBodies(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class GMMSurfaceLevel {
 		*  @param[in] nPatchSize
 		*    Patch size
 		*/
-		PLS_API void BuildLinkers(PLGeneral::uint32 nLevel, PLGeneral::uint32 nPatchSize);
+		PLS_API void BuildLinkers(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
 
 
 	//[-------------------------------------------------------]
@@ -154,7 +154,7 @@ class GMMSurfaceLevel {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer *m_pRenderer;	/**< Used renderer (always valid!) */
-		PLGeneral::uint32	  m_nLevels;	/**< Number of levels */
+		PLCore::uint32		  m_nLevels;	/**< Number of levels */
 		BodyPiece			 *m_pBodies;	/**< Bodies, can be a null pointer */
 		LinkingPiece		 *m_pLinkers;	/**< Linkers, can be a null pointer */
 

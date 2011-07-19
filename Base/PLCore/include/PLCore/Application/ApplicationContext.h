@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
+#include "PLCore/String/String.h"
+#include "PLCore/Container/Array.h"
 #include "PLCore/PLCore.h"
 
 
@@ -81,7 +81,7 @@ class ApplicationContext {
 		*  @return
 		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
-		PLCORE_API PLGeneral::String GetExecutableFilename() const;
+		PLCORE_API String GetExecutableFilename() const;
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class ApplicationContext {
 		*  @param[in] sExecutableFilename
 		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
-		PLCORE_API void SetExecutableFilename(const PLGeneral::String &sExecutableFilename);
+		PLCORE_API void SetExecutableFilename(const String &sExecutableFilename);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class ApplicationContext {
 		*    This is just a convenience function and is the same as using
 		*      Url(GetExecutableFile()).CutFilename()
 		*/
-		PLCORE_API PLGeneral::String GetAppDirectory() const;
+		PLCORE_API String GetAppDirectory() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class ApplicationContext {
 		*  @return
 		*    Current directory that was set when the application constructor was called (e.g. on Windows: 'C:\MyApplication')
 		*/
-		PLCORE_API PLGeneral::String GetStartupDirectory() const;
+		PLCORE_API String GetStartupDirectory() const;
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class ApplicationContext {
 		*  @param[in] sStartupDirectory
 		*    Current directory that was set when the application constructor was called
 		*/
-		PLCORE_API void SetStartupDirectory(const PLGeneral::String &sStartupDirectory);
+		PLCORE_API void SetStartupDirectory(const String &sStartupDirectory);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class ApplicationContext {
 		*  @return
 		*    Absolute path to log file, empty if log has not been opened
 		*/
-		PLCORE_API PLGeneral::String GetLogFilename() const;
+		PLCORE_API String GetLogFilename() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class ApplicationContext {
 		*  @param[in] sLog
 		*    Absolute path to log file, empty if log has not been opened
 		*/
-		PLCORE_API void SetLogFilename(const PLGeneral::String &sLog);
+		PLCORE_API void SetLogFilename(const String &sLog);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class ApplicationContext {
 		*  @return
 		*    Absolute path to config file, empty if no config is used
 		*/
-		PLCORE_API PLGeneral::String GetConfigFilename() const;
+		PLCORE_API String GetConfigFilename() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class ApplicationContext {
 		*  @param[in] sConfig
 		*    Absolute path to config file, empty if no config is used
 		*/
-		PLCORE_API void SetConfigFilename(const PLGeneral::String &sConfig);
+		PLCORE_API void SetConfigFilename(const String &sConfig);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class ApplicationContext {
 		*  @return
 		*    List of command line arguments that were passed to the program
 		*/
-		PLCORE_API const PLGeneral::Array<PLGeneral::String> &GetArguments() const;
+		PLCORE_API const Array<String> &GetArguments() const;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class ApplicationContext {
 		*  @param[in] lstArguments
 		*    List of command line arguments that were passed to the program
 		*/
-		PLCORE_API void SetArguments(const PLGeneral::Array<PLGeneral::String> &lstArguments);
+		PLCORE_API void SetArguments(const Array<String> &lstArguments);
 
 
 		//[-------------------------------------------------------]
@@ -197,12 +197,12 @@ class ApplicationContext {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String					m_sExecutableFilename;	/**< Absolute executable filename of the application */
-		PLGeneral::String					m_sAppDirectory;		/**< Application directory */
-		PLGeneral::String					m_sStartupDirectory;	/**< The current directory when the application constructor was called */
-		PLGeneral::String					m_sLog;					/**< Absolute path to log file, empty if log has not been opened */
-		PLGeneral::String					m_sConfig;				/**< Absolute path to config file, empty if no config is used */
-		PLGeneral::Array<PLGeneral::String>	m_lstArguments;			/**< Argument list */
+		String			m_sExecutableFilename;	/**< Absolute executable filename of the application */
+		String			m_sAppDirectory;		/**< Application directory */
+		String			m_sStartupDirectory;	/**< The current directory when the application constructor was called */
+		String			m_sLog;					/**< Absolute path to log file, empty if log has not been opened */
+		String			m_sConfig;				/**< Absolute path to config file, empty if no config is used */
+		Array<String>	m_lstArguments;			/**< Argument list */
 
 
 };

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
 #include "PLRendererD3D11/IndexBuffer.h"
 
@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRendererD3D11 {
 
 

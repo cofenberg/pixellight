@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/Url.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/Url.h>
 #include <IGame/IGame.h>
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLSceneNode.h"
@@ -37,7 +37,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

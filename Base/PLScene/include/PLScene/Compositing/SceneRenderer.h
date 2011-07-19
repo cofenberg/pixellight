@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include "PLScene/Compositing/SceneRendererPass.h"
 
 
@@ -62,7 +62,7 @@ class SceneRendererManager;
 *    - Derived classes should use a 'SR'-prefix (example: SRBegin)
 *    - Prefer creating new scene renderer passes instead of scene renderer
 */
-class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::ElementManager<SceneRendererPass> {
+class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLCore::ElementManager<SceneRendererPass> {
 
 
 	//[-------------------------------------------------------]
@@ -104,8 +104,7 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 		*  @note
 		*    - If the desired name is already in use, the name is chosen automatically
 		*/
-		PLS_API SceneRendererPass *Create(const PLGeneral::String &sClass, const PLGeneral::String &sName = "",
-										  const PLGeneral::String &sParameters = "");
+		PLS_API SceneRendererPass *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "");
 
 
 	//[-------------------------------------------------------]
@@ -121,7 +120,7 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		PLS_API SceneRenderer(SceneRendererManager &cManager, const PLGeneral::String &sName);
+		PLS_API SceneRenderer(SceneRendererManager &cManager, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -151,14 +150,14 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLGeneral::
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool Unload();
-		PLS_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual SceneRendererPass *CreateElement(const PLGeneral::String &sName);
+		PLS_API virtual SceneRendererPass *CreateElement(const PLCore::String &sName);
 
 
 };

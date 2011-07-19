@@ -58,7 +58,7 @@ class SNMPostProcessASCII : public PLCompositing::SNMPostProcess {
 		// Attributes
 		pl_attribute(LetterSize,		PLMath::Vector2,	PLMath::Vector2(16.0f, 16.0f),	ReadWrite,	DirectValue,	"Size of one letter in pixels",			"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,			PLGeneral::String,	"Data/PostProcesses/ASCII.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,			PLCore::String,		"Data/PostProcesses/ASCII.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

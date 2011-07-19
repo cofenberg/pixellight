@@ -67,11 +67,11 @@ class TrayIcon {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<const PLMath::Vector2i&>						EventMouseMove;					/**< Mouse moves inside the tray icon, mouse position within the widget as parameter */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonDown;			/**< Mouse button is pressed, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonUp;				/**< Mouse button is released, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonClick;			/**< Mouse button has been clicked, mouse button and mouse position within the widget as parameters */
-		PLCore::Event<PLGeneral::uint32, const PLMath::Vector2i&>	EventMouseButtonDoubleClick;	/**< Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters */
+		PLCore::Event<const PLMath::Vector2i&>					EventMouseMove;					/**< Mouse moves inside the tray icon, mouse position within the widget as parameter */
+		PLCore::Event<PLCore::uint32, const PLMath::Vector2i&>	EventMouseButtonDown;			/**< Mouse button is pressed, mouse button and mouse position within the widget as parameters */
+		PLCore::Event<PLCore::uint32, const PLMath::Vector2i&>	EventMouseButtonUp;				/**< Mouse button is released, mouse button and mouse position within the widget as parameters */
+		PLCore::Event<PLCore::uint32, const PLMath::Vector2i&>	EventMouseButtonClick;			/**< Mouse button has been clicked, mouse button and mouse position within the widget as parameters */
+		PLCore::Event<PLCore::uint32, const PLMath::Vector2i&>	EventMouseButtonDoubleClick;	/**< Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters */
 
 
 	//[-------------------------------------------------------]
@@ -154,7 +154,7 @@ class TrayIcon {
 		*  @return
 		*    Text that is displayed as a tooltip
 		*/
-		PLGUI_API PLGeneral::String GetTooltip() const;
+		PLGUI_API PLCore::String GetTooltip() const;
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class TrayIcon {
 		*  @param[in] sTooltip
 		*    Text that is displayed as a tooltip
 		*/
-		PLGUI_API void SetTooltip(const PLGeneral::String &sTooltip);
+		PLGUI_API void SetTooltip(const PLCore::String &sTooltip);
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class TrayIcon {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void ShowNotification(const PLGeneral::String &sTitle, const PLGeneral::String &sText);
+		PLGUI_API void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -199,7 +199,7 @@ class TrayIcon {
 		*  @param[in] vPos
 		*    Mouse position within the tray icon
 		*/
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class TrayIcon {
 		*  @param[in] vPos
 		*    Mouse position within the tray icon
 		*/
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -221,7 +221,7 @@ class TrayIcon {
 		*  @param[in] vPos
 		*    Mouse position within the tray icon
 		*/
-		PLGUI_API virtual void OnMouseButtonClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 		/**
 		*  @brief
@@ -232,18 +232,18 @@ class TrayIcon {
 		*  @param[in] vPos
 		*    Mouse position within the tray icon
 		*/
-		PLGUI_API virtual void OnMouseButtonDoubleClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDoubleClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui					*m_pGui;		/**< Pointer to GUI instance */
-		TrayIconImpl		*m_pImpl;		/**< Tray icon implementation */
-		bool				 m_bVisible;	/**< Is the tray icon visible? */
-		Image				 m_cIcon;		/**< Displayed icon */
-		PLGeneral::String	 m_sTooltip;	/**< Displayed tooltip */
+		Gui				*m_pGui;		/**< Pointer to GUI instance */
+		TrayIconImpl	*m_pImpl;		/**< Tray icon implementation */
+		bool			 m_bVisible;	/**< Is the tray icon visible? */
+		Image			 m_cIcon;		/**< Displayed icon */
+		PLCore::String	 m_sTooltip;	/**< Displayed tooltip */
 
 
 };

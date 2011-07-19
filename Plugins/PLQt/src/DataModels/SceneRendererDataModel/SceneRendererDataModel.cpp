@@ -35,8 +35,8 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLScene;
-using namespace PLGeneral;
 namespace PLQt {
 namespace DataModels {
 namespace SceneRendererDataModel {

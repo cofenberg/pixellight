@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
 #include <PLScene/Compositing/SceneRenderer.h>
@@ -35,7 +35,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;

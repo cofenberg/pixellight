@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Core/MemoryManager.h>
 #include <PLCore/Tools/Chunk.h>
 #include "PLTestBase/Core/ChunkTest.h"
 
@@ -31,7 +31,6 @@
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 

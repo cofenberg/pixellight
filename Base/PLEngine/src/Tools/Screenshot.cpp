@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/System/System.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

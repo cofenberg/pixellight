@@ -85,7 +85,7 @@ class PLSceneMaterialSRShaderLighting : public PLSceneMaterial {
 		*  @param[in] fDefault
 		*    Default setting
 		*/
-		void ExportFloat(PLGeneral::XmlElement &cMaterialElement, const char *pszIGamePropertyName, const char *pszParameterName, float fDefault);
+		void ExportFloat(PLCore::XmlElement &cMaterialElement, const char *pszIGamePropertyName, const char *pszParameterName, float fDefault);
 
 		/**
 		*  @brief
@@ -100,14 +100,14 @@ class PLSceneMaterialSRShaderLighting : public PLSceneMaterial {
 		*  @param[in] cDefault
 		*    Default setting
 		*/
-		void ExportColor(PLGeneral::XmlElement &cMaterialElement, const char *pszIGamePropertyName, const char *pszParameterName, const Point3 &cDefault);
+		void ExportColor(PLCore::XmlElement &cMaterialElement, const char *pszIGamePropertyName, const char *pszParameterName, const Point3 &cDefault);
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLSceneMaterial functions             ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void SaveParameters(PLGeneral::XmlElement &cMaterialElement);
+		virtual void SaveParameters(PLCore::XmlElement &cMaterialElement);
 
 
 };

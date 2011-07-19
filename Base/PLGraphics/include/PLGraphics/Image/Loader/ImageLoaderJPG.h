@@ -63,10 +63,10 @@ class ImageLoaderJPG : public ImageLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	Image&,			PLGeneral::File&,						"Load method, no fancy upsampling and no interblock smoothing is applied",																											"")
-		pl_method_4(LoadParams,	pl_ret_type(bool),	Image&,			PLGeneral::File&,	bool,	bool,		"Load method. Parameters: First 'bool' parameter determines whether or not fancy upsampling is applied, second 'bool' parameter whether or not interblock smoothing is applied.",	"")
-		pl_method_2(Save,		pl_ret_type(bool),	const Image&,	PLGeneral::File&,						"Save method, using 100% quality setting",																																			"")
-		pl_method_3(SaveParams,	pl_ret_type(bool),	const Image&,	PLGeneral::File&,	PLGeneral::uint32,	"Save method, quality (0...100) as first parameter",																																"")
+		pl_method_2(Load,		pl_ret_type(bool),	Image&,			PLCore::File&,					"Load method, no fancy upsampling and no interblock smoothing is applied",																											"")
+		pl_method_4(LoadParams,	pl_ret_type(bool),	Image&,			PLCore::File&,	bool,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not fancy upsampling is applied, second 'bool' parameter whether or not interblock smoothing is applied.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	const Image&,	PLCore::File&,					"Save method, using 100% quality setting",																																			"")
+		pl_method_3(SaveParams,	pl_ret_type(bool),	const Image&,	PLCore::File&,	PLCore::uint32,	"Save method, quality (0...100) as first parameter",																																"")
 	pl_class_end
 
 
@@ -74,10 +74,10 @@ class ImageLoaderJPG : public ImageLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLGRAPHICS_API bool Load(Image &cImage, PLGeneral::File &cFile);
-		PLGRAPHICS_API bool LoadParams(Image &cImage, PLGeneral::File &cFile, bool bBlockSmoothing, bool bFancyUpsampling);
-		PLGRAPHICS_API bool Save(const Image &cImage, PLGeneral::File &cFile);
-		PLGRAPHICS_API bool SaveParams(const Image &cImage, PLGeneral::File &cFile, PLGeneral::uint32 nQuality);
+		PLGRAPHICS_API bool Load(Image &cImage, PLCore::File &cFile);
+		PLGRAPHICS_API bool LoadParams(Image &cImage, PLCore::File &cFile, bool bBlockSmoothing, bool bFancyUpsampling);
+		PLGRAPHICS_API bool Save(const Image &cImage, PLCore::File &cFile);
+		PLGRAPHICS_API bool SaveParams(const Image &cImage, PLCore::File &cFile, PLCore::uint32 nQuality);
 
 
 	//[-------------------------------------------------------]

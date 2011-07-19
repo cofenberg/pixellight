@@ -55,8 +55,8 @@ class SNMKeyValue : public SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMKeyValue, "PLScene", PLScene::SceneNodeModifier, "Key/value data scene node modifier")
 		// Attributes
-		pl_attribute(Key,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Key",		"")
-		pl_attribute(Value,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Value",	"")
+		pl_attribute(Key,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Key",		"")
+		pl_attribute(Value,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Value",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

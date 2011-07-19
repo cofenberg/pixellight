@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Server.h>
+#include <PLCore/Network/Server.h>
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace NetworkChat {
 *  @brief
 *    Chat server network class
 */
-class ChatServer : public PLGeneral::Server {
+class ChatServer : public PLCore::Server {
 
 
 	//[-------------------------------------------------------]
@@ -85,10 +85,10 @@ class ChatServer : public PLGeneral::Server {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::Server functions           ]
+	//[ Private virtual PLCore::Server functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLGeneral::Connection *CreateIncomingConnection();
+		virtual PLCore::Connection *CreateIncomingConnection();
 
 
 };

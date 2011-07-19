@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
+#include <PLCore/Tools/Tools.h>
 #include <PLMath/BoundingBox.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
@@ -45,7 +45,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

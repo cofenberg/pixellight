@@ -100,8 +100,8 @@ class ImageLinux : public ImageImpl {
 	//[ Public virtual ImageImpl functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLGeneral::String &sFilename);
-		virtual bool LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphics::Color3 &cColor);
+		virtual bool Load(const PLCore::String &sFilename);
+		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor);
 
 
 	//[-------------------------------------------------------]
@@ -120,7 +120,7 @@ class ImageLinux : public ImageImpl {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadPixmap(const PLGeneral::String &sFilename, const PLGraphics::Color4 &cColorKey);
+		bool LoadPixmap(const PLCore::String &sFilename, const PLGraphics::Color4 &cColorKey);
 
 
 	//[-------------------------------------------------------]

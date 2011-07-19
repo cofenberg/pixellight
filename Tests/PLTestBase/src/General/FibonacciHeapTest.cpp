@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/FibonacciHeap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/FibonacciHeap.h>
 #include "PLTestBase/General/FibonacciHeapTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/PLGui.h"
 
@@ -100,7 +100,7 @@ class Screen {
 		*  @return
 		*    Name of screen (this depends on the system)
 		*/
-		PLGUI_API PLGeneral::String GetName() const;
+		PLGUI_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -109,7 +109,7 @@ class Screen {
 		*  @param[in] sName
 		*    Name of screen
 		*/
-		PLGUI_API void SetName(const PLGeneral::String &sName);
+		PLGUI_API void SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -170,12 +170,12 @@ class Screen {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Gui					*m_pGui;			/**< Pointer to GUI instance */
-		mutable Widget		*m_pDesktopWidget;	/**< Desktop widget */
-		bool				 m_bDefault;		/**< 'true' if the screen is the default screen */
-		PLGeneral::String	 m_sName;			/**< Screen name */
-		PLMath::Vector2i	 m_vPos;			/**< Screen position */
-		PLMath::Vector2i	 m_vSize;			/**< Screen size */
+		Gui				 *m_pGui;			/**< Pointer to GUI instance */
+		mutable Widget	 *m_pDesktopWidget;	/**< Desktop widget */
+		bool			  m_bDefault;		/**< 'true' if the screen is the default screen */
+		PLCore::String	  m_sName;			/**< Screen name */
+		PLMath::Vector2i  m_vPos;			/**< Screen position */
+		PLMath::Vector2i  m_vSize;			/**< Screen size */
 
 
 };

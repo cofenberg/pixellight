@@ -185,7 +185,7 @@ class WiiMote : public Device {
 		*  @param[in] pImpl
 		*    System specific device implementation, must be valid!
 		*/
-		PLINPUT_API WiiMote(const PLGeneral::String &sName, DeviceImpl *pImpl);
+		PLINPUT_API WiiMote(const PLCore::String &sName, DeviceImpl *pImpl);
 
 		/**
 		*  @brief
@@ -247,7 +247,7 @@ class WiiMote : public Device {
 		*  @return
 		*    Battery state
 		*/
-		PLINPUT_API PLGeneral::uint8 GetBattery() const;
+		PLINPUT_API PLCore::uint8 GetBattery() const;
 
 		/**
 		*  @brief
@@ -273,25 +273,25 @@ class WiiMote : public Device {
 		*/
 		struct SAcceleration {
 			// Status
-			int nUpdateNearG;		/**< Update counter when acceleration is near 1G */
+			int nUpdateNearG;	/**< Update counter when acceleration is near 1G */
 
 			// Status
-			float fAccX;			/**< Acceleration: X */
-			float fAccY;			/**< Acceleration: Y */
-			float fAccZ;			/**< Acceleration: Z */
-			float fOrientX;			/**< Orientation:  X */
-			float fOrientY;			/**< Orientation:  Y */
-			float fOrientZ;			/**< Orientation:  Z */
-			float fRoll;			/**< Angle:        Roll */
-			float fPitch;			/**< Angle:        Pitch */
+			float fAccX;		/**< Acceleration: X */
+			float fAccY;		/**< Acceleration: Y */
+			float fAccZ;		/**< Acceleration: Z */
+			float fOrientX;		/**< Orientation:  X */
+			float fOrientY;		/**< Orientation:  Y */
+			float fOrientZ;		/**< Orientation:  Z */
+			float fRoll;		/**< Angle:        Roll */
+			float fPitch;		/**< Angle:        Pitch */
 
 			// Calibration
-			PLGeneral::uint8 nX0;	/**< Calibration: X0 */
-			PLGeneral::uint8 nY0;	/**< Calibration: Y0 */
-			PLGeneral::uint8 nZ0;	/**< Calibration: Z0 */
-			PLGeneral::uint8 nXG;	/**< Calibration: XG */
-			PLGeneral::uint8 nYG;	/**< Calibration: YG */
-			PLGeneral::uint8 nZG;	/**< Calibration: ZG */
+			PLCore::uint8 nX0;	/**< Calibration: X0 */
+			PLCore::uint8 nY0;	/**< Calibration: Y0 */
+			PLCore::uint8 nZ0;	/**< Calibration: Z0 */
+			PLCore::uint8 nXG;	/**< Calibration: XG */
+			PLCore::uint8 nYG;	/**< Calibration: YG */
+			PLCore::uint8 nZG;	/**< Calibration: ZG */
 
 			// Calculate orientation from acceleration data
 			void CalculateOrientation();
@@ -307,12 +307,12 @@ class WiiMote : public Device {
 			float fY;				/**< Y position */
 
 			// Calibration
-			PLGeneral::uint8 nMinX;	/**< Calibration: Minimum X */
-			PLGeneral::uint8 nMidX;	/**< Calibration: Middle  X */
-			PLGeneral::uint8 nMaxX;	/**< Calibration: Maximum X */
-			PLGeneral::uint8 nMinY;	/**< Calibration: Minimum Y */
-			PLGeneral::uint8 nMidY;	/**< Calibration: Middle  Y */
-			PLGeneral::uint8 nMaxY;	/**< Calibration: Maximum Y */
+			PLCore::uint8 nMinX;	/**< Calibration: Minimum X */
+			PLCore::uint8 nMidX;	/**< Calibration: Middle  X */
+			PLCore::uint8 nMaxX;	/**< Calibration: Maximum X */
+			PLCore::uint8 nMinY;	/**< Calibration: Minimum Y */
+			PLCore::uint8 nMidY;	/**< Calibration: Middle  Y */
+			PLCore::uint8 nMaxY;	/**< Calibration: Maximum Y */
 		};
 
 		/**
@@ -415,19 +415,19 @@ class WiiMote : public Device {
 		*  @brief
 		*    Extension status received
 		*/
-		void OnReadExtension(PLGeneral::uint32 nOffset);
+		void OnReadExtension(PLCore::uint32 nOffset);
 
 		/**
 		*  @brief
 		*    Nunchuk status received
 		*/
-		void OnReadNunchuk(PLGeneral::uint32 nOffset);
+		void OnReadNunchuk(PLCore::uint32 nOffset);
 
 		/**
 		*  @brief
 		*    Classic-controller status received
 		*/
-		void OnReadClassic(PLGeneral::uint32 nOffset);
+		void OnReadClassic(PLCore::uint32 nOffset);
 
 		/**
 		*  @brief
@@ -438,7 +438,7 @@ class WiiMote : public Device {
 		*  @param[in] nSize
 		*    Size to read
 		*/
-		void ReadMemory(int nAddress, PLGeneral::uint8 nSize);
+		void ReadMemory(int nAddress, PLCore::uint8 nSize);
 
 		/**
 		*  @brief
@@ -451,7 +451,7 @@ class WiiMote : public Device {
 		*  @param[in] nSize
 		*    Size to write
 		*/
-		void WriteMemory(int nAddress, const PLGeneral::uint8* pBuffer, PLGeneral::uint8 nSize);
+		void WriteMemory(int nAddress, const PLCore::uint8* pBuffer, PLCore::uint8 nSize);
 
 		/**
 		*  @brief
@@ -462,7 +462,7 @@ class WiiMote : public Device {
 		*  @param[in] nData
 		*    Byte to write
 		*/
-		void WriteMemory(int nAddress, PLGeneral::uint8 nData);
+		void WriteMemory(int nAddress, PLCore::uint8 nData);
 
 		/**
 		*  @brief
@@ -479,7 +479,7 @@ class WiiMote : public Device {
 		*  @param[in] nSize
 		*    Size of buffer
 		*/
-		void Send(PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
+		void Send(PLCore::uint8 *pBuffer, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -490,7 +490,7 @@ class WiiMote : public Device {
 		*  @param[in] nSize
 		*    Size inside m_nWriteBuffer
 		*/
-		void DecryptBuffer(PLGeneral::uint32 nOffset, PLGeneral::uint32 nSize);
+		void DecryptBuffer(PLCore::uint32 nOffset, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -515,28 +515,28 @@ class WiiMote : public Device {
 		PLCore::EventHandler<> EventHandlerOnDeviceRead;
 
 		// HID connection
-		ConnectionDevice	*m_pConnectionDevice;		/**< Connection device, always valid! */
-		PLGeneral::uint8	*m_pInputBuffer;			/**< Input buffer */
-		PLGeneral::uint8	*m_pOutputBuffer;			/**< Output buffer */
+		ConnectionDevice	*m_pConnectionDevice;	/**< Connection device, always valid! */
+		PLCore::uint8		*m_pInputBuffer;		/**< Input buffer */
+		PLCore::uint8		*m_pOutputBuffer;		/**< Output buffer */
 
 		// WiiMote options
-		EReport				 m_nReportMode;				/**< Report mode */
-		EIRMode				 m_nIRMode;					/**< IR mode */
-		EExtension			 m_nExtension;				/**< Extension type */
+		EReport				 m_nReportMode;			/**< Report mode */
+		EIRMode				 m_nIRMode;				/**< IR mode */
+		EExtension			 m_nExtension;			/**< Extension type */
 
 		// WiiMote status
-		PLGeneral::uint8	 m_nBattery;				/**< Battery (percent) */
-		PLGeneral::uint8	 m_nLEDs;					/**< LEDs status */
-		PLGeneral::uint8	 m_nRumble;					/**< Rumble state (1=on, 0=off) */
-		PLGeneral::uint16	 m_nButtons;				/**< WiiMote Buttons */
-		SAcceleration		 m_sAcc;					/**< Acceleration sensor */
-		SDot				 m_sDots[2];				/**< IR dots */
-		PLMath::Vector2		 m_vIRPos;					/**< IR position (X, Y between 0..1) */
+		PLCore::uint8		 m_nBattery;			/**< Battery (percent) */
+		PLCore::uint8		 m_nLEDs;				/**< LEDs status */
+		PLCore::uint8		 m_nRumble;				/**< Rumble state (1=on, 0=off) */
+		PLCore::uint16		 m_nButtons;			/**< WiiMote Buttons */
+		SAcceleration		 m_sAcc;				/**< Acceleration sensor */
+		SDot				 m_sDots[2];			/**< IR dots */
+		PLMath::Vector2		 m_vIRPos;				/**< IR position (X, Y between 0..1) */
 
 		// Nunchuk status
-		PLGeneral::uint16	 m_nNunchukButtons;			/**< Nunchuk buttons */
-		SAcceleration		 m_sNunchukAcc;				/**< Nunchuk acceleration sensor */
-		SJoystick			 m_sNunchukJoy;				/**< Nunchuk joystick */
+		PLCore::uint16		 m_nNunchukButtons;		/**< Nunchuk buttons */
+		SAcceleration		 m_sNunchukAcc;			/**< Nunchuk acceleration sensor */
+		SJoystick			 m_sNunchukJoy;			/**< Nunchuk joystick */
 
 
 };

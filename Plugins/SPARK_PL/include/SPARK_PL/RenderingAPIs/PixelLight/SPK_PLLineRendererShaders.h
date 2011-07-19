@@ -89,7 +89,7 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 		*  @return
 		*    A new registered SPK_PLLineRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLLineRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
+		SPARK_PL_API static SPK_PLLineRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -109,7 +109,7 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 		*  @param[in] fWidth
 		*    The width of this SPK_PLLineRendererShaders in pixels
 		*/
-		SPK_PLLineRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
+		SPK_PLLineRendererShaders(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "", float fLength = 1.0f, float fWidth = 1.0f);
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class SPK_PLLineRendererShaders : public SPK_PLLineRenderer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLCore::String					 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
 		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
 		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
 		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */

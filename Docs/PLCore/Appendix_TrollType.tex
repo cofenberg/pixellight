@@ -33,7 +33,7 @@ if (pMyClass != nullptr) {
 	if (pMyObject != nullptr) {
 		// Ask the troll about the number he should currently
 		// remember -> sNumber is now "one"
-		PLGeneral::String sNumber = pMyObject->MyTroll.GetString();
+		PLCore::String sNumber = pMyObject->MyTroll.GetString();
 
 		// Give the smart troll a new number to remember
 		pMyObject->MyTroll.SetInt(42);
@@ -72,7 +72,7 @@ class TrollType {
 		bool operator ==(const TrollType &cOther) const;
 		int GetValue() const;
 		void SetValue(int nValue);
-		PLGeneral::String GetComment() const;
+		PLCore::String GetComment() const;
 
 	// Private data
 	private:
@@ -101,7 +101,7 @@ class Type<TrollType> {
 		typedef TrollType _Type;
 		typedef TrollType _StorageType;
 		static const int TypeID = 100101;
-		static PLGeneral::String GetTypeName() {
+		static String GetTypeName() {
 			return "troll";
 		}
 		static TrollType ConvertFromVar(const DynVar *pVar) {
@@ -125,63 +125,63 @@ class Type<TrollType> {
 			cTroll.SetValue(nValue);
 			return cTroll;
 		}
-		static PLGeneral::int8 ConvertToInt8(const TrollType &cTroll) {
-			return (PLGeneral::int8)ConvertToInt(cTroll);
+		static int8 ConvertToInt8(const TrollType &cTroll) {
+			return (int8)ConvertToInt(cTroll);
 		}
-		static TrollType ConvertFromInt8(PLGeneral::int8 nValue) {
+		static TrollType ConvertFromInt8(int8 nValue) {
 			return ConvertFromInt((int)nValue);
 		}
-		static PLGeneral::int16 ConvertToInt16(const TrollType &cTroll) {
-			return (PLGeneral::int16)ConvertToInt(cTroll);
+		static int16 ConvertToInt16(const TrollType &cTroll) {
+			return (int16)ConvertToInt(cTroll);
 		}
-		static TrollType ConvertFromInt16(PLGeneral::int16 nValue) {
+		static TrollType ConvertFromInt16(int16 nValue) {
 			return ConvertFromInt((int)nValue);
 		}
-		static PLGeneral::int32 ConvertToInt32(const TrollType &cTroll) {
-			return (PLGeneral::int32)ConvertToInt(cTroll);
+		static int32 ConvertToInt32(const TrollType &cTroll) {
+			return (int32)ConvertToInt(cTroll);
 		}
-		static TrollType ConvertFromInt32(PLGeneral::int32 nValue) {
+		static TrollType ConvertFromInt32(int32 nValue) {
 			return ConvertFromInt((int)nValue);
 		}
-		static PLGeneral::int64 ConvertToInt64(const TrollType &cTroll)
+		static int64 ConvertToInt64(const TrollType &cTroll)
 		{
-			return (PLGeneral::int64)ConvertToInt(cTroll);
+			return (int64)ConvertToInt(cTroll);
 		}
-		static TrollType ConvertFromInt64(PLGeneral::int64 nValue)
-		{
-			return ConvertFromInt((int)nValue);
-		}
-		static PLGeneral::uint8 ConvertToUInt8(const TrollType &cTroll) {
-			return (PLGeneral::uint8)ConvertToInt(cTroll);
-		}
-		static TrollType ConvertFromUInt8(PLGeneral::uint8 nValue) {
-			return ConvertFromInt((int)nValue);
-		}
-		static PLGeneral::uint16 ConvertToUInt16(const TrollType &cTroll) {
-			return (PLGeneral::uint16)ConvertToInt(cTroll);
-		}
-		static TrollType ConvertFromUInt16(PLGeneral::uint16 nValue) {
-			return ConvertFromInt((int)nValue);
-		}
-		static PLGeneral::uint32 ConvertToUInt32(const TrollType &cTroll) {
-			return (PLGeneral::uint32)ConvertToInt(cTroll);
-		}
-		static TrollType ConvertFromUInt32(PLGeneral::uint32 nValue) {
-			return ConvertFromInt((int)nValue);
-		}
-		static PLGeneral::uint64 ConvertToUInt64(const TrollType &cTroll)
-		{
-			return (PLGeneral::uint64)ConvertToInt(cTroll);
-		}
-		static TrollType ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static TrollType ConvertFromInt64(int64 nValue)
 		{
 			return ConvertFromInt((int)nValue);
 		}
-		static PLGeneral::uint_ptr ConvertToUIntPtr(const TrollType &cTroll)
-		{
-			return (PLGeneral::uint_ptr)ConvertToInt(cTroll);
+		static uint8 ConvertToUInt8(const TrollType &cTroll) {
+			return (uint8)ConvertToInt(cTroll);
 		}
-		static TrollType ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static TrollType ConvertFromUInt8(uint8 nValue) {
+			return ConvertFromInt((int)nValue);
+		}
+		static uint16 ConvertToUInt16(const TrollType &cTroll) {
+			return (uint16)ConvertToInt(cTroll);
+		}
+		static TrollType ConvertFromUInt16(uint16 nValue) {
+			return ConvertFromInt((int)nValue);
+		}
+		static uint32 ConvertToUInt32(const TrollType &cTroll) {
+			return (uint32)ConvertToInt(cTroll);
+		}
+		static TrollType ConvertFromUInt32(uint32 nValue) {
+			return ConvertFromInt((int)nValue);
+		}
+		static uint64 ConvertToUInt64(const TrollType &cTroll)
+		{
+			return (uint64)ConvertToInt(cTroll);
+		}
+		static TrollType ConvertFromUInt64(uint64 nValue)
+		{
+			return ConvertFromInt((int)nValue);
+		}
+		static uint_ptr ConvertToUIntPtr(const TrollType &cTroll)
+		{
+			return (uint_ptr)ConvertToInt(cTroll);
+		}
+		static TrollType ConvertFromUIntPtr(uint_ptr nValue)
 		{
 			return ConvertFromInt((int)nValue);
 		}
@@ -201,10 +201,10 @@ class Type<TrollType> {
 			cTroll.SetValue((int)dValue);
 			return cTroll;
 		}
-		static PLGeneral::String ConvertToString(const TrollType &cTroll) {
+		static String ConvertToString(const TrollType &cTroll) {
 			return cTroll.GetComment();
 		}
-		static TrollType ConvertFromString(const PLGeneral::String &sString) {
+		static TrollType ConvertFromString(const String &sString) {
 			TrollType cTroll;
 				 if (sString.CompareNoCase("nuthin'"))	cTroll.SetValue(0);
 			else if (sString.CompareNoCase("one"))		cTroll.SetValue(1);
@@ -234,7 +234,7 @@ Please note that the declaration of new RTTI data types, in this case \emph{Type
 #include "TrollType.h"
 
 // Namespace
-using namespace PLGeneral;
+using namespace PLCore;
 
 // Public functions
 TrollType::TrollType() :

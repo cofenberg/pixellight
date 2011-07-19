@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementHandler.h>
-#include <PLGeneral/Base/ElementManager.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementHandler.h>
+#include <PLCore/Container/ElementManager.h>
 #include <PLMath/Vector3.h>
 #include <PLCompositing/PLCompositing.h>
 
@@ -60,7 +60,7 @@ namespace PLCompositing {
 *  @brief
 *    Post process class
 */
-class PostProcess : public PLGeneral::Element<PostProcess> {
+class PostProcess : public PLCore::Element<PostProcess> {
 
 
 	//[-------------------------------------------------------]
@@ -76,7 +76,7 @@ class PostProcess : public PLGeneral::Element<PostProcess> {
 		*  @param[in] cManager
 		*    Post process manager using this element
 		*/
-		PLCOM_API PostProcess(const PLGeneral::String &sName, PostProcessManager &cManager);
+		PLCOM_API PostProcess(const PLCore::String &sName, PostProcessManager &cManager);
 
 		/**
 		*  @brief

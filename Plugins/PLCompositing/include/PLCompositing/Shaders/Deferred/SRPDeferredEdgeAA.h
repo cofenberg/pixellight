@@ -86,7 +86,7 @@ class SRPDeferredEdgeAA : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredEdgeAA, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering anti-aliasing using resolution-independent edge detection")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(WeightScale,		float,					1.0f,	ReadWrite,	DirectValue,	"Weight scale",																															"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")

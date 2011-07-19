@@ -59,7 +59,7 @@ class SNMPostProcessClipper : public PLCompositing::SNMPostProcess {
 		pl_attribute(MinColor, PLGraphics::Color4,	PLGraphics::Color4(0.2f, 0.5f, 0.3f, 1.0f),	ReadWrite,	DirectValue,	"Minimum color",						"")
 		pl_attribute(MaxColor, PLGraphics::Color4,	PLGraphics::Color4(0.8f, 0.9f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Maximum color",						"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename, PLGeneral::String,	"Data/PostProcesses/Clipper.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename, PLCore::String,		"Data/PostProcesses/Clipper.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

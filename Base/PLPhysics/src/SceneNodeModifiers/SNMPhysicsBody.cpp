@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Stack.h>
+#include <PLCore/Container/Stack.h>
 #include "PLPhysics/Body.h"
 #include "PLPhysics/World.h"
 #include "PLPhysics/ElementHandler.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLScene;
 namespace PLPhysics {

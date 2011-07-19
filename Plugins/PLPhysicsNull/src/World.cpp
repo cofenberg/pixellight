@@ -50,7 +50,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLPhysicsNull {
 
@@ -403,7 +403,7 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 	if (nFlags) {
 		// Is this body pair already within the map?
 		uint8 &nFlagsRef = m_mapBodyPairs.Get(sBodyPair);
-		if (&nFlagsRef != &PLGeneral::HashMap<BodyPair, PLGeneral::uint8, MyHashFunction, MyCompareFunction>::Null)
+		if (&nFlagsRef != &HashMap<BodyPair, uint8, MyHashFunction, MyCompareFunction>::Null)
 			nFlagsRef = nFlags; // Jep, just change the value :)
 		else {
 			// Nope, add it right now!
@@ -473,7 +473,7 @@ bool World::IsAlwaysStatic() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 PLPhysics::Element *World::CreateElement(const String &sName)
 {

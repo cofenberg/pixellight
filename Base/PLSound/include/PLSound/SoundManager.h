@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Object.h>
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include <PLMath/Vector3.h>
 #include "PLSound/Buffer.h"
 #include "PLSound/BufferHandler.h"
@@ -94,9 +94,9 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*    Sound statistics
 		*/
 		struct Statistics {
-			PLGeneral::uint32 nNumOfBuffers;		/**< Number of sound buffers */
-			PLGeneral::uint32 nNumOfSources;		/**< Number of sound sources */
-			PLGeneral::uint32 nNumOfActiveSources;	/**< Number of currently active sound sources */
+			PLCore::uint32 nNumOfBuffers;		/**< Number of sound buffers */
+			PLCore::uint32 nNumOfSources;		/**< Number of sound sources */
+			PLCore::uint32 nNumOfActiveSources;	/**< Number of currently active sound sources */
 		};
 
 		/**
@@ -105,8 +105,8 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*/
 		class Format {
 		public:
-			PLGeneral::String sFormat;		/**< Sound format */
-			PLGeneral::String sDescription;	/**< Sound format description */
+			PLCore::String sFormat;		/**< Sound format */
+			PLCore::String sDescription;	/**< Sound format description */
 			bool operator ==(const Format &cOther) const
 			{
 				return sFormat == cOther.sFormat && sDescription == cOther.sDescription;
@@ -143,7 +143,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*  @return
 		*    Number of resources
 		*/
-		PLSOUND_API PLGeneral::uint32 GetNumOfResources() const;
+		PLSOUND_API PLCore::uint32 GetNumOfResources() const;
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*  @return
 		*    The resource at the given index, a null pointer on error
 		*/
-		PLSOUND_API Resource *GetResource(PLGeneral::uint32 nIndex = 0) const;
+		PLSOUND_API Resource *GetResource(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*  @return
 		*    Sound manager description
 		*/
-		virtual PLGeneral::String GetDescription() const = 0;
+		virtual PLCore::String GetDescription() const = 0;
 
 		/**
 		*  @brief
@@ -217,7 +217,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*  @note
 		*    - The given list is NOT cleared before the formats are added
 		*/
-		virtual bool GetFormatList(PLGeneral::List<Format> &lstList) const = 0;
+		virtual bool GetFormatList(PLCore::List<Format> &lstList) const = 0;
 
 		/**
 		*  @brief
@@ -318,7 +318,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*    - Not each sound buffer can be streamed, use SoundBuffer::IsStreamed() to
 		*      check whether streaming is used.
 		*/
-		virtual Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false) = 0;
+		virtual Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false) = 0;
 
 		/**
 		*  @brief
@@ -382,8 +382,8 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Statistics					m_sStatistics;	/**< Sound statistics */
-		PLGeneral::Array<Resource*> m_lstResources;	/**< Sound resources of this sound manager */
+		Statistics				 m_sStatistics;		/**< Sound statistics */
+		PLCore::Array<Resource*> m_lstResources;	/**< Sound resources of this sound manager */
 
 
 	//[-------------------------------------------------------]
@@ -416,7 +416,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Buffer *CreateResource(const PLGeneral::String &sName);
+		virtual Buffer *CreateResource(const PLCore::String &sName);
 
 
 };

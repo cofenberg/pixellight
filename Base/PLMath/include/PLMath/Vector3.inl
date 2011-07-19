@@ -80,7 +80,7 @@ inline Vector3::Vector3(const Vector3 &vV) :
 {
 }
 
-inline Vector3::Vector3(const PLGeneral::String &sString)
+inline Vector3::Vector3(const PLCore::String &sString)
 {
 	FromString(sString);
 }

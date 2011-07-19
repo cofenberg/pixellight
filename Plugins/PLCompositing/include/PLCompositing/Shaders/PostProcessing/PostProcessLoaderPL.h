@@ -60,8 +60,8 @@ class PostProcessLoaderPL : public PostProcessLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PostProcessManager&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PostProcessManager&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PostProcessManager&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PostProcessManager&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class PostProcessLoaderPL : public PostProcessLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API bool Load(PostProcessManager &cPostProcessManager, PLGeneral::File &cFile);
-		PLCOM_API bool Save(PostProcessManager &cPostProcessManager, PLGeneral::File &cFile);
+		PLCOM_API bool Load(PostProcessManager &cPostProcessManager, PLCore::File &cFile);
+		PLCOM_API bool Save(PostProcessManager &cPostProcessManager, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class PostProcessLoaderPL : public PostProcessLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(PostProcessManager &cPostProcessManager, const PLGeneral::XmlElement &cPostProcessElement) const;
+		bool LoadV1(PostProcessManager &cPostProcessManager, const PLCore::XmlElement &cPostProcessElement) const;
 
 
 };

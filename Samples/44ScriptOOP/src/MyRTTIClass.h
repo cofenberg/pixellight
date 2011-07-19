@@ -50,7 +50,7 @@ class MyRTTIClass : public PLCore::Object {
 			pl_property("MyProperty",	"This is a property value")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
+		pl_attribute(Name,	PLCore::String,		"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
 		pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -60,9 +60,9 @@ class MyRTTIClass : public PLCore::Object {
 		pl_method_0(SaySomethingWise,	pl_ret_type(void),					"Says something wise",					"")
 		pl_method_0(GetSelf,			pl_ret_type(MyRTTIClass*),			"Returns a pointer to this instance",	"")
 		// Signals
-		pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed, message as first parameter",	"")
+		pl_signal_1(MySignal,	PLCore::String,	"My signal, automatically emitted after the name was changed, message as first parameter",	"")
 		// Slots
-		pl_slot_1(OnMyEvent,	PLGeneral::String,	"My slot, message as first parameter",	"")
+		pl_slot_1(OnMyEvent,	PLCore::String,	"My slot, message as first parameter",	"")
 	pl_class_end
 
 
@@ -70,8 +70,8 @@ class MyRTTIClass : public PLCore::Object {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::String GetName();
-		void SetName(const PLGeneral::String &sName);
+		PLCore::String GetName();
+		void SetName(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -130,14 +130,14 @@ class MyRTTIClass : public PLCore::Object {
 		*  @param[in] sMessage
 		*    Message
 		*/
-		void OnMyEvent(PLGeneral::String sMessage);
+		void OnMyEvent(PLCore::String sMessage);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sName;
+		PLCore::String m_sName;
 
 
 };

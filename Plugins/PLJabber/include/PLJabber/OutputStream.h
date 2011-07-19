@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/XmlDocument.h>
+#include <PLCore/Xml/XmlDocument.h>
 #include "PLJabber/PLJabber.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 };
 namespace PLJabber {
@@ -82,7 +82,7 @@ class OutputStream {
 		*  @param[in] sServer
 		*    Name of server
 		*/
-		PLJABBER_API void OpenStream(const PLGeneral::String &sServer);
+		PLJABBER_API void OpenStream(const PLCore::String &sServer);
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class OutputStream {
 		*  @param[in] cElement
 		*    XML element
 		*/
-		PLJABBER_API void SendElement(const PLGeneral::XmlElement &cElement) const;
+		PLJABBER_API void SendElement(const PLCore::XmlElement &cElement) const;
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class OutputStream {
 		*  @param[in] sFilename
 		*    Name of file
 		*/
-		PLJABBER_API void Save(const PLGeneral::String &sFilename);
+		PLJABBER_API void Save(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -139,9 +139,9 @@ class OutputStream {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		JabberConnection		*m_pJabberConnection;	/**< Jabber connection (always valid!) */
-		PLGeneral::XmlDocument   m_cXml;				/**< The XML document that is streamed */
-		PLGeneral::XmlElement	*m_pStream;				/**< Root node of XML stream, can be a null pointer */
+		JabberConnection	*m_pJabberConnection;	/**< Jabber connection (always valid!) */
+		PLCore::XmlDocument  m_cXml;				/**< The XML document that is streamed */
+		PLCore::XmlElement	*m_pStream;				/**< Root node of XML stream, can be a null pointer */
 
 
 };

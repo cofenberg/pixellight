@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLGraphics/Color/Color3.h"
 #include "PLGraphics/Color/Color4.h"
 
@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGraphics {
 
 
@@ -63,7 +63,7 @@ const Color4 Color4::Lime		(static_cast<uint8>(  0), 255,   0, 255);
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Maps a RGBA floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+*    Maps a RGBA floating point channels (0.0f to 1.0f range) to PLCore::uint32
 */
 uint32 Color4::ToUInt32(float fR, float fG, float fB, float fA)
 {
@@ -72,7 +72,7 @@ uint32 Color4::ToUInt32(float fR, float fG, float fB, float fA)
 
 /**
 *  @brief
-*    Returns the red color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+*    Returns the red color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 */
 float Color4::RedFromUInt32(uint32 nColor)
 {
@@ -81,7 +81,7 @@ float Color4::RedFromUInt32(uint32 nColor)
 
 /**
 *  @brief
-*    Returns the green color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+*    Returns the green color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 */
 float Color4::GreenFromUInt32(uint32 nColor)
 {
@@ -90,7 +90,7 @@ float Color4::GreenFromUInt32(uint32 nColor)
 
 /**
 *  @brief
-*    Returns the blue color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+*    Returns the blue color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 */
 float Color4::BlueFromUInt32(uint32 nColor)
 {
@@ -99,7 +99,7 @@ float Color4::BlueFromUInt32(uint32 nColor)
 
 /**
 *  @brief
-*    Returns the alpha color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+*    Returns the alpha color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 */
 float Color4::AlphaFromUInt32(uint32 nColor)
 {
@@ -276,7 +276,7 @@ Color4::~Color4()
 
 /**
 *  @brief
-*    Maps this RGBA floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+*    Maps this RGBA floating point channels (0.0f to 1.0f range) to PLCore::uint32
 */
 uint32 Color4::ToUInt32() const
 {
@@ -285,7 +285,7 @@ uint32 Color4::ToUInt32() const
 
 /**
 *  @brief
-*    Maps from a PLGeneral::uint32 to RGBA floating point channels (0.0f to 1.0f range)
+*    Maps from a PLCore::uint32 to RGBA floating point channels (0.0f to 1.0f range)
 */
 void Color4::FromUInt32(uint32 nColor)
 {

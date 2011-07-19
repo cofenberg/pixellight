@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -127,7 +127,7 @@ class TrayIconImpl {
 		*  @param[in] sText
 		*    Text
 		*/
-		virtual void ShowNotification(const PLGeneral::String &sTitle, const PLGeneral::String &sText) = 0;
+		virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText) = 0;
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLGraphics/Color/Color3.h"
 
 
@@ -98,7 +98,7 @@ class ImagePalette {
 		*  @param[in] nColors
 		*    Number of colors
 		*/
-		PLGRAPHICS_API void Create(PLGeneral::uint32 nColors);
+		PLGRAPHICS_API void Create(PLCore::uint32 nColors);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class ImagePalette {
 		*  @return
 		*    Number of colors
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetNumOfColors() const;
+		PLGRAPHICS_API PLCore::uint32 GetNumOfColors() const;
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class ImagePalette {
 		*  @return
 		*    Color, if index is invalid, Color3::Null (-1 -1 -1) is returned
 		*/
-		PLGRAPHICS_API Color3 GetColor(PLGeneral::uint32 nIndex) const;
+		PLGRAPHICS_API Color3 GetColor(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class ImagePalette {
 		*  @remarks
 		*    If nIndex is greater than the palette size, it is automatically extended
 		*/
-		PLGRAPHICS_API void SetColor(PLGeneral::uint32 nIndex, const Color3 &cColor);
+		PLGRAPHICS_API void SetColor(PLCore::uint32 nIndex, const Color3 &cColor);
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class ImagePalette {
 		*  @return
 		*    Index of new color
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 AddColor(const Color3 &cColor);
+		PLGRAPHICS_API PLCore::uint32 AddColor(const Color3 &cColor);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class ImagePalette {
 		*    If you use this function to change the palette data by yourself, be sure to call
 		*    RebuildColorIndex() to invalidate the index->color hash map!
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 *GetData() const;
+		PLGRAPHICS_API PLCore::uint8 *GetData() const;
 
 
 	//[-------------------------------------------------------]
@@ -200,17 +200,17 @@ class ImagePalette {
 		*  @param[in] nColors
 		*    Number of colors
 		*/
-		void Resize(PLGeneral::uint32 nColors);
+		void Resize(PLCore::uint32 nColors);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint8									*m_pData;		/**< Palette data, can be a null pointer */
-		PLGeneral::uint32									 m_nSize;		/**< Actual size of color array (Number of colors, not bytes!) */
-		PLGeneral::uint32									 m_nColors;		/**< Number of colors (<= m_nSize) */
-		mutable PLGeneral::HashMap<PLGeneral::uint32, int>	 m_mapColors;	/**< Hash map: Color -> Index */
+		PLCore::uint8								 *m_pData;		/**< Palette data, can be a null pointer */
+		PLCore::uint32								  m_nSize;		/**< Actual size of color array (Number of colors, not bytes!) */
+		PLCore::uint32								  m_nColors;	/**< Number of colors (<= m_nSize) */
+		mutable PLCore::HashMap<PLCore::uint32, int>  m_mapColors;	/**< Hash map: Color -> Index */
 
 
 };

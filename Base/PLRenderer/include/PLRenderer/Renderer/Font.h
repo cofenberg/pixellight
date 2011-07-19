@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLMath/Vector2.h>
 #include <PLMath/Vector2i.h>
 #include "PLRenderer/Renderer/Resource.h"
@@ -127,7 +127,7 @@ class Font : public Resource {
 		*  @return
 		*    The filename of the font file the data came from
 		*/
-		PLRENDERER_API PLGeneral::String GetFilename() const;
+		PLRENDERER_API PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class Font : public Resource {
 		*  @return
 		*    The nominal font size in points, for example 12
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetSize() const;
+		PLRENDERER_API PLCore::uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Font : public Resource {
 		*  @return
 		*    The horizontal and vertical resolution in DPI, for example 96
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetResolution() const;
+		PLRENDERER_API PLCore::uint32 GetResolution() const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Font : public Resource {
 		*    Font size in pixels = ------------------- × 96 dpi = ---- × 96 = 16 pixels
 		*                          72 points per inch              72
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetSizeInPixels() const;
+		PLRENDERER_API PLCore::uint32 GetSizeInPixels() const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Font : public Resource {
 		*  @see
 		*    - GetSizeInPixels()
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetHeightInPixels() const;
+		PLRENDERER_API PLCore::uint32 GetHeightInPixels() const;
 
 
 	//[-------------------------------------------------------]
@@ -195,7 +195,7 @@ class Font : public Resource {
 		*  @note
 		*    - When overwriting this method, it's highly recommended to call this base implementation, too
 		*/
-		PLRENDERER_API virtual bool SetSize(PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96);
+		PLRENDERER_API virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class Font : public Resource {
 		*  @note
 		*    - When overwriting this method, it's highly recommended to call this base implementation, too
 		*/
-		PLRENDERER_API virtual float GetTextWidth(const PLGeneral::String &sText);
+		PLRENDERER_API virtual float GetTextWidth(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class Font : public Resource {
 		*  @param[in] nFlags
 		*    Draw flags, see EDrawFlags
 		*/
-		virtual void Draw(const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLGeneral::uint32 nFlags = 0) = 0;
+		virtual void Draw(const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLCore::uint32 nFlags = 0) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -281,7 +281,7 @@ class Font : public Resource {
 		*  @param[in] sFilename
 		*    Filename of the font file the data came from, used to reference the new font by filename
 		*/
-		PLRENDERER_API Font(FontManager &cFontManager, const PLGeneral::String &sFilename);
+		PLRENDERER_API Font(FontManager &cFontManager, const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -320,11 +320,11 @@ class Font : public Resource {
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
-		FontManager					 *m_pFontManager;	/**< Creating font manager, always valid! */
-		PLGeneral::String			  m_sFilename;		/**< The filename of the font file the data came from */
-		PLGeneral::uint32			  m_nSize;			/**< Font size in points, for example 12 (72 points per inch) */
-		PLGeneral::uint32			  m_nResolution;	/**< The horizontal and vertical resolution in DPI, for example 96 */
-		PLGeneral::Array<FontGlyph*>  m_lstGlyphs;		/**< List of currently active glyphs ("character code -> glyph instance") */
+		FontManager				  *m_pFontManager;	/**< Creating font manager, always valid! */
+		PLCore::String			   m_sFilename;		/**< The filename of the font file the data came from */
+		PLCore::uint32			   m_nSize;			/**< Font size in points, for example 12 (72 points per inch) */
+		PLCore::uint32			   m_nResolution;	/**< The horizontal and vertical resolution in DPI, for example 96 */
+		PLCore::Array<FontGlyph*>  m_lstGlyphs;		/**< List of currently active glyphs ("character code -> glyph instance") */
 
 
 };

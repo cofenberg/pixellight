@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGui/Backend/ImageImpl.h"
 
 
@@ -96,16 +96,16 @@ class ImageWindows : public ImageImpl {
 	//[ Public virtual ImageImpl functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLGeneral::String &sFilename);
-		virtual bool LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphics::Color3 &cColor);
+		virtual bool Load(const PLCore::String &sFilename);
+		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HBITMAP m_hBitmap;		/**< Bitmap handle, can be a null pointer */
-		HICON	m_hIcon;		/**< Icon handle of bitmap */
+		HBITMAP m_hBitmap;	/**< Bitmap handle, can be a null pointer */
+		HICON	m_hIcon;	/**< Icon handle of bitmap */
 
 
 };

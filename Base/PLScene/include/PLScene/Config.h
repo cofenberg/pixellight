@@ -47,7 +47,7 @@ namespace PLScene {
 *
 *  @remarks
 *    ALL engine configuration classes are derived from this class.
-*    Use PLGeneral::Config::GetInstance()->Save("Config/Engine.cfg", "EngineConfigGroup") to save
+*    Use PLCore::Config::GetInstance()->Save("Config/Engine.cfg", "EngineConfigGroup") to save
 *    ONLY all engine configuration classes.
 */
 class EngineConfigGroup : public PLCore::ConfigGroup {
@@ -182,10 +182,10 @@ class EngineGraphicConfig : public EngineConfigGroup {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, EngineGraphicConfig, "PLScene", PLScene::EngineConfigGroup, "Engine graphics configuration classes")
 		// Attributes
-		pl_attribute(RendererAPI,				PLGeneral::String,							"PLRendererOpenGL::Renderer",				ReadWrite,	DirectValue,	"The used renderer API",													"")
+		pl_attribute(RendererAPI,				PLCore::String,								"PLRendererOpenGL::Renderer",				ReadWrite,	DirectValue,	"The used renderer API",													"")
 		pl_attribute(RendererMode,				pl_enum_type(PLRenderer::Renderer::EMode),	PLRenderer::Renderer::ModeBoth,				ReadWrite,	DirectValue,	"The mode the renderer should run in (fixed functions, shaders or both)",	"")
-		pl_attribute(DefaultFontTexture,		PLGeneral::String,							"Data/Fonts/LinLibertine_Re-2.7.9.9.otf",	ReadWrite,	DirectValue,	"The default texture font",													"")
-		pl_attribute(DefaultFontTextureSize,	PLGeneral::uint32,							15,											ReadWrite,	DirectValue,	"The default texture font size",											"Max='100'")
+		pl_attribute(DefaultFontTexture,		PLCore::String,								"Data/Fonts/LinLibertine_Re-2.7.9.9.otf",	ReadWrite,	DirectValue,	"The default texture font",													"")
+		pl_attribute(DefaultFontTextureSize,	PLCore::uint32,								15,											ReadWrite,	DirectValue,	"The default texture font size",											"Max='100'")
 
 		// [DEBUG] Remove this later!
 		pl_attribute(SlopeScaleDepthBias,		float,										-0.1f,										ReadWrite,	DirectValue,	"[DEBUG] Slope scale depth bias",											"")

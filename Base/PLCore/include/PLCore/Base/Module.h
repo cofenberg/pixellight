@@ -28,26 +28,21 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class DynLib;
-}
-namespace PLCore {
-	class Class;
-}
+#include "PLCore/String/String.h"
+#include "PLCore/Container/List.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Class;
+class DynLib;
 
 
 //[-------------------------------------------------------]
@@ -85,7 +80,7 @@ class Module {
 		*  @return
 		*    Module ID
 		*/
-		PLCORE_API PLGeneral::uint32 GetModuleID() const;
+		PLCORE_API uint32 GetModuleID() const;
 
 		/**
 		*  @brief
@@ -106,7 +101,7 @@ class Module {
 		*  @remarks
 		*    This function will only return a dynamic library, if the module is a plugin
 		*/
-		PLCORE_API PLGeneral::DynLib *GetDynLib() const;
+		PLCORE_API DynLib *GetDynLib() const;
 
 		/**
 		*  @brief
@@ -118,7 +113,7 @@ class Module {
 		*  @remarks
 		*    This function will only return an absolute filename, if the module is a plugin
 		*/
-		PLCORE_API PLGeneral::String GetFilename() const;
+		PLCORE_API String GetFilename() const;
 
 		/**
 		*  @brief
@@ -127,7 +122,7 @@ class Module {
 		*  @return
 		*    Name
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -136,7 +131,7 @@ class Module {
 		*  @return
 		*    Vendor name
 		*/
-		PLCORE_API PLGeneral::String GetVendor() const;
+		PLCORE_API String GetVendor() const;
 
 		/**
 		*  @brief
@@ -145,7 +140,7 @@ class Module {
 		*  @return
 		*    License
 		*/
-		PLCORE_API PLGeneral::String GetLicense() const;
+		PLCORE_API String GetLicense() const;
 
 		/**
 		*  @brief
@@ -154,7 +149,7 @@ class Module {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API PLGeneral::String GetDescription() const;
+		PLCORE_API String GetDescription() const;
 
 		/**
 		*  @brief
@@ -168,7 +163,7 @@ class Module {
 		*    If you want to search for classes with more specific search criteria,
 		*    have a look at ClassManager::GetClasses().
 		*/
-		PLCORE_API const PLGeneral::List<const Class*> &GetClasses() const;
+		PLCORE_API const List<const Class*> &GetClasses() const;
 
 
 	//[-------------------------------------------------------]
@@ -182,7 +177,7 @@ class Module {
 		*  @param[in] nModuleID
 		*    Module ID
 		*/
-		PLCORE_API Module(PLGeneral::uint32 nModuleID);
+		PLCORE_API Module(uint32 nModuleID);
 
 		/**
 		*  @brief
@@ -203,7 +198,7 @@ class Module {
 		*  @param[in] sDescription
 		*    Module description
 		*/
-		PLCORE_API void SetModuleInfo(const PLGeneral::String &sName, const PLGeneral::String &sVendor, const PLGeneral::String &sLicense, const PLGeneral::String &sDescription);
+		PLCORE_API void SetModuleInfo(const String &sName, const String &sVendor, const String &sLicense, const String &sDescription);
 
 		/**
 		*  @brief
@@ -229,17 +224,16 @@ class Module {
 	//[-------------------------------------------------------]
 	private:
 		// Module information
-		PLGeneral::uint32			  m_nModuleID;		/**< Module ID */
-		bool						  m_bPlugin;		/**< Is module a plugin? */
-		PLGeneral::DynLib			 *m_pDynLib;		/**< Plugin library (can be a null pointer, has the ownership over the dynamic library instance) */
-		PLGeneral::String			  m_sFilename;		/**< Absolute plugin filename (can be empty) */
-		PLGeneral::String			  m_sName;			/**< Name of module */
-		PLGeneral::String			  m_sVendor;		/**< Vendor of module */
-		PLGeneral::String			  m_sLicense;		/**< License of module */
-		PLGeneral::String			  m_sDescription;	/**< Description of module */
-
+		uint32			   m_nModuleID;		/**< Module ID */
+		bool			   m_bPlugin;		/**< Is module a plugin? */
+		DynLib			  *m_pDynLib;		/**< Plugin library (can be a null pointer, has the ownership over the dynamic library instance) */
+		String			   m_sFilename;		/**< Absolute plugin filename (can be empty) */
+		String			   m_sName;			/**< Name of module */
+		String			   m_sVendor;		/**< Vendor of module */
+		String			   m_sLicense;		/**< License of module */
+		String			   m_sDescription;	/**< Description of module */
 		// Classes
-		PLGeneral::List<const Class*> m_lstClasses;		/**< List of classes */
+		List<const Class*> m_lstClasses;	/**< List of classes */
 
 
 };

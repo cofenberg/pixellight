@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/RegEx.h"
 
 
 //[-------------------------------------------------------]
@@ -82,7 +81,7 @@ class ParamsParser {
 		*    and then parse the first parameter and value. If the string is not
 		*    valid or empty, the function will return 'false'.
 		*/
-		PLCORE_API bool ParseString(const PLGeneral::String &sParameters);
+		PLCORE_API bool ParseString(const String &sParameters);
 
 		/**
 		*  @brief
@@ -109,7 +108,7 @@ class ParamsParser {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -118,18 +117,18 @@ class ParamsParser {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API PLGeneral::String GetValue() const;
+		PLCORE_API String GetValue() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	m_sParameters;	/**< Parsed parameter string */
-		PLGeneral::RegEx	m_cRegEx;		/**< Regular expression for parsing a parameter string */
-		long				m_nParsePos;	/**< Current parsing position (-1 for inactive) */
-		PLGeneral::String	m_sName;		/**< Name of next parameter */
-		PLGeneral::String	m_sValue;		/**< Value of next parameter */
+		String	m_sParameters;	/**< Parsed parameter string */
+		RegEx	m_cRegEx;		/**< Regular expression for parsing a parameter string */
+		long	m_nParsePos;	/**< Current parsing position (-1 for inactive) */
+		String	m_sName;		/**< Name of next parameter */
+		String	m_sValue;		/**< Value of next parameter */
 
 
 };

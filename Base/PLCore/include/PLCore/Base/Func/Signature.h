@@ -60,14 +60,14 @@ class SignatureString {
 		*  @return
 		*    Signature description (e.g. "void(int,float)")
 		*/
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			// On runtime the signature doesn't change, so construct it only once and then just reuse it
-			static PLGeneral::String sSignature;
+			static String sSignature;
 			if (sSignature.GetLength()) {
 				// Return the already constructed signature
 				return sSignature;
 			} else {
-				PLGeneral::String sType;
+				String sType;
 
 				// Return type
 				sSignature = Type<R>::GetTypeName();
@@ -221,7 +221,7 @@ class Signature {
 		*  @return
 		*    Signature description (e.g. "void(int,float)")
 		*/
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
@@ -244,7 +244,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
@@ -267,7 +267,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
@@ -290,7 +290,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
@@ -313,7 +313,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
@@ -336,7 +336,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
@@ -359,7 +359,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8, T9);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
@@ -382,7 +382,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7, T8);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
@@ -405,7 +405,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6, T7> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6, T7);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
@@ -428,7 +428,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5, T6> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5, T6);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
@@ -451,7 +451,7 @@ class Signature<R, T0, T1, T2, T3, T4, T5> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4, T5);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
@@ -474,7 +474,7 @@ class Signature<R, T0, T1, T2, T3, T4> {
 		typedef R (*FuncType)(T0, T1, T2, T3, T4);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
@@ -497,7 +497,7 @@ class Signature<R, T0, T1, T2, T3> {
 		typedef R (*FuncType)(T0, T1, T2, T3);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3>::GetSignatureID();
 		}
 
@@ -520,7 +520,7 @@ class Signature<R, T0, T1, T2> {
 		typedef R (*FuncType)(T0, T1, T2);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2>::GetSignatureID();
 		}
 
@@ -543,7 +543,7 @@ class Signature<R, T0, T1> {
 		typedef R (*FuncType)(T0, T1);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1>::GetSignatureID();
 		}
 
@@ -566,7 +566,7 @@ class Signature<R, T0> {
 		typedef R (*FuncType)(T0);	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0>::GetSignatureID();
 		}
 
@@ -589,7 +589,7 @@ class Signature<R> {
 		typedef R (*FuncType)();	// Function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R>::GetSignatureID();
 		}
 
@@ -646,7 +646,7 @@ class MethodSignature {
 		*  @return
 		*    Signature description (e.g. "void(int,float)")
 		*/
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
@@ -688,7 +688,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10, _T11, _T12, _T13, _T14);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
@@ -729,7 +729,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10, _T11, _T12, _T13);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
@@ -769,7 +769,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10, _T11, _T12);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
@@ -808,7 +808,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10, _T11);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
@@ -846,7 +846,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9, _T10);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
@@ -883,7 +883,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8, _T9);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
@@ -919,7 +919,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7, _T8);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
@@ -954,7 +954,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6, _T7);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
@@ -988,7 +988,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5, _T6);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
@@ -1021,7 +1021,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4, _T5);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
@@ -1053,7 +1053,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3, T4> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3, _T4);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
@@ -1084,7 +1084,7 @@ class MethodSignature<CLASS, R, T0, T1, T2, T3> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2, _T3);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2, T3>::GetSignatureID();
 		}
 
@@ -1114,7 +1114,7 @@ class MethodSignature<CLASS, R, T0, T1, T2> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1, _T2);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1, T2>::GetSignatureID();
 		}
 
@@ -1143,7 +1143,7 @@ class MethodSignature<CLASS, R, T0, T1> {
 		typedef _R (CLASS::*MemFuncType)(_T0, _T1);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0, T1>::GetSignatureID();
 		}
 
@@ -1171,7 +1171,7 @@ class MethodSignature<CLASS, R, T0> {
 		typedef _R (CLASS::*MemFuncType)(_T0);	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R, T0>::GetSignatureID();
 		}
 
@@ -1198,7 +1198,7 @@ class MethodSignature<CLASS, R> {
 		typedef _R (CLASS::*MemFuncType)();	// Member function pointer
 
 		// Get signature as a string
-		static PLGeneral::String GetSignatureID() {
+		static String GetSignatureID() {
 			return SignatureString<R>::GetSignatureID();
 		}
 

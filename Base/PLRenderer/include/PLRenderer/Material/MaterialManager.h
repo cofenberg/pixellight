@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLRenderer/Material/Material.h"
 
 
@@ -117,7 +117,7 @@ class MaterialManager : public PLCore::ResourceManager<Material> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Material *CreateResource(const PLGeneral::String &sName);
+		virtual Material *CreateResource(const PLCore::String &sName);
 
 
 };

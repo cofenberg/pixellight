@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include "PLSound/Resource.h"
 
 
@@ -77,7 +77,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*  @return
 		*    Number of sources
 		*/
-		PLSOUND_API PLGeneral::uint32 GetNumOfSources() const;
+		PLSOUND_API PLCore::uint32 GetNumOfSources() const;
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*  @return
 		*    The source at the given index, a null pointer on error
 		*/
-		PLSOUND_API const Source *GetSource(PLGeneral::uint32 nIndex = 0) const;
+		PLSOUND_API const Source *GetSource(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*  @return
 		*    The source at the given index, a null pointer on error
 		*/
-		PLSOUND_API Source *GetSource(PLGeneral::uint32 nIndex = 0);
+		PLSOUND_API Source *GetSource(PLCore::uint32 nIndex = 0);
 
 
 	//[-------------------------------------------------------]
@@ -124,7 +124,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*    - Not each sound buffer can be streamed, use IsStreamed()
 		*      to check whether streaming is used
 		*/
-		virtual bool LoadBuffer(const PLGeneral::String &sFilename, bool bStream) = 0;
+		virtual bool LoadBuffer(const PLCore::String &sFilename, bool bStream) = 0;
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*    - If bStream is 'true' nData MUST stay valid!
 		*    - Not each sound buffer can be streamed, use IsStreamed() to check whether streaming is used
 		*/
-		virtual bool LoadBuffer(const PLGeneral::uint8 nData[], PLGeneral::uint32 nSize, bool bStream = false) = 0;
+		virtual bool LoadBuffer(const PLCore::uint8 nData[], PLCore::uint32 nSize, bool bStream = false) = 0;
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		PLSOUND_API Buffer(SoundManager &cSoundManager, const PLGeneral::String &sName = "");
+		PLSOUND_API Buffer(SoundManager &cSoundManager, const PLCore::String &sName = "");
 
 
 	//[-------------------------------------------------------]
@@ -199,7 +199,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::List<Source*> m_lstSources;	/**< List of sources using this buffer */
+		PLCore::List<Source*> m_lstSources;	/**< List of sources using this buffer */
 
 
 };

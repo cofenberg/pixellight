@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGui {
 
 
@@ -61,7 +61,7 @@ GuiMessage GuiMessage::OnTimer(Timer *pTimer)
 	return cMessage;
 }
 
-GuiMessage GuiMessage::OnUserMessage(Widget *pWidget, PLGeneral::uint32 nData, void *pData)
+GuiMessage GuiMessage::OnUserMessage(Widget *pWidget, uint32 nData, void *pData)
 {
 	// Create message
 	GuiMessage cMessage(pWidget, MessageOnUserMessage);
@@ -70,7 +70,7 @@ GuiMessage GuiMessage::OnUserMessage(Widget *pWidget, PLGeneral::uint32 nData, v
 	return cMessage;
 }
 
-GuiMessage GuiMessage::OnInternalMessage(PLGeneral::uint32 nData, PLGeneral::uint32 nExtData)
+GuiMessage GuiMessage::OnInternalMessage(uint32 nData, uint32 nExtData)
 {
 	// Create message
 	GuiMessage cMessage(nullptr, MessageOnInternalMessage);
@@ -346,7 +346,7 @@ GuiMessage GuiMessage::OnMouseWheel(Widget *pWidget, int nDelta)
 	return cMessage;
 }
 
-GuiMessage GuiMessage::OnKeyDown(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers)
+GuiMessage GuiMessage::OnKeyDown(Widget *pWidget, uint32 nKey, uint32 nModifiers)
 {
 	// Create message
 	GuiMessage cMessage(pWidget, MessageOnKeyDown);
@@ -355,7 +355,7 @@ GuiMessage GuiMessage::OnKeyDown(Widget *pWidget, PLGeneral::uint32 nKey, PLGene
 	return cMessage;
 }
 
-GuiMessage GuiMessage::OnKeyUp(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers)
+GuiMessage GuiMessage::OnKeyUp(Widget *pWidget, uint32 nKey, uint32 nModifiers)
 {
 	// Create message
 	GuiMessage cMessage(pWidget, MessageOnKeyUp);
@@ -364,7 +364,7 @@ GuiMessage GuiMessage::OnKeyUp(Widget *pWidget, PLGeneral::uint32 nKey, PLGenera
 	return cMessage;
 }
 
-GuiMessage GuiMessage::OnHotkey(Widget *pWidget, PLGeneral::uint32 nHotkey)
+GuiMessage GuiMessage::OnHotkey(Widget *pWidget, uint32 nHotkey)
 {
 	// Create message
 	GuiMessage cMessage(pWidget, MessageOnHotkey);

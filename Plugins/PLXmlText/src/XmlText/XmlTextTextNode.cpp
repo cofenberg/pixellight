@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
-#include <PLGeneral/Xml/XmlText.h>
+#include <PLCore/String/RegEx.h>
+#include <PLCore/Xml/XmlText.h>
 #include "PLXmlText/XmlText/XmlTextRenderer.h"
 #include "PLXmlText/XmlText/XmlTextTextNode.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLXmlText {
 
 

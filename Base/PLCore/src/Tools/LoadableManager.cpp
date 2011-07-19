@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
+#include "PLCore/File/Url.h"
+#include "PLCore/File/File.h"
+#include "PLCore/File/Directory.h"
+#include "PLCore/File/FileSearch.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Tools/Loader.h"
@@ -37,7 +37,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

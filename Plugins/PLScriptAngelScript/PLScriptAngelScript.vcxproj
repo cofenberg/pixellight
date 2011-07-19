@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../External/_Windows_x86_32/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../External/_Windows_x86_32/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ANGELSCRIPT_DLL_LIBRARY_IMPORT;PLSCRIPTANGELSCRIPT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptAngelScriptD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -132,7 +132,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../External/_Windows_x86_64/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../External/_Windows_x86_64/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;ANGELSCRIPT_DLL_LIBRARY_IMPORT;PLSCRIPTANGELSCRIPT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -147,7 +147,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptAngelScriptD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -177,7 +177,7 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../External/_Windows_x86_32/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../External/_Windows_x86_32/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ANGELSCRIPT_DLL_LIBRARY_IMPORT;PLSCRIPTANGELSCRIPT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -197,7 +197,7 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptAngelScript.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -229,7 +229,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../External/_Windows_x86_64/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../External/_Windows_x86_64/AngelScript/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;ANGELSCRIPT_DLL_LIBRARY_IMPORT;PLSCRIPTANGELSCRIPT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -245,7 +245,7 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptAngelScript64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -296,10 +296,6 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
     </ProjectReference>
     <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
       <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGeneral\PLGeneral.vcxproj">
-      <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

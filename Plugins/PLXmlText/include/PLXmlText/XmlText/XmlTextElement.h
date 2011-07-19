@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include <PLGui/Gui/Resources/Image.h>
 #include "PLXmlText/PLXmlText.h"
 
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlNode;
 }
 namespace PLGraphics {
@@ -99,7 +99,7 @@ class XmlTextElement {
 		*  @param[in] sFilename
 		*    Filename of XML file
 		*/
-		PLXMLTEXT_API void Load(const PLGeneral::String &sFilename);
+		PLXMLTEXT_API void Load(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class XmlTextElement {
 		*  @param[in] cXmlNode
 		*    XML node to be parsed
 		*/
-		PLXMLTEXT_API void Parse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API void Parse(PLCore::XmlNode &cXmlNode);
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class XmlTextElement {
 		*  @return
 		*    Color
 		*/
-		PLXMLTEXT_API PLGraphics::Color4 GetColor(const PLGeneral::String &sColor);
+		PLXMLTEXT_API PLGraphics::Color4 GetColor(const PLCore::String &sColor);
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class XmlTextElement {
 		*  @return
 		*    Image instance
 		*/
-		PLXMLTEXT_API PLGui::Image LoadImage(PLGui::Gui &cGui, const PLGeneral::String &sFilename);
+		PLXMLTEXT_API PLGui::Image LoadImage(PLGui::Gui &cGui, const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -183,7 +183,7 @@ class XmlTextElement {
 		*  @param[in] cXmlNode
 		*    XML node to be parsed
 		*/
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 
 		/**
 		*  @brief
@@ -209,9 +209,9 @@ class XmlTextElement {
 	//[-------------------------------------------------------]
 	protected:
 		// Element tree
-		XmlTextView							*m_pXmlText;		/**< XmlView control */
-		XmlTextElement						*m_pParent;			/**< Parent element */
-		PLGeneral::List<XmlTextElement*>	 m_lstChildren;		/**< Child elements */
+		XmlTextView						*m_pXmlText;		/**< XmlView control */
+		XmlTextElement					*m_pParent;			/**< Parent element */
+		PLCore::List<XmlTextElement*>	 m_lstChildren;		/**< Child elements */
 
 
 };

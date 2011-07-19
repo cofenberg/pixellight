@@ -37,7 +37,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
 

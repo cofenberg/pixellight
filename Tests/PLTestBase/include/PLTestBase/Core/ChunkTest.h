@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLTest/TestCase.h>
 
 
@@ -60,7 +60,7 @@ class ChunkTest : public TestCase {
 		*  @param[in] sInfo
 		*    Some information text
 		*/
-		void TestGetFunctions(const PLGeneral::String &sInfo);
+		void TestGetFunctions(const PLCore::String &sInfo);
 
 
 	//[-------------------------------------------------------]

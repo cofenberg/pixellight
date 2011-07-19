@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLPhysics/Element.h"
 
 
@@ -45,7 +45,7 @@ namespace PLPhysics {
 *  @brief
 *    Element buffer handler class
 */
-class ElementHandler : public PLGeneral::ElementHandler<Element> {
+class ElementHandler : public PLCore::ElementHandler<Element> {
 
 
 	//[-------------------------------------------------------]

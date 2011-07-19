@@ -74,9 +74,9 @@ class DrawHelpersBackend : public DrawHelpers {
 		PLRENDERER_API virtual float Get2DZValue() const;
 		PLRENDERER_API virtual void Set2DZValue(float fZValue = 0.0f);
 		PLRENDERER_API virtual const PLMath::Matrix4x4 &GetObjectSpaceToClipSpaceMatrix() const;
-		PLRENDERER_API virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPosition, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
-		PLRENDERER_API virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vPosition, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
-		PLRENDERER_API virtual float GetTextWidth(Font &cFont, const PLGeneral::String &sText) const;
+		PLRENDERER_API virtual void DrawText(Font &cFont, const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPosition, PLCore::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
+		PLRENDERER_API virtual void DrawText(Font &cFont, const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vPosition, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, PLCore::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero);
+		PLRENDERER_API virtual float GetTextWidth(Font &cFont, const PLCore::String &sText) const;
 		PLRENDERER_API virtual float GetTextHeight(Font &cFont) const;
 		PLRENDERER_API virtual void DrawBox(const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vMin, const PLMath::Vector3 &vMax, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, float fWidth = 1.0f);
 		PLRENDERER_API virtual void DrawPlane(const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vN, float fD, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, float fSize = 10000.0f, float fLineWidth = 1.0f);

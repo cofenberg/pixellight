@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include;../../Base/PLGeneral/include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +101,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLMathD.lib;PLGraphicsD.lib;PLCoreD.lib;PLGuiD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLMathD.lib;PLGraphicsD.lib;PLCoreD.lib;PLGuiD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,7 +120,7 @@ copy build\debug\PLPluginD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include;../../Base/PLGeneral/include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -131,7 +131,7 @@ copy build\debug\PLPluginD.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLCoreD64.lib;PLGuiD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLEngineD64.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLMathD64.lib;PLGraphicsD264.lib;PLCoreD64.lib;PLGuiD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLEngineD64.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D64.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -151,7 +151,7 @@ copy build\debug64\PLPluginD64.lib ..\..\Bin\Lib\
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include;../../Base/PLGeneral/include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -170,7 +170,7 @@ copy build\debug64\PLPluginD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLMath.lib;PLGraphics.lib;PLCore.lib;PLGui.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -193,7 +193,7 @@ copy build\release\PLPlugin.lib ..\..\Bin\Lib\
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>include;../../Base/PLGeneral/include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;../../Base/PLCore/include;../../Base/PLGraphics/include;../../Base/PLMath/include;../../Base/PLGui/include;../../Base/PLRenderer/include;../../Base/PLMesh/include;../../Base/PLScene/include;../../Base/PLEngine/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -203,7 +203,7 @@ copy build\release\PLPlugin.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLMath64.lib;PLGraphics642.lib;PLCore64.lib;PLGui64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLGui64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -246,10 +246,6 @@ copy build\release64\PLPlugin64.lib ..\..\Bin\Lib\
     <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLGeneral\PLGeneral.vcxproj">
-      <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\..\Base\PLEngine\PLEngine.vcxproj">
       <Project>{cc92ebb3-44c5-429c-992c-cf71c8c69d29}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

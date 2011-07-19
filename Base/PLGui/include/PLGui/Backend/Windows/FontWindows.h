@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGui/Backend/FontImpl.h"
 
 
@@ -81,8 +81,8 @@ class FontWindows : public FontImpl {
 	//[ Public virtual FontImpl functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadFont(const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight, PLGeneral::uint32 nWeight, EFontStyle nStyle);
-		virtual bool LoadFont(const PLGeneral::String &sFilename, PLGeneral::uint32 nHeight);
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, EFontStyle nStyle);
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight);
 
 
 	//[-------------------------------------------------------]

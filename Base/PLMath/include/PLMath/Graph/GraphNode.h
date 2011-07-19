@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
+#include <PLCore/Container/Element.h>
 #include "PLMath/Vector3.h"
 
 
@@ -45,7 +45,7 @@ namespace PLMath {
 *  @brief
 *    Graph node class
 */
-class GraphNode : public PLGeneral::Element<GraphNode> {
+class GraphNode : public PLCore::Element<GraphNode> {
 
 
 	//[-------------------------------------------------------]
@@ -64,7 +64,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @param[in] pManager
 		*    Element manager using this element, can be a null pointer
 		*/
-		PLMATH_API GraphNode(const PLGeneral::String &sName = "", PLGeneral::ElementManager<GraphNode> *pManager = nullptr);
+		PLMATH_API GraphNode(const PLCore::String &sName = "", PLCore::ElementManager<GraphNode> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @return
 		*    Number of neighbours
 		*/
-		PLMATH_API PLGeneral::uint32 GetNumOfNeighbours() const;
+		PLMATH_API PLCore::uint32 GetNumOfNeighbours() const;
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @return
 		*    Requested neighbour node, a null pointer on error
 		*/
-		PLMATH_API const GraphNode *GetNeighbour(PLGeneral::uint32 nNeighbour) const;
+		PLMATH_API const GraphNode *GetNeighbour(PLCore::uint32 nNeighbour) const;
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @return
 		*    Requested neighbour node, a null pointer on error
 		*/
-		PLMATH_API GraphNode *GetNeighbour(PLGeneral::uint32 nNeighbour);
+		PLMATH_API GraphNode *GetNeighbour(PLCore::uint32 nNeighbour);
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*    - By default the neighbour distance from AddNeighbour() is set, if
 		*      SetPos() is called the neighbour distances are updated automatically.
 		*/
-		PLMATH_API float GetNeighbourDistance(PLGeneral::uint32 nNeighbour) const;
+		PLMATH_API float GetNeighbourDistance(PLCore::uint32 nNeighbour) const;
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMATH_API bool RemoveNeighbourAtIndex(PLGeneral::uint32 nNeighbour);
+		PLMATH_API bool RemoveNeighbourAtIndex(PLCore::uint32 nNeighbour);
 
 		//[-------------------------------------------------------]
 		//[ Position                                              ]
@@ -255,13 +255,13 @@ class GraphNode : public PLGeneral::Element<GraphNode> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Vector3						m_vPos;					/**< Node position */
-		PLGeneral::List<Neighbour*> m_lstNeighbours;		/**< Neighbour nodes */
-		PLGeneral::List<GraphNode*> m_lstIsNeighbourFrom;	/**< This node is a neighbour from... */
+		Vector3					 m_vPos;				/**< Node position */
+		PLCore::List<Neighbour*> m_lstNeighbours;		/**< Neighbour nodes */
+		PLCore::List<GraphNode*> m_lstIsNeighbourFrom;	/**< This node is a neighbour from... */
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGeneral::Element functions           ]
+	//[ Public virtual PLCore::Element functions              ]
 	//[-------------------------------------------------------]
 	public:
 		PLMATH_API virtual GraphNode &operator =(const GraphNode &cSource);

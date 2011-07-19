@@ -61,7 +61,7 @@ class SNMPostProcessSepia : public PLCompositing::SNMPostProcess {
 		pl_attribute(LightColor,	PLGraphics::Color3,	PLGraphics::Color3(1.0f, 0.90f, 0.5f),	ReadWrite,	DirectValue,	"Paper tone",							"")
 		pl_attribute(DarkColor,		PLGraphics::Color3,	PLGraphics::Color3(0.2f, 0.05f, 0.0f),	ReadWrite,	DirectValue,	"Stain tone",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Sepia.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/Sepia.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

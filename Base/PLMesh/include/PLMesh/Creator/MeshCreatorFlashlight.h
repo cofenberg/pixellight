@@ -53,7 +53,7 @@ class MeshCreatorFlashlight : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorFlashlight, "PLMesh", PLMesh::MeshCreator, "Flashlight mesh creator class")
 		// Attributes
-		pl_attribute(Detail,	PLGeneral::uint32,	16,									ReadWrite,	DirectValue,	"Detail level",		"")
+		pl_attribute(Detail,	PLCore::uint32,		16,									ReadWrite,	DirectValue,	"Detail level",		"")
 		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -81,7 +81,7 @@ class MeshCreatorFlashlight : public MeshCreator {
 	//[ Private virtual MeshCreator functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *Create(Mesh &cMesh, PLGeneral::uint32 nLODLevel = 0, bool bStatic = true) const;
+		virtual Mesh *Create(Mesh &cMesh, PLCore::uint32 nLODLevel = 0, bool bStatic = true) const;
 
 
 };

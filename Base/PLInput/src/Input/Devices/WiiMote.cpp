@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLInput/Backend/ConnectionDevice.h"
 #include "PLInput/Input/Devices/WiiMote.h"
 
@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLInput {
 

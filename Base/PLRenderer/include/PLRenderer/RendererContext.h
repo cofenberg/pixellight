@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLRenderer {
@@ -99,7 +99,7 @@ class RendererContext {
 		*  @return
 		*    Creates a renderer context instance, a null pointer on error
 		*/
-		PLRENDERER_API static RendererContext *CreateInstance(const PLGeneral::String &sBackend, Renderer::EMode nMode = Renderer::ModeBoth, PLGeneral::uint32 nZBufferBits = 24, PLGeneral::uint32 nStencilBits = 8, PLGeneral::uint32 nMultisampleAntialiasingSamples = 0, const PLGeneral::String &sDefaultShaderLanguage = "");
+		PLRENDERER_API static RendererContext *CreateInstance(const PLCore::String &sBackend, Renderer::EMode nMode = Renderer::ModeBoth, PLCore::uint32 nZBufferBits = 24, PLCore::uint32 nStencilBits = 8, PLCore::uint32 nMultisampleAntialiasingSamples = 0, const PLCore::String &sDefaultShaderLanguage = "");
 
 
 	//[-------------------------------------------------------]

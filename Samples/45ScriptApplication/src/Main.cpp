@@ -24,7 +24,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
+#include <PLCore/Main.h>
 #include <PLCore/ModuleMain.h>
 #include <PLEngine/Application/ScriptApplication.h>
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLEngine;
 
 

@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 #include "PLScriptBindings/ScriptBinding_PL_System_Console.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptBindings {
 
 

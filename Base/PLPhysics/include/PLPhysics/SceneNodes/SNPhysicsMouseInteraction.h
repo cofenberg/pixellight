@@ -74,10 +74,10 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNPhysicsMouseInteraction, "PLPhysics", PLScene::SceneNode, "Mouse physics interaction scene node")
 		// Attributes
-		pl_attribute(InputSemantic,		PLGeneral::String,		"",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",								"")
+		pl_attribute(InputSemantic,		PLCore::String,			"",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",								"")
 		pl_attribute(MaxPickingRange,	float,					0.0f,				ReadWrite,	DirectValue,	"Maximum picking range, if 0.0, there's no range limit (physics container space)",	"Min='0.0'")
 		pl_attribute(ThrowForce,		float,					2.0f,				ReadWrite,	DirectValue,	"Throw force",																		"Min='0.0'")
-		pl_attribute(ForceLineName,		PLGeneral::String,		"PhysicsForceLine",	ReadWrite,	GetSet,			"Name of the force visualization line node",										"")
+		pl_attribute(ForceLineName,		PLCore::String,			"PhysicsForceLine",	ReadWrite,	GetSet,			"Name of the force visualization line node",										"")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCulling,			ReadWrite,	GetSet,			"Flags",																			"")
 		// Constructors
@@ -89,8 +89,8 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLGeneral::String GetForceLineName() const;
-		PLPHYSICS_API void SetForceLineName(const PLGeneral::String &sValue);
+		PLPHYSICS_API PLCore::String GetForceLineName() const;
+		PLPHYSICS_API void SetForceLineName(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -159,7 +159,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sForceLineName;		/**< Name of the force visualization line node */
+		PLCore::String				m_sForceLineName;		/**< Name of the force visualization line node */
 		bool						m_bPicking;				/**< Are we currently picking? */
 		PLMath::Vector2i			m_vPickingMousePos;		/**< Mouse position used for picking */
 		Body					   *m_pPickedPhysicsBody;	/**< The currently picked physics body, can be a null pointer */

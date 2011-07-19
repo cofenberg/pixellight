@@ -82,7 +82,7 @@ class SPTexturePreview : public SPPreview {
 		*  @return
 		*    Name of the used texture
 		*/
-		PLRENDERER_API PLGeneral::String GetTexture() const;
+		PLRENDERER_API PLCore::String GetTexture() const;
 
 		/**
 		*  @brief
@@ -91,14 +91,14 @@ class SPTexturePreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used texture
 		*/
-		PLRENDERER_API void SetTexture(const PLGeneral::String &sName = "");
+		PLRENDERER_API void SetTexture(const PLCore::String &sName = "");
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sTexture;	/**< Name of the used texture */
+		PLCore::String m_sTexture;	/**< Name of the used texture */
 
 
 	//[-------------------------------------------------------]

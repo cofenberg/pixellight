@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -45,7 +45,7 @@ namespace PLRenderer {
 *  @brief
 *    Animation handler code
 */
-class AnimationHandler : public PLGeneral::ElementHandler<Animation> {
+class AnimationHandler : public PLCore::ElementHandler<Animation> {
 
 
 	//[-------------------------------------------------------]

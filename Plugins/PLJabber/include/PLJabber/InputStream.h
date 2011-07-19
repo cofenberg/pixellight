@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/XmlDocument.h>
+#include <PLCore/Xml/XmlDocument.h>
 #include "PLJabber/PLJabber.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 };
 namespace PLJabber {
@@ -82,7 +82,7 @@ class InputStream {
 		*  @param[in] sStream
 		*    Incoming stream data
 		*/
-		PLJABBER_API void ParseStream(const PLGeneral::String &sStream);
+		PLJABBER_API void ParseStream(const PLCore::String &sStream);
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class InputStream {
 		*  @param[in] sFilename
 		*    Name of file
 		*/
-		PLJABBER_API void Save(const PLGeneral::String &sFilename);
+		PLJABBER_API void Save(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -124,9 +124,9 @@ class InputStream {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		JabberConnection		*m_pJabberConnection;	/**< Jabber connection (always valid!) */
-		PLGeneral::XmlDocument   m_cXml;				/**< The XML document that is streamed */
-		PLGeneral::XmlElement	*m_pStream;				/**< Root node of XML stream, can be a null pointer */
+		JabberConnection	*m_pJabberConnection;	/**< Jabber connection (always valid!) */
+		PLCore::XmlDocument  m_cXml;				/**< The XML document that is streamed */
+		PLCore::XmlElement	*m_pStream;				/**< Root node of XML stream, can be a null pointer */
 
 
 };

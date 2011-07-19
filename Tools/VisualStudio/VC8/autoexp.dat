@@ -1925,28 +1925,28 @@ tagPROPVARIANT|tagVARIANT|PROPVARIANT|VARIANT{
 ;------------------------------------------------------------------------------
 ;  PixelLight data types
 ;------------------------------------------------------------------------------
-PLGeneral::String {
+PLCore::String {
     preview (
         #(
         	#switch($c.m_pStringBuffer->m_nType)
         		#case 1
 				(
 					#(
-            		[(void *)((PLGeneral::StringBufferASCII*)$c.m_pStringBuffer)->m_pszString, s], 
+            		[(void *)((PLCore::StringBufferASCII*)$c.m_pStringBuffer)->m_pszString, s], 
 					" (Length=", [$c.m_pStringBuffer->m_nLength, u], " Type=ASCII)"
 					)
 				)
         		#case 2
 				(
         			#(
-					[(void *)((PLGeneral::StringBufferUnicode*)$c.m_pStringBuffer)->m_pszString, su],
+					[(void *)((PLCore::StringBufferUnicode*)$c.m_pStringBuffer)->m_pszString, su],
 					" (Length=", [$c.m_pStringBuffer->m_nLength, u], " Type=UTC-2)"
 					)
 				)
         		#case 3
 				(
         			#(
-					[(void *)((PLGeneral::StringBufferUTF8*)$c.m_pStringBuffer)->m_pszString, s],
+					[(void *)((PLCore::StringBufferUTF8*)$c.m_pStringBuffer)->m_pszString, s],
 					" (Length=", [$c.m_pStringBuffer->m_nLength, u], " Type=UTF-8)"
 					)
 				)

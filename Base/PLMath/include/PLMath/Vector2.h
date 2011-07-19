@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLMath/PLMath.h"
 
 
@@ -136,7 +136,7 @@ class Vector2 {
 		inline Vector2(const Vector2 &vV);
 		PLMATH_API Vector2(const Vector3 &vV);
 		PLMATH_API Vector2(const Vector4 &vV);
-		inline Vector2(const PLGeneral::String &sString);
+		inline Vector2(const PLCore::String &sString);
 
 		//[-------------------------------------------------------]
 		//[ Destructor                                            ]
@@ -688,7 +688,7 @@ class Vector2 {
 		*  @return
 		*    String with the data
 		*/
-		PLMATH_API PLGeneral::String ToString() const;
+		PLMATH_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -697,7 +697,7 @@ class Vector2 {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLMATH_API bool FromString(const PLGeneral::String &sString);
+		PLMATH_API bool FromString(const PLCore::String &sString);
 
 
 };

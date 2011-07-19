@@ -13,7 +13,7 @@ If the RTTI class manager adds new classes, a \emph{ClassManager::EventClassLoad
 
 \paragraph{RTTI Method And String Reference Parameter}
 \label{Appendix:CommonPitfalls:RTTIMethodStringReferenceParameter}
-Within PixelLight, when using strings as parameters we're usually using a reference to strings like \begin{quote}void MyFunction(const PLGeneral::String \&sString) \{ /* ... */ \}\end{quote}. The example function can then be called by writing for instance \begin{quote}MyFunction("My string");\end{quote} and all works as expected. When using a string reference as a parameter to a RTTI method, described within \ref{ClassMembers:Method}, one has to look out when dynamically calling the RTTI method. Have a look at the following example source~code~\ref{Code:ProblematicRTTIMethodStringReferenceDefinition}.
+Within PixelLight, when using strings as parameters we're usually using a reference to strings like \begin{quote}void MyFunction(const PLCore::String \&sString) \{ /* ... */ \}\end{quote}. The example function can then be called by writing for instance \begin{quote}MyFunction("My string");\end{quote} and all works as expected. When using a string reference as a parameter to a RTTI method, described within \ref{ClassMembers:Method}, one has to look out when dynamically calling the RTTI method. Have a look at the following example source~code~\ref{Code:ProblematicRTTIMethodStringReferenceDefinition}.
 \begin{lstlisting}[label=Code:ProblematicRTTIMethodStringReferenceDefinition,caption={Problematic RTTI method and string reference parameter definition}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
@@ -22,12 +22,12 @@ class MyClass : public PLCore::Object {
 	// RTTI interface
 	pl_class(pl_rtti_export, MyClass, "", PLCore::Object, "Description of my RTTI class")
 		pl_constructor_0(MyConstructor, "Default constructor", "")
-		pl_method_1(MyMethod, bool, PLGeneral::String&, "My method", "")
+		pl_method_1(MyMethod, bool, PLCore::String&, "My method", "")
 	pl_class_end
 
 	public:
 		MyClass() : MethodMyMethod(this) {}
-		bool MyMethod(PLGeneral::String &sMyString) {
+		bool MyMethod(PLCore::String &sMyString) {
 			return true;
 		}
 
@@ -51,7 +51,7 @@ if (pMyClass != nullptr) {
 	delete pMyObject;
 }
 \end{lstlisting}
-Still looks fine, isn't it? But probably, the programmer indented another behaviour in this case. As described within this document, the RTTI is type safe. Within the source~code~\ref{Code:ProblematicRTTIMethodStringReferenceDefinition} the RTTI method \emph{MyMethod} was defined with a \emph{PLGeneral::String\&} parameter, this means, a reference to a string object. But within source~code~\ref{Code:ProblematicRTTIMethodStringReferenceUsage} the RTTI method was called by writing \begin{quote}pMyObject->CallMethod("MyMethod", "Param0="My string"");\end{quote}. The method parameter \begin{quote}Param0="My string"\end{quote} implies that the first parameter of the method to call is of the type \emph{PLGeneral::String}, but this isn't the case, the type of the method parameter is in fact \emph{PLGeneral::String\&}. Because the RTTI method parameter is a reference, the RTTI is interpreting the given \emph{Param0} value as a reference, meaning a memory address. Unfortunately, for the most computer systems, \emph{"My string"} is no valid memory address. In short, the result won't be the same as one intuitively expected and the result is probably an ugly crash. Because in this example, the RTTI method takes a reference to a string, a reference to a string must be provided as shown within source~code~\ref{Code:CorrectRTTIMethodStringReferenceUsage}.
+Still looks fine, isn't it? But probably, the programmer indented another behaviour in this case. As described within this document, the RTTI is type safe. Within the source~code~\ref{Code:ProblematicRTTIMethodStringReferenceDefinition} the RTTI method \emph{MyMethod} was defined with a \emph{PLCore::String\&} parameter, this means, a reference to a string object. But within source~code~\ref{Code:ProblematicRTTIMethodStringReferenceUsage} the RTTI method was called by writing \begin{quote}pMyObject->CallMethod("MyMethod", "Param0="My string"");\end{quote}. The method parameter \begin{quote}Param0="My string"\end{quote} implies that the first parameter of the method to call is of the type \emph{PLCore::String}, but this isn't the case, the type of the method parameter is in fact \emph{PLCore::String\&}. Because the RTTI method parameter is a reference, the RTTI is interpreting the given \emph{Param0} value as a reference, meaning a memory address. Unfortunately, for the most computer systems, \emph{"My string"} is no valid memory address. In short, the result won't be the same as one intuitively expected and the result is probably an ugly crash. Because in this example, the RTTI method takes a reference to a string, a reference to a string must be provided as shown within source~code~\ref{Code:CorrectRTTIMethodStringReferenceUsage}.
 \begin{lstlisting}[label=Code:CorrectRTTIMethodStringReferenceUsage,caption={Correct RTTI method and string reference parameter usage}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
@@ -60,11 +60,11 @@ if (pMyClass != nullptr) {
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 
 	// Call a RTTI method
-	PLGeneral::String sMyString = "My string";
-	pMyObject->CallMethod("MyMethod", "Param0=\"" + PLCore::Type<PLGeneral::String&>::ConvertToString(sMyString) + "\"");
+	PLCore::String sMyString = "My string";
+	pMyObject->CallMethod("MyMethod", "Param0=\"" + PLCore::Type<PLCore::String&>::ConvertToString(sMyString) + "\"");
 
 	// Cleanup
 	delete pMyObject;
 }
 \end{lstlisting}
-The RTTI method is now called correctly with the memory address of \emph{sMyString}, and the content of the string object, we're referencing to, is \emph{"My string"}. This described problematic situation is no bug or a result of a bad RTTI design, in fact, the shown code works absolutely correct and is consistent. A reference is a reference, whether it's a reference to a file object, or a reference to a string object doesn't matter to the RTTI. But usually, if a programmer reads \emph{string parameter}, something like \emph{"My string"} as value comes into the mind - which may result in a wrong usage of the system. Therefore, when using RTTI methods, we recommend to not use string reference parameters when it's not required. Just use string objects as parameters directly and the described situation, when dynamically calling the RTTI method in an intuitive way, does not occur. Internally, the \emph{PLGeneral::String} implementation is using the \emph{copy-on-write} design pattern, as a result, using string objects directly as parameters won't result in a complete copy of the string, internally, just a pointer to the internal string object is copied and then shared as long as possible. Nothing with an enormous impact on the runtime performance.
+The RTTI method is now called correctly with the memory address of \emph{sMyString}, and the content of the string object, we're referencing to, is \emph{"My string"}. This described problematic situation is no bug or a result of a bad RTTI design, in fact, the shown code works absolutely correct and is consistent. A reference is a reference, whether it's a reference to a file object, or a reference to a string object doesn't matter to the RTTI. But usually, if a programmer reads \emph{string parameter}, something like \emph{"My string"} as value comes into the mind - which may result in a wrong usage of the system. Therefore, when using RTTI methods, we recommend to not use string reference parameters when it's not required. Just use string objects as parameters directly and the described situation, when dynamically calling the RTTI method in an intuitive way, does not occur. Internally, the \emph{PLCore::String} implementation is using the \emph{copy-on-write} design pattern, as a result, using string objects directly as parameters won't result in a complete copy of the string, internally, just a pointer to the internal string object is copied and then shared as long as possible. Nothing with an enormous impact on the runtime performance.

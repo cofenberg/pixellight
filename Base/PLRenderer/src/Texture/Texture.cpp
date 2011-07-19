@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/Url.h>
 #include <PLCore/Tools/Loader.h>
 #include <PLCore/Tools/LoaderImpl.h>
 #include <PLGraphics/Image/Image.h>
@@ -41,7 +41,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

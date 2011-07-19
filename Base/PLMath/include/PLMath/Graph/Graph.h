@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
-#include <PLGeneral/Container/Bitset.h>
-#include <PLGeneral/Container/BinaryHeap.h>
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Container/Resource.h>
+#include <PLCore/Container/BinaryHeap.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLMath/Graph/GraphNode.h"
 
 
@@ -54,7 +54,7 @@ class GraphPath;
 *  @brief
 *    Graph class (directed)
 */
-class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<GraphNode> {
+class Graph : public PLCore::Resource<Graph>, public PLCore::ElementManager<GraphNode> {
 
 
 	//[-------------------------------------------------------]
@@ -70,7 +70,7 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 		*  @param[in] pManager
 		*    Resource manager using this resource, can be a null pointer
 		*/
-		PLMATH_API Graph(const PLGeneral::String &sName = "", PLCore::ResourceManager<Graph> *pManager = nullptr);
+		PLMATH_API Graph(const PLCore::String &sName = "", PLCore::ResourceManager<Graph> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 		*  @note
 		*    - Dijkstra's single source shortest path algorithm is used
 		*/
-		PLMATH_API GraphPath *FindShortestPath(PLGeneral::uint32 nStartNode, PLGeneral::uint32 nEndNode);
+		PLMATH_API GraphPath *FindShortestPath(PLCore::uint32 nStartNode, PLCore::uint32 nEndNode);
 
 
 	//[-------------------------------------------------------]
@@ -102,19 +102,19 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 	//[-------------------------------------------------------]
 	private:
 		// Temp data used during path finding (so we do not reallocate it each time...)
-		PLGeneral::Array<float>					 m_lstNodeDistance;	/**< Shortest distance of each node to start node */
-		PLGeneral::Array<GraphNode*>			 m_lstPreviousNode;	/**< Previous node, if a null pointer, not processed yet */
-		PLGeneral::Bitset						 m_lstTouched;		/**< Holds whether nodes are already touched or not */
-		PLGeneral::Bitset						 m_lstProcessed;	/**< Holds whether nodes are already processed or not */
-		PLGeneral::Array<GraphNode*>			 m_lstNodes;		/**< Temp nodes array */
-		PLGeneral::BinaryHeap<float, GraphNode*> m_mapToProcess;	/**< Current processed nodes */
+		PLCore::Array<float>				  m_lstNodeDistance;	/**< Shortest distance of each node to start node */
+		PLCore::Array<GraphNode*>			  m_lstPreviousNode;	/**< Previous node, if a null pointer, not processed yet */
+		PLCore::Bitset						  m_lstTouched;			/**< Holds whether nodes are already touched or not */
+		PLCore::Bitset						  m_lstProcessed;		/**< Holds whether nodes are already processed or not */
+		PLCore::Array<GraphNode*>			  m_lstNodes;			/**< Temp nodes array */
+		PLCore::BinaryHeap<float, GraphNode*> m_mapToProcess;		/**< Current processed nodes */
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual GraphNode *CreateElement(const PLGeneral::String &sName);
+		virtual GraphNode *CreateElement(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -129,7 +129,7 @@ class Graph : public PLCore::Resource<Graph>, public PLGeneral::ElementManager<G
 	//[-------------------------------------------------------]
 	public:
 		PLMATH_API virtual bool Unload();
-		PLMATH_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLMATH_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLInput/PLInput.h"
 
 
@@ -103,23 +103,23 @@ class HIDCapability {
 	//[-------------------------------------------------------]
 	public:
 		// Capability info
-		PLGeneral::uint8  m_nReportID;		/**< Report ID */
-		PLGeneral::uint16 m_nLinkCollection;/**< Link collection */
-		PLGeneral::uint16 m_nUsagePage;		/**< Usage page ID */
-		PLGeneral::uint16 m_nUsage;			/**< Usage ID */
-		PLGeneral::uint16 m_nUsageMin;		/**< Usage ID minimum */
-		PLGeneral::uint16 m_nUsageMax;		/**< Usage ID maximum */
-		PLGeneral::uint16 m_nDataIndex;		/**< Data index (index in input report - NOT byte index!) */
-		PLGeneral::uint16 m_nDataIndexMin;	/**< Data index minimum */
-		PLGeneral::uint16 m_nDataIndexMax;	/**< Data index maximum */
-		PLGeneral::uint16 m_nBitSize;		/**< Size of data in bits */
-		PLGeneral::uint16 m_nLogicalMin;	/**< Logical minimum value (e.g. for axes) */
-		PLGeneral::uint16 m_nLogicalMax;	/**< Logical maximum value (e.g. for axes) */
-		PLGeneral::uint16 m_nPhysicalMin;	/**< Physical minimum value (e.g. for axes) */
-		PLGeneral::uint16 m_nPhysicalMax;	/**< Physical maximum value (e.g. for axes) */
+		PLCore::uint8  m_nReportID;			/**< Report ID */
+		PLCore::uint16 m_nLinkCollection;	/**< Link collection */
+		PLCore::uint16 m_nUsagePage;		/**< Usage page ID */
+		PLCore::uint16 m_nUsage;			/**< Usage ID */
+		PLCore::uint16 m_nUsageMin;			/**< Usage ID minimum */
+		PLCore::uint16 m_nUsageMax;			/**< Usage ID maximum */
+		PLCore::uint16 m_nDataIndex;		/**< Data index (index in input report - NOT byte index!) */
+		PLCore::uint16 m_nDataIndexMin;		/**< Data index minimum */
+		PLCore::uint16 m_nDataIndexMax;		/**< Data index maximum */
+		PLCore::uint16 m_nBitSize;			/**< Size of data in bits */
+		PLCore::uint16 m_nLogicalMin;		/**< Logical minimum value (e.g. for axes) */
+		PLCore::uint16 m_nLogicalMax;		/**< Logical maximum value (e.g. for axes) */
+		PLCore::uint16 m_nPhysicalMin;		/**< Physical minimum value (e.g. for axes) */
+		PLCore::uint16 m_nPhysicalMax;		/**< Physical maximum value (e.g. for axes) */
 
 		// Current data value
-		PLGeneral::uint32 m_nValue;			/**< Current value of input data */
+		PLCore::uint32 m_nValue;			/**< Current value of input data */
 
 
 };

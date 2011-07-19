@@ -95,7 +95,7 @@ class Window : public ContainerWidget {
 		*  @return
 		*    Flags describing the displayed system buttons
 		*/
-		PLGUI_API PLGeneral::uint32 GetSystemButtons() const;
+		PLGUI_API PLCore::uint32 GetSystemButtons() const;
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Window : public ContainerWidget {
 		*  @param[in] nButtons
 		*    Flags describing the displayed system buttons
 		*/
-		PLGUI_API void SetSystemButtons(PLGeneral::uint32 nButtons);
+		PLGUI_API void SetSystemButtons(PLCore::uint32 nButtons);
 
 		/**
 		*  @brief
@@ -211,9 +211,9 @@ class Window : public ContainerWidget {
 		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
 		PLGUI_API virtual void OnMousePosUpdate(const PLMath::Vector2i &vPos);
 		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDoubleClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDoubleClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 	//[-------------------------------------------------------]
@@ -221,7 +221,7 @@ class Window : public ContainerWidget {
 	//[-------------------------------------------------------]
 	protected:
 		// Exported variables
-		PLGeneral::uint32	 m_nSystemButtons;		/**< System buttons that are available in this window */
+		PLCore::uint32		 m_nSystemButtons;		/**< System buttons that are available in this window */
 		bool				 m_bShowTitleBar;		/**< Show title of window? */
 		bool				 m_bShowBorder;			/**< Show window border? */
 		bool				 m_bResizable;			/**< Is window resizable? */

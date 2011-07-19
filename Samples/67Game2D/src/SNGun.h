@@ -52,9 +52,9 @@ class SNGun : public PLSound::SNSound {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNGun, "", PLSound::SNSound, "Gun scene node")
 		// Attributes
-		pl_attribute(InputSemantic,	PLGeneral::String,		"Gun",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",													"")
+		pl_attribute(InputSemantic,	PLCore::String,			"Gun",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",													"")
 			// Overwritten PLSound::SNSound attributes
-		pl_attribute(Sound,			PLGeneral::String,		"Data/Sounds/Shot.ogg",	ReadWrite,	GetSet,			"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
+		pl_attribute(Sound,			PLCore::String,			"Data/Sounds/Shot.ogg",	ReadWrite,	GetSet,			"Filename of the sound which should be played (full path, supported file formats are API dependent)",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),	NoLoop|NoStartPlayback,	ReadWrite,	GetSet,			"Flags",																								"")
 		// Constructors

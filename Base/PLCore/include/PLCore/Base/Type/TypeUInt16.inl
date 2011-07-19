@@ -33,7 +33,7 @@
 *    Type wrapper for 'uint16'
 */
 template <>
-class Type<PLGeneral::uint16> {
+class Type<uint16> {
 
 
 	//[-------------------------------------------------------]
@@ -41,200 +41,200 @@ class Type<PLGeneral::uint16> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::uint16 _Type;		/**< Real type */
-		typedef PLGeneral::uint16 _StorageType;	/**< Storage type, for this type identical to the real type */
+		typedef uint16 _Type;			/**< Real type */
+		typedef uint16 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
-		static const PLGeneral::uint32 TypeID = TypeUInt16;
+		static const uint32 TypeID = TypeUInt16;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "uint16";
 		}
 
 		// Convert var to uint16
-		static PLGeneral::uint16 ConvertFromVar(const DynVar *pValue)
+		static uint16 ConvertFromVar(const DynVar *pValue)
 		{
 			return pValue->GetUInt16();
 		}
 
 		// Convert uint16 to bool
-		static bool ConvertToBool(PLGeneral::uint16 nValue)
+		static bool ConvertToBool(uint16 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint16
-		static PLGeneral::uint16 ConvertFromBool(bool bValue)
+		static uint16 ConvertFromBool(bool bValue)
 		{
-			return static_cast<PLGeneral::uint16>(bValue);
+			return static_cast<uint16>(bValue);
 		}
 
 		// Convert uint16 to int
-		static int ConvertToInt(PLGeneral::uint16 nValue)
+		static int ConvertToInt(uint16 nValue)
 		{
 			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint16
-		static PLGeneral::uint16 ConvertFromInt(int nValue)
+		static uint16 ConvertFromInt(int nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to int8
-		static PLGeneral::int8 ConvertToInt8(PLGeneral::uint16 nValue)
+		static int8 ConvertToInt8(uint16 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint16
-		static PLGeneral::uint16 ConvertFromInt8(PLGeneral::int8 nValue)
+		static uint16 ConvertFromInt8(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to int16
-		static PLGeneral::int16 ConvertToInt16(PLGeneral::uint16 nValue)
+		static int16 ConvertToInt16(uint16 nValue)
 		{
-			return static_cast<PLGeneral::int16>(nValue);
+			return static_cast<int16>(nValue);
 		}
 
 		// Convert int16 to uint16
-		static PLGeneral::uint16 ConvertFromInt16(PLGeneral::int16 nValue)
+		static uint16 ConvertFromInt16(int16 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to int32
-		static PLGeneral::int32 ConvertToInt32(PLGeneral::uint16 nValue)
+		static int32 ConvertToInt32(uint16 nValue)
 		{
-			return static_cast<PLGeneral::int32>(nValue);
+			return static_cast<int32>(nValue);
 		}
 
 		// Convert int32 to uint16
-		static PLGeneral::uint16 ConvertFromInt32(PLGeneral::int32 nValue)
+		static uint16 ConvertFromInt32(int32 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to int64
-		static PLGeneral::int64 ConvertToInt64(PLGeneral::uint16 nValue)
+		static int64 ConvertToInt64(uint16 nValue)
 		{
-			return static_cast<PLGeneral::int64>(nValue);
+			return static_cast<int64>(nValue);
 		}
 
 		// Convert int64 to uint16
-		static PLGeneral::uint16 ConvertFromInt64(PLGeneral::int64 nValue)
+		static uint16 ConvertFromInt64(int64 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint8
-		static PLGeneral::uint8 ConvertToUInt8(PLGeneral::uint16 nValue)
+		static uint8 ConvertToUInt8(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint8>(nValue);
+			return static_cast<uint8>(nValue);
 		}
 
 		// Convert uint8 to uint16
-		static PLGeneral::uint16 ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static uint16 ConvertFromUInt8(uint8 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint16
-		static PLGeneral::uint16 ConvertToUInt16(PLGeneral::uint16 nValue)
+		static uint16 ConvertToUInt16(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint16
-		static PLGeneral::uint16 ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static uint16 ConvertFromUInt16(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint32
-		static PLGeneral::uint32 ConvertToUInt32(PLGeneral::uint16 nValue)
+		static uint32 ConvertToUInt32(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint16
-		static PLGeneral::uint16 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static uint16 ConvertFromUInt32(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint64
-		static PLGeneral::uint64 ConvertToUInt64(PLGeneral::uint16 nValue)
+		static uint64 ConvertToUInt64(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint64>(nValue);
+			return static_cast<uint64>(nValue);
 		}
 
 		// Convert uint64 to uint16
-		static PLGeneral::uint16 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static uint16 ConvertFromUInt64(uint64 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(PLGeneral::uint16 nValue)
+		static uint_ptr ConvertToUIntPtr(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint_ptr>(nValue);
+			return static_cast<uint_ptr>(nValue);
 		}
 
 		// Convert uint_ptr to uint16
-		static PLGeneral::uint16 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static uint16 ConvertFromUIntPtr(uint_ptr nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to float
-		static float ConvertToFloat(PLGeneral::uint16 nValue)
+		static float ConvertToFloat(uint16 nValue)
 		{
 			return static_cast<float>(nValue);
 		}
 
 		// Convert float to uint16
-		static PLGeneral::uint16 ConvertFromFloat(float fValue)
+		static uint16 ConvertFromFloat(float fValue)
 		{
-			return static_cast<PLGeneral::uint16>(fValue);
+			return static_cast<uint16>(fValue);
 		}
 
 		// Convert uint16 to double
-		static double ConvertToDouble(PLGeneral::uint16 nValue)
+		static double ConvertToDouble(uint16 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint16
-		static PLGeneral::uint16 ConvertFromDouble(double dValue)
+		static uint16 ConvertFromDouble(double dValue)
 		{
-			return static_cast<PLGeneral::uint16>(dValue);
+			return static_cast<uint16>(dValue);
 		}
 
 		// Convert uint16 to string
-		static PLGeneral::String ConvertToString(PLGeneral::uint16 nValue)
+		static String ConvertToString(uint16 nValue)
 		{
-			return PLGeneral::String() + static_cast<int>(nValue);
+			return String() + static_cast<int>(nValue);
 		}
 
-		// Convert string to PLGeneral::uint16
-		static PLGeneral::uint16 ConvertFromString(const PLGeneral::String &sString)
+		// Convert string to uint16
+		static uint16 ConvertFromString(const String &sString)
 		{
-			return static_cast<PLGeneral::uint16>(sString.GetInt());
+			return static_cast<uint16>(sString.GetInt());
 		}
 
 		// Convert real to storage type
-		static PLGeneral::uint16 ConvertRealToStorage(PLGeneral::uint16 nValue)
+		static uint16 ConvertRealToStorage(uint16 nValue)
 		{
 			return nValue;
 		}
 
 		// Convert storage to real type
-		static PLGeneral::uint16 ConvertStorageToReal(PLGeneral::uint16 nValue)
+		static uint16 ConvertStorageToReal(uint16 nValue)
 		{
 			return nValue;
 		}

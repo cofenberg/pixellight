@@ -162,7 +162,7 @@ class MeshAnimationManager : public PLRenderer::AnimationManager, public PLCore:
 		*    Updates the mesh animation manager
 		*
 		*  @param[in] fTimeDifference
-		*    Past time since last frame (use e.g. PLGeneral::Timing::GetInstance()->GetTimeDifference())
+		*    Past time since last frame (use e.g. PLCore::Timing::GetInstance()->GetTimeDifference())
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

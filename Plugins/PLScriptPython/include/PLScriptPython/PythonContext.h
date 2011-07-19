@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
@@ -74,7 +74,7 @@ class PythonContext {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32 m_nContexCounter;	/**< Python context counter */
+		static PLCore::uint32 m_nContexCounter;	/**< Python context counter */
 
 
 };

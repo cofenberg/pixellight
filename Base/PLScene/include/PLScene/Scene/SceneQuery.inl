@@ -43,7 +43,7 @@ inline SceneContainer &SceneQuery::GetSceneContainer() const
 *  @brief
 *    Returns the flags
 */
-inline PLGeneral::uint32 SceneQuery::GetFlags() const
+inline PLCore::uint32 SceneQuery::GetFlags() const
 {
 	return m_nFlags;
 }
@@ -52,7 +52,7 @@ inline PLGeneral::uint32 SceneQuery::GetFlags() const
 *  @brief
 *    Sets the flags
 */
-inline void SceneQuery::SetFlags(PLGeneral::uint32 nFlags)
+inline void SceneQuery::SetFlags(PLCore::uint32 nFlags)
 {
 	m_nFlags = nFlags;
 }

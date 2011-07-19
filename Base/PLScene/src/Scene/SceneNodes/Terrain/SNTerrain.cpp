@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Loader.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
@@ -41,7 +41,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

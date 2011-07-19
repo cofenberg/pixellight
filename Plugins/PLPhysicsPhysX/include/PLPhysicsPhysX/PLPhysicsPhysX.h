@@ -52,7 +52,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4100) // "'identifier' : unreferenced formal parameter"
 	PL_WARNING_DISABLE(4244) // "'conversion' conversion from 'type1' to 'type2', possible loss of data"

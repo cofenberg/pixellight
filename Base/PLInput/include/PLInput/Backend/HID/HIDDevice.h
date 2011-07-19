@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/List.h>
 #include "PLInput/Backend/ConnectionDevice.h"
 #include "PLInput/Backend/HID/HIDCapability.h"
 
@@ -112,7 +112,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    Device name
 		*/
-		PLINPUT_API PLGeneral::String GetName() const;
+		PLINPUT_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    Vendor ID
 		*/
-		PLINPUT_API PLGeneral::uint32 GetVendor() const;
+		PLINPUT_API PLCore::uint32 GetVendor() const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    Product ID
 		*/
-		PLINPUT_API PLGeneral::uint32 GetProduct() const;
+		PLINPUT_API PLCore::uint32 GetProduct() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    Usage ID
 		*/
-		PLINPUT_API PLGeneral::uint16 GetUsage() const;
+		PLINPUT_API PLCore::uint16 GetUsage() const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    Usage page ID
 		*/
-		PLINPUT_API PLGeneral::uint16 GetUsagePage() const;
+		PLINPUT_API PLCore::uint16 GetUsagePage() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    List of input button controls
 		*/
-		const PLGeneral::List<HIDCapability> &GetInputButtons() const;
+		const PLCore::List<HIDCapability> &GetInputButtons() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    List of input value controls
 		*/
-		const PLGeneral::List<HIDCapability> &GetInputValues() const;
+		const PLCore::List<HIDCapability> &GetInputValues() const;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @return
 		*    List of output value controls
 		*/
-		const PLGeneral::List<HIDCapability> &GetOutputValues() const;
+		const PLCore::List<HIDCapability> &GetOutputValues() const;
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @param[in] nSize
 		*    Size of input report (in bytes)
 		*/
-		void ParseInputReport(const PLGeneral::uint8 *pInputReport, PLGeneral::uint32 nSize);
+		void ParseInputReport(const PLCore::uint8 *pInputReport, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -217,7 +217,7 @@ class HIDDevice : public ConnectionDevice {
 		*    functions (e.g. Windows HID API). This method will be called automatically
 		*    by ParseInputReport.
 		*/
-		virtual void ParseInputReportData(const PLGeneral::uint8 *pInputReport, PLGeneral::uint32 nSize);
+		virtual void ParseInputReportData(const PLCore::uint8 *pInputReport, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -236,29 +236,29 @@ class HIDDevice : public ConnectionDevice {
 	//[-------------------------------------------------------]
 	protected:
 		// Device data
-		PLGeneral::String m_sName;							/**< Device name */
-		PLGeneral::uint32 m_nVendor;						/**< Vendor ID */
-		PLGeneral::uint32 m_nProduct;						/**< Product ID */
+		PLCore::String m_sName;							/**< Device name */
+		PLCore::uint32 m_nVendor;						/**< Vendor ID */
+		PLCore::uint32 m_nProduct;						/**< Product ID */
 
 		// Device capabilities
-		PLGeneral::uint16 m_nUsagePage;						/**< Device usage page */
-		PLGeneral::uint16 m_nUsage;							/**< Device usage */
-		PLGeneral::uint16 m_nFeatureReportByteLength;		/**< Feature report byte length */
-		PLGeneral::uint16 m_nNumberLinkCollectionNodes;		/**< Number of link collection nodes */
-		PLGeneral::uint16 m_nNumberInputButtonCaps;			/**< Number of input buttons */
-		PLGeneral::uint16 m_nNumberInputValueCaps;			/**< Number of input values */
-		PLGeneral::uint16 m_nNumberInputDataIndices;		/**< Number of input data indices */
-		PLGeneral::uint16 m_nNumberOutputButtonCaps;		/**< Number of output buttons */
-		PLGeneral::uint16 m_nNumberOutputValueCaps;			/**< Number of output values */
-		PLGeneral::uint16 m_nNumberOutputDataIndices;		/**< Number of output data indices */
-		PLGeneral::uint16 m_nNumberFeatureButtonCaps;		/**< Number of feature buttons */
-		PLGeneral::uint16 m_nNumberFeatureValueCaps;		/**< Number of feature values */
-		PLGeneral::uint16 m_nNumberFeatureDataIndices;		/**< Number of feature data indices */
+		PLCore::uint16 m_nUsagePage;					/**< Device usage page */
+		PLCore::uint16 m_nUsage;						/**< Device usage */
+		PLCore::uint16 m_nFeatureReportByteLength;		/**< Feature report byte length */
+		PLCore::uint16 m_nNumberLinkCollectionNodes;	/**< Number of link collection nodes */
+		PLCore::uint16 m_nNumberInputButtonCaps;		/**< Number of input buttons */
+		PLCore::uint16 m_nNumberInputValueCaps;			/**< Number of input values */
+		PLCore::uint16 m_nNumberInputDataIndices;		/**< Number of input data indices */
+		PLCore::uint16 m_nNumberOutputButtonCaps;		/**< Number of output buttons */
+		PLCore::uint16 m_nNumberOutputValueCaps;		/**< Number of output values */
+		PLCore::uint16 m_nNumberOutputDataIndices;		/**< Number of output data indices */
+		PLCore::uint16 m_nNumberFeatureButtonCaps;		/**< Number of feature buttons */
+		PLCore::uint16 m_nNumberFeatureValueCaps;		/**< Number of feature values */
+		PLCore::uint16 m_nNumberFeatureDataIndices;		/**< Number of feature data indices */
 
 		// Controls
-		PLGeneral::List<HIDCapability> m_lstInputButtons;	/**< List of input buttons */
-		PLGeneral::List<HIDCapability> m_lstInputValues;	/**< List of input values */
-		PLGeneral::List<HIDCapability> m_lstOutputValues;	/**< List of output values */
+		PLCore::List<HIDCapability> m_lstInputButtons;	/**< List of input buttons */
+		PLCore::List<HIDCapability> m_lstInputValues;	/**< List of input values */
+		PLCore::List<HIDCapability> m_lstOutputValues;	/**< List of output values */
 
 
 };

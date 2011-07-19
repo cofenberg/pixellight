@@ -136,13 +136,13 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			if (m_nodeObj->IsContainer()) {
 				PLScene::SceneContainer *container = (PLScene::SceneContainer*)m_nodeObj;
-				for (PLGeneral::uint32 i=0; i<container->GetNumOfElements(); i++) {
+				for (PLCore::uint32 i=0; i<container->GetNumOfElements(); i++) {
 					PLScene::SceneNode *node = container->GetByIndex(i);
 					new SceneGraphNodeTreeItem(node, this);
 				}
 			}
 
-			for(PLGeneral::uint32 i=0; i<m_nodeObj->GetNumOfModifiers(); i++) {
+			for(PLCore::uint32 i=0; i<m_nodeObj->GetNumOfModifiers(); i++) {
 				PLScene::SceneNodeModifier *node = m_nodeObj->GetModifier("", i);
 				new SceneGraphNodeModifierTreeItem(node, this);
 			}
@@ -155,7 +155,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			m_Icon = QPixmap::fromImage(GetQImage(m_nodeObj->GetClass()->GetProperties().Get("Icon")));
 		}
 
-		QImage GetQImage(const PLGeneral::String imageName)
+		QImage GetQImage(const PLCore::String imageName)
 		{
 			PLGraphics::Image cImage;
 			bool bRet = cImage.Load(imageName);
@@ -167,7 +167,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 					buf->Decompress();
 
 				if (buf->HasData()) {
-					const PLGeneral::uint8 *data = buf->GetData();
+					const PLCore::uint8 *data = buf->GetData();
 					QImage img1((const uchar*)data, buf->GetSize().width, buf->GetSize().height,QImage::Format_ARGB32);
 					return img1.scaled(24,24, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 				}

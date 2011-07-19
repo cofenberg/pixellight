@@ -69,8 +69,8 @@ class EffectLoaderFX : public PLRenderer::EffectLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLRenderer::Effect&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLRenderer::Effect&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLRenderer::Effect&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLRenderer::Effect&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -78,8 +78,8 @@ class EffectLoaderFX : public PLRenderer::EffectLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLRenderer::Effect &cEffect, PLGeneral::File &cFile);
-		bool Save(PLRenderer::Effect &cEffect, PLGeneral::File &cFile);
+		bool Load(PLRenderer::Effect &cEffect, PLCore::File &cFile);
+		bool Save(PLRenderer::Effect &cEffect, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

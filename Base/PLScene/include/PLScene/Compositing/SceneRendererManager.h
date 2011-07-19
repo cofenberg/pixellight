@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLScene/Compositing/SceneRendererHandler.h"
 
 
@@ -102,7 +102,7 @@ class SceneRendererManager : public PLCore::ResourceManager<SceneRenderer> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SceneRenderer *CreateResource(const PLGeneral::String &sName);
+		virtual SceneRenderer *CreateResource(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]

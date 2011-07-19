@@ -109,7 +109,7 @@ class Provider : public PLCore::Object {
 		*  @return
 		*    Device list, do not destroy the returned instances!
 		*/
-		PLINPUT_API const PLGeneral::List<Device*> &GetDevices() const;
+		PLINPUT_API const PLCore::List<Device*> &GetDevices() const;
 
 
 	//[-------------------------------------------------------]
@@ -137,7 +137,7 @@ class Provider : public PLCore::Object {
 		*    it will not get deleted by DetectDevices(). Therefore, an input provider must
 		*    call this function everytime in it's QueryDevices()-function.
 		*/
-		PLINPUT_API bool CheckDevice(const PLGeneral::String &sName);
+		PLINPUT_API bool CheckDevice(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -156,7 +156,7 @@ class Provider : public PLCore::Object {
 		*    the new device will be registered in the input system. On success, the input provider
 		*    takes control over the device instance and will destroy it if it's no longer required.
 		*/
-		PLINPUT_API bool AddDevice(const PLGeneral::String &sName, Device *pDevice);
+		PLINPUT_API bool AddDevice(const PLCore::String &sName, Device *pDevice);
 
 
 	//[-------------------------------------------------------]
@@ -180,7 +180,7 @@ class Provider : public PLCore::Object {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::List<Device*>  m_lstDevices;		/**< List of devices */
+		PLCore::List<Device*>  m_lstDevices;	/**< List of devices */
 
 
 };

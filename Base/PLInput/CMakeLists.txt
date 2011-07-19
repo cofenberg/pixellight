@@ -72,7 +72,6 @@ endif()
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 )
@@ -97,7 +96,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLMath
 )
@@ -188,7 +186,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

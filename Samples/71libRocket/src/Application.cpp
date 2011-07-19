@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
 #include <libRocket_PL/libRocketAdapter.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>
@@ -39,7 +39,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
 using namespace PLRenderer;
@@ -128,7 +128,7 @@ void Application::OnInit()
 			// Get the application directory - look out! We can't just assume that the current work directory
 			// is the same as were the executable is in. If we do so, for example starting the application by using
 			// a MS Windows menu shortcut will not work... and just changing the current work directory by using
-			// "PLGeneral::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
+			// "PLCore::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
 			const String sAppDirectory = GetApplicationContext().GetAppDirectory();
 
 			// Load the fonts

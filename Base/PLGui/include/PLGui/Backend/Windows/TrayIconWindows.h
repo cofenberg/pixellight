@@ -87,7 +87,7 @@ class TrayIconWindows : public TrayIconImpl {
 		PLGUI_API virtual void DestroyTrayIcon();
 		PLGUI_API virtual void SetVisible(bool bVisible);
 		PLGUI_API virtual void Update();
-		PLGUI_API virtual void ShowNotification(const PLGeneral::String &sTitle, const PLGeneral::String &sText);
+		PLGUI_API virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -95,10 +95,10 @@ class TrayIconWindows : public TrayIconImpl {
 	//[-------------------------------------------------------]
 	private:
 		// Tray icon data
-		Widget				*m_pWindow;			/**< Message window */
-		PLGeneral::uint32	 m_nID;				/**< Tray icon ID */
-		bool				 m_bVisible;		/**< Tray icon visible? */
-		NOTIFYICONDATA		 m_sNotifyIcon;		/**< Notify icon data */
+		Widget			*m_pWindow;		/**< Message window */
+		PLCore::uint32	 m_nID;			/**< Tray icon ID */
+		bool			 m_bVisible;	/**< Tray icon visible? */
+		NOTIFYICONDATA	 m_sNotifyIcon;	/**< Notify icon data */
 
 
 };

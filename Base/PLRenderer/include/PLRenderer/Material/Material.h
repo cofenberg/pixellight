@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Container/Resource.h>
 #include <PLMath/Vector3.h>
 #include "PLRenderer/PLRenderer.h"
 
@@ -85,15 +85,15 @@ class Material : public PLCore::Resource<Material> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLGeneral::String DiffuseMap;			/**< 'DiffuseMap' string (other usual name: 'decal map') */
-		PLRENDERER_API static const PLGeneral::String LightMap;				/**< 'LightMap' string (global ambient lighting) */
-		PLRENDERER_API static const PLGeneral::String AmbientOcclusionMap;	/**< 'AmbientOcclusionMap' string (global ambient occlusion) */
-		PLRENDERER_API static const PLGeneral::String EmissiveMap;			/**< 'EmissiveMap' string (other usual name: 'self illumination map') */
-		PLRENDERER_API static const PLGeneral::String ReflectionMap;		/**< 'ReflectionMap' string (other usual name: 'environment map') */
-		PLRENDERER_API static const PLGeneral::String ReflectivityMap;		/**< 'ReflectivityMap' string */
-		PLRENDERER_API static const PLGeneral::String NormalMap;			/**< 'NormalMap' string */
-		PLRENDERER_API static const PLGeneral::String SpecularMap;			/**< 'SpecularMap' string */
-		PLRENDERER_API static const PLGeneral::String HeightMap;			/**< 'HeightMap' string (other usual name: 'bump map') */
+		PLRENDERER_API static const PLCore::String DiffuseMap;			/**< 'DiffuseMap' string (other usual name: 'decal map') */
+		PLRENDERER_API static const PLCore::String LightMap;			/**< 'LightMap' string (global ambient lighting) */
+		PLRENDERER_API static const PLCore::String AmbientOcclusionMap;	/**< 'AmbientOcclusionMap' string (global ambient occlusion) */
+		PLRENDERER_API static const PLCore::String EmissiveMap;			/**< 'EmissiveMap' string (other usual name: 'self illumination map') */
+		PLRENDERER_API static const PLCore::String ReflectionMap;		/**< 'ReflectionMap' string (other usual name: 'environment map') */
+		PLRENDERER_API static const PLCore::String ReflectivityMap;		/**< 'ReflectivityMap' string */
+		PLRENDERER_API static const PLCore::String NormalMap;			/**< 'NormalMap' string */
+		PLRENDERER_API static const PLCore::String SpecularMap;			/**< 'SpecularMap' string */
+		PLRENDERER_API static const PLCore::String HeightMap;			/**< 'HeightMap' string (other usual name: 'bump map') */
 
 
 	//[-------------------------------------------------------]
@@ -153,7 +153,7 @@ class Material : public PLCore::Resource<Material> {
 		*    materials, try to add whenever possible an overwriting parameter to the material instead
 		*    manipulating the effect parameter by hand.
 		*/
-		PLRENDERER_API Parameter *GetParameter(const PLGeneral::String &sName) const;
+		PLRENDERER_API Parameter *GetParameter(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -168,7 +168,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @see
 		*    - GetParameter()
 		*/
-		PLRENDERER_API TextureBuffer *GetParameterTextureBuffer(const PLGeneral::String &sName) const;
+		PLRENDERER_API TextureBuffer *GetParameterTextureBuffer(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    The number of materials
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfMaterials() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfMaterials() const;
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    Pointer to the requested material, a null pointer on error
 		*/
-		PLRENDERER_API Material *GetMaterial(PLGeneral::uint32 nIndex) const;
+		PLRENDERER_API Material *GetMaterial(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool RemoveMaterial(PLGeneral::uint32 nIndex);
+		PLRENDERER_API bool RemoveMaterial(PLCore::uint32 nIndex);
 
 		/**
 		*  @brief
@@ -287,7 +287,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    Number of passes
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfPasses() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfPasses() const;
 
 		/**
 		*  @brief
@@ -299,7 +299,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool SetupPass(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API bool SetupPass(PLCore::uint32 nIndex = 0) const;
 
 
 	//[-------------------------------------------------------]
@@ -315,7 +315,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		Material(MaterialManager &cManager, const PLGeneral::String &sName);
+		Material(MaterialManager &cManager, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -338,19 +338,19 @@ class Material : public PLCore::Resource<Material> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
-		PLGeneral::Array<MaterialHandler*>  m_lstMaterials;			/**< List of materials */
-		EffectHandler					   *m_pFXHandler;			/**< Effect handler, can be a null pointer */
+		ParameterManager				*m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
+		PLCore::Array<MaterialHandler*>  m_lstMaterials;		/**< List of materials */
+		EffectHandler				    *m_pFXHandler;			/**< Effect handler, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 		PLRENDERER_API virtual bool Reload();
 		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

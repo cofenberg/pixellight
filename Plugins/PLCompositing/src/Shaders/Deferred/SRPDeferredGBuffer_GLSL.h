@@ -21,7 +21,7 @@
 
 
 // OpenGL 2.1 ("#version 120") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredGBuffer_GLSL_VS = "\
+static const PLCore::String sDeferredGBuffer_GLSL_VS = "\
 // In attributes\n\
 attribute vec4 VertexPosition;		// Object space vertex position\n\
 attribute vec2 VertexTexCoord0;		// Vertex texture coordinate\n\
@@ -112,7 +112,7 @@ void main()\n\
 
 
 // OpenGL 2.1 ("#version 120") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredGBuffer_GLSL_FS = "\
+static const PLCore::String sDeferredGBuffer_GLSL_FS = "\
 // Attributes\n\
 #if defined(FS_AMBIENTOCCLUSIONMAP) || defined(FS_LIGHTMAP)\n\
 	varying vec4 TexCoordVS;	// Vertex texture coordinate, zw for ambient occlusion map and/or light map texture coordinate from vertex shader\n\

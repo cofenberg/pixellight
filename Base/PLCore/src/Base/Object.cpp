@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
+#include "PLCore/Xml/Xml.h"
 #include "PLCore/Base/Var/VarDesc.h"
 #include "PLCore/Base/Var/DynVar.h"
 #include "PLCore/Base/Func/FuncDesc.h"
@@ -41,7 +41,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

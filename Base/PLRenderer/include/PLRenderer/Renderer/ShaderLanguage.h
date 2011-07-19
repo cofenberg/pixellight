@@ -76,7 +76,7 @@ class ShaderLanguage : public PLCore::Object {
 		*  @return
 		*    The name of the shader language (for example "GLSL" or "Cg")
 		*/
-		virtual PLGeneral::String GetShaderLanguage() const = 0;
+		virtual PLCore::String GetShaderLanguage() const = 0;
 
 		/**
 		*  @brief

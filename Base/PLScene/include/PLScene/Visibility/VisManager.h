@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Container/Pool.h>
 #include "PLScene/PLScene.h"
 
 
@@ -114,7 +114,7 @@ class VisManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Pool<VisNode*> m_lstFreeNodes;	/**< List of currently free visibililty nodes */
+		PLCore::Pool<VisNode*> m_lstFreeNodes;	/**< List of currently free visibililty nodes */
 
 
 };

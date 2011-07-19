@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLCore/Base/Event/Event.h>
 #include "PLRenderer/Renderer/Resource.h"
 
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class ValueType> class Array;
 }
 namespace PLRenderer {
@@ -98,7 +98,7 @@ class Program : public Resource {
 		*  @return
 		*    The name of the shader language the program is using (for example "GLSL" or "Cg")
 		*/
-		virtual PLGeneral::String GetShaderLanguage() const = 0;
+		virtual PLCore::String GetShaderLanguage() const = 0;
 
 		/**
 		*  @brief
@@ -183,9 +183,9 @@ class Program : public Resource {
 		*  @verbatim
 		*    Usage example writing the compiled program into a text file:
 		*
-		*    PLGeneral::File cFile("d:\\CompiledProgram.txt");
-		*    if (cFile.Open(PLGeneral::File::FileCreate|PLGeneral::File::FileWrite)) {
-		*        const PLGeneral::String sProgram = pMyProgram->GetCompiledProgram();
+		*    PLCore::File cFile("d:\\CompiledProgram.txt");
+		*    if (cFile.Open(PLCore::File::FileCreate|PLCore::File::FileWrite)) {
+		*        const PLCore::String sProgram = pMyProgram->GetCompiledProgram();
 		*        cFile.Write(sProgram.GetASCII(), sProgram.GetLength(), 1);
 		*        cFile.Close();
 		*    }
@@ -195,7 +195,7 @@ class Program : public Resource {
 		*    - The compiled program depends on the used shader language, it's also possible
 		*      that an implementation is not able to return a compiled program
 		*/
-		virtual PLGeneral::String GetCompiledProgram() = 0;
+		virtual PLCore::String GetCompiledProgram() = 0;
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class Program : public Resource {
 		*  @return
 		*    List of attributes
 		*/
-		virtual const PLGeneral::Array<ProgramAttribute*> &GetAttributes() = 0;
+		virtual const PLCore::Array<ProgramAttribute*> &GetAttributes() = 0;
 
 		/**
 		*  @brief
@@ -216,7 +216,7 @@ class Program : public Resource {
 		*  @return
 		*    Attribute (can be a null pointer, if no attribute with that name could be found)
 		*/
-		virtual ProgramAttribute *GetAttribute(const PLGeneral::String &sName) = 0;
+		virtual ProgramAttribute *GetAttribute(const PLCore::String &sName) = 0;
 
 		/**
 		*  @brief
@@ -225,7 +225,7 @@ class Program : public Resource {
 		*  @return
 		*    List of uniforms
 		*/
-		virtual const PLGeneral::Array<ProgramUniform*> &GetUniforms() = 0;
+		virtual const PLCore::Array<ProgramUniform*> &GetUniforms() = 0;
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class Program : public Resource {
 		*  @return
 		*    Uniform (can be a null pointer, if no uniform with that name could be found)
 		*/
-		virtual ProgramUniform *GetUniform(const PLGeneral::String &sName) = 0;
+		virtual ProgramUniform *GetUniform(const PLCore::String &sName) = 0;
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class Program : public Resource {
 		*  @return
 		*    List of uniform blocks
 		*/
-		virtual const PLGeneral::Array<ProgramUniformBlock*> &GetUniformBlocks() = 0;
+		virtual const PLCore::Array<ProgramUniformBlock*> &GetUniformBlocks() = 0;
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class Program : public Resource {
 		*  @return
 		*    Uniform block (can be a null pointer, if no uniform block with that name could be found)
 		*/
-		virtual ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName) = 0;
+		virtual ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName) = 0;
 
 
 	//[-------------------------------------------------------]

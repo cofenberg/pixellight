@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Script/ScriptManager.h"
 #include "PLCore/Script/Script.h"
@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

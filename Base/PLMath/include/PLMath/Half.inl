@@ -34,7 +34,7 @@ namespace PLMath {
 *  @brief
 *    Returns whether or not the given half value is zero
 */
-inline bool Half::IsZero(PLGeneral::uint16 nHalf)
+inline bool Half::IsZero(PLCore::uint16 nHalf)
 {
 	return ((nHalf & 0x7fff) == 0);
 }
@@ -43,7 +43,7 @@ inline bool Half::IsZero(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is negative
 */
-inline bool Half::IsNegative(PLGeneral::uint16 nHalf)
+inline bool Half::IsNegative(PLCore::uint16 nHalf)
 {
 	return ((nHalf & 0x8000) != 0);
 }
@@ -52,10 +52,10 @@ inline bool Half::IsNegative(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is not a number (NAN)
 */
-inline bool Half::IsNotANumber(PLGeneral::uint16 nHalf)
+inline bool Half::IsNotANumber(PLCore::uint16 nHalf)
 {
-	const PLGeneral::uint16 nExponent = ((nHalf >> 10) & 0x001f);
-	const PLGeneral::uint16 nMantissa = (nHalf & 0x3ff);
+	const PLCore::uint16 nExponent = ((nHalf >> 10) & 0x001f);
+	const PLCore::uint16 nMantissa = (nHalf & 0x3ff);
 	return (nExponent == 31 && nMantissa != 0);
 }
 
@@ -63,9 +63,9 @@ inline bool Half::IsNotANumber(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is finite
 */
-inline bool Half::IsFinite(PLGeneral::uint16 nHalf)
+inline bool Half::IsFinite(PLCore::uint16 nHalf)
 {
-	const PLGeneral::uint16 nExponent = ((nHalf >> 10) & 0x001f);
+	const PLCore::uint16 nExponent = ((nHalf >> 10) & 0x001f);
 	return (nExponent < 31);
 }
 
@@ -73,10 +73,10 @@ inline bool Half::IsFinite(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is infinity
 */
-inline bool Half::IsInfinity(PLGeneral::uint16 nHalf)
+inline bool Half::IsInfinity(PLCore::uint16 nHalf)
 {
-	const PLGeneral::uint16 nExponent = ((nHalf >> 10) & 0x001f);
-	const PLGeneral::uint16 nMantissa = (nHalf & 0x3ff);
+	const PLCore::uint16 nExponent = ((nHalf >> 10) & 0x001f);
+	const PLCore::uint16 nMantissa = (nHalf & 0x3ff);
 	return (nExponent == 31 && nMantissa == 0);
 }
 
@@ -84,9 +84,9 @@ inline bool Half::IsInfinity(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is normalized
 */
-inline bool Half::IsNormalized(PLGeneral::uint16 nHalf)
+inline bool Half::IsNormalized(PLCore::uint16 nHalf)
 {
-	const PLGeneral::uint16 nExponent = ((nHalf >> 10) & 0x001f);
+	const PLCore::uint16 nExponent = ((nHalf >> 10) & 0x001f);
 	return (nExponent > 0 && nExponent < 31);
 }
 
@@ -94,10 +94,10 @@ inline bool Half::IsNormalized(PLGeneral::uint16 nHalf)
 *  @brief
 *    Returns whether or not the given half value is de-normalized
 */
-inline bool Half::IsDenormalized(PLGeneral::uint16 nHalf)
+inline bool Half::IsDenormalized(PLCore::uint16 nHalf)
 {
-	const PLGeneral::uint16 nExponent = ((nHalf >> 10) & 0x001f);
-	const PLGeneral::uint16 nMantissa = (nHalf & 0x3ff);
+	const PLCore::uint16 nExponent = ((nHalf >> 10) & 0x001f);
+	const PLCore::uint16 nMantissa = (nHalf & 0x3ff);
 	return (nExponent == 0 && nMantissa != 0);
 }
 
@@ -105,7 +105,7 @@ inline bool Half::IsDenormalized(PLGeneral::uint16 nHalf)
 *  @brief
 *    Convertes a given half value into a float value
 */
-inline float Half::ToFloat(PLGeneral::uint16 nHalf)
+inline float Half::ToFloat(PLCore::uint16 nHalf)
 {
 	// [TODO]
 	return 0.0f;
@@ -115,7 +115,7 @@ inline float Half::ToFloat(PLGeneral::uint16 nHalf)
 *  @brief
 *    Convertes a given float value into a half value
 */
-inline PLGeneral::uint16 Half::FromFloat(float fFloat)
+inline PLCore::uint16 Half::FromFloat(float fFloat)
 {
 	// [TODO]
 	return 0;

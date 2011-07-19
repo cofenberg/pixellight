@@ -41,7 +41,7 @@ class IGameMaterial;
 class PLSceneObject;
 class PLSceneTexture;
 class PLSceneMaterial;
-namespace PLGeneral {
+namespace PLCore {
 	class XmlDocument;
 }
 
@@ -194,7 +194,7 @@ class PLScene : public PLSceneContainer {
 		*  @param[in] cDocument
 		*    Scene XML document to insert into
 		*/
-		void WriteToXMLDocument(PLGeneral::XmlDocument &cDocument);
+		void WriteToXMLDocument(PLCore::XmlDocument &cDocument);
 
 
 	//[-------------------------------------------------------]
@@ -263,7 +263,7 @@ class PLScene : public PLSceneContainer {
 		*  @param[in] szName
 		*    Name of the property written into the file
 		*/
-		void GetSummaryPropertyValue(PLGeneral::XmlElement &cSceneElement, int nSet, int nType, const TCHAR szName[]) const;
+		void GetSummaryPropertyValue(PLCore::XmlElement &cSceneElement, int nSet, int nType, const TCHAR szName[]) const;
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class PLScene : public PLSceneContainer {
 		*  @param[in] cSceneElement
 		*    Scene XML element to insert into
 		*/
-		void ExportStartCamera(PLGeneral::XmlElement &cSceneElement);
+		void ExportStartCamera(PLCore::XmlElement &cSceneElement);
 
 
 	//[-------------------------------------------------------]

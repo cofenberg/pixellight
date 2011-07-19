@@ -131,8 +131,8 @@
     <ClCompile>
       <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -147,7 +147,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStatD.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/debug_2008/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -171,8 +171,8 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_64/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_64/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -190,7 +190,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStatD64.lib;PLCoreStatD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/debug_2008_64/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -217,8 +217,8 @@
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_SECURE_SCL=0;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -240,7 +240,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>   %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStat.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/release_2008/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -274,8 +274,8 @@ copy "build\release_2008\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax\x8
       <OmitFramePointers>false</OmitFramePointers>
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/Max2008/_Windows_x86_64/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_SECURE_SCL=0;WIN32;WIN64;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/Max2008/_Windows_x86_64/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_SECURE_SCL=0;WIN32;WIN64;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -294,7 +294,7 @@ copy "build\release_2008\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax\x8
     </ClCompile>
     <Link>
       <AdditionalOptions>/opt:lbr  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStat64.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/release_2008_64/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -322,8 +322,8 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -343,7 +343,7 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStat.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/hybrid_2008/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -367,8 +367,8 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;WIN64;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLGENERAL_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../PixelLight;../../Base/PLCore/include/;../../Base/PLMesh/include/;../../External/_Windows_x86_32/Max2008/include/;$(VCInstallDir)PlatformSDK/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_HYBRID;IS_HYBRID;_SECURE_SCL=0;WIN32;WIN64;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;ISOLATION_AWARE_ENABLED=1;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -388,7 +388,7 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLGeneralStat64.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/hybrid_2008_64/PL3dsMaxSceneExport_2008.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2008/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -484,10 +484,6 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
   <ItemGroup>
     <ProjectReference Include="..\..\Base\PLCore\PLCoreStat.vcxproj">
       <Project>{e795f59a-0152-4143-9809-6eeef19360a7}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGeneral\PLGeneralStat.vcxproj">
-      <Project>{d91a4268-899b-4a8e-b1b3-1b5a353e5e97}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

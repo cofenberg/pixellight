@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceHandler.h>
+#include <PLCore/Container/ResourceHandler.h>
 #include "PLSound/Buffer.h"
 
 

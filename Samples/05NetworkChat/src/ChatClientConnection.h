@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Connection.h>
+#include <PLCore/Network/Connection.h>
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace NetworkChat {
 *  @brief
 *    Chat client connection network class
 */
-class ChatClientConnection : public PLGeneral::Connection {
+class ChatClientConnection : public PLCore::Connection {
 
 
 	//[-------------------------------------------------------]
@@ -64,7 +64,7 @@ class ChatClientConnection : public PLGeneral::Connection {
 		*  @param[in] cClient
 		*    Client this client connection is connected to
 		*/
-		ChatClientConnection(PLGeneral::Host &cClient);
+		ChatClientConnection(PLCore::Host &cClient);
 
 		/**
 		*  @brief
@@ -95,12 +95,12 @@ class ChatClientConnection : public PLGeneral::Connection {
 
 
 	//[-------------------------------------------------------]
-	//[ Private PLGeneral::Connection functions               ]
+	//[ Private PLCore::Connection functions                  ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnConnect();
 		virtual void OnDisconnect();
-		virtual void OnReceive(const char *pBuffer, PLGeneral::uint32 nSize);
+		virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
 
 
 };

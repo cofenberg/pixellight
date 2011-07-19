@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLGraphics/Color/Color4.h"
 #include "PLGraphics/Color/Color3.h"
 
@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGraphics {
 
 
@@ -62,7 +62,7 @@ const Color3 Color3::Lime		(static_cast<uint8>(  0), 255,   0);
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Maps a RGB floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+*    Maps a RGB floating point channels (0.0f to 1.0f range) to PLCore::uint32
 */
 uint32 Color3::ToUInt32(float fR, float fG, float fB)
 {
@@ -71,7 +71,7 @@ uint32 Color3::ToUInt32(float fR, float fG, float fB)
 
 /**
 *  @brief
-*    Returns the red color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+*    Returns the red color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 */
 float Color3::RedFromUInt32(uint32 nColor)
 {
@@ -80,7 +80,7 @@ float Color3::RedFromUInt32(uint32 nColor)
 
 /**
 *  @brief
-*    Returns the green color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+*    Returns the green color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 */
 float Color3::GreenFromUInt32(uint32 nColor)
 {
@@ -89,7 +89,7 @@ float Color3::GreenFromUInt32(uint32 nColor)
 
 /**
 *  @brief
-*    Returns the blue color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+*    Returns the blue color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 */
 float Color3::BlueFromUInt32(uint32 nColor)
 {
@@ -248,7 +248,7 @@ Color3::~Color3()
 
 /**
 *  @brief
-*    Maps this RGB floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+*    Maps this RGB floating point channels (0.0f to 1.0f range) to PLCore::uint32
 */
 uint32 Color3::ToUInt32() const
 {
@@ -257,7 +257,7 @@ uint32 Color3::ToUInt32() const
 
 /**
 *  @brief
-*    Maps from a PLGeneral::uint32 to RGB floating point channels (0.0f to 1.0f range)
+*    Maps from a PLCore::uint32 to RGB floating point channels (0.0f to 1.0f range)
 */
 void Color3::FromUInt32(uint32 nColor)
 {

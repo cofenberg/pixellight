@@ -84,7 +84,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*    Maximum number of color render targets. This must be at least 1 - main renderer target color.
 		*/
 		SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTextureBuffer,
-							 PLGeneral::uint32 nFlags = Depth | Stencil, PLGeneral::uint8 nMaxColorTargets = 1);
+							 PLCore::uint32 nFlags = Depth | Stencil, PLCore::uint8 nMaxColorTargets = 1);
 
 
 	//[-------------------------------------------------------]
@@ -93,7 +93,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	private:
 		LPDIRECT3DSURFACE9			m_pTextureSurface;			/**< Texture surface to render in, can be a null pointer */
 		PLRenderer::ResourceHandler m_cTextureBufferHandler;	/**< Texture buffer to render in */
-		PLGeneral::uint8			m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
+		PLCore::uint8				m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
 
 
 	//[-------------------------------------------------------]
@@ -101,7 +101,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual PLRenderer::TextureBuffer *GetTextureBuffer() const;
-		virtual PLGeneral::uint8 GetTextureBufferFace() const;
+		virtual PLCore::uint8 GetTextureBufferFace() const;
 		virtual void TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::SurfaceTextureBuffer &cSurfaceTextureBuffer);
 
 
@@ -119,7 +119,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	private:
 		virtual bool Init();
 		virtual void DeInit();
-		virtual bool MakeCurrent(PLGeneral::uint8 nFace = 0);
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0);
 		virtual bool UnmakeCurrent();
 		virtual bool Present();
 

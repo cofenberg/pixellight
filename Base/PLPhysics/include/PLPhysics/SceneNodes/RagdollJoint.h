@@ -114,7 +114,7 @@ class RagdollJoint {
 		*    'true' if all went fine, else 'false'
 		*    (maybe this name is already used within the ragdoll?)
 		*/
-		PLPHYSICS_API bool SetName(const PLGeneral::String &sName);
+		PLPHYSICS_API bool SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -159,14 +159,14 @@ class RagdollJoint {
 		SNRagdoll *m_pParentRagdoll;
 		ElementHandler *m_pJointHandler;	/**< Holds the PL physics joint */
 
-		PLGeneral::uint32 nIndex;
+		PLCore::uint32 nIndex;
 
-		PLGeneral::String sName;		/**< Name of this ragdoll joint */
-		PLGeneral::String sAttached;	/**< Name of the attached ragdoll body */
-		PLGeneral::String sParent;		/**< Name of the attached parent ragdoll body */
+		PLCore::String sName;		/**< Name of this ragdoll joint */
+		PLCore::String sAttached;	/**< Name of the attached ragdoll body */
+		PLCore::String sParent;		/**< Name of the attached parent ragdoll body */
 
-		PLGeneral::String sThisJointName; /**< Name of the orginal skeleton joint */
-		PLGeneral::String sNextJointName; /**< Name of the next orginal skeleton joint which 'created' this joint */
+		PLCore::String sThisJointName; /**< Name of the orginal skeleton joint */
+		PLCore::String sNextJointName; /**< Name of the next orginal skeleton joint which 'created' this joint */
 
 		// Specifies whether attachedBody is connected to the world instead of another body part
 		bool bAttachToWorld;

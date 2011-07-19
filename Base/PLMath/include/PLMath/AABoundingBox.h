@@ -308,7 +308,7 @@ class AABoundingBox {
 		*  @see
 		*    - GetVertices()
 		*/
-		PLMATH_API Vector3 GetVertex(PLGeneral::uint32 nIndex) const;
+		PLMATH_API Vector3 GetVertex(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -320,7 +320,7 @@ class AABoundingBox {
 		*  @return
 		*    Index of the nearest vertex in the AAB according to the normal vector of a clip plane
 		*/
-		PLMATH_API PLGeneral::uint32 GetNearestVertexIndex(const Vector3 &vClipPlaneNormal) const;
+		PLMATH_API PLCore::uint32 GetNearestVertexIndex(const Vector3 &vClipPlaneNormal) const;
 
 		/**
 		*  @brief
@@ -332,7 +332,7 @@ class AABoundingBox {
 		*  @return
 		*    Index of the furthest vertex in the AAB according to the normal vector of a clip plane
 		*/
-		PLMATH_API PLGeneral::uint32 GetFurthestVertexIndex(const Vector3 &vClipPlaneNormal) const;
+		PLMATH_API PLCore::uint32 GetFurthestVertexIndex(const Vector3 &vClipPlaneNormal) const;
 
 		/**
 		*  @brief

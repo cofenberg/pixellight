@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLGui/Gui/Data/SizeHint.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGui {
 
 
@@ -196,11 +196,11 @@ String SizeHint::ToString() const
 	switch (m_nPolicy) {
 		// Pixel
 		case Pixel:
-			return PLGeneral::String() + static_cast<int>(m_fSize) + "px";
+			return String() + static_cast<int>(m_fSize) + "px";
 
 		// Percent
 		case Percent:
-			return PLGeneral::String() + m_fSize + '%';
+			return String() + m_fSize + '%';
 
 		// Preferred
 		case Preferred:
@@ -230,11 +230,11 @@ bool SizeHint::FromString(const String &sString)
 		m_fSize	  = 0.0f;
 	} else {
 		// Pixel or Percent?
-		static PLGeneral::RegEx cRegEx("\\s*([-+]?\\d*\\.?\\d+)\\s*(px|\\%)");
+		static RegEx cRegEx("\\s*([-+]?\\d*\\.?\\d+)\\s*(px|\\%)");
 		if (cRegEx.Match(sString)) {
 			// Pixel or Percent!
-			PLGeneral::String sSize   = cRegEx.GetResult(0);
-			PLGeneral::String sPolicy = cRegEx.GetResult(1);
+			String sSize   = cRegEx.GetResult(0);
+			String sPolicy = cRegEx.GetResult(1);
 			m_nPolicy = (sPolicy == "px" ? Pixel : Percent);
 			m_fSize   = sSize.GetFloat();
 		} else if (sString.GetFloat() > 0.0f) {

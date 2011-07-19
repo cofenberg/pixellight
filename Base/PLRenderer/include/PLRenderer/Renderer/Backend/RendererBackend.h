@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLMath/Frustum.h>
 #include <PLMath/Rectangle.h>
 #include "PLRenderer/Renderer/Renderer.h"
@@ -93,7 +93,7 @@ class RendererBackend : public Renderer {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool MakeSurfaceCurrent(Surface &cSurface, PLGeneral::uint8 nFace = 0);
+		PLRENDERER_API bool MakeSurfaceCurrent(Surface &cSurface, PLCore::uint8 nFace = 0);
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class RendererBackend : public Renderer {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool MakeTextureBufferCurrent(TextureBuffer &cTextureBuffer, PLGeneral::uint32 nStage);
+		PLRENDERER_API bool MakeTextureBufferCurrent(TextureBuffer &cTextureBuffer, PLCore::uint32 nStage);
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class RendererBackend : public Renderer {
 		*  @return
 		*    The API pixel format of the given PixelLight pixel format, a null pointer on error
 		*/
-		PLRENDERER_API PLGeneral::uint32 *GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const;
+		PLRENDERER_API PLCore::uint32 *GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const;
 
 
 	//[-------------------------------------------------------]
@@ -239,50 +239,50 @@ class RendererBackend : public Renderer {
 		Statistics			 m_sStatistics;		/**< Renderer statistics */
 
 		// Display modes
-		PLGeneral::Array<const DisplayMode*> m_lstDisplayModeList;	/**< A list of all found display modes */
-		DisplayMode							 m_sDisplayModeBackup;	/**< The previous display mode */
-		DisplayMode							 m_sDisplayMode;		/**< The current display mode */
+		PLCore::Array<const DisplayMode*> m_lstDisplayModeList;	/**< A list of all found display modes */
+		DisplayMode						  m_sDisplayModeBackup;	/**< The previous display mode */
+		DisplayMode						  m_sDisplayMode;		/**< The current display mode */
 
 		// Renderer surfaces of this renderer
-		PLGeneral::Array<Surface*> m_lstSurfaces;
+		PLCore::Array<Surface*> m_lstSurfaces;
 
 		// Renderer resources of this renderer
-		PLGeneral::Array<Resource*> m_lstResources;
+		PLCore::Array<Resource*> m_lstResources;
 
 		// All this wrappers will map PL renderer values to API dependent values.
 		// E.e. Compare::Less will return GL_LESS
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_FILLWrapper;		/**< Fill */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_CULLWrapper;		/**< Cull */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_BLENDWrapper;	/**< BlendFunc */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_CMPWrapper;		/**< Compare */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_SOPWrapper;		/**< StencilOp */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_PTWrapper;		/**< Primitive */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_TAWrapper;		/**< Texture address mode */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_TPFWrapper;		/**< TextureBuffer::EPixelFormat */
+		PLCore::Array<PLCore::uint32> m_cPLE_FILLWrapper;	/**< Fill */
+		PLCore::Array<PLCore::uint32> m_cPLE_CULLWrapper;	/**< Cull */
+		PLCore::Array<PLCore::uint32> m_cPLE_BLENDWrapper;	/**< BlendFunc */
+		PLCore::Array<PLCore::uint32> m_cPLE_CMPWrapper;	/**< Compare */
+		PLCore::Array<PLCore::uint32> m_cPLE_SOPWrapper;	/**< StencilOp */
+		PLCore::Array<PLCore::uint32> m_cPLE_PTWrapper;		/**< Primitive */
+		PLCore::Array<PLCore::uint32> m_cPLE_TAWrapper;		/**< Texture address mode */
+		PLCore::Array<PLCore::uint32> m_cPLE_TPFWrapper;	/**< TextureBuffer::EPixelFormat */
 
 		// Misc
-		PLGeneral::uint32	m_nSwapInterval;		/**< Swap interval */
-		PLMath::Rectangle	m_cViewportRect;		/**< The current viewport */
-		float				m_fViewPortMinZ;		/**< Viewport min z */
-		float				m_fViewPortMaxZ;		/**< Viewport max z */
-		PLMath::Rectangle	m_cScissorRect;			/**< The current scissor rectangle */
-		PLMath::Frustum		m_cFrustum;				/**< The current frustum */
-		bool				m_bColorMask[4];		/**< Color mask (RGBA) */
-		PLGeneral::uint8  **m_ppDataBackup;			/**< Data backup, used inside BackupDeviceObjects()/RestoreDeviceObjects() */
+		PLCore::uint32		m_nSwapInterval;	/**< Swap interval */
+		PLMath::Rectangle	m_cViewportRect;	/**< The current viewport */
+		float				m_fViewPortMinZ;	/**< Viewport min z */
+		float				m_fViewPortMaxZ;	/**< Viewport max z */
+		PLMath::Rectangle	m_cScissorRect;		/**< The current scissor rectangle */
+		PLMath::Frustum		m_cFrustum;			/**< The current frustum */
+		bool				m_bColorMask[4];	/**< Color mask (RGBA) */
+		PLCore::uint8	  **m_ppDataBackup;		/**< Data backup, used inside BackupDeviceObjects()/RestoreDeviceObjects() */
 
 		// States
-		PLGeneral::uint32   m_nRenderState[RenderState::Number];				/**< List of render states (see RenderState) */
-		PLGeneral::uint32 **m_ppnSamplerState;									/**< List of sampler states for each stage (see Sampler) */
-		PLGeneral::uint32 **m_ppnInternalSamplerState;							/**< List of internal sampler states for each stage (see Sampler) */
-		PLGeneral::uint32   m_nDefaultRenderState[RenderState::Number];			/**< Default renderer states */
-		PLGeneral::uint32   m_nDefaultSamplerState[Sampler::Number];			/**< Default sampler states */
+		PLCore::uint32   m_nRenderState[RenderState::Number];			/**< List of render states (see RenderState) */
+		PLCore::uint32 **m_ppnSamplerState;								/**< List of sampler states for each stage (see Sampler) */
+		PLCore::uint32 **m_ppnInternalSamplerState;						/**< List of internal sampler states for each stage (see Sampler) */
+		PLCore::uint32   m_nDefaultRenderState[RenderState::Number];	/**< Default renderer states */
+		PLCore::uint32   m_nDefaultSamplerState[Sampler::Number];		/**< Default sampler states */
 
 		// Current stuff
-		SurfaceHandler		m_cCurrentSurface;					/**< The current renderer target surface */
-		PLGeneral::uint8	m_nCurrentSurfaceFace;				/**< The current renderer target surface face */
-		TextureBuffer	  **m_ppCurrentTextureBuffer;			/**< The current texture buffer */
-		IndexBuffer		   *m_pCurrentIndexBuffer;				/**< Current index buffer */
-		ResourceHandler     m_cProgramHandler;					/**< Currently used program */
+		SurfaceHandler		m_cCurrentSurface;			/**< The current renderer target surface */
+		PLCore::uint8		m_nCurrentSurfaceFace;		/**< The current renderer target surface face */
+		TextureBuffer	  **m_ppCurrentTextureBuffer;	/**< The current texture buffer */
+		IndexBuffer		   *m_pCurrentIndexBuffer;		/**< Current index buffer */
+		ResourceHandler     m_cProgramHandler;			/**< Currently used program */
 
 
 	//[-------------------------------------------------------]
@@ -302,8 +302,8 @@ class RendererBackend : public Renderer {
 		PLRENDERER_API virtual DrawHelpers &GetDrawHelpers() const;
 		PLRENDERER_API virtual void BackupDeviceObjects();
 		PLRENDERER_API virtual void RestoreDeviceObjects();
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfDisplayModes() const;
-		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLGeneral::uint32 nIndex) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfDisplayModes() const;
+		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLCore::uint32 nIndex) const;
 		PLRENDERER_API virtual const Capabilities &GetCapabilities() const;
 		PLRENDERER_API virtual bool IsValidTextureBuffer1DSize(int nSize) const;
 		PLRENDERER_API virtual bool IsValidTextureBuffer2DSize(int nSize) const;
@@ -318,17 +318,17 @@ class RendererBackend : public Renderer {
 		//[-------------------------------------------------------]
 		//[ Surfaces                                              ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfSurfaces() const;
-		PLRENDERER_API virtual Surface *GetSurface(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfSurfaces() const;
+		PLRENDERER_API virtual Surface *GetSurface(PLCore::uint32 nIndex = 0) const;
 		PLRENDERER_API virtual bool AddSurface(Surface &cSurface);
 		PLRENDERER_API virtual bool RemoveSurface(Surface &cSurface);
-		PLRENDERER_API virtual SurfacePainter *CreateSurfacePainter(const PLGeneral::String &sClass);
+		PLRENDERER_API virtual SurfacePainter *CreateSurfacePainter(const PLCore::String &sClass);
 
 		//[-------------------------------------------------------]
 		//[ Resources                                             ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfResources() const;
-		PLRENDERER_API virtual Resource *GetResource(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfResources() const;
+		PLRENDERER_API virtual Resource *GetResource(PLCore::uint32 nIndex = 0) const;
 		PLRENDERER_API virtual bool AddResource(Resource &cResource);
 		PLRENDERER_API virtual bool RemoveResource(Resource &cResource);
 
@@ -336,19 +336,19 @@ class RendererBackend : public Renderer {
 		//[ States                                                ]
 		//[-------------------------------------------------------]
 		// Render states
-		PLRENDERER_API virtual PLGeneral::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
+		PLRENDERER_API virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
 		PLRENDERER_API virtual void ResetRenderStates();
 		PLRENDERER_API virtual int GetRenderState(RenderState::Enum nState) const;
 		// Sampler states
-		PLRENDERER_API virtual PLGeneral::uint32 GetDefaultSamplerState(Sampler::Enum nState) const;
+		PLRENDERER_API virtual PLCore::uint32 GetDefaultSamplerState(Sampler::Enum nState) const;
 		PLRENDERER_API virtual void ResetSamplerStates();
-		PLRENDERER_API virtual int GetSamplerState(PLGeneral::uint32 nStage, Sampler::Enum nState) const;
+		PLRENDERER_API virtual int GetSamplerState(PLCore::uint32 nStage, Sampler::Enum nState) const;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLGeneral::uint32 GetSwapInterval() const;
-		PLRENDERER_API virtual void SetSwapInterval(PLGeneral::uint32 nSwapInterval = 1);
+		PLRENDERER_API virtual PLCore::uint32 GetSwapInterval() const;
+		PLRENDERER_API virtual void SetSwapInterval(PLCore::uint32 nSwapInterval = 1);
 		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const;
 		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
 		PLRENDERER_API virtual const PLMath::Rectangle &GetScissorRect() const;
@@ -357,9 +357,9 @@ class RendererBackend : public Renderer {
 		//[-------------------------------------------------------]
 		//[ Get/set current resources                             ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = nullptr) const;
-		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLGeneral::uint8 nColorIndex = 0) const;
-		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLGeneral::uint32 nStage) const;
+		PLRENDERER_API virtual Surface *GetRenderTarget(PLCore::uint8 *pnFace = nullptr) const;
+		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLCore::uint8 nColorIndex = 0) const;
+		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLCore::uint32 nStage) const;
 		PLRENDERER_API virtual IndexBuffer *GetIndexBuffer() const;
 		PLRENDERER_API virtual Program *GetProgram() const;
 		PLRENDERER_API virtual bool SetProgram(Program *pProgram = nullptr);

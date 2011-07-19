@@ -63,10 +63,10 @@ class Screenshot : public PLCore::Object {
 	pl_class(PL_RTTI_EXPORT, Screenshot, "PLEngine", PLCore::Object, "Class offering screenshot functionality")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Methods
-			pl_method_0(GetScreenshotDirectory,	pl_ret_type(PLGeneral::String),								"Get screenshot directory in which the screenshots are saved",																																																															"")
-			pl_method_1(SetScreenshotDirectory,	pl_ret_type(void),				const PLGeneral::String&,	"Set screenshot directory, directory in which the screenshots are saved as first parameter (if set to \"\", the current directory will be used)",																																										"")
-			pl_method_1(SaveScreenshot,			pl_ret_type(bool),				const PLGeneral::String&,	"Save screenshot from current render target, screenshot filename (e.g. \"Screenshot.png\") as first parameter (if string is empty, GetScreenshotFilename() will be used). Returns 'true' if all went fine, else 'false'. Uses the dimension of the current render target.",												"")
-			pl_method_1(GetScreenshotFilename,	pl_ret_type(PLGeneral::String),	const PLGeneral::String&,	"Get a screenshot filename recommendation, file name extension (for example \"png\") as first parameter. Returns the recommended screenshot filename, empty string on error. The screenshot filename is automatically generated: \"/_Screenshots/Screenshot_0.png\", \"/_Screenshots/Screenshot_1.png\" and so on...",	"")
+			pl_method_0(GetScreenshotDirectory,	pl_ret_type(PLCore::String),							"Get screenshot directory in which the screenshots are saved",																																																															"")
+			pl_method_1(SetScreenshotDirectory,	pl_ret_type(void),				const PLCore::String&,	"Set screenshot directory, directory in which the screenshots are saved as first parameter (if set to \"\", the current directory will be used)",																																										"")
+			pl_method_1(SaveScreenshot,			pl_ret_type(bool),				const PLCore::String&,	"Save screenshot from current render target, screenshot filename (e.g. \"Screenshot.png\") as first parameter (if string is empty, GetScreenshotFilename() will be used). Returns 'true' if all went fine, else 'false'. Uses the dimension of the current render target.",												"")
+			pl_method_1(GetScreenshotFilename,	pl_ret_type(PLCore::String),	const PLCore::String&,	"Get a screenshot filename recommendation, file name extension (for example \"png\") as first parameter. Returns the recommended screenshot filename, empty string on error. The screenshot filename is automatically generated: \"/_Screenshots/Screenshot_0.png\", \"/_Screenshots/Screenshot_1.png\" and so on...",	"")
 		#endif
 	pl_class_end
 
@@ -135,7 +135,7 @@ class Screenshot : public PLCore::Object {
 		*  @return
 		*    Directory in which the screenshots are saved
 		*/
-		PL_API PLGeneral::String GetScreenshotDirectory() const;
+		PL_API PLCore::String GetScreenshotDirectory() const;
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class Screenshot : public PLCore::Object {
 		*  @note
 		*    - If set to "", the current directory will be used
 		*/
-		PL_API void SetScreenshotDirectory(const PLGeneral::String &sPath);
+		PL_API void SetScreenshotDirectory(const PLCore::String &sPath);
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class Screenshot : public PLCore::Object {
 		*  @note
 		*    - Uses the dimension of the current render target
 		*/
-		PL_API bool SaveScreenshot(const PLGeneral::String &sFilename = "") const;
+		PL_API bool SaveScreenshot(const PLCore::String &sFilename = "") const;
 
 		/**
 		*  @brief
@@ -190,8 +190,8 @@ class Screenshot : public PLCore::Object {
 		*    'current' hardware supports dimensions up to 8192x8192. Use the renderer capabilities to figure
 		*    out the maximum supported rectangle texture dimension.
 		*/
-		PL_API bool SaveCustomScreenshot(const PLGeneral::String &sFilename, PLGeneral::uint16 nWidth, PLGeneral::uint16 nHeight,
-										 PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags) const;
+		PL_API bool SaveCustomScreenshot(const PLCore::String &sFilename, PLCore::uint16 nWidth, PLCore::uint16 nHeight,
+										 PLRenderer::TextureBuffer::EPixelFormat nFormat, PLCore::uint32 nFlags) const;
 
 		/**
 		*  @brief
@@ -207,7 +207,7 @@ class Screenshot : public PLCore::Object {
 		*  @return
 		*    The recommended screenshot filename, empty string on error
 		*/
-		PL_API PLGeneral::String GetScreenshotFilename(const PLGeneral::String &sExtension = "png") const;
+		PL_API PLCore::String GetScreenshotFilename(const PLCore::String &sExtension = "png") const;
 
 
 	//[-------------------------------------------------------]
@@ -216,7 +216,7 @@ class Screenshot : public PLCore::Object {
 	private:
 		PLRenderer::RendererContext *m_pRendererContext;		/**< Used renderer context, can be a null pointer */
 		PLRenderer::SurfacePainter	*m_pSurfacePainter;			/**< Used surface painter, can be a null pointer */
-		PLGeneral::String			 m_sScreenshotDirectory;	/**< Screenshot directory */
+		PLCore::String				 m_sScreenshotDirectory;	/**< Screenshot directory */
 
 
 };

@@ -73,10 +73,10 @@ class PGFume : public SNParticleGroup {
 		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Energie",											"")
 		pl_attribute(PositionScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Position scale",									"")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,					PLGeneral::String,	"Data/Effects/PGFume.plfx",					ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,					PLGeneral::uint32,	20,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
-		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,	4,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
-		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,	4,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		pl_attribute(Material,					PLCore::String,		"Data/Effects/PGFume.plfx",					ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,					PLCore::uint32,		20,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
+		pl_attribute(TextureAnimationColumns,	PLCore::uint32,		4,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
+		pl_attribute(TextureAnimationRows,		PLCore::uint32,		4,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -175,7 +175,7 @@ class PGFume : public SNParticleGroup {
 	//[ Public virtual SNParticleGroup functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
+		virtual bool InitParticleGroup(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "", const void *pData = nullptr);
 	
 
 };

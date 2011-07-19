@@ -106,8 +106,8 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PGresult		  *m_pPostgreSQLResult;	/**< PostgreSQL database query result (always valid!) */
-		PLGeneral::uint32  m_nCurrentRow;		/**< Current row */
+		PGresult	   *m_pPostgreSQLResult;	/**< PostgreSQL database query result (always valid!) */
+		PLCore::uint32  m_nCurrentRow;			/**< Current row */
 
 
 	//[-------------------------------------------------------]
@@ -116,8 +116,8 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	public:
 		PLDATABASEPOSTGRESQL_API virtual bool IsEmpty() const;
 		PLDATABASEPOSTGRESQL_API virtual void FirstRow();
-		PLDATABASEPOSTGRESQL_API virtual const PLGeneral::Array<PLGeneral::String> &FetchFieldList();
-		PLDATABASEPOSTGRESQL_API virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> *FetchRow();
+		PLDATABASEPOSTGRESQL_API virtual const PLCore::Array<PLCore::String> &FetchFieldList();
+		PLDATABASEPOSTGRESQL_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow();
 
 
 };

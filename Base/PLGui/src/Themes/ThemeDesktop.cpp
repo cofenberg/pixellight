@@ -38,7 +38,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLGui {
@@ -268,7 +268,7 @@ void ThemeDesktop::DrawPanel(Graphics &cGraphics, const Vector2i &vPos1, const V
 	DrawBorder(cGraphics, vPos1, vPos2, nBorderStyle);
 }
 
-void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const String &sTitle, const PLGui::Image &cIcon)
+void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, bool bBorder, uint32 nWidgetState, const String &sTitle, const PLGui::Image &cIcon)
 {
 	// Show border?
 	int nBorder = 0;
@@ -300,7 +300,7 @@ void ThemeDesktop::DrawWindow(Graphics &cGraphics, const Vector2i &vPos1, const 
 	cGraphics.DrawBox(m_cPanelColor, Vector2i(vPos1.x+nBorder, vPos1.y+nBorder+20), Vector2i(vPos2.x-nBorder, vPos1.y+nBorder+21));
 }
 
-void ThemeDesktop::DrawSystemButton(Graphics &cGraphics, const Vector2i &vPos, ESystemCommand nSystemCommand, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawSystemButton(Graphics &cGraphics, const Vector2i &vPos, ESystemCommand nSystemCommand, uint32 nWidgetState)
 {
 	// Draw background
 	Color4 cColorBackground;
@@ -319,7 +319,7 @@ void ThemeDesktop::DrawSystemButton(Graphics &cGraphics, const Vector2i &vPos, E
 	cGraphics.DrawImage(*pImage, vPos, Vector2i(14, 14));
 }
 
-void ThemeDesktop::DrawButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, const String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, const String &sTitle, const Image &cImage, uint32 nWidgetState)
 {
 	// Get button state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);
@@ -366,7 +366,7 @@ void ThemeDesktop::DrawButton(Graphics &cGraphics, const Vector2i &vPos1, const 
 	}
 }
 
-void ThemeDesktop::DrawToggleButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, const String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState, ECheckState nChecked)
+void ThemeDesktop::DrawToggleButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, const String &sTitle, const Image &cImage, uint32 nWidgetState, ECheckState nChecked)
 {
 	// Get button state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);
@@ -494,7 +494,7 @@ void ThemeDesktop::DrawSlider(Graphics &cGraphics, const Vector2i &vPos1, const 
 	}
 }
 
-void ThemeDesktop::DrawSliderHandle(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawSliderHandle(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, uint32 nWidgetState)
 {
 	// Get slider state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);
@@ -520,7 +520,7 @@ void ThemeDesktop::DrawScrollBar(Graphics &cGraphics, const Vector2i &vPos1, con
 	cGraphics.DrawBox(m_cColorControlBack, vPos1, vPos2);
 }
 
-void ThemeDesktop::DrawScrollBarPlusButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawScrollBarPlusButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, uint32 nWidgetState)
 {
 	// Draw button
 	DrawButton(cGraphics, vPos1, vPos2, "", Image(*GetGui()), nWidgetState);
@@ -530,7 +530,7 @@ void ThemeDesktop::DrawScrollBarPlusButton(Graphics &cGraphics, const Vector2i &
 	else							cGraphics.DrawImage(m_cImageArrowDown,  vPos1 + Vector2i(3, 3), Vector2i(10, 10));
 }
 
-void ThemeDesktop::DrawScrollBarMinusButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawScrollBarMinusButton(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, uint32 nWidgetState)
 {
 	// Draw button
 	DrawButton(cGraphics, vPos1, vPos2, "", Image(*GetGui()), nWidgetState);
@@ -540,7 +540,7 @@ void ThemeDesktop::DrawScrollBarMinusButton(Graphics &cGraphics, const Vector2i 
 	else							cGraphics.DrawImage(m_cImageArrowUp,   vPos1 + Vector2i(3, 3), Vector2i(10, 10));
 }
 
-void ThemeDesktop::DrawScrollBarHandle(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState)
+void ThemeDesktop::DrawScrollBarHandle(Graphics &cGraphics, const Vector2i &vPos1, const Vector2i &vPos2, EOrientation nOrientation, uint32 nWidgetState)
 {
 	// Get slider state
 	bool bEnabled  = ((nWidgetState & WidgetEnabled)	!= 0);

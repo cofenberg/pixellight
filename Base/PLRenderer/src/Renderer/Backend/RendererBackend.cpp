@@ -23,12 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
-#include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/Tools/Profiling.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Tools.h>
+#include <PLCore/Tools/Stopwatch.h>
+#include <PLCore/Tools/Profiling.h>
+#include <PLCore/System/System.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRenderer/RendererContext.h"
@@ -45,7 +45,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

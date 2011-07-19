@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -87,7 +87,7 @@ void AnimationEvent::SetFrame(uint32 nFrame)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Element functions           ]
+//[ Public virtual PLCore::Element functions              ]
 //[-------------------------------------------------------]
 AnimationEvent &AnimationEvent::operator =(const AnimationEvent &cSource)
 {
@@ -104,7 +104,7 @@ AnimationEvent &AnimationEvent::operator =(const AnimationEvent &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 AnimationEvent *AnimationEventManager::CreateElement(const String &sName)
 {

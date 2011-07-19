@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
+#include <PLCore/String/Tokenizer.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Matrix3x4.h>
 #include "PLRenderer/RendererContext.h"
@@ -58,12 +58,12 @@ ParameterManager &Parameter::GetManager() const
 *  @brief
 *    Sets the value of this parameter to a parameter within the given manager
 */
-bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLGeneral::String &sName) const
+bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLCore::String &sName) const
 {
 	// Set parameter
 	switch (m_nType) {
 		case Parameters::String:
-			cManager.SetParameterString(sName, *static_cast<const PLGeneral::String*>(m_pValue));
+			cManager.SetParameterString(sName, *static_cast<const PLCore::String*>(m_pValue));
 			break;
 
 		case Parameters::Integer:
@@ -145,7 +145,7 @@ bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLGeneral::
 *  @brief
 *    Sets the value of this parameter to a parameter within the given manager GPU program
 */
-bool Parameter::SetManagerParameterValue(Program &cProgram, const PLGeneral::String &sName) const
+bool Parameter::SetManagerParameterValue(Program &cProgram, const PLCore::String &sName) const
 {
 	// Get the GPU program uniform
 	ProgramUniform *pProgramUniform = cProgram.GetUniform(sName);
@@ -253,7 +253,7 @@ Parameters::EDataType Parameter::GetType() const
 *  @brief
 *    Get the parameter name
 */
-PLGeneral::String Parameter::GetName() const
+PLCore::String Parameter::GetName() const
 {
 	return m_sName;
 }
@@ -262,7 +262,7 @@ PLGeneral::String Parameter::GetName() const
 *  @brief
 *    Set the parameter name
 */
-bool Parameter::SetName(const PLGeneral::String &sName)
+bool Parameter::SetName(const PLCore::String &sName)
 {
 	// Check parameter
 	if (sName.GetLength()) {
@@ -295,84 +295,84 @@ bool Parameter::SetName(const PLGeneral::String &sName)
 *  @brief
 *    Returns a parameter value as string (e.g. "1.0 5.4 0.21")
 */
-PLGeneral::String Parameter::GetParameterString() const
+PLCore::String Parameter::GetParameterString() const
 {
 	switch (m_nType) {
 		case Parameters::String:
-			return *static_cast<const PLGeneral::String*>(m_pValue);
+			return *static_cast<const PLCore::String*>(m_pValue);
 
 		case Parameters::Integer:
-			return PLGeneral::String(*static_cast<const int*>(m_pValue));
+			return PLCore::String(*static_cast<const int*>(m_pValue));
 
 		case Parameters::Integer2:
-			return PLGeneral::String::Format("%d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1]);
+			return PLCore::String::Format("%d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1]);
 
 		case Parameters::Integer3:
-			return PLGeneral::String::Format("%d %d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1], static_cast<const int*>(m_pValue)[2]);
+			return PLCore::String::Format("%d %d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1], static_cast<const int*>(m_pValue)[2]);
 
 		case Parameters::Integer4:
-			return PLGeneral::String::Format("%d %d %d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1], static_cast<const int*>(m_pValue)[2], static_cast<const int*>(m_pValue)[3]);
+			return PLCore::String::Format("%d %d %d %d", static_cast<const int*>(m_pValue)[0], static_cast<const int*>(m_pValue)[1], static_cast<const int*>(m_pValue)[2], static_cast<const int*>(m_pValue)[3]);
 
 		case Parameters::Float:
-			return PLGeneral::String::Format("%g", *static_cast<const float*>(m_pValue));
+			return PLCore::String::Format("%g", *static_cast<const float*>(m_pValue));
 
 		case Parameters::Float2:
-			return PLGeneral::String::Format("%g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1]);
+			return PLCore::String::Format("%g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1]);
 
 		case Parameters::Float3:
-			return PLGeneral::String::Format("%g %g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1], static_cast<const float*>(m_pValue)[2]);
+			return PLCore::String::Format("%g %g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1], static_cast<const float*>(m_pValue)[2]);
 
 		case Parameters::Float4:
-			return PLGeneral::String::Format("%g %g %g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1], static_cast<const float*>(m_pValue)[2], static_cast<const float*>(m_pValue)[3]);
+			return PLCore::String::Format("%g %g %g %g", static_cast<const float*>(m_pValue)[0], static_cast<const float*>(m_pValue)[1], static_cast<const float*>(m_pValue)[2], static_cast<const float*>(m_pValue)[3]);
 
 		case Parameters::Double:
-			return PLGeneral::String::Format("%g", *static_cast<const double*>(m_pValue));
+			return PLCore::String::Format("%g", *static_cast<const double*>(m_pValue));
 
 		case Parameters::Double2:
-			return PLGeneral::String::Format("%g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1]);
+			return PLCore::String::Format("%g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1]);
 
 		case Parameters::Double3:
-			return PLGeneral::String::Format("%g %g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1], static_cast<const double*>(m_pValue)[2]);
+			return PLCore::String::Format("%g %g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1], static_cast<const double*>(m_pValue)[2]);
 
 		case Parameters::Double4:
-			return PLGeneral::String::Format("%g %g %g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1], static_cast<const double*>(m_pValue)[2], static_cast<const double*>(m_pValue)[3]);
+			return PLCore::String::Format("%g %g %g %g", static_cast<const double*>(m_pValue)[0], static_cast<const double*>(m_pValue)[1], static_cast<const double*>(m_pValue)[2], static_cast<const double*>(m_pValue)[3]);
 
 		case Parameters::Float3x3:
 		{
 			const float *pfValue = static_cast<const float*>(m_pValue);
-			return PLGeneral::String::Format("%g %g %g %g %g %g %g %g %g",
-											 pfValue[0], pfValue[1], pfValue[2],
-											 pfValue[3], pfValue[4], pfValue[5],
-											 pfValue[6], pfValue[7], pfValue[8]);
+			return PLCore::String::Format("%g %g %g %g %g %g %g %g %g",
+										 pfValue[0], pfValue[1], pfValue[2],
+										 pfValue[3], pfValue[4], pfValue[5],
+										 pfValue[6], pfValue[7], pfValue[8]);
 		}
 
 		case Parameters::Float3x4:
 		{
 			const float *pfValue = static_cast<const float*>(m_pValue);
-			return PLGeneral::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g",
-											 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
-											 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
-											 pfValue[8], pfValue[9], pfValue[10], pfValue[11]);
+			return PLCore::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g",
+										 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
+										 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
+										 pfValue[8], pfValue[9], pfValue[10], pfValue[11]);
 		}
 
 		case Parameters::Float4x4:
 		{
 			const float *pfValue = static_cast<const float*>(m_pValue);
-			return PLGeneral::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
-											 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
-											 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
-											 pfValue[8], pfValue[9], pfValue[10], pfValue[11],
-											 pfValue[12], pfValue[13], pfValue[14], pfValue[15]);
+			return PLCore::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
+										 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
+										 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
+										 pfValue[8], pfValue[9], pfValue[10], pfValue[11],
+										 pfValue[12], pfValue[13], pfValue[14], pfValue[15]);
 		}
 
 		case Parameters::Double4x4:
 		{
 			const double *pfValue = static_cast<const double*>(m_pValue);
-			return PLGeneral::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
-											 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
-											 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
-											 pfValue[8], pfValue[9], pfValue[10], pfValue[11],
-											 pfValue[12], pfValue[13], pfValue[14], pfValue[15]);
+			return PLCore::String::Format("%g %g %g %g %g %g %g %g %g %g %g %g %g %g %g %g",
+										 pfValue[0], pfValue[1], pfValue[2], pfValue[3],
+										 pfValue[4], pfValue[5], pfValue[6], pfValue[7],
+										 pfValue[8], pfValue[9], pfValue[10], pfValue[11],
+										 pfValue[12], pfValue[13], pfValue[14], pfValue[15]);
 		}
 
 		case Parameters::TextureBuffer:
@@ -390,7 +390,7 @@ PLGeneral::String Parameter::GetParameterString() const
 *  @brief
 *    Sets a parameter value from a string (e.g. "1.0 5.4 0.21")
 */
-bool Parameter::SetParameterString(const PLGeneral::String &sValue)
+bool Parameter::SetParameterString(const PLCore::String &sValue)
 {
 	// Empty value string?
 	if (!sValue.GetLength())
@@ -402,14 +402,14 @@ bool Parameter::SetParameterString(const PLGeneral::String &sValue)
 		SetValueTexture(sValue);
 	} else {
 		// Setup tokenizer
-		PLGeneral::Tokenizer cTokenizer;
+		PLCore::Tokenizer cTokenizer;
 		cTokenizer.Start(sValue);
 
 		// Parse
-		PLGeneral::uint32 nIndex = 0;
+		PLCore::uint32 nIndex = 0;
 		switch (m_nType) {
 			case Parameters::String:
-				*static_cast<PLGeneral::String*>(m_pValue) = sValue;
+				*static_cast<PLCore::String*>(m_pValue) = sValue;
 				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 				break;
 
@@ -1001,7 +1001,7 @@ bool Parameter::SetValueFloat3x3(const float fValue[])
 {
 	if (m_nType != Parameters::Float3x3)
 		return false; // Error!
-	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*3);
+	PLCore::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*3);
 	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
@@ -1017,7 +1017,7 @@ bool Parameter::SetValueFloat3x4(const float fValue[])
 {
 	if (m_nType != Parameters::Float3x4)
 		return false; // Error!
-	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*4);
+	PLCore::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*3*4);
 	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
@@ -1033,7 +1033,7 @@ bool Parameter::SetValueMatrixfv(const float fValue[])
 {
 	if (m_nType != Parameters::Float4x4)
 		return false; // Error!
-	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*4*4);
+	PLCore::MemoryManager::Copy(m_pValue, fValue, sizeof(float)*4*4);
 	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
@@ -1049,7 +1049,7 @@ bool Parameter::SetValueMatrixdv(const double fValue[])
 {
 	if (m_nType != Parameters::Double4x4)
 		return false; // Error!
-	PLGeneral::MemoryManager::Copy(m_pValue, fValue, sizeof(double)*4*4);
+	PLCore::MemoryManager::Copy(m_pValue, fValue, sizeof(double)*4*4);
 	m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
 	return true; // Done
 }
@@ -1085,7 +1085,7 @@ bool Parameter::SetValueTexture(Texture *pTexture)
 	return true; // Done
 }
 
-bool Parameter::SetValueTexture(const PLGeneral::String &sFilename)
+bool Parameter::SetValueTexture(const PLCore::String &sFilename)
 {
 	if (m_nType != Parameters::TextureBuffer)
 		return false; // Error!
@@ -1109,14 +1109,14 @@ bool Parameter::SetValueTexture(const PLGeneral::String &sFilename)
 *  @brief
 *    Constructor
 */
-Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, const PLGeneral::String &sName) :
+Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, const PLCore::String &sName) :
 	m_pManager(&cManager),
 	m_nType(nType),
 	m_sName(sName)
 {
 	switch (m_nType) {
 		case Parameters::String:
-			m_pValue = new PLGeneral::String();
+			m_pValue = new PLCore::String();
 			break;
 
 		case Parameters::Integer:
@@ -1199,22 +1199,22 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 
 		case Parameters::Float3x3:
 			m_pValue = new float[3*3];
-			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*3);
+			PLCore::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*3);
 			break;
 
 		case Parameters::Float3x4:
 			m_pValue = new float[3*4];
-			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*4);
+			PLCore::MemoryManager::Set(m_pValue, 0, sizeof(float)*3*4);
 			break;
 
 		case Parameters::Float4x4:
 			m_pValue = new float[4*4];
-			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(float)*4*4);
+			PLCore::MemoryManager::Set(m_pValue, 0, sizeof(float)*4*4);
 			break;
 
 		case Parameters::Double4x4:
 			m_pValue = new double[4*4];
-			PLGeneral::MemoryManager::Set(m_pValue, 0, sizeof(double)*4*4);
+			PLCore::MemoryManager::Set(m_pValue, 0, sizeof(double)*4*4);
 			break;
 
 		case Parameters::TextureBuffer:
@@ -1244,7 +1244,7 @@ Parameter::~Parameter()
 		// Cast pointer if required (MUST be one of this types!)
 		switch (m_nType) {
 			case Parameters::String:
-				delete static_cast<PLGeneral::String*>(m_pValue);
+				delete static_cast<PLCore::String*>(m_pValue);
 				break;
 
 			case Parameters::Integer:

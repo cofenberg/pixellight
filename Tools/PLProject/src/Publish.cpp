@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/String/RegEx.h>
-#include <PLGeneral/System/System.h>
 #include <PLCore/Core.h>
+#include <PLCore/File/File.h>
+#include <PLCore/String/RegEx.h>
+#include <PLCore/System/System.h>
 #if defined(WIN32)
 	#include "PublishWin32.h"
 #elif defined(LINUX)
@@ -37,7 +37,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 
@@ -69,7 +68,7 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 {
 	// Loop through all files (no infinite loop...)
 	for (int i=0; ; i++) {
-		// Get the current file (for example "libPLGeneral.so")
+		// Get the current file (for example "libPLCore.so")
 		const String sFile = sFiles[i];
 		if (sFile.GetLength()) {
 			#ifdef LINUX

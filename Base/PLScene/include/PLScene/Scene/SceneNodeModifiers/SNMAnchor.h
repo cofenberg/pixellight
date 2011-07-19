@@ -78,10 +78,10 @@ class SNMAnchor : public SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMAnchor, "PLScene", PLScene::SceneNodeModifier, "Scene node anchor modifier class")
 		// Attributes
-		pl_attribute(AttachedNode,			PLGeneral::String,		"",									ReadWrite,	GetSet,			"Name of the attached scene node",																				"")
+		pl_attribute(AttachedNode,			PLCore::String,			"",									ReadWrite,	GetSet,			"Name of the attached scene node",																				"")
 		pl_attribute(PositionOffset,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Position offset (node space)",																					"")
 		pl_attribute(RotationOffset,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation offset in degree (node space)",																		"")
-		pl_attribute(SkeletonJoint,			PLGeneral::String,		"",									ReadWrite,	DirectValue,	"If not empty, the attached node is relative to this skeleton joint (there must be a mesh handler + skeleton)",	"")
+		pl_attribute(SkeletonJoint,			PLCore::String,			"",									ReadWrite,	DirectValue,	"If not empty, the attached node is relative to this skeleton joint (there must be a mesh handler + skeleton)",	"")
 		pl_attribute(JointPositionOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Joint position offset (joint space)",																			"")
 		pl_attribute(JointRotationOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Joint rotation offset in degree (joint space)",																"")
 			// Overwritten SceneNodeModifier attributes
@@ -98,8 +98,8 @@ class SNMAnchor : public SceneNodeModifier {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetAttachedNode() const;
-		PLS_API void SetAttachedNode(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetAttachedNode() const;
+		PLS_API void SetAttachedNode(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -150,7 +150,7 @@ class SNMAnchor : public SceneNodeModifier {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sAttachedNode;
+		PLCore::String m_sAttachedNode;
 		SceneNodeHandler  m_cAttachedNodeHandler;
 
 

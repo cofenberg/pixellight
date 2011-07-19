@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
 #include "PLCore/PLCoreDefinitions.h"
+#include "PLCore/String/Tokenizer.h"
 #include "PLCore/Base/Tools/TypeTraits.h"
 #include "PLCore/Base/Var/DynVar.h"
 #include "PLCore/Base/Type/EnumType.h"

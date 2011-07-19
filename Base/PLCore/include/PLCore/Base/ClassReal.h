@@ -64,21 +64,21 @@ class ClassReal : public ClassImpl {
 		PLCORE_API virtual bool IsDummy() const;
 		PLCORE_API virtual void InitClass() const;
 		PLCORE_API virtual void DeInitClass() const;
-		PLCORE_API virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
-		PLCORE_API virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
-		PLCORE_API virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
-		PLCORE_API virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
-		PLCORE_API virtual const PLGeneral::List<EventDesc*> &GetSignals() const;
-		PLCORE_API virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const;
-		PLCORE_API virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
-		PLCORE_API virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
+		PLCORE_API virtual const List<VarDesc*> &GetAttributes() const;
+		PLCORE_API virtual const VarDesc *GetAttribute(const String &sName) const;
+		PLCORE_API virtual const List<FuncDesc*> &GetMethods() const;
+		PLCORE_API virtual const FuncDesc *GetMethod(const String &sName) const;
+		PLCORE_API virtual const List<EventDesc*> &GetSignals() const;
+		PLCORE_API virtual const EventDesc *GetSignal(const String &sName) const;
+		PLCORE_API virtual const List<EventHandlerDesc*> &GetSlots() const;
+		PLCORE_API virtual const EventHandlerDesc *GetSlot(const String &sName) const;
 		PLCORE_API virtual bool HasConstructor() const;
 		PLCORE_API virtual bool HasDefaultConstructor() const;
-		PLCORE_API virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
-		PLCORE_API virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
+		PLCORE_API virtual const List<ConstructorDesc*> &GetConstructors() const;
+		PLCORE_API virtual const ConstructorDesc *GetConstructor(const String &sName) const;
 		PLCORE_API virtual Object *Create() const;
 		PLCORE_API virtual Object *Create(const DynParams &cParams) const;
-		PLCORE_API virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
+		PLCORE_API virtual Object *Create(const String &sName, const DynParams &cParams) const;
 
 
 	//[-------------------------------------------------------]
@@ -100,7 +100,7 @@ class ClassReal : public ClassImpl {
 		*  @param[in] sBaseClass
 		*    Base class
 		*/
-		PLCORE_API ClassReal(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sNamespace, const PLGeneral::String &sBaseClass);
+		PLCORE_API ClassReal(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass);
 
 		/**
 		*  @brief
@@ -128,15 +128,14 @@ class ClassReal : public ClassImpl {
 	//[-------------------------------------------------------]
 	protected:
 		// Own data (does not include data from base classes)
-		PLGeneral::List<MemberDesc*>									 m_lstOwnMembers;	/**< List of members */
-
+		List<MemberDesc*>						m_lstOwnMembers;	/**< List of members */
 		// Member lists (also including the members from base classes)
-		mutable PLGeneral::HashMap<PLGeneral::String, MemberDesc*>		 m_mapMembers;		/**< Hash map of names -> members */
-		mutable PLGeneral::List<VarDesc*>								 m_lstAttributes;	/**< List of attributes */
-		mutable PLGeneral::List<FuncDesc*>								 m_lstMethods;		/**< List of methods */
-		mutable PLGeneral::List<EventDesc*>								 m_lstSignals;		/**< List of signals */
-		mutable PLGeneral::List<EventHandlerDesc*>						 m_lstSlots;		/**< List of slots */
-		mutable PLGeneral::List<ConstructorDesc*>						 m_lstConstructors;	/**< List of constructors */
+		mutable HashMap<String, MemberDesc*>	m_mapMembers;		/**< Hash map of names -> members */
+		mutable List<VarDesc*>					m_lstAttributes;	/**< List of attributes */
+		mutable List<FuncDesc*>					m_lstMethods;		/**< List of methods */
+		mutable List<EventDesc*>				m_lstSignals;		/**< List of signals */
+		mutable List<EventHandlerDesc*>			m_lstSlots;			/**< List of slots */
+		mutable List<ConstructorDesc*>			m_lstConstructors;	/**< List of constructors */
 
 
 };
@@ -145,7 +144,7 @@ class ClassReal : public ClassImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLGeneral
+} // PLCore
 
 
 #endif // __PLCORE_CLASS_REAL_H__

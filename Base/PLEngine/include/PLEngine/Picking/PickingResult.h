@@ -99,7 +99,7 @@ class PickingResult {
 		*  @return
 		*    The picked geometry (if there's one)
 		*/
-		PL_API PLGeneral::uint32 GetGeometry() const;
+		PL_API PLCore::uint32 GetGeometry() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class PickingResult {
 		*  @return
 		*    The picked triangle (if there's one)
 		*/
-		PL_API PLGeneral::uint32 GetTriangle() const;
+		PL_API PLCore::uint32 GetTriangle() const;
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class PickingResult {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PL_API bool GetTextureCoordinate(PLMath::Vector2 &vTexCoord, PLGeneral::uint32 nTexCoordChannel = 0) const;
+		PL_API bool GetTextureCoordinate(PLMath::Vector2 &vTexCoord, PLCore::uint32 nTexCoordChannel = 0) const;
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class PickingResult {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PL_API bool GetWrappedTextureCoordinate(PLMath::Vector2 &vTexCoord, PLGeneral::uint32 nTexCoordChannel = 0) const;
+		PL_API bool GetWrappedTextureCoordinate(PLMath::Vector2 &vTexCoord, PLCore::uint32 nTexCoordChannel = 0) const;
 
 
 	//[-------------------------------------------------------]
@@ -193,8 +193,8 @@ class PickingResult {
 	//[-------------------------------------------------------]
 	private:
 		PLScene::SceneNode		*m_pSceneNode;				/**< Current picked scene node, can be a null pointer */
-		PLGeneral::uint32		 m_nGeometry;				/**< Picked geometry */
-		PLGeneral::uint32		 m_nTriangle;				/**< Picked triangle */
+		PLCore::uint32			 m_nGeometry;				/**< Picked geometry */
+		PLCore::uint32			 m_nTriangle;				/**< Picked triangle */
 		PLMath::Vector3			 m_vPoint;					/**< Picked point in node space */
 		PLScene::SceneContainer	*m_pSceneContainer;			/**< Scene container our line start position and squared distance are in, can be a null pointer */
 		PLMath::Vector3			 m_vLineStartPos;			/**< Line start position, see 'm_pSceneContainer' */

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/Core/RefCount.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -58,7 +58,7 @@ class Font;
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'Font' abstraction
 */
-class FontImpl : public PLGeneral::RefCount<FontImpl> {
+class FontImpl : public PLCore::RefCount<FontImpl> {
 
 
 	//[-------------------------------------------------------]
@@ -101,7 +101,7 @@ class FontImpl : public PLGeneral::RefCount<FontImpl> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool LoadFont(const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight, PLGeneral::uint32 nWeight, EFontStyle nStyle) = 0;
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, EFontStyle nStyle) = 0;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class FontImpl : public PLGeneral::RefCount<FontImpl> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool LoadFont(const PLGeneral::String &sFilename, PLGeneral::uint32 nHeight) = 0;
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight) = 0;
 
 
 	//[-------------------------------------------------------]

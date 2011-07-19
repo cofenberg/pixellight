@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Container/Pool.h>
 #include <PLMath/Rectangle.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
@@ -214,7 +214,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGBuffer, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering GBuffer (Geometry Buffer) fill")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,												"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,													"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(TextureFiltering,	pl_enum_type(SRPDeferredGBufferMaterial::ETextureFiltering),	SRPDeferredGBufferMaterial::Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),											0,											ReadWrite,	GetSet,			"Flags",																																"")
@@ -249,7 +249,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		*  @return
 		*    A render target texture buffer of the GBuffer, can be a null pointer
 		*/
-		PLCOM_API PLRenderer::TextureBufferRectangle *GetRenderTargetTextureBuffer(PLGeneral::uint32 nIndex) const;
+		PLCOM_API PLRenderer::TextureBufferRectangle *GetRenderTargetTextureBuffer(PLCore::uint32 nIndex) const;
 
 		// [TODO] Remove this!
 		PLCOM_API PLRenderer::SurfaceTextureBuffer *GetRenderTarget() const;
@@ -376,13 +376,13 @@ class SRPDeferredGBuffer : public SRPDeferred {
 		bool									 m_bColorTarget3AlphaUsed;	/**< Was the alpha component of target 3 actually used when filling the current GBuffer content? */
 		PLRenderer::Surface						*m_pSurfaceBackup;			/**< Backup of the previously set render surface, can be a null pointer */
 		FullscreenQuad							*m_pFullscreenQuad;			/**< Fullscreen quad instance, can be a null pointer */
-		PLGeneral::Pool<PLRenderer::Material*>   m_lstMaterials;			/**< List of currently used materials */
-		PLGeneral::Pool<MeshBatch*>				 m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
-		PLGeneral::Pool<MeshBatch*>				 m_lstMeshBatches;			/**< List of currently used mesh batches */
+		PLCore::Pool<PLRenderer::Material*>  	 m_lstMaterials;			/**< List of currently used materials */
+		PLCore::Pool<MeshBatch*>				 m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
+		PLCore::Pool<MeshBatch*>				 m_lstMeshBatches;			/**< List of currently used mesh batches */
 
 		// Material cache
-		PLRenderer::ProgramGenerator									   *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-		PLGeneral::HashMap<PLGeneral::uint64, SRPDeferredGBufferMaterial*>  m_lstMaterialCache;		/**< List of cached materials */
+		PLRenderer::ProgramGenerator							     *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLCore::HashMap<PLCore::uint64, SRPDeferredGBufferMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

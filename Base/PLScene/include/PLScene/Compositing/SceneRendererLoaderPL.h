@@ -64,9 +64,9 @@ class SceneRendererLoaderPL : public SceneRendererLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	SceneRenderer&,	PLGeneral::File&,			"Load method",												"")
-		pl_method_2(Save,		pl_ret_type(bool),	SceneRenderer&,	PLGeneral::File&,			"Save method. Default values are not written.",				"")
-		pl_method_3(SaveParams, pl_ret_type(bool),	SceneRenderer&,	PLGeneral::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	SceneRenderer&,	PLCore::File&,			"Load method",												"")
+		pl_method_2(Save,		pl_ret_type(bool),	SceneRenderer&,	PLCore::File&,			"Save method. Default values are not written.",				"")
+		pl_method_3(SaveParams, pl_ret_type(bool),	SceneRenderer&,	PLCore::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
 	pl_class_end
 
 
@@ -74,9 +74,9 @@ class SceneRendererLoaderPL : public SceneRendererLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API bool Load(SceneRenderer &cSceneRenderer, PLGeneral::File &cFile);
-		PLS_API bool Save(SceneRenderer &cSceneRenderer, PLGeneral::File &cFile);
-		PLS_API bool SaveParams(SceneRenderer &cSceneRenderer, PLGeneral::File &cFile, bool bNoDefault);
+		PLS_API bool Load(SceneRenderer &cSceneRenderer, PLCore::File &cFile);
+		PLS_API bool Save(SceneRenderer &cSceneRenderer, PLCore::File &cFile);
+		PLS_API bool SaveParams(SceneRenderer &cSceneRenderer, PLCore::File &cFile, bool bNoDefault);
 
 
 	//[-------------------------------------------------------]
@@ -112,7 +112,7 @@ class SceneRendererLoaderPL : public SceneRendererLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SceneRenderer &cSceneRenderer, const PLGeneral::XmlElement &cSceneRendererElement) const;
+		bool LoadV1(SceneRenderer &cSceneRenderer, const PLCore::XmlElement &cSceneRendererElement) const;
 
 
 };

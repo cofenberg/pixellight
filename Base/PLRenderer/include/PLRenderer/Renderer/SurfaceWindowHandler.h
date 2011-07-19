@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -118,7 +118,7 @@ class SurfaceWindowHandler {
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		PLRENDERER_API void Init(Renderer &cRenderer, PLGeneral::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false);
+		PLRENDERER_API void Init(Renderer &cRenderer, PLCore::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 		/**
 		*  @brief

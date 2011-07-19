@@ -140,7 +140,7 @@ class JointAni : public PLRenderer::AnimationBase {
 		*  @return
 		*    Skeleton animation joints
 		*/
-		PLMESH_API PLGeneral::Array<AniJoint> &GetJoints();
+		PLMESH_API PLCore::Array<AniJoint> &GetJoints();
 
 		/**
 		*  @brief
@@ -157,8 +157,7 @@ class JointAni : public PLRenderer::AnimationBase {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
 		*/
-		PLMESH_API bool ApplyJointStates(PLGeneral::Array<JointHandler> &lstJointHandlers,
-										 PLGeneral::uint32 nFrame, float fWeight = 1.0f) const;
+		PLMESH_API bool ApplyJointStates(PLCore::Array<JointHandler> &lstJointHandlers, PLCore::uint32 nFrame, float fWeight = 1.0f) const;
 
 		/**
 		*  @brief
@@ -179,15 +178,14 @@ class JointAni : public PLRenderer::AnimationBase {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
 		*/
-		PLMESH_API bool ApplyJointStates(PLGeneral::Array<JointHandler> &lstJointHandlers,
-										 PLGeneral::uint32 nFrame1, PLGeneral::uint32 nFrame2, float fTime, float fWeight = 1.0f) const;
+		PLMESH_API bool ApplyJointStates(PLCore::Array<JointHandler> &lstJointHandlers, PLCore::uint32 nFrame1, PLCore::uint32 nFrame2, float fTime, float fWeight = 1.0f) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<AniJoint> m_lstAniJoints;	/**< The animation joints */
+		PLCore::Array<AniJoint> m_lstAniJoints;	/**< The animation joints */
 
 
 	//[-------------------------------------------------------]

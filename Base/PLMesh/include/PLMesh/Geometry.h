@@ -71,7 +71,7 @@ class Geometry {
 		*  @return
 		*    Name of the geometry
 		*/
-		PLMESH_API PLGeneral::String GetName() const;
+		PLMESH_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -80,7 +80,7 @@ class Geometry {
 		*  @param[in] sName
 		*    Name of the geometry
 		*/
-		PLMESH_API void SetName(const PLGeneral::String &sName = "");
+		PLMESH_API void SetName(const PLCore::String &sName = "");
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Geometry {
 		*  @return
 		*    Geometry flags
 		*/
-		PLMESH_API PLGeneral::uint32 GetFlags() const;
+		PLMESH_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Geometry {
 		*  @param[in] nFlags
 		*    Geometry flags
 		*/
-		PLMESH_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLMESH_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class Geometry {
 		*  @return
 		*    Number of the material that is used
 		*/
-		PLMESH_API PLGeneral::uint32 GetMaterial() const;
+		PLMESH_API PLCore::uint32 GetMaterial() const;
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Geometry {
 		*  @param[in] nMaterial
 		*    Number of the material that is used
 		*/
-		PLMESH_API void SetMaterial(PLGeneral::uint32 nMaterial = 0);
+		PLMESH_API void SetMaterial(PLCore::uint32 nMaterial = 0);
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Geometry {
 		*  @return
 		*    Start index
 		*/
-		PLMESH_API PLGeneral::uint32 GetStartIndex() const;
+		PLMESH_API PLCore::uint32 GetStartIndex() const;
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Geometry {
 		*  @param[in] nStartIndex
 		*    Start index
 		*/
-		PLMESH_API void SetStartIndex(PLGeneral::uint32 nStartIndex = 0);
+		PLMESH_API void SetStartIndex(PLCore::uint32 nStartIndex = 0);
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class Geometry {
 		*  @return
 		*    Index size
 		*/
-		PLMESH_API PLGeneral::uint32 GetIndexSize() const;
+		PLMESH_API PLCore::uint32 GetIndexSize() const;
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class Geometry {
 		*  @param[in] nIndexSize
 		*    Index size
 		*/
-		PLMESH_API void SetIndexSize(PLGeneral::uint32 nIndexSize = 0);
+		PLMESH_API void SetIndexSize(PLCore::uint32 nIndexSize = 0);
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class Geometry {
 		*  @return
 		*    Number of triangles (always 0 if less than 3 indices!)
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfTriangles() const;
+		PLMESH_API PLCore::uint32 GetNumOfTriangles() const;
 
 		/**
 		*  @brief
@@ -229,14 +229,14 @@ class Geometry {
 	//[-------------------------------------------------------]
 	private:
 		// Geometry description
-		PLGeneral::String m_sName;		/**< Name of the geometry */
-		PLGeneral::uint32 m_nFlags;		/**< Flags */
-		bool			  m_bActive;	/**< Is this geometry active? */
+		PLCore::String m_sName;		/**< Name of the geometry */
+		PLCore::uint32 m_nFlags;	/**< Flags */
+		bool		   m_bActive;	/**< Is this geometry active? */
 		// Geometry data
 		PLRenderer::Primitive::Enum	 m_nPrimitiveType;	/**< Primitive type */
-		PLGeneral::uint32			 m_nMaterial;		/**< Material number */
-		PLGeneral::uint32			 m_nStartIndex;		/**< Start index of index buffer */
-		PLGeneral::uint32			 m_nIndexSize;		/**< Number of indices */
+		PLCore::uint32				 m_nMaterial;		/**< Material number */
+		PLCore::uint32				 m_nStartIndex;		/**< Start index of index buffer */
+		PLCore::uint32				 m_nIndexSize;		/**< Number of indices */
 
 
 };

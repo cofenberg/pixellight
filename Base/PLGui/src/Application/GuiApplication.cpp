@@ -23,12 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
-#include <PLGeneral/Log/Log.h>
 #include <PLCore/Core.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/FileSearch.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
 #include <PLCore/Tools/LoadableType.h>
@@ -48,9 +48,8 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-using namespace PLMath;
 using namespace PLCore;
+using namespace PLMath;
 namespace PLGui {
 
 
@@ -67,7 +66,7 @@ pl_implement_class(GuiApplication)
 *  @brief
 *    Constructor
 */
-GuiApplication::GuiApplication(const PLGeneral::String &sGuiFilename) : ConsoleApplication(),
+GuiApplication::GuiApplication(const String &sGuiFilename) : ConsoleApplication(),
 	EventHandlerOnDestroy(&GuiApplication::OnDestroyMainWindow, this),
 	m_pMainWindow(nullptr)
 {

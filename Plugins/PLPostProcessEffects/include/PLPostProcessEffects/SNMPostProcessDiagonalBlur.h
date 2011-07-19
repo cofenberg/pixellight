@@ -62,7 +62,7 @@ class SNMPostProcessDiagonalBlur : public PLCompositing::SNMPostProcess {
 		pl_attribute(PixelKernel2,	PLMath::Vector2,	PLMath::Vector2(-6.0f, 6.0f),			ReadWrite,	DirectValue,	"Pixel kernel 2",						"")
 		pl_attribute(PixelKernel3,	PLMath::Vector2,	PLMath::Vector2( 8.0f, 8.0f),			ReadWrite,	DirectValue,	"Pixel kernel 3",						"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/DiagonalBlur.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/DiagonalBlur.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

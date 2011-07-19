@@ -44,7 +44,7 @@ namespace PLMath {
 *  @brief
 *    Graph node handler
 */
-class GraphNodeHandler : public PLGeneral::ElementHandler<GraphNode> {
+class GraphNodeHandler : public PLCore::ElementHandler<GraphNode> {
 
 
 	//[-------------------------------------------------------]

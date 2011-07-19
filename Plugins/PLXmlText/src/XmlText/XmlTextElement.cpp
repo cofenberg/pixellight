@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/String/ParseTools.h>
-#include <PLGeneral/Xml/XmlDocument.h>
-#include <PLGeneral/Xml/XmlElement.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/String/ParseTools.h>
+#include <PLCore/Xml/XmlDocument.h>
+#include <PLCore/Xml/XmlElement.h>
 #include <PLGui/Gui/Gui.h>
 #include "PLXmlText/XmlText/XmlTextView.h"
 #include "PLXmlText/XmlText/XmlTextRenderer.h"
@@ -43,7 +43,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGraphics;
 using namespace PLMath;
 using namespace PLGui;

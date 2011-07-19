@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sDeferredDOF_GLSL_VS = "\
+static const PLCore::String sDeferredDOF_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\
@@ -45,7 +45,7 @@ void main()\n\
 
 
 // Depth blur GLSL fragment shader source code
-static const PLGeneral::String sDeferredDOF_GLSL_FS_DepthBlur = "\
+static const PLCore::String sDeferredDOF_GLSL_FS_DepthBlur = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\
@@ -90,7 +90,7 @@ void main()\n\
 
 
 // Downscale GLSL fragment shader source code
-static const PLGeneral::String sDeferredDOF_GLSL_FS_Downscale = "\
+static const PLCore::String sDeferredDOF_GLSL_FS_Downscale = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -135,7 +135,7 @@ void main()\n\
 
 
 // Blur GLSL fragment shader source code
-static const PLGeneral::String sDeferredDOF_GLSL_FS_Blur = "\
+static const PLCore::String sDeferredDOF_GLSL_FS_Blur = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -191,7 +191,7 @@ void main()\n\
 
 
 // Result GLSL fragment shader source code
-static const PLGeneral::String sDeferredDOF_GLSL_FS_Result = "\
+static const PLCore::String sDeferredDOF_GLSL_FS_Result = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -272,7 +272,7 @@ void main()\n\
 
 
 // Debug GLSL fragment shader source code, "#version" is added by hand
-static const PLGeneral::String sDeferredDOF_GLSL_FS_Debug = "\
+static const PLCore::String sDeferredDOF_GLSL_FS_Debug = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\

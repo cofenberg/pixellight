@@ -82,8 +82,7 @@ class BodyMesh : public PLPhysics::BodyMesh {
 		*  @param[in] bOptimize
 		*    Allow the physics API to optimize the mesh? (if supported)
 		*/
-		BodyMesh(PLPhysics::World &cWorld, const PLGeneral::String &sMesh,
-				 const PLMath::Vector3 &vMeshScale, bool bOptimize);
+		BodyMesh(PLPhysics::World &cWorld, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale, bool bOptimize);
 
 
 };

@@ -115,7 +115,7 @@ class TextureBuffer : public Resource {
 			// End
 			Unknown       = 25	/**< Unknown texture buffer pixel format */
 		};
-		static const PLGeneral::uint32 NumOfPixelFormats = 25;	/**< Numer of pixel formats */
+		static const PLCore::uint32 NumOfPixelFormats = 25;	/**< Numer of pixel formats */
 
 
 	//[-------------------------------------------------------]
@@ -194,7 +194,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of components per pixel, 0 if unknown format
 		*/
-		PLRENDERER_API static PLGeneral::uint32 GetComponentsPerPixel(EPixelFormat nFormat);
+		PLRENDERER_API static PLCore::uint32 GetComponentsPerPixel(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -206,7 +206,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel component, 0 if unknown format or no full byte per component
 		*/
-		PLRENDERER_API static PLGeneral::uint32 GetBytesPerPixelComponent(EPixelFormat nFormat);
+		PLRENDERER_API static PLCore::uint32 GetBytesPerPixelComponent(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -218,7 +218,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel, 0 if unknown format or no full byte per pixel (compressed format)
 		*/
-		PLRENDERER_API static PLGeneral::uint32 GetBytesPerPixel(EPixelFormat nFormat);
+		PLRENDERER_API static PLCore::uint32 GetBytesPerPixel(EPixelFormat nFormat);
 
 
 	//[-------------------------------------------------------]
@@ -238,7 +238,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The texture buffer flags (see EFlags)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFlags() const;
+		PLRENDERER_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -292,7 +292,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of components per pixel, 0 if unknown format
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetComponentsPerPixel() const;
+		PLRENDERER_API PLCore::uint32 GetComponentsPerPixel() const;
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel component, 0 if unknown format or no full byte per component
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetBytesPerPixelComponent() const;
+		PLRENDERER_API PLCore::uint32 GetBytesPerPixelComponent() const;
 
 		/**
 		*  @brief
@@ -310,7 +310,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel, 0 if unknown format or no full byte per pixel (compressed format)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetBytesPerPixel() const;
+		PLRENDERER_API PLCore::uint32 GetBytesPerPixel() const;
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class TextureBuffer : public Resource {
 		*
 		*    Note that mimaps are only created/used from a given image if the flag 'Mipmaps' is set.
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfMipmaps() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfMipmaps() const;
 
 		/**
 		*  @brief
@@ -337,7 +337,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of faces, always >0!
 		*/
-		PLRENDERER_API PLGeneral::uint8 GetNumOfFaces() const;
+		PLRENDERER_API PLCore::uint8 GetNumOfFaces() const;
 
 		/**
 		*  @brief
@@ -346,7 +346,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The total number of pixels including all mipmaps
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetTotalNumOfPixels() const;
+		PLRENDERER_API PLCore::uint32 GetTotalNumOfPixels() const;
 
 		/**
 		*  @brief
@@ -358,7 +358,7 @@ class TextureBuffer : public Resource {
 		*  @note
 		*    - If the texture buffer is using a compressed format, compression is also taken into account
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetTotalNumOfBytes() const;
+		PLRENDERER_API PLCore::uint32 GetTotalNumOfBytes() const;
 
 		/**
 		*  @brief
@@ -380,7 +380,7 @@ class TextureBuffer : public Resource {
 		*    - This function can only be used if the texture buffer format is a floating point one
 		*    - This function should only be used for debugging
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfNANValues(PLGeneral::uint32 nMipmap = 0, PLGeneral::uint8 nFace = 0);
+		PLRENDERER_API PLCore::uint32 GetNumOfNANValues(PLCore::uint32 nMipmap = 0, PLCore::uint8 nFace = 0);
 
 		/**
 		*  @brief
@@ -399,7 +399,7 @@ class TextureBuffer : public Resource {
 		*  @see
 		*    - GetNumOfNANValues()
 		*/
-		PLRENDERER_API PLGeneral::uint32 FixNANValues(const PLGraphics::Color4 &cColor, PLGeneral::uint32 nMipmap = 0, PLGeneral::uint8 nFace = 0);
+		PLRENDERER_API PLCore::uint32 FixNANValues(const PLGraphics::Color4 &cColor, PLCore::uint32 nMipmap = 0, PLCore::uint8 nFace = 0);
 
 
 	//[-------------------------------------------------------]
@@ -419,7 +419,7 @@ class TextureBuffer : public Resource {
 		*  @note
 		*    - If this is a cube texture, the number of pixels of all faces together will be returned
 		*/
-		virtual PLGeneral::uint32 GetNumOfPixels(PLGeneral::uint32 nMipmap = 0) const = 0;
+		virtual PLCore::uint32 GetNumOfPixels(PLCore::uint32 nMipmap = 0) const = 0;
 
 		/**
 		*  @brief
@@ -437,7 +437,7 @@ class TextureBuffer : public Resource {
 		*    - If 'nFormat' is a compressed format, compression is also taken into account
 		*    - If this is a cube texture, the number of bytes of all faces together will be returned
 		*/
-		virtual PLGeneral::uint32 GetNumOfBytes(PLGeneral::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const = 0;
+		virtual PLCore::uint32 GetNumOfBytes(PLCore::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const = 0;
 
 		/**
 		*  @brief
@@ -456,7 +456,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid mipmap level? invalid data?)
 		*/
-		virtual bool Upload(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLGeneral::uint8 nFace = 0) = 0;
+		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) = 0;
 
 		/**
 		*  @brief
@@ -475,7 +475,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid mipmap level? invalid data?)
 		*/
-		virtual bool Download(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLGeneral::uint8 nFace = 0) = 0;
+		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -493,7 +493,7 @@ class TextureBuffer : public Resource {
 		*  @param[in] nFlags
 		*    Texture buffer flags (see EFlags)
 		*/
-		PLRENDERER_API TextureBuffer(Renderer &cRenderer, EType nType, PLGeneral::uint32 nFlags);
+		PLRENDERER_API TextureBuffer(Renderer &cRenderer, EType nType, PLCore::uint32 nFlags);
 
 
 	//[-------------------------------------------------------]
@@ -510,18 +510,18 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool MakeCurrent(PLGeneral::uint32 nStage) = 0;
+		virtual bool MakeCurrent(PLCore::uint32 nStage) = 0;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nFlags;				/**< Texture buffer flags (see EFlags) */
-		EPixelFormat	  m_nFormat;			/**< Texture buffer pixel format */
-		PLGeneral::uint32 m_nNumOfElements;		/**< The number of elements */
-		PLGeneral::uint32 m_nNumOfMipmaps;		/**< Number of mipmap levels (the base level is 0) */
-		PLGeneral::uint32 m_nTotalNumOfBytes;	/**< Total number of bytes required to the texture buffer data including all mipmaps */
+		PLCore::uint32 m_nFlags;			/**< Texture buffer flags (see EFlags) */
+		EPixelFormat   m_nFormat;			/**< Texture buffer pixel format */
+		PLCore::uint32 m_nNumOfElements;	/**< The number of elements */
+		PLCore::uint32 m_nNumOfMipmaps;		/**< Number of mipmap levels (the base level is 0) */
+		PLCore::uint32 m_nTotalNumOfBytes;	/**< Total number of bytes required to the texture buffer data including all mipmaps */
 
 
 	//[-------------------------------------------------------]

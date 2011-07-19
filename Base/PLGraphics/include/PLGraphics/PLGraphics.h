@@ -98,7 +98,7 @@ enum ECheckConsistency {
 *  @remarks
 *    ID used to identify parts of an image. Please note that the part ID is purely optional and can be chosen freely.
 *    This enumeration contains some predefined semantics but is not a complete list, so you can choose any other value
-*    as well. Therefore please always use PLGeneral::uint32 as a data type for semantics and not EImagePart directly.
+*    as well. Therefore please always use PLCore::uint32 as a data type for semantics and not EImagePart directly.
 */
 enum EImagePart {
 	ImagePartStatic = 0,	/**< A single image */

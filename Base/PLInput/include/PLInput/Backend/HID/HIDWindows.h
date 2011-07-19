@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class DynLib;
 }
 namespace PLInput {
@@ -86,16 +86,16 @@ class HIDWindows : public HIDImpl {
 	//[ Private virtual HIDImpl functions                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void EnumerateDevices(PLGeneral::List<HIDDevice*> &lstDevices);
+		virtual void EnumerateDevices(PLCore::List<HIDDevice*> &lstDevices);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::DynLib				   *m_pDynLibHID;	/**< Dynamic HID library, always valid! */
-		PLGeneral::List<HIDDeviceWindows*>	m_lstDevices;	/**< List of devices */
-		GUID								m_sGUID;		/**< HID device interface GUID */
+		PLCore::DynLib				    *m_pDynLibHID;	/**< Dynamic HID library, always valid! */
+		PLCore::List<HIDDeviceWindows*>	 m_lstDevices;	/**< List of devices */
+		GUID							 m_sGUID;		/**< HID device interface GUID */
 
 
 

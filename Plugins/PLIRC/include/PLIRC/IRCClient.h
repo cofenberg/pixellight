@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Client.h>
+#include <PLCore/Network/Client.h>
 #include "PLIRC/PLIRC.h"
 
 
@@ -45,7 +45,7 @@ namespace PLIRC {
 *  @brief
 *    IRC client
 */
-class IRCClient : public PLGeneral::Client {
+class IRCClient : public PLCore::Client {
 
 
 	//[-------------------------------------------------------]
@@ -66,10 +66,10 @@ class IRCClient : public PLGeneral::Client {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLGeneral::Client functions         ]
+	//[ Protected virtual PLCore::Client functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLIRC_API virtual PLGeneral::Connection *CreateOutgoingConnection();
+		PLIRC_API virtual PLCore::Connection *CreateOutgoingConnection();
 
 
 	//[-------------------------------------------------------]

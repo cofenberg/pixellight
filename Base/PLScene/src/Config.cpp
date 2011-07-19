@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Thread.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Thread.h>
 #include <PLRenderer/RendererContext.h>
 #include "PLScene/Config.h"
 
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScene {
 
 

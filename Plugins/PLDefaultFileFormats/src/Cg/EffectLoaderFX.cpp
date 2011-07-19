@@ -26,9 +26,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/File/File.h>
+#include <PLCore/String/Tokenizer.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Material/ParameterManager.h>
@@ -41,7 +41,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 namespace PLDefaultFileFormats {
 

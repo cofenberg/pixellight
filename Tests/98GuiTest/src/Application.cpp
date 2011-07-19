@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/MessageFilterDebug.h>
 #include <PLGui/Gui/Gui.h>
@@ -43,7 +43,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;
@@ -159,7 +159,7 @@ void Application::TestFonts()
 	Gui *pGui = Gui::GetSystemGui();
 
 	// List fonts
-	const PLGeneral::List<FontInfo> &lstFonts = pGui->GetFontManager().GetFonts();
+	const List<FontInfo> &lstFonts = pGui->GetFontManager().GetFonts();
 	System::GetInstance()->GetConsole().Print("Available fonts:\n");
 	for (uint32 i=0; i<lstFonts.GetNumOfElements(); i++) {
 		// Get font

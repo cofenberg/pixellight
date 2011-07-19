@@ -103,12 +103,12 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32  m_nIndexBuffer;	/**< OpenGL index buffer (IBO) */
-		void			  *m_pData;			/**< Dynamic buffer, can be a null pointer (none IBO) */
-		void			  *m_pLockedData;	/**< Locked data, can be a null pointer */
-		bool			   m_bLockReadOnly;	/**< Read only lock? */
-		bool			   m_bUpdateIBO;	/**< Do we need to update the IBO? */
-		PLGeneral::uint32  m_nUsageAPI;		/**< API usage setting */
+		PLCore::uint32  m_nIndexBuffer;		/**< OpenGL index buffer (IBO) */
+		void		   *m_pData;			/**< Dynamic buffer, can be a null pointer (none IBO) */
+		void		   *m_pLockedData;		/**< Locked data, can be a null pointer */
+		bool			m_bLockReadOnly;	/**< Read only lock? */
+		bool			m_bUpdateIBO;		/**< Do we need to update the IBO? */
+		PLCore::uint32  m_nUsageAPI;		/**< API usage setting */
 
 
 	//[-------------------------------------------------------]
@@ -116,9 +116,9 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
 		virtual bool Clear();
-		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
 		virtual void *GetData();
 		virtual bool Unlock();
 
@@ -127,8 +127,8 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

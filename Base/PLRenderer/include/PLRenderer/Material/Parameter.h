@@ -90,7 +90,7 @@ class Parameter {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe incompatible parameter types?)
 		*/
-		PLRENDERER_API bool SetManagerParameterValue(Parameters &cManager, const PLGeneral::String &sName) const;
+		PLRENDERER_API bool SetManagerParameterValue(Parameters &cManager, const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Parameter {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe incompatible parameter types?)
 		*/
-		PLRENDERER_API bool SetManagerParameterValue(Program &cProgram, const PLGeneral::String &sName) const;
+		PLRENDERER_API bool SetManagerParameterValue(Program &cProgram, const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class Parameter {
 		*  @return
 		*    Parameter name
 		*/
-		PLRENDERER_API PLGeneral::String GetName() const;
+		PLRENDERER_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class Parameter {
 		*    (maybe the given name is empty or there's already a parameter with this name
 		*    within the parameter manager this parameter is in)
 		*/
-		PLRENDERER_API bool SetName(const PLGeneral::String &sName);
+		PLRENDERER_API bool SetName(const PLCore::String &sName);
 
 		//[-------------------------------------------------------]
 		//[ Get/set value                                         ]
@@ -151,7 +151,7 @@ class Parameter {
 		*  @note
 		*    - Not that performant, try to avoid using this multiple times within each frame
 		*/
-		PLRENDERER_API PLGeneral::String GetParameterString() const;
+		PLRENDERER_API PLCore::String GetParameterString() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Parameter {
 		*  @see
 		*    - GetParameterString()
 		*/
-		PLRENDERER_API bool SetParameterString(const PLGeneral::String &sValue);
+		PLRENDERER_API bool SetParameterString(const PLCore::String &sValue);
 
 		// Integer
 		PLRENDERER_API bool GetValue1i(int &nX) const;
@@ -257,7 +257,7 @@ class Parameter {
 		PLRENDERER_API TextureBuffer *GetValueTextureBuffer() const;
 		PLRENDERER_API TextureHandler *GetValueTextureHandler() const;
 		PLRENDERER_API bool SetValueTexture(Texture *pTexture);
-		PLRENDERER_API bool SetValueTexture(const PLGeneral::String &sFilename);
+		PLRENDERER_API bool SetValueTexture(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -275,7 +275,7 @@ class Parameter {
 		*  @param[in] sName
 		*    Name of the parameter
 		*/
-		Parameter(ParameterManager &cManager, Parameters::EDataType nType, const PLGeneral::String &sName);
+		Parameter(ParameterManager &cManager, Parameters::EDataType nType, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -290,7 +290,7 @@ class Parameter {
 	private:
 		ParameterManager	  *m_pManager;	/**< The parameter manager this parameter is in (NEVER a null pointer!) */
 		Parameters::EDataType  m_nType;		/**< Parameter type */
-		PLGeneral::String	   m_sName;		/**< Parameter name */
+		PLCore::String		   m_sName;		/**< Parameter name */
 		void				  *m_pValue;	/**< Parameter value, can be a null pointer */
 
 

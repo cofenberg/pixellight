@@ -60,21 +60,21 @@ class ClassDummy : public ClassImpl {
 		virtual bool IsDummy() const;
 		virtual void InitClass() const;
 		virtual void DeInitClass() const;
-		virtual const PLGeneral::List<VarDesc*> &GetAttributes() const;
-		virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
-		virtual const PLGeneral::List<FuncDesc*> &GetMethods() const;
-		virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
-		virtual const PLGeneral::List<EventDesc*> &GetSignals() const;
-		virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const;
-		virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
-		virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
+		virtual const List<VarDesc*> &GetAttributes() const;
+		virtual const VarDesc *GetAttribute(const String &sName) const;
+		virtual const List<FuncDesc*> &GetMethods() const;
+		virtual const FuncDesc *GetMethod(const String &sName) const;
+		virtual const List<EventDesc*> &GetSignals() const;
+		virtual const EventDesc *GetSignal(const String &sName) const;
+		virtual const List<EventHandlerDesc*> &GetSlots() const;
+		virtual const EventHandlerDesc *GetSlot(const String &sName) const;
 		virtual bool HasConstructor() const;
 		virtual bool HasDefaultConstructor() const;
-		virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
-		virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
+		virtual const List<ConstructorDesc*> &GetConstructors() const;
+		virtual const ConstructorDesc *GetConstructor(const String &sName) const;
 		virtual Object *Create() const;
 		virtual Object *Create(const DynParams &cParams) const;
-		virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
+		virtual Object *Create(const String &sName, const DynParams &cParams) const;
 
 
 	//[-------------------------------------------------------]
@@ -100,7 +100,7 @@ class ClassDummy : public ClassImpl {
 		*  @param[in] bHasDefaultConstructor
 		*    Class has a default constructor?
 		*/
-		ClassDummy(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sNamespace, const PLGeneral::String &sBaseClass, bool bHasConstructor, bool bHasDefaultConstructor);
+		ClassDummy(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass, bool bHasConstructor, bool bHasDefaultConstructor);
 
 		/**
 		*  @brief
@@ -126,12 +126,12 @@ class ClassDummy : public ClassImpl {
 	//[-------------------------------------------------------]
 	private:
 		// Member lists (also including the members from base classes) - static because those are just dummies in here
-		static PLGeneral::HashMap<PLGeneral::String, MemberDesc*> m_mapMembers;			/**< Hash map of names -> members */
-		static PLGeneral::List<VarDesc*>						  m_lstAttributes;		/**< List of attributes */
-		static PLGeneral::List<FuncDesc*>						  m_lstMethods;			/**< List of methods */
-		static PLGeneral::List<EventDesc*>						  m_lstSignals;			/**< List of signals */
-		static PLGeneral::List<EventHandlerDesc*>				  m_lstSlots;			/**< List of slots */
-		static PLGeneral::List<ConstructorDesc*>				  m_lstConstructors;	/**< List of constructors */
+		static HashMap<String, MemberDesc*> m_mapMembers;		/**< Hash map of names -> members */
+		static List<VarDesc*>			    m_lstAttributes;	/**< List of attributes */
+		static List<FuncDesc*>				m_lstMethods;		/**< List of methods */
+		static List<EventDesc*>				m_lstSignals;		/**< List of signals */
+		static List<EventHandlerDesc*>		m_lstSlots;			/**< List of slots */
+		static List<ConstructorDesc*>		m_lstConstructors;	/**< List of constructors */
 
 
 	//[-------------------------------------------------------]

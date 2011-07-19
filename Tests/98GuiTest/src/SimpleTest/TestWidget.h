@@ -94,7 +94,7 @@ class TestWidget : public PLGui::Widget {
 	//[-------------------------------------------------------]
 	public:
 		virtual void OnClose();
-		virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 		virtual void OnGetFocus();
 		virtual void OnLooseFocus();
 
@@ -103,8 +103,8 @@ class TestWidget : public PLGui::Widget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool				m_bExit;		/**< Exit application on right-click or ALT+F4? */
-		PLGraphics::Color4	m_cColor;		/**< Default color */
+		bool				m_bExit;	/**< Exit application on right-click or ALT+F4? */
+		PLGraphics::Color4	m_cColor;	/**< Default color */
 
 
 };

@@ -48,7 +48,7 @@ class Type<double> {
 		static const int TypeID = TypeDouble;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "double";
 		}
@@ -84,109 +84,109 @@ class Type<double> {
 		}
 
 		// Convert double to int8
-		static PLGeneral::int8 ConvertToInt8(double dValue)
+		static int8 ConvertToInt8(double dValue)
 		{
-			return static_cast<PLGeneral::int8>(dValue);
+			return static_cast<int8>(dValue);
 		}
 
 		// Convert int8 to double
-		static double ConvertFromInt8(PLGeneral::int8 nValue)
+		static double ConvertFromInt8(int8 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to int16
-		static PLGeneral::int16 ConvertToInt16(double dValue)
+		static int16 ConvertToInt16(double dValue)
 		{
-			return static_cast<PLGeneral::int16>(dValue);
+			return static_cast<int16>(dValue);
 		}
 
 		// Convert int16 to double
-		static double ConvertFromInt16(PLGeneral::int16 nValue)
+		static double ConvertFromInt16(int16 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to int32
-		static PLGeneral::int32 ConvertToInt32(double dValue)
+		static int32 ConvertToInt32(double dValue)
 		{
-			return static_cast<PLGeneral::int32>(dValue);
+			return static_cast<int32>(dValue);
 		}
 
 		// Convert int32 to double
-		static double ConvertFromInt32(PLGeneral::int32 nValue)
+		static double ConvertFromInt32(int32 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to int64
-		static PLGeneral::int64 ConvertToInt64(double dValue)
+		static int64 ConvertToInt64(double dValue)
 		{
-			return static_cast<PLGeneral::int64>(dValue);
+			return static_cast<int64>(dValue);
 		}
 
 		// Convert int64 to double
-		static double ConvertFromInt64(PLGeneral::int64 nValue)
+		static double ConvertFromInt64(int64 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint8
-		static PLGeneral::uint8 ConvertToUInt8(double dValue)
+		static uint8 ConvertToUInt8(double dValue)
 		{
-			return static_cast<PLGeneral::uint8>(dValue);
+			return static_cast<uint8>(dValue);
 		}
 
 		// Convert uint8 to double
-		static double ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static double ConvertFromUInt8(uint8 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint16
-		static PLGeneral::uint16 ConvertToUInt16(double dValue)
+		static uint16 ConvertToUInt16(double dValue)
 		{
-			return static_cast<PLGeneral::uint16>(dValue);
+			return static_cast<uint16>(dValue);
 		}
 
 		// Convert uint16 to double
-		static double ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static double ConvertFromUInt16(uint16 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint32
-		static PLGeneral::uint32 ConvertToUInt32(double dValue)
+		static uint32 ConvertToUInt32(double dValue)
 		{
-			return static_cast<PLGeneral::uint32>(dValue);
+			return static_cast<uint32>(dValue);
 		}
 
 		// Convert uint32 to double
-		static double ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static double ConvertFromUInt32(uint32 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint64
-		static PLGeneral::uint64 ConvertToUInt64(double dValue)
+		static uint64 ConvertToUInt64(double dValue)
 		{
-			return static_cast<PLGeneral::uint64>(dValue);
+			return static_cast<uint64>(dValue);
 		}
 
 		// Convert uint64 to double
-		static double ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static double ConvertFromUInt64(uint64 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(double dValue)
+		static uint_ptr ConvertToUIntPtr(double dValue)
 		{
-			return static_cast<PLGeneral::uint_ptr>(dValue);
+			return static_cast<uint_ptr>(dValue);
 		}
 
 		// Convert uint_ptr to double
-		static double ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static double ConvertFromUIntPtr(uint_ptr nValue)
 		{
 			return static_cast<double>(nValue);
 		}
@@ -216,13 +216,13 @@ class Type<double> {
 		}
 
 		// Convert double to string
-		static PLGeneral::String ConvertToString(double dValue)
+		static String ConvertToString(double dValue)
 		{
-			return PLGeneral::String() + dValue;
+			return String() + dValue;
 		}
 
 		// Convert string to double
-		static double ConvertFromString(const PLGeneral::String &sString)
+		static double ConvertFromString(const String &sString)
 		{
 			return sString.GetDouble();
 		}

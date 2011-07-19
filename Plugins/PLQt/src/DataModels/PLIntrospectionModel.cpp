@@ -78,11 +78,11 @@ void PLIntrospectionModel::SetObject(PLCore::Object *Obj)
 	qDeleteAll(childs.begin(), childs.end());
 
 	if (Obj) {
-		PLGeneral::List<PLCore::DynFuncPtr> funcs;
+		PLCore::List<PLCore::DynFuncPtr> funcs;
 		Obj->GetMethods(funcs);
 
-		PLGeneral::List<PLCore::DynVar*> list = Obj->GetAttributes();
-		for (PLGeneral::uint32 i=0; i<list.GetNumOfElements(); i++) {
+		PLCore::List<PLCore::DynVar*> list = Obj->GetAttributes();
+		for (PLCore::uint32 i=0; i<list.GetNumOfElements(); i++) {
 			PLCore::DynVar *var = list[i];
 			PLDynVarTreeItemsFactory::CreateDynVarTreeItem(var, GetRootItem());
 		}

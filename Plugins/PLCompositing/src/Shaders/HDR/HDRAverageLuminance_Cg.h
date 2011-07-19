@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_VS = "\
+static const PLCore::String sHDRAverageLuminance_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -47,7 +47,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 
 
 // Downsample Cg vertex shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_VS_Downsample = "\
+static const PLCore::String sHDRAverageLuminance_Cg_VS_Downsample = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -80,7 +80,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 
 
 // Common Cg fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_FS_Common = "\
+static const PLCore::String sHDRAverageLuminance_Cg_FS_Common = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -102,7 +102,7 @@ const static float2 Offsets[4] = {\n\
 
 
 // Downsample log Cg fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_FS_DownsampleLog = "\
+static const PLCore::String sHDRAverageLuminance_Cg_FS_DownsampleLog = "\
 // Downsample log main function\n\
 FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
 	 , uniform float3      LuminanceConvert	// Convert RGB to luminance\n\
@@ -129,7 +129,7 @@ FS_OUTPUT main(VS_OUTPUT   IN				// Interpolated output from the vertex stage\n\
 
 
 // Downsample Cg fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_FS_Downsample = "\
+static const PLCore::String sHDRAverageLuminance_Cg_FS_Downsample = "\
 // Downsample main function\n\
 FS_OUTPUT main(VS_OUTPUT   IN		// Interpolated output from the vertex stage\n\
 	 , uniform samplerRECT Texture)	// HDR texture\n\
@@ -147,7 +147,7 @@ FS_OUTPUT main(VS_OUTPUT   IN		// Interpolated output from the vertex stage\n\
 
 
 // Downsample exp Cg fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_Cg_FS_DownsampleExp = "\
+static const PLCore::String sHDRAverageLuminance_Cg_FS_DownsampleExp = "\
 // Downsample exp main function\n\
 FS_OUTPUT main(VS_OUTPUT   IN		// Interpolated output from the vertex stage\n\
 	 , uniform samplerRECT Texture)	// HDR texture\n\

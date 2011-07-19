@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include <PLMath/Vector3i.h>
 #include "PLRenderer/PLRenderer.h"
 
@@ -200,7 +200,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Bind(PLGeneral::uint32 nStage = 0) const;
+		PLRENDERER_API bool Bind(PLCore::uint32 nStage = 0) const;
 
 
 	//[-------------------------------------------------------]
@@ -234,7 +234,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		Texture(TextureManager &cManager, const PLGeneral::String &sName);
+		Texture(TextureManager &cManager, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -252,8 +252,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*  @return
 		*    The correct texture size
 		*/
-		PLGeneral::uint32 GetCorrectTextureSize(PLGeneral::uint32 nSize, PLGeneral::uint32 nMinSize,
-												PLGeneral::uint32 nMaxSize, bool bRectangle) const;
+		PLCore::uint32 GetCorrectTextureSize(PLCore::uint32 nSize, PLCore::uint32 nMinSize, PLCore::uint32 nMaxSize, bool bRectangle) const;
 
 		/**
 		*  @brief
@@ -276,11 +275,11 @@ class Texture : public PLCore::Resource<Texture> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLRENDERER_API virtual bool Save(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLRENDERER_API virtual bool Save(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

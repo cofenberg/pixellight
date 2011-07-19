@@ -340,7 +340,7 @@ void BodyImpl::SetAutoFreeze(bool bAutoFreeze)
 		dBodySetAutoDisableFlag(m_pODEBody, bAutoFreeze);
 }
 
-void BodyImpl::GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLGeneral::uint32 &nSteps) const
+void BodyImpl::GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLCore::uint32 &nSteps) const
 {
 	if (m_pODEBody) {
 		fLinearVelocity  = dBodyGetAutoDisableLinearThreshold(m_pODEBody);
@@ -349,7 +349,7 @@ void BodyImpl::GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocit
 	}
 }
 
-void BodyImpl::SetFreezeThreshold(float fLinearVelocity, float fAngularVelocity, PLGeneral::uint32 nSteps)
+void BodyImpl::SetFreezeThreshold(float fLinearVelocity, float fAngularVelocity, PLCore::uint32 nSteps)
 {
 	if (m_pODEBody) {
 		dBodySetAutoDisableLinearThreshold (m_pODEBody, fLinearVelocity);
@@ -397,23 +397,23 @@ void BodyImpl::SetUseGravity(bool bUseGravity)
 		dBodySetGravityMode(m_pODEBody, bUseGravity);
 }
 
-PLGeneral::uint32 BodyImpl::GetNumOfPartners() const
+PLCore::uint32 BodyImpl::GetNumOfPartners() const
 {
 	return m_lstPartnerBodies.GetNumOfElements();
 }
 
-PLGeneral::uint8 BodyImpl::GetCollisionGroup() const
+PLCore::uint8 BodyImpl::GetCollisionGroup() const
 {
 	return m_nCollisionGroup;
 }
 
-void BodyImpl::SetCollisionGroup(PLGeneral::uint8 nCollisionGroup)
+void BodyImpl::SetCollisionGroup(PLCore::uint8 nCollisionGroup)
 {
 	if (nCollisionGroup <= 31)
 		m_nCollisionGroup = nCollisionGroup;
 }
 
-PLPhysics::Body *BodyImpl::GetPartner(PLGeneral::uint32 nIndex) const
+PLPhysics::Body *BodyImpl::GetPartner(PLCore::uint32 nIndex) const
 {
 	return m_lstPartnerBodies[nIndex];
 }

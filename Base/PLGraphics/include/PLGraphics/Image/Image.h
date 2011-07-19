@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
 #include <PLCore/Tools/Loadable.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -141,7 +141,7 @@ class Image : public PLCore::Loadable {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLGeneral::uint8 *pnData = nullptr);
+		PLGRAPHICS_API static Image CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLCore::uint8 *pnData = nullptr);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class Image : public PLCore::Loadable {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLGeneral::uint8 *pnData = nullptr);
+		PLGRAPHICS_API static Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class Image : public PLCore::Loadable {
 		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLGeneral::uint8 *pnData = nullptr);
+		PLGRAPHICS_API static Image CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -295,7 +295,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Number of image parts
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetNumOfParts() const;
+		PLGRAPHICS_API PLCore::uint32 GetNumOfParts() const;
 
 		/**
 		*  @brief
@@ -307,7 +307,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Image part, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImagePart *GetPart(PLGeneral::uint32 nIndex) const;
+		PLGRAPHICS_API ImagePart *GetPart(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -319,7 +319,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Image part, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImagePart *GetPartBySemantics(PLGeneral::uint32 nSemantics) const;
+		PLGRAPHICS_API ImagePart *GetPartBySemantics(PLCore::uint32 nSemantics) const;
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    List of image parts
 		*/
-		PLGRAPHICS_API const PLGeneral::Container<ImagePart*> &GetParts() const;
+		PLGRAPHICS_API const PLCore::Container<ImagePart*> &GetParts() const;
 
 		/**
 		*  @brief
@@ -345,7 +345,7 @@ class Image : public PLCore::Loadable {
 		*    Please note that the semantics IDs has to be unique, so trying to create a new image part with an already
 		*    used ID will cause an error.
 		*/
-		PLGRAPHICS_API ImagePart *CreatePart(PLGeneral::uint32 nSemantics = ImagePartStatic);
+		PLGRAPHICS_API ImagePart *CreatePart(PLCore::uint32 nSemantics = ImagePartStatic);
 
 		/**
 		*  @brief
@@ -376,7 +376,7 @@ class Image : public PLCore::Loadable {
 		*    of the first subimage and first mipmap. So, for most images that contain of only one
 		*    image part, it is sufficent to just call GetBuffer() in order to get the image buffer.
 		*/
-		PLGRAPHICS_API ImageBuffer *GetBuffer(PLGeneral::uint32 nPart = 0, PLGeneral::uint32 nMipmap = 0) const;
+		PLGRAPHICS_API ImageBuffer *GetBuffer(PLCore::uint32 nPart = 0, PLCore::uint32 nMipmap = 0) const;
 
 		/**
 		*  @brief
@@ -392,15 +392,15 @@ class Image : public PLCore::Loadable {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLGRAPHICS_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLGRAPHICS_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<ImagePart*>					  m_lstParts;	/**< Image parts */
-		PLGeneral::HashMap<PLGeneral::uint32, ImagePart*> m_mapParts;	/**< Hash map: ID -> ImagePart */
+		PLCore::Array<ImagePart*>				    m_lstParts;	/**< Image parts */
+		PLCore::HashMap<PLCore::uint32, ImagePart*> m_mapParts;	/**< Hash map: ID -> ImagePart */
 
 
 };

@@ -87,7 +87,7 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 		*  @return
 		*    A new registered SPK_PLQuadRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLQuadRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
+		SPARK_PL_API static SPK_PLQuadRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -107,7 +107,7 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 		*  @param[in] sShaderLanguage
 		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*/
-		SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
+		SPK_PLQuadRendererShaders(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "", float fScaleX = 1.0f, float fScaleY = 1.0f);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLCore::String					 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
 		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
 		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
 		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */

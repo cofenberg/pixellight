@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLCore/Base/Event/Event.h>
 #include "PLScene/PLScene.h"
 
@@ -81,8 +81,8 @@ class SceneContext {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<PLInput::Controller*, PLGeneral::String>	EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
-		PLCore::Event<>											EventUpdate;				/**< Scene context update event */
+		PLCore::Event<PLInput::Controller*, PLCore::String>	EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
+		PLCore::Event<>										EventUpdate;				/**< Scene context update event */
 
 
 	//[-------------------------------------------------------]
@@ -269,11 +269,11 @@ class SceneContext {
 		PLRenderer::RendererContext  *m_pRendererContext;			/**< The used renderer context, not destroyed by the scene context (always valid!) */
 		PLMesh::MeshManager			 *m_pMeshManager;				/**< The mesh manager, can be a null pointer */
 		SceneNodeHandler			 *m_pRoot;						/**< The root of the scene graph (always valid!) */
-		PLGeneral::Array<SceneNode*>  m_lstDeleteNodes;				/**< List of scene nodes to delete */
+		PLCore::Array<SceneNode*>	  m_lstDeleteNodes;				/**< List of scene nodes to delete */
 		SceneRendererManager		 *m_pSceneRendererManager;		/**< Scene renderer manager, can be a null pointer */
 		VisManager					 *m_pVisManager;				/**< Visibility manager, can be a null pointer */
 		bool						  m_bProcessActive;				/**< Is there currently an active process? */
-		PLGeneral::uint32			  m_nProcessCounter;			/**< Internal process counter */
+		PLCore::uint32				  m_nProcessCounter;			/**< Internal process counter */
 		PLInput::VirtualController	 *m_pDefaultInputController;	/**< Default input controller, can be a null pointer */
 
 

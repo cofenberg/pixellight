@@ -60,9 +60,9 @@ class RagdollLoaderPL : public RagdollLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,			"Load method. By default, attach to world is allowed.",					"")
-		pl_method_3(LoadParams,	pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,	bool,	"Load method. Parameters: Attach to world allowed state as 'bool'.",	"")
-		pl_method_2(Save,		pl_ret_type(bool),	SNRagdoll&,	PLGeneral::File&,			"Save method",															"")
+		pl_method_2(Load,		pl_ret_type(bool),	SNRagdoll&,	PLCore::File&,			"Load method. By default, attach to world is allowed.",					"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	SNRagdoll&,	PLCore::File&,	bool,	"Load method. Parameters: Attach to world allowed state as 'bool'.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	SNRagdoll&,	PLCore::File&,			"Save method",															"")
 	pl_class_end
 
 
@@ -70,9 +70,9 @@ class RagdollLoaderPL : public RagdollLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API bool Load(SNRagdoll &cSNRagdoll, PLGeneral::File &cFile);
-		PLPHYSICS_API bool LoadParams(SNRagdoll &cSNRagdoll, PLGeneral::File &cFile, bool bAllowAttachToWorld);
-		PLPHYSICS_API bool Save(SNRagdoll &cSNRagdoll, PLGeneral::File &cFile);
+		PLPHYSICS_API bool Load(SNRagdoll &cSNRagdoll, PLCore::File &cFile);
+		PLPHYSICS_API bool LoadParams(SNRagdoll &cSNRagdoll, PLCore::File &cFile, bool bAllowAttachToWorld);
+		PLPHYSICS_API bool Save(SNRagdoll &cSNRagdoll, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -110,7 +110,7 @@ class RagdollLoaderPL : public RagdollLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SNRagdoll &cSNRagdoll, const PLGeneral::XmlElement &cRagdollElement, bool bAllowAttachToWorld) const;
+		bool LoadV1(SNRagdoll &cSNRagdoll, const PLCore::XmlElement &cRagdollElement, bool bAllowAttachToWorld) const;
 
 
 };

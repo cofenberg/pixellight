@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
+static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute highp vec3 VertexPosition;				// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -57,7 +57,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
+static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 \n\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable // [TODO] Will this create problems when using OpenGL ES 2.0?\n\

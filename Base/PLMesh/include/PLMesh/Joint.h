@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
+#include <PLCore/Container/Element.h>
 #include "PLMesh/JointState.h"
 
 
@@ -45,7 +45,7 @@ namespace PLMesh {
 *  @brief
 *    Skeleton joint element
 */
-class Joint : public PLGeneral::Element<Joint>, public JointState {
+class Joint : public PLCore::Element<Joint>, public JointState {
 
 
 	//[-------------------------------------------------------]
@@ -67,7 +67,7 @@ class Joint : public PLGeneral::Element<Joint>, public JointState {
 		*  @param[in] pManager
 		*    Element manager using this element, can be a null pointer
 		*/
-		PLMESH_API Joint(const PLGeneral::String &sName = "", PLGeneral::ElementManager<Joint> *pManager = nullptr);
+		PLMESH_API Joint(const PLCore::String &sName = "", PLCore::ElementManager<Joint> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class Joint : public PLGeneral::Element<Joint>, public JointState {
 		*  @note
 		*    - Call Skeleton::UpdateJointInformation() after changing parent/child joints!
 		*/
-		PLMESH_API const PLGeneral::Array<PLGeneral::uint32> &GetChildren() const;
+		PLMESH_API const PLCore::Array<PLCore::uint32> &GetChildren() const;
 
 		/**
 		*  @brief
@@ -152,9 +152,9 @@ class Joint : public PLGeneral::Element<Joint>, public JointState {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		int									m_nID;			/**< Joint ID */
-		int									m_nParent;		/**< Number of the parent joint */
-		PLGeneral::Array<PLGeneral::uint32>	m_lstChildren;	/**< Array of child joints */
+		int								m_nID;			/**< Joint ID */
+		int								m_nParent;		/**< Number of the parent joint */
+		PLCore::Array<PLCore::uint32>	m_lstChildren;	/**< Array of child joints */
 
 
 };

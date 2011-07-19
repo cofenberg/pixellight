@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_VS = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -45,7 +45,7 @@ void main()\n\
 
 
 // Downsample GLSL vertex shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_VS_Downsample = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_VS_Downsample = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -76,7 +76,7 @@ void main()\n\
 
 
 // Common GLSL fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_Common = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_FS_Common = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\
@@ -99,7 +99,7 @@ const vec2 Offsets[4] = vec2[4](\n\
 
 
 // Downsample log GLSL fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_DownsampleLog = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_FS_DownsampleLog = "\
 // Uniforms\n\
 uniform vec3	LuminanceConvert;	// Convert RGB to luminance\n\
 uniform float	Epsilon;			// A small value to avoid undefined log(0)\n\
@@ -123,7 +123,7 @@ void main()\n\
 
 
 // Downsample GLSL fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_Downsample = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_FS_Downsample = "\
 // Downsample main function\n\
 void main()\n\
 {\n\
@@ -136,7 +136,7 @@ void main()\n\
 
 
 // Downsample exp GLSL fragment shader source code
-static const PLGeneral::String sHDRAverageLuminance_GLSL_FS_DownsampleExp = "\
+static const PLCore::String sHDRAverageLuminance_GLSL_FS_DownsampleExp = "\
 // Downsample exp main function\n\
 void main()\n\
 {\n\

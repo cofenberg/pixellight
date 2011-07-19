@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/Thread.h>
+#include <PLCore/System/Thread.h>
 #include "PLPhysicsNewton/WorldUpdate.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Mutex;
 }
 
@@ -53,7 +53,7 @@ namespace PLPhysicsNewton {
 *  @brief
 *    PL Newton physics world update thread
 */
-class WorldThread : public WorldUpdate, public PLGeneral::Thread {
+class WorldThread : public WorldUpdate, public PLCore::Thread {
 
 
 	//[-------------------------------------------------------]
@@ -86,12 +86,12 @@ class WorldThread : public WorldUpdate, public PLGeneral::Thread {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Mutex *m_pMutex;				/**< Synchronisation object (always valid!) */
-		volatile bool	  m_bShutDown;			/**< Shut down this thread? */
-		volatile float	  m_fTimeScaleFactor;	/**< Cached time scale factor */
-		volatile float	  m_fMaxTimeDifference;	/**< Cached maximum time difference */
-		volatile float	  m_fSimulationSpeed;	/**< Cached simulation speed */
-		volatile float	  m_fFrameRate;			/**< Cached simulation frame frame */
+		PLCore::Mutex  *m_pMutex;				/**< Synchronisation object (always valid!) */
+		volatile bool	m_bShutDown;			/**< Shut down this thread? */
+		volatile float	m_fTimeScaleFactor;		/**< Cached time scale factor */
+		volatile float	m_fMaxTimeDifference;	/**< Cached maximum time difference */
+		volatile float	m_fSimulationSpeed;		/**< Cached simulation speed */
+		volatile float	m_fFrameRate;			/**< Cached simulation frame frame */
 
 
 	//[-------------------------------------------------------]
@@ -105,7 +105,7 @@ class WorldThread : public WorldUpdate, public PLGeneral::Thread {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGeneral::Thread functions            ]
+	//[ Public virtual PLCore::Thread functions            ]
 	//[-------------------------------------------------------]
 	public:
 		virtual int Run();

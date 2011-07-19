@@ -26,11 +26,11 @@
 #include <limits.h>
 #ifdef LINUX
 	// Under Linux, we need this for '_vscprintf' :(
-	#include <PLGeneral/PLGeneralLinuxWrapper.h>
+	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Core/MemoryManager.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Core/MemoryManager.h>
+#include <PLCore/Log/Log.h>
 #include <PLPhysics/ContactInformation.h>
 #include "PLPhysicsODE/BodyImpl.h"
 #include "PLPhysicsODE/BodyBox.h"
@@ -54,7 +54,7 @@ namespace PLPhysicsODE {
 //[-------------------------------------------------------]
 //[ Static variables                                      ]
 //[-------------------------------------------------------]
-PLGeneral::uint32 World::m_nODEInstanceCounter = 0;
+PLCore::uint32 World::m_nODEInstanceCounter = 0;
 
 
 //[-------------------------------------------------------]
@@ -66,7 +66,7 @@ pl_implement_class(World)
 //[-------------------------------------------------------]
 //[ Private MyHashFunction class implementation           ]
 //[-------------------------------------------------------]
-PLGeneral::uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
+PLCore::uint32 World::MyHashFunction::Hash(const BodyPair &sKey)
 {
 	return static_cast<uint32>(((sKey.pBody2 - sKey.pBody1) % UINT_MAX + (sKey.pBody1-sKey.pBody2) % UINT_MAX) % UINT_MAX);
 }
@@ -107,7 +107,7 @@ World::World() :
 	m_fTimeElapsed(0.0f)
 {
 	// Initialize group collision active states
-	PLGeneral::MemoryManager::Set(m_nGroupCollision, UINT_MAX, sizeof(PLGeneral::uint32)*32);
+	PLCore::MemoryManager::Set(m_nGroupCollision, UINT_MAX, sizeof(PLCore::uint32)*32);
 
 	// By default, collision between objects within the same group is disabled - except for the first group
 	for (uint8 i=1; i<32; i++)
@@ -239,8 +239,8 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 		PLPhysics::Body *pBody2 = static_cast<PLPhysics::Body*>(dGeomGetData(pGeomID2));
 		if (pBody2 && pBody2->IsActive() && pBody2->IsCollisionActive()) {
 			// Are the two bodies in different collision groups? If yes, is collision between this groups allowed?
-			PLGeneral::uint8 nCollisionGroup1 = pBody1->GetCollisionGroup();
-			PLGeneral::uint8 nCollisionGroup2 = pBody2->GetCollisionGroup();
+			PLCore::uint8 nCollisionGroup1 = pBody1->GetCollisionGroup();
+			PLCore::uint8 nCollisionGroup2 = pBody2->GetCollisionGroup();
 			if ((static_cast<World&>(pBody1->GetWorld()).m_nGroupCollision[nCollisionGroup1] & (1<<nCollisionGroup2))) {
 				// Get body pair flags
 				nCollisionGroup1 = pBody1->GetWorld().GetBodyPairFlags(*pBody1, *pBody2);
@@ -261,9 +261,9 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 						if (!cContactInformation.IsContactIgnored()) {
 							// [TODO] Check this
 							/*
-							static const PLGeneral::uint32 MaxContacts = 4;
+							static const PLCore::uint32 MaxContacts = 4;
 							dContact contact[MaxContacts];   // Up to 'MaxContacts' contacts per box-box
-							for (PLGeneral::uint32 i=0; i<MaxContacts; i++) {
+							for (PLCore::uint32 i=0; i<MaxContacts; i++) {
 								contact[i].surface.mode = dContactBounce | dContactSoftCFM;
 								contact[i].surface.mu = dInfinity;
 								contact[i].surface.mu2 = 0;
@@ -271,9 +271,9 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 								contact[i].surface.bounce_vel = 0.1;
 								contact[i].surface.soft_cfm = 0.01;
 							}
-							if (PLGeneral::uint32 numc = dCollide (pGeomID1,pGeomID2,MaxContacts,&contact[0].geom,
+							if (PLCore::uint32 numc = dCollide (pGeomID1,pGeomID2,MaxContacts,&contact[0].geom,
 										sizeof(dContact))) {
-								for (PLGeneral::uint32 i=0; i<numc; i++) {
+								for (PLCore::uint32 i=0; i<numc; i++) {
 									dJointID c = dJointCreateContact (m_pODEWorld,m_pODEContactGroup,contact+i);
 									dJointAttach (c,pODEBody1,pODEBody2);
 								}
@@ -281,15 +281,15 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 						*/
 							// Colliding two non-space geoms, so generate contact joints between
 							// pGeomID1 and pGeomID2
-							static const PLGeneral::uint32 MaxContactPoints = 16;
+							static const PLCore::uint32 MaxContactPoints = 16;
 							dContactGeom cp_array[MaxContactPoints];
-							PLGeneral::uint32 nNumContacts = dCollide(pGeomID1, pGeomID2, MaxContactPoints, cp_array, sizeof(dContactGeom));
+							PLCore::uint32 nNumContacts = dCollide(pGeomID1, pGeomID2, MaxContactPoints, cp_array, sizeof(dContactGeom));
 
 							if (nNumContacts > 1)
 								nNumContacts = 1;
 
 							// Add these contact joints to the simulation
-							for (PLGeneral::uint32 i=0; i<nNumContacts; i++) {
+							for (PLCore::uint32 i=0; i<nNumContacts; i++) {
 								dContact tempContact; // = new dContact;
 								// tempContact.surface.mode = 0;
 
@@ -315,12 +315,12 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 									/*
 							// Colliding two non-space geoms, so generate contact joints between
 							// pGeomID1 and pGeomID2
-							static const PLGeneral::uint32 MaxContactPoints = 16;
+							static const PLCore::uint32 MaxContactPoints = 16;
 							dContact pContacts[MaxContactPoints], pContact;
-							PLGeneral::uint32 nNumContacts = dCollide(pGeomID1, pGeomID2, MaxContactPoints, &pContacts[0].geom, sizeof(dContact));
+							PLCore::uint32 nNumContacts = dCollide(pGeomID1, pGeomID2, MaxContactPoints, &pContacts[0].geom, sizeof(dContact));
 
 							// Add these contact joints to the simulation
-							for (PLGeneral::uint32 i=0; i<nNumContacts; i++) {
+							for (PLCore::uint32 i=0; i<nNumContacts; i++) {
 								// Setup contact information
 								pContact = pContacts[i];
 
@@ -351,14 +351,14 @@ void World::OnCollision(dGeomID pGeomID1, dGeomID pGeomID2)
 // Allocation function
 void *World::AllocationFunction(size_t nSize)
 {
-	return PLGeneral::MemoryManager::Allocator(PLGeneral::MemoryManager::NewArray, nSize);
+	return PLCore::MemoryManager::Allocator(PLCore::MemoryManager::NewArray, nSize);
 }
 
 // Reallocation function
 void *World::ReallocationFunction(void *pAddress, size_t nOldSize, size_t nNewSize)
 {
 	// 'nOldSize' is not used (that's NO problem!)
-	return PLGeneral::MemoryManager::Reallocator(pAddress, nNewSize);
+	return PLCore::MemoryManager::Reallocator(pAddress, nNewSize);
 }
 
 // Deallocation function
@@ -366,7 +366,7 @@ void World::DeallocationFunction(void *pAddress, size_t nSize)
 {
 	// 'nSize' is not used (that's NO problem!)
 	if (pAddress)
-		PLGeneral::MemoryManager::Deallocator(PLGeneral::MemoryManager::DeleteArray, pAddress);
+		PLCore::MemoryManager::Deallocator(PLCore::MemoryManager::DeleteArray, pAddress);
 }
 
 // Error callback function
@@ -382,7 +382,7 @@ void World::ErrorHandler(int nErrNum, const char *pszMSG, va_list ap)
 			vsprintf(pszBuffer, pszMSG, ap);
 
 			// Log message
-			PL_LOG(Error, PLGeneral::String("ODE error ") + nErrNum + ": " + pszBuffer)
+			PL_LOG(Error, PLCore::String("ODE error ") + nErrNum + ": " + pszBuffer)
 
 			// Cleanup
 			delete [] pszBuffer;
@@ -432,18 +432,18 @@ PLPhysics::Body *World::CreateBodyEllipsoid(const Vector3 &vRadius, bool bStatic
 	return nullptr;
 }
 
-PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const Vector3 &vMeshScale, bool bStatic)
+PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const Vector3 &vMeshScale, bool bStatic)
 {
 	// Not implemented
 	return nullptr;
 }
 
-PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const Vector3 &vMeshScale, bool bOptimize)
+PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const Vector3 &vMeshScale, bool bOptimize)
 {
 	return new BodyMesh(*this, sMesh, vMeshScale, bOptimize);
 }
 
-PLPhysics::Body *World::CreateBodyTerrain(PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight, const float fTerrain[],
+PLPhysics::Body *World::CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
 										  const Vector3 &vBoxMin, const Vector3 &vBoxMax, const Vector3 &vScale)
 {
 	// Not implemented
@@ -535,13 +535,13 @@ PLPhysics::Joint *World::CreateJointUpVector(PLPhysics::Body &cParentBody, const
 //[-------------------------------------------------------]
 //[ Physics sensor creation                               ]
 //[-------------------------------------------------------]
-PLPhysics::Sensor *World::CreateSensorRaycast(const Vector3 &vStart, const Vector3 &vEnd, PLGeneral::uint32 nFlags)
+PLPhysics::Sensor *World::CreateSensorRaycast(const Vector3 &vStart, const Vector3 &vEnd, PLCore::uint32 nFlags)
 {
 	// [TODO] Not implemented
 	return nullptr;
 }
 
-PLPhysics::Sensor *World::CreateSensorAABoundingBox(const Vector3 &vMin, const Vector3 &vMax, PLGeneral::uint32 nFlags)
+PLPhysics::Sensor *World::CreateSensorAABoundingBox(const Vector3 &vMin, const Vector3 &vMax, PLCore::uint32 nFlags)
 {
 	// [TODO] Not implemented
 	return nullptr;
@@ -641,12 +641,12 @@ void World::SetGravity(const Vector3 &vGravity)
 		dWorldSetGravity(m_pODEWorld, vGravity.x, vGravity.y, vGravity.z);
 }
 
-bool World::GetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2) const
+bool World::GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const
 {
 	return (nGroup1 <= 31 && nGroup2 <= 31 && (m_nGroupCollision[nGroup1] & (1<<nGroup2)) != 0);
 }
 
-void World::SetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2, bool bActive)
+void World::SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive)
 {
 	if (nGroup1 <= 31 && nGroup2 <= 31) {
 		if (bActive) {
@@ -659,7 +659,7 @@ void World::SetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2
 	}
 }
 
-PLGeneral::uint8 World::GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const
+PLCore::uint8 World::GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const
 {
 	// Get body pair
 	BodyPair sBodyPair;
@@ -670,7 +670,7 @@ PLGeneral::uint8 World::GetBodyPairFlags(const PLPhysics::Body &cBody1, const PL
 	return m_mapBodyPairs.Get(sBodyPair);
 }
 
-void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLGeneral::uint8 nFlags)
+void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags)
 {
 	// Get body pair
 	BodyPair sBodyPair;
@@ -680,8 +680,8 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 	// If flags are set to 0, just remove the map entry
 	if (nFlags) {
 		// Is this body pair already within the map?
-		PLGeneral::uint8 &nFlagsRef = m_mapBodyPairs.Get(sBodyPair);
-		if (&nFlagsRef != &PLGeneral::HashMap<BodyPair, PLGeneral::uint8, MyHashFunction, MyCompareFunction>::Null)
+		PLCore::uint8 &nFlagsRef = m_mapBodyPairs.Get(sBodyPair);
+		if (&nFlagsRef != &PLCore::HashMap<BodyPair, PLCore::uint8, MyHashFunction, MyCompareFunction>::Null)
 			nFlagsRef = nFlags; // Jep, just change the value :)
 		else {
 			// Nope, add it right now!
@@ -727,12 +727,12 @@ void World::UpdateSimulation()
 	if (m_bSimulationActive) {
 		// If the time scale factor is smaller than 1, multiply the step size with this factor for smooth movement
 		float fStepSize = 1.0f/m_fFrameRate*m_fSimulationSpeed;
-		const float fTimeScaleFactor = PLGeneral::Timing::GetInstance()->GetTimeScaleFactor();
+		const float fTimeScaleFactor = PLCore::Timing::GetInstance()->GetTimeScaleFactor();
 		if (fTimeScaleFactor < 1.0f)
 			fStepSize = fStepSize*fTimeScaleFactor;
 
 		// Perform physics simulation
-		m_fTimeElapsed += PLGeneral::Timing::GetInstance()->GetTimeDifference();
+		m_fTimeElapsed += PLCore::Timing::GetInstance()->GetTimeDifference();
 		while (m_fTimeElapsed > fStepSize) {
 			// Collision detection step to create all contact joints
 			dSpaceCollide(m_pODESpaceID, this, &NearCallback);
@@ -768,9 +768,9 @@ bool World::IsAlwaysStatic() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
-PLPhysics::Element *World::CreateElement(const PLGeneral::String &sName)
+PLPhysics::Element *World::CreateElement(const PLCore::String &sName)
 {
 	// Nothing to do here
 	return nullptr;

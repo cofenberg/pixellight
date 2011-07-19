@@ -68,7 +68,7 @@ class TextureBuffer3D : public TextureBuffer {
 		*  @return
 		*    Texture buffer size
 		*/
-		PLRENDERER_API PLMath::Vector3i GetSize(PLGeneral::uint32 nMipmap = 0) const;
+		PLRENDERER_API PLMath::Vector3i GetSize(PLCore::uint32 nMipmap = 0) const;
 
 
 	//[-------------------------------------------------------]
@@ -84,7 +84,7 @@ class TextureBuffer3D : public TextureBuffer {
 		*  @param[in] nFlags
 		*    Texture buffer flags (see EFlags)
 		*/
-		PLRENDERER_API TextureBuffer3D(Renderer &cRenderer, PLGeneral::uint32 nFlags);
+		PLRENDERER_API TextureBuffer3D(Renderer &cRenderer, PLCore::uint32 nFlags);
 
 
 	//[-------------------------------------------------------]
@@ -124,8 +124,8 @@ class TextureBuffer3D : public TextureBuffer {
 	//[ Public virtual TextureBuffer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfPixels(PLGeneral::uint32 nMipmap = 0) const;
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfBytes(PLGeneral::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfPixels(PLCore::uint32 nMipmap = 0) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfBytes(PLCore::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const;
 
 
 };

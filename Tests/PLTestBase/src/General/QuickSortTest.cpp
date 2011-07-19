@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/QuickSort.h>
+#include <PLCore/Tools/QuickSort.h>
 #include "PLTestBase/General/QuickSortTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ class QuickSortTestClass : public QuickSort {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual private PLGeneral::QuickSort functions]
+	//[ Private virtual private PLCore::QuickSort functions   ]
 	//[-------------------------------------------------------]
 	private:
 		virtual char Compare(void *pElement1, void *pElement2) const

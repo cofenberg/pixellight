@@ -16,7 +16,6 @@ add_sources(
 ## Include directories
 ##################################################
 add_include_directories(
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLInput/include
@@ -33,7 +32,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLInput
 )
@@ -103,7 +101,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLInput)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLInput)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

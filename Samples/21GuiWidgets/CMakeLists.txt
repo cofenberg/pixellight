@@ -16,7 +16,6 @@ add_sources(
 ## Include directories
 ##################################################
 add_include_directories(
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
@@ -34,7 +33,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLMath
 	PLGraphics
@@ -106,7 +104,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLGui)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLGui)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -23,14 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLTestBase/Core/ResourceManagerTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 

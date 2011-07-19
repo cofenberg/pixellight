@@ -59,7 +59,7 @@ class SNSky;
 *    y-negative (3), z-positive (4), z-negative (5)
 *
 */
-class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
+class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 
 
 	//[-------------------------------------------------------]
@@ -103,7 +103,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		pl_attribute(Position,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer position",														"")
 		pl_attribute(Rotation,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer rotation",														"")
 		pl_attribute(Scale,		PLMath::Vector3,		PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Sky layer scale",															"")
-		pl_attribute(Name,		PLGeneral::String,		"",									ReadWrite,	GetSet,	"Optional sky layer name. If not defined, a name is chosen automatically.",	"")
+		pl_attribute(Name,		PLCore::String,			"",									ReadWrite,	GetSet,	"Optional sky layer name. If not defined, a name is chosen automatically.",	"")
 	pl_class_end
 
 
@@ -161,7 +161,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLS_API bool LoadMaterial(const PLGeneral::String &sFilename, PLGeneral::uint32 nMaterial = 0);
+		PLS_API bool LoadMaterial(const PLCore::String &sFilename, PLCore::uint32 nMaterial = 0);
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 		*  @param[in] pManager
 		*    Element manager using this element, can be a null pointer
 		*/
-		SkyLayer(const PLGeneral::String &sName, PLGeneral::ElementManager<SkyLayer> *pManager);
+		SkyLayer(const PLCore::String &sName, PLCore::ElementManager<SkyLayer> *pManager);
 
 
 	//[-------------------------------------------------------]
@@ -212,7 +212,7 @@ class SkyLayer : public PLCore::Object, public PLGeneral::Element<SkyLayer> {
 *  @brief
 *    Sky scene node
 */
-class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, public PLCore::Loadable {
+class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
@@ -226,7 +226,7 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 		pl_attribute(AABBMin,			PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,		"Minimum position of the 'scene node space' axis aligned bounding box",																"")
 		pl_attribute(AABBMax,			PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,		"Maximum position of the 'scene node space' axis aligned bounding box",																"")
 			// Overwritten PLCore::Loadable attributes
-		pl_attribute(Filename,			PLGeneral::String,		"",													ReadWrite,	GetSet,		"Sky filename",																														"Type='Sky'")
+		pl_attribute(Filename,			PLCore::String,			"",													ReadWrite,	GetSet,		"Sky filename",																														"Type='Sky'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -236,7 +236,7 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API void SetFilename(const PLGeneral::String &sValue);
+		PLS_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -272,10 +272,10 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SkyLayer *CreateElement(const PLGeneral::String &sName);
+		virtual SkyLayer *CreateElement(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -283,14 +283,14 @@ class SNSky : public SceneNode, public PLGeneral::ElementManager<SkyLayer>, publ
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool Unload();
-		PLS_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Loadable functions            ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
 
 
 	//[-------------------------------------------------------]

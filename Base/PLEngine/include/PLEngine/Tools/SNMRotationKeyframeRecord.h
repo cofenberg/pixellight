@@ -65,8 +65,8 @@ class SNMRotationKeyframeRecord : public PLScene::SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SNMRotationKeyframeRecord, "PLEngine", PLScene::SNMTransform, "Keyframe rotation animation scene node modifier class")
 		// Attributes
-		pl_attribute(FramesPerSecond,	PLGeneral::uint32,	24,	ReadWrite,	DirectValue,	"Frames per second",													"")
-		pl_attribute(Keys,				PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Rotation keys (w, x, y and z quaternion components) chunk filename",	"")
+		pl_attribute(FramesPerSecond,	PLCore::uint32,	24,	ReadWrite,	DirectValue,	"Frames per second",													"")
+		pl_attribute(Keys,				PLCore::String,	"",	ReadWrite,	DirectValue,	"Rotation keys (w, x, y and z quaternion components) chunk filename",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
@@ -138,11 +138,11 @@ class SNMRotationKeyframeRecord : public PLScene::SNMTransform {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool								 m_bRecording;	/**< Is recording currently enabled? */
-		PLGeneral::List<PLMath::Quaternion>  m_lstData;		/**< Recorded data */
-		float								 m_fFrame;		/**< Current frame as floating point */
-		int									 m_nFrame;		/**< Current frame as integer */
-		PLCore::Chunk						*m_pChunk;		/**< Chunk holding the keyframe data, always valid! */
+		bool							  m_bRecording;	/**< Is recording currently enabled? */
+		PLCore::List<PLMath::Quaternion>  m_lstData;	/**< Recorded data */
+		float							  m_fFrame;		/**< Current frame as floating point */
+		int								  m_nFrame;		/**< Current frame as integer */
+		PLCore::Chunk					 *m_pChunk;		/**< Chunk holding the keyframe data, always valid! */
 
 
 	//[-------------------------------------------------------]

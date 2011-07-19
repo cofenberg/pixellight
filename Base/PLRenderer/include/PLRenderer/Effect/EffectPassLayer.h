@@ -92,7 +92,7 @@ class EffectPassLayer {
 		*    - The texture handlers texture transformation matrix is also set!
 		*    - If there's no texture parameter name or an invalid one no texture is bound
 		*/
-		PLRENDERER_API bool Bind(PLGeneral::uint32 nStage, ParameterManager *pParameterManager = nullptr) const;
+		PLRENDERER_API bool Bind(PLCore::uint32 nStage, ParameterManager *pParameterManager = nullptr) const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class EffectPassLayer {
 		*  @return
 		*    The name of the used texture parameter
 		*/
-		PLRENDERER_API PLGeneral::String GetTexture() const;
+		PLRENDERER_API PLCore::String GetTexture() const;
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class EffectPassLayer {
 		*  @param[in] sTexture
 		*    The name of the used texture parameter
 		*/
-		PLRENDERER_API void SetTexture(const PLGeneral::String &sTexture);
+		PLRENDERER_API void SetTexture(const PLCore::String &sTexture);
 
 		/**
 		*  @brief
@@ -176,7 +176,7 @@ class EffectPassLayer {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool BindTexture(const Parameter *pParameter, PLGeneral::uint32 nStage) const;
+		bool BindTexture(const Parameter *pParameter, PLCore::uint32 nStage) const;
 
 
 	//[-------------------------------------------------------]
@@ -184,7 +184,7 @@ class EffectPassLayer {
 	//[-------------------------------------------------------]
 	private:
 		EffectPass						 *m_pFXPass;							/**< Layer owner (NEVER a null pointer!) */
-		PLGeneral::String				  m_sTexture;							/**< The name of the used texture parameter */
+		PLCore::String					  m_sTexture;							/**< The name of the used texture parameter */
 		SamplerStates					  m_cSamplerStates;						/**< Sampler states */
 		FixedFunctionsTextureStageStates  m_cFixedFunctionsTextureStageStates;	/**< Fixed functions texture stage states */
 

@@ -64,7 +64,7 @@ class Button : public Control {
 		*  @param[in] nCharacter
 		*    Character associated with the button, '\0' if none
 		*/
-		PLINPUT_API Button(Controller *pController, const PLGeneral::String &sName, const PLGeneral::String &sDescription, char nCharacter = '\0');
+		PLINPUT_API Button(Controller *pController, const PLCore::String &sName, const PLCore::String &sDescription, char nCharacter = '\0');
 
 		/**
 		*  @brief

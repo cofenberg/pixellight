@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;d3dx9.lib;d3d9.lib;cg.lib;cgD3D9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;d3dx9.lib;d3d9.lib;cg.lib;cgD3D9.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererD3D9D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;../../External/_Windows_x86_32/DirectX9/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -129,7 +129,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -144,7 +144,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;d3dx9_64.lib;d3d9_64.lib;cg64.lib;cgD3D964.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;d3dx9_64.lib;d3d9_64.lib;cg64.lib;cgD3D964.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererD3D9D64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;../../External/_Windows_x86_64/DirectX9/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -169,7 +169,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_32/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -189,7 +189,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;d3dx9.lib;d3d9.lib;cg.lib;cgD3D9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;d3dx9.lib;d3d9.lib;cg.lib;cgD3D9.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererD3D9.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;../../External/_Windows_x86_32/DirectX9/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -220,7 +220,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLGeneral/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_64/Cg/include/;$(VCInstallDir)PlatformSDK/include;../../External/_Windows_x86_64/DirectX9/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -236,7 +236,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;d3dx9_64.lib;d3d9_64.lib;cg64.lib;cgD3D964.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;d3dx9_64.lib;d3d9_64.lib;cg64.lib;cgD3D964.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererD3D964.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;../../External/_Windows_x86_64/DirectX9/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -294,10 +294,6 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\Plugins\
   <ItemGroup>
     <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
       <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGeneral\PLGeneral.vcxproj">
-      <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\..\Base\PLGraphics\PLGraphics.vcxproj">

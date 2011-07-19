@@ -108,11 +108,11 @@ If you're just using the code parts presented in this chapter, the \emph{PLCore:
 The method \emph{PLCore::ClassManager::GetClasses} is the central RTTI class enumeration method. By using this method, one can for example request a list of all RTTI classes which are derived from another RTTI class. The method has several parameters which are used to control which RTTI classes will land within the filled RTTI class list. The source~code~\ref{Code:EnumeratingRTTIClasses} shows this method in action.
 \begin{lstlisting}[float=htb,label=Code:EnumeratingRTTIClasses,caption={Enumerating RTTI classes}]
 // Get all classes derived from PLCore::Object
-PLGeneral::List<const PLCore::Class*> lstClasses;
+PLCore::List<const PLCore::Class*> lstClasses;
 PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLCore::Object", PLCore::NonRecursive, PLCore::NoBase, PLCore::IncludeAbstract);
 
 // Iterate through the found classes
-PLGeneral::Iterator<const PLCore::Class*> cIterator = lstClasses.GetIterator();
+PLCore::Iterator<const PLCore::Class*> cIterator = lstClasses.GetIterator();
 while (cIterator.HasNext()) {
 	// Get the class
 	const PLCore::Class *pClass = cIterator.Next();
@@ -188,7 +188,7 @@ The resulting XML file may look like
 
 As source~code~\ref{Code:RTTIScanPlugins} shows, it's quite simple to scan for RTTI plugins and adding them to the running system. After this step, they are ready to be used.
 \begin{lstlisting}[float=htb,label=Code:RTTIScanPlugins,caption={Scanning for RTTI plugins to add}]
-PLGeneral::String sDirectory = PLGeneral::System::GetInstance()->GetCurrentDir() + "/MyPlugins";
+PLCore::String sDirectory = PLCore::System::GetInstance()->GetCurrentDir() + "/MyPlugins";
 PLCore::ClassManager::GetInstance()->ScanPlugins(sDirectory);
 \end{lstlisting}
 
@@ -208,8 +208,8 @@ Multiple classes within different modules, but with the same class name - don't 
 To access the current executed module you can use the macro \emph{pl\_current\_module\_id} ( just a short cut for \emph{PLCore::ModuleID<int>::GetModuleID} to request the ID of this module. This module ID can then be used to request a pointer to this module by using \emph{PLCore::ClassManager::GetModule}. The following source~code~\ref{Code:CurrentDirectoryToCurrentModuleDirectory} shows how this can be used to set the current directory to the one the current module is in.
 \begin{lstlisting}[label=Code:CurrentDirectoryToCurrentModuleDirectory,caption={Setting the current directory to the one the current module is in}]
 // Includes
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Base/Rtti.h>
 #include <PLCore/Base/Module.h>
 #include <PLCore/Base/ClassManager.h>
@@ -217,19 +217,19 @@ To access the current executed module you can use the macro \emph{pl\_current\_m
 // ...
 
 // Get the ID of the current module
-const PLGeneral::uint32 nModuleID = pl_current_module_id();
+const PLCore::uint32 nModuleID = pl_current_module_id();
 
 // Get RTTI module instance
 const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModule(nModuleID);
 if (pModule != nullptr) {
 	// Get the absolute filename of the module [TODO] Currently an empty string is returned
-	const PLGeneral::String sAbsModuleFilename = pModule->GetFilename();
+	const PLCore::String sAbsModuleFilename = pModule->GetFilename();
 
 	// Get the absolute filename of the directory the module is in
-	const PLGeneral::String sAbsModuleDirectory = PLGeneral::Url(sAbsModuleFilename).CutFilename();
+	const PLCore::String sAbsModuleDirectory = PLCore::Url(sAbsModuleFilename).CutFilename();
 
 	// Use the module directory as the current directory
-	PLGeneral::System::GetInstance()->SetCurrentDir(sAbsModuleDirectory);
+	PLCore::System::GetInstance()->SetCurrentDir(sAbsModuleDirectory);
 }
 \end{lstlisting}
 
@@ -306,7 +306,7 @@ if (pMyClass != nullptr) {
 	}
 }
 \end{lstlisting}
-As mentioned before, the RTTI class attributes are actually objects - even if they can be used as if they were primitive data types. Therefore, methods from, for example the attribute \emph{MyInt}, can be called to check for instance whether or not the attribute has currently the defined default value. In the example above, this default value could be requested by using \begin{quote}int nDefaultValue = pMyObject->MyInt.Default();\end{quote} or by using \begin{quote}PLGeneral::String sDefaultValue = pMyObject->MyInt.GetDefault();\end{quote} to get the default value as generic string.
+As mentioned before, the RTTI class attributes are actually objects - even if they can be used as if they were primitive data types. Therefore, methods from, for example the attribute \emph{MyInt}, can be called to check for instance whether or not the attribute has currently the defined default value. In the example above, this default value could be requested by using \begin{quote}int nDefaultValue = pMyObject->MyInt.Default();\end{quote} or by using \begin{quote}PLCore::String sDefaultValue = pMyObject->MyInt.GetDefault();\end{quote} to get the default value as generic string.
 
 Although \emph{MyInt} can nearly be used as if it were just an usual primitive C++ data type, writing something like \begin{quote}pMyObject->MyInt += 42;\end{quote} would result in a compiler error like \begin{quote}error C2676: binary '+=' : 'MyClass::MyInt\_Attr' does not define this operator or a conversion to a type acceptable to the predefined operator\end{quote} because operators like \emph{+=} are not implemented within \emph{PLCore::DynVar}. If you want to write the previously shown, write \begin{quote}pMyObject->MyInt = pMyObject->MyInt + 42;\end{quote} instead. Another practical solution would be, to get the value by using for example \begin{quote}int nValue = pMyObject->MyInt;\end{quote}, then working on in this case \emph{nValue} and if your done writing down the result by using for instance \begin{quote}pMyObject->MyInt = nValue;\end{quote}.
 
@@ -504,7 +504,7 @@ if (pMyClass != nullptr) {
 	// Create an instance of the RTTI class
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 	if (pMyObject != nullptr) {
-		PLGeneral::String sValues;
+		PLCore::String sValues;
 
 		// Get the values of all attributes as string, but only
 		// the attributes which are currently not set to their
@@ -539,7 +539,7 @@ if (pMyClass != nullptr) {
 	MyClass *pMyObject = (MyClass*)pMyClass->Create();
 	if (pMyObject != nullptr) {
 		// Get the values of all attributes as XML
-		PLGeneral::XmlElement cXmlElement("MyElement");
+		PLCore::XmlElement cXmlElement("MyElement");
 		pMyObject->GetValuesXml(cXmlElement, PLCore::WithDefault);
 
 		// nMyIntValue has the value 10
@@ -771,7 +771,7 @@ The defined RTTI enumeration can then be used just like a traditional enumeratio
 
 
 \paragraph{Flags}
-A special case of an enumeration data type is the flags data type. As you may already now, by using flags is possible to get and set single bits of, for example an integer data type. Instead of using tons of boolean variables and wasting memory and lines of codes to provide interfaces for each and every variable, it's possible to put many \emph{true/false} states into one variable by accessing the single bits of a variable directly. As mentioned before, internally at a technical level, enumeration and flag data types are the same for the RTTI. Therefore we'll only discuss the additions of flags and especially their usage. When using the \emph{pl\_enum} RTTI macro, for enumerations, usually \emph{int} will do the job, but flags a data types like \emph{PLGeneral::uint32} would be the better choice because then, you know exactly how many bits are available - even if you currently writing an \SI{64}{\bit} application. In normal situations, 32 flags are enough and as a result, you normally don't care whether or not the flags are in fact stored as \emph{int} which can be \SI{32}{\bit} or \SI{64}{\bit}, or whether the number of bits is well defined by using for example \emph{PLGeneral::uint32} as data type. Within source~code~\ref{Code:DefineRTTIFlagsClass} you can see how to define RTTI flags and using them within a class as RTTI attribute.
+A special case of an enumeration data type is the flags data type. As you may already now, by using flags is possible to get and set single bits of, for example an integer data type. Instead of using tons of boolean variables and wasting memory and lines of codes to provide interfaces for each and every variable, it's possible to put many \emph{true/false} states into one variable by accessing the single bits of a variable directly. As mentioned before, internally at a technical level, enumeration and flag data types are the same for the RTTI. Therefore we'll only discuss the additions of flags and especially their usage. When using the \emph{pl\_enum} RTTI macro, for enumerations, usually \emph{int} will do the job, but flags a data types like \emph{PLCore::uint32} would be the better choice because then, you know exactly how many bits are available - even if you currently writing an \SI{64}{\bit} application. In normal situations, 32 flags are enough and as a result, you normally don't care whether or not the flags are in fact stored as \emph{int} which can be \SI{32}{\bit} or \SI{64}{\bit}, or whether the number of bits is well defined by using for example \emph{PLCore::uint32} as data type. Within source~code~\ref{Code:DefineRTTIFlagsClass} you can see how to define RTTI flags and using them within a class as RTTI attribute.
 \begin{lstlisting}[label=Code:DefineRTTIFlagsClass,caption={Defining new RTTI flags and a RTTI class using them}]
 // C++ enumeration used as flags
 enum MyFlags {MyFirstFlag=1<<0, MySecondFlag=1<<1};
@@ -828,7 +828,7 @@ if (pMyClass != nullptr) {
 		// bSecondFlagSet has now the value true
 		bSecondFlagSet = (pMyObject->MyFlagsNumber & MySecondFlag) != 0;
 		// sValue is now "MyFirstFlag|MyFlagsNumber"
-		PLGeneral::String sValue = pMyObject->GetAttribute("MyFlagsNumber")->GetString();
+		PLCore::String sValue = pMyObject->GetAttribute("MyFlagsNumber")->GetString();
 		// bFirstFlagSet has now the value true
 		bFirstFlagSet = sValue.IsSubstring("MyFirstFlag");
 		// bSecondFlagSet has now the value true
@@ -866,16 +866,16 @@ if (pMyClass != nullptr) {
 		PLCore::DynVar *pDynVar = pMyObject->GetAttribute("MyEnumNumber");
 		if (pDynVar != nullptr && pDynVar->GetType().IsEnumType()) {
 			// Get the list of all enumeration values
-			const PLGeneral::List<PLGeneral::String> &lstEnums = pDynVar->GetType().GetEnumValues();
-			for (PLGeneral::uint32 i=0; i<lstEnums.GetNumOfElements(); i++) {
+			const PLCore::List<PLCore::String> &lstEnums = pDynVar->GetType().GetEnumValues();
+			for (PLCore::uint32 i=0; i<lstEnums.GetNumOfElements(); i++) {
 				// Get the name of the enumeration value
-				PLGeneral::String sEnum  = lstEnums[i];
+				PLCore::String sEnum  = lstEnums[i];
 
 				// Get the value of the enumation value
-				PLGeneral::String sValue = pDynVar->GetType().GetEnumValue(sEnum);
+				PLCore::String sValue = pDynVar->GetType().GetEnumValue(sEnum);
 
 				// Get the description of the enumation value
-				PLGeneral::String sDescription = pDynVar->GetType().GetEnumDescription(sEnum);
+				PLCore::String sDescription = pDynVar->GetType().GetEnumDescription(sEnum);
 
 				// ...
 			}
@@ -1236,22 +1236,22 @@ As shown within source~code~\ref{Code:RTTIClassPropertiesUsage}, the usage of RT
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
 if (pMyClass != nullptr) {
 	// Query the value of the "MyFirstProperty" property, "sFirst" has now the value "FirstValue"
-	PLGeneral::String sFirst = pMyClass->GetProperties().Get("MyFirstProperty");
+	PLCore::String sFirst = pMyClass->GetProperties().Get("MyFirstProperty");
 
 	// Query the value of the "MySecondProperty" property, "sSecond" has now the value "SecondValue"
-	PLGeneral::String sSecond = pMyClass->GetProperties().Get("MySecondProperty");
+	PLCore::String sSecond = pMyClass->GetProperties().Get("MySecondProperty");
 }
 \end{lstlisting}
-A RTTI class can overwrite inherited properties from it's base classes. In this case, the hash map entry within the derived class is just replace by a new entry. Because the RTTI class properties are accessed by using a \emph{PLGeneral::HashMap} template instance, all hash map operations can be used. The following source~code~\ref{Code:RTTIClassPropertiesIteration} shows how to iterate over all RTTI class properties.
+A RTTI class can overwrite inherited properties from it's base classes. In this case, the hash map entry within the derived class is just replace by a new entry. Because the RTTI class properties are accessed by using a \emph{PLCore::HashMap} template instance, all hash map operations can be used. The following source~code~\ref{Code:RTTIClassPropertiesIteration} shows how to iterate over all RTTI class properties.
 \begin{lstlisting}[float=htb,label=Code:RTTIClassPropertiesIteration,caption={Iterating over all RTTI class properties}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
 if (pMyClass != nullptr) {
 	// Iterate over all RTTI class properties
-	PLGeneral::Iterator<PLGeneral::String> cIterator = pMyClass->GetProperties().GetKeyIterator();
+	PLCore::Iterator<PLCore::String> cIterator = pMyClass->GetProperties().GetKeyIterator();
 	while (cIterator.HasNext()) {
 		// Get the value of the current property
-		PLGeneral::String sValue = pMyClass->GetProperties().Get(cIterator.Next());
+		PLCore::String sValue = pMyClass->GetProperties().Get(cIterator.Next());
 	}
 }
 \end{lstlisting}

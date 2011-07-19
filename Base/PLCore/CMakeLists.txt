@@ -14,7 +14,88 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLScript)
 ##################################################
 add_sources(
 	src/PLCore.cpp
+	src/PCoreLinux.cpp
 	src/Core.cpp
+	src/Container/Functions.cpp
+	src/Container/Bitset.cpp
+	src/Container/BitsetIterator.cpp
+	src/Core/MemoryManager.cpp
+	src/File/Directory.cpp
+	src/File/File.cpp
+	src/File/FileAccess.cpp
+	src/File/FileHttp.cpp
+	src/File/FileImpl.cpp
+	src/File/FileZip.cpp
+	src/File/FileStdStream.cpp
+	src/File/FileObject.cpp
+	src/File/FileSearch.cpp
+	src/File/FileSearchImpl.cpp
+	src/File/FileSearchZip.cpp
+	src/File/FileSearchHttp.cpp
+	src/File/HttpHandle.cpp
+	src/File/SearchFilter.cpp
+	src/File/SearchFilterRegEx.cpp
+	src/File/SearchFilterWildcard.cpp
+	src/File/Url.cpp
+	src/File/ZipHandle.cpp
+	src/Network/Network.cpp
+	src/Network/Socket.cpp
+	src/Network/SocketAddress.cpp
+	src/Network/Host.cpp
+	src/Network/Client.cpp
+	src/Network/Server.cpp
+	src/Network/Connection.cpp
+	src/Network/Buffer.cpp
+	src/Network/Http/Http.cpp
+	src/Network/Http/HttpClient.cpp
+	src/Network/Http/HttpClientConnection.cpp
+	src/Network/Http/HttpServer.cpp
+	src/Network/Http/HttpServerConnection.cpp
+	src/Network/Http/HttpHeader.cpp
+	src/Network/Http/MimeTypeManager.cpp
+	src/Registry/Registry.cpp
+	src/Registry/RegistryImpl.cpp
+	src/String/BufferedReaderFile.cpp
+	src/String/BufferedReaderString.cpp
+	src/String/RegEx.cpp
+	src/String/String.cpp
+	src/String/StringBuffer.cpp
+	src/String/StringBufferASCII.cpp
+	src/String/StringBufferUnicode.cpp
+	src/String/StringBufferUTF8.cpp
+	src/String/StringBufferManager.cpp
+	src/String/Tokenizer.cpp
+	src/String/UTF8Tools.cpp
+	src/String/ParseTools.cpp
+	src/System/DynLib.cpp
+	src/System/DynLibImpl.cpp
+	src/System/Mutex.cpp
+	src/System/MutexImpl.cpp
+	src/System/Semaphore.cpp
+	src/System/SemaphoreImpl.cpp
+	src/System/System.cpp
+	src/System/SystemImpl.cpp
+	src/System/Console.cpp
+	src/System/Thread.cpp
+	src/System/ThreadImpl.cpp
+	src/System/ThreadFunction.cpp
+	src/System/Pipe.cpp
+	src/System/Process.cpp
+	src/Xml/XmlBase.cpp
+	src/Xml/XmlElement.cpp
+	src/Xml/XmlNode.cpp
+	src/Xml/XmlText.cpp
+	src/Xml/XmlAttribute.cpp
+	src/Xml/XmlComment.cpp
+	src/Xml/XmlUnknown.cpp
+	src/Xml/XmlDocument.cpp
+	src/Xml/XmlDeclaration.cpp
+	src/Xml/XmlParsingData.cpp
+	src/Log/Log.cpp
+	src/Log/LogFormater.cpp
+	src/Log/LogFormaterXml.cpp
+	src/Log/LogFormaterHtml.cpp
+	src/Log/LogFormaterText.cpp
 	src/Base/Class.cpp
 	src/Base/ClassImpl.cpp
 	src/Base/ClassReal.cpp
@@ -41,6 +122,20 @@ add_sources(
 	src/Config/ConfigLoader.cpp
 	src/Config/ConfigLoaderPL.cpp
 	src/Config/CoreConfigGroup.cpp
+	src/Tools/Profiling.cpp
+	src/Tools/QuickSort.cpp
+	src/Tools/Stopwatch.cpp
+	src/Tools/Time.cpp
+	src/Tools/Timing.cpp
+	src/Tools/Version.cpp
+	src/Tools/Wrapper.cpp
+	src/Tools/CommandLine.cpp
+	src/Tools/CommandLineOption.cpp
+	src/Tools/HTMLParser.cpp
+	src/Tools/Checksum.cpp
+	src/Tools/ChecksumCRC32.cpp
+	src/Tools/ChecksumMD5.cpp
+	src/Tools/ChecksumSHA1.cpp
 	src/Tools/Loadable.cpp
 	src/Tools/LoadableManager.cpp
 	src/Tools/LoadableType.cpp
@@ -61,14 +156,45 @@ add_sources(
 	src/Script/ScriptManager.cpp
 	src/Script/ScriptBinding.cpp
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_sources(
+		src/File/FileWindows.cpp
+		src/File/FileSearchWindows.cpp
+		src/Registry/RegistryWindows.cpp
+		src/System/SystemWindows.cpp
+		src/System/ConsoleWindows.cpp
+		src/System/DynLibWindows.cpp
+		src/System/ThreadWindows.cpp
+		src/System/MutexWindows.cpp
+		src/System/SemaphoreWindows.cpp
+	)
+else()
+	##################################################
+	## Linux
+	##################################################
+	add_sources(
+		src/PLCoreLinux.cpp
+		src/File/FileLinux.cpp
+		src/File/FileSearchLinux.cpp
+		src/System/SystemLinux.cpp
+		src/System/ConsoleLinux.cpp
+		src/System/DynLibLinux.cpp
+		src/System/ThreadLinux.cpp
+		src/System/MutexLinux.cpp
+		src/System/SemaphoreLinux.cpp
+	)
+endif()
 
 ##################################################
 ## Include directories
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_BINARY_DIR}
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
+	${ZLIB_INCLUDE_DIR}
+	${PCRE_INCLUDE_DIR}
 )
 
 ##################################################
@@ -82,14 +208,26 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
+	${ZLIB_LIBRARIES}
+	${PCRE_LIBRARIES}
 )
 if(WIN32)
 	##################################################
 	## Win32
 	##################################################
 	add_libs(
+		${WIN32_STANDARD_LIBS}
+		${WIN32_WSOCK32_LIB}
 		${WIN32_USER32_LIB}
+	)
+elseif(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_libs(
+		ncurses
+		dl
+		pthread
 	)
 endif()
 
@@ -105,6 +243,7 @@ if(WIN32)
 	##################################################
 	add_compile_defs(
 		${WIN32_COMPILE_DEFS}
+		PCRE_STATIC
 	)
 elseif(LINUX)
 	##################################################
@@ -143,7 +282,16 @@ if(WIN32)
 	##################################################
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
+		/NODEFAULTLIB:LIBCMT		# Ignore libraries
 	)
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
+		##################################################
+		## Debug
+		##################################################
+		add_linker_flags(
+			/NODEFAULTLIB:MSVCRT	# Ignore libraries
+		)
+	endif()
 elseif(LINUX)
 	##################################################
 	## GCC Compiler
@@ -161,8 +309,8 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib External-libpcre)
+add_dependencies(Base							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -177,6 +325,10 @@ if(LINUX)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime"
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime"
+	)
+	# Debug helper for gdb (pretty printer for PLCore::String)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKETOOLS_CURRENT_TARGET}-gdb.py" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION}-gdb.py"
 	)
 endif()
 
@@ -198,11 +350,17 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
 )
 
+# Debug helper for gdb (pretty printer for PLCore::String)
+if(LINUX)
+	install(FILES								"${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION}-gdb.py"
+			DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
+	)
+endif()
+
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
-
 
 ##################################################
 ## Build static library
@@ -210,15 +368,13 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 if(NOT LINUX)
 	remove_compile_defs(PLCORE_EXPORTS)
 endif()
-remove_libs(PLGeneral)
-add_libs(PLGeneralStat)
-add_compile_defs(PLGENERAL_STATIC PLCORE_STATIC)
+add_compile_defs(PLCORE_STATIC)
 build_library(${CMAKETOOLS_CURRENT_TARGET}Stat STATIC)
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	PLGeneralStat External-zlib External-libpcre)
+add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Stat	External-zlib External-libpcre)
 add_dependencies(Base                       		${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

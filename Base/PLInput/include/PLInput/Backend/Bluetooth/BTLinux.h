@@ -80,14 +80,14 @@ class BTLinux : public BTImpl {
 	//[ Private virtual BTImpl functions                      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void EnumerateDevices(PLGeneral::List<BTDevice*> &lstDevices);
+		virtual void EnumerateDevices(PLCore::List<BTDevice*> &lstDevices);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::List<BTDeviceLinux*> m_lstDevices;	/**< List of devices */
+		PLCore::List<BTDeviceLinux*> m_lstDevices;	/**< List of devices */
 
 
 };

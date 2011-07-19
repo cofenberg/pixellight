@@ -99,7 +99,7 @@ class SNGravitationSample : public SPARK_PL::SNSystem {
 	//[-------------------------------------------------------]
 	private:
 		// The number of point masses
-		static const PLGeneral::uint32 NumOfPointMasses = 2;
+		static const PLCore::uint32 NumOfPointMasses = 2;
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLMesh/Joint.h"
 
 
@@ -45,7 +45,7 @@ namespace PLMesh {
 *  @brief
 *    Joint handler class
 */
-class JointHandler : public PLGeneral::ElementHandler<Joint>, public JointState {
+class JointHandler : public PLCore::ElementHandler<Joint>, public JointState {
 
 
 	//[-------------------------------------------------------]

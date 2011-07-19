@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementManager.h>
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementManager.h>
+#include <PLCore/Container/ElementHandler.h>
 #include <PLRenderer/Animation/AnimationBase.h>
 #include "PLMesh/PLMesh.h"
 
@@ -54,7 +54,7 @@ class Mesh;
 *  @brief
 *    Morph target animation class
 */
-class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Element<MorphTargetAni> {
+class MorphTargetAni : public PLRenderer::AnimationBase, public PLCore::Element<MorphTargetAni> {
 
 
 	//[-------------------------------------------------------]
@@ -72,7 +72,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 			//[ Public data                                           ]
 			//[-------------------------------------------------------]
 			public:
-				PLGeneral::String sName; /**< Morph target name */
+				PLCore::String sName; /**< Morph target name */
 
 
 			//[-------------------------------------------------------]
@@ -115,7 +115,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*    - If the desired name is already in use inside the owner manager an alternative
 		*      name is set
 		*/
-		PLMESH_API MorphTargetAni(const PLGeneral::String &sName, PLGeneral::ElementManager<MorphTargetAni> *pManager = nullptr);
+		PLMESH_API MorphTargetAni(const PLCore::String &sName, PLCore::ElementManager<MorphTargetAni> *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*  @return
 		*    Morph target animation morph targets
 		*/
-		PLMESH_API PLGeneral::Array<AniMorphTarget> &GetMorphTargets();
+		PLMESH_API PLCore::Array<AniMorphTarget> &GetMorphTargets();
 
 		/**
 		*  @brief
@@ -154,8 +154,8 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*      of the given mesh, else lstMorphTargetWeights is only a list of the morph target
 		*      weights of THIS animation!
 		*/
-		PLMESH_API bool ApplyMorphTargetWeight(PLGeneral::Array<float> &lstMorphTargetWeights,
-											   PLGeneral::uint32 nFrame, float fWeight = 1.0f, const Mesh *pMesh = nullptr) const;
+		PLMESH_API bool ApplyMorphTargetWeight(PLCore::Array<float> &lstMorphTargetWeights,
+											   PLCore::uint32 nFrame, float fWeight = 1.0f, const Mesh *pMesh = nullptr) const;
 
 		/**
 		*  @brief
@@ -181,8 +181,8 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 		*  @see
 		*    - ApplyMorphTargetWeight() above
 		*/
-		PLMESH_API bool ApplyMorphTargetWeight(PLGeneral::Array<float> &lstMorphTargetWeights,
-											   PLGeneral::uint32 nFrame1, PLGeneral::uint32 nFrame2, float fTime,
+		PLMESH_API bool ApplyMorphTargetWeight(PLCore::Array<float> &lstMorphTargetWeights,
+											   PLCore::uint32 nFrame1, PLCore::uint32 nFrame2, float fTime,
 											   float fWeight = 1.0f, const Mesh *pMesh = nullptr) const;
 
 
@@ -190,7 +190,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<AniMorphTarget> m_lstAniMorphTargets;
+		PLCore::Array<AniMorphTarget> m_lstAniMorphTargets;
 
 
 	//[-------------------------------------------------------]
@@ -198,7 +198,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API virtual MorphTargetAni &operator =(const MorphTargetAni &cSource);
-		PLMESH_API virtual PLGeneral::String GetSourceName() const;
+		PLMESH_API virtual PLCore::String GetSourceName() const;
 
 
 };
@@ -208,7 +208,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLGeneral::Eleme
 *  @brief
 *    Morph target animation manager
 */
-class MorphTargetAniManager : public PLGeneral::ElementManager<MorphTargetAni> {
+class MorphTargetAniManager : public PLCore::ElementManager<MorphTargetAni> {
 
 
 	//[-------------------------------------------------------]
@@ -229,10 +229,10 @@ class MorphTargetAniManager : public PLGeneral::ElementManager<MorphTargetAni> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual MorphTargetAni *CreateElement(const PLGeneral::String &sName);
+		virtual MorphTargetAni *CreateElement(const PLCore::String &sName);
 
 
 };

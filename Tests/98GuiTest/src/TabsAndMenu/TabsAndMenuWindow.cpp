@@ -34,8 +34,8 @@
 #include "TabsAndMenu/TabsAndMenuWindow.h"
 
 // [DEBUG]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 
 
 //[-------------------------------------------------------]
@@ -48,7 +48,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;

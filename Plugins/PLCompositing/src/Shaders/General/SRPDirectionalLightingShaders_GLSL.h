@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDirectionalLighting_GLSL_VS = "\
+static const PLCore::String sDirectionalLighting_GLSL_VS = "\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -123,7 +123,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDirectionalLighting_GLSL_FS = "\
+static const PLCore::String sDirectionalLighting_GLSL_FS = "\
 // Attributes\n\
 #if defined(FS_TEXCOORD0) && defined(FS_TEXCOORD1)\n\
 	varying highp vec4 VertexTexCoordVS;		// Vertex texture coordinate 0 (xy) and 1 (zw) from vertex shader\n\

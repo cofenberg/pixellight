@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Tokenizer;
 }
 
@@ -72,8 +72,8 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLMesh::Skeleton&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -81,8 +81,8 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLMesh::Skeleton &cSkeleton, PLGeneral::File &cFile);
-		bool Save(PLMesh::Skeleton &cSkeleton, PLGeneral::File &cFile);
+		bool Load(PLMesh::Skeleton &cSkeleton, PLCore::File &cFile);
+		bool Save(PLMesh::Skeleton &cSkeleton, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -118,7 +118,7 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV6(PLMesh::Skeleton &cSkeleton, PLGeneral::Tokenizer &cTokenizer, PLMesh::Skeleton *pRefSkeleton) const;
+		bool LoadV6(PLMesh::Skeleton &cSkeleton, PLCore::Tokenizer &cTokenizer, PLMesh::Skeleton *pRefSkeleton) const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class SkeletonAniLoaderMd5 : public PLMesh::SkeletonAniLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV10(PLMesh::Skeleton &cSkeleton, PLGeneral::Tokenizer &cTokenizer) const;
+		bool LoadV10(PLMesh::Skeleton &cSkeleton, PLCore::Tokenizer &cTokenizer) const;
 
 
 };

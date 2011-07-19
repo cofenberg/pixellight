@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include <PLMath/Vector2i.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Resources/Graphics.h>
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;

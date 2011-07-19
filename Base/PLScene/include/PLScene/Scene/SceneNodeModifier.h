@@ -106,8 +106,8 @@ class SceneNodeModifier : public PLCore::Object {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLGeneral::uint32 GetFlags() const;
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API virtual PLCore::uint32 GetFlags() const;
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -139,7 +139,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*  @return
 		*    The scene node class this modifier operates on
 		*/
-		PLS_API PLGeneral::String GetSceneNodeClass() const;
+		PLS_API PLCore::String GetSceneNodeClass() const;
 
 		/**
 		*  @brief
@@ -240,8 +240,8 @@ class SceneNodeModifier : public PLCore::Object {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32  m_nFlags;		/**< Flags */
-		SceneNode		  *m_pSceneNode;	/**< Owner scene node (ALWAYS valid!) */
+		PLCore::uint32  m_nFlags;		/**< Flags */
+		SceneNode	   *m_pSceneNode;	/**< Owner scene node (ALWAYS valid!) */
 
 
 };

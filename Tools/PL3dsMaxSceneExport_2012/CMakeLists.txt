@@ -60,7 +60,6 @@ endif()
 add_include_directories(
 	${CMAKE_BINARY_DIR}
 	../PL3dsMaxSceneExport_2008/include/
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include/
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include/
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include/
 	${MAX2012_INCLUDE_DIRS}
@@ -70,7 +69,6 @@ add_include_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneralStat
 	PLCoreStat
 	${WIN32_ADVAPI32_LIB}
 	${WIN32_SHELL32_LIB}
@@ -85,7 +83,6 @@ add_libs(
 ##################################################
 add_compile_defs(
 	${WIN32_COMPILE_DEFS}
-	PLGENERAL_STATIC
 	PLCORE_STATIC
 	_SECURE_SCL=0
 )
@@ -128,7 +125,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Max2012 PLGeneralStat PLCoreStat)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Max2012 PLCoreStat)
 add_dependencies(Tools                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

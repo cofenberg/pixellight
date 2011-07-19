@@ -37,12 +37,10 @@
 class PLScene;
 class IGameNode;
 class PLSceneContainer;
-namespace PLGeneral {
-	class String;
-	class XmlElement;
-}
 namespace PLCore {
 	class Chunk;
+	class String;
+	class XmlElement;
 }
 
 
@@ -226,7 +224,7 @@ class PLSceneNode {
 		*  @param[in] cSceneElement
 		*    Node XML element to insert into
 		*/
-		void WriteToFilePosRotScaleBoxFlags(PLGeneral::XmlElement &cNodeElement) const;
+		void WriteToFilePosRotScaleBoxFlags(PLCore::XmlElement &cNodeElement) const;
 
 		/**
 		*  @brief
@@ -235,7 +233,7 @@ class PLSceneNode {
 		*  @param[in] cSceneElement
 		*    Node XML element to insert into
 		*/
-		void WriteVariables(PLGeneral::XmlElement &cNodeElement) const;
+		void WriteVariables(PLCore::XmlElement &cNodeElement) const;
 
 		/**
 		*  @brief
@@ -248,7 +246,7 @@ class PLSceneNode {
 		*  @param[in] sApplicationDir
 		*    Application directory
 		*/
-		void WriteModifiers(PLGeneral::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		void WriteModifiers(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir);
 
 		/**
 		*  @brief
@@ -261,7 +259,7 @@ class PLSceneNode {
 		*  @param[in] bFlip
 		*    Flip look at direction?
 		*/
-		void WriteTargetRotationModifier(PLGeneral::XmlElement &cSceneElement, INode &cTarget, bool bFlip) const;
+		void WriteTargetRotationModifier(PLCore::XmlElement &cSceneElement, INode &cTarget, bool bFlip) const;
 
 
 	//[-------------------------------------------------------]
@@ -279,7 +277,7 @@ class PLSceneNode {
 		*  @param[in] sApplicationDir
 		*    Application directory
 		*/
-		virtual void WriteToFile(PLGeneral::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) = 0;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -332,7 +330,7 @@ class PLSceneNode {
 		*  @param[in] cAbsFilename
 		*    Absolute filename of the file to save the chunk into
 		*/
-		bool SaveChunk(const PLCore::Chunk &cChunk, const PLGeneral::String &cAbsFilename) const;
+		bool SaveChunk(const PLCore::Chunk &cChunk, const PLCore::String &cAbsFilename) const;
 
 
 	//[-------------------------------------------------------]

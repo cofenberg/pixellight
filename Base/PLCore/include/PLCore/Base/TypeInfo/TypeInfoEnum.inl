@@ -84,7 +84,7 @@ class TypeInfo< EnumType<ENUM> > : public DynTypeInfo {
 			return Type<_Type>::TypeID;
 		}
 
-		virtual PLGeneral::String GetTypeName() const
+		virtual String GetTypeName() const
 		{
 			return Type<_Type>::GetTypeName();
 		}
@@ -99,19 +99,19 @@ class TypeInfo< EnumType<ENUM> > : public DynTypeInfo {
 			return false;
 		}
 
-		virtual PLGeneral::String GetEnumValue(const PLGeneral::String &sEnum) const
+		virtual String GetEnumValue(const String &sEnum) const
 		{
-			PLGeneral::String sName = sEnum;
-			PLGeneral::String sDesc;
+			String sName = sEnum;
+			String sDesc;
 			_Type nValue = DefaultValue<_Type>::Default();
 			ENUM::GetEnumValue(-1, nValue, sName, sDesc);
 			return Type<_Type>::ConvertToString(nValue);
 		}
 
-		virtual PLGeneral::String GetEnumDescription(const PLGeneral::String &sEnum) const
+		virtual String GetEnumDescription(const String &sEnum) const
 		{
-			PLGeneral::String sName = sEnum;
-			PLGeneral::String sDesc;
+			String sName = sEnum;
+			String sDesc;
 			_Type nValue = DefaultValue<_Type>::Default();
 			ENUM::GetEnumValue(-1, nValue, sName, sDesc);
 			return sDesc;

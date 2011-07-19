@@ -24,17 +24,17 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <string.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Tools/ChecksumMD5.h>
-#include <PLGeneral/Tools/ChecksumCRC32.h>
-#include <PLGeneral/Tools/ChecksumSHA1.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Tools/ChecksumMD5.h>
+#include <PLCore/Tools/ChecksumCRC32.h>
+#include <PLCore/Tools/ChecksumSHA1.h>
 #include "PLTestBase/General/ChecksumTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

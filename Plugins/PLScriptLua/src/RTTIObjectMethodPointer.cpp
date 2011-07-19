@@ -34,7 +34,6 @@ extern "C" {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScriptLua {
 

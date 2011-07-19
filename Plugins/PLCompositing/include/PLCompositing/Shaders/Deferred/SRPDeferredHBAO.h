@@ -84,8 +84,8 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredHBAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering 'Horizon Based Ambient Occlusion' (HBAO), a 'Screen-Space Ambient Occlusion' (SSAO) technique")
 		// Attributes
-		pl_attribute(NumberOfSteps,			PLGeneral::uint32,		8,								ReadWrite,	DirectValue,	"The maximum number samples per direction",																																														"Min='1'")
-		pl_attribute(NumberOfDirections,	PLGeneral::uint32,		8,								ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",												"Min='1'")
+		pl_attribute(NumberOfSteps,			PLCore::uint32,			8,								ReadWrite,	DirectValue,	"The maximum number samples per direction",																																														"Min='1'")
+		pl_attribute(NumberOfDirections,	PLCore::uint32,			8,								ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",												"Min='1'")
 		pl_attribute(AORadius,				float,					0.25f,							ReadWrite,	DirectValue,	"AO radius in scene metrics. The radius is the distance outside which occluders are ignored.",																																	"Min='0.0'")
 		pl_attribute(AngleBias,				float,					30.0f,							ReadWrite,	DirectValue,	"For low-tessellated geometry, occlusion variations tend to appear at creases and ridges, which betray the underlying tessellation. To remove these artifacts, we use an angle bias parameter which restricts the hemisphere.",	"Min='0.0'")
 		pl_attribute(Attenuation,			float,					1.0f,							ReadWrite,	DirectValue,	"This scale factor W0 is applied to the per-sample attenuation function. The occlusion contribution of a given sample is attenuated by W0 * W(r/ R) where W(x) = 1 – x2.",														"Min='0.0'")
@@ -101,8 +101,8 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API PLGeneral::uint32 GetNumberOfDirections() const;
-		PLCOM_API void SetNumberOfDirections(PLGeneral::uint32 nValue);
+		PLCOM_API PLCore::uint32 GetNumberOfDirections() const;
+		PLCOM_API void SetNumberOfDirections(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -165,7 +165,7 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32					 m_nNumberOfDirections;		/**< The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion. */
+		PLCore::uint32						 m_nNumberOfDirections;		/**< The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion. */
 		PLRenderer::TextureBuffer2D			*m_pRandomNormalsTexture;	/**< Texture with random normal vectors, can be a null pointer */
 		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
@@ -175,7 +175,7 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 	//[ Protected virtual SRPDeferredSSAO functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void DrawAO(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
+		virtual void DrawAO(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
 
 
 };

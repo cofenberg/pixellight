@@ -58,7 +58,7 @@ class SNMPostProcessMonochrome : public PLCompositing::SNMPostProcess {
 		// Attributes
 		pl_attribute(LuminanceConvert,	PLGraphics::Color3,	PLGraphics::Color3(0.2125f, 0.7154f, 0.0721f),	ReadWrite,	DirectValue,	"Luminance convert",					"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,			PLGeneral::String,	"Data/PostProcesses/Monochrome.pp",				ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,			PLCore::String,		"Data/PostProcesses/Monochrome.pp",				ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

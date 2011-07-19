@@ -82,9 +82,9 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nSkipRate;		/**< Skip rate */
-		PLGeneral::uint32 m_nMinFragments;	/**< Minimum number of visible fragments */
-		PLGeneral::uint32 m_nPixelCount;	/**< Last pixel count */
+		PLCore::uint32 m_nSkipRate;		/**< Skip rate */
+		PLCore::uint32 m_nMinFragments;	/**< Minimum number of visible fragments */
+		PLCore::uint32 m_nPixelCount;	/**< Last pixel count */
 
 
 	//[-------------------------------------------------------]
@@ -93,12 +93,12 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	public:
 		virtual bool BeginOcclusionQuery();
 		virtual void EndOcclusionQuery();
-		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = nullptr);
-		virtual PLGeneral::uint32 GetLastQuerysPixelCount() const;
-		virtual PLGeneral::uint32 GetSkipRate() const;
-		virtual void SetSkipRate(PLGeneral::uint32 nRate = 0);
-		virtual PLGeneral::uint32 GetMinFragments() const;
-		virtual void SetMinFragments(PLGeneral::uint32 nMinFragments = 0);
+		virtual bool PullOcclusionQuery(PLCore::uint32 *pnNumOfFragments = nullptr);
+		virtual PLCore::uint32 GetLastQuerysPixelCount() const;
+		virtual PLCore::uint32 GetSkipRate() const;
+		virtual void SetSkipRate(PLCore::uint32 nRate = 0);
+		virtual PLCore::uint32 GetMinFragments() const;
+		virtual void SetMinFragments(PLCore::uint32 nMinFragments = 0);
 
 
 };

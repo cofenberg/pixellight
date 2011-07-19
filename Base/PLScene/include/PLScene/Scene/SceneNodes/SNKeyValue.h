@@ -55,8 +55,8 @@ class SNKeyValue : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNKeyValue, "PLScene", PLScene::SceneNode, "Key/value data scene node")
 		// Attributes
-		pl_attribute(Key,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Key",		"")
-		pl_attribute(Value,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Value",	"")
+		pl_attribute(Key,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Key",		"")
+		pl_attribute(Value,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Value",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

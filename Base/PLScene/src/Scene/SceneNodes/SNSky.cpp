@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Loader.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/EulerAngles.h>
@@ -45,7 +45,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
@@ -463,7 +462,7 @@ void SNSky::OnActivate(bool bActivate)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 SkyLayer *SNSky::CreateElement(const String &sName)
 {

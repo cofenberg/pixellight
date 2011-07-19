@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLGui/Gui/Base/MessageFilterRule.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLGui {
@@ -108,7 +108,7 @@ class MessageFilter {
 		*  @remarks
 		*    Use this constructor to filter against a widget name
 		*/
-		PLGUI_API void AddRule(EMessageFilter nFilterType, const PLGeneral::String &sWidget);
+		PLGUI_API void AddRule(EMessageFilter nFilterType, const PLCore::String &sWidget);
 
 
 	//[-------------------------------------------------------]
@@ -143,7 +143,7 @@ class MessageFilter {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::Array<MessageFilterRule> m_lstRules;	/**< Filter rule list */
+		PLCore::Array<MessageFilterRule> m_lstRules;	/**< Filter rule list */
 
 
 };

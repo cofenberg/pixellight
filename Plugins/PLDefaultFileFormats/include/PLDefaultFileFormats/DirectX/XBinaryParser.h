@@ -28,13 +28,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 
@@ -161,7 +161,7 @@ class XToken {
 		*  @param[in] cParentToken
 		*    Parent token
 		*/
-		void ReadTokens(PLGeneral::File &cFile, XToken &cParentToken);
+		void ReadTokens(PLCore::File &cFile, XToken &cParentToken);
 
 
 	//[-------------------------------------------------------]
@@ -196,7 +196,7 @@ class XTokenRoot : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenRoot(PLGeneral::File &cFile);
+		XTokenRoot(PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class XTokenName : public XToken {
 		*  @return
 		*    The length of the name, in bytes
 		*/
-		PLGeneral::uint32 GetLength() const;
+		PLCore::uint32 GetLength() const;
 
 		/**
 		*  @brief
@@ -261,7 +261,7 @@ class XTokenName : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenName(PLGeneral::File &cFile);
+		XTokenName(PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -274,8 +274,8 @@ class XTokenName : public XToken {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32  m_nLength;	/**< Length of name field, in bytes */
-		char			  *m_pszName;	/**< Array count ASCII name, can be a null pointer */
+		PLCore::uint32  m_nLength;	/**< Length of name field, in bytes */
+		char		   *m_pszName;	/**< Array count ASCII name, can be a null pointer */
 
 
 };
@@ -304,7 +304,7 @@ class XTokenString : public XToken {
 		*  @return
 		*    The length of the string, in bytes (excluding the terminating zero)
 		*/
-		PLGeneral::uint32 GetLength() const;
+		PLCore::uint32 GetLength() const;
 
 		/**
 		*  @brief
@@ -333,7 +333,7 @@ class XTokenString : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenString(PLGeneral::File &cFile);
+		XTokenString(PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -346,9 +346,9 @@ class XTokenString : public XToken {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32	m_nLength;		/**< DWORD 4 length of string field in bytes (excluding the terminating zero) */
-		char			   *m_pszString;	/**< BYTE array count ASCII string, can be a null pointer */
-		PLGeneral::uint16	m_nTerminator;	/**< DWORD 4 TOKEN_SEMICOLON or TOKEN_COMMA */
+		PLCore::uint32	m_nLength;		/**< DWORD 4 length of string field in bytes (excluding the terminating zero) */
+		char		   *m_pszString;	/**< BYTE array count ASCII string, can be a null pointer */
+		PLCore::uint16	m_nTerminator;	/**< DWORD 4 TOKEN_SEMICOLON or TOKEN_COMMA */
 
 
 };
@@ -370,7 +370,7 @@ class XTokenInt : public XToken {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint32 m_value;	/**< DWORD 4 single integer */
+		PLCore::uint32 m_value;	/**< DWORD 4 single integer */
 
 
 	//[-------------------------------------------------------]
@@ -384,7 +384,7 @@ class XTokenInt : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenInt(PLGeneral::File &cFile);
+		XTokenInt(PLCore::File &cFile);
 
 
 };
@@ -407,10 +407,10 @@ class XTokenGUID : public XToken {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint32 m_Data1;		/**< DWORD 4 GUID data field 1 */
-		PLGeneral::uint16 m_Data2;		/**< WORD 2 GUID data field 2 */
-		PLGeneral::uint16 m_Data3;		/**< WORD 2 GUID data field 3 */
-		PLGeneral::uint8  m_Data4[8];	/**< BYTE array 8 GUID data field 4 */
+		PLCore::uint32 m_Data1;		/**< DWORD 4 GUID data field 1 */
+		PLCore::uint16 m_Data2;		/**< WORD 2 GUID data field 2 */
+		PLCore::uint16 m_Data3;		/**< WORD 2 GUID data field 3 */
+		PLCore::uint8  m_Data4[8];	/**< BYTE array 8 GUID data field 4 */
 
 
 	//[-------------------------------------------------------]
@@ -424,7 +424,7 @@ class XTokenGUID : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenGUID(PLGeneral::File &cFile);
+		XTokenGUID(PLCore::File &cFile);
 
 
 };
@@ -446,8 +446,8 @@ class XTokenIntList : public XToken {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint32  m_nLength;	/**< DWORD 4 number of integers in list field */
-		PLGeneral::uint32 *m_list;		/**< DWORD 4 x count integer list, can be a null pointer */
+		PLCore::uint32  m_nLength;	/**< DWORD 4 number of integers in list field */
+		PLCore::uint32 *m_list;		/**< DWORD 4 x count integer list, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -461,7 +461,7 @@ class XTokenIntList : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenIntList(PLGeneral::File &cFile);
+		XTokenIntList(PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -489,9 +489,9 @@ class XTokenFloatList : public XToken {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint32  m_nLength;	/**< DWORD 4 number of floats or doubles in list field */
-		float			  *m_list;		/**< float/double array 4 or 8 x count float or double list
-											 determined from the header accuracy, can be a null pointer */
+		PLCore::uint32  m_nLength;	/**< DWORD 4 number of floats or doubles in list field */
+		float		   *m_list;		/**< float/double array 4 or 8 x count float or double list
+										 determined from the header accuracy, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -505,7 +505,7 @@ class XTokenFloatList : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenFloatList(PLGeneral::File &cFile);
+		XTokenFloatList(PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -548,7 +548,7 @@ class XTokenTemplate : public XToken {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XTokenTemplate(PLGeneral::File &cFile);
+		XTokenTemplate(PLCore::File &cFile);
 
 		/**
 		*  @brief

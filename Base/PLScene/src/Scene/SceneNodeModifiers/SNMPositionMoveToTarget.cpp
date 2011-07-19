@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Container/Stack.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Container/Stack.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMPositionMoveToTarget.h"
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLScene {
 

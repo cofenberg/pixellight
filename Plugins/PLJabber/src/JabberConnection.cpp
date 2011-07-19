@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include <PLGeneral/Xml/XmlElement.h>
-#include <PLGeneral/Xml/XmlText.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
+#include <PLCore/Xml/XmlElement.h>
+#include <PLCore/Xml/XmlText.h>
 #include "PLJabber/JabberConnection.h"
 
 
@@ -40,7 +40,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLJabber {
 
 
@@ -142,7 +142,7 @@ void JabberConnection::Message(const String &sTo, const String &sSubject, const 
 *  @brief
 *    Constructor
 */
-JabberConnection::JabberConnection(JabberClient &cClient) : Connection(reinterpret_cast<PLGeneral::Host&>(cClient)),
+JabberConnection::JabberConnection(JabberClient &cClient) : Connection(reinterpret_cast<Host&>(cClient)),
 	m_cInput(*this),
 	m_cOutput(*this)
 {
@@ -296,7 +296,7 @@ void JabberConnection::SendPresence(const String &sFrom, const String &sTo, cons
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGeneral::Connection functions     ]
+//[ Protected virtual PLCore::Connection functions        ]
 //[-------------------------------------------------------]
 void JabberConnection::OnConnect()
 {

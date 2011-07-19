@@ -82,14 +82,14 @@ class SensorRaycast : public PLPhysics::SensorRaycast {
 		*  @param[in] nFlags
 		*    Flags (see EFlags)
 		*/
-		SensorRaycast(PLPhysics::World &cWorld, const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0);
+		SensorRaycast(PLPhysics::World &cWorld, const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLPhysics::Sensor functions            ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNULL_API virtual PLGeneral::uint32 Check();
+		PLPHYSICSNULL_API virtual PLCore::uint32 Check();
 
 
 };

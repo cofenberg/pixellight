@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLInput/Input/Controls/Button.h"
 #include "PLInput/Input/Controls/Axis.h"
 #include "PLInput/Input/Devices/Keyboard.h"
@@ -137,7 +137,7 @@ enum EKey {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

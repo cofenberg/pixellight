@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h"
 
 
@@ -76,7 +76,7 @@ class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_flagValues;
+		PLCore::uint32 m_flagValues;
 
 
 	//[-------------------------------------------------------]
@@ -90,7 +90,7 @@ class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 			//[ Public functions                                      ]
 			//[-------------------------------------------------------]
 			public:
-				FlagValueTreeItem(QObject *parent, QString flagName, PLGeneral::uint32 flagValue, PLDynVarFlagsTreeItem *parentItem);
+				FlagValueTreeItem(QObject *parent, QString flagName, PLCore::uint32 flagValue, PLDynVarFlagsTreeItem *parentItem);
 				virtual QVariant data(const int column, const int role);
 				bool setData(const int column, const QVariant &value, const int role);
 
@@ -99,7 +99,7 @@ class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 			//[ Private data                                          ]
 			//[-------------------------------------------------------]
 			private:
-				PLGeneral::uint32		 m_flagValue;
+				PLCore::uint32			 m_flagValue;
 				QString					 m_flagName;
 				PLDynVarFlagsTreeItem	*m_parentItem;
 

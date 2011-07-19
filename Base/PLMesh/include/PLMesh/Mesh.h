@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include <PLMath/Vector3.h>
 #include "PLMesh/Weight.h"
 #include "PLMesh/AnchorPoint.h"
@@ -68,9 +68,9 @@ namespace PLMesh {
 */
 class MeshTriangle {
 	public:
-	PLGeneral::uint32 nGeometry;		/**< Index of the geometry this triangle is in */
-	PLGeneral::uint32 nVertex[3];		/**< The three vertex indices */
-	int				  nNeighbour[3];	/**< Neighbour triangles */
+	PLCore::uint32 nGeometry;		/**< Index of the geometry this triangle is in */
+	PLCore::uint32 nVertex[3];		/**< The three vertex indices */
+	int			  nNeighbour[3];	/**< Neighbour triangles */
 
 	PLMESH_API MeshTriangle &operator =(const MeshTriangle &cSource);
 	PLMESH_API bool operator ==(const MeshTriangle &cMeshTriangle) const;
@@ -82,8 +82,8 @@ class MeshTriangle {
 */
 class MeshEdge {
 	public:
-	PLGeneral::uint32 nVertex[2];	/**< The two edge vertex indices */
-	PLGeneral::uint32 nTriangle[2];	/**< The two edge triangles */
+	PLCore::uint32 nVertex[2];		/**< The two edge vertex indices */
+	PLCore::uint32 nTriangle[2];	/**< The two edge triangles */
 
 	PLMESH_API MeshEdge &operator =(const MeshEdge &cSource);
 	PLMESH_API bool operator ==(const MeshEdge &cMeshEdge) const;
@@ -165,7 +165,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Maximum number of vertices
 		*/
-		PLMESH_API PLGeneral::uint32 GetMaxNumOfVertices() const;
+		PLMESH_API PLCore::uint32 GetMaxNumOfVertices() const;
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Maximum number of geometries
 		*/
-		PLMESH_API PLGeneral::uint32 GetMaxNumOfGeometries() const;
+		PLMESH_API PLCore::uint32 GetMaxNumOfGeometries() const;
 
 		/**
 		*  @brief
@@ -183,7 +183,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Maximum number of triangles
 		*/
-		PLMESH_API PLGeneral::uint32 GetMaxNumOfTriangles() const;
+		PLMESH_API PLCore::uint32 GetMaxNumOfTriangles() const;
 
 		/**
 		*  @brief
@@ -207,8 +207,8 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*      usage of the mesh. (for instance you dynamically change it)
 		*      Normally you should use a mesh handler to handle the mesh
 		*/
-		PLMESH_API void Draw(const PLMath::Matrix4x4 &mWorldViewProjection, bool bBlend = false, PLGeneral::uint32 nFlags = 0, PLGeneral::uint32 nLODLevel = 0,
-							 PLGeneral::uint32 nMorphTarget = 0, bool bUseMaterials = true) const;
+		PLMESH_API void Draw(const PLMath::Matrix4x4 &mWorldViewProjection, bool bBlend = false, PLCore::uint32 nFlags = 0, PLCore::uint32 nLODLevel = 0,
+							 PLCore::uint32 nMorphTarget = 0, bool bUseMaterials = true) const;
 
 		/**
 		*  @brief
@@ -255,7 +255,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Number of morph targets the mesh contains
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfMorphTargets() const;
+		PLMESH_API PLCore::uint32 GetNumOfMorphTargets() const;
 
 		/**
 		*  @brief
@@ -276,7 +276,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Pointer to the morph target, or a null pointer
 		*/
-		PLMESH_API MeshMorphTarget *GetMorphTarget(PLGeneral::uint32 nMorphTarget = 0) const;
+		PLMESH_API MeshMorphTarget *GetMorphTarget(PLCore::uint32 nMorphTarget = 0) const;
 
 		/**
 		*  @brief
@@ -288,7 +288,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Pointer to the morph target, or a null pointer
 		*/
-		PLMESH_API MeshMorphTarget *GetMorphTarget(const PLGeneral::String &sName) const;
+		PLMESH_API MeshMorphTarget *GetMorphTarget(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -300,7 +300,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    The index of the given morph target, < 0 if the morph target wasn't found
 		*/
-		PLMESH_API int GetMorphTargetIndex(const PLGeneral::String &sName) const;
+		PLMESH_API int GetMorphTargetIndex(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -325,7 +325,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool AddMorphTargetAnimation(const PLGeneral::String &sFilename);
+		PLMESH_API bool AddMorphTargetAnimation(const PLCore::String &sFilename);
 
 		//[-------------------------------------------------------]
 		//[ LOD functions                                         ]
@@ -343,7 +343,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Number of LOD levels the mesh contains
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfLODLevels() const;
+		PLMESH_API PLCore::uint32 GetNumOfLODLevels() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Pointer to the LOD level, or a null pointer
 		*/
-		PLMESH_API MeshLODLevel *GetLODLevel(PLGeneral::uint32 nLODLevel = 0) const;
+		PLMESH_API MeshLODLevel *GetLODLevel(PLCore::uint32 nLODLevel = 0) const;
 
 		//[-------------------------------------------------------]
 		//[ Material functions                                    ]
@@ -382,7 +382,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Number of materials
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfMaterials() const;
+		PLMESH_API PLCore::uint32 GetNumOfMaterials() const;
 
 		/**
 		*  @brief
@@ -412,7 +412,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    - The material index of the geometries will automatically corrected
 		*      if the material index has changed
 		*/
-		PLMESH_API bool DeleteMaterial(PLGeneral::uint32 nMaterial);
+		PLMESH_API bool DeleteMaterial(PLCore::uint32 nMaterial);
 
 		/**
 		*  @brief
@@ -428,7 +428,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    - Use this function for instance to find unused materials in order to
 		*      delete them
 		*/
-		PLMESH_API PLGeneral::uint32 GetMaterialUsage(PLGeneral::uint32 nMaterial) const;
+		PLMESH_API PLCore::uint32 GetMaterialUsage(PLCore::uint32 nMaterial) const;
 
 		/**
 		*  @brief
@@ -440,7 +440,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    Pointer to the material, or a null pointer
 		*/
-		PLMESH_API PLRenderer::Material *GetMaterial(PLGeneral::uint32 nMaterial = 0) const;
+		PLMESH_API PLRenderer::Material *GetMaterial(PLCore::uint32 nMaterial = 0) const;
 
 		/**
 		*  @brief
@@ -454,7 +454,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool SetMaterial(PLGeneral::uint32 nMaterial, PLRenderer::Material *pMaterial);
+		PLMESH_API bool SetMaterial(PLCore::uint32 nMaterial, PLRenderer::Material *pMaterial);
 
 		//[-------------------------------------------------------]
 		//[ Skeleton functions                                    ]
@@ -484,7 +484,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @see
 		*    - ClearSkeletonHandlers()
 		*/
-		PLMESH_API PLGeneral::Array<SkeletonHandler*> &GetSkeletonHandlers();
+		PLMESH_API PLCore::Array<SkeletonHandler*> &GetSkeletonHandlers();
 
 		/**
 		*  @brief
@@ -496,7 +496,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @note
 		*    - The weights are optional, but required for mesh skinning
 		*/
-		PLMESH_API PLGeneral::Array<Weight> &GetWeights();
+		PLMESH_API PLCore::Array<Weight> &GetWeights();
 
 		/**
 		*  @brief
@@ -511,7 +511,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*     (see MeshMorphTarget::GetVertexBuffer())
 		*    - The vertex weights are optional, but required for mesh skinning
 		*/
-		PLMESH_API PLGeneral::Array<VertexWeights> &GetVertexWeights();
+		PLMESH_API PLCore::Array<VertexWeights> &GetVertexWeights();
 
 		//[-------------------------------------------------------]
 		//[ Tool functions                                        ]
@@ -547,7 +547,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @note
 		*    - The first LOD level and morph target must exist already
 		*/
-		PLMESH_API bool BuildLOD(PLGeneral::uint32 nNumLODLevels);
+		PLMESH_API bool BuildLOD(PLCore::uint32 nNumLODLevels);
 
 		/**
 		*  @brief
@@ -666,8 +666,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*  @param[in] bStatic
 		*    Static mesh? (better performance!)
 		*/
-		Mesh(PLRenderer::Renderer *pRenderer, PLCore::ResourceManager<Mesh> &cManager,
-			 const PLGeneral::String &sName, bool bStatic = true);
+		Mesh(PLRenderer::Renderer *pRenderer, PLCore::ResourceManager<Mesh> &cManager, const PLCore::String &sName, bool bStatic = true);
 
 
 	//[-------------------------------------------------------]
@@ -684,20 +683,20 @@ class Mesh : public PLCore::Resource<Mesh> {
 		AnchorPointManager m_cAnchorPointManager;
 
 		/** Morph targets */
-		PLGeneral::Array<MeshMorphTarget*>						m_lstMorphTargets;
-		MorphTargetAniManager									m_cMorphTargetAnimation;
-		PLGeneral::HashMap<PLGeneral::String, MeshMorphTarget*> m_mapMorphTargets;
+		PLCore::Array<MeshMorphTarget*>					  m_lstMorphTargets;
+		MorphTargetAniManager							  m_cMorphTargetAnimation;
+		PLCore::HashMap<PLCore::String, MeshMorphTarget*> m_mapMorphTargets;
 
 		/** LOD data */
-		PLGeneral::Array<MeshLODLevel*> m_lstLODLevels;
+		PLCore::Array<MeshLODLevel*> m_lstLODLevels;
 
 		/** Materials */
-		PLGeneral::Array<PLRenderer::MaterialHandler*> m_lstMaterials;
+		PLCore::Array<PLRenderer::MaterialHandler*> m_lstMaterials;
 
 		/** Skeleton */
-		PLGeneral::Array<SkeletonHandler*> m_lstSkeletonHandler;	/**< List of skeleton handlers */
-		PLGeneral::Array<Weight>		   m_lstWeights;			/**< Optional weights */
-		PLGeneral::Array<VertexWeights>	   m_lstVertexWeights;		/**< Optional vertex weights per vertex */
+		PLCore::Array<SkeletonHandler*> m_lstSkeletonHandler;	/**< List of skeleton handlers */
+		PLCore::Array<Weight>		    m_lstWeights;			/**< Optional weights */
+		PLCore::Array<VertexWeights>	m_lstVertexWeights;		/**< Optional vertex weights per vertex */
 
 
 	//[-------------------------------------------------------]
@@ -705,7 +704,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API virtual bool Unload();
-		PLMESH_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLMESH_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

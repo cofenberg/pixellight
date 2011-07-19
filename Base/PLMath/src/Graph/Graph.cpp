@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLMath {
 
@@ -153,7 +152,7 @@ GraphPath *Graph::FindShortestPath(uint32 nStartNode, uint32 nEndNode)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 GraphNode *Graph::CreateElement(const String &sName)
 {

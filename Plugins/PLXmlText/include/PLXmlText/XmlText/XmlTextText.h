@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLXmlText/PLXmlText.h"
 #include "PLXmlText/XmlText/XmlTextElement.h"
@@ -76,7 +76,7 @@ class XmlTextText : public XmlTextElement {
 	//[ Protected virtual XmlTextElement functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
 
 
@@ -88,7 +88,7 @@ class XmlTextText : public XmlTextElement {
 		bool					m_bParagraph;	/**< If 'true', this element defines it's own paragraph */
 		PLGraphics::Color4		m_cTextColor;	/**< Text color */
 		PLGraphics::Color4		m_cBgColor;		/**< Background color */
-		PLGeneral::String		m_sFont;		/**< Font name */
+		PLCore::String			m_sFont;		/**< Font name */
 		int						m_nFontSize;	/**< Font size */
 		XmlTextRenderer::HAlign	m_nHAlign;		/**< Horizontal alignment */
 		XmlTextRenderer::VAlign	m_nVAlign;		/**< Vertical alignment */

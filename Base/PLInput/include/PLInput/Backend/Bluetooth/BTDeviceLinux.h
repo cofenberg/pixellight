@@ -83,11 +83,11 @@ class BTDeviceLinux : public BTDevice {
 	//[ Public virtual ConnectionDevice functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual bool Open(PLGeneral::uint16 nOutputPort = 0, PLGeneral::uint16 nInputPort = 0);
+		PLINPUT_API virtual bool Open(PLCore::uint16 nOutputPort = 0, PLCore::uint16 nInputPort = 0);
 		PLINPUT_API virtual bool Close();
 		PLINPUT_API virtual bool IsOpen() const;
-		PLINPUT_API virtual bool Read(PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
-		PLINPUT_API virtual bool Write(const PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
+		PLINPUT_API virtual bool Read(PLCore::uint8 *pBuffer, PLCore::uint32 nSize);
+		PLINPUT_API virtual bool Write(const PLCore::uint8 *pBuffer, PLCore::uint32 nSize);
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@ extern "C" {
 	#include <Lua/lualib.h>
 	#include <Lua/lauxlib.h>
 }
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectPointer.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
@@ -38,7 +38,6 @@ extern "C" {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScriptLua {
 

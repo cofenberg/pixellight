@@ -25,9 +25,9 @@
 //[-------------------------------------------------------]
 #include <GLES2/gl2.h>
 #ifdef WIN32
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES/Renderer.h"
 #include "PLRendererOpenGLES/SurfaceWindow.h"
 
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererOpenGLES {
 

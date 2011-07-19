@@ -70,7 +70,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDEREROPENGL_RTTI_EXPORT, Renderer, "PLRendererOpenGL", PLRenderer::RendererBackend, "OpenGL 1.1 + extensions renderer backend")
 		// Constructors
-		pl_constructor_5(DefaultConstructor,	pl_enum_type(EMode),	PLGeneral::uint32,	PLGeneral::uint32,	PLGeneral::uint32,	PLGeneral::String,	"Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter",	"")
+		pl_constructor_5(DefaultConstructor,	pl_enum_type(EMode),	PLCore::uint32,	PLCore::uint32,	PLCore::uint32,	PLCore::String,	"Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter",	"")
 	pl_class_end
 
 
@@ -94,7 +94,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*    The name of the default shader language of the renderer (for example "GLSL" or "Cg"), if the string
 		*    is empty, the default is chosen by the renderer implementation, this information is just a hint
 		*/
-		PLRENDEREROPENGL_API Renderer(EMode nMode, PLGeneral::uint32 nZBufferBits, PLGeneral::uint32 nStencilBits, PLGeneral::uint32 nMultisampleAntialiasingSamples, PLGeneral::String sDefaultShaderLanguage);
+		PLRENDEREROPENGL_API Renderer(EMode nMode, PLCore::uint32 nZBufferBits, PLCore::uint32 nStencilBits, PLCore::uint32 nMultisampleAntialiasingSamples, PLCore::String sDefaultShaderLanguage);
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*  @return
 		*    The used multisample antialiasing samples per pixel
 		*/
-		PLGeneral::uint32 GetMultisampleAntialiasingSamples() const;
+		PLCore::uint32 GetMultisampleAntialiasingSamples() const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*  @return
 		*    The converted OpenGL format (like GL_LUMINANCE, GL_RGB etc.)
 		*/
-		PLGeneral::uint32 GetOpenGLPixelFormat(PLRenderer::TextureBuffer::EPixelFormat nFormat) const;
+		PLCore::uint32 GetOpenGLPixelFormat(PLRenderer::TextureBuffer::EPixelFormat nFormat) const;
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*  @return
 		*    The converted data format (like GL_UNSIGNED_UINT, GL_UNSIGNED_SHORT etc.)
 		*/
-		PLGeneral::uint32 GetOpenGLDataFormat(PLRenderer::TextureBuffer::EPixelFormat nFormat) const;
+		PLCore::uint32 GetOpenGLDataFormat(PLRenderer::TextureBuffer::EPixelFormat nFormat) const;
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*  @return
 		*    The chosen internal format
 		*/
-		PLRenderer::TextureBuffer::EPixelFormat ChooseFormats(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, PLGeneral::uint32 nFlags,
+		PLRenderer::TextureBuffer::EPixelFormat ChooseFormats(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, PLCore::uint32 nFlags,
 															  PLRenderer::TextureBuffer::EPixelFormat &nImageFormat, bool &bUsePreCompressedData) const;
 
 
@@ -210,7 +210,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		*  @return
 		*    OpenGL sampler filter mode
 		*/
-		GLuint GetCombinedMinMipFilter(PLGeneral::uint32 nStage);
+		GLuint GetCombinedMinMipFilter(PLCore::uint32 nStage);
 
 		/**
 		*  @brief
@@ -223,19 +223,19 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Context														*m_pContext;						/**< OpenGL render context, can be a null pointer (= renderer not initialized) */
-		FixedFunctions												*m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
-		FontManager													*m_pFontManager;					/**< OpenGL renderer font manager, always valid! */
-		bool														 m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
-		PLGeneral::uint32											 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
-		PLGeneral::String											 m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */
-		PLGeneral::List<const PLCore::Class*>						 m_lstShaderLanguages;				/**< List of available shader language classes */
-		PLGeneral::HashMap<PLGeneral::String, const PLCore::Class*>  m_mapShaderLanguages;				/**< Map of available shader language classes "<Name> => <Class>" */
-		PLGeneral::Array<ShaderLanguage*>							 m_lstShaderLanguageInstances;		/**< List of available shader language instances */
-		PLGeneral::HashMap<PLGeneral::String, ShaderLanguage*>		 m_mapShaderLanguageInstances;		/**< Map of available shader language instances "<Name> => <Instance>" */
+		Context												  *m_pContext;							/**< OpenGL render context, can be a null pointer (= renderer not initialized) */
+		FixedFunctions										  *m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
+		FontManager											  *m_pFontManager;						/**< OpenGL renderer font manager, always valid! */
+		bool												   m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
+		PLCore::uint32										   m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
+		PLCore::String										   m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */
+		PLCore::List<const PLCore::Class*>					   m_lstShaderLanguages;				/**< List of available shader language classes */
+		PLCore::HashMap<PLCore::String, const PLCore::Class*>  m_mapShaderLanguages;				/**< Map of available shader language classes "<Name> => <Class>" */
+		PLCore::Array<ShaderLanguage*>						   m_lstShaderLanguageInstances;		/**< List of available shader language instances */
+		PLCore::HashMap<PLCore::String, ShaderLanguage*>	   m_mapShaderLanguageInstances;		/**< Map of available shader language instances "<Name> => <Instance>" */
 
 		/** OpenGL texture type at the certain texture stages */
-		PLGeneral::uint32 *m_nTextureBufferTypes;
+		PLCore::uint32 *m_nTextureBufferTypes;
 
 		PLRenderer::TextureBuffer **m_ppPrevTextureBuffer;	/**< The previous non a null pointer texture buffer */
 
@@ -244,10 +244,10 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const;
-		virtual PLGeneral::String GetVendor() const;
-		virtual PLGeneral::String GetDefaultShaderLanguage() const;
-		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "");
+		virtual PLCore::String GetAPI(PLCore::uint32 *pnVersion = nullptr) const;
+		virtual PLCore::String GetVendor() const;
+		virtual PLCore::String GetDefaultShaderLanguage() const;
+		virtual PLRenderer::ShaderLanguage *GetShaderLanguage(const PLCore::String &sShaderLanguage = "");
 		virtual PLRenderer::FixedFunctions *GetFixedFunctions() const;
 		virtual PLRenderer::FontManager &GetFontManager() const;
 		virtual void BackupDeviceObjects();
@@ -256,15 +256,15 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		//[-------------------------------------------------------]
 		//[ Create surface/resource                               ]
 		//[-------------------------------------------------------]
-		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLGeneral::handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
-		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBuffer2D(const PLMath::Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil, PLGeneral::uint8 nMaxColorTargets = 1);
-		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBufferRectangle(const PLMath::Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil, PLGeneral::uint8 nMaxColorTargets = 1);
-		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBufferCube(PLGeneral::uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLGeneral::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil);
-		virtual PLRenderer::TextureBuffer1D *CreateTextureBuffer1D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
-		virtual PLRenderer::TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
-		virtual PLRenderer::TextureBuffer *CreateTextureBufferRectangle(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = 0);
-		virtual PLRenderer::TextureBuffer3D *CreateTextureBuffer3D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
-		virtual PLRenderer::TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLGeneral::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
+		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBuffer2D(const PLMath::Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLCore::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil, PLCore::uint8 nMaxColorTargets = 1);
+		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBufferRectangle(const PLMath::Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLCore::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil, PLCore::uint8 nMaxColorTargets = 1);
+		virtual PLRenderer::SurfaceTextureBuffer *CreateSurfaceTextureBufferCube(PLCore::uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, PLCore::uint32 nFlags = PLRenderer::SurfaceTextureBuffer::Depth | PLRenderer::SurfaceTextureBuffer::Stencil);
+		virtual PLRenderer::TextureBuffer1D *CreateTextureBuffer1D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLCore::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
+		virtual PLRenderer::TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLCore::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
+		virtual PLRenderer::TextureBuffer *CreateTextureBufferRectangle(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLCore::uint32 nFlags = 0);
+		virtual PLRenderer::TextureBuffer3D *CreateTextureBuffer3D(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLCore::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
+		virtual PLRenderer::TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat = PLRenderer::TextureBuffer::Unknown, PLCore::uint32 nFlags = PLRenderer::TextureBuffer::Mipmaps);
 		virtual PLRenderer::IndexBuffer *CreateIndexBuffer();
 		virtual PLRenderer::VertexBuffer *CreateVertexBuffer();
 		virtual PLRenderer::OcclusionQuery *CreateOcclusionQuery();
@@ -272,8 +272,8 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		//[-------------------------------------------------------]
 		//[ States                                                ]
 		//[-------------------------------------------------------]
-		virtual bool SetRenderState(PLRenderer::RenderState::Enum nState, PLGeneral::uint32 nValue);
-		virtual bool SetSamplerState(PLGeneral::uint32 nStage, PLRenderer::Sampler::Enum nState, PLGeneral::uint32 nValue);
+		virtual bool SetRenderState(PLRenderer::RenderState::Enum nState, PLCore::uint32 nValue);
+		virtual bool SetSamplerState(PLCore::uint32 nStage, PLRenderer::Sampler::Enum nState, PLCore::uint32 nValue);
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
@@ -286,14 +286,14 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		virtual bool SetDepthBounds(float fZMin = 0.0f, float fZMax = 1.0f);
 		virtual void GetColorMask(bool &bRed, bool &bGreen, bool &bBlue, bool &bAlpha) const;
 		virtual bool SetColorMask(bool bRed = true, bool bGreen = true, bool bBlue = true, bool bAlpha = true);
-		virtual bool Clear(PLGeneral::uint32 nFlags = PLRenderer::Clear::Color | PLRenderer::Clear::ZBuffer,
-						   const PLGraphics::Color4 &cColor = PLGraphics::Color4::Black, float fZ = 1.0f, PLGeneral::uint32 nStencil = 0);
+		virtual bool Clear(PLCore::uint32 nFlags = PLRenderer::Clear::Color | PLRenderer::Clear::ZBuffer,
+						   const PLGraphics::Color4 &cColor = PLGraphics::Color4::Black, float fZ = 1.0f, PLCore::uint32 nStencil = 0);
 
 		//[-------------------------------------------------------]
 		//[ Get/set current resources                             ]
 		//[-------------------------------------------------------]
-		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLGeneral::uint8 nFace = 0);
-		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0);
+		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLCore::uint8 nFace = 0);
+		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLCore::uint8 nColorIndex = 0, PLCore::uint8 nFace = 0);
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage);
 		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr);
 
@@ -306,8 +306,8 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 		//[-------------------------------------------------------]
 		//[ Draw                                                  ]
 		//[-------------------------------------------------------]
-		virtual bool DrawPrimitives(PLRenderer::Primitive::Enum nType, PLGeneral::uint32 nStartIndex, PLGeneral::uint32 nNumVertices);
-		virtual bool DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, PLGeneral::uint32 nMinIndex, PLGeneral::uint32 nMaxIndex, PLGeneral::uint32 nStartIndex, PLGeneral::uint32 nNumVertices);
+		virtual bool DrawPrimitives(PLRenderer::Primitive::Enum nType, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices);
+		virtual bool DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, PLCore::uint32 nMinIndex, PLCore::uint32 nMaxIndex, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices);
 
 
 };

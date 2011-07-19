@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Map.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/Map.h>
+#include <PLCore/Container/List.h>
 #include "PLTestBase/General/MapTestCase.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

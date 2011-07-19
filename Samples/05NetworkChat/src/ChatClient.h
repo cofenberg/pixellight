@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Client.h>
+#include <PLCore/Network/Client.h>
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace NetworkChat {
 *  @brief
 *    Chat client network class
 */
-class ChatClient : public PLGeneral::Client {
+class ChatClient : public PLCore::Client {
 
 
 	//[-------------------------------------------------------]
@@ -66,7 +66,7 @@ class ChatClient : public PLGeneral::Client {
 		*  @param[in] nMaxConnections
 		*    Maximum number of allowed connections
 		*/
-		ChatClient(PLGeneral::uint32 nPort, PLGeneral::uint32 nMaxConnections);
+		ChatClient(PLCore::uint32 nPort, PLCore::uint32 nMaxConnections);
 
 
 	//[-------------------------------------------------------]
@@ -96,10 +96,10 @@ class ChatClient : public PLGeneral::Client {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::Client functions           ]
+	//[ Private virtual PLCore::Client functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLGeneral::Connection *CreateOutgoingConnection();
+		virtual PLCore::Connection *CreateOutgoingConnection();
 
 
 };

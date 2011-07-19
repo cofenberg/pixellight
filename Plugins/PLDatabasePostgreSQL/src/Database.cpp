@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <PostgreSQL/libpq-fe.h>
 #include <PostgreSQL/pg_config.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLDatabasePostgreSQL/DatabaseQuery.h"
 #include "PLDatabasePostgreSQL/Database.h"
 
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLDatabasePostgreSQL {
 
 

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLCompositing/PLCompositing.h"
 
 
@@ -45,7 +45,7 @@ namespace PLCompositing {
 *  @brief
 *    Post process handler class
 */
-class PostProcessHandler : public PLGeneral::ElementHandler<PostProcess> {
+class PostProcessHandler : public PLCore::ElementHandler<PostProcess> {
 
 
 	//[-------------------------------------------------------]

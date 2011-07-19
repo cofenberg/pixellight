@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Bitset.h>
+#include <PLCore/Container/Bitset.h>
 #include <PLGui/Backend/GuiImpl.h>
 #include <PLGui/Gui/Base/GuiMessage.h>
 #include "PLScene/PLScene.h"
@@ -81,7 +81,7 @@ class GuiPL : public PLGui::GuiImpl {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, GuiPL, "PLScene", PLGui::GuiImpl, "PixelLight ingame GUI implementation")
 		// Attributes
-		pl_attribute(InputSemantic,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
+		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 		// Constructors
 		pl_constructor_1(DefaultConstructor,	PLGui::Gui*,	"Default constructor",	"")
 	pl_class_end
@@ -165,11 +165,11 @@ class GuiPL : public PLGui::GuiImpl {
 		virtual bool HasPendingMessages();
 		virtual void ProcessMessage();
 		virtual void PostMessage(const PLGui::GuiMessage &cMessage);
-		virtual void EnumerateScreens(PLGeneral::List<PLGui::Screen*> &lstScreens);
+		virtual void EnumerateScreens(PLCore::List<PLGui::Screen*> &lstScreens);
 		virtual PLMath::Vector2i GetScreenSize() const;
 		virtual bool HasTaskbar();
 		virtual void SetMouseVisible(bool bVisible);
-		virtual void ListFonts(PLGeneral::List<PLGui::FontInfo> &lstFonts) const;
+		virtual void ListFonts(PLCore::List<PLGui::FontInfo> &lstFonts) const;
 		virtual PLGui::WidgetImpl *CreateWidgetImpl(PLGui::Widget &cWidget) const;
 		virtual PLGui::GraphicsImpl *CreateGraphicsImpl(PLGui::Graphics &cGraphics) const;
 		virtual PLGui::ImageImpl *CreateImageImpl(PLGui::Image &cImage) const;
@@ -224,7 +224,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @return
 		*    The currently pressed key modifiers
 		*/
-		PLGeneral::uint32 GetKeyModifiers(PLInput::Keyboard &cKeyboard) const;
+		PLCore::uint32 GetKeyModifiers(PLInput::Keyboard &cKeyboard) const;
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class GuiPL : public PLGui::GuiImpl {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static const PLGeneral::uint32 NumOfMouseButtons = 3;	/**< Number of supported mouse buttons */
+		static const PLCore::uint32 NumOfMouseButtons = 3;	/**< Number of supported mouse buttons */
 
 
 	//[-------------------------------------------------------]
@@ -283,28 +283,28 @@ class GuiPL : public PLGui::GuiImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Gui							*m_pGui;									/**< Platform independent GUI, a null pointer on error */
-		PLMath::Vector2i					 m_vScreenSize;								/**< Screen size */
-		PLRenderer::Renderer				*m_pRenderer;								/**< Used renderer, a null pointer on error */
-		PLGeneral::Mutex					*m_pMessageQueueMutex;						/**< GUI message queue mutex, always valid! */
-		PLGeneral::List<PLGui::GuiMessage>   m_lstMessageQueue;							/**< GUI message queue */
+		PLGui::Gui						 *m_pGui;									/**< Platform independent GUI, a null pointer on error */
+		PLMath::Vector2i				  m_vScreenSize;							/**< Screen size */
+		PLRenderer::Renderer			 *m_pRenderer;								/**< Used renderer, a null pointer on error */
+		PLCore::Mutex					 *m_pMessageQueueMutex;						/**< GUI message queue mutex, always valid! */
+		PLCore::List<PLGui::GuiMessage>   m_lstMessageQueue;						/**< GUI message queue */
 
 		// Widgets
-		PLGui::Widget						*m_pMouseOver;								/**< Widget that the mouse has currently entered */
-		PLGeneral::Array<PLGui::Widget*>	 m_lstTopLevelWidgets;						/**< List of z position sorted top-level widgets, smaller number for widgets below other with higher numbers */
+		PLGui::Widget					 *m_pMouseOver;								/**< Widget that the mouse has currently entered */
+		PLCore::Array<PLGui::Widget*>	  m_lstTopLevelWidgets;						/**< List of z position sorted top-level widgets, smaller number for widgets below other with higher numbers */
 
 		// Input
-		PLInput::VirtualController			*m_pInputController;						/**< Virtual input controller, can be a null pointer */
+		PLInput::VirtualController		 *m_pInputController;						/**< Virtual input controller, can be a null pointer */
 
 		// Keyboard
-		PLGeneral::Bitset					 m_lstKeys;									/**< State of keys buttons */
-		PLGeneral::Bitset					 m_lstRepeatKeys;							/**< Repeat state of keys buttons */
-		PLGui::Timer						*m_pKeyTimer;								/**< Key autorepeat timer */
+		PLCore::Bitset					  m_lstKeys;								/**< State of keys buttons */
+		PLCore::Bitset					  m_lstRepeatKeys;							/**< Repeat state of keys buttons */
+		PLGui::Timer					 *m_pKeyTimer;								/**< Key autorepeat timer */
 
 		// Mouse
-		PLMath::Vector2i					 m_vSystemMousePos;							/**< System mouse position (not the position within the ingame GUI coordinate system) */
-		PLMath::Vector2i					 m_vMousePos;								/**< Ingame GUI mouse position */
-		bool								 m_bMouseButtonPressed[NumOfMouseButtons];	/**< Mouse button pressed */
+		PLMath::Vector2i				  m_vSystemMousePos;						/**< System mouse position (not the position within the ingame GUI coordinate system) */
+		PLMath::Vector2i				  m_vMousePos;								/**< Ingame GUI mouse position */
+		bool							  m_bMouseButtonPressed[NumOfMouseButtons];	/**< Mouse button pressed */
 
 
 };

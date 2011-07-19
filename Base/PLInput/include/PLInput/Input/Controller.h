@@ -77,8 +77,8 @@ class Controller : public PLCore::Object {
 	pl_class(PLINPUT_RTTI_EXPORT, Controller, "PLInput", PLCore::Object, "Input controller base class")
 		// Attributes
 		pl_attribute(Type,			pl_enum_type(EControllerType),	ControllerVirtual,	ReadOnly,	GetSet,	"Controller type",			"")
-		pl_attribute(Name,			PLGeneral::String,				"",					ReadOnly,	GetSet,	"Controller name",			"")
-		pl_attribute(Description,	PLGeneral::String,				"",					ReadOnly,	GetSet,	"Controller description",	"")
+		pl_attribute(Name,			PLCore::String,					"",					ReadOnly,	GetSet,	"Controller name",			"")
+		pl_attribute(Description,	PLCore::String,					"",					ReadOnly,	GetSet,	"Controller description",	"")
 		pl_attribute(Active,		bool,							true,				ReadWrite,	GetSet,	"State of controller",		"")
 		// Signals
 		pl_signal_1(OnActivate,	bool,		"Controller has been activated or deactivated",	"")
@@ -102,7 +102,7 @@ class Controller : public PLCore::Object {
 		*  @param[in] sDescription
 		*    Controller description
 		*/
-		PLINPUT_API Controller(EControllerType nType, const PLGeneral::String &sName, const PLGeneral::String &sDescription);
+		PLINPUT_API Controller(EControllerType nType, const PLCore::String &sName, const PLCore::String &sDescription);
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    Name
 		*/
-		PLINPUT_API PLGeneral::String GetName() const;
+		PLINPUT_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    Description
 		*/
-		PLINPUT_API PLGeneral::String GetDescription() const;
+		PLINPUT_API PLCore::String GetDescription() const;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    List of controls
 		*/
-		PLINPUT_API const PLGeneral::List<Control*> &GetControls() const;
+		PLINPUT_API const PLCore::List<Control*> &GetControls() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    List of buttons
 		*/
-		PLINPUT_API const PLGeneral::List<Button*> &GetButtons() const;
+		PLINPUT_API const PLCore::List<Button*> &GetButtons() const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    List of axes
 		*/
-		PLINPUT_API const PLGeneral::List<Axis*> &GetAxes() const;
+		PLINPUT_API const PLCore::List<Axis*> &GetAxes() const;
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class Controller : public PLCore::Object {
 		*  @return
 		*    Control, or a null pointer if no control with that name could be found
 		*/
-		PLINPUT_API Control *GetControl(const PLGeneral::String &sName) const;
+		PLINPUT_API Control *GetControl(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class Controller : public PLCore::Object {
 		*    To determine whether a connection is incoming or outgoing, you can check e.g.
 		*    GetOutputControl()->GetController() == this or something similar.
 		*/
-		PLINPUT_API const PLGeneral::List<Connection*> &GetConnections();
+		PLINPUT_API const PLCore::List<Connection*> &GetConnections();
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class Controller : public PLCore::Object {
 		*  @param[in] fScale
 		*    Scale factor
 		*/
-		PLINPUT_API void Connect(const PLGeneral::String &sControl, Control *pControl, float fScale = 1.0f);
+		PLINPUT_API void Connect(const PLCore::String &sControl, Control *pControl, float fScale = 1.0f);
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class Controller : public PLCore::Object {
 		*    You can also provide a prefix for either or both sides, e.g.: ConnectAll(pOtherController, "", "Camera")
 		*    will connect pController->"CameraLeft" to this->"Left".
 		*/
-		PLINPUT_API void ConnectAll(Controller *pController, const PLGeneral::String &sPrefixOut, const PLGeneral::String &sPrefixIn);
+		PLINPUT_API void ConnectAll(Controller *pController, const PLCore::String &sPrefixOut, const PLCore::String &sPrefixIn);
 
 		/**
 		*  @brief
@@ -371,22 +371,22 @@ class Controller : public PLCore::Object {
 	//[-------------------------------------------------------]
 	protected:
 		// Controller information and state
-		EControllerType									m_nType;			/**< Controller type */
-		PLGeneral::String								m_sName;			/**< Controller name */
-		PLGeneral::String								m_sDescription;		/**< Controller description */
-		bool											m_bConfirmed;		/**< Confirmation flag for DetectDevices() */
-		bool											m_bActive;			/**< Is the controller active? */
-		mutable bool									m_bChanged;			/**< Has the controller's state changed? */
+		EControllerType								m_nType;			/**< Controller type */
+		PLCore::String								m_sName;			/**< Controller name */
+		PLCore::String								m_sDescription;		/**< Controller description */
+		bool										m_bConfirmed;		/**< Confirmation flag for DetectDevices() */
+		bool										m_bActive;			/**< Is the controller active? */
+		mutable bool								m_bChanged;			/**< Has the controller's state changed? */
 
 		// Controls
-		PLGeneral::List<Control*>						m_lstControls;		/**< List of all controls */
-		PLGeneral::HashMap<PLGeneral::String, Control*>	m_mapControls;		/**< Hash map of name -> control */
-		mutable PLGeneral::List<Button*>				m_lstButtons;		/**< List of buttons (filled on use) */
-		mutable PLGeneral::List<Axis*>					m_lstAxes;			/**< List of absolute axes (filled on use) */
-		char											m_nChar;			/**< Last hit key character */
+		PLCore::List<Control*>						m_lstControls;		/**< List of all controls */
+		PLCore::HashMap<PLCore::String, Control*>	m_mapControls;		/**< Hash map of name -> control */
+		mutable PLCore::List<Button*>				m_lstButtons;		/**< List of buttons (filled on use) */
+		mutable PLCore::List<Axis*>					m_lstAxes;			/**< List of absolute axes (filled on use) */
+		char										m_nChar;			/**< Last hit key character */
 
 		// Connections
-		PLGeneral::List<Connection*>					m_lstConnections;	/**< List of connections */
+		PLCore::List<Connection*>					m_lstConnections;	/**< List of connections */
 
 
 };

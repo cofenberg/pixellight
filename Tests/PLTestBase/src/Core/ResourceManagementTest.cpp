@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
-#include <PLGeneral/Base/SmartPtr.h>
+#include <PLCore/Core/RefCount.h>
+#include <PLCore/Core/SmartPtr.h>
 #include "PLTestBase/Core/ResourceManagementTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

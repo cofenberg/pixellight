@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sVertexShaderSourceCodeCg = "\
+static const PLCore::String sVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -47,7 +47,7 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 }";
 
 // Cg vertex shader source code - uniform buffer version
-static const PLGeneral::String sVertexShaderSourceCodeCg_UniformBuffer = "\
+static const PLCore::String sVertexShaderSourceCodeCg_UniformBuffer = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -79,7 +79,7 @@ VS_OUTPUT main(float3             VertexPosition : POSITION,	// Object space ver
 
 
 // Cg geometry shader source code
-static const PLGeneral::String sGeometryShaderSourceCodeCg = "\
+static const PLCore::String sGeometryShaderSourceCodeCg = "\
 TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space vertex positions from vertex shader, lower/left is (-1,-1) and upper/right is (1,1)\n\
 				   AttribArray<float4> VertexColor    : COLOR)		// Vertex colors from vertex shader\n\
 {\n\
@@ -98,7 +98,7 @@ TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space 
 
 
 // Cg fragment shader source code
-static const PLGeneral::String sFragmentShaderSourceCodeCg = "\
+static const PLCore::String sFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\

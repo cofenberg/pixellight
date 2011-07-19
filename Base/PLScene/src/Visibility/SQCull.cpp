@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
-#include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/Tools/Tools.h>
+#include <PLCore/Tools/Stopwatch.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Application/ConsoleApplication.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>
@@ -54,7 +54,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

@@ -28,26 +28,21 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class File;
-	class Parameters;
-}
-namespace PLCore {
-	class Loader;
-}
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class File;
+class Loader;
+class Parameters;
 
 
 //[-------------------------------------------------------]
@@ -74,7 +69,7 @@ class Loadable {
 		*  @return
 		*    The filename this loadable was given to loaded from
 		*/
-		PLCORE_API PLGeneral::String GetFilename() const;
+		PLCORE_API String GetFilename() const;
 
 		/**
 		*  @brief
@@ -83,7 +78,7 @@ class Loadable {
 		*  @return
 		*    The absolute filename this loadable was loaded from
 		*/
-		PLCORE_API PLGeneral::String GetUrl() const;
+		PLCORE_API String GetUrl() const;
 
 
 	//[-------------------------------------------------------]
@@ -107,7 +102,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLCORE_API virtual bool Load(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -126,7 +121,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Load(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLCORE_API virtual bool Load(File &cFile, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -145,7 +140,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Save(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLCORE_API virtual bool Save(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -164,7 +159,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Save(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLCORE_API virtual bool Save(File &cFile, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -194,7 +189,7 @@ class Loadable {
 		*  @return
 		*    The loadable type name
 		*/
-		PLCORE_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLCORE_API virtual String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
@@ -237,15 +232,15 @@ class Loadable {
 		*  @note
 		*    - The default implementation is empty and will return always 'false'
 		*/
-		PLCORE_API virtual bool CallLoadable(PLGeneral::File &cFile, Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+		PLCORE_API virtual bool CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sFilename;	/**< The filename this loadable was given to loaded from */
-		PLGeneral::String m_sUrl;		/**< The absolute filename this loadable was loaded from */
+		String m_sFilename;	/**< The filename this loadable was given to loaded from */
+		String m_sUrl;		/**< The absolute filename this loadable was loaded from */
 
 
 };

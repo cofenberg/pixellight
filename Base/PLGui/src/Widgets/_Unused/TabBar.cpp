@@ -37,7 +37,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
 
@@ -225,7 +225,7 @@ void TabBar::CloseTab(TabBarEntry *pTab)
 *  @brief
 *    Close tab
 */
-void TabBar::CloseTab(PLGeneral::uint32 nTab)
+void TabBar::CloseTab(uint32 nTab)
 {
 	// Check tab
 	TabBarEntry *pTab = m_lstTabs.Get(nTab);

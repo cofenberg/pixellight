@@ -76,7 +76,7 @@ class SNPortal : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNPortal, "PLScene", PLScene::SceneNode, "Abstract portal scene node")
 		// Attributes
-		pl_attribute(Vertices,		PLGeneral::String,			"-1.0 -1.0 0.0 -1.0 1.0 0.0 1.0 1.0 0.0 1.0 -1.0 0.0",	ReadWrite,	GetSet,	"Vertices (xyz, counterclockwise) defining the portal polygon. There should be at least 3 vertices.",	"")
+		pl_attribute(Vertices,		PLCore::String,				"-1.0 -1.0 0.0 -1.0 1.0 0.0 1.0 1.0 0.0 1.0 -1.0 0.0",	ReadWrite,	GetSet,	"Vertices (xyz, counterclockwise) defining the portal polygon. There should be at least 3 vertices.",	"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		CastShadow|ReceiveShadow,								ReadWrite,	GetSet,	"Flags",																								"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,														ReadWrite,	GetSet,	"Debug flags",																							"")
@@ -87,8 +87,8 @@ class SNPortal : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetVertices() const;
-		PLS_API void SetVertices(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetVertices() const;
+		PLS_API void SetVertices(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -162,7 +162,7 @@ class SNPortal : public SceneNode {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint8 m_nInternalPortalFlags;	/**< Internal portal flags */
+		PLCore::uint8 m_nInternalPortalFlags;	/**< Internal portal flags */
 
 
 	//[-------------------------------------------------------]
@@ -201,9 +201,9 @@ class SNPortal : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	m_sVertices;			/**< Vertices (xyz, counterclockwise) defining the portal polygon. There should be at least 3 vertices." */
-		PLMath::Polygon		m_cPolygon;				/**< Local portal polygon */
-		PLMath::Polygon		m_cContainerPolygon;	/**< Container space portal polygon */
+		PLCore::String	m_sVertices;			/**< Vertices (xyz, counterclockwise) defining the portal polygon. There should be at least 3 vertices." */
+		PLMath::Polygon	m_cPolygon;				/**< Local portal polygon */
+		PLMath::Polygon	m_cContainerPolygon;	/**< Container space portal polygon */
 
 
 	//[-------------------------------------------------------]

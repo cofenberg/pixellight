@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sDeferredGlow_Cg_VS = "\
+static const PLCore::String sDeferredGlow_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -47,7 +47,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 
 
 // Downscale Cg fragment shader source code
-static const PLGeneral::String sDeferredGlow_Cg_FS_Downscale = "\
+static const PLCore::String sDeferredGlow_Cg_FS_Downscale = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -97,7 +97,7 @@ FS_OUTPUT main(VS_OUTPUT  IN		// Interpolated output from the vertex stage\n\
 
 
 // Blur Cg fragment shader source code
-static const PLGeneral::String sDeferredGlow_Cg_FS_Blur = "\
+static const PLCore::String sDeferredGlow_Cg_FS_Blur = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -158,7 +158,7 @@ FS_OUTPUT main(VS_OUTPUT   IN		// Interpolated output from the vertex stage\n\
 
 
 // Result Cg fragment shader source code
-static const PLGeneral::String sDeferredGlow_Cg_FS_Result = "\
+static const PLCore::String sDeferredGlow_Cg_FS_Result = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\

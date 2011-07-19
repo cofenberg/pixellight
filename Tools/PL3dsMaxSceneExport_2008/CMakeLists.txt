@@ -60,7 +60,6 @@ endif()
 add_include_directories(
 	include
 	${CMAKE_BINARY_DIR}
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include/
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include/
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include/
 	${MAX2008_INCLUDE_DIRS}
@@ -70,7 +69,6 @@ add_include_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneralStat
 	PLCoreStat
 	${WIN32_ADVAPI32_LIB}
 	${WIN32_SHELL32_LIB}
@@ -85,7 +83,6 @@ add_libs(
 ##################################################
 add_compile_defs(
 	${WIN32_COMPILE_DEFS}
-	PLGENERAL_STATIC
 	PLCORE_STATIC
 	_SECURE_SCL=0
 )
@@ -128,7 +125,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Max2008 PLGeneralStat PLCoreStat)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Max2008 PLCoreStat)
 add_dependencies(Tools                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

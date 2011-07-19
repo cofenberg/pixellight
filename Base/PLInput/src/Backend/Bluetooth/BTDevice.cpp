@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLInput/Backend/Bluetooth/BTDevice.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

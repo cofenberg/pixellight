@@ -86,7 +86,7 @@ class SRPDeferredAmbient : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredAmbient, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering ambient")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",										ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",										ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(AmbientColor,		PLGraphics::Color3,		PLGraphics::Color3(0.2f, 0.2f, 0.2f),	ReadWrite,	DirectValue,	"Ambient color",																														"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",																																"")

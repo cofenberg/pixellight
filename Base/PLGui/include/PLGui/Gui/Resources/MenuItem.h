@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLGui/Gui/Resources/Image.h>
 #include "PLGui/PLGui.h"
 
@@ -77,7 +77,7 @@ class MenuItem {
 		*  @param[in] sText
 		*    Text of the menu item
 		*/
-		PLGUI_API MenuItem(Gui &cGui, const PLGeneral::String &sText);
+		PLGUI_API MenuItem(Gui &cGui, const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class MenuItem {
 		*  @param[in] cIcon
 		*    Icon of the menu item
 		*/
-		PLGUI_API MenuItem(Gui &cGui, const PLGeneral::String &sText, const Image &cIcon);
+		PLGUI_API MenuItem(Gui &cGui, const PLCore::String &sText, const Image &cIcon);
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class MenuItem {
 		*  @return
 		*    Command ID of the menu item
 		*/
-		PLGUI_API PLGeneral::uint32 GetID() const;
+		PLGUI_API PLCore::uint32 GetID() const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class MenuItem {
 		*  @param[in] nID
 		*    Command ID of the menu item
 		*/
-		PLGUI_API void SetID(PLGeneral::uint32 nID);
+		PLGUI_API void SetID(PLCore::uint32 nID);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class MenuItem {
 		*  @return
 		*    Text of the menu item
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class MenuItem {
 		*  @param[in] sText
 		*    Text of the menu item
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -200,11 +200,11 @@ class MenuItem {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui				   *m_pGui;			/**< Pointer to owner GUI */
-		EMenuItemType		m_nType;		/**< Menu item type */
-		PLGeneral::uint32	m_nCommandID;	/**< Command ID */
-		PLGeneral::String	m_sText;		/**< Text that is displayed */
-		Image				m_cIcon;		/**< Icon */
+		Gui			   *m_pGui;			/**< Pointer to owner GUI */
+		EMenuItemType	m_nType;		/**< Menu item type */
+		PLCore::uint32	m_nCommandID;	/**< Command ID */
+		PLCore::String	m_sText;		/**< Text that is displayed */
+		Image			m_cIcon;		/**< Icon */
 
 
 };

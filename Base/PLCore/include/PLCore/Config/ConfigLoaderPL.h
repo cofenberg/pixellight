@@ -32,17 +32,16 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class XmlElement;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class XmlElement;
+
 
 
 //[-------------------------------------------------------]
@@ -68,9 +67,9 @@ class ConfigLoaderPL : public ConfigLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	Config&,		PLGeneral::File&,								"Load method",																						"")
-		pl_method_2(Save,		pl_ret_type(bool),	const Config&,	PLGeneral::File&,								"Save method. Saves all configuration groups and includes default values, too.",					"")
-		pl_method_4(SaveParams,	pl_ret_type(bool),	const Config&,	PLGeneral::File&,	PLGeneral::String,	bool,	"Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	Config&,		File&,					"Load method",																						"")
+		pl_method_2(Save,		pl_ret_type(bool),	const Config&,	File&,					"Save method. Saves all configuration groups and includes default values, too.",					"")
+		pl_method_4(SaveParams,	pl_ret_type(bool),	const Config&,	File&,	String,	bool,	"Save method. Parameters: Configuration group to save as 'String', no default values as 'bool'.",	"")
 	pl_class_end
 
 
@@ -78,9 +77,9 @@ class ConfigLoaderPL : public ConfigLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API bool Load(Config &cConfig, PLGeneral::File &cFile);
-		PLCORE_API bool Save(const Config &cConfig, PLGeneral::File &cFile);
-		PLCORE_API bool SaveParams(const Config &cConfig, PLGeneral::File &cFile, PLGeneral::String sGroup, bool bNoDefault);
+		PLCORE_API bool Load(Config &cConfig, File &cFile);
+		PLCORE_API bool Save(const Config &cConfig, File &cFile);
+		PLCORE_API bool SaveParams(const Config &cConfig, File &cFile, String sGroup, bool bNoDefault);
 
 
 	//[-------------------------------------------------------]
@@ -116,7 +115,7 @@ class ConfigLoaderPL : public ConfigLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(Config &cConfig, const PLGeneral::XmlElement &cConfigElement) const;
+		bool LoadV1(Config &cConfig, const XmlElement &cConfigElement) const;
 
 		/**
 		*  @brief
@@ -132,7 +131,7 @@ class ConfigLoaderPL : public ConfigLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool SaveGroup(PLGeneral::XmlElement &cConfigElement, const ConfigGroup &cGroup, bool bNoDefault = false) const;
+		bool SaveGroup(XmlElement &cConfigElement, const ConfigGroup &cGroup, bool bNoDefault = false) const;
 
 
 };

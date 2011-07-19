@@ -92,7 +92,7 @@ class SRP2DGame : public PLScene::SceneRendererPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool DrawImage(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sName, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize = PLMath::Vector2::Zero,
+		bool DrawImage(PLRenderer::Renderer &cRenderer, const PLCore::String &sName, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize = PLMath::Vector2::Zero,
 					   const PLMath::Vector2 &vTextureCoordinate = PLMath::Vector2::Zero, const PLMath::Vector2 &vTextureCoordinateSize = PLMath::Vector2::One) const;
 
 

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Container/Pool.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Rectangle.h>
 #include "PLScene/Visibility/VisNode.h"
@@ -102,7 +102,7 @@ class VisContainer : public VisNode {
 		*  @return
 		*    List of visibililty nodes
 		*/
-		PLS_API const PLGeneral::Pool<VisNode*> &GetVisNodes() const;
+		PLS_API const PLCore::Pool<VisNode*> &GetVisNodes() const;
 
 		/**
 		*  @brief
@@ -180,11 +180,11 @@ class VisContainer : public VisNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SceneQueryHandler									 *m_pQueryHandler;	/**< The cull scene query of this visibility container (always valid!) */
-		PLGeneral::Pool<VisNode*>							  m_lstNodes;		/**< List of currently used visibililty nodes */
-		PLGeneral::HashMap<PLGeneral::String, VisContainer*>  m_mapContainers;	/**< Map with all child visibilty containers of this container */
-		PLGeneral::HashMap<PLGeneral::String, VisPortal*>	  m_mapPortals;		/**< Map with all visibilty portals of this container */
-		Projection											  m_sProjection;	/**< Projection information */
+		SceneQueryHandler							   *m_pQueryHandler;	/**< The cull scene query of this visibility container (always valid!) */
+		PLCore::Pool<VisNode*>							m_lstNodes;			/**< List of currently used visibililty nodes */
+		PLCore::HashMap<PLCore::String, VisContainer*>  m_mapContainers;	/**< Map with all child visibilty containers of this container */
+		PLCore::HashMap<PLCore::String, VisPortal*>	    m_mapPortals;		/**< Map with all visibilty portals of this container */
+		Projection										m_sProjection;		/**< Projection information */
 
 
 	//[-------------------------------------------------------]

@@ -396,7 +396,7 @@ class Body : public Element {
 		*  @note
 		*    - nSteps may not be supported by each physics API, in this case, this setting has no effect
 		*/
-		PLPHYSICS_API void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLGeneral::uint32 &nSteps) const;
+		PLPHYSICS_API void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLCore::uint32 &nSteps) const;
 
 		/**
 		*  @brief
@@ -413,7 +413,7 @@ class Body : public Element {
 		*  @see
 		*    - SetFreezeThreshold()
 		*/
-		PLPHYSICS_API void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLGeneral::uint32 nSteps = 10);
+		PLPHYSICS_API void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLCore::uint32 nSteps = 10);
 
 		/**
 		*  @brief
@@ -479,7 +479,7 @@ class Body : public Element {
 		*  @see
 		*    - World::GetGroupCollision()
 		*/
-		PLPHYSICS_API PLGeneral::uint8 GetCollisionGroup() const;
+		PLPHYSICS_API PLCore::uint8 GetCollisionGroup() const;
 
 		/**
 		*  @brief
@@ -491,7 +491,7 @@ class Body : public Element {
 		*  @see
 		*    - World::GetGroupCollision()
 		*/
-		PLPHYSICS_API void SetCollisionGroup(PLGeneral::uint8 nCollisionGroup = 0);
+		PLPHYSICS_API void SetCollisionGroup(PLCore::uint8 nCollisionGroup = 0);
 
 		/**
 		*  @brief
@@ -509,7 +509,7 @@ class Body : public Element {
 		*  @see
 		*    - GetBodyPairFlags() & SetBodyPairFlags()
 		*/
-		PLPHYSICS_API PLGeneral::uint32 GetNumOfPartners() const;
+		PLPHYSICS_API PLCore::uint32 GetNumOfPartners() const;
 
 		/**
 		*  @brief
@@ -524,7 +524,7 @@ class Body : public Element {
 		*  @see
 		*    - GetNumOfPartners()
 		*/
-		PLPHYSICS_API Body *GetPartner(PLGeneral::uint32 nIndex) const;
+		PLPHYSICS_API Body *GetPartner(PLCore::uint32 nIndex) const;
 
 
 	//[-------------------------------------------------------]

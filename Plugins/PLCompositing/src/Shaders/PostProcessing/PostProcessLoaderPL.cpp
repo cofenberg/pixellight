@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Material/MaterialManager.h>
 #include "PLCompositing/Shaders/PostProcessing/PostProcessManager.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 namespace PLCompositing {
 

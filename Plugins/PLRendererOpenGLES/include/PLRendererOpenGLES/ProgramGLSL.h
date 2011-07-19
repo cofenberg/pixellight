@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <GLES2/gl2.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLRenderer/Renderer/ResourceHandler.h>
 #include <PLRenderer/Renderer/Program.h>
 
@@ -138,28 +138,28 @@ class ProgramGLSL : public PLRenderer::Program {
 	//[-------------------------------------------------------]
 	private:
 		// Program
-		GLuint																	m_nOpenGLESProgram;				/**< OpenGL ES program, always valid! */
-		bool																	m_bLinked;						/**< Is the OpenGL ES program currently linked? */
-		bool																	m_bLinkedFailed;				/**< OpenGL ES program link failed? */
+		GLuint															m_nOpenGLESProgram;				/**< OpenGL ES program, always valid! */
+		bool															m_bLinked;						/**< Is the OpenGL ES program currently linked? */
+		bool															m_bLinkedFailed;				/**< OpenGL ES program link failed? */
 		// Shaders
-		PLRenderer::ResourceHandler												m_cVertexShaderHandler;			/**< Vertex shader resource handler */
-		PLRenderer::ResourceHandler												m_cFragmentShaderHandler;		/**< Fragment shader resource handler */
+		PLRenderer::ResourceHandler										m_cVertexShaderHandler;			/**< Vertex shader resource handler */
+		PLRenderer::ResourceHandler										m_cFragmentShaderHandler;		/**< Fragment shader resource handler */
 		// Attributes
-		bool																	m_bAttributeInformationBuild;	/**< Attribute information already build? */
-		PLGeneral::Array<PLRenderer::ProgramAttribute*>							m_lstAttributes;				/**< List of attributes */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramAttribute*>	m_mapAttributes;				/**< Hash map of names -> attributes */
+		bool															m_bAttributeInformationBuild;	/**< Attribute information already build? */
+		PLCore::Array<PLRenderer::ProgramAttribute*>					m_lstAttributes;				/**< List of attributes */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>	m_mapAttributes;				/**< Hash map of names -> attributes */
 		// Uniforms
-		bool																	m_bUniformInformationBuild;		/**< Uniform information already build? */
-		PLGeneral::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;					/**< List of uniforms */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniform*>		m_mapUniforms;					/**< Hash map of names -> uniforms */
-		PLGeneral::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;				/**< List of uniform blocks - There's no uniform block support in OpenGL ES 2.0, this is just a dummy so the interface can return "something" */
+		bool															m_bUniformInformationBuild;		/**< Uniform information already build? */
+		PLCore::Array<PLRenderer::ProgramUniform*>						m_lstUniforms;					/**< List of uniforms */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>	m_mapUniforms;					/**< Hash map of names -> uniforms */
+		PLCore::Array<PLRenderer::ProgramUniformBlock*>					m_lstUniformBlocks;				/**< List of uniform blocks - There's no uniform block support in OpenGL ES 2.0, this is just a dummy so the interface can return "something" */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Program functions          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
+		virtual PLCore::String GetShaderLanguage() const;
 		virtual PLRenderer::VertexShader *GetVertexShader() const;
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader);
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const;
@@ -167,13 +167,13 @@ class ProgramGLSL : public PLRenderer::Program {
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const;
 		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader);
 		virtual bool IsValid();
-		virtual PLGeneral::String GetCompiledProgram();
-		virtual const PLGeneral::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
-		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLGeneral::String &sName);
-		virtual const PLGeneral::Array<PLRenderer::ProgramUniform*> &GetUniforms();
-		virtual PLRenderer::ProgramUniform *GetUniform(const PLGeneral::String &sName);
-		virtual const PLGeneral::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
-		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName);
+		virtual PLCore::String GetCompiledProgram();
+		virtual const PLCore::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
+		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLCore::String &sName);
+		virtual const PLCore::Array<PLRenderer::ProgramUniform*> &GetUniforms();
+		virtual PLRenderer::ProgramUniform *GetUniform(const PLCore::String &sName);
+		virtual const PLCore::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
+		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]

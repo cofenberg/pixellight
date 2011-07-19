@@ -28,10 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Container/List.h"
+#include "PLCore/Container/HashMap.h"
 
 
 //[-------------------------------------------------------]
@@ -96,7 +95,7 @@ class Class {
 		*  @return
 		*    Name of class and namespace
 		*/
-		PLCORE_API PLGeneral::String GetClassName() const;
+		PLCORE_API String GetClassName() const;
 
 		/**
 		*  @brief
@@ -105,7 +104,7 @@ class Class {
 		*  @return
 		*    Name of base class and namespace
 		*/
-		PLCORE_API PLGeneral::String GetBaseClassName() const;
+		PLCORE_API String GetBaseClassName() const;
 
 		/**
 		*  @brief
@@ -114,7 +113,7 @@ class Class {
 		*  @return
 		*    Name of class
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -123,7 +122,7 @@ class Class {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API PLGeneral::String GetDescription() const;
+		PLCORE_API String GetDescription() const;
 
 		/**
 		*  @brief
@@ -132,7 +131,7 @@ class Class {
 		*  @return
 		*    Namespace
 		*/
-		PLCORE_API PLGeneral::String GetNamespace() const;
+		PLCORE_API String GetNamespace() const;
 
 		/**
 		*  @brief
@@ -165,7 +164,7 @@ class Class {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API bool IsDerivedFrom(const PLGeneral::String &sBaseClass) const;
+		PLCORE_API bool IsDerivedFrom(const String &sBaseClass) const;
 
 		/**
 		*  @brief
@@ -179,7 +178,7 @@ class Class {
 		*    If you want to search for classes with more specific search criteria,
 		*    have a look at ClassManager::GetClasses().
 		*/
-		PLCORE_API const PLGeneral::List<const Class*> GetDerivedClasses() const;
+		PLCORE_API const List<const Class*> GetDerivedClasses() const;
 
 		/**
 		*  @brief
@@ -194,7 +193,7 @@ class Class {
 		*      "PluginType"  -> "Widget"
 		*      "FileFormats" -> "avi mpg mp4"
 		*/
-		PLCORE_API const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> &GetProperties() const;
+		PLCORE_API const HashMap<String, String> &GetProperties() const;
 
 		/**
 		*  @brief
@@ -203,7 +202,7 @@ class Class {
 		*  @return
 		*    List of attribute descriptors, do NOT destroy the returned instances!
 		*/
-		PLCORE_API const PLGeneral::List<VarDesc*> &GetAttributes() const;
+		PLCORE_API const List<VarDesc*> &GetAttributes() const;
 
 		/**
 		*  @brief
@@ -215,7 +214,7 @@ class Class {
 		*  @return
 		*    Attribute descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
-		PLCORE_API const VarDesc *GetAttribute(const PLGeneral::String &sName) const;
+		PLCORE_API const VarDesc *GetAttribute(const String &sName) const;
 
 		/**
 		*  @brief
@@ -224,7 +223,7 @@ class Class {
 		*  @return
 		*    List of method descriptors, do NOT destroy the returned instances!
 		*/
-		PLCORE_API const PLGeneral::List<FuncDesc*> &GetMethods() const;
+		PLCORE_API const List<FuncDesc*> &GetMethods() const;
 
 		/**
 		*  @brief
@@ -236,7 +235,7 @@ class Class {
 		*  @return
 		*    Method descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
-		PLCORE_API const FuncDesc *GetMethod(const PLGeneral::String &sName) const;
+		PLCORE_API const FuncDesc *GetMethod(const String &sName) const;
 
 		/**
 		*  @brief
@@ -245,7 +244,7 @@ class Class {
 		*  @return
 		*    List of signal descriptors, do NOT destroy the returned instances!
 		*/
-		PLCORE_API const PLGeneral::List<EventDesc*> &GetSignals() const;
+		PLCORE_API const List<EventDesc*> &GetSignals() const;
 
 		/**
 		*  @brief
@@ -257,7 +256,7 @@ class Class {
 		*  @return
 		*    Signal descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
-		PLCORE_API const EventDesc *GetSignal(const PLGeneral::String &sName) const;
+		PLCORE_API const EventDesc *GetSignal(const String &sName) const;
 
 		/**
 		*  @brief
@@ -266,7 +265,7 @@ class Class {
 		*  @return
 		*    List of slot descriptors, do NOT destroy the returned instances!
 		*/
-		PLCORE_API const PLGeneral::List<EventHandlerDesc*> &GetSlots() const;
+		PLCORE_API const List<EventHandlerDesc*> &GetSlots() const;
 
 		/**
 		*  @brief
@@ -278,7 +277,7 @@ class Class {
 		*  @return
 		*    Slot descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
-		PLCORE_API const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const;
+		PLCORE_API const EventHandlerDesc *GetSlot(const String &sName) const;
 
 		/**
 		*  @brief
@@ -305,7 +304,7 @@ class Class {
 		*  @return
 		*    List of constructor descriptors, do NOT destroy the returned instances!
 		*/
-		PLCORE_API const PLGeneral::List<ConstructorDesc*> &GetConstructors() const;
+		PLCORE_API const List<ConstructorDesc*> &GetConstructors() const;
 
 		/**
 		*  @brief
@@ -317,7 +316,7 @@ class Class {
 		*  @return
 		*    Constructor descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
 		*/
-		PLCORE_API const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const;
+		PLCORE_API const ConstructorDesc *GetConstructor(const String &sName) const;
 
 		/**
 		*  @brief
@@ -364,7 +363,7 @@ class Class {
 		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
-		PLCORE_API Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const;
+		PLCORE_API Object *Create(const String &sName, const DynParams &cParams) const;
 
 
 	//[-------------------------------------------------------]

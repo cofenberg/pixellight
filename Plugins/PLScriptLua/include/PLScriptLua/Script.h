@@ -120,56 +120,56 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTLUA_API virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTLUA_API virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
 		PLSCRIPTLUA_API virtual bool RemoveAllGlobalFunctions();
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTLUA_API virtual PLGeneral::String GetSourceCode() const;
-		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLGeneral::String &sSourceCode);
+		PLSCRIPTLUA_API virtual PLCore::String GetSourceCode() const;
+		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTLUA_API virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTLUA_API virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTLUA_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTLUA_API virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "");
-		PLSCRIPTLUA_API virtual void SetGlobalVariable(const PLGeneral::String &sName, const PLCore::DynVar &cValue, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTLUA_API virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "");
+		PLSCRIPTLUA_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
 		PLSCRIPTLUA_API virtual void PushArgument(bool bValue);
 		PLSCRIPTLUA_API virtual void PushArgument(float fValue);
 		PLSCRIPTLUA_API virtual void PushArgument(double fValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::int8 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::int16 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::int32 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::int64 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint8 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint16 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint32 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(PLGeneral::uint64 nValue);
-		PLSCRIPTLUA_API virtual void PushArgument(const PLGeneral::String &sString);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::int8 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::int16 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::int32 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::int64 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::uint8 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::uint16 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::uint32 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(PLCore::uint64 nValue);
+		PLSCRIPTLUA_API virtual void PushArgument(const PLCore::String &sString);
 		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object *pObject);
 		PLSCRIPTLUA_API virtual void PushArgument(PLCore::Object &cObject);
 		PLSCRIPTLUA_API virtual bool EndCall();
 		PLSCRIPTLUA_API virtual bool GetReturn(bool nValue);
 		PLSCRIPTLUA_API virtual float GetReturn(float nValue);
 		PLSCRIPTLUA_API virtual double GetReturn(double nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue);
-		PLSCRIPTLUA_API virtual PLGeneral::String GetReturn(PLGeneral::String nValue);
+		PLSCRIPTLUA_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
+		PLSCRIPTLUA_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
+		PLSCRIPTLUA_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
+		PLSCRIPTLUA_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
+		PLSCRIPTLUA_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
+		PLSCRIPTLUA_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
+		PLSCRIPTLUA_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
+		PLSCRIPTLUA_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
+		PLSCRIPTLUA_API virtual PLCore::String GetReturn(PLCore::String nValue);
 		PLSCRIPTLUA_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
 		PLSCRIPTLUA_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
 
@@ -218,10 +218,10 @@ class Script : public PLCore::Script {
 		*    A global function
 		*/
 		struct GlobalFunction {
-			Script			  *pScript;		/**< Pointer to the owner script instance, always valid! */
-			PLGeneral::String  sFunction;	/**< Function name used inside the script to call the global function */
-			PLCore::DynFunc   *pDynFunc;	/**< Dynamic function to be called, always valid, destroy when done */
-			PLGeneral::String  sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
+			Script			*pScript;		/**< Pointer to the owner script instance, always valid! */
+			PLCore::String   sFunction;		/**< Function name used inside the script to call the global function */
+			PLCore::DynFunc *pDynFunc;		/**< Dynamic function to be called, always valid, destroy when done */
+			PLCore::String   sNamespace;	/**< Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on) */
 		};
 
 		/**
@@ -291,7 +291,7 @@ class Script : public PLCore::Script {
 		*  @return
 		*    'true' if all went fine, else 'false' (error within the given Lua table name?)
 		*/
-		bool CreateNestedTable(const PLGeneral::String &sTableName);
+		bool CreateNestedTable(const PLCore::String &sTableName);
 
 		/**
 		*  @brief
@@ -307,7 +307,7 @@ class Script : public PLCore::Script {
 		*  @return
 		*    'true' if all went fine, else 'false' (error within the given Lua table name?)
 		*/
-		bool GetNestedTable(const PLGeneral::String &sTableName);
+		bool GetNestedTable(const PLCore::String &sTableName);
 
 		//[-------------------------------------------------------]
 		//[ Event and event handler stuff                         ]
@@ -324,7 +324,7 @@ class Script : public PLCore::Script {
 		*  @return
 		*    Event user data key
 		*/
-		PLGeneral::String GetEventUserDataKey(PLCore::DynEvent *pDynEvent, const void *pLuaPointer) const;
+		PLCore::String GetEventUserDataKey(PLCore::DynEvent *pDynEvent, const void *pLuaPointer) const;
 
 		/**
 		*  @brief
@@ -367,13 +367,13 @@ class Script : public PLCore::Script {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String									   m_sSourceCode;			/**< Script source code */
-		lua_State											  *m_pLuaState;				/**< Lua state, can be a null pointer */
-		PLGeneral::String									   m_sCurrentFunction;		/**< Name of the current function */
-		bool												   m_bFunctionResult;		/**< Has the current function a result? */
-		PLGeneral::uint32									   m_nCurrentArgument;		/**< Current argument, used during function call */
-		PLGeneral::Array<GlobalFunction*>					   m_lstGlobalFunctions;	/**< List of global functions */
-		PLGeneral::HashMap<PLGeneral::String, EventUserData*>  m_mapEventUserData;		/**< Map holding all event user data instances */
+		PLCore::String									 m_sSourceCode;			/**< Script source code */
+		lua_State										*m_pLuaState;			/**< Lua state, can be a null pointer */
+		PLCore::String									 m_sCurrentFunction;	/**< Name of the current function */
+		bool											 m_bFunctionResult;		/**< Has the current function a result? */
+		PLCore::uint32									 m_nCurrentArgument;	/**< Current argument, used during function call */
+		PLCore::Array<GlobalFunction*>				     m_lstGlobalFunctions;	/**< List of global functions */
+		PLCore::HashMap<PLCore::String, EventUserData*>  m_mapEventUserData;	/**< Map holding all event user data instances */
 
 
 };

@@ -206,7 +206,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*  @see
 		*    - GetDefaultSceneRenderer()
 		*/
-		PLS_API void SetDefaultSceneRenderer(const PLGeneral::String &sSceneRenderer = "Forward.sr");
+		PLS_API void SetDefaultSceneRenderer(const PLCore::String &sSceneRenderer = "Forward.sr");
 
 
 	//[-------------------------------------------------------]
@@ -277,7 +277,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 		SceneNodeHandler     *m_pSceneContainerHandler;			/**< Scene container handler (always valid!) */
 		SceneQueryHandler    *m_pCullQuery;						/**< Cull query (always valid!) */
 		SceneNodeHandler     *m_pCameraNodeHandler;				/**< Camera scene node handler (always valid!) */
-		PLGeneral::String     m_sDefaultSceneRenderer;			/**< Default scene renderer */
+		PLCore::String		  m_sDefaultSceneRenderer;			/**< Default scene renderer */
 		SceneRendererHandler *m_pDefaultSceneRendererHandler;	/**< Default scene renderer handler, always valid! */
 
 

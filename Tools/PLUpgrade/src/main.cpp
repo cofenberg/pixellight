@@ -23,17 +23,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/FileSearch.h>
+#include <PLCore/Main.h>
+#include <PLCore/System/System.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/FileSearch.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

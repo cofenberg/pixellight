@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLSoundOpenAL/Ogg.h"
 #include "PLSoundOpenAL/Wav.h"
@@ -38,7 +38,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLSoundOpenAL {
 

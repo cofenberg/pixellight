@@ -77,7 +77,7 @@ class ImageEffects {
 		*  @return
 		*    Image effect
 		*/
-		PLGRAPHICS_API static ImageEffectWrapper Effect(const PLGeneral::String &sEffect, const PLGeneral::String &sParameters);
+		PLGRAPHICS_API static ImageEffectWrapper Effect(const PLCore::String &sEffect, const PLCore::String &sParameters);
 
 		/**
 		*  @brief

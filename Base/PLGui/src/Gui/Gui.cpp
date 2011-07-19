@@ -41,8 +41,8 @@
 #endif
 
 // [DEBUG]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 
 
 //[-------------------------------------------------------]
@@ -55,7 +55,6 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
@@ -681,7 +680,7 @@ Widget *Gui::GetFocusWidget() const
 *  @brief
 *    Display a tooltip
 */
-void Gui::ShowTooltip(const PLMath::Vector2i &vPos, const PLGeneral::String &sTooltip)
+void Gui::ShowTooltip(const PLMath::Vector2i &vPos, const String &sTooltip)
 {
 	// Create tooltip window
 	if (!m_pTooltip) {

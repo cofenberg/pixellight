@@ -60,8 +60,8 @@ class SkyLoaderPL : public SkyLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	SNSky&,		PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	SNSky&,		PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class SkyLoaderPL : public SkyLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API bool Load(SNSky &cSky, PLGeneral::File &cFile);
-		PLS_API bool Save(SNSky &cSky, PLGeneral::File &cFile);
+		PLS_API bool Load(SNSky &cSky, PLCore::File &cFile);
+		PLS_API bool Save(SNSky &cSky, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class SkyLoaderPL : public SkyLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SNSky &cSky, const PLGeneral::XmlElement &cSkyElement) const;
+		bool LoadV1(SNSky &cSky, const PLCore::XmlElement &cSkyElement) const;
 
 
 };

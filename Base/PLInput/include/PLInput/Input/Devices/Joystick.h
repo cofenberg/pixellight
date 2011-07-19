@@ -134,7 +134,7 @@ class Joystick : public Device {
 		*  @param[in] pImpl
 		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Joystick(const PLGeneral::String &sName, DeviceImpl *pImpl);
+		PLINPUT_API Joystick(const PLCore::String &sName, DeviceImpl *pImpl);
 
 		/**
 		*  @brief

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementManager.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLScene/Scene/SceneNode.h"
 
 
@@ -51,7 +51,7 @@ namespace PLScene {
 *    scene node. The scene node handler will be informed if the scene node is deleted
 *    and in this case you are able to avoid accessing a deleted scene node! :)
 */
-class SceneNodeHandler : public PLGeneral::ElementHandler<SceneNode> {
+class SceneNodeHandler : public PLCore::ElementHandler<SceneNode> {
 
 
 	//[-------------------------------------------------------]

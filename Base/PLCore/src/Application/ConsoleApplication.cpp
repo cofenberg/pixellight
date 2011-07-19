@@ -26,14 +26,14 @@
 #ifdef LINUX
 	#include <signal.h>
 #endif
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Tools/Stopwatch.h>
 #include "PLCore/Core.h"
+#include "PLCore/Log/Log.h"
+#include "PLCore/File/Url.h"
+#include "PLCore/File/Directory.h"
+#include "PLCore/System/System.h"
+#include "PLCore/System/Console.h"
+#include "PLCore/Tools/Timing.h"
+#include "PLCore/Tools/Stopwatch.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
@@ -43,7 +43,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 
@@ -510,7 +509,7 @@ void ConsoleApplication::OnInitLog()
 		PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
 		PL_LOG(Info, "PLCore build: "__DATE__" "__TIME__"")
 		PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
-		PL_LOG(Info, "\nPLGeneral infomation:\n" + System::GetInstance()->GetInfo() + '\n')
+		PL_LOG(Info, "\nPLCore infomation:\n" + System::GetInstance()->GetInfo() + '\n')
 		PL_LOG(Quiet, '\n')
 
 		{ // Print out directory information:

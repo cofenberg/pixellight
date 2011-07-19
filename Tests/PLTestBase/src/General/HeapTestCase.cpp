@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Heap.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/Heap.h>
+#include <PLCore/Container/List.h>
 #include "PLTestBase/General/HeapTestCase.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

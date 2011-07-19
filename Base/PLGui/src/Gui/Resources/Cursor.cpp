@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
 
@@ -175,7 +175,7 @@ void Cursor::Load(EMouseCursor nCursor)
 *  @brief
 *    Load cursor
 */
-void Cursor::Load(const PLGeneral::String &sFilename, const Vector2i &vHotspot)
+void Cursor::Load(const String &sFilename, const Vector2i &vHotspot)
 {
 	// Release cursor
 	if (m_pCursorImpl) {

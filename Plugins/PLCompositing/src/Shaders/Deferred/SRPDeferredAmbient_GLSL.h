@@ -21,7 +21,7 @@
 
 
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredAmbient_GLSL_VS = "\
+static const PLCore::String sDeferredAmbient_GLSL_VS = "\
 // Attributes\n\
 attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
@@ -42,7 +42,7 @@ void main()\n\
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredAmbient_GLSL_FS = "\
+static const PLCore::String sDeferredAmbient_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\

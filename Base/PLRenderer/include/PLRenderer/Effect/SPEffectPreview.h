@@ -82,7 +82,7 @@ class SPEffectPreview : public SPPreview {
 		*  @return
 		*    Name of the used effect
 		*/
-		PLRENDERER_API PLGeneral::String GetEffect() const;
+		PLRENDERER_API PLCore::String GetEffect() const;
 
 		/**
 		*  @brief
@@ -91,14 +91,14 @@ class SPEffectPreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used effect
 		*/
-		PLRENDERER_API void SetEffect(const PLGeneral::String &sName);
+		PLRENDERER_API void SetEffect(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sEffect;	/**< Name of the used effect */
+		PLCore::String m_sEffect;	/**< Name of the used effect */
 
 
 	//[-------------------------------------------------------]

@@ -72,8 +72,8 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 			pl_property("SceneNodeClass",	"PLScene::SNCamera")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Filename,		PLGeneral::String,	"",		ReadWrite,	GetSet,			"Filename of the post process to use",														"Type='PostProcess'")
-		pl_attribute(EffectWeight,	float,				1.0f,	ReadWrite,	DirectValue,	"Effect weight, 0 means that this effect has no influence, 1 for the intended influence",	"Min=0 Max=1")
+		pl_attribute(Filename,		PLCore::String,	"",		ReadWrite,	GetSet,			"Filename of the post process to use",														"Type='PostProcess'")
+		pl_attribute(EffectWeight,	float,			1.0f,	ReadWrite,	DirectValue,	"Effect weight, 0 means that this effect has no influence, 1 for the intended influence",	"Min=0 Max=1")
 	pl_class_end
 
 
@@ -81,8 +81,8 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API PLGeneral::String GetFilename() const;
-		PLCOM_API void SetFilename(const PLGeneral::String &sValue);
+		PLCOM_API PLCore::String GetFilename() const;
+		PLCOM_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -112,7 +112,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 		*  @return
 		*    The requested post process parameter, a null pointer if no such parameter was found or 'bActiveOnly' is used
 		*/
-		PLCOM_API PLRenderer::Parameter *GetParameter(const PLGeneral::String &sName, PLGeneral::uint32 nIndex = 0, bool bActiveOnly = false);
+		PLCOM_API PLRenderer::Parameter *GetParameter(const PLCore::String &sName, PLCore::uint32 nIndex = 0, bool bActiveOnly = false);
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 		*    This function loops through all (or just active) post processes and adds the material parameter
 		*    of a given name into the output array.
 		*/
-		PLCOM_API bool GetParameters(const PLGeneral::String &sName, PLGeneral::Array<PLRenderer::Parameter*> &lstParameters, bool bActiveOnly = false);
+		PLCOM_API bool GetParameters(const PLCore::String &sName, PLCore::Array<PLRenderer::Parameter*> &lstParameters, bool bActiveOnly = false);
 
 
 	//[-------------------------------------------------------]
@@ -174,7 +174,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sFilename;
+		PLCore::String m_sFilename;
 
 
 	//[-------------------------------------------------------]

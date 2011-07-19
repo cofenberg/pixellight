@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -55,7 +55,7 @@ AniInfoManager::~AniInfoManager()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 AniInfo *AniInfoManager::CreateElement(const String &sName)
 {

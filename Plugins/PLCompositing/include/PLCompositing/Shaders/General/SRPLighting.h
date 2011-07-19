@@ -216,7 +216,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 	pl_class(PLCOM_RTTI_EXPORT, SRPLighting, "PLCompositing", PLScene::SceneRendererPass, "Shaders based lighting scene renderer pass implementation")
 		// Attributes
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
-		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,						"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(LightingIntensity,	float,								1.0f,			ReadWrite,	DirectValue,	"General lighting intensity",																											"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",																																"")
@@ -264,7 +264,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		*  @param[in] nStage
 		*    Texture stage
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage) const;
 
 		/**
 		*  @brief
@@ -365,8 +365,8 @@ class SRPLighting : public PLScene::SceneRendererPass {
 		PLRenderer::TextureHandler			 m_cCubeMapHandler;		/**< Texture handler for the default cube map */
 
 		// Material cache
-		PLRenderer::ProgramGenerator								*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-		PLGeneral::HashMap<PLGeneral::uint64, SRPLightingMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
+		PLRenderer::ProgramGenerator						  *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLCore::HashMap<PLCore::uint64, SRPLightingMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

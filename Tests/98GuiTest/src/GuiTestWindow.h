@@ -49,18 +49,18 @@ class GuiTestWindow : public PLGui::Window {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnTrayIcon,			PLGeneral::uint32,	const PLMath::Vector2i&,	"Tray icon callback",	"")
-		pl_slot_0(OnNotify,																"Button callback",		"")
-		pl_slot_0(OnWindow,																"Button callback",		"")
-		pl_slot_0(OnSimpleTest,															"Button callback",		"")
-		pl_slot_0(OnWindowTest,															"Button callback",		"")
-		pl_slot_0(OnMouseOverTest,														"Button callback",		"")
-		pl_slot_0(OnFocusTest,															"Button callback",		"")
-		pl_slot_0(OnWidgetTest,															"Button callback",		"")
-		pl_slot_0(OnDragDropTest,														"Button callback",		"")
-		pl_slot_0(OnTabsAndMenuTest,													"Button callback",		"")
-		pl_slot_0(OnSlimTest,															"Button callback",		"")
-		pl_slot_0(OnThemeTest,															"Button callback",		"")
+		pl_slot_2(OnTrayIcon,			PLCore::uint32,	const PLMath::Vector2i&,	"Tray icon callback",	"")
+		pl_slot_0(OnNotify,															"Button callback",		"")
+		pl_slot_0(OnWindow,															"Button callback",		"")
+		pl_slot_0(OnSimpleTest,														"Button callback",		"")
+		pl_slot_0(OnWindowTest,														"Button callback",		"")
+		pl_slot_0(OnMouseOverTest,													"Button callback",		"")
+		pl_slot_0(OnFocusTest,														"Button callback",		"")
+		pl_slot_0(OnWidgetTest,														"Button callback",		"")
+		pl_slot_0(OnDragDropTest,													"Button callback",		"")
+		pl_slot_0(OnTabsAndMenuTest,												"Button callback",		"")
+		pl_slot_0(OnSlimTest,														"Button callback",		"")
+		pl_slot_0(OnThemeTest,														"Button callback",		"")
 	pl_class_end
 
 
@@ -95,7 +95,7 @@ class GuiTestWindow : public PLGui::Window {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		void OnTrayIcon(PLGeneral::uint32, const PLMath::Vector2i&);
+		void OnTrayIcon(PLCore::uint32, const PLMath::Vector2i&);
 		void OnNotify();
 		void OnWindow();
 		void OnSimpleTest();

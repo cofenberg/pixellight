@@ -103,8 +103,8 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 		void Reset();
 		bool IncRow();
 		bool EndOfRow() const;
-		const char *GetCurrentValue(PLGeneral::uint32 nColumn) const;
-		const char *GetFieldName(PLGeneral::uint32 nColumn) const;
+		const char *GetCurrentValue(PLCore::uint32 nColumn) const;
+		const char *GetFieldName(PLCore::uint32 nColumn) const;
 
 
 	//[-------------------------------------------------------]
@@ -113,8 +113,8 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	public:
 		PLDATABASENULL_API virtual bool IsEmpty() const;
 		PLDATABASENULL_API virtual void FirstRow();
-		PLDATABASENULL_API virtual const PLGeneral::Array<PLGeneral::String> &FetchFieldList();
-		PLDATABASENULL_API virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> *FetchRow();
+		PLDATABASENULL_API virtual const PLCore::Array<PLCore::String> &FetchFieldList();
+		PLDATABASENULL_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow();
 
 
 };

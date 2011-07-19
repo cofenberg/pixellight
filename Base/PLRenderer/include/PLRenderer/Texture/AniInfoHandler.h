@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLRenderer/Texture/AniInfo.h"
 
 
@@ -45,7 +45,7 @@ namespace PLRenderer {
 *  @brief
 *    Animation information handler class
 */
-class AniInfoHandler : public PLGeneral::ElementHandler<AniInfo> {
+class AniInfoHandler : public PLCore::ElementHandler<AniInfo> {
 
 
 	//[-------------------------------------------------------]

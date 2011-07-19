@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Chunk.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLRenderer/Animation/Animation.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMRotationKeyframeAnimation.h"
@@ -34,7 +34,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;

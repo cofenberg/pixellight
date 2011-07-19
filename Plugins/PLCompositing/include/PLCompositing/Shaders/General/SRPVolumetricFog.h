@@ -129,7 +129,7 @@ class SRPVolumetricFog : public PLScene::SceneRendererPass {
 	pl_class(PLCOM_RTTI_EXPORT, SRPVolumetricFog, "PLCompositing", PLScene::SceneRendererPass, "Shaders based volumetric fog scene renderer pass implementation")
 		// Attributes
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,	ReadWrite,	DirectValue,	"Texture filtering",																													"")
-		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,						"",				ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),				0,				ReadWrite,	GetSet,			"Flags",																																"")
 		// Constructors
@@ -167,7 +167,7 @@ class SRPVolumetricFog : public PLScene::SceneRendererPass {
 		*  @param[in] nStage
 		*    Texture stage
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage) const;
 
 		/**
 		*  @brief

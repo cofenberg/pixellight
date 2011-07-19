@@ -23,16 +23,16 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/String/RegEx.h>
-#include <PLGeneral/Registry/Registry.h>
 #include <PLCore/Core.h>
+#include <PLCore/Main.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/FileSearch.h>
+#include <PLCore/File/File.h>
+#include <PLCore/String/String.h>
+#include <PLCore/String/RegEx.h>
+#include <PLCore/Registry/Registry.h>
 #include <PLCore/Tools/LocalizationLoaderPL.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
@@ -42,7 +42,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 

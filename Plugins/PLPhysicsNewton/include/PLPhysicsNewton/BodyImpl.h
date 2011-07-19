@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLMath/Quaternion.h>
 #include <PLPhysics/BodyImpl.h>
 #include "PLPhysicsNewton/PLPhysicsNewton.h"
@@ -145,12 +145,12 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		PLPHYSICSNEWTON_API virtual void SetCollisionActive(bool bActive = true);
 		PLPHYSICSNEWTON_API virtual bool GetUseGravity() const;
 		PLPHYSICSNEWTON_API virtual void SetUseGravity(bool bUseGravity = true);
-		PLPHYSICSNEWTON_API virtual void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLGeneral::uint32 &nSteps) const;
-		PLPHYSICSNEWTON_API virtual void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLGeneral::uint32 nSteps = 10);
-		PLPHYSICSNEWTON_API virtual PLGeneral::uint8 GetCollisionGroup() const;
-		PLPHYSICSNEWTON_API virtual void SetCollisionGroup(PLGeneral::uint8 nCollisionGroup = 0);
-		PLPHYSICSNEWTON_API virtual PLGeneral::uint32 GetNumOfPartners() const;
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *GetPartner(PLGeneral::uint32 nIndex) const;
+		PLPHYSICSNEWTON_API virtual void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLCore::uint32 &nSteps) const;
+		PLPHYSICSNEWTON_API virtual void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLCore::uint32 nSteps = 10);
+		PLPHYSICSNEWTON_API virtual PLCore::uint8 GetCollisionGroup() const;
+		PLPHYSICSNEWTON_API virtual void SetCollisionGroup(PLCore::uint8 nCollisionGroup = 0);
+		PLPHYSICSNEWTON_API virtual PLCore::uint32 GetNumOfPartners() const;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *GetPartner(PLCore::uint32 nIndex) const;
 
 
 	//[-------------------------------------------------------]
@@ -210,16 +210,16 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		bool				m_bAutoFreeze;				/**< Automatically freeze the body? */
 		float				m_fFreezeLinearVelocity;	/**< Linear velocity freeze threshold */
 		float				m_fFreezeAngularVelocity;	/**< Angular velocity freeze threshold */
-		PLGeneral::uint32	m_nFreezeSteps;				/**< Number of steps the linear and angular velocity must be below the thresholds before the body is frozen */
-		PLGeneral::uint32	m_nCurrentFreezeSteps;		/**< Current freeze steps */
+		PLCore::uint32		m_nFreezeSteps;				/**< Number of steps the linear and angular velocity must be below the thresholds before the body is frozen */
+		PLCore::uint32		m_nCurrentFreezeSteps;		/**< Current freeze steps */
 		bool				m_bCollisionActive;			/**< Can the body collide? */
 		bool				m_bUseGravity;				/**< Use gravity? */
-		PLGeneral::uint8	m_nCollisionGroup;			/**< Collision group the body is in */
-		PLGeneral::uint16	m_nChangedByUserFlags;		/**< Changed by user flags */
-		PLGeneral::uint8	m_nChangedByPhysicsFlags;	/**< Changed by physics flags */
+		PLCore::uint8		m_nCollisionGroup;			/**< Collision group the body is in */
+		PLCore::uint16		m_nChangedByUserFlags;		/**< Changed by user flags */
+		PLCore::uint8		m_nChangedByPhysicsFlags;	/**< Changed by physics flags */
 
 		/** List of partner bodies */
-		PLGeneral::Array<PLPhysics::Body*> m_lstPartnerBodies;
+		PLCore::Array<PLPhysics::Body*> m_lstPartnerBodies;
 
 
 };

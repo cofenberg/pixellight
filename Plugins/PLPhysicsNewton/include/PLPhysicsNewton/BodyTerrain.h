@@ -91,7 +91,7 @@ class BodyTerrain : public PLPhysics::BodyTerrain {
 		*  @param[in] vScale
 		*    Scale
 		*/
-		BodyTerrain(PLPhysics::World &cWorld, PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight,
+		BodyTerrain(PLPhysics::World &cWorld, PLCore::uint32 nWidth, PLCore::uint32 nHeight,
 					const float fTerrain[], const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax,
 					const PLMath::Vector3 &vScale);
 
@@ -146,8 +146,8 @@ class BodyTerrain : public PLPhysics::BodyTerrain {
 	//[-------------------------------------------------------]
 	private:
 		// Private data
-		PLGeneral::uint32  m_nWidth;	/**< Terrain data width */
-		PLGeneral::uint32  m_nHeight;	/**< Terrain data height */
+		PLCore::uint32     m_nWidth;	/**< Terrain data width */
+		PLCore::uint32     m_nHeight;	/**< Terrain data height */
 		const float		  *m_pfTerrain;	/**< Terrain data (always valid, do NOT destroy the data itself, it's only shared) */
 		PLMath::Vector3	   m_vBoxMin;	/**< Bounding box minimum */
 		PLMath::Vector3	   m_vBoxMax;	/**< Bounding box maximum */

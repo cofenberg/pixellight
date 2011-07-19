@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/File/File.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLRenderer/Renderer/ResourceHandler.h"
 #include "PLRenderer/Renderer/FontTexture.h"
@@ -34,7 +34,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLRenderer {
 

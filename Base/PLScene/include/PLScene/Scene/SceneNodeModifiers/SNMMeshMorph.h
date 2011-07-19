@@ -58,10 +58,10 @@ class SNMMeshMorph : public SNMMesh {
 		// Constructors
 		pl_constructor_1(ParameterConstructor, SceneNode&, "Parameter constructor", "")
 		// Attributes
-		pl_attribute(Name,		PLGeneral::String,	"",		ReadWrite,	GetSet,			"Name of the morph target",		"")
-		pl_attribute(Weight,	float,				0.0f,	ReadWrite,	DirectValue,	"Morph target weight",			"")
-		pl_attribute(MinWeight,	float,				0.0f,	ReadWrite,	DirectValue,	"Minimum morph target weight",	"")
-		pl_attribute(MaxWeight,	float,				1.0f,	ReadWrite,	DirectValue,	"Maximum morph target weight",	"")
+		pl_attribute(Name,		PLCore::String,	"",		ReadWrite,	GetSet,			"Name of the morph target",		"")
+		pl_attribute(Weight,	float,			0.0f,	ReadWrite,	DirectValue,	"Morph target weight",			"")
+		pl_attribute(MinWeight,	float,			0.0f,	ReadWrite,	DirectValue,	"Minimum morph target weight",	"")
+		pl_attribute(MaxWeight,	float,			1.0f,	ReadWrite,	DirectValue,	"Maximum morph target weight",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class SNMMeshMorph : public SNMMesh {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetName() const;
-		PLS_API void SetName(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetName() const;
+		PLS_API void SetName(const PLCore::String &sValue);
 		PLS_API float GetWeight() const;
 		PLS_API void SetWeight(float fValue);
 		PLS_API float GetMinWeight() const;
@@ -121,10 +121,10 @@ class SNMMeshMorph : public SNMMesh {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sName;		/**< Name of the morph target */
-		float			  m_fWeight;	/**< Morph target weight */
-		float			  m_fMinWeight;	/**< Minimum morph target weight */
-		float			  m_fMaxWeight;	/**< Maximum morph target weight */
+		PLCore::String m_sName;			/**< Name of the morph target */
+		float		   m_fWeight;		/**< Morph target weight */
+		float		   m_fMinWeight;	/**< Minimum morph target weight */
+		float		   m_fMaxWeight;	/**< Maximum morph target weight */
 
 
 };

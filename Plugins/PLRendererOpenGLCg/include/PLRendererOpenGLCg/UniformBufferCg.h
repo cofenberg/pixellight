@@ -96,7 +96,7 @@ class UniformBufferCg : public PLRenderer::UniformBuffer {
 		*  @param[in] sShaderLanguage
 		*    The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg")
 		*/
-		UniformBufferCg(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage);
+		UniformBufferCg(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage);
 
 		/**
 		*  @brief
@@ -112,20 +112,20 @@ class UniformBufferCg : public PLRenderer::UniformBuffer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String  m_sShaderLanguage;	/**< The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg") */
-		CGbuffer		   m_pCgBuffer;			/**< Cg buffer, can be a null pointer */
-		void			  *m_pData;				/**< Dynamic buffer, can be a null pointer (none UBO) */
-		void			  *m_pLockedData;		/**< Locked data, can be a null pointer */
-		bool			   m_bLockReadOnly;		/**< Read only lock? */
-		bool			   m_bUpdateUBO;		/**< Do we need to update the UBO? */
-		CGbufferusage	   m_nUsageAPI;			/**< API usage setting */
+		PLCore::String  m_sShaderLanguage;	/**< The name of the shader language the uniform buffer is using (for example "GLSL" or "Cg") */
+		CGbuffer	    m_pCgBuffer;		/**< Cg buffer, can be a null pointer */
+		void		   *m_pData;			/**< Dynamic buffer, can be a null pointer (none UBO) */
+		void		   *m_pLockedData;		/**< Locked data, can be a null pointer */
+		bool		    m_bLockReadOnly;	/**< Read only lock? */
+		bool		    m_bUpdateUBO;		/**< Do we need to update the UBO? */
+		CGbufferusage   m_nUsageAPI;		/**< API usage setting */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::UniformBuffer functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
+		virtual PLCore::String GetShaderLanguage() const;
 
 
 	//[-------------------------------------------------------]
@@ -133,9 +133,9 @@ class UniformBufferCg : public PLRenderer::UniformBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
 		virtual bool Clear();
-		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
 		virtual void *GetData();
 		virtual bool Unlock();
 
@@ -144,8 +144,8 @@ class UniformBufferCg : public PLRenderer::UniformBuffer {
 	//[ Protected virtual PLRenderer::Resource functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

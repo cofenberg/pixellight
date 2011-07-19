@@ -55,8 +55,8 @@ class MeshCreatorDisk : public MeshCreator {
 		// Attributes
 		pl_attribute(InnerRadius,	float,				0.0f,								ReadWrite,	DirectValue,	"Inner radius of the disk (may be zero)",											"")
 		pl_attribute(OuterRadius,	float,				0.5f,								ReadWrite,	DirectValue,	"Outer radius of the disk",															"")
-		pl_attribute(Slices,		PLGeneral::uint32,	20,									ReadWrite,	DirectValue,	"Number of subdivisions around the z-axis",											"")
-		pl_attribute(Loops,			PLGeneral::uint32,	1,									ReadWrite,	DirectValue,	"Number of concentric rings about the origin into which the disk is subdivided",	"")
+		pl_attribute(Slices,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"Number of subdivisions around the z-axis",											"")
+		pl_attribute(Loops,			PLCore::uint32,		1,									ReadWrite,	DirectValue,	"Number of concentric rings about the origin into which the disk is subdivided",	"")
 		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",																	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -84,7 +84,7 @@ class MeshCreatorDisk : public MeshCreator {
 	//[ Private virtual MeshCreator functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *Create(Mesh &cMesh, PLGeneral::uint32 nLODLevel = 0, bool bStatic = true) const;
+		virtual Mesh *Create(Mesh &cMesh, PLCore::uint32 nLODLevel = 0, bool bStatic = true) const;
 
 
 };

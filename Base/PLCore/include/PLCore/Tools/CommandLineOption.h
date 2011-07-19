@@ -1,0 +1,258 @@
+/*********************************************************\
+ *  File: CommandLineOption.h                            *
+ *
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLCORE_COMMANDLINEOPTION_H__
+#define __PLCORE_COMMANDLINEOPTION_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/String/String.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Command line option
+*/
+class CommandLineOption {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Command line option type
+		*/
+		enum EType {
+			OptionFlag,			/**< A flag, e.g. 'command -v' or 'command --verbose' */
+			OptionParam,		/**< A parameter, e.g. 'command -f name' or 'command --filename name' */
+			OptionArgument		/**< An argument, e.g. 'command name' */
+		};
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLCORE_API CommandLineOption();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API ~CommandLineOption();
+
+		/**
+		*  @brief
+		*    Get option type
+		*
+		*  @return
+		*    Type of option
+		*/
+		PLCORE_API EType GetType() const;
+
+		/**
+		*  @brief
+		*    Set option type
+		*
+		*  @param[in] nType
+		*    Type of option
+		*/
+		PLCORE_API void SetType(EType nType);
+
+		/**
+		*  @brief
+		*    Check if this option is required
+		*
+		*  @return
+		*    'true' if the option is required, else 'false'
+		*/
+		PLCORE_API bool IsRequired() const;
+
+		/**
+		*  @brief
+		*    Set if this option is required
+		*
+		*  @param[in] bRequired
+		*    'true' if the option is required, else 'false'
+		*/
+		PLCORE_API void SetRequired(bool bRequired);
+
+		/**
+		*  @brief
+		*    Get name
+		*
+		*  @return
+		*    Option name (e.g. "Name")
+		*/
+		PLCORE_API String GetName() const;
+
+		/**
+		*  @brief
+		*    Set name
+		*
+		*  @param[in] sName
+		*    Option name (e.g. "Name")
+		*/
+		PLCORE_API void SetName(const String &sName);
+
+		/**
+		*  @brief
+		*    Get short name
+		*
+		*  @return
+		*    Short option name (e.g. "-a")
+		*/
+		PLCORE_API String GetShortName() const;
+
+		/**
+		*  @brief
+		*    Set short name
+		*
+		*  @param[in] sName
+		*    Short option name (e.g. "-a")
+		*/
+		PLCORE_API void SetShortName(const String &sName);
+
+		/**
+		*  @brief
+		*    Get long name
+		*
+		*  @return
+		*    Long option name (e.g. "--optiona")
+		*/
+		PLCORE_API String GetLongName() const;
+
+		/**
+		*  @brief
+		*    Set long name
+		*
+		*  @param[in] sName
+		*    Long option name (e.g. "--optiona")
+		*/
+		PLCORE_API void SetLongName(const String &sName);
+
+		/**
+		*  @brief
+		*    Get description
+		*
+		*  @return
+		*    Description string
+		*/
+		PLCORE_API String GetDescription() const;
+
+		/**
+		*  @brief
+		*    Set description
+		*
+		*  @param[in] sDescription
+		*    Description string
+		*/
+		PLCORE_API void SetDescription(const String &sDescription);
+
+		/**
+		*  @brief
+		*    Get default value
+		*
+		*  @return
+		*    Default value
+		*/
+		PLCORE_API String GetDefault() const;
+
+		/**
+		*  @brief
+		*    Set default value
+		*
+		*  @param[in] sDefault
+		*    Default value
+		*/
+		PLCORE_API void SetDefault(const String &sDefault);
+
+		/**
+		*  @brief
+		*    Check if option value is set (either by command line or by default value)
+		*
+		*  @return
+		*    'true' if the value is set, else 'false'
+		*/
+		PLCORE_API bool IsSet() const;
+
+		/**
+		*  @brief
+		*    Get option value
+		*
+		*  @return
+		*    Value of option ("true"/"false" for boolean values)
+		*/
+		PLCORE_API String GetValue() const;
+
+		/**
+		*  @brief
+		*    Set value
+		*
+		*  @param[in] sValue
+		*    Option value
+		*/
+		PLCORE_API void SetValue(const String &sValue);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		EType	m_nType;		/**< Type of command line option */
+		bool	m_bRequired;	/**< Is this option required? */
+		String	m_sName;		/**< Name, can be "" except for OptionArgument */
+		String	m_sShortName;	/**< Short name (e.g. "-a"), can be "" */
+		String	m_sLongName;	/**< Long name (e.g. "--optiona"), can be "" */
+		String	m_sDescription;	/**< Description */
+		String	m_sDefault;		/**< Default value */
+		String	m_sValue;		/**< Current value */
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore
+
+
+#endif // __PLCORE_COMMANDLINEOPTION_H__

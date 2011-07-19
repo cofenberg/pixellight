@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <png.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Url.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Url.h>
 #include "PLGraphics/Image/Image.h"
 #include "PLGraphics/Image/ImagePart.h"
 #include "PLGraphics/Image/ImageBuffer.h"
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGraphics {
 

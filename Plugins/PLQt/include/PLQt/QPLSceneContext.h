@@ -82,12 +82,12 @@ class PLQT_API QPLSceneContext : public QPLContext {
 		PLScene::SceneContext* GetSceneContext();
 		PLScene::SceneContainer* GetScene();
 		PLScene::SceneContainer* GetRootScene();
-		PLScene::SceneNode* GetNodeFromScene(const PLGeneral::String &nodeName);
+		PLScene::SceneNode* GetNodeFromScene(const PLCore::String &nodeName);
 		void UpdateSceneContext();
 		bool LoadSceneFromFile(const QString& sSceneFile);
 		PLScene::SNCamera* GetCamera() { return m_pCamera; }
-		void SetSceneRenderer(const PLGeneral::String & sSceneRenderer);
-		const PLGeneral::String& GetSceneRenderer();
+		void SetSceneRenderer(const PLCore::String & sSceneRenderer);
+		const PLCore::String& GetSceneRenderer();
 
 
 	protected:
@@ -123,8 +123,8 @@ class PLQT_API QPLSceneContext : public QPLContext {
 		PLScene::SNCamera		*m_pCamera;
 		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	 EventHandlerSceneNode;
 		PLScene::SceneNode *m_pFirstFoundCamera;
-		PLGeneral::String	m_sStartCamera;
-		PLGeneral::String m_sSceneRenderer;
+		PLCore::String	m_sStartCamera;
+		PLCore::String m_sSceneRenderer;
 
 
 };

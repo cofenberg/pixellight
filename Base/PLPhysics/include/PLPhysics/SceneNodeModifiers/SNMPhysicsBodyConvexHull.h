@@ -67,7 +67,7 @@ class SNMPhysicsBodyConvexHull : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyConvexHull, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics convex hull body scene node modifier")
 		// Attributes
-		pl_attribute(Mesh,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead",	"Type='Mesh'")
+		pl_attribute(Mesh,	PLCore::String,	"",	ReadWrite,	GetSet,	"Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead",	"Type='Mesh'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
@@ -77,8 +77,8 @@ class SNMPhysicsBodyConvexHull : public SNMPhysicsBody {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLGeneral::String GetMesh() const;
-		PLPHYSICS_API void SetMesh(const PLGeneral::String &sValue);
+		PLPHYSICS_API PLCore::String GetMesh() const;
+		PLPHYSICS_API void SetMesh(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -105,7 +105,7 @@ class SNMPhysicsBodyConvexHull : public SNMPhysicsBody {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sMesh;	/**< Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead */
+		PLCore::String m_sMesh;	/**< Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead */
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Time.h>
+#include <PLCore/Tools/Time.h>
 #include "PLIRC/PLIRC.h"
 
 
@@ -54,35 +54,35 @@ class Topic {
 	public:
 		// Construction/Destruction
 		PLIRC_API Topic();
-		PLIRC_API Topic(const PLGeneral::String &sNick, const PLGeneral::String &sTopic, const PLGeneral::Time &cDate);
+		PLIRC_API Topic(const PLCore::String &sNick, const PLCore::String &sTopic, const PLCore::Time &cDate);
 		PLIRC_API ~Topic();
 
 		// Get nick name
-		PLIRC_API PLGeneral::String GetNick() const;
+		PLIRC_API PLCore::String GetNick() const;
 
 		// Set nick name
-		PLIRC_API void SetNick(const PLGeneral::String &sNick);
+		PLIRC_API void SetNick(const PLCore::String &sNick);
 
 		// Get topic
-		PLIRC_API PLGeneral::String GetTopic() const;
+		PLIRC_API PLCore::String GetTopic() const;
 
 		// Set topic
-		PLIRC_API void SetTopic(const PLGeneral::String &sTopic);
+		PLIRC_API void SetTopic(const PLCore::String &sTopic);
 
 		// Get date
-		PLIRC_API const PLGeneral::Time &GetDate() const;
+		PLIRC_API const PLCore::Time &GetDate() const;
 
 		// Set date
-		PLIRC_API void SetDate(const PLGeneral::Time &cDate);
+		PLIRC_API void SetDate(const PLCore::Time &cDate);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sNick;	/**< Nick name of the user that sets the topic */
-		PLGeneral::String m_sTopic;	/**< Topic */
-		PLGeneral::Time   m_cDate;	/**< Date the topic was set */
+		PLCore::String m_sNick;		/**< Nick name of the user that sets the topic */
+		PLCore::String m_sTopic;	/**< Topic */
+		PLCore::Time   m_cDate;		/**< Date the topic was set */
 
 
 };

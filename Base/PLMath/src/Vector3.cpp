@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLMath/Plane.h"
 #include "PLMath/Rectangle.h"
 #include "PLMath/Quaternion.h"
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLMath {
 
 

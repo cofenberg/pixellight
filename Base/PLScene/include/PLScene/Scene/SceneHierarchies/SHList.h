@@ -100,8 +100,8 @@ class SHListNode : public SceneHierarchyNode {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual void Touch(bool bRecursive = false);
-		PLS_API virtual PLGeneral::uint32 GetNumOfNodes() const;
-		PLS_API virtual SceneHierarchyNode *GetNode(PLGeneral::uint32 nIndex) const;
+		PLS_API virtual PLCore::uint32 GetNumOfNodes() const;
+		PLS_API virtual SceneHierarchyNode *GetNode(PLCore::uint32 nIndex) const;
 
 
 	//[-------------------------------------------------------]

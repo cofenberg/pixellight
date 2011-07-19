@@ -126,8 +126,8 @@ class SNMesh : public SceneNode {
 			pl_property("Icon",	"Data/Textures/IconMesh.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Mesh,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Mesh to use",													"Type='Mesh'")
-		pl_attribute(Skin,			PLGeneral::String,			"",	ReadWrite,	GetSet,	"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
+		pl_attribute(Mesh,			PLCore::String,				"",	ReadWrite,	GetSet,	"Mesh to use",													"Type='Mesh'")
+		pl_attribute(Skin,			PLCore::String,				"",	ReadWrite,	GetSet,	"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		0,	ReadWrite,	GetSet,	"Flags",														"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,	ReadWrite,	GetSet,	"Debug flags",													"")
@@ -140,11 +140,11 @@ class SNMesh : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetMesh() const;
-		PLS_API void SetMesh(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetSkin() const;
-		PLS_API void SetSkin(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneNode
+		PLS_API PLCore::String GetMesh() const;
+		PLS_API void SetMesh(const PLCore::String &sValue);
+		PLS_API PLCore::String GetSkin() const;
+		PLS_API void SetSkin(const PLCore::String &sValue);
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue);	// From SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -181,7 +181,7 @@ class SNMesh : public SceneNode {
 		*    - If this entitiy is initialized the mesh defined in the entiy variable
 		*      m_sMesh is loaded automatically
 		*/
-		PLS_API bool LoadMesh(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API bool LoadMesh(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class SNMesh : public SceneNode {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLS_API bool LoadSkin(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API bool LoadSkin(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 
 		/**
 		*  @brief
@@ -213,7 +213,7 @@ class SNMesh : public SceneNode {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLS_API bool SaveSkin(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API bool SaveSkin(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class SNMesh : public SceneNode {
 		*    'true' if all went fine, else 'false'
 		*    (There's no mesh? There's no skeleton? There's no joint with the given name?)
 		*/
-		PLS_API bool GetSkeletonJointWorldPosition(const PLGeneral::String &sJointName, PLMath::Vector3 &vPosition);
+		PLS_API bool GetSkeletonJointWorldPosition(const PLCore::String &sJointName, PLMath::Vector3 &vPosition);
 
 
 	//[-------------------------------------------------------]
@@ -270,8 +270,8 @@ class SNMesh : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String    m_sMesh;			/**< Mesh to use */
-		PLGeneral::String    m_sSkin;			/**< Skin file overwriting the default materials of the used mesh */
+		PLCore::String		 m_sMesh;			/**< Mesh to use */
+		PLCore::String		 m_sSkin;			/**< Skin file overwriting the default materials of the used mesh */
 		PLMesh::MeshHandler *m_pMeshHandler;	/**< The mesh handler, can be a null pointer */
 
 

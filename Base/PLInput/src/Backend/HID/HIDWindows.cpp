@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/System/DynLib.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/System/DynLib.h>
 #include "PLInput/Backend/HID/HIDWindows.h"
 #include "PLInput/Backend/HID/HIDDeviceWindows.h"
 
@@ -46,7 +46,7 @@ PFNHIDPGETVALUECAPS			HidP_GetValueCaps		= nullptr;
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

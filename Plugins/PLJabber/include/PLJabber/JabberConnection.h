@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Connection.h>
+#include <PLCore/Network/Connection.h>
 #include "PLJabber/InputStream.h"
 #include "PLJabber/OutputStream.h"
 
@@ -52,7 +52,7 @@ class JabberClient;
 *  @brief
 *    Jabber connection
 */
-class JabberConnection : public PLGeneral::Connection {
+class JabberConnection : public PLCore::Connection {
 
 
 	//[-------------------------------------------------------]
@@ -95,7 +95,7 @@ class JabberConnection : public PLGeneral::Connection {
 		*  @param[in] sPassword
 		*    Desired password
 		*/
-		PLJABBER_API void CreateAccount(const PLGeneral::String &sServer, const PLGeneral::String &sUsername, const PLGeneral::String &sPassword);
+		PLJABBER_API void CreateAccount(const PLCore::String &sServer, const PLCore::String &sUsername, const PLCore::String &sPassword);
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class JabberConnection : public PLGeneral::Connection {
 		*  @param[in] sPassword
 		*    Password
 		*/
-		PLJABBER_API void Login(const PLGeneral::String &sServer, const PLGeneral::String &sUsername, const PLGeneral::String &sPassword);
+		PLJABBER_API void Login(const PLCore::String &sServer, const PLCore::String &sUsername, const PLCore::String &sPassword);
 
 		/**
 		*  @brief
@@ -119,17 +119,17 @@ class JabberConnection : public PLGeneral::Connection {
 		// [TODO] Comments for the following methods
 		PLJABBER_API void GetRoster() const;
 
-		PLJABBER_API void SetPresence(EPresence nPresence, EPresenceShow nShow, const PLGeneral::String &sStatus, int nPriority) const;
+		PLJABBER_API void SetPresence(EPresence nPresence, EPresenceShow nShow, const PLCore::String &sStatus, int nPriority) const;
 
-		PLJABBER_API void Subscribe(const PLGeneral::String &sTo) const;
+		PLJABBER_API void Subscribe(const PLCore::String &sTo) const;
 
-		PLJABBER_API void Unsubscribe(const PLGeneral::String &sTo) const;
+		PLJABBER_API void Unsubscribe(const PLCore::String &sTo) const;
 
-		PLJABBER_API void AllowSubscription(const PLGeneral::String &sTo) const;
+		PLJABBER_API void AllowSubscription(const PLCore::String &sTo) const;
 
-		PLJABBER_API void RevokeSubscription(const PLGeneral::String &sTo) const;
+		PLJABBER_API void RevokeSubscription(const PLCore::String &sTo) const;
 
-		PLJABBER_API void Message(const PLGeneral::String &sTo, const PLGeneral::String &sSubject, const PLGeneral::String &sMessage) const;
+		PLJABBER_API void Message(const PLCore::String &sTo, const PLCore::String &sSubject, const PLCore::String &sMessage) const;
 
 
 	//[-------------------------------------------------------]
@@ -158,12 +158,12 @@ class JabberConnection : public PLGeneral::Connection {
 		*  @param[in] cElement
 		*    XML Element
 		*/
-		PLJABBER_API void SendElement(const PLGeneral::XmlElement &cElement) const;
+		PLJABBER_API void SendElement(const PLCore::XmlElement &cElement) const;
 
-		PLJABBER_API void SendQueryLogin(const PLGeneral::String &sUsername, const PLGeneral::String &sPassword) const;
-		PLJABBER_API void SendLogin(const PLGeneral::String &sUsername, const PLGeneral::String &sPassword) const;
+		PLJABBER_API void SendQueryLogin(const PLCore::String &sUsername, const PLCore::String &sPassword) const;
+		PLJABBER_API void SendLogin(const PLCore::String &sUsername, const PLCore::String &sPassword) const;
 		PLJABBER_API void SendQueryRoster() const;
-		PLJABBER_API void SendMsg(const PLGeneral::String &sTo, const PLGeneral::String &sSubject, const PLGeneral::String &sMessage) const;
+		PLJABBER_API void SendMsg(const PLCore::String &sTo, const PLCore::String &sSubject, const PLCore::String &sMessage) const;
 
 		/**
 		*  @brief
@@ -198,31 +198,31 @@ class JabberConnection : public PLGeneral::Connection {
 		*      - 'normal': User is available (standard online status)
 		*      - 'xa':     User is away. Really.
 		*/
-		PLJABBER_API void SendPresence(const PLGeneral::String &sFrom, const PLGeneral::String &sTo, const PLGeneral::String &sType, const PLGeneral::String &sShow, const PLGeneral::String &sStatus, int nPriority) const;
+		PLJABBER_API void SendPresence(const PLCore::String &sFrom, const PLCore::String &sTo, const PLCore::String &sType, const PLCore::String &sShow, const PLCore::String &sStatus, int nPriority) const;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLGeneral::Connection functions     ]
+	//[ Protected virtual PLCore::Connection functions        ]
 	//[-------------------------------------------------------]
 	protected:
 		PLJABBER_API virtual void OnConnect();
 		PLJABBER_API virtual void OnDisconnect();
-		PLJABBER_API virtual void OnReceive(const char *pBuffer, PLGeneral::uint32 nSize);
+		PLJABBER_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual JabberConnection functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PLJABBER_API virtual void OnStreamStarted(const PLGeneral::XmlElement &cStream);
-		PLJABBER_API virtual void OnElement(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnInformQuery(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnMessage(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnPresence(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnError(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnAuthInfo(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnAuth(const PLGeneral::XmlElement &cElement);
-		PLJABBER_API virtual void OnRoster(const PLGeneral::XmlElement &cElement);
+		PLJABBER_API virtual void OnStreamStarted(const PLCore::XmlElement &cStream);
+		PLJABBER_API virtual void OnElement(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnInformQuery(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnMessage(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnPresence(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnError(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnAuthInfo(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnAuth(const PLCore::XmlElement &cElement);
+		PLJABBER_API virtual void OnRoster(const PLCore::XmlElement &cElement);
 
 
 	//[-------------------------------------------------------]
@@ -230,17 +230,17 @@ class JabberConnection : public PLGeneral::Connection {
 	//[-------------------------------------------------------]
 	protected:
 		// XML streams
-		InputStream			m_cInput;		/**< XML input stream */
-		OutputStream		m_cOutput;		/**< XML output stream */
+		InputStream		m_cInput;		/**< XML input stream */
+		OutputStream	m_cOutput;		/**< XML output stream */
 
 		// User data
-		PLGeneral::String	m_sUsername;
-		PLGeneral::String	m_sPassword;
-		PLGeneral::String	m_sUserID;
+		PLCore::String	m_sUsername;
+		PLCore::String	m_sPassword;
+		PLCore::String	m_sUserID;
 
 		// Connection data
-		PLGeneral::String	m_sServer;		/**< Name of the server */
-		PLGeneral::String	m_sID;			/**< ID generated by the server */
+		PLCore::String	m_sServer;		/**< Name of the server */
+		PLCore::String	m_sID;			/**< ID generated by the server */
 
 
 };

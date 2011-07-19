@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLMath/Plane.h"
 
 
@@ -168,7 +168,7 @@ class PlaneSet {
 		*  @note
 		*    - If there are not enought planes this function will create it. There are 5 planes. (no far plane)
 		*/
-		PLMATH_API bool CreateViewPlanes(const PLGeneral::Array<Vector3> &lstVertices, const Vector3 &vViewPosition);
+		PLMATH_API bool CreateViewPlanes(const PLCore::Array<Vector3> &lstVertices, const Vector3 &vViewPosition);
 
 		/**
 		*  @brief
@@ -217,7 +217,7 @@ class PlaneSet {
 		*  @return
 		*    Number of planes in the set
 		*/
-		PLMATH_API PLGeneral::uint32 GetNumOfPlanes() const;
+		PLMATH_API PLCore::uint32 GetNumOfPlanes() const;
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class PlaneSet {
 		*  @return
 		*    Plane list
 		*/
-		PLMATH_API PLGeneral::Array<Plane> &GetList();
+		PLMATH_API PLCore::Array<Plane> &GetList();
 
 		/**
 		*  @brief
@@ -259,7 +259,7 @@ class PlaneSet {
 		*  @return
 		*    Plane list
 		*/
-		PLMATH_API const PLGeneral::Array<Plane> &GetList() const;
+		PLMATH_API const PLCore::Array<Plane> &GetList() const;
 
 		/**
 		*  @brief
@@ -271,7 +271,7 @@ class PlaneSet {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMATH_API bool RemovePlane(PLGeneral::uint32 nID = 0);
+		PLMATH_API bool RemovePlane(PLCore::uint32 nID = 0);
 
 		/**
 		*  @brief
@@ -368,7 +368,7 @@ class PlaneSet {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::Array<Plane> m_lstPlane;	/**< Plane list */
+		PLCore::Array<Plane> m_lstPlane;	/**< Plane list */
 
 
 };

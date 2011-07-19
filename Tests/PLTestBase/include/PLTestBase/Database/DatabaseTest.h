@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLDatabase {
@@ -72,7 +72,7 @@ class DatabaseTest : public TestCase {
 		*  @param[in] sDatabase
 		*    Database
 		*/
-		void TestImplementation(const PLGeneral::String &sClass, const PLGeneral::String &sServer, const PLGeneral::String &sUserName, const PLGeneral::String &sUserPassword, const PLGeneral::String &sDatabase);
+		void TestImplementation(const PLCore::String &sClass, const PLCore::String &sServer, const PLCore::String &sUserName, const PLCore::String &sUserPassword, const PLCore::String &sDatabase);
 
 		/**
 		*  @brief

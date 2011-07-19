@@ -87,8 +87,8 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Public virtual PLSound::SoundManager functions        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetDescription() const;
-		virtual bool GetFormatList(PLGeneral::List<Format> &lstList) const;
+		virtual PLCore::String GetDescription() const;
+		virtual bool GetFormatList(PLCore::List<Format> &lstList) const;
 		virtual float GetVolume() const;
 		virtual void SetVolume(float fVolume = 1.0f);
 		virtual float GetPitch() const;
@@ -99,7 +99,7 @@ class SoundManager : public PLSound::SoundManager {
 		//[-------------------------------------------------------]
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
-		virtual PLSound::Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false);
+		virtual PLSound::Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false);
 		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
 
 		//[-------------------------------------------------------]
@@ -122,7 +122,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLSound::Buffer *CreateResource(const PLGeneral::String &sName);
+		virtual PLSound::Buffer *CreateResource(const PLCore::String &sName);
 
 
 };

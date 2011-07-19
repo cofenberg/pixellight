@@ -56,12 +56,12 @@ class SNMMeshAnimation : public SNMMesh {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMMeshAnimation, "PLScene", PLScene::SNMMesh, "Mesh scene node animation modifier class")
 		// Attributes
-		pl_attribute(Name,		PLGeneral::String,	"",		ReadWrite,	GetSet,	"Name of the animation",										"")
-		pl_attribute(Frame,		float,				0.0f,	ReadWrite,	GetSet,	"Current animation frame",										"")
-		pl_attribute(Speed,		float,				1.0f,	ReadWrite,	GetSet,	"Animation playback speed (multiplied with original speed)",	"")
-		pl_attribute(Weight,	float,				1.0f,	ReadWrite,	GetSet,	"Animation weight",												"")
-		pl_attribute(MinWeight,	float,				0.0f,	ReadWrite,	GetSet,	"Minimum animation weight",										"")
-		pl_attribute(MaxWeight,	float,				1.0f,	ReadWrite,	GetSet,	"Maximum animation weight",										"")
+		pl_attribute(Name,		PLCore::String,	"",		ReadWrite,	GetSet,	"Name of the animation",										"")
+		pl_attribute(Frame,		float,			0.0f,	ReadWrite,	GetSet,	"Current animation frame",										"")
+		pl_attribute(Speed,		float,			1.0f,	ReadWrite,	GetSet,	"Animation playback speed (multiplied with original speed)",	"")
+		pl_attribute(Weight,	float,			1.0f,	ReadWrite,	GetSet,	"Animation weight",												"")
+		pl_attribute(MinWeight,	float,			0.0f,	ReadWrite,	GetSet,	"Minimum animation weight",										"")
+		pl_attribute(MaxWeight,	float,			1.0f,	ReadWrite,	GetSet,	"Maximum animation weight",										"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
@@ -71,8 +71,8 @@ class SNMMeshAnimation : public SNMMesh {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetName() const;
-		PLS_API void SetName(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetName() const;
+		PLS_API void SetName(const PLCore::String &sValue);
 		PLS_API float GetFrame() const;
 		PLS_API void SetFrame(float fValue);
 		PLS_API float GetSpeed() const;
@@ -120,12 +120,12 @@ class SNMMeshAnimation : public SNMMesh {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sName;
-		float			  m_fFrame;
-		float			  m_fSpeed;
-		float			  m_fWeight;
-		float			  m_fMinWeight;
-		float			  m_fMaxWeight;
+		PLCore::String m_sName;
+		float		   m_fFrame;
+		float		   m_fSpeed;
+		float		   m_fWeight;
+		float		   m_fMinWeight;
+		float		   m_fMaxWeight;
 
 
 };

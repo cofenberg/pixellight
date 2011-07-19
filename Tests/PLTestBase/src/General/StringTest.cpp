@@ -28,9 +28,9 @@
 #include <malloc.h>
 #ifdef LINUX
 	#include <wchar.h>
-	#include <PLGeneral/PLGeneralLinuxWrapper.h>
+	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLTestBase/General/StringTest.h"
 
 
@@ -44,7 +44,7 @@ PL_WARNING_DISABLE(4996) // "'strdup': The POSIX name for this item is deprecate
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

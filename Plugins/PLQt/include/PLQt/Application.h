@@ -244,7 +244,7 @@ class PLQT_API Application : public QApplication {
 		*  @param[in] sRendererName
 		*    Name of the Renderer to be used
 		*/
-		void CreateRenderContext(const PLGeneral::String &sRendererName = "PLRendererOpenGL::Renderer");
+		void CreateRenderContext(const PLCore::String &sRendererName = "PLRendererOpenGL::Renderer");
 
 		/**
 		*  @brief
@@ -255,7 +255,7 @@ class PLQT_API Application : public QApplication {
 		*  @param[in] sExtension
 		*    extension of the archive to be used (default .zip)
 		*/
-		bool ScanFSArchives(const PLGeneral::String &sDirectory, const PLGeneral::String &sExtension = "*.zip");
+		bool ScanFSArchives(const PLCore::String &sDirectory, const PLCore::String &sExtension = "*.zip");
 
 
 	//[-------------------------------------------------------]

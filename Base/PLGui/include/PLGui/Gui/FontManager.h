@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/List.h>
 #include "PLGui/Gui/Resources/FontInfo.h"
 
 
@@ -90,16 +90,16 @@ class FontManager {
 		*  @return
 		*    List of font informations
 		*/
-		PLGUI_API const PLGeneral::List<FontInfo> &GetFonts();
+		PLGUI_API const PLCore::List<FontInfo> &GetFonts();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui							*m_pGui;		/**< Pointer to GUI */
-		PLGeneral::List<FontInfo>	 m_lstFonts;	/**< List of available fonts */
-		bool						 m_bFilled;		/**< Has the font list been filled? */
+		Gui						*m_pGui;		/**< Pointer to GUI */
+		PLCore::List<FontInfo>	 m_lstFonts;	/**< List of available fonts */
+		bool					 m_bFilled;		/**< Has the font list been filled? */
 
 
 };

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
+#include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/Context.h"
 
 
@@ -68,7 +68,7 @@ class ContextWindows : public Context {
 		*  @param[in] nMultisampleAntialiasingSamples
 		*    Multisample antialiasing samples per pixel, <=1 means no antialiasing
 		*/
-		ContextWindows(Renderer &cRenderer, PLGeneral::uint32 nMultisampleAntialiasingSamples);
+		ContextWindows(Renderer &cRenderer, PLCore::uint32 nMultisampleAntialiasingSamples);
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class ContextWindows : public Context {
 	public:
 		virtual bool IsValid() const;
 		virtual void MakeDummyCurrent() const;
-		virtual bool QueryDisplayModes(PLGeneral::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
+		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
 
 
 	//[-------------------------------------------------------]

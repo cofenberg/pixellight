@@ -57,7 +57,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SoundManager, "PLSoundOpenAL", PLSound::SoundManager, "OpenAL sound backend")
 		// Attributes
-		pl_attribute(DeviceName,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Device name. If not defined the 'preferred device' is selected.",	"")
+		pl_attribute(DeviceName,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Device name. If not defined the 'preferred device' is selected.",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -72,8 +72,8 @@ class SoundManager : public PLSound::SoundManager {
 		*    Read from memory structure for the custom OpenAL file callbacks
 		*/
 		struct MemData {
-			const PLGeneral::uint8 *pnData;		/**< Current data position (always valid!) */
-			const PLGeneral::uint8 *pnDataE;	/**< Data end position (always valid!) */
+			const PLCore::uint8 *pnData;	/**< Current data position (always valid!) */
+			const PLCore::uint8 *pnDataE;	/**< Data end position (always valid!) */
 		};
 
 
@@ -81,7 +81,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Custom static OpenAL file callbacks                   ]
 	//[-------------------------------------------------------]
 	public:
-		// From PLGeneral::File
+		// From PLCore::File
 		static size_t read_func(void *ptr, size_t size, size_t nmemb, void *datasource);
 		static int seek_func(void *datasource, ogg_int64_t offset, int whence);
 		static int close_func(void *datasource);
@@ -147,20 +147,20 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ALCdevice						   *m_pDevice;								/**< Device */
-		ALCcontext						   *m_pContext;								/**< Context */
-		PLGeneral::uint32					m_nEAXLevel;							/**< EAX level */
-		float								m_fPitch;								/**< Master pitch */
-		PLMath::Vector3						m_vListenerAttributes[ListenerNumber];	/**< Listener attributes */
-		PLGeneral::Array<PLSound::Source*>	m_lstActiveSources;						/**< Current active sound sources of this sound manager */
+		ALCdevice					    *m_pDevice;								/**< Device */
+		ALCcontext					    *m_pContext;							/**< Context */
+		PLCore::uint32					 m_nEAXLevel;							/**< EAX level */
+		float							 m_fPitch;								/**< Master pitch */
+		PLMath::Vector3					 m_vListenerAttributes[ListenerNumber];	/**< Listener attributes */
+		PLCore::Array<PLSound::Source*>	 m_lstActiveSources;					/**< Current active sound sources of this sound manager */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLSound::SoundManager functions        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetDescription() const;
-		virtual bool GetFormatList(PLGeneral::List<Format> &lstList) const;
+		virtual PLCore::String GetDescription() const;
+		virtual bool GetFormatList(PLCore::List<Format> &lstList) const;
 		virtual float GetVolume() const;
 		virtual void SetVolume(float fVolume = 1.0f);
 		virtual float GetPitch() const;
@@ -171,7 +171,7 @@ class SoundManager : public PLSound::SoundManager {
 		//[-------------------------------------------------------]
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
-		virtual PLSound::Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false);
+		virtual PLSound::Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false);
 		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
 
 		//[-------------------------------------------------------]
@@ -194,7 +194,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLSound::Buffer *CreateResource(const PLGeneral::String &sName);
+		virtual PLSound::Buffer *CreateResource(const PLCore::String &sName);
 
 
 };

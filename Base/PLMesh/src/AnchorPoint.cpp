@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLMesh {
 
 
@@ -93,7 +93,7 @@ void AnchorPoint::SetID(uint32 nID)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Element functions           ]
+//[ Public virtual PLCore::Element functions              ]
 //[-------------------------------------------------------]
 AnchorPoint &AnchorPoint::operator =(const AnchorPoint &cSource)
 {
@@ -132,7 +132,7 @@ AnchorPointManager::~AnchorPointManager()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 AnchorPoint *AnchorPointManager::CreateElement(const String &sName)
 {

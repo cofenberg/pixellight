@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLMesh {
@@ -95,7 +95,7 @@ class BodyMesh : public PLPhysics::BodyMesh {
 		*  @param[in] bOptimize
 		*    Allow the physics API to optimize the mesh? (if supported)
 		*/
-		BodyMesh(PLPhysics::World &cWorld, PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const PLMath::Vector3 &vMeshScale, bool bOptimize);
+		BodyMesh(PLPhysics::World &cWorld, PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale, bool bOptimize);
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class BodyMesh : public PLPhysics::BodyMesh {
 		*  @return
 		*    The opened file, a null pointer on error (or maybe caching is not activated)
 		*/
-		PLGeneral::File *OpenFile(PLPhysics::World &cWorld, const PLGeneral::String &sFilename, bool bCreate = false) const;
+		PLCore::File *OpenFile(PLPhysics::World &cWorld, const PLCore::String &sFilename, bool bCreate = false) const;
 
 
 };

@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLGui/Widgets/Containers/ContainerWidget.h>
 
 
@@ -127,7 +127,7 @@ class DragDropWidget : public PLGui::ContainerWidget {
 		PLGui::Button *m_pButtonPaste;		/**< Button 'Paste' */
 
 		// Data
-		PLGeneral::String m_sText;		/**< Text */
+		PLCore::String m_sText;		/**< Text */
 
 
 };

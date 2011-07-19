@@ -111,7 +111,7 @@ class SensorAABoundingBox : public Sensor {
 		*  @param[in] nFlags
 		*    Flags (see EFlags)
 		*/
-		PLPHYSICS_API SensorAABoundingBox(World &cWorld, const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0);
+		PLPHYSICS_API SensorAABoundingBox(World &cWorld, const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
 
 
 	//[-------------------------------------------------------]

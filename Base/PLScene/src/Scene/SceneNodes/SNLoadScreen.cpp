@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
@@ -250,7 +250,7 @@ void SNLoadScreen::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Base functions              ]
+//[ Public virtual PLCore::Base functions                 ]
 //[-------------------------------------------------------]
 // [TODO] New RTTI usage
 /*

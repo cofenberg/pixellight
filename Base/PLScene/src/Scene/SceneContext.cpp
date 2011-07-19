@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/Tools/Profiling.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Stopwatch.h>
+#include <PLCore/Tools/Profiling.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLMesh/MeshManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
@@ -39,7 +39,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLMesh;
 using namespace PLInput;

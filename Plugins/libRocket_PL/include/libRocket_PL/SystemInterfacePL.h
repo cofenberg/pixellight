@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core/SystemInterface.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "libRocket_PL/libRocket_PL.h"
 
 
@@ -60,7 +60,7 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 		*  @param[in] sLocalizationGroup
 		*    Localization group the texts to translate are in
 		*/
-		LIBROCKET_PL_API SystemInterfacePL(const PLGeneral::String &sLocalizationGroup = "PixelLight");
+		LIBROCKET_PL_API SystemInterfacePL(const PLCore::String &sLocalizationGroup = "PixelLight");
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sLocalizationGroup;	/**< Localization group the texts to translate are in */
+		PLCore::String m_sLocalizationGroup;	/**< Localization group the texts to translate are in */
 
 
 };

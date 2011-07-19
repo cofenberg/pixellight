@@ -107,7 +107,7 @@ class FixedFunctionsTextureStageStates : public PLCore::Object {
 		*  @return
 		*    The value of the queried texture stage state variable
 		*/
-		PLRENDERER_API PLGeneral::uint32 Get(FixedFunctions::TextureStage::Enum nState) const;
+		PLRENDERER_API PLCore::uint32 Get(FixedFunctions::TextureStage::Enum nState) const;
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class FixedFunctionsTextureStageStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(FixedFunctions::TextureStage::Enum nState, PLGeneral::uint32 nValue);
+		PLRENDERER_API bool Set(FixedFunctions::TextureStage::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class FixedFunctionsTextureStageStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::uint32 m_nTSS[FixedFunctions::TextureStage::Number];	/**< List of texture stage states (see FixedFunctions::TextureStage) */
+		PLCore::uint32 m_nTSS[FixedFunctions::TextureStage::Number];	/**< List of texture stage states (see FixedFunctions::TextureStage) */
 
 
 };

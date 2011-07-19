@@ -279,7 +279,7 @@ class VisNode {
 		PLMath::Matrix3x4  m_mWorld;					/**< Absolute world matrix of the scene node */
 		float			   m_fSquaredDistanceToCamera;	/**< Squared distance to the camera */
 		// Lazy evaluation
-		mutable PLGeneral::uint8  m_nInternalFlags;		/**< Internal flags */
+		mutable PLCore::uint8	  m_nInternalFlags;		/**< Internal flags */
 		mutable PLMath::Matrix3x4 m_mInvWorld;			/**< Absolute inverse world matrix of the scene node (derived on demand from m_mWorld and SQCull data) */
 		mutable PLMath::Matrix4x4 m_mWorldView;			/**< Absolute world view matrix of the scene node (derived on demand from m_mWorld and SQCull data) */
 		mutable PLMath::Matrix4x4 m_mWorldViewProj;		/**< Absolute world view projection matrix of the scene node (derived on demand from m_mWorld and SQCull data) */

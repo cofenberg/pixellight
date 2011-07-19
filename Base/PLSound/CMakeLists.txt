@@ -31,7 +31,6 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
@@ -48,7 +47,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLMath
 	PLScene
@@ -123,7 +121,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLScene)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

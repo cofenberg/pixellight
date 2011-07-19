@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/XmlDeclaration.h>
-#include <PLGeneral/Xml/XmlElement.h>
+#include <PLCore/Xml/XmlDeclaration.h>
+#include <PLCore/Xml/XmlElement.h>
 #include "PLJabber/JabberConnection.h"
 #include "PLJabber/OutputStream.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLJabber {
 
 

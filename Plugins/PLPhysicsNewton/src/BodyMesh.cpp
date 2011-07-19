@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/Url.h>
+#include <PLCore/System/System.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/Url.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -43,7 +43,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLMesh;

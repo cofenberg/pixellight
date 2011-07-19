@@ -66,8 +66,8 @@ class LocalizationLoaderPL : public LocalizationLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	LocalizationGroup&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const LocalizationGroup&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	LocalizationGroup&,			File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const LocalizationGroup&,	File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -75,8 +75,8 @@ class LocalizationLoaderPL : public LocalizationLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API bool Load(LocalizationGroup &cLocalizationGroup, PLGeneral::File &cFile);
-		PLCORE_API bool Save(const LocalizationGroup &cLocalizationGroup, PLGeneral::File &cFile);
+		PLCORE_API bool Load(LocalizationGroup &cLocalizationGroup, File &cFile);
+		PLCORE_API bool Save(const LocalizationGroup &cLocalizationGroup, File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -112,7 +112,7 @@ class LocalizationLoaderPL : public LocalizationLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(LocalizationGroup &cLocalizationGroup, const PLGeneral::XmlElement &cLocalizationElement) const;
+		bool LoadV1(LocalizationGroup &cLocalizationGroup, const XmlElement &cLocalizationElement) const;
 
 
 };

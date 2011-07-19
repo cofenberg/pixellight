@@ -79,21 +79,21 @@ because the user should be able to see whether or not a function is going to man
 
 
 \section{Namespaces}
-PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined in PLGeneral you need to do this:
+PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined in \emph{PLCore} you need to do this:
 
 \begin{lstlisting}[caption=Explicit namespace]
-PLGeneral::String sMyString;
+PLCore::String sMyString;
 \end{lstlisting}
 
 Or this:
 
 \begin{lstlisting}[caption=Using namespace]
-using namespace PLGeneral;
+using namespace PLCore;
 ...
 String sMyString;
 \end{lstlisting}
 
-Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLGeneral::}. We recommend to NEVER use \emph{using namespace} within header files!
+Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLCore::}. We recommend to NEVER use \emph{using namespace} within header files!
 
 
 
@@ -230,8 +230,8 @@ pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, do
 		pl_property("MyProperty",	"This is a property value")
 	pl_properties_end
 	// Attributes
-	pl_attribute(Name,	PLGeneral::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
-	pl_attribute(Level,	int,				1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
+	pl_attribute(Name,	PLCore::String,	"Bob",	ReadWrite,	GetSet,			"A name, emits MySignal after the name was changed",			"")
+	pl_attribute(Level,	int,			1,		ReadWrite,	DirectValue,	"Level, automatically increased on get/set name and OnMyEvent",	"")
 	// Constructors
 	pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	// Methods
@@ -240,7 +240,7 @@ pl_class(pl_rtti_export, MyRTTIClass, "", PLCore::Object, "Sample RTTI class, do
 	pl_method_0(SaySomethingWise,	void,					"Says something wise",					"")
 	pl_method_0(GetSelf,			MyRTTIClass*,			"Returns a pointer to this instance",	"")
 	// Signals
-	pl_signal_1(MySignal,	PLGeneral::String,	"My signal, automatically emitted after the name was changed",	"")
+	pl_signal_1(MySignal,	PLCore::String,	"My signal, automatically emitted after the name was changed",	"")
 	// Slots
 	pl_slot_0(OnMyEvent,	"My slot",	"")
 pl_class_end

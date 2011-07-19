@@ -76,7 +76,7 @@ inline Vector2::Vector2(const Vector2 &vV) :
 {
 }
 
-inline Vector2::Vector2(const PLGeneral::String &sString)
+inline Vector2::Vector2(const PLCore::String &sString)
 {
 	FromString(sString);
 }

@@ -52,15 +52,15 @@ class PGImage : public SNParticleGroup {
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGImage, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Image particle group")
 		// Attributes
-		pl_attribute(ImageFilename,		PLGeneral::String,		"Data/Textures/PGImage_Test.dds",	ReadWrite,	DirectValue,	"Image to create the particles from",	"Type='Image'")
-		pl_attribute(RedColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key red component",				"")
-		pl_attribute(GreenColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key green component",			"")
-		pl_attribute(BlueColorKey,		PLGeneral::uint8,		0,									ReadWrite,	DirectValue,	"Color key blue component",				"")
+		pl_attribute(ImageFilename,		PLCore::String,			"Data/Textures/PGImage_Test.dds",	ReadWrite,	DirectValue,	"Image to create the particles from",	"Type='Image'")
+		pl_attribute(RedColorKey,		PLCore::uint8,			0,									ReadWrite,	DirectValue,	"Color key red component",				"")
+		pl_attribute(GreenColorKey,		PLCore::uint8,			0,									ReadWrite,	DirectValue,	"Color key green component",			"")
+		pl_attribute(BlueColorKey,		PLCore::uint8,			0,									ReadWrite,	DirectValue,	"Color key blue component",				"")
 		pl_attribute(ColorKeyTolerance,	char,					0,									ReadWrite,	DirectValue,	"Color key tolerance",					"")
 		pl_attribute(ImageScale,		float,					0.1f,								ReadWrite,	DirectValue,	"Image scale",							"")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,			PLGeneral::String,		"Data/Effects/PGImage.plfx",		ReadWrite,	GetSet,			"Particle group material",				"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,			PLGeneral::uint32,		1,									ReadWrite,	GetSet,			"Number of particles",					"Min=1")
+		pl_attribute(Material,			PLCore::String,			"Data/Effects/PGImage.plfx",		ReadWrite,	GetSet,			"Particle group material",				"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,			PLCore::uint32,			1,									ReadWrite,	GetSet,			"Number of particles",					"Min=1")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	PointSprites,						ReadWrite,	GetSet,			"Flags",								"")
 		// Constructors

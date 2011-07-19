@@ -36,7 +36,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 typedef struct FT_FaceRec_ *FT_Face;
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLRendererOpenGLES {
@@ -99,13 +99,13 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[ Public virtual PLRenderer::Font functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool SetSize(PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96);
+		virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
 		virtual bool IsValid() const;
 		virtual float GetAscender() const;
 		virtual float GetDescender() const;
 		virtual float GetHeight() const;
-		virtual float GetTextWidth(const PLGeneral::String &sText);
-		virtual void Draw(const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLGeneral::uint32 nFlags = 0);
+		virtual float GetTextWidth(const PLCore::String &sText);
+		virtual void Draw(const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLCore::uint32 nFlags = 0);
 
 
 	//[-------------------------------------------------------]
@@ -121,7 +121,7 @@ class FontTexture : public PLRenderer::FontTexture {
 		*  @param[in] cFile
 		*    File to load from, must be opened and readable
 		*/
-		FontTexture(FontManager &cFontManager, PLGeneral::File &cFile);
+		FontTexture(FontManager &cFontManager, PLCore::File &cFile);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class FontTexture : public PLRenderer::FontTexture {
 		*  @return
 		*    The number of bytes the glyph texture atlas allocates
 		*/
-		PLGeneral::uint32 GetGlyphTextureAtlasNumOfBytes(bool bIncludeMipmaps) const;
+		PLCore::uint32 GetGlyphTextureAtlasNumOfBytes(bool bIncludeMipmaps) const;
 
 		/**
 		*  @brief
@@ -161,10 +161,10 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32  m_nFontFileSize;					/**< Font file size in bytes */
-		PLGeneral::uint8  *m_pFontFileData;					/**< Font file data, can be a null pointer */
+		PLCore::uint32     m_nFontFileSize;					/**< Font file size in bytes */
+		PLCore::uint8  	  *m_pFontFileData;					/**< Font file data, can be a null pointer */
 		FT_Face			  *m_pFTFace;						/**< FreeType library face (aka "The Font"), a null pointer on error */
-		PLGeneral::uint32  m_nGlyphTextureAtlasPadding;		/**< Glyph texture atlas gab between glyphs in pixel */
+		PLCore::uint32     m_nGlyphTextureAtlasPadding;		/**< Glyph texture atlas gab between glyphs in pixel */
 		GLuint			   m_nOpenGLESGlyphTextureAtlas;	/**< OpenGL ES glyph texture atlas, can be null */
 		PLMath::Vector2i   m_vGlyphTextureAtlasSize;		/**< Glyph texture atlas size */
 

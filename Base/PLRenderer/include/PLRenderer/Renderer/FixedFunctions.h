@@ -74,10 +74,10 @@ class FixedFunctions {
 		*    Holds all hardware capabilities
 		*/
 		struct Capabilities {
-			PLGeneral::uint8 nMaxActiveLights;			/**< Maximum number of active lights */
-			PLGeneral::uint8 nMaxClipPlanes;			/**< Maximum number of clip planes */
-			bool             bVertexBufferFogCoord;		/**< Vertex buffer fog coordinates supported? (for VertexBuffer::FogCoord) */
-			PLGeneral::uint8 nMaxVertexBufferStreams;	/**< Maximum number of vertex buffer streams */
+			PLCore::uint8 nMaxActiveLights;			/**< Maximum number of active lights */
+			PLCore::uint8 nMaxClipPlanes;			/**< Maximum number of clip planes */
+			bool          bVertexBufferFogCoord;	/**< Vertex buffer fog coordinates supported? (for VertexBuffer::FogCoord) */
+			PLCore::uint8 nMaxVertexBufferStreams;	/**< Maximum number of vertex buffer streams */
 		};
 
 		/**
@@ -89,7 +89,7 @@ class FixedFunctions {
 			enum Enum {
 				// Fog
 				FogEnable           = 0,	/**< Enable/disable fog (false/true, default: false) */
-				FogColor            = 1,	/**< RGBA fog color (PLGeneral::uint32, default: 0/0/0/0) */
+				FogColor            = 1,	/**< RGBA fog color (PLCore::uint32, default: 0/0/0/0) */
 				FogDensity          = 2,	/**< Fog density (float, default: 1.0) */
 				FogStart            = 3,	/**< Fog start (float, default: 0.0) */
 				FogEnd              = 4,	/**< Fog start (float, default: 1.0) */
@@ -100,7 +100,7 @@ class FixedFunctions {
 				AlphaTestReference  = 8,	/**< Alpha test reference value (0-1, default: 0.5) */
 				// Misc
 				Lighting            = 9,	/**< Enable/disable lighting (false/true, default: false) */
-				Ambient             = 10,	/**< General RGBA ambient color (PLGeneral::uint32, default: 0.0/0.0/0.0/0.0) */
+				Ambient             = 10,	/**< General RGBA ambient color (PLCore::uint32, default: 0.0/0.0/0.0/0.0) */
 				NormalizeNormals    = 11,	/**< Enable/disable normalize normals (false/true, default: true) */
 				ShadeMode           = 12,	/**< Shade mode (see Shade, default: Shade::Smooth) */
 				// End
@@ -242,10 +242,10 @@ class FixedFunctions {
 		class MaterialState {
 			public:
 			enum Enum {
-				Ambient   = 0,	/**< RGBA ambient color (PLGeneral::uint32, default: 0.2, 0.2, 0.2, 1.0) */
-				Diffuse   = 1,	/**< RGBA diffuse color (PLGeneral::uint32, default: 0.8, 0.8, 0.8, 1.0) */
-				Specular  = 2,	/**< RGBA specular color (PLGeneral::uint32, default: 0.0, 0.0, 0.0, 1.0) */
-				Emission  = 3,	/**< RGBA emission color (PLGeneral::uint32, default: 0.0, 0.0, 0.0, 1.0) */
+				Ambient   = 0,	/**< RGBA ambient color (PLCore::uint32, default: 0.2, 0.2, 0.2, 1.0) */
+				Diffuse   = 1,	/**< RGBA diffuse color (PLCore::uint32, default: 0.8, 0.8, 0.8, 1.0) */
+				Specular  = 2,	/**< RGBA specular color (PLCore::uint32, default: 0.0, 0.0, 0.0, 1.0) */
+				Emission  = 3,	/**< RGBA emission color (PLCore::uint32, default: 0.0, 0.0, 0.0, 1.0) */
 				Shininess = 4,	/**< Shininess (float, default: 0.0) */
 				// End
 				Number    = 5,	/**< Number of material states */
@@ -351,7 +351,7 @@ class FixedFunctions {
 		*  @return
 		*    The default state
 		*/
-		virtual PLGeneral::uint32 GetDefaultRenderState(RenderState::Enum nState) const = 0;
+		virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -397,7 +397,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultRenderState()
 		*/
-		virtual bool SetRenderState(RenderState::Enum nState, PLGeneral::uint32 nValue) = 0;
+		virtual bool SetRenderState(RenderState::Enum nState, PLCore::uint32 nValue) = 0;
 
 		/**
 		*  @brief
@@ -481,7 +481,7 @@ class FixedFunctions {
 		*  @return
 		*    The default state
 		*/
-		virtual PLGeneral::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const = 0;
+		virtual PLCore::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -508,7 +508,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultTextureStageState()
 		*/
-		virtual int GetTextureStageState(PLGeneral::uint32 nStage, TextureStage::Enum nState) const = 0;
+		virtual int GetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -531,7 +531,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultTextureStageState()
 		*/
-		virtual bool SetTextureStageState(PLGeneral::uint32 nStage, TextureStage::Enum nState, PLGeneral::uint32 nValue) = 0;
+		virtual bool SetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState, PLCore::uint32 nValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Material states                                       ]
@@ -549,7 +549,7 @@ class FixedFunctions {
 		*  @return
 		*    The default state
 		*/
-		virtual PLGeneral::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const = 0;
+		virtual PLCore::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -592,7 +592,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultMaterialState()
 		*/
-		virtual bool SetMaterialState(MaterialState::Enum nState, PLGeneral::uint32 nValue) = 0;
+		virtual bool SetMaterialState(MaterialState::Enum nState, PLCore::uint32 nValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Light states                                          ]
@@ -628,7 +628,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultLightSettings()
 		*/
-		virtual bool IsLightEnabled(PLGeneral::uint32 nLightID) const = 0;
+		virtual bool IsLightEnabled(PLCore::uint32 nLightID) const = 0;
 
 		/**
 		*  @brief
@@ -645,7 +645,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultLightSettings()
 		*/
-		virtual bool SetLightEnabled(PLGeneral::uint32 nLightID, bool bEnabled) = 0;
+		virtual bool SetLightEnabled(PLCore::uint32 nLightID, bool bEnabled) = 0;
 
 		/**
 		*  @brief
@@ -662,7 +662,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultLightSettings()
 		*/
-		virtual bool GetLight(PLGeneral::uint32 nLightID, Light &sLight) const = 0;
+		virtual bool GetLight(PLCore::uint32 nLightID, Light &sLight) const = 0;
 
 		/**
 		*  @brief
@@ -679,7 +679,7 @@ class FixedFunctions {
 		*  @see
 		*    - GetDefaultLightSettings()
 		*/
-		virtual bool SetLight(PLGeneral::uint32 nLightID, const Light &sLight) = 0;
+		virtual bool SetLight(PLCore::uint32 nLightID, const Light &sLight) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Clip plane states                                     ]
@@ -701,7 +701,7 @@ class FixedFunctions {
 		*    - Clip planes will only work in fix pass and often they are not well supported by hardware. So
 		*      try to avoid using clip planes whenever you can!
 		*/
-		virtual bool IsClipPlaneEnabled(PLGeneral::uint8 nIndex) const = 0;
+		virtual bool IsClipPlaneEnabled(PLCore::uint8 nIndex) const = 0;
 
 		/**
 		*  @brief
@@ -742,7 +742,7 @@ class FixedFunctions {
 		*  @see
 		*    - IsClipPlaneEnabled()
 		*/
-		virtual bool GetClipPlane(PLGeneral::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const = 0;
+		virtual bool GetClipPlane(PLCore::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const = 0;
 
 		/**
 		*  @brief
@@ -792,7 +792,7 @@ class FixedFunctions {
 		*    - For better performance, try to avoid using more than one vertex buffer at the same time
 		*      whenever possible.
 		*/
-		virtual VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = nullptr) const = 0;
+		virtual VertexBuffer *GetVertexBuffer(PLCore::uint32 nStreamNumber = 0, PLCore::uint32 *pnOffset = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -813,7 +813,7 @@ class FixedFunctions {
 		*    - If the first stream (the base stream) is set all other stream settings are cleared
 		*    - See GetVertexBuffer()
 		*/
-		virtual bool SetVertexBuffer(VertexBuffer *pVertexBuffer = nullptr, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0) = 0;
+		virtual bool SetVertexBuffer(VertexBuffer *pVertexBuffer = nullptr, PLCore::uint32 nOffset = 0, PLCore::uint32 nStreamNumber = 0) = 0;
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLMesh/SkeletonHandler.h"
 #include "PLMesh/Skeleton.h"
 
@@ -79,7 +79,7 @@ class SkeletonManager : public PLCore::ResourceManager<Skeleton> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Skeleton *CreateResource(const PLGeneral::String &sName);
+		virtual Skeleton *CreateResource(const PLCore::String &sName);
 
 
 };

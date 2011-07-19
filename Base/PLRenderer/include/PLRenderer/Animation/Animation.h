@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Container/Element.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -53,7 +53,7 @@ class AnimationManager;
 *  @brief
 *    Animation control
 */
-class Animation : public PLGeneral::Element<Animation> {
+class Animation : public PLCore::Element<Animation> {
 
 
 	//[-------------------------------------------------------]
@@ -93,7 +93,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @param[in] pManager
 		*    Animation manager using this element, can be a null pointer
 		*/
-		PLRENDERER_API Animation(const PLGeneral::String &sName = "", AnimationManager *pManager = nullptr);
+		PLRENDERER_API Animation(const PLCore::String &sName = "", AnimationManager *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @return
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetType() const;
+		PLRENDERER_API PLCore::uint32 GetType() const;
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @param[in] nType
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API void SetType(PLGeneral::uint32 nType = 0);
+		PLRENDERER_API void SetType(PLCore::uint32 nType = 0);
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*    - Use the start function below wich accepts a AnimationInfo
 		*      as parameter for more complex animations
 		*/
-		PLRENDERER_API void Start(PLGeneral::uint32 nStart, PLGeneral::uint32 nEnd, float fSpeed = 24.0f, PLGeneral::uint32 nFlags = 0);
+		PLRENDERER_API void Start(PLCore::uint32 nStart, PLCore::uint32 nEnd, float fSpeed = 24.0f, PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @return
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFlags() const;
+		PLRENDERER_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -260,7 +260,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @param[in] nFlags
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -278,7 +278,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @return
 		*    The start frame (inclusive)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetStartFrame() const;
+		PLRENDERER_API PLCore::uint32 GetStartFrame() const;
 
 		/**
 		*  @brief
@@ -287,7 +287,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @return
 		*    The end frame (inclusive)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetEndFrame() const;
+		PLRENDERER_API PLCore::uint32 GetEndFrame() const;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @return
 		*    The number of frames
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfFrames() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfFrames() const;
 
 		/**
 		*  @brief
@@ -327,7 +327,7 @@ class Animation : public PLGeneral::Element<Animation> {
 		*    - This function returns an integer for the current animation frame, e.g. if the
 		*      animation frame is at 2.6f, it will return 2
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetCurrentFrame() const;
+		PLRENDERER_API PLCore::uint32 GetCurrentFrame() const;
 
 		/**
 		*  @brief
@@ -351,14 +351,14 @@ class Animation : public PLGeneral::Element<Animation> {
 		*  @see
 		*    - GetCurrentFrame()
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNextFrame() const;
+		PLRENDERER_API PLCore::uint32 GetNextFrame() const;
 
 		/**
 		*  @brief
 		*    Updates the animation
 		*
 		*  @param[in] fTimeDifference
-		*    Past time since last frame (use e.g. PLGeneral::Timing::GetInstance()->GetTimeDifference())
+		*    Past time since last frame (use e.g. PLCore::Timing::GetInstance()->GetTimeDifference())
 		*/
 		PLRENDERER_API void Update(float fTimeDifference);
 
@@ -415,18 +415,18 @@ class Animation : public PLGeneral::Element<Animation> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		float			   m_fFrame;			/**< Current animation frame */
-		bool			   m_bActive;			/**< Active status (if the channel is used in calculations) */
-		bool			   m_bRunning;			/**< Running status */
-		PLGeneral::uint32  m_nType;				/**< Animation type (for instance  0=skeleton, 1=vertex) */
-		PLGeneral::uint32  m_nFlags;			/**< Animation flags */
-		PLGeneral::uint32  m_nStart;			/**< Start frame of the animation */
-		PLGeneral::uint32  m_nEnd;				/**< End frame of the animation */
-		float			   m_fSpeed;			/**< Playback speed */
-		bool			   m_bEvents;			/**< Are animation events enabled? */
-		AnimationInfo	  *m_pAnimationInfo;	/**< Pointer to the animation information, can be a null pointer */
-		float			   m_fWeight;			/**< Animation weight */
-		bool			   m_bBounced;			/**< If ping pong playback, was there already a 'bounce'? */
+		float			m_fFrame;			/**< Current animation frame */
+		bool			m_bActive;			/**< Active status (if the channel is used in calculations) */
+		bool			m_bRunning;			/**< Running status */
+		PLCore::uint32  m_nType;			/**< Animation type (for instance  0=skeleton, 1=vertex) */
+		PLCore::uint32  m_nFlags;			/**< Animation flags */
+		PLCore::uint32  m_nStart;			/**< Start frame of the animation */
+		PLCore::uint32  m_nEnd;				/**< End frame of the animation */
+		float		    m_fSpeed;			/**< Playback speed */
+		bool		    m_bEvents;			/**< Are animation events enabled? */
+		AnimationInfo  *m_pAnimationInfo;	/**< Pointer to the animation information, can be a null pointer */
+		float		    m_fWeight;			/**< Animation weight */
+		bool		    m_bBounced;			/**< If ping pong playback, was there already a 'bounce'? */
 
 
 };

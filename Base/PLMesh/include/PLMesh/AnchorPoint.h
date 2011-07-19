@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGeneral/Base/Element.h"
-#include "PLGeneral/Base/ElementManager.h"
-#include "PLGeneral/Base/ElementHandler.h"
+#include "PLCore/Container/Element.h"
+#include "PLCore/Container/ElementManager.h"
+#include "PLCore/Container/ElementHandler.h"
 #include "PLMesh/PLMesh.h"
 
 
@@ -60,7 +60,7 @@ class AnchorPointManager;
 *    to connect e.g. particle effects etc. to mesh vertices without to much effort.
 *    Bone anchor points have the advantage that you will also receive the current bone rotation.
 */
-class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
+class AnchorPoint : public PLCore::Element<AnchorPoint> {
 
 
 	//[-------------------------------------------------------]
@@ -84,8 +84,7 @@ class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
 		*    - If you provide the pointer to the owner manager the anchor point
 		*      will check in the anchor point manager name list
 		*/
-		PLMESH_API AnchorPoint(const PLGeneral::String &sName = "", bool bType = 0,
-							   PLGeneral::uint32 nID = 0, AnchorPointManager *pManager = nullptr);
+		PLMESH_API AnchorPoint(const PLCore::String &sName = "", bool bType = 0, PLCore::uint32 nID = 0, AnchorPointManager *pManager = nullptr);
 
 		/**
 		*  @brief
@@ -118,7 +117,7 @@ class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
 		*  @return
 		*    ID of the vertex/bone the anchor is attached to
 		*/
-		PLMESH_API PLGeneral::uint32 GetID() const;
+		PLMESH_API PLCore::uint32 GetID() const;
 
 		/**
 		*  @brief
@@ -127,19 +126,19 @@ class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
 		*  @param[in] nID
 		*    ID of the vertex/bone the anchor is attached to
 		*/
-		PLMESH_API void SetID(PLGeneral::uint32 nID = 0);
+		PLMESH_API void SetID(PLCore::uint32 nID = 0);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool			  m_bType;	/**< Anchor point type (0=vertex  1=joint) */
-		PLGeneral::uint32 m_nID;	/**< Vertex/bone ID the anchor is attached to */
+		bool		   m_bType;	/**< Anchor point type (0=vertex  1=joint) */
+		PLCore::uint32 m_nID;	/**< Vertex/bone ID the anchor is attached to */
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGeneral::Element functions           ]
+	//[ Public virtual PLCore::Element functions              ]
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API virtual AnchorPoint &operator =(const AnchorPoint &cSource);
@@ -151,7 +150,7 @@ class AnchorPoint : public PLGeneral::Element<AnchorPoint> {
 *  @brief
 *    Anchor point manager
 */
-class AnchorPointManager : public PLGeneral::ElementManager<AnchorPoint> {
+class AnchorPointManager : public PLCore::ElementManager<AnchorPoint> {
 
 
 	//[-------------------------------------------------------]
@@ -172,10 +171,10 @@ class AnchorPointManager : public PLGeneral::ElementManager<AnchorPoint> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AnchorPoint *CreateElement(const PLGeneral::String &sName);
+		virtual AnchorPoint *CreateElement(const PLCore::String &sName);
 
 
 };

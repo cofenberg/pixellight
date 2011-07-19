@@ -61,7 +61,6 @@ endif()
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${JPEG_INCLUDE_DIR}
@@ -80,7 +79,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLMath
 	${JPEG_LIBRARIES}
@@ -172,7 +170,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLCore PLMath External-libpng External-libjpg External-zlib)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath External-libpng External-libjpg External-zlib)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

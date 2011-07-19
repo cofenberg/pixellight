@@ -23,12 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
-#include <PLGeneral/String/RegEx.h>
-#include <PLGeneral/String/Tokenizer.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/FileSearch.h>
+#include <PLCore/String/RegEx.h>
+#include <PLCore/String/Tokenizer.h>
 #include "PLPluginClassInfo.h"
 #include "PLPluginInfo.h"
 
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLRenderer {
@@ -82,8 +82,8 @@ class SceneLoaderX : public PLScene::SceneLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -91,8 +91,8 @@ class SceneLoaderX : public PLScene::SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
-		bool Save(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
+		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -104,10 +104,10 @@ class SceneLoaderX : public PLScene::SceneLoader {
 		*    Internal per instance data
 		*/
 		struct SInstance {
-			PLGeneral::Array<PLRenderer::Material*> lstMaterials;	/**< List of all materials */
+			PLCore::Array<PLRenderer::Material*> lstMaterials;	/**< List of all materials */
 			// Statistics
-			PLGeneral::uint32 nTotalNumOfContainers;	/**< Total number of containers within the scene (without the root container itself) */
-			PLGeneral::uint32 nTotalNumOfNodes;			/**< Total number of nodes (without containers) within the scene */
+			PLCore::uint32 nTotalNumOfContainers;	/**< Total number of containers within the scene (without the root container itself) */
+			PLCore::uint32 nTotalNumOfNodes;		/**< Total number of nodes (without containers) within the scene */
 		};
 
 
@@ -145,7 +145,7 @@ class SceneLoaderX : public PLScene::SceneLoader {
 		*  @param[in]  sResourceName
 		*    Desired resource name
 		*/
-		void ProcessNodes(SInstance &sInstance, PLScene::SceneContainer &cContainer, XNode *pXNode, const PLGeneral::String &sResourceName) const;
+		void ProcessNodes(SInstance &sInstance, PLScene::SceneContainer &cContainer, XNode *pXNode, const PLCore::String &sResourceName) const;
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class SceneLoaderX : public PLScene::SceneLoader {
 		*  @param[in]      sResourceName
 		*    Desired resource name
 		*/
-		void ProcessMesh(SInstance &sInstance, XMesh &cXMesh, PLScene::SNMesh &cMeshSceneNode, const PLGeneral::String &sResourceName) const;
+		void ProcessMesh(SInstance &sInstance, XMesh &cXMesh, PLScene::SNMesh &cMeshSceneNode, const PLCore::String &sResourceName) const;
 
 
 };

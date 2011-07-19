@@ -68,7 +68,7 @@ class FontTextureShaders : public FontTexture {
 	//[ Public virtual PLRenderer::Font functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Draw(const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLGeneral::uint32 nFlags = 0);
+		virtual void Draw(const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLCore::uint32 nFlags = 0);
 
 
 	//[-------------------------------------------------------]
@@ -84,7 +84,7 @@ class FontTextureShaders : public FontTexture {
 		*  @param[in] cFile
 		*    File to load from, must be opened and readable
 		*/
-		FontTextureShaders(FontManager &cFontManager, PLGeneral::File &cFile);
+		FontTextureShaders(FontManager &cFontManager, PLCore::File &cFile);
 
 
 };

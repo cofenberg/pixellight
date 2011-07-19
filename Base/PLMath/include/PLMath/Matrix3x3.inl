@@ -43,12 +43,12 @@ inline Matrix3x3::Matrix3x3() :
 
 inline Matrix3x3::Matrix3x3(const float fS[])
 {
-	PLGeneral::MemoryManager::Copy(this->fM, fS, sizeof(float)*9);
+	PLCore::MemoryManager::Copy(this->fM, fS, sizeof(float)*9);
 }
 
 inline Matrix3x3::Matrix3x3(const Matrix3x3 &mM)
 {
-	PLGeneral::MemoryManager::Copy(this->fM, mM.fM, sizeof(float)*9);
+	PLCore::MemoryManager::Copy(this->fM, mM.fM, sizeof(float)*9);
 }
 
 inline Matrix3x3::Matrix3x3(float fXX, float fXY, float fXZ,
@@ -75,13 +75,13 @@ inline Matrix3x3::~Matrix3x3()
 //[-------------------------------------------------------]
 inline Matrix3x3 &Matrix3x3::operator =(const float fS[])
 {
-	PLGeneral::MemoryManager::Copy(this->fM, fS, sizeof(float)*9);
+	PLCore::MemoryManager::Copy(this->fM, fS, sizeof(float)*9);
 	return *this;
 }
 
 inline Matrix3x3 &Matrix3x3::operator =(const Matrix3x3 &mM)
 {
-	PLGeneral::MemoryManager::Copy(this->fM, mM.fM, sizeof(float)*9);
+	PLCore::MemoryManager::Copy(this->fM, mM.fM, sizeof(float)*9);
 	return *this;
 }
 
@@ -176,12 +176,12 @@ inline float &Matrix3x3::operator [](int nIndex)
 	return fM[nIndex];
 }
 
-inline float Matrix3x3::operator ()(PLGeneral::uint32 nRow, PLGeneral::uint32 nColumn) const
+inline float Matrix3x3::operator ()(PLCore::uint32 nRow, PLCore::uint32 nColumn) const
 {
 	return fM[nRow+3*nColumn];
 }
 
-inline float &Matrix3x3::operator ()(PLGeneral::uint32 nRow, PLGeneral::uint32 nColumn)
+inline float &Matrix3x3::operator ()(PLCore::uint32 nRow, PLCore::uint32 nColumn)
 {
 	return fM[nRow+3*nColumn];
 }
@@ -217,7 +217,7 @@ inline bool Matrix3x3::IsZero() const
 */
 inline bool Matrix3x3::IsTrueZero() const
 {
-	return (PLGeneral::MemoryManager::Compare(this->fM, Zero.fM, sizeof(float)*9) == 0);
+	return (PLCore::MemoryManager::Compare(this->fM, Zero.fM, sizeof(float)*9) == 0);
 }
 
 /**
@@ -226,7 +226,7 @@ inline bool Matrix3x3::IsTrueZero() const
 */
 inline void Matrix3x3::SetZero()
 {
-	PLGeneral::MemoryManager::Set(this->fM, 0, sizeof(float)*9);
+	PLCore::MemoryManager::Set(this->fM, 0, sizeof(float)*9);
 }
 
 /**
@@ -246,7 +246,7 @@ inline bool Matrix3x3::IsIdentity() const
 */
 inline bool Matrix3x3::IsTrueIdentity() const
 {
-	return (PLGeneral::MemoryManager::Compare(this->fM, Identity.fM, sizeof(float)*9) == 0);
+	return (PLCore::MemoryManager::Compare(this->fM, Identity.fM, sizeof(float)*9) == 0);
 }
 
 /**
@@ -255,7 +255,7 @@ inline bool Matrix3x3::IsTrueIdentity() const
 */
 inline void Matrix3x3::SetIdentity()
 {
-	PLGeneral::MemoryManager::Copy(this->fM, Identity.fM, sizeof(float)*9);
+	PLCore::MemoryManager::Copy(this->fM, Identity.fM, sizeof(float)*9);
 }
 
 /**
@@ -275,7 +275,7 @@ inline void Matrix3x3::Set(float fXX, float fXY, float fXZ,
 *  @brief
 *    Returns a requested row
 */
-inline Vector3 Matrix3x3::GetRow(PLGeneral::uint8 nRow) const
+inline Vector3 Matrix3x3::GetRow(PLCore::uint8 nRow) const
 {
 	switch (nRow) {
 		case 0:  return Vector3(xx, xy, xz);
@@ -289,7 +289,7 @@ inline Vector3 Matrix3x3::GetRow(PLGeneral::uint8 nRow) const
 *  @brief
 *    Sets a row
 */
-inline void Matrix3x3::SetRow(PLGeneral::uint8 nRow, const Vector3 &vRow)
+inline void Matrix3x3::SetRow(PLCore::uint8 nRow, const Vector3 &vRow)
 {
 	switch (nRow) {
 		case 0: xx = vRow.x; xy = vRow.y; xz = vRow.z; break;
@@ -302,7 +302,7 @@ inline void Matrix3x3::SetRow(PLGeneral::uint8 nRow, const Vector3 &vRow)
 *  @brief
 *    Returns a requested column
 */
-inline Vector3 Matrix3x3::GetColumn(PLGeneral::uint8 nColumn) const
+inline Vector3 Matrix3x3::GetColumn(PLCore::uint8 nColumn) const
 {
 	switch (nColumn) {
 		case 0:  return Vector3(xx, yx, zx);
@@ -316,7 +316,7 @@ inline Vector3 Matrix3x3::GetColumn(PLGeneral::uint8 nColumn) const
 *  @brief
 *    Sets a column
 */
-inline void Matrix3x3::SetColumn(PLGeneral::uint8 nColumn, const Vector3 &vColumn)
+inline void Matrix3x3::SetColumn(PLCore::uint8 nColumn, const Vector3 &vColumn)
 {
 	switch (nColumn) {
 		case 0: xx = vColumn.x; yx = vColumn.y; zx = vColumn.z; break;

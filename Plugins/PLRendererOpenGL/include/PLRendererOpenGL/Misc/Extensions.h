@@ -232,7 +232,7 @@ class OpenGLExtensions {
 		*  @param[in] nTarget
 		*    Target (vertex, fragment etc.)
 		*/
-		void ShowOpenGLShaderProgramInformation(PLGeneral::uint32 nTarget) const;
+		void ShowOpenGLShaderProgramInformation(PLCore::uint32 nTarget) const;
 
 		/**
 		*  @brief

@@ -28,10 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/Base/Object.h>
 #include <PLMath/Vector2i.h>
 #include <PLGraphics/Color/Color4.h>
-#include <PLCore/Base/Object.h>
 #include "PLGui/Gui/Resources/Image.h"
 #include "PLGui/Gui/Resources/Font.h"
 #include "PLGui/PLGuiDefinitions.h"
@@ -91,7 +90,7 @@ class Theme : public PLCore::Object {
 		*  @param[in] sName
 		*    Name of modifier
 		*/
-		PLGUI_API Theme(Gui &cGui, const PLGeneral::String &sName = "");
+		PLGUI_API Theme(Gui &cGui, const PLCore::String &sName = "");
 
 		/**
 		*  @brief
@@ -115,7 +114,7 @@ class Theme : public PLCore::Object {
 		*  @return
 		*    Name of theme
 		*/
-		PLGUI_API PLGeneral::String GetName() const;
+		PLGUI_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -212,23 +211,23 @@ class Theme : public PLCore::Object {
 
 		// Widgets
 		virtual void DrawPanel(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle) = 0;
-		virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLGeneral::uint32 nWidgetState, const PLGeneral::String &sTitle, const PLGui::Image &cIcon) = 0;
-		virtual void DrawSystemButton(Graphics &cGraphics, const PLMath::Vector2i &vPos, ESystemCommand nSystemCommand, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawToggleButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, const Image &cImage, PLGeneral::uint32 nWidgetState, ECheckState nChecked) = 0;
-		virtual void DrawRadioButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, PLGeneral::uint32 nWidgetState, ECheckState nChecked) = 0;
-		virtual void DrawCheckBox(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, PLGeneral::uint32 nWidgetState, ECheckState nChecked) = 0;
-		virtual void DrawTooltip(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawSlider(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawSliderHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawScrollBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawScrollBarPlusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawScrollBarMinusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawScrollBarHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
+		virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLCore::uint32 nWidgetState, const PLCore::String &sTitle, const PLGui::Image &cIcon) = 0;
+		virtual void DrawSystemButton(Graphics &cGraphics, const PLMath::Vector2i &vPos, ESystemCommand nSystemCommand, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawToggleButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState, ECheckState nChecked) = 0;
+		virtual void DrawRadioButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked) = 0;
+		virtual void DrawCheckBox(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked) = 0;
+		virtual void DrawTooltip(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawSlider(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawSliderHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawScrollBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawScrollBarPlusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawScrollBarMinusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawScrollBarHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
 		virtual void DrawSplitter(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation) = 0;
-		virtual void DrawMenuBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawPopupMenu(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
-		virtual void DrawMenuItem(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLGeneral::String &sTitle, const Image &cImage, bool bDrawArrow, EMenuItemType nType, EOrientation nOrientation, PLGeneral::uint32 nWidgetState) = 0;
+		virtual void DrawMenuBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawPopupMenu(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
+		virtual void DrawMenuItem(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, bool bDrawArrow, EMenuItemType nType, EOrientation nOrientation, PLCore::uint32 nWidgetState) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -237,7 +236,7 @@ class Theme : public PLCore::Object {
 	protected:
 		// Gui
 		Gui					*m_pGui;					/**< Owner GUI */
-		PLGeneral::String	 m_sName;					/**< Theme name */
+		PLCore::String		 m_sName;					/**< Theme name */
 
 		// Default resources
 		PLGui::Font			 m_cDefaultFont;			/**< Default font */

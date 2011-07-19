@@ -94,7 +94,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sDevice
 		*    Name of device
 		*/
-		void TestInput(const PLGeneral::String &sDevice);
+		void TestInput(const PLCore::String &sDevice);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sDevice
 		*    Name of device
 		*/
-		void TestGetChar(const PLGeneral::String &sDevice);
+		void TestGetChar(const PLCore::String &sDevice);
 
 		/**
 		*  @brief

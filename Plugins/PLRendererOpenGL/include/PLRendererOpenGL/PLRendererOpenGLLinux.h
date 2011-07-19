@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralLinuxIncludes.h>
+#include <PLCore/PLCoreLinuxIncludes.h>
 #include <stddef.h>
 #define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitily NOT ok (one reason is that "glext.h" is frequently extended)
 #include <GL/gl.h>

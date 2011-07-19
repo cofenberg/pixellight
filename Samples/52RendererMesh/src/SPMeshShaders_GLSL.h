@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
+static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
 attribute highp vec3 VertexNormal;		// Object space vertex normal input\n\
@@ -43,7 +43,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
+static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader\n\
 \n\

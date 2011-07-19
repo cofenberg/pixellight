@@ -57,8 +57,8 @@ class Application : public PLEngine::ScriptApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnKeyDown,	PLGeneral::uint32,			PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
-		pl_slot_1(OnDrop,		const PLGui::DataObject&,						"Called when something was dropped down, dropped data object as first parameter",									"")
+		pl_slot_2(OnKeyDown,	PLCore::uint32,				PLCore::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_1(OnDrop,		const PLGui::DataObject&,					"Called when something was dropped down, dropped data object as first parameter",									"")
 	pl_class_end
 
 
@@ -66,7 +66,7 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static const PLGeneral::String DefaultFilename;	/**< The used default resource loaded at start, if empty a file dialog will appear */
+		static const PLCore::String DefaultFilename;	/**< The used default resource loaded at start, if empty a file dialog will appear */
 
 
 	//[-------------------------------------------------------]
@@ -92,7 +92,7 @@ class Application : public PLEngine::ScriptApplication {
 		*  @return
 		*    The chooen resource
 		*/
-		PLGeneral::String ChooseFilename();
+		PLCore::String ChooseFilename();
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Application : public PLEngine::ScriptApplication {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadResource(const PLGeneral::String &sFilename);
+		bool LoadResource(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -120,7 +120,7 @@ class Application : public PLEngine::ScriptApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Public virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadScene(PLGeneral::String sFilename);
+		virtual bool LoadScene(PLCore::String sFilename);
 
 
 	//[-------------------------------------------------------]

@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLIRC {
 
 
@@ -55,7 +55,7 @@ IRCClient::~IRCClient()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGeneral::Client functions         ]
+//[ Protected virtual PLCore::Client functions            ]
 //[-------------------------------------------------------]
 Connection *IRCClient::CreateOutgoingConnection()
 {

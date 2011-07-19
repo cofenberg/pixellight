@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Stack.h>
+#include <PLCore/Container/Stack.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/EulerAngles.h>
 #include <PLRenderer/RendererContext.h>
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

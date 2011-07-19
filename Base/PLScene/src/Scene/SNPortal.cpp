@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/String/Tokenizer.h>
 #include <PLCore/Base/Func/Functor.h>
 #include <PLMath/Intersect.h>
 #include <PLRenderer/RendererContext.h>
@@ -40,7 +40,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

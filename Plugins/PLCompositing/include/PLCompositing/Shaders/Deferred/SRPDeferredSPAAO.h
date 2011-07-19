@@ -66,7 +66,7 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredSPAAO, "PLCompositing", PLCompositing::SRPDeferredSSAO, "Scene renderer pass for deferred rendering 'A Simple and Practical Approach to SSAO' (SPAAO), a 'Screen-Space Ambient Occlusion' (SSAO) technique")
 		// Attributes
-		pl_attribute(NumberOfDirections,	PLGeneral::uint32,		8,		ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",	"Min='1'")
+		pl_attribute(NumberOfDirections,	PLCore::uint32,			8,		ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",	"Min='1'")
 		pl_attribute(SampleRadius,			float,					0.1f,	ReadWrite,	DirectValue,	"The sampling radius",																																								"Min='0.0'")
 		pl_attribute(Intensity,				float,					4.0f,	ReadWrite,	DirectValue,	"The ambient occlusion intensity",																																					"Min='0.0'")
 		pl_attribute(Scale,					float,					10.0f,	ReadWrite,	DirectValue,	"Scales distance between occluders and occludee",																																	"Min='0.0'")
@@ -82,8 +82,8 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API PLGeneral::uint32 GetNumberOfDirections() const;
-		PLCOM_API void SetNumberOfDirections(PLGeneral::uint32 nValue);
+		PLCOM_API PLCore::uint32 GetNumberOfDirections() const;
+		PLCOM_API void SetNumberOfDirections(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -131,7 +131,7 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32					 m_nNumberOfDirections;		/**< The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion. */
+		PLCore::uint32						 m_nNumberOfDirections;		/**< The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion. */
 		PLRenderer::TextureBuffer2D			*m_pRandomNormalsTexture;	/**< Texture with random normal vectors, can be a null pointer */
 		PLRenderer::ProgramGenerator		*m_pProgramGenerator;		/**< Program generator, can be a null pointer */
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
@@ -141,7 +141,7 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 	//[ Protected virtual SRPDeferredSSAO functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void DrawAO(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
+		virtual void DrawAO(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
 
 
 };

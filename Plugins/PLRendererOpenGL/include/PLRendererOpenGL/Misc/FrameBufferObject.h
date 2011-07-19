@@ -104,7 +104,7 @@ class FrameBufferObject {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Initialize(Renderer &cRenderer, const PLMath::Vector2i &vSize, PLGeneral::uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat, bool bNoMultisampleAntialiasing);
+		bool Initialize(Renderer &cRenderer, const PLMath::Vector2i &vSize, PLCore::uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat, bool bNoMultisampleAntialiasing);
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class FrameBufferObject {
 		*  @param[in] nFace
 		*    Cube map face to render in
 		*/
-		void SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, PLGeneral::uint32 nAttachIndex = 0, PLGeneral::uint8 nFace = 0);
+		void SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, PLCore::uint32 nAttachIndex = 0, PLCore::uint8 nFace = 0);
 
 		/**
 		*  @brief

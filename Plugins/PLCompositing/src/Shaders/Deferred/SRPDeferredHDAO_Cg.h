@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sDeferredHDAO_Cg_VS = "\
+static const PLCore::String sDeferredHDAO_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -47,7 +47,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, 
 
 
 // Cg fragment shader source code
-static const PLGeneral::String sDeferredHDAO_Cg_FS = "\
+static const PLCore::String sDeferredHDAO_Cg_FS = "\
 // Definitions\n\
 #define M_PI 3.14159265f\n\
 \n\

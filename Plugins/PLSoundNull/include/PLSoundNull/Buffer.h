@@ -80,15 +80,15 @@ class Buffer : public PLSound::Buffer {
 		*  @param[in] bStream
 		*    Stream the file?
 		*/
-		Buffer(PLSound::SoundManager &cSoundManager, const PLGeneral::String &sName = "", bool bStream = false);
+		Buffer(PLSound::SoundManager &cSoundManager, const PLCore::String &sName = "", bool bStream = false);
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLSound::Buffer functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadBuffer(const PLGeneral::String &sFilename, bool bStream);
-		virtual bool LoadBuffer(const PLGeneral::uint8 nData[], PLGeneral::uint32 nSize, bool bStream = false);
+		virtual bool LoadBuffer(const PLCore::String &sFilename, bool bStream);
+		virtual bool LoadBuffer(const PLCore::uint8 nData[], PLCore::uint32 nSize, bool bStream = false);
 		virtual bool IsLoaded() const;
 		virtual bool IsStreamed() const;
 
@@ -97,7 +97,7 @@ class Buffer : public PLSound::Buffer {
 	//[ Public virtual PLCore::Resource functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLGeneral::String &sName);
+		virtual bool Load(const PLCore::String &sName);
 		virtual bool Unload();
 
 

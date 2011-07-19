@@ -57,9 +57,9 @@ class Application : public PLEngine::BasicSceneApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnKeyDown,	PLGeneral::uint32,				PLGeneral::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
-		pl_slot_2(OnKeyUp,		PLGeneral::uint32,				PLGeneral::uint32,	"Called when a key is released. pressed key as first parameter and modifier keys pressed as second parameter",		"")
-		pl_slot_1(OnContact,	PLPhysics::ContactInformation&,						"Called when a contact between two bodies was detected by the physics, contact information as first parameter",		"")
+		pl_slot_2(OnKeyDown,	PLCore::uint32,					PLCore::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_2(OnKeyUp,		PLCore::uint32,					PLCore::uint32,	"Called when a key is released. pressed key as first parameter and modifier keys pressed as second parameter",		"")
+		pl_slot_1(OnContact,	PLPhysics::ContactInformation&,					"Called when a contact between two bodies was detected by the physics, contact information as first parameter",		"")
 	pl_class_end
 
 
@@ -86,7 +86,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @return
 		*    Name of the used physics API
 		*/
-		PLGeneral::String GetPhysicsAPI() const;
+		PLCore::String GetPhysicsAPI() const;
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +132,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void OnKeyUp(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	 m_sPhysicsAPI;		/**< Name of the used physics API */
+		PLCore::String	 	 m_sPhysicsAPI;		/**< Name of the used physics API */
 		PLScene::SceneNode	*m_pLine;			/**< Pointer to the line scene node, can be a null pointer */
 		PLScene::SceneNode	*m_pFallingBox;		/**< Pointer to the falling box scene node, can be a null pointer */
 		bool				 m_bApplyForce;		/**< Apply force to the falling box scene node? */

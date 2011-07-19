@@ -62,7 +62,7 @@
 void GeneralTests()
 {
 	// Perform the test cases
-	TestManager cTestManager("PLGeneral");
+	TestManager cTestManager("PLCore");
 	cTestManager.Perform(new TimeTest());
 	cTestManager.Perform(new StackTest());
 	cTestManager.Perform(new QueueTest());

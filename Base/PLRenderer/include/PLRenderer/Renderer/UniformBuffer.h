@@ -86,7 +86,7 @@ class UniformBuffer : public Buffer {
 		*    In pratice, e.g. the Cg shader language comes with it's own way how to create and use uniform buffers,
 		*    that's the only reason PixelLight connects an uniform buffer with a shader language.
 		*/
-		virtual PLGeneral::String GetShaderLanguage() const = 0;
+		virtual PLCore::String GetShaderLanguage() const = 0;
 
 
 	//[-------------------------------------------------------]

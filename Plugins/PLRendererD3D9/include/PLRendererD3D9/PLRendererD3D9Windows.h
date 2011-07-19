@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include <d3dx9.h>
 
 

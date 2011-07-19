@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include "PLScene/Compositing/SceneRenderer.h"
 #include "PLScene/Compositing/SceneRendererLoaderPL.h"
@@ -33,7 +33,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScene {
 

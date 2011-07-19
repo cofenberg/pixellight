@@ -24,7 +24,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Container.h>
+#include <PLCore/Container/Container.h>
 #include "PLTestBase/General/ContainerTestCase.h"
 
 
@@ -36,7 +36,7 @@
 *    Tests a container implementation
 */
 template <class AType>
-bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
+bool ContainerTestCase<AType>::Test(PLCore::Container<AType> &cContainer)
 {
 	bool bResult;
 
@@ -71,7 +71,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check iterator from 0 -> (NumOfElements-1)
 		StartTask("Iterator from 0 -> (NumOfElements-1)");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetIterator();
 		bResult = true;
 
 		// There should be no previous element...
@@ -101,7 +101,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check iterator from (NumOfElements-1) -> 0
 		StartTask("Iterator from (NumOfElements-1) -> 0");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetEndIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetEndIterator();
 		bResult = true;
 
 		// There should be no next element...
@@ -139,7 +139,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check GetIterator() if there are NO elements within the container
 		StartTask("Check GetIterator() if there are NO elements within the container");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetIterator();
 		bResult = true;
 		if (cIterator.HasPrevious()) bResult = false;
 		if (cIterator.HasNext()) bResult = false;
@@ -148,7 +148,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check GetEndIterator() if there are NO elements within the container
 		StartTask("Check GetEndIterator() if there are NO elements within the container");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetEndIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetEndIterator();
 		bResult = true;
 		if (cIterator.HasPrevious()) bResult = false;
 		if (cIterator.HasNext()) bResult = false;
@@ -160,7 +160,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check GetIterator() if there is only ONE element within the container
 		StartTask("Check GetIterator() if there is only ONE element within the container");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetIterator();
 		bResult = true;
 		if (cIterator.HasPrevious()) bResult = false;
 		if (!cIterator.HasNext()) bResult = false;
@@ -169,7 +169,7 @@ bool ContainerTestCase<AType>::Test(PLGeneral::Container<AType> &cContainer)
 
 	{ // Check GetEndIterator() if there is only ONE element within the container
 		StartTask("Check GetEndIterator() if there is only ONE element within the container");
-		PLGeneral::Iterator<AType> cIterator = cContainer.GetEndIterator();
+		PLCore::Iterator<AType> cIterator = cContainer.GetEndIterator();
 		bResult = true;
 		if (!cIterator.HasPrevious()) bResult = false;
 		if (cIterator.HasNext()) bResult = false;

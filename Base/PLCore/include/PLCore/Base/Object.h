@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/XmlElement.h>
-#include <PLGeneral/Container/List.h>
 #include "PLCore/PLCoreDefinitions.h"
+#include "PLCore/Xml/XmlElement.h"
+#include "PLCore/Container/List.h"
 #include "PLCore/Base/Rtti.h"
 
 
@@ -114,14 +114,14 @@ class Object : public ObjectBase {
 	pl_class_internal(PLCORE_RTTI_EXPORT, Object, "PLCore", /* No base class */, "Object base class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
-			pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const PLGeneral::String&,								"Check if object is instance of a given class. Class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
-			pl_method_2(SetAttribute,			pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Set attribute value. Attribute name as first parameter, attribute value as second parameter.",																											"")
-			pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const PLGeneral::String&,								"Set attribute to it's default value. Attribute name as first parameter.",																																"")
-			pl_method_2(CallMethod,				pl_ret_type(void),				const PLGeneral::String&,	const PLGeneral::String&,	"Call method. Method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter.",																				"")
-			pl_method_1(SetValues,				pl_ret_type(void),				const PLGeneral::String&,								"Set multiple attribute values as a string at once. String containing attributes and values as first parameter (e.g. \"Name='Bob' Position='1 2 3'\").",												"")
-			pl_method_0(SetDefaultValues,		pl_ret_type(void),																		"Set all attributes to default.",																																										"")
-			pl_method_0(ToString,				pl_ret_type(PLGeneral::String),															"Get the object as string. Returns string representation of object.",																																	"")
-			pl_method_1(FromString,				pl_ret_type(void),				const PLGeneral::String&,								"Set the object from string. String representation of object as first parameter.",																														"")
+			pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const String&,					"Check if object is instance of a given class. Class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
+			pl_method_2(SetAttribute,			pl_ret_type(void),				const String&,	const String&,	"Set attribute value. Attribute name as first parameter, attribute value as second parameter.",																											"")
+			pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const String&,					"Set attribute to it's default value. Attribute name as first parameter.",																																"")
+			pl_method_2(CallMethod,				pl_ret_type(void),				const String&,	const String&,	"Call method. Method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter.",																				"")
+			pl_method_1(SetValues,				pl_ret_type(void),				const String&,					"Set multiple attribute values as a string at once. String containing attributes and values as first parameter (e.g. \"Name='Bob' Position='1 2 3'\").",												"")
+			pl_method_0(SetDefaultValues,		pl_ret_type(void),												"Set all attributes to default.",																																										"")
+			pl_method_0(ToString,				pl_ret_type(String),											"Get the object as string. Returns string representation of object.",																																	"")
+			pl_method_1(FromString,				pl_ret_type(void),				const String&,					"Set the object from string. String representation of object as first parameter.",																														"")
 		#endif
 	pl_class_end
 
@@ -167,7 +167,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    'true' if the object is an instance of the class or one of it's derived classes, else 'false'
 		*/
-		PLCORE_API bool IsInstanceOf(const PLGeneral::String &sClass) const;
+		PLCORE_API bool IsInstanceOf(const String &sClass) const;
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Object : public ObjectBase {
 		*    In general it is recommended to use GetClass()->GetAttributes() to obtain a list of attribute descriptors
 		*    and then call GetAttribute() from the descriptor to get access to the actual attribute
 		*/
-		PLCORE_API const PLGeneral::List<DynVar*> GetAttributes() const;
+		PLCORE_API const List<DynVar*> GetAttributes() const;
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    Attribute (can be a null pointer, if no attribute with that name could be found)
 		*/
-		PLCORE_API DynVar *GetAttribute(const PLGeneral::String &sName) const;
+		PLCORE_API DynVar *GetAttribute(const String &sName) const;
 
 		/**
 		*  @brief
@@ -207,7 +207,7 @@ class Object : public ObjectBase {
 		*    instances are created each time the function is called!
 		*    If you only need the method descriptors, use GetClass()->GetMethods() instead.
 		*/
-		PLCORE_API void GetMethods(PLGeneral::List<DynFuncPtr> &lstMethods);
+		PLCORE_API void GetMethods(List<DynFuncPtr> &lstMethods);
 
 		/**
 		*  @brief
@@ -224,7 +224,7 @@ class Object : public ObjectBase {
 		*    created each time the function is called!
 		*    If you only need the method descriptor, use GetClass()->GetMethod() instead.
 		*/
-		PLCORE_API DynFuncPtr GetMethod(const PLGeneral::String &sName);
+		PLCORE_API DynFuncPtr GetMethod(const String &sName);
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Object : public ObjectBase {
 		*    In general it is recommended to use GetClass()->GetSignals() to obtain a list of signal descriptors
 		*    and then call GetSignal() from the descriptor to get access to the actual signal
 		*/
-		PLCORE_API const PLGeneral::List<DynEvent*> GetSignals() const;
+		PLCORE_API const List<DynEvent*> GetSignals() const;
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    Signal (can be a null pointer, if no signal with that name could be found)
 		*/
-		PLCORE_API DynEvent *GetSignal(const PLGeneral::String &sName) const;
+		PLCORE_API DynEvent *GetSignal(const String &sName) const;
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class Object : public ObjectBase {
 		*    In general it is recommended to use GetClass()->GetSlots() to obtain a list of slot descriptors
 		*    and then call GetSlot() from the descriptor to get access to the actual slot
 		*/
-		PLCORE_API const PLGeneral::List<DynEventHandler*> GetSlots() const;
+		PLCORE_API const List<DynEventHandler*> GetSlots() const;
 
 		/**
 		*  @brief
@@ -276,7 +276,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    Slot (can be a null pointer, if no slot with that name could be found)
 		*/
-		PLCORE_API DynEventHandler *GetSlot(const PLGeneral::String &sName) const;
+		PLCORE_API DynEventHandler *GetSlot(const String &sName) const;
 
 		//[-------------------------------------------------------]
 		//[ Direct access functions                               ]
@@ -290,7 +290,7 @@ class Object : public ObjectBase {
 		*  @param[in] sValue
 		*    Attribute value
 		*/
-		PLCORE_API void SetAttribute(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+		PLCORE_API void SetAttribute(const String &sName, const String &sValue);
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ class Object : public ObjectBase {
 		*  @param[in] pVar
 		*    Attribute value
 		*/
-		PLCORE_API void SetAttribute(const PLGeneral::String &sName, const DynVar *pVar);
+		PLCORE_API void SetAttribute(const String &sName, const DynVar *pVar);
 
 		/**
 		*  @brief
@@ -310,7 +310,7 @@ class Object : public ObjectBase {
 		*  @param[in] sName
 		*    Attribute name
 		*/
-		PLCORE_API void SetAttributeDefault(const PLGeneral::String &sName);
+		PLCORE_API void SetAttributeDefault(const String &sName);
 
 		/**
 		*  @brief
@@ -321,7 +321,7 @@ class Object : public ObjectBase {
 		*  @param[in] cParams
 		*    Parameters
 		*/
-		PLCORE_API void CallMethod(const PLGeneral::String &sName, DynParams &cParams);
+		PLCORE_API void CallMethod(const String &sName, DynParams &cParams);
 
 		/**
 		*  @brief
@@ -332,7 +332,7 @@ class Object : public ObjectBase {
 		*  @param[in] cParams
 		*    Parameters
 		*/
-		PLCORE_API void CallMethod(const PLGeneral::String &sName, const DynParams &cParams);
+		PLCORE_API void CallMethod(const String &sName, const DynParams &cParams);
 
 		/**
 		*  @brief
@@ -343,7 +343,7 @@ class Object : public ObjectBase {
 		*  @param[in] sParams
 		*    Parameters as string
 		*/
-		PLCORE_API void CallMethod(const PLGeneral::String &sName, const PLGeneral::String &sParams);
+		PLCORE_API void CallMethod(const String &sName, const String &sParams);
 
 		/**
 		*  @brief
@@ -354,7 +354,7 @@ class Object : public ObjectBase {
 		*  @param[in] cElement
 		*    Parameters as XML
 		*/
-		PLCORE_API void CallMethod(const PLGeneral::String &sName, const PLGeneral::XmlElement &cElement);
+		PLCORE_API void CallMethod(const String &sName, const XmlElement &cElement);
 
 		//[-------------------------------------------------------]
 		//[ Object state functions                                ]
@@ -373,7 +373,7 @@ class Object : public ObjectBase {
 		*    The returned string contains the attributes and their values.
 		*    Example: "Name='Test' IntValue='10'"
 		*/
-		PLCORE_API PLGeneral::String GetValues(EDefaultValue nDefaultValue = NoDefault) const;
+		PLCORE_API String GetValues(EDefaultValue nDefaultValue = NoDefault) const;
 
 		/**
 		*  @brief
@@ -382,7 +382,7 @@ class Object : public ObjectBase {
 		*  @param[in] sString
 		*    String containing attributes and values (e.g. \"Name='Bob' Position='1 2 3'\")
 		*/
-		PLCORE_API void SetValues(const PLGeneral::String &sVars);
+		PLCORE_API void SetValues(const String &sVars);
 
 		/**
 		*  @brief
@@ -396,7 +396,7 @@ class Object : public ObjectBase {
 		*  @remarks
 		*    The attributes and their values are added as XML-attributes to the given XML-element
 		*/
-		PLCORE_API void GetValuesXml(PLGeneral::XmlElement &cElement, EDefaultValue nDefaultValue = NoDefault) const;
+		PLCORE_API void GetValuesXml(XmlElement &cElement, EDefaultValue nDefaultValue = NoDefault) const;
 
 		/**
 		*  @brief
@@ -408,7 +408,7 @@ class Object : public ObjectBase {
 		*  @remarks
 		*    The attributes and their values are read from the XML-attributes of the given XML-element
 		*/
-		PLCORE_API void SetValuesXml(const PLGeneral::XmlElement &cElement);
+		PLCORE_API void SetValuesXml(const XmlElement &cElement);
 
 		/**
 		*  @brief
@@ -428,7 +428,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    String representation of object
 		*/
-		PLCORE_API virtual PLGeneral::String ToString() const;
+		PLCORE_API virtual String ToString() const;
 
 		/**
 		*  @brief
@@ -437,7 +437,7 @@ class Object : public ObjectBase {
 		*  @param[in] sString
 		*    String representation of object
 		*/
-		PLCORE_API virtual void FromString(const PLGeneral::String &sString);
+		PLCORE_API virtual void FromString(const String &sString);
 
 		/**
 		*  @brief
@@ -446,7 +446,7 @@ class Object : public ObjectBase {
 		*  @return
 		*    XML representation of object
 		*/
-		PLCORE_API virtual PLGeneral::XmlElement ToXml() const;
+		PLCORE_API virtual XmlElement ToXml() const;
 
 		/**
 		*  @brief
@@ -455,7 +455,7 @@ class Object : public ObjectBase {
 		*  @param[in] cElement
 		*    XML representation of object
 		*/
-		PLCORE_API virtual void FromXml(const PLGeneral::XmlElement &cElement);
+		PLCORE_API virtual void FromXml(const XmlElement &cElement);
 
 
 };

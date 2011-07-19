@@ -71,7 +71,7 @@ class EnumType {
 	//[-------------------------------------------------------]
 	public:
 		static int GetNumOfEnumValues() {
-			PLGeneral::String sEnum, sDesc;
+			String sEnum, sDesc;
 			_Type nValue;
 			int nIndex = 0;
 			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++)
@@ -79,24 +79,24 @@ class EnumType {
 			return nIndex;
 		}
 
-		static PLGeneral::String GetEnumName(int nIndex) {
-			PLGeneral::String sEnum, sDesc;
+		static String GetEnumName(int nIndex) {
+			String sEnum, sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc);
 			return sEnum;
 		}
 
-		static _Type GetEnumValue(const PLGeneral::String &sName) {
-			PLGeneral::String sEnum = sName;
-			PLGeneral::String sDesc;
+		static _Type GetEnumValue(const String &sName) {
+			String sEnum = sName;
+			String sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(-1, nValue, sEnum, sDesc);
 			return nValue;
 		}
 
-		static PLGeneral::String GetEnumDescription(const PLGeneral::String &sName) {
-			PLGeneral::String sEnum = sName;
-			PLGeneral::String sDesc;
+		static String GetEnumDescription(const String &sName) {
+			String sEnum = sName;
+			String sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(-1, nValue, sEnum, sDesc);
 			return sDesc;
@@ -118,7 +118,7 @@ class FlagType {
 	//[ Public data types                                     ]
 	//[-------------------------------------------------------]
 	public:
-		typedef typename PLGeneral::uint32 _BaseType;
+		typedef typename uint32 _BaseType;
 		typedef typename ENUM::_Type       _Type;			/**< Real type */
 		typedef typename ENUM::_Type       _StorageType;	/**< Storage type, for this type identical to the real type */
 
@@ -128,7 +128,7 @@ class FlagType {
 	//[-------------------------------------------------------]
 	public:
 		static int GetNumOfEnumValues() {
-			PLGeneral::String sEnum, sDesc;
+			String sEnum, sDesc;
 			_Type nValue;
 			int nIndex = 0;
 			for (nIndex=0; ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc); nIndex++)
@@ -136,24 +136,24 @@ class FlagType {
 			return nIndex;
 		}
 
-		static PLGeneral::String GetEnumName(int nIndex) {
-			PLGeneral::String sEnum, sDesc;
+		static String GetEnumName(int nIndex) {
+			String sEnum, sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(nIndex, nValue, sEnum, sDesc);
 			return sEnum;
 		}
 
-		static _Type GetEnumValue(const PLGeneral::String &sName) {
-			PLGeneral::String sEnum = sName;
-			PLGeneral::String sDesc;
+		static _Type GetEnumValue(const String &sName) {
+			String sEnum = sName;
+			String sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(-1, nValue, sEnum, sDesc);
 			return nValue;
 		}
 
-		static PLGeneral::String GetEnumDescription(const PLGeneral::String &sName) {
-			PLGeneral::String sEnum = sName;
-			PLGeneral::String sDesc;
+		static String GetEnumDescription(const String &sName) {
+			String sEnum = sName;
+			String sDesc;
 			_Type nValue;
 			ENUM::GetEnumValue(-1, nValue, sEnum, sDesc);
 			return sDesc;

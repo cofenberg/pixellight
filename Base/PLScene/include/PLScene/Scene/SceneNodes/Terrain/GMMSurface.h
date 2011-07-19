@@ -128,8 +128,7 @@ class GMMSurface {
 		*    - The GMM takes place in the single patches of the surface further they
 		*      are used for frustum culling and each patch could have another material
 		*/
-		PLS_API bool Create(PLGeneral::uint32 nHeightMapSize, float fHeightMap[],
-						   PLGeneral::uint32 nPatchSize = 16, int nGeoMipMaps = -1);
+		PLS_API bool Create(PLCore::uint32 nHeightMapSize, float fHeightMap[], PLCore::uint32 nPatchSize = 16, int nGeoMipMaps = -1);
 
 		/**
 		*  @brief
@@ -162,7 +161,7 @@ class GMMSurface {
 		*  @return
 		*    The size of the height map
 		*/
-		PLS_API PLGeneral::uint32 GetHeightMapSize() const;
+		PLS_API PLCore::uint32 GetHeightMapSize() const;
 
 		/**
 		*  @brief
@@ -180,7 +179,7 @@ class GMMSurface {
 		*  @return
 		*    Number of surface vertices
 		*/
-		PLS_API PLGeneral::uint32 GetVertices() const;
+		PLS_API PLCore::uint32 GetVertices() const;
 
 		/**
 		*  @brief
@@ -192,7 +191,7 @@ class GMMSurface {
 		*  @return
 		*    Pointer to a surface vertex, a null pointer if there was an error
 		*/
-		PLS_API Vertex *GetVertex(PLGeneral::uint32 nID = 0) const;
+		PLS_API Vertex *GetVertex(PLCore::uint32 nID = 0) const;
 
 		/**
 		*  @brief
@@ -206,7 +205,7 @@ class GMMSurface {
 		*  @return
 		*    The height of a height map coordinate
 		*/
-		PLS_API float GetHeight(PLGeneral::uint32 nX, PLGeneral::uint32 nY) const;
+		PLS_API float GetHeight(PLCore::uint32 nX, PLCore::uint32 nY) const;
 
 		/**
 		*  @brief
@@ -226,7 +225,7 @@ class GMMSurface {
 		*    - If a height value in the height map is manipulated the patch using this
 		*      coordinate must be recalculated during the next GMM surface update
 		*/
-		PLS_API bool SetHeight(PLGeneral::uint32 nX, PLGeneral::uint32 nY, float fHeight = 0);
+		PLS_API bool SetHeight(PLCore::uint32 nX, PLCore::uint32 nY, float fHeight = 0);
 
 		/**
 		*  @brief
@@ -235,7 +234,7 @@ class GMMSurface {
 		*  @return
 		*    Size of a patch
 		*/
-		PLS_API PLGeneral::uint32 GetPatchSize() const;
+		PLS_API PLCore::uint32 GetPatchSize() const;
 
 		/**
 		*  @brief
@@ -244,7 +243,7 @@ class GMMSurface {
 		*  @return
 		*    Number of patches per column/row
 		*/
-		PLS_API PLGeneral::uint32 GetXYPatches() const;
+		PLS_API PLCore::uint32 GetXYPatches() const;
 
 		/**
 		*  @brief
@@ -253,7 +252,7 @@ class GMMSurface {
 		*  @return
 		*    The total number of patches in the GMM surface
 		*/
-		PLS_API PLGeneral::uint32 GetPatches() const;
+		PLS_API PLCore::uint32 GetPatches() const;
 
 		/**
 		*  @brief
@@ -265,7 +264,7 @@ class GMMSurface {
 		*  @return
 		*    A pointer to the patch with the given ID, a null pointer if there was an error
 		*/
-		PLS_API GMMSurfacePatch *GetPatch(PLGeneral::uint32 nID) const;
+		PLS_API GMMSurfacePatch *GetPatch(PLCore::uint32 nID) const;
 
 		/**
 		*  @brief
@@ -274,7 +273,7 @@ class GMMSurface {
 		*  @return
 		*    Number of geometrically mip maps
 		*/
-		PLS_API PLGeneral::uint32 GetGeoMipMaps() const;
+		PLS_API PLCore::uint32 GetGeoMipMaps() const;
 
 		/**
 		*  @brief
@@ -373,23 +372,23 @@ class GMMSurface {
 		PLRenderer::Renderer		 *m_pRenderer;			/**< Used renderer (always valid!) */
 		PLMath::Vector3				  m_vViewerPos;			/**< Viewer position */
 		GMMSurface					 *m_pNeighbour[4];		/**< Neighbour GMM surfaces, can be a null pointer */
-		PLGeneral::uint32			  m_nVertices;			/**< Number of surface vertices */
+		PLCore::uint32				  m_nVertices;			/**< Number of surface vertices */
 		PLRenderer::VertexBuffer	 *m_pVertexBuffer;		/**< Vertex buffer, can be a null pointer */
 		Vertex						 *m_pVertex;			/**< Surface vertices, can be a null pointer */
 		PLRenderer::MaterialHandler	 *m_pMaterialHandler;	/**< Surface material (always valid!) */
 
 		// Height map
-		PLGeneral::uint32 	 m_nHeightMapSize;	/**< Height map size */
-		float				*m_pfHeightMap;		/**< Height map data, can be a null pointer */
+		PLCore::uint32 	 m_nHeightMapSize;	/**< Height map size */
+		float			*m_pfHeightMap;		/**< Height map data, can be a null pointer */
 
 		// Patches
-		PLGeneral::uint32	 m_nPatchSize,	/**< Patch size */
-							 m_nXYPatches,	/**< Patches per column / row */
-							 m_nPatches;	/**< Total number of patches */
-		GMMSurfacePatch    **m_ppPatches;	/**< The patches, can be a null pointer */
+		PLCore::uint32	  m_nPatchSize,	/**< Patch size */
+						  m_nXYPatches,	/**< Patches per column / row */
+						  m_nPatches;	/**< Total number of patches */
+		GMMSurfacePatch **m_ppPatches;	/**< The patches, can be a null pointer */
 
 		// Levels
-		PLGeneral::uint32   m_nGeoMipMaps;	/**< Number of geometrically mip maps */
+		PLCore::uint32      m_nGeoMipMaps;	/**< Number of geometrically mip maps */
 		GMMSurfaceLevel   **m_ppLevels;		/**< Levels, can be a null pointer */
 
 		// Quadtree

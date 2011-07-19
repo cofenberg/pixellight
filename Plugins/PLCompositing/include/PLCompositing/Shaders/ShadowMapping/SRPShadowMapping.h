@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Container/Pool.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
@@ -88,7 +88,7 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPShadowMapping, "PLCompositing", PLScene::SceneRendererPass, "Shadow map manager scene renderer pass implementation")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -311,21 +311,21 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 		PLScene::SceneQueryHandler	*m_pLightCullQuery;			/**< Light cull query (always valid!) */
 
 		// Cube shadow map
-		static const PLGeneral::uint32 CubeShadowRenderTargets = 5;
+		static const PLCore::uint32 CubeShadowRenderTargets = 5;
 		PLRenderer::SurfaceTextureBuffer *m_pCubeShadowRenderTarget[CubeShadowRenderTargets];	/**< 256, 128, 64, 32, 16, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer **m_pCurrentCubeShadowRenderTarget;
 
 		// Spot shadow map
-		static const PLGeneral::uint32 SpotShadowRenderTargets = 5;
+		static const PLCore::uint32 SpotShadowRenderTargets = 5;
 		PLRenderer::SurfaceTextureBuffer *m_pSpotShadowRenderTarget[SpotShadowRenderTargets];	/**< 512, 256, 128, 64, 32, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer **m_pCurrentSpotShadowRenderTarget;
 
 		// Material & shader
-		PLGeneral::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
-		PLGeneral::Pool<MeshBatch*>					  m_lstFreeMeshBatches;		/**< List of currently free mesh batches */
-		PLGeneral::Pool<MeshBatch*>					  m_lstMeshBatches;			/**< List of currently used mesh batches */
-		PLRenderer::ProgramGenerator				 *m_pProgramGenerator;		/**< Program generator, can be a null pointer */
-		PLRenderer::ProgramGenerator::Flags			  m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
+		PLCore::Pool<const PLRenderer::Material*>  m_lstMaterials;			/**< List of currently used materials */
+		PLCore::Pool<MeshBatch*>				   m_lstFreeMeshBatches;	/**< List of currently free mesh batches */
+		PLCore::Pool<MeshBatch*>				   m_lstMeshBatches;		/**< List of currently used mesh batches */
+		PLRenderer::ProgramGenerator			  *m_pProgramGenerator;		/**< Program generator, can be a null pointer */
+		PLRenderer::ProgramGenerator::Flags		   m_cProgramFlags;			/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]

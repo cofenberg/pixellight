@@ -52,9 +52,9 @@ class TextureCreatorRandom2D : public TextureCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, TextureCreatorRandom2D, "PLRenderer", PLRenderer::TextureCreator, "Random 2D texture (TextureBuffer::R8G8B8) creator class")
 		// Attributes
-		pl_attribute(Width,			PLGeneral::uint32,	32,	ReadWrite,	DirectValue,	"Texture width (must be a power of 2)",		"Min='8'")
-		pl_attribute(Height,		PLGeneral::uint32,	32,	ReadWrite,	DirectValue,	"Texture height (must be a power of 2)",	"Min='8'")
-		pl_attribute(Components,	PLGeneral::uint8,	3,	ReadWrite,	DirectValue,	"Number of color components (1-4)",			"Min='1' Max='4'")
+		pl_attribute(Width,			PLCore::uint32,	32,	ReadWrite,	DirectValue,	"Texture width (must be a power of 2)",		"Min='8'")
+		pl_attribute(Height,		PLCore::uint32,	32,	ReadWrite,	DirectValue,	"Texture height (must be a power of 2)",	"Min='8'")
+		pl_attribute(Components,	PLCore::uint8,	3,	ReadWrite,	DirectValue,	"Number of color components (1-4)",			"Min='1' Max='4'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

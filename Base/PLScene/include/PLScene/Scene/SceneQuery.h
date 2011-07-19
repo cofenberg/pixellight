@@ -28,11 +28,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementHandler.h>
-#include <PLGeneral/Base/ElementManager.h>
 #include <PLCore/Base/Object.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementHandler.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLScene/PLScene.h"
 
 
@@ -66,14 +66,14 @@ class SceneContainer;
 *  @note
 *    - Derived classes should use a 'SQ'-prefix (example: SQLine)
 */
-class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> {
+class SceneQuery : public PLCore::Object, public PLCore::Element<SceneQuery> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class SceneContainer;
-	friend class PLGeneral::ElementManager<SceneQuery>;
+	friend class PLCore::ElementManager<SceneQuery>;
 
 
 	//[-------------------------------------------------------]
@@ -128,7 +128,7 @@ class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> 
 		*  @return
 		*    Flags (see EFlags)
 		*/
-		inline PLGeneral::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> 
 		*  @param[in] nFlags
 		*    Flags (see EFlags)
 		*/
-		inline void SetFlags(PLGeneral::uint32 nFlags = Recursive);
+		inline void SetFlags(PLCore::uint32 nFlags = Recursive);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class SceneQuery : public PLCore::Object, public PLGeneral::Element<SceneQuery> 
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nFlags;	/**< Flags (see EFlags) */
+		PLCore::uint32 m_nFlags;	/**< Flags (see EFlags) */
 
 
 	//[-------------------------------------------------------]

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLGui/Gui/Resources/Graphics.h"
 #include "PLGui/Gui/Gui.h"
 #include "PLGui/Themes/Theme.h"
@@ -39,9 +39,9 @@ static const int GAP = 8;	// Gap between two words
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-using namespace PLGraphics;
+using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 namespace PLGui {
 
 

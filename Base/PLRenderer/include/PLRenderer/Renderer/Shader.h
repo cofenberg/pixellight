@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLRenderer/Renderer/Resource.h"
 
 
@@ -71,7 +71,7 @@ class Shader : public Resource {
 		*    drivers produced compiler errors when using precision qualifiers. Due this buggy behaviour, it's recommended to
 		*    remove the precision qualifiers before passing on the shader source code to OpenGL.
 		*/
-		static PLRENDERER_API PLGeneral::String RemovePrecisionQualifiersFromGLSL(const PLGeneral::String &sSourceCode);
+		static PLRENDERER_API PLCore::String RemovePrecisionQualifiersFromGLSL(const PLCore::String &sSourceCode);
 
 
 	//[-------------------------------------------------------]
@@ -96,7 +96,7 @@ class Shader : public Resource {
 		*  @return
 		*    The name of the shader language the shader is using (for example "GLSL" or "Cg")
 		*/
-		virtual PLGeneral::String GetShaderLanguage() const = 0;
+		virtual PLCore::String GetShaderLanguage() const = 0;
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class Shader : public Resource {
 		*  @return
 		*    The shader source code
 		*/
-		virtual PLGeneral::String GetSourceCode() const = 0;
+		virtual PLCore::String GetSourceCode() const = 0;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class Shader : public Resource {
 		*  @return
 		*    The name of the shader profile the shader is using (for example "arbvp1")
 		*/
-		virtual PLGeneral::String GetProfile() const = 0;
+		virtual PLCore::String GetProfile() const = 0;
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class Shader : public Resource {
 		*  @return
 		*    The name of the shader entry point the shader is using (for example "main")
 		*/
-		virtual PLGeneral::String GetEntry() const = 0;
+		virtual PLCore::String GetEntry() const = 0;
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class Shader : public Resource {
 		*  GPU's you have virtually no other change then using the GLSL profiles in order to write shaders using modern features. While the concept of Cg is
 		*  fantastic, this lack of modern none NVIDIA profiles destroys many of Cg's advantages...
 		*/
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "") = 0;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") = 0;
 
 
 	//[-------------------------------------------------------]

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Core/Singleton.h>
+#include <PLCore/Container/List.h>
 #include "PLInput/PLInput.h"
 
 
@@ -55,13 +55,13 @@ namespace PLInput {
 *  @brief
 *    Class for accessing HID (Human Interface Device) devices
 */
-class HID : public PLGeneral::Singleton<HID> {
+class HID : public PLCore::Singleton<HID> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<HID>;
+	friend class PLCore::Singleton<HID>;
 
 
 	//[-------------------------------------------------------]
@@ -81,7 +81,7 @@ class HID : public PLGeneral::Singleton<HID> {
 		*  @return
 		*    Device list
 		*/
-		PLINPUT_API const PLGeneral::List<HIDDevice*> &GetDevices() const;
+		PLINPUT_API const PLCore::List<HIDDevice*> &GetDevices() const;
 
 
 	//[-------------------------------------------------------]
@@ -111,8 +111,8 @@ class HID : public PLGeneral::Singleton<HID> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HIDImpl						*m_pHIDImpl;	/**< Platform specific HID implementation */
-		PLGeneral::List<HIDDevice*>	 m_lstDevices;	/**< List of devices */
+		HIDImpl					 *m_pHIDImpl;	/**< Platform specific HID implementation */
+		PLCore::List<HIDDevice*>  m_lstDevices;	/**< List of devices */
 
 
 };
@@ -127,7 +127,7 @@ class HID : public PLGeneral::Singleton<HID> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::HID>;
 }
 

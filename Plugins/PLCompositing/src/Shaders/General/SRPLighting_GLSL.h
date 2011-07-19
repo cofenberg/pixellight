@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sLighting_GLSL_VS = "\
+static const PLCore::String sLighting_GLSL_VS = "\
 // In attributes\n\
 attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
@@ -100,7 +100,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code - divided into two parts because I got the following VC compiler error: "error C2026: string too big, trailing characters truncated", "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sLighting_GLSL_FS_Part1 = "\
+static const PLCore::String sLighting_GLSL_FS_Part1 = "\
 // Attributes\n\
 #ifdef FS_TEXCOORD0\n\
 	varying highp vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 from vertex shader\n\
@@ -300,7 +300,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		return shadowMap.r/1.0 + shadowMap.g/256.0 + shadowMap.b/65536.0 + shadowMap.a/16777216.0;\n\
 	}\n\
 #endif";
-static const PLGeneral::String sLighting_GLSL_FS_Part2 = "\
+static const PLCore::String sLighting_GLSL_FS_Part2 = "\
 \n\
 void main()\n\
 {\n\
@@ -625,4 +625,4 @@ void main()\n\
 	gl_FragColor = vec4(lightingColor*shadow, 1.0);\n\
 \n\
 }";
-static const PLGeneral::String sLighting_GLSL_FS = sLighting_GLSL_FS_Part1 + sLighting_GLSL_FS_Part2;
+static const PLCore::String sLighting_GLSL_FS = sLighting_GLSL_FS_Part1 + sLighting_GLSL_FS_Part2;

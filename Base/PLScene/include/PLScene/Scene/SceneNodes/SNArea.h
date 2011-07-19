@@ -60,8 +60,8 @@ class SNArea : public SceneNode, public PLMath::PlaneSet {
 			pl_property("Icon",	"Data/Textures/IconArea.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Box,		PLGeneral::String,	"-0.5 -0.5 -0.5 0.5 0.5 0.5",	ReadWrite,	GetSet,	"Box min/max position (creates automatically the required planes)",	"")
-		pl_attribute(Planes,	PLGeneral::String,	"",								ReadWrite,	GetSet,	"Planes defining the (normally convex) area",						"")
+		pl_attribute(Box,		PLCore::String,	"-0.5 -0.5 -0.5 0.5 0.5 0.5",	ReadWrite,	GetSet,	"Box min/max position (creates automatically the required planes)",	"")
+		pl_attribute(Planes,	PLCore::String,	"",								ReadWrite,	GetSet,	"Planes defining the (normally convex) area",						"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -71,10 +71,10 @@ class SNArea : public SceneNode, public PLMath::PlaneSet {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetBox() const;
-		PLS_API void SetBox(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetPlanes() const;
-		PLS_API void SetPlanes(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetBox() const;
+		PLS_API void SetBox(const PLCore::String &sValue);
+		PLS_API PLCore::String GetPlanes() const;
+		PLS_API void SetPlanes(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -121,8 +121,8 @@ class SNArea : public SceneNode, public PLMath::PlaneSet {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sBox;		/**< Box min/max position (creates automatically the required planes) */
-		PLGeneral::String m_sPlanes;	/**< Planes defining the (normally convex) area */
+		PLCore::String m_sBox;		/**< Box min/max position (creates automatically the required planes) */
+		PLCore::String m_sPlanes;	/**< Planes defining the (normally convex) area */
 
 
 	//[-------------------------------------------------------]

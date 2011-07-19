@@ -32,9 +32,9 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-using namespace PLGraphics;
+using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 namespace PLGui {
 
 
@@ -162,7 +162,7 @@ bool Image::Load(const String &sFilename)
 *  @brief
 *    Load image and apply a color key
 */
-bool Image::LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphics::Color3 &cColor)
+bool Image::LoadWithColorKey(const String &sFilename, const PLGraphics::Color3 &cColor)
 {
 	// Release image
 	if (m_pImageImpl) {

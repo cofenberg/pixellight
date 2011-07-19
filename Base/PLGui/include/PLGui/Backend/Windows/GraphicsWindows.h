@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGui/Backend/GraphicsImpl.h"
 
 
@@ -81,14 +81,14 @@ class GraphicsWindows : public GraphicsImpl {
 	//[ Public virtual GraphicsImpl functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void DrawLine(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nWidth = 1);
-		virtual void DrawRect(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nRoundX = 0, PLGeneral::uint32 nRoundY = 0, PLGeneral::uint32 nWidth = 1);
-		virtual void DrawBox(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nRoundX = 0, PLGeneral::uint32 nRoundY = 0);
+		virtual void DrawLine(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nWidth = 1);
+		virtual void DrawRect(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nRoundX = 0, PLCore::uint32 nRoundY = 0, PLCore::uint32 nWidth = 1);
+		virtual void DrawBox(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nRoundX = 0, PLCore::uint32 nRoundY = 0);
 		virtual void DrawGradientBox(const PLGraphics::Color4 &cColor1, const PLGraphics::Color4 &cColor2, float fAngle, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2);
 		virtual void DrawImage(const Image &cImage, const PLMath::Vector2i &vPos, const PLMath::Vector2i &vSize);
-		virtual void DrawText(const Font &cFont, const PLGraphics::Color4 &cTextColor, const PLGraphics::Color4 &cBkColor, const PLMath::Vector2i &vPos, const PLGeneral::String &sText);
-		virtual PLGeneral::uint32 GetTextWidth(const Font &cFont, const PLGeneral::String &sText);
-		virtual PLGeneral::uint32 GetTextHeight(const Font &cFont, const PLGeneral::String &sText);
+		virtual void DrawText(const Font &cFont, const PLGraphics::Color4 &cTextColor, const PLGraphics::Color4 &cBkColor, const PLMath::Vector2i &vPos, const PLCore::String &sText);
+		virtual PLCore::uint32 GetTextWidth(const Font &cFont, const PLCore::String &sText);
+		virtual PLCore::uint32 GetTextHeight(const Font &cFont, const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]

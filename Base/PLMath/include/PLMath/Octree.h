@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Bitset;
 }
 namespace PLMath {
@@ -133,7 +133,7 @@ class Octree {
 		*  @note
 		*    - You should destroy the old octree before you initialize the new one!
 		*/
-		PLMATH_API void Init(Octree *pParent = nullptr, int nSubdivide = -1, PLGeneral::uint32 nMinGeometries = 0, PLGeneral::uint32 nIDOffset = 0);
+		PLMATH_API void Init(Octree *pParent = nullptr, int nSubdivide = -1, PLCore::uint32 nMinGeometries = 0, PLCore::uint32 nIDOffset = 0);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class Octree {
 		*  @return
 		*    Subdivision level
 		*/
-		PLMATH_API PLGeneral::uint32 GetLevel() const;
+		PLMATH_API PLCore::uint32 GetLevel() const;
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Octree {
 		*  @return
 		*    Minimum number of geometries per octree
 		*/
-		PLMATH_API PLGeneral::uint32 GetMinGeometries() const;
+		PLMATH_API PLCore::uint32 GetMinGeometries() const;
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class Octree {
 		*    The function it will call CustomVisible()/CustomInvisible()
 		*    to mark an octree as visible or invisible.
 		*/
-		PLMATH_API void UpdateVisibility(const PlaneSet &cPlaneSet, PLGeneral::Bitset *pBitset = nullptr);
+		PLMATH_API void UpdateVisibility(const PlaneSet &cPlaneSet, PLCore::Bitset *pBitset = nullptr);
 
 		/**
 		*  @brief
@@ -297,20 +297,20 @@ class Octree {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32	m_nIDOffset;		/**< ID offset from parent (0-7) */
-		PLGeneral::uint32   m_nID;				/**< Octree ID */
-		Octree			   *m_pTopmost;			/**< Topmost octree (always valid!) */
-		Octree			   *m_pParent;			/**< Octree parent, can be a null pointer */
-		PLGeneral::uint32	m_nLevel;			/**< Node level (0 = topmost) */
-		PLGeneral::uint32   m_nNumOfChildren;	/**< Number of children */
-		Octree			  **m_ppChild;			/**< The children, can be a null pointer */
-		BoundingBox			m_cBoundingBox;		/**< Octree bounding box */
-		Vector3				m_vPos;				/**< World position (m_vPos+m_vBBCenter = real world position) */
-		Vector3				m_vBBCenter;		/**< Orginal bounding box center */
-		bool				m_bVisible;			/**< Is the octree visible? */
-		bool				m_bBuild;			/**< is the octree build? */
-		int					m_nSubdivide;		/**< Subdivide */
-		PLGeneral::uint32   m_nMinGeometries;	/**< Minimum nuber of geometries per octree */
+		PLCore::uint32	 m_nIDOffset;		/**< ID offset from parent (0-7) */
+		PLCore::uint32   m_nID;				/**< Octree ID */
+		Octree			*m_pTopmost;		/**< Topmost octree (always valid!) */
+		Octree			*m_pParent;			/**< Octree parent, can be a null pointer */
+		PLCore::uint32	 m_nLevel;			/**< Node level (0 = topmost) */
+		PLCore::uint32   m_nNumOfChildren;	/**< Number of children */
+		Octree		   **m_ppChild;			/**< The children, can be a null pointer */
+		BoundingBox		 m_cBoundingBox;	/**< Octree bounding box */
+		Vector3			 m_vPos;			/**< World position (m_vPos+m_vBBCenter = real world position) */
+		Vector3			 m_vBBCenter;		/**< Orginal bounding box center */
+		bool			 m_bVisible;		/**< Is the octree visible? */
+		bool			 m_bBuild;			/**< is the octree build? */
+		int				 m_nSubdivide;		/**< Subdivide */
+		PLCore::uint32   m_nMinGeometries;	/**< Minimum nuber of geometries per octree */
 
 
 	//[-------------------------------------------------------]
@@ -353,7 +353,7 @@ class Octree {
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is visible
 		*/
-		PLMATH_API virtual void CustomVisible(PLGeneral::Bitset *pBitset = nullptr);
+		PLMATH_API virtual void CustomVisible(PLCore::Bitset *pBitset = nullptr);
 
 		/**
 		*  @brief
@@ -365,7 +365,7 @@ class Octree {
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is invisible
 		*/
-		PLMATH_API virtual void CustomInvisible(PLGeneral::Bitset *pBitset = nullptr);
+		PLMATH_API virtual void CustomInvisible(PLCore::Bitset *pBitset = nullptr);
 
 
 };

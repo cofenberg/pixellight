@@ -23,15 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/String/Tokenizer.h>
 #include "PLScene/Scene/SceneNodes/Console/ConsoleCommand.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScene {
 

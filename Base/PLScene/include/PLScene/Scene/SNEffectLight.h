@@ -54,9 +54,9 @@ class SNEffectLight : public SNLight {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNEffectLight, "PLScene", PLScene::SNLight, "Effect light scene node")
 		// Attributes
-		pl_attribute(CoronaMaterial,	PLGeneral::String,	"Data/Effects/DefaultCorona.plfx",	ReadWrite,	GetSet,	"Corona material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(FlareMaterial,		PLGeneral::String,	"Data/Effects/DefaultFlare.plfx",	ReadWrite,	GetSet,	"Flare material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(BlendMaterial,		PLGeneral::String,	"Data/Effects/DefaultBlend.plfx",	ReadWrite,	GetSet,	"Blend material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(CoronaMaterial,	PLCore::String,	"Data/Effects/DefaultCorona.plfx",	ReadWrite,	GetSet,	"Corona material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(FlareMaterial,		PLCore::String,	"Data/Effects/DefaultFlare.plfx",	ReadWrite,	GetSet,	"Flare material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(BlendMaterial,		PLCore::String,	"Data/Effects/DefaultBlend.plfx",	ReadWrite,	GetSet,	"Blend material",	"Type='Material Effect Image TextureAni'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -66,12 +66,12 @@ class SNEffectLight : public SNLight {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetCoronaMaterial() const;
-		PLS_API void SetCoronaMaterial(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetFlareMaterial() const;
-		PLS_API void SetFlareMaterial(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetBlendMaterial() const;
-		PLS_API void SetBlendMaterial(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetCoronaMaterial() const;
+		PLS_API void SetCoronaMaterial(const PLCore::String &sValue);
+		PLS_API PLCore::String GetFlareMaterial() const;
+		PLS_API void SetFlareMaterial(const PLCore::String &sValue);
+		PLS_API PLCore::String GetBlendMaterial() const;
+		PLS_API void SetBlendMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -123,13 +123,13 @@ class SNEffectLight : public SNLight {
 	//[-------------------------------------------------------]
 	private:
 		bool						m_bCoronaMaterial;	/**< Corona material loaded? */
-		PLGeneral::String			m_sCoronaMaterial;	/**< Corona material */
+		PLCore::String				m_sCoronaMaterial;	/**< Corona material */
 		PLRenderer::MaterialHandler m_cCoronaMaterial;	/**< Corona material */
 		bool						m_bFlareMaterial;	/**< Flare material loaded? */
-		PLGeneral::String			m_sFlareMaterial;	/**< Flare material */
+		PLCore::String				m_sFlareMaterial;	/**< Flare material */
 		PLRenderer::MaterialHandler m_cFlareMaterial;	/**< Flare material */
 		bool						m_bBlendMaterial;	/**< Blend material loaded? */
-		PLGeneral::String			m_sBlendMaterial;	/**< Blend material */
+		PLCore::String				m_sBlendMaterial;	/**< Blend material */
 		PLRenderer::MaterialHandler m_cBlendMaterial;	/**< Blend material */
 
 

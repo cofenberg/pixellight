@@ -21,7 +21,7 @@
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLGeneral::String sSPK_PLPointRendererShaders_GLSL_VS = "\
+static const PLCore::String sSPK_PLPointRendererShaders_GLSL_VS = "\
 // Attributes\n\
 attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
 attribute lowp  vec4 VertexColor;		// Vertex color input\n\
@@ -50,7 +50,7 @@ void main()\n\
 
 
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLGeneral::String sSPK_PLPointRendererShaders_GLSL_FS = "\
+static const PLCore::String sSPK_PLPointRendererShaders_GLSL_FS = "\
 // Attributes\n\
 varying lowp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
 \n\

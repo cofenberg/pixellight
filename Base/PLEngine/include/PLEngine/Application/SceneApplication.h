@@ -91,7 +91,7 @@ class SceneApplication : public RenderApplication {
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PL_API SceneApplication(const PLGeneral::String &sSceneFilename = "");
+		PL_API SceneApplication(const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief
@@ -309,14 +309,14 @@ class SceneApplication : public RenderApplication {
 		*    - Connected to the "PLScene::SceneContext::EventInputControllerFound"-event
 		*    - The default implementation tries to connect all controls automatically with the virtual standard controller
 		*/
-		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLGeneral::String sInputSemantic);
+		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected event handlers                              ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::EventHandler<PLInput::Controller*, PLGeneral::String> EventHandlerInputControllerFound;
+		PLCore::EventHandler<PLInput::Controller*, PLCore::String> EventHandlerInputControllerFound;
 
 
 	//[-------------------------------------------------------]

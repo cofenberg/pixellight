@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <GLES2/gl2.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -67,7 +67,7 @@ class ShaderToolsGLSL {
 		*  @note
 		*    - If compiling the shader failed, compiler information is written into the log
 		*/
-		static bool SetSourceCode(GLuint nOpenGLESShader, const PLGeneral::String &sSourceCode);
+		static bool SetSourceCode(GLuint nOpenGLESShader, const PLCore::String &sSourceCode);
 
 		/**
 		*  @brief

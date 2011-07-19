@@ -57,7 +57,7 @@ namespace PLRenderer {
 *    pOcclusionQuery->EndOcclusionQuery();
 *    // Do something useful to give the GPU some time to process the stuff
 *    // Results must be pulled using:
-*    PLGeneral::uint32 nNumberOfVisibleFragments;
+*    PLCore::uint32 nNumberOfVisibleFragments;
 *    if (!pOcclusionQuery->PullOcclusionQuery(&nNumberOfVisibleFragments)) {
 *      if (nNumberOfVisibleFragments >= pOcclusionQuery->GetMinFragments()) {
 *        // Our object is visible (or visible enough ;-)
@@ -124,7 +124,7 @@ class OcclusionQuery : public Resource {
 		*  @see
 		*    - GetMinFragments()
 		*/
-		virtual bool PullOcclusionQuery(PLGeneral::uint32 *pnNumOfFragments = nullptr) = 0;
+		virtual bool PullOcclusionQuery(PLCore::uint32 *pnNumOfFragments = nullptr) = 0;
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class OcclusionQuery : public Resource {
 		*  @return
 		*    The fragment count from the last test
 		*/
-		virtual PLGeneral::uint32 GetLastQuerysPixelCount() const = 0;
+		virtual PLCore::uint32 GetLastQuerysPixelCount() const = 0;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class OcclusionQuery : public Resource {
 		*    which will result in a better performance. New and none visible objects will be tested all the time.
 		*    This class can keep track on visible and none visible objects for you.
 		*/
-		virtual PLGeneral::uint32 GetSkipRate() const = 0;
+		virtual PLCore::uint32 GetSkipRate() const = 0;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class OcclusionQuery : public Resource {
 		*  @see
 		*    - GetSkipRate()
 		*/
-		virtual void SetSkipRate(PLGeneral::uint32 nRate = 0) = 0;
+		virtual void SetSkipRate(PLCore::uint32 nRate = 0) = 0;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class OcclusionQuery : public Resource {
 		*    For instance often you can see something as invisible if less then
 		*    e.g. 10 fragments are visible without a visual quality impact.
 		*/
-		virtual PLGeneral::uint32 GetMinFragments() const = 0;
+		virtual PLCore::uint32 GetMinFragments() const = 0;
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class OcclusionQuery : public Resource {
 		*  @see
 		*    - GetMinFragments()
 		*/
-		virtual void SetMinFragments(PLGeneral::uint32 nMinFragments = 0) = 0;
+		virtual void SetMinFragments(PLCore::uint32 nMinFragments = 0) = 0;
 
 
 	//[-------------------------------------------------------]

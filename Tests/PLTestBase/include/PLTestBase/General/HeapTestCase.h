@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLTest/TestCase.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class KeyType, class ValueType> class Heap;
 }
 
@@ -64,7 +64,7 @@ class HeapTestCase : public TestCase {
 		*  @return
 		*    'true' if the test has succeeded, else 'false'
 		*/
-		bool Test(PLGeneral::Heap<int, PLGeneral::String> &cHeap);
+		bool Test(PLCore::Heap<int, PLCore::String> &cHeap);
 
 
 };

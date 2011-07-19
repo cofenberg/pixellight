@@ -105,7 +105,7 @@ class HDRAverageLuminance {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateAverageLuminance(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, const PLGraphics::Color3 &cLuminanceConvert);
+		PLCOM_API void CalculateAverageLuminance(const PLCore::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, const PLGraphics::Color3 &cLuminanceConvert);
 
 		/**
 		*  @brief

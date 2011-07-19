@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLScene/Scene/SceneQuery.h"
 
 
@@ -87,7 +87,7 @@ class SQByName : public SceneQuery {
 		*  @return
 		*    The used regular expression
 		*/
-		PLS_API const PLGeneral::RegEx &GetRegEx() const;
+		PLS_API const PLCore::RegEx &GetRegEx() const;
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class SQByName : public SceneQuery {
 		*  @param[in] cRegEx
 		*    The regular expression to use
 		*/
-		PLS_API void SetRegEx(const PLGeneral::RegEx &cRegEx);
+		PLS_API void SetRegEx(const PLCore::RegEx &cRegEx);
 
 
 	//[-------------------------------------------------------]
@@ -120,7 +120,7 @@ class SQByName : public SceneQuery {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::RegEx m_cRegEx;	/**< Regular expression used for the query */
+		PLCore::RegEx m_cRegEx;	/**< Regular expression used for the query */
 
 
 	//[-------------------------------------------------------]

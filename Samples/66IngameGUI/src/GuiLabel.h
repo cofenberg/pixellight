@@ -92,7 +92,7 @@ class GuiLabel : public GuiBase {
 		*  @return
 		*    Text displayed in the item
 		*/
-		PLGeneral::String GetText() const;
+		PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class GuiLabel : public GuiBase {
 		*  @param[in] sText
 		*    Text displayed in the item
 		*/
-		void SetText(const PLGeneral::String &sText);
+		void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class GuiLabel : public GuiBase {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	 m_sText;	/**< Displayed text */
+		PLCore::String		 m_sText;	/**< Displayed text */
 		PLGui::Font			*m_pFont;	/**< Selected font */
 		PLGraphics::Color4	 m_cColor;	/**< Text color */
 		ETextAlign			 m_nAlign;	/**< Text alignment */

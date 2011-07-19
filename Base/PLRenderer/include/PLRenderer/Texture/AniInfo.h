@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
+#include <PLCore/Container/Element.h>
 #include "PLRenderer/Animation/AnimationInfo.h"
 
 
@@ -45,7 +45,7 @@ namespace PLRenderer {
 *  @brief
 *    Animation information class
 */
-class AniInfo : public PLGeneral::Element<AniInfo>, public AnimationInfo {
+class AniInfo : public PLCore::Element<AniInfo>, public AnimationInfo {
 
 
 	//[-------------------------------------------------------]
@@ -61,7 +61,7 @@ class AniInfo : public PLGeneral::Element<AniInfo>, public AnimationInfo {
 		*  @param[in] pManager
 		*    Element manager using this element, can be a null pointer
 		*/
-		PLRENDERER_API AniInfo(const PLGeneral::String &sName = "", PLGeneral::ElementManager<AniInfo> *pManager = nullptr);
+		PLRENDERER_API AniInfo(const PLCore::String &sName = "", PLCore::ElementManager<AniInfo> *pManager = nullptr);
 
 		/**
 		*  @brief

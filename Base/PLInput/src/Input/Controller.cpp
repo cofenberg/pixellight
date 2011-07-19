@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 
@@ -160,7 +160,7 @@ const List<Control*> &Controller::GetControls() const
 *  @brief
 *    Get all buttons
 */
-const PLGeneral::List<Button*> &Controller::GetButtons() const
+const List<Button*> &Controller::GetButtons() const
 {
 	// Initialize button list
 	if (m_lstButtons.GetNumOfElements() == 0)
@@ -174,7 +174,7 @@ const PLGeneral::List<Button*> &Controller::GetButtons() const
 *  @brief
 *    Get all axes
 */
-const PLGeneral::List<Axis*> &Controller::GetAxes() const
+const List<Axis*> &Controller::GetAxes() const
 {
 	// Initialize axes list
 	if (m_lstAxes.GetNumOfElements() == 0)

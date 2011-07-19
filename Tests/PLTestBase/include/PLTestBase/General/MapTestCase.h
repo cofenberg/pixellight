@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLTest/TestCase.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class KeyType, class ValueType> class Map;
 }
 
@@ -64,7 +64,7 @@ class MapTestCase : public TestCase {
 		*  @return
 		*    'true' if the test has succeeded, else 'false'
 		*/
-		bool Test(PLGeneral::Map<PLGeneral::String, int> &cMap);
+		bool Test(PLCore::Map<PLCore::String, int> &cMap);
 
 
 };

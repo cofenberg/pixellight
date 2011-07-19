@@ -123,7 +123,7 @@ class Vector4 {
 		PLMATH_API Vector4(const Vector2 &vV, float fZ = 0.0f, float fW = 1.0f);
 		PLMATH_API Vector4(const Vector3 &vV, float fW = 1.0f);
 		inline Vector4(const Vector4 &vV);
-		inline Vector4(const PLGeneral::String &sString);
+		inline Vector4(const PLCore::String &sString);
 
 		//[-------------------------------------------------------]
 		//[ Destructor                                            ]
@@ -699,7 +699,7 @@ class Vector4 {
 		*  @return
 		*    String with the data
 		*/
-		PLMATH_API PLGeneral::String ToString() const;
+		PLMATH_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -708,7 +708,7 @@ class Vector4 {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLMATH_API bool FromString(const PLGeneral::String &sString);
+		PLMATH_API bool FromString(const PLCore::String &sString);
 
 
 };

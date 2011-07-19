@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLRenderer/Material/Parameter.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLCompositing/Shaders/PostProcessing/PostProcessManager.h>
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLPostProcessEffects {

@@ -28,31 +28,27 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
 #include "PLCore/Tools/Loadable.h"
+#include "PLCore/Core/Singleton.h"
+#include "PLCore/Container/Array.h"
+#include "PLCore/Container/HashMap.h"
 #include "PLCore/Base/Event/EventHandler.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class Directory;
-}
-namespace PLCore {
-	class Class;
-	class Loader;
-	class LoadableType;
-	class LoadableManager;
-}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Class;
+class Loader;
+class Directory;
+class LoadableType;
+class LoadableManager;
 
 
 //[-------------------------------------------------------]
@@ -79,16 +75,16 @@ namespace PLCore {
 *
 *  @note
 *    - An empty string is also a valid base directory and represents the current system directory
-*      (see PLGeneral::System::GetCurrentDir())
+*      (see System::GetCurrentDir())
 */
-class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
+class LoadableManager : public Singleton<LoadableManager> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class LoadableType;
-	friend class PLGeneral::Singleton<LoadableManager>;
+	friend class Singleton<LoadableManager>;
 
 
 	//[-------------------------------------------------------]
@@ -105,7 +101,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The number of loadable types
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfTypes();
+		PLCORE_API uint32 GetNumOfTypes();
 
 		/**
 		*  @brief
@@ -117,7 +113,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetType(PLGeneral::uint32 nIndex);
+		PLCORE_API LoadableType *GetType(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -129,7 +125,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetType(const PLGeneral::String &sName);
+		PLCORE_API LoadableType *GetType(const String &sName);
 
 		/**
 		*  @brief
@@ -141,7 +137,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetTypeByExtension(const PLGeneral::String &sExtension);
+		PLCORE_API LoadableType *GetTypeByExtension(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Loaders                                               ]
@@ -153,7 +149,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The number of loaders
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfLoaders();
+		PLCORE_API uint32 GetNumOfLoaders();
 
 		/**
 		*  @brief
@@ -165,7 +161,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(PLGeneral::uint32 nIndex);
+		PLCORE_API Loader *GetLoader(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -177,7 +173,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(const PLGeneral::String &sExtension);
+		PLCORE_API Loader *GetLoader(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Formats                                               ]
@@ -189,7 +185,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfFormats();
+		PLCORE_API uint32 GetNumOfFormats();
 
 		/**
 		*  @brief
@@ -201,7 +197,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API PLGeneral::String GetFormat(PLGeneral::uint32 nIndex);
+		PLCORE_API String GetFormat(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -215,7 +211,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true' if loading is supported for the given format, else 'false'
 		*/
-		PLCORE_API bool IsFormatLoadSupported(const PLGeneral::String &sExtension, const PLGeneral::String &sType = "");
+		PLCORE_API bool IsFormatLoadSupported(const String &sExtension, const String &sType = "");
 
 		/**
 		*  @brief
@@ -229,7 +225,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true' if saving is supported for the given format, else 'false'
 		*/
-		PLCORE_API bool IsFormatSaveSupported(const PLGeneral::String &sExtension, const PLGeneral::String &sType = "");
+		PLCORE_API bool IsFormatSaveSupported(const String &sExtension, const String &sType = "");
 
 		//[-------------------------------------------------------]
 		//[ Base directories                                      ]
@@ -241,7 +237,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    Number of base directories
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfBaseDirs() const;
+		PLCORE_API uint32 GetNumOfBaseDirs() const;
 
 		/**
 		*  @brief
@@ -253,7 +249,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    Path of the base directory or empty string
 		*/
-		PLCORE_API PLGeneral::String GetBaseDir(PLGeneral::uint32 nNum) const;
+		PLCORE_API String GetBaseDir(uint32 nNum) const;
 
 		/**
 		*  @brief
@@ -265,7 +261,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true', if the given path is a base directory, else 'false'
 		*/
-		PLCORE_API bool IsBaseDir(const PLGeneral::String &sPath) const;
+		PLCORE_API bool IsBaseDir(const String &sPath) const;
 
 		/**
 		*  @brief
@@ -277,7 +273,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool AddBaseDir(const PLGeneral::String &sPath);
+		PLCORE_API bool AddBaseDir(const String &sPath);
 
 		/**
 		*  @brief
@@ -295,7 +291,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    This function changes the order of the two base dirs
 		*    so that sSecondPath comes right after sFirstPath.
 		*/
-		PLCORE_API bool SetBaseDirPriority(const PLGeneral::String &sFirstPath, const PLGeneral::String &sSecondPath);
+		PLCORE_API bool SetBaseDirPriority(const String &sFirstPath, const String &sSecondPath);
 
 		/**
 		*  @brief
@@ -307,7 +303,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool RemoveBaseDir(const PLGeneral::String &sPath);
+		PLCORE_API bool RemoveBaseDir(const String &sPath);
 
 		/**
 		*  @brief
@@ -319,7 +315,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool RemoveBaseDir(PLGeneral::uint32 nNum);
+		PLCORE_API bool RemoveBaseDir(uint32 nNum);
 
 		/**
 		*  @brief
@@ -347,7 +343,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @see
 		*    - LoadableType::GetRelativeFilePath()
 		*/
-		PLCORE_API PLGeneral::String GetRelativeFilename(const PLGeneral::String &sFilename);
+		PLCORE_API String GetRelativeFilename(const String &sFilename);
 
 		/**
 		*  @brief
@@ -361,7 +357,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool ScanPackages(const PLGeneral::String &sPath, const PLGeneral::String &sExtension = "*.zip");
+		PLCORE_API bool ScanPackages(const String &sPath, const String &sExtension = "*.zip");
 
 		/**
 		*  @brief
@@ -377,7 +373,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool OpenFile(PLGeneral::File &cFile, const PLGeneral::String &sFilename, bool bCreate = false) const;
+		PLCORE_API bool OpenFile(File &cFile, const String &sFilename, bool bCreate = false) const;
 
 		/**
 		*  @brief
@@ -386,7 +382,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*  @param[in] sFilename
 		*    Name of the file to read the string from
 		*  @param[in] nFormat
-		*    String format, "PLGeneral::String::ASCII" or "PLGeneral::String::Unicode" (not recommended!)
+		*    String format, "String::ASCII" or "String::Unicode" (not recommended!)
 		*
 		*  @return
 		*    The read string, empty string on error or if the file is just empty
@@ -396,7 +392,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 		*    - It's not recommended to read in Unicode by using this method because internally
 		*      wchar_t is used and this data type has not the same size on every platform
 		*/
-		PLCORE_API PLGeneral::String LoadStringFromFile(const PLGeneral::String &sFilename, PLGeneral::String::EFormat nFormat = PLGeneral::String::ASCII) const;
+		PLCORE_API String LoadStringFromFile(const String &sFilename, String::EFormat nFormat = String::ASCII) const;
 
 
 	//[-------------------------------------------------------]
@@ -465,16 +461,15 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 	//[-------------------------------------------------------]
 	private:
 		// General
-		PLGeneral::Array<LoadableType*>						 m_lstTypes;		/**< List of loadable types */
-		PLGeneral::HashMap<PLGeneral::String, LoadableType*> m_mapTypes;		/**< Map of loadable types */
-		PLGeneral::Array<PLGeneral::String>					 m_lstBaseDirs;		/**< List of base directories */
-		PLGeneral::Array<const Class*>						 m_lstNewClasses;	/**< New classes to register as soon as required */
-
+		Array<LoadableType*>			m_lstTypes;				/**< List of loadable types */
+		HashMap<String, LoadableType*>	m_mapTypes;				/**< Map of loadable types */
+		Array<String>					m_lstBaseDirs;			/**< List of base directories */
+		Array<const Class*>				m_lstNewClasses;		/**< New classes to register as soon as required */
 		// Filled by LoadableType
-		PLGeneral::Array<Loader*>							 m_lstLoaders;			/**< List of loaders */
-		PLGeneral::HashMap<PLGeneral::String, Loader*>		 m_mapLoaders;			/**< Map of loaders (key = extension) */
-		PLGeneral::Array<PLGeneral::String>					 m_lstFormats;			/**< List of loadable formats */
-		PLGeneral::HashMap<PLGeneral::String, LoadableType*> m_mapTypesByExtension;	/**< Map of loadable types (key = extension) */
+		Array<Loader*>					m_lstLoaders;			/**< List of loaders */
+		HashMap<String, Loader*>		m_mapLoaders;			/**< Map of loaders (key = extension) */
+		Array<String>					m_lstFormats;			/**< List of loadable formats */
+		HashMap<String, LoadableType*>	m_mapTypesByExtension;	/**< Map of loadable types (key = extension) */
 
 
 };
@@ -489,7 +484,7 @@ class LoadableManager : public PLGeneral::Singleton<LoadableManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::LoadableManager>;
+PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::LoadableManager>;
 
 
 #endif // __PLCORE_LOADABLEMANAGER_H__

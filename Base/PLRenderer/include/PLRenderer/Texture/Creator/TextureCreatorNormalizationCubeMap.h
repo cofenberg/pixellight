@@ -58,7 +58,7 @@ class TextureCreatorNormalizationCubeMap : public TextureCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, TextureCreatorNormalizationCubeMap, "PLRenderer", PLRenderer::TextureCreator, "Normalization cube map (TextureBuffer::R8G8B8) texture creator class")
 		// Attributes
-		pl_attribute(Size,	PLGeneral::uint32,	64,	ReadWrite,	DirectValue,	"Texture size (must be a power of 2)",	"Min='8'")
+		pl_attribute(Size,	PLCore::uint32,	64,	ReadWrite,	DirectValue,	"Texture size (must be a power of 2)",	"Min='8'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -99,7 +99,7 @@ class TextureCreatorNormalizationCubeMap : public TextureCreator {
 		*  @return
 		*    The cube requested vector
 		*/
-		PLMath::Vector3 GetCubeVector(PLGeneral::uint8 i, PLGeneral::uint32 x, PLGeneral::uint32 y) const;
+		PLMath::Vector3 GetCubeVector(PLCore::uint8 i, PLCore::uint32 x, PLCore::uint32 y) const;
 
 
 	//[-------------------------------------------------------]

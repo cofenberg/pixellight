@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Wrapper.h>
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Tools/Wrapper.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 #include "PLRendererOpenGLCg/ShaderToolsCg.h"
 #include "PLRendererOpenGLCg/VertexShaderCg.h"
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRendererOpenGLCg {
 
 

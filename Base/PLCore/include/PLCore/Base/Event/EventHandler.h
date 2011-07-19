@@ -135,7 +135,7 @@ class EventHandler : public DynEventHandler {
 	//[ Public virtual DynEventHandler functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetSignature() const {
+		virtual String GetSignature() const {
 			return TypeSignature::GetSignatureID();
 		}
 

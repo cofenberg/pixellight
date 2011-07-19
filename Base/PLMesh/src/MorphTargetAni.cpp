@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLMesh {
 
 
@@ -220,7 +220,7 @@ MorphTargetAniManager::~MorphTargetAniManager()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 MorphTargetAni *MorphTargetAniManager::CreateElement(const String &sName)
 {

@@ -26,14 +26,14 @@
 extern "C" {
 	#include <Lua/lua.h>
 }
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLScriptLua/LuaContext.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptLua {
 
 

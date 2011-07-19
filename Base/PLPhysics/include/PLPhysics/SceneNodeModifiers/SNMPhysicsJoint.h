@@ -89,7 +89,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsJoint, "PLPhysics", PLPhysics::SNMPhysics, "Abstract physics joint scene node modifier")
 		// Attributes
-		pl_attribute(Target,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined",	"")
+		pl_attribute(Target,	PLCore::String,			"",	ReadWrite,	GetSet,	"Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined",	"")
 			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																										"")
 	pl_class_end
@@ -99,9 +99,9 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLGeneral::String GetTarget() const;
-		PLPHYSICS_API void SetTarget(const PLGeneral::String &sValue);
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLPHYSICS_API PLCore::String GetTarget() const;
+		PLPHYSICS_API void SetTarget(const PLCore::String &sValue);
+		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -203,7 +203,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String  m_sTarget;			/**< Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined */
+		PLCore::String	   m_sTarget;			/**< Name of the target scene node (which must have a 'PLPhysics::SNMPhysicsBody' modifier!), can left undefined */
 		SCPhysicsWorld    *m_pWorldContainer;	/**< The PL physics world scene node container the physics joint is in, can be a null pointer */
 		ElementHandler    *m_pJointHandler;		/**< Holds the PL physics joint (ALWAYS valid!) */
 

@@ -85,7 +85,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @return
 		*    The result
 		*/
-		float RunScript(const PLGeneral::String &sScriptFilename, float fFirst, float fSecond);
+		float RunScript(const PLCore::String &sScriptFilename, float fFirst, float fSecond);
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @return
 		*    The result
 		*/
-		static PLGeneral::String StaticStringMethod(PLGeneral::String sFirst);
+		static PLCore::String StaticStringMethod(PLCore::String sFirst);
 
 
 	//[-------------------------------------------------------]

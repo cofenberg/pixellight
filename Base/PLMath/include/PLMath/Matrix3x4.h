@@ -194,8 +194,8 @@ class Matrix3x4 {
 		inline void           operator /=(float fS);
 		inline float          operator [](int nIndex) const;
 		inline float         &operator [](int nIndex);
-		inline float          operator ()(PLGeneral::uint32 nRow = 0, PLGeneral::uint32 nColumn = 0) const;
-		inline float         &operator ()(PLGeneral::uint32 nRow = 0, PLGeneral::uint32 nColumn = 0);
+		inline float          operator ()(PLCore::uint32 nRow = 0, PLCore::uint32 nColumn = 0) const;
+		inline float         &operator ()(PLCore::uint32 nRow = 0, PLCore::uint32 nColumn = 0);
 		inline                operator float *();
 		inline                operator const float *() const;
 
@@ -297,7 +297,7 @@ class Matrix3x4 {
 		*    | 0 0 0 0 |
 		*    @endcode
 		*/
-		inline Vector4 GetRow(PLGeneral::uint8 nRow) const;
+		inline Vector4 GetRow(PLCore::uint8 nRow) const;
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class Matrix3x4 {
 		*  @see
 		*    - GetRow()
 		*/
-		inline void SetRow(PLGeneral::uint8 nRow, const Vector4 &vRow);
+		inline void SetRow(PLCore::uint8 nRow, const Vector4 &vRow);
 
 		/**
 		*  @brief
@@ -333,7 +333,7 @@ class Matrix3x4 {
 		*      Column 0
 		*    @endcode
 		*/
-		inline Vector3 GetColumn(PLGeneral::uint8 nColumn) const;
+		inline Vector3 GetColumn(PLCore::uint8 nColumn) const;
 
 		/**
 		*  @brief
@@ -347,7 +347,7 @@ class Matrix3x4 {
 		*  @see
 		*    - GetColumn()
 		*/
-		inline void SetColumn(PLGeneral::uint8 nColumn, const Vector3 &vColumn);
+		inline void SetColumn(PLCore::uint8 nColumn, const Vector3 &vColumn);
 
 		/**
 		*  @brief

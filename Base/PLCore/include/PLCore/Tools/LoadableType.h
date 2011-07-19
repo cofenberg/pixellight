@@ -28,10 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Container/Array.h"
+#include "PLCore/Container/HashMap.h"
 
 
 //[-------------------------------------------------------]
@@ -77,7 +76,7 @@ class LoadableType {
 		*  @return
 		*    Name of the loadable type
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -103,7 +102,7 @@ class LoadableType {
 		*      will be used
 		*    - MS Windows example: 'C:\test\test.bmp' -> 'test.bmp'
 		*/
-		PLCORE_API PLGeneral::String GetRelativeFilePath(const PLGeneral::String &sPath) const;
+		PLCORE_API String GetRelativeFilePath(const String &sPath) const;
 
 		//[-------------------------------------------------------]
 		//[ Formats & loaders                                     ]
@@ -115,7 +114,7 @@ class LoadableType {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfFormats() const;
+		PLCORE_API uint32 GetNumOfFormats() const;
 
 		/**
 		*  @brief
@@ -127,7 +126,7 @@ class LoadableType {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API PLGeneral::String GetFormat(PLGeneral::uint32 nIndex) const;
+		PLCORE_API String GetFormat(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -136,7 +135,7 @@ class LoadableType {
 		*  @return
 		*    The number of loaders
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfLoaders() const;
+		PLCORE_API uint32 GetNumOfLoaders() const;
 
 		/**
 		*  @brief
@@ -148,7 +147,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(PLGeneral::uint32 nIndex) const;
+		PLCORE_API Loader *GetLoader(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -160,7 +159,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader, a null pointer on error (format is not supported)
 		*/
-		PLCORE_API Loader *GetLoader(const PLGeneral::String &sExtension) const;
+		PLCORE_API Loader *GetLoader(const String &sExtension) const;
 
 
 	//[-------------------------------------------------------]
@@ -182,7 +181,7 @@ class LoadableType {
 		*  @param[in] cClass
 		*    Class the loadable type
 		*/
-		LoadableType(const PLGeneral::String &sName, const Class &cClass);
+		LoadableType(const String &sName, const Class &cClass);
 
 		/**
 		*  @brief
@@ -216,11 +215,11 @@ class LoadableType {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String							   m_sName;			/**< Name of the loadable type */
-		const Class									  *m_pClass;		/**< Class the loadable type, always valid! */
-		PLGeneral::Array<Loader*>					   m_lstLoaders;	/**< List of loaders */
-		PLGeneral::HashMap<PLGeneral::String, Loader*> m_mapLoaders;	/**< Map of loaders (key = extension) */
-		PLGeneral::Array<PLGeneral::String>			   m_lstFormats;	/**< List of loadable formats */
+		String						 m_sName;		/**< Name of the loadable type */
+		const Class					*m_pClass;		/**< Class the loadable type, always valid! */
+		Array<Loader*>				 m_lstLoaders;	/**< List of loaders */
+		HashMap<String, Loader*>	 m_mapLoaders;	/**< Map of loaders (key = extension) */
+		Array<String>				 m_lstFormats;	/**< List of loadable formats */
 
 
 };

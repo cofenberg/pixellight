@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 }
 
@@ -68,8 +68,8 @@ class EffectLoaderPL : public EffectLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Effect&,		PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Effect&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Effect&,		PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Effect&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -77,8 +77,8 @@ class EffectLoaderPL : public EffectLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API bool Load(Effect &cEffect, PLGeneral::File &cFile);
-		PLRENDERER_API bool Save(const Effect &cEffect, PLGeneral::File &cFile);
+		PLRENDERER_API bool Load(Effect &cEffect, PLCore::File &cFile);
+		PLRENDERER_API bool Save(const Effect &cEffect, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class EffectLoaderPL : public EffectLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(Effect &cFX, const PLGeneral::XmlElement &cFXElement) const;
+		bool LoadV1(Effect &cFX, const PLCore::XmlElement &cFXElement) const;
 
 
 };

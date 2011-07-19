@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGui/Backend/WidgetImpl.h"
 
 
@@ -85,10 +85,10 @@ class WidgetWindows : public WidgetImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void CreateWidget();
-		virtual void CreateWrapperWidget(PLGeneral::handle nWindowHandle);
+		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle);
 		virtual bool IsDestroyed() const;
 		virtual void Destroy();
-		virtual PLGeneral::handle GetWindowHandle() const;
+		virtual PLCore::handle GetWindowHandle() const;
 		virtual void SetParent(WidgetImpl *pParent);
 		virtual bool IsShowInTaskbar() const;
 		virtual void SetShowInTaskbar(bool bShowInTaskbar);
@@ -112,10 +112,10 @@ class WidgetWindows : public WidgetImpl {
 		virtual void Redraw();
 		virtual void SetCaptureMouse(bool bCapture);
 		virtual void SetTrapMouse(bool bTrap);
-		virtual void SetTitle(const PLGeneral::String &sTitle);
+		virtual void SetTitle(const PLCore::String &sTitle);
 		virtual void SetIcon(const Image &cIcon);
-		virtual PLGeneral::uint32 RegisterHotkey(PLGeneral::uint32 nModKey, PLGeneral::uint32 nKey);
-		virtual void UnregisterHotkey(PLGeneral::uint32 nID);
+		virtual PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey);
+		virtual void UnregisterHotkey(PLCore::uint32 nID);
 		virtual void SetCursor(const Cursor &cCursor);
 		virtual bool GetMousePos(PLMath::Vector2i &vPos);
 
@@ -133,7 +133,7 @@ class WidgetWindows : public WidgetImpl {
 		*  @param[out] nExtStyle
 		*    Extended window style
 		*/
-		void GetWindowStyle(PLGeneral::uint32 &nWinStyle, PLGeneral::uint32 &nExtStyle);
+		void GetWindowStyle(PLCore::uint32 &nWinStyle, PLCore::uint32 &nExtStyle);
 
 		/**
 		*  @brief

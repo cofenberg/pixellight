@@ -274,17 +274,17 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @param[in] nModifiers
 		*    Modifier keys pressed
 		*/
-		void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<>									   EventHandlerDestroy;
-		PLCore::EventHandler<>									   EventHandlerShow;
-		PLCore::EventHandler<>									   EventHandlerHide;
-		PLCore::EventHandler<PLGeneral::uint32, PLGeneral::uint32> EventHandlerKeyDown;
+		PLCore::EventHandler<>							     EventHandlerDestroy;
+		PLCore::EventHandler<>							     EventHandlerShow;
+		PLCore::EventHandler<>							     EventHandlerHide;
+		PLCore::EventHandler<PLCore::uint32, PLCore::uint32> EventHandlerKeyDown;
 
 
 	//[-------------------------------------------------------]
@@ -298,7 +298,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		bool					 m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using alt-return? */
 		bool					 m_bFullscreenAltTab;		/**< Is it allowed to use hotkeys within fullscreen mode? */
 		bool					 m_bFullscreenAltTabKey;	/**< Is there an hotkeys key? */
-		PLGeneral::uint32		 m_nHotkeyIDAltTab;			/**< Alt-tab hotkey ID */
+		PLCore::uint32			 m_nHotkeyIDAltTab;			/**< Alt-tab hotkey ID */
 
 
 };

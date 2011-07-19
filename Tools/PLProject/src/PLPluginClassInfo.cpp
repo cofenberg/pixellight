@@ -23,19 +23,19 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Xml/XmlText.h>
-#include <PLGeneral/Xml/XmlElement.h>
-#include <PLGeneral/Xml/XmlDocument.h>
-#include <PLGeneral/Container/ConstIterator.h>
+#include <PLCore/String/RegEx.h>
+#include <PLCore/String/Tokenizer.h>
+#include <PLCore/Xml/XmlText.h>
+#include <PLCore/Xml/XmlElement.h>
+#include <PLCore/Xml/XmlDocument.h>
+#include <PLCore/Container/ConstIterator.h>
 #include "PLPluginClassInfo.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

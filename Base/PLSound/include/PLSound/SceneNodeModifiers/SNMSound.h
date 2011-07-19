@@ -84,7 +84,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLSOUND_RTTI_EXPORT, SNMSound, "PLSound", PLScene::SceneNodeModifier, "Scene node modifier which is able to playback a sound")
 		// Attributes
-		pl_attribute(Sound,				PLGeneral::String,		"",			ReadWrite,	GetSet,	"Name of the sound which should be played (full path, supported file formats are API dependent)",				"Ext='mp3 ogg wav mid midi it mod s3m xm'")
+		pl_attribute(Sound,				PLCore::String,			"",			ReadWrite,	GetSet,	"Name of the sound which should be played (full path, supported file formats are API dependent)",				"Ext='mp3 ogg wav mid midi it mod s3m xm'")
 		pl_attribute(Volume,			float,					1.0f,		ReadWrite,	GetSet,	"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",												"Min='0.0' Max='1.0'")
 		pl_attribute(Pitch,				float,					1.0f,		ReadWrite,	GetSet,	"Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster)",										"Min='0.0'")
 		pl_attribute(ReferenceDistance,	float,					1.0f,		ReadWrite,	GetSet,	"Used to increase or decrease the range of a source by decreasing or increasing the attenuation, respectively",	"Min='0.0'")
@@ -103,8 +103,8 @@ class SNMSound : public PLScene::SceneNodeModifier {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLSOUND_API PLGeneral::String GetSound() const;
-		PLSOUND_API void SetSound(const PLGeneral::String &sValue);
+		PLSOUND_API PLCore::String GetSound() const;
+		PLSOUND_API void SetSound(const PLCore::String &sValue);
 		PLSOUND_API float GetVolume() const;
 		PLSOUND_API void SetVolume(float fValue);
 		PLSOUND_API float GetPitch() const;
@@ -115,7 +115,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		PLSOUND_API void SetMaxDistance(float fValue);
 		PLSOUND_API float GetRolloffFactor() const;
 		PLSOUND_API void SetRolloffFactor(float fValue);
-		PLSOUND_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLSOUND_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -158,12 +158,12 @@ class SNMSound : public PLScene::SceneNodeModifier {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sSound;				/**< Name of the sound which should be played (full path, supported file formats are API dependent) */
-		float			  m_fVolume;			/**< Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume) */
-		float			  m_fPitch;				/**< Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster) */
-		float			  m_fReferenceDistance;	/**< Used to increase or decrease the range of a source by decreasing or increasing the attenuation, respectively */
-		float			  m_fMaxDistance;		/**< Defines a distance beyond which the source will not be further attenuated by distance */
-		float			  m_fRolloffFactor;		/**< This will scale the distance attenuation over the applicable range */
+		PLCore::String m_sSound;				/**< Name of the sound which should be played (full path, supported file formats are API dependent) */
+		float		   m_fVolume;				/**< Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume) */
+		float		   m_fPitch;				/**< Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster) */
+		float		   m_fReferenceDistance;	/**< Used to increase or decrease the range of a source by decreasing or increasing the attenuation, respectively */
+		float		   m_fMaxDistance;			/**< Defines a distance beyond which the source will not be further attenuated by distance */
+		float		   m_fRolloffFactor;		/**< This will scale the distance attenuation over the applicable range */
 
 
 	//[-------------------------------------------------------]

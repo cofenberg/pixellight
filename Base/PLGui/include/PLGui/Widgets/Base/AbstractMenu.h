@@ -193,9 +193,9 @@ class AbstractMenu : public Widget {
 	protected:
 		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
 		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 		PLGUI_API virtual void OnGetFocus();
 		PLGUI_API virtual void OnLooseFocus();
 

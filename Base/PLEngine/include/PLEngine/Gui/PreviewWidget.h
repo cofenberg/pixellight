@@ -126,8 +126,8 @@ class PreviewWidget : public RenderWidget {
 	//[-------------------------------------------------------]
 	public:
 		virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 };

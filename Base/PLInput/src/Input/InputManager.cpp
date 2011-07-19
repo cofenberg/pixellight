@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/MutexGuard.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/System/MutexGuard.h>
 #include "PLInput/Input/Controller.h"
 #include "PLInput/Input/InputManager.h"
 #include "PLInput/Input/Devices/Device.h"
@@ -36,7 +36,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLInput {
 

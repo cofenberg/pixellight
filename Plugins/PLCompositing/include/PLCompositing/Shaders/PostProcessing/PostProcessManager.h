@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
 #include <PLCore/Tools/Loadable.h>
+#include <PLCore/Container/ElementManager.h>
 #include <PLRenderer/Renderer/TextureBuffer.h>
 #include "PLCompositing/Shaders/PostProcessing/PostProcess.h"
 
@@ -55,7 +55,7 @@ namespace PLCompositing {
 *  @brief
 *    This is a manager for the post process element
 */
-class PostProcessManager : public PLGeneral::ElementManager<PostProcess>, public PLCore::Loadable {
+class PostProcessManager : public PLCore::ElementManager<PostProcess>, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
@@ -127,21 +127,21 @@ class PostProcessManager : public PLGeneral::ElementManager<PostProcess>, public
 	//[-------------------------------------------------------]
 	public:
 		PLCOM_API virtual bool Unload();
-		PLCOM_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLCOM_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Loadable functions            ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PostProcess *CreateElement(const PLGeneral::String &sName);
+		virtual PostProcess *CreateElement(const PLCore::String &sName);
 
 
 };

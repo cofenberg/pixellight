@@ -60,8 +60,8 @@ class GraphLoaderPL : public GraphLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Graph&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Graph&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Graph&,			PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Graph&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class GraphLoaderPL : public GraphLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API bool Load(Graph &cGraph, PLGeneral::File &cFile);
-		PLMATH_API bool Save(const Graph &cGraph, PLGeneral::File &cFile);
+		PLMATH_API bool Load(Graph &cGraph, PLCore::File &cFile);
+		PLMATH_API bool Save(const Graph &cGraph, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class GraphLoaderPL : public GraphLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(Graph &cGraph, const PLGeneral::XmlElement &cGraphElement) const;
+		bool LoadV1(Graph &cGraph, const PLCore::XmlElement &cGraphElement) const;
 
 
 };

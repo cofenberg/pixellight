@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
+#include <PLCore/Container/Element.h>
 #include "PLPhysics/PLPhysics.h"
 
 
@@ -51,7 +51,7 @@ class World;
 *  @brief
 *    Abstract PL physics element base class
 */
-class Element : public PLGeneral::Element<Element> {
+class Element : public PLCore::Element<Element> {
 
 
 	//[-------------------------------------------------------]

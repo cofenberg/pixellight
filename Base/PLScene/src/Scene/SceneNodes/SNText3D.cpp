@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/Tools/Tools.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/Tools/Tools.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Font.h>
@@ -41,7 +41,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

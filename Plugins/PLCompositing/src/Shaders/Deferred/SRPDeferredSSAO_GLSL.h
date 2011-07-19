@@ -21,7 +21,7 @@
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sDeferredSSAO_GLSL_VS = "\
+static const PLCore::String sDeferredSSAO_GLSL_VS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\
@@ -48,7 +48,7 @@ void main()\n\
 
 
 // GLSL vertex shader source code
-static const PLGeneral::String sDeferredSSAO_GLSL_FS = "\
+static const PLCore::String sDeferredSSAO_GLSL_FS = "\
 // GLSL preprocessor directives\n\
 #version 110	// OpenGL 2.0\n\
 \n\

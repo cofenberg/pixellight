@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/FastPool.h>
+#include <PLCore/Container/FastPool.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLRenderer/Material/MaterialHandler.h>
 #include <PLMesh/Mesh.h>
@@ -102,11 +102,11 @@ class SNParticleGroup : public PLScene::SceneNode {
 			pl_property("Icon",	"Data/Textures/IconParticles.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Material,					PLGeneral::String,		"Data/Effects/DefaultParticle.plfx",		ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
+		pl_attribute(Material,					PLCore::String,			"Data/Effects/DefaultParticle.plfx",		ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
 		pl_attribute(GlobalColor,				PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Global particle color",							"")
-		pl_attribute(Particles,					PLGeneral::uint32,		10,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
-		pl_attribute(TextureAnimationColumns,	PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
-		pl_attribute(TextureAnimationRows,		PLGeneral::uint32,		1,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		pl_attribute(Particles,					PLCore::uint32,			10,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
+		pl_attribute(TextureAnimationColumns,	PLCore::uint32,			1,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
+		pl_attribute(TextureAnimationRows,		PLCore::uint32,			1,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,						pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",											"")
 	pl_class_end
@@ -116,15 +116,15 @@ class SNParticleGroup : public PLScene::SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPG_API PLGeneral::String GetMaterial() const;
-		PLPG_API void SetMaterial(const PLGeneral::String &sValue);
-		PLPG_API PLGeneral::uint32 GetParticles() const;
-		PLPG_API void SetParticles(const PLGeneral::uint32 &nValue);
-		PLPG_API PLGeneral::uint32 GetTextureAnimationColumns() const;
-		PLPG_API void SetTextureAnimationColumns(const PLGeneral::uint32 &nValue);
-		PLPG_API PLGeneral::uint32 GetTextureAnimationRows() const;
-		PLPG_API void SetTextureAnimationRows(const PLGeneral::uint32 &nValue);
-		PLPG_API virtual void SetFlags(PLGeneral::uint32 nValue);	// From SceneNode
+		PLPG_API PLCore::String GetMaterial() const;
+		PLPG_API void SetMaterial(const PLCore::String &sValue);
+		PLPG_API PLCore::uint32 GetParticles() const;
+		PLPG_API void SetParticles(const PLCore::uint32 &nValue);
+		PLPG_API PLCore::uint32 GetTextureAnimationColumns() const;
+		PLPG_API void SetTextureAnimationColumns(const PLCore::uint32 &nValue);
+		PLPG_API PLCore::uint32 GetTextureAnimationRows() const;
+		PLPG_API void SetTextureAnimationRows(const PLCore::uint32 &nValue);
+		PLPG_API virtual void SetFlags(PLCore::uint32 nValue);	// From SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -135,7 +135,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @brief
 		*    A single particle of the particle group
 		*/
-		class Particle : public PLGeneral::FastPoolElement<Particle> {
+		class Particle : public PLCore::FastPoolElement<Particle> {
 
 
 			//[-------------------------------------------------------]
@@ -154,8 +154,8 @@ class SNParticleGroup : public PLScene::SceneNode {
 				float				fRot;			/**< Rotation (more performance cost if not 0.0f) */
 
 				// Texture animation related
-				PLGeneral::uint32 nAnimationStep;	/**< Texture animation step */
-				float			  fAnimationTimer;	/**< Animation timer */
+				PLCore::uint32 nAnimationStep;	/**< Texture animation step */
+				float		   fAnimationTimer;	/**< Animation timer */
 
 				// Custom variables
 				int   nCustom1;	/**< Custom variable 1 */
@@ -212,7 +212,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*    - Normally, this function calls InitParticles() which further calles
 		*      the scene nodes InitFunction() in which you can initialize the individual particles
 		*/
-		PLPG_API virtual bool InitParticleGroup(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "", const void *pData = nullptr);
+		PLPG_API virtual bool InitParticleGroup(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "", const void *pData = nullptr);
 
 		/**
 		*  @brief
@@ -221,7 +221,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @return
 		*    The maximum possible number of particles
 		*/
-		PLPG_API PLGeneral::uint32 GetMaxNumOfParticles() const;
+		PLPG_API PLCore::uint32 GetMaxNumOfParticles() const;
 
 		/**
 		*  @brief
@@ -230,7 +230,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @return
 		*    The current number of particles
 		*/
-		PLPG_API PLGeneral::uint32 GetNumOfParticles() const;
+		PLPG_API PLCore::uint32 GetNumOfParticles() const;
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @note
 		*    - You have to delete this iterator by yourself if you no longer need it!
 		*/
-		PLPG_API PLGeneral::Iterator<Particle> GetParticleIterator() const;
+		PLPG_API PLCore::Iterator<Particle> GetParticleIterator() const;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @param[in] nRows
 		*    Number of animation frame rows in the texture
 		*/
-		PLPG_API void SetupTextureAnimation(PLGeneral::uint32 nColumns = 1, PLGeneral::uint32 nRows = 1);
+		PLPG_API void SetupTextureAnimation(PLCore::uint32 nColumns = 1, PLCore::uint32 nRows = 1);
 
 		/**
 		*  @brief
@@ -305,7 +305,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @return
 		*    The number of texture animation steps
 		*/
-		PLPG_API PLGeneral::uint32 GetTextureAnimationSteps() const;
+		PLPG_API PLCore::uint32 GetTextureAnimationSteps() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLPG_API bool InitParticles(PLGeneral::uint32 nMaxNumOfParticles, const PLGeneral::String &sMaterial = "");
+		PLPG_API bool InitParticles(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "");
 
 
 	//[-------------------------------------------------------]
@@ -421,20 +421,20 @@ class SNParticleGroup : public PLScene::SceneNode {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String					 m_sMaterial;					/**< Particle group material */
-		PLRenderer::MaterialHandler			 m_cMaterial;					/**< Used material */
-		PLGeneral::uint32					 m_nParticles;					/**< Number of particles */
-		PLGeneral::uint32					 m_nTextureAnimationColumns;	/**< Number of animation frame columns in the texture */
-		PLGeneral::uint32					 m_nTextureAnimationRows;		/**< Number of animation frame rows in the texture */
-		PLRenderer::IndexBuffer				*m_pIndexBuffer;				/**< Index buffer, can be a null pointer */
-		PLRenderer::VertexBuffer			*m_pVertexBuffer;				/**< Vertex buffer, can be a null pointer */
-		PLGeneral::uint32					 m_nUsedIndices;				/**< Number of used indices */
-		PLGeneral::uint32					 m_nUsedVertices;				/**< Number of used vertices */
-		bool								 m_bRemoveAutomatically;		/**< Should the particle group be removed automatically? */
-		PLGeneral::uint32					 m_nMaxNumOfParticles;			/**< Maximum number of allowed particles */
-		PLGeneral::FastPool<Particle>		 m_lstParticles;				/**< Particle list */
-		bool								 m_bCreateParticles;			/**< Create new particles? */
-		PLGeneral::Array<ParticleTexCoord>	 m_lstTexCoord;					/**< A list of all texture coordinates */
+		PLCore::String					 m_sMaterial;					/**< Particle group material */
+		PLRenderer::MaterialHandler		 m_cMaterial;					/**< Used material */
+		PLCore::uint32					 m_nParticles;					/**< Number of particles */
+		PLCore::uint32					 m_nTextureAnimationColumns;	/**< Number of animation frame columns in the texture */
+		PLCore::uint32					 m_nTextureAnimationRows;		/**< Number of animation frame rows in the texture */
+		PLRenderer::IndexBuffer			*m_pIndexBuffer;				/**< Index buffer, can be a null pointer */
+		PLRenderer::VertexBuffer		*m_pVertexBuffer;				/**< Vertex buffer, can be a null pointer */
+		PLCore::uint32					 m_nUsedIndices;				/**< Number of used indices */
+		PLCore::uint32					 m_nUsedVertices;				/**< Number of used vertices */
+		bool							 m_bRemoveAutomatically;		/**< Should the particle group be removed automatically? */
+		PLCore::uint32					 m_nMaxNumOfParticles;			/**< Maximum number of allowed particles */
+		PLCore::FastPool<Particle>		 m_lstParticles;				/**< Particle list */
+		bool							 m_bCreateParticles;			/**< Create new particles? */
+		PLCore::Array<ParticleTexCoord>	 m_lstTexCoord;					/**< A list of all texture coordinates */
 
 
 	//[-------------------------------------------------------]

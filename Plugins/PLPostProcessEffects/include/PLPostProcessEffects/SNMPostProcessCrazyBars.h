@@ -55,9 +55,9 @@ class SNMPostProcessCrazyBars : public PLCompositing::SNMPostProcess {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessCrazyBars, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		// Attributes
-		pl_attribute(ColorScaleY,	float,				1.0f,								ReadWrite,	DirectValue,	"Color scale Y (0.002 for a rainbow :) )",	"")
+		pl_attribute(ColorScaleY,	float,			1.0f,								ReadWrite,	DirectValue,	"Color scale Y (0.002 for a rainbow :) )",	"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/CrazyBars.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",		"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,	"Data/PostProcesses/CrazyBars.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",		"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

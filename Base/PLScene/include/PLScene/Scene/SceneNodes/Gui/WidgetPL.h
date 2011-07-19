@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/QuickSort.h>
+#include <PLCore/Tools/QuickSort.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLGui/Backend/WidgetImpl.h>
 #include "PLScene/PLScene.h"
@@ -89,10 +89,10 @@ class WidgetPL : public PLGui::WidgetImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void CreateWidget();
-		virtual void CreateWrapperWidget(PLGeneral::handle nWindowHandle);
+		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle);
 		virtual bool IsDestroyed() const;
 		virtual void Destroy();
-		virtual PLGeneral::handle GetWindowHandle() const;
+		virtual PLCore::handle GetWindowHandle() const;
 		virtual void SetParent(PLGui::WidgetImpl *pParent);
 		virtual bool IsShowInTaskbar() const;
 		virtual void SetShowInTaskbar(bool bShowInTaskbar);
@@ -116,10 +116,10 @@ class WidgetPL : public PLGui::WidgetImpl {
 		virtual void Redraw();
 		virtual void SetCaptureMouse(bool bCapture);
 		virtual void SetTrapMouse(bool bTrap);
-		virtual void SetTitle(const PLGeneral::String &sTitle);
+		virtual void SetTitle(const PLCore::String &sTitle);
 		virtual void SetIcon(const PLGui::Image &cIcon);
-		virtual PLGeneral::uint32 RegisterHotkey(PLGeneral::uint32 nModKey, PLGeneral::uint32 nKey);
-		virtual void UnregisterHotkey(PLGeneral::uint32 nID);
+		virtual PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey);
+		virtual void UnregisterHotkey(PLCore::uint32 nID);
 		virtual void SetCursor(const PLGui::Cursor &cCursor);
 		virtual bool GetMousePos(PLMath::Vector2i &vPos);
 
@@ -139,28 +139,28 @@ class WidgetPL : public PLGui::WidgetImpl {
 		*  @param[in]      pWidget
 		*    Other widget used to align relative to (only matters for 'ZAbove' or 'ZBehind')
 		*/
-		void SetZPos(PLGeneral::Array<PLGui::Widget*> &lstChildren, PLGui::EZPos nZPos, PLGui::Widget *pWidget = nullptr);
+		void SetZPos(PLCore::Array<PLGui::Widget*> &lstChildren, PLGui::EZPos nZPos, PLGui::Widget *pWidget = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Widget					   *m_pWidget;				/**< Reference to platform independent widget, always valid! */
-		bool								m_bWrapper;				/**< 'true' if this is a wrapper for a system window */
-		bool								m_bDestroyed;			/**< 'true' if the widget has already been destroyed */
-		PLGui::EWindowState					m_nWindowState;			/**< Current window state */
-		PLMath::Vector2i					m_vPos;					/**< Widget position */
-		PLMath::Vector2i					m_vSize;				/**< Widget size */
-		bool								m_bTopmost;				/**< Is this widget topmost */
-		bool								m_bFullscreen;			/**< Fullscreen mode */
-		PLGui::ETransparency				m_nTransparency;		/**< Widget transparency type */
-		PLGraphics::Color4					m_cTransparencyColor;	/**< Widget color */
-		bool								m_bVisible;				/**< Is the widget visible? */
-		bool								m_bEnabled;				/**< Is the widget enabled? */
-		bool								m_bCaptureMouse;		/**< Capture mouse? */
-		PLGeneral::Array<PLGui::Widget*>	m_lstTopmostChildren;	/**< List of z position sorted topmost child widgets, smaller number for widgets below other with higher numbers */
-		PLGeneral::Array<PLGui::Widget*>	m_lstChildren;			/**< List of z position sorted child widgets (including topmost), smaller number for widgets below other with higher numbers */
+		PLGui::Widget				   *m_pWidget;				/**< Reference to platform independent widget, always valid! */
+		bool							m_bWrapper;				/**< 'true' if this is a wrapper for a system window */
+		bool							m_bDestroyed;			/**< 'true' if the widget has already been destroyed */
+		PLGui::EWindowState				m_nWindowState;			/**< Current window state */
+		PLMath::Vector2i				m_vPos;					/**< Widget position */
+		PLMath::Vector2i				m_vSize;				/**< Widget size */
+		bool							m_bTopmost;				/**< Is this widget topmost */
+		bool							m_bFullscreen;			/**< Fullscreen mode */
+		PLGui::ETransparency			m_nTransparency;		/**< Widget transparency type */
+		PLGraphics::Color4				m_cTransparencyColor;	/**< Widget color */
+		bool							m_bVisible;				/**< Is the widget visible? */
+		bool							m_bEnabled;				/**< Is the widget enabled? */
+		bool							m_bCaptureMouse;		/**< Capture mouse? */
+		PLCore::Array<PLGui::Widget*>	m_lstTopmostChildren;	/**< List of z position sorted topmost child widgets, smaller number for widgets below other with higher numbers */
+		PLCore::Array<PLGui::Widget*>	m_lstChildren;			/**< List of z position sorted child widgets (including topmost), smaller number for widgets below other with higher numbers */
 
 
 };

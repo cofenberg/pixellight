@@ -33,7 +33,6 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
@@ -53,7 +52,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLGraphics
 	PLMath
@@ -149,7 +147,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/P
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES External-freetype PLGeneral PLCore PLMath PLGraphics PLRenderer)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES External-freetype PLCore PLMath PLGraphics PLRenderer)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

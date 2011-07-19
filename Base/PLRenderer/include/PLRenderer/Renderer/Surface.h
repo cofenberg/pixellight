@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
-#include <PLMath/Vector2i.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/List.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLMath/Vector2i.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -264,7 +264,7 @@ class Surface {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool MakeCurrent(PLGeneral::uint8 nFace = 0) = 0;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) = 0;
 
 		/**
 		*  @brief
@@ -342,7 +342,7 @@ class Surface {
 		bool			m_bSwapY;		/**< Is the surface flipped along the y axis? */
 		SurfacePainter *m_pPainter;		/**< The used surface painter, can be a null pointer */
 		/** List of surface handlers */
-		PLGeneral::List<SurfaceHandler*> m_lstHandler;
+		PLCore::List<SurfaceHandler*> m_lstHandler;
 
 
 };

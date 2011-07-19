@@ -27,7 +27,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/socket.h>
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLInput/Backend/Bluetooth/BTDevice.h"
 #include "PLInput/Backend/Bluetooth/BTDeviceLinux.h"
 
@@ -95,7 +95,7 @@ static const int BufferSize		= 128;		// Size of temporary read/write buffer
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

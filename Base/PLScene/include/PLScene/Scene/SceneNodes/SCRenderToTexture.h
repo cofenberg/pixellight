@@ -119,16 +119,16 @@ class SCRenderToTexture : public SceneContainer {
 	pl_class(PLS_RTTI_EXPORT, SCRenderToTexture, "PLScene", PLScene::SceneContainer, "Render to texture scene container")
 		// Attributes
 		pl_attribute(Cube,			bool,							false,					ReadWrite,	GetSet,			"Render to cube texture? If 'true', only 'Width' is used which must be a power of two",	"")
-		pl_attribute(Width,			PLGeneral::uint16,				512,					ReadWrite,	GetSet,			"Texture width",																		"Min='16'")
-		pl_attribute(Height,		PLGeneral::uint16,				512,					ReadWrite,	GetSet,			"Texture height",																		"Min='16'")
+		pl_attribute(Width,			PLCore::uint16,					512,					ReadWrite,	GetSet,			"Texture width",																		"Min='16'")
+		pl_attribute(Height,		PLCore::uint16,					512,					ReadWrite,	GetSet,			"Texture height",																		"Min='16'")
 		pl_attribute(Format,		pl_enum_type(EFormat),			R8G8B8A8,				ReadWrite,	GetSet,			"Texture format",																		"")
 		pl_attribute(SurfaceFlags,	pl_flag_type(ESurfaceFlags),	Depth|Mipmaps,			ReadWrite,	GetSet,			"Texture surface flags",																"")
-		pl_attribute(TextureName,	PLGeneral::String,				"",						ReadWrite,	GetSet,			"Name of the resulting texture",														"")
+		pl_attribute(TextureName,	PLCore::String,					"",						ReadWrite,	GetSet,			"Name of the resulting texture",														"")
 		pl_attribute(FPSLimit,		float,							30.0f,					ReadWrite,	DirectValue,	"Frames per second limitation, if 0, there's no limitation",							"Min='0.0'")
-		pl_attribute(Painter,		PLGeneral::String,				"PLScene::SPScene",	ReadWrite,	GetSet,			"Name of the used surface painter",														"")
-		pl_attribute(SceneRenderer,	PLGeneral::String,				"Forward.sr",			ReadWrite,	GetSet,			"Name of the used scene renderer, only used if the painter is derived of 'SPScene'",	"")
-		pl_attribute(SceneName,		PLGeneral::String,				"Parent",				ReadWrite,	GetSet,			"Name of the scene to renderer, only used if the painter is derived of 'SPScene'",		"")
-		pl_attribute(CameraName,	PLGeneral::String,				"",						ReadWrite,	DirectValue,	"Name of the camera to use, only used if the painter is derived of 'SPScene'",			"")
+		pl_attribute(Painter,		PLCore::String,					"PLScene::SPScene",	ReadWrite,	GetSet,			"Name of the used surface painter",														"")
+		pl_attribute(SceneRenderer,	PLCore::String,					"Forward.sr",			ReadWrite,	GetSet,			"Name of the used scene renderer, only used if the painter is derived of 'SPScene'",	"")
+		pl_attribute(SceneName,		PLCore::String,					"Parent",				ReadWrite,	GetSet,			"Name of the scene to renderer, only used if the painter is derived of 'SPScene'",		"")
+		pl_attribute(CameraName,	PLCore::String,					"",						ReadWrite,	DirectValue,	"Name of the camera to use, only used if the painter is derived of 'SPScene'",			"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),			NoCulling|NoRecursion,	ReadWrite,	GetSet,			"Flags",																				"")
 		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),		0,						ReadWrite,	GetSet,			"Debug flags",																			"")
@@ -143,22 +143,22 @@ class SCRenderToTexture : public SceneContainer {
 	public:
 		PLS_API bool GetCube() const;
 		PLS_API void SetCube(bool bValue);
-		PLS_API PLGeneral::uint16 GetWidth() const;
-		PLS_API void SetWidth(PLGeneral::uint16 nValue);
-		PLS_API PLGeneral::uint16 GetHeight() const;
-		PLS_API void SetHeight(PLGeneral::uint16 nValue);
+		PLS_API PLCore::uint16 GetWidth() const;
+		PLS_API void SetWidth(PLCore::uint16 nValue);
+		PLS_API PLCore::uint16 GetHeight() const;
+		PLS_API void SetHeight(PLCore::uint16 nValue);
 		PLS_API EFormat GetFormat() const;
 		PLS_API void SetFormat(EFormat nValue);
-		PLS_API PLGeneral::uint32 GetSurfaceFlags() const;
-		PLS_API void SetSurfaceFlags(PLGeneral::uint32 nValue);
-		PLS_API PLGeneral::String GetTextureName() const;
-		PLS_API void SetTextureName(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetPainter() const;
-		PLS_API void SetPainter(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetSceneRenderer() const;
-		PLS_API void SetSceneRenderer(const PLGeneral::String &sValue);
-		PLS_API PLGeneral::String GetSceneName() const;
-		PLS_API void SetSceneName(const PLGeneral::String &sValue);
+		PLS_API PLCore::uint32 GetSurfaceFlags() const;
+		PLS_API void SetSurfaceFlags(PLCore::uint32 nValue);
+		PLS_API PLCore::String GetTextureName() const;
+		PLS_API void SetTextureName(const PLCore::String &sValue);
+		PLS_API PLCore::String GetPainter() const;
+		PLS_API void SetPainter(const PLCore::String &sValue);
+		PLS_API PLCore::String GetSceneRenderer() const;
+		PLS_API void SetSceneRenderer(const PLCore::String &sValue);
+		PLS_API PLCore::String GetSceneName() const;
+		PLS_API void SetSceneName(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -201,15 +201,15 @@ class SCRenderToTexture : public SceneContainer {
 	//[-------------------------------------------------------]
 	protected:
 		bool							  m_bCube;					/**< Render to cube texture? If 'true', only 'Width' is used which must be a power of two */
-		PLGeneral::uint16				  m_nWidth;					/**< Texture width */
-		PLGeneral::uint16				  m_nHeight;				/**< Texture height */
+		PLCore::uint16					  m_nWidth;					/**< Texture width */
+		PLCore::uint16					  m_nHeight;				/**< Texture height */
 		EFormat							  m_nFormat;				/**< Texture format */
-		PLGeneral::uint32				  m_nSurfaceFlags;			/**< Texture surface flags */
-		PLGeneral::String				  m_sTextureName;			/**< Name of the resulting texture */
-		PLGeneral::String				  m_sPainter;				/**< Name of the used surface painter */
-		PLGeneral::String				  m_sSceneRenderer;			/**< Name of the used scene renderer, only used if the painter is derived of 'SPScene' */
-		PLGeneral::String				  m_sSceneName;				/**< Name of the scene to renderer, only used if the painter is derived of 'SPScene' */
-		PLGeneral::uint64				  m_nFPSLimitLastTime;		/**< Time when the last update was done */
+		PLCore::uint32					  m_nSurfaceFlags;			/**< Texture surface flags */
+		PLCore::String					  m_sTextureName;			/**< Name of the resulting texture */
+		PLCore::String					  m_sPainter;				/**< Name of the used surface painter */
+		PLCore::String					  m_sSceneRenderer;			/**< Name of the used scene renderer, only used if the painter is derived of 'SPScene' */
+		PLCore::String					  m_sSceneName;				/**< Name of the scene to renderer, only used if the painter is derived of 'SPScene' */
+		PLCore::uint64					  m_nFPSLimitLastTime;		/**< Time when the last update was done */
 		PLRenderer::SurfaceTextureBuffer *m_pSurfaceTextureBuffer;	/**< Render to texture buffer, can be a null pointer */
 		PLRenderer::TextureHandler		 *m_pTextureHandler;		/**< The resulting texture (ALWAYS valid!) */
 

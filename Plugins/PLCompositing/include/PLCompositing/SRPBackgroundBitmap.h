@@ -72,7 +72,7 @@ class SRPBackgroundBitmap : public SRPBackground {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPBackgroundBitmap, "PLCompositing", PLCompositing::SRPBackground, "Abstract bitmap background scene renderer pass")
 		// Attributes
-		pl_attribute(Material,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"Material to use",											"Type='Material Effect Image TextureAni'")
+		pl_attribute(Material,		PLCore::String,			"",											ReadWrite,	GetSet,			"Material to use",											"Type='Material Effect Image TextureAni'")
 		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Bitmap color",												"")
 		pl_attribute(Position,		PLMath::Vector2,		PLMath::Vector2(0.0f, 0.0f),				ReadWrite,	DirectValue,	"Bitmap position (0..1), (0, 0)=left top",					"")
 		pl_attribute(Size,			PLMath::Vector2,		PLMath::Vector2(1.0f, 1.0f),				ReadWrite,	DirectValue,	"Bitmap size (0..1)",										"")
@@ -89,8 +89,8 @@ class SRPBackgroundBitmap : public SRPBackground {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API PLGeneral::String GetMaterial() const;
-		PLCOM_API void SetMaterial(const PLGeneral::String &sValue);
+		PLCOM_API PLCore::String GetMaterial() const;
+		PLCOM_API void SetMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -134,7 +134,7 @@ class SRPBackgroundBitmap : public SRPBackground {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sMaterial;	/**< Material name */
+		PLCore::String				m_sMaterial;	/**< Material name */
 		PLRenderer::MaterialHandler m_cMaterial;	/**< Material */
 		bool						m_bLoaded;		/**< Material already loaded? */
 

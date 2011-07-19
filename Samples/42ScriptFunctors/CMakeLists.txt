@@ -15,7 +15,6 @@ add_sources(
 ## Include directories
 ##################################################
 add_include_directories(
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 )
 
@@ -30,7 +29,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 )
 
@@ -99,7 +97,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -404,7 +404,7 @@ class LayoutHints {
 		*  @return
 		*    Spacing
 		*/
-		PLGUI_API PLGeneral::uint32 GetSpacing() const;
+		PLGUI_API PLCore::uint32 GetSpacing() const;
 
 		/**
 		*  @brief
@@ -413,7 +413,7 @@ class LayoutHints {
 		*  @param[in] nSpacing
 		*    Spacing, default is 10 pixel
 		*/
-		PLGUI_API void SetSpacing(PLGeneral::uint32 nSpacing);
+		PLGUI_API void SetSpacing(PLCore::uint32 nSpacing);
 
 
 	//[-------------------------------------------------------]
@@ -432,23 +432,23 @@ class LayoutHints {
 	//[-------------------------------------------------------]
 	protected:
 		// Size
-		SizeHint			m_cSizeX;			/**< Desired size (X) */
-		SizeHint			m_cSizeY;			/**< Desired size (Y) */
-		SizeHint			m_cMinSizeX;		/**< Minimum size (X) */
-		SizeHint			m_cMinSizeY;		/**< Minimum size (Y) */
-		SizeHint			m_cMaxSizeX;		/**< Maximum size (X) */
-		SizeHint			m_cMaxSizeY;		/**< Maximum size (Y) */
-		SizeHint			m_cMarginLeft;		/**< Margin (left) */
-		SizeHint			m_cMarginRight;		/**< Margin (right) */
-		SizeHint			m_cMarginTop;		/**< Margin (top) */
-		SizeHint			m_cMarginBottom;	/**< Margin (bottom) */
-		SizeHint			m_cPaddingLeft;		/**< Padding (left) */
-		SizeHint			m_cPaddingRight;	/**< Padding (right) */
-		SizeHint			m_cPaddingTop;		/**< Padding (top) */
-		SizeHint			m_cPaddingBottom;	/**< Padding (bottom) */
-		EAlign				m_nAlign;			/**< Horizontal alignment of child elements */
-		EVAlign				m_nVAlign;			/**< Vertical alignment of child elements */
-		PLGeneral::uint32	m_nSpacing;			/**< Spacing between child elements */
+		SizeHint		m_cSizeX;			/**< Desired size (X) */
+		SizeHint		m_cSizeY;			/**< Desired size (Y) */
+		SizeHint		m_cMinSizeX;		/**< Minimum size (X) */
+		SizeHint		m_cMinSizeY;		/**< Minimum size (Y) */
+		SizeHint		m_cMaxSizeX;		/**< Maximum size (X) */
+		SizeHint		m_cMaxSizeY;		/**< Maximum size (Y) */
+		SizeHint		m_cMarginLeft;		/**< Margin (left) */
+		SizeHint		m_cMarginRight;		/**< Margin (right) */
+		SizeHint		m_cMarginTop;		/**< Margin (top) */
+		SizeHint		m_cMarginBottom;	/**< Margin (bottom) */
+		SizeHint		m_cPaddingLeft;		/**< Padding (left) */
+		SizeHint		m_cPaddingRight;	/**< Padding (right) */
+		SizeHint		m_cPaddingTop;		/**< Padding (top) */
+		SizeHint		m_cPaddingBottom;	/**< Padding (bottom) */
+		EAlign			m_nAlign;			/**< Horizontal alignment of child elements */
+		EVAlign			m_nVAlign;			/**< Vertical alignment of child elements */
+		PLCore::uint32	m_nSpacing;			/**< Spacing between child elements */
 
 
 };

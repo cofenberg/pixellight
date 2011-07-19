@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include "PLGraphics/Color/Color3.h"
 #include "PLGraphics/Color/Color4.h"
 #include "PLGraphics/Image/Image.h"
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGraphics {
 

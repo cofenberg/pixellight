@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLInput/Backend/ConnectionDevice.h"
 
 
@@ -110,7 +110,7 @@ class BTDevice : public ConnectionDevice {
 		*  @return
 		*    Device name
 		*/
-		PLINPUT_API PLGeneral::String GetName() const;
+		PLINPUT_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class BTDevice : public ConnectionDevice {
 		*  @return
 		*    Address
 		*/
-		PLINPUT_API PLGeneral::uint8 GetAddress(PLGeneral::int8 nIndex) const;
+		PLINPUT_API PLCore::uint8 GetAddress(PLCore::int8 nIndex) const;
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class BTDevice : public ConnectionDevice {
 		*  @return
 		*    Class
 		*/
-		PLINPUT_API PLGeneral::uint8 GetClass(PLGeneral::int8 nIndex) const;
+		PLINPUT_API PLCore::uint8 GetClass(PLCore::int8 nIndex) const;
 
 
 	//[-------------------------------------------------------]
@@ -142,9 +142,9 @@ class BTDevice : public ConnectionDevice {
 	//[-------------------------------------------------------]
 	private:
 		// Device data
-		PLGeneral::String m_sName;			/**< Device name */
-		PLGeneral::uint8  m_nAddress[8];	/**< Bluetooth address */
-		PLGeneral::uint8  m_nClass[3];		/**< Bluetooth device class */
+		PLCore::String m_sName;			/**< Device name */
+		PLCore::uint8  m_nAddress[8];	/**< Bluetooth address */
+		PLCore::uint8  m_nClass[3];		/**< Bluetooth device class */
 
 
 };

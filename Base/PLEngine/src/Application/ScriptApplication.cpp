@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
@@ -35,7 +35,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLEngine {
 

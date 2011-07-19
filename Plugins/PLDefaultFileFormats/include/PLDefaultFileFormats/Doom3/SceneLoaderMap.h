@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLScene {
@@ -77,8 +77,8 @@ class SceneLoaderMap : public PLScene::SceneLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -86,8 +86,8 @@ class SceneLoaderMap : public PLScene::SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
-		bool Save(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
+		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

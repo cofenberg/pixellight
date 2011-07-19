@@ -115,8 +115,8 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	public:
 		PLDATABASEMYSQL_API virtual bool IsEmpty() const;
 		PLDATABASEMYSQL_API virtual void FirstRow();
-		PLDATABASEMYSQL_API virtual const PLGeneral::Array<PLGeneral::String> &FetchFieldList();
-		PLDATABASEMYSQL_API virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> *FetchRow();
+		PLDATABASEMYSQL_API virtual const PLCore::Array<PLCore::String> &FetchFieldList();
+		PLDATABASEMYSQL_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow();
 
 
 };

@@ -83,7 +83,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLGeneral::handle nWindow, bool bFullscreen = false);
+		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nWindow, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]
@@ -107,7 +107,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	private:
 		virtual bool Init();
 		virtual void DeInit();
-		virtual bool MakeCurrent(PLGeneral::uint8 nFace = 0);
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0);
 		virtual bool UnmakeCurrent();
 		virtual bool Present();
 

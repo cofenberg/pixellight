@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 class PLScene;
 class IGameMaterial;
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 }
 
@@ -143,7 +143,7 @@ class PLSceneMaterial {
 		*  @param[in] bNormalMap_xGxR
 		*    Is this a 'xGxR' normal map?
 		*/
-		void SaveTexture(PLGeneral::XmlElement &cMaterialElement, const std::string &sFilename, const std::string &sSemantic, bool bNormalMap_xGxR = false);
+		void SaveTexture(PLCore::XmlElement &cMaterialElement, const std::string &sFilename, const std::string &sSemantic, bool bNormalMap_xGxR = false);
 
 
 	//[-------------------------------------------------------]
@@ -157,7 +157,7 @@ class PLSceneMaterial {
 		*  @param[in] cMaterialElement
 		*    Material XML element to insert into
 		*/
-		virtual void SaveParameters(PLGeneral::XmlElement &cMaterialElement) = 0;
+		virtual void SaveParameters(PLCore::XmlElement &cMaterialElement) = 0;
 
 
 	//[-------------------------------------------------------]

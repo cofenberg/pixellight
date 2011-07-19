@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLInput/Backend/HID/HIDImpl.h"
 
 
@@ -86,14 +86,14 @@ class HIDLinux : public HIDImpl {
 	//[ Private virtual HIDImpl functions                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void EnumerateDevices(PLGeneral::List<HIDDevice*> &lstDevices);
+		virtual void EnumerateDevices(PLCore::List<HIDDevice*> &lstDevices);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::List<HIDDeviceLinux*> m_lstDevices;	/**< List of devices */
+		PLCore::List<HIDDeviceLinux*> m_lstDevices;	/**< List of devices */
 
 
 };

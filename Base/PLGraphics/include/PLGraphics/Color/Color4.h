@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -98,7 +98,7 @@ class Color4 {
 	public:
 		/**
 		*  @brief
-		*    Maps a RGBA floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+		*    Maps a RGBA floating point channels (0.0f to 1.0f range) to PLCore::uint32
 		*
 		*  @param[in] fR
 		*    Red color component (0.0-1.0)
@@ -110,57 +110,57 @@ class Color4 {
 		*    Alpha color component (0.0-1.0)
 		*
 		*  @return
-		*    The color as PLGeneral::uint32
+		*    The color as PLCore::uint32
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 ToUInt32(float fR, float fG, float fB, float fA);
+		PLGRAPHICS_API static PLCore::uint32 ToUInt32(float fR, float fG, float fB, float fA);
 
 		/**
 		*  @brief
-		*    Returns the red color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+		*    Returns the red color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The red color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float RedFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float RedFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
-		*    Returns the green color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+		*    Returns the green color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The green color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float GreenFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float GreenFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
-		*    Returns the blue color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+		*    Returns the blue color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float BlueFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float BlueFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
-		*    Returns the alpha color component (float, 0.0-1.0) from a PLGeneral::uint32 RGBA color
+		*    Returns the alpha color component (float, 0.0-1.0) from a PLCore::uint32 RGBA color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The alpha color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float AlphaFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float AlphaFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class Color4 {
 		*  @note
 		*    - This function is internally assembler optimizes for maximum performance
 		*/
-		PLGRAPHICS_API static void SwapRB(PLGeneral::uint8 nBuffer[], PLGeneral::uint32 nNumOfPixels);
+		PLGRAPHICS_API static void SwapRB(PLCore::uint8 nBuffer[], PLCore::uint32 nNumOfPixels);
 
 
 	//[-------------------------------------------------------]
@@ -215,7 +215,7 @@ class Color4 {
 		*  @param[in] nA
 		*    Alpha color component (0-255)
 		*/
-		PLGRAPHICS_API Color4(PLGeneral::uint8 nR, PLGeneral::uint8 nG, PLGeneral::uint8 nB, PLGeneral::uint8 nA);
+		PLGRAPHICS_API Color4(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB, PLCore::uint8 nA);
 
 		/**
 		*  @brief
@@ -231,9 +231,9 @@ class Color4 {
 		*    Constructor
 		*
 		*  @param[in] nColor
-		*    PLGeneral::uint8 array holding the color, MUST have 4 elements! (0-255)
+		*    PLCore::uint8 array holding the color, MUST have 4 elements! (0-255)
 		*/
-		PLGRAPHICS_API Color4(const PLGeneral::uint8 nColor[]);
+		PLGRAPHICS_API Color4(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class Color4 {
 		*  @param[in] nColor
 		*    Value for all four color components (0-255)
 		*/
-		PLGRAPHICS_API Color4(PLGeneral::uint8 nColor);
+		PLGRAPHICS_API Color4(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -281,21 +281,21 @@ class Color4 {
 
 		/**
 		*  @brief
-		*    Maps this RGBA floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+		*    Maps this RGBA floating point channels (0.0f to 1.0f range) to PLCore::uint32
 		*
 		*  @return
-		*    This color as PLGeneral::uint32
+		*    This color as PLCore::uint32
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 ToUInt32() const;
+		PLGRAPHICS_API PLCore::uint32 ToUInt32() const;
 
 		/**
 		*  @brief
-		*    Maps from a PLGeneral::uint32 to RGBA floating point channels (0.0f to 1.0f range)
+		*    Maps from a PLCore::uint32 to RGBA floating point channels (0.0f to 1.0f range)
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*/
-		PLGRAPHICS_API void FromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API void FromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -325,7 +325,7 @@ class Color4 {
 		*  @param[out] nA
 		*    Will receive the alpha color component (0-255)
 		*/
-		PLGRAPHICS_API void GetRGBA(PLGeneral::uint8 &nR, PLGeneral::uint8 &nG, PLGeneral::uint8 &nB, PLGeneral::uint8 &nA) const;
+		PLGRAPHICS_API void GetRGBA(PLCore::uint8 &nR, PLCore::uint8 &nG, PLCore::uint8 &nB, PLCore::uint8 &nA) const;
 
 		/**
 		*  @brief
@@ -355,7 +355,7 @@ class Color4 {
 		*  @param[in] nA
 		*    Alpha color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGBA(PLGeneral::uint8 nR, PLGeneral::uint8 nG, PLGeneral::uint8 nB, PLGeneral::uint8 nA);
+		PLGRAPHICS_API void SetRGBA(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB, PLCore::uint8 nA);
 
 		/**
 		*  @brief
@@ -371,9 +371,9 @@ class Color4 {
 		*    Get the color component as array of integer values
 		*
 		*  @param[out] nColor
-		*    Reference to PLGeneral::uint8 array receiving the color values, MUST have 4 elements! (0-255)
+		*    Reference to PLCore::uint8 array receiving the color values, MUST have 4 elements! (0-255)
 		*/
-		PLGRAPHICS_API void GetRGBA(PLGeneral::uint8 nColor[]) const;
+		PLGRAPHICS_API void GetRGBA(PLCore::uint8 nColor[]) const;
 
 		/**
 		*  @brief
@@ -389,9 +389,9 @@ class Color4 {
 		*    Set the color components by using a reference to integer values
 		*
 		*  @param[in] nColor
-		*    Reference to PLGeneral::uint8 array containing the color value, MUST have 4 elements! (0-255)
+		*    Reference to PLCore::uint8 array containing the color value, MUST have 4 elements! (0-255)
 		*/
-		PLGRAPHICS_API void SetRGBA(const PLGeneral::uint8 nColor[]);
+		PLGRAPHICS_API void SetRGBA(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -409,7 +409,7 @@ class Color4 {
 		*  @param[in] nColor
 		*    Value for all four color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGBA(PLGeneral::uint8 nColor);
+		PLGRAPHICS_API void SetRGBA(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -427,7 +427,7 @@ class Color4 {
 		*  @return
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetRInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetRInt() const;
 
 		/**
 		*  @brief
@@ -445,7 +445,7 @@ class Color4 {
 		*  @param[in] nR
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API void SetR(PLGeneral::uint8 nR);
+		PLGRAPHICS_API void SetR(PLCore::uint8 nR);
 
 		/**
 		*  @brief
@@ -463,7 +463,7 @@ class Color4 {
 		*  @return
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetGInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetGInt() const;
 
 		/**
 		*  @brief
@@ -481,7 +481,7 @@ class Color4 {
 		*  @param[in] nG
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API void SetG(PLGeneral::uint8 nG);
+		PLGRAPHICS_API void SetG(PLCore::uint8 nG);
 
 		/**
 		*  @brief
@@ -499,7 +499,7 @@ class Color4 {
 		*  @return
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetBInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetBInt() const;
 
 		/**
 		*  @brief
@@ -517,7 +517,7 @@ class Color4 {
 		*  @param[in] nB
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API void SetB(PLGeneral::uint8 nB);
+		PLGRAPHICS_API void SetB(PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -535,7 +535,7 @@ class Color4 {
 		*  @return
 		*    Alpha value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetAInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetAInt() const;
 
 		/**
 		*  @brief
@@ -553,7 +553,7 @@ class Color4 {
 		*  @param[in] nA
 		*    Alpha value (0-255)
 		*/
-		PLGRAPHICS_API void SetA(PLGeneral::uint8 nA);
+		PLGRAPHICS_API void SetA(PLCore::uint8 nA);
 
 		/**
 		*  @brief
@@ -610,7 +610,7 @@ class Color4 {
 		*  @see
 		*    - GetLuminance()
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetLuminanceInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetLuminanceInt() const;
 
 		/**
 		*  @brief
@@ -673,7 +673,7 @@ class Color4 {
 		*  @return
 		*    String with the data
 		*/
-		PLGRAPHICS_API PLGeneral::String ToString() const;
+		PLGRAPHICS_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -682,7 +682,7 @@ class Color4 {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLGRAPHICS_API bool FromString(const PLGeneral::String &sString);
+		PLGRAPHICS_API bool FromString(const PLCore::String &sString);
 
 
 };

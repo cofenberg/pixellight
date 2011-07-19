@@ -57,16 +57,16 @@ class PGFountain : public SNParticleGroup {
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGFountain, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Fountain particle group")
 		// Attributes
-		pl_attribute(Steps,					PLGeneral::uint32,		8,								ReadWrite,	GetSet,	"Steps",					"")
-		pl_attribute(RaysPerStep,			PLGeneral::uint32,		6,								ReadWrite,	GetSet,	"Rays per step",			"")
-		pl_attribute(DropsPerRay,			PLGeneral::uint32,		50,								ReadWrite,	GetSet,	"Drops per ray",			"")
-		pl_attribute(AngleOfDeepestStep,	float,					80.0f,							ReadWrite,	GetSet,	"Angle of deepest step",	"")
-		pl_attribute(AngleOfHighestStep,	float,					85.0f,							ReadWrite,	GetSet,	"Angle of highest step",	"")
-		pl_attribute(RandomAngleAddition,	float,					20.0f,							ReadWrite,	GetSet,	"Random angle addition",	"")
-		pl_attribute(AccFactor,				float,					0.11f,							ReadWrite,	GetSet,	"Acc factor",				"")
+		pl_attribute(Steps,					PLCore::uint32,		8,								ReadWrite,	GetSet,	"Steps",					"")
+		pl_attribute(RaysPerStep,			PLCore::uint32,		6,								ReadWrite,	GetSet,	"Rays per step",			"")
+		pl_attribute(DropsPerRay,			PLCore::uint32,		50,								ReadWrite,	GetSet,	"Drops per ray",			"")
+		pl_attribute(AngleOfDeepestStep,	float,				80.0f,							ReadWrite,	GetSet,	"Angle of deepest step",	"")
+		pl_attribute(AngleOfHighestStep,	float,				85.0f,							ReadWrite,	GetSet,	"Angle of highest step",	"")
+		pl_attribute(RandomAngleAddition,	float,				20.0f,							ReadWrite,	GetSet,	"Random angle addition",	"")
+		pl_attribute(AccFactor,				float,				0.11f,							ReadWrite,	GetSet,	"Acc factor",				"")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,				PLGeneral::String,		"Data/Textures/PGFountain.dds",	ReadWrite,	GetSet,	"Particle group material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,				PLGeneral::uint32,		600,							ReadWrite,	GetSet,	"Number of particles",		"Min=1")
+		pl_attribute(Material,				PLCore::String,		"Data/Textures/PGFountain.dds",	ReadWrite,	GetSet,	"Particle group material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,				PLCore::uint32,		600,							ReadWrite,	GetSet,	"Number of particles",		"Min=1")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -76,12 +76,12 @@ class PGFountain : public SNParticleGroup {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPG_API PLGeneral::uint32 GetSteps() const;
-		PLPG_API void SetSteps(PLGeneral::uint32 nValue);
-		PLPG_API PLGeneral::uint32 GetRaysPerStep() const;
-		PLPG_API void SetRaysPerStep(PLGeneral::uint32 nValue);
-		PLPG_API PLGeneral::uint32 GetDropsPerRay() const;
-		PLPG_API void SetDropsPerRay(PLGeneral::uint32 nValue);
+		PLPG_API PLCore::uint32 GetSteps() const;
+		PLPG_API void SetSteps(PLCore::uint32 nValue);
+		PLPG_API PLCore::uint32 GetRaysPerStep() const;
+		PLPG_API void SetRaysPerStep(PLCore::uint32 nValue);
+		PLPG_API PLCore::uint32 GetDropsPerRay() const;
+		PLPG_API void SetDropsPerRay(PLCore::uint32 nValue);
 		PLPG_API float GetAngleOfDeepestStep() const;
 		PLPG_API void SetAngleOfDeepestStep(float fValue);
 		PLPG_API float GetAngleOfHighestStep() const;
@@ -142,13 +142,13 @@ class PGFountain : public SNParticleGroup {
 	private:
 		bool m_bUpdate;	/**< Perform an update the next time? */
 		// Exported variables
-		PLGeneral::uint32 m_nSteps;
-		PLGeneral::uint32 m_nRaysPerStep;
-		PLGeneral::uint32 m_nDropsPerRay;
-		float			  m_fAngleOfDeepestStep;
-		float			  m_fAngleOfHighestStep;
-		float			  m_fRandomAngleAddition;
-		float			  m_fAccFactor;
+		PLCore::uint32 m_nSteps;
+		PLCore::uint32 m_nRaysPerStep;
+		PLCore::uint32 m_nDropsPerRay;
+		float		   m_fAngleOfDeepestStep;
+		float		   m_fAngleOfHighestStep;
+		float		   m_fRandomAngleAddition;
+		float		   m_fAccFactor;
 
 
 };

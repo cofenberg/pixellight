@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/Core/RefCount.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -63,7 +63,7 @@ namespace PLGui {
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'Cursor' abstraction
 */
-class CursorImpl : public PLGeneral::RefCount<CursorImpl> {
+class CursorImpl : public PLCore::RefCount<CursorImpl> {
 
 
 	//[-------------------------------------------------------]
@@ -101,7 +101,7 @@ class CursorImpl : public PLGeneral::RefCount<CursorImpl> {
 		*  @return
 		*    Image filename
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 
 	//[-------------------------------------------------------]
@@ -126,16 +126,16 @@ class CursorImpl : public PLGeneral::RefCount<CursorImpl> {
 		*  @param[in] vHotspot
 		*    Hotspot of cursor
 		*/
-		virtual void Load(const PLGeneral::String &sFilename, const PLMath::Vector2i &vHotspot) = 0;
+		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot) = 0;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Cursor			  *m_pCursor;		/**< Pointer to the platform independent cursor object */
-		EMouseCursor	   m_nMouseCursor;	/**< Default cursor ID (CustomCursor if a custom image has been loaded) */
-		PLGeneral::String  m_sFilename;		/**< Image filename */
+		Cursor		   *m_pCursor;		/**< Pointer to the platform independent cursor object */
+		EMouseCursor	m_nMouseCursor;	/**< Default cursor ID (CustomCursor if a custom image has been loaded) */
+		PLCore::String  m_sFilename;	/**< Image filename */
 
 
 };

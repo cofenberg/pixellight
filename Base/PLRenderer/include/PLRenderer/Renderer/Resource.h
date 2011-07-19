@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -122,7 +122,7 @@ class Resource {
 		*  @return
 		*    The number of resource handlers
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfHandlers() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfHandlers() const;
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class Resource {
 		*      all resource device data
 		*    - Normally only used inside Renderer::BackupDeviceObjects()/Renderer::RestoreDeviceObjects()
 		*/
-		PLRENDERER_API virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
+		PLRENDERER_API virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
 
 		/**
 		*  @brief
@@ -224,7 +224,7 @@ class Resource {
 		*  @see
 		*    - BackupDeviceData()
 		*/
-		PLRENDERER_API virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		PLRENDERER_API virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 	//[-------------------------------------------------------]
@@ -257,9 +257,9 @@ class Resource {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer						  *m_pRenderer;		/**< Owner renderer (always valid!) */
-		EType							   m_nType;			/**< Resource type */
-		PLGeneral::List<ResourceHandler*>  m_lstHandlers;	/**< List of resource handlers */
+		Renderer					   *m_pRenderer;	/**< Owner renderer (always valid!) */
+		EType						    m_nType;		/**< Resource type */
+		PLCore::List<ResourceHandler*>  m_lstHandlers;	/**< List of resource handlers */
 
 
 };

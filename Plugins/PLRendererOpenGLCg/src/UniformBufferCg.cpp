@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
 #include "PLRendererOpenGLCg/ShaderToolsCg.h"
 #include "PLRendererOpenGLCg/UniformBufferCg.h"
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRendererOpenGLCg {
 
 

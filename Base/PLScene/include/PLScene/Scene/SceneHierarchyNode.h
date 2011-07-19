@@ -124,7 +124,7 @@ class SceneHierarchyNode {
 		*    SceneHierarchy::FreeNode() are used during runtime instead of new/delete. Have a look at
 		*    the SceneHierarchy::GetFreeNode() documentation for more information about this.
 		*/
-		PLS_API PLGeneral::uint32 GetID() const;
+		PLS_API PLCore::uint32 GetID() const;
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class SceneHierarchyNode {
 		*  @return
 		*    The level/tree depth of the scene hierarchy node
 		*/
-		PLS_API PLGeneral::uint8 GetLevel() const;
+		PLS_API PLCore::uint8 GetLevel() const;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class SceneHierarchyNode {
 		*  @return
 		*    'false' if the scene hierarchy node volume is not within the given plane set, else 'true'
 		*/
-		PLS_API bool CheckPlaneSet(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 *pnOutClipMask = nullptr) const;
+		PLS_API bool CheckPlaneSet(const PLMath::PlaneSet &cPlaneSet, PLCore::uint32 *pnOutClipMask = nullptr) const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class SceneHierarchyNode {
 		*  @return
 		*    The number of scene hierarchy node items
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfItems() const;
+		PLS_API PLCore::uint32 GetNumOfItems() const;
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class SceneHierarchyNode {
 		*  @return
 		*    The number of child scene hierarchy nodes
 		*/
-		virtual PLGeneral::uint32 GetNumOfNodes() const = 0;
+		virtual PLCore::uint32 GetNumOfNodes() const = 0;
 
 		/**
 		*  @brief
@@ -262,7 +262,7 @@ class SceneHierarchyNode {
 		*  @return
 		*    The requested child scene hierarchy node, a null pointer on error
 		*/
-		virtual SceneHierarchyNode *GetNode(PLGeneral::uint32 nIndex) const = 0;
+		virtual SceneHierarchyNode *GetNode(PLCore::uint32 nIndex) const = 0;
 
 
 	//[-------------------------------------------------------]
@@ -365,10 +365,10 @@ class SceneHierarchyNode {
 	protected:
 		SceneHierarchy		   *m_pHierarchy;		/**< Owner hierarchy (always valid!) */
 		SceneHierarchyNode	   *m_pParentNode;		/**< Parent scene hierarchy node, can be a null pointer */
-		PLGeneral::uint32		m_nID;				/**< The unique ID of the scene hierarchy node */
-		PLGeneral::uint8		m_nLevel;			/**< Scene hierarchy node level */
+		PLCore::uint32			m_nID;				/**< The unique ID of the scene hierarchy node */
+		PLCore::uint8			m_nLevel;			/**< Scene hierarchy node level */
 		PLMath::AABoundingBox   m_cAABoundingBox;	/**< Axis aligned bounding box of this scene hierarchy node */
-		PLGeneral::uint32	    m_nNumOfItems;		/**< The number of scene hierarchy node items attached to this scene hierarchy node */
+		PLCore::uint32			m_nNumOfItems;		/**< The number of scene hierarchy node items attached to this scene hierarchy node */
 		SceneHierarchyNodeItem *m_pFirstItem;		/**< The first scene hierarchy node item, can be a null pointer */
 
 

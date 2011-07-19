@@ -15,7 +15,7 @@ add_sources(
 ##################################################
 add_include_directories(
 	src
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 )
 
 ##################################################
@@ -29,7 +29,7 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneralStat
+	PLCoreStat
 )
 if(WIN32)
 	##################################################
@@ -44,7 +44,7 @@ endif()
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLGENERAL_STATIC
+	PLCORE_STATIC
 )
 if(WIN32)
 	##################################################
@@ -108,7 +108,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneralStat)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCoreStat)
 add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

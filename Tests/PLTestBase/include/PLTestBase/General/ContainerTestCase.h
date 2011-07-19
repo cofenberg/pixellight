@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class AType> class Container;
 }
 
@@ -64,7 +64,7 @@ class ContainerTestCase : public TestCase {
 		*  @return
 		*    'true' if the test has succeeded, else 'false'
 		*/
-		bool Test(PLGeneral::Container<AType> &lstContainer);
+		bool Test(PLCore::Container<AType> &lstContainer);
 
 
 };

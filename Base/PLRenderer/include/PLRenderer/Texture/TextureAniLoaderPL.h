@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 }
 namespace PLRenderer {
@@ -71,8 +71,8 @@ class TextureAniLoaderPL : public TextureAniLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	TextureAni&,		PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const TextureAni&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	TextureAni&,		PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const TextureAni&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -80,8 +80,8 @@ class TextureAniLoaderPL : public TextureAniLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API bool Load(TextureAni &cTextureAni, PLGeneral::File &cFile);
-		PLRENDERER_API bool Save(const TextureAni &cTextureAni, PLGeneral::File &cFile);
+		PLRENDERER_API bool Load(TextureAni &cTextureAni, PLCore::File &cFile);
+		PLRENDERER_API bool Save(const TextureAni &cTextureAni, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -117,7 +117,7 @@ class TextureAniLoaderPL : public TextureAniLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(TextureAni &cTextureAni, const PLGeneral::XmlElement &cTextureAniElement) const;
+		bool LoadV1(TextureAni &cTextureAni, const PLCore::XmlElement &cTextureAniElement) const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class TextureAniLoaderPL : public TextureAniLoader {
 		*  @param[in]  sType
 		*    Type of animation
 		*/
-		void AddAniInfoManager(PLGeneral::XmlElement &cElement, const AniInfoManager &cAniInfoManager, const PLGeneral::String &sType) const;
+		void AddAniInfoManager(PLCore::XmlElement &cElement, const AniInfoManager &cAniInfoManager, const PLCore::String &sType) const;
 
 
 };

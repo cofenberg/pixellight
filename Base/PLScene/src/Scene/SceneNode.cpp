@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLMath/Line.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>
@@ -51,7 +51,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
@@ -1340,7 +1339,7 @@ void SceneNode::OnScale()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Element functions           ]
+//[ Public virtual PLCore::Element functions              ]
 //[-------------------------------------------------------]
 bool SceneNode::Delete(bool bProtectedToo)
 {
@@ -1416,7 +1415,7 @@ bool SceneNode::SetName(const String &sName)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::Element functions          ]
+//[ Private virtual PLCore::Element functions             ]
 //[-------------------------------------------------------]
 void SceneNode::DeleteElement()
 {

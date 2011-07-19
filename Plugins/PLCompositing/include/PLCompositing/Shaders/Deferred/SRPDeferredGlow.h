@@ -91,9 +91,9 @@ class SRPDeferredGlow : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredGlow, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering glow effect")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(GlowFactor,		float,					1.0f,	ReadWrite,	DirectValue,	"Glow factor",																															"")
-		pl_attribute(GlowBlurPasses,	PLGeneral::uint32,		4,		ReadWrite,	DirectValue,	"Number of glow blur passes, should be a multiple of 2",																				"")
+		pl_attribute(GlowBlurPasses,	PLCore::uint32,			4,		ReadWrite,	DirectValue,	"Number of glow blur passes, should be a multiple of 2",																				"")
 		pl_attribute(GlowDownscale,		float,					8.0f,	ReadWrite,	DirectValue,	"Glow downscale factor, should be a multiple of 2",																						"Min='1.0'")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
@@ -143,7 +143,7 @@ class SRPDeferredGlow : public SRPDeferred {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		void CalculateGlow(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLGeneral::uint32 nBlurPasses, float fDownscale);
+		void CalculateGlow(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLCore::uint32 nBlurPasses, float fDownscale);
 
 		/**
 		*  @brief

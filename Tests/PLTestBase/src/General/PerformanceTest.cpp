@@ -24,17 +24,17 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdlib.h> // For 'rand()'
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/System/System.h>
+#include <PLCore/Tools/Stopwatch.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLTestBase/General/PerformanceTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

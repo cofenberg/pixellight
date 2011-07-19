@@ -104,7 +104,7 @@ class TabBarEntry : public Widget {
 		*  @return
 		*    Text
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class TabBarEntry : public Widget {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class TabBarEntry : public Widget {
 		PLGUI_API virtual void OnAdjustContent();
 		PLGUI_API virtual void OnMouseEnter();
 		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseButtonClick(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 	//[-------------------------------------------------------]
@@ -254,7 +254,7 @@ class TabBarEntry : public Widget {
 	//[-------------------------------------------------------]
 	protected:
 		// Tab data
-		PLGeneral::String  m_sText;			/**< Text displayed in tab */
+		PLCore::String     m_sText;			/**< Text displayed in tab */
 		Image			   m_cIcon;			/**< Tab icon */
 		Widget			  *m_pWidget;		/**< Widget associated with the tab (data only!) */
 		void			  *m_pData;			/**< User data */

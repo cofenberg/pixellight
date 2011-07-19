@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Bitset.h>
-#include <PLGeneral/Container/BitsetIterator.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Container/BitsetIterator.h>
 #include "PLTestBase/General/BitsetTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

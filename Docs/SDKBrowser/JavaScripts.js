@@ -77,7 +77,6 @@ text_shortcut("License_cc_by_nc_sa_3",	"cc-by-nc-sa-3.txt");
 shortcut("Doc_ReleaseNotes",		"ReleaseNotes.txt");
 shortcut("Doc_CodingConventions",	"Docs\\CodingConventions.pdf");
 shortcut("Doc_PLFeatures",			"Docs\\PLFeatures.pdf");
-shortcut("Doc_PLGeneral",			"Docs\\PLGeneral.pdf");
 shortcut("Doc_PLCore",				"Docs\\PLCore.pdf");
 shortcut("Doc_PLMath",				"Docs\\PLMath.pdf");
 shortcut("Doc_PLGraphics",			"Docs\\PLGraphics.pdf");
@@ -109,7 +108,6 @@ shortcut("Dir_Tools_PLViewer",	"Tools\\PLViewer\\");
 shortcut("Dir_3dsMax",			"Tools\\3dsMax\\");
 // include
 shortcut("Dir_Include",				"Include\\");
-shortcut("Dir_PLGeneral",			"include\\PLGeneral\\");
 shortcut("Dir_PLCore",				"include\\PLCore\\");
 shortcut("Dir_PLMath",				"include\\PLMath\\");
 shortcut("Dir_PLGraphics",			"include\\PLGraphics\\");

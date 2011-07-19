@@ -226,8 +226,7 @@ class Rectangle {
 		*  @return
 		*    'false' if the rectangle is entirely off-screen, else 'true'
 		*/
-		PLMATH_API bool ScreenRectangle(const PLGeneral::Array<Vector3> &lstPoints, bool bZCull, const Matrix4x4 &mMVP,
-										PLGeneral::uint32 nX, PLGeneral::uint32 nY, PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight);
+		PLMATH_API bool ScreenRectangle(const PLCore::Array<Vector3> &lstPoints, bool bZCull, const Matrix4x4 &mMVP, PLCore::uint32 nX, PLCore::uint32 nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight);
 
 		/**
 		*  @brief
@@ -255,8 +254,7 @@ class Rectangle {
 		*  @return
 		*    'false' if the rectangle is entirely off-screen, else 'true'
 		*/
-		PLMATH_API bool ScreenRectangle(const PLGeneral::Array<Vector4> &lstPoints, bool bZCull, const Matrix4x4 &mMVP,
-										PLGeneral::uint32 nX, PLGeneral::uint32 nY, PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight);
+		PLMATH_API bool ScreenRectangle(const PLCore::Array<Vector4> &lstPoints, bool bZCull, const Matrix4x4 &mMVP, PLCore::uint32 nX, PLCore::uint32 nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight);
 
 
 };

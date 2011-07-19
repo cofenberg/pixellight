@@ -81,7 +81,7 @@ class SNCellPortal : public SNPortal {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNCellPortal, "PLScene", PLScene::SNPortal, "Cell-portal scene node")
 		// Attributes
-		pl_attribute(TargetCell,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Name of the cell this cell-portal links to (for instance 'Parent.Cell2')",	"")
+		pl_attribute(TargetCell,	PLCore::String,			"",	ReadWrite,	GetSet,	"Name of the cell this cell-portal links to (for instance 'Parent.Cell2')",	"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																	"")
 		// Constructors
@@ -93,8 +93,8 @@ class SNCellPortal : public SNPortal {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetTargetCell() const;
-		PLS_API void SetTargetCell(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetTargetCell() const;
+		PLS_API void SetTargetCell(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -175,7 +175,7 @@ class SNCellPortal : public SNPortal {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String  m_sTargetCell;	/**< Name of the cell this cell-portal links to (for instance 'Parent.Cell2') */
+		PLCore::String	   m_sTargetCell;	/**< Name of the cell this cell-portal links to (for instance 'Parent.Cell2') */
 		PLMath::Matrix3x4  m_mWarp;			/**< This cell space into target cell space */
 		SceneNodeHandler  *m_pTargetCell;	/**< Target cell (ALWAYS valid!) */
 

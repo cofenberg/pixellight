@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/System/MutexGuard.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/System/MutexGuard.h>
 #include <PLMath/Rectangle.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
@@ -54,7 +54,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
 using namespace PLInput;
@@ -286,7 +286,7 @@ void GuiPL::SetMouseVisible(bool bVisible)
 	// Nothing required in here, the GUI using this implementation, stores the mouse visibility
 }
 
-void GuiPL::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
+void GuiPL::ListFonts(List<FontInfo> &lstFonts) const
 {
 	// Not supported, fonts are loaded by using font files
 }

@@ -61,7 +61,7 @@ class SNMPostProcessToneMap : public PLCompositing::SNMPostProcess {
 		pl_attribute(DeFogLevel,	float,				0.0f,									ReadWrite,	DirectValue,	"De-fog level",							"")
 		pl_attribute(FogColor,		PLGraphics::Color3,	PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Fog color",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/ToneMap.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/ToneMap.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

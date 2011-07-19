@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
 #include <PLCore/Base/Object.h>
+#include <PLCore/Container/Pool.h>
 #include "PLScene/PLScene.h"
 
 
@@ -140,7 +140,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @return
 		*    The maximum allowed level
 		*/
-		PLS_API PLGeneral::uint32 GetMaxLevel() const;
+		PLS_API PLCore::uint32 GetMaxLevel() const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @param[in] nMaxLevel
 		*    The maximum allowed level
 		*/
-		PLS_API void SetMaxLevel(PLGeneral::uint32 nMaxLevel = 16);
+		PLS_API void SetMaxLevel(PLCore::uint32 nMaxLevel = 16);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @return
 		*    The maximum allowed number of items per scene hierarchy node
 		*/
-		PLS_API PLGeneral::uint32 GetMaxNumOfNodeItems() const;
+		PLS_API PLCore::uint32 GetMaxNumOfNodeItems() const;
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @param[in] nMaxNumOfNodeItems
 		*    The maximum allowed number of items per scene hierarchy node
 		*/
-		PLS_API void SetMaxNumOfNodeItems(PLGeneral::uint32 nMaxNumOfNodeItems = 16);
+		PLS_API void SetMaxNumOfNodeItems(PLCore::uint32 nMaxNumOfNodeItems = 16);
 
 		/**
 		*  @brief
@@ -176,7 +176,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @return
 		*    Total number of scene hierarchy nodes
 		*/
-		PLS_API PLGeneral::uint32 GetTotalNumOfNodes() const;
+		PLS_API PLCore::uint32 GetTotalNumOfNodes() const;
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @return
 		*    Total number of currently used scene hierarchy nodes
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfNodes() const;
+		PLS_API PLCore::uint32 GetNumOfNodes() const;
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class SceneHierarchy : public PLCore::Object {
 		*  @return
 		*    The number of scene nodes within this hierarchy
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfSceneNodes() const;
+		PLS_API PLCore::uint32 GetNumOfSceneNodes() const;
 
 		/**
 		*  @brief
@@ -287,13 +287,13 @@ class SceneHierarchy : public PLCore::Object {
 	protected:
 		SceneContainer	   *m_pSceneContainer;		/**< Scene container this scene hierarchy node operates on (NEVER a null pointer!) */
 		SceneHierarchyNode *m_pRootNode;			/**< Scene hierarchy root node (NEVER a null pointer!) */
-		PLGeneral::uint32   m_nTotalNumOfNodes;		/**< Total number of scene hierarchy nodes */
-		PLGeneral::uint32   m_nNumOfSceneNodes;		/**< The number of scene nodes within this hierarchy */
-		PLGeneral::uint32	m_nMaxLevel;			/**< Maximum allowed level (tree depth) */
-		PLGeneral::uint32	m_nMaxNumOfNodeItems;	/**< Maximum allowed number of items per scene hierarchy node */
+		PLCore::uint32		m_nTotalNumOfNodes;		/**< Total number of scene hierarchy nodes */
+		PLCore::uint32		m_nNumOfSceneNodes;		/**< The number of scene nodes within this hierarchy */
+		PLCore::uint32		m_nMaxLevel;			/**< Maximum allowed level (tree depth) */
+		PLCore::uint32		m_nMaxNumOfNodeItems;	/**< Maximum allowed number of items per scene hierarchy node */
 
 		/** List of currently unused scene hierarchy nodes */
-		PLGeneral::Pool<SceneHierarchyNode*> m_lstFreeNodes;
+		PLCore::Pool<SceneHierarchyNode*> m_lstFreeNodes;
 
 
 };

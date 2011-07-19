@@ -21,7 +21,7 @@
 
 
 // OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredHBAO_GLSL_VS = "\
+static const PLCore::String sDeferredHBAO_GLSL_VS = "\
 // Attributes\n\
 in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
@@ -39,7 +39,7 @@ void main()\n\
 
 
 // OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sDeferredHBAO_GLSL_FS = "\
+static const PLCore::String sDeferredHBAO_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\

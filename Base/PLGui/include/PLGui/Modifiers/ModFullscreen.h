@@ -85,7 +85,7 @@ class ModFullscreen : public Modifier {
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 
 };

@@ -11,7 +11,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLPlugin/PLPlugin.h"
 
 
@@ -75,7 +75,7 @@ class Plugin {
 		*  @return
 		*    Width
 		*/
-		PLPLUGIN_API PLGeneral::uint32 GetWidth() const;
+		PLPLUGIN_API PLCore::uint32 GetWidth() const;
 
 		/**
 		*  @brief
@@ -84,7 +84,7 @@ class Plugin {
 		*  @return
 		*    Height
 		*/
-		PLPLUGIN_API PLGeneral::uint32 GetHeight() const;
+		PLPLUGIN_API PLCore::uint32 GetHeight() const;
 
 		/**
 		*  @brief

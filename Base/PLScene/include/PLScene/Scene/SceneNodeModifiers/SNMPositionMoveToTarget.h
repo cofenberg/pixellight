@@ -56,8 +56,8 @@ class SNMPositionMoveToTarget : public SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionMoveToTarget, "PLScene", PLScene::SNMTransform, "Scene node modifier class moving the owner scene node towards a target scene node")
 		// Attributes
-		pl_attribute(Target,	PLGeneral::String,	"",		ReadWrite,	DirectValue,	"Target scene node to move to",	"")
-		pl_attribute(Speed,		float,				2.0f,	ReadWrite,	DirectValue,	"Movement speed",				"Min='0.0001'")
+		pl_attribute(Target,	PLCore::String,	"",		ReadWrite,	DirectValue,	"Target scene node to move to",	"")
+		pl_attribute(Speed,		float,			2.0f,	ReadWrite,	DirectValue,	"Movement speed",				"Min='0.0001'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

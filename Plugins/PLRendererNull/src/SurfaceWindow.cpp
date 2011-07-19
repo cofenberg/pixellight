@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #ifdef WIN32
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
 #include "PLRendererNull/SurfaceWindow.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererNull {
 

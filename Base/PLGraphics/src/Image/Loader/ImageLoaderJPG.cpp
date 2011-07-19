@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/StdIo.h> // Required for "jpg/jpeglib.h"
+#include <PLCore/File/StdIo.h> // Required for "jpg/jpeglib.h"
 extern "C" {
 	#include <jpeglib.h>
 }
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include "PLGraphics/Image/Image.h"
 #include "PLGraphics/Image/ImagePart.h"
 #include "PLGraphics/Image/ImageBuffer.h"
@@ -37,7 +37,7 @@ extern "C" {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGraphics {
 

@@ -99,7 +99,7 @@ class SPMultiView : public PLRenderer::SurfacePainter {
 		*  @param[in] nScene
 		*    Scene to draw
 		*/
-		virtual void DrawScene(PLGeneral::uint32 nScene = 0) = 0;
+		virtual void DrawScene(PLCore::uint32 nScene = 0) = 0;
 
 
 	//[-------------------------------------------------------]

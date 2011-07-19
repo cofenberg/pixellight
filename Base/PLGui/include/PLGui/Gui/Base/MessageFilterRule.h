@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -84,7 +84,7 @@ class MessageFilterRule {
 		*  @remarks
 		*    Use this constructor to filter against widget name
 		*/
-		PLGUI_API MessageFilterRule(EMessageFilter nFilterType, const PLGeneral::String &sWidget);
+		PLGUI_API MessageFilterRule(EMessageFilter nFilterType, const PLCore::String &sWidget);
 
 		/**
 		*  @brief
@@ -158,16 +158,16 @@ class MessageFilterRule {
 		*    A filter rule can filter against message types or widget names.
 		*    This will return "", if the type is a message-type filter.
 		*/
-		PLGUI_API PLGeneral::String GetWidgetName() const;
+		PLGUI_API PLCore::String GetWidgetName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		EMessageFilter		m_nFilterType;		/**< Filter type (inclusive or exclusive) */
-		EMessageType		m_nMessageType;		/**< Message type that is filtered (MessageOnUnknown if not used) */
-		PLGeneral::String	m_sWidget;			/**< Widget name that is filtered  ("" if not used) */
+		EMessageFilter	m_nFilterType;	/**< Filter type (inclusive or exclusive) */
+		EMessageType	m_nMessageType;	/**< Message type that is filtered (MessageOnUnknown if not used) */
+		PLCore::String	m_sWidget;		/**< Widget name that is filtered  ("" if not used) */
 
 
 };

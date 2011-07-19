@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
-#include <PLGeneral/Base/ElementManager.h>
 #include <PLCore/Base/Object.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Container/Pool.h>
+#include <PLCore/Container/ElementManager.h>
 #include <PLMath/Vector3.h>
 #include "PLPhysics/Element.h"
 #include "PLPhysics/ElementHandler.h"
@@ -72,7 +72,7 @@ namespace PLPhysics {
 *    you can't espect the same values as the ones set by yourself. For instance Body::GetLinearVelocity()
 *    must not be vMyVelocity you set using Body::SetLinearVelocity(vMyVelocity)!
 */
-class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
+class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 
 
 	//[-------------------------------------------------------]
@@ -184,7 +184,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    using 'cached data'. Therefore this function is using a mesh manager and mesh name instead of a direct
 		*    mesh instance to just load/use the mesh 'on demand'.
 		*/
-		virtual Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh,
+		virtual Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh,
 										   const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false) = 0;
 
 		/**
@@ -208,7 +208,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    using 'cached data'. Therefore this function is using a mesh manager and mesh name instead of a direct
 		*    mesh instance to just load/use the mesh 'on demand'.
 		*/
-		virtual Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh,
+		virtual Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh,
 									 const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false) = 0;
 
 		/**
@@ -231,7 +231,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*  @return
 		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
-		virtual Body *CreateBodyTerrain(PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight, const float fTerrain[],
+		virtual Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
 										const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) = 0;
 
 		/**
@@ -446,7 +446,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*  @return
 		*    The created physics sensor, a null pointer on error (sensor type not supported?)
 		*/
-		virtual Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0) = 0;
+		virtual Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) = 0;
 
 		/**
 		*  @brief
@@ -462,7 +462,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*  @return
 		*    The created physics sensor, a null pointer on error (sensor type not supported?)
 		*/
-		virtual Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0) = 0;
+		virtual Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
@@ -630,7 +630,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    - nGroup1 and nGroup2 are commutative
 		*    - By default, collision between objects within the same group is disabled - except for the first group
 		*/
-		virtual bool GetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2) const = 0;
+		virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const = 0;
 
 		/**
 		*  @brief
@@ -646,7 +646,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*  @see
 		*    - GetGroupCollision()
 		*/
-		virtual void SetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2, bool bActive = true) = 0;
+		virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true) = 0;
 
 		/**
 		*  @brief
@@ -664,7 +664,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*    - GetBodyPairFlags() must NOT return the same flags set by SetBodyPairFlags()!
 		*    - cBody1 and cBody2 are commutative
 		*/
-		virtual PLGeneral::uint8 GetBodyPairFlags(const Body &cBody1, const Body &cBody2) const = 0;
+		virtual PLCore::uint8 GetBodyPairFlags(const Body &cBody1, const Body &cBody2) const = 0;
 
 		/**
 		*  @brief
@@ -680,7 +680,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 		*  @see
 		*    - SetBodyPairFlags()
 		*/
-		virtual void SetBodyPairFlags(const Body &cBody1, const Body &cBody2, PLGeneral::uint8 nFlags = 0) = 0;
+		virtual void SetBodyPairFlags(const Body &cBody1, const Body &cBody2, PLCore::uint8 nFlags = 0) = 0;
 
 		/**
 		*  @brief
@@ -763,7 +763,7 @@ class World : public PLCore::Object, public PLGeneral::ElementManager<Element> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Pool<void*> m_lstFreeBodyInformation;	/**< List of currently free body information */
+		PLCore::Pool<void*> m_lstFreeBodyInformation;	/**< List of currently free body information */
 
 
 };

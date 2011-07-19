@@ -129,8 +129,8 @@ class World : public PLPhysics::World, public NxUserContactModify {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static NxPhysicsSDK		 *m_pPhysXPhysicsSDK;		/**< PhysX physics SDK instance, can be a null pointer */
-		static PLGeneral::uint32  m_nPhysXInstanceCounter;	/**< PhysX instance counter */
+		static NxPhysicsSDK	  *m_pPhysXPhysicsSDK;		/**< PhysX physics SDK instance, can be a null pointer */
+		static PLCore::uint32  m_nPhysXInstanceCounter;	/**< PhysX instance counter */
 
 
 	//[-------------------------------------------------------]
@@ -146,7 +146,7 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		bool			m_bBuoyancyActive;		// [TODO] Implement buoyancy within the PhysX backend
 		float			m_fBuoyancyPlaneY;		// [TODO] Implement buoyancy within the PhysX backend
 
-		PLGeneral::Pool<PLPhysics::Body*> m_lstChangedByUser;
+		PLCore::Pool<PLPhysics::Body*> m_lstChangedByUser;
 		NxScene *m_pPhysXScene;	/**< PhysX physics scene, can be a null pointer */
 
 
@@ -160,10 +160,10 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false);
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodySphere(float fRadius, bool bStatic = false);
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false);
-		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false);
-		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false);
-		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyTerrain(PLGeneral::uint32 nWidth, PLGeneral::uint32 nHeight, const float fTerrain[],
-																		const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale);
+		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false);
+		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false);
+		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
+																	  const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale);
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false);
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false);
 		PLPHYSICSPHYSX_API virtual PLPhysics::Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false);
@@ -187,8 +187,8 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		//[-------------------------------------------------------]
 		//[ Physics sensor creation                               ]
 		//[-------------------------------------------------------]
-		PLPHYSICSPHYSX_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0);
-		PLPHYSICSPHYSX_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLGeneral::uint32 nFlags = 0);
+		PLPHYSICSPHYSX_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
+		PLPHYSICSPHYSX_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
@@ -206,10 +206,10 @@ class World : public PLPhysics::World, public NxUserContactModify {
 		PLPHYSICSPHYSX_API virtual bool SetFrameRate(float fFrameRate = 60.0f);
 		PLPHYSICSPHYSX_API virtual void GetGravity(PLMath::Vector3 &vGravity) const;
 		PLPHYSICSPHYSX_API virtual void SetGravity(const PLMath::Vector3 &vGravity = PLMath::Vector3(0.0f, -9.81f, 0.0f));
-		PLPHYSICSPHYSX_API virtual bool GetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2) const;
-		PLPHYSICSPHYSX_API virtual void SetGroupCollision(PLGeneral::uint8 nGroup1, PLGeneral::uint8 nGroup2, bool bActive = true);
-		PLPHYSICSPHYSX_API virtual PLGeneral::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const;
-		PLPHYSICSPHYSX_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLGeneral::uint8 nFlags = 0);
+		PLPHYSICSPHYSX_API virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const;
+		PLPHYSICSPHYSX_API virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true);
+		PLPHYSICSPHYSX_API virtual PLCore::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const;
+		PLPHYSICSPHYSX_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags = 0);
 		PLPHYSICSPHYSX_API virtual bool IsBuoyancyActive() const;
 		PLPHYSICSPHYSX_API virtual void SetBuoyancyActive(bool bActive = false);
 		PLPHYSICSPHYSX_API virtual float GetBuoyancyPlaneY() const;
@@ -219,10 +219,10 @@ class World : public PLPhysics::World, public NxUserContactModify {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLPhysics::Element *CreateElement(const PLGeneral::String &sName);
+		virtual PLPhysics::Element *CreateElement(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]

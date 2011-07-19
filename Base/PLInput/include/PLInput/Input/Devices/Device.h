@@ -84,7 +84,7 @@ class Device : public Controller {
 		*  @param[in] pImpl
 		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Device(const PLGeneral::String &sName, const PLGeneral::String &sDescription, DeviceImpl *pImpl);
+		PLINPUT_API Device(const PLCore::String &sName, const PLCore::String &sDescription, DeviceImpl *pImpl);
 
 		/**
 		*  @brief

@@ -15,11 +15,11 @@ We have several rules for our header files. See below. At the first look some or
 Each header has to use definitions and \emph{\#pragma once} to prevent multiple inclusion - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
 
 \begin{lstlisting}[caption=Header guard]
-#ifndef __PLGENERAL_STRING_H__
-#define __PLGENERAL_STRING_H__
+#ifndef __PLCORE_STRING_H__
+#define __PLCORE_STRING_H__
 #pragma once
 // ...
-#endif // __PLGENERAL_STRING_H__
+#endif // __PLCORE_STRING_H__
 \end{lstlisting}
 
 
@@ -126,22 +126,22 @@ Use \emph{forward declarations} whenever possible instead of includes when somet
 
 \begin{lstlisting}[caption=Using forward declaration]
 class MyInterface {
-    void SetName(const PLGeneral::String &sName);
+    void SetName(const PLCore::String &sName);
 };
 \end{lstlisting}
 
 Someone can now just throw in an include like:
 
 \begin{lstlisting}[caption=Include]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 \end{lstlisting}
 
-But now, your header depends on another one and \emph{PLGeneral/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLGeneral/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively NOT productive!
+But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively NOT productive!
 
 Now someone may cry out \emph{Use cool precompiled headers!}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple! We grab the problem on it's root by doing for example the following:
 
 \begin{lstlisting}[caption=Forward declaration]
-namespace PLGeneral {
+namespace PLCore {
     class String;
 }
 \end{lstlisting}
@@ -159,10 +159,10 @@ Each header must provide all information the compiler needs to compile it! So, a
 Except for headers for the final application, each header has to put it's content into a appropriate namespace.
 
 \begin{lstlisting}[caption=Namespace definition]
-namespace PLGeneral {
+namespace PLCore {
   class MyClass {
   };
-} // PLGeneral
+} // PLCore
 \end{lstlisting}
 
 It's not allowed to use \emph{using namespace} - this may introduce ugly name conflicts in other projects!

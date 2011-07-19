@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 
@@ -132,15 +132,15 @@ class StreamWav : public Stream {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::File		   *m_pFile;		/**< Used on file streaming, can be a null pointer */
-		const PLGeneral::uint8 *m_pnData;		/**< Used on memory streaming, can be a null pointer */
-		ALuint					m_nStreamSize;	/**< Stream size */
-		ALuint					m_nStreamPos;	/**< Current stream position */
-		ALenum					m_nFormat;		/**< Format */
-		ALuint					m_nFrequency;	/**< Frequency */
-		ALuint					m_nBuffers[2];	/**< Back and front buffer */
-		PLGeneral::uint32		m_nSwapSize;	/**< Swap buffer size in bytes */
-		PLGeneral::uint8	   *m_pnSwap;		/**< Buffer used within FillBuffer(), can be a null pointer */
+		PLCore::File	    *m_pFile;		/**< Used on file streaming, can be a null pointer */
+		const PLCore::uint8 *m_pnData;		/**< Used on memory streaming, can be a null pointer */
+		ALuint				 m_nStreamSize;	/**< Stream size */
+		ALuint				 m_nStreamPos;	/**< Current stream position */
+		ALenum				 m_nFormat;		/**< Format */
+		ALuint				 m_nFrequency;	/**< Frequency */
+		ALuint				 m_nBuffers[2];	/**< Back and front buffer */
+		PLCore::uint32		 m_nSwapSize;	/**< Swap buffer size in bytes */
+		PLCore::uint8	    *m_pnSwap;		/**< Buffer used within FillBuffer(), can be a null pointer */
 
 
 	//[-------------------------------------------------------]

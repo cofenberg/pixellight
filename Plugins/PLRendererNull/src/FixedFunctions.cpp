@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
+#include <PLCore/Tools/Tools.h>
 #include "PLRendererNull/Renderer.h"
 #include "PLRendererNull/VertexBuffer.h"
 #include "PLRendererNull/FixedFunctions.h"
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRendererNull {

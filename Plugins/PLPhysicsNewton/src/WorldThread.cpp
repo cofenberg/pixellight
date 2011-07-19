@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/MutexGuard.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/MutexGuard.h>
 #include "PLPhysicsNewton/World.h"
 #include "PLPhysicsNewton/WorldThread.h"
 
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLPhysicsNewton {
 
 
@@ -118,7 +118,7 @@ bool WorldThread::Unlock()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Thread functions            ]
+//[ Public virtual PLCore::Thread functions               ]
 //[-------------------------------------------------------]
 int WorldThread::Run()
 {

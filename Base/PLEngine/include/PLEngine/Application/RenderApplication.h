@@ -102,7 +102,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*  @param[in] sSurfacePainter
 		*    Surface painter class to use
 		*/
-		PL_API RenderApplication(const PLGeneral::String &sSurfacePainter = "PLRenderer::SPDefault");
+		PL_API RenderApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
 
 		/**
 		*  @brief
@@ -351,7 +351,7 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String			 m_sSurfacePainter;		/**< Surface painter class to use */
+		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
 		PLRenderer::RendererContext *m_pRendererContext;	/**< The renderer context, can be a null pointer */
 		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be a null pointer */
 

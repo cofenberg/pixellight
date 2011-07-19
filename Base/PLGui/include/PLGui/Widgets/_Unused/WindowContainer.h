@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLGui/Widgets/Widget.h"
 
 
@@ -114,7 +114,7 @@ class WindowContainer : public Widget {
 		*  @return
 		*    List of windows
 		*/
-		PLGUI_API const PLGeneral::Container<Widget*> &GetWindows() const;
+		PLGUI_API const PLCore::Container<Widget*> &GetWindows() const;
 
 		/**
 		*  @brief
@@ -205,10 +205,10 @@ class WindowContainer : public Widget {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	public:
-		Widget					 *m_pContentWidget;	/**< Inner widget that contains the content windows */
-		PLGeneral::List<Widget*>  m_lstWindows;		/**< List of windows */
-		int						  m_nSelection;		/**< Index of currently selected window */
-		Widget					 *m_pSelection;		/**< Pointer to currently selected window */
+		Widget				  *m_pContentWidget;	/**< Inner widget that contains the content windows */
+		PLCore::List<Widget*>  m_lstWindows;		/**< List of windows */
+		int					   m_nSelection;		/**< Index of currently selected window */
+		Widget				  *m_pSelection;		/**< Pointer to currently selected window */
 
 
 };

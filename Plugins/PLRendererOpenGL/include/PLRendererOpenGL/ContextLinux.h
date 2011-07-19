@@ -100,7 +100,7 @@ class ContextLinux : public Context {
 	public:
 		virtual bool IsValid() const;
 		virtual void MakeDummyCurrent() const;
-		virtual bool QueryDisplayModes(PLGeneral::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
+		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
 
 
 	//[-------------------------------------------------------]

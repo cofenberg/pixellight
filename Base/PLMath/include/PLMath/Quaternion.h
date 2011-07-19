@@ -507,7 +507,7 @@ class Quaternion {
 		*  @return
 		*    String with the data
 		*/
-		PLMATH_API PLGeneral::String ToString() const;
+		PLMATH_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -516,7 +516,7 @@ class Quaternion {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLMATH_API bool FromString(const PLGeneral::String &sString);
+		PLMATH_API bool FromString(const PLCore::String &sString);
 
 
 };

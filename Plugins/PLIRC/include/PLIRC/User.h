@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLIRC/PLIRC.h"
 
 
@@ -53,14 +53,14 @@ class User {
 	//[-------------------------------------------------------]
 	public:
 		// Construction/Destruction
-		PLIRC_API User(const PLGeneral::String &sNick, bool bOp, bool bVoice);
+		PLIRC_API User(const PLCore::String &sNick, bool bOp, bool bVoice);
 		PLIRC_API ~User();
 
 		// Get the nick name
-		PLIRC_API PLGeneral::String GetNick() const;
+		PLIRC_API PLCore::String GetNick() const;
 
 		// Set the nick name
-		PLIRC_API void SetNick(const PLGeneral::String &sNick);
+		PLIRC_API void SetNick(const PLCore::String &sNick);
 
 		// Does the user have op mode?
 		PLIRC_API bool IsOp() const;
@@ -79,9 +79,9 @@ class User {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sNick;	/**< Nick name */
-		bool			  m_bOp;	/**< Op mode */
-		bool			  m_bVoice;	/**< Voice mode */
+		PLCore::String m_sNick;		/**< Nick name */
+		bool		   m_bOp;		/**< Op mode */
+		bool		   m_bVoice;	/**< Voice mode */
 
 
 };

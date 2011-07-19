@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/Thread.h>
-#include <PLGeneral/System/Mutex.h>
+#include <PLCore/System/Mutex.h>
+#include <PLCore/System/Thread.h>
 #include "PLInput/Backend/ConnectionDevice.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

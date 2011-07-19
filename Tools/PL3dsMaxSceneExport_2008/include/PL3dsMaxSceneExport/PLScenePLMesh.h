@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 
@@ -109,7 +109,7 @@ class PLScenePLMesh : public PLSceneMesh {
 		bool WriteGeometry(FILE &cFile, ChunkStack &cChunkStack, int nGeometry);
 		bool WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack);
 		bool WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack, morphChannel &cMorphChannel);
-		bool WritePointCacheMorphTargets(FILE &cFile, ChunkStack &cChunkStack, PLGeneral::File &cPointCacheFile);
+		bool WritePointCacheMorphTargets(FILE &cFile, ChunkStack &cChunkStack, PLCore::File &cPointCacheFile);
 		bool WriteWeight(FILE &cFile, ChunkStack &cChunkStack, const Weight &cWeight);
 		bool WriteVertexWeights(FILE &cFile, ChunkStack &cChunkStack, const Vertex &cVertex, int nWeights);
 		bool WriteVertexBuffer(FILE &cFile, ChunkStack &cChunkStack, int nVertexBuffer);
@@ -120,17 +120,17 @@ class PLScenePLMesh : public PLSceneMesh {
 		bool WriteMorphTargetAnimation(FILE &cFile, ChunkStack &cChunkStack);
 		bool WritePointCacheAnimation(FILE &cFile, ChunkStack &cChunkStack, Animation &cAnimation);
 		bool WriteAnimations(FILE &cFile, ChunkStack &cChunkStack);
-		bool BeginChunk(FILE &cFile, ChunkStack &cChunkStack, PLGeneral::uint32 nType);
+		bool BeginChunk(FILE &cFile, ChunkStack &cChunkStack, PLCore::uint32 nType);
 		bool EndChunk(FILE &cFile, ChunkStack &cChunkStack);
 		bool Write(FILE &cFile, void *pBuffer, ULONG nSize);
-		void GetChunkString(PLGeneral::uint32 nType, char szString[]);
+		void GetChunkString(PLCore::uint32 nType, char szString[]);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<Animation*> m_lstPointCacheAnimations;	/**< Internal point cache animation list */
+		PLCore::Array<Animation*> m_lstPointCacheAnimations;	/**< Internal point cache animation list */
 
 
 };

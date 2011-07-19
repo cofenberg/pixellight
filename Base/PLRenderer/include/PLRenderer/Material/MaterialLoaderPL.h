@@ -60,8 +60,8 @@ class MaterialLoaderPL : public MaterialLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Material&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Material&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Material&,			PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Material&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class MaterialLoaderPL : public MaterialLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API bool Load(Material &cMaterial, PLGeneral::File &cFile);
-		PLRENDERER_API bool Save(const Material &cMaterial, PLGeneral::File &cFile);
+		PLRENDERER_API bool Load(Material &cMaterial, PLCore::File &cFile);
+		PLRENDERER_API bool Save(const Material &cMaterial, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class MaterialLoaderPL : public MaterialLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(Material &cMaterial, const PLGeneral::XmlElement &cMaterialElement) const;
+		bool LoadV1(Material &cMaterial, const PLCore::XmlElement &cMaterialElement) const;
 
 
 };

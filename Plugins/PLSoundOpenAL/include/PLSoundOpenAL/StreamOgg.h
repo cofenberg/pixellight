@@ -107,12 +107,12 @@ class StreamOgg : public Stream {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OggVorbis_File     m_cOggStream;	/**< Ogg stream */
-		vorbis_info		  *m_pVorbisInfo;	/**< Vorbis information, can be a null pointer */
-		ALenum			   m_nFormat;		/**< Format */
-		ALuint			   m_nBuffers[2];	/**< Back and front buffer */
-		PLGeneral::uint32  m_nSwapSize;		/**< Swap buffer size in bytes */
-		PLGeneral::uint8  *m_pnSwap;		/**< Buffer used within FillBuffer(), can be a null pointer */
+		OggVorbis_File  m_cOggStream;	/**< Ogg stream */
+		vorbis_info	   *m_pVorbisInfo;	/**< Vorbis information, can be a null pointer */
+		ALenum		    m_nFormat;		/**< Format */
+		ALuint		    m_nBuffers[2];	/**< Back and front buffer */
+		PLCore::uint32  m_nSwapSize;	/**< Swap buffer size in bytes */
+		PLCore::uint8  *m_pnSwap;		/**< Buffer used within FillBuffer(), can be a null pointer */
 
 
 	//[-------------------------------------------------------]

@@ -101,7 +101,7 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 		*  @return
 		*    The number of samples per trail
 		*/
-		SPARK_PL_API PLGeneral::uint32 GetNumOfSamples() const;
+		SPARK_PL_API PLCore::uint32 GetNumOfSamples() const;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 		*    The number of samples defines the number of points used to construct the trail.<br>
 		*    The bigger the number of samples, the smoother the trail but the bigger the compution time and the memory consumption.
 		*/
-		SPARK_PL_API void SetNumOfSamples(PLGeneral::uint32 nNumOfSamples);
+		SPARK_PL_API void SetNumOfSamples(PLCore::uint32 nNumOfSamples);
 
 		/**
 		*  @brief
@@ -247,7 +247,7 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 	//[-------------------------------------------------------]
 	protected:
 		SPK_PLBuffer	  *m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
-		PLGeneral::uint32  m_nNumOfSamples;	/**< The number of samples to construct the trails */
+		PLCore::uint32 	   m_nNumOfSamples;	/**< The number of samples to construct the trails */
 		float			   m_fWidth;		/**< The width of trails in pixels */
 		float			   m_fDuration;		/**< The duration of a sample */
 		PLGraphics::Color4 m_cColor;		/**< The color components of degenerated lines */

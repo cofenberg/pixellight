@@ -103,9 +103,9 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLGeneral::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
 		virtual bool Clear();
-		virtual void *Lock(PLGeneral::uint32 nFlag = PLRenderer::Lock::ReadWrite);
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
 		virtual void *GetData();
 		virtual bool Unlock();
 

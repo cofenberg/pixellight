@@ -104,7 +104,7 @@ class Source : public Resource {
 		*  @return
 		*    Source flags (see EFlags)
 		*/
-		PLSOUND_API PLGeneral::uint32 GetFlags() const;
+		PLSOUND_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class Source : public Resource {
 		*  @param[in] nFlags
 		*    Source flags (see EFlags)
 		*/
-		PLSOUND_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLSOUND_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 
 	//[-------------------------------------------------------]
@@ -410,8 +410,8 @@ class Source : public Resource {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		BufferHandler	  m_cBufferHandler;	/**< Sound buffer the source is using */
-		PLGeneral::uint32 m_nFlags;			/**< Flags */
+		BufferHandler  m_cBufferHandler;	/**< Sound buffer the source is using */
+		PLCore::uint32 m_nFlags;			/**< Flags */
 
 
 };

@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <vorbis/vorbisfile.h>
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include "PLSoundOpenAL/SoundManager.h"
 #include "PLSoundOpenAL/Ogg.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLSoundOpenAL {
 
 

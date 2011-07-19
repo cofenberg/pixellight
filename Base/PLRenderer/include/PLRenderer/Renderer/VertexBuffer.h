@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLRenderer/Renderer/Buffer.h"
 
@@ -87,8 +87,8 @@ class VertexBuffer : public Buffer {
 			Tangent      =  8,	/**< Tangent data (1 channel, only Float3 allowed!) */
 			Binormal     =  9	/**< Binormal (also refered to as bitangent) data (1 channel, only Float3 allowed!) */
 		};
-		static const PLGeneral::uint8 NumOfSemantics      = 10;	/**< Numer of vertex attribute semantics */
-		static const PLGeneral::uint8 MaxPipelineChannels = 16;	/**< Maximum possible number of channels */
+		static const PLCore::uint8 NumOfSemantics      = 10;	/**< Numer of vertex attribute semantics */
+		static const PLCore::uint8 MaxPipelineChannels = 16;	/**< Maximum possible number of channels */
 
 		/**
 		*  @brief
@@ -114,14 +114,14 @@ class VertexBuffer : public Buffer {
 		*    Defines input vertex attribute to the pipeline
 		*/
 		struct Attribute {
-			ESemantic		  nSemantic;		/**< Any member of the vertex attribute semantic enumeration type */
-			PLGeneral::uint32 nChannel;			/**< Pipeline channel (see ESemantic) */
-			EType			  nType;			/**< Any member of the EType enumeration type */
-			PLGeneral::uint32 nOffset;			/**< Offset of the vertex attribute */
+			ESemantic	   nSemantic;		/**< Any member of the vertex attribute semantic enumeration type */
+			PLCore::uint32 nChannel;		/**< Pipeline channel (see ESemantic) */
+			EType		   nType;			/**< Any member of the EType enumeration type */
+			PLCore::uint32 nOffset;			/**< Offset of the vertex attribute */
 			// API dependent
-			PLGeneral::uint32 nSizeAPI;			/**< Size of the vertex attribute */
-			PLGeneral::uint32 nTypeAPI;			/**< API dependent vertex type */
-			PLGeneral::uint32 nComponentsAPI;	/**< Number of vertex type components */
+			PLCore::uint32 nSizeAPI;		/**< Size of the vertex attribute */
+			PLCore::uint32 nTypeAPI;		/**< API dependent vertex type */
+			PLCore::uint32 nComponentsAPI;	/**< Number of vertex type components */
 		};
 
 
@@ -142,7 +142,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    Number of vertex attributes
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfVertexAttributes() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfVertexAttributes() const;
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class VertexBuffer : public Buffer {
 		*      allocated using the Allocate()-function! (performance!)
 		*    - It the buffer is still locked, it's forced to be unlocked immediately if all went fine
 		*/
-		PLRENDERER_API bool AddVertexAttribute(ESemantic nSemantic, PLGeneral::uint32 nChannel, EType nType);
+		PLRENDERER_API bool AddVertexAttribute(ESemantic nSemantic, PLCore::uint32 nChannel, EType nType);
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    The requested vertex attribute, a null pointer on error
 		*/
-		PLRENDERER_API const Attribute *GetVertexAttribute(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API const Attribute *GetVertexAttribute(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    The first found vertex attribute with the requested semantic, a null pointer on error
 		*/
-		PLRENDERER_API const Attribute *GetVertexAttribute(ESemantic nSemantic, PLGeneral::uint32 nChannel = 0) const;
+		PLRENDERER_API const Attribute *GetVertexAttribute(ESemantic nSemantic, PLCore::uint32 nChannel = 0) const;
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    Vertex size (in bytes)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetVertexSize() const;
+		PLRENDERER_API PLCore::uint32 GetVertexSize() const;
 
 		/**
 		*  @brief
@@ -277,7 +277,7 @@ class VertexBuffer : public Buffer {
 		*      vertex attribute
 		*    - When manipulating color data you should use GetColor() and SetColor()!
 		*/
-		virtual void *GetData(PLGeneral::uint32 nIndex, PLGeneral::uint32 nSemantic, PLGeneral::uint32 nChannel = 0) = 0;
+		virtual void *GetData(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel = 0) = 0;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class VertexBuffer : public Buffer {
 		*      you should always use this offered color functions which are API
 		*      independent!
 		*/
-		virtual PLGraphics::Color4 GetColor(PLGeneral::uint32 nIndex, PLGeneral::uint32 nChannel = 0) = 0;
+		virtual PLGraphics::Color4 GetColor(PLCore::uint32 nIndex, PLCore::uint32 nChannel = 0) = 0;
 
 		/**
 		*  @brief
@@ -315,7 +315,7 @@ class VertexBuffer : public Buffer {
 		*  @see
 		*    - GetColor()
 		*/
-		virtual bool SetColor(PLGeneral::uint32 nIndex, const PLGraphics::Color4 &cColor, PLGeneral::uint32 nChannel = 0) = 0;
+		virtual bool SetColor(PLCore::uint32 nIndex, const PLGraphics::Color4 &cColor, PLCore::uint32 nChannel = 0) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -336,8 +336,8 @@ class VertexBuffer : public Buffer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::Array<Attribute*> m_lstVertexAttributes;	/**< The vertex attributes */
-		PLGeneral::uint32			 m_nVertexSize;			/**< Size in bytes of the vertex buffer (in bytes) */
+		PLCore::Array<Attribute*> m_lstVertexAttributes;	/**< The vertex attributes */
+		PLCore::uint32			  m_nVertexSize;			/**< Size in bytes of the vertex buffer (in bytes) */
 
 
 	//[-------------------------------------------------------]

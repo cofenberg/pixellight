@@ -132,7 +132,7 @@ class SRPEmissiveFixedFunctions : public PLScene::SceneRendererPass {
 		*  @param[in] nStage
 		*    Texture stage
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage) const;
 
 		/**
 		*  @brief

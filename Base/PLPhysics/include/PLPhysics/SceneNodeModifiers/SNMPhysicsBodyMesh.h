@@ -68,8 +68,8 @@ class SNMPhysicsBodyMesh : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyMesh, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics mesh body scene node modifier")
 		// Attributes
-		pl_attribute(Mesh,		PLGeneral::String,	"",		ReadWrite,	GetSet,	"Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead",								"Type='Mesh'")
-		pl_attribute(Optimize,	bool,				false,	ReadWrite,	GetSet,	"Flag that indicates whether it should optimize this mesh. Set to 1 to optimize (may take some time!) the mesh, otherwise 0.",	"")
+		pl_attribute(Mesh,		PLCore::String,	"",		ReadWrite,	GetSet,	"Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead",								"Type='Mesh'")
+		pl_attribute(Optimize,	bool,			false,	ReadWrite,	GetSet,	"Flag that indicates whether it should optimize this mesh. Set to 1 to optimize (may take some time!) the mesh, otherwise 0.",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
@@ -79,8 +79,8 @@ class SNMPhysicsBodyMesh : public SNMPhysicsBody {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLGeneral::String GetMesh() const;
-		PLPHYSICS_API void SetMesh(const PLGeneral::String &sValue);
+		PLPHYSICS_API PLCore::String GetMesh() const;
+		PLPHYSICS_API void SetMesh(const PLCore::String &sValue);
 		PLPHYSICS_API bool GetOptimize() const;
 		PLPHYSICS_API void SetOptimize(bool bValue);
 
@@ -109,8 +109,8 @@ class SNMPhysicsBodyMesh : public SNMPhysicsBody {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sMesh;		/**< Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead */
-		bool			  m_bOptimize;	/**< Flag that indicates whether it should optimize this mesh. Set to 1 to optimize (may take some time!) the mesh, otherwise 0. */
+		PLCore::String m_sMesh;		/**< Collision mesh, if empty, the variable 'Mesh' (if available) of the scene node is used instead */
+		bool		   m_bOptimize;	/**< Flag that indicates whether it should optimize this mesh. Set to 1 to optimize (may take some time!) the mesh, otherwise 0. */
 
 
 	//[-------------------------------------------------------]

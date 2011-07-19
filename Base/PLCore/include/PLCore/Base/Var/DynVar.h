@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -115,7 +114,7 @@ class DynVar {
 		*  @return
 		*    Type name (e.g. "int")
 		*/
-		PLCORE_API virtual PLGeneral::String GetTypeName() const;
+		PLCORE_API virtual String GetTypeName() const;
 
 		/**
 		*  @brief
@@ -139,7 +138,7 @@ class DynVar {
 		*  @return
 		*    Default value as string
 		*/
-		PLCORE_API virtual PLGeneral::String GetDefault() const;
+		PLCORE_API virtual String GetDefault() const;
 
 		/**
 		*  @brief
@@ -193,7 +192,7 @@ class DynVar {
 		*  @return
 		*    Value as int8
 		*/
-		PLCORE_API virtual PLGeneral::int8 GetInt8() const;
+		PLCORE_API virtual int8 GetInt8() const;
 
 		/**
 		*  @brief
@@ -202,7 +201,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as int8
 		*/
-		PLCORE_API virtual void SetInt8(PLGeneral::int8 nValue);
+		PLCORE_API virtual void SetInt8(int8 nValue);
 
 		/**
 		*  @brief
@@ -211,7 +210,7 @@ class DynVar {
 		*  @return
 		*    Value as int16
 		*/
-		PLCORE_API virtual PLGeneral::int16 GetInt16() const;
+		PLCORE_API virtual int16 GetInt16() const;
 
 		/**
 		*  @brief
@@ -220,7 +219,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as int16
 		*/
-		PLCORE_API virtual void SetInt16(PLGeneral::int16 nValue);
+		PLCORE_API virtual void SetInt16(int16 nValue);
 
 		/**
 		*  @brief
@@ -229,7 +228,7 @@ class DynVar {
 		*  @return
 		*    Value as int32
 		*/
-		PLCORE_API virtual PLGeneral::int32 GetInt32() const;
+		PLCORE_API virtual int32 GetInt32() const;
 
 		/**
 		*  @brief
@@ -238,7 +237,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as int32
 		*/
-		PLCORE_API virtual void SetInt32(PLGeneral::int32 nValue);
+		PLCORE_API virtual void SetInt32(int32 nValue);
 
 		/**
 		*  @brief
@@ -247,7 +246,7 @@ class DynVar {
 		*  @return
 		*    Value as int64
 		*/
-		PLCORE_API virtual PLGeneral::int64 GetInt64() const;
+		PLCORE_API virtual int64 GetInt64() const;
 
 		/**
 		*  @brief
@@ -256,7 +255,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as int64
 		*/
-		PLCORE_API virtual void SetInt64(PLGeneral::int64 nValue);
+		PLCORE_API virtual void SetInt64(int64 nValue);
 
 		/**
 		*  @brief
@@ -265,7 +264,7 @@ class DynVar {
 		*  @return
 		*    Value as uint8
 		*/
-		PLCORE_API virtual PLGeneral::uint8 GetUInt8() const;
+		PLCORE_API virtual uint8 GetUInt8() const;
 
 		/**
 		*  @brief
@@ -274,7 +273,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as uint8
 		*/
-		PLCORE_API virtual void SetUInt8(PLGeneral::uint8 nValue);
+		PLCORE_API virtual void SetUInt8(uint8 nValue);
 
 		/**
 		*  @brief
@@ -283,7 +282,7 @@ class DynVar {
 		*  @return
 		*    Value as uint16
 		*/
-		PLCORE_API virtual PLGeneral::uint16 GetUInt16() const;
+		PLCORE_API virtual uint16 GetUInt16() const;
 
 		/**
 		*  @brief
@@ -292,7 +291,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as uint16
 		*/
-		PLCORE_API virtual void SetUInt16(PLGeneral::uint16 nValue);
+		PLCORE_API virtual void SetUInt16(uint16 nValue);
 
 		/**
 		*  @brief
@@ -301,7 +300,7 @@ class DynVar {
 		*  @return
 		*    Value as uint32
 		*/
-		PLCORE_API virtual PLGeneral::uint32 GetUInt32() const;
+		PLCORE_API virtual uint32 GetUInt32() const;
 
 		/**
 		*  @brief
@@ -310,7 +309,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as uint32
 		*/
-		PLCORE_API virtual void SetUInt32(PLGeneral::uint32 nValue);
+		PLCORE_API virtual void SetUInt32(uint32 nValue);
 
 		/**
 		*  @brief
@@ -319,7 +318,7 @@ class DynVar {
 		*  @return
 		*    Value as uint64
 		*/
-		PLCORE_API virtual PLGeneral::uint64 GetUInt64() const;
+		PLCORE_API virtual uint64 GetUInt64() const;
 
 		/**
 		*  @brief
@@ -328,7 +327,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as uint64
 		*/
-		PLCORE_API virtual void SetUInt64(PLGeneral::uint64 nValue);
+		PLCORE_API virtual void SetUInt64(uint64 nValue);
 
 		/**
 		*  @brief
@@ -337,7 +336,7 @@ class DynVar {
 		*  @return
 		*    Value as uint_ptr
 		*/
-		PLCORE_API virtual PLGeneral::uint_ptr GetUIntPtr() const;
+		PLCORE_API virtual uint_ptr GetUIntPtr() const;
 
 		/**
 		*  @brief
@@ -346,7 +345,7 @@ class DynVar {
 		*  @param[in] nValue
 		*    Value as uint_ptr
 		*/
-		PLCORE_API virtual void SetUIntPtr(PLGeneral::uint_ptr nValue);
+		PLCORE_API virtual void SetUIntPtr(uint_ptr nValue);
 
 		/**
 		*  @brief
@@ -391,7 +390,7 @@ class DynVar {
 		*  @return
 		*    Value as string
 		*/
-		PLCORE_API virtual PLGeneral::String GetString() const;
+		PLCORE_API virtual String GetString() const;
 
 		/**
 		*  @brief
@@ -400,7 +399,7 @@ class DynVar {
 		*  @param[in] sValue
 		*    Value as string
 		*/
-		PLCORE_API virtual void SetString(const PLGeneral::String &sValue);
+		PLCORE_API virtual void SetString(const String &sValue);
 
 
 };

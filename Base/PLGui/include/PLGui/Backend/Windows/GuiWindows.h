@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLGui/Backend/GuiImpl.h"
 
 
@@ -83,11 +83,11 @@ class GuiWindows : public GuiImpl {
 		virtual bool HasPendingMessages();
 		virtual void ProcessMessage();
 		virtual void PostMessage(const GuiMessage &cMessage);
-		virtual void EnumerateScreens(PLGeneral::List<Screen*> &lstScreens);
+		virtual void EnumerateScreens(PLCore::List<Screen*> &lstScreens);
 		virtual PLMath::Vector2i GetScreenSize() const;
 		virtual bool HasTaskbar();
 		virtual void SetMouseVisible(bool bVisible);
-		virtual void ListFonts(PLGeneral::List<FontInfo> &lstFonts) const;
+		virtual void ListFonts(PLCore::List<FontInfo> &lstFonts) const;
 		virtual WidgetImpl *CreateWidgetImpl(Widget &cWidget) const;
 		virtual GraphicsImpl *CreateGraphicsImpl(Graphics &cGraphics) const;
 		virtual ImageImpl *CreateImageImpl(Image &cImage) const;
@@ -140,7 +140,7 @@ class GuiWindows : public GuiImpl {
 		*  @param[in] nMessage
 		*    Notify message
 		*/
-		static void ProcessTrayIconMessage(TrayIcon *pTrayIcon, PLGeneral::uint32 nID, PLGeneral::uint32 nMessage);
+		static void ProcessTrayIconMessage(TrayIcon *pTrayIcon, PLCore::uint32 nID, PLCore::uint32 nMessage);
 
 		/**
 		*  @brief
@@ -160,15 +160,15 @@ class GuiWindows : public GuiImpl {
 	//[-------------------------------------------------------]
 	private:
 		// System handles
-		HINSTANCE				  m_hInstance;			/**< Main process handle */
-		DWORD					  m_nThreadID;			/**< Main thread ID */
-		WNDCLASS				  m_WndClass;			/**< Window class */
+		HINSTANCE				m_hInstance;	/**< Main process handle */
+		DWORD					m_nThreadID;	/**< Main thread ID */
+		WNDCLASS				m_WndClass;		/**< Window class */
 
 		// Screens
-		PLGeneral::List<Screen*>  m_lstScreens;			/**< List of available screens (monitors) */
+		PLCore::List<Screen*>	m_lstScreens;	/**< List of available screens (monitors) */
 
 		// Widgets
-		Widget					 *m_pMouseOver;			/**< Widget that the mouse has currently entered */
+		Widget				   *m_pMouseOver;	/**< Widget that the mouse has currently entered */
 
 
 };

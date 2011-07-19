@@ -21,7 +21,7 @@
 
 
 // Downsample and bloom OpenGL 2.1 ("#version 120") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator" or by hand
-static const PLGeneral::String sHDRBloom_GLSL_VS = "\
+static const PLCore::String sHDRBloom_GLSL_VS = "\
 // Attributes\n\
 attribute vec4 VertexPosition;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
 									// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
@@ -54,7 +54,7 @@ void main()\n\
 
 
 // Downsample OpenGL 2.1 ("#version 120") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sHDRBloom_GLSL_FS_Downscale = "\
+static const PLCore::String sHDRBloom_GLSL_FS_Downscale = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\
@@ -145,7 +145,7 @@ void main()\n\
 
 
 // Bloom GLSL vertex shader source code
-static const PLGeneral::String sHDRBloom_GLSL_FS = "\
+static const PLCore::String sHDRBloom_GLSL_FS = "\
 // GLSL preprocessor directives\n\
 #version 120	// OpenGL 2.1\n\
 \n\

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLMath/Math.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
@@ -40,7 +40,7 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLScene;

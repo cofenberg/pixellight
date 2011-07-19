@@ -106,7 +106,7 @@ class Timer {
 		*  @return
 		*    Timer ID
 		*/
-		PLGUI_API PLGeneral::uint32 GetID() const;
+		PLGUI_API PLCore::uint32 GetID() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class Timer {
 		*  @param[in] nID
 		*    Timer ID
 		*/
-		PLGUI_API void SetID(PLGeneral::uint32 nID);
+		PLGUI_API void SetID(PLCore::uint32 nID);
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class Timer {
 		*  @return
 		*    Timeout interval in milliseconds
 		*/
-		PLGUI_API PLGeneral::uint64 GetTimeout() const;
+		PLGUI_API PLCore::uint64 GetTimeout() const;
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class Timer {
 		*  @note
 		*    - If the timer is already running it's stopped and started again
 		*/
-		PLGUI_API void Start(PLGeneral::uint64 nTimeout);
+		PLGUI_API void Start(PLCore::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Timer {
 		*  @note
 		*    - If the timer is already running it's stopped and started again
 		*/
-		PLGUI_API void StartOnce(PLGeneral::uint64 nTimeout);
+		PLGUI_API void StartOnce(PLCore::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -190,19 +190,19 @@ class Timer {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui				  *m_pGui;		/**< Pointer to owner GUI */
-		PLGeneral::uint32  m_nID;		/**< Timer ID */
-		TimerThread		  *m_pThread;	/**< Current timer thread */
-		bool			   m_bActive;	/**< Timer is active? */
-		bool			   m_bOnce;		/**< Timer is firing only once? */
-		PLGeneral::uint64  m_nTimeout;	/**< Timeout value */
+		Gui			   *m_pGui;		/**< Pointer to owner GUI */
+		PLCore::uint32  m_nID;		/**< Timer ID */
+		TimerThread	   *m_pThread;	/**< Current timer thread */
+		bool		    m_bActive;	/**< Timer is active? */
+		bool		    m_bOnce;	/**< Timer is firing only once? */
+		PLCore::uint64  m_nTimeout;	/**< Timeout value */
 
 
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32 m_nNextID;	/**< ID counter */
+		static PLCore::uint32 m_nNextID;	/**< ID counter */
 
 
 };

@@ -58,7 +58,7 @@ class ScriptBinding_PL_System_Console : public PLCore::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
 		// Methods
-		pl_method_1(Print,	pl_ret_type(void),	PLGeneral::String,	"Prints the given string into the system console",	"")
+		pl_method_1(Print,	pl_ret_type(void),	PLCore::String,	"Prints the given string into the system console",	"")
 	pl_class_end
 
 
@@ -66,7 +66,7 @@ class ScriptBinding_PL_System_Console : public PLCore::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		void Print(PLGeneral::String sText);
+		void Print(PLCore::String sText);
 
 
 	//[-------------------------------------------------------]

@@ -98,7 +98,7 @@ class DynParams : public DynSignature {
 		*    - Whenever possible, don't use this method, use typed access instead
 		*    - If you really need to use this generic method, use it at least very carefully and always use "GetParameterTypeID()" to check for the real type
 		*/
-		PLCORE_API virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex);
+		PLCORE_API virtual void *GetPointerToParameterValue(uint32 nIndex);
 
 
 };

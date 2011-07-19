@@ -70,10 +70,10 @@ class SNText : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNText, "PLScene", PLScene::SceneNode, "Abstract text scene node")
 		// Attributes
-		pl_attribute(Text,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"Text do draw",																						"")
+		pl_attribute(Text,		PLCore::String,			"",											ReadWrite,	GetSet,			"Text do draw",																						"")
 		pl_attribute(Color,		PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Text color",																						"")
-		pl_attribute(Font,		PLGeneral::String,		"",											ReadWrite,	GetSet,			"The used font, if empty the default font is used",													"")
-		pl_attribute(FontSize,	PLGeneral::uint32,		0,											ReadWrite,	GetSet,			"The font size, if null the default font size is used - use scene node scale for dynamic scale",	"Max='100'")
+		pl_attribute(Font,		PLCore::String,			"",											ReadWrite,	GetSet,			"The used font, if empty the default font is used",													"")
+		pl_attribute(FontSize,	PLCore::uint32,			0,											ReadWrite,	GetSet,			"The font size, if null the default font size is used - use scene node scale for dynamic scale",	"Max='100'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																							"")
 	pl_class_end
@@ -83,12 +83,12 @@ class SNText : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLGeneral::String GetText() const;
-		PLS_API virtual void SetText(const PLGeneral::String &sValue);
-		PLS_API virtual PLGeneral::String GetFont() const;
-		PLS_API virtual void SetFont(const PLGeneral::String &sValue);
-		PLS_API virtual PLGeneral::uint32 GetFontSize() const;
-		PLS_API virtual void SetFontSize(PLGeneral::uint32 nValue);
+		PLS_API virtual PLCore::String GetText() const;
+		PLS_API virtual void SetText(const PLCore::String &sValue);
+		PLS_API virtual PLCore::String GetFont() const;
+		PLS_API virtual void SetFont(const PLCore::String &sValue);
+		PLS_API virtual PLCore::uint32 GetFontSize() const;
+		PLS_API virtual void SetFontSize(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -112,9 +112,9 @@ class SNText : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sText;		/**< Text do draw */
-		PLGeneral::String m_sFont;		/**< The used font, if empty the default font is used */
-		PLGeneral::uint32 m_nFontSize;	/**< The font size, if null the default font size is used - use scene node scale for dynamic scale */
+		PLCore::String m_sText;		/**< Text do draw */
+		PLCore::String m_sFont;		/**< The used font, if empty the default font is used */
+		PLCore::uint32 m_nFontSize;	/**< The font size, if null the default font size is used - use scene node scale for dynamic scale */
 
 
 };

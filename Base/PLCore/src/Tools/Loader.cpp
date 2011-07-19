@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
 #include "PLCore/Base/Class.h"
+#include "PLCore/String/Tokenizer.h"
 #include "PLCore/Tools/LoaderImpl.h"
 #include "PLCore/Tools/Loader.h"
 
@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

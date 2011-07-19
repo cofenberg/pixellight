@@ -75,7 +75,7 @@ class EventHandlerDesc : public MemberDesc {
 		*  @param[in] sAnnotation
 		*    Function annotation
 		*/
-		PLCORE_API EventHandlerDesc(const PLGeneral::String &sSignature, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sAnnotation);
+		PLCORE_API EventHandlerDesc(const String &sSignature, const String &sName, const String &sDescription, const String &sAnnotation);
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class EventHandlerDesc : public MemberDesc {
 		*  @return
 		*    Signature
 		*/
-		PLCORE_API PLGeneral::String GetSignature() const;
+		PLCORE_API String GetSignature() const;
 
 
 	//[-------------------------------------------------------]
@@ -120,7 +120,7 @@ class EventHandlerDesc : public MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sSignature;		/**< Signature */
+		String m_sSignature;	/**< Signature */
 
 
 };

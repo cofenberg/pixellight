@@ -82,8 +82,8 @@ class SRPDebugSceneNodeNames : public SRPDebug {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDebugSceneNodeNames, "PLCompositing", PLCompositing::SRPDebug, "Scene renderer pass drawing just simple scene node names")
 		// Attributes
-		pl_attribute(FontName,			PLGeneral::String,		"",											ReadWrite,	DirectValue,	"The used font, if empty the default font is used",											"")
-		pl_attribute(FontSize,			PLGeneral::uint32,		0,											ReadWrite,	DirectValue,	"The font size, if null the default font size is used - use 'FontScale' for dynamic scale",	"Max='100'")
+		pl_attribute(FontName,			PLCore::String,			"",											ReadWrite,	DirectValue,	"The used font, if empty the default font is used",											"")
+		pl_attribute(FontSize,			PLCore::uint32,			0,											ReadWrite,	DirectValue,	"The font size, if null the default font size is used - use 'FontScale' for dynamic scale",	"Max='100'")
 		pl_attribute(FontScale,			float,					1.0f,										ReadWrite,	DirectValue,	"The dynamic font scale",																	"Min='0' Max='100'")
 		pl_attribute(FontColor,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"The dynamic font color",																	"")
 		pl_attribute(MaxDrawDistance,	float,					20.0f,										ReadWrite,	DirectValue,	"Maximum draw distance of names to the camera, if less or equal 0, there's no limitation",	"")

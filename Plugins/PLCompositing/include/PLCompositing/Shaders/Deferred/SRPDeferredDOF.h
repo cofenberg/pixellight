@@ -93,13 +93,13 @@ class SRPDeferredDOF : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredDOF, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering DOF effect")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(EffectWeight,		float,					1.0f,	ReadWrite,	DirectValue,	"Effect weight, 0 means that this effect has no influence, 1 for the intended influence",												"Min=0 Max=1")
 		pl_attribute(NearPlaneDepth,	float,					0.5f,	ReadWrite,	DirectValue,	"Everything closer than this is fully blurred (only used if IgnoreCameraSettings is set)",												"")
 		pl_attribute(FocalPlaneDepth,	float,					5.0f,	ReadWrite,	DirectValue,	"Points on this plane are in focus (only used if IgnoreCameraSettings is set)",															"")
 		pl_attribute(FarPlaneDepth,		float,					10.0f,	ReadWrite,	DirectValue,	"Everything beyond the far plane is fully blurred (only used if IgnoreCameraSettings is set)",											"")
 		pl_attribute(BlurrinessCutoff,	float,					0.8f,	ReadWrite,	DirectValue,	"Blurriness cutoff constant for objects behind the focal plane (only used if IgnoreCameraSettings is set)",								"")
-		pl_attribute(BlurPasses,		PLGeneral::uint32,		2,		ReadWrite,	DirectValue,	"Number of blur passes, should be a multiple of 2",																						"")
+		pl_attribute(BlurPasses,		PLCore::uint32,			2,		ReadWrite,	DirectValue,	"Number of blur passes, should be a multiple of 2",																						"")
 		pl_attribute(BlurDownscale,		float,					4.0f,	ReadWrite,	DirectValue,	"Blur downscale factor, should be a multiple of 2",																						"Min='1.0'")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																"")
@@ -150,7 +150,7 @@ class SRPDeferredDOF : public SRPDeferred {
 		*  @param[in] fBlurrinessCutoff
 		*    Blurriness cutoff
 		*/
-		void CalculateDepthBlur(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cRGBTexture,
+		void CalculateDepthBlur(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cRGBTexture,
 								PLRenderer::TextureBufferRectangle &cNormalDepthTexture, float fNearPlaneDepth, float fFocalPlaneDepth, float fFarPlaneDepth, float fBlurrinessCutoff);
 
 		/**
@@ -173,7 +173,7 @@ class SRPDeferredDOF : public SRPDeferred {
 		*  @note
 		*    - Use GetBlurTextureBuffer() to receive the result of the calculation
 		*/
-		void CalculateBlur(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLGeneral::uint32 nBlurPasses, float fDownscale);
+		void CalculateBlur(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, PLCore::uint32 nBlurPasses, float fDownscale);
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class SRPDeferredDOF : public SRPDeferred {
 		*  @param[in] nType
 		*    0 for depth blur, 1 for blur
 		*/
-		void Debug(const PLGeneral::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cTexture, PLGeneral::uint32 nType);
+		void Debug(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cTexture, PLCore::uint32 nType);
 
 		/**
 		*  @brief
@@ -262,7 +262,7 @@ class SRPDeferredDOF : public SRPDeferred {
 		PLRenderer::ProgramAttribute	 *m_pDebugPositionProgramAttribute;				/**< Debug position program attribute, can be a null pointer */
 		PLRenderer::ProgramUniform		 *m_pDebugTextureSizeProgramUniform;			/**< Debug texture size program uniform, can be a null pointer */
 		PLRenderer::ProgramUniform		 *m_pDebugTextureProgramUniform;				/**< Debug texture program uniform, can be a null pointer */
-		PLGeneral::uint32				  m_nDebugType;									/**< Current debug type we have a generated GPU program for */
+		PLCore::uint32					  m_nDebugType;									/**< Current debug type we have a generated GPU program for */
 
 
 	//[-------------------------------------------------------]

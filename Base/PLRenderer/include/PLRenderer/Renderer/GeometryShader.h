@@ -114,7 +114,7 @@ class GeometryShader : public Shader {
 		*  @return
 		*    The number of output vertices, 0 if the maximum possible number of output vertices should be used
 		*/
-		virtual PLGeneral::uint32 GetNumOfOutputVertices() const = 0;
+		virtual PLCore::uint32 GetNumOfOutputVertices() const = 0;
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class GeometryShader : public Shader {
 		*  @see
 		*   - "Shader::SetSourceCode()" for additional information
 		*/
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLGeneral::uint32 nNumOfOutputVertices, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "") = 0;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") = 0;
 
 
 	//[-------------------------------------------------------]

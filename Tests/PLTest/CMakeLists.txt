@@ -17,7 +17,6 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 )
 
@@ -32,7 +31,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 )
 
@@ -104,7 +102,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore)
 add_dependencies(Tests ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

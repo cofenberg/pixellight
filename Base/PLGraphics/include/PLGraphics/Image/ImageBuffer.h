@@ -81,7 +81,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of components per pixel
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 GetComponentsPerPixel(EColorFormat nColorFormat);
+		PLGRAPHICS_API static PLCore::uint32 GetComponentsPerPixel(EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel component
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 GetBytesPerPixelComponent(EDataFormat nDataFormat);
+		PLGRAPHICS_API static PLCore::uint32 GetBytesPerPixelComponent(EDataFormat nDataFormat);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
+		PLGRAPHICS_API static PLCore::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class ImageBuffer {
 		*  @return
 		*    The size of a certain mipmap
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 GetMipmapSize(PLGeneral::uint32 nBaseSize, PLGeneral::uint32 nMipmap);
+		PLGRAPHICS_API static PLCore::uint32 GetMipmapSize(PLCore::uint32 nBaseSize, PLCore::uint32 nMipmap);
 
 		/**
 		*  @brief
@@ -280,7 +280,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of components per pixel
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetComponentsPerPixel() const;
+		PLGRAPHICS_API PLCore::uint32 GetComponentsPerPixel() const;
 
 		/**
 		*  @brief
@@ -289,7 +289,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel component
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetBytesPerPixelComponent() const;
+		PLGRAPHICS_API PLCore::uint32 GetBytesPerPixelComponent() const;
 
 		/**
 		*  @brief
@@ -298,7 +298,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetBytesPerPixel() const;
+		PLGRAPHICS_API PLCore::uint32 GetBytesPerPixel() const;
 
 		/**
 		*  @brief
@@ -337,7 +337,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of pixels
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetNumOfPixels() const;
+		PLGRAPHICS_API PLCore::uint32 GetNumOfPixels() const;
 
 		/**
 		*  @brief
@@ -355,7 +355,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of image data in bytes
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetDataSize() const;
+		PLGRAPHICS_API PLCore::uint32 GetDataSize() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of one row in bytes
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetRowSize() const;
+		PLGRAPHICS_API PLCore::uint32 GetRowSize() const;
 
 		/**
 		*  @brief
@@ -380,8 +380,8 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
-		PLGRAPHICS_API const PLGeneral::uint8 *GetData() const;
-		PLGRAPHICS_API PLGeneral::uint8 *GetData();
+		PLGRAPHICS_API const PLCore::uint8 *GetData() const;
+		PLGRAPHICS_API PLCore::uint8 *GetData();
 
 		/**
 		*  @brief
@@ -399,7 +399,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of compressed image data in bytes
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 GetCompressedDataSize() const;
+		PLGRAPHICS_API PLCore::uint32 GetCompressedDataSize() const;
 
 		/**
 		*  @brief
@@ -411,8 +411,8 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
-		PLGRAPHICS_API const PLGeneral::uint8 *GetCompressedData() const;
-		PLGRAPHICS_API PLGeneral::uint8 *GetCompressedData();
+		PLGRAPHICS_API const PLCore::uint8 *GetCompressedData() const;
+		PLGRAPHICS_API PLCore::uint8 *GetCompressedData();
 
 		/**
 		*  @brief
@@ -463,7 +463,7 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void CopyData(const PLGeneral::uint8 *pnData);
+		PLGRAPHICS_API void CopyData(const PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -476,7 +476,7 @@ class ImageBuffer {
 		*    - "Takeover" means that this image buffer will destroy the provided data when it's no longer used!
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void TakeoverData(PLGeneral::uint8 *pnData);
+		PLGRAPHICS_API void TakeoverData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -491,7 +491,7 @@ class ImageBuffer {
 		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void ShareData(PLGeneral::uint8 *pnData);
+		PLGRAPHICS_API void ShareData(PLCore::uint8 *pnData);
 
 
 	//[-------------------------------------------------------]

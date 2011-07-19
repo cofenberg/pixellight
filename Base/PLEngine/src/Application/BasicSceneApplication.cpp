@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/System/System.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneQuery.h>
@@ -41,7 +41,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;

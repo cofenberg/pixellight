@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLMath/PLMath.h"
 
 
@@ -154,7 +154,7 @@ class Vector3 {
 		PLMATH_API Vector3(const Vector2 &vV, float fZ = 0.0f);
 		inline Vector3(const Vector3 &vV);
 		PLMATH_API Vector3(const Vector4 &vV);
-		inline Vector3(const PLGeneral::String &sString);
+		inline Vector3(const PLCore::String &sString);
 
 		//[-------------------------------------------------------]
 		//[ Destructor                                            ]
@@ -1039,7 +1039,7 @@ class Vector3 {
 		*  @return
 		*    String with the data
 		*/
-		PLMATH_API PLGeneral::String ToString() const;
+		PLMATH_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -1048,7 +1048,7 @@ class Vector3 {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLMATH_API bool FromString(const PLGeneral::String &sString);
+		PLMATH_API bool FromString(const PLCore::String &sString);
 
 
 };

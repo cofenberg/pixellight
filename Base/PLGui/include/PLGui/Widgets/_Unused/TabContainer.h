@@ -113,7 +113,7 @@ class TabContainer : public WindowContainer {
 		*  @return
 		*    TabBar options (combination of ETabBarOption values)
 		*/
-		PLGUI_API PLGeneral::uint32 GetOptions() const;
+		PLGUI_API PLCore::uint32 GetOptions() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class TabContainer : public WindowContainer {
 		*  @param[in] nOptions
 		*    TabBar options
 		*/
-		PLGUI_API void SetOptions(PLGeneral::uint32 nOptions);
+		PLGUI_API void SetOptions(PLCore::uint32 nOptions);
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class TabContainer : public WindowContainer {
 		*  @remarks
 		*    see SetTabWidth()
 		*/
-		PLGUI_API PLGeneral::uint32 GetTabWidth() const;
+		PLGUI_API PLCore::uint32 GetTabWidth() const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class TabContainer : public WindowContainer {
 		*    - If side is SideLeft or SideRight, or StaticTabSize is set, tabs have a static size.
 		*      In that case, every tab will get exactly the width set by nWidth.
 		*/
-		PLGUI_API void SetTabWidth(PLGeneral::uint32 nWidth);
+		PLGUI_API void SetTabWidth(PLCore::uint32 nWidth);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class TabContainer : public WindowContainer {
 		*  @return
 		*    Tab height
 		*/
-		PLGUI_API PLGeneral::uint32 GetTabHeight() const;
+		PLGUI_API PLCore::uint32 GetTabHeight() const;
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class TabContainer : public WindowContainer {
 		*  @param[in] nHeight
 		*    Tab height
 		*/
-		PLGUI_API void SetTabHeight(PLGeneral::uint32 nHeight);
+		PLGUI_API void SetTabHeight(PLCore::uint32 nHeight);
 
 
 	//[-------------------------------------------------------]

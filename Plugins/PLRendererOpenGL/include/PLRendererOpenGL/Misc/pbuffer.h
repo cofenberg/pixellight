@@ -4,7 +4,7 @@
 
 
 #if defined(WIN32)
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #  include <GL/gl.h>
 #  include "../../../../../External/Recommended/OpenGL/wglext.h"
 #  pragma warning (disable : 4786)
@@ -16,7 +16,7 @@
 #  include <AGL/agl.h>
 #endif
 
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	#include <string>

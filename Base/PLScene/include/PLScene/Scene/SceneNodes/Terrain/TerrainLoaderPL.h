@@ -58,8 +58,8 @@ class TerrainLoaderPL : public TerrainLoader {
 			pl_property("Save",		"0")
 		pl_properties_end
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	SNTerrain&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	SNTerrain&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	SNTerrain&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNTerrain&,	PLCore::File&,	"Save method",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -69,8 +69,8 @@ class TerrainLoaderPL : public TerrainLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API bool Load(SNTerrain &cSNTerrain, PLGeneral::File &cFile);
-		PLS_API bool Save(SNTerrain &cSNTerrain, PLGeneral::File &cFile);
+		PLS_API bool Load(SNTerrain &cSNTerrain, PLCore::File &cFile);
+		PLS_API bool Save(SNTerrain &cSNTerrain, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class TerrainLoaderPL : public TerrainLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SNTerrain &cSNTerrain, const PLGeneral::XmlElement &cTerrainElement) const;
+		bool LoadV1(SNTerrain &cSNTerrain, const PLCore::XmlElement &cTerrainElement) const;
 
 
 };

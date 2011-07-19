@@ -29,11 +29,11 @@
 #include <lib3ds/mesh.h>
 #include <lib3ds/matrix.h>
 #include <lib3ds/material.h>
-#include <PLGeneral/Tools/Wrapper.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/Container/Bitset.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Tools/Wrapper.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Log/Log.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
@@ -48,7 +48,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLMesh;

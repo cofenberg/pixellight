@@ -29,7 +29,7 @@
 	#undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #endif
 #include <MySQL/mysql.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLDatabaseMySQL/Database.h"
 #include "PLDatabaseMySQL/DatabaseQueryResult.h"
 #include "PLDatabaseMySQL/DatabaseQuery.h"
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLDatabaseMySQL {
 
 

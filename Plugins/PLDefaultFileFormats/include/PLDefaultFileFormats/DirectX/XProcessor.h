@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
@@ -141,8 +141,8 @@ struct XColorRGBA {
 *    mesh vertex colors. The index defines the vertex to which the color is applied.
 */
 struct XIndexedColor {
-	PLGeneral::uint32 nIndex;	/**< Index of the vertex this color is for */
-	XColorRGBA        sColor;	/**< RGBA color for the indexed vertex */
+	PLCore::uint32 nIndex;	/**< Index of the vertex this color is for */
+	XColorRGBA     sColor;	/**< RGBA color for the indexed vertex */
 };
 
 /**
@@ -153,7 +153,7 @@ struct XIndexedColor {
 *    Defines a simple boolean type. This template should be set to 0 or 1.
 */
 struct XBoolean {
-	PLGeneral::uint32 nValue;	/**< 0 for false or 1 for true */
+	PLCore::uint32 nValue;	/**< 0 for false or 1 for true */
 };
 
 /**
@@ -190,8 +190,8 @@ struct XTextureFilename {
 *    of the pnFaceVertexIndices array references a mesh vertex used to build the face.
 */
 struct XMeshFace {
-	PLGeneral::uint32  nNumFaceVertexIndices;	/**< Number of face vertex indices */
-	PLGeneral::uint32 *pnFaceVertexIndices;		/**< Face vertex indices */
+	PLCore::uint32  nNumFaceVertexIndices;	/**< Number of face vertex indices */
+	PLCore::uint32 *pnFaceVertexIndices;		/**< Face vertex indices */
 };
 
 /**
@@ -203,8 +203,8 @@ struct XMeshFace {
 *    the nFaceWrapValues member should be equal to the number of faces in a mesh.
 */
 struct XMeshFaceWraps {
-	PLGeneral::uint32  nFaceWrapValues;		/**< Face wrap values */
-	XBoolean2d        *psFaceWrapValues;	/**< Face wrap values */
+	PLCore::uint32  nFaceWrapValues;	/**< Face wrap values */
+	XBoolean2d     *psFaceWrapValues;	/**< Face wrap values */
 };
 
 /**
@@ -215,8 +215,8 @@ struct XMeshFaceWraps {
 *    This template defines a mesh's texture coordinates.
 */
 struct XMeshTextureCoords {
-	PLGeneral::uint32  nTextureCoords;	/**< Number of texture coordinates */
-	XCoords2d         *psTextureCoords;	/**< Texture coordinates */
+	PLCore::uint32  nTextureCoords;		/**< Number of texture coordinates */
+	XCoords2d      *psTextureCoords;	/**< Texture coordinates */
 };
 
 /**
@@ -230,10 +230,10 @@ struct XMeshTextureCoords {
 *    of faces in a mesh.
 */
 struct XMeshNormals {
-	PLGeneral::uint32  nNormals;		/**< Number of vertex normals */
-	XVector           *psNormals;		/**< Vertex normals */
-	PLGeneral::uint32  nFaceNormals;	/**< Number of face normals */
-	XMeshFace         *psFaceNormals;	/**< Face normals */
+	PLCore::uint32  nNormals;		/**< Number of vertex normals */
+	XVector        *psNormals;		/**< Vertex normals */
+	PLCore::uint32  nFaceNormals;	/**< Number of face normals */
+	XMeshFace      *psFaceNormals;	/**< Face normals */
 };
 
 /**
@@ -244,8 +244,8 @@ struct XMeshNormals {
 *    This template specifies vertex colors for a mesh, instead of applying a material per face or per mesh.
 */
 struct XMeshVertexColors {
-	PLGeneral::uint32  nVertexColors;	/**< Number of vertex colors */
-	XIndexedColor     *psVertexColors;	/**< Vertex colors */
+	PLCore::uint32  nVertexColors;	/**< Number of vertex colors */
+	XIndexedColor  *psVertexColors;	/**< Vertex colors */
 };
 
 /**
@@ -258,10 +258,10 @@ struct XMeshVertexColors {
 *    material to apply.
 */
 struct XMeshMaterialList {
-	PLGeneral::uint32  nMaterials;		/**< Number of available materials */
-	PLGeneral::uint32  nFaceIndexes;	/**< Number of face indices */
-	PLGeneral::uint32 *pnFaceIndexes;	/**< Zero-based face material indices */
-	XNode             *pcFirstMaterial;	/**< First material */
+	PLCore::uint32  nMaterials;			/**< Number of available materials */
+	PLCore::uint32  nFaceIndexes;		/**< Number of face indices */
+	PLCore::uint32 *pnFaceIndexes;		/**< Zero-based face material indices */
+	XNode          *pcFirstMaterial;	/**< First material */
 };
 
 /**
@@ -284,8 +284,8 @@ struct XFrameTransformMatrix {
 *    in that array. This is used for defining sets of animation keys.
 */
 struct XFloatKeys {
-	PLGeneral::uint32  nValues;		/**< Number of values */
-	float             *pfValues;	/**< Values */
+	PLCore::uint32  nValues;	/**< Number of values */
+	float          *pfValues;	/**< Values */
 };
 
 /**
@@ -296,8 +296,8 @@ struct XFloatKeys {
 *    This template defines a set of floats and a positive time used in animations.
 */
 struct XTimedFloatKeys {
-	PLGeneral::uint32  nTime;		/**< Number of time keys */
-	XFloatKeys        *psTimeKeys;	/**< Time keys */
+	PLCore::uint32  nTime;		/**< Number of time keys */
+	XFloatKeys     *psTimeKeys;	/**< Time keys */
 };
 
 /**
@@ -317,9 +317,9 @@ struct XTimedFloatKeys {
 *       3     matrix          16        matrix
 */
 struct XAnimationKeys {
-	PLGeneral::uint32  nKeyType;	/**< Key type */
-	PLGeneral::uint32  nKeys;		/**< Number of keys */
-	XTimedFloatKeys   *psKeys;		/**< Keys */
+	PLCore::uint32   nKeyType;	/**< Key type */
+	PLCore::uint32   nKeys;		/**< Number of keys */
+	XTimedFloatKeys *psKeys;	/**< Keys */
 };
 
 /**
@@ -333,8 +333,8 @@ struct XAnimationKeys {
 *    positions or 1 for linear positions. By default, an animation is closed.
 */
 struct XAnimationOptions {
-	PLGeneral::uint32 nOpenClosed;		/**< 0 for a closed or 1 for an open animation */
-	PLGeneral::uint32 nPositionQuality;	/**< 0 for spline positions or 1 for linear positions */
+	PLCore::uint32 nOpenClosed;			/**< 0 for a closed or 1 for an open animation */
+	PLCore::uint32 nPositionQuality;	/**< 0 for spline positions or 1 for linear positions */
 };
 
 
@@ -444,11 +444,11 @@ class XRoot : public XNode {
 		*    Statistics
 		*/
 		struct Statistics {
-			PLGeneral::uint32 nNumOfMeshes;			/**< Number of meshes */
-			PLGeneral::uint32 nNumOfMeshVertices;	/**< Number of mesh vertices */
-			PLGeneral::uint32 nNumOfMeshFaces;		/**< Number of mesh faces */
-			bool			  bTextureCoords;		/**< Are there any texture coordinates? */
-			bool			  bNormals;				/**< Are there any normals? */
+			PLCore::uint32 nNumOfMeshes;		/**< Number of meshes */
+			PLCore::uint32 nNumOfMeshVertices;	/**< Number of mesh vertices */
+			PLCore::uint32 nNumOfMeshFaces;		/**< Number of mesh faces */
+			bool		   bTextureCoords;		/**< Are there any texture coordinates? */
+			bool		   bNormals;			/**< Are there any normals? */
 		};
 
 
@@ -561,9 +561,9 @@ class XHeader : public XNode {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint16 nMajor;	/**< Major version */
-		PLGeneral::uint16 nMinor;	/**< Minor version */
-		PLGeneral::uint32 nFlags;	/**< Flags */
+		PLCore::uint16 nMajor;	/**< Major version */
+		PLCore::uint16 nMinor;	/**< Minor version */
+		PLCore::uint32 nFlags;	/**< Flags */
 
 
 	//[-------------------------------------------------------]
@@ -666,9 +666,9 @@ class XMesh : public XNode {
 	//[-------------------------------------------------------]
 	public:
 		char               *pszName;			/**< Mesh name, can be a null pointer */
-		PLGeneral::uint32   nVertices;			/**< Number of vertices */
+		PLCore::uint32   	nVertices;			/**< Number of vertices */
 		XVector            *psVertices;			/**< Vertices */
-		PLGeneral::uint32   nFaces;				/**< Number of faces */
+		PLCore::uint32   	nFaces;				/**< Number of faces */
 		XMeshFace          *psFaces;			/**< Faces */
 		// Optional data elements
 		XMeshFaceWraps     *psFaceWraps;		/**< Can be a null pointer */

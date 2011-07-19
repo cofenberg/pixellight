@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Widgets/Widget.h>
 #include <PLInput/Input/Controller.h>
@@ -37,7 +37,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGui;
 using namespace PLInput;
 using namespace PLScene;

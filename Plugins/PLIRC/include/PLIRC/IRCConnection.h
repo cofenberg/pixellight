@@ -28,16 +28,16 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Network/Buffer.h>
-#include <PLGeneral/Network/Connection.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Network/Buffer.h>
+#include <PLCore/Network/Connection.h>
 #include "PLIRC/PLIRC.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Time;
 }
 namespace PLIRC {
@@ -59,7 +59,7 @@ namespace PLIRC {
 *  @brief
 *    IRC connection
 */
-class IRCConnection : public PLGeneral::Connection {
+class IRCConnection : public PLCore::Connection {
 
 
 	//[-------------------------------------------------------]
@@ -73,61 +73,61 @@ class IRCConnection : public PLGeneral::Connection {
 	//[-------------------------------------------------------]
 	public:
 		// Login to IRC server
-		PLIRC_API void Login(const PLGeneral::String &sNick, const PLGeneral::String &sLogin = "",
-									const PLGeneral::String &sName = "", const PLGeneral::String &sPass = "");
+		PLIRC_API void Login(const PLCore::String &sNick, const PLCore::String &sLogin = "",
+							 const PLCore::String &sName = "", const PLCore::String &sPass = "");
 
 		// Logout from IRC server
-		PLIRC_API void Logout(const PLGeneral::String &sReason = "");
+		PLIRC_API void Logout(const PLCore::String &sReason = "");
 
 		// Joins a channel
-		PLIRC_API void JoinChannel(const PLGeneral::String &sChannel, const PLGeneral::String &sPass = "");
+		PLIRC_API void JoinChannel(const PLCore::String &sChannel, const PLCore::String &sPass = "");
 
 		// Leaves (parts) a channel
-		PLIRC_API void PartChannel(const PLGeneral::String &sChannel, const PLGeneral::String &sReason = "");
+		PLIRC_API void PartChannel(const PLCore::String &sChannel, const PLCore::String &sReason = "");
 
 		// Sends a message to a channel or a user
-		PLIRC_API void SendMessage(const PLGeneral::String &sTarget, const PLGeneral::String &sMessage);
+		PLIRC_API void SendMessage(const PLCore::String &sTarget, const PLCore::String &sMessage);
 
 		// Sends an action to a channel
-		PLIRC_API void SendAction(const PLGeneral::String &sChannel, const PLGeneral::String &sAction);
+		PLIRC_API void SendAction(const PLCore::String &sChannel, const PLCore::String &sAction);
 
 		// Sends a notice to a channel or a user
-		PLIRC_API void SendNotice(const PLGeneral::String &sTarget, const PLGeneral::String &sNotice);
+		PLIRC_API void SendNotice(const PLCore::String &sTarget, const PLCore::String &sNotice);
 
 		// Sends a CTCP request to a channel or a user
-		PLIRC_API void SendCTCP(const PLGeneral::String &sTarget, const PLGeneral::String &sMessage);
+		PLIRC_API void SendCTCP(const PLCore::String &sTarget, const PLCore::String &sMessage);
 
 		// Sets a new nick name
-		PLIRC_API void SetNick(const PLGeneral::String &sNick);
+		PLIRC_API void SetNick(const PLCore::String &sNick);
 
 		// Set the channel mode
-		PLIRC_API void SetMode(const PLGeneral::String &sChannel, const PLGeneral::String &sMode);
+		PLIRC_API void SetMode(const PLCore::String &sChannel, const PLCore::String &sMode);
 
 		// Invites a user to a channel
-		PLIRC_API void Invite(const PLGeneral::String &sChannel, const PLGeneral::String &sTarget);
+		PLIRC_API void Invite(const PLCore::String &sChannel, const PLCore::String &sTarget);
 
 		// Get the channel topic (will trigger an OnTopic message)
-		PLIRC_API void GetTopic(const PLGeneral::String &sChannel);
+		PLIRC_API void GetTopic(const PLCore::String &sChannel);
 
 		// Sets the channel topic
-		PLIRC_API void SetTopic(const PLGeneral::String &sChannel, const PLGeneral::String &sTopic);
+		PLIRC_API void SetTopic(const PLCore::String &sChannel, const PLCore::String &sTopic);
 
 		// Kicks a user from a channel
-		PLIRC_API void Kick(const PLGeneral::String &sChannel, const PLGeneral::String &sTarget, const PLGeneral::String &sReason);
+		PLIRC_API void Kick(const PLCore::String &sChannel, const PLCore::String &sTarget, const PLCore::String &sReason);
 
 		// Bans users from a channel
-		PLIRC_API void SetBan(const PLGeneral::String &sChannel, const PLGeneral::String &sHostmask, bool bBan = true);
+		PLIRC_API void SetBan(const PLCore::String &sChannel, const PLCore::String &sHostmask, bool bBan = true);
 
 		// Sets the operator status of a user
-		PLIRC_API void SetOp(const PLGeneral::String &sChannel, const PLGeneral::String &sTarget, bool bOp = true);
+		PLIRC_API void SetOp(const PLCore::String &sChannel, const PLCore::String &sTarget, bool bOp = true);
 
 		// Sets the voice status of a user
-		PLIRC_API void SetVoice(const PLGeneral::String &sChannel, const PLGeneral::String &sTarget, bool bVoice = true);
+		PLIRC_API void SetVoice(const PLCore::String &sChannel, const PLCore::String &sTarget, bool bVoice = true);
 
 		// Channel list
-		PLIRC_API PLGeneral::uint32 GetNumOfChannels() const;
-		PLIRC_API const Channel *GetChannel(PLGeneral::uint32 nChannel) const;
-		PLIRC_API const Channel *GetChannel(const PLGeneral::String &sChannel) const;
+		PLIRC_API PLCore::uint32 GetNumOfChannels() const;
+		PLIRC_API const Channel *GetChannel(PLCore::uint32 nChannel) const;
+		PLIRC_API const Channel *GetChannel(const PLCore::String &sChannel) const;
 
 
 	//[-------------------------------------------------------]
@@ -150,16 +150,16 @@ class IRCConnection : public PLGeneral::Connection {
 		PLIRC_API virtual ~IRCConnection();
 
 		// IRC message processing
-		PLIRC_API void ProcessIRCMessage(const PLGeneral::String &sMessage);
-		PLIRC_API void ProcessServerMessage(const PLGeneral::String &sSource, int nCmd, char *pszParams[]);
-		PLIRC_API void ProcessCTCPMessage(const PLGeneral::String &sSource, const PLGeneral::String &sTarget, const PLGeneral::String &sCTCPMessage);
-		PLIRC_API void ProcessMode(const PLGeneral::String &sSource, const PLGeneral::String &sTarget, char *pszParams[]);
+		PLIRC_API void ProcessIRCMessage(const PLCore::String &sMessage);
+		PLIRC_API void ProcessServerMessage(const PLCore::String &sSource, int nCmd, char *pszParams[]);
+		PLIRC_API void ProcessCTCPMessage(const PLCore::String &sSource, const PLCore::String &sTarget, const PLCore::String &sCTCPMessage);
+		PLIRC_API void ProcessMode(const PLCore::String &sSource, const PLCore::String &sTarget, char *pszParams[]);
 
 		// Channel list
-		PLIRC_API Channel *GetChannel(PLGeneral::uint32 nChannel);
-		PLIRC_API Channel *GetChannel(const PLGeneral::String &sChannel);
-		PLIRC_API bool AddChannel(const PLGeneral::String &sChannel);
-		PLIRC_API void RemoveChannel(const PLGeneral::String &sChannel);
+		PLIRC_API Channel *GetChannel(PLCore::uint32 nChannel);
+		PLIRC_API Channel *GetChannel(const PLCore::String &sChannel);
+		PLIRC_API bool AddChannel(const PLCore::String &sChannel);
+		PLIRC_API void RemoveChannel(const PLCore::String &sChannel);
 		PLIRC_API void RemoveAllChannels();
 
 
@@ -181,100 +181,100 @@ class IRCConnection : public PLGeneral::Connection {
 		*    The default implementation only calls Send(sMessage). Overwrite this function
 		*    to for instance print send messages on the screen.
 		*/
-		PLIRC_API virtual int SendCommand(const PLGeneral::String &sCommand);
+		PLIRC_API virtual int SendCommand(const PLCore::String &sCommand);
 
 			// The raw message from the IRC server
-		PLIRC_API virtual void OnIRCMessage(const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnIRCMessage(const PLCore::String &sMessage);
 			// A unknown message
-		PLIRC_API virtual void OnUnknownMessage(const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnUnknownMessage(const PLCore::String &sMessage);
 			// A server message
-		PLIRC_API virtual void OnServerMessage(const PLGeneral::String &sSource, int nCmd, char *pszParams[]);
+		PLIRC_API virtual void OnServerMessage(const PLCore::String &sSource, int nCmd, char *pszParams[]);
 			// A CTCP message
-		PLIRC_API virtual void OnCTCPMessage(const PLGeneral::String &sSource, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnCTCPMessage(const PLCore::String &sSource, const PLCore::String &sMessage);
 			// A NOTICE AUTH message
-		PLIRC_API virtual void OnNoticeAuth(const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnNoticeAuth(const PLCore::String &sMessage);
 			// A PING request from the server
-		PLIRC_API virtual void OnServerPing(const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnServerPing(const PLCore::String &sMessage);
 			// A user has joined a channel
-		PLIRC_API virtual void OnJoin(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sUser);
+		PLIRC_API virtual void OnJoin(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sUser);
 			// A user has part a channel
-		PLIRC_API virtual void OnPart(const PLGeneral::String &sChannel, const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnPart(const PLCore::String &sChannel, const PLCore::String &sSource);
 			// A user has quit the server
-		PLIRC_API virtual void OnQuit(const PLGeneral::String &sSource, const PLGeneral::String &sReason);
+		PLIRC_API virtual void OnQuit(const PLCore::String &sSource, const PLCore::String &sReason);
 			// A user has changed it's nick
-		PLIRC_API virtual void OnNick(const PLGeneral::String &sSource, const PLGeneral::String &sNick);
+		PLIRC_API virtual void OnNick(const PLCore::String &sSource, const PLCore::String &sNick);
 			// A user has been kicked
-		PLIRC_API virtual void OnKick(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sTarget, const PLGeneral::String &sReason);
+		PLIRC_API virtual void OnKick(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sTarget, const PLCore::String &sReason);
 			// A user has changed the mode
-		PLIRC_API virtual void OnMode(const PLGeneral::String &sSource, const PLGeneral::String &sTarget, const PLGeneral::String &sMode);
+		PLIRC_API virtual void OnMode(const PLCore::String &sSource, const PLCore::String &sTarget, const PLCore::String &sMode);
 			// Mode change: operator
-		PLIRC_API virtual void OnOp(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sTarget, bool bOp);
+		PLIRC_API virtual void OnOp(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sTarget, bool bOp);
 			// Mode change: voice
-		PLIRC_API virtual void OnVoice(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sTarget, bool bVoice);
+		PLIRC_API virtual void OnVoice(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sTarget, bool bVoice);
 			// Mode change: ban
-		PLIRC_API virtual void OnBan(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sHostmask, bool bBan);
+		PLIRC_API virtual void OnBan(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sHostmask, bool bBan);
 			// Mode change: channel key
-		PLIRC_API virtual void OnSetChannelKey(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sKey, bool bKey);
+		PLIRC_API virtual void OnSetChannelKey(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sKey, bool bKey);
 			// Mode change: channel limit
-		PLIRC_API virtual void OnSetChannelLimit(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, int nLimit);
+		PLIRC_API virtual void OnSetChannelLimit(const PLCore::String &sChannel, const PLCore::String &sSource, int nLimit);
 			// Mode change: channel topic protection
-		PLIRC_API virtual void OnSetTopicProtection(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bTopicProtection);
+		PLIRC_API virtual void OnSetTopicProtection(const PLCore::String &sChannel, const PLCore::String &sSource, bool bTopicProtection);
 			// Mode change: channel no external messages
-		PLIRC_API virtual void OnSetNoExternalMessages(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bNoExternalMessages);
+		PLIRC_API virtual void OnSetNoExternalMessages(const PLCore::String &sChannel, const PLCore::String &sSource, bool bNoExternalMessages);
 			// Mode change: channel invite only
-		PLIRC_API virtual void OnSetInviteOnly(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bInviteOnly);
+		PLIRC_API virtual void OnSetInviteOnly(const PLCore::String &sChannel, const PLCore::String &sSource, bool bInviteOnly);
 			// Mode change: channel moderated
-		PLIRC_API virtual void OnSetModerated(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bModerated);
+		PLIRC_API virtual void OnSetModerated(const PLCore::String &sChannel, const PLCore::String &sSource, bool bModerated);
 			// Mode change: channel private
-		PLIRC_API virtual void OnSetPrivate(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bPrivate);
+		PLIRC_API virtual void OnSetPrivate(const PLCore::String &sChannel, const PLCore::String &sSource, bool bPrivate);
 			// Mode change: channel secret
-		PLIRC_API virtual void OnSetSecret(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, bool bSecret);
+		PLIRC_API virtual void OnSetSecret(const PLCore::String &sChannel, const PLCore::String &sSource, bool bSecret);
 			// A user has invited another user to join a channel
-		PLIRC_API virtual void OnInvite(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sTarget);
+		PLIRC_API virtual void OnInvite(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sTarget);
 			// A user has changed the topic
-		PLIRC_API virtual void OnTopic(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sTopic, const PLGeneral::Time &cTime, bool bChanged);
+		PLIRC_API virtual void OnTopic(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sTopic, const PLCore::Time &cTime, bool bChanged);
 			// A channel has sent it's user list (use GetChannel(), GetUser())
-		PLIRC_API virtual void OnUserList(const PLGeneral::String &sChannel);
+		PLIRC_API virtual void OnUserList(const PLCore::String &sChannel);
 			// A notice has been sent
-		PLIRC_API virtual void OnNotice(const PLGeneral::String &sSource, const PLGeneral::String &sTarget, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnNotice(const PLCore::String &sSource, const PLCore::String &sTarget, const PLCore::String &sMessage);
 			// A channel message has been sent
-		PLIRC_API virtual void OnMessage(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnMessage(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sMessage);
 			// A private message has been sent
-		PLIRC_API virtual void OnPrivateMessage(const PLGeneral::String &sSource, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnPrivateMessage(const PLCore::String &sSource, const PLCore::String &sMessage);
 			// CTCP VERSION Request
-		PLIRC_API virtual void OnVersion(const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnVersion(const PLCore::String &sSource);
 			// CTCP USERINFO Request
-		PLIRC_API virtual void OnUserInfo(const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnUserInfo(const PLCore::String &sSource);
 			// CTCP CLIENTINFO Request
-		PLIRC_API virtual void OnClientInfo(const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnClientInfo(const PLCore::String &sSource);
 			// CTCP ACTION Request
-		PLIRC_API virtual void OnAction(const PLGeneral::String &sChannel, const PLGeneral::String &sSource, const PLGeneral::String &sAction);
+		PLIRC_API virtual void OnAction(const PLCore::String &sChannel, const PLCore::String &sSource, const PLCore::String &sAction);
 			// CTCP PING Request
-		PLIRC_API virtual void OnPing(const PLGeneral::String &sSource, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnPing(const PLCore::String &sSource, const PLCore::String &sMessage);
 			// CTCP TIME Request
-		PLIRC_API virtual void OnTime(const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnTime(const PLCore::String &sSource);
 			// CTCP FINGER Request
-		PLIRC_API virtual void OnFinger(const PLGeneral::String &sSource);
+		PLIRC_API virtual void OnFinger(const PLCore::String &sSource);
 			// CTCP DCC Request
-		PLIRC_API virtual void OnDCC(const PLGeneral::String &sSource, const PLGeneral::String &sMessage);
+		PLIRC_API virtual void OnDCC(const PLCore::String &sSource, const PLCore::String &sMessage);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String		  m_sNick;			/**< User nick name */
-		PLGeneral::Buffer		  m_cBuffer;		/**< Receive buffer */
-		PLGeneral::List<Channel*> m_lstChannels;	/**< List of channels the user has joined */
+		PLCore::String		   m_sNick;			/**< User nick name */
+		PLCore::Buffer		   m_cBuffer;		/**< Receive buffer */
+		PLCore::List<Channel*> m_lstChannels;	/**< List of channels the user has joined */
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLGeneral::Connection functions     ]
+	//[ Protected virtual PLCore::Connection functions        ]
 	//[-------------------------------------------------------]
 	protected:
 		PLIRC_API virtual void OnConnect();
 		PLIRC_API virtual void OnDisconnect();
-		PLIRC_API virtual void OnReceive(const char *pBuffer, PLGeneral::uint32 nSize);
+		PLIRC_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
 
 
 };

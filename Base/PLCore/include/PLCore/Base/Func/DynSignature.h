@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -76,7 +75,7 @@ class DynSignature {
 		*  @return
 		*    Signature (e.g. "void(int,float)")
 		*/
-		PLCORE_API virtual PLGeneral::String GetSignature() const;
+		PLCORE_API virtual String GetSignature() const;
 
 		/**
 		*  @brief
@@ -94,7 +93,7 @@ class DynSignature {
 		*  @return
 		*    Number of parameters
 		*/
-		PLCORE_API virtual PLGeneral::uint32 GetNumOfParameters() const;
+		PLCORE_API virtual uint32 GetNumOfParameters() const;
 
 		/**
 		*  @brief
@@ -106,7 +105,7 @@ class DynSignature {
 		*  @return
 		*    Parameter type ID (e.g. "TypeInt" for "void(int)"), "TypeInvalid" on error
 		*/
-		PLCORE_API virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const;
+		PLCORE_API virtual int GetParameterTypeID(uint32 nIndex) const;
 
 
 };

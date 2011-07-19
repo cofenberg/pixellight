@@ -64,8 +64,8 @@ class SamplerStates : public PLCore::Object {
 		pl_attribute(MipFilter,		pl_enum_type(TextureFiltering::Enum),	TextureFiltering::Linear,	ReadWrite,	GetSet,	"Mipmap filter to use during minification",												"")
 			// Filter
 		pl_attribute(MipmapLODBias,	float,									0.0f,						ReadWrite,	GetSet,	"Mipmap level of detail (LOD) bias",													"")
-		pl_attribute(MaxMapLevel,	PLGeneral::uint32,						1000,						ReadWrite,	GetSet,	"LOD index of largest map to use. Values range from 0 to (n-1) where 0 is the largest",	"")
-		pl_attribute(MaxAnisotropy,	PLGeneral::uint32,						1,							ReadWrite,	GetSet,	"Maximum anisotropy",																	"")
+		pl_attribute(MaxMapLevel,	PLCore::uint32,							1000,						ReadWrite,	GetSet,	"LOD index of largest map to use. Values range from 0 to (n-1) where 0 is the largest",	"")
+		pl_attribute(MaxAnisotropy,	PLCore::uint32,							1,							ReadWrite,	GetSet,	"Maximum anisotropy",																	"")
 	pl_class_end
 
 
@@ -90,10 +90,10 @@ class SamplerStates : public PLCore::Object {
 		// Filter
 		PLRENDERER_API float GetMipmapLODBias() const;
 		PLRENDERER_API void SetMipmapLODBias(float fValue);
-		PLRENDERER_API PLGeneral::uint32 GetMaxMapLevel() const;
+		PLRENDERER_API PLCore::uint32 GetMaxMapLevel() const;
 		PLRENDERER_API void SetMaxMapLevel(int nValue);
-		PLRENDERER_API PLGeneral::uint32 GetMaxAnisotropy() const;
-		PLRENDERER_API void SetMaxAnisotropy(PLGeneral::uint32 nValue);
+		PLRENDERER_API PLCore::uint32 GetMaxAnisotropy() const;
+		PLRENDERER_API void SetMaxAnisotropy(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +132,7 @@ class SamplerStates : public PLCore::Object {
 		*  @return
 		*    The value of the queried sampler state variable
 		*/
-		PLRENDERER_API PLGeneral::uint32 Get(Sampler::Enum nState) const;
+		PLRENDERER_API PLCore::uint32 Get(Sampler::Enum nState) const;
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class SamplerStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(Sampler::Enum nState, PLGeneral::uint32 nValue);
+		PLRENDERER_API bool Set(Sampler::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class SamplerStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::uint32 m_nSS[Sampler::Number];	/**< List of sampler states (see Sampler) */
+		PLCore::uint32 m_nSS[Sampler::Number];	/**< List of sampler states (see Sampler) */
 
 
 };

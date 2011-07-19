@@ -67,7 +67,7 @@ class ImageEffectWrapper: public ImageEffect {
 		*  @param[in] sParameters
 		*    Image effect parameters
 		*/
-		PLGRAPHICS_API ImageEffectWrapper(const PLGeneral::String &sEffect, const PLGeneral::String &sParameters);
+		PLGRAPHICS_API ImageEffectWrapper(const PLCore::String &sEffect, const PLCore::String &sParameters);
 
 		/**
 		*  @brief

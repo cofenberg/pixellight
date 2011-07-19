@@ -104,7 +104,7 @@ class DatabaseQuery : public PLDatabase::DatabaseQuery {
 	//[ Public virtual PLDatabase::DatabaseQuery functions    ]
 	//[-------------------------------------------------------]
 	public:
-		PLDATABASESQLITE_API virtual PLDatabase::DatabaseQueryResult *Execute(const PLGeneral::String &sSQL);
+		PLDATABASESQLITE_API virtual PLDatabase::DatabaseQueryResult *Execute(const PLCore::String &sSQL);
 
 
 };

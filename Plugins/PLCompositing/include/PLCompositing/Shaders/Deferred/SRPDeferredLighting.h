@@ -130,7 +130,7 @@ class SRPDeferredLighting : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredLighting, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering lighting")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,					"",								ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,						"",								ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,					ReadWrite,	DirectValue,	"Texture filtering, used for projective lights",																						"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),				NoShadowLOD|NoAmbientOcclusion,	ReadWrite,	GetSet,			"Flags",																																"")
@@ -171,7 +171,7 @@ class SRPDeferredLighting : public SRPDeferred {
 		*  @param[in] nTextureFiltering
 		*    Texture filtering mode to use
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage, PLGeneral::uint32 nTextureFiltering) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage, PLCore::uint32 nTextureFiltering) const;
 
 		/**
 		*  @brief

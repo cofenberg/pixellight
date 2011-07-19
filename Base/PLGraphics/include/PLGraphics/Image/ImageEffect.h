@@ -88,7 +88,7 @@ class ImageEffect : public PLCore::Object {
 		*  @return
 		*    Effect description
 		*/
-		PLGRAPHICS_API PLGeneral::String GetDescription() const;
+		PLGRAPHICS_API PLCore::String GetDescription() const;
 
 
 	//[-------------------------------------------------------]

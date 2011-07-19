@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLSound/PLSound.h"
 
 
@@ -104,7 +104,7 @@ class Resource {
 		*  @return
 		*    The number of resource handlers
 		*/
-		PLSOUND_API PLGeneral::uint32 GetNumOfResourceHandlers() const;
+		PLSOUND_API PLCore::uint32 GetNumOfResourceHandlers() const;
 
 		/**
 		*  @brief
@@ -196,9 +196,9 @@ class Resource {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SoundManager					  *m_pSoundManager;		/**< Owner sound manager (always valid!) */
-		EType							   m_nType;				/**< Resource type */
-		PLGeneral::List<ResourceHandler*>  m_lstSoundHandlers;	/**< List of resource handlers */
+		SoundManager				   *m_pSoundManager;	/**< Owner sound manager (always valid!) */
+		EType						    m_nType;			/**< Resource type */
+		PLCore::List<ResourceHandler*>  m_lstSoundHandlers;	/**< List of resource handlers */
 
 
 };

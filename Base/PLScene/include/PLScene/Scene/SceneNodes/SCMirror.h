@@ -65,13 +65,13 @@ class SCMirror : public SCRenderToTexture {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SCMirror, "PLScene", PLScene::SCRenderToTexture, "Planar mirror scene node")
 		// Attributes
-		pl_attribute(Material,		PLGeneral::String,	"",										ReadWrite,	DirectValue,	"Material to use",																				"Type='Material Effect Image TextureAni'")
-		pl_attribute(DynamicMap,	PLGeneral::String,	"DynamicMap",							ReadWrite,	DirectValue,	"Name of the material/effect parameter to assign the dynamic texture with",						"")
-		pl_attribute(Vertices,		PLGeneral::String,	"1.0 -1.0 -1.0 -1.0 -1.0 1.0 1.0 1.0",	ReadWrite,	DirectValue,	"The vertices (x/y position) defining the mirror polygon. Each vertex has 3 components. (xyz)",	"")
-		pl_attribute(NearScale,		float,				1.0f,									ReadWrite,	DirectValue,	"Virtual camera near plane scale",																"")
-		pl_attribute(Far,			float,				1000.0f,								ReadWrite,	DirectValue,	"Virtual camera far plane",																		"")
+		pl_attribute(Material,		PLCore::String,	"",										ReadWrite,	DirectValue,	"Material to use",																				"Type='Material Effect Image TextureAni'")
+		pl_attribute(DynamicMap,	PLCore::String,	"DynamicMap",							ReadWrite,	DirectValue,	"Name of the material/effect parameter to assign the dynamic texture with",						"")
+		pl_attribute(Vertices,		PLCore::String,	"1.0 -1.0 -1.0 -1.0 -1.0 1.0 1.0 1.0",	ReadWrite,	DirectValue,	"The vertices (x/y position) defining the mirror polygon. Each vertex has 3 components. (xyz)",	"")
+		pl_attribute(NearScale,		float,			1.0f,									ReadWrite,	DirectValue,	"Virtual camera near plane scale",																"")
+		pl_attribute(Far,			float,			1000.0f,								ReadWrite,	DirectValue,	"Virtual camera far plane",																		"")
 			// Overwritten SCRenderToTexture attributes
-		pl_attribute(FPSLimit,		float,				0.0f,									ReadWrite,	ModifyAttr,		"Frames per second limitation, if 0, there's no limitation",									"Min='0.0'")
+		pl_attribute(FPSLimit,		float,			0.0f,									ReadWrite,	ModifyAttr,		"Frames per second limitation, if 0, there's no limitation",									"Min='0.0'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

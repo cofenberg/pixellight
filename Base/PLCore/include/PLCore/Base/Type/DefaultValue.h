@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include "PLCore/String/String.h"
 #include "PLCore/Base/Tools/TypeTraits.h"
 
 
@@ -79,65 +79,65 @@ class DefaultValue<int> {
 */
 
 template <>
-class DefaultValue<PLGeneral::int8> {
+class DefaultValue<int8> {
 	public:
-		static PLGeneral::int8 Default() {
+		static int8 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::int16> {
+class DefaultValue<int16> {
 	public:
-		static PLGeneral::int16 Default() {
+		static int16 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::int32> {
+class DefaultValue<int32> {
 	public:
-		static PLGeneral::int32 Default() {
+		static int32 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::int64> {
+class DefaultValue<int64> {
 	public:
-		static PLGeneral::int64 Default() {
+		static int64 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::uint8> {
+class DefaultValue<uint8> {
 	public:
-		static PLGeneral::uint8 Default() {
+		static uint8 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::uint16> {
+class DefaultValue<uint16> {
 	public:
-		static PLGeneral::uint16 Default() {
+		static uint16 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::uint32> {
+class DefaultValue<uint32> {
 	public:
-		static PLGeneral::uint32 Default() {
+		static uint32 Default() {
 			return 0;
 		}
 };
 
 template <>
-class DefaultValue<PLGeneral::uint64> {
+class DefaultValue<uint64> {
 	public:
-		static PLGeneral::uint64 Default() {
+		static uint64 Default() {
 			return 0;
 		}
 };
@@ -159,9 +159,9 @@ class DefaultValue<double> {
 };
 
 template <>
-class DefaultValue<PLGeneral::String> {
+class DefaultValue<String> {
 	public:
-		static PLGeneral::String Default() {
+		static String Default() {
 			return "";
 		}
 };

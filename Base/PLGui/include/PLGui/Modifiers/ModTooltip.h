@@ -52,7 +52,7 @@ class ModTooltip : public Modifier {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, ModTooltip, "PLGui", PLGui::Modifier, "Modifier that displays a tooltip for a widget")
 		// Attributes
-		pl_attribute(Tooltip,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Tooltip text",	"")
+		pl_attribute(Tooltip,	PLCore::String,	"",	ReadWrite,	GetSet,	"Tooltip text",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -81,7 +81,7 @@ class ModTooltip : public Modifier {
 		*  @return
 		*    Tooltip text
 		*/
-		PLGUI_API PLGeneral::String GetTooltip() const;
+		PLGUI_API PLCore::String GetTooltip() const;
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class ModTooltip : public Modifier {
 		*  @param[in] sTooltip
 		*    Tooltip text
 		*/
-		PLGUI_API void SetTooltip(const PLGeneral::String &sTooltip);
+		PLGUI_API void SetTooltip(const PLCore::String &sTooltip);
 
 
 	//[-------------------------------------------------------]
@@ -123,7 +123,7 @@ class ModTooltip : public Modifier {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sTooltip;	/**< Tooltip text */
+		PLCore::String m_sTooltip;	/**< Tooltip text */
 
 
 };

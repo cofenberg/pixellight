@@ -144,7 +144,7 @@ class RttiObject : public PLCore::Object {
 		pl_constructor_2(CreateValues,	int,	float,	"Create with two values",	"")
 		// Methods
 		pl_method_2(Test,		pl_ret_type(void),	int, float,			"Test method",	"")
-		pl_method_1(MyMethod,	pl_ret_type(bool),	PLGeneral::String&,	"Test",			"")
+		pl_method_1(MyMethod,	pl_ret_type(bool),	PLCore::String&,	"Test",			"")
 		// Signals
 		pl_signal_0(Event0,					"Test event",		"")
 		pl_signal_2(Event1,	int,	int,	"Test event #2",	"")
@@ -204,7 +204,7 @@ class RttiObject : public PLCore::Object {
 		*/
 		void OnSomeEvent0(int nParam0);
 
-		bool MyMethod(PLGeneral::String &sParam);
+		bool MyMethod(PLCore::String &sParam);
 
 	private:
 		int m_nIntValue;

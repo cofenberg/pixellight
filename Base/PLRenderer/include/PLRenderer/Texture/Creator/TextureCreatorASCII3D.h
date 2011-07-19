@@ -60,7 +60,7 @@ class TextureCreatorASCII3D : public TextureCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, TextureCreatorASCII3D, "PLRenderer", PLRenderer::TextureCreator, "3D ASCII texture (TextureBuffer::L8) creator class")
 		// Attributes
-		pl_attribute(ASCIIFilename,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"2D ASCII texture filename",	"Type='Image'")
+		pl_attribute(ASCIIFilename,	PLCore::String,	"",	ReadWrite,	DirectValue,	"2D ASCII texture filename",	"Type='Image'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

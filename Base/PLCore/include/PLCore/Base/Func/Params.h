@@ -125,7 +125,7 @@ class Params : public DynParams {
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -146,7 +146,7 @@ class Params : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -240,7 +240,7 @@ class Params : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
@@ -255,12 +255,12 @@ class Params : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -283,7 +283,7 @@ class Params : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -370,7 +370,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 		_ST15 Param15;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -391,7 +391,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -478,17 +478,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -511,7 +511,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -597,7 +597,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 		_ST14 Param14;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -617,7 +617,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -703,7 +703,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
@@ -718,12 +718,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -745,7 +745,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -827,7 +827,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 		_ST14 Param14;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -847,7 +847,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -930,17 +930,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -962,7 +962,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1044,7 +1044,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 		_ST13 Param13;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1063,7 +1063,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1145,7 +1145,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
@@ -1160,12 +1160,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1186,7 +1186,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1264,7 +1264,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 		_ST13 Param13;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1283,7 +1283,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1362,17 +1362,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1393,7 +1393,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1471,7 +1471,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 		_ST12 Param12;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1489,7 +1489,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1567,7 +1567,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
@@ -1582,12 +1582,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1607,7 +1607,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1681,7 +1681,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 		_ST12 Param12;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1699,7 +1699,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1774,17 +1774,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1804,7 +1804,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1878,7 +1878,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 		_ST11 Param11;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1895,7 +1895,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -1969,7 +1969,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
@@ -1984,12 +1984,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2008,7 +2008,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2078,7 +2078,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 		_ST11 Param11;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2095,7 +2095,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2166,17 +2166,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2195,7 +2195,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2265,7 +2265,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 		_ST10 Param10;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2281,7 +2281,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2351,7 +2351,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
@@ -2366,12 +2366,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2389,7 +2389,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2455,7 +2455,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 		_ST10 Param10;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2471,7 +2471,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2538,17 +2538,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2566,7 +2566,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2632,7 +2632,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 		_ST9  Param9;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2647,7 +2647,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2713,7 +2713,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
@@ -2728,12 +2728,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2750,7 +2750,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2812,7 +2812,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 		_ST9  Param9;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2827,7 +2827,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2890,17 +2890,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2917,7 +2917,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2979,7 +2979,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 		_ST8  Param8;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -2993,7 +2993,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3055,7 +3055,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
@@ -3070,12 +3070,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3091,7 +3091,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3149,7 +3149,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 		_ST8  Param8;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3163,7 +3163,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3222,17 +3222,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3248,7 +3248,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3306,7 +3306,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 		_ST7  Param7;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3319,7 +3319,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3377,7 +3377,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
@@ -3392,12 +3392,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3412,7 +3412,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3466,7 +3466,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 		_ST7  Param7;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3479,7 +3479,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3534,17 +3534,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3559,7 +3559,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3613,7 +3613,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 		_ST6  Param6;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3625,7 +3625,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3679,7 +3679,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
@@ -3694,12 +3694,12 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3713,7 +3713,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3763,7 +3763,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 		_ST6  Param6;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3775,7 +3775,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5, t6);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3826,17 +3826,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3850,7 +3850,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3900,7 +3900,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 		_ST5  Param5;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3911,7 +3911,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -3961,7 +3961,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
@@ -3976,12 +3976,12 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3994,7 +3994,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4040,7 +4040,7 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 		_ST5  Param5;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4051,7 +4051,7 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return Params(t0, t1, t2, t3, t4, t5);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4098,17 +4098,17 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4121,7 +4121,7 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4167,7 +4167,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 		_ST4  Param4;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4177,7 +4177,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			return Params(t0, t1, t2, t3, t4);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4223,7 +4223,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
@@ -4238,12 +4238,12 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4255,7 +4255,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4297,7 +4297,7 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 		_ST4  Param4;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4307,7 +4307,7 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			return Params(t0, t1, t2, t3, t4);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4350,17 +4350,17 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4372,7 +4372,7 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4414,7 +4414,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 		_ST3  Param3;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4423,7 +4423,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			return Params(t0, t1, t2, t3);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4465,7 +4465,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2, T3>::GetSignatureID();
 		}
@@ -4480,12 +4480,12 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4496,7 +4496,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4534,7 +4534,7 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 		_ST3  Param3;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4543,7 +4543,7 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			return Params(t0, t1, t2, t3);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4582,17 +4582,17 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2, T3>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4603,7 +4603,7 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4641,7 +4641,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 		_ST2  Param2;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4649,7 +4649,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 			return Params(t0, t1, t2);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4687,7 +4687,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1, T2>::GetSignatureID();
 		}
@@ -4702,12 +4702,12 @@ class Params<R, T0, T1, T2> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4717,7 +4717,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4751,7 +4751,7 @@ class Params<void, T0, T1, T2> : public DynParams {
 		_ST2  Param2;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4759,7 +4759,7 @@ class Params<void, T0, T1, T2> : public DynParams {
 			return Params(t0, t1, t2);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4794,17 +4794,17 @@ class Params<void, T0, T1, T2> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1, T2>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4814,7 +4814,7 @@ class Params<void, T0, T1, T2> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4848,14 +4848,14 @@ class Params<R, T0, T1> : public DynParams {
 		_ST1  Param1;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
 			return Params(t0, t1);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4889,7 +4889,7 @@ class Params<R, T0, T1> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0, T1>::GetSignatureID();
 		}
@@ -4904,12 +4904,12 @@ class Params<R, T0, T1> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4918,7 +4918,7 @@ class Params<R, T0, T1> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4948,14 +4948,14 @@ class Params<void, T0, T1> : public DynParams {
 		_ST1  Param1;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()					? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
 			return Params(t0, t1);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			_T1  t1  = (cParser.Next()				? Type<T1> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T1> ::Default());
@@ -4986,17 +4986,17 @@ class Params<void, T0, T1> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0, T1>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5005,7 +5005,7 @@ class Params<void, T0, T1> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5035,13 +5035,13 @@ class Params<R, T0> : public DynParams {
 		_ST0  Param0;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			return Params(t0);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			return Params(t0);
@@ -5071,7 +5071,7 @@ class Params<R, T0> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R, T0>::GetSignatureID();
 		}
@@ -5086,12 +5086,12 @@ class Params<R, T0> : public DynParams {
 			return (void*)&Return;
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5099,7 +5099,7 @@ class Params<R, T0> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5125,13 +5125,13 @@ class Params<void, T0> : public DynParams {
 		_ST0  Param0;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			ParamsParser cParser;
 			_T0  t0  = (cParser.ParseString(sParams)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			return Params(t0);
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			ParamsParserXml cParser;
 			_T0  t0  = (cParser.ParseXml(cElement)	? Type<T0> ::ConvertFromString(cParser.GetValue()) : DefaultValue<T0> ::Default());
 			return Params(t0);
@@ -5158,17 +5158,17 @@ class Params<void, T0> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void, T0>::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5176,7 +5176,7 @@ class Params<void, T0> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(PLGeneral::uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex)
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5202,11 +5202,11 @@ class Params<R> : public DynParams {
 		_SR	Return;
 
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			return Params();
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			return Params();
 		}
 
@@ -5231,7 +5231,7 @@ class Params<R> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<R>::GetSignatureID();
 		}
@@ -5257,11 +5257,11 @@ class Params<R> : public DynParams {
 template <>
 class Params<void> : public DynParams {
 	public:
-		static Params FromString(const PLGeneral::String &sParams) {
+		static Params FromString(const String &sParams) {
 			return Params();
 		}
 
-		static Params FromXml(const PLGeneral::XmlElement &cElement) {
+		static Params FromXml(const XmlElement &cElement) {
 			return Params();
 		}
 
@@ -5283,7 +5283,7 @@ class Params<void> : public DynParams {
 			return *this;
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return Signature<void>::GetSignatureID();
 		}

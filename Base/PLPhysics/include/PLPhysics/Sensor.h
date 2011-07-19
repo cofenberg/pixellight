@@ -103,7 +103,7 @@ class Sensor : public Element {
 		*  @return
 		*    Flags (see EFlags)
 		*/
-		PLPHYSICS_API PLGeneral::uint32 GetFlags() const;
+		PLPHYSICS_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class Sensor : public Element {
 		*  @param[in] nFlags
 		*    Flags (see EFlags)
 		*/
-		PLPHYSICS_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLPHYSICS_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class Sensor : public Element {
 		*  @return
 		*    The number of hit physics bodies
 		*/
-		PLPHYSICS_API PLGeneral::uint32 GetNumOfHitBodies() const;
+		PLPHYSICS_API PLCore::uint32 GetNumOfHitBodies() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class Sensor : public Element {
 		*  @return
 		*    The hit physics body information, a null pointer on error (do NOT store a pointer on it!)
 		*/
-		PLPHYSICS_API const BodyInfo *GetHitBody(PLGeneral::uint32 nIndex) const;
+		PLPHYSICS_API const BodyInfo *GetHitBody(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class Sensor : public Element {
 		*  @return
 		*    The number of hit physics bodies
 		*/
-		PLPHYSICS_API virtual PLGeneral::uint32 Check();
+		PLPHYSICS_API virtual PLCore::uint32 Check();
 
 
 	//[-------------------------------------------------------]
@@ -187,7 +187,7 @@ class Sensor : public Element {
 		*  @param[in] nFlags
 		*    Flags (see EFlags)
 		*/
-		PLPHYSICS_API Sensor(World &cWorld, PLGeneral::uint32 nFlags = 0);
+		PLPHYSICS_API Sensor(World &cWorld, PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -241,9 +241,9 @@ class Sensor : public Element {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<BodyInfo*>  m_lstBodyInfo;		/**< List of detected body information */
-		BodyInfo					*m_pClosedBodyInfo;	/**< Closest body information, can be a null pointer */
-		PLGeneral::uint32			 m_nFlags;			/**< Flags (see EFlags) */
+		PLCore::Array<BodyInfo*>  m_lstBodyInfo;		/**< List of detected body information */
+		BodyInfo				 *m_pClosedBodyInfo;	/**< Closest body information, can be a null pointer */
+		PLCore::uint32			  m_nFlags;				/**< Flags (see EFlags) */
 
 
 };

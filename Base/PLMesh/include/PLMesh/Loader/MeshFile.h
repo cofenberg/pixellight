@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
@@ -49,43 +49,43 @@ namespace PLMesh {
 
 	MESHFILE
 	|
-	+--PLGeneral::uint32 nMagic
+	+--PLCore::uint32 nMagic
 	|
-	+--PLGeneral::uint32 nVersion
+	+--PLCore::uint32 nVersion
 	|
 	+--MATERIALS
 	|  |
-	|  +--PLGeneral::uint32 nMaterials
+	|  +--PLCore::uint32 nMaterials
 	|  |
 	|  +--char szName[256][nMaterials]
 	|
 	+--MESH
 	|  |
-	|  +--PLGeneral::uint32 nLODLevels
+	|  +--PLCore::uint32 nLODLevels
 	|  |
-	|  +--PLGeneral::uint32 nMorphTargets
+	|  +--PLCore::uint32 nMorphTargets
 	|  |
-	|  +--PLGeneral::uint32 nWeights
+	|  +--PLCore::uint32 nWeights
 	|  |
-	|  +--PLGeneral::uint32 nVertexWeights
+	|  +--PLCore::uint32 nVertexWeights
 	|  |
 	|  +--LODLEVEL (*)
 	|  |  |
 	|  |  +--float fDistance
 	|  |  |
-	|  |  +--PLGeneral::uint32 nGeometries
+	|  |  +--PLCore::uint32 nGeometries
 	|  |  |
-	|  |  +--PLGeneral::uint32 nOctreeSubdivide
+	|  |  +--PLCore::uint32 nOctreeSubdivide
 	|  |  |
-	|  |  +--PLGeneral::uint32 nOctreeMinGeometries
+	|  |  +--PLCore::uint32 nOctreeMinGeometries
 	|  |  |
 	|  |  +--INDEXBUFFER
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nElementType
+	|  |  |  +--PLCore::uint32 nElementType
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nElements
+	|  |  |  +--PLCore::uint32 nElements
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nSize;
+	|  |  |  +--PLCore::uint32 nSize;
 	|  |  |  |
 	|  |  |  +--... 'nElements' indices of type 'nElementType'
 	|  |  |
@@ -93,7 +93,7 @@ namespace PLMesh {
 	|  |  |  |
 	|  |  |  +--char szName[64]
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nFlags
+	|  |  |  +--PLCore::uint32 nFlags
 	|  |  |  |
 	|  |  |  +--bool bActive
 	|  |  |  |
@@ -115,19 +115,19 @@ namespace PLMesh {
 	|  |  |
 	|  |  +--bool bRelative
 	|  |  |
-	|  |  +--PLGeneral::uint32 nVertexIDs
+	|  |  +--PLCore::uint32 nVertexIDs
 	|  |  |
-	|  |  +--PLGeneral::uint32 nVertexBuffers
+	|  |  +--PLCore::uint32 nVertexBuffers
 	|  |  |
 	|  |  +--'nVertexIDs' vertex ID's
 	|  |  |
 	|  |  +--VERTEXBUFFER (*)
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nVertexAttributes
+	|  |  |  +--PLCore::uint32 nVertexAttributes
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nVertices
+	|  |  |  +--PLCore::uint32 nVertices
 	|  |  |  |
-	|  |  |  +--PLGeneral::uint32 nSize;
+	|  |  |  +--PLCore::uint32 nSize;
 	|  |  |  |
 	|  |  |  +--VERTEXATTRIBUTE (*)
 	|  |  |  |  |
@@ -155,7 +155,7 @@ namespace PLMesh {
 	|  |
 	|  +--VERTEXWEIGHTS (*)
 	|  |  |
-	|  |  +--PLGeneral::uint32 nWeights
+	|  |  +--PLCore::uint32 nWeights
 	|  |  |
 	|  |  +-- 'nWeights' weight indices for the vertex
 	|  |
@@ -165,9 +165,9 @@ namespace PLMesh {
 	|  |
 	|  +--char szName
 	|  |
-	|  +--PLGeneral::uint32 nMorphTargets
+	|  +--PLCore::uint32 nMorphTargets
 	|  |
-	|  +--PLGeneral::uint32 nFrames
+	|  +--PLCore::uint32 nFrames
 	|  |
 	|  +--MORPHTARGETANIMATIONTARGET (*)
 	|  |  |
@@ -189,9 +189,9 @@ namespace PLMesh {
 	|  |
 	|  +--char szName
 	|  |
-	|  +--PLGeneral::uint32 nJoints
+	|  +--PLCore::uint32 nJoints
 	|  |
-	|  +--PLGeneral::uint32 nFrames
+	|  +--PLCore::uint32 nFrames
 	|  |
 	|  +--JOINT (*)
 	|  |  |
@@ -199,7 +199,7 @@ namespace PLMesh {
 	|  |  |
 	|  |  +-- int nParent
 	|  |  |
-	|  |  +-- PLGeneral::uint8 nAnimatedComponents
+	|  |  +-- PLCore::uint8 nAnimatedComponents
 	|  |
 	|  +--... 'nJoints' joints
 	|  |
@@ -229,7 +229,7 @@ namespace PLMesh {
 	|
 	+--ANCHORPOINTS
 	|  |
-	|  +--PLGeneral::uint32 nAnchorPoints
+	|  +--PLCore::uint32 nAnchorPoints
 	|  |
 	|  +--ANCHORPOINT (*)
 	|  |  |
@@ -243,7 +243,7 @@ namespace PLMesh {
 	|
 	+--ANIMATIONS
 	|  |
-	|  +--PLGeneral::uint32 nAnimations
+	|  +--PLCore::uint32 nAnimations
 	|  |
 	|  +--ANIMATION (*)
 	|  |  |
@@ -257,7 +257,7 @@ namespace PLMesh {
 	|  |  |
 	|  |  +--float fSpeed
 	|  |  |
-	|  |  +--PLGeneral::uint32 nFlags
+	|  |  +--PLCore::uint32 nFlags
 	|  |  |
 	|  |  +--int nEvents
 	|  |  |
@@ -297,27 +297,27 @@ class MeshFile {
 	//[-------------------------------------------------------]
 	public:
 		// Format definition
-		static const PLGeneral::uint32 MAGIC						= 0x57754631;
-		static const PLGeneral::uint32 VERSION						= 2;
+		static const PLCore::uint32 MAGIC						= 0x57754631;
+		static const PLCore::uint32 VERSION						= 2;
 
 		// Chunk types (0x0-------)
-		static const PLGeneral::uint32 CHUNK_MESHFILE				= 0x00000001;
-		static const PLGeneral::uint32 CHUNK_MATERIALS				= 0x00000010;
-		static const PLGeneral::uint32 CHUNK_MESH					= 0x00000011;
-		static const PLGeneral::uint32 CHUNK_LODLEVEL				= 0x00000012;
-		static const PLGeneral::uint32 CHUNK_INDEXBUFFER			= 0x00000013;
-		static const PLGeneral::uint32 CHUNK_GEOMETRY				= 0x00000014;
-		static const PLGeneral::uint32 CHUNK_MORPHTARGET			= 0x00000015;
-		static const PLGeneral::uint32 CHUNK_VERTEXBUFFER			= 0x00000016;
-		static const PLGeneral::uint32 CHUNK_VERTEXATTRIBUTE		= 0x00000017;
-		static const PLGeneral::uint32 CHUNK_WEIGHT					= 0x00000018;
-		static const PLGeneral::uint32 CHUNK_VERTEXWEIGHTS			= 0x00000019;
-		static const PLGeneral::uint32 CHUNK_SKELETON				= 0x00000020;
-		static const PLGeneral::uint32 CHUNK_SKELETONANIMATION		= 0x00000021;
-		static const PLGeneral::uint32 CHUNK_ANCHORPOINTS			= 0x00000022;
-		static const PLGeneral::uint32 CHUNK_ANIMATIONS				= 0x00000023;
-		static const PLGeneral::uint32 CHUNK_MORPHTARGETANIMATION	= 0x00000024;
-		static const PLGeneral::uint32 CHUNK_MESHBOUNDINGBOX		= 0x00000025;
+		static const PLCore::uint32 CHUNK_MESHFILE				= 0x00000001;
+		static const PLCore::uint32 CHUNK_MATERIALS				= 0x00000010;
+		static const PLCore::uint32 CHUNK_MESH					= 0x00000011;
+		static const PLCore::uint32 CHUNK_LODLEVEL				= 0x00000012;
+		static const PLCore::uint32 CHUNK_INDEXBUFFER			= 0x00000013;
+		static const PLCore::uint32 CHUNK_GEOMETRY				= 0x00000014;
+		static const PLCore::uint32 CHUNK_MORPHTARGET			= 0x00000015;
+		static const PLCore::uint32 CHUNK_VERTEXBUFFER			= 0x00000016;
+		static const PLCore::uint32 CHUNK_VERTEXATTRIBUTE		= 0x00000017;
+		static const PLCore::uint32 CHUNK_WEIGHT				= 0x00000018;
+		static const PLCore::uint32 CHUNK_VERTEXWEIGHTS			= 0x00000019;
+		static const PLCore::uint32 CHUNK_SKELETON				= 0x00000020;
+		static const PLCore::uint32 CHUNK_SKELETONANIMATION		= 0x00000021;
+		static const PLCore::uint32 CHUNK_ANCHORPOINTS			= 0x00000022;
+		static const PLCore::uint32 CHUNK_ANIMATIONS			= 0x00000023;
+		static const PLCore::uint32 CHUNK_MORPHTARGETANIMATION	= 0x00000024;
+		static const PLCore::uint32 CHUNK_MESHBOUNDINGBOX		= 0x00000025;
 
 		// Experimental chunks (0xA-------)
 
@@ -335,8 +335,8 @@ class MeshFile {
 		*    Chunk header
 		*/
 		struct Chunk {
-			PLGeneral::uint32 nType;	/**< Chunk type (e.g. CHUNK_MESHFILE) */
-			PLGeneral::uint32 nSize;	/**< Chunk size in bytes (including the 8 bytes for the chunk header) */
+			PLCore::uint32 nType;	/**< Chunk type (e.g. CHUNK_MESHFILE) */
+			PLCore::uint32 nSize;	/**< Chunk size in bytes (including the 8 bytes for the chunk header) */
 		};
 
 		/** 
@@ -344,8 +344,8 @@ class MeshFile {
 		*    Main file header
 		*/
 		struct MeshFileHeader {
-			PLGeneral::uint32 nMagic;	/**< MeshFile ID "" (see MAGIC above) */
-			PLGeneral::uint32 nVersion;	/**< MeshFile Version (see VERSION above) */
+			PLCore::uint32 nMagic;		/**< MeshFile ID "" (see MAGIC above) */
+			PLCore::uint32 nVersion;	/**< MeshFile Version (see VERSION above) */
 		};
 
 		/** 
@@ -353,7 +353,7 @@ class MeshFile {
 		*    Material list
 		*/
 		struct Materials {
-			PLGeneral::uint32 nMaterials;	/**< Number of materials */
+			PLCore::uint32 nMaterials;	/**< Number of materials */
 		};
 
 		/** 
@@ -361,10 +361,10 @@ class MeshFile {
 		*    Mesh
 		*/
 		struct Mesh {
-			PLGeneral::uint32 nLODLevels;		/**< Number of LOD levels */
-			PLGeneral::uint32 nMorphTargets;	/**< Number of morph targets */
-			PLGeneral::uint32 nWeights;			/**< Total number of weights */
-			PLGeneral::uint32 nVertexWeights;	/**< Number of vertices with weights */
+			PLCore::uint32 nLODLevels;		/**< Number of LOD levels */
+			PLCore::uint32 nMorphTargets;	/**< Number of morph targets */
+			PLCore::uint32 nWeights;		/**< Total number of weights */
+			PLCore::uint32 nVertexWeights;	/**< Number of vertices with weights */
 		};
 
 		/** 
@@ -390,7 +390,7 @@ class MeshFile {
 		*    Vertex weights
 		*/
 		struct VertexWeights {
-			PLGeneral::uint32 nWeights;	/**< Number of weights for the vertex */
+			PLCore::uint32 nWeights;	/**< Number of weights for the vertex */
 		};
 
 		/** 
@@ -398,10 +398,10 @@ class MeshFile {
 		*    LOD level
 		*/
 		struct LODLevel {
-			float			  fDistance;			/**< Distance this LOD level is used */
-			PLGeneral::uint32 nGeometries;			/**< Number of geometries */
-			PLGeneral::uint32 nOctreeSubdivide;		/**< Octree subdivide */
-			PLGeneral::uint32 nOctreeMinGeometries;	/**< Minimum number of geometries per octree */
+			float		   fDistance;				/**< Distance this LOD level is used */
+			PLCore::uint32 nGeometries;				/**< Number of geometries */
+			PLCore::uint32 nOctreeSubdivide;		/**< Octree subdivide */
+			PLCore::uint32 nOctreeMinGeometries;	/**< Minimum number of geometries per octree */
 		};
 
 		/** 
@@ -409,9 +409,9 @@ class MeshFile {
 		*    Index buffer
 		*/
 		struct IndexBuffer {
-			PLGeneral::uint32 nElementType;	/**< Index element type (see IndexBuffer::EType) */
-			PLGeneral::uint32 nElements;	/**< Number of indices */
-			PLGeneral::uint32 nSize;		/**< Total index buffer size in bytes */
+			PLCore::uint32 nElementType;	/**< Index element type (see IndexBuffer::EType) */
+			PLCore::uint32 nElements;		/**< Number of indices */
+			PLCore::uint32 nSize;			/**< Total index buffer size in bytes */
 		};
 
 		/** 
@@ -419,13 +419,13 @@ class MeshFile {
 		*    Geometry object
 		*/
 		struct Geometry {
-			char			  szName[64];		/**< Optional geometry name */
-			PLGeneral::uint32 nFlags;			/**< Optional geometry flags */
-			bool			  bActive;			/**< Is the geometry active/inactive? */
-			int				  nPrimitiveType;	/**< Geometry primitive type (see PLRenderer::Primitive) */
-			int				  nMaterial;		/**< ID of the material the geometry is using */
-			int				  nStartIndex;		/**< First geometry index within the index buffer */
-			int				  nIndexSize;		/**< Number of indices */
+			char		   szName[64];		/**< Optional geometry name */
+			PLCore::uint32 nFlags;			/**< Optional geometry flags */
+			bool		   bActive;			/**< Is the geometry active/inactive? */
+			int			   nPrimitiveType;	/**< Geometry primitive type (see PLRenderer::Primitive) */
+			int			   nMaterial;		/**< ID of the material the geometry is using */
+			int			   nStartIndex;		/**< First geometry index within the index buffer */
+			int			   nIndexSize;		/**< Number of indices */
 		};
 
 		/** 
@@ -433,10 +433,10 @@ class MeshFile {
 		*    Morph target
 		*/
 		struct MorphTarget {
-			char			  szName[64];		/**< Name of the morph target */
-			bool			  bRelative;		/**< Is this morph target relative to the basis morph target? */
-			PLGeneral::uint32 nVertexIDs;		/**< Number of vertex ID's, if 0 ALL vertices are influenced */
-			PLGeneral::uint32 nVertexBuffers;	/**< Number of vertex buffers (one VB per LOD level) */
+			char		   szName[64];		/**< Name of the morph target */
+			bool		   bRelative;		/**< Is this morph target relative to the basis morph target? */
+			PLCore::uint32 nVertexIDs;		/**< Number of vertex ID's, if 0 ALL vertices are influenced */
+			PLCore::uint32 nVertexBuffers;	/**< Number of vertex buffers (one VB per LOD level) */
 		};
 
 		/** 
@@ -444,9 +444,9 @@ class MeshFile {
 		*    Vertex buffer
 		*/
 		struct VertexBuffer {
-			PLGeneral::uint32 nVertexAttributes;	/**< Number of vertex attributes */
-			PLGeneral::uint32 nVertices;			/**< Number of vertices */
-			PLGeneral::uint32 nSize;				/**< Total vertex buffer size in bytes */
+			PLCore::uint32 nVertexAttributes;	/**< Number of vertex attributes */
+			PLCore::uint32 nVertices;			/**< Number of vertices */
+			PLCore::uint32 nSize;				/**< Total vertex buffer size in bytes */
 		};
 
 		/** 
@@ -465,9 +465,9 @@ class MeshFile {
 		*    Morph target animation
 		*/
 		struct MorphTargetAnimation {
-			char			  szName[64];		/**< Name of the morph target animation */
-			PLGeneral::uint32 nMorphTargets;	/**< Number of morph targets */
-			PLGeneral::uint32 nFrames;			/**< Number of morph target animation frames */
+			char		   szName[64];		/**< Name of the morph target animation */
+			PLCore::uint32 nMorphTargets;	/**< Number of morph targets */
+			PLCore::uint32 nFrames;			/**< Number of morph target animation frames */
 		};
 
 		/** 
@@ -475,9 +475,9 @@ class MeshFile {
 		*    Skeleton
 		*/
 		struct Skeleton {
-			char			  szName[64];	/**< Name of the skeleton (animation) */
-			PLGeneral::uint32 nJoints;		/**< Number of joints the skeleton consists of */
-			PLGeneral::uint32 nFrames;		/**< Number of skeleton animation frames */
+			char		   szName[64];	/**< Name of the skeleton (animation) */
+			PLCore::uint32 nJoints;		/**< Number of joints the skeleton consists of */
+			PLCore::uint32 nFrames;		/**< Number of skeleton animation frames */
 		};
 
 		/** 
@@ -485,9 +485,9 @@ class MeshFile {
 		*    Joint
 		*/
 		struct Joint {
-			char			 szName[64];			/**< Unique joint name */
-			int				 nParent;				/**< Number of the parent joint, < 0 if no parent */
-			PLGeneral::uint8 nAnimatedComponents;	/**< X, Y, Z, Yaw, Pitch, Roll, W */
+			char		  szName[64];			/**< Unique joint name */
+			int			  nParent;				/**< Number of the parent joint, < 0 if no parent */
+			PLCore::uint8 nAnimatedComponents;	/**< X, Y, Z, Yaw, Pitch, Roll, W */
 		};
 
 		/** 
@@ -506,7 +506,7 @@ class MeshFile {
 		*    Anchor points list
 		*/
 		struct AnchorPoints {
-			PLGeneral::uint32 nAnchorPoints;	/**< Number of anchor points */
+			PLCore::uint32 nAnchorPoints;	/**< Number of anchor points */
 		};
 
 		/** 
@@ -524,7 +524,7 @@ class MeshFile {
 		*    Animations list
 		*/
 		struct Animations {
-			PLGeneral::uint32 nAnimations;	/**< Number of animations */
+			PLCore::uint32 nAnimations;	/**< Number of animations */
 		};
 
 		/** 
@@ -537,7 +537,7 @@ class MeshFile {
 			int				  nStart;		/**< Start frame of the animation (inclusive) */
 			int				  nEnd;			/**< End frame of the animation (inclusive) */
 			float			  fSpeed;		/**< Playback speed (1.0 = normal) */
-			PLGeneral::uint32 nFlags;		/**< Animation information flags */
+			PLCore::uint32 nFlags;		/**< Animation information flags */
 			int				  nEvents;		/**< Number of animation events */
 		};
 

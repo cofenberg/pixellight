@@ -21,7 +21,7 @@
 
 
 //  OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
+static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute vec3 VertexPosition;		// Object space vertex position input, lower/left is (0,0) and upper/right is (1,1)\n\
 varying   vec2 VertexTexCoordVS;	// Normalized vertex texture coordinate output\n\
@@ -53,7 +53,7 @@ void main()\n\
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
+static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate from vertex shader\n\
 \n\

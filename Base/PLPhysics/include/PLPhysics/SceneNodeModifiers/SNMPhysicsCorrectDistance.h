@@ -56,9 +56,9 @@ class SNMPhysicsCorrectDistance : public SNMPhysics {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCorrectDistance, "PLPhysics", PLPhysics::SNMPhysics, "Scene node modifier class correcting the distance between the owner scene node and a target scene node by using physics tests")
 		// Attributes
-		pl_attribute(Target,			PLGeneral::String,	"",		ReadWrite,	DirectValue,	"Target scene node",											"")
-		pl_attribute(BlendOutTarget,	PLGeneral::String,	"",		ReadWrite,	DirectValue,	"Target scene node to blend out, if empty 'Target' is used",	"")
-		pl_attribute(BlendOutDistance,	float,				0.5f,	ReadWrite,	DirectValue,	"Blend out distance",											"Min='0.0'")
+		pl_attribute(Target,			PLCore::String,	"",		ReadWrite,	DirectValue,	"Target scene node",											"")
+		pl_attribute(BlendOutTarget,	PLCore::String,	"",		ReadWrite,	DirectValue,	"Target scene node to blend out, if empty 'Target' is used",	"")
+		pl_attribute(BlendOutDistance,	float,			0.5f,	ReadWrite,	DirectValue,	"Blend out distance",											"Min='0.0'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

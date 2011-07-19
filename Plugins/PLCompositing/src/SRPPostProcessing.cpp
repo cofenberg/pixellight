@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Profiling.h>
-#include <PLGeneral/Tools/Stopwatch.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Profiling.h>
+#include <PLCore/Tools/Stopwatch.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Scene/SNCamera.h>
 #include "PLCompositing/SRPBegin.h"
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLCompositing {

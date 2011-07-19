@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLInput/Backend/UpdateDevice.h"
 #include "PLInput/PLInputWindowsIncludes.h"
 
@@ -118,7 +118,7 @@ class RawInputDevice : public UpdateDevice {
 		*  @return
 		*    Device name
 		*/
-		PLINPUT_API PLGeneral::String GetName() const;
+		PLINPUT_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -233,15 +233,15 @@ class RawInputDevice : public UpdateDevice {
 	//[-------------------------------------------------------]
 	private:
 		// Device data
-		PLGeneral::String	m_sName;		/**< Device name */
-		DWORD				m_nType;		/**< Device type (keyboard, mouse or HID) */
-		HANDLE				m_hDevice;		/**< Device handle */
-		RID_DEVICE_INFO		m_sDeviceInfo;	/**< Device information struct */
-		bool				m_bVirtual;		/**< Virtual device flag */
+		PLCore::String	m_sName;		/**< Device name */
+		DWORD			m_nType;		/**< Device type (keyboard, mouse or HID) */
+		HANDLE			m_hDevice;		/**< Device handle */
+		RID_DEVICE_INFO	m_sDeviceInfo;	/**< Device information struct */
+		bool			m_bVirtual;		/**< Virtual device flag */
 
 		// Mouse data
-		long				m_nOldX;		/**< X position (if mouse only supports absolute positions) */
-		long				m_nOldY;		/**< Y position (if mouse only supports absolute positions) */
+		long			m_nOldX;		/**< X position (if mouse only supports absolute positions) */
+		long			m_nOldY;		/**< Y position (if mouse only supports absolute positions) */
 
 
 };

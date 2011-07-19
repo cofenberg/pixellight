@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLIRC/Topic.h"
 
 
@@ -59,24 +59,24 @@ class Channel {
 	//[-------------------------------------------------------]
 	public:
 		// Construction/Destruction
-		PLIRC_API Channel(const PLGeneral::String &sName);
+		PLIRC_API Channel(const PLCore::String &sName);
 		PLIRC_API ~Channel();
 
 		// Get the channel name
-		PLIRC_API PLGeneral::String GetName() const;
+		PLIRC_API PLCore::String GetName() const;
 
 		// Channel topic
 		PLIRC_API const Topic &GetTopic() const;
 		PLIRC_API Topic &GetTopic();
 
 		// User list
-		PLIRC_API PLGeneral::uint32 GetNumOfUsers() const;
-		PLIRC_API const User *GetUser(PLGeneral::uint32 nUser) const;
-		PLIRC_API User *GetUser(PLGeneral::uint32 nUser);
-		PLIRC_API const User *GetUser(const PLGeneral::String &sNick) const;
-		PLIRC_API User *GetUser(const PLGeneral::String &sNick);
-		PLIRC_API bool AddUser(const PLGeneral::String &sNick, bool bOp = false, bool bVoice = false);
-		PLIRC_API void RemoveUser(const PLGeneral::String &sNick);
+		PLIRC_API PLCore::uint32 GetNumOfUsers() const;
+		PLIRC_API const User *GetUser(PLCore::uint32 nUser) const;
+		PLIRC_API User *GetUser(PLCore::uint32 nUser);
+		PLIRC_API const User *GetUser(const PLCore::String &sNick) const;
+		PLIRC_API User *GetUser(const PLCore::String &sNick);
+		PLIRC_API bool AddUser(const PLCore::String &sNick, bool bOp = false, bool bVoice = false);
+		PLIRC_API void RemoveUser(const PLCore::String &sNick);
 
 
 	//[-------------------------------------------------------]
@@ -109,9 +109,9 @@ class Channel {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	   m_sName;		/**< Name of channel */
-		Topic				   m_cTopic;	/**< Channel topic */
-		PLGeneral::List<User*> m_lstUsers;	/**< User list */
+		PLCore::String	    m_sName;	/**< Name of channel */
+		Topic			    m_cTopic;	/**< Channel topic */
+		PLCore::List<User*> m_lstUsers;	/**< User list */
 
 
 };

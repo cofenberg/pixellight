@@ -99,7 +99,7 @@ class Modifier : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Name
 		*/
-		PLGUI_API PLGeneral::String GetName() const;
+		PLGUI_API PLCore::String GetName() const;
 
 
 	//[-------------------------------------------------------]
@@ -113,7 +113,7 @@ class Modifier : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] sName
 		*    Name
 		*/
-		PLGUI_API void SetName(const PLGeneral::String &sName);
+		PLGUI_API void SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -165,8 +165,8 @@ class Modifier : public PLCore::Object, public WidgetFunctions {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Widget			  *m_pWidget;	/**< Widget to which the modifier belongs */
-		PLGeneral::String  m_sName;		/**< Name of modifier */
+		Widget		   *m_pWidget;	/**< Widget to which the modifier belongs */
+		PLCore::String  m_sName;	/**< Name of modifier */
 
 
 };

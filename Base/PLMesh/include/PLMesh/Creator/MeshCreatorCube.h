@@ -111,14 +111,14 @@ class MeshCreatorCube : public MeshCreator {
 		*  @param[in] fZ
 		*    Z component of the normal vector
 		*/
-		void SetNormals(PLRenderer::VertexBuffer &cVertexBuffer, PLGeneral::uint32 nSide, float fX, float fY, float fZ) const;
+		void SetNormals(PLRenderer::VertexBuffer &cVertexBuffer, PLCore::uint32 nSide, float fX, float fY, float fZ) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual MeshCreator functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *Create(Mesh &cMesh, PLGeneral::uint32 nLODLevel = 0, bool bStatic = true) const;
+		virtual Mesh *Create(Mesh &cMesh, PLCore::uint32 nLODLevel = 0, bool bStatic = true) const;
 
 
 };

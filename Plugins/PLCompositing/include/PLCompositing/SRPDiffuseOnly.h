@@ -152,7 +152,7 @@ class SRPDiffuseOnly : public PLScene::SceneRendererPass {
 		*  @param[in] nStage
 		*    Texture stage
 		*/
-		PLCOM_API void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage) const;
+		PLCOM_API void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage) const;
 
 		/**
 		*  @brief

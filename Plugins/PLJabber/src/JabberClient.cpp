@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLJabber {
 
 
@@ -55,7 +55,7 @@ JabberClient::~JabberClient()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGeneral::Client functions         ]
+//[ Protected virtual PLCore::Client functions            ]
 //[-------------------------------------------------------]
 Connection *JabberClient::CreateOutgoingConnection()
 {

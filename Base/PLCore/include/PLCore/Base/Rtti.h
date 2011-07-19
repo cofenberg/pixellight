@@ -88,7 +88,7 @@ template <typename T> class ModuleID
 		*  @return
 		*    Unique module ID
 		*/
-		static PLGeneral::uint32 GetModuleID();
+		static uint32 GetModuleID();
 
 		/**
 		*  @brief
@@ -103,20 +103,20 @@ template <typename T> class ModuleID
 		*  @param[in] sDescription
 		*    Module description
 		*/
-		static void RegisterModule(const PLGeneral::String &sName, const PLGeneral::String &sVendor, const PLGeneral::String &sLicense, const PLGeneral::String &sDescription);
+		static void RegisterModule(const String &sName, const String &sVendor, const String &sLicense, const String &sDescription);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32 m_nModuleID;	/**< Unique module ID */
+		static uint32 m_nModuleID;	/**< Unique module ID */
 
 
 };
 
 // Get module ID
-template <typename T> PLGeneral::uint32 ModuleID<T>::GetModuleID()
+template <typename T> uint32 ModuleID<T>::GetModuleID()
 {
 	// Request module ID from ClassManager
 	if (m_nModuleID == 0)
@@ -126,13 +126,13 @@ template <typename T> PLGeneral::uint32 ModuleID<T>::GetModuleID()
 	return m_nModuleID;
 }
 
-template <typename T> void ModuleID<T>::RegisterModule(const PLGeneral::String &sName, const PLGeneral::String &sVendor, const PLGeneral::String &sLicense, const PLGeneral::String &sDescription)
+template <typename T> void ModuleID<T>::RegisterModule(const String &sName, const String &sVendor, const String &sLicense, const String &sDescription)
 {
 	ClassManager::GetInstance()->RegisterModule(GetModuleID(), sName, sVendor, sLicense, sDescription);
 }
 
 // Module ID
-template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
+template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 
 
 //[-------------------------------------------------------]
@@ -151,7 +151,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 			typedef int  _BaseType; \
 			typedef ENUM _Type; \
 			\
-			static bool GetEnumValue(int nIndex, ENUM &nValue, PLGeneral::String &sName, PLGeneral::String &sDescription) { \
+			static bool GetEnumValue(int nIndex, ENUM &nValue, PLCore::String &sName, PLCore::String &sDescription) { \
 				int nCount = 0; \
 
 /**
@@ -169,7 +169,7 @@ template <typename T> PLGeneral::uint32	ModuleID<T>::m_nModuleID = 0;
 			typedef TYPE _BaseType; \
 			typedef TYPE _Type; \
 			\
-			static bool GetEnumValue(int nIndex, TYPE &nValue, PLGeneral::String &sName, PLGeneral::String &sDescription) { \
+			static bool GetEnumValue(int nIndex, TYPE &nValue, PLCore::String &sName, PLCore::String &sDescription) { \
 				int nCount = 0; \
 
 /**

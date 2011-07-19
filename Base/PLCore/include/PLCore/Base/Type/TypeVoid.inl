@@ -48,7 +48,7 @@ class Type<void> {
 		static const int TypeID = TypeVoid;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "void";
 		}

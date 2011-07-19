@@ -75,7 +75,7 @@ class SNProjectiveSpotLight : public SNSpotLight {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNProjectiveSpotLight, "PLScene", PLScene::SNSpotLight, "Projective spot light scene node")
 		// Attributes
-		pl_attribute(ProjectedMaterial,	PLGeneral::String,		"Data/Textures/PLLogo.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(ProjectedMaterial,	PLCore::String,			"Data/Textures/PLLogo.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCone,						ReadWrite,	GetSet,	"Flags",				"")
 		// Constructors
@@ -87,8 +87,8 @@ class SNProjectiveSpotLight : public SNSpotLight {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetProjectedMaterial() const;
-		PLS_API void SetProjectedMaterial(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetProjectedMaterial() const;
+		PLS_API void SetProjectedMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -121,7 +121,7 @@ class SNProjectiveSpotLight : public SNSpotLight {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sProjectedMaterial;	/**< Projected material */
+		PLCore::String				m_sProjectedMaterial;	/**< Projected material */
 		bool						m_bProjectedMaterial;	/**< Projected material loaded? */
 		PLRenderer::MaterialHandler m_cProjectedMaterial;	/**< Projected material */
 

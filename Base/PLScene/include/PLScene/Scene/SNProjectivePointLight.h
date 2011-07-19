@@ -71,7 +71,7 @@ class SNProjectivePointLight : public SNPointLight {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNProjectivePointLight, "PLScene", PLScene::SNPointLight, "Omnidirectional projective point light scene node")
 		// Attributes
-		pl_attribute(ProjectedMaterial,	PLGeneral::String,		"Data/Textures/DefaultCubeMap.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(ProjectedMaterial,	PLCore::String,			"Data/Textures/DefaultCubeMap.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",				"")
 		// Constructors
@@ -83,8 +83,8 @@ class SNProjectivePointLight : public SNPointLight {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetProjectedMaterial() const;
-		PLS_API void SetProjectedMaterial(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetProjectedMaterial() const;
+		PLS_API void SetProjectedMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -117,7 +117,7 @@ class SNProjectivePointLight : public SNPointLight {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sProjectedMaterial;	/**< Projected material */
+		PLCore::String				m_sProjectedMaterial;	/**< Projected material */
 		bool						m_bProjectedMaterial;	/**< Projected material loaded? */
 		PLRenderer::MaterialHandler m_cProjectedMaterial;	/**< Projected material */
 

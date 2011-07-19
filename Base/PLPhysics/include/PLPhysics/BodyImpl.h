@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLPhysics/PLPhysics.h"
 
 
@@ -112,18 +112,18 @@ class BodyImpl {
 		virtual void SetTorque(const PLMath::Vector3 &vTorque) = 0;
 		virtual bool IsAutoFreeze() const = 0;
 		virtual void SetAutoFreeze(bool bAutoFreeze = true) = 0;
-		virtual void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLGeneral::uint32 &nSteps) const = 0;
-		virtual void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLGeneral::uint32 nSteps = 10) = 0;
+		virtual void GetFreezeThreshold(float &fLinearVelocity, float &fAngularVelocity, PLCore::uint32 &nSteps) const = 0;
+		virtual void SetFreezeThreshold(float fLinearVelocity = 0.01f, float fAngularVelocity = 0.01f, PLCore::uint32 nSteps = 10) = 0;
 		virtual bool IsFrozen() const = 0;
 		virtual void SetFrozen(bool bFrozen = true) = 0;
 		virtual bool IsCollisionActive() const = 0;
 		virtual void SetCollisionActive(bool bActive = true) = 0;
 		virtual bool GetUseGravity() const = 0;
 		virtual void SetUseGravity(bool bUseGravity = true) = 0;
-		virtual PLGeneral::uint8 GetCollisionGroup() const = 0;
-		virtual void SetCollisionGroup(PLGeneral::uint8 nCollisionGroup = 0) = 0;
-		virtual PLGeneral::uint32 GetNumOfPartners() const = 0;
-		virtual Body *GetPartner(PLGeneral::uint32 nIndex) const = 0;
+		virtual PLCore::uint8 GetCollisionGroup() const = 0;
+		virtual void SetCollisionGroup(PLCore::uint8 nCollisionGroup = 0) = 0;
+		virtual PLCore::uint32 GetNumOfPartners() const = 0;
+		virtual Body *GetPartner(PLCore::uint32 nIndex) const = 0;
 
 
 	//[-------------------------------------------------------]

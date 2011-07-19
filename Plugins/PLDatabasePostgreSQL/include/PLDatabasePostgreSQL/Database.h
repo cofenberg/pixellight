@@ -122,9 +122,9 @@ class Database : public PLDatabase::Database {
 	//[ Public virtual PLDatabase::Database functions         ]
 	//[-------------------------------------------------------]
 	public:
-		PLDATABASEPOSTGRESQL_API virtual PLGeneral::String GetVersion() const;
-		PLDATABASEPOSTGRESQL_API virtual bool Connect(const PLGeneral::String &sServer, const PLGeneral::String &sUserName,
-													  const PLGeneral::String &sUserPassword, const PLGeneral::String &sDatabase);
+		PLDATABASEPOSTGRESQL_API virtual PLCore::String GetVersion() const;
+		PLDATABASEPOSTGRESQL_API virtual bool Connect(const PLCore::String &sServer, const PLCore::String &sUserName,
+													  const PLCore::String &sUserPassword, const PLCore::String &sDatabase);
 		PLDATABASEPOSTGRESQL_API virtual bool IsConnected() const;
 		PLDATABASEPOSTGRESQL_API virtual bool IsConnectionActive() const;
 		PLDATABASEPOSTGRESQL_API virtual bool Disconnect();

@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/String/Tokenizer.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Quaternion.h>
 #include <PLMath/EulerAngles.h>
@@ -43,7 +43,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRenderer {

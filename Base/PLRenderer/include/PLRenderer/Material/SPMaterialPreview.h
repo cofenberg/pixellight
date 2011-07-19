@@ -82,7 +82,7 @@ class SPMaterialPreview : public SPPreview {
 		*  @return
 		*    Name of the used material
 		*/
-		PLRENDERER_API PLGeneral::String GetMaterial() const;
+		PLRENDERER_API PLCore::String GetMaterial() const;
 
 		/**
 		*  @brief
@@ -91,14 +91,14 @@ class SPMaterialPreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used material
 		*/
-		PLRENDERER_API void SetMaterial(const PLGeneral::String &sName = "");
+		PLRENDERER_API void SetMaterial(const PLCore::String &sName = "");
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sMaterial;	/**< Name of the used material */
+		PLCore::String m_sMaterial;	/**< Name of the used material */
 
 
 	//[-------------------------------------------------------]

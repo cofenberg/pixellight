@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include "PLRendererD3D9/Renderer.h"
 #include "PLRendererD3D9/VertexBuffer.h"
 
@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGraphics;
 namespace PLRendererD3D9 {
 

@@ -60,10 +60,10 @@ class SCSound : public PLScene::SceneContainer {
 	//[-------------------------------------------------------]
 	pl_class(PLSOUND_RTTI_EXPORT, SCSound, "PLSound", PLScene::SceneContainer, "Sound scene node container")
 		// Attributes
-		pl_attribute(SoundAPI,	PLGeneral::String,	"PLSoundOpenAL::SoundManager",	ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
-		pl_attribute(Volume,	float,				1.0f,							ReadWrite,	GetSet,			"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",			"Min='0.0' Max='1.0'")
-		pl_attribute(Pitch,		float,				1.0f,							ReadWrite,	GetSet,			"Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster)",	"Min='0.0'")
-		pl_attribute(Listener,	PLGeneral::String,	"",								ReadWrite,	GetSet,			"Name of the scene node used as listener",									"")
+		pl_attribute(SoundAPI,	PLCore::String,	"PLSoundOpenAL::SoundManager",	ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
+		pl_attribute(Volume,	float,			1.0f,							ReadWrite,	GetSet,			"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",			"Min='0.0' Max='1.0'")
+		pl_attribute(Pitch,		float,			1.0f,							ReadWrite,	GetSet,			"Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster)",	"Min='0.0'")
+		pl_attribute(Listener,	PLCore::String,	"",								ReadWrite,	GetSet,			"Name of the scene node used as listener",									"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
@@ -79,8 +79,8 @@ class SCSound : public PLScene::SceneContainer {
 		PLSOUND_API void SetVolume(float fValue);
 		PLSOUND_API float GetPitch() const;
 		PLSOUND_API void SetPitch(float fValue);
-		PLSOUND_API PLGeneral::String GetListener() const;
-		PLSOUND_API void SetListener(const PLGeneral::String &sValue);
+		PLSOUND_API PLCore::String GetListener() const;
+		PLSOUND_API void SetListener(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -126,7 +126,7 @@ class SCSound : public PLScene::SceneContainer {
 	private:
 		float						m_fVolume;				/**< Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume) */
 		float						m_fPitch;				/**< Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster) */
-		PLGeneral::String			m_sListener;			/**< Name of the scene node used as listener */
+		PLCore::String				m_sListener;			/**< Name of the scene node used as listener */
 		SoundManager			   *m_pSoundManager;		/**< The PL sound manager, can be a null pointer */
 		PLScene::SceneNodeHandler   m_cListenerNodeHandler;	/**< Listener scene node handler */
 

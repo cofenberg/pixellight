@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include <PLRenderer/Renderer/Program.h>
 #include "PLRendererOpenGLES/Renderer.h"
 #include "PLRendererOpenGLES/FontManager.h"
@@ -37,7 +37,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLRendererOpenGLES {

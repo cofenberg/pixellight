@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include "PLCore/String/String.h"
 #include "PLCore/PLCoreDefinitions.h"
 
 
@@ -75,7 +75,7 @@ class MemberDesc {
 		*  @param[in] sAnnotation
 		*    Var annotation
 		*/
-		PLCORE_API MemberDesc(EMemberType nMemberType, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sAnnotation);
+		PLCORE_API MemberDesc(EMemberType nMemberType, const String &sName, const String &sDescription, const String &sAnnotation);
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class MemberDesc {
 		*  @return
 		*    Name
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class MemberDesc {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API PLGeneral::String GetDescription() const;
+		PLCORE_API String GetDescription() const;
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class MemberDesc {
 		*  @return
 		*    Annotation
 		*/
-		PLCORE_API PLGeneral::String GetAnnotation() const;
+		PLCORE_API String GetAnnotation() const;
 
 
 	//[-------------------------------------------------------]
@@ -138,10 +138,10 @@ class MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		EMemberType			m_nMemberType;	/**< Member type */
-		PLGeneral::String	m_sName;		/**< Name */
-		PLGeneral::String	m_sDescription;	/**< Description */
-		PLGeneral::String	m_sAnnotation;	/**< Annotation */
+		EMemberType	m_nMemberType;	/**< Member type */
+		String		m_sName;		/**< Name */
+		String		m_sDescription;	/**< Description */
+		String		m_sAnnotation;	/**< Annotation */
 
 
 };

@@ -93,7 +93,7 @@ class SPMultiViewShaders : public SPMultiView {
 	//[ Private virtual SPMultiView functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void DrawScene(PLGeneral::uint32 nScene = 0);
+		virtual void DrawScene(PLCore::uint32 nScene = 0);
 
 
 };

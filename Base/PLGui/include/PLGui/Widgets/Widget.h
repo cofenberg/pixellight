@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLMath/Vector2i.h>
 #include <PLCore/Base/Object.h>
@@ -96,9 +96,9 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, Widget, "PLGui", PLCore::Object, "Widget base class")
 		// Attributes
-		pl_attribute(ID,				PLGeneral::uint32,	0,						ReadWrite,	GetSet,	"Widget ID",		"")
-		pl_attribute(Name,				PLGeneral::String,	"",						ReadWrite,	GetSet,	"Widget name",		"")
-		pl_attribute(Title,				PLGeneral::String,	"No Title",				ReadWrite,	GetSet,	"Widget title",		"")
+		pl_attribute(ID,				PLCore::uint32,		0,						ReadWrite,	GetSet,	"Widget ID",		"")
+		pl_attribute(Name,				PLCore::String,		"",						ReadWrite,	GetSet,	"Widget name",		"")
+		pl_attribute(Title,				PLCore::String,		"No Title",				ReadWrite,	GetSet,	"Widget title",		"")
 		pl_attribute(Pos,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite,	GetSet,	"Widget position",	"")
 		pl_attribute(Size,				PLMath::Vector2i,	PLMath::Vector2i(0, 0),	ReadWrite,	GetSet,	"Widget size",		"")
 		pl_attribute(Topmost,			bool,				false,					ReadWrite,	GetSet,	"Topmost state",	"")
@@ -112,7 +112,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 			pl_method_1(SetTrapMouse,		pl_ret_type(void),		bool,	"Trap the mouse inside the widget. 'true' as first parameter if the mouse should be trapped inside the widget, else 'false'.",	"")
 		#endif
 		// Signals
-		pl_signal_2(SignalUserMessage,				PLGeneral::uint32,	void*,								"User message, two custom parameters",																		"")
+		pl_signal_2(SignalUserMessage,				PLCore::uint32,				void*,						"User message, two custom parameters",																		"")
 		pl_signal_0(SignalOnThemeChanged,																	"Theme has been changed",																					"")
 		pl_signal_0(SignalUpdateContent,																	"Widget content has been changed",																			"")
 		pl_signal_1(SignalUpdateChildWidget,		Widget*,												"Child widget has been changed, child widget as parameter",													"")
@@ -143,14 +143,14 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		pl_signal_1(SignalMouseMove,				const PLMath::Vector2i&,								"Mouse moves inside the widget, mouse position within the widget as parameter",								"")
 		pl_signal_0(SignalMouseHover,																		"Mouse hovers over the widget",																				"")
 		pl_signal_1(SignalMousePosUpdate,			const PLMath::Vector2i&,								"Mouse position inside the widget has changed due to the movement of widget, position as parameter",		"")
-		pl_signal_2(SignalMouseButtonDown,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button is pressed, mouse button and mouse position within the widget as parameters",					"")
-		pl_signal_2(SignalMouseButtonUp,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button is released, mouse button and mouse position within the widget as parameters",				"")
-		pl_signal_2(SignalMouseButtonClick,			PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button has been clicked, mouse button and mouse position within the widget as parameters",			"")
-		pl_signal_2(SignalMouseButtonDoubleClick,	PLGeneral::uint32,			const PLMath::Vector2i&,	"Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters",	"")
+		pl_signal_2(SignalMouseButtonDown,			PLCore::uint32,				const PLMath::Vector2i&,	"Mouse button is pressed, mouse button and mouse position within the widget as parameters",					"")
+		pl_signal_2(SignalMouseButtonUp,			PLCore::uint32,				const PLMath::Vector2i&,	"Mouse button is released, mouse button and mouse position within the widget as parameters",				"")
+		pl_signal_2(SignalMouseButtonClick,			PLCore::uint32,				const PLMath::Vector2i&,	"Mouse button has been clicked, mouse button and mouse position within the widget as parameters",			"")
+		pl_signal_2(SignalMouseButtonDoubleClick,	PLCore::uint32,				const PLMath::Vector2i&,	"Mouse button has been double-clicked, mouse button and mouse position within the widget as parameters",	"")
 		pl_signal_1(SignalMouseWheel,				int,													"Mouse wheel moved, mouse wheel movement as parameter",														"")
-		pl_signal_2(SignalKeyDown,					PLGeneral::uint32,			PLGeneral::uint32,			"Key gets pressed, pressed key and modifier keys pressed as parameters",									"")
-		pl_signal_2(SignalKeyUp,					PLGeneral::uint32,			PLGeneral::uint32,			"Key gets released, released key and modifier keys pressed as parameters",									"")
-		pl_signal_1(SignalHotkey,					PLGeneral::uint32,										"Hotkey pressed, hotkey ID as parameter",																	"")
+		pl_signal_2(SignalKeyDown,					PLCore::uint32,				PLCore::uint32,				"Key gets pressed, pressed key and modifier keys pressed as parameters",									"")
+		pl_signal_2(SignalKeyUp,					PLCore::uint32,				PLCore::uint32,				"Key gets released, released key and modifier keys pressed as parameters",									"")
+		pl_signal_1(SignalHotkey,					PLCore::uint32,											"Hotkey pressed, hotkey ID as parameter",																	"")
 		pl_signal_1(SignalDrop,						const DataObject&,										"Data has been dropped onto the widget, data as parameter",													"")
 	pl_class_end
 
@@ -185,7 +185,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    there you need to pass a valid system handle for the window being wrapped. This only works
 		*    with the system GUI, which is being used automatically.
 		*/
-		PLGUI_API Widget(PLGeneral::handle nWindowHandle);
+		PLGUI_API Widget(PLCore::handle nWindowHandle);
 
 		/**
 		*  @brief
@@ -218,7 +218,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Window handle
 		*/
-		PLGUI_API PLGeneral::handle GetWindowHandle() const;
+		PLGUI_API PLCore::handle GetWindowHandle() const;
 
 		//[-------------------------------------------------------]
 		//[ Widget information                                    ]
@@ -230,7 +230,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Widget ID
 		*/
-		PLGUI_API PLGeneral::uint32 GetID() const;
+		PLGUI_API PLCore::uint32 GetID() const;
 
 		/**
 		*  @brief
@@ -239,7 +239,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] nID
 		*    Widget ID
 		*/
-		PLGUI_API void SetID(PLGeneral::uint32 nID);
+		PLGUI_API void SetID(PLCore::uint32 nID);
 
 		/**
 		*  @brief
@@ -248,7 +248,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Widget name
 		*/
-		PLGUI_API PLGeneral::String GetName() const;
+		PLGUI_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -257,7 +257,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] sName
 		*    Widget name
 		*/
-		PLGUI_API void SetName(const PLGeneral::String &sName);
+		PLGUI_API void SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    handle if all of the previous mentioned weren't available.
 		*    Use this function e.g. to output a widget descriptor in debug messages.
 		*/
-		PLGUI_API PLGeneral::String GetDescriptor() const;
+		PLGUI_API PLCore::String GetDescriptor() const;
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Widget title
 		*/
-		PLGUI_API PLGeneral::String GetTitle() const;
+		PLGUI_API PLCore::String GetTitle() const;
 
 		/**
 		*  @brief
@@ -320,7 +320,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] sTitle
 		*    Widget title
 		*/
-		PLGUI_API void SetTitle(const PLGeneral::String &sTitle);
+		PLGUI_API void SetTitle(const PLCore::String &sTitle);
 
 		/**
 		*  @brief
@@ -415,7 +415,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    List of child widgets
 		*/
-		PLGUI_API const PLGeneral::List<Widget*> &GetChildren() const;
+		PLGUI_API const PLCore::List<Widget*> &GetChildren() const;
 
 		/**
 		*  @brief
@@ -933,7 +933,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    function can be overwritten in derived classes to modify it's behaviour according to
 		*    the widget or add new states (e.g. WidgetPressed for buttons)
 		*/
-		PLGUI_API virtual PLGeneral::uint32 GetWidgetState() const;
+		PLGUI_API virtual PLCore::uint32 GetWidgetState() const;
 
 		/**
 		*  @brief
@@ -989,7 +989,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    Hotkey ID, 0 on error
 		*/
-		PLGUI_API PLGeneral::uint32 RegisterHotkey(PLGeneral::uint32 nModKey, PLGeneral::uint32 nKey);
+		PLGUI_API PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey);
 
 		/**
 		*  @brief
@@ -998,7 +998,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] nID
 		*    Hotkey ID
 		*/
-		PLGUI_API void UnregisterHotkey(PLGeneral::uint32 nID);
+		PLGUI_API void UnregisterHotkey(PLCore::uint32 nID);
 
 		//[-------------------------------------------------------]
 		//[ Theme                                                 ]
@@ -1031,7 +1031,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @return
 		*    List of modifiers that belong to the widget
 		*/
-		PLGUI_API const PLGeneral::List<Modifier*> &GetModifiers() const;
+		PLGUI_API const PLCore::List<Modifier*> &GetModifiers() const;
 
 		/**
 		*  @brief
@@ -1043,7 +1043,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @remarks
 		*    Modifier, or a null pointer if no modifier with that name exists
 		*/
-		PLGUI_API Modifier *GetModifier(const PLGeneral::String &sName) const;
+		PLGUI_API Modifier *GetModifier(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -1072,7 +1072,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    If a name is provided and there is already a modifier with the same name, the old modifier is
 		*    destroyed and replaced by the new one.
 		*/
-		PLGUI_API void AddModifier(const PLGeneral::String &sName, Modifier *pModifier);
+		PLGUI_API void AddModifier(const PLCore::String &sName, Modifier *pModifier);
 
 		/**
 		*  @brief
@@ -1083,7 +1083,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] sOptions
 		*    Options for the modifier
 		*/
-		PLGUI_API void AddModifier(const PLGeneral::String &sClass, const PLGeneral::String &sOptions);
+		PLGUI_API void AddModifier(const PLCore::String &sClass, const PLCore::String &sOptions);
 
 		/**
 		*  @brief
@@ -1101,7 +1101,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    If a name is provided and there is already a modifier with the same name, the old modifier is
 		*    destroyed and replaced by the new one.
 		*/
-		PLGUI_API void AddModifier(const PLGeneral::String &sName, const PLGeneral::String &sClass, const PLGeneral::String &sOptions);
+		PLGUI_API void AddModifier(const PLCore::String &sName, const PLCore::String &sClass, const PLCore::String &sOptions);
 
 		/**
 		*  @brief
@@ -1125,7 +1125,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @remarks
 		*    The widget will remove and delete the modifier
 		*/
-		PLGUI_API void RemoveModifier(const PLGeneral::String &sName);
+		PLGUI_API void RemoveModifier(const PLCore::String &sName);
 
 		//[-------------------------------------------------------]
 		//[ Layout                                                ]
@@ -1160,7 +1160,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @param[in] sOptions
 		*    Layout options
 		*/
-		PLGUI_API void SetLayout(const PLGeneral::String &sClass, const PLGeneral::String &sOptions);
+		PLGUI_API void SetLayout(const PLCore::String &sClass, const PLCore::String &sOptions);
 
 		/**
 		*  @brief
@@ -1284,33 +1284,32 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		// Data
-		Gui												 *m_pGui;				/**< Pointer to GUI instance */
-		bool											  m_bManaged;			/**< If a widget is managed, it will not be listed in the list of toplevel widgets and not be deleted automatically! */
-		bool											  m_bRootWidget;		/**< If 'true', the widget is a dummy object for the 'root' of a GUI implementation (no real widget at all!) */
-		PLGeneral::uint32								  m_nID;				/**< Widget ID */
-		PLGeneral::String								  m_sName;				/**< Widget name */
-		Widget											 *m_pParent;			/**< Pointer to parent widget */
-		WidgetImpl										 *m_pWidgetImpl;		/**< Widget implementation */
-		Theme											 *m_pTheme;				/**< Current theme */
-		PLGeneral::List<Widget*>						  m_lstChildren;		/**< List of child widgets */
-		PLGeneral::List<Modifier*>						  m_lstModifiers;		/**< List of modifiers */
-		PLGeneral::HashMap<PLGeneral::String, Modifier*>  m_mapModifiers;		/**< Map 'Name' -> 'Modifier' */
-		Layout											 *m_pLayout;			/**< Layout */
-		LayoutHints										  m_cLayoutHints;		/**< Layout hints for the widget */
-		EWindowState									  m_nWindowState;		/**< Current window state */
-		PLMath::Vector2i								  m_vPos;				/**< Position of the widget */
-		PLMath::Vector2i								  m_vSize;				/**< Size of the widget */
-		bool											  m_bTopmost;			/**< Topmost flag */
-		PLGeneral::String								  m_sTitle;				/**< Widget title */
-		Image											  m_cIcon;				/**< Widget icon */
-		Cursor											  m_cCursor;			/**< Mouse cursor */
-		EFocusStyle										  m_nFocusStyle;		/**< How does this widget accept the keyboard focus? */
-		bool											  m_bTabStop;			/**< Does the widget accept the focus by tabbing? */
-		bool											  m_bCaptureMouse;		/**< Is the mouse captured by the widget? */
-		PLGraphics::Color4								  m_cBackgroundColor;	/**< Background color of the widget */
-		PLMath::Vector2i								  m_vPreferredSize;		/**< Preferred size of the widget */
-		void											 *m_pUserData;			/**< User defined data */
+		Gui											 *m_pGui;				/**< Pointer to GUI instance */
+		bool										  m_bManaged;			/**< If a widget is managed, it will not be listed in the list of toplevel widgets and not be deleted automatically! */
+		bool										  m_bRootWidget;		/**< If 'true', the widget is a dummy object for the 'root' of a GUI implementation (no real widget at all!) */
+		PLCore::uint32								  m_nID;				/**< Widget ID */
+		PLCore::String								  m_sName;				/**< Widget name */
+		Widget										 *m_pParent;			/**< Pointer to parent widget */
+		WidgetImpl									 *m_pWidgetImpl;		/**< Widget implementation */
+		Theme										 *m_pTheme;				/**< Current theme */
+		PLCore::List<Widget*>						  m_lstChildren;		/**< List of child widgets */
+		PLCore::List<Modifier*>						  m_lstModifiers;		/**< List of modifiers */
+		PLCore::HashMap<PLCore::String, Modifier*>    m_mapModifiers;		/**< Map 'Name' -> 'Modifier' */
+		Layout										 *m_pLayout;			/**< Layout */
+		LayoutHints									  m_cLayoutHints;		/**< Layout hints for the widget */
+		EWindowState								  m_nWindowState;		/**< Current window state */
+		PLMath::Vector2i							  m_vPos;				/**< Position of the widget */
+		PLMath::Vector2i							  m_vSize;				/**< Size of the widget */
+		bool										  m_bTopmost;			/**< Topmost flag */
+		PLCore::String								  m_sTitle;				/**< Widget title */
+		Image										  m_cIcon;				/**< Widget icon */
+		Cursor										  m_cCursor;			/**< Mouse cursor */
+		EFocusStyle									  m_nFocusStyle;		/**< How does this widget accept the keyboard focus? */
+		bool										  m_bTabStop;			/**< Does the widget accept the focus by tabbing? */
+		bool										  m_bCaptureMouse;		/**< Is the mouse captured by the widget? */
+		PLGraphics::Color4							  m_cBackgroundColor;	/**< Background color of the widget */
+		PLMath::Vector2i							  m_vPreferredSize;		/**< Preferred size of the widget */
+		void										 *m_pUserData;			/**< User defined data */
 
 
 };

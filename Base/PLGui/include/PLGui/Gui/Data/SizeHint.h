@@ -85,7 +85,7 @@ class SizeHint {
 		*  @param[in] nSize
 		*    Size
 		*/
-		PLGUI_API SizeHint(EPolicy nPolicy = Floating, PLGeneral::uint32 nSize = 0);
+		PLGUI_API SizeHint(EPolicy nPolicy = Floating, PLCore::uint32 nSize = 0);
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class SizeHint {
 		*  @return
 		*    Size
 		*/
-		PLGUI_API PLGeneral::uint32 GetSize() const;
+		PLGUI_API PLCore::uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class SizeHint {
 		*  @param[in] nSize
 		*    Size
 		*/
-		PLGUI_API void SetSize(PLGeneral::uint32 nSize);
+		PLGUI_API void SetSize(PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class SizeHint {
 		*  @param[in] nSize
 		*    Size
 		*/
-		PLGUI_API void Set(EPolicy nPolicy, PLGeneral::uint32 nSize);
+		PLGUI_API void Set(EPolicy nPolicy, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class SizeHint {
 		*  @return
 		*    Size, or -1 of policy is Floating
 		*/
-		PLGUI_API int CalculateSize(PLGeneral::uint32 nParentSize, int nPreferredSize) const;
+		PLGUI_API int CalculateSize(PLCore::uint32 nParentSize, int nPreferredSize) const;
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class SizeHint {
 		*  @return
 		*    String representation
 		*/
-		PLGUI_API PLGeneral::String ToString() const;
+		PLGUI_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class SizeHint {
 		*  @return
 		*    'true' on success, else 'false'
 		*/
-		PLGUI_API bool FromString(const PLGeneral::String &sString);
+		PLGUI_API bool FromString(const PLCore::String &sString);
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Stack.h>
+#include <PLCore/Container/Stack.h>
 #include "PLMath/PlaneSet.h"
 
 
@@ -81,7 +81,7 @@ class Frustum : public PlaneSet {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Stack<PlaneSet> m_cStack;	/**< Frustum backups */
+		PLCore::Stack<PlaneSet> m_cStack;	/**< Frustum backups */
 
 
 };

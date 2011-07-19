@@ -64,8 +64,8 @@ class ImageLoaderTGA : public ImageLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Image&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Image&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Image&,			PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Image&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -73,8 +73,8 @@ class ImageLoaderTGA : public ImageLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLGRAPHICS_API bool Load(Image &cImage, PLGeneral::File &cFile);
-		PLGRAPHICS_API bool Save(const Image &cImage, PLGeneral::File &cFile);
+		PLGRAPHICS_API bool Load(Image &cImage, PLCore::File &cFile);
+		PLGRAPHICS_API bool Save(const Image &cImage, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

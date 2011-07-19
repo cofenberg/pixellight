@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
+#include <PLCore/Xml/Xml.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/TextureBuffer.h"
 #include "PLRenderer/Texture/Texture.h"
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -64,7 +64,7 @@ uint32 ParameterManager::GetNumOfParameters() const
 *  @brief
 *    Creates a new parameter
 */
-Parameter *ParameterManager::CreateParameter(EDataType nType, const PLGeneral::String &sName)
+Parameter *ParameterManager::CreateParameter(EDataType nType, const PLCore::String &sName)
 {
 	// Check parameter
 	if (nType >= UnknownDataType)
@@ -97,7 +97,7 @@ Parameter *ParameterManager::GetParameter(uint32 nIndex) const
 *  @brief
 *    Gets a parameter by name
 */
-Parameter *ParameterManager::GetParameter(const PLGeneral::String &sName) const
+Parameter *ParameterManager::GetParameter(const PLCore::String &sName) const
 {
 	return m_mapParameters.Get(sName);
 }
@@ -124,7 +124,7 @@ bool ParameterManager::AddParametersToXMLElement(XmlElement &cElement) const
 				pParameterElement->SetAttribute("Name", pParameter->m_sName);
 
 			// Write parameter value instead
-			const PLGeneral::String sValue = pParameter->GetParameterString();
+			const PLCore::String sValue = pParameter->GetParameterString();
 			if (sValue.GetLength()) {
 				XmlText *pValue = new XmlText(sValue);
 				pParameterElement->LinkEndChild(*pValue);
@@ -149,7 +149,7 @@ bool ParameterManager::AddParameterFromXMLElement(const XmlElement &cElement)
 	const EDataType nType = DataTypeFromString(cElement.GetValue());
 	if (nType != UnknownDataType) {
 		// Name
-		const PLGeneral::String sName = cElement.GetAttribute("Name");
+		const PLCore::String sName = cElement.GetAttribute("Name");
 		if (sName.GetLength()) {
 			// IS there already a parameter with this name?
 			if (m_mapParameters.Get(sName))
@@ -197,7 +197,7 @@ bool ParameterManager::RemoveParameter(uint32 nIndex)
 *  @brief
 *    Removes a parameter by name
 */
-bool ParameterManager::RemoveParameter(const PLGeneral::String &sName)
+bool ParameterManager::RemoveParameter(const PLCore::String &sName)
 {
 	// Get the parameter to remove
 	Parameter *pParameter = m_mapParameters.Get(sName);
@@ -307,18 +307,18 @@ void ParameterManager::OnParameterChange(Parameter &cParameter) const
 //[-------------------------------------------------------]
 //[ Public virtual Parameters functions                   ]
 //[-------------------------------------------------------]
-bool ParameterManager::IsParameter(const PLGeneral::String &sName) const
+bool ParameterManager::IsParameter(const PLCore::String &sName) const
 {
 	return (m_mapParameters.Get(sName) != nullptr);
 }
 
-PLGeneral::String ParameterManager::GetParameterString(const PLGeneral::String &sName) const
+String ParameterManager::GetParameterString(const PLCore::String &sName) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return pParameter ? pParameter->GetParameterString() : "";
 }
 
-bool ParameterManager::SetParameterString(const PLGeneral::String &sName, const PLGeneral::String &sValue)
+bool ParameterManager::SetParameterString(const PLCore::String &sName, const PLCore::String &sValue)
 {
 	Parameter *pParameter = CreateParameter(String, sName);
 	return (pParameter && pParameter->SetParameterString(sValue));
@@ -326,26 +326,26 @@ bool ParameterManager::SetParameterString(const PLGeneral::String &sName, const 
 
 
 // Integer
-bool ParameterManager::GetParameter1i(const PLGeneral::String &sName, int &nX) const
+bool ParameterManager::GetParameter1i(const PLCore::String &sName, int &nX) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue1i(nX));
 }
 
-bool ParameterManager::SetParameter1i(const PLGeneral::String &sName, int nX)
+bool ParameterManager::SetParameter1i(const PLCore::String &sName, int nX)
 {
 	Parameter *pParameter = CreateParameter(Integer, sName);
 	return (pParameter && pParameter->SetValue1i(nX));
 }
 
 // Integer2
-bool ParameterManager::GetParameter2i(const PLGeneral::String &sName, int &nX, int &nY) const
+bool ParameterManager::GetParameter2i(const PLCore::String &sName, int &nX, int &nY) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue2i(nX, nY));
 }
 
-bool ParameterManager::GetParameter2iv(const PLGeneral::String &sName, int nValue[]) const
+bool ParameterManager::GetParameter2iv(const PLCore::String &sName, int nValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -356,26 +356,26 @@ bool ParameterManager::GetParameter2iv(const PLGeneral::String &sName, int nValu
 	}
 }
 
-bool ParameterManager::SetParameter2i(const PLGeneral::String &sName, int nX, int nY)
+bool ParameterManager::SetParameter2i(const PLCore::String &sName, int nX, int nY)
 {
 	Parameter *pParameter = CreateParameter(Integer2, sName);
 	return (pParameter && pParameter->SetValue2i(nX, nY));
 }
 
-bool ParameterManager::SetParameter2iv(const PLGeneral::String &sName, const int nValue[])
+bool ParameterManager::SetParameter2iv(const PLCore::String &sName, const int nValue[])
 {
 	Parameter *pParameter = CreateParameter(Integer2, sName);
 	return (pParameter && pParameter->SetValue2iv(nValue));
 }
 
 // Integer3
-bool ParameterManager::GetParameter3i(const PLGeneral::String &sName, int &nX, int &nY, int &nZ) const
+bool ParameterManager::GetParameter3i(const PLCore::String &sName, int &nX, int &nY, int &nZ) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue3i(nX, nY, nZ));
 }
 
-bool ParameterManager::GetParameter3iv(const PLGeneral::String &sName, int nValue[]) const
+bool ParameterManager::GetParameter3iv(const PLCore::String &sName, int nValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -386,26 +386,26 @@ bool ParameterManager::GetParameter3iv(const PLGeneral::String &sName, int nValu
 	}
 }
 
-bool ParameterManager::SetParameter3i(const PLGeneral::String &sName, int nX, int nY, int nZ)
+bool ParameterManager::SetParameter3i(const PLCore::String &sName, int nX, int nY, int nZ)
 {
 	Parameter *pParameter = CreateParameter(Integer3, sName);
 	return (pParameter && pParameter->SetValue3i(nX, nY, nZ));
 }
 
-bool ParameterManager::SetParameter3iv(const PLGeneral::String &sName, const int nValue[])
+bool ParameterManager::SetParameter3iv(const PLCore::String &sName, const int nValue[])
 {
 	Parameter *pParameter = CreateParameter(Integer3, sName);
 	return (pParameter && pParameter->SetValue3iv(nValue));
 }
 
 // Integer4
-bool ParameterManager::GetParameter4i(const PLGeneral::String &sName, int &nX, int &nY, int &nZ, int &nW) const
+bool ParameterManager::GetParameter4i(const PLCore::String &sName, int &nX, int &nY, int &nZ, int &nW) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue4i(nX, nY, nZ, nW));
 }
 
-bool ParameterManager::GetParameter4iv(const PLGeneral::String &sName, int nValue[]) const
+bool ParameterManager::GetParameter4iv(const PLCore::String &sName, int nValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -416,13 +416,13 @@ bool ParameterManager::GetParameter4iv(const PLGeneral::String &sName, int nValu
 	}
 }
 
-bool ParameterManager::SetParameter4i(const PLGeneral::String &sName, int nX, int nY, int nZ, int nW)
+bool ParameterManager::SetParameter4i(const PLCore::String &sName, int nX, int nY, int nZ, int nW)
 {
 	Parameter *pParameter = CreateParameter(Integer4, sName);
 	return (pParameter && pParameter->SetValue4i(nX, nY, nZ, nW));
 }
 
-bool ParameterManager::SetParameter4iv(const PLGeneral::String &sName, const int nValue[])
+bool ParameterManager::SetParameter4iv(const PLCore::String &sName, const int nValue[])
 {
 	Parameter *pParameter = CreateParameter(Integer4, sName);
 	return (pParameter && pParameter->SetValue4iv(nValue));
@@ -430,26 +430,26 @@ bool ParameterManager::SetParameter4iv(const PLGeneral::String &sName, const int
 
 
 // Float
-bool ParameterManager::GetParameter1f(const PLGeneral::String &sName, float &fX) const
+bool ParameterManager::GetParameter1f(const PLCore::String &sName, float &fX) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue1f(fX));
 }
 
-bool ParameterManager::SetParameter1f(const PLGeneral::String &sName, float fX)
+bool ParameterManager::SetParameter1f(const PLCore::String &sName, float fX)
 {
 	Parameter *pParameter = CreateParameter(Float, sName);
 	return (pParameter && pParameter->SetValue1f(fX));
 }
 
 // Float2
-bool ParameterManager::GetParameter2f(const PLGeneral::String &sName, float &fX, float &fY) const
+bool ParameterManager::GetParameter2f(const PLCore::String &sName, float &fX, float &fY) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue2f(fX, fY));
 }
 
-bool ParameterManager::GetParameter2fv(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameter2fv(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -460,26 +460,26 @@ bool ParameterManager::GetParameter2fv(const PLGeneral::String &sName, float fVa
 	}
 }
 
-bool ParameterManager::SetParameter2f(const PLGeneral::String &sName, float fX, float fY)
+bool ParameterManager::SetParameter2f(const PLCore::String &sName, float fX, float fY)
 {
 	Parameter *pParameter = CreateParameter(Float2, sName);
 	return (pParameter && pParameter->SetValue2f(fX, fY));
 }
 
-bool ParameterManager::SetParameter2fv(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameter2fv(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float2, sName);
 	return (pParameter && pParameter->SetValue2fv(fValue));
 }
 
 // Float3
-bool ParameterManager::GetParameter3f(const PLGeneral::String &sName, float &fX, float &fY, float &fZ) const
+bool ParameterManager::GetParameter3f(const PLCore::String &sName, float &fX, float &fY, float &fZ) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue3f(fX, fY, fZ));
 }
 
-bool ParameterManager::GetParameter3fv(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameter3fv(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -490,26 +490,26 @@ bool ParameterManager::GetParameter3fv(const PLGeneral::String &sName, float fVa
 	}
 }
 
-bool ParameterManager::SetParameter3f(const PLGeneral::String &sName, float fX, float fY, float fZ)
+bool ParameterManager::SetParameter3f(const PLCore::String &sName, float fX, float fY, float fZ)
 {
 	Parameter *pParameter = CreateParameter(Float3, sName);
 	return (pParameter && pParameter->SetValue3f(fX, fY, fZ));
 }
 
-bool ParameterManager::SetParameter3fv(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameter3fv(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float3, sName);
 	return (pParameter && pParameter->SetValue3fv(fValue));
 }
 
 // Float4
-bool ParameterManager::GetParameter4f(const PLGeneral::String &sName, float &fX, float &fY, float &fZ, float &fW) const
+bool ParameterManager::GetParameter4f(const PLCore::String &sName, float &fX, float &fY, float &fZ, float &fW) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue4f(fX, fY, fZ, fW));
 }
 
-bool ParameterManager::GetParameter4fv(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameter4fv(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -520,13 +520,13 @@ bool ParameterManager::GetParameter4fv(const PLGeneral::String &sName, float fVa
 	}
 }
 
-bool ParameterManager::SetParameter4f(const PLGeneral::String &sName, float fX, float fY, float fZ, float fW)
+bool ParameterManager::SetParameter4f(const PLCore::String &sName, float fX, float fY, float fZ, float fW)
 {
 	Parameter *pParameter = CreateParameter(Float4, sName);
 	return (pParameter && pParameter->SetValue4f(fX, fY, fZ, fW));
 }
 
-bool ParameterManager::SetParameter4fv(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameter4fv(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float4, sName);
 	return (pParameter && pParameter->SetValue4fv(fValue));
@@ -534,26 +534,26 @@ bool ParameterManager::SetParameter4fv(const PLGeneral::String &sName, const flo
 
 
 // Double
-bool ParameterManager::GetParameter1d(const PLGeneral::String &sName, double &fX) const
+bool ParameterManager::GetParameter1d(const PLCore::String &sName, double &fX) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue1d(fX));
 }
 
-bool ParameterManager::SetParameter1d(const PLGeneral::String &sName, double fX)
+bool ParameterManager::SetParameter1d(const PLCore::String &sName, double fX)
 {
 	Parameter *pParameter = CreateParameter(Double, sName);
 	return (pParameter && pParameter->SetValue1d(fX));
 }
 
 // Double2
-bool ParameterManager::GetParameter2d(const PLGeneral::String &sName, double &fX, double &fY) const
+bool ParameterManager::GetParameter2d(const PLCore::String &sName, double &fX, double &fY) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue2d(fX, fY));
 }
 
-bool ParameterManager::GetParameter2dv(const PLGeneral::String &sName, double fValue[]) const
+bool ParameterManager::GetParameter2dv(const PLCore::String &sName, double fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -564,26 +564,26 @@ bool ParameterManager::GetParameter2dv(const PLGeneral::String &sName, double fV
 	}
 }
 
-bool ParameterManager::SetParameter2d(const PLGeneral::String &sName, double fX, double fY)
+bool ParameterManager::SetParameter2d(const PLCore::String &sName, double fX, double fY)
 {
 	Parameter *pParameter = CreateParameter(Double2, sName);
 	return (pParameter && pParameter->SetValue2d(fX, fY));
 }
 
-bool ParameterManager::SetParameter2dv(const PLGeneral::String &sName, const double fValue[])
+bool ParameterManager::SetParameter2dv(const PLCore::String &sName, const double fValue[])
 {
 	Parameter *pParameter = CreateParameter(Double2, sName);
 	return (pParameter && pParameter->SetValue2dv(fValue));
 }
 
 // Double3
-bool ParameterManager::GetParameter3d(const PLGeneral::String &sName, double &fX, double &fY, double &fZ) const
+bool ParameterManager::GetParameter3d(const PLCore::String &sName, double &fX, double &fY, double &fZ) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue3d(fX, fY, fZ));
 }
 
-bool ParameterManager::GetParameter3dv(const PLGeneral::String &sName, double fValue[]) const
+bool ParameterManager::GetParameter3dv(const PLCore::String &sName, double fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -594,26 +594,26 @@ bool ParameterManager::GetParameter3dv(const PLGeneral::String &sName, double fV
 	}
 }
 
-bool ParameterManager::SetParameter3d(const PLGeneral::String &sName, double fX, double fY, double fZ)
+bool ParameterManager::SetParameter3d(const PLCore::String &sName, double fX, double fY, double fZ)
 {
 	Parameter *pParameter = CreateParameter(Double3, sName);
 	return (pParameter && pParameter->SetValue3d(fX, fY, fZ));
 }
 
-bool ParameterManager::SetParameter3dv(const PLGeneral::String &sName, const double fValue[])
+bool ParameterManager::SetParameter3dv(const PLCore::String &sName, const double fValue[])
 {
 	Parameter *pParameter = CreateParameter(Double3, sName);
 	return (pParameter && pParameter->SetValue3dv(fValue));
 }
 
 // Double4
-bool ParameterManager::GetParameter4d(const PLGeneral::String &sName, double &fX, double &fY, double &fZ, double &fW) const
+bool ParameterManager::GetParameter4d(const PLCore::String &sName, double &fX, double &fY, double &fZ, double &fW) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return (pParameter && pParameter->GetValue4d(fX, fY, fZ, fW));
 }
 
-bool ParameterManager::GetParameter4dv(const PLGeneral::String &sName, double fValue[]) const
+bool ParameterManager::GetParameter4dv(const PLCore::String &sName, double fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter)
@@ -624,13 +624,13 @@ bool ParameterManager::GetParameter4dv(const PLGeneral::String &sName, double fV
 	}
 }
 
-bool ParameterManager::SetParameter4d(const PLGeneral::String &sName, double fX, double fY, double fZ, double fW)
+bool ParameterManager::SetParameter4d(const PLCore::String &sName, double fX, double fY, double fZ, double fW)
 {
 	Parameter *pParameter = CreateParameter(Double4, sName);
 	return (pParameter && pParameter->SetValue4d(fX, fY, fZ, fW));
 }
 
-bool ParameterManager::SetParameter4dv(const PLGeneral::String &sName, const double fValue[])
+bool ParameterManager::SetParameter4dv(const PLCore::String &sName, const double fValue[])
 {
 	Parameter *pParameter = CreateParameter(Double4, sName);
 	return (pParameter && pParameter->SetValue4dv(fValue));
@@ -638,13 +638,13 @@ bool ParameterManager::SetParameter4dv(const PLGeneral::String &sName, const dou
 
 
 // Float3x3
-bool ParameterManager::GetParameterFloat3x3(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameterFloat3x3(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
 		const float *pfTemp = pParameter->GetValueFloat3x3();
 		if (pfTemp) {
-			PLGeneral::MemoryManager::Copy(fValue, pfTemp, sizeof(float)*3*3);
+			MemoryManager::Copy(fValue, pfTemp, sizeof(float)*3*3);
 
 			// Done
 			return true;
@@ -655,7 +655,7 @@ bool ParameterManager::GetParameterFloat3x3(const PLGeneral::String &sName, floa
 	return false;
 }
 
-bool ParameterManager::SetParameterFloat3x3(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameterFloat3x3(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float3x3, sName);
 	return (pParameter && pParameter->SetValueFloat3x3(fValue));
@@ -663,13 +663,13 @@ bool ParameterManager::SetParameterFloat3x3(const PLGeneral::String &sName, cons
 
 
 // Float3x4
-bool ParameterManager::GetParameterFloat3x4(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameterFloat3x4(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
 		const float *pfTemp = pParameter->GetValueFloat3x4();
 		if (pfTemp) {
-			PLGeneral::MemoryManager::Copy(fValue, pfTemp, sizeof(float)*3*4);
+			MemoryManager::Copy(fValue, pfTemp, sizeof(float)*3*4);
 
 			// Done
 			return true;
@@ -680,7 +680,7 @@ bool ParameterManager::GetParameterFloat3x4(const PLGeneral::String &sName, floa
 	return false;
 }
 
-bool ParameterManager::SetParameterFloat3x4(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameterFloat3x4(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float3x4, sName);
 	return (pParameter && pParameter->SetValueFloat3x4(fValue));
@@ -688,13 +688,13 @@ bool ParameterManager::SetParameterFloat3x4(const PLGeneral::String &sName, cons
 
 
 // Float4x4
-bool ParameterManager::GetParameterMatrixfv(const PLGeneral::String &sName, float fValue[]) const
+bool ParameterManager::GetParameterMatrixfv(const PLCore::String &sName, float fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
 		const float *pfTemp = pParameter->GetValueMatrixfv();
 		if (pfTemp) {
-			PLGeneral::MemoryManager::Copy(fValue, pfTemp, sizeof(float)*4*4);
+			MemoryManager::Copy(fValue, pfTemp, sizeof(float)*4*4);
 
 			// Done
 			return true;
@@ -705,7 +705,7 @@ bool ParameterManager::GetParameterMatrixfv(const PLGeneral::String &sName, floa
 	return false;
 }
 
-bool ParameterManager::SetParameterMatrixfv(const PLGeneral::String &sName, const float fValue[])
+bool ParameterManager::SetParameterMatrixfv(const PLCore::String &sName, const float fValue[])
 {
 	Parameter *pParameter = CreateParameter(Float4x4, sName);
 	return (pParameter && pParameter->SetValueMatrixfv(fValue));
@@ -713,13 +713,13 @@ bool ParameterManager::SetParameterMatrixfv(const PLGeneral::String &sName, cons
 
 
 // Double4x4
-bool ParameterManager::GetParameterMatrixdv(const PLGeneral::String &sName, double fValue[]) const
+bool ParameterManager::GetParameterMatrixdv(const PLCore::String &sName, double fValue[]) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
 		const double *pfTemp = pParameter->GetValueMatrixdv();
 		if (pfTemp) {
-			PLGeneral::MemoryManager::Copy(fValue, pfTemp, sizeof(double)*4*4);
+			MemoryManager::Copy(fValue, pfTemp, sizeof(double)*4*4);
 
 			// Done
 			return true;
@@ -730,7 +730,7 @@ bool ParameterManager::GetParameterMatrixdv(const PLGeneral::String &sName, doub
 	return false;
 }
 
-bool ParameterManager::SetParameterMatrixdv(const PLGeneral::String &sName, const double fValue[])
+bool ParameterManager::SetParameterMatrixdv(const PLCore::String &sName, const double fValue[])
 {
 	Parameter *pParameter = CreateParameter(Double4x4, sName);
 	return (pParameter && pParameter->SetValueMatrixdv(fValue));
@@ -738,7 +738,7 @@ bool ParameterManager::SetParameterMatrixdv(const PLGeneral::String &sName, cons
 
 
 // Texture buffer
-TextureBuffer *ParameterManager::GetParameterTextureBuffer(const PLGeneral::String &sName) const
+TextureBuffer *ParameterManager::GetParameterTextureBuffer(const PLCore::String &sName) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	if (pParameter) {
@@ -750,7 +750,7 @@ TextureBuffer *ParameterManager::GetParameterTextureBuffer(const PLGeneral::Stri
 	}
 }
 
-int ParameterManager::SetParameterTextureBuffer(const PLGeneral::String &sName, PLRenderer::TextureBuffer *pTextureBuffer)
+int ParameterManager::SetParameterTextureBuffer(const PLCore::String &sName, PLRenderer::TextureBuffer *pTextureBuffer)
 {
 	Parameter *pParameter = CreateParameter(TextureBuffer, sName);
 	if (pParameter) {
@@ -783,13 +783,13 @@ int ParameterManager::SetParameterTextureBuffer(const PLGeneral::String &sName, 
 	}
 }
 
-Texture *ParameterManager::GetParameterTexture(const PLGeneral::String &sName) const
+Texture *ParameterManager::GetParameterTexture(const PLCore::String &sName) const
 {
 	const Parameter *pParameter = m_mapParameters.Get(sName);
 	return pParameter ? pParameter->GetValueTexture() : nullptr;
 }
 
-int ParameterManager::SetParameterTexture(const PLGeneral::String &sName, const PLGeneral::String &sFilename)
+int ParameterManager::SetParameterTexture(const PLCore::String &sName, const PLCore::String &sFilename)
 {
 	Parameter *pParameter = CreateParameter(TextureBuffer, sName);
 	if (pParameter) {
@@ -800,7 +800,7 @@ int ParameterManager::SetParameterTexture(const PLGeneral::String &sName, const 
 	}
 }
 
-int ParameterManager::SetParameterTexture(const PLGeneral::String &sName, Texture *pTexture)
+int ParameterManager::SetParameterTexture(const PLCore::String &sName, Texture *pTexture)
 {
 	Parameter *pParameter = CreateParameter(TextureBuffer, sName);
 	if (pParameter) {

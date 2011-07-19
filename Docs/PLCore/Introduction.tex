@@ -3,7 +3,9 @@
 
 
 \paragraph{Motivation}
-The PixelLight core component provides more advanced features that are usually quite useful for all types of projects. As the project name \emph{PLCore} implies, it's the foundation of the PixelLight framework which is used for the development of complete applications. RTTI, plugins, the application framework - this all is part of the \emph{PLCore} project.
+\emph{PLCore} is the most basic library of PixelLight. In here, you'll find container implementations like linked lists, arrays up to hash maps. Strings, files, checksum, XML, log and interfaces for the general interaction with the used operation system are also available. Usually, every PixelLight basing project is using \emph{PLCore} features because they are just essential and by using it, one can avoid to implement linked lists, strings etc. multiple times within multiple projects which would just be inefficient and error prone.\footnote{When using external third party libraries, it's usually fact that they implement their own linked lists, strings and so on - this shouldn't be the case for PixelLight based projects.}
+
+The PixelLight core component also provides more advanced features that are usually quite useful for all types of projects. As the project name \emph{PLCore} implies, it's the foundation of the PixelLight framework which is used for the development of complete applications. RTTI, plugins, the application framework.
 
 
 \paragraph{Overview}
@@ -52,4 +54,24 @@ While doing this for each case in a controlled way would be the clean way - it w
 
 
 \section{External Dependences}
-PLCore only depends on the \textbf{PLGeneral} library and doesn't use any external third party libraries itself.
+\emph{PLCore} is using some open source third party libraries which are static linked. As a result, the resulting \emph{PLCore} library has no additional external shared library dependencies.
+
+
+\paragraph{zlib}
+\begin{itemize}
+\item ZIP library
+\item \emph{zlib} license
+\item Version \emph{1.2.3}
+\item Used by the zip file classes
+\item Downloaded from \url{http://www.zlib.org/}
+\end{itemize}
+
+
+\paragraph{PCRE}
+\begin{itemize}
+\item Regular expression library
+\item \emph{BSD} license
+\item Version \emph{8.10}
+\item Used by the \emph{RegEx} class
+\item Downloaded from \emph{http://www.pcre.org/}
+\end{itemize}

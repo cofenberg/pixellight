@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLDatabase/PLDatabase.h"
 
 
@@ -102,7 +102,7 @@ class DatabaseQueryResult {
 		*  @return
 		*    Reference to the current field list
 		*/
-		virtual const PLGeneral::Array<PLGeneral::String> &FetchFieldList() = 0;
+		virtual const PLCore::Array<PLCore::String> &FetchFieldList() = 0;
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class DatabaseQueryResult {
 		*  @return
 		*    Pointer to the current row map, a null pointer on error (do NOT delete this!)
 		*/
-		virtual const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> *FetchRow() = 0;
+		virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow() = 0;
 
 
 	//[-------------------------------------------------------]
@@ -132,8 +132,8 @@ class DatabaseQueryResult {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::Array<PLGeneral::String>						 m_lstFields;	/**< List of fields */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapRow;		/**< Row map */
+		PLCore::Array<PLCore::String>					m_lstFields;	/**< List of fields */
+		PLCore::HashMap<PLCore::String, PLCore::String> m_mapRow;		/**< Row map */
 
 
 	//[-------------------------------------------------------]

@@ -38,9 +38,9 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-using namespace PLGraphics;
+using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 namespace PLGui {
 
 
@@ -117,7 +117,7 @@ bool ImageLinux::LoadWithColorKey(const String &sFilename, const Color3 &cColor)
 *  @brief
 *    Load pixmap
 */
-bool ImageLinux::LoadPixmap(const PLGeneral::String &sFilename, const PLGraphics::Color4 &cColorKey)
+bool ImageLinux::LoadPixmap(const String &sFilename, const PLGraphics::Color4 &cColorKey)
 {
 	// Free pixmap
 	if (m_pPixmap)		XFreePixmap(m_pDisplay, m_pPixmap);

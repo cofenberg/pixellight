@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLMath/PLMath.h"
 
 
@@ -57,8 +57,8 @@ class Half {
 	//[-------------------------------------------------------]
 	public:
 		// Some half numbers
-		PLMATH_API static const PLGeneral::uint16 Zero;				/**< Representation of 0.0 */
-		PLMATH_API static const PLGeneral::uint16 One;				/**< Representation of 1.0 */
+		PLMATH_API static const PLCore::uint16 Zero;				/**< Representation of 0.0 */
+		PLMATH_API static const PLCore::uint16 One;					/**< Representation of 1.0 */
 
 		// Important values
 		PLMATH_API static const float SmallestPositive;				/**< Smallest positive half (5.96046448e-08f) */
@@ -81,7 +81,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is zero, else 'false'
 		*/
-		inline static bool IsZero(PLGeneral::uint16 nHalf);
+		inline static bool IsZero(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is negative, else 'false'
 		*/
-		inline static bool IsNegative(PLGeneral::uint16 nHalf);
+		inline static bool IsNegative(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is not a number, else 'false'
 		*/
-		inline static bool IsNotANumber(PLGeneral::uint16 nHalf);
+		inline static bool IsNotANumber(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is finite, else 'false'
 		*/
-		inline static bool IsFinite(PLGeneral::uint16 nHalf);
+		inline static bool IsFinite(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -129,7 +129,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is infinity, else 'false'
 		*/
-		inline static bool IsInfinity(PLGeneral::uint16 nHalf);
+		inline static bool IsInfinity(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is normalized, else 'false'
 		*/
-		inline static bool IsNormalized(PLGeneral::uint16 nHalf);
+		inline static bool IsNormalized(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is de-normalized, else 'false'
 		*/
-		inline static bool IsDenormalized(PLGeneral::uint16 nHalf);
+		inline static bool IsDenormalized(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -168,7 +168,7 @@ class Half {
 		*  [TODO]
 		*    - Implement
 		*/
-		inline static float ToFloat(PLGeneral::uint16 nHalf);
+		inline static float ToFloat(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -183,7 +183,7 @@ class Half {
 		*  [TODO]
 		*    - Implement
 		*/
-		inline static PLGeneral::uint16 FromFloat(float fFloat);
+		inline static PLCore::uint16 FromFloat(float fFloat);
 
 
 };

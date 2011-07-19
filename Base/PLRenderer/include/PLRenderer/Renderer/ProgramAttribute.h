@@ -66,7 +66,7 @@ class ProgramAttribute {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLGeneral::uint32 nIndex) = 0;
+		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLCore::uint32 nIndex) = 0;
 
 		/**
 		*  @brief
@@ -82,7 +82,7 @@ class ProgramAttribute {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer::VertexBuffer::ESemantic nSemantic, PLGeneral::uint32 nChannel = 0) = 0;
+		virtual bool Set(PLRenderer::VertexBuffer *pVertexBuffer, PLRenderer::VertexBuffer::ESemantic nSemantic, PLCore::uint32 nChannel = 0) = 0;
 
 
 	//[-------------------------------------------------------]

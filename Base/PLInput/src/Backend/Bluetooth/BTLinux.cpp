@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <stdlib.h>
 #include <dbus/dbus.h>
-#include <PLGeneral/String/ParseTools.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/String/ParseTools.h>
+#include <PLCore/Log/Log.h>
 #include "PLInput/Backend/Bluetooth/BTLinux.h"
 #include "PLInput/Backend/Bluetooth/BTDeviceLinux.h"
 
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 

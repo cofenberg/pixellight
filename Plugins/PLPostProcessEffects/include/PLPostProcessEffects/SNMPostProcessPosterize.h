@@ -55,10 +55,10 @@ class SNMPostProcessPosterize : public PLCompositing::SNMPostProcess {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessPosterize, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		// Attributes
-		pl_attribute(Gamma,		float,				1.0f,								ReadWrite,	DirectValue,	"Gamma",								"")
-		pl_attribute(Colors,	float,				8.0f,								ReadWrite,	DirectValue,	"Number of colors",						"")
+		pl_attribute(Gamma,		float,			1.0f,								ReadWrite,	DirectValue,	"Gamma",								"")
+		pl_attribute(Colors,	float,			8.0f,								ReadWrite,	DirectValue,	"Number of colors",						"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Posterize.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,	PLCore::String,	"Data/PostProcesses/Posterize.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

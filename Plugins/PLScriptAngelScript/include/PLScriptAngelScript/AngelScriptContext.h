@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -86,7 +86,7 @@ class AngelScriptContext {
 		*  @return
 		*    Unique name
 		*/
-		static PLGeneral::String GetUniqueName();
+		static PLCore::String GetUniqueName();
 
 
 	//[-------------------------------------------------------]
@@ -109,8 +109,8 @@ class AngelScriptContext {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32  m_nContexCounter;		/**< AngelScript context counter */
-		static asIScriptEngine	 *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer */
+		static PLCore::uint32   m_nContexCounter;		/**< AngelScript context counter */
+		static asIScriptEngine *m_pAngelScriptEngine;	/**< AngelScript engine instance, can be a null pointer */
 
 
 };

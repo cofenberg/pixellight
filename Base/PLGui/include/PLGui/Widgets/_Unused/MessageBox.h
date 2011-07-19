@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/String/String.h>
 #include <PLCore/Base/Event/EventHandler.h>
-#include <PLGeneral/String/String.h>
 #include "PLGui/Widgets/Windows/Dialog.h"
 
 
@@ -81,7 +81,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Message box text
 		*/
-		PLGUI_API MessageBox(Widget *pParent = nullptr, EMessageBox nType = MessageBoxOk, const PLGeneral::String &sTitle = "Message Box", const PLGeneral::String &sText = "Message");
+		PLGUI_API MessageBox(Widget *pParent = nullptr, EMessageBox nType = MessageBoxOk, const PLCore::String &sTitle = "Message Box", const PLCore::String &sText = "Message");
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Message box text
 		*/
-		PLGUI_API MessageBox(EMessageBox nType, const PLGeneral::String &sTitle, const PLGeneral::String &sText);
+		PLGUI_API MessageBox(EMessageBox nType, const PLCore::String &sTitle, const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class MessageBox : public Dialog {
 		*  @return
 		*    Text
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class MessageBox : public Dialog {
 		*  @return
 		*    Text
 		*/
-		PLGUI_API PLGeneral::String GetButtonText(EMessageBoxButton nButton) const;
+		PLGUI_API PLCore::String GetButtonText(EMessageBoxButton nButton) const;
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void SetButtonText(EMessageBoxButton nButton, const PLGeneral::String &sText);
+		PLGUI_API void SetButtonText(EMessageBoxButton nButton, const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -175,7 +175,7 @@ class MessageBox : public Dialog {
 		*  @param[in] sText
 		*    Message box text
 		*/
-		void CreateMessageBox(EMessageBox nType, const PLGeneral::String &sTitle, const PLGeneral::String &sText);
+		void CreateMessageBox(EMessageBox nType, const PLCore::String &sTitle, const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class MessageBox : public Dialog {
 
 		// Data
 		EMessageBox			 m_nType;			/**< Message box type */
-		PLGeneral::String	 m_sText;			/**< Message box text */
+		PLCore::String		 m_sText;			/**< Message box text */
 
 		// Widgets
 		Label				*m_pLabel;			/**< Text label */

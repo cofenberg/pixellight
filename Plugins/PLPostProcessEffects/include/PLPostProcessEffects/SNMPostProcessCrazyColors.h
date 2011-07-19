@@ -63,7 +63,7 @@ class SNMPostProcessCrazyColors : public PLCompositing::SNMPostProcess {
 		pl_attribute(ColorSpeedY,	PLMath::Vector3,	PLMath::Vector3( 2.0f,  2.5f,  3.0f),	ReadWrite,	DirectValue,	"Color speed y",						"")
 		pl_attribute(ColorOffsetY,	PLMath::Vector3,	PLMath::Vector3(10.0f, 20.0f, 30.0f),	ReadWrite,	DirectValue,	"Color offset y",						"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/CrazyColors.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/CrazyColors.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

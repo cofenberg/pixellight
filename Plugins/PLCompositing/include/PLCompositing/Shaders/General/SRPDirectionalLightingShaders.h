@@ -204,7 +204,7 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLightingShaders, "PLCompositing", PLCompositing::SRPDirectionalLighting, "Shaders based diffuse only scene renderer pass implementation")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 		// Constructors
@@ -278,9 +278,9 @@ class SRPDirectionalLightingShaders : public SRPDirectionalLighting {
 		float m_fDOFBlurrinessCutoff;
 
 		// Material cache
-		PLRenderer::ProgramGenerator												  *m_pProgramGenerator;	/**< Program generator, can be a null pointer */
-		PLRenderer::RenderStates													  *m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
-		PLGeneral::HashMap<PLGeneral::uint64, SRPDirectionalLightingShadersMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
+		PLRenderer::ProgramGenerator											*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLRenderer::RenderStates												*m_pRenderStates;		/**< Used to 'translate' render state strings, always valid! */
+		PLCore::HashMap<PLCore::uint64, SRPDirectionalLightingShadersMaterial*>  m_lstMaterialCache;	/**< List of cached materials */
 
 
 	//[-------------------------------------------------------]

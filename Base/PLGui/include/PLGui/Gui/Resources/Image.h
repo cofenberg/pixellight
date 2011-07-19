@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -79,7 +79,7 @@ class Image {
 		*  @param[in] sFilename
 		*    Image filename
 		*/
-		PLGUI_API Image(Gui &cGui, const PLGeneral::String &sFilename = "");
+		PLGUI_API Image(Gui &cGui, const PLCore::String &sFilename = "");
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class Image {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API bool Load(const PLGeneral::String &sFilename);
+		PLGUI_API bool Load(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -156,7 +156,7 @@ class Image {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API bool LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphics::Color3 &cColor);
+		PLGUI_API bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor);
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class Image {
 		*  @return
 		*    Filename of image
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -183,16 +183,16 @@ class Image {
 		*  @return
 		*    Color depth
 		*/
-		PLGUI_API PLGeneral::uint32 GetColorDepth() const;
+		PLGUI_API PLCore::uint32 GetColorDepth() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui					*m_pGui;		/**< GUI instance */
-		ImageImpl			*m_pImageImpl;	/**< Image implementation object */
-		PLGeneral::String	 m_sFilename;	/**< Image filename */
+		Gui				*m_pGui;		/**< GUI instance */
+		ImageImpl		*m_pImageImpl;	/**< Image implementation object */
+		PLCore::String	 m_sFilename;	/**< Image filename */
 
 
 };

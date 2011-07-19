@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
-#include <PLGeneral/Container/Bitset.h>
+#include <PLCore/Tools/Tools.h>
+#include <PLCore/Container/Bitset.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
@@ -39,7 +39,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

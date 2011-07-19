@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -106,7 +106,7 @@ class Parameters {
 		*  @return
 		*    The given data type as string
 		*/
-		PLRENDERER_API static PLGeneral::String DataTypeToString(EDataType nDataType);
+		PLRENDERER_API static PLCore::String DataTypeToString(EDataType nDataType);
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class Parameters {
 		*  @return
 		*    The given data type as number
 		*/
-		PLRENDERER_API static EDataType DataTypeFromString(const PLGeneral::String &sDataType);
+		PLRENDERER_API static EDataType DataTypeFromString(const PLCore::String &sDataType);
 
 
 	//[-------------------------------------------------------]
@@ -135,7 +135,7 @@ class Parameters {
 		*  @return
 		*    'true' if there's a valid parameter with the given name, else 'false'
 		*/
-		virtual bool IsParameter(const PLGeneral::String &sName) const = 0;
+		virtual bool IsParameter(const PLCore::String &sName) const = 0;
 
 		//[-------------------------------------------------------]
 		//[ Get/set parameters                                    ]
@@ -150,7 +150,7 @@ class Parameters {
 		*  @return
 		*    The value of the parameter as string, empty string on error
 		*/
-		virtual PLGeneral::String GetParameterString(const PLGeneral::String &sName) const = 0;
+		virtual PLCore::String GetParameterString(const PLCore::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -164,74 +164,74 @@ class Parameters {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe unknown parameter)
 		*/
-		virtual bool SetParameterString(const PLGeneral::String &sName, const PLGeneral::String &sValue) = 0;
+		virtual bool SetParameterString(const PLCore::String &sName, const PLCore::String &sValue) = 0;
 
 		// Integer
-		virtual bool GetParameter1i(const PLGeneral::String &sName, int &nX) const = 0;
-		virtual bool SetParameter1i(const PLGeneral::String &sName, int nX) = 0;
+		virtual bool GetParameter1i(const PLCore::String &sName, int &nX) const = 0;
+		virtual bool SetParameter1i(const PLCore::String &sName, int nX) = 0;
 		// Integer2
-		virtual bool GetParameter2i(const PLGeneral::String &sName, int &nX, int &nY) const = 0;
-		virtual bool GetParameter2iv(const PLGeneral::String &sName, int nValue[]) const = 0;
-		virtual bool SetParameter2i(const PLGeneral::String &sName, int nX, int nY) = 0;
-		virtual bool SetParameter2iv(const PLGeneral::String &sName, const int nValue[]) = 0;
+		virtual bool GetParameter2i(const PLCore::String &sName, int &nX, int &nY) const = 0;
+		virtual bool GetParameter2iv(const PLCore::String &sName, int nValue[]) const = 0;
+		virtual bool SetParameter2i(const PLCore::String &sName, int nX, int nY) = 0;
+		virtual bool SetParameter2iv(const PLCore::String &sName, const int nValue[]) = 0;
 		// Integer3
-		virtual bool GetParameter3i(const PLGeneral::String &sName, int &nX, int &nY, int &nZ) const = 0;
-		virtual bool GetParameter3iv(const PLGeneral::String &sName, int nValue[]) const = 0;
-		virtual bool SetParameter3i(const PLGeneral::String &sName, int nX, int nY, int nZ) = 0;
-		virtual bool SetParameter3iv(const PLGeneral::String &sName, const int nValue[]) = 0;
+		virtual bool GetParameter3i(const PLCore::String &sName, int &nX, int &nY, int &nZ) const = 0;
+		virtual bool GetParameter3iv(const PLCore::String &sName, int nValue[]) const = 0;
+		virtual bool SetParameter3i(const PLCore::String &sName, int nX, int nY, int nZ) = 0;
+		virtual bool SetParameter3iv(const PLCore::String &sName, const int nValue[]) = 0;
 		// Integer4
-		virtual bool GetParameter4i(const PLGeneral::String &sName, int &nX, int &nY, int &nZ, int &nW) const = 0;
-		virtual bool GetParameter4iv(const PLGeneral::String &sName, int nValue[]) const = 0;
-		virtual bool SetParameter4i(const PLGeneral::String &sName, int nX, int nY, int nZ, int nW) = 0;
-		virtual bool SetParameter4iv(const PLGeneral::String &sName, const int nValue[]) = 0;
+		virtual bool GetParameter4i(const PLCore::String &sName, int &nX, int &nY, int &nZ, int &nW) const = 0;
+		virtual bool GetParameter4iv(const PLCore::String &sName, int nValue[]) const = 0;
+		virtual bool SetParameter4i(const PLCore::String &sName, int nX, int nY, int nZ, int nW) = 0;
+		virtual bool SetParameter4iv(const PLCore::String &sName, const int nValue[]) = 0;
 		// Float
-		virtual bool GetParameter1f(const PLGeneral::String &sName, float &fX) const = 0;
-		virtual bool SetParameter1f(const PLGeneral::String &sName, float fX) = 0;
+		virtual bool GetParameter1f(const PLCore::String &sName, float &fX) const = 0;
+		virtual bool SetParameter1f(const PLCore::String &sName, float fX) = 0;
 		// Float2
-		virtual bool GetParameter2f(const PLGeneral::String &sName, float &fX, float &fY) const = 0;
-		virtual bool GetParameter2fv(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameter2f(const PLGeneral::String &sName, float fX, float fY) = 0;
-		virtual bool SetParameter2fv(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameter2f(const PLCore::String &sName, float &fX, float &fY) const = 0;
+		virtual bool GetParameter2fv(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameter2f(const PLCore::String &sName, float fX, float fY) = 0;
+		virtual bool SetParameter2fv(const PLCore::String &sName, const float fValue[]) = 0;
 		// Float3
-		virtual bool GetParameter3f(const PLGeneral::String &sName, float &fX, float &fY, float &fZ) const = 0;
-		virtual bool GetParameter3fv(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameter3f(const PLGeneral::String &sName, float fX, float fY, float fZ) = 0;
-		virtual bool SetParameter3fv(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameter3f(const PLCore::String &sName, float &fX, float &fY, float &fZ) const = 0;
+		virtual bool GetParameter3fv(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameter3f(const PLCore::String &sName, float fX, float fY, float fZ) = 0;
+		virtual bool SetParameter3fv(const PLCore::String &sName, const float fValue[]) = 0;
 		// Float4
-		virtual bool GetParameter4f(const PLGeneral::String &sName, float &fX, float &fY, float &fZ, float &fW) const = 0;
-		virtual bool GetParameter4fv(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameter4f(const PLGeneral::String &sName, float fX, float fY, float fZ, float fW) = 0;
-		virtual bool SetParameter4fv(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameter4f(const PLCore::String &sName, float &fX, float &fY, float &fZ, float &fW) const = 0;
+		virtual bool GetParameter4fv(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameter4f(const PLCore::String &sName, float fX, float fY, float fZ, float fW) = 0;
+		virtual bool SetParameter4fv(const PLCore::String &sName, const float fValue[]) = 0;
 		// Double
-		virtual bool GetParameter1d(const PLGeneral::String &sName, double &fX) const = 0;
-		virtual bool SetParameter1d(const PLGeneral::String &sName, double fX) = 0;
+		virtual bool GetParameter1d(const PLCore::String &sName, double &fX) const = 0;
+		virtual bool SetParameter1d(const PLCore::String &sName, double fX) = 0;
 		// Double2
-		virtual bool GetParameter2d(const PLGeneral::String &sName, double &fX, double &fY) const = 0;
-		virtual bool GetParameter2dv(const PLGeneral::String &sName, double fValue[]) const = 0;
-		virtual bool SetParameter2d(const PLGeneral::String &sName, double fX, double fY) = 0;
-		virtual bool SetParameter2dv(const PLGeneral::String &sName, const double fValue[]) = 0;
+		virtual bool GetParameter2d(const PLCore::String &sName, double &fX, double &fY) const = 0;
+		virtual bool GetParameter2dv(const PLCore::String &sName, double fValue[]) const = 0;
+		virtual bool SetParameter2d(const PLCore::String &sName, double fX, double fY) = 0;
+		virtual bool SetParameter2dv(const PLCore::String &sName, const double fValue[]) = 0;
 		// Double3
-		virtual bool GetParameter3d(const PLGeneral::String &sName, double &fX, double &fY, double &fZ) const = 0;
-		virtual bool GetParameter3dv(const PLGeneral::String &sName, double fValue[]) const = 0;
-		virtual bool SetParameter3d(const PLGeneral::String &sName, double fX, double fY, double fZ) = 0;
-		virtual bool SetParameter3dv(const PLGeneral::String &sName, const double fValue[]) = 0;
+		virtual bool GetParameter3d(const PLCore::String &sName, double &fX, double &fY, double &fZ) const = 0;
+		virtual bool GetParameter3dv(const PLCore::String &sName, double fValue[]) const = 0;
+		virtual bool SetParameter3d(const PLCore::String &sName, double fX, double fY, double fZ) = 0;
+		virtual bool SetParameter3dv(const PLCore::String &sName, const double fValue[]) = 0;
 		// Double4
-		virtual bool GetParameter4d(const PLGeneral::String &sName, double &fX, double &fY, double &fZ, double &fW) const = 0;
-		virtual bool GetParameter4dv(const PLGeneral::String &sName, double fValue[]) const = 0;
-		virtual bool SetParameter4d(const PLGeneral::String &sName, double fX, double fY, double fZ, double fW) = 0;
-		virtual bool SetParameter4dv(const PLGeneral::String &sName, const double fValue[]) = 0;
+		virtual bool GetParameter4d(const PLCore::String &sName, double &fX, double &fY, double &fZ, double &fW) const = 0;
+		virtual bool GetParameter4dv(const PLCore::String &sName, double fValue[]) const = 0;
+		virtual bool SetParameter4d(const PLCore::String &sName, double fX, double fY, double fZ, double fW) = 0;
+		virtual bool SetParameter4dv(const PLCore::String &sName, const double fValue[]) = 0;
 		// Float3x3
-		virtual bool GetParameterFloat3x3(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameterFloat3x3(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameterFloat3x3(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameterFloat3x3(const PLCore::String &sName, const float fValue[]) = 0;
 		// Float3x4
-		virtual bool GetParameterFloat3x4(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameterFloat3x4(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameterFloat3x4(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameterFloat3x4(const PLCore::String &sName, const float fValue[]) = 0;
 		// Float4x4
-		virtual bool GetParameterMatrixfv(const PLGeneral::String &sName, float fValue[]) const = 0;
-		virtual bool SetParameterMatrixfv(const PLGeneral::String &sName, const float fValue[]) = 0;
+		virtual bool GetParameterMatrixfv(const PLCore::String &sName, float fValue[]) const = 0;
+		virtual bool SetParameterMatrixfv(const PLCore::String &sName, const float fValue[]) = 0;
 		// Double4x4
-		virtual bool GetParameterMatrixdv(const PLGeneral::String &sName, double fValue[]) const = 0;
-		virtual bool SetParameterMatrixdv(const PLGeneral::String &sName, const double fValue[]) = 0;
+		virtual bool GetParameterMatrixdv(const PLCore::String &sName, double fValue[]) const = 0;
+		virtual bool SetParameterMatrixdv(const PLCore::String &sName, const double fValue[]) = 0;
 		// Texture buffer
 		/**
 		*  @brief
@@ -240,7 +240,7 @@ class Parameters {
 		*  @return
 		*    The texture buffer of the parameter, can be a null pointer
 		*/
-		virtual PLRenderer::TextureBuffer *GetParameterTextureBuffer(const PLGeneral::String &sName) const = 0;
+		virtual PLRenderer::TextureBuffer *GetParameterTextureBuffer(const PLCore::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -254,7 +254,7 @@ class Parameters {
 		*  @return
 		*    Texture stage the texture buffer was set to, < 0 on error
 		*/
-		virtual int SetParameterTextureBuffer(const PLGeneral::String &sName, PLRenderer::TextureBuffer *pTextureBuffer) = 0;
+		virtual int SetParameterTextureBuffer(const PLCore::String &sName, PLRenderer::TextureBuffer *pTextureBuffer) = 0;
 
 		/**
 		*  @brief
@@ -263,7 +263,7 @@ class Parameters {
 		*  @return
 		*    The texture of the parameter, can be a null pointer
 		*/
-		virtual PLRenderer::Texture *GetParameterTexture(const PLGeneral::String &sName) const = 0;
+		virtual PLRenderer::Texture *GetParameterTexture(const PLCore::String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -277,7 +277,7 @@ class Parameters {
 		*  @return
 		*    Texture stage the texture was set to, < 0 on error
 		*/
-		virtual int SetParameterTexture(const PLGeneral::String &sName, const PLGeneral::String &sFilename) = 0;
+		virtual int SetParameterTexture(const PLCore::String &sName, const PLCore::String &sFilename) = 0;
 
 		/**
 		*  @brief
@@ -291,7 +291,7 @@ class Parameters {
 		*  @return
 		*    Texture stage the texture was set to, < 0 on error
 		*/
-		virtual int SetParameterTexture(const PLGeneral::String &sName, PLRenderer::Texture *pTexture) = 0;
+		virtual int SetParameterTexture(const PLCore::String &sName, PLRenderer::Texture *pTexture) = 0;
 
 
 	//[-------------------------------------------------------]

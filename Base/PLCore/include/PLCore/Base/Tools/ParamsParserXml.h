@@ -28,23 +28,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class XmlElement;
-	class XmlAttribute;
-}
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class XmlElement;
+class XmlAttribute;
 
 
 //[-------------------------------------------------------]
@@ -91,7 +88,7 @@ class ParamsParserXml {
 		*    and then parse the first parameter and value. If the parameter list
 		*    is empty, the function will return 'false'.
 		*/
-		PLCORE_API bool ParseXml(const PLGeneral::XmlElement &cElement);
+		PLCORE_API bool ParseXml(const XmlElement &cElement);
 
 		/**
 		*  @brief
@@ -118,7 +115,7 @@ class ParamsParserXml {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -127,17 +124,17 @@ class ParamsParserXml {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API PLGeneral::String GetValue() const;
+		PLCORE_API String GetValue() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		const PLGeneral::XmlElement    *m_pElement;		/**< XML element */
-		const PLGeneral::XmlAttribute  *m_pAttribute;	/**< XML attribute */
-		PLGeneral::String				m_sName;		/**< Name of next parameter */
-		PLGeneral::String				m_sValue;		/**< Value of next parameter */
+		const XmlElement    *m_pElement;	/**< XML element */
+		const XmlAttribute  *m_pAttribute;	/**< XML attribute */
+		String				 m_sName;		/**< Name of next parameter */
+		String				 m_sValue;		/**< Value of next parameter */
 
 
 };

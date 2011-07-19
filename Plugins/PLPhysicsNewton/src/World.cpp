@@ -24,9 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <limits.h>
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Log/Log.h>
 #include <PLMath/Plane.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLPhysics/ContactInformation.h>
@@ -58,7 +58,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace Newton;
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLPhysicsNewton {
 
@@ -96,7 +96,7 @@ bool World::MyCompareFunction::IsGreater(const BodyPair &sKey1, const BodyPair &
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Base functions              ]
+//[ Public virtual PLCore::Base functions                 ]
 //[-------------------------------------------------------]
 	// [TODO] New RTTI usage
 /*void World::VarChanged(const String &sVar)
@@ -875,7 +875,7 @@ void World::SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Bod
 	if (nFlags) {
 		// Is this body pair already within the map?
 		uint8 &nFlagsRef = m_mapBodyPairs.Get(sBodyPair);
-		if (&nFlagsRef != &PLGeneral::HashMap<BodyPair, PLGeneral::uint8, MyHashFunction, MyCompareFunction>::Null)
+		if (&nFlagsRef != &HashMap<BodyPair, uint8, MyHashFunction, MyCompareFunction>::Null)
 			nFlagsRef = nFlags; // Jep, just change the value :)
 		else {
 			// Nope, add it right now!
@@ -1136,7 +1136,7 @@ bool World::IsAlwaysStatic() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 PLPhysics::Element *World::CreateElement(const String &sName)
 {

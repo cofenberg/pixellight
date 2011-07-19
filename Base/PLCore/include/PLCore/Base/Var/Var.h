@@ -195,7 +195,7 @@ class Var : public DynVar {
 			return TypeInfo<T>::Instance;
 		}
 
-		virtual PLGeneral::String GetTypeName() const
+		virtual String GetTypeName() const
 		{
 			return Type<T>::GetTypeName();
 		}
@@ -215,7 +215,7 @@ class Var : public DynVar {
 			m_Value.Set(m_Value.GetDefault());
 		}
 
-		virtual PLGeneral::String GetDefault() const
+		virtual String GetDefault() const
 		{
 			return Type<T>::ConvertToString(m_Value.GetDefault());
 		}
@@ -245,92 +245,92 @@ class Var : public DynVar {
 			m_Value.Set(Type<T>::ConvertFromInt(nValue));
 		}
 
-		virtual PLGeneral::int8 GetInt8() const
+		virtual int8 GetInt8() const
 		{
 			return Type<T>::ConvertToInt8(m_Value.Get());
 		}
 
-		virtual void SetInt8(PLGeneral::int8 nValue)
+		virtual void SetInt8(int8 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromInt8(nValue));
 		}
 
-		virtual PLGeneral::int16 GetInt16() const
+		virtual int16 GetInt16() const
 		{
 			return Type<T>::ConvertToInt16(m_Value.Get());
 		}
 
-		virtual void SetInt16(PLGeneral::int16 nValue)
+		virtual void SetInt16(int16 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromInt16(nValue));
 		}
 
-		virtual PLGeneral::int32 GetInt32() const
+		virtual int32 GetInt32() const
 		{
 			return Type<T>::ConvertToInt32(m_Value.Get());
 		}
 
-		virtual void SetInt32(PLGeneral::int32 nValue)
+		virtual void SetInt32(int32 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromInt32(nValue));
 		}
 
-		virtual PLGeneral::int64 GetInt64() const
+		virtual int64 GetInt64() const
 		{
 			return Type<T>::ConvertToInt64(m_Value.Get());
 		}
 
-		virtual void SetInt64(PLGeneral::int64 nValue)
+		virtual void SetInt64(int64 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromInt64(nValue));
 		}
 
-		virtual PLGeneral::uint8 GetUInt8() const
+		virtual uint8 GetUInt8() const
 		{
 			return Type<T>::ConvertToUInt8(m_Value.Get());
 		}
 
-		virtual void SetUInt8(PLGeneral::uint8 nValue)
+		virtual void SetUInt8(uint8 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt8(nValue));
 		}
 
-		virtual PLGeneral::uint16 GetUInt16() const
+		virtual uint16 GetUInt16() const
 		{
 			return Type<T>::ConvertToUInt16(m_Value.Get());
 		}
 
-		virtual void SetUInt16(PLGeneral::uint16 nValue)
+		virtual void SetUInt16(uint16 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt16(nValue));
 		}
 
-		virtual PLGeneral::uint32 GetUInt32() const
+		virtual uint32 GetUInt32() const
 		{
 			return Type<T>::ConvertToUInt32(m_Value.Get());
 		}
 
-		virtual void SetUInt32(PLGeneral::uint32 nValue)
+		virtual void SetUInt32(uint32 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt32(nValue));
 		}
 
-		virtual PLGeneral::uint64 GetUInt64() const
+		virtual uint64 GetUInt64() const
 		{
 			return Type<T>::ConvertToUInt64(m_Value.Get());
 		}
 
-		virtual void SetUInt64(PLGeneral::uint64 nValue)
+		virtual void SetUInt64(uint64 nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt64(nValue));
 		}
 
-		virtual PLGeneral::uint_ptr GetUIntPtr() const
+		virtual uint_ptr GetUIntPtr() const
 		{
 			return Type<T>::ConvertToUIntPtr(m_Value.Get());
 		}
 
-		virtual void SetUIntPtr(PLGeneral::uint_ptr nValue)
+		virtual void SetUIntPtr(uint_ptr nValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromUIntPtr(nValue));
 		}
@@ -355,12 +355,12 @@ class Var : public DynVar {
 			m_Value.Set(Type<T>::ConvertFromDouble(dValue));
 		}
 
-		virtual PLGeneral::String GetString() const
+		virtual String GetString() const
 		{
 			return Type<T>::ConvertToString(m_Value.Get());
 		}
 
-		virtual void SetString(const PLGeneral::String &sValue)
+		virtual void SetString(const String &sValue)
 		{
 			m_Value.Set(Type<T>::ConvertFromString(sValue));
 		}

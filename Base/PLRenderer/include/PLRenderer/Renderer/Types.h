@@ -236,14 +236,14 @@ class RenderState {
 		ZEnable             = 2,	/**< Enable/disable z buffer test (false/true, default: true) */
 		ZWriteEnable        = 3,	/**< Enable/disable z buffer writing (false/true, default: true) */
 		ZFunc               = 4,	/**< Z buffer function (see Compare, default: Compare::LessEqual) */
-		ZBias               = 5,	/**< Z bias/polygon offset factor, < 0 = towards camera (float to PLGeneral::uint32 example PLGeneral::Tools::FloatToUInt32(-0.001f), default: 0)
+		ZBias               = 5,	/**< Z bias/polygon offset factor, < 0 = towards camera (float to PLCore::uint32 example PLCore::Tools::FloatToUInt32(-0.001f), default: 0)
 										 Because RenderState::SlopeScaleDepthBias and RenderState::DepthBias below are API and
 										 GPU dependent, their results are NOT the same on each system & API. Whenever possible, do NOT use
 										 this 'classic' render states, use RenderState::ZBias instead. If this state is not null, the renderer
 										 will automatically manipulate the internal projection matrix to perform an 'z bias' which is more
 										 predictable as the 'classic' polygon offset. */
-		SlopeScaleDepthBias = 6,	/**< Slope scale bias/polygon offset factor, try to avoid using this -> see ZBias (float to PLGeneral::uint32 example PLGeneral::Tools::FloatToUInt32(-1.0f), default: 0) */
-		DepthBias           = 7,	/**< Depth bias/polygon offset units, try to avoid using this -> see ZBias (float to PLGeneral::uint32 example PLGeneral::Tools::FloatToUInt32(-2.0f), default: 0) */
+		SlopeScaleDepthBias = 6,	/**< Slope scale bias/polygon offset factor, try to avoid using this -> see ZBias (float to PLCore::uint32 example PLCore::Tools::FloatToUInt32(-1.0f), default: 0) */
+		DepthBias           = 7,	/**< Depth bias/polygon offset units, try to avoid using this -> see ZBias (float to PLCore::uint32 example PLCore::Tools::FloatToUInt32(-2.0f), default: 0) */
 		// Blend
 		BlendEnable         = 8,	/**< Enable/disable blending (false/true, default: false) */
 		SrcBlendFunc        = 9,	/**< Source blend function (see BlendFunc, default: BlendFunc::SrcAlpha) */
@@ -251,8 +251,8 @@ class RenderState {
 		// Stencil
 		StencilEnable       = 11,	/**< Enable/disable stencil test (false/true, default: false) */
 		StencilFunc         = 12,	/**< Stencil test passes if ((ref & mask) stencilfn (stencil & mask)) is true (see Compare, default: Compare::Always) */
-		StencilRef          = 13,	/**< Reference value used in stencil test (PLGeneral::uint32, default: 0) */
-		StencilMask         = 14,	/**< Mask value used in stencil test (PLGeneral::uint32, default: 0xFFFFFFFF) */
+		StencilRef          = 13,	/**< Reference value used in stencil test (PLCore::uint32, default: 0) */
+		StencilMask         = 14,	/**< Mask value used in stencil test (PLCore::uint32, default: 0xFFFFFFFF) */
 		StencilFail         = 15,	/**< Operation to perform if stencil test fails (StencilOp, default: StencilOp::Keep) */
 		StencilZFail        = 16,	/**< Operation to perform if stencil test passes and Z test fails (StencilOp, default: StencilOp::Keep) */
 		StencilPass         = 17,	/**< Operation to perform if both stencil and Z tests pass (StencilOp, default: StencilOp::Keep) */
@@ -423,8 +423,8 @@ class Sampler {
 		MipFilter     =  5,	/**< Mipmap filter to use during minification. See TextureFiltering. (default: TextureFiltering::Linear) */
 		// Misc
 		MipmapLODBias =  6,	/**< Mipmap level of detail (LOD) bias (float, default: 0.0) */
-		MaxMapLevel   =  7,	/**< LOD index of largest map to use. Values range from 0 to (n-1) where 0 is the largest. (PLGeneral::uint32, default: 1000) */
-		MaxAnisotropy =  8,	/**< Maximum anisotropy (PLGeneral::uint32, default: 1) */
+		MaxMapLevel   =  7,	/**< LOD index of largest map to use. Values range from 0 to (n-1) where 0 is the largest. (PLCore::uint32, default: 1000) */
+		MaxAnisotropy =  8,	/**< Maximum anisotropy (PLCore::uint32, default: 1) */
 		// End
 		Number        =  9,	/**< Number of sampler states */
 		Unknown       = 10	/**< Unknown sampler state */
@@ -440,9 +440,9 @@ class Sampler {
 *    Display mode
 */
 struct DisplayMode {
-	PLMath::Vector2i  vSize;		/**< Screen resolution */
-	PLGeneral::uint32 nColorBits;	/**< Number of bits for the color (for example 32) */
-	PLGeneral::uint32 nFrequency;	/**< Refresh rate (for example 60) */
+	PLMath::Vector2i vSize;			/**< Screen resolution */
+	PLCore::uint32	 nColorBits;	/**< Number of bits for the color (for example 32) */
+	PLCore::uint32	 nFrequency;	/**< Refresh rate (for example 60) */
 };
 
 /**
@@ -450,30 +450,30 @@ struct DisplayMode {
 *    Holds all hardware capabilities
 */
 struct Capabilities {
-	PLGeneral::uint8  nMaxColorRenderTargets;			/**< Maximum number of color render targets (multi render targets (MRT)) */
-	PLGeneral::uint8  nMaxTextureUnits;					/**< Maximum number of texture units */
-	PLGeneral::uint16 nMaxAnisotropy;					/**< Maximum anisotropy */
-	PLGeneral::uint8  nMaxTessellationFactor;			/**< Maximum tessellation factor (inclusive) */
-	PLGeneral::uint16 nMaxTextureBufferSize;			/**< Maximum texture buffer size */
-	bool              bTextureBufferNonPowerOfTwo;		/**< Non power of two (NPOT) texture buffers supported? (no power of two restriction for all texture buffer types) */
-	bool              bTextureBufferRectangle;			/**< Rectangle texture buffers supported? (special non power of two texture buffer type, comes with special limitations) */
-	PLGeneral::uint16 nMaxRectangleTextureBufferSize;	/**< Maximum rectangle texture buffer size */
-	bool              bTextureBuffer3D;					/**< 3D texture buffers supported? */
-	PLGeneral::uint16 nMax3DTextureBufferSize;			/**< Maximum 3D texture buffer size */
-	bool              bTextureBufferCube;				/**< Cube texture buffers supported? */
-	PLGeneral::uint16 nMaxCubeTextureBufferSize;		/**< Maximum cube texture buffer size */
-	bool              bStencilWrap;						/**< Stencil wrap supported? (for StencilOp::IncrWrap & StencilOp::DecrWrap) */
-	bool              bTwoSidedStencils;				/**< Two sided stencils supported? (for RenderState::TwoSidedStencilMode, RenderState::CCWStencilFunc,
-															 RenderState::CCWStencilFail, RenderState::CCWStencilZFail, RenderState::CCWStencilPass) */
-	bool              bDepthBoundsTest;					/**< Depth bounds test supported? (for Renderer::SetDepthBounds()) */
-	bool              bPointSprite;						/**< Point sprite supported? (for RenderState::PointSpriteEnable) */
-	bool              bPointParameters;					/**< Point parameters supported? (for RenderState::PointSizeMin, RenderState::PointSizeMax,
-															 RenderState::PointScaleA, RenderState::PointScaleB, RenderState::PointScaleC) */
-	bool              bOcclusionQuery;					/**< Occlusion query supported? (for the OcclusionQuery class) */
-	bool              bVertexBufferSecondaryColor;		/**< Vertex buffer secondary color supported? (for the second channel of VertexBuffer::Color) */
-	PLGeneral::uint32 nZBufferBits;						/**< Z buffer bits (for example 24) */
-	PLGeneral::uint32 nStencilBits;						/**< Stencil buffer bits (for example 8) */
-	PLGeneral::uint32 nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples */
+	PLCore::uint8  nMaxColorRenderTargets;			/**< Maximum number of color render targets (multi render targets (MRT)) */
+	PLCore::uint8  nMaxTextureUnits;				/**< Maximum number of texture units */
+	PLCore::uint16 nMaxAnisotropy;					/**< Maximum anisotropy */
+	PLCore::uint8  nMaxTessellationFactor;			/**< Maximum tessellation factor (inclusive) */
+	PLCore::uint16 nMaxTextureBufferSize;			/**< Maximum texture buffer size */
+	bool           bTextureBufferNonPowerOfTwo;		/**< Non power of two (NPOT) texture buffers supported? (no power of two restriction for all texture buffer types) */
+	bool           bTextureBufferRectangle;			/**< Rectangle texture buffers supported? (special non power of two texture buffer type, comes with special limitations) */
+	PLCore::uint16 nMaxRectangleTextureBufferSize;	/**< Maximum rectangle texture buffer size */
+	bool           bTextureBuffer3D;				/**< 3D texture buffers supported? */
+	PLCore::uint16 nMax3DTextureBufferSize;			/**< Maximum 3D texture buffer size */
+	bool           bTextureBufferCube;				/**< Cube texture buffers supported? */
+	PLCore::uint16 nMaxCubeTextureBufferSize;		/**< Maximum cube texture buffer size */
+	bool           bStencilWrap;					/**< Stencil wrap supported? (for StencilOp::IncrWrap & StencilOp::DecrWrap) */
+	bool           bTwoSidedStencils;				/**< Two sided stencils supported? (for RenderState::TwoSidedStencilMode, RenderState::CCWStencilFunc,
+														 RenderState::CCWStencilFail, RenderState::CCWStencilZFail, RenderState::CCWStencilPass) */
+	bool           bDepthBoundsTest;				/**< Depth bounds test supported? (for Renderer::SetDepthBounds()) */
+	bool           bPointSprite;					/**< Point sprite supported? (for RenderState::PointSpriteEnable) */
+	bool           bPointParameters;				/**< Point parameters supported? (for RenderState::PointSizeMin, RenderState::PointSizeMax,
+														 RenderState::PointScaleA, RenderState::PointScaleB, RenderState::PointScaleC) */
+	bool           bOcclusionQuery;					/**< Occlusion query supported? (for the OcclusionQuery class) */
+	bool           bVertexBufferSecondaryColor;		/**< Vertex buffer secondary color supported? (for the second channel of VertexBuffer::Color) */
+	PLCore::uint32 nZBufferBits;					/**< Z buffer bits (for example 24) */
+	PLCore::uint32 nStencilBits;					/**< Stencil buffer bits (for example 8) */
+	PLCore::uint32 nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples */
 };
 
 /**
@@ -481,30 +481,30 @@ struct Capabilities {
 *    Renderer statistics
 */
 struct Statistics {
-	PLGeneral::uint32 nRenderStateChanges;		/**< Number of render (internal API) state changes */
-	PLGeneral::uint32 nSamplerStateChanges;		/**< Number of sampler (internal API) state changes */
-	PLGeneral::uint32 nDrawPrimitivCalls;		/**< Number of draw primitiv calls */
-	PLGeneral::uint32 nVertices;				/**< Number of rendered vertices */
-	PLGeneral::uint32 nTriangles;				/**< Number of rendered triangles */
+	PLCore::uint32 nRenderStateChanges;			/**< Number of render (internal API) state changes */
+	PLCore::uint32 nSamplerStateChanges;		/**< Number of sampler (internal API) state changes */
+	PLCore::uint32 nDrawPrimitivCalls;			/**< Number of draw primitiv calls */
+	PLCore::uint32 nVertices;					/**< Number of rendered vertices */
+	PLCore::uint32 nTriangles;					/**< Number of rendered triangles */
 	// Texture buffers
-	PLGeneral::uint32 nTextureBuffersNum;		/**< Number of texture buffers */
-	PLGeneral::uint64 nTextureBuffersMem;		/**< Memory in bytes the texture buffers require */
-	PLGeneral::uint32 nTextureBufferBinds;		/**< Number of texture buffer bindings */
+	PLCore::uint32 nTextureBuffersNum;			/**< Number of texture buffers */
+	PLCore::uint64 nTextureBuffersMem;			/**< Memory in bytes the texture buffers require */
+	PLCore::uint32 nTextureBufferBinds;			/**< Number of texture buffer bindings */
 	// Vertex buffers
-	PLGeneral::uint32 nVertexBufferNum;			/**< Number of vertex buffers */
-	PLGeneral::uint64 nVertexBufferMem;			/**< Memory in bytes the vertex buffers require */
-	PLGeneral::uint64 nVertexBuffersSetupTime;	/**< Vertex buffers setup time (mircoseconds) */
-	PLGeneral::uint32 nVertexBufferLocks;		/**< Number of vertex buffer locks */
+	PLCore::uint32 nVertexBufferNum;			/**< Number of vertex buffers */
+	PLCore::uint64 nVertexBufferMem;			/**< Memory in bytes the vertex buffers require */
+	PLCore::uint64 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (mircoseconds) */
+	PLCore::uint32 nVertexBufferLocks;			/**< Number of vertex buffer locks */
 	// Index buffers
-	PLGeneral::uint32 nIndexBufferNum;			/**< Number of index buffers */
-	PLGeneral::uint64 nIndexBufferMem;			/**< Memory in bytes the index buffers require */
-	PLGeneral::uint64 nIndexBuffersSetupTime;	/**< Index buffers setup time (microseconds) */
-	PLGeneral::uint32 nIndexBufferLocks;		/**< Number of index buffer locks */
+	PLCore::uint32 nIndexBufferNum;				/**< Number of index buffers */
+	PLCore::uint64 nIndexBufferMem;				/**< Memory in bytes the index buffers require */
+	PLCore::uint64 nIndexBuffersSetupTime;		/**< Index buffers setup time (microseconds) */
+	PLCore::uint32 nIndexBufferLocks;			/**< Number of index buffer locks */
 	// Uniform buffers
-	PLGeneral::uint32 nUniformBufferNum;		/**< Number of uniform buffers */
-	PLGeneral::uint64 nUniformBufferMem;		/**< Memory in bytes the uniform buffers require */
-	PLGeneral::uint64 nUniformBuffersSetupTime;	/**< Uniform buffers setup time (microseconds) */
-	PLGeneral::uint32 nUniformBufferLocks;		/**< Number of uniform buffer locks */
+	PLCore::uint32 nUniformBufferNum;			/**< Number of uniform buffers */
+	PLCore::uint64 nUniformBufferMem;			/**< Memory in bytes the uniform buffers require */
+	PLCore::uint64 nUniformBuffersSetupTime;	/**< Uniform buffers setup time (microseconds) */
+	PLCore::uint32 nUniformBufferLocks;			/**< Number of uniform buffer locks */
 };
 
 

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include <PLMath/Vector2i.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Resources/Graphics.h>
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGraphics;
 using namespace PLGui;
 using namespace PLMath;
@@ -299,7 +299,7 @@ void GuiButton::OnMouseButtonDown(uint32 nButton, const Vector2i &vPos)
 	m_bMouseDown = true;
 }
 
-void GuiButton::OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos)
+void GuiButton::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 {
 	// Call base implementation
 	Widget::OnMouseButtonUp(nButton, vPos);

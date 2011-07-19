@@ -69,8 +69,8 @@ class ImageLoaderDDS : public ImageLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Image&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Image&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Image&,			PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Image&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -78,8 +78,8 @@ class ImageLoaderDDS : public ImageLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLGRAPHICS_API bool Load(Image &cImage, PLGeneral::File &cFile);
-		PLGRAPHICS_API bool Save(const Image &cImage, PLGeneral::File &cFile);
+		PLGRAPHICS_API bool Load(Image &cImage, PLCore::File &cFile);
+		PLGRAPHICS_API bool Save(const Image &cImage, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class ImageLoaderDDS : public ImageLoader {
 		*  @param[out] nShiftRight
 		*    Receives the shift right
 		*/
-		void GetBitsFromMask(PLGeneral::uint32 nMask, PLGeneral::uint32 &nShiftLeft, PLGeneral::uint32 &nShiftRight) const;
+		void GetBitsFromMask(PLCore::uint32 nMask, PLCore::uint32 &nShiftLeft, PLCore::uint32 &nShiftRight) const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class ImageLoaderDDS : public ImageLoader {
 		*  @param[in] pnCompressedData
 		*    Data to decompress
 		*/
-		void DecompressRGBA(const DDSHeader &sHeader, ImageBuffer &cImageBuffer, const PLGeneral::uint8 *pnCompressedData) const;
+		void DecompressRGBA(const DDSHeader &sHeader, ImageBuffer &cImageBuffer, const PLCore::uint8 *pnCompressedData) const;
 
 
 };

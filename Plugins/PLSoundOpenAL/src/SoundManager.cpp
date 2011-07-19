@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdio.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Localization.h>
 #include "PLSoundOpenAL/Buffer.h"
 #include "PLSoundOpenAL/Source.h"
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLSoundOpenAL {
 
@@ -49,7 +49,7 @@ pl_implement_class(SoundManager)
 //[-------------------------------------------------------]
 //[ Custom static OpenAL file callbacks                   ]
 //[-------------------------------------------------------]
-// From PLGeneral::File
+// From PLCore::File
 size_t SoundManager::read_func(void *ptr, size_t size, size_t nmemb, void *datasource)
 {
 	return datasource ? static_cast<size_t>(static_cast<File*>(datasource)->Read(ptr, 1, static_cast<long>(size*nmemb))) : 0;

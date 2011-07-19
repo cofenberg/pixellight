@@ -87,8 +87,8 @@ class SNMRotationKeyframeAnimation : public SNMTransform {
 	pl_class(PLS_RTTI_EXPORT, SNMRotationKeyframeAnimation, "PLScene", PLScene::SNMTransform, "Keyframe rotation animation scene node modifier class")
 		// Attributes
 		pl_attribute(Speed,				float,					1.0f,	ReadWrite,	DirectValue,	"Animation playback speed",												"")
-		pl_attribute(FramesPerSecond,	PLGeneral::uint32,		24,		ReadWrite,	DirectValue,	"Frames per second",													"")
-		pl_attribute(Keys,				PLGeneral::String,		"",		ReadWrite,	GetSet,			"Rotation keys (w, x, y and z quaternion components) chunk filename",	"")
+		pl_attribute(FramesPerSecond,	PLCore::uint32,			24,		ReadWrite,	DirectValue,	"Frames per second",													"")
+		pl_attribute(Keys,				PLCore::String,			"",		ReadWrite,	GetSet,			"Rotation keys (w, x, y and z quaternion components) chunk filename",	"")
 			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																"")
 		// Constructors
@@ -100,8 +100,8 @@ class SNMRotationKeyframeAnimation : public SNMTransform {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetKeys() const;
-		PLS_API void SetKeys(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetKeys() const;
+		PLS_API void SetKeys(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -171,7 +171,7 @@ class SNMRotationKeyframeAnimation : public SNMTransform {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	   m_sKeys;			/**< Rotation keys (x, y and z) chunk filename */
+		PLCore::String		   m_sKeys;			/**< Rotation keys (x, y and z) chunk filename */
 		PLCore::Chunk		  *m_pChunk;		/**< Chunk holding the keyframe data, always valid! */
 		PLRenderer::Animation *m_pAnimation;	/**< Animation, always valid! */
 

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLRenderer/Texture/Texture.h"
 #include "PLRenderer/Texture/TextureHandler.h"
 
@@ -69,7 +69,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLGeneral::String Default;	/**< Default texture */
+		PLRENDERER_API static const PLCore::String Default;	/**< Default texture */
 
 
 	//[-------------------------------------------------------]
@@ -218,7 +218,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    a texture with this method, the given texture buffer is just shared and therefore not automatically destroyed
 		*    when the texture gets destroyed. If possible, try to avoid using this method because it's somewhat ugly!
 		*/
-		PLRENDERER_API Texture *CreateTexture(const PLGeneral::String &sName, TextureBuffer &cTextureBuffer);
+		PLRENDERER_API Texture *CreateTexture(const PLCore::String &sName, TextureBuffer &cTextureBuffer);
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    Pointer to the created resource, a null pointer if there was an error
 		*    (maybe unknown class or the class is not derived from 'PLRenderer::TextureCreator')
 		*/
-		PLRENDERER_API Texture *CreateTexture(const PLGeneral::String &sName, const PLGeneral::String &sParameters);
+		PLRENDERER_API Texture *CreateTexture(const PLCore::String &sName, const PLCore::String &sParameters);
 
 
 	//[-------------------------------------------------------]
@@ -272,7 +272,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Texture *CreateResource(const PLGeneral::String &sName);
+		virtual Texture *CreateResource(const PLCore::String &sName);
 
 
 };

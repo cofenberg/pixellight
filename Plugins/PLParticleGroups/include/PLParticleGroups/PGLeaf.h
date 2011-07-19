@@ -59,8 +59,8 @@ class PGLeaf : public SNParticleGroup {
 		pl_attribute(LeafSize,			float,				0.8f,								ReadWrite,	DirectValue,	"Leaf size",				"Min='0.0001'")
 		pl_attribute(LeafSizeVariation,	float,				0.5f,								ReadWrite,	DirectValue,	"Leaf size variation",		"Min='0.0'")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,			PLGeneral::String,	"Data/Effects/PGLeaf.plfx",			ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,			PLGeneral::uint32,	100,								ReadWrite,	GetSet,			"Number of particles",		"Min=1")
+		pl_attribute(Material,			PLCore::String,		"Data/Effects/PGLeaf.plfx",			ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,			PLCore::uint32,		100,								ReadWrite,	GetSet,			"Number of particles",		"Min=1")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

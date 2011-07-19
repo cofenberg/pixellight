@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/String/ParseTools.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/String/ParseTools.h>
 #include "PLPhysics/SceneNodes/SNRagdoll.h"
 #include "PLPhysics/SceneNodes/RagdollBody.h"
 #include "PLPhysics/SceneNodes/RagdollJoint.h"
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLPhysics {
 
 

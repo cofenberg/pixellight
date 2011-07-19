@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLScene {
@@ -84,8 +84,8 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -93,8 +93,8 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
-		bool Save(PLScene::SceneContainer &cContainer, PLGeneral::File &cFile);
+		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -126,15 +126,15 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 		*    Internal per instance data
 		*/
 		struct SInstance {
-			PLGeneral::uint32 nTotalNumOfCells;
-			PLGeneral::uint32 nTotalNumOfMeshes;
-			PLGeneral::uint32 nTotalNumOfVertices;
-			PLGeneral::uint32 nTotalNumOfIndices;
-			PLGeneral::uint32 nTotalNumOfPortals;
-			PLGeneral::uint32 nTotalNumOfLights;
+			PLCore::uint32 nTotalNumOfCells;
+			PLCore::uint32 nTotalNumOfMeshes;
+			PLCore::uint32 nTotalNumOfVertices;
+			PLCore::uint32 nTotalNumOfIndices;
+			PLCore::uint32 nTotalNumOfPortals;
+			PLCore::uint32 nTotalNumOfLights;
 
-			PLGeneral::Array<PLScene::SCCell*>	lstCells;
-			PLGeneral::Array<Node>				lstNodes;
+			PLCore::Array<PLScene::SCCell*>	lstCells;
+			PLCore::Array<Node>				lstNodes;
 		};
 
 
@@ -177,7 +177,7 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 		*    The 'map' file contains entities like lights which populate the scene. Brushs
 		*    are ignored.
 		*/
-		bool LoadMapFile(SInstance &sInstance, PLScene::SceneContainer &cContainer, const PLGeneral::String &sFilename) const;
+		bool LoadMapFile(SInstance &sInstance, PLScene::SceneContainer &cContainer, const PLCore::String &sFilename) const;
 
 		/**
 		*  @brief
@@ -191,7 +191,7 @@ class SceneLoaderProc : public PLScene::SceneLoader {
 		*  @return
 		*    Cell index, < 0 on error
 		*/
-		int GetCellIndexByName(SInstance &sInstance, const PLGeneral::String &sName) const;
+		int GetCellIndexByName(SInstance &sInstance, const PLCore::String &sName) const;
 
 		/**
 		*  @brief

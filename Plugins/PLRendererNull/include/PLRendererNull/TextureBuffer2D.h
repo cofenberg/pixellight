@@ -85,8 +85,7 @@ class TextureBuffer2D : public PLRenderer::TextureBuffer2D {
 		*    - The image is assumed to be valid because it was already checked by the renderer texture buffer
 		*      create function
 		*/
-		TextureBuffer2D(PLRenderer::Renderer &cRenderer, PLGraphics::Image &cImage,
-						EPixelFormat nInternalFormat, PLGeneral::uint32 nFlags);
+		TextureBuffer2D(PLRenderer::Renderer &cRenderer, PLGraphics::Image &cImage, EPixelFormat nInternalFormat, PLCore::uint32 nFlags);
 
 		/**
 		*  @brief
@@ -101,22 +100,22 @@ class TextureBuffer2D : public PLRenderer::TextureBuffer2D {
 		*  @param[in] nFlags
 		*    Texture buffer flags (see EFlags)
 		*/
-		TextureBuffer2D(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vSize, EPixelFormat nInternalFormat, PLGeneral::uint32 nFlags);
+		TextureBuffer2D(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vSize, EPixelFormat nInternalFormat, PLCore::uint32 nFlags);
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::TextureBuffer functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Upload(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLGeneral::uint8 nFace = 0);
-		virtual bool Download(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLGeneral::uint8 nFace = 0);
+		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0);
+		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0);
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::TextureBuffer functions   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool MakeCurrent(PLGeneral::uint32 nStage);
+		virtual bool MakeCurrent(PLCore::uint32 nStage);
 
 
 };

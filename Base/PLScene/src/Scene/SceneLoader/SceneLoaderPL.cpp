@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Tools/Stopwatch.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Stopwatch.h>
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeModifier.h"
 #include "PLScene/Scene/SceneLoader/SceneLoaderPL.h"
@@ -36,7 +36,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScene {
 

@@ -94,7 +94,7 @@ class TypeInfo : public DynTypeInfo {
 			return Type<T>::TypeID;
 		}
 
-		virtual PLGeneral::String GetTypeName() const
+		virtual String GetTypeName() const
 		{
 			return Type<T>::GetTypeName();
 		}
@@ -109,7 +109,7 @@ class TypeInfo : public DynTypeInfo {
 			return false;
 		}
 
-		virtual PLGeneral::String GetEnumValue(const PLGeneral::String &sEnum) const
+		virtual String GetEnumValue(const String &sEnum) const
 		{
 			return "";
 		}

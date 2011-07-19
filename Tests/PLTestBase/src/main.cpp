@@ -25,7 +25,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdio.h>
-#include <PLGeneral/Main.h>
+#include <PLCore/Main.h>
 #include <PLCore/Core.h>
 #include <PLCore/ModuleMain.h>
 #include "PLTestBase/General/General.h"
@@ -38,7 +38,6 @@
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 

@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Core/MemoryManager.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Core/MemoryManager.h>
 #include "PLDefaultFileFormats/DirectX/XBinaryParser.h"
 #include "PLDefaultFileFormats/DirectX/XProcessorBinary.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLDefaultFileFormats {
 
 

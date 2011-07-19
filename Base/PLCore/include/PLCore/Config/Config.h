@@ -163,7 +163,7 @@ class Config : public Loadable {
 		*    Configuration variable value, empty string on error so
 		*    this pointer is never a null pointer!
 		*/
-		PLCORE_API PLGeneral::String GetVar(const PLGeneral::String &sClass, const PLGeneral::String &sVariable);
+		PLCORE_API String GetVar(const String &sClass, const String &sVariable);
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Config : public Loadable {
 		*    - If the variable type is PL_VAR_FLAGS, the flags will be read out
 		*    - If the variable type is PL_VAR_ENUM, the enum value will be read out
 		*/
-		PLCORE_API int GetVarInt(const PLGeneral::String &sClass, const PLGeneral::String &sVariable);
+		PLCORE_API int GetVarInt(const String &sClass, const String &sVariable);
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class Config : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetVar(const PLGeneral::String &sClass, const PLGeneral::String &sVariable, const PLGeneral::String &sValue = "");
+		PLCORE_API bool SetVar(const String &sClass, const String &sVariable, const String &sValue = "");
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class Config : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetDefault(const PLGeneral::String &sClass = "", const PLGeneral::String &sVariable = "");
+		PLCORE_API bool SetDefault(const String &sClass = "", const String &sVariable = "");
 
 		/**
 		*  @brief
@@ -221,7 +221,7 @@ class Config : public Loadable {
 		*  @return
 		*    The number of configuration class instances
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfClasses() const;
+		PLCORE_API uint32 GetNumOfClasses() const;
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class Config : public Loadable {
 		*  @return
 		*    The requested configuration class instance, a null pointer on error
 		*/
-		PLCORE_API ConfigGroup *GetClassByIndex(PLGeneral::uint32 nIndex) const;
+		PLCORE_API ConfigGroup *GetClassByIndex(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class Config : public Loadable {
 		*    System::GetInstance()->GetClassList(&lstClasses, "PLConfig");\n
 		*    to get a list of all configuration plugins.
 		*/
-		PLCORE_API ConfigGroup *GetClass(const PLGeneral::String &sName);
+		PLCORE_API ConfigGroup *GetClass(const String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -292,22 +292,22 @@ class Config : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool SetClassDefault(const PLGeneral::String &sClass, const PLGeneral::String &sVariable);
+		bool SetClassDefault(const String &sClass, const String &sVariable);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<ConfigGroup*>						m_lstConfig;
-		PLGeneral::HashMap<PLGeneral::String, ConfigGroup*> m_mapConfig;
+		Array<ConfigGroup*>			  m_lstConfig;
+		HashMap<String, ConfigGroup*> m_mapConfig;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Loadable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLCORE_API virtual String GetLoadableTypeName() const;
 
 
 };

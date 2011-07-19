@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Tools/Profiling.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Tools/Profiling.h>
 #include <PLCore/Application/ConsoleApplication.h>
 #include <PLMath/Intersect.h>
 #include <PLInput/Input/InputManager.h>
@@ -46,7 +46,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
@@ -135,7 +134,7 @@ const MaterialHandler &SNEngineInformation::GetProfilingMaterialHandler()
 void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 {
 	// Check if we have to draw the profiling information
-	PLGeneral::Profiling *pProfiling = Profiling::GetInstance();
+	PLCore::Profiling *pProfiling = Profiling::GetInstance();
 	if (pProfiling->IsActive()) {
 		// Backup renderer states
 		const uint32 nBlendEnable  = cRenderer.GetRenderState(RenderState::BlendEnable);

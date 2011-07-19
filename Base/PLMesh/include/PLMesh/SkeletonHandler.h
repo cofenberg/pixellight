@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
-#include <PLCore/Tools/ResourceHandler.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/ResourceHandler.h>
 #include "PLMesh/Joint.h"
 #include "PLMesh/Skeleton.h"
 #include "PLMesh/JointHandler.h"
@@ -144,8 +144,8 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    Current joint handlers
 		*/
-		PLMESH_API PLGeneral::Array<JointHandler> &GetJointHandlers();
-		PLMESH_API const PLGeneral::Array<JointHandler> &GetJointHandlers() const;
+		PLMESH_API PLCore::Array<JointHandler> &GetJointHandlers();
+		PLMESH_API const PLCore::Array<JointHandler> &GetJointHandlers() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    Joint handler, a null pointer on error
 		*/
-		PLMESH_API JointHandler *GetJointHandler(const PLGeneral::String &sJointName) const;
+		PLMESH_API JointHandler *GetJointHandler(const PLCore::String &sJointName) const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    Base joint handlers
 		*/
-		PLMESH_API PLGeneral::Array<JointHandler> &GetBaseJointHandlers();
+		PLMESH_API PLCore::Array<JointHandler> &GetBaseJointHandlers();
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    Base joint handler, a null pointer on error
 		*/
-		PLMESH_API JointHandler *GetBaseJointHandler(const PLGeneral::String &sJointName) const;
+		PLMESH_API JointHandler *GetBaseJointHandler(const PLCore::String &sJointName) const;
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
 		*/
-		PLMESH_API bool ApplyJointStates(PLGeneral::uint32 nFrame, float fWeight = 1.0f);
+		PLMESH_API bool ApplyJointStates(PLCore::uint32 nFrame, float fWeight = 1.0f);
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe no skeleton set?)
 		*/
-		PLMESH_API bool ApplyJointStates(PLGeneral::uint32 nFrame1, PLGeneral::uint32 nFrame2, float fTime, float fWeight = 1.0f);
+		PLMESH_API bool ApplyJointStates(PLCore::uint32 nFrame1, PLCore::uint32 nFrame2, float fTime, float fWeight = 1.0f);
 
 		/**
 		*  @brief
@@ -297,8 +297,8 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<JointHandler> m_lstBaseJointHandlers;	/**< Base joint handlers */
-		PLGeneral::Array<JointHandler> m_lstJointHandlers;		/**< Current joint handlers */
+		PLCore::Array<JointHandler> m_lstBaseJointHandlers;	/**< Base joint handlers */
+		PLCore::Array<JointHandler> m_lstJointHandlers;		/**< Current joint handlers */
 
 
 	//[-------------------------------------------------------]

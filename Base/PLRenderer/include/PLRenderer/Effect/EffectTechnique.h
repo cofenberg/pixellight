@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -106,7 +106,7 @@ class EffectTechnique {
 		*  @return
 		*    Name of the technique
 		*/
-		PLRENDERER_API PLGeneral::String GetName() const;
+		PLRENDERER_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class EffectTechnique {
 		*  @param[in] sName
 		*    New technique name
 		*/
-		PLRENDERER_API void SetName(const PLGeneral::String &sName = "");
+		PLRENDERER_API void SetName(const PLCore::String &sName = "");
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class EffectTechnique {
 		*  @return
 		*    Number of passes
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfPasses() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfPasses() const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class EffectTechnique {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool RemovePass(PLGeneral::uint32 nIndex = 0);
+		PLRENDERER_API bool RemovePass(PLCore::uint32 nIndex = 0);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class EffectTechnique {
 		*  @return
 		*    The requested pass, a null pointer on error
 		*/
-		PLRENDERER_API EffectPass *GetPass(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API EffectPass *GetPass(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class EffectTechnique {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool SetupPass(PLGeneral::uint32 nIndex = 0, ParameterManager *pParameterManager = nullptr) const;
+		PLRENDERER_API bool SetupPass(PLCore::uint32 nIndex = 0, ParameterManager *pParameterManager = nullptr) const;
 
 
 	//[-------------------------------------------------------]
@@ -219,10 +219,10 @@ class EffectTechnique {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Effect						  *m_pFX;		/**< Owner effect (always valid!) */
-		bool						   m_bValid;	/**< Is the technique valid? */
-		PLGeneral::String			   m_sName;		/**< Technique name */
-		PLGeneral::Array<EffectPass*>  m_lstPass;	/**< List of passes */
+		Effect					   *m_pFX;		/**< Owner effect (always valid!) */
+		bool						m_bValid;	/**< Is the technique valid? */
+		PLCore::String			    m_sName;	/**< Technique name */
+		PLCore::Array<EffectPass*>  m_lstPass;	/**< List of passes */
 
 
 };

@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 
@@ -128,7 +128,7 @@ void HIDDeviceWindows::SendOutputReportData()
 		// Send one output report for every report ID
 		for (uint32 i=0; i<lstReportIDs.GetNumOfElements(); i++) {
 			// Clear output report
-			PLGeneral::MemoryManager::Set(m_pOutputBuffer, 0, m_nOutputReportSize);
+			MemoryManager::Set(m_pOutputBuffer, 0, m_nOutputReportSize);
 
 			// Set report ID
 			uint8 nReportID = lstReportIDs[i];

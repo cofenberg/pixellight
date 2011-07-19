@@ -23,16 +23,16 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
-#include <PLGeneral/Network/Server.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
+#include <PLCore/Network/Server.h>
 #include "ChatServerConnection.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace NetworkChat {
 
 
@@ -76,7 +76,7 @@ ChatServerConnection &ChatServerConnection::operator =(const ChatServerConnectio
 
 
 //[-------------------------------------------------------]
-//[ Private PLGeneral::Connection functions               ]
+//[ Private PLCore::Connection functions                  ]
 //[-------------------------------------------------------]
 void ChatServerConnection::OnConnect()
 {

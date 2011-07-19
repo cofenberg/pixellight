@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLMesh {
 
@@ -139,7 +138,7 @@ void Skeleton::RecCalculateStates(Joint &cJoint, Joint *pParentJoint) const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 Joint *Skeleton::CreateElement(const String &sName)
 {

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Core/MemoryManager.inl>	// By adding this in here, usually every PixelLight basing project will add automatically the correct memory manager features
+#include "PLCore/Core/MemoryManager.inl"	// By adding this in here, usually every PixelLight basing project will add automatically the correct memory manager features
 #include "PLCore/Base/Rtti.h"
 
 
@@ -56,10 +56,10 @@
 		private: \
 			static void Register() \
 			{ \
-				PLGeneral::String sName        = Name; \
-				PLGeneral::String sVendor      = "Unknown"; \
-				PLGeneral::String sLicense     = "Unknown"; \
-				PLGeneral::String sDescription = "Unknown module"; \
+				PLCore::String sName        = Name; \
+				PLCore::String sVendor      = "Unknown"; \
+				PLCore::String sLicense     = "Unknown"; \
+				PLCore::String sDescription = "Unknown module"; \
 
 /**
 *  @brief

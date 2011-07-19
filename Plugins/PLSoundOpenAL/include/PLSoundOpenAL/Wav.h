@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 	template <class AType> class Array;
 }
@@ -66,7 +66,7 @@ namespace PLSoundOpenAL {
 *  @return
 *    'true' if all went fine and the file object was also destroyed automatically, else 'false'
 */
-extern bool LoadWav(PLGeneral::File *pFile, PLGeneral::Array<PLGeneral::uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFrequency);
+extern bool LoadWav(PLCore::File *pFile, PLCore::Array<PLCore::uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFrequency);
 
 /**
 *  @brief
@@ -87,7 +87,7 @@ extern bool LoadWav(PLGeneral::File *pFile, PLGeneral::Array<PLGeneral::uint8> &
 *  @return
 *    'true' if all went fine, else 'false'
 */
-extern bool LoadWav(const PLGeneral::uint8 nData[], PLGeneral::uint32 nSize, PLGeneral::Array<PLGeneral::uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFrequency);
+extern bool LoadWav(const PLCore::uint8 nData[], PLCore::uint32 nSize, PLCore::Array<PLCore::uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFrequency);
 
 
 //[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
@@ -67,7 +67,7 @@ class ShaderToolsGLSL {
 		*  @note
 		*    - If compiling the shader failed, compiler information is written into the log
 		*/
-		static bool SetSourceCode(GLuint nOpenGLShader, const PLGeneral::String &sSourceCode);
+		static bool SetSourceCode(GLuint nOpenGLShader, const PLCore::String &sSourceCode);
 
 		/**
 		*  @brief

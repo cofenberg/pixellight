@@ -21,7 +21,7 @@
 
 
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sSRPShadowMapping_GLSL_VS = "\
+static const PLCore::String sSRPShadowMapping_GLSL_VS = "\
 // Attributes\n\
 attribute vec4 VertexPosition;		// Object space vertex position input\n\
 varying   vec3 LightVecVS;\n\
@@ -52,7 +52,7 @@ void main()\n\
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLGeneral::String sSRPShadowMapping_GLSL_FS = "\
+static const PLCore::String sSRPShadowMapping_GLSL_FS = "\
 // Attributes\n\
 varying vec3 LightVecVS;\n\
 #ifdef FS_ALPHATEST\n\

@@ -67,16 +67,16 @@ class ScriptApplication : public BasicSceneApplication {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, ScriptApplication, "PLEngine", PLEngine::BasicSceneApplication, "Script application class")
 		// Attributes
-		pl_attribute(OnInitFunction,	PLGeneral::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should initialize itself",		"")
-		pl_attribute(OnUpdateFunction,	PLGeneral::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should update itself",			"")
-		pl_attribute(OnDeInitFunction,	PLGeneral::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should de-initialize itself",	"")
+		pl_attribute(OnInitFunction,	PLCore::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should initialize itself",		"")
+		pl_attribute(OnUpdateFunction,	PLCore::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should update itself",			"")
+		pl_attribute(OnDeInitFunction,	PLCore::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should de-initialize itself",	"")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
-			pl_constructor_0(DefaultConstructor,																					"Default constructor",																																																															"")
-			pl_constructor_4(ConstructorParameter,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	PLGeneral::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
+			pl_constructor_0(DefaultConstructor,																	"Default constructor",																																																															"")
+			pl_constructor_4(ConstructorParameter,	PLCore::String,	PLCore::String,	PLCore::String,	PLCore::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 			// Methods
-			pl_method_0(GetBaseDirectory,	pl_ret_type(PLGeneral::String),								"Returns the base directory of the application.",										"")
-			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLGeneral::String&,	"Sets the base directory of the application. Base directory as the first parameter.",	"")
+			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application.",										"")
+			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application. Base directory as the first parameter.",	"")
 		#endif
 	pl_class_end
 
@@ -113,7 +113,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    }
 		*  @endverbatim
 		*/
-		PL_API ScriptApplication(PLGeneral::String sScriptFilename, PLGeneral::String sName = "", PLGeneral::String sTitle = "", PLGeneral::String sAppDataSubdir = "");
+		PL_API ScriptApplication(PLCore::String sScriptFilename, PLCore::String sName = "", PLCore::String sTitle = "", PLCore::String sAppDataSubdir = "");
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*  @return
 		*    The base directory of the application
 		*/
-		PL_API PLGeneral::String GetBaseDirectory() const;
+		PL_API PLCore::String GetBaseDirectory() const;
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*  @param[in] sBaseDirectory
 		*    The base directory of the application
 		*/
-		PL_API void SetBaseDirectory(const PLGeneral::String &sBaseDirectory);
+		PL_API void SetBaseDirectory(const PLCore::String &sBaseDirectory);
 
 
 	//[-------------------------------------------------------]
@@ -207,7 +207,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*  @note
 		*    - Calls the optional script function <OnInitFunction>
 		*/
-		PL_API bool LoadScript(const PLGeneral::String &sFilename);
+		PL_API bool LoadScript(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -223,9 +223,9 @@ class ScriptApplication : public BasicSceneApplication {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String	 m_sCurrentSceneBaseDirectory;	/**< Base directory of the currently loaded scene */
-		PLGeneral::String	 m_sScriptFilename;				/**< Filename of the used script */
-		PLCore::Script		*m_pScript;						/**< Used script instance, can be a null pointer */
+		PLCore::String	 m_sCurrentSceneBaseDirectory;	/**< Base directory of the currently loaded scene */
+		PLCore::String	 m_sScriptFilename;				/**< Filename of the used script */
+		PLCore::Script	*m_pScript;						/**< Used script instance, can be a null pointer */
 
 
 };

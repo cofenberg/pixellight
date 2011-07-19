@@ -62,7 +62,7 @@ class Axis : public Control {
 		*  @param[in] sDescription
 		*    Control description
 		*/
-		PLINPUT_API Axis(Controller *pController, const PLGeneral::String &sName, const PLGeneral::String &sDescription);
+		PLINPUT_API Axis(Controller *pController, const PLCore::String &sName, const PLCore::String &sDescription);
 
 		/**
 		*  @brief

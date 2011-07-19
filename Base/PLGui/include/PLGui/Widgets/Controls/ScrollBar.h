@@ -116,8 +116,8 @@ class ScrollBar : public AbstractSlider {
 		PLGUI_API virtual void OnDisable();
 		PLGUI_API virtual void OnMouseLeave();
 		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 	//[-------------------------------------------------------]
@@ -149,7 +149,7 @@ class ScrollBar : public AbstractSlider {
 		*  @return
 		*    Widget state of minus button (combination of EWidgetState values)
 		*/
-		PLGeneral::uint32 GetMinusButtonState();
+		PLCore::uint32 GetMinusButtonState();
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class ScrollBar : public AbstractSlider {
 		*  @return
 		*    Widget state of plus button (combination of EWidgetState values)
 		*/
-		PLGeneral::uint32 GetPlusButtonState();
+		PLCore::uint32 GetPlusButtonState();
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class ScrollBar : public AbstractSlider {
 		*  @return
 		*    Widget state of handle (combination of EWidgetState values)
 		*/
-		PLGeneral::uint32 GetHandleState();
+		PLCore::uint32 GetHandleState();
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class ScrollBar : public AbstractSlider {
 	protected:
 		// Options
 		EOrientation		m_nOrientation;		/**< Scrollbar orientation */
-		PLGeneral::uint64	m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
+		PLCore::uint64		m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
 
 		// Internal data
 		SScrollBarButton	m_sButtonMinus;		/**< Button 'minus' */

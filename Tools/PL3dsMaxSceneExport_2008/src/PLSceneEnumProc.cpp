@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
 #include <IGame/IGame.h>
 #include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLSceneExportDialogs.h"
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
@@ -405,10 +405,9 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 		bool bPhysics = !strcmp(g_SEOptions.sSceneContainer.c_str(), "PLPhysics::SCPhysicsWorld");
 
 		{ // Copy runtime and data files
-			const int NumOfFiles = bPhysics ? 12 : 11;
+			const int NumOfFiles = bPhysics ? 11 : 10;
 			static const std::string sFiles[] =
 			{
-				"PLGeneral.dll",
 				"PLCore.dll",
 				"PLMath.dll",
 				"PLGraphics.dll",

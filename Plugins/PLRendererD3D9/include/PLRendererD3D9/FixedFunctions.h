@@ -103,7 +103,7 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool UpdateCurrentD3D9TextureMatrix(PLGeneral::uint32 nStage);
+		bool UpdateCurrentD3D9TextureMatrix(PLCore::uint32 nStage);
 
 		/**
 		*  @brief
@@ -125,8 +125,8 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		Renderer		   *m_pRendererD3D9;									/**< D3D9 renderer instance, always valid! */
 		Capabilities	    m_sCapabilities;									/**< The renderer fixed functions capabilities */
 		// Render states
-		PLGeneral::uint32   m_nDefaultRenderState[RenderState::Number];			/**< Default renderer states */
-		PLGeneral::uint32   m_nRenderState[RenderState::Number];				/**< List of render states (see RenderState) */
+		PLCore::uint32   	m_nDefaultRenderState[RenderState::Number];			/**< Default renderer states */
+		PLCore::uint32  	m_nRenderState[RenderState::Number];				/**< List of render states (see RenderState) */
 		PLGraphics::Color4  m_cColor;											/**< Current color */
 		// Transform states
 		PLMath::Matrix4x4   m_mProj;											/**< Projection transformation matrix */
@@ -136,23 +136,23 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		PLMath::Matrix4x4   m_mOriginalProj;									/**< Original projection matrix */
 		PLMath::Matrix4x4   m_mOriginalTexture[8];								/**< Original texture transformation matrix (only used of matrix is scaled) */
 		// Texture stage states
-		PLGeneral::uint32   m_nDefaultTextureStageState[TextureStage::Number];	/**< Default texture stage states */
-		PLGeneral::uint32 **m_ppnTextureStageState;								/**< List of texture stage states for each stage (see TextureStage) */
-		PLGeneral::uint32 **m_ppnInternalTextureStageState;						/**< List of internal texture stage states for each stage (see TextureStage) */
+		PLCore::uint32   	m_nDefaultTextureStageState[TextureStage::Number];	/**< Default texture stage states */
+		PLCore::uint32 	  **m_ppnTextureStageState;								/**< List of texture stage states for each stage (see TextureStage) */
+		PLCore::uint32    **m_ppnInternalTextureStageState;						/**< List of internal texture stage states for each stage (see TextureStage) */
 		// Material states
-		PLGeneral::uint32   m_nDefaultMaterialState[MaterialState::Number];		/**< Default material states */
-		PLGeneral::uint32   m_nMaterialState[MaterialState::Number];			/**< List of material states */
+		PLCore::uint32   	m_nDefaultMaterialState[MaterialState::Number];		/**< Default material states */
+		PLCore::uint32   	m_nMaterialState[MaterialState::Number];			/**< List of material states */
 		// Vertex buffer states
 		PLRenderer::VertexBuffer	 **m_ppCurrentVertexBuffer;					/**< Current vertex buffer */
-		PLGeneral::uint32			  *m_nVertexBufferOffsets;					/**< Current vertex buffer offsets */
-		PLGeneral::uint32			   m_nVertexOffset;							/**< Current vertex offset */
+		PLCore::uint32				  *m_nVertexBufferOffsets;					/**< Current vertex buffer offsets */
+		PLCore::uint32				   m_nVertexOffset;							/**< Current vertex offset */
 		bool						   m_bUpdateVertexDeclaration;				/**< Update the vertex declaration at the next draw call? */
 		LPDIRECT3DVERTEXDECLARATION9   m_pConstructedVertexDeclaration;			/**< Constructed vertex declaration (if multiple streams are used) */
 		D3DVERTEXELEMENT9			  *m_pConstructedDeclarations;				/**< Used during dynamic vertex declaration construction */
-		PLGeneral::uint32			   m_nNumOfVertexStreams;					/**< Current number of vertex streams */
+		PLCore::uint32				   m_nNumOfVertexStreams;					/**< Current number of vertex streams */
 		// All this wrappers will map PL renderer values to API dependent values
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_FMWrapper;		/**< Fog */
-		PLGeneral::Array<PLGeneral::uint32> m_cPLE_SHADEWrapper;	/**< Shade */
+		PLCore::Array<PLCore::uint32> m_cPLE_FMWrapper;		/**< Fog */
+		PLCore::Array<PLCore::uint32> m_cPLE_SHADEWrapper;	/**< Shade */
 
 
 	//[-------------------------------------------------------]
@@ -162,10 +162,10 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		virtual const Capabilities &GetCapabilities() const;
 		virtual void Reset();
 		// Render states
-		virtual PLGeneral::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
+		virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
 		virtual void ResetRenderStates();
 		virtual int GetRenderState(RenderState::Enum nState) const;
-		virtual bool SetRenderState(RenderState::Enum nState, PLGeneral::uint32 nValue);
+		virtual bool SetRenderState(RenderState::Enum nState, PLCore::uint32 nValue);
 		virtual PLGraphics::Color4 GetColor() const;
 		virtual void SetColor(const PLGraphics::Color4 &cColor = PLGraphics::Color4::White);
 		// Transform states
@@ -174,30 +174,30 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix3x4 &mTrans);
 		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix4x4 &mTrans);
 		// Texture stage states
-		virtual PLGeneral::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const;
+		virtual PLCore::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const;
 		virtual void ResetTextureStageStates();
-		virtual int GetTextureStageState(PLGeneral::uint32 nStage, TextureStage::Enum nState) const;
-		virtual bool SetTextureStageState(PLGeneral::uint32 nStage, TextureStage::Enum nState, PLGeneral::uint32 nValue);
+		virtual int GetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState) const;
+		virtual bool SetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState, PLCore::uint32 nValue);
 		// Material states
-		virtual PLGeneral::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const;
+		virtual PLCore::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const;
 		virtual void ResetMaterialStates();
 		virtual int GetMaterialState(MaterialState::Enum nState) const;
-		virtual bool SetMaterialState(MaterialState::Enum nState, PLGeneral::uint32 nValue);
+		virtual bool SetMaterialState(MaterialState::Enum nState, PLCore::uint32 nValue);
 		// Light states
 		virtual void GetDefaultLightSettings(Light &sLight) const;
 		virtual void ResetLights();
-		virtual bool IsLightEnabled(PLGeneral::uint32 nLightID) const;
-		virtual bool SetLightEnabled(PLGeneral::uint32 nLightID, bool bEnabled);
-		virtual bool GetLight(PLGeneral::uint32 nLightID, Light &sLight) const;
-		virtual bool SetLight(PLGeneral::uint32 nLightID, const Light &sLight);
+		virtual bool IsLightEnabled(PLCore::uint32 nLightID) const;
+		virtual bool SetLightEnabled(PLCore::uint32 nLightID, bool bEnabled);
+		virtual bool GetLight(PLCore::uint32 nLightID, Light &sLight) const;
+		virtual bool SetLight(PLCore::uint32 nLightID, const Light &sLight);
 		// Clip plane states
-		virtual bool IsClipPlaneEnabled(PLGeneral::uint8 nIndex) const;
+		virtual bool IsClipPlaneEnabled(PLCore::uint8 nIndex) const;
 		virtual bool SetClipPlaneEnabled(char nIndex = -1, bool bEnable = false);
-		virtual bool GetClipPlane(PLGeneral::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const;
+		virtual bool GetClipPlane(PLCore::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const;
 		virtual bool SetClipPlane(char nIndex = -1, float fA = 0.0f, float fB = 0.0f, float fC = 0.0f, float fD = 0.0f);
 		// Vertex buffer states
-		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLGeneral::uint32 nStreamNumber = 0, PLGeneral::uint32 *pnOffset = nullptr) const;
-		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = nullptr, PLGeneral::uint32 nOffset = 0, PLGeneral::uint32 nStreamNumber = 0);
+		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLCore::uint32 nStreamNumber = 0, PLCore::uint32 *pnOffset = nullptr) const;
+		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = nullptr, PLCore::uint32 nOffset = 0, PLCore::uint32 nStreamNumber = 0);
 
 
 };

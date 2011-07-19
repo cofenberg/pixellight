@@ -142,7 +142,7 @@ class Renderer : public PLCore::Object {
 		*    For 'OpenGL', 'nVersion' can for example be '21' for 'OpenGL 2.1'.
 		*    For 'Direct3D', 'nVersion' can for example be '900' for 'Direct3D 9'.
 		*/
-		virtual PLGeneral::String GetAPI(PLGeneral::uint32 *pnVersion = nullptr) const = 0;
+		virtual PLCore::String GetAPI(PLCore::uint32 *pnVersion = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    Renderer vendor
 		*/
-		virtual PLGeneral::String GetVendor() const = 0;
+		virtual PLCore::String GetVendor() const = 0;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The name of the default shader language of the renderer (for example "GLSL" or "Cg"), the string can be empty, too
 		*/
-		virtual PLGeneral::String GetDefaultShaderLanguage() const = 0;
+		virtual PLCore::String GetDefaultShaderLanguage() const = 0;
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The shader language instance (do NOT delete it!), a null pointer on error
 		*/
-		virtual ShaderLanguage *GetShaderLanguage(const PLGeneral::String &sShaderLanguage = "") = 0;
+		virtual ShaderLanguage *GetShaderLanguage(const PLCore::String &sShaderLanguage = "") = 0;
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class Renderer : public PLCore::Object {
 		*    happen that even if a dipsplay mode received by the system is listed, it may not work properly
 		*    within fullscreen mode and you get for example just a black window.
 		*/
-		virtual PLGeneral::uint32 GetNumOfDisplayModes() const = 0;
+		virtual PLCore::uint32 GetNumOfDisplayModes() const = 0;
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetNumOfDisplayModes()
 		*/
-		virtual const DisplayMode *GetDisplayMode(PLGeneral::uint32 nIndex) const = 0;
+		virtual const DisplayMode *GetDisplayMode(PLCore::uint32 nIndex) const = 0;
 
 		/**
 		*  @brief
@@ -407,7 +407,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    Number of surfaces
 		*/
-		virtual PLGeneral::uint32 GetNumOfSurfaces() const = 0;
+		virtual PLCore::uint32 GetNumOfSurfaces() const = 0;
 
 		/**
 		*  @brief
@@ -419,7 +419,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The surface at the given index, a null pointer on error
 		*/
-		virtual Surface *GetSurface(PLGeneral::uint32 nIndex = 0) const = 0;
+		virtual Surface *GetSurface(PLCore::uint32 nIndex = 0) const = 0;
 
 		/**
 		*  @brief
@@ -464,7 +464,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The created surface painter, a null pointer on error (YOU have to destroy the object!)
 		*/
-		virtual SurfacePainter *CreateSurfacePainter(const PLGeneral::String &sClass) = 0;
+		virtual SurfacePainter *CreateSurfacePainter(const PLCore::String &sClass) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Resources                                             ]
@@ -476,7 +476,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    Number of resources
 		*/
-		virtual PLGeneral::uint32 GetNumOfResources() const = 0;
+		virtual PLCore::uint32 GetNumOfResources() const = 0;
 
 		/**
 		*  @brief
@@ -488,7 +488,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The resource at the given index, a null pointer on error
 		*/
-		virtual Resource *GetResource(PLGeneral::uint32 nIndex = 0) const = 0;
+		virtual Resource *GetResource(PLCore::uint32 nIndex = 0) const = 0;
 
 		/**
 		*  @brief
@@ -547,7 +547,7 @@ class Renderer : public PLCore::Object {
 		*    - The renderer surface handler is required because this kind of surface is assigned
 		*      with a window and if the surface or window is lost they have to be informed
 		*/
-		virtual SurfaceWindow *CreateSurfaceWindow(SurfaceWindowHandler &cHandler, PLGeneral::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false) = 0;
+		virtual SurfaceWindow *CreateSurfaceWindow(SurfaceWindowHandler &cHandler, PLCore::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false) = 0;
 
 		/**
 		*  @brief
@@ -570,8 +570,8 @@ class Renderer : public PLCore::Object {
 		*    - The new created renderer surface is added to this renderer automatically
 		*/
 		virtual SurfaceTextureBuffer *CreateSurfaceTextureBuffer2D(const PLMath::Vector2i &vSize, TextureBuffer::EPixelFormat nFormat,
-																   PLGeneral::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil,
-																   PLGeneral::uint8 nMaxColorTargets = 1) = 0;
+																   PLCore::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil,
+																   PLCore::uint8 nMaxColorTargets = 1) = 0;
 
 		/**
 		*  @brief
@@ -596,8 +596,8 @@ class Renderer : public PLCore::Object {
 		*      work as render targets
 		*/
 		virtual SurfaceTextureBuffer *CreateSurfaceTextureBufferRectangle(const PLMath::Vector2i &vSize, TextureBuffer::EPixelFormat nFormat,
-																		  PLGeneral::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil,
-																		  PLGeneral::uint8 nMaxColorTargets = 1) = 0;
+																		  PLCore::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil,
+																		  PLCore::uint8 nMaxColorTargets = 1) = 0;
 
 		/**
 		*  @brief
@@ -616,8 +616,8 @@ class Renderer : public PLCore::Object {
 		*  @note
 		*    - The new created renderer surface is added to this renderer automatically
 		*/
-		virtual SurfaceTextureBuffer *CreateSurfaceTextureBufferCube(PLGeneral::uint16 nSize, TextureBuffer::EPixelFormat nFormat,
-																	 PLGeneral::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil) = 0;
+		virtual SurfaceTextureBuffer *CreateSurfaceTextureBufferCube(PLCore::uint16 nSize, TextureBuffer::EPixelFormat nFormat,
+																	 PLCore::uint32 nFlags = SurfaceTextureBuffer::Depth | SurfaceTextureBuffer::Stencil) = 0;
 
 		/**
 		*  @brief
@@ -648,7 +648,7 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual TextureBuffer1D *CreateTextureBuffer1D(PLGraphics::Image &cImage,
 													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLGeneral::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief
@@ -670,7 +670,7 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage,
 													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLGeneral::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief
@@ -708,7 +708,7 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual TextureBuffer *CreateTextureBufferRectangle(PLGraphics::Image &cImage,
 															TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-															PLGeneral::uint32 nFlags = TextureBuffer::Compression) = 0;
+															PLCore::uint32 nFlags = TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief
@@ -734,7 +734,7 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual TextureBuffer3D *CreateTextureBuffer3D(PLGraphics::Image &cImage,
 													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLGeneral::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief
@@ -760,7 +760,7 @@ class Renderer : public PLCore::Object {
 		*/
 		virtual TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage,
 														   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-														   PLGeneral::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+														   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief
@@ -816,7 +816,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The default state
 		*/
-		virtual PLGeneral::uint32 GetDefaultRenderState(RenderState::Enum nState) const = 0;
+		virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -862,7 +862,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetDefaultRenderState()
 		*/
-		virtual bool SetRenderState(RenderState::Enum nState, PLGeneral::uint32 nValue) = 0;
+		virtual bool SetRenderState(RenderState::Enum nState, PLCore::uint32 nValue) = 0;
 
 		/**
 		*  @brief
@@ -874,7 +874,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The default state
 		*/
-		virtual PLGeneral::uint32 GetDefaultSamplerState(Sampler::Enum nState) const = 0;
+		virtual PLCore::uint32 GetDefaultSamplerState(Sampler::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -901,7 +901,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetDefaultSamplerState()
 		*/
-		virtual int GetSamplerState(PLGeneral::uint32 nStage, Sampler::Enum nState) const = 0;
+		virtual int GetSamplerState(PLCore::uint32 nStage, Sampler::Enum nState) const = 0;
 
 		/**
 		*  @brief
@@ -929,7 +929,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetDefaultSamplerState()
 		*/
-		virtual bool SetSamplerState(PLGeneral::uint32 nStage, Sampler::Enum nState, PLGeneral::uint32 nValue) = 0;
+		virtual bool SetSamplerState(PLCore::uint32 nStage, Sampler::Enum nState, PLCore::uint32 nValue) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
@@ -944,7 +944,7 @@ class Renderer : public PLCore::Object {
 		*  @note
 		*    - Please note that the swap interval is only a hint and can be overwritten by the driver settings!
 		*/
-		virtual PLGeneral::uint32 GetSwapInterval() const = 0;
+		virtual PLCore::uint32 GetSwapInterval() const = 0;
 
 		/**
 		*  @brief
@@ -956,7 +956,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - GetSwapInterval()
 		*/
-		virtual void SetSwapInterval(PLGeneral::uint32 nSwapInterval = 1) = 0;
+		virtual void SetSwapInterval(PLCore::uint32 nSwapInterval = 1) = 0;
 
 		/**
 		*  @brief
@@ -1188,9 +1188,9 @@ class Renderer : public PLCore::Object {
 		*    - If scissor is disabled or set to the full viewport size some GPU's may be able to clear more efficent
 		*    - The color mask has no effect on the clear operation
 		*/
-		virtual bool Clear(PLGeneral::uint32 nFlags = Clear::Color | Clear::ZBuffer,
+		virtual bool Clear(PLCore::uint32 nFlags = Clear::Color | Clear::ZBuffer,
 						   const PLGraphics::Color4 &cColor = PLGraphics::Color4::Black, float fZ = 1.0f,
-						   PLGeneral::uint32 nStencil = 0) = 0;
+						   PLCore::uint32 nStencil = 0) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Get/set current resources                             ]
@@ -1205,7 +1205,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    Current renderer target, a null pointer if there's no one
 		*/
-		virtual Surface *GetRenderTarget(PLGeneral::uint8 *pnFace = nullptr) const = 0;
+		virtual Surface *GetRenderTarget(PLCore::uint8 *pnFace = nullptr) const = 0;
 
 		/**
 		*  @brief
@@ -1217,7 +1217,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    Current color renderer target, a null pointer if there's no one
 		*/
-		virtual TextureBuffer *GetColorRenderTarget(PLGeneral::uint8 nColorIndex = 0) const = 0;
+		virtual TextureBuffer *GetColorRenderTarget(PLCore::uint8 nColorIndex = 0) const = 0;
 
 		/**
 		*  @brief
@@ -1234,7 +1234,7 @@ class Renderer : public PLCore::Object {
 		*  @note
 		*    - SetViewport() and SetScissorRect() are called automatically
 		*/
-		virtual bool SetRenderTarget(Surface *pSurface, PLGeneral::uint8 nFace = 0) = 0;
+		virtual bool SetRenderTarget(Surface *pSurface, PLCore::uint8 nFace = 0) = 0;
 
 		/**
 		*  @brief
@@ -1254,7 +1254,7 @@ class Renderer : public PLCore::Object {
 		*  @note
 		*    - This color render targets MUST have the dimension and format of the render target
 		*/
-		virtual bool SetColorRenderTarget(TextureBuffer *pTextureBuffer, PLGeneral::uint8 nColorIndex = 0, PLGeneral::uint8 nFace = 0) = 0;
+		virtual bool SetColorRenderTarget(TextureBuffer *pTextureBuffer, PLCore::uint8 nColorIndex = 0, PLCore::uint8 nFace = 0) = 0;
 
 		/**
 		*  @brief
@@ -1278,7 +1278,7 @@ class Renderer : public PLCore::Object {
 		*  @return
 		*    The current texture buffer at the given stage, a null pointer if there's no one
 		*/
-		virtual TextureBuffer *GetTextureBuffer(PLGeneral::uint32 nStage) const = 0;
+		virtual TextureBuffer *GetTextureBuffer(PLCore::uint32 nStage) const = 0;
 
 		/**
 		*  @brief
@@ -1361,7 +1361,7 @@ class Renderer : public PLCore::Object {
 		*  @note
 		*    - DrawPrimitives() fails if no vertex array is set
 		*/
-		virtual bool DrawPrimitives(Primitive::Enum nType, PLGeneral::uint32 nStartIndex, PLGeneral::uint32 nNumVertices) = 0;
+		virtual bool DrawPrimitives(Primitive::Enum nType, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
 
 		/**
 		*  @brief
@@ -1390,8 +1390,8 @@ class Renderer : public PLCore::Object {
 		*    - DrawIndexedPrimitive() fails if no index and/or vertex array is set
 		*    - The Primitive::PointList member of the primitive enumerated type is not supported and is not a valid type for this method
 		*/
-		virtual bool DrawIndexedPrimitives(Primitive::Enum nType, PLGeneral::uint32 nMinIndex, PLGeneral::uint32 nMaxIndex,
-										   PLGeneral::uint32 nStartIndex, PLGeneral::uint32 nNumVertices) = 0;
+		virtual bool DrawIndexedPrimitives(Primitive::Enum nType, PLCore::uint32 nMinIndex, PLCore::uint32 nMaxIndex,
+										   PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
 
 
 	//[-------------------------------------------------------]

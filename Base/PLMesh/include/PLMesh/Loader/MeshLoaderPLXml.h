@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class AType> class Stack;
 }
 namespace PLRenderer {
@@ -81,9 +81,9 @@ class MeshLoaderPLXml : public MeshLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	Mesh&,	PLGeneral::File&,			"Load method. The loaded mesh is static.",															"")
-		pl_method_3(LoadParams,	pl_ret_type(bool),	Mesh&,	PLGeneral::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
-		pl_method_2(Save,		pl_ret_type(bool),	Mesh&,	PLGeneral::File&,			"Save method",																						"")
+		pl_method_2(Load,		pl_ret_type(bool),	Mesh&,	PLCore::File&,			"Load method. The loaded mesh is static.",															"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	Mesh&,	PLCore::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	Mesh&,	PLCore::File&,			"Save method",																						"")
 	pl_class_end
 
 
@@ -91,9 +91,9 @@ class MeshLoaderPLXml : public MeshLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API bool Load(Mesh &cMesh, PLGeneral::File &cFile);
-		PLMESH_API bool LoadParams(Mesh &cMesh, PLGeneral::File &cFile, bool bStatic);
-		PLMESH_API bool Save(Mesh &cMesh, PLGeneral::File &cFile);
+		PLMESH_API bool Load(Mesh &cMesh, PLCore::File &cFile);
+		PLMESH_API bool LoadParams(Mesh &cMesh, PLCore::File &cFile, bool bStatic);
+		PLMESH_API bool Save(Mesh &cMesh, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -118,25 +118,25 @@ class MeshLoaderPLXml : public MeshLoader {
 	//[-------------------------------------------------------]
 	private:
 		// File loading
-		bool LoadV1(Mesh &cMesh, const PLGeneral::XmlElement &cMeshElement, bool bStatic) const;
-		bool ReadMaterials(Mesh &cMesh, const PLGeneral::XmlElement &cMaterialsElement) const;
-		bool ReadLODLevels(Mesh &cMesh, const PLGeneral::XmlElement &cLODLevelsElement, bool bStatic) const;
-		bool ReadLODLevel(MeshLODLevel &cLODLevel, const PLGeneral::XmlElement &cLODLevelElement, bool bStatic) const;
-		bool ReadIndexBuffer(PLRenderer::IndexBuffer &cIndexBuffer, const PLGeneral::XmlElement &cIndexBufferElement, bool bStatic) const;
-		bool ReadGeometry(Geometry &cGeometry, const PLGeneral::XmlElement &cGeometryElement) const;
-		bool ReadMorphTargets(Mesh &cMesh, const PLGeneral::XmlElement &cMorphTargetsElement, bool bStatic) const;
-		bool ReadMorphTarget(MeshMorphTarget &cMorphTarget, const PLGeneral::XmlElement &cMorphTargetElement, bool bStatic) const;
-		bool ReadVertexBuffer(PLRenderer::VertexBuffer &cVertexBuffer, PLGeneral::uint32 nIndex, const PLGeneral::XmlElement &cVertexBufferElement, bool bStatic) const;
-		bool ReadVertexAttribute(PLRenderer::VertexBuffer &cVertexBuffer, const PLGeneral::XmlElement &cVertexAttributeElement) const;
-		bool ReadWeights(Mesh &cMesh, const PLGeneral::XmlElement &cWeightsElement) const;
-		bool ReadVertexWeightsContainer(Mesh &cMesh, const PLGeneral::XmlElement &cVertexWeightsContainerElement) const;
-		bool ReadSkeletons(Mesh &cMesh, const PLGeneral::XmlElement &cSkeletonsElement) const;
-		bool ReadSkeleton(Mesh &cMesh, const PLGeneral::XmlElement &cSkeletonElement) const;
-		bool ReadAnchorPoints(Mesh &cMesh, const PLGeneral::XmlElement &cAnchorPointsElement) const;
-		bool ReadAnimations(PLGeneral::File &cFile) const;
-		bool ReadMorphTargetAnimations(Mesh &cMesh, const PLGeneral::XmlElement &cMorphTargetAnimationsElement) const;
-		bool ReadMorphTargetAnimation(Mesh &cMesh, const PLGeneral::XmlElement &cMorphTargetElement) const;
-		bool ReadMeshBoundingBox(Mesh &cMesh, const PLGeneral::XmlElement &cBoundingBoxElement) const;
+		bool LoadV1(Mesh &cMesh, const PLCore::XmlElement &cMeshElement, bool bStatic) const;
+		bool ReadMaterials(Mesh &cMesh, const PLCore::XmlElement &cMaterialsElement) const;
+		bool ReadLODLevels(Mesh &cMesh, const PLCore::XmlElement &cLODLevelsElement, bool bStatic) const;
+		bool ReadLODLevel(MeshLODLevel &cLODLevel, const PLCore::XmlElement &cLODLevelElement, bool bStatic) const;
+		bool ReadIndexBuffer(PLRenderer::IndexBuffer &cIndexBuffer, const PLCore::XmlElement &cIndexBufferElement, bool bStatic) const;
+		bool ReadGeometry(Geometry &cGeometry, const PLCore::XmlElement &cGeometryElement) const;
+		bool ReadMorphTargets(Mesh &cMesh, const PLCore::XmlElement &cMorphTargetsElement, bool bStatic) const;
+		bool ReadMorphTarget(MeshMorphTarget &cMorphTarget, const PLCore::XmlElement &cMorphTargetElement, bool bStatic) const;
+		bool ReadVertexBuffer(PLRenderer::VertexBuffer &cVertexBuffer, PLCore::uint32 nIndex, const PLCore::XmlElement &cVertexBufferElement, bool bStatic) const;
+		bool ReadVertexAttribute(PLRenderer::VertexBuffer &cVertexBuffer, const PLCore::XmlElement &cVertexAttributeElement) const;
+		bool ReadWeights(Mesh &cMesh, const PLCore::XmlElement &cWeightsElement) const;
+		bool ReadVertexWeightsContainer(Mesh &cMesh, const PLCore::XmlElement &cVertexWeightsContainerElement) const;
+		bool ReadSkeletons(Mesh &cMesh, const PLCore::XmlElement &cSkeletonsElement) const;
+		bool ReadSkeleton(Mesh &cMesh, const PLCore::XmlElement &cSkeletonElement) const;
+		bool ReadAnchorPoints(Mesh &cMesh, const PLCore::XmlElement &cAnchorPointsElement) const;
+		bool ReadAnimations(PLCore::File &cFile) const;
+		bool ReadMorphTargetAnimations(Mesh &cMesh, const PLCore::XmlElement &cMorphTargetAnimationsElement) const;
+		bool ReadMorphTargetAnimation(Mesh &cMesh, const PLCore::XmlElement &cMorphTargetElement) const;
+		bool ReadMeshBoundingBox(Mesh &cMesh, const PLCore::XmlElement &cBoundingBoxElement) const;
 
 
 	//[-------------------------------------------------------]
@@ -144,23 +144,23 @@ class MeshLoaderPLXml : public MeshLoader {
 	//[-------------------------------------------------------]
 	private:
 		// File saving
-		bool WriteMeshFile(Mesh &cMesh, PLGeneral::XmlElement &cMeshElement) const;
-		bool WriteMaterials(const Mesh &cMesh, PLGeneral::XmlElement &cMeshElement) const;
-		bool WriteMesh(Mesh &cMesh, PLGeneral::XmlElement &cMeshElement) const;
-		bool WriteLODLevel(MeshLODLevel &cLODLevel, PLGeneral::uint32 nID, PLGeneral::XmlElement &cLODLevelsElement) const;
-		bool WriteIndexBuffer(PLRenderer::IndexBuffer &cIndexBuffer, PLGeneral::XmlElement &cLODLevelElement) const;
-		bool WriteGeometry(const Geometry &cGeometry, PLGeneral::uint32 nID, PLGeneral::XmlElement &cGeometriesElement) const;
-		bool WriteWeight(const Weight &cWeight, PLGeneral::uint32 nID, PLGeneral::XmlElement &cWeightsElement) const;
-		bool WriteVertexWeights(VertexWeights &cVertexWeights, PLGeneral::uint32 nID, PLGeneral::XmlElement &cVertexWeightsElement) const;
-		bool WriteMorphTarget(MeshMorphTarget &cMorphTarget, PLGeneral::uint32 nID, PLGeneral::XmlElement &cMorphTargetsElement) const;
-		bool WriteVertexBuffer(PLRenderer::VertexBuffer &cVertexBuffer, PLGeneral::uint32 nID, PLGeneral::XmlElement &pVertexBuffersElement) const;
-		bool WriteVertexAttribute(const PLRenderer::VertexBuffer::Attribute &cVertexAttribute, PLGeneral::uint32 nID, PLGeneral::XmlElement &cVertexAttributesElement) const;
-		bool WriteSkeleton(Skeleton &cSkeleton, PLGeneral::uint32 nID, PLGeneral::XmlElement &cSkeletonsElement) const;
-		bool WriteAnchorPoints(Mesh &cMesh, PLGeneral::XmlElement &cMeshElement) const;
+		bool WriteMeshFile(Mesh &cMesh, PLCore::XmlElement &cMeshElement) const;
+		bool WriteMaterials(const Mesh &cMesh, PLCore::XmlElement &cMeshElement) const;
+		bool WriteMesh(Mesh &cMesh, PLCore::XmlElement &cMeshElement) const;
+		bool WriteLODLevel(MeshLODLevel &cLODLevel, PLCore::uint32 nID, PLCore::XmlElement &cLODLevelsElement) const;
+		bool WriteIndexBuffer(PLRenderer::IndexBuffer &cIndexBuffer, PLCore::XmlElement &cLODLevelElement) const;
+		bool WriteGeometry(const Geometry &cGeometry, PLCore::uint32 nID, PLCore::XmlElement &cGeometriesElement) const;
+		bool WriteWeight(const Weight &cWeight, PLCore::uint32 nID, PLCore::XmlElement &cWeightsElement) const;
+		bool WriteVertexWeights(VertexWeights &cVertexWeights, PLCore::uint32 nID, PLCore::XmlElement &cVertexWeightsElement) const;
+		bool WriteMorphTarget(MeshMorphTarget &cMorphTarget, PLCore::uint32 nID, PLCore::XmlElement &cMorphTargetsElement) const;
+		bool WriteVertexBuffer(PLRenderer::VertexBuffer &cVertexBuffer, PLCore::uint32 nID, PLCore::XmlElement &pVertexBuffersElement) const;
+		bool WriteVertexAttribute(const PLRenderer::VertexBuffer::Attribute &cVertexAttribute, PLCore::uint32 nID, PLCore::XmlElement &cVertexAttributesElement) const;
+		bool WriteSkeleton(Skeleton &cSkeleton, PLCore::uint32 nID, PLCore::XmlElement &cSkeletonsElement) const;
+		bool WriteAnchorPoints(Mesh &cMesh, PLCore::XmlElement &cMeshElement) const;
 // [TODO] Update this
-//		bool WriteAnimations(const Mesh &cMesh, PLGeneral::File &cFile, PLGeneral::Stack<MeshFile::Chunk> &cChunkStack) const;
-		bool WriteMorphTargetAnimation(Mesh &cMesh, PLGeneral::uint32 nAnimation, PLGeneral::XmlElement &cMorphTargetAnimationsElement) const;
-		bool WriteMeshBoundingBox(const Mesh &cMesh, PLGeneral::XmlElement &cMeshElement) const;
+//		bool WriteAnimations(const Mesh &cMesh, PLCore::File &cFile, PLCore::Stack<MeshFile::Chunk> &cChunkStack) const;
+		bool WriteMorphTargetAnimation(Mesh &cMesh, PLCore::uint32 nAnimation, PLCore::XmlElement &cMorphTargetAnimationsElement) const;
+		bool WriteMeshBoundingBox(const Mesh &cMesh, PLCore::XmlElement &cMeshElement) const;
 
 
 };

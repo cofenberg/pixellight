@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace NetworkChat {
 
 
@@ -70,7 +70,7 @@ ChatServer &ChatServer::operator =(const ChatServer &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::Server functions           ]
+//[ Private virtual PLCore::Server functions              ]
 //[-------------------------------------------------------]
 Connection *ChatServer::CreateIncomingConnection()
 {

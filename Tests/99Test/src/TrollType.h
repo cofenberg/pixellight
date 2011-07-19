@@ -124,7 +124,7 @@ class TrollType {
 		*  @return
 		*    Troll's comment
 		*/
-		PLGeneral::String GetComment() const;
+		PLCore::String GetComment() const;
 
 
 	//[-------------------------------------------------------]

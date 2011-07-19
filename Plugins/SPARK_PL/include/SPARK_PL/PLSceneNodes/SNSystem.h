@@ -89,7 +89,7 @@ class SNSystem : public PLScene::SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(SPARK_PL_RTTI_EXPORT, SNSystem, "SPARK_PL", PLScene::SceneNode, "Abstract SPARK particle system scene node base class")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 			// Overwritten PLScene::SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 		// Slots
@@ -222,8 +222,8 @@ class SNSystem : public PLScene::SceneNode {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		SPK::System						  *m_pParticleSystem;	/**< SPARK particle system, can be a null pointer */
-		PLGeneral::Array<SPK_PLRenderer*>  m_lstSPK_PLRenderer;	/**< Used SPK_PLRenderer instances */
+		SPK::System					   *m_pParticleSystem;		/**< SPARK particle system, can be a null pointer */
+		PLCore::Array<SPK_PLRenderer*>  m_lstSPK_PLRenderer;	/**< Used SPK_PLRenderer instances */
 
 
 	//[-------------------------------------------------------]

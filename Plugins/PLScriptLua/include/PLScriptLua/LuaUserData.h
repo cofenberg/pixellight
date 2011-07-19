@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
+#include <PLCore/Core/RefCount.h>
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ class Script;
 *  @note
 *    - "Lua 5.1 Reference Manual " -> "2.8 - Metatables" -> http://www.lua.org/manual/5.1/manual.html
 */
-class LuaUserData : private PLGeneral::RefCount<LuaUserData> {
+class LuaUserData : private PLCore::RefCount<LuaUserData> {
 
 
 	//[-------------------------------------------------------]

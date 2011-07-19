@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLMath/PLMath.h"
 
 
@@ -144,7 +144,7 @@ class Math {
 		*  @return
 		*    A positive random number
 		*/
-		PLMATH_API static PLGeneral::uint32 GetRand();
+		PLMATH_API static PLCore::uint32 GetRand();
 
 		/**
 		*  @brief
@@ -236,7 +236,7 @@ class Math {
 		*/
 		inline static float Min(float a, float b);
 		inline static int Min(int a, int b);
-		inline static PLGeneral::uint32 Min(PLGeneral::uint32 a, PLGeneral::uint32 b);
+		inline static PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b);
 
 		/**
 		*  @brief
@@ -252,7 +252,7 @@ class Math {
 		*/
 		inline static float Max(float a, float b);
 		inline static int Max(int a, int b);
-		inline static PLGeneral::uint32 Max(PLGeneral::uint32 a, PLGeneral::uint32 b);
+		inline static PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b);
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class Math {
 		*/
 		inline static float Min(float a, float b, float c, float d);
 		inline static int Min(int a, int b, int c, int d);
-		inline static PLGeneral::uint32 Min(PLGeneral::uint32 a, PLGeneral::uint32 b, PLGeneral::uint32 c, PLGeneral::uint32 d);
+		inline static PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
 
 		/**
 		*  @brief
@@ -292,7 +292,7 @@ class Math {
 		*/
 		inline static float Max(float a, float b, float c, float d);
 		inline static int Max(int a, int b, int c, int d);
-		inline static PLGeneral::uint32 Max(PLGeneral::uint32 a, PLGeneral::uint32 b, PLGeneral::uint32 c, PLGeneral::uint32 d);
+		inline static PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
 
 		/**
 		*  @brief
@@ -441,7 +441,7 @@ class Math {
 		*  @return
 		*    The rounded value of the given value
 		*/
-		PLMATH_API static float Round(float fValue, PLGeneral::uint32 nPrecision = 0);
+		PLMATH_API static float Round(float fValue, PLCore::uint32 nPrecision = 0);
 
 		/**
 		*  @brief

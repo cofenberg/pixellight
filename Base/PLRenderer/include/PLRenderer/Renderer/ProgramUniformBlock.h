@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLRenderer/PLRenderer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLRenderer {
@@ -81,7 +81,7 @@ class ProgramUniformBlock {
 		*    which can be used at the same time during rendering are limited to e.g. 45 (just an example!)
 		*    binding points.
 		*/
-		virtual bool SetUniformBuffer(UniformBuffer *pUniformBuffer, PLGeneral::uint32 nBindingPoint) = 0;
+		virtual bool SetUniformBuffer(UniformBuffer *pUniformBuffer, PLCore::uint32 nBindingPoint) = 0;
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class ProgramUniformBlock {
 		*  @return
 		*    The uniform block index
 		*/
-		virtual PLGeneral::uint32 GetIndex() const = 0;
+		virtual PLCore::uint32 GetIndex() const = 0;
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ProgramUniformBlock {
 		*  @return
 		*    The uniform block data size (in bytes)
 		*/
-		virtual PLGeneral::uint32 GetSize() const = 0;
+		virtual PLCore::uint32 GetSize() const = 0;
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class ProgramUniformBlock {
 		*  @return
 		*    The offset (in bytes) of an uniform inside the uniform block
 		*/
-		virtual PLGeneral::uint32 GetUniformOffset(const PLGeneral::String &sUniformName) const = 0;
+		virtual PLCore::uint32 GetUniformOffset(const PLCore::String &sUniformName) const = 0;
 
 		/**
 		*  @brief
@@ -120,7 +120,7 @@ class ProgramUniformBlock {
 		*  @return
 		*    The size (in bytes) of an uniform inside the uniform block
 		*/
-		virtual PLGeneral::uint32 GetUniformSize(const PLGeneral::String &sUniformName) const = 0;
+		virtual PLCore::uint32 GetUniformSize(const PLCore::String &sUniformName) const = 0;
 
 		/**
 		*  @brief
@@ -129,7 +129,7 @@ class ProgramUniformBlock {
 		*  @return
 		*    The number of array elements of an uniform inside the uniform block, 1 for none array uniforms
 		*/
-		virtual PLGeneral::uint32 GetUniformNumOfArrayElements(const PLGeneral::String &sUniformName) const = 0;
+		virtual PLCore::uint32 GetUniformNumOfArrayElements(const PLCore::String &sUniformName) const = 0;
 
 
 	//[-------------------------------------------------------]

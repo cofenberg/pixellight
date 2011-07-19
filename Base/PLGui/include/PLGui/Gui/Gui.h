@@ -40,7 +40,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Mutex;
 }
 namespace PLGui {
@@ -141,7 +141,7 @@ class Gui : public PLCore::Object {
 		*  @remarks
 		*    To obtain a pointer to the system GUI, use GetSystemGui() instead of creating a new instance
 		*/
-		PLGUI_API Gui(const PLGeneral::String &sGui = "");
+		PLGUI_API Gui(const PLCore::String &sGui = "");
 
 		/**
 		*  @brief
@@ -245,7 +245,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    List of message filters
 		*/
-		PLGUI_API const PLGeneral::Container<MessageFilter*> &GetMessageFilters() const;
+		PLGUI_API const PLCore::Container<MessageFilter*> &GetMessageFilters() const;
 
 		/**
 		*  @brief
@@ -284,7 +284,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    List of screens
 		*/
-		PLGUI_API const PLGeneral::Container<Screen*> &GetScreens() const;
+		PLGUI_API const PLCore::Container<Screen*> &GetScreens() const;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    Pointer to the specific screen, or a null pointer if that screen doesn't exist
 		*/
-		PLGUI_API Screen *GetScreen(const PLGeneral::String &sName) const;
+		PLGUI_API Screen *GetScreen(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -402,7 +402,7 @@ class Gui : public PLCore::Object {
 		*  @param[in] sTooltip
 		*    Tooltip text
 		*/
-		PLGUI_API void ShowTooltip(const PLMath::Vector2i &vPos, const PLGeneral::String &sTooltip);
+		PLGUI_API void ShowTooltip(const PLMath::Vector2i &vPos, const PLCore::String &sTooltip);
 
 		//[-------------------------------------------------------]
 		//[ Theme                                                 ]
@@ -434,7 +434,7 @@ class Gui : public PLCore::Object {
 		*  @param[in] sOptions
 		*    Theme options
 		*/
-		PLGUI_API void SetTheme(const PLGeneral::String &sClass, const PLGeneral::String &sOptions);
+		PLGUI_API void SetTheme(const PLCore::String &sClass, const PLCore::String &sOptions);
 
 		//[-------------------------------------------------------]
 		//[ Options                                               ]
@@ -446,7 +446,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    Timeout (in milliseconds)
 		*/
-		PLGUI_API PLGeneral::uint64 GetHoverTime() const;
+		PLGUI_API PLCore::uint64 GetHoverTime() const;
 
 		/**
 		*  @brief
@@ -458,7 +458,7 @@ class Gui : public PLCore::Object {
 		*  @remarks
 		*    If set to 0, hover events will be disabled completely.
 		*/
-		PLGUI_API void SetHoverTime(PLGeneral::uint64 nTimeout);
+		PLGUI_API void SetHoverTime(PLCore::uint64 nTimeout);
 
 
 	//[-------------------------------------------------------]
@@ -472,7 +472,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    Widget ID for a newly created widget
 		*/
-		PLGeneral::uint32 GetUniqueWidgetID();
+		PLCore::uint32 GetUniqueWidgetID();
 
 		/**
 		*  @brief
@@ -630,33 +630,33 @@ class Gui : public PLCore::Object {
 	//[-------------------------------------------------------]
 	private:
 		// Data
-		GuiImpl							 *m_pGuiImpl;				/**< Gui implementation, always valid! */
-		bool							  m_bShutdown;				/**< Has the GUI shut down? */
-		Theme							 *m_pTheme;					/**< Current theme */
-		PLGeneral::uint64				  m_nHoverTime;				/**< Time in milliseconds before a hove event shall occur */
-		FontManager						  m_cFontManager;			/**< Font manager */
-		CursorManager					  m_cCursorManager;			/**< Cursor manager */
-		ClipBoard						  m_cClipBoard;				/**< Clip board */
-		bool							  m_bActive;				/**< 'true' if the GUI is active */
-		PLGeneral::uint32				  m_nNextWidgetID;			/**< Sequential widget ID */
-		PLGeneral::List<Screen*>		  m_lstScreens;				/**< List of available screens (monitors) */
-		Screen							 *m_pDefaultScreen;			/**< Pointer to default (primary) screen */
-		bool							  m_bMouseVisible;			/**< Is the mouse cursor visible? */
-		Widget							 *m_pRootWidget;			/**< Dummy root widget */
-		PLGeneral::List<Widget*>		  m_lstTopLevelWidgets;		/**< List of top-level widgets */
-		PLGeneral::List<Widget*>		  m_lstWrapperWidgets;		/**< List of wrapper widgets */
-		PLGeneral::List<Widget*>		  m_lstDestroyedWidgets;	/**< List of destroyed widgets */
-		PLGeneral::List<Timer*>			  m_lstTimers;				/**< List of active timers */
-		PLGeneral::List<MessageFilter*>	  m_lstMessageFilters;		/**< Message filters */
-		Widget							 *m_pMouseOverWidget;		/**< Widget that is currently selected by the mouse */
-		Widget							 *m_pMouseOverWidgetNew;	/**< New mouse-over widget */
-		Timer							 *m_pHoverTimer;			/**< Timer for hover messages */
-		Widget							 *m_pFocusWidget;			/**< Widget that currenty has the keyboard focus */
-		Widget							 *m_pFocusWidgetNew;		/**< New focus widget */
-		Tooltip							 *m_pTooltip;				/**< Tooltip widget */
+		GuiImpl						 *m_pGuiImpl;				/**< Gui implementation, always valid! */
+		bool						  m_bShutdown;				/**< Has the GUI shut down? */
+		Theme						 *m_pTheme;					/**< Current theme */
+		PLCore::uint64				  m_nHoverTime;				/**< Time in milliseconds before a hove event shall occur */
+		FontManager					  m_cFontManager;			/**< Font manager */
+		CursorManager				  m_cCursorManager;			/**< Cursor manager */
+		ClipBoard					  m_cClipBoard;				/**< Clip board */
+		bool						  m_bActive;				/**< 'true' if the GUI is active */
+		PLCore::uint32				  m_nNextWidgetID;			/**< Sequential widget ID */
+		PLCore::List<Screen*>		  m_lstScreens;				/**< List of available screens (monitors) */
+		Screen						 *m_pDefaultScreen;			/**< Pointer to default (primary) screen */
+		bool						  m_bMouseVisible;			/**< Is the mouse cursor visible? */
+		Widget						 *m_pRootWidget;			/**< Dummy root widget */
+		PLCore::List<Widget*>		  m_lstTopLevelWidgets;		/**< List of top-level widgets */
+		PLCore::List<Widget*>		  m_lstWrapperWidgets;		/**< List of wrapper widgets */
+		PLCore::List<Widget*>		  m_lstDestroyedWidgets;	/**< List of destroyed widgets */
+		PLCore::List<Timer*>		  m_lstTimers;				/**< List of active timers */
+		PLCore::List<MessageFilter*>  m_lstMessageFilters;		/**< Message filters */
+		Widget						 *m_pMouseOverWidget;		/**< Widget that is currently selected by the mouse */
+		Widget						 *m_pMouseOverWidgetNew;	/**< New mouse-over widget */
+		Timer						 *m_pHoverTimer;			/**< Timer for hover messages */
+		Widget						 *m_pFocusWidget;			/**< Widget that currenty has the keyboard focus */
+		Widget						 *m_pFocusWidgetNew;		/**< New focus widget */
+		Tooltip						 *m_pTooltip;				/**< Tooltip widget */
 
 		// Event handlers
-		PLCore::EventHandler<>			  EventHandlerOnHoverTimer;	/**< Event handler for hover timer event */
+		PLCore::EventHandler<>		  EventHandlerOnHoverTimer;	/**< Event handler for hover timer event */
 
 
 };

@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -80,7 +79,7 @@ class LocalizationText {
 		*  @return
 		*    The name of the text
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -89,7 +88,7 @@ class LocalizationText {
 		*  @return
 		*    The translation of the text
 		*/
-		PLCORE_API PLGeneral::String GetTranslation() const;
+		PLCORE_API String GetTranslation() const;
 
 		/**
 		*  @brief
@@ -98,7 +97,7 @@ class LocalizationText {
 		*  @param[in] sTranslation
 		*    The translation of the text
 		*/
-		PLCORE_API void SetTranslation(const PLGeneral::String &sTranslation);
+		PLCORE_API void SetTranslation(const String &sTranslation);
 
 
 	//[-------------------------------------------------------]
@@ -119,7 +118,7 @@ class LocalizationText {
 		*  @note
 		*    - By default, the translation if set to the text name
 		*/
-		LocalizationText(LocalizationGroup &cGroup, const PLGeneral::String &sName, const PLGeneral::String &sTranslation);
+		LocalizationText(LocalizationGroup &cGroup, const String &sName, const String &sTranslation);
 
 		/**
 		*  @brief
@@ -154,8 +153,8 @@ class LocalizationText {
 	//[-------------------------------------------------------]
 	private:
 		LocalizationGroup *m_pGroup;		/**< The group the text is in (always valid!) */
-		PLGeneral::String  m_sName;			/**< Name of the group */
-		PLGeneral::String  m_sTranslation;	/**< The translation of the text */
+		String			   m_sName;			/**< Name of the group */
+		String			   m_sTranslation;	/**< The translation of the text */
 
 
 };

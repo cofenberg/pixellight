@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Base/Keys.h>
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGui;
 using namespace PLRenderer;
 using namespace PLScene;

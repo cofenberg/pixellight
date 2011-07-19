@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/Directory.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/File/Directory.h>
 #include <IGame/IGame.h>
 #include <IGame/IGameFX.h>
 #include <iparamb2.h>
@@ -46,7 +46,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

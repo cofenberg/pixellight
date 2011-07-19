@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLXmlText/PLXmlText.h"
 #include "PLXmlText/XmlText/XmlTextElement.h"
 
@@ -73,7 +73,7 @@ class XmlTextTextNode : public XmlTextElement {
 	//[ Protected virtual XmlTextElement functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
 
 
@@ -81,7 +81,7 @@ class XmlTextTextNode : public XmlTextElement {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sText;	/**< Contained text */
+		PLCore::String m_sText;	/**< Contained text */
 
 
 };

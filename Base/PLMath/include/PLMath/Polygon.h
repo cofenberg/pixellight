@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLMath/Plane.h"
 
 
@@ -131,7 +131,7 @@ class Polygon {
 		*    - If vertices are changed to should call the ComputePlane()
 		*      function to keep the polygon plane up to date!
 		*/
-		PLMATH_API PLGeneral::Array<Vector3> &GetVertexList();
+		PLMATH_API PLCore::Array<Vector3> &GetVertexList();
 
 		/**
 		*  @brief
@@ -218,8 +218,8 @@ class Polygon {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<Vector3> m_lstVertices;	/**< The vertices (xyz) */
-		Plane					  m_cPlane;			/**< Plane the polygon is on */
+		PLCore::Array<Vector3> m_lstVertices;	/**< The vertices (xyz) */
+		Plane				   m_cPlane;		/**< Plane the polygon is on */
 
 
 	//[-------------------------------------------------------]
@@ -254,7 +254,7 @@ class Polygon {
 		*    - Is called by Split() to get an custom split behaviour... a
 		*      derived polygon could e.g. also have texture coordinates to be split or added!
 		*/
-		PLMATH_API virtual bool CustomAdd(Polygon &cPolygon, PLGeneral::uint32 nID);
+		PLMATH_API virtual bool CustomAdd(Polygon &cPolygon, PLCore::uint32 nID);
 
 		/**
 		*  @brief
@@ -275,8 +275,7 @@ class Polygon {
 		*  @see
 		*    - CustomAdd()
 		*/
-		PLMATH_API virtual bool CustomSplit(Polygon &cFrontPolygon, Polygon &cBackPolygon,
-											PLGeneral::uint32 nID, float fDistance);
+		PLMATH_API virtual bool CustomSplit(Polygon &cFrontPolygon, Polygon &cBackPolygon, PLCore::uint32 nID, float fDistance);
 
 
 };

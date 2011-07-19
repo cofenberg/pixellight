@@ -26,17 +26,17 @@
 #include <string.h>
 #ifdef LINUX
 	#include <wchar.h>
-	#include <PLGeneral/PLGeneralLinuxWrapper.h>
+	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/String/UTF8Tools.h>
+#include <PLCore/System/System.h>
+#include <PLCore/String/UTF8Tools.h>
 #include "PLTestBase/General/UTF8ToolsTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

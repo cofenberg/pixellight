@@ -71,7 +71,7 @@ class FontTexture : public Font {
 		*  @param[in] sFilename
 		*    Filename of the font file the data came from, used to reference the new font by filename
 		*/
-		PLRENDERER_API FontTexture(FontManager &cFontManager, const PLGeneral::String &sFilename);
+		PLRENDERER_API FontTexture(FontManager &cFontManager, const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]

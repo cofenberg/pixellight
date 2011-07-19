@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 }
 namespace PLDefaultFileFormats {
@@ -70,7 +70,7 @@ class XRootBinary : public XRoot {
 		*  @param[in] cFile
 		*    File to use
 		*/
-		XRootBinary(PLGeneral::File &cFile);
+		XRootBinary(PLCore::File &cFile);
 
 		/**
 		*  @brief

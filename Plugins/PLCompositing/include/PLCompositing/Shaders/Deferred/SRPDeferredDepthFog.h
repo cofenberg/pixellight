@@ -99,7 +99,7 @@ class SRPDeferredDepthFog : public SRPDeferred {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDeferredDepthFog, "PLCompositing", PLCompositing::SRPDeferred, "Scene renderer pass for deferred rendering classic depth fog")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",											ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		pl_attribute(FogColor,			PLGraphics::Color4,		PLGraphics::Color4(0.5f, 0.5f, 0.5f, 1.0f),	ReadWrite,	DirectValue,	"Fog color",																															"")
 		pl_attribute(FogMode,			pl_enum_type(EFogMode),	ExponentialMode,							ReadWrite,	DirectValue,	"Fog mode",																																"")
 		pl_attribute(FogStart,			float,					0.0f,										ReadWrite,	DirectValue,	"Fog start, only for LinearMode",																										"")

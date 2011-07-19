@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Checksum;
 }
 
@@ -72,7 +72,7 @@ class ChecksumTest : public TestCase {
 		*  @return
 		*    The checksum of the given file, empty string on error (invalid file?)
 		*/
-		PLGeneral::String CheckFile(PLGeneral::Checksum &cChecksum, const PLGeneral::String &sFilename);
+		PLCore::String CheckFile(PLCore::Checksum &cChecksum, const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]

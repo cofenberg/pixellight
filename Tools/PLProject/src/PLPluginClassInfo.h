@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/HashMap.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 }
 
@@ -73,7 +73,7 @@ class PLPluginClassInfo {
 		*  @param[in] cParent
 		*   XML element to append the parsed information to
 		*/
-		void Save(PLGeneral::XmlElement &cParent) const;
+		void Save(PLCore::XmlElement &cParent) const;
 
 		/**
 		*  @brief
@@ -82,7 +82,7 @@ class PLPluginClassInfo {
 		*  @param[in] sPLClassBlock
 		*    Block to parse
 		*/
-		void ParsePLClassBlock(const PLGeneral::String &sPLClassBlock);
+		void ParsePLClassBlock(const PLCore::String &sPLClassBlock);
 
 
 	//[-------------------------------------------------------]
@@ -115,13 +115,13 @@ class PLPluginClassInfo {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String										 m_sClassName;				/**< Name of the class */
-		PLGeneral::String										 m_sNamespace;				/**< Namespace in which the class is in */
-		PLGeneral::String										 m_sBaseClass;				/**< Name of the base class */
-		PLGeneral::String										 m_sDescription;			/**< Class description */
-		bool													 m_bHasConstructor;			/**< Flag which indicates whether or not the class has at least one constructor known to the RTTI */
-		bool													 m_bHasDefaultConstructor;	/**< Flag which indicates whether or not the class has a default constructor known to the RTTI */
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;			/**< List of class properties and their value */
+		PLCore::String									m_sClassName;				/**< Name of the class */
+		PLCore::String									m_sNamespace;				/**< Namespace in which the class is in */
+		PLCore::String									m_sBaseClass;				/**< Name of the base class */
+		PLCore::String									m_sDescription;				/**< Class description */
+		bool											m_bHasConstructor;			/**< Flag which indicates whether or not the class has at least one constructor known to the RTTI */
+		bool											m_bHasDefaultConstructor;	/**< Flag which indicates whether or not the class has a default constructor known to the RTTI */
+		PLCore::HashMap<PLCore::String, PLCore::String> m_mapProperties;			/**< List of class properties and their value */
 
 
 };

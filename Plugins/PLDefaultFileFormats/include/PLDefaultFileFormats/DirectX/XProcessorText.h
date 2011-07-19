@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Tokenizer;
 }
 
@@ -66,7 +66,7 @@ class XRootText : public XRoot {
 		*  @param[in] cTokenizer
 		*    Tokenizer to use
 		*/
-		XRootText(PLGeneral::Tokenizer &cTokenizer);
+		XRootText(PLCore::Tokenizer &cTokenizer);
 
 		/**
 		*  @brief

@@ -71,8 +71,8 @@ class RenderStates : public PLCore::Object {
 			// Stencil
 		pl_attribute(StencilEnable,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable stencil test",															"")
 		pl_attribute(StencilFunc,			pl_enum_type(Compare::Enum),			Compare::Always,			ReadWrite,	GetSet,	"Stencil test passes if ((ref & mask) stencilfn (stencil & mask)) is true",				"")
-		pl_attribute(StencilRef,			PLGeneral::uint32,						0,							ReadWrite,	GetSet,	"Reference value used in stencil test",													"")
-		pl_attribute(StencilMask,			PLGeneral::uint32,						0xFFFFFFFF,					ReadWrite,	GetSet,	"Mask value used in stencil test",														"")
+		pl_attribute(StencilRef,			PLCore::uint32,							0,							ReadWrite,	GetSet,	"Reference value used in stencil test",													"")
+		pl_attribute(StencilMask,			PLCore::uint32,							0xFFFFFFFF,					ReadWrite,	GetSet,	"Mask value used in stencil test",														"")
 		pl_attribute(StencilFail,			pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if stencil test fails",											"")
 		pl_attribute(StencilZFail,			pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if stencil test passes and Z test fails",							"")
 		pl_attribute(StencilPass,			pl_enum_type(StencilOp::Enum),			StencilOp::Keep,			ReadWrite,	GetSet,	"Operation to perform if both stencil and Z tests pass",								"")
@@ -91,7 +91,7 @@ class RenderStates : public PLCore::Object {
 		pl_attribute(PointScaleC,			float,									0.0f,						ReadWrite,	GetSet,	"Controls for distance-based size attenuation for point primitives",					"")
 		pl_attribute(LineWidth,				float,									1.0f,						ReadWrite,	GetSet,	"Line width",																			"")
 			// Tessellation
-		pl_attribute(TessellationFactor,	PLGeneral::uint32,						1,							ReadWrite,	GetSet,	"Tessellation factor",																	"Min=1")
+		pl_attribute(TessellationFactor,	PLCore::uint32,							1,							ReadWrite,	GetSet,	"Tessellation factor",																	"Min=1")
 // [TODO] Linux GCC: "error: changes meaning of ‘TessellationMode’ from ‘class PLRenderer::TessellationMode"
 //		pl_attribute(TessellationMode,		pl_enum_type(TessellationMode::Enum),	TessellationMode::Discrete,	ReadWrite,	GetSet,	"Tessellation mode",																	"")
 			// Misc
@@ -138,10 +138,10 @@ class RenderStates : public PLCore::Object {
 		PLRENDERER_API void SetStencilEnable(bool bValue);
 		PLRENDERER_API Compare::Enum GetStencilFunc() const;
 		PLRENDERER_API void SetStencilFunc(Compare::Enum nValue);
-		PLRENDERER_API PLGeneral::uint32 GetStencilRef() const;
-		PLRENDERER_API void SetStencilRef(PLGeneral::uint32 nValue);
-		PLRENDERER_API PLGeneral::uint32 GetStencilMask() const;
-		PLRENDERER_API void SetStencilMask(PLGeneral::uint32 nValue);
+		PLRENDERER_API PLCore::uint32 GetStencilRef() const;
+		PLRENDERER_API void SetStencilRef(PLCore::uint32 nValue);
+		PLRENDERER_API PLCore::uint32 GetStencilMask() const;
+		PLRENDERER_API void SetStencilMask(PLCore::uint32 nValue);
 		PLRENDERER_API StencilOp::Enum GetStencilFail() const;
 		PLRENDERER_API void SetStencilFail(StencilOp::Enum nValue);
 		PLRENDERER_API StencilOp::Enum GetStencilZFail() const;
@@ -176,8 +176,8 @@ class RenderStates : public PLCore::Object {
 		PLRENDERER_API float GetLineWidth() const;
 		PLRENDERER_API void SetLineWidth(float fValue);
 		// Tessellation
-		PLRENDERER_API PLGeneral::uint32 GetTessellationFactor() const;
-		PLRENDERER_API void SetTessellationFactor(PLGeneral::uint32 nValue);
+		PLRENDERER_API PLCore::uint32 GetTessellationFactor() const;
+		PLRENDERER_API void SetTessellationFactor(PLCore::uint32 nValue);
 		PLRENDERER_API TessellationMode::Enum GetTessellationMode() const;
 		PLRENDERER_API void SetTessellationMode(TessellationMode::Enum nValue);
 		// Misc
@@ -235,7 +235,7 @@ class RenderStates : public PLCore::Object {
 		*    - Some settings like stencil, fog and scissor test aren't set
 		*      by the material through the default setting
 		*/
-		PLRENDERER_API PLGeneral::uint32 Get(RenderState::Enum nState) const;
+		PLRENDERER_API PLCore::uint32 Get(RenderState::Enum nState) const;
 
 		/**
 		*  @brief
@@ -254,7 +254,7 @@ class RenderStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(RenderState::Enum nState, PLGeneral::uint32 nValue);
+		PLRENDERER_API bool Set(RenderState::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class RenderStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::uint32 m_nRS[RenderState::Number];	/**< List of render states (see RenderState) */
+		PLCore::uint32 m_nRS[RenderState::Number];	/**< List of render states (see RenderState) */
 
 
 };

@@ -85,7 +85,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetType() const;
+		PLRENDERER_API PLCore::uint32 GetType() const;
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class AnimationInfo {
 		*  @param[in] nType
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API void SetType(PLGeneral::uint32 nType = 0);
+		PLRENDERER_API void SetType(PLCore::uint32 nType = 0);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation start frame
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetStartFrame() const;
+		PLRENDERER_API PLCore::uint32 GetStartFrame() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class AnimationInfo {
 		*  @param[in] nStartFrame
 		*    Animation start frame
 		*/
-		PLRENDERER_API void SetStartFrame(PLGeneral::uint32 nStartFrame = 0);
+		PLRENDERER_API void SetStartFrame(PLCore::uint32 nStartFrame = 0);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation end frame
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetEndFrame() const;
+		PLRENDERER_API PLCore::uint32 GetEndFrame() const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class AnimationInfo {
 		*  @param[in] nEndFrame
 		*    Animation end frame
 		*/
-		PLRENDERER_API void SetEndFrame(PLGeneral::uint32 nEndFrame = 0);
+		PLRENDERER_API void SetEndFrame(PLCore::uint32 nEndFrame = 0);
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class AnimationInfo {
 		*  @return
 		*    Number of animation frames (normally EndFrame-StartFrame+1)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfFrames() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfFrames() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFlags() const;
+		PLRENDERER_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class AnimationInfo {
 		*  @param[in] nFlags
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class AnimationInfo {
 		*  @return
 		*    Frame information, a null pointer if there's an error
 		*/
-		PLRENDERER_API AnimationFrameInfo *GetFrameInfo(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API AnimationFrameInfo *GetFrameInfo(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -228,21 +228,21 @@ class AnimationInfo {
 		*    - If this is a vertex animation, the source name is the name of a morph target animation.
 		*      (pMyMesh->GetMorphTargetAnimationManager().Get(...))
 		*/
-		PLRENDERER_API virtual PLGeneral::String GetSourceName() const;
+		PLRENDERER_API virtual PLCore::String GetSourceName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nType;	/**< Animation type (for instance  0=skeleton  1=vertex) */
-		PLGeneral::uint32 m_nStart;	/**< Start frame of the animation */
-		PLGeneral::uint32 m_nEnd;	/**< End frame of the animation */
-		float			  m_fSpeed;	/**< Playback speed */
-		PLGeneral::uint32 m_nFlags;	/**< Animation information flags */
+		PLCore::uint32 m_nType;		/**< Animation type (for instance  0=skeleton  1=vertex) */
+		PLCore::uint32 m_nStart;	/**< Start frame of the animation */
+		PLCore::uint32 m_nEnd;		/**< End frame of the animation */
+		float		   m_fSpeed;	/**< Playback speed */
+		PLCore::uint32 m_nFlags;	/**< Animation information flags */
 
 		/** Frame information */
-		PLGeneral::Array<AnimationFrameInfo> m_lstFrameInfos;
+		PLCore::Array<AnimationFrameInfo> m_lstFrameInfos;
 
 		/** Event manager */
 		AnimationEventManager m_cEventManager;

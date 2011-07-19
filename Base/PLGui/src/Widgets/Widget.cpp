@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Class.h>
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLGui/Gui/Base/GuiMessage.h"
 #include "PLGui/Gui/Base/Keys.h"
@@ -49,7 +49,6 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLGraphics;
 using namespace PLMath;
@@ -462,7 +461,7 @@ Widget *Widget::GetContentWidget() const
 *  @brief
 *    Get list of children
 */
-const PLGeneral::List<Widget*> &Widget::GetChildren() const
+const List<Widget*> &Widget::GetChildren() const
 {
 	// Return list of children
 	return m_lstChildren;
@@ -1328,7 +1327,7 @@ void Widget::AddModifier(Modifier *pModifier)
 *  @brief
 *    Add modifier
 */
-void Widget::AddModifier(const PLGeneral::String &sName, Modifier *pModifier)
+void Widget::AddModifier(const String &sName, Modifier *pModifier)
 {
 	// Check if modifier is valid
 	if (pModifier) {

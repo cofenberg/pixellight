@@ -28,11 +28,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/Bitset.h>
-#include <PLGeneral/Container/HashMap.h>
-#include <PLGeneral/Container/BinaryHeap.h>
+#include <PLCore/Container/Pool.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Container/HashMap.h>
+#include <PLCore/Container/BinaryHeap.h>
 #include <PLMath/PlaneSet.h>
 #include <PLMath/Matrix4x4.h>
 #include "PLScene/Scene/SceneQuery.h"
@@ -121,18 +121,18 @@ class SQCull : public SceneQuery {
 		*    Several statistics of the culling process
 		*/
 		struct Statistics {
-			PLGeneral::uint64 nCullTime;						/**< Culling time of the specified algorihtm (in ms) */
-			PLGeneral::uint32 nNumOfTraversedNodes;				/**< Number of traversed nodes */
-			PLGeneral::uint32 nNumOfOccluders;					/**< Number of used occluders */
-			PLGeneral::uint32 nNumOfQueryCulledNodes;			/**< Number of hierarchy nodes culled by the occlusion query */
-			PLGeneral::uint32 nNumOfSkippedFrustumTests;		/**< Number of skipped frustum tests because for instance the parent node was
+			PLCore::uint64 nCullTime;							/**< Culling time of the specified algorihtm (in ms) */
+			PLCore::uint32 nNumOfTraversedNodes;				/**< Number of traversed nodes */
+			PLCore::uint32 nNumOfOccluders;						/**< Number of used occluders */
+			PLCore::uint32 nNumOfQueryCulledNodes;				/**< Number of hierarchy nodes culled by the occlusion query */
+			PLCore::uint32 nNumOfSkippedFrustumTests;			/**< Number of skipped frustum tests because for instance the parent node was
 																	 already complete within the frustum. (hierarchy node & scene node tests) */
-			PLGeneral::uint32 nNumOfFrustumCulledNodes;			/**< Number of hierarchy nodes culled by the frustum culling only */
-			PLGeneral::uint32 nNumOfNearPlaneIntersectingNodes;	/**< Number of hierarchy nodes with near plane intersection */
-			PLGeneral::uint32 nNumOfVisibleSceneNodes;			/**< Number of visible scene nodes */
-			PLGeneral::uint32 nNumOfQueries;					/**< Total number of occlusion queries */
-			PLGeneral::uint32 nMaxNumOfQueries;					/**< Maximum number of occlusion queries active at the same time */
-			bool			  bWaitForQueryResult;				/**< Was waiting for a query result required? */
+			PLCore::uint32 nNumOfFrustumCulledNodes;			/**< Number of hierarchy nodes culled by the frustum culling only */
+			PLCore::uint32 nNumOfNearPlaneIntersectingNodes;	/**< Number of hierarchy nodes with near plane intersection */
+			PLCore::uint32 nNumOfVisibleSceneNodes;				/**< Number of visible scene nodes */
+			PLCore::uint32 nNumOfQueries;						/**< Total number of occlusion queries */
+			PLCore::uint32 nMaxNumOfQueries;					/**< Maximum number of occlusion queries active at the same time */
+			bool		   bWaitForQueryResult;					/**< Was waiting for a query result required? */
 		};
 
 
@@ -186,7 +186,7 @@ class SQCull : public SceneQuery {
 		*  @note
 		*    - Used by the render modes StopAndWait and Coherent
 		*/
-		PLS_API PLGeneral::uint32 GetVisibilityThreshold() const;
+		PLS_API PLCore::uint32 GetVisibilityThreshold() const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class SQCull : public SceneQuery {
 		*  @see
 		*    - GetVisibilityThreshold()
 		*/
-		PLS_API void SetVisibilityThreshold(PLGeneral::uint32 nThreshold = 1);
+		PLS_API void SetVisibilityThreshold(PLCore::uint32 nThreshold = 1);
 
 		/**
 		*  @brief
@@ -402,7 +402,7 @@ class SQCull : public SceneQuery {
 		*  @param[in] cHierarchyNode
 		*    Hierarchy node we currently work on
 		*/
-		PLGeneral::uint32 GetOcclusionQueryResult(const SceneHierarchyNode &cHierarchyNode);
+		PLCore::uint32 GetOcclusionQueryResult(const SceneHierarchyNode &cHierarchyNode);
 
 		/**
 		*  @brief
@@ -433,7 +433,7 @@ class SQCull : public SceneQuery {
 	private:
 		// General data
 		EMode			   m_nMode;						/**< Used cull mode */
-		PLGeneral::uint32  m_nVisibilityThreshold;		/**< Visibility threshold */
+		PLCore::uint32	   m_nVisibilityThreshold;		/**< Visibility threshold */
 		Statistics		   m_sStatistics;				/**< Some statistics */
 		SceneNodeHandler  *m_pCameraContainer;			/**< Container the camera is in */
 		bool			   m_bCameraInCell;				/**< Is the camera within a cell? */
@@ -446,17 +446,17 @@ class SQCull : public SceneQuery {
 		PLMath::Matrix4x4  m_mViewProjection;			/**< View projection matrix */
 
 		// Frame to frame data
-		PLGeneral::uint32					m_nFrame;				/**< Current frame */
-		PLGeneral::Bitset					m_lstVisibility;		/**< Visibility state of all hierarchy nodes */
-		PLGeneral::Bitset					m_lstTotalVisibility;	/**< Total visibility state of all hierarchy nodes */
-		PLGeneral::Array<PLGeneral::uint32> m_lstLastVisited;		/**< Frame the node was visited last time */
+		PLCore::uint32					m_nFrame;				/**< Current frame */
+		PLCore::Bitset					m_lstVisibility;		/**< Visibility state of all hierarchy nodes */
+		PLCore::Bitset					m_lstTotalVisibility;	/**< Total visibility state of all hierarchy nodes */
+		PLCore::Array<PLCore::uint32>	m_lstLastVisited;		/**< Frame the node was visited last time */
 
 		// Current frame data
-		PLGeneral::uint32									m_nCurrentQueries;		/**< Current number of queries */
-		PLGeneral::uint32									m_nOcclusionQueries;	/**< Number of occlusion queries */
-		PLRenderer::OcclusionQuery						  **m_ppOcclusionQueries;	/**< Occlusion queries */
-		PLGeneral::BinaryHeap<float, SceneHierarchyNode*>	m_lstDistanceQueue;		/**< Distance queue */
-		PLGeneral::BinaryHeap<float, SceneNode*>			m_lstNodeDistanceQueue;	/**< Distance queue for the scene nodes*/
+		PLCore::uint32									 m_nCurrentQueries;			/**< Current number of queries */
+		PLCore::uint32									 m_nOcclusionQueries;		/**< Number of occlusion queries */
+		PLRenderer::OcclusionQuery					   **m_ppOcclusionQueries;		/**< Occlusion queries */
+		PLCore::BinaryHeap<float, SceneHierarchyNode*> 	 m_lstDistanceQueue;		/**< Distance queue */
+		PLCore::BinaryHeap<float, SceneNode*>			 m_lstNodeDistanceQueue;	/**< Distance queue for the scene nodes*/
 
 		VisContainer *m_pVisRootContainer;	/**< Visibility root container */
 		VisContainer *m_pVisContainer;		/**< Visibility container (do NOT use this variable directly, use GetVisContainer()!) */

@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 
@@ -42,7 +42,7 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-Control::Control(Controller *pController, EControlType nType, const PLGeneral::String &sName, const PLGeneral::String &sDescription) :
+Control::Control(Controller *pController, EControlType nType, const String &sName, const String &sDescription) :
 	m_pController(pController),
 	m_nType(nType),
 	m_sName(sName),

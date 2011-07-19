@@ -38,7 +38,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLGui {
@@ -211,7 +211,7 @@ void Slider::OnMouseMove(const PLMath::Vector2i &vPos)
 	}
 }
 
-void Slider::OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos)
+void Slider::OnMouseButtonDown(uint32 nButton, const PLMath::Vector2i &vPos)
 {
 	// Left mouse button
 	if (nButton == LeftButton) {
@@ -223,7 +223,7 @@ void Slider::OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i
 	}
 }
 
-void Slider::OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos)
+void Slider::OnMouseButtonUp(uint32 nButton, const PLMath::Vector2i &vPos)
 {
 	// Left mouse button
 	if (nButton == LeftButton) {

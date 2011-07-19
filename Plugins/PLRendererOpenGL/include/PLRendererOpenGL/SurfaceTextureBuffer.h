@@ -98,7 +98,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*  @param[in] pTextureBuffer
 		*    Texture buffer to render in, can be a null pointer
 		*/
-		void SetColorRenderTarget(PLGeneral::uint8 nColorIndex, PLRenderer::TextureBuffer *pTextureBuffer);
+		void SetColorRenderTarget(PLCore::uint8 nColorIndex, PLRenderer::TextureBuffer *pTextureBuffer);
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*    Maximum number of color render targets. This must be at least 1 - main renderer target color.
 		*/
 		SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTexture,
-							 PLGeneral::uint32 nFlags = Depth | Stencil, PLGeneral::uint8 nMaxColorTargets = 1);
+							 PLCore::uint32 nFlags = Depth | Stencil, PLCore::uint8 nMaxColorTargets = 1);
 
 		/*
 		*  @brief
@@ -153,9 +153,9 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		FrameBufferObject			*m_pFrameBufferObject;		/**< Nice frame buffer object, can be a null pointer */
 		PBuffer						*m_pPBuffer;				/**< The PBuffer, can be a null pointer */
 		PLRenderer::ResourceHandler	 m_cTextureBufferHandler;	/**< Texture buffer to render in */
-		PLGeneral::uint8			 m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
+		PLCore::uint8			 	 m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
 
-		PLGeneral::List<PLRenderer::ResourceHandler*> m_lstTextureBufferHandler;
+		PLCore::List<PLRenderer::ResourceHandler*> m_lstTextureBufferHandler;
 
 
 	//[-------------------------------------------------------]
@@ -163,7 +163,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	//[-------------------------------------------------------]
 	public:
 		virtual PLRenderer::TextureBuffer *GetTextureBuffer() const;
-		virtual PLGeneral::uint8 GetTextureBufferFace() const;
+		virtual PLCore::uint8 GetTextureBufferFace() const;
 		virtual void TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::SurfaceTextureBuffer &cSurfaceTextureBuffer);
 
 
@@ -180,7 +180,7 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	private:
 		virtual bool Init();
 		virtual void DeInit();
-		virtual bool MakeCurrent(PLGeneral::uint8 nFace = 0);
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0);
 		virtual bool UnmakeCurrent();
 		virtual bool Present();
 		virtual void BackupDeviceData();

@@ -24,14 +24,14 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdio.h>
-#include <PLGeneral/Base/Singleton.h>
+#include <PLCore/Core/Singleton.h>
 #include "PLTestBase/General/SingletonTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

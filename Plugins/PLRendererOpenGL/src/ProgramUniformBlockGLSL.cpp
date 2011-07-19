@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
 #include "PLRendererOpenGL/UniformBuffer.h"
 #include "PLRendererOpenGL/ProgramUniformBlockGLSL.h"
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRendererOpenGL {
 
 

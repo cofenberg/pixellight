@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCore.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -152,7 +152,7 @@ class ImageToolsWindows {
 		*    This feature allows you to have images directly in your .exe and not worry
 		*    whether a particular file is present on the user's harddrive.
 		*/
-		PLGRAPHICS_API static bool LoadResource(Image &cImage, HINSTANCE hInst, int nID, const PLGeneral::String &sResourceType, const PLGeneral::String &sFileType);
+		PLGRAPHICS_API static bool LoadResource(Image &cImage, HINSTANCE hInst, int nID, const PLCore::String &sResourceType, const PLCore::String &sFileType);
 
 
 	//[-------------------------------------------------------]

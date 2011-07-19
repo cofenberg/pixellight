@@ -94,7 +94,7 @@ class GeometryShaderGLSL : public PLRenderer::GeometryShader {
 	private:
 		EInputPrimitiveType	 m_nInputPrimitiveType;		/**< Input primitive type */
 		EOutputPrimitiveType m_nOutputPrimitiveType;	/**< Output primitive type */
-		PLGeneral::uint32	 m_nNumOfOutputVertices;	/**< Num of output vertices */
+		PLCore::uint32	 	 m_nNumOfOutputVertices;	/**< Num of output vertices */
 		GLuint				 m_nOpenGLGeometryShader;	/**< OpenGL geometry shader, always valid! */
 
 
@@ -104,27 +104,27 @@ class GeometryShaderGLSL : public PLRenderer::GeometryShader {
 	public:
 		virtual EInputPrimitiveType GetInputPrimitiveType() const;
 		virtual EOutputPrimitiveType GetOutputPrimitiveType() const;
-		virtual PLGeneral::uint32 GetNumOfOutputVertices() const;
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLGeneral::uint32 nNumOfOutputVertices, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
+		virtual PLCore::uint32 GetNumOfOutputVertices() const;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLGeneral::String GetSourceCode() const;
-		virtual PLGeneral::String GetProfile() const;
-		virtual PLGeneral::String GetEntry() const;
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
+		virtual PLCore::String GetShaderLanguage() const;
+		virtual PLCore::String GetSourceCode() const;
+		virtual PLCore::String GetProfile() const;
+		virtual PLCore::String GetEntry() const;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

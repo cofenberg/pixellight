@@ -62,7 +62,7 @@ class SNMPostProcessBloom : public PLCompositing::SNMPostProcess {
 		pl_attribute(BloomScale,	float,				1.2f,							ReadWrite,	DirectValue,	"Bloom scale",							"")
 		pl_attribute(Strength,		PLMath::Vector2,	PLMath::Vector2(8.0f, 8.0f),	ReadWrite,	DirectValue,	"Blur strength",						"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Bloom.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/Bloom.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

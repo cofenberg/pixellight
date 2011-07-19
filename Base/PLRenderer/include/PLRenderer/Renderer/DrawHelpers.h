@@ -193,7 +193,7 @@ class DrawHelpers {
 		*  @param[in] vBias
 		*    Font bias (position offset)
 		*/
-		virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPosition, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero) = 0;
+		virtual void DrawText(Font &cFont, const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPosition, PLCore::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero) = 0;
 
 		/**
 		*  @brief
@@ -219,7 +219,7 @@ class DrawHelpers {
 		*  @note
 		*    - "vPosition.To2DCoordinate(mObjectSpaceToClipSpace, cRenderer.GetViewport())" is used to calculate the screen space position
 		*/
-		virtual void DrawText(Font &cFont, const PLGeneral::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vPosition, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, PLGeneral::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero) = 0;
+		virtual void DrawText(Font &cFont, const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vPosition, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, PLCore::uint32 nFlags = 0, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero) = 0;
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class DrawHelpers {
 		*  @return
 		*    The width of a text
 		*/
-		virtual float GetTextWidth(Font &cFont, const PLGeneral::String &sText) const = 0;
+		virtual float GetTextWidth(Font &cFont, const PLCore::String &sText) const = 0;
 
 		/**
 		*  @brief

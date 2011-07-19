@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Bitset.h>
-#include <PLCore/Tools/ResourceManager.h>
-#include <PLCore/Tools/ResourceHandler.h>
 #include <PLCore/Base/Event/EventHandler.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Container/ResourceManager.h>
+#include <PLCore/Container/ResourceHandler.h>
 #include <PLMath/Plane.h>
 #include "PLMesh/Mesh.h"
 
@@ -166,7 +166,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Updates the mesh handler
 		*
 		*  @param[in] fTimeDifference
-		*    Past time since last frame (use e.g. PLGeneral::Timing::GetInstance()->GetTimeDifference())
+		*    Past time since last frame (use e.g. PLCore::Timing::GetInstance()->GetTimeDifference())
 		*  @param[in] nLODLevel
 		*    LOD level to use
 		*
@@ -175,7 +175,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    individual mesh data required for drawing the mesh the mesh handler is
 		*    using.
 		*/
-		PLMESH_API void Update(float fTimeDifference, PLGeneral::uint32 nLODLevel = 0);
+		PLMESH_API void Update(float fTimeDifference, PLCore::uint32 nLODLevel = 0);
 
 		//[-------------------------------------------------------]
 		//[ Draw functions                                        ]
@@ -302,7 +302,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @return
 		*    Number of materials
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfMaterials() const;
+		PLMESH_API PLCore::uint32 GetNumOfMaterials() const;
 
 		/**
 		*  @brief
@@ -314,7 +314,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @return
 		*    Pointer to the material, or a null pointer
 		*/
-		PLMESH_API PLRenderer::Material *GetMaterial(PLGeneral::uint32 nMaterial = 0) const;
+		PLMESH_API PLRenderer::Material *GetMaterial(PLCore::uint32 nMaterial = 0) const;
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool SetMaterial(PLGeneral::uint32 nMaterial, PLRenderer::Material *pMaterial);
+		PLMESH_API bool SetMaterial(PLCore::uint32 nMaterial, PLRenderer::Material *pMaterial);
 
 		//[-------------------------------------------------------]
 		//[ Morph target functions                                ]
@@ -347,8 +347,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    - Use whenever possible the 'const' version of this function (performance)
 		*    - The none 'const' version automatically sets the internal 'mesh update required'-flag
 		*/
-		PLMESH_API PLGeneral::Array<float> &GetBaseMorphTargetWeights();
-		PLMESH_API const PLGeneral::Array<float> &GetBaseMorphTargetWeights() const;
+		PLMESH_API PLCore::Array<float> &GetBaseMorphTargetWeights();
+		PLMESH_API const PLCore::Array<float> &GetBaseMorphTargetWeights() const;
 
 		/**
 		*  @brief
@@ -368,8 +368,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    - Use whenever possible the 'const' version of this function (performance)
 		*    - The none 'const' version automatically sets the internal 'mesh update required'-flag
 		*/
-		PLMESH_API PLGeneral::Array<float> &GetMorphTargetWeights();
-		PLMESH_API const PLGeneral::Array<float> &GetMorphTargetWeights() const;
+		PLMESH_API PLCore::Array<float> &GetMorphTargetWeights();
+		PLMESH_API const PLCore::Array<float> &GetMorphTargetWeights() const;
 
 		//[-------------------------------------------------------]
 		//[ Animation functions                                   ]
@@ -411,7 +411,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    The created mesh handlers animation manager, a null pointer on error
 		*    (maybe unknown class or the class is not derived from 'PLMesh::MeshAnimationManager')
 		*/
-		PLMESH_API MeshAnimationManager *CreateMeshAnimationManager(const PLGeneral::String &sName = "PLMesh::MeshAnimationManagerSoftware");
+		PLMESH_API MeshAnimationManager *CreateMeshAnimationManager(const PLCore::String &sName = "PLMesh::MeshAnimationManagerSoftware");
 
 		/**
 		*  @brief
@@ -423,7 +423,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - GetAnimationInfo()
 		*/
-		PLMESH_API void GetAnimationsList(PLGeneral::Array<PLGeneral::String> &lstAnimations) const;
+		PLMESH_API void GetAnimationsList(PLCore::Array<PLCore::String> &lstAnimations) const;
 
 		/**
 		*  @brief
@@ -448,7 +448,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    - This function will seach for the requested animation information within the skeleton
 		*      manager and the morph targets of the mesh the mesh handler is using.
 		*/
-		PLMESH_API PLRenderer::AnimationInfo *GetAnimationInfo(const PLGeneral::String &sName, int nLogMessage = 1) const;
+		PLMESH_API PLRenderer::AnimationInfo *GetAnimationInfo(const PLCore::String &sName, int nLogMessage = 1) const;
 
 		/**
 		*  @brief
@@ -463,7 +463,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @note
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the skeleton
 		*/
-		PLMESH_API JointHandler *GetJointHandler(const PLGeneral::String &sJointName) const;
+		PLMESH_API JointHandler *GetJointHandler(const PLCore::String &sJointName) const;
 
 		/**
 		*  @brief
@@ -480,7 +480,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*      settings
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the skeleton
 		*/
-		PLMESH_API JointHandler *GetBaseJointHandler(const PLGeneral::String &sJointName) const;
+		PLMESH_API JointHandler *GetBaseJointHandler(const PLCore::String &sJointName) const;
 
 		//[-------------------------------------------------------]
 		//[ Visibility functions                                  ]
@@ -510,7 +510,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @note
 		*    - Call UpdateVisibility() to update the visibility stuff
 		*/
-		PLMESH_API PLGeneral::Bitset &GetGeometryVisibility();
+		PLMESH_API PLCore::Bitset &GetGeometryVisibility();
 
 		//[-------------------------------------------------------]
 		//[ LOD functions                                         ]
@@ -525,7 +525,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - Update()
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfLODLevels() const;
+		PLMESH_API PLCore::uint32 GetNumOfLODLevels() const;
 
 		/**
 		*  @brief
@@ -537,7 +537,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - Update()
 		*/
-		PLMESH_API PLGeneral::uint32 GetLODLevelIndex() const;
+		PLMESH_API PLCore::uint32 GetLODLevelIndex() const;
 
 		/**
 		*  @brief
@@ -594,7 +594,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @return
 		*    Total number of current triangles
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfTriangles() const;
+		PLMESH_API PLCore::uint32 GetNumOfTriangles() const;
 
 		/**
 		*  @brief
@@ -621,8 +621,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*/
 		PLMESH_API bool FindTriangle(const PLMath::Vector3 &vLineStartPos,
 									 const PLMath::Vector3 &vLineEndPos,
-									 PLGeneral::uint32 &nTriangle, PLGeneral::uint32 *pnGeometry = nullptr,
-									 PLMath::Vector3 *pvCollisionPoint = nullptr, PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr) const;
+									 PLCore::uint32 &nTriangle, PLCore::uint32 *pnGeometry = nullptr,
+									 PLMath::Vector3 *pvCollisionPoint = nullptr, PLCore::Array<PLCore::uint32> *plstGeometries = nullptr) const;
 
 		/**
 		*  @brief
@@ -643,7 +643,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @note
 		*    - The the planes must be in the object space
 		*/
-		PLMESH_API PLGeneral::uint32 FindGeometries(const PLMath::PlaneSet &cPlaneSet, PLGeneral::uint32 **ppnGeometries = nullptr, PLMath::Vector3 *pvCamDir = nullptr) const;
+		PLMESH_API PLCore::uint32 FindGeometries(const PLMath::PlaneSet &cPlaneSet, PLCore::uint32 **ppnGeometries = nullptr, PLMath::Vector3 *pvCamDir = nullptr) const;
 
 		/**
 		*  @brief
@@ -655,7 +655,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - MeshLODLevel::BuildTriangleList()
 		*/
-		PLMESH_API PLGeneral::Array<MeshTriangle> *GetTriangleList();
+		PLMESH_API PLCore::Array<MeshTriangle> *GetTriangleList();
 
 		/**
 		*  @brief
@@ -667,7 +667,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - MeshLODLevel::BuildEdgeList()
 		*/
-		PLMESH_API PLGeneral::Array<MeshEdge> *GetEdgeList();
+		PLMESH_API PLCore::Array<MeshEdge> *GetEdgeList();
 
 		/**
 		*  @brief
@@ -698,7 +698,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @see
 		*    - See BuildTrianglePlaneList()
 		*/
-		PLMESH_API PLGeneral::Array<PLMath::Plane> *GetTrianglePlaneList();
+		PLMESH_API PLCore::Array<PLMath::Plane> *GetTrianglePlaneList();
 
 
 	//[-------------------------------------------------------]
@@ -741,24 +741,24 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer						   *m_pRenderer;		/**< Used renderer, can be a null pointer */
-		Mesh										   *m_pMesh;			/**< Used mesh, can be a null pointer */
-		PLGeneral::Array<PLRenderer::MaterialHandler*>  m_lstMaterials;		/**< Materials */
-		PLRenderer::VertexBuffer					   *m_pVertexBuffer;	/**< Mesh handler own vertex buffer (optional, can be a null pointer) */
+		PLRenderer::Renderer						*m_pRenderer;		/**< Used renderer, can be a null pointer */
+		Mesh										*m_pMesh;			/**< Used mesh, can be a null pointer */
+		PLCore::Array<PLRenderer::MaterialHandler*>  m_lstMaterials;	/**< Materials */
+		PLRenderer::VertexBuffer					*m_pVertexBuffer;	/**< Mesh handler own vertex buffer (optional, can be a null pointer) */
 
 		// Current stuff
 		bool					  m_bMeshUpdateRequired;		/**< Mesh update required */
-		PLGeneral::uint32		  m_nLOD;						/**< Current LOD level */
+		PLCore::uint32			  m_nLOD;						/**< Current LOD level */
 		PLRenderer::VertexBuffer *m_pCurrentVertexBuffer;		/**< Current vertex buffer to use, can be a null pointer */
-		PLGeneral::Bitset		  m_cGeometryVisibility;		/**< Holds which geometry is visible and which not */
-		PLGeneral::Array<float>	  m_lstBaseMorphTargetWeights;	/**< Morph target base weights */
-		PLGeneral::Array<float>	  m_lstMorphTargetWeights;		/**< Current morph target weights */
+		PLCore::Bitset			  m_cGeometryVisibility;		/**< Holds which geometry is visible and which not */
+		PLCore::Array<float>	  m_lstBaseMorphTargetWeights;	/**< Morph target base weights */
+		PLCore::Array<float>	  m_lstMorphTargetWeights;		/**< Current morph target weights */
 		SkeletonHandler			 *m_pSkeletonHandler;			/**< Skeleton handler, can be a null pointer */
 		MeshAnimationManager	 *m_pMeshAnimationManager;		/**< Mesh animation manager, can be a null pointer */
 
 		// Precalculated data
-		bool							m_bRecalculateTrianglePlanes;	/**< Do we need to recalculate the triangle planes? */
-		PLGeneral::Array<PLMath::Plane> m_lstTrianglePlanes;			/**< List of triangle planes */
+		bool						 m_bRecalculateTrianglePlanes;	/**< Do we need to recalculate the triangle planes? */
+		PLCore::Array<PLMath::Plane> m_lstTrianglePlanes;			/**< List of triangle planes */
 
 
 };

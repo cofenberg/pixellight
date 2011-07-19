@@ -1,6 +1,6 @@
 // PBuffer helper class from the NVIDIA SDK
 
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace std;
 namespace PLRendererOpenGL {
 

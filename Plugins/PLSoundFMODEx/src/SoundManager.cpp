@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/Core/MemoryManager.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/System/System.h>
+#include <PLCore/Core/MemoryManager.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLSoundFMODEx/SoundManager.h"
@@ -37,7 +37,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 namespace PLSoundFMODEx {

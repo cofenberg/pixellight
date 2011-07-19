@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLCore/Base/Func/DynFunc.h>
 #include "PLScriptLua/RTTIObjectPointer.h"
 
@@ -71,7 +71,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*
 		*  @remarks
 		*    Strings are somewhat of a special case... It's possible that there's a RTTI method with
-		*    a "Object*(const PLGeneral::String&)"-signature meaning that the parameter is a reference.
+		*    a "Object*(const PLCore::String&)"-signature meaning that the parameter is a reference.
 		*    Within scripts, strings are fundamental and therefore it should be possible to use such a
 		*    RTTI method by writing for instance
 		*      this:GetSceneNode():GetByName("Soldier")
@@ -83,7 +83,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 		*    heap during the function call to that the reference/pointer has a valid address. That's what
 		*    the "lstTempStrings"-parameter of this method is for.
 		*/
-		static PLGeneral::String GetLuaFunctionParametersAsString(Script &cScript, PLCore::DynSignature &cDynSignature, bool bIsMethod, PLGeneral::Array<PLGeneral::String> &lstTempStrings);
+		static PLCore::String GetLuaFunctionParametersAsString(Script &cScript, PLCore::DynSignature &cDynSignature, bool bIsMethod, PLCore::Array<PLCore::String> &lstTempStrings);
 
 		/**
 		*  @brief

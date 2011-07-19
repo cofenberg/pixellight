@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/ParseTools.h>
 #include "PLCore/Base/Class.h"
+#include "PLCore/String/ParseTools.h"
 #include "PLCore/Config/ConfigLoader.h"
 #include "PLCore/Config/Config.h"
 
@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

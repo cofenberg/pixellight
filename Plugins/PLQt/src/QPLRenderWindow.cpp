@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <QtGui/QMouseEvent>
 #include <QtGui/QKeyEvent>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Surface.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
@@ -40,7 +40,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 namespace PLQt {
 
@@ -262,7 +262,7 @@ void QPLRenderWindow::InitWindow(const PLRenderer::DisplayMode *pDisplayMode)
 		}
 
 		// Initialize renderer surface handler
-		Init(m_pContext->GetRendererContext()->GetRenderer(), (PLGeneral::handle)winId(), m_sDisplayMode, false);
+		Init(m_pContext->GetRendererContext()->GetRenderer(), (PLCore::handle)winId(), m_sDisplayMode, false);
 
 		ChangeContext(m_pContext);
 	} else {

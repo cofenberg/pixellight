@@ -93,7 +93,7 @@ class SNEngineInformation : public SceneNode {
 	pl_class(PLS_RTTI_EXPORT, SNEngineInformation, "PLScene", PLScene::SceneNode, "Engine information scene node")
 		// Attributes
 		pl_attribute(InfoFlags,			pl_flag_type(EInfoFlags),	FPS|CoordinateAxis|Planes|Profiling,	ReadWrite,	DirectValue,	"Information flags",	"")
-		pl_attribute(ProfilingMaterial,	PLGeneral::String,			"Data/Effects/PLProfiling.plfx",		ReadWrite,	GetSet,			"Profiling material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(ProfilingMaterial,	PLCore::String,				"Data/Effects/PLProfiling.plfx",		ReadWrite,	GetSet,			"Profiling material",	"Type='Material Effect Image TextureAni'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),		NoCulling,								ReadWrite,	GetSet,			"Flags",				"")
 		// Constructors
@@ -105,8 +105,8 @@ class SNEngineInformation : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetProfilingMaterial() const;
-		PLS_API void SetProfilingMaterial(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetProfilingMaterial() const;
+		PLS_API void SetProfilingMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -166,7 +166,7 @@ class SNEngineInformation : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			 m_sProfilingMaterial;	/**< Profiling material */
+		PLCore::String				 m_sProfilingMaterial;	/**< Profiling material */
 		bool						 m_bProfilingMaterial;	/**< Profiling material loaded? */
 		PLRenderer::MaterialHandler *m_pProfilingMaterial;	/**< Profiling material (ALWAYS valid!) */
 

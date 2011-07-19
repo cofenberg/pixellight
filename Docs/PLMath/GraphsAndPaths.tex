@@ -62,7 +62,7 @@ A                   D
 An actor can be moved along a path for example in the way shown below:
 
 \begin{lstlisting}[caption=Moving along path]
-fTimer += PLGeneral::Timing::GetInstance()->GetTimeDifference();
+fTimer += PLCore::Timing::GetInstance()->GetTimeDifference();
 pMyActor->SetPosition(pMyPath->GetPosByNodeIndex(fTimer));
 \end{lstlisting}
 

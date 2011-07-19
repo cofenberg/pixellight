@@ -106,7 +106,7 @@ class SNMPositionPath : public SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionPath, "PLScene", PLScene::SNMTransform, "Scene node modifier class moving the position of a scene node along a given path")
 		// Attributes
-		pl_attribute(Filename,		PLGeneral::String,				"",		ReadWrite,	GetSet,			"Filename of the path the node should move on",									"Type='GraphPath'")
+		pl_attribute(Filename,		PLCore::String,					"",		ReadWrite,	GetSet,			"Filename of the path the node should move on",									"Type='GraphPath'")
 		pl_attribute(Progress,		float,							0.0f,	ReadWrite,	DirectValue,	"Path progress (0-1, automatically wrapped into that range -> or node index)",	"")
 		pl_attribute(Speed,			float,							1.0f,	ReadWrite,	DirectValue,	"Path movement speed",															"")
 		pl_attribute(Interpolation,	pl_enum_type(EInterpolation),	Linear,	ReadWrite,	DirectValue,	"Interpolation type",															"")
@@ -121,8 +121,8 @@ class SNMPositionPath : public SNMTransform {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetFilename() const;
-		PLS_API void SetFilename(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetFilename() const;
+		PLS_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -196,10 +196,10 @@ class SNMPositionPath : public SNMTransform {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::String m_sFilename;
-		float			  m_fProgress;
-		float			  m_fSpeed;
-		PLGeneral::uint32 m_nInterpolation;
+		PLCore::String m_sFilename;
+		float		   m_fProgress;
+		float		   m_fSpeed;
+		PLCore::uint32 m_nInterpolation;
 
 		// Private data
 		PLMath::GraphPathHandler *m_pPathHandler; /**< Our path (ALWAYS valid!) */

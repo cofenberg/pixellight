@@ -60,8 +60,8 @@ class GraphPathLoaderPL : public GraphPathLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	GraphPath&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const GraphPath&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	GraphPath&,			PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const GraphPath&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class GraphPathLoaderPL : public GraphPathLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API bool Load(GraphPath &cGraphPath, PLGeneral::File &cFile);
-		PLMATH_API bool Save(const GraphPath &cGraphPath, PLGeneral::File &cFile);
+		PLMATH_API bool Load(GraphPath &cGraphPath, PLCore::File &cFile);
+		PLMATH_API bool Save(const GraphPath &cGraphPath, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class GraphPathLoaderPL : public GraphPathLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(GraphPath &cGraphPath, const PLGeneral::XmlElement &cGraphPathElement) const;
+		bool LoadV1(GraphPath &cGraphPath, const PLCore::XmlElement &cGraphPathElement) const;
 
 
 };

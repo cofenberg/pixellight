@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLRenderer;
 namespace PLCompositing {
@@ -134,7 +133,7 @@ bool PostProcessManager::CallLoadable(File &cFile, Loader &cLoader, const String
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 PostProcess *PostProcessManager::CreateElement(const String &sName)
 {

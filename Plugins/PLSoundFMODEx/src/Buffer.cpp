@@ -38,7 +38,7 @@ PL_WARNING_DISABLE(4505) // "'function' : unreferenced local function has been r
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLSoundFMODEx {
 
 

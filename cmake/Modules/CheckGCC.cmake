@@ -32,7 +32,7 @@ endmacro(cmaketools_check_cxx_visibility_flag)
 ##################################################
 
 # Check GCC visibility flag
-# [TODO] Make this work, currently we end up with some 'undefined reference to vtable for PLMath::Vector2/3/4[i] or PLGeneral::Base
+# [TODO] Make this work, currently we end up with some 'undefined reference to vtable for PLMath::Vector2/3/4[i] or PLCore::Object
 if(CMAKE_COMPILER_IS_GNUCXX)
   cmaketools_check_cxx_visibility_flag(CMAKETOOLS_GCC_VISIBILITY_FLAG)
   if(CMAKETOOLS_GCC_VISIBILITY_FLAG)

@@ -48,7 +48,7 @@ class Type< InvalidType<T> > {
 		static const int TypeID = TypeInvalid;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			PLCORE_ERROR(Type_Not_Supported)
 		}
@@ -73,7 +73,7 @@ class Type< InvalidType< InvalidType<T> > > {
 		static const int TypeID = TypeInvalid;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			PLCORE_ERROR(Type_Not_Supported)
 		}

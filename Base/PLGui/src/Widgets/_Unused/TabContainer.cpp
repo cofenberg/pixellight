@@ -37,7 +37,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
 
@@ -315,7 +315,7 @@ void TabContainer::OnTabBarCreateTab()
 TabBarEntry *TabContainer::FindTab(Widget *pWindow) const
 {
 	// Loop through tabs
-	const PLGeneral::Container<TabBarEntry*> &lstTabs = m_pTabBar->GetTabs();
+	const Container<TabBarEntry*> &lstTabs = m_pTabBar->GetTabs();
 	for (uint32 i=0; i<lstTabs.GetNumOfElements(); i++) {
 		// Get tab
 		TabBarEntry *pTab = lstTabs[i];

@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Tokenizer;
 }
 
@@ -73,9 +73,9 @@ class MeshLoaderMd5 : public PLMesh::MeshLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,			"Load method. The loaded mesh is static.",															"")
-		pl_method_3(LoadParams,	pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
-		pl_method_2(Save,		pl_ret_type(bool),	PLMesh::Mesh&,	PLGeneral::File&,			"Save method",																						"")
+		pl_method_2(Load,		pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,			"Load method. The loaded mesh is static.",															"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,			"Save method",																						"")
 	pl_class_end
 
 
@@ -83,9 +83,9 @@ class MeshLoaderMd5 : public PLMesh::MeshLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLMesh::Mesh &cMesh, PLGeneral::File &cFile);
-		bool LoadParams(PLMesh::Mesh &cMesh, PLGeneral::File &cFile, bool bStatic);
-		bool Save(PLMesh::Mesh &cMesh, PLGeneral::File &cFile);
+		bool Load(PLMesh::Mesh &cMesh, PLCore::File &cFile);
+		bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic);
+		bool Save(PLMesh::Mesh &cMesh, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -123,7 +123,7 @@ class MeshLoaderMd5 : public PLMesh::MeshLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV6(PLMesh::Mesh &cMesh, PLGeneral::Tokenizer &cTokenizer, bool bStatic = false) const;
+		bool LoadV6(PLMesh::Mesh &cMesh, PLCore::Tokenizer &cTokenizer, bool bStatic = false) const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class MeshLoaderMd5 : public PLMesh::MeshLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV10(PLMesh::Mesh &cMesh, PLGeneral::Tokenizer &cTokenizer, bool bStatic = false) const;
+		bool LoadV10(PLMesh::Mesh &cMesh, PLCore::Tokenizer &cTokenizer, bool bStatic = false) const;
 
 
 };

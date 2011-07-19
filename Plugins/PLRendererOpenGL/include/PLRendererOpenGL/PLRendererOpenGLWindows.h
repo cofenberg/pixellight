@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralWindowsIncludes.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "../../../../External/Recommended/OpenGL/glext.h"

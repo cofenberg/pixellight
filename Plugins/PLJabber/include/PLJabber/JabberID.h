@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLJabber/PLJabber.h"
 
 
@@ -59,7 +59,7 @@ class JabberID {
 		*  @param[in] sJabberID
 		*    Jabber ID as string
 		*/
-		PLJABBER_API JabberID(const PLGeneral::String &sJabberID = "");
+		PLJABBER_API JabberID(const PLCore::String &sJabberID = "");
 
 		/**
 		*  @brief
@@ -74,7 +74,7 @@ class JabberID {
 		*  @returns
 		*    Jabber ID as string
 		*/
-		PLJABBER_API PLGeneral::String GetValue() const;
+		PLJABBER_API PLCore::String GetValue() const;
 
 		/**
 		*  @brief
@@ -83,7 +83,7 @@ class JabberID {
 		*  @param[in] sJabberID
 		*    Jabber ID as string
 		*/
-		PLJABBER_API void SetValue(const PLGeneral::String &sJabberID);
+		PLJABBER_API void SetValue(const PLCore::String &sJabberID);
 
 		/**
 		*  @brief
@@ -92,7 +92,7 @@ class JabberID {
 		*  @returns
 		*    User name
 		*/
-		PLJABBER_API PLGeneral::String GetUserName() const;
+		PLJABBER_API PLCore::String GetUserName() const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class JabberID {
 		*  @param[in] sUserName
 		*    User name
 		*/
-		PLJABBER_API void SetUserName(const PLGeneral::String &sUserName);
+		PLJABBER_API void SetUserName(const PLCore::String &sUserName);
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class JabberID {
 		*  @returns
 		*    Host name
 		*/
-		PLJABBER_API PLGeneral::String GetHostName() const;
+		PLJABBER_API PLCore::String GetHostName() const;
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class JabberID {
 		*  @param[in] sHostName
 		*    Host name
 		*/
-		PLJABBER_API void SetHostName(const PLGeneral::String &sHostName);
+		PLJABBER_API void SetHostName(const PLCore::String &sHostName);
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class JabberID {
 		*  @returns
 		*    Ressource
 		*/
-		PLJABBER_API PLGeneral::String GetRessource() const;
+		PLJABBER_API PLCore::String GetRessource() const;
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class JabberID {
 		*  @param[in] sRessource
 		*    Ressource
 		*/
-		PLJABBER_API void SetRessource(const PLGeneral::String &sRessource);
+		PLJABBER_API void SetRessource(const PLCore::String &sRessource);
 
 
 	//[-------------------------------------------------------]
@@ -161,10 +161,10 @@ class JabberID {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String m_sJabberID;	/**< Complete Jabber ID */
-		PLGeneral::String m_sUserName;	/**< User name */
-		PLGeneral::String m_sHostName;	/**< Host name */
-		PLGeneral::String m_sRessource;	/**< Ressource */
+		PLCore::String m_sJabberID;		/**< Complete Jabber ID */
+		PLCore::String m_sUserName;		/**< User name */
+		PLCore::String m_sHostName;		/**< Host name */
+		PLCore::String m_sRessource;	/**< Ressource */
 
 
 };

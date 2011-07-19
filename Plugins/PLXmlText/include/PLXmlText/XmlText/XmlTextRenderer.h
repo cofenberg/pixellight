@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include <PLMath/Vector2i.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLXmlText/PLXmlText.h"
@@ -234,7 +234,7 @@ class XmlTextRenderer {
 		*  @param[in] nFontSize
 		*    Font size
 		*/
-		PLXMLTEXT_API void SetFont(const PLGeneral::String &sFont, int nFontSize);
+		PLXMLTEXT_API void SetFont(const PLCore::String &sFont, int nFontSize);
 
 		/**
 		*  @brief
@@ -318,7 +318,7 @@ class XmlTextRenderer {
 		*  @param[in] sText
 		*    Text to render
 		*/
-		PLXMLTEXT_API void DrawText(const PLGeneral::String &sText);
+		PLXMLTEXT_API void DrawText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -386,25 +386,25 @@ class XmlTextRenderer {
 	//[-------------------------------------------------------]
 	private:
 		// Renderer data
-		PLGui::Gui							*m_pGui;			/**< Gui containing the XmlText element, always valid */
-		PLGui::Graphics						*m_pGraphics;		/**< Graphics object into which to render, can be a null pointer, but always valid on rendering */
+		PLGui::Gui						*m_pGui;			/**< Gui containing the XmlText element, always valid */
+		PLGui::Graphics					*m_pGraphics;		/**< Graphics object into which to render, can be a null pointer, but always valid on rendering */
 
 		// Renderer state
-		PLMath::Vector2i					 m_vSectionPos;		/**< Current section position */
-		PLMath::Vector2i					 m_vSectionSize;	/**< Current section size */
-		int									 m_nIndent;			/**< Current indentation */
-		PLGui::Font							*m_pFont;			/**< Current font, can be a null pointer */
-		PLGraphics::Color4					 m_cTextColor;		/**< Current text color */
-		PLGraphics::Color4					 m_cBgColor;		/**< Current background color */
-		HAlign								 m_nHAlign;			/**< Horizontal alignment */
-		VAlign								 m_nVAlign;			/**< Vertical alignment */
-		PLMath::Vector2i					 m_vPos;			/**< Current text position */
+		PLMath::Vector2i				 m_vSectionPos;		/**< Current section position */
+		PLMath::Vector2i				 m_vSectionSize;	/**< Current section size */
+		int								 m_nIndent;			/**< Current indentation */
+		PLGui::Font						*m_pFont;			/**< Current font, can be a null pointer */
+		PLGraphics::Color4				 m_cTextColor;		/**< Current text color */
+		PLGraphics::Color4				 m_cBgColor;		/**< Current background color */
+		HAlign							 m_nHAlign;			/**< Horizontal alignment */
+		VAlign							 m_nVAlign;			/**< Vertical alignment */
+		PLMath::Vector2i				 m_vPos;			/**< Current text position */
 
 		// Current line
-		PLGeneral::List<XmlTextPrimitive>	 m_lstLine;			/**< Primitives in the current line */
-		int									 m_nLineWidth;		/**< Width of current line with spaces */
-		int									 m_nLineWidthRaw;	/**< Width of line without spaces */
-		int									 m_nLineHeight;		/**< Maximum height of all primitives */
+		PLCore::List<XmlTextPrimitive>	 m_lstLine;			/**< Primitives in the current line */
+		int								 m_nLineWidth;		/**< Width of current line with spaces */
+		int								 m_nLineWidthRaw;	/**< Width of line without spaces */
+		int								 m_nLineHeight;		/**< Maximum height of all primitives */
 
 
 };

@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
+#include "PLCore/Xml/Xml.h"
+#include "PLCore/Log/Log.h"
 #include "PLCore/Tools/LocalizationText.h"
 #include "PLCore/Tools/LocalizationGroup.h"
 #include "PLCore/Tools/LocalizationLoaderPL.h"
@@ -33,7 +33,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

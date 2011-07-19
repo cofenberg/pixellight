@@ -65,7 +65,7 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static const PLGeneral::String GLSL;	/**< 'GLSL' string */
+		static const PLCore::String GLSL;	/**< 'GLSL' string */
 
 
 	//[-------------------------------------------------------]
@@ -85,7 +85,7 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
+		virtual PLCore::String GetShaderLanguage() const;
 		virtual PLRenderer::VertexShader *CreateVertexShader();
 		virtual PLRenderer::GeometryShader *CreateGeometryShader();
 		virtual PLRenderer::FragmentShader *CreateFragmentShader();

@@ -32,7 +32,7 @@
 
 // [TODO] Use FS own functions for this if implemented...
 #ifdef WIN32
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
 
 
@@ -60,7 +60,7 @@ class SNConsole : public SNConsoleBase {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static const PLGeneral::String StandardMaterial; /**< Standard console material */
+		static const PLCore::String StandardMaterial; /**< Standard console material */
 
 
 	//[-------------------------------------------------------]
@@ -99,7 +99,7 @@ class SNConsole : public SNConsoleBase {
 		PLS_API void SetAlpha(float fNewAlpha);
 
 		// Overrided virtuals
-		PLS_API PLGeneral::String GetDescription() const;
+		PLS_API PLCore::String GetDescription() const;
 
 
 	//[-------------------------------------------------------]
@@ -125,7 +125,7 @@ class SNConsole : public SNConsoleBase {
 	//[-------------------------------------------------------]
 	private:
 		int							m_nRow;			/**< Current log row */
-		PLGeneral::uint32			m_nLastRow;		/**< Last log row */
+		PLCore::uint32				m_nLastRow;		/**< Last log row */
 		float						m_fPos;			/**< Y position (between 0 and 1) */
 		float						m_fMaxPos;		/**< Maximum position (between 0..1) */
 		float						m_fAlpha;		/**< Transparency (255 = full opacity) */
@@ -141,7 +141,7 @@ class SNConsole : public SNConsoleBase {
 		#endif
 
 
-		PLGeneral::Array<PLGeneral::String> m_lstLogLines;	/**< Log lines */
+		PLCore::Array<PLCore::String> m_lstLogLines;	/**< Log lines */
 
 
 	//[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Pool.h>
+#include <PLCore/Container/Pool.h>
 #include <PLCore/Tools/Loadable.h>
 #include "PLScene/Scene/SceneNode.h"
 
@@ -69,7 +69,7 @@ class SceneQueryManager;
 *    - Derived classes should use a 'SC'-prefix (example: SCCell)
 *    - By default, all draw function flags are set
 */
-class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneNode>, public PLCore::Loadable {
+class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode>, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
@@ -103,22 +103,22 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneContainer, "PLScene", PLScene::SceneNode, "Scene container node (group node) class which is using scene nodes")
 		// Attributes
-		pl_attribute(Hierarchy,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
+		pl_attribute(Hierarchy,	PLCore::String,			"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,													ReadWrite,	GetSet,	"Flags",																"")
 		pl_attribute(AABBMin,	PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,	"Minimum position of the 'scene node space' axis aligned bounding box",	"")
 		pl_attribute(AABBMax,	PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
 			// Overwritten Loadable attributes
-		pl_attribute(Filename,	PLGeneral::String,		"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
+		pl_attribute(Filename,	PLCore::String,			"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_1(Clear,					pl_ret_type(bool),			bool,																				"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																								"")
-			pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLGeneral::uint32,																	"Returns a scene node by using the given index, result can be a null pointer.",																																																																		"")
-			pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLGeneral::String&,															"Returns a scene node by using the given name, result can be a null pointer.",																																																																		"")
-			pl_method_3(Create,					pl_ret_type(SceneNode*),	const PLGeneral::String&,	const PLGeneral::String&,	const PLGeneral::String&,	"Creates a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
-			pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																								"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																			"")
+			pl_method_1(Clear,					pl_ret_type(bool),			bool,																	"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																								"")
+			pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLCore::uint32,															"Returns a scene node by using the given index, result can be a null pointer.",																																																																		"")
+			pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLCore::String&,													"Returns a scene node by using the given name, result can be a null pointer.",																																																																		"")
+			pl_method_3(Create,					pl_ret_type(SceneNode*),	const PLCore::String&,	const PLCore::String&,	const PLCore::String&,	"Creates a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
+			pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																					"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																			"")
 		#endif
 		// Signals
 		pl_signal_1(SignalLoadProgress,	float,	"Scene load progress signal. Current load progress as parameter - if not within 0-1 loading is done.",	"")
@@ -129,9 +129,9 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetHierarchy() const;
-		PLS_API void SetHierarchy(const PLGeneral::String &sValue);
-		PLS_API void SetFilename(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetHierarchy() const;
+		PLS_API void SetHierarchy(const PLCore::String &sValue);
+		PLS_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -168,7 +168,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*  @note
 		*    - If the desired name is already in use, the name is chosen automatically
 		*/
-		PLS_API SceneNode *Create(const PLGeneral::String &sClass, const PLGeneral::String &sName = "", const PLGeneral::String &sParameters = "");
+		PLS_API SceneNode *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "");
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*    - All current container scene nodes are added to the hierarchy automatically
 		*      and the hierarchy is created
 		*/
-		PLS_API SceneHierarchy *CreateHierarchy(const PLGeneral::String &sClass = "PLScene::SHList");
+		PLS_API SceneHierarchy *CreateHierarchy(const PLCore::String &sClass = "PLScene::SHList");
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*    a null pointer on error (maybe unknown class or the class is not derived from
 		*    'SceneQuery')
 		*/
-		PLS_API SceneQuery *CreateQuery(const PLGeneral::String &sClass);
+		PLS_API SceneQuery *CreateQuery(const PLCore::String &sClass);
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 		*    - If the node name is already used another unused node name will be used instead!
 		*    - Use this function only in special cases!
 		*/
-		bool Add(SceneNode &cNode, const PLGeneral::String &sName = "", bool bInitNode = true);
+		bool Add(SceneNode &cNode, const PLCore::String &sName = "", bool bInitNode = true);
 
 		/**
 		*  @brief
@@ -328,13 +328,13 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 	//[-------------------------------------------------------]
 	private:
 		// Private data
-		PLGeneral::String  m_sHierarchy;	/**< Class name of the scene container hierarchy */
+		PLCore::String	   m_sHierarchy;	/**< Class name of the scene container hierarchy */
 		SceneContext	  *m_pSceneContext;	/**< The scene context this scene container is in (should be always valid!) */
 		SceneHierarchy	  *m_pHierarchy;	/**< Scene hierarchy, can be a null pointer */
 		SceneQueryManager *m_pQueryManager;	/**< Scene query manager, can be a null pointer */
 
 		/** List of scene nodes which need a scene hierarchy refresh */
-		PLGeneral::Pool<SceneNode*> m_lstHierarchyRefresh;
+		PLCore::Pool<SceneNode*> m_lstHierarchyRefresh;
 
 
 	//[-------------------------------------------------------]
@@ -347,36 +347,36 @@ class SceneContainer : public SceneNode, public PLGeneral::ElementManager<SceneN
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGeneral::ElementManager functions    ]
+	//[ Public virtual PLCore::ElementManager functions       ]
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool DeInit();
-		PLS_API virtual SceneNode *GetByIndex(PLGeneral::uint32 nIndex = 0) const;
-		PLS_API virtual SceneNode *GetByName(const PLGeneral::String &sName) const;
+		PLS_API virtual SceneNode *GetByIndex(PLCore::uint32 nIndex = 0) const;
+		PLS_API virtual SceneNode *GetByName(const PLCore::String &sName) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLS_API virtual bool Load(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 		PLS_API virtual bool Unload();
-		PLS_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::Loadable functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+		PLS_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual SceneNode *CreateElement(const PLGeneral::String &sName);
+		PLS_API virtual SceneNode *CreateElement(const PLCore::String &sName);
 
 
 };

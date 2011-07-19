@@ -71,7 +71,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNTerrain, "PLScene", PLScene::SceneNode, "Terrain scene node")
 		// Attributes
-		pl_attribute(Filename,	PLGeneral::String, "",	ReadWrite,	GetSet,	"Terrain filename",	"Type='Terrain'")
+		pl_attribute(Filename,	PLCore::String, "",	ReadWrite,	GetSet,	"Terrain filename",	"Type='Terrain'")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -81,8 +81,8 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetFilename() const;
-		PLS_API void SetFilename(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetFilename() const;
+		PLS_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -127,16 +127,16 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadHeightMap(const PLGeneral::String &sHeightMap, PLGraphics::Image &cHeightMap);
+		bool LoadHeightMap(const PLCore::String &sHeightMap, PLGraphics::Image &cHeightMap);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String  m_sFilename;		/**< Terrain filename */
-		float			  *m_pfHeightMap;	/**< Heightmap, can be a null pointer */
-		GMMSurface		  *m_pGMMSurface;	/**< Terrain GMM surface, can be a null pointer */
+		PLCore::String  m_sFilename;	/**< Terrain filename */
+		float		   *m_pfHeightMap;	/**< Heightmap, can be a null pointer */
+		GMMSurface	   *m_pGMMSurface;	/**< Terrain GMM surface, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -158,14 +158,14 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[-------------------------------------------------------]
 	public:
 		PLS_API virtual bool Unload();
-		PLS_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Loadable functions            ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool CallLoadable(PLGeneral::File &cFile, PLCore::Loader &cLoader, const PLGeneral::String &sMethod, const PLGeneral::String &sParams);
+		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
 
 
 };

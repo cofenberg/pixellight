@@ -213,12 +213,12 @@ class Transform3 {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint8 m_nInternalFlags;	/**< Internal flags */
-		Vector3			 m_vPosition;		/**< Position as vector */
-		Quaternion		 m_qRotation;		/**< Rotation as quaternion */
-		Vector3			 m_vScale;			/**< Scale as vector */
-		Matrix3x4		 m_mTrans;			/**< Current final composed transform matrix */
-		Matrix3x4		 m_mInvTrans;		/**< Current final composed inverse transform matrix */
+		PLCore::uint8 m_nInternalFlags;	/**< Internal flags */
+		Vector3		  m_vPosition;		/**< Position as vector */
+		Quaternion	  m_qRotation;		/**< Rotation as quaternion */
+		Vector3		  m_vScale;			/**< Scale as vector */
+		Matrix3x4	  m_mTrans;			/**< Current final composed transform matrix */
+		Matrix3x4	  m_mInvTrans;		/**< Current final composed inverse transform matrix */
 
 
 };

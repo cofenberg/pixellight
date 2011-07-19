@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/Gui/Data/DataObject.h"
 
 
@@ -126,7 +126,7 @@ class ClipBoard {
 		*  @return
 		*    String
 		*/
-		PLGUI_API PLGeneral::String GetText();
+		PLGUI_API PLCore::String GetText();
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class ClipBoard {
 		*  @param[in] sText
 		*    String
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]

@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Tools/Tools.h>
-#include <PLGeneral/String/ParseTools.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Tools/Tools.h>
+#include <PLCore/String/ParseTools.h>
 #include "PLRenderer/Texture/TextureHandler.h"
 #include "PLRenderer/Material/ParameterManager.h"
 #include "PLRenderer/Effect/EffectPass.h"
@@ -39,7 +39,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGraphics;
 namespace PLRenderer {
 

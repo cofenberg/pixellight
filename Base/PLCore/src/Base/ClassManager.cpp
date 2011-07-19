@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/DynLib.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Tools/Stopwatch.h>
+#include "PLCore/Xml/Xml.h"
+#include "PLCore/Log/Log.h"
+#include "PLCore/File/File.h"
+#include "PLCore/File/Directory.h"
+#include "PLCore/File/FileSearch.h"
+#include "PLCore/System/System.h"
+#include "PLCore/System/DynLib.h"
 #include "PLCore/Tools/Loader.h"
+#include "PLCore/Tools/Stopwatch.h"
 #include "PLCore/Tools/LoaderImpl.h"
 #include "PLCore/Base/Module.h"
 #include "PLCore/Base/Rtti.h"
@@ -44,7 +44,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

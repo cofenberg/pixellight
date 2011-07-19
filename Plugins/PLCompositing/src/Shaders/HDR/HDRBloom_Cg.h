@@ -21,7 +21,7 @@
 
 
 // Downscale and bloom Cg vertex shader source code
-static const PLGeneral::String sHDRBloom_Cg_VS = "\
+static const PLCore::String sHDRBloom_Cg_VS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -60,7 +60,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION	// Clip space vertex position, l
 
 
 // Downscale Cg fragment shader source code
-static const PLGeneral::String sHDRBloom_Cg_FS_Downscale = "\
+static const PLCore::String sHDRBloom_Cg_FS_Downscale = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -159,7 +159,7 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 
 
 // Bloom Cg vertex shader source code
-static const PLGeneral::String sHDRBloom_Cg_FS = "\
+static const PLCore::String sHDRBloom_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\

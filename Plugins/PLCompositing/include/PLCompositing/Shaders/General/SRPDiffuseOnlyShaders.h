@@ -109,7 +109,7 @@ class SRPDiffuseOnlyShaders : public SRPDiffuseOnly {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDiffuseOnlyShaders, "PLCompositing", PLCompositing::SRPDiffuseOnly, "Shaders based diffuse only scene renderer pass implementation, can also be used as depth only renderer pass")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,		"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 		// Constructors

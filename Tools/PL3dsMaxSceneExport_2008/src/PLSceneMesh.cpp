@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/File/File.h>
+#include <PLCore/String/String.h>
 #include <IGame/IGame.h>
 #include <IGame/IGameModifier.h>
 #include <iparamb2.h>
@@ -42,7 +42,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMesh;
 
 

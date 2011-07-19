@@ -202,7 +202,7 @@ class SRPLightingMaterial {
 		*  @return
 		*    Generated program user data, do NOT delete the memory the pointer points to
 		*/
-		GeneratedProgramUserData *MakeMaterialCurrent(PLGeneral::uint32 nRendererFlags, PLGeneral::uint32 nEnvironmentFlags, ETextureFiltering nTextureFiltering, float fLightingIntensity);
+		GeneratedProgramUserData *MakeMaterialCurrent(PLCore::uint32 nRendererFlags, PLCore::uint32 nEnvironmentFlags, ETextureFiltering nTextureFiltering, float fLightingIntensity);
 
 
 	//[-------------------------------------------------------]
@@ -266,51 +266,51 @@ class SRPLightingMaterial {
 	//[-------------------------------------------------------]
 	private:
 		// Material parameter
-		static const PLGeneral::String TwoSided;
-		static const PLGeneral::String AlphaReference;
-		static const PLGeneral::String DiffuseRampMap;
-		static const PLGeneral::String IndexOfRefraction;
-		static const PLGeneral::String FresnelReflectionPower;
-		static const PLGeneral::String ReflectionColor;
-		static const PLGeneral::String Reflectivity;
-		static const PLGeneral::String NormalMapBumpiness;
-		static const PLGeneral::String DetailNormalMap;
-		static const PLGeneral::String DetailNormalMapBumpiness;
-		static const PLGeneral::String DetailNormalMapUVScale;
-		static const PLGeneral::String Parallax;
-		static const PLGeneral::String SpecularColor;
-		static const PLGeneral::String SpecularExponent;
-		static const PLGeneral::String SpecularRampMap;
-		static const PLGeneral::String EdgeRampMap;
+		static const PLCore::String TwoSided;
+		static const PLCore::String AlphaReference;
+		static const PLCore::String DiffuseRampMap;
+		static const PLCore::String IndexOfRefraction;
+		static const PLCore::String FresnelReflectionPower;
+		static const PLCore::String ReflectionColor;
+		static const PLCore::String Reflectivity;
+		static const PLCore::String NormalMapBumpiness;
+		static const PLCore::String DetailNormalMap;
+		static const PLCore::String DetailNormalMapBumpiness;
+		static const PLCore::String DetailNormalMapUVScale;
+		static const PLCore::String Parallax;
+		static const PLCore::String SpecularColor;
+		static const PLCore::String SpecularExponent;
+		static const PLCore::String SpecularRampMap;
+		static const PLCore::String EdgeRampMap;
 		// Shader parameter
-		static const PLGeneral::String DiffuseColor;
-		static const PLGeneral::String VertexPosition;
-		static const PLGeneral::String VertexTexCoord0;
-		static const PLGeneral::String VertexNormal;
-		static const PLGeneral::String VertexTangent;
-		static const PLGeneral::String VertexBinormal;
-		static const PLGeneral::String NormalScale;
-		static const PLGeneral::String ObjectSpaceToViewSpaceMatrix;
-		static const PLGeneral::String ObjectSpaceToClipSpaceMatrix;
-		static const PLGeneral::String EyePos;
-		// static const PLGeneral::String AlphaReference;	// Already defined
-		static const PLGeneral::String FresnelConstants;
-		static const PLGeneral::String ViewSpaceToWorldSpace;
-		static const PLGeneral::String ParallaxScaleBias;
-		static const PLGeneral::String LightDirection;
-		static const PLGeneral::String LightPosition;
-		static const PLGeneral::String LightRadius;
-		static const PLGeneral::String ProjectivePointCubeMap;
-		static const PLGeneral::String ViewSpaceToCubeMapSpace;
-		static const PLGeneral::String ProjectiveSpotMap;
-		static const PLGeneral::String ViewSpaceToSpotMapSpace;
-		static const PLGeneral::String SpotConeCos;
-		static const PLGeneral::String ShadowMap;
-		static const PLGeneral::String ViewSpaceToShadowMapSpace;
-		static const PLGeneral::String ViewSpaceToShadowCubeMapSpace;
-		static const PLGeneral::String InvLightRadius;
-		static const PLGeneral::String TexelSize;
-		static const PLGeneral::String LightColor;
+		static const PLCore::String DiffuseColor;
+		static const PLCore::String VertexPosition;
+		static const PLCore::String VertexTexCoord0;
+		static const PLCore::String VertexNormal;
+		static const PLCore::String VertexTangent;
+		static const PLCore::String VertexBinormal;
+		static const PLCore::String NormalScale;
+		static const PLCore::String ObjectSpaceToViewSpaceMatrix;
+		static const PLCore::String ObjectSpaceToClipSpaceMatrix;
+		static const PLCore::String EyePos;
+		// static const PLCore::String AlphaReference;	// Already defined
+		static const PLCore::String FresnelConstants;
+		static const PLCore::String ViewSpaceToWorldSpace;
+		static const PLCore::String ParallaxScaleBias;
+		static const PLCore::String LightDirection;
+		static const PLCore::String LightPosition;
+		static const PLCore::String LightRadius;
+		static const PLCore::String ProjectivePointCubeMap;
+		static const PLCore::String ViewSpaceToCubeMapSpace;
+		static const PLCore::String ProjectiveSpotMap;
+		static const PLCore::String ViewSpaceToSpotMapSpace;
+		static const PLCore::String SpotConeCos;
+		static const PLCore::String ShadowMap;
+		static const PLCore::String ViewSpaceToShadowMapSpace;
+		static const PLCore::String ViewSpaceToShadowCubeMapSpace;
+		static const PLCore::String InvLightRadius;
+		static const PLCore::String TexelSize;
+		static const PLCore::String LightColor;
 
 
 	//[-------------------------------------------------------]
@@ -326,7 +326,7 @@ class SRPLightingMaterial {
 		*  @param[in] nEnvironmentFlags
 		*    Environment flags to use (see EEnvironmentFlags)
 		*/
-		void Synchronize(PLGeneral::uint32 nRendererFlags, PLGeneral::uint32 nEnvironmentFlags);
+		void Synchronize(PLCore::uint32 nRendererFlags, PLCore::uint32 nEnvironmentFlags);
 
 		/**
 		*  @brief
@@ -339,7 +339,7 @@ class SRPLightingMaterial {
 		*  @param[in] nTextureFiltering
 		*    Texture filtering
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage, ETextureFiltering nTextureFiltering) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage, ETextureFiltering nTextureFiltering) const;
 
 		/**
 		*  @brief
@@ -365,8 +365,8 @@ class SRPLightingMaterial {
 		// General
 		PLRenderer::Material				*m_pMaterial;			/**< Owner material, always valid! */
 		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, always valid! */
-		PLGeneral::uint32					 m_nRendererFlags;		/**< Used SRPLighting-flags */
-		PLGeneral::uint32					 m_nEnvironmentFlags;	/**< Used environment flags (see EEnvironmentFlags) */
+		PLCore::uint32						 m_nRendererFlags;		/**< Used SRPLighting-flags */
+		PLCore::uint32						 m_nEnvironmentFlags;	/**< Used environment flags (see EEnvironmentFlags) */
 		bool								 m_bSynchronized;		/**< Synchronized? */
 		// Generated program
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */

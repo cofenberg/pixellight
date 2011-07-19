@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLMath/Vector2i.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLXmlText/PLXmlText.h"
@@ -81,7 +81,7 @@ class XmlTextSection : public XmlTextElement {
 	//[ Protected virtual XmlTextNew functions                ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
 		PLXMLTEXT_API virtual PLMath::Vector2i OnGetSize() const;
 
@@ -98,7 +98,7 @@ class XmlTextSection : public XmlTextElement {
 		int					m_nPaddingTop;		/**< Number of pixels between top border and content */
 		int					m_nPaddingBottom;	/**< Number of pixels between bottom border and content */
 		PLGraphics::Color4	m_cBgColor;			/**< Background color */
-		PLGeneral::String	m_sBackground;		/**< Background image */
+		PLCore::String		m_sBackground;		/**< Background image */
 		float				m_fAlpha;			/**< Alpha transparency */
 		int					m_nBorder;			/**< Border size */
 		PLGraphics::Color4	m_cBorderColor;		/**< Background color */

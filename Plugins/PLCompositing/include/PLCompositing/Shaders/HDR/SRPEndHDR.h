@@ -111,7 +111,7 @@ class SRPEndHDR : public SRPEnd {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPEndHDR, "PLCompositing", PLCompositing::SRPEnd, "HDR render pipeline finishing scene renderer pass")
 		// Attributes
-		pl_attribute(ShaderLanguage,		PLGeneral::String,		"",												ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",		"")
+		pl_attribute(ShaderLanguage,		PLCore::String,			"",												ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",		"")
 		pl_attribute(LuminanceConvert,		PLGraphics::Color3,		PLGraphics::Color3(0.2125f, 0.7154f, 0.0721f),	ReadWrite,	DirectValue,	"Luminance convert (tone mapping)",																											"")
 		pl_attribute(Key,					float,					0.72f,											ReadWrite,	DirectValue,	"Key value, midzone luminance (tone mapping)",																								"")
 		pl_attribute(WhiteLevel,			float,					100.0f,											ReadWrite,	DirectValue,	"The smallest luminance that will be mapped to pure white, values above 'burn out' (tone mapping)",											"")
@@ -119,7 +119,7 @@ class SRPEndHDR : public SRPEnd {
 		pl_attribute(Tau,					float,					0.5f,											ReadWrite,	DirectValue,	"Light adaptation 'tau', lower value for longer light adaption time (tone mapping, only used if NoAutomaticAverageLuminance is not set)",	"")
 		pl_attribute(BloomBrightThreshold,	float,					0.5f,											ReadWrite,	DirectValue,	"Bloom bright threshold, only color components >= this value bloom (only used if NoBloom is not set)",										"")
 		pl_attribute(BloomFactor,			float,					1.0f,											ReadWrite,	DirectValue,	"Bloom factor (only used if NoBloom is not set)",																							"")
-		pl_attribute(BloomBlurPasses,		PLGeneral::uint32,		4,												ReadWrite,	DirectValue,	"Number of bloom blur passes, should be a multiple of 2 (only used if NoBloom is not set)",													"")
+		pl_attribute(BloomBlurPasses,		PLCore::uint32,			4,												ReadWrite,	DirectValue,	"Number of bloom blur passes, should be a multiple of 2 (only used if NoBloom is not set)",													"")
 		pl_attribute(BloomDownscale,		float,					8.0f,											ReadWrite,	DirectValue,	"Bloom downscale factor, should be a multiple of 2 (only used if NoBloom is not set)",														"Min='1'")
 		pl_attribute(Gamma,					float,					2.2f,											ReadWrite,	DirectValue,	"Gamma correction value, higher values lighten the image, smaller values darken the image",													"")
 			// Overwritten PLScene::SceneRendererPass attributes

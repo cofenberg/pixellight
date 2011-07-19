@@ -89,8 +89,8 @@ class TestWindow : public PLGui::Window {
 		void ButtonClicked();
 		void ButtonPressed();
 		void ButtonReleased();
-		void MenuClicked(PLGeneral::uint32 nID);
-		void TrayClicked(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		void MenuClicked(PLCore::uint32 nID);
+		void TrayClicked(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 	//[-------------------------------------------------------]
@@ -98,11 +98,11 @@ class TestWindow : public PLGui::Window {
 	//[-------------------------------------------------------]
 	private:
 		// Event handlers
-		PLCore::EventHandler<PLGeneral::uint32, const PLMath::Vector2i&>	EventHandlerTrayClicked;
-		PLCore::EventHandler<>												EventHandlerClicked;
-		PLCore::EventHandler<>												EventHandlerPressed;
-		PLCore::EventHandler<>												EventHandlerReleased;
-		PLCore::EventHandler<PLGeneral::uint32>								EventHandlerMenu;
+		PLCore::EventHandler<PLCore::uint32, const PLMath::Vector2i&>	EventHandlerTrayClicked;
+		PLCore::EventHandler<>											EventHandlerClicked;
+		PLCore::EventHandler<>											EventHandlerPressed;
+		PLCore::EventHandler<>											EventHandlerReleased;
+		PLCore::EventHandler<PLCore::uint32>							EventHandlerMenu;
 
 		// Widgets
 		PLGui::Label				*m_pLabel;

@@ -62,7 +62,7 @@ class SNMPostProcessGlow : public SNMPostProcess {
 		pl_attribute(WhiteCutoff,	float,				0.99f,							ReadWrite,	DirectValue,	"White cutoff",							"")
 		pl_attribute(BloomScale,	float,				1.5f,							ReadWrite,	DirectValue,	"Bloom scale",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,		PLGeneral::String,	"Data/PostProcesses/Glow.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,		PLCore::String,		"Data/PostProcesses/Glow.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

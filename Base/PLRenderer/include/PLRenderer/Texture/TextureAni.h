@@ -144,8 +144,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The texture frames array
 		*/
-		PLRENDERER_API PLGeneral::Array<TextureFrame*> &GetTextureFrames();
-		PLRENDERER_API const PLGeneral::Array<TextureFrame*> &GetTextureFrames() const;
+		PLRENDERER_API PLCore::Array<TextureFrame*> &GetTextureFrames();
+		PLRENDERER_API const PLCore::Array<TextureFrame*> &GetTextureFrames() const;
 
 		//[-------------------------------------------------------]
 		//[ Matrix animation                                      ]
@@ -176,8 +176,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The matrix frames array
 		*/
-		PLRENDERER_API PLGeneral::Array<MatrixFrame*> &GetMatrixFrames();
-		PLRENDERER_API const PLGeneral::Array<MatrixFrame*> &GetMatrixFrames() const;
+		PLRENDERER_API PLCore::Array<MatrixFrame*> &GetMatrixFrames();
+		PLRENDERER_API const PLCore::Array<MatrixFrame*> &GetMatrixFrames() const;
 
 		//[-------------------------------------------------------]
 		//[ Color animation                                       ]
@@ -208,8 +208,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The color frames array
 		*/
-		PLRENDERER_API PLGeneral::Array<ColorFrame*> &GetColorFrames();
-		PLRENDERER_API const PLGeneral::Array<ColorFrame*> &GetColorFrames() const;
+		PLRENDERER_API PLCore::Array<ColorFrame*> &GetColorFrames();
+		PLRENDERER_API const PLCore::Array<ColorFrame*> &GetColorFrames() const;
 
 
 	//[-------------------------------------------------------]
@@ -225,7 +225,7 @@ class TextureAni : public Texture {
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		TextureAni(TextureManager &cManager, const PLGeneral::String &sName);
+		TextureAni(TextureManager &cManager, const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -233,14 +233,14 @@ class TextureAni : public Texture {
 	//[-------------------------------------------------------]
 	private:
 		// Texture animation
-		AniInfoManager					 m_cTextureAnimationManager;	/**< Texture animation manager */
-		PLGeneral::Array<TextureFrame*>  m_lstTextureFrames;			/**< Texture animation frames */
+		AniInfoManager				 m_cTextureAnimationManager;	/**< Texture animation manager */
+		PLCore::Array<TextureFrame*> m_lstTextureFrames;			/**< Texture animation frames */
 		// Matrix animation
-		AniInfoManager					 m_cMatrixAnimationManager;		/**< Matrix animation manager */
-		PLGeneral::Array<MatrixFrame*>	 m_lstMatrixFrames;				/**< Matrix animation frames */
+		AniInfoManager				 m_cMatrixAnimationManager;		/**< Matrix animation manager */
+		PLCore::Array<MatrixFrame*>	 m_lstMatrixFrames;				/**< Matrix animation frames */
 		// Color animation
-		AniInfoManager					 m_cColorAnimationManager;		/**< Color animation manager */
-		PLGeneral::Array<ColorFrame*>	 m_lstColorFrames;				/**< Color animation frames */
+		AniInfoManager				 m_cColorAnimationManager;		/**< Color animation manager */
+		PLCore::Array<ColorFrame*>	 m_lstColorFrames;				/**< Color animation frames */
 
 
 	//[-------------------------------------------------------]
@@ -254,11 +254,11 @@ class TextureAni : public Texture {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(PLGeneral::File &cFile, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "");
+		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLRENDERER_API virtual bool Save(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLRENDERER_API virtual bool Save(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
 		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

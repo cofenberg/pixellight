@@ -11,7 +11,7 @@
 # 3. Search in standard directories (e.g. /usr/lib, /usr/local/lib, /usr/include, /usr/local/include)
 #
 # Includes are searched in subdirectory Include/ first (for installed SDKs on Windows), then using the PixelLight source
-# layout, e.g. Base/PLGeneral/include.
+# layout, e.g. Base/PLCore/include.
 #
 # Libraries are searched using a suffix "D" for debug builds, if that is not found, the search is repeated without the
 # suffix (allowing for debug builds using a release version of the PixelLight libraries)
@@ -82,11 +82,6 @@ endmacro(_pixellight_find_lib varname header library basepath)
 
 
 # Base
-
-# PLGeneral
-_pixellight_find_lib(PL_PLGENERAL PLGeneral/PLGeneral.h PLGeneral Base/PLGeneral/include)
-#message("PLGeneral include: ${PL_PLGENERAL_INCLUDE_DIR}")
-#message("PLGeneral library: ${PL_PLGENERAL_LIBRARY}")
 
 # PLCore
 _pixellight_find_lib(PL_PLCORE PLCore/PLCore.h PLCore Base/PLCore/include)
@@ -178,6 +173,6 @@ _pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText Plugins/PLXmlT
 #message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
 
 
-# Set PixelLight_FOUND variable based on PLGeneral (we need at least that lib)
+# Set PixelLight_FOUND variable based on PLCore (we need at least that lib)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(PixelLight DEFAULT_MSG 
-                                  PL_PLGENERAL_LIBRARY PL_PLGENERAL_INCLUDE_DIR) 
+                                  PL_PLCORE_LIBRARY PL_PLCORE_INCLUDE_DIR) 

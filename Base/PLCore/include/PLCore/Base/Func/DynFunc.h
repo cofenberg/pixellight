@@ -28,26 +28,22 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/SmartPtr.h>
+#include "PLCore/Core/SmartPtr.h"
 #include "PLCore/Base/Func/DynSignature.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class XmlElement;
-}
-namespace PLCore {
-	class FuncDesc;
-	class DynParams;
-}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class FuncDesc;
+class DynParams;
+class XmlElement;
 
 
 //[-------------------------------------------------------]
@@ -114,7 +110,7 @@ class DynFunc : public DynSignature {
 		*  @param[in] sParams
 		*    Parameters as string
 		*/
-		PLCORE_API virtual void Call(const PLGeneral::String &sParams);
+		PLCORE_API virtual void Call(const String &sParams);
 
 		/**
 		*  @brief
@@ -123,7 +119,7 @@ class DynFunc : public DynSignature {
 		*  @param[in] cElement
 		*    Parameters as XML
 		*/
-		PLCORE_API virtual void Call(const PLGeneral::XmlElement &cElement);
+		PLCORE_API virtual void Call(const XmlElement &cElement);
 
 		/**
 		*  @brief
@@ -135,7 +131,7 @@ class DynFunc : public DynSignature {
 		*  @return
 		*    Return of the function as string, empty string if there's no return
 		*/
-		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::String &sParams);
+		PLCORE_API virtual String CallWithReturn(const String &sParams);
 
 		/**
 		*  @brief
@@ -147,7 +143,7 @@ class DynFunc : public DynSignature {
 		*  @return
 		*    Return of the function as string, empty string if there's no return
 		*/
-		PLCORE_API virtual PLGeneral::String CallWithReturn(const PLGeneral::XmlElement &cElement);
+		PLCORE_API virtual String CallWithReturn(const XmlElement &cElement);
 
 		/**
 		*  @brief
@@ -197,7 +193,7 @@ class DynFunc : public DynSignature {
 //[-------------------------------------------------------]
 //[ Type definitions                                      ]
 //[-------------------------------------------------------]
-typedef PLGeneral::SmartPtr<DynFunc> DynFuncPtr;
+typedef SmartPtr<DynFunc> DynFuncPtr;
 
 
 //[-------------------------------------------------------]

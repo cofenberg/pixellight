@@ -123,8 +123,8 @@ class HDRBloom {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateBloom(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const PLGraphics::Color3 &cLuminanceConvert,
-									  float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLGeneral::uint32 nBloomBlurPasses, float fDownscale, bool bUseVertexTextureFetch);
+		PLCOM_API void CalculateBloom(const PLCore::String &sShaderLanguage, PLRenderer::TextureBufferRectangle &cOriginalTexture, float fBrightThreshold, bool bToneMapping, bool bAutomaticAverageLuminance, const PLGraphics::Color3 &cLuminanceConvert,
+									  float fKey, float fWhiteLevel, float fAverageLuminance, PLRenderer::TextureBuffer *pHDRAverageLuminanceTextureBuffer, PLCore::uint32 nBloomBlurPasses, float fDownscale, bool bUseVertexTextureFetch);
 
 		/**
 		*  @brief

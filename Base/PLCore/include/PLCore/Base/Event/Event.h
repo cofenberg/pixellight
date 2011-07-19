@@ -83,10 +83,10 @@ class Event : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
@@ -96,17 +96,17 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -164,13 +164,13 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Emit(cParams);
@@ -217,10 +217,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
@@ -230,17 +230,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -297,13 +297,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Emit(cParams);
@@ -349,10 +349,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
@@ -362,17 +362,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -428,13 +428,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Emit(cParams);
@@ -479,10 +479,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
@@ -492,17 +492,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -557,13 +557,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Emit(cParams);
@@ -607,10 +607,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
@@ -620,17 +620,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -682,13 +682,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Emit(cParams);
@@ -731,10 +731,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
@@ -744,17 +744,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -805,13 +805,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Emit(cParams);
@@ -853,10 +853,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
@@ -866,17 +866,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -926,13 +926,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Emit(cParams);
@@ -973,10 +973,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7, t8);
@@ -986,17 +986,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1045,13 +1045,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Emit(cParams);
@@ -1091,10 +1091,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6, t7);
@@ -1104,17 +1104,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1160,13 +1160,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Emit(cParams);
@@ -1205,10 +1205,10 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5, t6);
@@ -1218,17 +1218,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1273,13 +1273,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Emit(cParams);
@@ -1317,10 +1317,10 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4, t5);
@@ -1330,17 +1330,17 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1384,13 +1384,13 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Emit(cParams);
@@ -1427,10 +1427,10 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3, t4);
@@ -1440,17 +1440,17 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1493,13 +1493,13 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Emit(cParams);
@@ -1535,10 +1535,10 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2, t3);
@@ -1548,17 +1548,17 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1598,13 +1598,13 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
 			Emit(cParams);
@@ -1639,10 +1639,10 @@ class Event<T0, T1, T2> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) const
 		{
 			// Iterate through all event handlers
-			const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const typename SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const typename PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const typename SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1, t2);
@@ -1652,17 +1652,17 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1701,13 +1701,13 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
 			Emit(cParams);
@@ -1741,10 +1741,10 @@ class Event<T0, T1> : public DynEvent {
 		virtual void operator ()(_T0 t0, _T1 t1) const
 		{
 			// Iterate through all event handlers
-			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0, t1);
@@ -1754,17 +1754,17 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1802,13 +1802,13 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
 			Emit(cParams);
@@ -1843,10 +1843,10 @@ class Event<T0> : public DynEvent {
 		virtual void operator ()(_T0 t0) const
 		{
 			// Iterate through all event handlers
-			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor(t0);
@@ -1856,17 +1856,17 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1903,13 +1903,13 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
 			Emit(cParams);
@@ -1941,10 +1941,10 @@ class Event<> : public DynEvent {
 		virtual void operator ()() const
 		{
 			// Iterate through all event handlers
-			const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
+			const SimpleList<DynEventHandler*>::ListElement *pElement = m_lstHandlers.pFirstElement;
 			while (pElement) {
 				// Backup the next element because "pElement" may get invalid within the next step...
-				const PLGeneral::SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
+				const SimpleList<DynEventHandler*>::ListElement *pNextElement = pElement->pNextElement;
 
 				// Call the functor of the current event handler
 				static_cast<TypeHandler*>(pElement->Data)->m_cFunctor();
@@ -1954,17 +1954,17 @@ class Event<> : public DynEvent {
 			}
 		}
 
-		virtual PLGeneral::String GetSignature() const
+		virtual String GetSignature() const
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual PLGeneral::uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const
 		{
 			return 0;
 		}
 
-		virtual int GetParameterTypeID(PLGeneral::uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const
 		{
 			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
@@ -1993,13 +1993,13 @@ class Event<> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const PLGeneral::String &sParams) const
+		virtual void Emit(const String &sParams) const
 		{
 			Params<void> cParams = Params<void>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const PLGeneral::XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const
 		{
 			Params<void> cParams = Params<void>::FromXml(cElement);
 			Emit(cParams);

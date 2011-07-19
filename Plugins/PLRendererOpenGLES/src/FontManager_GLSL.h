@@ -21,7 +21,7 @@
 
 
 // OpenGL ES 2.0 GLSL shader language 100 vertex shader source code
-static const PLGeneral::String sVertexShaderSourceCodeGLSL = "\
+static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
 attribute highp vec3 VertexPosition;	// Object space vertex position input, lower/left is (0,0) and upper/right is (1,1)\n\
 varying   highp vec2 VertexTexCoordVS;	// Normalized vertex texture coordinate output\n\
@@ -53,7 +53,7 @@ void main()\n\
 
 
 // OpenGL ES 2.0 GLSL shader language 100 fragment shader source code
-static const PLGeneral::String sFragmentShaderSourceCodeGLSL = "\
+static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
 varying highp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate from vertex shader\n\
 \n\

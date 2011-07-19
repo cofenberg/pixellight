@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include "PLCore/Base/MemberDesc.h"
 
 
@@ -76,7 +75,7 @@ class ConstructorDesc : public MemberDesc {
 		*  @param[in] sAnnotation
 		*    Annotation
 		*/
-		PLCORE_API ConstructorDesc(const PLGeneral::String &sSignature, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sAnnotation);
+		PLCORE_API ConstructorDesc(const String &sSignature, const String &sName, const String &sDescription, const String &sAnnotation);
 
 		/**
 		*  @brief
@@ -100,7 +99,7 @@ class ConstructorDesc : public MemberDesc {
 		*  @return
 		*    Signature
 		*/
-		PLCORE_API PLGeneral::String GetSignature() const;
+		PLCORE_API String GetSignature() const;
 
 		/**
 		*  @brief
@@ -139,7 +138,7 @@ class ConstructorDesc : public MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sSignature;		/**< Signature */
+		String m_sSignature;	/**< Signature */
 
 
 };

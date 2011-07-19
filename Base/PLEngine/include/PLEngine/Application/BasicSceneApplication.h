@@ -76,7 +76,7 @@ class BasicSceneApplication : public SceneApplication {
 			pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),								"Returns the scene container (the 'concrete scene'), can be a null pointer.",																							"")
 			pl_method_1(SetScene,				pl_ret_type(void),						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'). New scene container as first parameter (can be a null pointer).",														"")
 			pl_method_0(ClearScene,				pl_ret_type(void),													"Clears the scene, after calling this method the scene is empty.",																										"")
-			pl_method_1(LoadScene,				pl_ret_type(bool),						const PLGeneral::String&,	"Loads a scene. Filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
+			pl_method_1(LoadScene,				pl_ret_type(bool),						const PLCore::String&,		"Loads a scene. Filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
 			pl_method_0(GetCamera,				pl_ret_type(PLScene::SNCamera*),									"Get the scene camera, can be a null pointer.",																															"")
 			pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera. New scene camera as first parameter (can be a null pointer).",																					"")
 			pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool&),									"Returns the scene renderer tool.",																																		"")
@@ -92,7 +92,7 @@ class BasicSceneApplication : public SceneApplication {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PL_API static const PLGeneral::String DefaultSceneRenderer;	/**< The used default (and very basic) scene renderer */
+		PL_API static const PLCore::String DefaultSceneRenderer;	/**< The used default (and very basic) scene renderer */
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PL_API BasicSceneApplication(const PLGeneral::String &sSceneFilename = "");
+		PL_API BasicSceneApplication(const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class BasicSceneApplication : public SceneApplication {
 		*    - If currently the edit dialog is opened, it will be closed automatically to avoid update problems
 		*    - Emits the "SignalSceneLoadingFinished"-signal when the scene loading has been finished successfully
 		*/
-		PL_API virtual bool LoadScene(const PLGeneral::String &sFilename);
+		PL_API virtual bool LoadScene(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -322,15 +322,15 @@ class BasicSceneApplication : public SceneApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene::SceneNodeHandler					   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
-		PLScene::SceneNodeHandler					   m_cCameraHandler;			/**< Scene node handler for the camera */
-		PLGeneral::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
-		PLGeneral::String							   m_sStartCamera;				/**< Name of the given start camera */
-		PLScene::SceneNode							  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
-		PLGeneral::Array<const PLScene::SNKeyValue*>   m_lstPostKeys;				/**< Keys to process AFTER all other */
-		bool										   m_bHasLoadScreen;			/**< Is there a load screen? */
-		SceneRendererTool							   m_cSceneRendererTool;		/**< Scene renderer tool */
-		Screenshot									   m_cScreenshot;				/**< Screenshot tool */
+		PLScene::SceneNodeHandler				   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
+		PLScene::SceneNodeHandler				   m_cCameraHandler;			/**< Scene node handler for the camera */
+		PLCore::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
+		PLCore::String							   m_sStartCamera;				/**< Name of the given start camera */
+		PLScene::SceneNode						  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
+		PLCore::Array<const PLScene::SNKeyValue*>  m_lstPostKeys;				/**< Keys to process AFTER all other */
+		bool									   m_bHasLoadScreen;			/**< Is there a load screen? */
+		SceneRendererTool						   m_cSceneRendererTool;		/**< Scene renderer tool */
+		Screenshot								   m_cScreenshot;				/**< Screenshot tool */
 
 
 };

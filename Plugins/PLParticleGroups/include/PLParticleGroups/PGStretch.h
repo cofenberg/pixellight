@@ -56,8 +56,8 @@ class PGStretch : public SNParticleGroup {
 		pl_attribute(Length,	float,				10.0f,										ReadWrite,	DirectValue,	"Length",					"")
 		pl_attribute(Color,		PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Particle color",			"")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,	PLGeneral::String,	"Data/Textures/PGStretch.dds",				ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,	PLGeneral::uint32,	1,											ReadWrite,	GetSet,			"Number of particles",		"Min=1")
+		pl_attribute(Material,	PLCore::String,		"Data/Textures/PGStretch.dds",				ReadWrite,	GetSet,			"Particle group material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,	PLCore::uint32,		1,											ReadWrite,	GetSet,			"Number of particles",		"Min=1")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

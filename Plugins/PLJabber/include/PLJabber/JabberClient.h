@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Network/Client.h>
+#include <PLCore/Network/Client.h>
 #include "PLJabber/PLJabber.h"
 
 
@@ -45,7 +45,7 @@ namespace PLJabber {
 *  @brief
 *    Jabber client
 */
-class JabberClient : public PLGeneral::Client {
+class JabberClient : public PLCore::Client {
 
 
 	//[-------------------------------------------------------]
@@ -66,10 +66,10 @@ class JabberClient : public PLGeneral::Client {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLGeneral::Client functions         ]
+	//[ Protected virtual PLCore::Client functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLJABBER_API virtual PLGeneral::Connection *CreateOutgoingConnection();
+		PLJABBER_API virtual PLCore::Connection *CreateOutgoingConnection();
 
 
 	//[-------------------------------------------------------]

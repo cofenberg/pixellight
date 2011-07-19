@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	#include <Core/SPK_Buffer.h>
@@ -88,7 +88,7 @@ class SPK_PLBuffer : public SPK::Buffer {
 		*  @param[in] nNumOfParticles
 		*    Number of particles
 		*/
-		SPARK_PL_API SPK_PLBuffer(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nNumOfVerticesPerParticle, PLGeneral::uint32 nNumOfIndicesPerParticle, SPK::TexturingMode nTexturingMode, PLGeneral::uint32 nNumOfParticles);
+		SPARK_PL_API SPK_PLBuffer(PLRenderer::Renderer &cRenderer, PLCore::uint32 nNumOfVerticesPerParticle, PLCore::uint32 nNumOfIndicesPerParticle, SPK::TexturingMode nTexturingMode, PLCore::uint32 nNumOfParticles);
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class PLBufferCreator : public SPK::BufferCreator {
 		*  @param[in] nTexturingMode
 		*    The texturing mode of this SPK_PLBuffer
 		*/
-		SPARK_PL_API PLBufferCreator(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nNumOfVerticesPerParticle, PLGeneral::uint32 nNumOfIndicesPerParticle, SPK::TexturingMode nTexturingMode);
+		SPARK_PL_API PLBufferCreator(PLRenderer::Renderer &cRenderer, PLCore::uint32 nNumOfVerticesPerParticle, PLCore::uint32 nNumOfIndicesPerParticle, SPK::TexturingMode nTexturingMode);
 
 
 	//[-------------------------------------------------------]
@@ -172,8 +172,8 @@ class PLBufferCreator : public SPK::BufferCreator {
 	//[-------------------------------------------------------]
 	private:
 		PLRenderer::Renderer *m_pRenderer;					/**< PixelLight renderer to use, always valid */
-		PLGeneral::uint32	  m_nNumOfVerticesPerParticle;	/**< Number of vertices per particle (e.g. 4) */
-		PLGeneral::uint32	  m_nNumOfIndicesPerParticle;	/**< Number of indices per particle (e.g. 6) */
+		PLCore::uint32		  m_nNumOfVerticesPerParticle;	/**< Number of vertices per particle (e.g. 4) */
+		PLCore::uint32	  	  m_nNumOfIndicesPerParticle;	/**< Number of indices per particle (e.g. 6) */
 		SPK::TexturingMode	  m_nTexturingMode;				/**< The texturing mode of this SPK_PLBuffer */
 
 

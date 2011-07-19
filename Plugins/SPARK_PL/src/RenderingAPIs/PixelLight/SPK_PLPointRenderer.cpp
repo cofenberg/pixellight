@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Tools.h>
+#include <PLCore/Tools/Tools.h>
 #include <PLMath/Rectangle.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -44,7 +44,7 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;

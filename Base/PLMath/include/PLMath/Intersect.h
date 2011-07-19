@@ -29,14 +29,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include "PLMath/PLMath.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class AType> class Array;
 }
 
@@ -621,7 +621,7 @@ class Intersect {
 		*  @return
 		*    'true' if the points are in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLGeneral::Array<Vector3> &lstPoints);
+		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector3> &lstPoints);
 
 		/**
 		*  @brief
@@ -635,7 +635,7 @@ class Intersect {
 		*  @return
 		*    'true' if the points are in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLGeneral::Array<Vector4> &lstPoints);
+		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector4> &lstPoints);
 
 		/**
 		*  @brief
@@ -690,7 +690,7 @@ class Intersect {
 		*  @return
 		*    'true' if the axis aligned box is within plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, PLGeneral::uint32 *pnOutClipMask = nullptr);
+		PLMATH_API static bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, PLCore::uint32 *pnOutClipMask = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Triangle                                              ]

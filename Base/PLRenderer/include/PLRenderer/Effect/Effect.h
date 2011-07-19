@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Resource.h>
+#include <PLCore/Container/Resource.h>
 #include <PLMath/Vector3.h>
 #include "PLRenderer/PLRenderer.h"
 
@@ -157,7 +157,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    Flags
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFlags() const;
+		PLRENDERER_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @param[in] nFlags
 		*    Flags
 		*/
-		PLRENDERER_API void SetFlags(PLGeneral::uint32 nFlags = 0);
+		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The number of techniques
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfTechniques() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfTechniques() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The effect technique, a null pointer on error
 		*/
-		PLRENDERER_API EffectTechnique *GetTechnique(PLGeneral::uint32 nIndex) const;
+		PLRENDERER_API EffectTechnique *GetTechnique(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -268,7 +268,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid or unknown technique)
 		*/
-		PLRENDERER_API bool SelectTechnique(PLGeneral::uint32 nIndex = 0);
+		PLRENDERER_API bool SelectTechnique(PLCore::uint32 nIndex = 0);
 
 		/**
 		*  @brief
@@ -280,7 +280,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid or unknown technique)
 		*/
-		PLRENDERER_API bool SelectTechnique(const PLGeneral::String &sName);
+		PLRENDERER_API bool SelectTechnique(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -296,19 +296,19 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @param[in] sName
 		*    Resource name to set
 		*/
-		Effect(EffectManager &cManager, const PLGeneral::String &sName);
+		Effect(EffectManager &cManager, const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ParameterManager				   *m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
-		PLGeneral::String					m_sFilename;			/**< Effect filename */
-		PLGeneral::uint32					m_nFlags;				/**< Flags */
-		bool								m_bBlend;				/**< Is the effect blend? */
-		PLGeneral::Array<EffectTechnique*>	m_lstTechnique;			/**< List of techniques */
-		int									m_nSelectedTechnique;	/**< The current selected technique */
+		ParameterManager			   *m_pParameterManager;	/**< Parameter manager (NEVER a null pointer!) */
+		PLCore::String					m_sFilename;			/**< Effect filename */
+		PLCore::uint32					m_nFlags;				/**< Flags */
+		bool							m_bBlend;				/**< Is the effect blend? */
+		PLCore::Array<EffectTechnique*>	m_lstTechnique;			/**< List of techniques */
+		int								m_nSelectedTechnique;	/**< The current selected technique */
 
 
 	//[-------------------------------------------------------]
@@ -317,7 +317,7 @@ class Effect : public PLCore::Resource<Effect> {
 	public:
 		PLRENDERER_API virtual bool Reload();
 		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
 
 
 };

@@ -73,7 +73,7 @@ class LinuxEventDevice : public UpdateDevice {
 		*  @return
 		*    Bus type
 		*/
-		PLINPUT_API PLGeneral::uint16 GetBusType() const;
+		PLINPUT_API PLCore::uint16 GetBusType() const;
 
 		/**
 		*  @brief
@@ -82,7 +82,7 @@ class LinuxEventDevice : public UpdateDevice {
 		*  @return
 		*    Vendor ID
 		*/
-		PLINPUT_API PLGeneral::uint16 GetVendorID() const;
+		PLINPUT_API PLCore::uint16 GetVendorID() const;
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class LinuxEventDevice : public UpdateDevice {
 		*  @return
 		*    Product ID
 		*/
-		PLINPUT_API PLGeneral::uint16 GetProductID() const;
+		PLINPUT_API PLCore::uint16 GetProductID() const;
 
 		/**
 		*  @brief
@@ -100,7 +100,7 @@ class LinuxEventDevice : public UpdateDevice {
 		*  @return
 		*    Version
 		*/
-		PLINPUT_API PLGeneral::uint16 GetVersion() const;
+		PLINPUT_API PLCore::uint16 GetVersion() const;
 
 
 	//[-------------------------------------------------------]
@@ -114,11 +114,11 @@ class LinuxEventDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		int					m_nFile;		/**< File handle */
-		PLGeneral::uint16	m_nBusType;		/**< Bus type (e.g. USB) */
-		PLGeneral::uint16	m_nVendor;		/**< Vendor ID */
-		PLGeneral::uint16	m_nProduct;		/**< Product ID */
-		PLGeneral::uint16	m_nVersion;		/**< Version */
+		int				m_nFile;	/**< File handle */
+		PLCore::uint16	m_nBusType;	/**< Bus type (e.g. USB) */
+		PLCore::uint16	m_nVendor;	/**< Vendor ID */
+		PLCore::uint16	m_nProduct;	/**< Product ID */
+		PLCore::uint16	m_nVersion;	/**< Version */
 
 
 };

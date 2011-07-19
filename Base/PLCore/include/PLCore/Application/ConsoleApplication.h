@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Version.h>
-#include <PLGeneral/Tools/CommandLine.h>
 #include "PLCore/Base/Object.h"
+#include "PLCore/Tools/Version.h"
+#include "PLCore/Tools/CommandLine.h"
 #include "PLCore/Application/ApplicationContext.h"
 #include "PLCore/Config/Config.h"
 
@@ -57,7 +57,7 @@ namespace PLCore {
 *    This class provides a most basic framework for console applications.
 *    It keeps the filename and startup directory of the executable for later use and
 *    provides a name, title and version of the application. It also provides an instance
-*    of the command line parser to work with command line parameters (see PLGeneral::CommandLine
+*    of the command line parser to work with command line parameters (see CommandLine
 *    for further explanations).
 *
 *  @note
@@ -150,7 +150,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Name of the application
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class ConsoleApplication : public Object {
 		*  @param[in] sName
 		*    Name of the application
 		*/
-		PLCORE_API void SetName(const PLGeneral::String &sName);
+		PLCORE_API void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -168,7 +168,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Title of the application
 		*/
-		PLCORE_API PLGeneral::String GetTitle() const;
+		PLCORE_API String GetTitle() const;
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class ConsoleApplication : public Object {
 		*  @param[in] sTitle
 		*    Title of the application
 		*/
-		PLCORE_API void SetTitle(const PLGeneral::String &sTitle);
+		PLCORE_API void SetTitle(const String &sTitle);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Version of the program
 		*/
-		PLCORE_API const PLGeneral::Version &GetVersion() const;
+		PLCORE_API const Version &GetVersion() const;
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class ConsoleApplication : public Object {
 		*  @param[in] cVersion
 		*    Version of the program
 		*/
-		PLCORE_API void SetVersion(const PLGeneral::Version &cVersion);
+		PLCORE_API void SetVersion(const Version &cVersion);
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Config filename (only filename, not a path!)
 		*/
-		PLCORE_API PLGeneral::String GetConfigName() const;
+		PLCORE_API String GetConfigName() const;
 
 		/**
 		*  @brief
@@ -281,7 +281,7 @@ class ConsoleApplication : public Object {
 		*  @remarks
 		*    Default is "<appname>.cfg"
 		*/
-		PLCORE_API void SetConfigName(const PLGeneral::String &sConfigName);
+		PLCORE_API void SetConfigName(const String &sConfigName);
 
 		/**
 		*  @brief
@@ -290,7 +290,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Log filename (only filename, not a path!)
 		*/
-		PLCORE_API PLGeneral::String GetLogName() const;
+		PLCORE_API String GetLogName() const;
 
 		/**
 		*  @brief
@@ -302,7 +302,7 @@ class ConsoleApplication : public Object {
 		*  @remarks
 		*    Default is "<appname>.log"
 		*/
-		PLCORE_API void SetLogName(const PLGeneral::String &sLogName);
+		PLCORE_API void SetLogName(const String &sLogName);
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Subdirectory (relative path)
 		*/
-		PLCORE_API PLGeneral::String GetAppDataSubdir() const;
+		PLCORE_API String GetAppDataSubdir() const;
 
 		/**
 		*  @brief
@@ -325,7 +325,7 @@ class ConsoleApplication : public Object {
 		*    If you change this, you should use System::GetDataDirName(), to convert your name
 		*    into the typical style for the used OS.
 		*/
-		PLCORE_API void SetAppDataSubdir(const PLGeneral::String &sSubdir);
+		PLCORE_API void SetAppDataSubdir(const String &sSubdir);
 
 		/**
 		*  @brief
@@ -380,7 +380,7 @@ class ConsoleApplication : public Object {
 		*  @return
 		*    Exit code
 		*/
-		PLCORE_API int Run(const PLGeneral::String &sExecutableFilename, const PLGeneral::Array<PLGeneral::String> &lstArguments);
+		PLCORE_API int Run(const String &sExecutableFilename, const Array<String> &lstArguments);
 
 
 	//[-------------------------------------------------------]
@@ -603,20 +603,20 @@ class ConsoleApplication : public Object {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ApplicationContext		m_cApplicationContext;		/**< Application context */
-		PLGeneral::String		m_sName;					/**< Name of application */
-		PLGeneral::String		m_sTitle;					/**< Title of application */
-		PLGeneral::Version		m_cVersion;					/**< Version of application */
-		bool					m_bMultiUser;				/**< Use multi-user environment? */
-		bool					m_bUseRuntime;				/**< Use PixelLight runtime? */
-		bool					m_bDelayedPluginLoading;	/**< 'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false' */
-		PLGeneral::String		m_sConfigName;				/**< File name (not path) of config */
-		PLGeneral::String		m_sLogName;					/**< File name (not path) of log */
-		PLGeneral::String		m_sAppDataSubdir;			/**< Subdirectory for application data */
-		Config					m_cConfig;					/**< Configuration instance */
-		PLGeneral::CommandLine	m_cCommandLine;				/**< Command line arguments */
-		bool					m_bRunning;					/**< Is the application currently running? */
-		int						m_nResult;					/**< Return code */
+		ApplicationContext	m_cApplicationContext;		/**< Application context */
+		String				m_sName;					/**< Name of application */
+		String				m_sTitle;					/**< Title of application */
+		Version				m_cVersion;					/**< Version of application */
+		bool				m_bMultiUser;				/**< Use multi-user environment? */
+		bool				m_bUseRuntime;				/**< Use PixelLight runtime? */
+		bool				m_bDelayedPluginLoading;	/**< 'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false' */
+		String				m_sConfigName;				/**< File name (not path) of config */
+		String				m_sLogName;					/**< File name (not path) of log */
+		String				m_sAppDataSubdir;			/**< Subdirectory for application data */
+		Config				m_cConfig;					/**< Configuration instance */
+		CommandLine			m_cCommandLine;				/**< Command line arguments */
+		bool				m_bRunning;					/**< Is the application currently running? */
+		int					m_nResult;					/**< Return code */
 
 
 };

@@ -85,9 +85,9 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPLightEffects, "PLCompositing", PLScene::SceneRendererPass, "Abstract scene renderer pass drawing light effects like lens flares")
 		// Attributes
-		pl_attribute(CoronaMaterial,	PLGeneral::String,		"Data/Effects/DefaultCorona.plfx",	ReadWrite,	GetSet,	"Corona material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(FlareMaterial,		PLGeneral::String,		"Data/Effects/DefaultFlare.plfx",	ReadWrite,	GetSet,	"Flare material",	"Type='Material Effect Image TextureAni'")
-		pl_attribute(BlendMaterial,		PLGeneral::String,		"Data/Effects/DefaultBlend.plfx",	ReadWrite,	GetSet,	"Blend material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(CoronaMaterial,	PLCore::String,			"Data/Effects/DefaultCorona.plfx",	ReadWrite,	GetSet,	"Corona material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(FlareMaterial,		PLCore::String,			"Data/Effects/DefaultFlare.plfx",	ReadWrite,	GetSet,	"Flare material",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(BlendMaterial,		PLCore::String,			"Data/Effects/DefaultBlend.plfx",	ReadWrite,	GetSet,	"Blend material",	"Type='Material Effect Image TextureAni'")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",			"")
 	pl_class_end
@@ -97,12 +97,12 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API PLGeneral::String GetCoronaMaterial() const;
-		PLCOM_API void SetCoronaMaterial(const PLGeneral::String &sValue);
-		PLCOM_API PLGeneral::String GetFlareMaterial() const;
-		PLCOM_API void SetFlareMaterial(const PLGeneral::String &sValue);
-		PLCOM_API PLGeneral::String GetBlendMaterial() const;
-		PLCOM_API void SetBlendMaterial(const PLGeneral::String &sValue);
+		PLCOM_API PLCore::String GetCoronaMaterial() const;
+		PLCOM_API void SetCoronaMaterial(const PLCore::String &sValue);
+		PLCOM_API PLCore::String GetFlareMaterial() const;
+		PLCOM_API void SetFlareMaterial(const PLCore::String &sValue);
+		PLCOM_API PLCore::String GetBlendMaterial() const;
+		PLCOM_API void SetBlendMaterial(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -159,13 +159,13 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	private:
 		bool						m_bCoronaMaterial;	/**< Corona material loaded? */
-		PLGeneral::String			m_sCoronaMaterial;	/**< Corona material */
+		PLCore::String				m_sCoronaMaterial;	/**< Corona material */
 		PLRenderer::MaterialHandler m_cCoronaMaterial;	/**< Corona material */
 		bool						m_bFlareMaterial;	/**< Flare material loaded? */
-		PLGeneral::String			m_sFlareMaterial;	/**< Flare material */
+		PLCore::String				m_sFlareMaterial;	/**< Flare material */
 		PLRenderer::MaterialHandler m_cFlareMaterial;	/**< Flare material */
 		bool						m_bBlendMaterial;	/**< Blend material loaded? */
-		PLGeneral::String			m_sBlendMaterial;	/**< Blend material */
+		PLCore::String				m_sBlendMaterial;	/**< Blend material */
 		PLRenderer::MaterialHandler m_cBlendMaterial;	/**< Blend material */
 
 

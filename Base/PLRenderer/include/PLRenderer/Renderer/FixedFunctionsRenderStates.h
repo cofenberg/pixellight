@@ -147,7 +147,7 @@ class FixedFunctionsRenderStates : public PLCore::Object {
 		*  @note
 		*    - Some settings aren't set by the material through the default setting
 		*/
-		PLRENDERER_API PLGeneral::uint32 Get(FixedFunctions::RenderState::Enum nState) const;
+		PLRENDERER_API PLCore::uint32 Get(FixedFunctions::RenderState::Enum nState) const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class FixedFunctionsRenderStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(FixedFunctions::RenderState::Enum nState, PLGeneral::uint32 nValue);
+		PLRENDERER_API bool Set(FixedFunctions::RenderState::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class FixedFunctionsRenderStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::uint32 m_nRS[FixedFunctions::RenderState::Number];	/**< List of render states (see FixedFunctions::RenderState) */
+		PLCore::uint32 m_nRS[FixedFunctions::RenderState::Number];	/**< List of render states (see FixedFunctions::RenderState) */
 
 
 };

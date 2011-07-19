@@ -179,7 +179,7 @@ class SRPDeferredGBufferMaterial {
 		*  @return
 		*    Generated program user data, do NOT delete the memory the pointer points to
 		*/
-		GeneratedProgramUserData *MakeMaterialCurrent(PLGeneral::uint32 nRendererFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed);
+		GeneratedProgramUserData *MakeMaterialCurrent(PLCore::uint32 nRendererFlags, ETextureFiltering nTextureFiltering, bool &bColorTarget3Used, bool &bColorTarget3AlphaUsed);
 
 
 	//[-------------------------------------------------------]
@@ -233,55 +233,55 @@ class SRPDeferredGBufferMaterial {
 	//[-------------------------------------------------------]
 	private:
 		// Material parameter
-		static const PLGeneral::String TwoSided;
-		static const PLGeneral::String DisplacementMap;
-		static const PLGeneral::String DisplacementScale;
-		static const PLGeneral::String DisplacementBias;
-		static const PLGeneral::String IndexOfRefraction;
-		static const PLGeneral::String FresnelReflectionPower;
-		static const PLGeneral::String ReflectionColor;
-		static const PLGeneral::String Reflectivity;
-		static const PLGeneral::String Parallax;
-		static const PLGeneral::String Glow;
-		static const PLGeneral::String GlowMap;
-		static const PLGeneral::String AlphaReference;
-		static const PLGeneral::String SpecularColor;
-		static const PLGeneral::String SpecularExponent;
-		static const PLGeneral::String NormalMapBumpiness;
-		static const PLGeneral::String DetailNormalMap;
-		static const PLGeneral::String DetailNormalMapBumpiness;
-		static const PLGeneral::String DetailNormalMapUVScale;
+		static const PLCore::String TwoSided;
+		static const PLCore::String DisplacementMap;
+		static const PLCore::String DisplacementScale;
+		static const PLCore::String DisplacementBias;
+		static const PLCore::String IndexOfRefraction;
+		static const PLCore::String FresnelReflectionPower;
+		static const PLCore::String ReflectionColor;
+		static const PLCore::String Reflectivity;
+		static const PLCore::String Parallax;
+		static const PLCore::String Glow;
+		static const PLCore::String GlowMap;
+		static const PLCore::String AlphaReference;
+		static const PLCore::String SpecularColor;
+		static const PLCore::String SpecularExponent;
+		static const PLCore::String NormalMapBumpiness;
+		static const PLCore::String DetailNormalMap;
+		static const PLCore::String DetailNormalMapBumpiness;
+		static const PLCore::String DetailNormalMapUVScale;
 		// Shader parameter
-		static const PLGeneral::String VertexPosition;
-		static const PLGeneral::String VertexTexCoord0;
-		static const PLGeneral::String VertexTexCoord1;
-		static const PLGeneral::String VertexNormal;
-		static const PLGeneral::String VertexTangent;
-		static const PLGeneral::String VertexBinormal;
-		static const PLGeneral::String NormalScale;
-		static const PLGeneral::String EyePos;
-		static const PLGeneral::String WorldVP;
-		static const PLGeneral::String WorldV;
-		static const PLGeneral::String DisplacementScaleBias;
-		static const PLGeneral::String DiffuseColor;
-		static const PLGeneral::String DiffuseMap;
-		// static const PLGeneral::String AlphaReference;	// Already defined
-		static const PLGeneral::String SpecularMap;
-		static const PLGeneral::String NormalMap;
-		static const PLGeneral::String HeightMap;
-		static const PLGeneral::String ParallaxScaleBias;
-		static const PLGeneral::String AmbientOcclusionMap;
-		static const PLGeneral::String AmbientOcclusionFactor;
-		static const PLGeneral::String LightMap;
-		static const PLGeneral::String LightMapColor;
-		static const PLGeneral::String EmissiveMap;
-		static const PLGeneral::String EmissiveMapColor;
-		static const PLGeneral::String GlowFactor;
-		// static const PLGeneral::String GlowMap;	// Already defined
-		static const PLGeneral::String ReflectivityMap;
-		static const PLGeneral::String FresnelConstants;
-		static const PLGeneral::String ReflectionMap;
-		static const PLGeneral::String ViewSpaceToWorldSpace;
+		static const PLCore::String VertexPosition;
+		static const PLCore::String VertexTexCoord0;
+		static const PLCore::String VertexTexCoord1;
+		static const PLCore::String VertexNormal;
+		static const PLCore::String VertexTangent;
+		static const PLCore::String VertexBinormal;
+		static const PLCore::String NormalScale;
+		static const PLCore::String EyePos;
+		static const PLCore::String WorldVP;
+		static const PLCore::String WorldV;
+		static const PLCore::String DisplacementScaleBias;
+		static const PLCore::String DiffuseColor;
+		static const PLCore::String DiffuseMap;
+		// static const PLCore::String AlphaReference;	// Already defined
+		static const PLCore::String SpecularMap;
+		static const PLCore::String NormalMap;
+		static const PLCore::String HeightMap;
+		static const PLCore::String ParallaxScaleBias;
+		static const PLCore::String AmbientOcclusionMap;
+		static const PLCore::String AmbientOcclusionFactor;
+		static const PLCore::String LightMap;
+		static const PLCore::String LightMapColor;
+		static const PLCore::String EmissiveMap;
+		static const PLCore::String EmissiveMapColor;
+		static const PLCore::String GlowFactor;
+		// static const PLCore::String GlowMap;	// Already defined
+		static const PLCore::String ReflectivityMap;
+		static const PLCore::String FresnelConstants;
+		static const PLCore::String ReflectionMap;
+		static const PLCore::String ViewSpaceToWorldSpace;
 
 
 	//[-------------------------------------------------------]
@@ -295,7 +295,7 @@ class SRPDeferredGBufferMaterial {
 		*  @param[in] nRendererFlags
 		*    SRPDeferredGBuffer-flags to use
 		*/
-		void Synchronize(PLGeneral::uint32 nRendererFlags);
+		void Synchronize(PLCore::uint32 nRendererFlags);
 
 		/**
 		*  @brief
@@ -308,7 +308,7 @@ class SRPDeferredGBufferMaterial {
 		*  @param[in] nTextureFiltering
 		*    Texture filtering
 		*/
-		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLGeneral::uint32 nStage, ETextureFiltering nTextureFiltering) const;
+		void SetupTextureFiltering(PLRenderer::Renderer &cRenderer, PLCore::uint32 nStage, ETextureFiltering nTextureFiltering) const;
 
 		/**
 		*  @brief
@@ -334,7 +334,7 @@ class SRPDeferredGBufferMaterial {
 		// General
 		PLRenderer::Material				*m_pMaterial;			/**< Owner material, always valid! */
 		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, always valid! */
-		PLGeneral::uint32					 m_nRendererFlags;		/**< Used SRPDeferredGBuffer-flags */
+		PLCore::uint32					 	 m_nRendererFlags;		/**< Used SRPDeferredGBuffer-flags */
 		bool								 m_bSynchronized;		/**< Synchronized? */
 		// Generated program
 		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */

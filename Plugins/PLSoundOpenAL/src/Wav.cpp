@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/File/File.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/File/File.h>
 #include "PLSoundOpenAL/StreamWav.h" // For StreamWav::Header
 #include "PLSoundOpenAL/Wav.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLSoundOpenAL {
 
 

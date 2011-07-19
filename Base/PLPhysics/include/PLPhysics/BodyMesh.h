@@ -82,7 +82,7 @@ class BodyMesh : public Body {
 		*  @return
 		*    The collision mesh
 		*/
-		PLPHYSICS_API PLGeneral::String GetMesh() const;
+		PLPHYSICS_API PLCore::String GetMesh() const;
 
 		/**
 		*  @brief
@@ -122,17 +122,16 @@ class BodyMesh : public Body {
 		*  @param[in] bOptimize
 		*    Allow the physics API to optimize the mesh? (if supported)
 		*/
-		PLPHYSICS_API BodyMesh(World &cWorld, BodyImpl &cBodyImpl, const PLGeneral::String &sMesh,
-							   const PLMath::Vector3 &vMeshScale, bool bOptimize);
+		PLPHYSICS_API BodyMesh(World &cWorld, BodyImpl &cBodyImpl, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale, bool bOptimize);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sMesh;		/**< Collision mesh */
-		PLMath::Vector3	  m_vMeshScale;	/**< Mesh scale */
-		bool			  m_bOptimize;	/**< Allow the physics API to optimize the mesh? (if supported) */
+		PLCore::String  m_sMesh;		/**< Collision mesh */
+		PLMath::Vector3	m_vMeshScale;	/**< Mesh scale */
+		bool			m_bOptimize;	/**< Allow the physics API to optimize the mesh? (if supported) */
 
 
 };

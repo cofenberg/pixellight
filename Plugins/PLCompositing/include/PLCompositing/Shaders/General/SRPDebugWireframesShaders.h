@@ -67,7 +67,7 @@ class SRPDebugWireframesShaders : public SRPDebugWireframes {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDebugWireframesShaders, "PLCompositing", PLCompositing::SRPDebugWireframes, "Shaders based scene renderer pass drawing just simple wireframes")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

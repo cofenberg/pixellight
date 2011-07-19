@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/Main.h>
 #include <PLCore/ModuleMain.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 #include "ChatServer.h"
 #include "ChatClient.h"
 #include "ChatClientConnection.h"
@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace NetworkChat {
 
 

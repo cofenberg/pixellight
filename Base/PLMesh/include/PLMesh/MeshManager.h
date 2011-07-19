@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLMesh/MeshHandler.h"
 
 
@@ -112,7 +112,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*  @note
 		*    - If there's already a resource with this name, this resource is returned
 		*/
-		PLMESH_API Mesh *CreateMesh(const PLGeneral::String &sName, bool bStatic = true);
+		PLMESH_API Mesh *CreateMesh(const PLCore::String &sName, bool bStatic = true);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*    Pointer to the created resource, a null pointer if there was an error
 		*    (maybe unknown class or the class is not derived from 'MeshCreator')
 		*/
-		PLMESH_API Mesh *CreateMesh(const PLGeneral::String &sName, bool bStatic, const PLGeneral::String &sParameters);
+		PLMESH_API Mesh *CreateMesh(const PLCore::String &sName, bool bStatic, const PLCore::String &sParameters);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*  @return
 		*    The loaded mesh, a null pointer on error
 		*/
-		PLMESH_API Mesh *LoadMesh(const PLGeneral::String &sFilename, const PLGeneral::String &sParams = "", const PLGeneral::String &sMethod = "", bool bReloadMesh = false, bool bStatic = true);
+		PLMESH_API Mesh *LoadMesh(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "", bool bReloadMesh = false, bool bStatic = true);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *CreateResource(const PLGeneral::String &sName);
+		virtual Mesh *CreateResource(const PLCore::String &sName);
 
 
 };

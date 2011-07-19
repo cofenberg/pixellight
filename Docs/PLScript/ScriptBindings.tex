@@ -15,7 +15,7 @@ Write \emph{PL.GetApplication()} in order to get an instance of the currently us
 
 
 \section{PL.System}
-Exposes \emph{PLGeneral::System}-features to scripts.
+Exposes \emph{PLCore::System}-features to scripts.
 
 \paragraph{<bool> PL.System.IsWindows()}
 Write \emph{PL.System.IsWindows()} in order to figure out whether or not the application is currently running on MS Windows. Returns \emph{true} if we're currently running on a Windows platform, else \emph{false}.
@@ -27,7 +27,7 @@ Write \emph{PL.System.IsLinux()} in order to figure out whether or not the appli
 
 
 \section{PL.Log}
-Exposes \emph{PLGeneral::Log}-features to scripts.
+Exposes \emph{PLCore::Log}-features to scripts.
 
 \paragraph{PL.Log.OutputAlways(<string>)}
 Write \emph{PL.System.OutputAlways(<string>)} in order to write the given string into the log ('always' log level).
@@ -51,7 +51,7 @@ Write \emph{PL.System.OutputDebug(<string>)} in order to write the given string 
 
 
 \section{PL.System.Console}
-Exposes \emph{PLGeneral::Console}-features to scripts.
+Exposes \emph{PLCore::Console}-features to scripts.
 
 \paragraph{PL.System.Console.Print(<string>)}
 Write \emph{PL.System.Console.Print(<string>)} in order to write the given string into the system console.
@@ -60,7 +60,7 @@ Write \emph{PL.System.Console.Print(<string>)} in order to write the given strin
 
 
 \section{PL.Timing}
-Exposes \emph{PLGeneral::Timing}-features to scripts.
+Exposes \emph{PLCore::Timing}-features to scripts.
 
 \paragraph{<float> PL.Timing.GetTimeDifference()}
 Write \emph{PL.Timing.GetTimeDifference()} in order to get the past time since last frame (seconds).

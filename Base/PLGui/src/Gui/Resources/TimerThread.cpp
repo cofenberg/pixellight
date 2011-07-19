@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Mutex.h>
+#include <PLCore/System/Mutex.h>
+#include <PLCore/System/System.h>
 #include "PLGui/Gui/Base/GuiMessage.h"
 #include "PLGui/Gui/Resources/Timer.h"
 #include "PLGui/Gui/Resources/TimerThread.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGui {
 
 

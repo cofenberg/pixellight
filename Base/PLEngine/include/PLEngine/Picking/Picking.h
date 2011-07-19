@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	template <class ValueType> class Array;
 }
 namespace PLMath {
@@ -120,7 +120,7 @@ class Picking {
 		*    'true' if anything has been picked, else 'false'
 		*/
 		PL_API bool PerformPicking(PickingResult &cPickingResult, PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-								   PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr);
+								   PLCore::Array<PLCore::uint32> *plstGeometries = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -152,7 +152,7 @@ class Picking {
 		*    List of mesh geometry indices to use, if a null pointer all mesh geometries are used
 		*/
 		void MeshIntersection(PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-							  PLGeneral::Array<PLGeneral::uint32> *plstGeometries = nullptr);
+							  PLCore::Array<PLCore::uint32> *plstGeometries = nullptr);
 
 
 	//[-------------------------------------------------------]

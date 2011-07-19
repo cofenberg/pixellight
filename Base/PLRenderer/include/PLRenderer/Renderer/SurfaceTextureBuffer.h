@@ -90,7 +90,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @return
 		*    The texture buffer surface flags (see EFlags)
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetFlags() const;
+		PLRENDERER_API PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @return
 		*    The maximum number of color render targets
 		*/
-		PLRENDERER_API PLGeneral::uint8 GetMaxColorTargets() const;
+		PLRENDERER_API PLCore::uint8 GetMaxColorTargets() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @param[in] nMaxColorTargets
 		*    The maximum number of color render targets
 		*/
-		PLRENDERER_API void SetMaxColorTargets(PLGeneral::uint8 nMaxColorTargets);
+		PLRENDERER_API void SetMaxColorTargets(PLCore::uint8 nMaxColorTargets);
 
 
 	//[-------------------------------------------------------]
@@ -140,7 +140,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @see
 		*    - 'TextureBufferCube.h' for more information about cube maps
 		*/
-		virtual PLGeneral::uint8 GetTextureBufferFace() const = 0;
+		virtual PLCore::uint8 GetTextureBufferFace() const = 0;
 
 		/**
 		*  @brief
@@ -168,15 +168,15 @@ class SurfaceTextureBuffer : public Surface {
 		*    Maximum number of color render targets. This must be at least 1 - main renderer
 		*    target color.
 		*/
-		PLRENDERER_API SurfaceTextureBuffer(Renderer &cRenderer, PLGeneral::uint32 nFlags = Depth | Stencil, PLGeneral::uint8 nMaxColorTargets = 1);
+		PLRENDERER_API SurfaceTextureBuffer(Renderer &cRenderer, PLCore::uint32 nFlags = Depth | Stencil, PLCore::uint8 nMaxColorTargets = 1);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nFlags;				/**< Texture buffer surface flags (see EFlags) */
-		PLGeneral::uint8  m_nMaxColorTargets;	/**< Maximum number of color render targets */
+		PLCore::uint32 m_nFlags;			/**< Texture buffer surface flags (see EFlags) */
+		PLCore::uint8  m_nMaxColorTargets;	/**< Maximum number of color render targets */
 
 
 	//[-------------------------------------------------------]

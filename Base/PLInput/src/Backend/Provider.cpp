@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLInput {
 
 
@@ -124,7 +124,7 @@ void Provider::Clear()
 *  @brief
 *    Check if a device is already known
 */
-bool Provider::CheckDevice(const PLGeneral::String &sName)
+bool Provider::CheckDevice(const String &sName)
 {
 	// Check if the device is already present
 	Device *pDevice = InputManager::GetInstance()->GetDevice(sName);

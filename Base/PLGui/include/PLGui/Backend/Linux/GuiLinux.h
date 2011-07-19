@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLGui/Backend/GuiImpl.h"
 #include "PLGui/PLGuiLinuxIncludes.h"
 
@@ -113,7 +113,7 @@ class GuiLinux : public GuiImpl {
 		*  @remarks
 		*    See Keys.h for symbolic values of modifier keys
 		*/
-		PLGUI_API PLGeneral::uint32 GetModifierKeys();
+		PLGUI_API PLCore::uint32 GetModifierKeys();
 
 
 	//[-------------------------------------------------------]
@@ -123,11 +123,11 @@ class GuiLinux : public GuiImpl {
 		virtual bool HasPendingMessages();
 		virtual void ProcessMessage();
 		virtual void PostMessage(const GuiMessage &cMessage);
-		virtual void EnumerateScreens(PLGeneral::List<Screen*> &lstScreens);
+		virtual void EnumerateScreens(PLCore::List<Screen*> &lstScreens);
 		virtual PLMath::Vector2i GetScreenSize() const;
 		virtual bool HasTaskbar();
 		virtual void SetMouseVisible(bool bVisible);
-		virtual void ListFonts(PLGeneral::List<FontInfo> &lstFonts) const;
+		virtual void ListFonts(PLCore::List<FontInfo> &lstFonts) const;
 		virtual WidgetImpl *CreateWidgetImpl(Widget &cWidget) const;
 		virtual GraphicsImpl *CreateGraphicsImpl(Graphics &cGraphics) const;
 		virtual ImageImpl *CreateImageImpl(Image &cImage) const;

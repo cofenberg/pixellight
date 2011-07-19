@@ -90,7 +90,7 @@ class BodyConvexHull : public PLPhysics::BodyConvexHull {
 		*  @param[in] vMeshScale
 		*    Mesh scale
 		*/
-		BodyConvexHull(PLPhysics::World &cWorld, PLMesh::MeshManager &cMeshManager, const PLGeneral::String &sMesh, const PLMath::Vector3 &vMeshScale);
+		BodyConvexHull(PLPhysics::World &cWorld, PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale);
 
 
 };

@@ -62,16 +62,16 @@ class Camcorder : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, Camcorder, "PLEngine", PLCore::Object, "Camcorder interaction component")
 		// Attributes
-		pl_attribute(CamcorderDirectory,	PLGeneral::String,	"Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
+		pl_attribute(CamcorderDirectory,	PLCore::String,	"Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Methods
-			pl_method_1(StartRecord,	pl_ret_type(void),	const PLGeneral::String&,	"Starts the record, record name as first parameter (if empty string, no recording can be started). The currently used application camera will be recorded. If playback is currently enabled, the playback will be stopped at once.",	"")
-			pl_method_0(IsRecording,	pl_ret_type(bool),								"Returns whether or not recording is currently active. Returns 'true' if recording is currently active, else 'false'.",																													"")
-			pl_method_0(StopRecord,		pl_ret_type(void),								"Stops the record",																																																						"")
-			pl_method_1(StartPlayback,	pl_ret_type(void),	const PLGeneral::String&,	"Starts the playback, record name as first parameter (must be valid). The currently used application camera will be feed with the recorded data. If recording is currently enabled, the recording will be stopped at once.",			"")
-			pl_method_0(IsPlaying,		pl_ret_type(bool),								"Returns whether or not playback is currently active. Returns 'true' if playback is currently active, else 'false'.",																													"")
-			pl_method_0(StopPlayback,	pl_ret_type(void),								"Stops the playback",																																																					"")
-			pl_method_0(Update,			pl_ret_type(void),								"Updates the camcorder component",																																																		"")
+			pl_method_1(StartRecord,	pl_ret_type(void),	const PLCore::String&,	"Starts the record, record name as first parameter (if empty string, no recording can be started). The currently used application camera will be recorded. If playback is currently enabled, the playback will be stopped at once.",	"")
+			pl_method_0(IsRecording,	pl_ret_type(bool),							"Returns whether or not recording is currently active. Returns 'true' if recording is currently active, else 'false'.",																													"")
+			pl_method_0(StopRecord,		pl_ret_type(void),							"Stops the record",																																																						"")
+			pl_method_1(StartPlayback,	pl_ret_type(void),	const PLCore::String&,	"Starts the playback, record name as first parameter (must be valid). The currently used application camera will be feed with the recorded data. If recording is currently enabled, the recording will be stopped at once.",			"")
+			pl_method_0(IsPlaying,		pl_ret_type(bool),							"Returns whether or not playback is currently active. Returns 'true' if playback is currently active, else 'false'.",																													"")
+			pl_method_0(StopPlayback,	pl_ret_type(void),							"Stops the playback",																																																					"")
+			pl_method_0(Update,			pl_ret_type(void),							"Updates the camcorder component",																																																		"")
 		#endif
 		// Signals
 		pl_signal_0(SignalPlaybackFinished,	"Playback has been finished",	"")
@@ -119,7 +119,7 @@ class Camcorder : public PLCore::Object {
 		*    - The currently used application camera will be recorded
 		*    - If playback is currently enabled, the playback will be stopped at once
 		*/
-		PL_API void StartRecord(const PLGeneral::String &sName);
+		PL_API void StartRecord(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class Camcorder : public PLCore::Object {
 		*    - The currently used application camera will be feed with the recorded data
 		*    - If recording is currently enabled, the recording will be stopped at once
 		*/
-		PL_API void StartPlayback(const PLGeneral::String &sName);
+		PL_API void StartPlayback(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -201,10 +201,10 @@ class Camcorder : public PLCore::Object {
 		bool					   m_bRecording;					/**< Is recording currently enabled? */
 		bool					   m_bPlaying;						/**< Is playback currently enabled? */
 		bool					   m_bPlaybackFinished;				/**< Playback finished? */
-		PLGeneral::String		   m_sRecordName;					/**< Current record name */
+		PLCore::String			   m_sRecordName;					/**< Current record name */
 		PLScene::SceneNodeHandler  m_cCameraSceneNodeHandler;		/**< Recorded camera scene node handler */
-		PLGeneral::String		   m_sCameraStartSceneContainer;	/**< Camera start scene container */
-		PLGeneral::String		   m_sCameraStartName;				/**< Camera start name */
+		PLCore::String			   m_sCameraStartSceneContainer;	/**< Camera start scene container */
+		PLCore::String			   m_sCameraStartName;				/**< Camera start name */
 
 
 };

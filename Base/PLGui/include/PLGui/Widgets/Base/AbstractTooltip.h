@@ -54,8 +54,8 @@ class AbstractTooltip : public Widget {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, AbstractTooltip, "PLGui", PLGui::Widget, "Base class for tooltip windows")
 		// Attributes
-		pl_attribute(Text,		PLGeneral::String,	"",		ReadWrite,	GetSet,	"Tooltip text",											"")
-		pl_attribute(Timeout,	PLGeneral::uint64,	5000,	ReadWrite,	GetSet,	"Time (in ms) after which the tooltip is blended out",	"")
+		pl_attribute(Text,		PLCore::String,	"",		ReadWrite,	GetSet,	"Tooltip text",											"")
+		pl_attribute(Timeout,	PLCore::uint64,	5000,	ReadWrite,	GetSet,	"Time (in ms) after which the tooltip is blended out",	"")
 		// Signals
 		pl_signal_0(SignalTimeout,	"Timeout has been reached",	"")
 		// Slots
@@ -89,7 +89,7 @@ class AbstractTooltip : public Widget {
 		*  @return
 		*    Tooltip text
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class AbstractTooltip : public Widget {
 		*  @param[in] sTooltip
 		*    Tooltip text
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sTooltip);
+		PLGUI_API void SetText(const PLCore::String &sTooltip);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class AbstractTooltip : public Widget {
 		*  @return
 		*    Timeout (in ms)
 		*/
-		PLGUI_API PLGeneral::uint64 GetTimeout() const;
+		PLGUI_API PLCore::uint64 GetTimeout() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class AbstractTooltip : public Widget {
 		*  @param[in] nTimeout
 		*    Timeout (in ms)
 		*/
-		PLGUI_API void SetTimeout(PLGeneral::uint64 nTimeout);
+		PLGUI_API void SetTimeout(PLCore::uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -166,9 +166,9 @@ class AbstractTooltip : public Widget {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String	m_sTooltip;		/**< Tooltip text */
-		PLGeneral::uint64	m_nTimeout;		/**< Timeout (in ms) */
-		Timer				m_cTimer;		/**< Timer */
+		PLCore::String	m_sTooltip;	/**< Tooltip text */
+		PLCore::uint64	m_nTimeout;	/**< Timeout (in ms) */
+		Timer			m_cTimer;	/**< Timer */
 
 
 };

@@ -62,7 +62,7 @@ class AnimationBase : public AnimationInfo {
 			//[ Public data                                           ]
 			//[-------------------------------------------------------]
 			public:
-				PLGeneral::Array<float> lstFrameKeys;
+				PLCore::Array<float> lstFrameKeys;
 
 
 			//[-------------------------------------------------------]
@@ -119,15 +119,15 @@ class AnimationBase : public AnimationInfo {
 		*  @return
 		*    Frame keys
 		*/
-		PLRENDERER_API PLGeneral::Array<FrameKeys> &GetFrameKeys();
+		PLRENDERER_API PLCore::Array<FrameKeys> &GetFrameKeys();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		float						m_fFrameRate;	/**< Frame rate */
-		PLGeneral::Array<FrameKeys> m_lstFrameKeys;	/**< Frame keys */
+		float					 m_fFrameRate;		/**< Frame rate */
+		PLCore::Array<FrameKeys> m_lstFrameKeys;	/**< Frame keys */
 
 
 	//[-------------------------------------------------------]

@@ -84,7 +84,7 @@ inline Vector4::Vector4(const Vector4 &vV) :
 {
 }
 
-inline Vector4::Vector4(const PLGeneral::String &sString)
+inline Vector4::Vector4(const PLCore::String &sString)
 {
 	FromString(sString);
 }

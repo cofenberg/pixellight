@@ -109,7 +109,7 @@ inline int Math::Min(int a, int b)
 	return (a < b) ? a : b;
 }
 
-inline PLGeneral::uint32 Math::Min(PLGeneral::uint32 a, PLGeneral::uint32 b)
+inline PLCore::uint32 Math::Min(PLCore::uint32 a, PLCore::uint32 b)
 {
 	return (a < b) ? a : b;
 }
@@ -128,7 +128,7 @@ inline int Math::Max(int a, int b)
 	return (a > b) ? a : b;
 }
 
-inline PLGeneral::uint32 Math::Max(PLGeneral::uint32 a, PLGeneral::uint32 b)
+inline PLCore::uint32 Math::Max(PLCore::uint32 a, PLCore::uint32 b)
 {
 	return (a > b) ? a : b;
 }
@@ -195,7 +195,7 @@ inline int Math::Min(int a, int b, int c, int d)
 	}
 }
 
-inline PLGeneral::uint32 Math::Min(PLGeneral::uint32 a, PLGeneral::uint32 b, PLGeneral::uint32 c, PLGeneral::uint32 d)
+inline PLCore::uint32 Math::Min(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d)
 {
 	if (a < b) {
 		if (a < c) {
@@ -286,7 +286,7 @@ inline int Math::Max(int a, int b, int c, int d)
 	}
 }
 
-inline PLGeneral::uint32 Math::Max(PLGeneral::uint32 a, PLGeneral::uint32 b, PLGeneral::uint32 c, PLGeneral::uint32 d)
+inline PLCore::uint32 Math::Max(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d)
 {
 	if (a > b) {
 		if (a > c) {

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "libRocket_PL/FileInterfacePL.h"
 
@@ -31,7 +31,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace libRocket_PL {
 

@@ -65,7 +65,7 @@ class LED : public Control {
 		*  @param[in] sDescription
 		*    Control description
 		*/
-		PLINPUT_API LED(Controller *pController, const PLGeneral::String &sName, const PLGeneral::String &sDescription);
+		PLINPUT_API LED(Controller *pController, const PLCore::String &sName, const PLCore::String &sDescription);
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class LED : public Control {
 		*  @return
 		*    LED states
 		*/
-		PLINPUT_API PLGeneral::uint32 GetLEDs() const;
+		PLINPUT_API PLCore::uint32 GetLEDs() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class LED : public Control {
 		*  @param[in] nLEDs
 		*    LED states
 		*/
-		PLINPUT_API void SetLEDs(PLGeneral::uint32 nLEDs);
+		PLINPUT_API void SetLEDs(PLCore::uint32 nLEDs);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class LED : public Control {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nLEDs;		/**< State of all LEDs */
+		PLCore::uint32 m_nLEDs;		/**< State of all LEDs */
 
 
 };

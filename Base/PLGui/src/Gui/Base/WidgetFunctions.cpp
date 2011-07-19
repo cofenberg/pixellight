@@ -37,7 +37,7 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGui {
 
@@ -319,7 +319,7 @@ void WidgetFunctions::OnMousePosUpdate(const Vector2i &vPos)
 *  @brief
 *    Called when a mouse button is pressed
 */
-void WidgetFunctions::OnMouseButtonDown(PLGeneral::uint32 nButton, const Vector2i &vPos)
+void WidgetFunctions::OnMouseButtonDown(uint32 nButton, const Vector2i &vPos)
 {
 }
 
@@ -327,7 +327,7 @@ void WidgetFunctions::OnMouseButtonDown(PLGeneral::uint32 nButton, const Vector2
 *  @brief
 *    Called when a mouse button is released
 */
-void WidgetFunctions::OnMouseButtonUp(PLGeneral::uint32 nButton, const Vector2i &vPos)
+void WidgetFunctions::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 {
 }
 
@@ -335,7 +335,7 @@ void WidgetFunctions::OnMouseButtonUp(PLGeneral::uint32 nButton, const Vector2i 
 *  @brief
 *    Called when a mouse button is clicked
 */
-void WidgetFunctions::OnMouseButtonClick(PLGeneral::uint32 nButton, const Vector2i &vPos)
+void WidgetFunctions::OnMouseButtonClick(uint32 nButton, const Vector2i &vPos)
 {
 }
 
@@ -343,7 +343,7 @@ void WidgetFunctions::OnMouseButtonClick(PLGeneral::uint32 nButton, const Vector
 *  @brief
 *    Called when a mouse button is double-clicked
 */
-void WidgetFunctions::OnMouseButtonDoubleClick(PLGeneral::uint32 nButton, const Vector2i &vPos)
+void WidgetFunctions::OnMouseButtonDoubleClick(uint32 nButton, const Vector2i &vPos)
 {
 }
 

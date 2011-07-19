@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PostgreSQL/libpq-fe.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLDatabasePostgreSQL/Database.h"
 #include "PLDatabasePostgreSQL/DatabaseQueryResult.h"
 #include "PLDatabasePostgreSQL/DatabaseQuery.h"
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLDatabasePostgreSQL {
 
 

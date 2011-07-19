@@ -24,16 +24,15 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PixelLight.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/Registry/Registry.h>
-#include <PLGeneral/File/Directory.h>
+#include "PLCore/System/System.h"
+#include "PLCore/File/Directory.h"
+#include "PLCore/Registry/Registry.h"
 #include "PLCore/Core.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

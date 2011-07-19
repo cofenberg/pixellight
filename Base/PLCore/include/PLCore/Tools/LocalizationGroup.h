@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
+#include "PLCore/Container/Array.h"
+#include "PLCore/Container/HashMap.h"
 #include "PLCore/Tools/Loadable.h"
 
 
@@ -65,7 +65,7 @@ class LocalizationGroup : public Loadable {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const PLGeneral::String English;	/**< "English" (default) */
+		PLCORE_API static const String English;	/**< "English" (default) */
 
 
 	//[-------------------------------------------------------]
@@ -79,7 +79,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The name of the group
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The language used as 'from-key'
 		*/
-		PLCORE_API PLGeneral::String GetFromLanguage() const;
+		PLCORE_API String GetFromLanguage() const;
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class LocalizationGroup : public Loadable {
 		*  @param[in] sFrom
 		*    The language used as 'from-key'
 		*/
-		PLCORE_API void SetFromLanguage(const PLGeneral::String &sFrom = English);
+		PLCORE_API void SetFromLanguage(const String &sFrom = English);
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The language used as 'to-key'
 		*/
-		PLCORE_API PLGeneral::String GetToLanguage() const;
+		PLCORE_API String GetToLanguage() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class LocalizationGroup : public Loadable {
 		*  @param[in] sTo
 		*    The language used as 'to-key'
 		*/
-		PLCORE_API void SetToLanguage(const PLGeneral::String &sTo = English);
+		PLCORE_API void SetToLanguage(const String &sTo = English);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The number of texts
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfTexts() const;
+		PLCORE_API uint32 GetNumOfTexts() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The requested text, a null pointer on error
 		*/
-		PLCORE_API LocalizationText *GetText(PLGeneral::uint32 nIndex) const;
+		PLCORE_API LocalizationText *GetText(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The requested text, a null pointer on error
 		*/
-		PLCORE_API LocalizationText *GetText(const PLGeneral::String &sName) const;
+		PLCORE_API LocalizationText *GetText(const String &sName) const;
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The new text, a null pointer on error (maybe there's already a text with the given name?)
 		*/
-		PLCORE_API LocalizationText *AddText(const PLGeneral::String &sName, const PLGeneral::String &sTranslation);
+		PLCORE_API LocalizationText *AddText(const String &sName, const String &sTranslation);
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe there's no text with the given name?)
 		*/
-		PLCORE_API bool RemoveText(PLGeneral::uint32 nIndex);
+		PLCORE_API bool RemoveText(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe there's no text with the given name?)
 		*/
-		PLCORE_API bool RemoveText(const PLGeneral::String &sName);
+		PLCORE_API bool RemoveText(const String &sName);
 
 		/**
 		*  @brief
@@ -206,7 +206,7 @@ class LocalizationGroup : public Loadable {
 		*  @param[in] sName
 		*    Name of the group
 		*/
-		LocalizationGroup(const PLGeneral::String &sName);
+		LocalizationGroup(const String &sName);
 
 		/**
 		*  @brief
@@ -240,11 +240,11 @@ class LocalizationGroup : public Loadable {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String										 m_sName;			/**< Name of the group */
-		PLGeneral::String										 m_sFromLanguage;	/**< The language used as 'from-key' */
-		PLGeneral::String										 m_sToLanguage;		/**< The language used as 'to-key' */
-		PLGeneral::Array<LocalizationText*>						 m_lstTexts;		/**< Localization texts list */
-		PLGeneral::HashMap<PLGeneral::String, LocalizationText*> m_mapTexts;		/**< Localization texts map */
+		String							   m_sName;			/**< Name of the group */
+		String							   m_sFromLanguage;	/**< The language used as 'from-key' */
+		String							   m_sToLanguage;	/**< The language used as 'to-key' */
+		Array<LocalizationText*>		   m_lstTexts;		/**< Localization texts list */
+		HashMap<String, LocalizationText*> m_mapTexts;		/**< Localization texts map */
 
 
 	//[-------------------------------------------------------]
@@ -252,7 +252,7 @@ class LocalizationGroup : public Loadable {
 	//[-------------------------------------------------------]
 	public:
 		PLCORE_API virtual bool Unload();
-		PLCORE_API virtual PLGeneral::String GetLoadableTypeName() const;
+		PLCORE_API virtual String GetLoadableTypeName() const;
 
 
 };

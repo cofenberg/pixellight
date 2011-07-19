@@ -138,7 +138,7 @@ class SNConsoleBase : public SceneNode {
 		*  @return
 		*    Console description
 		*/
-		PLS_API virtual PLGeneral::String GetDescription() const;
+		PLS_API virtual PLCore::String GetDescription() const;
 
 		/**
 		*  @brief
@@ -166,8 +166,8 @@ class SNConsoleBase : public SceneNode {
 		*    - Have a look at the definition of ConsoleCommand::EMsgParamID for more information
 		*      about the command parameters
 		*/
-		PLS_API bool RegisterCommand(bool bDebug, const PLGeneral::String &sCommand, const PLGeneral::String &sParameters,
-									const PLGeneral::String &sHelp, const PLCore::Functor<void, ConsoleCommand &> &cFunctor);
+		PLS_API bool RegisterCommand(bool bDebug, const PLCore::String &sCommand, const PLCore::String &sParameters,
+									const PLCore::String &sHelp, const PLCore::Functor<void, ConsoleCommand &> &cFunctor);
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class SNConsoleBase : public SceneNode {
 		*  @note
 		*    - eg: "/fogcolor"... this will remove the /fogcolor command
 		*/
-		PLS_API bool UnRegisterCommand(const PLGeneral::String &sCommand);
+		PLS_API bool UnRegisterCommand(const PLCore::String &sCommand);
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class SNConsoleBase : public SceneNode {
 		*  @return
 		*    The number of registered commands
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfCommands() const;
+		PLS_API PLCore::uint32 GetNumOfCommands() const;
 
 		/**
 		*  @brief
@@ -227,7 +227,7 @@ class SNConsoleBase : public SceneNode {
 		*  @remarks
 		*    Example: "/fogcolor 100 20 240" will return the value 3
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfParamsInString(const PLGeneral::String &sString) const;
+		PLS_API PLCore::uint32 GetNumOfParamsInString(const PLCore::String &sString) const;
 
 		/**
 		*  @brief
@@ -245,7 +245,7 @@ class SNConsoleBase : public SceneNode {
 		*  @note
 		*    - If 'sCommand' is empty, the console own command line will be executed
 		*/
-		PLS_API void ProcessCommand(const PLGeneral::String &sCommand = "");
+		PLS_API void ProcessCommand(const PLCore::String &sCommand = "");
 
 		/**
 		*  @brief
@@ -294,20 +294,20 @@ class SNConsoleBase : public SceneNode {
 	//[-------------------------------------------------------]
 	protected:
 		// General
-		EState			  m_nState;			/**< Current state of console */
-		PLGeneral::String m_sCommand;		/**< Current command string */
-		PLGeneral::String m_sFoundCommand;	/**< Found command string */
-		PLGeneral::uint32 m_nCursor;		/**< Current cursor position */
-		int				  m_nSelStart;		/**< Selection cursor start position */
-		int				  m_nSelEnd;		/**< Selection cursor end position */
+		EState		   m_nState;		/**< Current state of console */
+		PLCore::String m_sCommand;		/**< Current command string */
+		PLCore::String m_sFoundCommand;	/**< Found command string */
+		PLCore::uint32 m_nCursor;		/**< Current cursor position */
+		int			   m_nSelStart;		/**< Selection cursor start position */
+		int			   m_nSelEnd;		/**< Selection cursor end position */
 
 		// Commands
-		PLGeneral::Array<ConsoleCommand*>					   m_lstCommands;	/**< The collection of registered commands */
-		PLGeneral::HashMap<PLGeneral::String, ConsoleCommand*> m_mapCommands;	/**< Commands hash map */
+		PLCore::Array<ConsoleCommand*>				     m_lstCommands;	/**< The collection of registered commands */
+		PLCore::HashMap<PLCore::String, ConsoleCommand*> m_mapCommands;	/**< Commands hash map */
 
 		// Command history system
-		PLGeneral::uint32					m_nCurrentCommand;		/**< Current selected command entry */
-		PLGeneral::Array<PLGeneral::String> m_lstCommandHistory;	/**< Command history list */
+		PLCore::uint32				  m_nCurrentCommand;	/**< Current selected command entry */
+		PLCore::Array<PLCore::String> m_lstCommandHistory;	/**< Command history list */
 
 
 };

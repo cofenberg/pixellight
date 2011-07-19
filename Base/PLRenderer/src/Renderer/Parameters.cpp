@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -37,7 +37,7 @@ namespace PLRenderer {
 //[ Global variables                                      ]
 //[-------------------------------------------------------]
 // For fast Parameters::DataTypeToString()
-const PLGeneral::String g_sDataTypeToString[] = {
+const String g_sDataTypeToString[] = {
 	"String",
 	"Integer",
 	"Integer2",
@@ -59,7 +59,7 @@ const PLGeneral::String g_sDataTypeToString[] = {
 	"Unknown"
 };
 // For fast Parameters::DataTypeFromString()
-HashMap<PLGeneral::String, Parameters::EDataType> g_mapDataTypeFromString;
+HashMap<String, Parameters::EDataType> g_mapDataTypeFromString;
 
 
 //[-------------------------------------------------------]
@@ -69,7 +69,7 @@ HashMap<PLGeneral::String, Parameters::EDataType> g_mapDataTypeFromString;
 *  @brief
 *    Returns a data type as string
 */
-PLGeneral::String Parameters::DataTypeToString(EDataType nDataType)
+String Parameters::DataTypeToString(EDataType nDataType)
 {
 	return (nDataType <= UnknownDataType) ? g_sDataTypeToString[nDataType] : "";
 }
@@ -78,7 +78,7 @@ PLGeneral::String Parameters::DataTypeToString(EDataType nDataType)
 *  @brief
 *    Returns a data type as number
 */
-Parameters::EDataType Parameters::DataTypeFromString(const PLGeneral::String &sDataType)
+Parameters::EDataType Parameters::DataTypeFromString(const PLCore::String &sDataType)
 {
 	// Check parameter
 	if (sDataType.GetLength()) {
@@ -107,7 +107,7 @@ Parameters::EDataType Parameters::DataTypeFromString(const PLGeneral::String &sD
 
 		// Get the data type as number
 		const EDataType &nDataType = g_mapDataTypeFromString.Get(sDataType);
-		if (&nDataType != &HashMap<PLGeneral::String, EDataType>::Null)
+		if (&nDataType != &HashMap<PLCore::String, EDataType>::Null)
 			return nDataType;
 	}
 

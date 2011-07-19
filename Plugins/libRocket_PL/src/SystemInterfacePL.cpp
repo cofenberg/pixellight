@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Tools/Timing.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
 #include "libRocket_PL/SystemInterfacePL.h"
 
@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace libRocket_PL {
 
@@ -63,7 +62,7 @@ SystemInterfacePL::~SystemInterfacePL()
 //[-------------------------------------------------------]
 float SystemInterfacePL::GetElapsedTime()
 {
-	// "PLGeneral::Timing::GetPastTime()" returns the past time in milliseconds since the application start
+	// "PLCore::Timing::GetPastTime()" returns the past time in milliseconds since the application start
 	// - but this method must return the number of seconds elapsed since the start of the application...
 	return Timing::GetInstance()->GetPastTime()*0.001f;
 }

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLCg/VertexShaderCg.h"
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
@@ -40,7 +40,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRendererOpenGLCg {
 
 

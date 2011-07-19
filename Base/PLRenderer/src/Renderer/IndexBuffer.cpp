@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -78,7 +78,7 @@ bool IndexBuffer::SetElementType(EType nType)
 *  @brief
 *    Sets the type of the buffer elements automatically by using a given maximum vertex index
 */
-bool IndexBuffer::SetElementTypeByMaximumIndex(PLGeneral::uint32 nMaximumIndex)
+bool IndexBuffer::SetElementTypeByMaximumIndex(uint32 nMaximumIndex)
 {
 	// Is the index buffer already allocated?
 	if (IsAllocated())

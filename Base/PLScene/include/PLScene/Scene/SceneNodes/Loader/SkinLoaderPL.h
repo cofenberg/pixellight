@@ -60,8 +60,8 @@ class SkinLoaderPL : public SkinLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	SNMesh&,	PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	SNMesh&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	SNMesh&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNMesh&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class SkinLoaderPL : public SkinLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API bool Load(SNMesh &cSNMesh, PLGeneral::File &cFile);
-		PLS_API bool Save(SNMesh &cSNMesh, PLGeneral::File &cFile);
+		PLS_API bool Load(SNMesh &cSNMesh, PLCore::File &cFile);
+		PLS_API bool Save(SNMesh &cSNMesh, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class SkinLoaderPL : public SkinLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SNMesh &cSNMesh, const PLGeneral::XmlElement &cSkinElement) const;
+		bool LoadV1(SNMesh &cSNMesh, const PLCore::XmlElement &cSkinElement) const;
 
 
 };

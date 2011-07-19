@@ -91,8 +91,8 @@ class FontPL : public PLGui::FontImpl {
 	//[ Public virtual PLGui::FontImpl functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadFont(const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight, PLGeneral::uint32 nWeight, PLGui::EFontStyle nStyle);
-		virtual bool LoadFont(const PLGeneral::String &sFilename, PLGeneral::uint32 nHeight);
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, PLGui::EFontStyle nStyle);
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight);
 
 
 	//[-------------------------------------------------------]

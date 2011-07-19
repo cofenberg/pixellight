@@ -162,10 +162,9 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
-	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLGui/include
 	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
@@ -183,10 +182,9 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
-	PLGraphics
 	PLMath
+	PLGraphics
 	PLGui
 	PLInput
 	PLRenderer
@@ -271,7 +269,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGeneral PLGraphics PLCore PLMath PLGui PLInput PLRenderer PLMesh)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

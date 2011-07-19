@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <stdio.h>
 #ifdef WIN32
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
 #ifdef LINUX
 	#include <errno.h>
@@ -35,17 +35,17 @@
 	#include <unistd.h>
 	#include <sys/stat.h>
 #endif
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/File/Directory.h>
-#include <PLGeneral/File/FileSearch.h>
+#include <PLCore/System/System.h>
+#include <PLCore/File/File.h>
+#include <PLCore/File/Directory.h>
+#include <PLCore/File/FileSearch.h>
 #include "PLTestBase/General/FileSystemTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLMesh/PLMesh.h"
 
 
@@ -78,8 +78,8 @@ class VertexWeights {
 		*    - This array holds the vertex weight indices per vertex
 		*      (see Mesh::GetVertexWeights())
 		*/
-		PLMESH_API PLGeneral::Array<PLGeneral::uint32> &GetWeights();
-		PLMESH_API const PLGeneral::Array<PLGeneral::uint32> &GetWeights() const;
+		PLMESH_API PLCore::Array<PLCore::uint32> &GetWeights();
+		PLMESH_API const PLCore::Array<PLCore::uint32> &GetWeights() const;
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class VertexWeights {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::Array<PLGeneral::uint32> m_lstWeights;	/**< Vertex weights */
+		PLCore::Array<PLCore::uint32> m_lstWeights;	/**< Vertex weights */
 
 
 };

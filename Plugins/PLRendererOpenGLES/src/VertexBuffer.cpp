@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 #include "PLRendererOpenGLES/Renderer.h"
 #include "PLRendererOpenGLES/VertexBuffer.h"
 
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLGraphics;
 namespace PLRendererOpenGLES {
 

@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Container/Stack.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Loader.h>
+#include <PLCore/Container/Stack.h>
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneHierarchy.h"
 #include "PLScene/Scene/SceneHierarchyNode.h"
@@ -39,7 +39,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 namespace PLScene {
@@ -505,7 +504,7 @@ void SceneContainer::OnActivate(bool bActivate)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::ElementManager functions    ]
+//[ Public virtual PLCore::ElementManager functions       ]
 //[-------------------------------------------------------]
 bool SceneContainer::DeInit()
 {
@@ -668,7 +667,7 @@ bool SceneContainer::CallLoadable(File &cFile, Loader &cLoader, const String &sM
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 SceneNode *SceneContainer::CreateElement(const String &sName)
 {

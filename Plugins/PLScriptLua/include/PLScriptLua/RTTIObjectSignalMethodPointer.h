@@ -85,7 +85,7 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 		*  @return
 		*    The build in method defined by the given string
 		*/
-		static EMethod StringToMethod(const PLGeneral::String &sMethod);
+		static EMethod StringToMethod(const PLCore::String &sMethod);
 
 
 	//[-------------------------------------------------------]

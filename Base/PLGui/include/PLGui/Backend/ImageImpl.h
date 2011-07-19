@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/Core/RefCount.h>
+#include <PLCore/String/String.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/PLGui.h"
 
@@ -64,7 +64,7 @@ namespace PLGui {
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'Image' abstraction
 */
-class ImageImpl : public PLGeneral::RefCount<ImageImpl> {
+class ImageImpl : public PLCore::RefCount<ImageImpl> {
 
 
 	//[-------------------------------------------------------]
@@ -93,7 +93,7 @@ class ImageImpl : public PLGeneral::RefCount<ImageImpl> {
 		*  @return
 		*    Filename of image
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class ImageImpl : public PLGeneral::RefCount<ImageImpl> {
 		*  @return
 		*    Color depth
 		*/
-		PLGUI_API PLGeneral::uint32 GetColorDepth() const;
+		PLGUI_API PLCore::uint32 GetColorDepth() const;
 
 
 	//[-------------------------------------------------------]
@@ -128,7 +128,7 @@ class ImageImpl : public PLGeneral::RefCount<ImageImpl> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Load(const PLGeneral::String &sFilename) = 0;
+		virtual bool Load(const PLCore::String &sFilename) = 0;
 
 		/**
 		*  @brief
@@ -142,17 +142,17 @@ class ImageImpl : public PLGeneral::RefCount<ImageImpl> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool LoadWithColorKey(const PLGeneral::String &sFilename, const PLGraphics::Color3 &cColor) = 0;
+		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor) = 0;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Image			  *m_pImage;		/**< Pointer to the platform independent image object */
-		PLGeneral::String  m_sFilename;		/**< Image name */
-		PLMath::Vector2i   m_vSize;			/**< Image size */
-		PLGeneral::uint32  m_nColorDepth;	/**< Color depth */
+		Image			 *m_pImage;			/**< Pointer to the platform independent image object */
+		PLCore::String    m_sFilename;		/**< Image name */
+		PLMath::Vector2i  m_vSize;			/**< Image size */
+		PLCore::uint32    m_nColorDepth;	/**< Color depth */
 
 
 };

@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Keyboard.h>
 #include <PLRenderer/RendererContext.h>
@@ -42,7 +42,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

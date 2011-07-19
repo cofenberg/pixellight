@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -100,7 +100,7 @@ class ShaderToolsCg {
 		*  @note
 		*    - There must be at least one reference to the Cg context
 		*/
-		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLGeneral::String &sSourceCode, const PLGeneral::String &sEntry, const PLGeneral::String &sArguments = "");
+		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLCore::String &sSourceCode, const PLCore::String &sEntry, const PLCore::String &sArguments = "");
 
 
 	//[-------------------------------------------------------]
@@ -118,8 +118,8 @@ class ShaderToolsCg {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static CGcontext		 m_pCgContext;			/**< Cg shader program context, can be a null pointer */
-		static PLGeneral::uint32 m_nCgContexCounter;	/**< Cg context counter */
+		static CGcontext	  m_pCgContext;			/**< Cg shader program context, can be a null pointer */
+		static PLCore::uint32 m_nCgContexCounter;	/**< Cg context counter */
 
 
 };

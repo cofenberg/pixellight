@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -87,7 +87,7 @@ class Font {
 		*  @param[in] nStyle
 		*    Font style
 		*/
-		PLGUI_API Font(Gui &cGui, const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight = 0, EFontWeight nWeight = WeightNormal, EFontStyle nStyle = StyleNormal);
+		PLGUI_API Font(Gui &cGui, const PLCore::String &sFamily, PLCore::uint32 nHeight = 0, EFontWeight nWeight = WeightNormal, EFontStyle nStyle = StyleNormal);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class Font {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API bool Load(const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight = 0, EFontWeight nWeight = WeightNormal, EFontStyle nStyle = StyleNormal);
+		PLGUI_API bool Load(const PLCore::String &sFamily, PLCore::uint32 nHeight = 0, EFontWeight nWeight = WeightNormal, EFontStyle nStyle = StyleNormal);
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class Font {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API bool LoadFromFile(const PLGeneral::String &sFilename, PLGeneral::uint32 nHeight = 0);
+		PLGUI_API bool LoadFromFile(const PLCore::String &sFilename, PLCore::uint32 nHeight = 0);
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Font {
 		*  @remarks
 		*    Will only return a file name if the font has been created using the according constructor
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Font {
 		*  @return
 		*    Font family name
 		*/
-		PLGUI_API PLGeneral::String GetFamily() const;
+		PLGUI_API PLCore::String GetFamily() const;
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class Font {
 		*  @param[in] sFamily
 		*    Font family name
 		*/
-		PLGUI_API void SetFamily(const PLGeneral::String &sFamily);
+		PLGUI_API void SetFamily(const PLCore::String &sFamily);
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class Font {
 		*  @return
 		*    Font height
 		*/
-		PLGUI_API PLGeneral::uint32 GetHeight() const;
+		PLGUI_API PLCore::uint32 GetHeight() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class Font {
 		*  @param[in] nHeight
 		*    Font height
 		*/
-		PLGUI_API void SetHeight(PLGeneral::uint32 nHeight);
+		PLGUI_API void SetHeight(PLCore::uint32 nHeight);
 
 		/**
 		*  @brief
@@ -272,13 +272,13 @@ class Font {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui				  *m_pGui;		/**< Pointer to GUI */
-		FontImpl		  *m_pFontImpl;	/**< Font implementation */
-		PLGeneral::String  m_sFamily;	/**< Font family */
-		PLGeneral::uint32  m_nHeight;	/**< Font height */
-		EFontWeight		   m_nWeight;	/**< Font weight */
-		EFontStyle		   m_nStyle;	/**< Font style (normal, italics, ...) */
-		PLGeneral::String  m_sFilename;	/**< Filename for directly loaded fonts */
+		Gui			   *m_pGui;			/**< Pointer to GUI */
+		FontImpl	   *m_pFontImpl;	/**< Font implementation */
+		PLCore::String  m_sFamily;		/**< Font family */
+		PLCore::uint32  m_nHeight;		/**< Font height */
+		EFontWeight		m_nWeight;		/**< Font weight */
+		EFontStyle		m_nStyle;		/**< Font style (normal, italics, ...) */
+		PLCore::String  m_sFilename;	/**< Filename for directly loaded fonts */
 
 
 };

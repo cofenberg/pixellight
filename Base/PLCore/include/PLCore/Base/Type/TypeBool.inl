@@ -48,7 +48,7 @@ class Type<bool> {
 		static const int TypeID = TypeBool;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "bool";
 		}
@@ -84,109 +84,109 @@ class Type<bool> {
 		}
 
 		// Convert bool to int8
-		static PLGeneral::int8 ConvertToInt8(bool bValue)
+		static int8 ConvertToInt8(bool bValue)
 		{
-			return static_cast<PLGeneral::int8>(bValue);
+			return static_cast<int8>(bValue);
 		}
 
 		// Convert int8 to bool
-		static bool ConvertFromInt8(PLGeneral::int8 nValue)
+		static bool ConvertFromInt8(int8 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int16
-		static PLGeneral::int16 ConvertToInt16(bool bValue)
+		static int16 ConvertToInt16(bool bValue)
 		{
-			return static_cast<PLGeneral::int16>(bValue);
+			return static_cast<int16>(bValue);
 		}
 
 		// Convert int16 to bool
-		static bool ConvertFromInt16(PLGeneral::int16 nValue)
+		static bool ConvertFromInt16(int16 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int32
-		static PLGeneral::int32 ConvertToInt32(bool bValue)
+		static int32 ConvertToInt32(bool bValue)
 		{
-			return static_cast<PLGeneral::int32>(bValue);
+			return static_cast<int32>(bValue);
 		}
 
 		// Convert int32 to bool
-		static bool ConvertFromInt32(PLGeneral::int32 nValue)
+		static bool ConvertFromInt32(int32 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int64
-		static PLGeneral::int64 ConvertToInt64(bool bValue)
+		static int64 ConvertToInt64(bool bValue)
 		{
-			return static_cast<PLGeneral::int64>(bValue);
+			return static_cast<int64>(bValue);
 		}
 
 		// Convert int64 to bool
-		static bool ConvertFromInt64(PLGeneral::int64 nValue)
+		static bool ConvertFromInt64(int64 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint8
-		static PLGeneral::uint8 ConvertToUInt8(bool bValue)
+		static uint8 ConvertToUInt8(bool bValue)
 		{
-			return static_cast<PLGeneral::uint8>(bValue);
+			return static_cast<uint8>(bValue);
 		}
 
 		// Convert uint8 to bool
-		static bool ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static bool ConvertFromUInt8(uint8 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint16
-		static PLGeneral::uint16 ConvertToUInt16(bool bValue)
+		static uint16 ConvertToUInt16(bool bValue)
 		{
-			return static_cast<PLGeneral::uint16>(bValue);
+			return static_cast<uint16>(bValue);
 		}
 
 		// Convert uint16 to bool
-		static bool ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static bool ConvertFromUInt16(uint16 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint32
-		static PLGeneral::uint32 ConvertToUInt32(bool bValue)
+		static uint32 ConvertToUInt32(bool bValue)
 		{
-			return static_cast<PLGeneral::uint32>(bValue);
+			return static_cast<uint32>(bValue);
 		}
 
 		// Convert uint32 to bool
-		static bool ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static bool ConvertFromUInt32(uint32 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint64
-		static PLGeneral::uint64 ConvertToUInt64(bool bValue)
+		static uint64 ConvertToUInt64(bool bValue)
 		{
-			return static_cast<PLGeneral::uint64>(bValue);
+			return static_cast<uint64>(bValue);
 		}
 
 		// Convert uint64 to bool
-		static bool ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static bool ConvertFromUInt64(uint64 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(bool bValue)
+		static uint_ptr ConvertToUIntPtr(bool bValue)
 		{
-			return static_cast<PLGeneral::uint_ptr>(bValue);
+			return static_cast<uint_ptr>(bValue);
 		}
 
 		// Convert uint_ptr to bool
-		static bool ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static bool ConvertFromUIntPtr(uint_ptr nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
@@ -216,13 +216,13 @@ class Type<bool> {
 		}
 
 		// Convert bool to string
-		static PLGeneral::String ConvertToString(bool bValue)
+		static String ConvertToString(bool bValue)
 		{
 			return (bValue ? "true" : "false");
 		}
 
 		// Convert string to bool
-		static bool ConvertFromString(const PLGeneral::String &sString)
+		static bool ConvertFromString(const String &sString)
 		{
 			return sString.GetBool();
 		}

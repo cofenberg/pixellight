@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/System/SystemWindows.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/System/SystemWindows.h>
 #include "PLRendererD3D11/Renderer.h"
 #include "PLRendererD3D11/SurfaceWindow.h"
 
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererD3D11 {
 

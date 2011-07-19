@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/String/Tokenizer.h>
+#include <PLCore/File/File.h>
+#include <PLCore/String/Tokenizer.h>
 #include "PLGraphics/Image/Image.h"
 #include "PLGraphics/Image/ImagePart.h"
 #include "PLGraphics/Image/ImageBuffer.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLGraphics {
 

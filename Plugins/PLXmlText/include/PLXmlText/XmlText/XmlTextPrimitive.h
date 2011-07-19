@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include <PLMath/Vector2i.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLGui/Gui/Resources/Font.h>
@@ -222,7 +222,7 @@ class XmlTextPrimitive {
 		int					 m_nHGap;			/**< Horizontal gap after primitive */
 
 		// PrimitiveText
-		PLGeneral::String	 m_sText;			/**< Text to print */
+		PLCore::String	 	m_sText;			/**< Text to print */
 
 		// PrimitiveImage
 		const PLGui::Image	*m_pImage;			/**< Image */

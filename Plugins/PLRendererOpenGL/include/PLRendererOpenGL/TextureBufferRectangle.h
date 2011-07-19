@@ -72,7 +72,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*  @return
 		*    OpenGL resource ID of the texture buffer
 		*/
-		PLRENDEREROPENGL_API PLGeneral::uint32 GetOpenGLTexture() const;
+		PLRENDEREROPENGL_API PLCore::uint32 GetOpenGLTexture() const;
 
 
 	//[-------------------------------------------------------]
@@ -96,7 +96,7 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*    - The image is assumed to be valid because it was already checked by the renderer texture buffer
 		*      create function
 		*/
-		TextureBufferRectangle(PLRenderer::Renderer &cRenderer, PLGraphics::Image &cImage, EPixelFormat nInternalFormat, PLGeneral::uint32 nFlags);
+		TextureBufferRectangle(PLRenderer::Renderer &cRenderer, PLGraphics::Image &cImage, EPixelFormat nInternalFormat, PLCore::uint32 nFlags);
 
 		/**
 		*  @brief
@@ -111,38 +111,38 @@ class TextureBufferRectangle : public PLRenderer::TextureBufferRectangle {
 		*  @param[in] nFlags
 		*    Texture buffer flags (see EFlags)
 		*/
-		TextureBufferRectangle(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vSize, EPixelFormat nInternalFormat, PLGeneral::uint32 nFlags);
+		TextureBufferRectangle(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vSize, EPixelFormat nInternalFormat, PLCore::uint32 nFlags);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nOpenGLTexture;								/**< OpenGL texture ID */
-		PLGeneral::uint32 m_nSamplerState[PLRenderer::Sampler::Number];	/**< Sampler states of this texture */
+		PLCore::uint32 m_nOpenGLTexture;								/**< OpenGL texture ID */
+		PLCore::uint32 m_nSamplerState[PLRenderer::Sampler::Number];	/**< Sampler states of this texture */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::TextureBuffer functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Upload(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLGeneral::uint8 nFace = 0);
-		virtual bool Download(PLGeneral::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLGeneral::uint8 nFace = 0);
+		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0);
+		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0);
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::TextureBuffer functions   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool MakeCurrent(PLGeneral::uint32 nStage);
+		virtual bool MakeCurrent(PLCore::uint32 nStage);
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

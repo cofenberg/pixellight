@@ -33,7 +33,7 @@
 *    Type wrapper for 'uint32'
 */
 template <>
-class Type<PLGeneral::uint32> {
+class Type<uint32> {
 
 
 	//[-------------------------------------------------------]
@@ -41,200 +41,200 @@ class Type<PLGeneral::uint32> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::uint32 _Type;		/**< Real type */
-		typedef PLGeneral::uint32 _StorageType;	/**< Storage type, for this type identical to the real type */
+		typedef uint32 _Type;			/**< Real type */
+		typedef uint32 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
-		static const PLGeneral::uint32 TypeID = TypeUInt32;
+		static const uint32 TypeID = TypeUInt32;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "uint32";
 		}
 
 		// Convert var to uint32
-		static PLGeneral::uint32 ConvertFromVar(const DynVar *pValue)
+		static uint32 ConvertFromVar(const DynVar *pValue)
 		{
 			return pValue->GetUInt32();
 		}
 
 		// Convert uint32 to bool
-		static bool ConvertToBool(PLGeneral::uint32 nValue)
+		static bool ConvertToBool(uint32 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to uint32
-		static PLGeneral::uint32 ConvertFromBool(bool bValue)
+		static uint32 ConvertFromBool(bool bValue)
 		{
-			return static_cast<PLGeneral::uint32>(bValue);
+			return static_cast<uint32>(bValue);
 		}
 
 		// Convert uint32 to int
-		static int ConvertToInt(PLGeneral::uint32 nValue)
+		static int ConvertToInt(uint32 nValue)
 		{
 			return static_cast<int>(nValue);
 		}
 
 		// Convert int to uint32
-		static PLGeneral::uint32 ConvertFromInt(int nValue)
+		static uint32 ConvertFromInt(int nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to int8
-		static PLGeneral::int8 ConvertToInt8(PLGeneral::uint32 nValue)
+		static int8 ConvertToInt8(uint32 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint32
-		static PLGeneral::uint32 ConvertFromInt8(PLGeneral::int8 nValue)
+		static uint32 ConvertFromInt8(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to int16
-		static PLGeneral::int16 ConvertToInt16(PLGeneral::uint32 nValue)
+		static int16 ConvertToInt16(uint32 nValue)
 		{
-			return static_cast<PLGeneral::int16>(nValue);
+			return static_cast<int16>(nValue);
 		}
 
 		// Convert int16 to uint32
-		static PLGeneral::uint32 ConvertFromInt16(PLGeneral::int16 nValue)
+		static uint32 ConvertFromInt16(int16 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to int32
-		static PLGeneral::int32 ConvertToInt32(PLGeneral::uint32 nValue)
+		static int32 ConvertToInt32(uint32 nValue)
 		{
-			return static_cast<PLGeneral::int32>(nValue);
+			return static_cast<int32>(nValue);
 		}
 
 		// Convert int32 to uint32
-		static PLGeneral::uint32 ConvertFromInt32(PLGeneral::int32 nValue)
+		static uint32 ConvertFromInt32(int32 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to int64
-		static PLGeneral::int64 ConvertToInt64(PLGeneral::uint32 nValue)
+		static int64 ConvertToInt64(uint32 nValue)
 		{
-			return static_cast<PLGeneral::int64>(nValue);
+			return static_cast<int64>(nValue);
 		}
 
 		// Convert int64 to uint32
-		static PLGeneral::uint32 ConvertFromInt64(PLGeneral::int64 nValue)
+		static uint32 ConvertFromInt64(int64 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint8
-		static PLGeneral::uint8 ConvertToUInt8(PLGeneral::uint32 nValue)
+		static uint8 ConvertToUInt8(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint8>(nValue);
+			return static_cast<uint8>(nValue);
 		}
 
 		// Convert uint8 to uint32
-		static PLGeneral::uint32 ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static uint32 ConvertFromUInt8(uint8 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint16
-		static PLGeneral::uint16 ConvertToUInt16(PLGeneral::uint32 nValue)
+		static uint16 ConvertToUInt16(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to uint32
-		static PLGeneral::uint32 ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static uint32 ConvertFromUInt16(uint16 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint32
-		static PLGeneral::uint32 ConvertToUInt32(PLGeneral::uint32 nValue)
+		static uint32 ConvertToUInt32(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint32
-		static PLGeneral::uint32 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static uint32 ConvertFromUInt32(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint64
-		static PLGeneral::uint64 ConvertToUInt64(PLGeneral::uint32 nValue)
+		static uint64 ConvertToUInt64(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint64>(nValue);
+			return static_cast<uint64>(nValue);
 		}
 
 		// Convert uint64 to uint32
-		static PLGeneral::uint32 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static uint32 ConvertFromUInt64(uint64 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(PLGeneral::uint32 nValue)
+		static uint_ptr ConvertToUIntPtr(uint32 nValue)
 		{
-			return static_cast<PLGeneral::uint_ptr>(nValue);
+			return static_cast<uint_ptr>(nValue);
 		}
 
 		// Convert uint_ptr to uint32
-		static PLGeneral::uint32 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static uint32 ConvertFromUIntPtr(uint_ptr nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to float
-		static float ConvertToFloat(PLGeneral::uint32 nValue)
+		static float ConvertToFloat(uint32 nValue)
 		{
 			return static_cast<float>(nValue);
 		}
 
 		// Convert float to uint32
-		static PLGeneral::uint32 ConvertFromFloat(float fValue)
+		static uint32 ConvertFromFloat(float fValue)
 		{
-			return static_cast<PLGeneral::uint32>(fValue);
+			return static_cast<uint32>(fValue);
 		}
 
 		// Convert uint32 to double
-		static double ConvertToDouble(PLGeneral::uint32 nValue)
+		static double ConvertToDouble(uint32 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to uint32
-		static PLGeneral::uint32 ConvertFromDouble(double dValue)
+		static uint32 ConvertFromDouble(double dValue)
 		{
-			return static_cast<PLGeneral::uint32>(dValue);
+			return static_cast<uint32>(dValue);
 		}
 
 		// Convert uint32 to string
-		static PLGeneral::String ConvertToString(PLGeneral::uint32 nValue)
+		static String ConvertToString(uint32 nValue)
 		{
-			return PLGeneral::String() + static_cast<int>(nValue);
+			return String() + static_cast<int>(nValue);
 		}
 
-		// Convert string to PLGeneral::uint32
-		static PLGeneral::uint32 ConvertFromString(const PLGeneral::String &sString)
+		// Convert string to uint32
+		static uint32 ConvertFromString(const String &sString)
 		{
 			return sString.GetInt();
 		}
 
 		// Convert real to storage type
-		static PLGeneral::uint32 ConvertRealToStorage(PLGeneral::uint32 nValue)
+		static uint32 ConvertRealToStorage(uint32 nValue)
 		{
 			return nValue;
 		}
 
 		// Convert storage to real type
-		static PLGeneral::uint32 ConvertStorageToReal(PLGeneral::uint32 nValue)
+		static uint32 ConvertStorageToReal(uint32 nValue)
 		{
 			return nValue;
 		}

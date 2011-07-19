@@ -130,10 +130,10 @@ class WorldUpdate {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		World			  *m_pWorld;			/**< Owner Newton world (always valid!) */
-		PLGeneral::uint32  m_nTotalNumOfSteps;	/**< Total number of performed physics steps */
-		PLGeneral::uint64  m_nLastTime;			/**< Time the last update was performed in milliseconds */
-		float			   m_fTimeElapsed;		/**< Elapsed time in seconds */
+		World		   *m_pWorld;			/**< Owner Newton world (always valid!) */
+		PLCore::uint32  m_nTotalNumOfSteps;	/**< Total number of performed physics steps */
+		PLCore::uint64  m_nLastTime;		/**< Time the last update was performed in milliseconds */
+		float			m_fTimeElapsed;		/**< Elapsed time in seconds */
 
 
 };

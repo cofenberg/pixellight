@@ -63,7 +63,7 @@ namespace PLCore {
 *
 *    Supported primitive data types: bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*, PLCore::Object&
 *    Please note that not each script language/API may make such a detailed data type distinction.
-*    Because strings are fundamental within scripts, PLGeneral::String is supported as well.
+*    Because strings are fundamental within scripts, String is supported as well.
 */
 class Script : public Object {
 
@@ -78,7 +78,7 @@ class Script : public Object {
 			pl_property("Formats",	"Unknown")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Name,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Name of this script, optional but recommended for better debugging",	"")
+		pl_attribute(Name,	String,	"",	ReadWrite,	DirectValue,	"Name of this script, optional but recommended for better debugging",	"")
 	pl_class_end
 
 
@@ -99,7 +99,7 @@ class Script : public Object {
 		*  @return
 		*    The name of the script language the script is using (for example "Lua" or "JavaScript")
 		*/
-		PLCORE_API PLGeneral::String GetScriptLanguage() const;
+		PLCORE_API String GetScriptLanguage() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class Script : public Object {
 		*  @param[out] lstFormats
 		*    List of file formats this script supports (the given list is not cleared before new entries are added)
 		*/
-		PLCORE_API void GetFormats(PLGeneral::Array<PLGeneral::String> &lstFormats) const;
+		PLCORE_API void GetFormats(Array<String> &lstFormats) const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class Script : public Object {
 		*  @note
 		*    - The added RTTI class instance methods will be available to the script as simple global functions
 		*/
-		PLCORE_API void AddBinding(Object &cObject, const PLGeneral::String &sNamespace = "");
+		PLCORE_API void AddBinding(Object &cObject, const String &sNamespace = "");
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Script : public Object {
 		*    log when the given global script function wasn't found. So, when using optional global script
 		*    functions, it's a good idea to check whether there's such a global script function by using "IsGlobalFunction()".
 		*/
-		virtual bool IsGlobalFunction(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool IsGlobalFunction(const String &sName, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Script : public Object {
 		*  @note
 		*    - If there's already a set script ("SetSourceCode()") this method will return an error
 		*/
-		virtual bool AddGlobalFunction(const PLGeneral::String &sFunction, const DynFunc &cDynFunc, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool AddGlobalFunction(const String &sFunction, const DynFunc &cDynFunc, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class Script : public Object {
 		*  @return
 		*    The script source code
 		*/
-		virtual PLGeneral::String GetSourceCode() const = 0;
+		virtual String GetSourceCode() const = 0;
 
 		/**
 		*  @brief
@@ -216,7 +216,7 @@ class Script : public Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode) = 0;
+		virtual bool SetSourceCode(const String &sSourceCode) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
@@ -230,7 +230,7 @@ class Script : public Object {
 		*  @param[in]  sNamespace
 		*    Optional namespace (e.g. "MyNamespace", "MyNamespace.MyOtherNamespace" and so on)
 		*/
-		virtual void GetGlobalVariables(PLGeneral::Array<PLGeneral::String> &lstGlobalVariables, const PLGeneral::String &sNamespace = "") = 0;
+		virtual void GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class Script : public Object {
 		*  @return
 		*    'true' if the given name belongs to a global variable, else 'false'
 		*/
-		virtual bool IsGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool IsGlobalVariable(const String &sName, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class Script : public Object {
 		*  @return
 		*    The type ID of the global variable (e.g. "PLCore::TypeFloat" for "float") or "PLCore::TypeInvalid" on error
 		*/
-		virtual ETypeID GetGlobalVariableTypeID(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
+		virtual ETypeID GetGlobalVariableTypeID(const String &sName, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class Script : public Object {
 		*  @return
 		*    The current value of the global variable
 		*/
-		virtual PLGeneral::String GetGlobalVariable(const PLGeneral::String &sName, const PLGeneral::String &sNamespace = "") = 0;
+		virtual String GetGlobalVariable(const String &sName, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -290,7 +290,7 @@ class Script : public Object {
 		*    - Please note that it depends on the used script language/API which data types are really available,
 		*      this means that "GetGlobalVariableTypeID()" may return another data type as the one you specified
 		*/
-		virtual void SetGlobalVariable(const PLGeneral::String &sName, const DynVar &cValue, const PLGeneral::String &sNamespace = "") = 0;
+		virtual void SetGlobalVariable(const String &sName, const DynVar &cValue, const String &sNamespace = "") = 0;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
@@ -315,7 +315,7 @@ class Script : public Object {
 		*  @see
 		*    - Have a look at "IsGlobalFunction()" for additional information
 		*/
-		virtual bool BeginCall(const PLGeneral::String &sFunctionName, const PLGeneral::String &sFunctionSignature, const PLGeneral::String &sNamespace = "") = 0;
+		virtual bool BeginCall(const String &sFunctionName, const String &sFunctionSignature, const String &sNamespace = "") = 0;
 
 		/**
 		*  @brief
@@ -330,15 +330,15 @@ class Script : public Object {
 		virtual void PushArgument(bool bValue) = 0;
 		virtual void PushArgument(float fValue) = 0;
 		virtual void PushArgument(double fValue) = 0;
-		virtual void PushArgument(PLGeneral::int8 nValue) = 0;
-		virtual void PushArgument(PLGeneral::int16 nValue) = 0;
-		virtual void PushArgument(PLGeneral::int32 nValue) = 0;
-		virtual void PushArgument(PLGeneral::int64 nValue) = 0;
-		virtual void PushArgument(PLGeneral::uint8 nValue) = 0;
-		virtual void PushArgument(PLGeneral::uint16 nValue) = 0;
-		virtual void PushArgument(PLGeneral::uint32 nValue) = 0;
-		virtual void PushArgument(PLGeneral::uint64 nValue) = 0;
-		virtual void PushArgument(const PLGeneral::String &sString) = 0;
+		virtual void PushArgument(int8 nValue) = 0;
+		virtual void PushArgument(int16 nValue) = 0;
+		virtual void PushArgument(int32 nValue) = 0;
+		virtual void PushArgument(int64 nValue) = 0;
+		virtual void PushArgument(uint8 nValue) = 0;
+		virtual void PushArgument(uint16 nValue) = 0;
+		virtual void PushArgument(uint32 nValue) = 0;
+		virtual void PushArgument(uint64 nValue) = 0;
+		virtual void PushArgument(const String &sString) = 0;
 		virtual void PushArgument(Object *pObject) = 0;
 		virtual void PushArgument(Object &cObject) = 0;
 
@@ -371,15 +371,15 @@ class Script : public Object {
 		virtual bool GetReturn(bool nValue) = 0;
 		virtual float GetReturn(float nValue) = 0;
 		virtual double GetReturn(double nValue) = 0;
-		virtual PLGeneral::int8 GetReturn(PLGeneral::int8 nValue) = 0;
-		virtual PLGeneral::int16 GetReturn(PLGeneral::int16 nValue) = 0;
-		virtual PLGeneral::int32 GetReturn(PLGeneral::int32 nValue) = 0;
-		virtual PLGeneral::int64 GetReturn(PLGeneral::int64 nValue) = 0;
-		virtual PLGeneral::uint8 GetReturn(PLGeneral::uint8 nValue) = 0;
-		virtual PLGeneral::uint16 GetReturn(PLGeneral::uint16 nValue) = 0;
-		virtual PLGeneral::uint32 GetReturn(PLGeneral::uint32 nValue) = 0;
-		virtual PLGeneral::uint64 GetReturn(PLGeneral::uint64 nValue) = 0;
-		virtual PLGeneral::String GetReturn(PLGeneral::String nValue) = 0;
+		virtual int8 GetReturn(int8 nValue) = 0;
+		virtual int16 GetReturn(int16 nValue) = 0;
+		virtual int32 GetReturn(int32 nValue) = 0;
+		virtual int64 GetReturn(int64 nValue) = 0;
+		virtual uint8 GetReturn(uint8 nValue) = 0;
+		virtual uint16 GetReturn(uint16 nValue) = 0;
+		virtual uint32 GetReturn(uint32 nValue) = 0;
+		virtual uint64 GetReturn(uint64 nValue) = 0;
+		virtual String GetReturn(String nValue) = 0;
 		virtual Object *GetReturn(Object *nValue) = 0;
 		virtual Object &GetReturn(Object &nValue) = 0;
 
@@ -409,11 +409,11 @@ class Script : public Object {
 		*  @remarks
 		*    The text is written to the log only if the current
 		*    log level is greater or equal to the specified value.
-		*    This method is an extension of "PLGeneral::Log::Output()"
+		*    This method is an extension of "Log::Output()"
 		*    which also adds the name of the script to the given
 		*    text.
 		*/
-		PLCORE_API bool LogOutput(PLGeneral::uint8 nLogLevel, const PLGeneral::String &sText);
+		PLCORE_API bool LogOutput(uint8 nLogLevel, const String &sText);
 
 
 	//[-------------------------------------------------------]

@@ -48,7 +48,7 @@ class Type<NullType> {
 		static const int TypeID = TypeNull;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			// Empty type
 			return "";

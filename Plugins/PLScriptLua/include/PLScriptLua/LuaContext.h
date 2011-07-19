@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
@@ -74,7 +74,7 @@ class LuaContext {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static PLGeneral::uint32 m_nContexCounter;	/**< Lua context counter */
+		static PLCore::uint32 m_nContexCounter;	/**< Lua context counter */
 
 
 };

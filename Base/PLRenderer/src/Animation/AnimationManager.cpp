@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -58,7 +58,7 @@ AnimationManager::~AnimationManager()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGeneral::ElementManager functions ]
+//[ Protected virtual PLCore::ElementManager functions    ]
 //[-------------------------------------------------------]
 Animation *AnimationManager::CreateElement(const String &sName)
 {

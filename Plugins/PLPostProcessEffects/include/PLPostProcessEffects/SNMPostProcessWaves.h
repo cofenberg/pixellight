@@ -60,7 +60,7 @@ class SNMPostProcessWaves : public PLCompositing::SNMPostProcess {
 		pl_attribute(Speed,		PLMath::Vector2,	PLMath::Vector2(10.0f, 10.0f),	ReadWrite,	DirectValue,	"Speed",								"")
 		pl_attribute(Scale,		PLMath::Vector2,	PLMath::Vector2( 2.0f,  2.0f),	ReadWrite,	DirectValue,	"Scale",								"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/Waves.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,	PLCore::String,		"Data/PostProcesses/Waves.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

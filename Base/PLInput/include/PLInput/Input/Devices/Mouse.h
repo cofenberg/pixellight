@@ -94,7 +94,7 @@ class Mouse : public Device {
 		*  @param[in] pImpl
 		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Mouse(const PLGeneral::String &sName, DeviceImpl *pImpl);
+		PLINPUT_API Mouse(const PLCore::String &sName, DeviceImpl *pImpl);
 
 		/**
 		*  @brief

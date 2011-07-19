@@ -28,28 +28,24 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/SimpleList.h>
+#include "PLCore/Container/SimpleList.h"
 #include "PLCore/Base/Func/Signature.h"
 #include "PLCore/Base/Func/DynSignature.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGeneral {
-	class XmlElement;
-}
-namespace PLCore {
-	class EventDesc;
-	class DynParams;
-	class DynEventHandler;
-}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class EventDesc;
+class DynParams;
+class XmlElement;
+class DynEventHandler;
 
 
 //[-------------------------------------------------------]
@@ -120,7 +116,7 @@ class DynEvent : public DynSignature {
 		*    - Don't use this method within performance critical situations because due internal
 		*      implementation, this request has a linear, not constant runtime!
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfConnects() const;
+		PLCORE_API uint32 GetNumOfConnects() const;
 
 
 	//[-------------------------------------------------------]
@@ -180,7 +176,7 @@ class DynEvent : public DynSignature {
 		*  @param[in] sParams
 		*    Parameters as string
 		*/
-		PLCORE_API virtual void Emit(const PLGeneral::String &sParams) const;
+		PLCORE_API virtual void Emit(const String &sParams) const;
 
 		/**
 		*  @brief
@@ -189,14 +185,14 @@ class DynEvent : public DynSignature {
 		*  @param[in] cElement
 		*    Parameters as XML
 		*/
-		PLCORE_API virtual void Emit(const PLGeneral::XmlElement &cElement) const;
+		PLCORE_API virtual void Emit(const XmlElement &cElement) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::SimpleList<DynEventHandler*>	m_lstHandlers;	/**< List of event handlers */
+		SimpleList<DynEventHandler*> m_lstHandlers;	/**< List of event handlers */
 
 
 };

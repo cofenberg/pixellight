@@ -183,7 +183,7 @@ class SNSpotLight : public SNPointLight {
 		*  @note
 		*    - This vertices can for instance be used to check the spot frustum visibility
 		*/
-		PLS_API const PLGeneral::Array<PLMath::Vector3> &GetFrustumVertices();
+		PLS_API const PLCore::Array<PLMath::Vector3> &GetFrustumVertices();
 
 
 	//[-------------------------------------------------------]
@@ -234,14 +234,14 @@ class SNSpotLight : public SNPointLight {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		float							  m_fOuterAngle;		/**< Outer cone angle in degree */
-		float							  m_fInnerAngle;		/**< Inner cone angle in degree (smaller than the outer angle) */
-		float							  m_fZNear;				/**< Near clipping plane */
-		float							  m_fAspect;			/**< Aspect factor (only used if 'NoCone'-flag is set!) */
-		PLMath::Matrix4x4				  m_mProj;				/**< Current projection matrix */
-		PLMath::Matrix3x4				  m_mView;				/**< Current view matrix */
-		PLMath::Frustum					  m_cFrustum;			/**< Current frustum */
-		PLGeneral::Array<PLMath::Vector3> m_cFrustumVertices;	/**< Current frustum vertices */
+		float						   m_fOuterAngle;		/**< Outer cone angle in degree */
+		float						   m_fInnerAngle;		/**< Inner cone angle in degree (smaller than the outer angle) */
+		float						   m_fZNear;			/**< Near clipping plane */
+		float						   m_fAspect;			/**< Aspect factor (only used if 'NoCone'-flag is set!) */
+		PLMath::Matrix4x4			   m_mProj;				/**< Current projection matrix */
+		PLMath::Matrix3x4			   m_mView;				/**< Current view matrix */
+		PLMath::Frustum				   m_cFrustum;			/**< Current frustum */
+		PLCore::Array<PLMath::Vector3> m_cFrustumVertices;	/**< Current frustum vertices */
 
 
 	//[-------------------------------------------------------]

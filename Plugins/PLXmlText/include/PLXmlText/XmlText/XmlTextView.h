@@ -55,7 +55,7 @@ class XmlTextView : public PLGui::Widget {
 	//[-------------------------------------------------------]
 	pl_class(PLXMLTEXT_RTTI_EXPORT, XmlTextView, "PLXmlText", PLGui::Widget, "Control that display's a text using a XML based markup language")
 		// Attributes
-		pl_attribute(Filename,	PLGeneral::String,	"",	ReadWrite,	GetSet,	"Filename of XmlText file",	"")
+		pl_attribute(Filename,	PLCore::String,	"",	ReadWrite,	GetSet,	"Filename of XmlText file",	"")
 	pl_class_end
 
 
@@ -63,8 +63,8 @@ class XmlTextView : public PLGui::Widget {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLXMLTEXT_API PLGeneral::String GetFilename() const;
-		PLXMLTEXT_API void SetFilename(const PLGeneral::String &sValue);
+		PLXMLTEXT_API PLCore::String GetFilename() const;
+		PLXMLTEXT_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -87,7 +87,7 @@ class XmlTextView : public PLGui::Widget {
 		*  @param[in] sFilename
 		*    Filename of XML file
 		*/
-		PLXMLTEXT_API void Load(const PLGeneral::String &sFilename);
+		PLXMLTEXT_API void Load(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class XmlTextView : public PLGui::Widget {
 		*  @return
 		*    Path to document root (directory containing XmlText document)
 		*/
-		PLXMLTEXT_API PLGeneral::String GetDocumentRoot() const;
+		PLXMLTEXT_API PLCore::String GetDocumentRoot() const;
 
 		/**
 		*  @brief
@@ -124,12 +124,12 @@ class XmlTextView : public PLGui::Widget {
 	//[-------------------------------------------------------]
 	private:
 		// Exported variables
-		PLGeneral::String		m_sFilename;		/**< File name */
-		PLGeneral::String		m_sDocumentRoot;	/**< Path containing the file */
+		PLCore::String		m_sFilename;		/**< File name */
+		PLCore::String		m_sDocumentRoot;	/**< Path containing the file */
 
 		// XML text
-		XmlTextElement			m_cXmlText;			/**< XmlText element tree */
-		XmlTextRenderer			m_cRenderer;		/**< XmlText renderer */
+		XmlTextElement		m_cXmlText;			/**< XmlText element tree */
+		XmlTextRenderer		m_cRenderer;		/**< XmlText renderer */
 
 
 	//[-------------------------------------------------------]

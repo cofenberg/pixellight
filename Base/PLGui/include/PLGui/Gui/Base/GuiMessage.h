@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/PLGui.h"
 
@@ -65,8 +65,8 @@ class GuiMessage {
 		PLGUI_API static GuiMessage OnWakeup();
 		PLGUI_API static GuiMessage OnExit();
 		PLGUI_API static GuiMessage OnTimer(Timer *pTimer);
-		PLGUI_API static GuiMessage OnUserMessage(Widget *pWidget, PLGeneral::uint32 nData, void *pData);
-		PLGUI_API static GuiMessage OnInternalMessage(PLGeneral::uint32 nData, PLGeneral::uint32 nExtData);
+		PLGUI_API static GuiMessage OnUserMessage(Widget *pWidget, PLCore::uint32 nData, void *pData);
+		PLGUI_API static GuiMessage OnInternalMessage(PLCore::uint32 nData, PLCore::uint32 nExtData);
 		PLGUI_API static GuiMessage OnThemeChanged(Widget *pWidget);
 		PLGUI_API static GuiMessage OnUpdateContent(Widget *pWidget);
 		PLGUI_API static GuiMessage OnUpdateChildWidget(Widget *pWidget, Widget *pChildWidget);
@@ -102,9 +102,9 @@ class GuiMessage {
 		PLGUI_API static GuiMessage OnMouseButtonClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
 		PLGUI_API static GuiMessage OnMouseButtonDoubleClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
 		PLGUI_API static GuiMessage OnMouseWheel(Widget *pWidget, int nDelta);
-		PLGUI_API static GuiMessage OnKeyDown(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnKeyUp(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnHotkey(Widget *pWidget, PLGeneral::uint32 nHotkey);
+		PLGUI_API static GuiMessage OnKeyDown(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API static GuiMessage OnKeyUp(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API static GuiMessage OnHotkey(Widget *pWidget, PLCore::uint32 nHotkey);
 		PLGUI_API static GuiMessage OnDrop(Widget *pWidget, DataObject *pDataObject);
 
 
@@ -169,7 +169,7 @@ class GuiMessage {
 		*  @return
 		*    Message as string
 		*/
-		PLGUI_API PLGeneral::String ToString() const;
+		PLGUI_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -200,7 +200,7 @@ class GuiMessage {
 		*  @return
 		*    Message data
 		*/
-		inline PLGeneral::uint32 GetData() const {
+		inline PLCore::uint32 GetData() const {
 			return m_nData;
 		}
 
@@ -244,7 +244,7 @@ class GuiMessage {
 		*  @return
 		*    Key
 		*/
-		inline PLGeneral::uint32 GetKey() const {
+		inline PLCore::uint32 GetKey() const {
 			return m_nKey;
 		}
 
@@ -277,7 +277,7 @@ class GuiMessage {
 		*  @return
 		*    Message data
 		*/
-		inline PLGeneral::uint32 GetExtData() const {
+		inline PLCore::uint32 GetExtData() const {
 			return m_nExtData;
 		}
 
@@ -332,7 +332,7 @@ class GuiMessage {
 		*  @return
 		*    Modifiers
 		*/
-		inline const PLGeneral::uint32 GetModifiers() const {
+		inline const PLCore::uint32 GetModifiers() const {
 			return m_nModifiers;
 		}
 
@@ -353,34 +353,34 @@ class GuiMessage {
 	//[-------------------------------------------------------]
 	protected:
 		// Message target
-		Widget					*m_pWidget;			/**< Widget */
+		Widget				*m_pWidget;			/**< Widget */
 
 		// Message type
-		EMessageType			 m_nType;			/**< Message type */
+		EMessageType		 m_nType;			/**< Message type */
 
 		// First message data
 		union {
-			PLGeneral::uint32	 m_nData;			/**< Message data */
-			int					 m_nDelta;			/**< Movement delta */
-			EWindowState		 m_nWindowState;	/**< Window state */
-			EMouseButton		 m_nMouseButton;	/**< Mouse button */
-			PLGeneral::uint32	 m_nKey;			/**< Key code */
-			bool				 m_bState;			/**< Boolean state */
+			PLCore::uint32	 m_nData;			/**< Message data */
+			int				 m_nDelta;			/**< Movement delta */
+			EWindowState	 m_nWindowState;	/**< Window state */
+			EMouseButton	 m_nMouseButton;	/**< Mouse button */
+			PLCore::uint32	 m_nKey;			/**< Key code */
+			bool			 m_bState;			/**< Boolean state */
 		};
 
 		// Second message data
 		union {
-			void				*m_pDataPtr;		/**< Message data pointer */
-			PLGeneral::uint32	 m_nExtData;		/**< Secondary data */
-			DataObject			*m_pDataObject;		/**< Data object */
-			Widget				*m_pChildWidget;	/**< Child widget */
-			Graphics			*m_pGraphics;		/**< Graphics object */
-			Timer				*m_pTimer;			/**< Timer object */
-			PLGeneral::uint32	 m_nModifiers;		/**< Key modifiers */
+			void			*m_pDataPtr;		/**< Message data pointer */
+			PLCore::uint32	 m_nExtData;		/**< Secondary data */
+			DataObject		*m_pDataObject;		/**< Data object */
+			Widget			*m_pChildWidget;	/**< Child widget */
+			Graphics		*m_pGraphics;		/**< Graphics object */
+			Timer			*m_pTimer;			/**< Timer object */
+			PLCore::uint32	 m_nModifiers;		/**< Key modifiers */
 		};
 
 		// Position or size data
-		PLMath::Vector2i		 m_vPosSize;		/**< Position or size */
+		PLMath::Vector2i	 m_vPosSize;		/**< Position or size */
 
 
 };

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -73,7 +73,7 @@ class FontInfo {
 		*  @param[in] nStyle
 		*    Font style
 		*/
-		PLGUI_API FontInfo(const PLGeneral::String &sFilename, const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight, EFontWeight nWeight, EFontStyle nStyle);
+		PLGUI_API FontInfo(const PLCore::String &sFilename, const PLCore::String &sFamily, PLCore::uint32 nHeight, EFontWeight nWeight, EFontStyle nStyle);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class FontInfo {
 		*  @remarks
 		*    Will only return a file name if the font file has been added manually
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class FontInfo {
 		*  @return
 		*    Font family name
 		*/
-		PLGUI_API PLGeneral::String GetFamily() const;
+		PLGUI_API PLCore::String GetFamily() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class FontInfo {
 		*  @return
 		*    Font height
 		*/
-		PLGUI_API PLGeneral::uint32 GetHeight() const;
+		PLGUI_API PLCore::uint32 GetHeight() const;
 
 		/**
 		*  @brief
@@ -164,11 +164,11 @@ class FontInfo {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sFilename;	/**< Filename for directly loaded fonts */
-		PLGeneral::String m_sFamily;	/**< Font family */
-		PLGeneral::uint32 m_nHeight;	/**< Font height */
-		EFontWeight		  m_nWeight;	/**< Font weight */
-		EFontStyle		  m_nStyle;		/**< Font style (normal, italics, ...) */
+		PLCore::String m_sFilename;	/**< Filename for directly loaded fonts */
+		PLCore::String m_sFamily;	/**< Font family */
+		PLCore::uint32 m_nHeight;	/**< Font height */
+		EFontWeight	   m_nWeight;	/**< Font weight */
+		EFontStyle	   m_nStyle;	/**< Font style (normal, italics, ...) */
 
 
 };

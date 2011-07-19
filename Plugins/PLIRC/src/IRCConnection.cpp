@@ -37,12 +37,12 @@
 #include <stdlib.h>
 #include <string.h>
 #ifdef WIN32
-	#include <PLGeneral/PLGeneralWindowsIncludes.h>
+	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
 #ifdef LINUX
-	#include <PLGeneral/PLGeneralLinuxWrapper.h>
+	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
-#include <PLGeneral/System/System.h>
+#include <PLCore/System/System.h>
 
 #include "PLIRC/User.h"
 #include "PLIRC/Channel.h"
@@ -53,7 +53,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLIRC {
 
 
@@ -1047,7 +1047,7 @@ void IRCConnection::OnDCC(const String &sSource, const String &sMessage)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGeneral::Connection functions     ]
+//[ Protected virtual PLCore::Connection functions        ]
 //[-------------------------------------------------------]
 void IRCConnection::OnConnect()
 {

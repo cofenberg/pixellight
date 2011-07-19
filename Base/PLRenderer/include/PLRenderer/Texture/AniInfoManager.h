@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLRenderer/PLRenderer.h"
 
 
@@ -51,7 +51,7 @@ class AniInfo;
 *  @brief
 *    This is a manager for the animation information element
 */
-class AniInfoManager : public PLGeneral::ElementManager<AniInfo> {
+class AniInfoManager : public PLCore::ElementManager<AniInfo> {
 
 
 	//[-------------------------------------------------------]
@@ -72,10 +72,10 @@ class AniInfoManager : public PLGeneral::ElementManager<AniInfo> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AniInfo *CreateElement(const PLGeneral::String &sName);
+		virtual AniInfo *CreateElement(const PLCore::String &sName);
 
 
 };

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4244) // "'conversion' conversion from 'type1' to 'type2', possible loss of data"
 	PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
@@ -41,8 +41,8 @@ PL_WARNING_PUSH
 	#include <ImfMatrixAttribute.h>
 	#include <ImfArray.h>
 PL_WARNING_POP
-#include <PLGeneral/File/File.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/File/File.h>
+#include <PLCore/Log/Log.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
@@ -54,7 +54,7 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 using namespace Imf;
 using namespace Imath;
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 namespace PLImageLoaderEXR {

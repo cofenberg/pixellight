@@ -74,13 +74,7 @@ class CursorPL : public PLGui::CursorImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void Load(PLGui::EMouseCursor nCursor);
-		virtual void Load(const PLGeneral::String &sFilename, const PLMath::Vector2i &vHotspot);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
+		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
 
 
 };

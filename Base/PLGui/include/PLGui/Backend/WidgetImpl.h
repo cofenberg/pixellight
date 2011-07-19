@@ -107,7 +107,7 @@ class WidgetImpl {
 		*  @param[in] nWindowHandle
 		*    System window handle
 		*/
-		virtual void CreateWrapperWidget(PLGeneral::handle nWindowHandle) = 0;
+		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle) = 0;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class WidgetImpl {
 		*  @return
 		*    Window handle
 		*/
-		virtual PLGeneral::handle GetWindowHandle() const = 0;
+		virtual PLCore::handle GetWindowHandle() const = 0;
 
 		/**
 		*  @brief
@@ -340,7 +340,7 @@ class WidgetImpl {
 		*  @param[in] sTitle
 		*    Title
 		*/
-		virtual void SetTitle(const PLGeneral::String &sTitle) = 0;
+		virtual void SetTitle(const PLCore::String &sTitle) = 0;
 
 		/**
 		*  @brief
@@ -363,7 +363,7 @@ class WidgetImpl {
 		*  @return
 		*    Hotkey ID, 0 on error
 		*/
-		virtual PLGeneral::uint32 RegisterHotkey(PLGeneral::uint32 nModKey, PLGeneral::uint32 nKey) = 0;
+		virtual PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey) = 0;
 
 		/**
 		*  @brief
@@ -372,7 +372,7 @@ class WidgetImpl {
 		*  @param[in] nID
 		*    Hotkey ID
 		*/
-		virtual void UnregisterHotkey(PLGeneral::uint32 nID) = 0;
+		virtual void UnregisterHotkey(PLCore::uint32 nID) = 0;
 
 		/**
 		*  @brief

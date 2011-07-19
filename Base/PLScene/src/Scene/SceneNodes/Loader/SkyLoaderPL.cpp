@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/Log/Log.h>
 #include <PLRenderer/Material/Material.h>
 #include <PLMesh/MeshHandler.h>
 #include "PLScene/Scene/SceneNodes/SNSky.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScene {
 
 

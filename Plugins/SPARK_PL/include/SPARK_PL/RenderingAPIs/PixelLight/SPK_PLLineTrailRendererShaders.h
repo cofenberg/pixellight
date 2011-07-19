@@ -85,7 +85,7 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 		*  @return
 		*    A new registered SPK_PLLineTrailRendererShaders
 		*/
-		SPARK_PL_API static SPK_PLLineTrailRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
+		SPARK_PL_API static SPK_PLLineTrailRendererShaders *Create(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "");
 
 
 	//[-------------------------------------------------------]
@@ -101,7 +101,7 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 		*  @param[in] sShaderLanguage
 		*    Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used
 		*/
-		SPK_PLLineTrailRendererShaders(PLRenderer::Renderer &cRenderer, const PLGeneral::String &sShaderLanguage = "");
+		SPK_PLLineTrailRendererShaders(PLRenderer::Renderer &cRenderer, const PLCore::String &sShaderLanguage = "");
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String				 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
+		PLCore::String					 m_sShaderLanguage;								/**< Shader language to use (for example "GLSL" or "Cg"), if empty string, the default shader language of the renderer will be used */
 		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
 		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
 		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */

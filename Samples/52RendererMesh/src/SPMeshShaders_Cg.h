@@ -21,7 +21,7 @@
 
 
 // Cg vertex shader source code
-static const PLGeneral::String sVertexShaderSourceCodeCg = "\
+static const PLCore::String sVertexShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
@@ -48,7 +48,7 @@ VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex posit
 
 
 // Cg fragment shader source code
-static const PLGeneral::String sFragmentShaderSourceCodeCg = "\
+static const PLCore::String sFragmentShaderSourceCodeCg = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\

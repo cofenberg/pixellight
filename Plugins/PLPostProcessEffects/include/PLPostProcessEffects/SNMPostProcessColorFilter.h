@@ -58,7 +58,7 @@ class SNMPostProcessColorFilter : public PLCompositing::SNMPostProcess {
 		// Attributes
 		pl_attribute(Filter,	PLGraphics::Color4,	PLGraphics::Color4(1.0f, 0.4f, 0.4f, 1.0f),	ReadWrite,	DirectValue,	"Color filter",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/ColorFilter.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,	PLCore::String,		"Data/PostProcesses/ColorFilter.pp",		ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

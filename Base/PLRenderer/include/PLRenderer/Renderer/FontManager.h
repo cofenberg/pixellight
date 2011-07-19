@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLRenderer/PLRenderer.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 	class String;
 }
@@ -117,7 +117,7 @@ class FontManager {
 		*  @return
 		*    The texture font, a null pointer on error
 		*/
-		PLRENDERER_API FontTexture *GetFontTexture(const PLGeneral::String &sFilename, PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96);
+		PLRENDERER_API FontTexture *GetFontTexture(const PLCore::String &sFilename, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class FontManager {
 		*  @note
 		*    - The default implementations opens and reads in the file
 		*/
-		PLRENDERER_API virtual Font *CreateFontTexture(const PLGeneral::String &sFilename, PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96);
+		PLRENDERER_API virtual Font *CreateFontTexture(const PLCore::String &sFilename, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class FontManager {
 		*  @return
 		*    The created texture font, destroy the instance if you no longer need it
 		*/
-		virtual Font *CreateFontTexture(PLGeneral::File &cFile, PLGeneral::uint32 nSize = 12, PLGeneral::uint32 nResolution = 96) = 0;
+		virtual Font *CreateFontTexture(PLCore::File &cFile, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -190,9 +190,9 @@ class FontManager {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Renderer						*m_pRenderer;					/**< Owner renderer, always valid! */
-		ResourceHandler					*m_pDefaultFontTextureHandler;	/**< Default texture font, always valid! */
-		PLGeneral::Array<FontTexture*>   m_lstFontTexture;				/**< Texture fonts */
+		Renderer					*m_pRenderer;					/**< Owner renderer, always valid! */
+		ResourceHandler				*m_pDefaultFontTextureHandler;	/**< Default texture font, always valid! */
+		PLCore::Array<FontTexture*>  m_lstFontTexture;				/**< Texture fonts */
 
 
 	//[-------------------------------------------------------]

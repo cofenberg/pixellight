@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Bitset.h>
+#include <PLCore/Container/Bitset.h>
+#include <PLCore/Core/MemoryManager.h>
 #include <PLMath/Math.h>
-#include <PLGeneral/Core/MemoryManager.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 namespace PLMesh {

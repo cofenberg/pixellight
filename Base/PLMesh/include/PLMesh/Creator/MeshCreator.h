@@ -91,7 +91,7 @@ class MeshCreator : public PLCore::Object {
 		pl_attribute(Order,		bool,						0,								ReadWrite,	DirectValue,	"Geometry order (0=clockwise  1=counterclockwise)",	"")
 		pl_attribute(TexCoords,	bool,						true,							ReadWrite,	DirectValue,	"Generate texture coordinates?",					"")
 		pl_attribute(Normals,	bool,						true,							ReadWrite,	DirectValue,	"Generate normals coordinates?",					"")
-		pl_attribute(Material,	PLGeneral::String,			"Data/Textures/Default.dds",	ReadWrite,	DirectValue,	"Material to use",									"")
+		pl_attribute(Material,	PLCore::String,				"Data/Textures/Default.dds",	ReadWrite,	DirectValue,	"Material to use",									"")
 	pl_class_end
 
 
@@ -133,7 +133,7 @@ class MeshCreator : public PLCore::Object {
 		*  @note
 		*    - The default implementation sets the first material
 		*/
-		PLMESH_API virtual Mesh *Create(Mesh &cMesh, PLGeneral::uint32 nLODLevel = 0, bool bStatic = true) const;
+		PLMESH_API virtual Mesh *Create(Mesh &cMesh, PLCore::uint32 nLODLevel = 0, bool bStatic = true) const;
 
 
 };

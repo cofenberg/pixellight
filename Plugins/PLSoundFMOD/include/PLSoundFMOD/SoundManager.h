@@ -115,12 +115,12 @@ class SoundManager : public PLSound::SoundManager {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SoundManager, "PLSoundFMOD", PLSound::SoundManager, "FMOD sound backend")
 		// Attributes
-		pl_attribute(BufferSize,	PLGeneral::uint32,				200,				ReadWrite,	DirectValue,	"FMOD internal mixing buffer size (in milliseconds)",																							"")
+		pl_attribute(BufferSize,	PLCore::uint32,					200,				ReadWrite,	DirectValue,	"FMOD internal mixing buffer size (in milliseconds)",																							"")
 		pl_attribute(Output,		pl_enum_type(ESoundcardDriver),	AUTODETECT,			ReadWrite,	DirectValue,	"The output system to be used",																													"")
-		pl_attribute(Driver,		PLGeneral::uint32,				0,					ReadWrite,	DirectValue,	"Selects a soundcard driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",	"")
+		pl_attribute(Driver,		PLCore::uint32,					0,					ReadWrite,	DirectValue,	"Selects a soundcard driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",	"")
 		pl_attribute(Mixer,			pl_enum_type(EQuality),			QUALITY_AUTODETECT,	ReadWrite,	DirectValue,	"Digital mixer type",																															"")
-		pl_attribute(OutputRate,	PLGeneral::uint32,				44100,				ReadWrite,	DirectValue,	"Output rate in hz between 4000 and 65535",																										"")
-		pl_attribute(Channels,		PLGeneral::uint32,				32,					ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are autodetected)",															"")
+		pl_attribute(OutputRate,	PLCore::uint32,					44100,				ReadWrite,	DirectValue,	"Output rate in hz between 4000 and 65535",																										"")
+		pl_attribute(Channels,		PLCore::uint32,					32,					ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are autodetected)",															"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -180,19 +180,19 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		float							   m_fVolume;								/**< Master volume */
-		float							   m_fPitch;								/**< Master pitch */
-		float							   m_fDopplerFactor;						/**< Doppler factor */
-		PLMath::Vector3					   m_vListenerAttributes[ListenerNumber];	/**< Listener attributes */
-		PLGeneral::Array<PLSound::Source*> m_lstActiveSources;						/**< Current active sound sources of this sound manager */
+		float						    m_fVolume;								/**< Master volume */
+		float						    m_fPitch;								/**< Master pitch */
+		float						    m_fDopplerFactor;						/**< Doppler factor */
+		PLMath::Vector3				    m_vListenerAttributes[ListenerNumber];	/**< Listener attributes */
+		PLCore::Array<PLSound::Source*> m_lstActiveSources;						/**< Current active sound sources of this sound manager */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLSound::SoundManager functions        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetDescription() const;
-		virtual bool GetFormatList(PLGeneral::List<Format> &lstList) const;
+		virtual PLCore::String GetDescription() const;
+		virtual bool GetFormatList(PLCore::List<Format> &lstList) const;
 		virtual float GetVolume() const;
 		virtual void SetVolume(float fVolume = 1.0f);
 		virtual float GetPitch() const;
@@ -203,7 +203,7 @@ class SoundManager : public PLSound::SoundManager {
 		//[-------------------------------------------------------]
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
-		virtual PLSound::Buffer *CreateSoundBuffer(const PLGeneral::String &sFilename = "", bool bStream = false);
+		virtual PLSound::Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false);
 		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
 
 		//[-------------------------------------------------------]
@@ -226,7 +226,7 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLSound::Buffer *CreateResource(const PLGeneral::String &sName);
+		virtual PLSound::Buffer *CreateResource(const PLCore::String &sName);
 
 
 };

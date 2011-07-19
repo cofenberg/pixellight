@@ -90,7 +90,7 @@ class SystemButton: public AbstractButton {
 		*  @return
 		*    Widget states as flags (see EWidgetState)
 		*/
-		PLGUI_API virtual PLGeneral::uint32 GetWidgetState() const;
+		PLGUI_API virtual PLCore::uint32 GetWidgetState() const;
 
 		/**
 		*  @brief

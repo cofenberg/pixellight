@@ -58,7 +58,7 @@ class LegacyJoystickDevice : public UpdateDevice {
 		*  @param[in] nJoystickID
 		*    Joystick ID
 		*/
-		LegacyJoystickDevice(PLGeneral::uint32 nJoystickID);
+		LegacyJoystickDevice(PLCore::uint32 nJoystickID);
 
 		/**
 		*  @brief
@@ -78,8 +78,8 @@ class LegacyJoystickDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nJoystickID;	/**< Joystick ID */
-		int				  m_nFallbackPOV;	/**< If the joystick doesn't support POV this is used, else this is 0 */
+		PLCore::uint32 m_nJoystickID;	/**< Joystick ID */
+		int			   m_nFallbackPOV;	/**< If the joystick doesn't support POV this is used, else this is 0 */
 
 
 };

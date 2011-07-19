@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Core/MemoryManager.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Core/MemoryManager.h>
+#include <PLCore/Log/Log.h>
 #include <PLPhysics/ContactInformation.h>
 #include "PLPhysicsPhysX/BodyImpl.h"
 #include "PLPhysicsPhysX/BodyBox.h"
@@ -43,7 +43,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLPhysicsPhysX {
 
@@ -606,7 +606,7 @@ bool World::IsAlwaysStatic() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 PLPhysics::Element *World::CreateElement(const String &sName)
 {

@@ -574,7 +574,6 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = PixelLight.h \
-                         ../../Base/PLGeneral/include \
                          ../../Base/PLCore/include \
                          ../../Base/PLScript/include \
                          ../../Base/PLMath/include \
@@ -639,37 +638,34 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = ../../Base/PLGeneral/include/PLGeneral/FileSystem/Windows/ \
-                         ../../Base/PLGeneral/include/PLGeneral/FileSystem/Linux/ \
-                         ../../Base/PLGeneral/include/PLGeneral/FileSystem/Zip/ \
-                         ../../Base/PLGeneral/include/PLGeneral/System/SystemWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/SystemLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadManagerImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadManagerWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadManagerLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/MutexImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/MutexWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/MutexLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/SemaphoreImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/SemaphoreWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/SemaphoreLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/Threading/ThreadLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibManagerImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibManagerWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibManagerLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibImpl.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/System/DynLib/DynLibLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/PLGeneral.h \
-                         ../../Base/PLGeneral/include/PLGeneral/PLGeneralWindows.h \
-                         ../../Base/PLGeneral/include/PLGeneral/PLGeneralLinux.h \
-                         ../../Base/PLGeneral/include/PLGeneral/PLGeneralWindowsIncludes.h \
-                         ../../Base/PLGeneral/include/PLGeneral/PLGeneralLinuxIncludes.h \
+EXCLUDE                = ../../Base/PLCore/include/PLCore/FileSystem/Windows/ \
+                         ../../Base/PLCore/include/PLCore/FileSystem/Linux/ \
+                         ../../Base/PLCore/include/PLCore/FileSystem/Zip/ \
+                         ../../Base/PLCore/include/PLCore/System/SystemWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/SystemLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadManagerImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadManagerWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadManagerLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/MutexImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/MutexWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/MutexLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/SemaphoreImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/SemaphoreWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/SemaphoreLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/Threading/ThreadLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibManagerImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibManagerWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibManagerLinux.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibImpl.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibWindows.h \
+                         ../../Base/PLCore/include/PLCore/System/DynLib/DynLibLinux.h \
                          ../../Base/PLCore/include/PLCore/PLCore.h \
                          ../../Base/PLCore/include/PLCore/PLCoreWindows.h \
                          ../../Base/PLCore/include/PLCore/PLCoreLinux.h \
+                         ../../Base/PLCore/include/PLCore/PLCoreWindowsIncludes.h \
+                         ../../Base/PLCore/include/PLCore/PLCoreLinuxIncludes.h \
                          ../../Base/PLCore/include/PLScript/PLScript.h \
                          ../../Base/PLCore/include/PLScript/PLScriptWindows.h \
                          ../../Base/PLCore/include/PLScript/PLScriptLinux.h \

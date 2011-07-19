@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Bitset;
 	template <class AType> class Array;
 }
@@ -92,8 +92,8 @@ class MeshOctree : public PLMath::Octree {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool Build(MeshLODLevel &cMeshLODLevel, PLGeneral::uint32 nNumOfGeometries, const PLGeneral::uint32 nGeometries[],
-							  PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = nullptr);
+		PLMESH_API bool Build(MeshLODLevel &cMeshLODLevel, PLCore::uint32 nNumOfGeometries, const PLCore::uint32 nGeometries[],
+							  PLCore::Array<PLCore::Array<PLCore::uint32>*> *plstOctreeIDList = nullptr);
 
 		/**
 		*  @brief
@@ -113,16 +113,16 @@ class MeshOctree : public PLMath::Octree {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MeshLODLevel	  *m_pOwnerMeshLODLevel;	/**< Pointer to the owner, can be a null pointer */
-		PLGeneral::uint32  m_nNumOfGeometries;		/**< Number of geometry indices */
-		PLGeneral::uint32 *m_pnGeometries;			/**< Geometry indices, can be a null pointer */
+		MeshLODLevel   *m_pOwnerMeshLODLevel;	/**< Pointer to the owner, can be a null pointer */
+		PLCore::uint32  m_nNumOfGeometries;		/**< Number of geometry indices */
+		PLCore::uint32 *m_pnGeometries;			/**< Geometry indices, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLMath::Octree functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CustomVisible(PLGeneral::Bitset *pBitset = nullptr);
+		virtual void CustomVisible(PLCore::Bitset *pBitset = nullptr);
 
 
 };

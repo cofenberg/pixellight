@@ -66,7 +66,7 @@ class SNMPostProcessEdgeDetect : public PLCompositing::SNMPostProcess {
 		pl_attribute(PixelKernel2,		PLMath::Vector2,	PLMath::Vector2( 0.0f, -1.0f),				ReadWrite,	DirectValue,	"Pixel kernel 2",							"")
 		pl_attribute(PixelKernel3,		PLMath::Vector2,	PLMath::Vector2(-1.0f,  0.0f),				ReadWrite,	DirectValue,	"Pixel kernel 3",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,			PLGeneral::String,	"Data/PostProcesses/EdgeDetect.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",		"Type='PostProcess'")
+		pl_attribute(Filename,			PLCore::String,		"Data/PostProcesses/EdgeDetect.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",		"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

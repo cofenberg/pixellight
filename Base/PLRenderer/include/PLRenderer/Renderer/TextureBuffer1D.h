@@ -67,7 +67,7 @@ class TextureBuffer1D : public TextureBuffer {
 		*  @return
 		*    Texture buffer size
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetSize(PLGeneral::uint32 nMipmap = 0) const;
+		PLRENDERER_API PLCore::uint32 GetSize(PLCore::uint32 nMipmap = 0) const;
 
 
 	//[-------------------------------------------------------]
@@ -83,14 +83,14 @@ class TextureBuffer1D : public TextureBuffer {
 		*  @param[in] nFlags
 		*    Texture buffer flags (see EFlags)
 		*/
-		PLRENDERER_API TextureBuffer1D(Renderer &cRenderer, PLGeneral::uint32 nFlags);
+		PLRENDERER_API TextureBuffer1D(Renderer &cRenderer, PLCore::uint32 nFlags);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint32 m_nSize;	/**< Texture buffer size */
+		PLCore::uint32 m_nSize;	/**< Texture buffer size */
 
 
 	//[-------------------------------------------------------]
@@ -123,8 +123,8 @@ class TextureBuffer1D : public TextureBuffer {
 	//[ Public virtual TextureBuffer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfPixels(PLGeneral::uint32 nMipmap = 0) const;
-		PLRENDERER_API virtual PLGeneral::uint32 GetNumOfBytes(PLGeneral::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfPixels(PLCore::uint32 nMipmap = 0) const;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfBytes(PLCore::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const;
 
 
 };

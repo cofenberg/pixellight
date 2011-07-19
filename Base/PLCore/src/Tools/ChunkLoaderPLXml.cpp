@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/File/File.h>
+#include "PLCore/Xml/Xml.h"
+#include "PLCore/Log/Log.h"
+#include "PLCore/File/File.h"
 #include "PLCore/Tools/Chunk.h"
 #include "PLCore/Tools/ChunkLoaderPLXml.h"
 
@@ -33,7 +33,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 namespace PLCore {
 
 

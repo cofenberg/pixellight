@@ -27,14 +27,14 @@
 #include <../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.h>
 #include <../../../External/Optional/AngelScript/add_on/scriptarray/scriptarray.h>
 #include <../../../External/Optional/AngelScript/add_on/scriptmath/scriptmath.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLScriptAngelScript {
 
 

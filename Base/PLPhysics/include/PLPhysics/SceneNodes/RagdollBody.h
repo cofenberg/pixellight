@@ -112,7 +112,7 @@ class RagdollBody {
 		*    'true' if all went fine, else 'false'
 		*    (maybe this name is already used within the ragdoll?)
 		*/
-		PLPHYSICS_API bool SetName(const PLGeneral::String &sName);
+		PLPHYSICS_API bool SetName(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -174,10 +174,10 @@ class RagdollBody {
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		PLGeneral::uint32 nIndex;
-		PLGeneral::String sName;
+		PLCore::uint32 nIndex;
+		PLCore::String sName;
 
-		PLGeneral::String sJoint;	/**< Joint this body is attached to */
+		PLCore::String sJoint;	/**< Joint this body is attached to */
 
 		// Specified whether the body (and any possible joints its connected to) are enabled
 		bool bEnabled;

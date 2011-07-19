@@ -25,12 +25,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Main.h>
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Console.h>
+#include <PLCore/Main.h>
 #include <PLCore/Core.h>
 #include <PLCore/ModuleMain.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
@@ -39,7 +39,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 
 

@@ -33,7 +33,7 @@
 *    Type wrapper for 'String'
 */
 template <>
-class Type<PLGeneral::String> {
+class Type<String> {
 
 
 	//[-------------------------------------------------------]
@@ -41,200 +41,200 @@ class Type<PLGeneral::String> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::String _Type;		/**< Real type */
-		typedef PLGeneral::String _StorageType;	/**< Storage type, for this type identical to the real type */
+		typedef String _Type;			/**< Real type */
+		typedef String _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
 		static const int TypeID = TypeString;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "string";
 		}
 
 		// Convert var to string
-		static PLGeneral::String ConvertFromVar(const DynVar *pValue)
+		static String ConvertFromVar(const DynVar *pValue)
 		{
 			return pValue->GetString();
 		}
 
 		// Convert string to bool
-		static bool ConvertToBool(const PLGeneral::String &sString)
+		static bool ConvertToBool(const String &sString)
 		{
 			return sString.GetBool();
 		}
 
 		// Convert bool to string
-		static PLGeneral::String ConvertFromBool(bool bValue)
+		static String ConvertFromBool(bool bValue)
 		{
-			return (PLGeneral::String() + bValue);
+			return (String() + bValue);
 		}
 
 		// Convert string to int
-		static int ConvertToInt(const PLGeneral::String &sString)
+		static int ConvertToInt(const String &sString)
 		{
 			return sString.GetInt();
 		}
 
 		// Convert int to string
-		static PLGeneral::String ConvertFromInt(int nValue)
+		static String ConvertFromInt(int nValue)
 		{
-			return (PLGeneral::String() + nValue);
+			return (String() + nValue);
 		}
 
 		// Convert string to int8
-		static PLGeneral::int8 ConvertToInt8(const PLGeneral::String &sString)
+		static int8 ConvertToInt8(const String &sString)
 		{
-			return static_cast<PLGeneral::int8>(sString.GetInt());
+			return static_cast<int8>(sString.GetInt());
 		}
 
 		// Convert int8 to string
-		static PLGeneral::String ConvertFromInt8(PLGeneral::int8 nValue)
+		static String ConvertFromInt8(int8 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to int16
-		static PLGeneral::int16 ConvertToInt16(const PLGeneral::String &sString)
+		static int16 ConvertToInt16(const String &sString)
 		{
-			return static_cast<PLGeneral::int16>(sString.GetInt());
+			return static_cast<int16>(sString.GetInt());
 		}
 
 		// Convert int16 to string
-		static PLGeneral::String ConvertFromInt16(PLGeneral::int16 nValue)
+		static String ConvertFromInt16(int16 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to int32
-		static PLGeneral::int32 ConvertToInt32(const PLGeneral::String &sString)
+		static int32 ConvertToInt32(const String &sString)
 		{
-			return static_cast<PLGeneral::int32>(sString.GetInt());
+			return static_cast<int32>(sString.GetInt());
 		}
 
 		// Convert int32 to string
-		static PLGeneral::String ConvertFromInt32(PLGeneral::int32 nValue)
+		static String ConvertFromInt32(int32 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to int64
-		static PLGeneral::int64 ConvertToInt64(const PLGeneral::String &sString)
+		static int64 ConvertToInt64(const String &sString)
 		{
-			return static_cast<PLGeneral::int64>(sString.GetInt());
+			return static_cast<int64>(sString.GetInt());
 		}
 
 		// Convert int64 to string
-		static PLGeneral::String ConvertFromInt64(PLGeneral::int64 nValue)
+		static String ConvertFromInt64(int64 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to uint8
-		static PLGeneral::uint8 ConvertToUInt8(const PLGeneral::String &sString)
+		static uint8 ConvertToUInt8(const String &sString)
 		{
-			return static_cast<PLGeneral::uint8>(sString.GetInt());
+			return static_cast<uint8>(sString.GetInt());
 		}
 
 		// Convert uint8 to string
-		static PLGeneral::String ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static String ConvertFromUInt8(uint8 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to uint16
-		static PLGeneral::uint16 ConvertToUInt16(const PLGeneral::String &sString)
+		static uint16 ConvertToUInt16(const String &sString)
 		{
-			return static_cast<PLGeneral::uint16>(sString.GetInt());
+			return static_cast<uint16>(sString.GetInt());
 		}
 
 		// Convert uint16 to string
-		static PLGeneral::String ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static String ConvertFromUInt16(uint16 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to uint32
-		static PLGeneral::uint32 ConvertToUInt32(const PLGeneral::String &sString)
+		static uint32 ConvertToUInt32(const String &sString)
 		{
-			return static_cast<PLGeneral::uint32>(sString.GetInt());
+			return static_cast<uint32>(sString.GetInt());
 		}
 
 		// Convert uint32 to string
-		static PLGeneral::String ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static String ConvertFromUInt32(uint32 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to uint64
-		static PLGeneral::uint64 ConvertToUInt64(const PLGeneral::String &sString)
+		static uint64 ConvertToUInt64(const String &sString)
 		{
-			return static_cast<PLGeneral::uint64>(sString.GetInt());
+			return static_cast<uint64>(sString.GetInt());
 		}
 
 		// Convert uint64 to string
-		static PLGeneral::String ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static String ConvertFromUInt64(uint64 nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLGeneral::String &sString)
+		static uint_ptr ConvertToUIntPtr(const String &sString)
 		{
-			return static_cast<PLGeneral::uint_ptr>(sString.GetInt());
+			return static_cast<uint_ptr>(sString.GetInt());
 		}
 
 		// Convert uint_ptr to string
-		static PLGeneral::String ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static String ConvertFromUIntPtr(uint_ptr nValue)
 		{
-			return (PLGeneral::String() + static_cast<int>(nValue));
+			return (String() + static_cast<int>(nValue));
 		}
 
 		// Convert string to float
-		static float ConvertToFloat(const PLGeneral::String &sString)
+		static float ConvertToFloat(const String &sString)
 		{
 			return sString.GetFloat();
 		}
 
 		// Convert float to string
-		static PLGeneral::String ConvertFromFloat(float fValue)
+		static String ConvertFromFloat(float fValue)
 		{
-			return (PLGeneral::String() + fValue);
+			return (String() + fValue);
 		}
 
 		// Convert string to double
-		static double ConvertToDouble(const PLGeneral::String &sString)
+		static double ConvertToDouble(const String &sString)
 		{
 			return sString.GetDouble();
 		}
 
 		// Convert double to string
-		static PLGeneral::String ConvertFromDouble(double dValue)
+		static String ConvertFromDouble(double dValue)
 		{
-			return (PLGeneral::String() + dValue);
+			return (String() + dValue);
 		}
 
 		// Convert string to string
-		static PLGeneral::String ConvertToString(const PLGeneral::String &sString)
+		static String ConvertToString(const String &sString)
 		{
 			return sString;
 		}
 
 		// Convert string to string
-		static PLGeneral::String ConvertFromString(const PLGeneral::String &sString)
+		static String ConvertFromString(const String &sString)
 		{
 			return sString;
 		}
 
 		// Convert real to storage type
-		static PLGeneral::String ConvertRealToStorage(PLGeneral::String sValue)
+		static String ConvertRealToStorage(String sValue)
 		{
 			return sValue;
 		}
 
 		// Convert storage to real type
-		static PLGeneral::String ConvertStorageToReal(PLGeneral::String sValue)
+		static String ConvertStorageToReal(String sValue)
 		{
 			return sValue;
 		}

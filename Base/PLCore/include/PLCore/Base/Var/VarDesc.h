@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
 #include "PLCore/Base/MemberDesc.h"
 
 
@@ -78,7 +77,7 @@ class VarDesc : public MemberDesc {
 		*  @param[in] sAnnotation
 		*    Var annotation
 		*/
-		PLCORE_API VarDesc(int nType, const PLGeneral::String &sType, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sAnnotation);
+		PLCORE_API VarDesc(int nType, const String &sType, const String &sName, const String &sDescription, const String &sAnnotation);
 
 		/**
 		*  @brief
@@ -111,7 +110,7 @@ class VarDesc : public MemberDesc {
 		*  @return
 		*    Type name
 		*/
-		PLCORE_API PLGeneral::String GetTypeName() const;
+		PLCORE_API String GetTypeName() const;
 
 
 	//[-------------------------------------------------------]
@@ -132,8 +131,8 @@ class VarDesc : public MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		int					m_nType;	/**< Type ID */
-		PLGeneral::String	m_sType;	/**< Type name */
+		int		m_nType;	/**< Type ID */
+		String	m_sType;	/**< Type name */
 
 
 };

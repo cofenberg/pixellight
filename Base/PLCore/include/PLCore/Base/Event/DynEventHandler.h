@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/SimpleList.h>
+#include "PLCore/Container/SimpleList.h"
 #include "PLCore/Base/Func/DynSignature.h"
 
 
@@ -103,7 +103,7 @@ class DynEventHandler : public DynSignature {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::SimpleList<DynEvent*> m_lstEvents;	/**< List of events */
+		SimpleList<DynEvent*> m_lstEvents;	/**< List of events */
 
 
 };

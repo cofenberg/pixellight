@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLMath {
 
 
@@ -287,7 +287,7 @@ float GraphNode::GetDistance(const GraphNode &cNode) const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLGeneral::Element functions           ]
+//[ Public virtual PLCore::Element functions              ]
 //[-------------------------------------------------------]
 GraphNode &GraphNode::operator =(const GraphNode &cSource)
 {

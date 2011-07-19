@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include "PLMesh/Mesh.h"
 #include "PLMesh/Geometry.h"
 
@@ -176,7 +176,7 @@ class MeshLODLevel {
 		*  @return
 		*    Total number of LOD level triangles
 		*/
-		PLMESH_API PLGeneral::uint32 GetNumOfTriangles() const;
+		PLMESH_API PLCore::uint32 GetNumOfTriangles() const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class MeshLODLevel {
 		*  @return
 		*    List of geometries, can be a null pointer
 		*/
-		PLMESH_API PLGeneral::Array<Geometry> *GetGeometries() const;
+		PLMESH_API PLCore::Array<Geometry> *GetGeometries() const;
 
 		//[-------------------------------------------------------]
 		//[ Visibility functions                                  ]
@@ -229,8 +229,8 @@ class MeshLODLevel {
 		*    - The tool function GenerateOctreeGeometries() will split up the geometries
 		*      in octree friendly parts
 		*/
-		PLMESH_API bool CreateOctree(PLGeneral::uint32 nSubdivide = 1, PLGeneral::uint32 nMinGeometries = 10,
-									 PLGeneral::Array<PLGeneral::Array<PLGeneral::uint32>*> *plstOctreeIDList = nullptr);
+		PLMESH_API bool CreateOctree(PLCore::uint32 nSubdivide = 1, PLCore::uint32 nMinGeometries = 10,
+									 PLCore::Array<PLCore::Array<PLCore::uint32>*> *plstOctreeIDList = nullptr);
 
 		/**
 		*  @brief
@@ -281,7 +281,7 @@ class MeshLODLevel {
 		*  @see
 		*    - BuildTriangleList()
 		*/
-		PLMESH_API PLGeneral::Array<MeshTriangle> &GetTriangleList();
+		PLMESH_API PLCore::Array<MeshTriangle> &GetTriangleList();
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class MeshLODLevel {
 		*  @see
 		*    - BuildEdgeList()
 		*/
-		PLMESH_API PLGeneral::Array<MeshEdge> &GetEdgeList();
+		PLMESH_API PLCore::Array<MeshEdge> &GetEdgeList();
 
 		/**
 		*  @brief
@@ -330,8 +330,7 @@ class MeshLODLevel {
 		*    - GetTrianglePlaneList() is faster because it is using a precalculated triangle
 		*      list
 		*/
-		PLMESH_API bool GetTriangle(PLGeneral::uint32 nGeometry, PLGeneral::uint32 nIndex,
-									PLGeneral::uint32 &nVertex1, PLGeneral::uint32 &nVertex2, PLGeneral::uint32 &nVertex3) const;
+		PLMESH_API bool GetTriangle(PLCore::uint32 nGeometry, PLCore::uint32 nIndex, PLCore::uint32 &nVertex1, PLCore::uint32 &nVertex2, PLCore::uint32 &nVertex3) const;
 
 		/**
 		*  @brief
@@ -351,7 +350,7 @@ class MeshLODLevel {
 		*  @note
 		*    - If there was an octree it will be destroyed!
 		*/
-		PLMESH_API bool SplitGeometries(bool bSingleGeometries = false, PLGeneral::uint32 *pSplit = nullptr, PLGeneral::uint32 nSplitNumber = 0);
+		PLMESH_API bool SplitGeometries(bool bSingleGeometries = false, PLCore::uint32 *pSplit = nullptr, PLCore::uint32 nSplitNumber = 0);
 
 		/**
 		*  @brief
@@ -370,7 +369,7 @@ class MeshLODLevel {
 		*    - Geometries of the primitive type PLRenderer::Primitive::LineStrip,
 		*      PLRenderer::Primitive::TriangleStrip and PLRenderer::Primitive::TriangleFan can't be joined!
 		*/
-		PLMESH_API bool JoinGeometries(PLGeneral::uint32 *pJoin = nullptr, PLGeneral::uint32 nJoinNumber = 0);
+		PLMESH_API bool JoinGeometries(PLCore::uint32 *pJoin = nullptr, PLCore::uint32 nJoinNumber = 0);
 
 		/**
 		*  @brief
@@ -391,7 +390,7 @@ class MeshLODLevel {
 		*      geometries!
 		*    - This may take some time so don't do it during runtime!
 		*/
-		PLMESH_API bool GenerateOctreeGeometries(PLGeneral::uint32 nSubdivide = 1, PLGeneral::uint32 nMinGeometries = 10);
+		PLMESH_API bool GenerateOctreeGeometries(PLCore::uint32 nSubdivide = 1, PLCore::uint32 nMinGeometries = 10);
 
 		/**
 		*  @brief
@@ -416,7 +415,7 @@ class MeshLODLevel {
 		*    - Ensure that there are ONLY geometries of triangles, (PLRenderer::Primitive::TriangleList)
 		*      else this function will not work! (see SplitGeometries())
 		*/
-		PLMESH_API bool GenerateStrips(PLGeneral::uint32 nVertexCacheSize = 18, PLGeneral::uint32 nMinStripLength = 3);
+		PLMESH_API bool GenerateStrips(PLCore::uint32 nVertexCacheSize = 18, PLCore::uint32 nMinStripLength = 3);
 
 		/**
 		*  @brief
@@ -434,7 +433,7 @@ class MeshLODLevel {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool CalculateBoundingBox(const PLGeneral::Array<const Geometry*> &lstGeometries, PLRenderer::VertexBuffer &cVertexBuffer, PLMath::Vector3 &vMinPos, PLMath::Vector3 &vMaxPos) const;
+		PLMESH_API bool CalculateBoundingBox(const PLCore::Array<const Geometry*> &lstGeometries, PLRenderer::VertexBuffer &cVertexBuffer, PLMath::Vector3 &vMinPos, PLMath::Vector3 &vMaxPos) const;
 
 		/**
 		*  @brief
@@ -452,7 +451,7 @@ class MeshLODLevel {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLMESH_API bool CalculateBoundingSphere(const PLGeneral::Array<const Geometry*> &lstGeometries, PLRenderer::VertexBuffer &cVertexBuffer, PLMath::Vector3 &vPos, float &fRadius) const;
+		PLMESH_API bool CalculateBoundingSphere(const PLCore::Array<const Geometry*> &lstGeometries, PLRenderer::VertexBuffer &cVertexBuffer, PLMath::Vector3 &vPos, float &fRadius) const;
 
 
 	//[-------------------------------------------------------]
@@ -466,15 +465,15 @@ class MeshLODLevel {
 		float m_fDistance;	/**< LOD distance */
 
 		// Overwritten data
-		PLRenderer::IndexBuffer    *m_pIndexBuffer;		/**< Index buffer, can be a null pointer */
-		PLGeneral::Array<Geometry> *m_plstGeometries;	/**< Geometries, can be a null pointer */
+		PLRenderer::IndexBuffer *m_pIndexBuffer;	/**< Index buffer, can be a null pointer */
+		PLCore::Array<Geometry> *m_plstGeometries;	/**< Geometries, can be a null pointer */
 
 		// Visibility
 		MeshOctree *m_pOctree;	/**< Octree for geometry visibility determination, can be a null pointer */
 
 		// Precalculated data
-		PLGeneral::Array<MeshTriangle> m_lstTriangles;	/**< List of triangles */
-		PLGeneral::Array<MeshEdge>     m_lstEdges;		/**< List of edges */
+		PLCore::Array<MeshTriangle> m_lstTriangles;	/**< List of triangles */
+		PLCore::Array<MeshEdge>     m_lstEdges;		/**< List of edges */
 
 
 };

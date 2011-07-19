@@ -23,15 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Time.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/Tools/Time.h>
+#include <PLCore/System/System.h>
 #include "PLTestBase/General/SystemTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
@@ -90,6 +90,6 @@ void SystemTest::Test()
 	Print("PATH: %s\n", pSystem->GetEnvironmentVariable("PATH").GetASCII());
 	Print("\n");
 
-//		PLGENERAL_API bool SetEnvironmentVariable(const String &sName, const String &sValue);
-//		PLGENERAL_API bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir = "");
+//		PLCORE_API bool SetEnvironmentVariable(const String &sName, const String &sValue);
+//		PLCORE_API bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir = "");
 }

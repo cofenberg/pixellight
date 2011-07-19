@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/PLGeneralLinuxIncludes.h>
+#include <PLCore/PLCoreLinuxIncludes.h>
 #include "PLGui/Backend/CursorImpl.h"
 
 
@@ -82,7 +82,7 @@ class CursorLinux : public CursorImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void Load(EMouseCursor nCursor);
-		virtual void Load(const PLGeneral::String &sFilename, const PLMath::Vector2i &vHotspot);
+		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
 
 
 	//[-------------------------------------------------------]

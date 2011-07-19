@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Cg/cg.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLRenderer/Renderer/ResourceHandler.h>
 #include <PLRendererOpenGL/Program.h>
 
@@ -149,32 +149,32 @@ class ProgramCg : public PLRendererOpenGL::Program {
 	//[-------------------------------------------------------]
 	private:
 		// Program
-		CGprogram																m_pCgCombinedProgram;				/**< Cg combined program, can be a null pointer */
-		bool																	m_bLinked;							/**< Is the Cg combined program currently linked? */
-		bool																	m_bLinkedFailed;					/**< Cg combined program link failed? */
+		CGprogram															m_pCgCombinedProgram;				/**< Cg combined program, can be a null pointer */
+		bool																m_bLinked;							/**< Is the Cg combined program currently linked? */
+		bool																m_bLinkedFailed;					/**< Cg combined program link failed? */
 		// Shaders
-		PLRenderer::ResourceHandler												m_cVertexShaderHandler;				/**< Vertex shader resource handler */
-		PLRenderer::ResourceHandler												m_cGeometryShaderHandler;			/**< Geometry shader resource handler */
-		PLRenderer::ResourceHandler												m_cFragmentShaderHandler;			/**< Fragment shader resource handler */
+		PLRenderer::ResourceHandler											m_cVertexShaderHandler;				/**< Vertex shader resource handler */
+		PLRenderer::ResourceHandler											m_cGeometryShaderHandler;			/**< Geometry shader resource handler */
+		PLRenderer::ResourceHandler											m_cFragmentShaderHandler;			/**< Fragment shader resource handler */
 		// Attributes
-		bool																	m_bAttributeInformationBuild;		/**< Attribute information already build? */
-		PLGeneral::Array<PLRenderer::ProgramAttribute*>							m_lstAttributes;					/**< List of attributes */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramAttribute*>	m_mapAttributes;					/**< Hash map of names -> attributes */
+		bool																m_bAttributeInformationBuild;		/**< Attribute information already build? */
+		PLCore::Array<PLRenderer::ProgramAttribute*>						m_lstAttributes;					/**< List of attributes */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>		m_mapAttributes;					/**< Hash map of names -> attributes */
 		// Uniforms
-		bool																	m_bUniformInformationBuild;			/**< Uniform information already build? */
-		PLGeneral::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;						/**< List of uniforms */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniform*>		m_mapUniforms;						/**< Hash map of names -> uniforms */
+		bool																m_bUniformInformationBuild;			/**< Uniform information already build? */
+		PLCore::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;						/**< List of uniforms */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>		m_mapUniforms;						/**< Hash map of names -> uniforms */
 		// Uniform blocks
-		bool																	m_bUniformBlockInformationBuild;	/**< Uniform block information already build? */
-		PLGeneral::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;					/**< List of uniform blocks */
-		PLGeneral::HashMap<PLGeneral::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;					/**< Hash map of names -> uniform blocks */
+		bool																m_bUniformBlockInformationBuild;	/**< Uniform block information already build? */
+		PLCore::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;					/**< List of uniform blocks */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;					/**< Hash map of names -> uniform blocks */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Program functions          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
+		virtual PLCore::String GetShaderLanguage() const;
 		virtual PLRenderer::VertexShader *GetVertexShader() const;
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader);
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const;
@@ -182,13 +182,13 @@ class ProgramCg : public PLRendererOpenGL::Program {
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const;
 		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader);
 		virtual bool IsValid();
-		virtual PLGeneral::String GetCompiledProgram();
-		virtual const PLGeneral::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
-		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLGeneral::String &sName);
-		virtual const PLGeneral::Array<PLRenderer::ProgramUniform*> &GetUniforms();
-		virtual PLRenderer::ProgramUniform *GetUniform(const PLGeneral::String &sName);
-		virtual const PLGeneral::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
-		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLGeneral::String &sName);
+		virtual PLCore::String GetCompiledProgram();
+		virtual const PLCore::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
+		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLCore::String &sName);
+		virtual const PLCore::Array<PLRenderer::ProgramUniform*> &GetUniforms();
+		virtual PLRenderer::ProgramUniform *GetUniform(const PLCore::String &sName);
+		virtual const PLCore::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
+		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -203,8 +203,8 @@ class ProgramCg : public PLRendererOpenGL::Program {
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

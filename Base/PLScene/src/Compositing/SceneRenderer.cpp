@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include "PLScene/Compositing/SceneRendererManager.h"
 #include "PLScene/Compositing/SceneRenderer.h"
@@ -32,7 +32,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLRenderer;
 namespace PLScene {
@@ -150,7 +149,7 @@ String SceneRenderer::GetLoadableTypeName() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGeneral::ElementManager functions   ]
+//[ Private virtual PLCore::ElementManager functions      ]
 //[-------------------------------------------------------]
 SceneRendererPass *SceneRenderer::CreateElement(const String &sName)
 {

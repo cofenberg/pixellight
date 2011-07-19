@@ -28,11 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Core/Singleton.h"
+#include "PLCore/Container/Array.h"
+#include "PLCore/Container/HashMap.h"
 
 
 //[-------------------------------------------------------]
@@ -79,20 +78,20 @@ namespace PLCore {
 *    String sMyString = PL_TEXT("Translate this text", "MyProject");
 *  @endverbatim
 */
-class Localization : public PLGeneral::Singleton<Localization> {
+class Localization : public Singleton<Localization> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<Localization>;
+	friend class Singleton<Localization>;
 
 
 	//[-------------------------------------------------------]
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const PLGeneral::String PixelLight;	/**< "PixelLight" (default) */
+		PLCORE_API static const String PixelLight;	/**< "PixelLight" (default) */
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +105,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    The current language
 		*/
-		PLCORE_API PLGeneral::String GetLanguage() const;
+		PLCORE_API String GetLanguage() const;
 
 		/**
 		*  @brief
@@ -123,7 +122,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*    - It's recommended to call this function ONLY on startup because it's possible that some
 		*      texts can't be updated on runtime if another language is set
 		*/
-		PLCORE_API void SetLanguage(const PLGeneral::String &sLanguage);
+		PLCORE_API void SetLanguage(const String &sLanguage);
 
 		/**
 		*  @brief
@@ -138,7 +137,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*    The translation of the given text, if no translation is available for this text the
 		*    given text is returned instead by default
 		*/
-		PLCORE_API PLGeneral::String Get(const PLGeneral::String &sText, const PLGeneral::String &sGroup = PixelLight) const;
+		PLCORE_API String Get(const String &sText, const String &sGroup = PixelLight) const;
 
 		/**
 		*  @brief
@@ -147,7 +146,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    The number of groups
 		*/
-		PLCORE_API PLGeneral::uint32 GetNumOfGroups() const;
+		PLCORE_API uint32 GetNumOfGroups() const;
 
 		/**
 		*  @brief
@@ -159,7 +158,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    The requested group, a null pointer on error
 		*/
-		PLCORE_API LocalizationGroup *GetGroup(PLGeneral::uint32 nIndex) const;
+		PLCORE_API LocalizationGroup *GetGroup(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -171,7 +170,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    The requested group, a null pointer on error
 		*/
-		PLCORE_API LocalizationGroup *GetGroup(const PLGeneral::String &sName) const;
+		PLCORE_API LocalizationGroup *GetGroup(const String &sName) const;
 
 		/**
 		*  @brief
@@ -183,7 +182,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    The new group, a null pointer on error (maybe there's already a group with the given name?)
 		*/
-		PLCORE_API LocalizationGroup *AddGroup(const PLGeneral::String &sName);
+		PLCORE_API LocalizationGroup *AddGroup(const String &sName);
 
 		/**
 		*  @brief
@@ -195,7 +194,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe there's no group with the given name?)
 		*/
-		PLCORE_API bool RemoveGroup(PLGeneral::uint32 nIndex);
+		PLCORE_API bool RemoveGroup(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -207,7 +206,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe there's no group with the given name?)
 		*/
-		PLCORE_API bool RemoveGroup(const PLGeneral::String &sName);
+		PLCORE_API bool RemoveGroup(const String &sName);
 
 		/**
 		*  @brief
@@ -258,9 +257,9 @@ class Localization : public PLGeneral::Singleton<Localization> {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String											m_sLanguage;	/**< Current set language */
-		PLGeneral::Array<LocalizationGroup*>						m_lstGroups;	/**< Localization groups list */
-		PLGeneral::HashMap<PLGeneral::String, LocalizationGroup*>	m_mapGroups;	/**< Localization groups map */
+		String								m_sLanguage;	/**< Current set language */
+		Array<LocalizationGroup*>			m_lstGroups;	/**< Localization groups list */
+		HashMap<String, LocalizationGroup*>	m_mapGroups;	/**< Localization groups map */
 
 
 };
@@ -275,7 +274,7 @@ class Localization : public PLGeneral::Singleton<Localization> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLGeneral::Singleton<PLCore::Localization>;
+PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::Localization>;
 
 
 #endif // __PLCORE_LOCALIZATION_H__

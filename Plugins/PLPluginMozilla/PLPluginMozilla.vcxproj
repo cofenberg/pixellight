@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src;../../Base/PLGeneral/include/;../PLPlugin/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../PLPlugin/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPLUGINMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -119,7 +119,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src;../../Base/PLGeneral/include/;../PLPlugin/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../PLPlugin/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPLUGINMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -150,7 +150,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>src;../../Base/PLGeneral/include/;../PLPlugin/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../PLPlugin/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPLUGINMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -191,7 +191,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>src;../../Base/PLGeneral/include/;../PLPlugin/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../PLPlugin/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPLUGINMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

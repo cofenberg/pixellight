@@ -157,8 +157,7 @@ class Quadtree {
 		*  @note
 		*    - You should destroy the old quadtree before you initialize the new one!
 		*/
-		PLMATH_API void Init(PLGeneral::uint32 nXOffset = 0, PLGeneral::uint32 nYOffset = 0, PLGeneral::uint32 nXSize = 0,
-							 PLGeneral::uint32 nYSize = 0, Quadtree *pParent = nullptr);
+		PLMATH_API void Init(PLCore::uint32 nXOffset = 0, PLCore::uint32 nYOffset = 0, PLCore::uint32 nXSize = 0, PLCore::uint32 nYSize = 0, Quadtree *pParent = nullptr);
 
 		/**
 		*  @brief
@@ -228,7 +227,7 @@ class Quadtree {
 		*  @return
 		*    Number of children
 		*/
-		PLMATH_API PLGeneral::uint32 GetNumOfChildren() const;
+		PLMATH_API PLCore::uint32 GetNumOfChildren() const;
 
 		/**
 		*  @brief
@@ -240,7 +239,7 @@ class Quadtree {
 		*  @return
 		*    The requested child, a null pointer on error
 		*/
-		PLMATH_API Quadtree *GetChild(PLGeneral::uint32 nChild) const;
+		PLMATH_API Quadtree *GetChild(PLCore::uint32 nChild) const;
 
 
 	//[-------------------------------------------------------]
@@ -273,15 +272,15 @@ class Quadtree {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32  m_nXOffset;			/**< X offset */
-		PLGeneral::uint32  m_nYOffset;			/**< Y offset */
-		PLGeneral::uint32  m_nXSize;			/**< X size */
-		PLGeneral::uint32  m_nYSize;			/**< Y size */
-		Quadtree		  *m_pTopmost;			/**< Topmost quadtree (always valid!) */
-		Quadtree		  *m_pParent;			/**< Quadtree parent, can be a null pointer */
-		PLGeneral::uint32  m_nNumOfChildren;	/**< Number of children */
-		Quadtree		  *m_pChild;			/**< The children, can be a null pointer */
-		Vector3			   m_vBoundingBox[2];	/**< Quadtree bounding box (min/max) */
+		PLCore::uint32  m_nXOffset;			/**< X offset */
+		PLCore::uint32  m_nYOffset;			/**< Y offset */
+		PLCore::uint32  m_nXSize;			/**< X size */
+		PLCore::uint32  m_nYSize;			/**< Y size */
+		Quadtree	   *m_pTopmost;			/**< Topmost quadtree (always valid!) */
+		Quadtree	   *m_pParent;			/**< Quadtree parent, can be a null pointer */
+		PLCore::uint32  m_nNumOfChildren;	/**< Number of children */
+		Quadtree	   *m_pChild;			/**< The children, can be a null pointer */
+		Vector3			m_vBoundingBox[2];	/**< Quadtree bounding box (min/max) */
 
 
 };

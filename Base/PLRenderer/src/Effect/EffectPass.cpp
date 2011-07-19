@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/File/File.h>
+#include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Program.h"
@@ -42,7 +42,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;

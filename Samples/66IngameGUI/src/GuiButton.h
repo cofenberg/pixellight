@@ -31,7 +31,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/SmartPtr.h>
+#include <PLCore/Core/SmartPtr.h>
 #include "GuiBase.h"
 
 
@@ -58,7 +58,7 @@ class GuiButton : public GuiBase {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, GuiButton, "", GuiBase, "Ingame Gui - Button")
 		// Signals
-		pl_signal_1(SignalPressed,	PLGeneral::uint32,	"Button has been pressed",	"")
+		pl_signal_1(SignalPressed,	PLCore::uint32,	"Button has been pressed",	"")
 	pl_class_end
 
 
@@ -98,7 +98,7 @@ class GuiButton : public GuiBase {
 		*  @return
 		*    Text displayed in the item
 		*/
-		PLGeneral::String GetText() const;
+		PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class GuiButton : public GuiBase {
 		*  @param[in] sText
 		*    Text displayed in the item
 		*/
-		void SetText(const PLGeneral::String &sText);
+		void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class GuiButton : public GuiBase {
 		*  @return
 		*    Background image filename
 		*/
-		PLGeneral::String GetBackgroundImageFilename() const;
+		PLCore::String GetBackgroundImageFilename() const;
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class GuiButton : public GuiBase {
 		*  @param[in] sFilename
 		*    Background image filename
 		*/
-		void SetBackgroundImageFilename(const PLGeneral::String &sFilename);
+		void SetBackgroundImageFilename(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]
@@ -215,16 +215,16 @@ class GuiButton : public GuiBase {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String	 m_sText;						/**< Displayed text */
+		PLCore::String	 	 m_sText;						/**< Displayed text */
 		PLGui::Font			*m_pFont;						/**< Selected font */
 		PLGraphics::Color4	 m_cColor;						/**< Text color */
 		PLGraphics::Color4	 m_cMouseOverColor;				/**< Mouse over text color */
 		ETextAlign			 m_nAlign;						/**< Text alignment */
 		bool				 m_bMouseOver;					/**< Is the mouse button currently over this widget? */
 		bool				 m_bMouseDown;					/**< Is the mouse button currently down? */
-		PLGeneral::String	 m_sBackgroundImageFilename;	/**< Background image filename */
+		PLCore::String	 	 m_sBackgroundImageFilename;	/**< Background image filename */
 		// Images
-		PLGeneral::SmartPtr<PLGui::Image> m_cBackground;	/**< Background image */
+		PLCore::SmartPtr<PLGui::Image> m_cBackground;	/**< Background image */
 
 
 	//[-------------------------------------------------------]
@@ -235,8 +235,8 @@ class GuiButton : public GuiBase {
 		virtual void OnMouseMove(const PLMath::Vector2i &vPos);
 		virtual void OnMouseEnter();
 		virtual void OnMouseLeave();
-		virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
 
 
 };

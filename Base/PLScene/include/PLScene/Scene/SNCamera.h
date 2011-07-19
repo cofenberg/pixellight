@@ -116,7 +116,7 @@ class SNCamera : public SceneNode {
 		pl_attribute(Aspect,				float,						1.0f,		ReadWrite,	GetSet,	"Aspect factor",																											"")
 		pl_attribute(ZNear,					float,						0.01f,		ReadWrite,	GetSet,	"Near clipping plane",																										"")
 		pl_attribute(ZFar,					float,						1000.0f,	ReadWrite,	GetSet,	"Far clipping plane",																										"")
-		pl_attribute(SceneRendererFilename,	PLGeneral::String,			"",			ReadWrite,	GetSet,	"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
+		pl_attribute(SceneRendererFilename,	PLCore::String,				"",			ReadWrite,	GetSet,	"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),		0,			ReadWrite,	GetSet,	"Flags",																													"")
 		pl_attribute(DebugFlags,			pl_flag_type(EDebugFlags),	0,			ReadWrite,	GetSet,	"Debug flags",																												"")
@@ -137,9 +137,9 @@ class SNCamera : public SceneNode {
 		PLS_API void SetZNear(float fValue);
 		PLS_API float GetZFar() const;
 		PLS_API void SetZFar(float fValue);
-		PLS_API PLGeneral::String GetSceneRendererFilename() const;
-		PLS_API void SetSceneRendererFilename(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API PLCore::String GetSceneRendererFilename() const;
+		PLS_API void SetSceneRendererFilename(const PLCore::String &sValue);
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -321,7 +321,7 @@ class SNCamera : public SceneNode {
 		*  @note
 		*    - This vertices can for instance be used to check the camera frustum visibility
 		*/
-		PLS_API const PLGeneral::Array<PLMath::Vector3> &GetFrustumVertices(const PLMath::Rectangle &cViewport);
+		PLS_API const PLCore::Array<PLMath::Vector3> &GetFrustumVertices(const PLMath::Rectangle &cViewport);
 
 		/**
 		*  @brief
@@ -403,21 +403,21 @@ class SNCamera : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		float							   m_fFOV;						/**< Field of view in degree */
-		float							   m_fAspect;					/**< Aspect factor */
-		float							   m_fZNear;					/**< Near clipping plane */
-		float							   m_fZFar;						/**< Far clipping plane */
-		PLGeneral::String				   m_sSceneRendererFilename;	/**< Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used */
-		PLGeneral::uint8				   m_nInternalCameraFlags;		/**< Internal camera flags */
-		bool							   m_bAutoUpdate;				/**< Update projection & view matrix and frustum automatically? */
-		PLMath::Matrix4x4				   m_mProj;						/**< Current projection matrix */
-		PLMath::Quaternion				   m_qViewRotationOffset;		/**< View rotation offset */
-		PLMath::Matrix3x4				   m_mView;						/**< Current view matrix */
-		PLMath::Frustum					   m_cFrustum;					/**< Current frustum */
-		PLGeneral::Array<PLMath::Vector3>  m_cFrustumVertices;			/**< Current frustum vertices */
-		PLGeneral::uint32				   m_nViewportWidth;			/**< Current viewport width */
-		PLGeneral::uint32				   m_nViewportHeight;			/**< Current viewport height */
-		SceneRendererHandler			  *m_pSceneRendererHandler;		/**< Scene renderer handler, always valid! */
+		float							m_fFOV;						/**< Field of view in degree */
+		float							m_fAspect;					/**< Aspect factor */
+		float							m_fZNear;					/**< Near clipping plane */
+		float							m_fZFar;					/**< Far clipping plane */
+		PLCore::String				    m_sSceneRendererFilename;	/**< Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used */
+		PLCore::uint8				    m_nInternalCameraFlags;		/**< Internal camera flags */
+		bool							m_bAutoUpdate;				/**< Update projection & view matrix and frustum automatically? */
+		PLMath::Matrix4x4				m_mProj;					/**< Current projection matrix */
+		PLMath::Quaternion				m_qViewRotationOffset;		/**< View rotation offset */
+		PLMath::Matrix3x4				m_mView;					/**< Current view matrix */
+		PLMath::Frustum					m_cFrustum;					/**< Current frustum */
+		PLCore::Array<PLMath::Vector3>  m_cFrustumVertices;			/**< Current frustum vertices */
+		PLCore::uint32				    m_nViewportWidth;			/**< Current viewport width */
+		PLCore::uint32				    m_nViewportHeight;			/**< Current viewport height */
+		SceneRendererHandler		   *m_pSceneRendererHandler;	/**< Scene renderer handler, always valid! */
 
 
 	//[-------------------------------------------------------]

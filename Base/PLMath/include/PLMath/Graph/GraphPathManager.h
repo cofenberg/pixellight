@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLCore/Tools/ResourceManager.h>
+#include <PLCore/Core/Singleton.h>
+#include <PLCore/Container/ResourceManager.h>
 #include "PLMath/Graph/GraphPath.h"
 
 
@@ -49,14 +49,13 @@ namespace PLMath {
 *  @note
 *    - Unloads unused resources automatically by default
 */
-class GraphPathManager : public PLCore::ResourceManager<GraphPath>,
-	public PLGeneral::Singleton<GraphPathManager> {
+class GraphPathManager : public PLCore::ResourceManager<GraphPath>, public PLCore::Singleton<GraphPathManager> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<GraphPathManager>;
+	friend class PLCore::Singleton<GraphPathManager>;
 
 
 	//[-------------------------------------------------------]
@@ -80,7 +79,7 @@ class GraphPathManager : public PLCore::ResourceManager<GraphPath>,
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual GraphPath *CreateResource(const PLGeneral::String &sName);
+		virtual GraphPath *CreateResource(const PLCore::String &sName);
 
 
 };
@@ -95,7 +94,7 @@ class GraphPathManager : public PLCore::ResourceManager<GraphPath>,
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLMATH_TEMPLATE template class PLMATH_API PLGeneral::Singleton<PLMath::GraphPathManager>;
+PLMATH_TEMPLATE template class PLMATH_API PLCore::Singleton<PLMath::GraphPathManager>;
 
 
 #endif // __PLMATH_GRAPH_GRAPHPATHMANAGER_H__

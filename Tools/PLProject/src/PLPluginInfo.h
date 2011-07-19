@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class File;
 	class XmlElement;
 	class XmlDocument;
@@ -118,7 +118,7 @@ class PLPluginInfo {
 		*  @param[in] sLibraryName
 		*    Name of the library
 		*/
-		void SetLibraryName(const PLGeneral::String &sLibraryName);
+		void SetLibraryName(const PLCore::String &sLibraryName);
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class PLPluginInfo {
 		*  @param[in] sLibrarySuffix
 		*    Library suffix
 		*/
-		void SetLibrarySuffix(const PLGeneral::String &sLibrarySuffix);
+		void SetLibrarySuffix(const PLCore::String &sLibrarySuffix);
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class PLPluginInfo {
 		*  @param[in] sPluginVersion
 		*    Version of the plugin file
 		*/
-		void SetPluginFileVersion(const PLGeneral::String &sPluginVersion);
+		void SetPluginFileVersion(const PLCore::String &sPluginVersion);
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class PLPluginInfo {
 		*  @param[in] sPLVersion
 		*    PixelLight version string
 		*/
-		void SetPLVersion(const PLGeneral::String &sPLVersion);
+		void SetPLVersion(const PLCore::String &sPLVersion);
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class PLPluginInfo {
 		*  @param[in] sFilename
 		*    Name of the file to write into
 		*/
-		void Save(const PLGeneral::String &sFilename) const;
+		void Save(const PLCore::String &sFilename) const;
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class PLPluginInfo {
 		*  @param[out] cFile
 		*    File to write in, must be opened and writable
 		*/
-		void Save(PLGeneral::File &cFile) const;
+		void Save(PLCore::File &cFile) const;
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class PLPluginInfo {
 		*  @parse[in] sIncludePath
 		*    Include path to parse
 		*/
-		void ParseIncludeFiles(const PLGeneral::String &sIncludePath);
+		void ParseIncludeFiles(const PLCore::String &sIncludePath);
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class PLPluginInfo {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool ParseMainModuleFile(const PLGeneral::String &sMainModuleFilename);
+		bool ParseMainModuleFile(const PLCore::String &sMainModuleFilename);
 
 
 	//[-------------------------------------------------------]
@@ -237,7 +237,7 @@ class PLPluginInfo {
 		*  @param[in] sFilename
 		*    Name of the file to parse
 		*/
-		void ParseFile(const PLGeneral::String &sFilename);
+		void ParseFile(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class PLPluginInfo {
 		*  @param[in]  bRecursive
 		*    'true' to search recursive
 		*/
-		void Find(PLGeneral::Array<PLGeneral::String> &lstNames, const PLGeneral::String &sPath, const PLGeneral::String &sPattern, bool bRecursive) const;
+		void Find(PLCore::Array<PLCore::String> &lstNames, const PLCore::String &sPath, const PLCore::String &sPattern, bool bRecursive) const;
 
 		/**
 		*  @brief
@@ -263,7 +263,7 @@ class PLPluginInfo {
 		*  @param[in]  sValue
 		*    XML element value
 		*/
-		void AddTextXmlElement(PLGeneral::XmlElement &cParent, const PLGeneral::String &sName, const PLGeneral::String &sValue) const;
+		void AddTextXmlElement(PLCore::XmlElement &cParent, const PLCore::String &sName, const PLCore::String &sValue) const;
 
 		/**
 		*  @brief
@@ -272,7 +272,7 @@ class PLPluginInfo {
 		*  @param[in] sPluginModuleBlock
 		*    Block to parse
 		*/
-		void ParsePluginModuleBlock(const PLGeneral::String &sPluginModuleBlock);
+		void ParsePluginModuleBlock(const PLCore::String &sPluginModuleBlock);
 
 		/**
 		*  @brief
@@ -284,7 +284,7 @@ class PLPluginInfo {
 		*  @return
 		*    The file content
 		*/
-		PLGeneral::String GetContentFromFile(const PLGeneral::String &sFilename) const;
+		PLCore::String GetContentFromFile(const PLCore::String &sFilename) const;
 
 		/**
 		*  @brief
@@ -293,24 +293,24 @@ class PLPluginInfo {
 		*  @param[out] cDocument
 		*    XML document to append to
 		*/
-		void AppendInformation(PLGeneral::XmlDocument &cDocument) const;
+		void AppendInformation(PLCore::XmlDocument &cDocument) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String					 m_sPluginFileVersion;	/**< Plugin version string */
-		PLGeneral::String					 m_sPLVersion;			/**< PixelLight version string */
-		bool								 m_bIsActive;			/**< Flag if the plugin is active */
-		bool								 m_bDelayed;			/**< Flag if the delayed loading should be used */
-		PLGeneral::String					 m_sDescription;		/**< Plugin description */
-		PLGeneral::String					 m_sVendor;				/**< Plugin vendor information */
-		PLGeneral::String					 m_sLicense;			/**< Plugin license information */
-		PLGeneral::String					 m_sPluginName;			/**< Name of the plugin */
-		PLGeneral::String					 m_sModuleVersion;		/**< Version of the module */
-		PLGeneral::Array<PLPluginClassInfo*> m_lstClasses;			/**< List of PLPLuginClassInfo instances */
-		PLPluginPlatformInfo				 m_cPluginPlatformInfo;	/**< Parser for the platform specific bits in an pl_module_plugin pl_module_end block */
+		PLCore::String					  m_sPluginFileVersion;		/**< Plugin version string */
+		PLCore::String					  m_sPLVersion;				/**< PixelLight version string */
+		bool							  m_bIsActive;				/**< Flag if the plugin is active */
+		bool							  m_bDelayed;				/**< Flag if the delayed loading should be used */
+		PLCore::String					  m_sDescription;			/**< Plugin description */
+		PLCore::String					  m_sVendor;				/**< Plugin vendor information */
+		PLCore::String					  m_sLicense;				/**< Plugin license information */
+		PLCore::String					  m_sPluginName;			/**< Name of the plugin */
+		PLCore::String					  m_sModuleVersion;			/**< Version of the module */
+		PLCore::Array<PLPluginClassInfo*> m_lstClasses;				/**< List of PLPLuginClassInfo instances */
+		PLPluginPlatformInfo			  m_cPluginPlatformInfo;	/**< Parser for the platform specific bits in an pl_module_plugin pl_module_end block */
 
 
 };

@@ -24,12 +24,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <AngelScript/angelscript.h>
-#include <PLGeneral/PLGeneral.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
 	#include <../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.h>
 PL_WARNING_POP
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
 #include "PLScriptAngelScript/AngelScriptContext.h"
 #include "PLScriptAngelScript/Script.h"
 
@@ -37,7 +37,6 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScriptAngelScript {
 

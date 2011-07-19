@@ -152,7 +152,7 @@ class GuiImpl : public PLCore::Object {
 		*    - The given list is not cleared, new entries are just added
 		*    - If you no longer need the list entries, you are responsible for destroying them
 		*/
-		virtual void EnumerateScreens(PLGeneral::List<Screen*> &lstScreens) = 0;
+		virtual void EnumerateScreens(PLCore::List<Screen*> &lstScreens) = 0;
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class GuiImpl : public PLCore::Object {
 		*  @param[out] lstFonts
 		*    List that will receive the fonts
 		*/
-		virtual void ListFonts(PLGeneral::List<FontInfo> &lstFonts) const = 0;
+		virtual void ListFonts(PLCore::List<FontInfo> &lstFonts) const = 0;
 
 		/**
 		*  @brief

@@ -28,10 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Container/List.h"
+#include "PLCore/Container/HashMap.h"
 
 
 //[-------------------------------------------------------]
@@ -110,7 +109,7 @@ class ClassImpl {
 		*  @param[in] sBaseClass
 		*    Base class
 		*/
-		PLCORE_API ClassImpl(PLGeneral::uint32 nModuleID, const PLGeneral::String &sName, const PLGeneral::String &sDescription, const PLGeneral::String &sNamespace, const PLGeneral::String &sBaseClass);
+		PLCORE_API ClassImpl(uint32 nModuleID, const String &sName, const String &sDescription, const String &sNamespace, const String &sBaseClass);
 
 		/**
 		*  @brief
@@ -134,7 +133,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class and namespace
 		*/
-		PLCORE_API PLGeneral::String GetClassName() const;
+		PLCORE_API String GetClassName() const;
 
 		/**
 		*  @brief
@@ -143,7 +142,7 @@ class ClassImpl {
 		*  @return
 		*    Name of base class and namespace
 		*/
-		PLCORE_API PLGeneral::String GetBaseClassName() const;
+		PLCORE_API String GetBaseClassName() const;
 
 		/**
 		*  @brief
@@ -152,7 +151,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class
 		*/
-		PLCORE_API PLGeneral::String GetName() const;
+		PLCORE_API String GetName() const;
 
 		/**
 		*  @brief
@@ -161,7 +160,7 @@ class ClassImpl {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API PLGeneral::String GetDescription() const;
+		PLCORE_API String GetDescription() const;
 
 		/**
 		*  @brief
@@ -170,7 +169,7 @@ class ClassImpl {
 		*  @return
 		*    Namespace
 		*/
-		PLCORE_API PLGeneral::String GetNamespace() const;
+		PLCORE_API String GetNamespace() const;
 
 		/**
 		*  @brief
@@ -203,7 +202,7 @@ class ClassImpl {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API bool IsDerivedFrom(const PLGeneral::String &sBaseClass) const;
+		PLCORE_API bool IsDerivedFrom(const String &sBaseClass) const;
 
 		/**
 		*  @brief
@@ -218,7 +217,7 @@ class ClassImpl {
 		*      "PluginType"  -> "Widget"
 		*      "FileFormats" -> "avi mpg mp4"
 		*/
-		PLCORE_API const PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> &GetProperties() const;
+		PLCORE_API const HashMap<String, String> &GetProperties() const;
 
 		//[-------------------------------------------------------]
 		//[ Class management                                      ]
@@ -232,7 +231,7 @@ class ClassImpl {
 		*  @param[in] sValue
 		*    Property value
 		*/
-		PLCORE_API void AddProperty(const PLGeneral::String &sName, const PLGeneral::String &sValue);
+		PLCORE_API void AddProperty(const String &sName, const String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -284,7 +283,7 @@ class ClassImpl {
 		*  @return
 		*    List of attribute descriptors
 		*/
-		virtual const PLGeneral::List<VarDesc*> &GetAttributes() const = 0;
+		virtual const List<VarDesc*> &GetAttributes() const = 0;
 
 		/**
 		*  @brief
@@ -296,7 +295,7 @@ class ClassImpl {
 		*  @return
 		*    Attribute descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		virtual const VarDesc *GetAttribute(const PLGeneral::String &sName) const = 0;
+		virtual const VarDesc *GetAttribute(const String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -305,7 +304,7 @@ class ClassImpl {
 		*  @return
 		*    List of method descriptors
 		*/
-		virtual const PLGeneral::List<FuncDesc*> &GetMethods() const = 0;
+		virtual const List<FuncDesc*> &GetMethods() const = 0;
 
 		/**
 		*  @brief
@@ -317,7 +316,7 @@ class ClassImpl {
 		*  @return
 		*    Method descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		virtual const FuncDesc *GetMethod(const PLGeneral::String &sName) const = 0;
+		virtual const FuncDesc *GetMethod(const String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -326,7 +325,7 @@ class ClassImpl {
 		*  @return
 		*    List of signal descriptors
 		*/
-		virtual const PLGeneral::List<EventDesc*> &GetSignals() const = 0;
+		virtual const List<EventDesc*> &GetSignals() const = 0;
 
 		/**
 		*  @brief
@@ -338,7 +337,7 @@ class ClassImpl {
 		*  @return
 		*    Signal descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		virtual const EventDesc *GetSignal(const PLGeneral::String &sName) const = 0;
+		virtual const EventDesc *GetSignal(const String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -347,7 +346,7 @@ class ClassImpl {
 		*  @return
 		*    List of slot descriptors
 		*/
-		virtual const PLGeneral::List<EventHandlerDesc*> &GetSlots() const = 0;
+		virtual const List<EventHandlerDesc*> &GetSlots() const = 0;
 
 		/**
 		*  @brief
@@ -359,7 +358,7 @@ class ClassImpl {
 		*  @return
 		*    Slot descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		virtual const EventHandlerDesc *GetSlot(const PLGeneral::String &sName) const = 0;
+		virtual const EventHandlerDesc *GetSlot(const String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -386,7 +385,7 @@ class ClassImpl {
 		*  @return
 		*    List of constructor descriptors
 		*/
-		virtual const PLGeneral::List<ConstructorDesc*> &GetConstructors() const = 0;
+		virtual const List<ConstructorDesc*> &GetConstructors() const = 0;
 
 		/**
 		*  @brief
@@ -398,7 +397,7 @@ class ClassImpl {
 		*  @return
 		*    Constructor descriptor (can be a null pointer, if no member with that name could be found)
 		*/
-		virtual const ConstructorDesc *GetConstructor(const PLGeneral::String &sName) const = 0;
+		virtual const ConstructorDesc *GetConstructor(const String &sName) const = 0;
 
 		/**
 		*  @brief
@@ -445,7 +444,7 @@ class ClassImpl {
 		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
-		virtual Object *Create(const PLGeneral::String &sName, const DynParams &cParams) const = 0;
+		virtual Object *Create(const String &sName, const DynParams &cParams) const = 0;
 
 
 	//[-------------------------------------------------------]
@@ -453,23 +452,23 @@ class ClassImpl {
 	//[-------------------------------------------------------]
 	protected:
 		// Class information
-		Class															*m_pClass;				/**< Class instance wrapping this class implementation (can be a null pointer, set and managed by the class manager) */
-		PLGeneral::String												 m_sName;				/**< Name of class */
-		PLGeneral::String												 m_sNamespace;			/**< Namespace of class */
-		PLGeneral::String												 m_sClassName;			/**< Name of class (with namespace) */
-		PLGeneral::String												 m_sDescription;		/**< Description of class */
-		PLGeneral::String												 m_sBaseClass;			/**< Name of base class (with namespace) */
+		Class							*m_pClass;				/**< Class instance wrapping this class implementation (can be a null pointer, set and managed by the class manager) */
+		String							 m_sName;				/**< Name of class */
+		String							 m_sNamespace;			/**< Namespace of class */
+		String							 m_sClassName;			/**< Name of class (with namespace) */
+		String							 m_sDescription;		/**< Description of class */
+		String							 m_sBaseClass;			/**< Name of base class (with namespace) */
 
 		// Own data (does not include data from base classes)
-		PLGeneral::HashMap<PLGeneral::String, PLGeneral::String>		 m_mapOwnProperties;	/**< Hash map of properties (name -> value) */
+		HashMap<String, String>			 m_mapOwnProperties;	/**< Hash map of properties (name -> value) */
 
 		// Runtime data
-		mutable PLGeneral::uint32										 m_nModuleID;			/**< ID of owner module */
-		mutable bool													 m_bInitialized;		/**< Is the class initialized? */
-		mutable const Class												*m_pBaseClass;			/**< Pointer to base class */
+		mutable uint32					 m_nModuleID;			/**< ID of owner module */
+		mutable bool					 m_bInitialized;		/**< Is the class initialized? */
+		mutable const Class			    *m_pBaseClass;			/**< Pointer to base class */
 
 		// Member lists (also including the members from base classes)
-		mutable PLGeneral::HashMap<PLGeneral::String, PLGeneral::String> m_mapProperties;		/**< Hash map of properties (name -> value) */
+		mutable HashMap<String, String>  m_mapProperties;		/**< Hash map of properties (name -> value) */
 
 
 	//[-------------------------------------------------------]

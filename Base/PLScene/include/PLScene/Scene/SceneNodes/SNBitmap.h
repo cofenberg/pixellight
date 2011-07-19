@@ -76,7 +76,7 @@ class SNBitmap : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNBitmap, "PLScene", PLScene::SceneNode, "Abstract bitmap scene node")
 		// Attributes
-		pl_attribute(Material,		PLGeneral::String,		"Data/Effects/DefaultBitmap.plfx",	ReadWrite,	GetSet,	"Material to use",											"Type='Material Effect Image TextureAni'")
+		pl_attribute(Material,		PLCore::String,			"Data/Effects/DefaultBitmap.plfx",	ReadWrite,	GetSet,	"Material to use",											"Type='Material Effect Image TextureAni'")
 		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4::White,			ReadWrite,	GetSet,	"Bitmap color",												"")
 		pl_attribute(TexelStart,	PLMath::Vector2,		PLMath::Vector2::Zero,				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) start coordinate",	"")
 		pl_attribute(TexelEnd,		PLMath::Vector2,		PLMath::Vector2::One,				ReadWrite,	GetSet,	"Bitmap texture source rectangle (0..1) end coordinate",	"")
@@ -89,8 +89,8 @@ class SNBitmap : public SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetMaterial() const;
-		PLS_API void SetMaterial(const PLGeneral::String &sValue);
+		PLS_API PLCore::String GetMaterial() const;
+		PLS_API void SetMaterial(const PLCore::String &sValue);
 		PLS_API virtual const PLGraphics::Color4 &GetColor() const;
 		PLS_API virtual void SetColor(const PLGraphics::Color4 &cValue);
 		PLS_API virtual const PLMath::Vector2 &GetTexelStart() const;
@@ -134,7 +134,7 @@ class SNBitmap : public SceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sMaterial;	/**< Material */
+		PLCore::String				m_sMaterial;	/**< Material */
 		bool						m_bMaterial;	/**< Material loaded? */
 		PLRenderer::MaterialHandler m_cMaterial;	/**< Material */
 		PLGraphics::Color4			m_cColor;		/**< Bitmap color */

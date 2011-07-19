@@ -57,7 +57,7 @@ class SNMPostProcessLaplaceSharpen : public PLCompositing::SNMPostProcess {
 	pl_class(pl_rtti_export, SNMPostProcessLaplaceSharpen, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		// Attributes
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,	PLGeneral::String,	"Data/PostProcesses/LaplaceSharpen.pp",	ReadWrite,	ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,	PLCore::String,	"Data/PostProcesses/LaplaceSharpen.pp",	ReadWrite,	ModifyAttr,	"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

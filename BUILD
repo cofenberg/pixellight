@@ -157,7 +157,7 @@ The following packages are required in order to be able to compile everything (U
 	-> Ensure that "dvipdfmx" is installed which is included within the "texlive-base"-package (e.g. "dvipdf" will propably fail)
 - texlive-science (LaTeX package for compiling the documentation)
 - texlive-latex-extra (LaTeX package for compiling the documentation)
-- libncurses5-dev (required by PLGeneral)
+- libncurses5-dev (required by PLCore)
 - libzip-dev (required by libpng used by PLGraphics)
 - libxcursor-dev (required by PLGui)
 - libxext-dev (required by PLGui)
@@ -170,7 +170,7 @@ To install all required packages at once, just use:
   apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev
 
 When using the maketool flag '--syslibs', you also need the following packages:
-- libpcre3-dev (required by PLGeneral)
+- libpcre3-dev (required by PLCore)
 - libjpeg62-dev (required by PLGraphics)
 - libpng12-dev (required by PLGraphics)
 - libfreetype6-dev (required by PLRendererOpenGL and PLRendererOpenGLES)

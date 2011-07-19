@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLScene/Scene/SceneQuery.h"
 
 
@@ -48,7 +48,7 @@ namespace PLScene {
 *  @note
 *    - Unloads unused elements automatically by default
 */
-class SceneQueryManager : public PLGeneral::ElementManager<SceneQuery> {
+class SceneQueryManager : public PLCore::ElementManager<SceneQuery> {
 
 
 	//[-------------------------------------------------------]
@@ -75,10 +75,10 @@ class SceneQueryManager : public PLGeneral::ElementManager<SceneQuery> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ElementManager functions   ]
+	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SceneQuery *CreateElement(const PLGeneral::String &sName);
+		virtual SceneQuery *CreateElement(const PLCore::String &sName);
 
 
 };

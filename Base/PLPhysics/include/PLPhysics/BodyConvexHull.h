@@ -80,7 +80,7 @@ class BodyConvexHull : public Body {
 		*  @return
 		*    The collision mesh
 		*/
-		PLPHYSICS_API PLGeneral::String GetMesh() const;
+		PLPHYSICS_API PLCore::String GetMesh() const;
 
 		/**
 		*  @brief
@@ -109,16 +109,15 @@ class BodyConvexHull : public Body {
 		*  @param[in] vMeshScale
 		*    Mesh scale
 		*/
-		PLPHYSICS_API BodyConvexHull(World &cWorld, BodyImpl &cBodyImpl, const PLGeneral::String &sMesh,
-									 const PLMath::Vector3 &vMeshScale);
+		PLPHYSICS_API BodyConvexHull(World &cWorld, BodyImpl &cBodyImpl, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::String m_sMesh;		/**< Collision mesh */
-		PLMath::Vector3	  m_vMeshScale;	/**< Mesh scale */
+		PLCore::String  m_sMesh;		/**< Collision mesh */
+		PLMath::Vector3	m_vMeshScale;	/**< Mesh scale */
 
 
 };

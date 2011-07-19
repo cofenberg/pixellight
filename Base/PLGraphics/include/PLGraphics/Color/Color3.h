@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGraphics/PLGraphics.h"
 
 
@@ -97,7 +97,7 @@ class Color3 {
 	public:
 		/**
 		*  @brief
-		*    Maps a RGB floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+		*    Maps a RGB floating point channels (0.0f to 1.0f range) to PLCore::uint32
 		*
 		*  @param[in] fR
 		*    Red color component (0.0-1.0)
@@ -107,45 +107,45 @@ class Color3 {
 		*    Blue color component (0.0-1.0)
 		*
 		*  @return
-		*    The color as PLGeneral::uint32
+		*    The color as PLCore::uint32
 		*/
-		PLGRAPHICS_API static PLGeneral::uint32 ToUInt32(float fR, float fG, float fB);
+		PLGRAPHICS_API static PLCore::uint32 ToUInt32(float fR, float fG, float fB);
 
 		/**
 		*  @brief
-		*    Returns the red color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+		*    Returns the red color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The red color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float RedFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float RedFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
-		*    Returns the green color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+		*    Returns the green color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The green color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float GreenFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float GreenFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
-		*    Returns the blue color component (float, 0.0-1.0) from a PLGeneral::uint32 RGB color
+		*    Returns the blue color component (float, 0.0-1.0) from a PLCore::uint32 RGB color
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*
 		*  @return
 		*    The blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float BlueFromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API static float BlueFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class Color3 {
 		*  @note
 		*    - This function is internally assembler optimizes for maximum performance
 		*/
-		PLGRAPHICS_API static void SwapRB(PLGeneral::uint8 nBuffer[], PLGeneral::uint32 nNumOfPixels);
+		PLGRAPHICS_API static void SwapRB(PLCore::uint8 nBuffer[], PLCore::uint32 nNumOfPixels);
 
 
 	//[-------------------------------------------------------]
@@ -196,7 +196,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue color component (0-255)
 		*/
-		PLGRAPHICS_API Color3(PLGeneral::uint8 nR, PLGeneral::uint8 nG, PLGeneral::uint8 nB);
+		PLGRAPHICS_API Color3(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -212,9 +212,9 @@ class Color3 {
 		*    Constructor
 		*
 		*  @param[in] nColor
-		*    PLGeneral::uint8 array holding the color, MUST have 3 elements! (0-255)
+		*    PLCore::uint8 array holding the color, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API Color3(const PLGeneral::uint8 nColor[]);
+		PLGRAPHICS_API Color3(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Value for all three color components (0-255)
 		*/
-		PLGRAPHICS_API Color3(PLGeneral::uint8 nColor);
+		PLGRAPHICS_API Color3(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -251,21 +251,21 @@ class Color3 {
 
 		/**
 		*  @brief
-		*    Maps this RGB floating point channels (0.0f to 1.0f range) to PLGeneral::uint32
+		*    Maps this RGB floating point channels (0.0f to 1.0f range) to PLCore::uint32
 		*
 		*  @return
-		*    This color as PLGeneral::uint32
+		*    This color as PLCore::uint32
 		*/
-		PLGRAPHICS_API PLGeneral::uint32 ToUInt32() const;
+		PLGRAPHICS_API PLCore::uint32 ToUInt32() const;
 
 		/**
 		*  @brief
-		*    Maps from a PLGeneral::uint32 to RGB floating point channels (0.0f to 1.0f range)
+		*    Maps from a PLCore::uint32 to RGB floating point channels (0.0f to 1.0f range)
 		*
 		*  @param[in] nColor
-		*    Color as PLGeneral::uint32
+		*    Color as PLCore::uint32
 		*/
-		PLGRAPHICS_API void FromUInt32(PLGeneral::uint32 nColor);
+		PLGRAPHICS_API void FromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -291,7 +291,7 @@ class Color3 {
 		*  @param[out] nB
 		*    Will receive the blue color component (0-255)
 		*/
-		PLGRAPHICS_API void GetRGB(PLGeneral::uint8 &nR, PLGeneral::uint8 &nG, PLGeneral::uint8 &nB) const;
+		PLGRAPHICS_API void GetRGB(PLCore::uint8 &nR, PLCore::uint8 &nG, PLCore::uint8 &nB) const;
 
 		/**
 		*  @brief
@@ -317,7 +317,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(PLGeneral::uint8 nR, PLGeneral::uint8 nG, PLGeneral::uint8 nB);
+		PLGRAPHICS_API void SetRGB(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -333,9 +333,9 @@ class Color3 {
 		*    Get the color component as array of integer values
 		*
 		*  @param[out] nColor
-		*    Reference to PLGeneral::uint8 array receiving the color values, MUST have 3 elements! (0-255)
+		*    Reference to PLCore::uint8 array receiving the color values, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API void GetRGB(PLGeneral::uint8 nColor[]) const;
+		PLGRAPHICS_API void GetRGB(PLCore::uint8 nColor[]) const;
 
 		/**
 		*  @brief
@@ -351,9 +351,9 @@ class Color3 {
 		*    Set the color components by using a reference to integer values
 		*
 		*  @param[in] nColor
-		*    Reference to PLGeneral::uint8 array containing the color value, MUST have 3 elements! (0-255)
+		*    Reference to PLCore::uint8 array containing the color value, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(const PLGeneral::uint8 nColor[]);
+		PLGRAPHICS_API void SetRGB(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -371,7 +371,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Value for all three color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(PLGeneral::uint8 nColor);
+		PLGRAPHICS_API void SetRGB(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -389,7 +389,7 @@ class Color3 {
 		*  @return
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetRInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetRInt() const;
 
 		/**
 		*  @brief
@@ -407,7 +407,7 @@ class Color3 {
 		*  @param[in] nR
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API void SetR(PLGeneral::uint8 nR);
+		PLGRAPHICS_API void SetR(PLCore::uint8 nR);
 
 		/**
 		*  @brief
@@ -425,7 +425,7 @@ class Color3 {
 		*  @return
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetGInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetGInt() const;
 
 		/**
 		*  @brief
@@ -443,7 +443,7 @@ class Color3 {
 		*  @param[in] nG
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API void SetG(PLGeneral::uint8 nG);
+		PLGRAPHICS_API void SetG(PLCore::uint8 nG);
 
 		/**
 		*  @brief
@@ -461,7 +461,7 @@ class Color3 {
 		*  @return
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetBInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetBInt() const;
 
 		/**
 		*  @brief
@@ -479,7 +479,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API void SetB(PLGeneral::uint8 nB);
+		PLGRAPHICS_API void SetB(PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -518,7 +518,7 @@ class Color3 {
 		*  @see
 		*    - GetLuminance()
 		*/
-		PLGRAPHICS_API PLGeneral::uint8 GetLuminanceInt() const;
+		PLGRAPHICS_API PLCore::uint8 GetLuminanceInt() const;
 
 		/**
 		*  @brief
@@ -582,7 +582,7 @@ class Color3 {
 		*  @return
 		*    String with the data
 		*/
-		PLGRAPHICS_API PLGeneral::String ToString() const;
+		PLGRAPHICS_API PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -591,7 +591,7 @@ class Color3 {
 		*  @param[in] sString
 		*    String with the data
 		*/
-		PLGRAPHICS_API bool FromString(const PLGeneral::String &sString);
+		PLGRAPHICS_API bool FromString(const PLCore::String &sString);
 
 
 };

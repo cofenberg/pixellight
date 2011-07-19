@@ -99,19 +99,19 @@ class FragmentShaderGLSL : public PLRenderer::FragmentShader {
 	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLGeneral::String GetShaderLanguage() const;
-		virtual PLGeneral::String GetSourceCode() const;
-		virtual PLGeneral::String GetProfile() const;
-		virtual PLGeneral::String GetEntry() const;
-		virtual bool SetSourceCode(const PLGeneral::String &sSourceCode, const PLGeneral::String &sProfile = "", const PLGeneral::String &sEntry = "");
+		virtual PLCore::String GetShaderLanguage() const;
+		virtual PLCore::String GetSourceCode() const;
+		virtual PLCore::String GetProfile() const;
+		virtual PLCore::String GetEntry() const;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLGeneral::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLGeneral::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
 
 
 };

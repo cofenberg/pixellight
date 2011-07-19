@@ -74,7 +74,7 @@ class Control {
 		*  @param[in] sDescription
 		*    Control description
 		*/
-		PLINPUT_API Control(Controller *pController, EControlType nType, const PLGeneral::String &sName, const PLGeneral::String &sDescription);
+		PLINPUT_API Control(Controller *pController, EControlType nType, const PLCore::String &sName, const PLCore::String &sDescription);
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class Control {
 		*  @return
 		*    Name
 		*/
-		PLINPUT_API PLGeneral::String GetName() const;
+		PLINPUT_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class Control {
 		*  @return
 		*    Description
 		*/
-		PLINPUT_API PLGeneral::String GetDescription() const;
+		PLINPUT_API PLCore::String GetDescription() const;
 
 
 	//[-------------------------------------------------------]
@@ -144,10 +144,10 @@ class Control {
 	//[-------------------------------------------------------]
 	protected:
 		// Control data
-		Controller			*m_pController;		/**< Owning controller, can be a null pointer */
-		EControlType		 m_nType;			/**< Control type */
-		PLGeneral::String	 m_sName;			/**< Control name */
-		PLGeneral::String	 m_sDescription;	/**< Control description */
+		Controller		*m_pController;		/**< Owning controller, can be a null pointer */
+		EControlType	 m_nType;			/**< Control type */
+		PLCore::String	 m_sName;			/**< Control name */
+		PLCore::String	 m_sDescription;	/**< Control description */
 
 
 };

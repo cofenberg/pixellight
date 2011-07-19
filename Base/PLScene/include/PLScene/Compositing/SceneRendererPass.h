@@ -28,10 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Element.h>
-#include <PLGeneral/Base/ElementHandler.h>
-#include <PLGeneral/Base/ElementManager.h>
 #include <PLCore/Base/Object.h>
+#include <PLCore/Container/Element.h>
+#include <PLCore/Container/ElementHandler.h>
+#include <PLCore/Container/ElementManager.h>
 #include "PLScene/PLScene.h"
 
 
@@ -73,7 +73,7 @@ namespace PLScene {
 *  @note
 *    - Derived classes should use a 'SRP' prefix (example: SRPBegin)
 */
-class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<SceneRendererPass> {
+class SceneRendererPass : public PLCore::Object, public PLCore::Element<SceneRendererPass> {
 
 
 	//[-------------------------------------------------------]
@@ -104,7 +104,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 	pl_class(PLS_RTTI_EXPORT, SceneRendererPass, "PLScene", PLCore::Object, "Abstract scene renderer pass class")
 		// Attributes
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",																				"")
-		pl_attribute(Name,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Optional scene renderer pass name. If not defined, a name is chosen automatically",	"")
+		pl_attribute(Name,	PLCore::String,			"",	ReadWrite,	GetSet,	"Optional scene renderer pass name. If not defined, a name is chosen automatically",	"")
 	pl_class_end
 
 
@@ -112,8 +112,8 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLGeneral::uint32 GetFlags() const;
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API virtual PLCore::uint32 GetFlags() const;
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -148,7 +148,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 		*  @return
 		*    The first found instance of a scene renderer pass instance within the scene renderer, can be a null pointer
 		*/
-		PLS_API SceneRendererPass *GetFirstInstanceOfSceneRendererPassClass(const PLGeneral::String &sClassName) const;
+		PLS_API SceneRendererPass *GetFirstInstanceOfSceneRendererPassClass(const PLCore::String &sClassName) const;
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class SceneRendererPass : public PLCore::Object, public PLGeneral::Element<Scene
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::uint32 m_nFlags;	/**< Flags */
+		PLCore::uint32 m_nFlags;	/**< Flags */
 
 
 };

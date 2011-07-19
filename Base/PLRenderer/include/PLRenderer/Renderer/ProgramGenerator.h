@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include "PLRenderer/PLRenderer.h"
 
@@ -47,7 +47,7 @@
 *  @param[in] FLAG
 *    Flag to add
 */
-#define PL_ADD_VS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddVertexShaderFlag(static_cast<PLGeneral::uint32>(FLAG), #FLAG);
+#define PL_ADD_VS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddVertexShaderFlag(static_cast<PLCore::uint32>(FLAG), #FLAG);
 
 /**
 *  @brief
@@ -58,7 +58,7 @@
 *  @param[in] FLAG
 *    Flag to add
 */
-#define PL_ADD_FS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddFragmentShaderFlag(static_cast<PLGeneral::uint32>(FLAG), #FLAG);
+#define PL_ADD_FS_FLAG(PROGRAMFLAGS, FLAG) PROGRAMFLAGS.AddFragmentShaderFlag(static_cast<PLCore::uint32>(FLAG), #FLAG);
 
 
 //[-------------------------------------------------------]
@@ -104,7 +104,7 @@ class ProgramGenerator {
 		*    This is done by using program flags, which internally will be added in front of the shader source code
 		*    as #define preprocessor directives. The goal of the class design was to to make the implementation as
 		*    performant as possible due the heavy usage of this class during rendering. Therfore definition strings are just
-		*    stored as pointer to "char" instead of "PLGeneral::String" to avoid any overhead produced by strings. As a result,
+		*    stored as pointer to "char" instead of "PLCore::String" to avoid any overhead produced by strings. As a result,
 		*    this definitions strings must stay valid until "ProgramGenerator::GetProgram()" was called with the program flags.
 		*    To reduce dynamic memory allocations during rendering, it's recommended to just use one program flags instance during
 		*    rendering. When starting the definition of current program flags, call "ProgramFlags::Reset()" to reset the current
@@ -130,7 +130,7 @@ class ProgramGenerator {
 					m_lstVertexShaderDefinitions.Reset();
 					m_lstFragmentShaderDefinitions.Reset();
 				}
-				inline void AddVertexShaderFlag(PLGeneral::uint32 nFlag, const char *pszDefinition)
+				inline void AddVertexShaderFlag(PLCore::uint32 nFlag, const char *pszDefinition)
 				{
 					// Is this flag already set?
 					if (!(m_nVertexShaderFlags & nFlag)) {
@@ -139,7 +139,7 @@ class ProgramGenerator {
 						m_lstVertexShaderDefinitions.Add(pszDefinition);
 					}
 				}
-				inline void AddFragmentShaderFlag(PLGeneral::uint32 nFlag, const char *pszDefinition)
+				inline void AddFragmentShaderFlag(PLCore::uint32 nFlag, const char *pszDefinition)
 				{
 					// Is this flag already set?
 					if (!(m_nFragmentShaderFlags & nFlag)) {
@@ -148,34 +148,34 @@ class ProgramGenerator {
 						m_lstFragmentShaderDefinitions.Add(pszDefinition);
 					}
 				}
-				inline PLGeneral::uint32 GetVertexShaderFlags() const
+				inline PLCore::uint32 GetVertexShaderFlags() const
 				{
 					return m_nVertexShaderFlags;
 				}
-				inline const PLGeneral::Array<const char *> &GetVertexShaderDefinitions() const
+				inline const PLCore::Array<const char *> &GetVertexShaderDefinitions() const
 				{
 					return m_lstVertexShaderDefinitions;
 				}
-				inline PLGeneral::uint32 GetFragmentShaderFlags() const
+				inline PLCore::uint32 GetFragmentShaderFlags() const
 				{
 					return m_nFragmentShaderFlags;
 				}
-				inline const PLGeneral::Array<const char *> &GetFragmentShaderDefinitions() const
+				inline const PLCore::Array<const char *> &GetFragmentShaderDefinitions() const
 				{
 					return m_lstFragmentShaderDefinitions;
 				}
 			private:
-				PLGeneral::uint32				m_nVertexShaderFlags;
-				PLGeneral::Array<const char *>  m_lstVertexShaderDefinitions;
-				PLGeneral::uint32				m_nFragmentShaderFlags;
-				PLGeneral::Array<const char *>  m_lstFragmentShaderDefinitions;
+				PLCore::uint32				 m_nVertexShaderFlags;
+				PLCore::Array<const char *>  m_lstVertexShaderDefinitions;
+				PLCore::uint32				 m_nFragmentShaderFlags;
+				PLCore::Array<const char *>  m_lstFragmentShaderDefinitions;
 		};
 		struct GeneratedProgram {
-			Program			  *pProgram;				/**< The program, always valid! */
-			PLGeneral::uint32  nVertexShaderFlags;		/**< Vertex shader flags used to generate the program */
-			PLGeneral::uint32  nFragmentShaderFlags;	/**< Fragment shader flags used to generate the program */
-			void			  *pUserData;				/**< User data for the generated program, can be a null pointer, is destroyed automatically of the generated
-															 program is destroyed, may also become a null pointer if for example the program became dirty */
+			Program		   *pProgram;				/**< The program, always valid! */
+			PLCore::uint32  nVertexShaderFlags;		/**< Vertex shader flags used to generate the program */
+			PLCore::uint32  nFragmentShaderFlags;	/**< Fragment shader flags used to generate the program */
+			void		   *pUserData;				/**< User data for the generated program, can be a null pointer, is destroyed automatically of the generated
+														 program is destroyed, may also become a null pointer if for example the program became dirty */
 		};
 
 
@@ -205,9 +205,9 @@ class ProgramGenerator {
 		*  @note
 		*    - When using GLSL, the profile is the GLSL version to use
 		*/
-		PLRENDERER_API ProgramGenerator(Renderer &cRenderer, const PLGeneral::String &sShaderLanguage,
-										const PLGeneral::String &sVertexShader, const PLGeneral::String &sVertexShaderProfile,
-										const PLGeneral::String &sFragmentShader, const PLGeneral::String &sFragmentShaderProfile);
+		PLRENDERER_API ProgramGenerator(Renderer &cRenderer, const PLCore::String &sShaderLanguage,
+										const PLCore::String &sVertexShader, const PLCore::String &sVertexShaderProfile,
+										const PLCore::String &sFragmentShader, const PLCore::String &sFragmentShaderProfile);
 
 		/**
 		*  @brief
@@ -231,7 +231,7 @@ class ProgramGenerator {
 		*  @return
 		*    The name of the used shader language
 		*/
-		PLRENDERER_API PLGeneral::String GetShaderLanguage() const;
+		PLRENDERER_API PLCore::String GetShaderLanguage() const;
 
 		/**
 		*  @brief
@@ -240,7 +240,7 @@ class ProgramGenerator {
 		*  @return
 		*    The used vertex shader source code
 		*/
-		PLRENDERER_API PLGeneral::String GetVertexShaderSourceCode() const;
+		PLRENDERER_API PLCore::String GetVertexShaderSourceCode() const;
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class ProgramGenerator {
 		*  @return
 		*    The used fragment shader source code
 		*/
-		PLRENDERER_API PLGeneral::String GetFragmentShaderSourceCode() const;
+		PLRENDERER_API PLCore::String GetFragmentShaderSourceCode() const;
 
 		/**
 		*  @brief
@@ -322,21 +322,21 @@ class ProgramGenerator {
 	//[-------------------------------------------------------]
 	private:
 		// Input
-		Renderer		  *m_pRenderer;					/**< Renderer to use, always valid! */
-		PLGeneral::String  m_sShaderLanguage;			/**< The name of the shader language the shaders are using (for example "GLSL" or "Cg") */
-		PLGeneral::String  m_sVertexShader;				/**< Vertex shader ("Über-Shader") source code to use, usually blank ASCII */
-		PLGeneral::String  m_sVertexShaderProfile;		/**< Vertex shader profile to use, if empty string, a default profile will be used which usually
-															 tries to use the best available profile that runs on most hardware */
-		PLGeneral::String  m_sFragmentShader;			/**< Fragment shader ("Über-Shader") source code to use, usually blank ASCII */
-		PLGeneral::String  m_sFragmentShaderProfile;	/**< Fragment shader profile to use, if empty string, a default profile will be used which usually
-															 tries to use the best available profile that runs on most hardware */
+		Renderer	   *m_pRenderer;				/**< Renderer to use, always valid! */
+		PLCore::String  m_sShaderLanguage;			/**< The name of the shader language the shaders are using (for example "GLSL" or "Cg") */
+		PLCore::String  m_sVertexShader;			/**< Vertex shader ("Über-Shader") source code to use, usually blank ASCII */
+		PLCore::String  m_sVertexShaderProfile;		/**< Vertex shader profile to use, if empty string, a default profile will be used which usually
+														 tries to use the best available profile that runs on most hardware */
+		PLCore::String  m_sFragmentShader;			/**< Fragment shader ("Über-Shader") source code to use, usually blank ASCII */
+		PLCore::String  m_sFragmentShaderProfile;	/**< Fragment shader profile to use, if empty string, a default profile will be used which usually
+														 tries to use the best available profile that runs on most hardware */
 		// Cache
-		PLGeneral::Array<VertexShader*>						     m_lstVertexShaders;	/**< List of generated vertex shader instances */
-		PLGeneral::HashMap<PLGeneral::uint32, VertexShader*>     m_mapVertexShaders;	/**< Program flags -> vertex shader instance */
-		PLGeneral::Array<FragmentShader*>					     m_lstFragmentShaders;	/**< List of generated fragment shader instances */
-		PLGeneral::HashMap<PLGeneral::uint32, FragmentShader*>   m_mapFragmentShaders;	/**< Program flags -> fragment shader instance */
-		PLGeneral::Array<GeneratedProgram*>					     m_lstPrograms;			/**< List of generated program instances */
-		PLGeneral::HashMap<PLGeneral::uint64, GeneratedProgram*> m_mapPrograms;			/**< Program flags -> program instance */
+		PLCore::Array<VertexShader*>					   m_lstVertexShaders;		/**< List of generated vertex shader instances */
+		PLCore::HashMap<PLCore::uint32, VertexShader*>     m_mapVertexShaders;		/**< Program flags -> vertex shader instance */
+		PLCore::Array<FragmentShader*>					   m_lstFragmentShaders;	/**< List of generated fragment shader instances */
+		PLCore::HashMap<PLCore::uint32, FragmentShader*>   m_mapFragmentShaders;	/**< Program flags -> fragment shader instance */
+		PLCore::Array<GeneratedProgram*>				   m_lstPrograms;			/**< List of generated program instances */
+		PLCore::HashMap<PLCore::uint64, GeneratedProgram*> m_mapPrograms;			/**< Program flags -> program instance */
 
 
 };

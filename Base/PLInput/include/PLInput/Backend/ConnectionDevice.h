@@ -35,7 +35,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Thread;
 	class Mutex;
 }
@@ -118,7 +118,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @return
 		*    Size of an input report in bytes (unique to each HID device)
 		*/
-		PLINPUT_API PLGeneral::uint32 GetInputReportSize() const;
+		PLINPUT_API PLCore::uint32 GetInputReportSize() const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @param[in] nSize
 		*    Size of an input report in bytes (unique to each HID device)
 		*/
-		PLINPUT_API void SetInputReportSize(PLGeneral::uint32 nSize);
+		PLINPUT_API void SetInputReportSize(PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @return
 		*    Size of an output report in bytes
 		*/
-		PLINPUT_API PLGeneral::uint32 GetOutputReportSize() const;
+		PLINPUT_API PLCore::uint32 GetOutputReportSize() const;
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @param[in] nSize
 		*    Size of an output report in bytes (unique to each HID device)
 		*/
-		PLINPUT_API void SetOutputReportSize(PLGeneral::uint32 nSize);
+		PLINPUT_API void SetOutputReportSize(PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @return
 		*    Input buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
 		*/
-		PLINPUT_API PLGeneral::uint8 *GetInputBuffer() const;
+		PLINPUT_API PLCore::uint8 *GetInputBuffer() const;
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @return
 		*    Output buffer (can be a null pointer if the device is not open), do not destroy the returned buffer!
 		*/
-		PLINPUT_API PLGeneral::uint8 *GetOutputBuffer() const;
+		PLINPUT_API PLCore::uint8 *GetOutputBuffer() const;
 
 
 	//[-------------------------------------------------------]
@@ -188,7 +188,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLINPUT_API virtual bool Open(PLGeneral::uint16 nOutputPort = 0, PLGeneral::uint16 nInputPort = 0);
+		PLINPUT_API virtual bool Open(PLCore::uint16 nOutputPort = 0, PLCore::uint16 nInputPort = 0);
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLINPUT_API virtual bool Read(PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
+		PLINPUT_API virtual bool Read(PLCore::uint8 *pBuffer, PLCore::uint32 nSize);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class ConnectionDevice : public DeviceImpl {
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLINPUT_API virtual bool Write(const PLGeneral::uint8 *pBuffer, PLGeneral::uint32 nSize);
+		PLINPUT_API virtual bool Write(const PLCore::uint8 *pBuffer, PLCore::uint32 nSize);
 
 
 	//[-------------------------------------------------------]
@@ -307,18 +307,18 @@ class ConnectionDevice : public DeviceImpl {
 	//[-------------------------------------------------------]
 	protected:
 		// Device type
-		EDeviceType			 m_nDeviceType;			/**< Device type */
+		EDeviceType		 m_nDeviceType;			/**< Device type */
 
 		// Input and output buffers
-		PLGeneral::uint8	*m_pInputBuffer;		/**< Input report buffer, can be a null pointer */
-		PLGeneral::uint8	*m_pOutputBuffer;		/**< Output report buffer, can be a null pointer */
-		PLGeneral::uint16	 m_nInputReportSize;	/**< Size of input report in bytes */
-		PLGeneral::uint16	 m_nOutputReportSize;	/**< Size of output report in bytes */
+		PLCore::uint8	*m_pInputBuffer;		/**< Input report buffer, can be a null pointer */
+		PLCore::uint8	*m_pOutputBuffer;		/**< Output report buffer, can be a null pointer */
+		PLCore::uint16	 m_nInputReportSize;	/**< Size of input report in bytes */
+		PLCore::uint16	 m_nOutputReportSize;	/**< Size of output report in bytes */
 
 		// Read thread
-		PLGeneral::Thread	*m_pThread;				/**< Update thread, can be a null pointer */
-		PLGeneral::Mutex	*m_pMutex;				/**< Update mutex, can be a null pointer */
-		bool				 m_bThreadExit;			/**< Flag to exit the thread */
+		PLCore::Thread	*m_pThread;				/**< Update thread, can be a null pointer */
+		PLCore::Mutex	*m_pMutex;				/**< Update mutex, can be a null pointer */
+		bool			 m_bThreadExit;			/**< Flag to exit the thread */
 
 
 };

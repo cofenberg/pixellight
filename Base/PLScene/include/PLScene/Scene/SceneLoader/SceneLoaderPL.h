@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class XmlElement;
 }
 namespace PLScene {
@@ -76,9 +76,9 @@ class SceneLoaderPL : public SceneLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,			"Load method",												"")
-		pl_method_2(Save,		pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,			"Save method",												"")
-		pl_method_3(SaveParams,	pl_ret_type(bool),	SceneContainer&,	PLGeneral::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	SceneContainer&,	PLCore::File&,			"Load method",												"")
+		pl_method_2(Save,		pl_ret_type(bool),	SceneContainer&,	PLCore::File&,			"Save method",												"")
+		pl_method_3(SaveParams,	pl_ret_type(bool),	SceneContainer&,	PLCore::File&,	bool,	"Save method. Parameters: No default values as 'bool'.",	"")
 	pl_class_end
 
 
@@ -86,9 +86,9 @@ class SceneLoaderPL : public SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API bool Load(SceneContainer &cContainer, PLGeneral::File &cFile);
-		PLS_API bool Save(SceneContainer &cContainer, PLGeneral::File &cFile);
-		PLS_API bool SaveParams(SceneContainer &cContainer, PLGeneral::File &cFile, bool bNoDefault);
+		PLS_API bool Load(SceneContainer &cContainer, PLCore::File &cFile);
+		PLS_API bool Save(SceneContainer &cContainer, PLCore::File &cFile);
+		PLS_API bool SaveParams(SceneContainer &cContainer, PLCore::File &cFile, bool bNoDefault);
 
 
 	//[-------------------------------------------------------]
@@ -100,11 +100,11 @@ class SceneLoaderPL : public SceneLoader {
 		*    Internal per instance data
 		*/
 		struct SInstance {
-			SceneContainer *pContainer;					/**< Scene root container (the one we currently 'load in', always valid) */
+			SceneContainer *pContainer;				/**< Scene root container (the one we currently 'load in', always valid) */
 			// Statistics
-			PLGeneral::uint32 nTotalNumOfContainers;	/**< Total number of containers within the scene (without the root container itself) */
-			PLGeneral::uint32 nTotalNumOfNodes;			/**< Total number of nodes (without containers) within the scene */
-			PLGeneral::uint32 nTotalNumOfModifiers;		/**< Total number of modifiers within the scene */
+			PLCore::uint32  nTotalNumOfContainers;	/**< Total number of containers within the scene (without the root container itself) */
+			PLCore::uint32  nTotalNumOfNodes;		/**< Total number of nodes (without containers) within the scene */
+			PLCore::uint32  nTotalNumOfModifiers;	/**< Total number of modifiers within the scene */
 		};
 
 
@@ -143,7 +143,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(SceneContainer &cContainer, const PLGeneral::XmlElement &cSceneElement, PLGeneral::File &cFile) const;
+		bool LoadV1(SceneContainer &cContainer, const PLCore::XmlElement &cSceneElement, PLCore::File &cFile) const;
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadRec(SInstance &sInstance, SceneContainer &cContainer, const PLGeneral::XmlElement &cParent, PLGeneral::uint32 nFirstSceneRow, PLGeneral::uint32 nLastSceneRow) const;
+		bool LoadRec(SInstance &sInstance, SceneContainer &cContainer, const PLCore::XmlElement &cParent, PLCore::uint32 nFirstSceneRow, PLCore::uint32 nLastSceneRow) const;
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    The created scene node, a null pointer on error (maybe XML element has no class attribute?)
 		*/
-		SceneNode *LoadNode(SInstance &sInstance, SceneContainer &cContainer, const PLGeneral::XmlElement &cNode, bool bContainer) const;
+		SceneNode *LoadNode(SInstance &sInstance, SceneContainer &cContainer, const PLCore::XmlElement &cNode, bool bContainer) const;
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    The created scene node modifier, a null pointer on error (maybe XML element has no class attribute?)
 		*/
-		SceneNodeModifier *LoadModifier(SInstance &sInstance, const PLGeneral::XmlElement &cNode, SceneNode &cSceneNode) const;
+		SceneNodeModifier *LoadModifier(SInstance &sInstance, const PLCore::XmlElement &cNode, SceneNode &cSceneNode) const;
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool SaveRec(SInstance &sInstance, const SceneContainer &cContainer, PLGeneral::XmlElement &cParent, bool bNoDefault = true) const;
+		bool SaveRec(SInstance &sInstance, const SceneContainer &cContainer, PLCore::XmlElement &cParent, bool bNoDefault = true) const;
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class SceneLoaderPL : public SceneLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool SaveModifiers(SInstance &sInstance, PLGeneral::XmlElement &cParent, const SceneNode &cSceneNode, bool bNoDefault = true) const;
+		bool SaveModifiers(SInstance &sInstance, PLCore::XmlElement &cParent, const SceneNode &cSceneNode, bool bNoDefault = true) const;
 
 
 };

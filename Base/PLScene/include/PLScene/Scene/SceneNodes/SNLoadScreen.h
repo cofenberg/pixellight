@@ -87,7 +87,7 @@ class SNLoadScreen : public SNLoadScreenBase {
 		// Attributes
 		pl_attribute(ClearFlags,	pl_flag_type(EClearFlags),	Color|Depth,									ReadWrite,	DirectValue,	"Clear flags",											"")
 		pl_attribute(ClearColor,	PLGraphics::Color4,			PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),		ReadWrite,	DirectValue,	"Clear color (r/g/b/a)",								"")
-		pl_attribute(Images,		PLGeneral::uint8,			4,												ReadWrite,	DirectValue,	"Number of images (1-4)",								"Min='1' Max='4'")
+		pl_attribute(Images,		PLCore::uint8,				4,												ReadWrite,	DirectValue,	"Number of images (1-4)",								"Min='1' Max='4'")
 
 		// [TODO] New RTTI usage
 //		DEFINE_VAR(PL_VAR_FILENAME,	m_sScreenMaterial[0],	"ScreenMaterial[0]",	"Data/Materials/LoadScreen/0.mat",			"Screen 0 material filename",							"Type='Material Effect Image TextureAni'",	"")
@@ -147,9 +147,9 @@ class SNLoadScreen : public SNLoadScreenBase {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sScreenMaterial[4];
-		PLGeneral::String			m_sBarBackMaterial;
-		PLGeneral::String			m_sBarMaterial[2];
+		PLCore::String				m_sScreenMaterial[4];
+		PLCore::String				m_sBarBackMaterial;
+		PLCore::String				m_sBarMaterial[2];
 		PLRenderer::MaterialHandler	m_cScreenMaterial[4];
 		PLRenderer::MaterialHandler	m_cBarBackMaterial;
 		PLRenderer::MaterialHandler	m_cBarMaterial[2];

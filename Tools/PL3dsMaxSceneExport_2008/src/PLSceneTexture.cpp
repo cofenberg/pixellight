@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Xml/Xml.h>
-#include <PLGeneral/File/Url.h>
-#include <PLGeneral/File/Directory.h>
+#include <PLCore/Xml/Xml.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/File/Directory.h>
 #include <max.h>
 #include <bmmlib.h>
 #include "PL3dsMaxSceneExport/PLLog.h"
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

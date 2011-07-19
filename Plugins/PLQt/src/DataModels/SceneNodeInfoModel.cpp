@@ -43,7 +43,7 @@ SceneNodeInfoModel::SceneNodeInfoModel(QObject *parent) : PLIntrospectionModel(p
 
 void SetSelected(PLScene::SceneNode *node, bool selected)
 {
-	PLGeneral::uint32 flagValue = node->GetDebugFlags();
+	PLCore::uint32 flagValue = node->GetDebugFlags();
 	if (selected)
 		flagValue |= PLScene::SceneNode::DebugEnabled;
 	else

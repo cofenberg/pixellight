@@ -87,7 +87,7 @@ class EffectPass {
 		*  @return
 		*    Pass name
 		*/
-		PLRENDERER_API PLGeneral::String GetName() const;
+		PLRENDERER_API PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class EffectPass {
 		*  @param[in] sName
 		*    New pass name
 		*/
-		PLRENDERER_API void SetName(const PLGeneral::String &sName = "Pass");
+		PLRENDERER_API void SetName(const PLCore::String &sName = "Pass");
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class EffectPass {
 		*  @return
 		*    The value of the queried material state variable
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetMaterialState(FixedFunctions::MaterialState::Enum nState) const;
+		PLRENDERER_API PLCore::uint32 GetMaterialState(FixedFunctions::MaterialState::Enum nState) const;
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool SetMaterialState(FixedFunctions::MaterialState::Enum nState, PLGeneral::uint32 nValue);
+		PLRENDERER_API bool SetMaterialState(FixedFunctions::MaterialState::Enum nState, PLCore::uint32 nValue);
 
 		//[-------------------------------------------------------]
 		//[ Layers                                                ]
@@ -208,7 +208,7 @@ class EffectPass {
 		*  @return
 		*    Number of texture layers
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetNumOfLayers() const;
+		PLRENDERER_API PLCore::uint32 GetNumOfLayers() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class EffectPass {
 		*  @return
 		*    Effect pass layer, a null pointer if there was an error
 		*/
-		PLRENDERER_API EffectPassLayer *GetLayer(PLGeneral::uint32 nIndex = 0) const;
+		PLRENDERER_API EffectPassLayer *GetLayer(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -241,7 +241,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool RemoveLayer(PLGeneral::uint32 nIndex = 0);
+		PLRENDERER_API bool RemoveLayer(PLCore::uint32 nIndex = 0);
 
 		/**
 		*  @brief
@@ -266,7 +266,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool LoadVertexShader(const PLGeneral::String &sFilename, const PLGeneral::String &sShaderLanguage, const PLGeneral::String &sProfile = "");
+		PLRENDERER_API bool LoadVertexShader(const PLCore::String &sFilename, const PLCore::String &sShaderLanguage, const PLCore::String &sProfile = "");
 
 		/**
 		*  @brief
@@ -282,7 +282,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool LoadFragmentShader(const PLGeneral::String &sFilename, const PLGeneral::String &sShaderLanguage, const PLGeneral::String &sProfile = "");
+		PLRENDERER_API bool LoadFragmentShader(const PLCore::String &sFilename, const PLCore::String &sShaderLanguage, const PLCore::String &sProfile = "");
 
 		/**
 		*  @brief
@@ -319,14 +319,14 @@ class EffectPass {
 	//[-------------------------------------------------------]
 	private:
 		EffectTechnique   *m_pTechnique;	/**< Owner effect technique (always valid!) */
-		PLGeneral::String  m_sName;			/**< Pass name */
+		PLCore::String	  m_sName;			/**< Pass name */
 		// States
 		PLGraphics::Color4		   m_cColor;												/**< General color */
 		RenderStates			   m_cRenderStates;											/**< Render states */
 		FixedFunctionsRenderStates m_cFixedFunctionsRenderStates;							/**< Fixed functions render states */
-		PLGeneral::uint32		   m_nMaterialState[FixedFunctions::MaterialState::Number];	/**< List of material states (see 'Material') */
+		PLCore::uint32			   m_nMaterialState[FixedFunctions::MaterialState::Number];	/**< List of material states (see 'Material') */
 		// Layers
-		PLGeneral::Array<EffectPassLayer*> m_lstLayers;	/**< Texture layers */
+		PLCore::Array<EffectPassLayer*> m_lstLayers;	/**< Texture layers */
 		// Shaders
 		VertexShader   *m_pVertexShader;	/**< Used vertex shader, can be a null pointer */
 		FragmentShader *m_pFragmentShader;	/**< Used fragment shader, can be a null pointer */

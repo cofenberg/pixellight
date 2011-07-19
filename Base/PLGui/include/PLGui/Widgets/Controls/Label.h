@@ -59,7 +59,7 @@ class Label : public Widget {
 		pl_attribute(VAlign,	pl_enum_type(EVAlign),		AlignMiddle,				ReadWrite,	GetSet,	"Text alignment (vertical)",	"")
 		pl_attribute(Wrap,		pl_enum_type(ETextWrap),	TextWrap,					ReadWrite,	GetSet,	"Text wrapping",				"")
 		pl_attribute(Style,		pl_flag_type(ETextStyle),	0,							ReadWrite,	GetSet,	"Text style",					"")
-		pl_attribute(Text,		PLGeneral::String,			"",							ReadWrite,	GetSet,	"Text label",					"")
+		pl_attribute(Text,		PLCore::String,				"",							ReadWrite,	GetSet,	"Text label",					"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -181,7 +181,7 @@ class Label : public Widget {
 		*  @return
 		*    Text style
 		*/
-		PLGUI_API PLGeneral::uint32 GetStyle() const;
+		PLGUI_API PLCore::uint32 GetStyle() const;
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class Label : public Widget {
 		*  @param[in] nStyle
 		*    Text style
 		*/
-		PLGUI_API void SetStyle(PLGeneral::uint32 nStyle);
+		PLGUI_API void SetStyle(PLCore::uint32 nStyle);
 
 		/**
 		*  @brief
@@ -199,7 +199,7 @@ class Label : public Widget {
 		*  @return
 		*    Text
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -208,7 +208,7 @@ class Label : public Widget {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -228,8 +228,8 @@ class Label : public Widget {
 		EAlign				m_nAlign;
 		EVAlign				m_nVAlign;
 		ETextWrap			m_nWrap;
-		PLGeneral::uint32	m_nStyle;
-		PLGeneral::String	m_sText;
+		PLCore::uint32		m_nStyle;
+		PLCore::String		m_sText;
 
 		// Private data
 		Font				m_cFont;		/**< Used font */

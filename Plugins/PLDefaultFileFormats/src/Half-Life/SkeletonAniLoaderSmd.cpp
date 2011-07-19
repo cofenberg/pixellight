@@ -26,8 +26,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/Tokenizer.h>
-#include <PLGeneral/Log/Log.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/String/Tokenizer.h>
 #include <PLMath/EulerAngles.h>
 #include <PLMesh/Skeleton.h>
 #include "PLDefaultFileFormats/Half-Life/SkeletonAniLoaderSmd.h"
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLMesh;
 namespace PLDefaultFileFormats {

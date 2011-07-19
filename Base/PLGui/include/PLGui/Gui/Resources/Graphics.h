@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include <PLMath/Vector2i.h>
 #include "PLGui/PLGui.h"
 
@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLGraphics {
@@ -134,7 +134,7 @@ class Graphics {
 		*  @return
 		*    List of hints
 		*/
-		PLGUI_API const PLGeneral::List<GraphicsHint*> &GetHints();
+		PLGUI_API const PLCore::List<GraphicsHint*> &GetHints();
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class Graphics {
 		*  @param[in] nWidth
 		*    Line width
 		*/
-		PLGUI_API void DrawLine(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nWidth = 1);
+		PLGUI_API void DrawLine(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nWidth = 1);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class Graphics {
 		*  @param[in] nWidth
 		*    Line width
 		*/
-		PLGUI_API void DrawRect(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nRoundX = 0, PLGeneral::uint32 nRoundY = 0, PLGeneral::uint32 nWidth = 1);
+		PLGUI_API void DrawRect(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nRoundX = 0, PLCore::uint32 nRoundY = 0, PLCore::uint32 nWidth = 1);
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class Graphics {
 		*  @param[in] nRoundY
 		*    Rounded border in Y direction
 		*/
-		PLGUI_API void DrawBox(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLGeneral::uint32 nRoundX = 0, PLGeneral::uint32 nRoundY = 0);
+		PLGUI_API void DrawBox(const PLGraphics::Color4 &cColor, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nRoundX = 0, PLCore::uint32 nRoundY = 0);
 
 		/**
 		*  @brief
@@ -260,7 +260,7 @@ class Graphics {
 		*  @param[in] sText
 		*    Text
 		*/
-		PLGUI_API void DrawText(const Font &cFont, const PLGraphics::Color4 &cTextColor, const PLGraphics::Color4 &cBkColor, const PLMath::Vector2i &vPos, const PLGeneral::String &sText);
+		PLGUI_API void DrawText(const Font &cFont, const PLGraphics::Color4 &cTextColor, const PLGraphics::Color4 &cBkColor, const PLMath::Vector2i &vPos, const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class Graphics {
 		*  @return
 		*    The width of the given text using the given font
 		*/
-		PLGUI_API PLGeneral::uint32 GetTextWidth(const Font &cFont, const PLGeneral::String &sText);
+		PLGUI_API PLCore::uint32 GetTextWidth(const Font &cFont, const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -288,17 +288,17 @@ class Graphics {
 		*  @return
 		*    The height of the given text using the given font
 		*/
-		PLGUI_API PLGeneral::uint32 GetTextHeight(const Font &cFont, const PLGeneral::String &sText);
+		PLGUI_API PLCore::uint32 GetTextHeight(const Font &cFont, const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui								*m_pGui;			/**< GUI instance */
-		GraphicsImpl					*m_pGraphicsImpl;	/**< Graphics implementation object */
-		bool							 m_bManageImpl;		/**< If 'true', m_pGraphicsImpl will be destroyed in destructor */
-		PLGeneral::List<GraphicsHint*>	 m_lstHints;		/**< Rendering hints */
+		Gui							*m_pGui;			/**< GUI instance */
+		GraphicsImpl				*m_pGraphicsImpl;	/**< Graphics implementation object */
+		bool						 m_bManageImpl;		/**< If 'true', m_pGraphicsImpl will be destroyed in destructor */
+		PLCore::List<GraphicsHint*>	 m_lstHints;		/**< Rendering hints */
 
 
 };

@@ -23,15 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-const static PLGeneral::String sRuntimeSharedLibraries[] =
+const static PLCore::String sRuntimeSharedLibraries[] =
 {
-	"libPLGeneral.so",
 	"libPLCore.so",
 	"libPLMath.so",
 	"libPLGraphics.so",
@@ -45,12 +44,12 @@ const static PLGeneral::String sRuntimeSharedLibraries[] =
 	"libPLSound.so",
 	""
 };
-const static PLGeneral::String sRuntimeDataFiles[] =
+const static PLCore::String sRuntimeDataFiles[] =
 {
 	"Standard.zip",
 	""
 };
-static const PLGeneral::String sPLRendererPlugins[] =
+static const PLCore::String sPLRendererPlugins[] =
 {
 	"libPLRendererOpenGL.so",
 	"PLRendererOpenGL.plugin",
@@ -58,20 +57,20 @@ static const PLGeneral::String sPLRendererPlugins[] =
 	"libCgGL.so",
 	""
 };
-static const PLGeneral::String sPLScenePlugins[] =
+static const PLCore::String sPLScenePlugins[] =
 {
 	"libPLCompositing.so",
 	"PLCompositing.plugin",
 	""
 };
-static const PLGeneral::String sPLPhysicsPlugins[] =
+static const PLCore::String sPLPhysicsPlugins[] =
 {
 	"libPLPhysicsNewton.so",
 	"PLPhysicsNewton.plugin",
 	"libNewton.so",
 	""
 };
-static const PLGeneral::String sPLSoundPlugins[] =
+static const PLCore::String sPLSoundPlugins[] =
 {
 	"libPLSoundOpenAL.so",
 	"PLSoundOpenAL.plugin",

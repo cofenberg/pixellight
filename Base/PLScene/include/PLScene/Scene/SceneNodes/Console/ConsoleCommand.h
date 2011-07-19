@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Container/Array.h>
 #include <PLCore/Base/Func/Functor.h>
 #include "PLScene/PLScene.h"
 
@@ -104,10 +104,10 @@ class ConsoleCommand {
 			//[ Public data                                           ]
 			//[-------------------------------------------------------]
 			public:
-				float			  f;
-				bool			  b;
-				int				  i;
-				PLGeneral::String s;
+				float		   f;
+				bool		   b;
+				int			   i;
+				PLCore::String s;
 
 
 			//[-------------------------------------------------------]
@@ -152,8 +152,8 @@ class ConsoleCommand {
 		*  @param[in] cFunctor
 		*    Execution functor
 		*/
-		PLS_API ConsoleCommand(bool bDebug, const PLGeneral::String &sCommand, const PLGeneral::String &sParameters,
-							  const PLGeneral::String &sHelp, const PLCore::Functor<void, ConsoleCommand &> &cFunctor);
+		PLS_API ConsoleCommand(bool bDebug, const PLCore::String &sCommand, const PLCore::String &sParameters,
+							  const PLCore::String &sHelp, const PLCore::Functor<void, ConsoleCommand &> &cFunctor);
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class ConsoleCommand {
 		*  @return
 		*    Command string
 		*/
-		PLS_API PLGeneral::String GetCommand() const;
+		PLS_API PLCore::String GetCommand() const;
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class ConsoleCommand {
 		*  @return
 		*    Parameter string
 		*/
-		PLS_API PLGeneral::String GetParameters() const;
+		PLS_API PLCore::String GetParameters() const;
 
 		/**
 		*  @brief
@@ -213,7 +213,7 @@ class ConsoleCommand {
 		*  @return
 		*    Help string
 		*/
-		PLS_API PLGeneral::String GetHelp() const;
+		PLS_API PLCore::String GetHelp() const;
 
 		/**
 		*  @brief
@@ -240,7 +240,7 @@ class ConsoleCommand {
 		*  @return
 		*    Number of command parameters
 		*/
-		PLS_API PLGeneral::uint32 GetNumOfParams() const;
+		PLS_API PLCore::uint32 GetNumOfParams() const;
 
 		/**
 		*  @brief
@@ -252,7 +252,7 @@ class ConsoleCommand {
 		*  @return
 		*    The parameter type of parameter
 		*/
-		PLS_API EMsgParamID GetParamType(PLGeneral::uint32 nNr) const;
+		PLS_API EMsgParamID GetParamType(PLCore::uint32 nNr) const;
 
 		/**
 		*  @brief
@@ -261,7 +261,7 @@ class ConsoleCommand {
 		*  @param[in] sParameters
 		*    Parameter string
 		*/
-		PLS_API void CreateVarsFromString(const PLGeneral::String &sParameters);
+		PLS_API void CreateVarsFromString(const PLCore::String &sParameters);
 
 		/**
 		*  @brief
@@ -276,7 +276,7 @@ class ConsoleCommand {
 		*  @note
 		*    - CreateVarsFromString() must have been called before this function...
 		*/
-		PLS_API Variable &GetVar(PLGeneral::uint32 nNr) const;
+		PLS_API Variable &GetVar(PLCore::uint32 nNr) const;
 
 		/**
 		*  @brief
@@ -306,11 +306,11 @@ class ConsoleCommand {
 	private:
 		SNConsoleBase							*m_pConsole;	/**< Owner console, can be a null pointer */
 		bool									 m_bDebug;		/**< Is this a debug command? */
-		PLGeneral::String						 m_sCommand;	/**< For example "/fogcolor" */
-		PLGeneral::String						 m_sParameters;	/**< For example "III" in case you want R G B values (3 integers) */
-		PLGeneral::String						 m_sHelp;		/**< For example "<r> <g> <n>" if you want to display "Usage: /fogcolor <r> <g> <b>" as help */
+		PLCore::String							 m_sCommand;	/**< For example "/fogcolor" */
+		PLCore::String							 m_sParameters;	/**< For example "III" in case you want R G B values (3 integers) */
+		PLCore::String							 m_sHelp;		/**< For example "<r> <g> <n>" if you want to display "Usage: /fogcolor <r> <g> <b>" as help */
 		PLCore::Functor<void, ConsoleCommand &>  m_cFunctor;	/**< The console functor which executes this command, always valid! */
-		PLGeneral::Array<Variable>				 m_lstVars;		/**< Values for the parameters, which the user entered */
+		PLCore::Array<Variable>					 m_lstVars;		/**< Values for the parameters, which the user entered */
 
 
 };

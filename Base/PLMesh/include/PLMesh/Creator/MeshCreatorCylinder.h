@@ -56,7 +56,7 @@ class MeshCreatorCylinder : public MeshCreator {
 		pl_attribute(BaseRadius,	float,				0.5f,								ReadWrite,	DirectValue,	"The radius of the cylinder at z = 0",			"")
 		pl_attribute(TopRadius,		float,				0.5f,								ReadWrite,	DirectValue,	"The radius of the cylinder at z = height",		"")
 		pl_attribute(Height,		float,				1.0f,								ReadWrite,	DirectValue,	"The height of the cylinder",					"")
-		pl_attribute(Slices,		PLGeneral::uint32,	20,									ReadWrite,	DirectValue,	"The number of subdivisions around the z-axis",	"")
+		pl_attribute(Slices,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"The number of subdivisions around the z-axis",	"")
 		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",								"")
 		pl_attribute(Closed,		bool,				true,								ReadWrite,	DirectValue,	"Shall the shape be closed on all sides?",		"")
 		// Constructors
@@ -85,7 +85,7 @@ class MeshCreatorCylinder : public MeshCreator {
 	//[ Private virtual MeshCreator functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *Create(Mesh &cMesh, PLGeneral::uint32 nLODLevel = 0, bool bStatic = true) const;
+		virtual Mesh *Create(Mesh &cMesh, PLCore::uint32 nLODLevel = 0, bool bStatic = true) const;
 
 
 };

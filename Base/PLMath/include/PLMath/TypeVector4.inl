@@ -60,7 +60,7 @@ class Type<PLMath::Vector4> {
 		static const int TypeID = 1002;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "vector4";
 		}
@@ -98,109 +98,109 @@ class Type<PLMath::Vector4> {
 		}
 
 		// Convert PLMath::Vector4 to int8
-		static PLGeneral::int8 ConvertToInt8(const PLMath::Vector4 &vVector)
+		static int8 ConvertToInt8(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::int8>(ConvertToInt(vVector));
+			return static_cast<int8>(ConvertToInt(vVector));
 		}
 
 		// Convert int8 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromInt8(PLGeneral::int8 nValue)
+		static PLMath::Vector4 ConvertFromInt8(int8 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to int16
-		static PLGeneral::int16 ConvertToInt16(const PLMath::Vector4 &vVector)
+		static int16 ConvertToInt16(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::int16>(ConvertToInt(vVector));
+			return static_cast<int16>(ConvertToInt(vVector));
 		}
 
 		// Convert int16 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromInt16(PLGeneral::int16 nValue)
+		static PLMath::Vector4 ConvertFromInt16(int16 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to int32
-		static PLGeneral::int32 ConvertToInt32(const PLMath::Vector4 &vVector)
+		static int32 ConvertToInt32(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::int32>(ConvertToInt(vVector));
+			return static_cast<int32>(ConvertToInt(vVector));
 		}
 
 		// Convert int32 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromInt32(PLGeneral::int32 nValue)
+		static PLMath::Vector4 ConvertFromInt32(int32 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to int64
-		static PLGeneral::int64 ConvertToInt64(const PLMath::Vector4 &vVector)
+		static int64 ConvertToInt64(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::int64>(ConvertToInt(vVector));
+			return static_cast<int64>(ConvertToInt(vVector));
 		}
 
 		// Convert int64 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromInt64(PLGeneral::int64 nValue)
+		static PLMath::Vector4 ConvertFromInt64(int64 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to uint8
-		static PLGeneral::uint8 ConvertToUInt8(const PLMath::Vector4 &vVector)
+		static uint8 ConvertToUInt8(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::uint8>(ConvertToInt(vVector));
+			return static_cast<uint8>(ConvertToInt(vVector));
 		}
 
 		// Convert uint8 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static PLMath::Vector4 ConvertFromUInt8(uint8 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to uint16
-		static PLGeneral::uint16 ConvertToUInt16(const PLMath::Vector4 &vVector)
+		static uint16 ConvertToUInt16(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::uint16>(ConvertToInt(vVector));
+			return static_cast<uint16>(ConvertToInt(vVector));
 		}
 
 		// Convert uint16 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static PLMath::Vector4 ConvertFromUInt16(uint16 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to uint32
-		static PLGeneral::uint32 ConvertToUInt32(const PLMath::Vector4 &vVector)
+		static uint32 ConvertToUInt32(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::uint32>(ConvertToInt(vVector));
+			return static_cast<uint32>(ConvertToInt(vVector));
 		}
 
 		// Convert uint32 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static PLMath::Vector4 ConvertFromUInt32(uint32 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to uint64
-		static PLGeneral::uint64 ConvertToUInt64(const PLMath::Vector4 &vVector)
+		static uint64 ConvertToUInt64(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::uint64>(ConvertToInt(vVector));
+			return static_cast<uint64>(ConvertToInt(vVector));
 		}
 
 		// Convert uint64 to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static PLMath::Vector4 ConvertFromUInt64(uint64 nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
 
 		// Convert PLMath::Vector4 to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(const PLMath::Vector4 &vVector)
+		static uint_ptr ConvertToUIntPtr(const PLMath::Vector4 &vVector)
 		{
-			return static_cast<PLGeneral::uint_ptr>(ConvertToInt(vVector));
+			return static_cast<uint_ptr>(ConvertToInt(vVector));
 		}
 
 		// Convert uint_ptr to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static PLMath::Vector4 ConvertFromUIntPtr(uint_ptr nValue)
 		{
 			return PLMath::Vector4(static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue), static_cast<float>(nValue));
 		}
@@ -230,13 +230,13 @@ class Type<PLMath::Vector4> {
 		}
 
 		// Convert PLMath::Vector4 to string
-		static PLGeneral::String ConvertToString(const PLMath::Vector4 &vVector)
+		static String ConvertToString(const PLMath::Vector4 &vVector)
 		{
 			return vVector.ToString();
 		}
 
 		// Convert string to PLMath::Vector4
-		static PLMath::Vector4 ConvertFromString(const PLGeneral::String &sString)
+		static PLMath::Vector4 ConvertFromString(const String &sString)
 		{
 			PLMath::Vector4 vVector;
 			vVector.FromString(sString);

@@ -54,7 +54,7 @@ class Application : public PLCore::ConsoleApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_1(OnMySignal,	PLGeneral::String,	"Called on MySignal signal, a string as first parameter",	"")
+		pl_slot_1(OnMySignal,	PLCore::String,	"Called on MySignal signal, a string as first parameter",	"")
 	pl_class_end
 
 
@@ -86,7 +86,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sScriptFilename
 		*    Filename of the script to run
 		*/
-		void RunScript(const PLGeneral::String &sScriptFilename);
+		void RunScript(const PLCore::String &sScriptFilename);
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class Application : public PLCore::ConsoleApplication {
 		*  @param[in] sParameter
 		*    Signal parameter
 		*/
-		void OnMySignal(PLGeneral::String sParameter);
+		void OnMySignal(PLCore::String sParameter);
 
 		/**
 		*  @brief

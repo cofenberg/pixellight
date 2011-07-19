@@ -28,17 +28,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/Singleton.h>
-#include <PLGeneral/Container/List.h>
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Core/Singleton.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Container/List.h>
+#include <PLCore/Container/HashMap.h>
 #include "PLInput/PLInput.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Thread;
 	class Mutex;
 }
@@ -68,13 +68,13 @@ namespace PLInput {
 *    The input manager stores all available devices that are present on the computer and
 *    controls the update of input messages.
 */
-class InputManager : public PLGeneral::Singleton<InputManager> {
+class InputManager : public PLCore::Singleton<InputManager> {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class PLGeneral::Singleton<InputManager>;
+	friend class PLCore::Singleton<InputManager>;
 	friend class Provider;
 	friend class Control;
 
@@ -123,7 +123,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*  @return
 		*    Provider list, do not destroy the returned instances!
 		*/
-		PLINPUT_API const PLGeneral::List<Provider*> &GetProviders() const;
+		PLINPUT_API const PLCore::List<Provider*> &GetProviders() const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*  @return
 		*    Provider list, do not destroy the returned instances!
 		*/
-		PLINPUT_API PLGeneral::List<Provider*> &GetProviders();
+		PLINPUT_API PLCore::List<Provider*> &GetProviders();
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*  @return
 		*    Provider, or a null pointer if it doesn't exist, do not destroy the returned instance!
 		*/
-		PLINPUT_API Provider *GetProvider(const PLGeneral::String &sProvider);
+		PLINPUT_API Provider *GetProvider(const PLCore::String &sProvider);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*  @return
 		*    Device list, do not destroy the returned instances!
 		*/
-		PLINPUT_API PLGeneral::List<Device*> &GetDevices();
+		PLINPUT_API PLCore::List<Device*> &GetDevices();
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*  @return
 		*    Device, or a null pointer if it doesn't exist, do not destroy the returned instance!
 		*/
-		PLINPUT_API Device *GetDevice(const PLGeneral::String &sDevice) const;
+		PLINPUT_API Device *GetDevice(const PLCore::String &sDevice) const;
 
 		/**
 		*  @brief
@@ -231,7 +231,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 		*    If the provider is already present, it's Detect()-method will be called. Otherwise,
 		*    a new instance of the provider will be created, then Detect() will be called as well.
 		*/
-		void DetectProvider(const PLGeneral::String &sProvider, bool bReset);
+		void DetectProvider(const PLCore::String &sProvider, bool bReset);
 
 		/**
 		*  @brief
@@ -285,12 +285,12 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 	//[-------------------------------------------------------]
 	private:
 		// Providers and devices
-		PLGeneral::List<Provider*>						 m_lstProviders;		/**< List of providers */
-		PLGeneral::HashMap<PLGeneral::String, Provider*> m_mapProviders;		/**< Hash map of providers */
-		PLGeneral::List<Device*>						 m_lstDevices;			/**< List of devices */
-		PLGeneral::HashMap<PLGeneral::String, Device*>	 m_mapDevices;			/**< Hash map of devices */
-		PLGeneral::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages, always valid! */
-		PLGeneral::List<Control*>						 m_lstUpdatedControls;	/**< List of controls that have been updated (message list) */
+		PLCore::List<Provider*>						 m_lstProviders;		/**< List of providers */
+		PLCore::HashMap<PLCore::String, Provider*>	 m_mapProviders;		/**< Hash map of providers */
+		PLCore::List<Device*>						 m_lstDevices;			/**< List of devices */
+		PLCore::HashMap<PLCore::String, Device*>	 m_mapDevices;			/**< Hash map of devices */
+		PLCore::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages, always valid! */
+		PLCore::List<Control*>						 m_lstUpdatedControls;	/**< List of controls that have been updated (message list) */
 
 
 };
@@ -305,7 +305,7 @@ class InputManager : public PLGeneral::Singleton<InputManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::InputManager>;
 }
 

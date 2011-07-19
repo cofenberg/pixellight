@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/Tools/Profiling.h>
-#include <PLGeneral/Log/Log.h>
 #include <PLCore/Core.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/Tools/Profiling.h>
 #include <PLCore/Application/ConsoleApplication.h>
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodes/Console/ConsoleCommand.h"
@@ -36,7 +36,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 namespace PLScene {
 

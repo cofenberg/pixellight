@@ -638,6 +638,31 @@ RECURSIVE              = YES
 
 EXCLUDE                = ../../include/PLCore/PLCoreWindows.h \
                          ../../include/PLCore/PLCoreLinux.h
+EXCLUDE                = ../../include/PLCore/FileSystem/Windows/ \
+                         ../../include/PLCore/FileSystem/Linux/ \
+                         ../../include/PLCore/FileSystem/Zip/ \
+                         ../../include/PLCore/System/SystemWindows.h \
+                         ../../include/PLCore/System/SystemLinux.h \
+                         ../../include/PLCore/System/Threading/ThreadManagerImpl.h \
+                         ../../include/PLCore/System/Threading/ThreadManagerWindows.h \
+                         ../../include/PLCore/System/Threading/ThreadManagerLinux.h \
+                         ../../include/PLCore/System/Threading/MutexImpl.h \
+                         ../../include/PLCore/System/Threading/MutexWindows.h \
+                         ../../include/PLCore/System/Threading/MutexLinux.h \
+                         ../../include/PLCore/System/Threading/SemaphoreImpl.h \
+                         ../../include/PLCore/System/Threading/SemaphoreWindows.h \
+                         ../../include/PLCore/System/Threading/SemaphoreLinux.h \
+                         ../../include/PLCore/System/Threading/ThreadImpl.h \
+                         ../../include/PLCore/System/Threading/ThreadWindows.h \
+                         ../../include/PLCore/System/Threading/ThreadLinux.h \
+                         ../../include/PLCore/System/DynLib/DynLibManagerImpl.h \
+                         ../../include/PLCore/System/DynLib/DynLibManagerWindows.h \
+                         ../../include/PLCore/System/DynLib/DynLibManagerLinux.h \
+                         ../../include/PLCore/System/DynLib/DynLibImpl.h \
+                         ../../include/PLCore/System/DynLib/DynLibWindows.h \
+                         ../../include/PLCore/System/DynLib/DynLibLinux.h \
+                         ../../include/PLCore/PLCoreWindowsIncludes.h \
+                         ../../include/PLCore/PLCoreLinuxIncludes.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 

@@ -89,8 +89,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include;../../PixelLight;../../Base/PLGeneral/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -101,9 +101,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlib.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -111,6 +111,7 @@
       </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLCoreD.dll ..\..\Bin\Runtime\
@@ -125,8 +126,8 @@ copy build\debug\PLCoreD.lib ..\..\Bin\Lib\
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include;../../PixelLight;../../Base/PLGeneral/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -144,8 +145,8 @@ copy build\debug\PLCoreD.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Bin/Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlib.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/zlib/lib/;../../External/_Windows_x86_32/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -167,8 +168,8 @@ copy build\release\PLCore.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include;../../PixelLight;../../Base/PLGeneral/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLCORE_EXPORTS;X64_ARCHITECTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_EXPORTS;X64_ARCHITECTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -178,9 +179,9 @@ copy build\release\PLCore.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneralD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlibstat64.lib;pcre64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -201,8 +202,8 @@ copy build\debug64\PLCoreD64.lib ..\..\Bin\Lib\
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>include;../../PixelLight;../../Base/PLGeneral/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLCORE_EXPORTS;X64_ARCHITECTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_EXPORTS;X64_ARCHITECTURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -210,9 +211,9 @@ copy build\debug64\PLCoreD64.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLGeneral64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlibstat64.lib;pcre64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -239,7 +240,63 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Base\Func\FuncDesc.cpp" />
     <ClCompile Include="src\Base\Tools\ParamsParser.cpp" />
     <ClCompile Include="src\Base\Tools\ParamsParserXml.cpp" />
+    <ClCompile Include="src\Container\Bitset.cpp" />
+    <ClCompile Include="src\Container\BitsetIterator.cpp" />
+    <ClCompile Include="src\Container\Functions.cpp" />
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\Core\MemoryManager.cpp" />
+    <ClCompile Include="src\File\Directory.cpp" />
+    <ClCompile Include="src\File\File.cpp" />
+    <ClCompile Include="src\File\FileAccess.cpp" />
+    <ClCompile Include="src\File\FileHttp.cpp" />
+    <ClCompile Include="src\File\FileImpl.cpp" />
+    <ClCompile Include="src\File\FileLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\File\FileObject.cpp" />
+    <ClCompile Include="src\File\FileSearch.cpp" />
+    <ClCompile Include="src\File\FileSearchHttp.cpp" />
+    <ClCompile Include="src\File\FileSearchImpl.cpp" />
+    <ClCompile Include="src\File\FileSearchLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\File\FileSearchWindows.cpp" />
+    <ClCompile Include="src\File\FileSearchZip.cpp" />
+    <ClCompile Include="src\File\FileStdStream.cpp" />
+    <ClCompile Include="src\File\FileWindows.cpp" />
+    <ClCompile Include="src\File\FileZip.cpp" />
+    <ClCompile Include="src\File\HttpHandle.cpp" />
+    <ClCompile Include="src\File\SearchFilter.cpp" />
+    <ClCompile Include="src\File\SearchFilterRegEx.cpp" />
+    <ClCompile Include="src\File\SearchFilterWildcard.cpp" />
+    <ClCompile Include="src\File\Url.cpp" />
+    <ClCompile Include="src\File\ZipHandle.cpp" />
+    <ClCompile Include="src\Log\Log.cpp" />
+    <ClCompile Include="src\Log\LogFormater.cpp" />
+    <ClCompile Include="src\Log\LogFormaterHtml.cpp" />
+    <ClCompile Include="src\Log\LogFormaterText.cpp" />
+    <ClCompile Include="src\Log\LogFormaterXml.cpp" />
+    <ClCompile Include="src\Network\Buffer.cpp" />
+    <ClCompile Include="src\Network\Client.cpp" />
+    <ClCompile Include="src\Network\Connection.cpp" />
+    <ClCompile Include="src\Network\Host.cpp" />
+    <ClCompile Include="src\Network\Http\Http.cpp" />
+    <ClCompile Include="src\Network\Http\HttpClient.cpp" />
+    <ClCompile Include="src\Network\Http\HttpClientConnection.cpp" />
+    <ClCompile Include="src\Network\Http\HttpHeader.cpp" />
+    <ClCompile Include="src\Network\Http\HttpServer.cpp" />
+    <ClCompile Include="src\Network\Http\HttpServerConnection.cpp" />
+    <ClCompile Include="src\Network\Http\MimeTypeManager.cpp" />
+    <ClCompile Include="src\Network\Network.cpp" />
+    <ClCompile Include="src\Network\Server.cpp" />
+    <ClCompile Include="src\Network\Socket.cpp" />
+    <ClCompile Include="src\Network\SocketAddress.cpp" />
+    <ClCompile Include="src\PCoreLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\PLCore.cpp" />
     <ClCompile Include="src\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\Application\ConsoleApplication.cpp" />
@@ -259,13 +316,79 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Base\Var\DynVar.cpp" />
     <ClCompile Include="src\Base\Var\VarDesc.cpp" />
     <ClCompile Include="src\Base\TypeInfo\DynTypeInfo.cpp" />
+    <ClCompile Include="src\Registry\Registry.cpp" />
+    <ClCompile Include="src\Registry\RegistryImpl.cpp" />
+    <ClCompile Include="src\Registry\RegistryWindows.cpp" />
     <ClCompile Include="src\Script\Script.cpp" />
     <ClCompile Include="src\Script\ScriptBinding.cpp" />
     <ClCompile Include="src\Script\ScriptManager.cpp" />
+    <ClCompile Include="src\String\BufferedReaderFile.cpp" />
+    <ClCompile Include="src\String\BufferedReaderString.cpp" />
+    <ClCompile Include="src\String\ParseTools.cpp" />
+    <ClCompile Include="src\String\RegEx.cpp" />
+    <ClCompile Include="src\String\String.cpp" />
+    <ClCompile Include="src\String\StringBuffer.cpp" />
+    <ClCompile Include="src\String\StringBufferASCII.cpp" />
+    <ClCompile Include="src\String\StringBufferManager.cpp" />
+    <ClCompile Include="src\String\StringBufferUnicode.cpp" />
+    <ClCompile Include="src\String\StringBufferUTF8.cpp" />
+    <ClCompile Include="src\String\Tokenizer.cpp" />
+    <ClCompile Include="src\String\UTF8Tools.cpp" />
+    <ClCompile Include="src\System\Console.cpp" />
+    <ClCompile Include="src\System\ConsoleLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\ConsoleWindows.cpp" />
+    <ClCompile Include="src\System\DynLib.cpp" />
+    <ClCompile Include="src\System\DynLibImpl.cpp" />
+    <ClCompile Include="src\System\DynLibLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\DynLibWindows.cpp" />
+    <ClCompile Include="src\System\Mutex.cpp" />
+    <ClCompile Include="src\System\MutexImpl.cpp" />
+    <ClCompile Include="src\System\MutexLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows.cpp" />
+    <ClCompile Include="src\System\Pipe.cpp" />
+    <ClCompile Include="src\System\Process.cpp" />
+    <ClCompile Include="src\System\Semaphore.cpp" />
+    <ClCompile Include="src\System\SemaphoreImpl.cpp" />
+    <ClCompile Include="src\System\SemaphoreLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\SemaphoreWindows.cpp" />
+    <ClCompile Include="src\System\System.cpp" />
+    <ClCompile Include="src\System\SystemImpl.cpp" />
+    <ClCompile Include="src\System\SystemLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\SystemWindows.cpp" />
+    <ClCompile Include="src\System\Thread.cpp" />
+    <ClCompile Include="src\System\ThreadFunction.cpp" />
+    <ClCompile Include="src\System\ThreadImpl.cpp" />
+    <ClCompile Include="src\System\ThreadLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadWindows.cpp" />
+    <ClCompile Include="src\Tools\Checksum.cpp" />
+    <ClCompile Include="src\Tools\ChecksumCRC32.cpp" />
+    <ClCompile Include="src\Tools\ChecksumMD5.cpp" />
+    <ClCompile Include="src\Tools\ChecksumSHA1.cpp" />
     <ClCompile Include="src\Tools\Chunk.cpp" />
     <ClCompile Include="src\Tools\ChunkLoader.cpp" />
     <ClCompile Include="src\Tools\ChunkLoaderPL.cpp" />
     <ClCompile Include="src\Tools\ChunkLoaderPLXml.cpp" />
+    <ClCompile Include="src\Tools\CommandLine.cpp" />
+    <ClCompile Include="src\Tools\CommandLineOption.cpp" />
+    <ClCompile Include="src\Tools\HTMLParser.cpp" />
     <ClCompile Include="src\Tools\Loadable.cpp" />
     <ClCompile Include="src\Tools\LoadableManager.cpp" />
     <ClCompile Include="src\Tools\LoadableType.cpp" />
@@ -276,6 +399,23 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Tools\LocalizationLoader.cpp" />
     <ClCompile Include="src\Tools\LocalizationLoaderPL.cpp" />
     <ClCompile Include="src\Tools\LocalizationText.cpp" />
+    <ClCompile Include="src\Tools\Profiling.cpp" />
+    <ClCompile Include="src\Tools\QuickSort.cpp" />
+    <ClCompile Include="src\Tools\Stopwatch.cpp" />
+    <ClCompile Include="src\Tools\Time.cpp" />
+    <ClCompile Include="src\Tools\Timing.cpp" />
+    <ClCompile Include="src\Tools\Version.cpp" />
+    <ClCompile Include="src\Tools\Wrapper.cpp" />
+    <ClCompile Include="src\Xml\XmlAttribute.cpp" />
+    <ClCompile Include="src\Xml\XmlBase.cpp" />
+    <ClCompile Include="src\Xml\XmlComment.cpp" />
+    <ClCompile Include="src\Xml\XmlDeclaration.cpp" />
+    <ClCompile Include="src\Xml\XmlDocument.cpp" />
+    <ClCompile Include="src\Xml\XmlElement.cpp" />
+    <ClCompile Include="src\Xml\XmlNode.cpp" />
+    <ClCompile Include="src\Xml\XmlParsingData.cpp" />
+    <ClCompile Include="src\Xml\XmlText.cpp" />
+    <ClCompile Include="src\Xml\XmlUnknown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Base\ClassDummy.h" />
@@ -301,11 +441,101 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\Base\Tools\ParamsParser.h" />
     <ClInclude Include="include\PLCore\Base\Tools\ParamsParserXml.h" />
     <ClInclude Include="include\PLCore\Base\Tools\TypeTraits.h" />
+    <ClInclude Include="include\PLCore\Container\Array.h" />
+    <ClInclude Include="include\PLCore\Container\ArrayIterator.h" />
+    <ClInclude Include="include\PLCore\Container\BinaryHeap.h" />
+    <ClInclude Include="include\PLCore\Container\BinaryHeapIterator.h" />
+    <ClInclude Include="include\PLCore\Container\BinominalHeap.h" />
+    <ClInclude Include="include\PLCore\Container\BinominalHeapIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Bitset.h" />
+    <ClInclude Include="include\PLCore\Container\BitsetIterator.h" />
+    <ClInclude Include="include\PLCore\Container\ConstIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Container.h" />
+    <ClInclude Include="include\PLCore\Container\Element.h" />
+    <ClInclude Include="include\PLCore\Container\ElementHandler.h" />
+    <ClInclude Include="include\PLCore\Container\ElementManager.h" />
+    <ClInclude Include="include\PLCore\Container\FastPool.h" />
+    <ClInclude Include="include\PLCore\Container\FastPoolIterator.h" />
+    <ClInclude Include="include\PLCore\Container\FibonacciHeap.h" />
+    <ClInclude Include="include\PLCore\Container\FibonacciHeapIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Functions.h" />
+    <ClInclude Include="include\PLCore\Container\HashMap.h" />
+    <ClInclude Include="include\PLCore\Container\HashMapIterator.h" />
+    <ClInclude Include="include\PLCore\Container\HashMapKeyIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Heap.h" />
+    <ClInclude Include="include\PLCore\Container\Iterable.h" />
+    <ClInclude Include="include\PLCore\Container\Iterator.h" />
+    <ClInclude Include="include\PLCore\Container\IteratorImpl.h" />
+    <ClInclude Include="include\PLCore\Container\List.h" />
+    <ClInclude Include="include\PLCore\Container\ListIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Map.h" />
+    <ClInclude Include="include\PLCore\Container\Pool.h" />
+    <ClInclude Include="include\PLCore\Container\PoolIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Queue.h" />
+    <ClInclude Include="include\PLCore\Container\Resource.h" />
+    <ClInclude Include="include\PLCore\Container\ResourceHandler.h" />
+    <ClInclude Include="include\PLCore\Container\ResourceManager.h" />
+    <ClInclude Include="include\PLCore\Container\SimpleList.h" />
+    <ClInclude Include="include\PLCore\Container\SimpleListIterator.h" />
+    <ClInclude Include="include\PLCore\Container\SimpleMap.h" />
+    <ClInclude Include="include\PLCore\Container\SimpleMapIterator.h" />
+    <ClInclude Include="include\PLCore\Container\SimpleMapKeyIterator.h" />
+    <ClInclude Include="include\PLCore\Container\Stack.h" />
     <ClInclude Include="include\PLCore\Core.h" />
+    <ClInclude Include="include\PLCore\Core\MemoryManager.h" />
+    <ClInclude Include="include\PLCore\Core\RefCount.h" />
+    <ClInclude Include="include\PLCore\Core\RefCountPtr.h" />
+    <ClInclude Include="include\PLCore\Core\Singleton.h" />
+    <ClInclude Include="include\PLCore\Core\SmartPtr.h" />
+    <ClInclude Include="include\PLCore\File\Directory.h" />
+    <ClInclude Include="include\PLCore\File\File.h" />
+    <ClInclude Include="include\PLCore\File\FileAccess.h" />
+    <ClInclude Include="include\PLCore\File\FileHttp.h" />
+    <ClInclude Include="include\PLCore\File\FileImpl.h" />
+    <ClInclude Include="include\PLCore\File\FileLinux.h" />
+    <ClInclude Include="include\PLCore\File\FileObject.h" />
+    <ClInclude Include="include\PLCore\File\FileSearch.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchHttp.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchImpl.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchLinux.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchWindows.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchZip.h" />
+    <ClInclude Include="include\PLCore\File\FileStdStream.h" />
+    <ClInclude Include="include\PLCore\File\FileWindows.h" />
+    <ClInclude Include="include\PLCore\File\FileZip.h" />
+    <ClInclude Include="include\PLCore\File\HttpHandle.h" />
+    <ClInclude Include="include\PLCore\File\SearchFilter.h" />
+    <ClInclude Include="include\PLCore\File\SearchFilterRegEx.h" />
+    <ClInclude Include="include\PLCore\File\SearchFilterWildcard.h" />
+    <ClInclude Include="include\PLCore\File\StdIo.h" />
+    <ClInclude Include="include\PLCore\File\Url.h" />
+    <ClInclude Include="include\PLCore\File\ZipHandle.h" />
+    <ClInclude Include="include\PLCore\Log\Log.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormater.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormaterHtml.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormaterText.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormaterXml.h" />
+    <ClInclude Include="include\PLCore\Main.h" />
     <ClInclude Include="include\PLCore\ModuleMain.h" />
+    <ClInclude Include="include\PLCore\Network\Buffer.h" />
+    <ClInclude Include="include\PLCore\Network\Client.h" />
+    <ClInclude Include="include\PLCore\Network\Connection.h" />
+    <ClInclude Include="include\PLCore\Network\Host.h" />
+    <ClInclude Include="include\PLCore\Network\Http\Http.h" />
+    <ClInclude Include="include\PLCore\Network\Http\HttpClient.h" />
+    <ClInclude Include="include\PLCore\Network\Http\HttpClientConnection.h" />
+    <ClInclude Include="include\PLCore\Network\Http\HttpHeader.h" />
+    <ClInclude Include="include\PLCore\Network\Http\HttpServer.h" />
+    <ClInclude Include="include\PLCore\Network\Http\HttpServerConnection.h" />
+    <ClInclude Include="include\PLCore\Network\Http\MimeTypeManager.h" />
+    <ClInclude Include="include\PLCore\Network\Server.h" />
+    <ClInclude Include="include\PLCore\Network\Socket.h" />
+    <ClInclude Include="include\PLCore\Network\SocketAddress.h" />
     <ClInclude Include="include\PLCore\PLCore.h" />
     <ClInclude Include="include\PLCore\PLCoreDefinitions.h" />
     <ClInclude Include="include\PLCore\PLCoreLinux.h" />
+    <ClInclude Include="include\PLCore\PLCoreLinuxIncludes.h" />
+    <ClInclude Include="include\PLCore\PLCoreLinuxWrapper.h" />
     <ClInclude Include="include\PLCore\PLCoreWindows.h" />
     <ClInclude Include="include\PLCore\Application\ApplicationContext.h" />
     <ClInclude Include="include\PLCore\Application\ConsoleApplication.h" />
@@ -338,14 +568,65 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\Base\Var\VarStorage.h" />
     <ClInclude Include="include\PLCore\Base\TypeInfo\DynTypeInfo.h" />
     <ClInclude Include="include\PLCore\Base\TypeInfo\TypeInfo.h" />
+    <ClInclude Include="include\PLCore\PLCoreWindowsIncludes.h" />
+    <ClInclude Include="include\PLCore\Registry\Registry.h" />
+    <ClInclude Include="include\PLCore\Registry\RegistryImpl.h" />
+    <ClInclude Include="include\PLCore\Registry\RegistryWindows.h" />
     <ClInclude Include="include\PLCore\Script\FuncScriptPtr.h" />
     <ClInclude Include="include\PLCore\Script\Script.h" />
     <ClInclude Include="include\PLCore\Script\ScriptBinding.h" />
     <ClInclude Include="include\PLCore\Script\ScriptManager.h" />
+    <ClInclude Include="include\PLCore\String\BufferedReader.h" />
+    <ClInclude Include="include\PLCore\String\BufferedReaderFile.h" />
+    <ClInclude Include="include\PLCore\String\BufferedReaderString.h" />
+    <ClInclude Include="include\PLCore\String\ParseTools.h" />
+    <ClInclude Include="include\PLCore\String\RegEx.h" />
+    <ClInclude Include="include\PLCore\String\String.h" />
+    <ClInclude Include="include\PLCore\String\StringBuffer.h" />
+    <ClInclude Include="include\PLCore\String\StringBufferASCII.h" />
+    <ClInclude Include="include\PLCore\String\StringBufferManager.h" />
+    <ClInclude Include="include\PLCore\String\StringBufferUnicode.h" />
+    <ClInclude Include="include\PLCore\String\StringBufferUTF8.h" />
+    <ClInclude Include="include\PLCore\String\Tokenizer.h" />
+    <ClInclude Include="include\PLCore\String\UTF8Tools.h" />
+    <ClInclude Include="include\PLCore\System\Console.h" />
+    <ClInclude Include="include\PLCore\System\ConsoleLinux.h" />
+    <ClInclude Include="include\PLCore\System\ConsoleWindows.h" />
+    <ClInclude Include="include\PLCore\System\DynLib.h" />
+    <ClInclude Include="include\PLCore\System\DynLibImpl.h" />
+    <ClInclude Include="include\PLCore\System\DynLibLinux.h" />
+    <ClInclude Include="include\PLCore\System\DynLibWindows.h" />
+    <ClInclude Include="include\PLCore\System\Mutex.h" />
+    <ClInclude Include="include\PLCore\System\MutexGuard.h" />
+    <ClInclude Include="include\PLCore\System\MutexImpl.h" />
+    <ClInclude Include="include\PLCore\System\MutexLinux.h" />
+    <ClInclude Include="include\PLCore\System\MutexWindows.h" />
+    <ClInclude Include="include\PLCore\System\Pipe.h" />
+    <ClInclude Include="include\PLCore\System\Process.h" />
+    <ClInclude Include="include\PLCore\System\Semaphore.h" />
+    <ClInclude Include="include\PLCore\System\SemaphoreImpl.h" />
+    <ClInclude Include="include\PLCore\System\SemaphoreLinux.h" />
+    <ClInclude Include="include\PLCore\System\SemaphoreWindows.h" />
+    <ClInclude Include="include\PLCore\System\System.h" />
+    <ClInclude Include="include\PLCore\System\SystemImpl.h" />
+    <ClInclude Include="include\PLCore\System\SystemLinux.h" />
+    <ClInclude Include="include\PLCore\System\SystemWindows.h" />
+    <ClInclude Include="include\PLCore\System\Thread.h" />
+    <ClInclude Include="include\PLCore\System\ThreadFunction.h" />
+    <ClInclude Include="include\PLCore\System\ThreadImpl.h" />
+    <ClInclude Include="include\PLCore\System\ThreadLinux.h" />
+    <ClInclude Include="include\PLCore\System\ThreadWindows.h" />
+    <ClInclude Include="include\PLCore\Tools\Checksum.h" />
+    <ClInclude Include="include\PLCore\Tools\ChecksumCRC32.h" />
+    <ClInclude Include="include\PLCore\Tools\ChecksumMD5.h" />
+    <ClInclude Include="include\PLCore\Tools\ChecksumSHA1.h" />
     <ClInclude Include="include\PLCore\Tools\Chunk.h" />
     <ClInclude Include="include\PLCore\Tools\ChunkLoader.h" />
     <ClInclude Include="include\PLCore\Tools\ChunkLoaderPL.h" />
     <ClInclude Include="include\PLCore\Tools\ChunkLoaderPLXml.h" />
+    <ClInclude Include="include\PLCore\Tools\CommandLine.h" />
+    <ClInclude Include="include\PLCore\Tools\CommandLineOption.h" />
+    <ClInclude Include="include\PLCore\Tools\HTMLParser.h" />
     <ClInclude Include="include\PLCore\Tools\Loadable.h" />
     <ClInclude Include="include\PLCore\Tools\LoadableManager.h" />
     <ClInclude Include="include\PLCore\Tools\LoadableType.h" />
@@ -356,9 +637,25 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\Tools\LocalizationLoader.h" />
     <ClInclude Include="include\PLCore\Tools\LocalizationLoaderPL.h" />
     <ClInclude Include="include\PLCore\Tools\LocalizationText.h" />
-    <ClInclude Include="include\PLCore\Tools\Resource.h" />
-    <ClInclude Include="include\PLCore\Tools\ResourceHandler.h" />
-    <ClInclude Include="include\PLCore\Tools\ResourceManager.h" />
+    <ClInclude Include="include\PLCore\Tools\Profiling.h" />
+    <ClInclude Include="include\PLCore\Tools\QuickSort.h" />
+    <ClInclude Include="include\PLCore\Tools\Stopwatch.h" />
+    <ClInclude Include="include\PLCore\Tools\Time.h" />
+    <ClInclude Include="include\PLCore\Tools\Timing.h" />
+    <ClInclude Include="include\PLCore\Tools\Tools.h" />
+    <ClInclude Include="include\PLCore\Tools\Version.h" />
+    <ClInclude Include="include\PLCore\Tools\Wrapper.h" />
+    <ClInclude Include="include\PLCore\Xml\Xml.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlAttribute.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlBase.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlComment.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlDeclaration.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlDocument.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlElement.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlNode.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlParsingData.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlText.h" />
+    <ClInclude Include="include\PLCore\Xml\XmlUnknown.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl" />
@@ -385,17 +682,50 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <None Include="include\PLCore\Base\Type\TypeVoid.inl" />
     <None Include="include\PLCore\Base\TypeInfo\TypeInfoEnum.inl" />
     <None Include="include\PLCore\Base\TypeInfo\TypeInfoFlag.inl" />
-    <None Include="include\PLCore\Tools\Resource.inl" />
-    <None Include="include\PLCore\Tools\ResourceHandler.inl" />
-    <None Include="include\PLCore\Tools\ResourceManager.inl" />
+    <None Include="include\PLCore\Container\Array.inl" />
+    <None Include="include\PLCore\Container\ArrayIterator.inl" />
+    <None Include="include\PLCore\Container\BinaryHeap.inl" />
+    <None Include="include\PLCore\Container\BinaryHeapIterator.inl" />
+    <None Include="include\PLCore\Container\BinominalHeap.inl" />
+    <None Include="include\PLCore\Container\BinominalHeapIterator.inl" />
+    <None Include="include\PLCore\Container\Bitset.inl" />
+    <None Include="include\PLCore\Container\ConstIterator.inl" />
+    <None Include="include\PLCore\Container\Element.inl" />
+    <None Include="include\PLCore\Container\ElementHandler.inl" />
+    <None Include="include\PLCore\Container\ElementManager.inl" />
+    <None Include="include\PLCore\Container\FastPool.inl" />
+    <None Include="include\PLCore\Container\FastPoolIterator.inl" />
+    <None Include="include\PLCore\Container\FibonacciHeap.inl" />
+    <None Include="include\PLCore\Container\FibonacciHeapIterator.inl" />
+    <None Include="include\PLCore\Container\HashMap.inl" />
+    <None Include="include\PLCore\Container\HashMapIterator.inl" />
+    <None Include="include\PLCore\Container\HashMapKeyIterator.inl" />
+    <None Include="include\PLCore\Container\Iterator.inl" />
+    <None Include="include\PLCore\Container\List.inl" />
+    <None Include="include\PLCore\Container\ListIterator.inl" />
+    <None Include="include\PLCore\Container\Pool.inl" />
+    <None Include="include\PLCore\Container\PoolIterator.inl" />
+    <None Include="include\PLCore\Container\Queue.inl" />
+    <None Include="include\PLCore\Container\Resource.inl" />
+    <None Include="include\PLCore\Container\ResourceHandler.inl" />
+    <None Include="include\PLCore\Container\ResourceManager.inl" />
+    <None Include="include\PLCore\Container\SimpleList.inl" />
+    <None Include="include\PLCore\Container\SimpleListIterator.inl" />
+    <None Include="include\PLCore\Container\SimpleMap.inl" />
+    <None Include="include\PLCore\Container\SimpleMapIterator.inl" />
+    <None Include="include\PLCore\Container\SimpleMapKeyIterator.inl" />
+    <None Include="include\PLCore\Container\Stack.inl" />
+    <None Include="include\PLCore\Core\MemoryManager.inl" />
+    <None Include="include\PLCore\Core\RefCount.inl" />
+    <None Include="include\PLCore\Core\RefCountPtr.inl" />
+    <None Include="include\PLCore\Core\Singleton.inl" />
+    <None Include="include\PLCore\Core\SmartPtr.inl" />
+    <None Include="include\PLCore\String\UTF8Tools.inl" />
+    <None Include="include\PLCore\System\MutexGuard.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PLGeneral\PLGeneral.vcxproj">
-      <Project>{909ccd7c-873c-4f9e-ab2d-0881e14e6134}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
+    <None Include="include\PLCore\Tools\Stopwatch.inl" />
+    <None Include="include\PLCore\Tools\Tools.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

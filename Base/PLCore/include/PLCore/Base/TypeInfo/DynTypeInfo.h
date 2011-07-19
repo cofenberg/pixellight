@@ -28,9 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/List.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
+#include "PLCore/Container/List.h"
 
 
 //[-------------------------------------------------------]
@@ -92,7 +91,7 @@ class DynTypeInfo {
 		*  @return
 		*    Type name
 		*/
-		PLCORE_API virtual PLGeneral::String GetTypeName() const;
+		PLCORE_API virtual String GetTypeName() const;
 
 		/**
 		*  @brief
@@ -119,7 +118,7 @@ class DynTypeInfo {
 		*  @return
 		*    List of enum value names
 		*/
-		PLCORE_API virtual const PLGeneral::List<PLGeneral::String> &GetEnumValues() const;
+		PLCORE_API virtual const List<String> &GetEnumValues() const;
 
 		/**
 		*  @brief
@@ -131,7 +130,7 @@ class DynTypeInfo {
 		*  @return
 		*    Enum value as string
 		*/
-		PLCORE_API virtual PLGeneral::String GetEnumValue(const PLGeneral::String &sEnum) const;
+		PLCORE_API virtual String GetEnumValue(const String &sEnum) const;
 
 		/**
 		*  @brief
@@ -143,14 +142,14 @@ class DynTypeInfo {
 		*  @return
 		*    Description for that enum value
 		*/
-		PLCORE_API virtual PLGeneral::String GetEnumDescription(const PLGeneral::String &sEnum) const;
+		PLCORE_API virtual String GetEnumDescription(const String &sEnum) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::List<PLGeneral::String> m_lstEnumValues;	/**< List of enum values (empty but for enum-types) */
+		List<String> m_lstEnumValues;	/**< List of enum values (empty but for enum-types) */
 
 
 };

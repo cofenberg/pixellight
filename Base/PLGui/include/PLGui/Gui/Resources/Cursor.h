@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/PLGui.h"
 
 
@@ -109,7 +109,7 @@ class Cursor {
 		*  @remarks
 		*    Loads a custom cursor from an image. The mouse cursor ID will be set to CursorCustom.
 		*/
-		PLGUI_API Cursor(Gui &cGui, const PLGeneral::String &sFilename, const PLMath::Vector2i &vHotspot);
+		PLGUI_API Cursor(Gui &cGui, const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class Cursor {
 		*  @param[in] vHotspot
 		*    Hotspot of cursor
 		*/
-		PLGUI_API void Load(const PLGeneral::String &sFilename, const PLMath::Vector2i &vHotspot);
+		PLGUI_API void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
 
 		/**
 		*  @brief
@@ -189,17 +189,17 @@ class Cursor {
 		*  @return
 		*    Cursor filename
 		*/
-		PLGUI_API PLGeneral::String GetFilename() const;
+		PLGUI_API PLCore::String GetFilename() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Gui				  *m_pGui;			/**< Pointer to GUI */
-		CursorImpl		  *m_pCursorImpl;	/**< Cursor implementation */
-		EMouseCursor	   m_nMouseCursor;	/**< Cursor ID (CustomCursor if a custom image has been loaded) */
-		PLGeneral::String  m_sFilename;		/**< Image filename */
+		Gui			   *m_pGui;			/**< Pointer to GUI */
+		CursorImpl	   *m_pCursorImpl;	/**< Cursor implementation */
+		EMouseCursor	m_nMouseCursor;	/**< Cursor ID (CustomCursor if a custom image has been loaded) */
+		PLCore::String  m_sFilename;	/**< Image filename */
 
 
 };

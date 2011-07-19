@@ -68,9 +68,9 @@ class SNMPositionKeyframeRecord : public PLScene::SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SNMPositionKeyframeRecord, "PLEngine", PLScene::SNMTransform, "Keyframe position animation scene node modifier class")
 		// Attributes
-		pl_attribute(FramesPerSecond,	PLGeneral::uint32,	24,	ReadWrite,	DirectValue,	"Frames per second",																											"")
-		pl_attribute(Keys,				PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Position keys (x, y and z) chunk filename",																					"")
-		pl_attribute(CoordinateSystem,	PLGeneral::String,	"",	ReadWrite,	DirectValue,	"Name of the scene container the position keys are in, empty string means scene container of the modifiers owner scene node",	"")
+		pl_attribute(FramesPerSecond,	PLCore::uint32,	24,	ReadWrite,	DirectValue,	"Frames per second",																											"")
+		pl_attribute(Keys,				PLCore::String,	"",	ReadWrite,	DirectValue,	"Position keys (x, y and z) chunk filename",																					"")
+		pl_attribute(CoordinateSystem,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Name of the scene container the position keys are in, empty string means scene container of the modifiers owner scene node",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
@@ -142,11 +142,11 @@ class SNMPositionKeyframeRecord : public PLScene::SNMTransform {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool							  m_bRecording;	/**< Is recording currently enabled? */
-		PLGeneral::List<PLMath::Vector3>  m_lstData;	/**< Recorded data */
-		float							  m_fFrame;		/**< Current frame as floating point */
-		int								  m_nFrame;		/**< Current frame as integer */
-		PLCore::Chunk					 *m_pChunk;		/**< Chunk holding the keyframe data, always valid! */
+		bool						   m_bRecording;	/**< Is recording currently enabled? */
+		PLCore::List<PLMath::Vector3>  m_lstData;		/**< Recorded data */
+		float						   m_fFrame;		/**< Current frame as floating point */
+		int							   m_nFrame;		/**< Current frame as integer */
+		PLCore::Chunk				  *m_pChunk;		/**< Chunk holding the keyframe data, always valid! */
 
 
 	//[-------------------------------------------------------]

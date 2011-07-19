@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Tools/Timing.h>
-#include <PLGeneral/System/System.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/System/System.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
@@ -43,7 +43,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
 using namespace PLCore;
 using namespace PLGui;
 using namespace PLInput;

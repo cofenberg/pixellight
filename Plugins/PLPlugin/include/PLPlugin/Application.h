@@ -75,7 +75,7 @@ class Application : public PLEngine::RenderApplication {
 		*  @param[in] nKey
 		*    Pressed key
 		*/
-		void OnKeyDown(PLGeneral::uint32 nKey);
+		void OnKeyDown(PLCore::uint32 nKey);
 
 
 	//[-------------------------------------------------------]
@@ -89,7 +89,7 @@ class Application : public PLEngine::RenderApplication {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLGeneral::uint32> EventHandlerKeyDown;
+		PLCore::EventHandler<PLCore::uint32> EventHandlerKeyDown;
 
 
 };

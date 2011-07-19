@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Log/Log.h>
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/Log/Log.h>
+#include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/PLRendererOpenGLWindows.h"
 #include "PLRendererOpenGL/Renderer.h"
@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererOpenGL {
 

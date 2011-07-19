@@ -82,7 +82,6 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
@@ -101,7 +100,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	PLGeneral
 	PLCore
 	PLMath
 	PLGraphics
@@ -174,7 +172,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLGeneral PLCore PLMath PLGraphics PLDatabase PLTest)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLMath PLGraphics PLDatabase PLTest)
 add_dependencies(Tests ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

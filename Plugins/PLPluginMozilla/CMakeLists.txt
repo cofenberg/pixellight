@@ -19,7 +19,7 @@ add_sources(
 ##################################################
 add_include_directories(
 	src
-	${CMAKE_SOURCE_DIR}/Base/PLGeneral/include
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLPlugin/include
 	${XULRUNNERSDK_INCLUDE_DIRS}
 )
@@ -111,7 +111,7 @@ build_library(nppl3d SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-xulrunnersdk PLGeneral PLGui PLRenderer PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-xulrunnersdk PLCore PLGui PLRenderer PLScene)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

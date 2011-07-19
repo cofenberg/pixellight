@@ -75,7 +75,7 @@ class SNText3D : public SNText {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNText3D, "PLScene", PLScene::SNText, "3D (\"flat\") text scene node")
 		// Attributes
-		pl_attribute(BackgroundMaterial,	PLGeneral::String,		"",	ReadWrite,	GetSet,	"Background material to use",	"Type='Material Effect Image TextureAni'")
+		pl_attribute(BackgroundMaterial,	PLCore::String,			"",	ReadWrite,	GetSet,	"Background material to use",	"Type='Material Effect Image TextureAni'")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",						"")
 		// Constructors
@@ -87,12 +87,12 @@ class SNText3D : public SNText {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLGeneral::String GetBackgroundMaterial() const;
-		PLS_API void SetBackgroundMaterial(const PLGeneral::String &sValue);
-		PLS_API virtual void SetText(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFont(const PLGeneral::String &sValue);
-		PLS_API virtual void SetFontSize(PLGeneral::uint32 nValue);
-		PLS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLS_API PLCore::String GetBackgroundMaterial() const;
+		PLS_API void SetBackgroundMaterial(const PLCore::String &sValue);
+		PLS_API virtual void SetText(const PLCore::String &sValue);
+		PLS_API virtual void SetFont(const PLCore::String &sValue);
+		PLS_API virtual void SetFontSize(PLCore::uint32 nValue);
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -125,7 +125,7 @@ class SNText3D : public SNText {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGeneral::String			m_sBackgroundMaterial;	/**< Background material */
+		PLCore::String				m_sBackgroundMaterial;	/**< Background material */
 		bool						m_bBackgroundMaterial;	/**< Background material loaded? */
 		PLRenderer::MaterialHandler m_cBackgroundMaterial;	/**< Background material */
 

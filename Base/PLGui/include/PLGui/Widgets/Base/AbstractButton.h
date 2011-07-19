@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/String/String.h>
+#include <PLCore/String/String.h>
 #include "PLGui/Gui/Resources/Image.h"
 #include "PLGui/Gui/Resources/Timer.h"
 #include "PLGui/Widgets/Widget.h"
@@ -55,12 +55,12 @@ class AbstractButton : public Widget {
 	//[-------------------------------------------------------]
 	pl_class(PLGUI_RTTI_EXPORT, AbstractButton, "PLGui", PLGui::Widget, "Abstract base class for all kind of buttons")
 		// Attributes
-		pl_attribute(Text,				PLGeneral::String,	"",							ReadWrite,	GetSet,	"Text that is displayed on the button",					"")
-		pl_attribute(ImageName,			PLGeneral::String,	"",							ReadWrite,	GetSet,	"Image filename",										"")
+		pl_attribute(Text,				PLCore::String,		"",							ReadWrite,	GetSet,	"Text that is displayed on the button",					"")
+		pl_attribute(ImageName,			PLCore::String,		"",							ReadWrite,	GetSet,	"Image filename",										"")
 		pl_attribute(ImageSize,			PLMath::Vector2i,	PLMath::Vector2i(16, 16),	ReadWrite,	GetSet,	"Image size",											"")
 		pl_attribute(Repeat,			bool,				false,						ReadWrite,	GetSet,	"If the button is hold down, emit clicks repeatedly",	"")
-		pl_attribute(RepeatDelay,		PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Initial delay (in ms) for repeated clicks",			"")
-		pl_attribute(RepeatInterval,	PLGeneral::uint64,	500,						ReadWrite,	GetSet,	"Interval (in ms) between repeated clicks",				"")
+		pl_attribute(RepeatDelay,		PLCore::uint64,		500,						ReadWrite,	GetSet,	"Initial delay (in ms) for repeated clicks",			"")
+		pl_attribute(RepeatInterval,	PLCore::uint64,		500,						ReadWrite,	GetSet,	"Interval (in ms) between repeated clicks",				"")
 		// Signals
 		pl_signal_0(SignalPressed,	"The button has been pressed down",						"")
 		pl_signal_0(SignalReleased,	"The button has been released",							"")
@@ -96,7 +96,7 @@ class AbstractButton : public Widget {
 		*  @return
 		*    Widget states as flags (see EWidgetState)
 		*/
-		PLGUI_API virtual PLGeneral::uint32 GetWidgetState() const;
+		PLGUI_API virtual PLCore::uint32 GetWidgetState() const;
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class AbstractButton : public Widget {
 		*  @return
 		*    Text that is displayed on the button
 		*/
-		PLGUI_API PLGeneral::String GetText() const;
+		PLGUI_API PLCore::String GetText() const;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class AbstractButton : public Widget {
 		*  @param[in] sText
 		*    Text that is displayed on the button
 		*/
-		PLGUI_API void SetText(const PLGeneral::String &sText);
+		PLGUI_API void SetText(const PLCore::String &sText);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class AbstractButton : public Widget {
 		*  @return
 		*    Image that is displayed on the button
 		*/
-		PLGUI_API PLGeneral::String GetImageName() const;
+		PLGUI_API PLCore::String GetImageName() const;
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class AbstractButton : public Widget {
 		*  @param[in] sImage
 		*    Image that is displayed on the button
 		*/
-		PLGUI_API void SetImageName(const PLGeneral::String &sImage);
+		PLGUI_API void SetImageName(const PLCore::String &sImage);
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class AbstractButton : public Widget {
 		*  @return
 		*    Initial delay (in ms) before auto-repeat
 		*/
-		PLGUI_API PLGeneral::uint64 GetRepeatDelay() const;
+		PLGUI_API PLCore::uint64 GetRepeatDelay() const;
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class AbstractButton : public Widget {
 		*  @param[in] nDelay
 		*    Initial delay (in ms) before auto-repeat
 		*/
-		PLGUI_API void SetRepeatDelay(PLGeneral::uint64 nDelay);
+		PLGUI_API void SetRepeatDelay(PLCore::uint64 nDelay);
 
 		/**
 		*  @brief
@@ -213,7 +213,7 @@ class AbstractButton : public Widget {
 		*  @return
 		*    Interval (in ms) between auto-repeated clicks
 		*/
-		PLGUI_API PLGeneral::uint64 GetRepeatInterval() const;
+		PLGUI_API PLCore::uint64 GetRepeatInterval() const;
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class AbstractButton : public Widget {
 		*  @param[in] nInterval
 		*    Interval (in ms) between auto-repeated clicks
 		*/
-		PLGUI_API void SetRepeatInterval(PLGeneral::uint64 nInterval);
+		PLGUI_API void SetRepeatInterval(PLCore::uint64 nInterval);
 
 		/**
 		*  @brief
@@ -253,10 +253,10 @@ class AbstractButton : public Widget {
 		PLGUI_API virtual void OnMouseEnter();
 		PLGUI_API virtual void OnMouseLeave();
 		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLGeneral::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnKeyDown(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
-		PLGUI_API virtual void OnKeyUp(PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API virtual void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 
 	//[-------------------------------------------------------]
@@ -290,12 +290,12 @@ class AbstractButton : public Widget {
 	//[-------------------------------------------------------]
 	protected:
 		// Button options
-		PLGeneral::String	m_sText;			/**< Text that is displayed on the button */
+		PLCore::String		m_sText;			/**< Text that is displayed on the button */
 		Image				m_cImage;			/**< Image that is displayed on the button */
 		PLMath::Vector2i	m_vImageSize;		/**< Size of image (usually 16x16) */
 		bool				m_bRepeat;			/**< If the button is hold down, emit clicks repeatedly */
-		PLGeneral::uint64	m_nRepeatDelay;		/**< Initial delay (in ms) for repeated clicks */
-		PLGeneral::uint64	m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
+		PLCore::uint64		m_nRepeatDelay;		/**< Initial delay (in ms) for repeated clicks */
+		PLCore::uint64		m_nRepeatInterval;	/**< Interval (in ms) between repeated clicks */
 
 		// Button state
 		bool				m_bPressed;			/**< Is the button currently pressed? */

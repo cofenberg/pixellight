@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/HashMap.h>
+#include <PLCore/Container/HashMap.h>
 #include <PLGui/Gui/Base/MessageFilter.h>
 #include "libRocket_PL/libRocket_PL.h"
 
@@ -133,9 +133,9 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rocket::Core::Context													  *m_pRocketContext;	/**< libRocket context, always valid! */
-		PLGui::Widget															  *m_pTargetWidget;		/**< Message target widget, if null pointer, messages from all widgets are send to libRocket */
-		PLGeneral::HashMap<PLGeneral::uint32, Rocket::Core::Input::KeyIdentifier>  m_mapKeyIdentifier;	/**< Key identifier map from PLGui-key to libRocket-key */
+		Rocket::Core::Context												*m_pRocketContext;		/**< libRocket context, always valid! */
+		PLGui::Widget													  	*m_pTargetWidget;		/**< Message target widget, if null pointer, messages from all widgets are send to libRocket */
+		PLCore::HashMap<PLCore::uint32, Rocket::Core::Input::KeyIdentifier>  m_mapKeyIdentifier;	/**< Key identifier map from PLGui-key to libRocket-key */
 
 
 };

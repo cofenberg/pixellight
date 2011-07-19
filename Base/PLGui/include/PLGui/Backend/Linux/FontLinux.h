@@ -83,24 +83,24 @@ class FontLinux : public FontImpl {
 		*  @return
 		*    Font height
 		*/
-		PLGUI_API PLGeneral::uint32 GetHeight() const;
+		PLGUI_API PLCore::uint32 GetHeight() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual FontImpl functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadFont(const PLGeneral::String &sFamily, PLGeneral::uint32 nHeight, PLGeneral::uint32 nWeight, EFontStyle nStyle);
-		virtual bool LoadFont(const PLGeneral::String &sFilename, PLGeneral::uint32 nHeight);
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, EFontStyle nStyle);
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Display			  *m_pDisplay;	/**< X Display */
-		XFontStruct		  *m_pXFont;	/**< Pointer to X-Font, can be a null pointer */
-		PLGeneral::uint32  m_nHeight;	/**< Font height */
+		Display		   *m_pDisplay;	/**< X Display */
+		XFontStruct	   *m_pXFont;	/**< Pointer to X-Font, can be a null pointer */
+		PLCore::uint32  m_nHeight;	/**< Font height */
 
 
 };

@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/ElementManager.h>
-#include <PLGeneral/Base/ElementHandler.h>
+#include <PLCore/Container/ElementManager.h>
+#include <PLCore/Container/ElementHandler.h>
 #include "PLScene/Scene/SceneQuery.h"
 
 
@@ -51,7 +51,7 @@ namespace PLScene {
 *    scene query. The scene query handler will be informed if the scene query is deleted
 *    and in this case you are able to avoid accessing a deleted scene query! :)
 */
-class SceneQueryHandler : public PLGeneral::ElementHandler<SceneQuery> {
+class SceneQueryHandler : public PLCore::ElementHandler<SceneQuery> {
 
 
 	//[-------------------------------------------------------]

@@ -62,10 +62,10 @@ class IndexBuffer : public Buffer {
 		};
 
 		/** Maxmimum vertex index which can be used if UShort is used as index buffer type */
-		static const PLGeneral::uint32 MaxVertexIndexUShort = 65535;
+		static const PLCore::uint32 MaxVertexIndexUShort = 65535;
 
 		/** Maxmimum vertex index which can be used if UByte is used as index buffer type */
-		static const PLGeneral::uint32 MaxVertexIndexUByte = 255;
+		static const PLCore::uint32 MaxVertexIndexUByte = 255;
 
 
 	//[-------------------------------------------------------]
@@ -123,7 +123,7 @@ class IndexBuffer : public Buffer {
 		*  @see
 		*    - SetElementType()
 		*/
-		PLRENDERER_API bool SetElementTypeByMaximumIndex(PLGeneral::uint32 nMaximumIndex);
+		PLRENDERER_API bool SetElementTypeByMaximumIndex(PLCore::uint32 nMaximumIndex);
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class IndexBuffer : public Buffer {
 		*  @see
 		*    - Buffer::GetData()
 		*/
-		PLRENDERER_API PLGeneral::uint32 GetData(PLGeneral::uint32 nIndex);
+		PLRENDERER_API PLCore::uint32 GetData(PLCore::uint32 nIndex);
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class IndexBuffer : public Buffer {
 		*  @see
 		*    - GetData()
 		*/
-		PLRENDERER_API bool SetData(PLGeneral::uint32 nIndex, PLGeneral::uint32 nData);
+		PLRENDERER_API bool SetData(PLCore::uint32 nIndex, PLCore::uint32 nData);
 
 
 	//[-------------------------------------------------------]

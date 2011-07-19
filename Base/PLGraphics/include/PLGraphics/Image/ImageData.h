@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Base/RefCount.h>
+#include <PLCore/Core/RefCount.h>
 #include <PLMath/Vector3i.h>
 #include "PLGraphics/PLGraphics.h"
 
@@ -55,7 +55,7 @@ class ImagePalette;
 *  @note
 *    - Implementation of the proxy design pattern, this class is the real subject
 */
-class ImageData : protected PLGeneral::RefCount<ImageData> {
+class ImageData : protected PLCore::RefCount<ImageData> {
 
 
 	//[-------------------------------------------------------]
@@ -203,7 +203,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Size of image data in bytes
 		*/
-		PLGeneral::uint32 GetDataSize() const;
+		PLCore::uint32 GetDataSize() const;
 
 		/**
 		*  @brief
@@ -216,8 +216,8 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*    If the image contains no uncompressed data, but compressed image data is available the data,
 		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
 		*/
-		const PLGeneral::uint8 *GetData() const;
-		PLGeneral::uint8 *GetData();
+		const PLCore::uint8 *GetData() const;
+		PLCore::uint8 *GetData();
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Size of compressed image data in bytes
 		*/
-		PLGeneral::uint32 GetCompressedDataSize() const;
+		PLCore::uint32 GetCompressedDataSize() const;
 
 		/**
 		*  @brief
@@ -244,8 +244,8 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @return
 		*    Pointer to compressed image data, a null pointer on error
 		*/
-		const PLGeneral::uint8 *GetCompressedData() const;
-		PLGeneral::uint8 *GetCompressedData();
+		const PLCore::uint8 *GetCompressedData() const;
+		PLCore::uint8 *GetCompressedData();
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Data to copy into this image data, must have enough bytes to fill the whole image! The given pointer must be valid!
 		*/
-		void CopyData(const PLGeneral::uint8 *pnData);
+		void CopyData(const PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -302,7 +302,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Pointer to the image data to be taken over by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
 		*/
-		void TakeoverData(PLGeneral::uint8 *pnData);
+		void TakeoverData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Pointer to the image data to be shared by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
 		*/
-		void ShareData(PLGeneral::uint8 *pnData);
+		void ShareData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -377,7 +377,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @note
 		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXTColorBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const;
+		void DecodeDXTColorBlock(PLCore::uint8 *pnDestination, const PLCore::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset, ECompression nCompression, int nRedIndex, int nBlueIndex) const;
 
 		/**
 		*  @brief
@@ -399,7 +399,7 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @note
 		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXT3AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
+		void DecodeDXT3AlphaBlock(PLCore::uint8 *pnDestination, const PLCore::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
 
 		/**
 		*  @brief
@@ -421,23 +421,23 @@ class ImageData : protected PLGeneral::RefCount<ImageData> {
 		*  @note
 		*    - Please note that in this method, there's no destination buffer overflow test, so correct the block size if required before calling this method!
 		*/
-		void DecodeDXT5AlphaBlock(PLGeneral::uint8 *pnDestination, const PLGeneral::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
+		void DecodeDXT5AlphaBlock(PLCore::uint8 *pnDestination, const PLCore::uint8 *pnSource, int nBlockWidth, int nBlockHeight, int nXOffset, int nYOffset) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		EDataFormat			 m_nDataFormat;			/**< Data format of the image */
-		EColorFormat		 m_nColorFormat;		/**< Color format of the image */
-		ECompression		 m_nCompression;		/**< Compression format */
-		PLMath::Vector3i	 m_vSize;				/**< Size of the image */
-		PLGeneral::uint8	*m_pData;				/**< Uncompressed image data, can be a null pointer */
-		PLGeneral::uint32	 m_nDataSize;			/**< Size of uncompressed image data in bytes */
-		bool				 m_bDataShared;			/**< If 'true', the uncompressed image data is just shared and this image data instance is not allowed to deleted it (the user keeps the image data ownership) */
-		PLGeneral::uint8	*m_pCompressedData;		/**< Compressed image data, can be a null pointer */
-		PLGeneral::uint32	 m_nCompressedSize;		/**< Size of compressed image data in bytes */
-		ImagePalette		*m_pPalette;			/**< Color palette, can be a null pointer */
+		EDataFormat		 m_nDataFormat;		/**< Data format of the image */
+		EColorFormat	 m_nColorFormat;	/**< Color format of the image */
+		ECompression	 m_nCompression;	/**< Compression format */
+		PLMath::Vector3i m_vSize;			/**< Size of the image */
+		PLCore::uint8	*m_pData;			/**< Uncompressed image data, can be a null pointer */
+		PLCore::uint32	 m_nDataSize;		/**< Size of uncompressed image data in bytes */
+		bool			 m_bDataShared;		/**< If 'true', the uncompressed image data is just shared and this image data instance is not allowed to deleted it (the user keeps the image data ownership) */
+		PLCore::uint8	*m_pCompressedData;	/**< Compressed image data, can be a null pointer */
+		PLCore::uint32	 m_nCompressedSize;	/**< Size of compressed image data in bytes */
+		ImagePalette	*m_pPalette;		/**< Color palette, can be a null pointer */
 
 
 };

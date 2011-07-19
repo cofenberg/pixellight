@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLMesh;
 namespace PLScene {
@@ -52,7 +52,7 @@ String SNMMeshAnimation::GetName() const
 	return m_sName;
 }
 
-void SNMMeshAnimation::SetName(const PLGeneral::String &sValue)
+void SNMMeshAnimation::SetName(const String &sValue)
 {
 	if (m_sName != sValue) {
 		m_sName = sValue;

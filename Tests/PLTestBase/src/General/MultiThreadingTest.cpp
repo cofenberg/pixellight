@@ -24,16 +24,16 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdio.h>
-#include <PLGeneral/System/System.h>
-#include <PLGeneral/System/Mutex.h>
-#include <PLGeneral/System/Thread.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Mutex.h>
+#include <PLCore/System/Thread.h>
 #include "PLTestBase/General/MultiThreadingTest.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespaces                                            ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]

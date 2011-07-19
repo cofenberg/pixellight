@@ -102,7 +102,7 @@ class HDRLightAdaptation {
 		*  @note
 		*    - Use GetTextureBuffer() to receive the result of the calculation
 		*/
-		PLCOM_API void CalculateLightAdaptation(const PLGeneral::String &sShaderLanguage, PLRenderer::TextureBuffer &cAverageLuminanceTextureBuffer2D, float fTauTimeDifference);
+		PLCOM_API void CalculateLightAdaptation(const PLCore::String &sShaderLanguage, PLRenderer::TextureBuffer &cAverageLuminanceTextureBuffer2D, float fTauTimeDifference);
 
 		/**
 		*  @brief

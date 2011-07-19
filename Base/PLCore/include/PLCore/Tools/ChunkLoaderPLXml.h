@@ -60,8 +60,8 @@ class ChunkLoaderPLXml : public ChunkLoader {
 		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	Chunk&,			PLGeneral::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	const Chunk&,	PLGeneral::File&,	"Save method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	Chunk&,			File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	const Chunk&,	File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -69,8 +69,8 @@ class ChunkLoaderPLXml : public ChunkLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API bool Load(Chunk &cChunk, PLGeneral::File &cFile);
-		PLCORE_API bool Save(const Chunk &cChunk, PLGeneral::File &cFile);
+		PLCORE_API bool Load(Chunk &cChunk, File &cFile);
+		PLCORE_API bool Save(const Chunk &cChunk, File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -106,7 +106,7 @@ class ChunkLoaderPLXml : public ChunkLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadV1(Chunk &cChunk, const PLGeneral::XmlElement &cChunkElement) const;
+		bool LoadV1(Chunk &cChunk, const XmlElement &cChunkElement) const;
 
 
 };

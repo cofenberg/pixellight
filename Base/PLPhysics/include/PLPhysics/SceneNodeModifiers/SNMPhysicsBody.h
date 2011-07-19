@@ -93,7 +93,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		pl_attribute(Mass,				float,					0.0f,								ReadWrite,	GetSet,	"Mass of the physics body, 0=static body",				"Min='0.0'")
 		pl_attribute(CenterOfMass,		PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Relative center of mass",								"")
 		pl_attribute(PositionOffset,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Position offset relative to the scene node (=origin)",	"")
-		pl_attribute(CollisionGroup,	PLGeneral::uint8,		0,									ReadWrite,	GetSet,	"The collision group the body is in (0-31)",			"Min='0' Max='31'")
+		pl_attribute(CollisionGroup,	PLCore::uint8,			0,									ReadWrite,	GetSet,	"The collision group the body is in (0-31)",			"Min='0' Max='31'")
 			// Overwritten PLScene::SceneNodeModifier attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,	"Flags",												"")
 		// Slots
@@ -114,9 +114,9 @@ class SNMPhysicsBody : public SNMPhysics {
 		PLPHYSICS_API void SetCenterOfMass(const PLMath::Vector3 &vValue);
 		PLPHYSICS_API const PLMath::Vector3 &GetPositionOffset() const;
 		PLPHYSICS_API void SetPositionOffset(const PLMath::Vector3 &vValue);
-		PLPHYSICS_API PLGeneral::uint8 GetCollisionGroup() const;
-		PLPHYSICS_API void SetCollisionGroup(PLGeneral::uint8 nValue);
-		PLPHYSICS_API virtual void SetFlags(PLGeneral::uint32 nValue);
+		PLPHYSICS_API PLCore::uint8 GetCollisionGroup() const;
+		PLPHYSICS_API void SetCollisionGroup(PLCore::uint8 nValue);
+		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -197,7 +197,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		float			  m_fMass;				/**< Mass of the physics body, 0=static body */
 		PLMath::Vector3	  m_vCenterOfMass;		/**< Relative center of mass */
 		PLMath::Vector3	  m_vPositionOffset;	/**< Position offset relative to the scene node (=origin) */
-		PLGeneral::uint8  m_nCollisionGroup;	/**< The collision group the body is in (0-31) */
+		PLCore::uint8	  m_nCollisionGroup;	/**< The collision group the body is in (0-31) */
 		SCPhysicsWorld   *m_pWorldContainer;	/**< The PL physics world scene node container the physics body is in, can be a null pointer */
 		ElementHandler   *m_pBodyHandler;		/**< Holds the PL physics body (ALWAYS valid!) */
 		bool			  m_bListening;			/**< Listening scene node position changes etc.? */

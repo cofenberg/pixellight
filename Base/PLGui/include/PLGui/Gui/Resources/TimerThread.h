@@ -28,14 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/Thread.h>
+#include <PLCore/System/Thread.h>
 #include "PLGui/PLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class Mutex;
 }
 namespace PLGui {
@@ -56,7 +56,7 @@ namespace PLGui {
 *  @brief
 *    Timer operation thread
 */
-class TimerThread : public PLGeneral::Thread {
+class TimerThread : public PLCore::Thread {
 
 
 	//[-------------------------------------------------------]
@@ -74,7 +74,7 @@ class TimerThread : public PLGeneral::Thread {
 		*  @param[in] bOnce
 		*    'true' if the timer shall fire only once, else 'false'
 		*/
-		PLGUI_API TimerThread(Timer &cTimer, PLGeneral::uint64 nTimeout, bool bOnce);
+		PLGUI_API TimerThread(Timer &cTimer, PLCore::uint64 nTimeout, bool bOnce);
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class TimerThread : public PLGeneral::Thread {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGeneral::ThreadFunction functions   ]
+	//[ Private virtual PLCore::ThreadFunction functions      ]
 	//[-------------------------------------------------------]
 	private:
 		virtual int Run();
@@ -106,11 +106,11 @@ class TimerThread : public PLGeneral::Thread {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Timer			  &m_cTimer;	/**< Timer to that this thread belongs */
-		PLGeneral::Mutex  *m_pMutex;	/**< Timer mutex (always valid!) */
-		PLGeneral::uint64  m_nTimeout;	/**< Timeout value */
-		bool			   m_bOnce;		/**< Timer is firing only once? */
-		volatile bool	   m_bShutdown;	/**< Shutdown thread? */
+		Timer		   &m_cTimer;		/**< Timer to that this thread belongs */
+		PLCore::Mutex  *m_pMutex;		/**< Timer mutex (always valid!) */
+		PLCore::uint64  m_nTimeout;		/**< Timeout value */
+		bool		    m_bOnce;		/**< Timer is firing only once? */
+		volatile bool	m_bShutdown;	/**< Shutdown thread? */
 
 
 };

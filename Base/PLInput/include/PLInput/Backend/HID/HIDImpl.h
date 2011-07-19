@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Container/List.h>
+#include <PLCore/Container/List.h>
 #include "PLInput/PLInput.h"
 
 
@@ -88,7 +88,7 @@ class HIDImpl {
 		*  @param[out] lstDevices
 		*    List that will receive the devices
 		*/
-		virtual void EnumerateDevices(PLGeneral::List<HIDDevice*> &lstDevices) = 0;
+		virtual void EnumerateDevices(PLCore::List<HIDDevice*> &lstDevices) = 0;
 
 
 };

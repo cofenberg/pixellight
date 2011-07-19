@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 //#include <locale.h>
 #include <stdio.h>
-#include <PLGeneral/String/RegEx.h>
+#include <PLCore/String/RegEx.h>
 #include "PLGui/Gui/Base/GuiMessage.h"
 #include "PLGui/Gui/Base/Keys.h"
 #include "PLGui/Gui/Resources/Graphics.h"
@@ -46,10 +46,9 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 using namespace PLMath;
-namespace PLGui
-{
+namespace PLGui {
 
 
 //[-------------------------------------------------------]
@@ -424,7 +423,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 	}
 }
 
-void GuiLinux::EnumerateScreens(PLGeneral::List<Screen*> &lstScreens)
+void GuiLinux::EnumerateScreens(List<Screen*> &lstScreens)
 {
 	// Get display name
 	String sDisplay = DisplayString(m_pDisplay);
@@ -478,7 +477,7 @@ void GuiLinux::SetMouseVisible(bool bVisible)
 	// [TODO] implement
 }
 
-void GuiLinux::ListFonts(PLGeneral::List<FontInfo> &lstFonts) const
+void GuiLinux::ListFonts(List<FontInfo> &lstFonts) const
 {
 	// Get fonts
 	char **ppFonts;

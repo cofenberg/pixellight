@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/Tools/Version.h>
-#include "PLCore/PLCore.h"
+#include "PLCore/Tools/Version.h"
 
 
 //[-------------------------------------------------------]
@@ -60,9 +59,9 @@ class Core {
 		*    Path to the PL-Runtime directory (e.g. "C:\PixelLight\Runtime"), or ""
 		*
 		*  @see
-		*    - 'PLGeneral::Registry' class documentation
+		*    - 'Registry' class documentation
 		*/
-		PLCORE_API static PLGeneral::String GetRuntimeDirectory();
+		PLCORE_API static String GetRuntimeDirectory();
 
 		/**
 		*  @brief
@@ -71,7 +70,7 @@ class Core {
 		*  @return
 		*    Version of this PixelLight installation
 		*/
-		PLCORE_API static PLGeneral::Version GetVersion();
+		PLCORE_API static Version GetVersion();
 
 		/**
 		*  @brief
@@ -80,7 +79,7 @@ class Core {
 		*  @return
 		*    Suffix of this PixelLight installation
 		*/
-		PLCORE_API static PLGeneral::String GetSuffix();
+		PLCORE_API static String GetSuffix();
 
 
 };

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGeneral/System/MutexGuard.h>
+#include <PLCore/System/MutexGuard.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
 #include <PLGui/Gui/Base/GuiMessage.h>
@@ -63,9 +63,9 @@
 		PLGUI_API static GuiMessage OnMouseButtonClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
 		PLGUI_API static GuiMessage OnMouseButtonDoubleClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
 		PLGUI_API static GuiMessage OnMouseWheel(Widget *pWidget, int nDelta);
-		PLGUI_API static GuiMessage OnKeyDown(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnKeyUp(Widget *pWidget, PLGeneral::uint32 nKey, PLGeneral::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnHotkey(Widget *pWidget, PLGeneral::uint32 nHotkey);		*not required*
+		PLGUI_API static GuiMessage OnKeyDown(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API static GuiMessage OnKeyUp(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API static GuiMessage OnHotkey(Widget *pWidget, PLCore::uint32 nHotkey);		*not required*
 		PLGUI_API static GuiMessage OnDrop(Widget *pWidget, DataObject *pDataObject);
 */
 
@@ -73,9 +73,9 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
-using namespace PLGraphics;
+using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 using namespace PLGui;
 namespace PLScene {
 

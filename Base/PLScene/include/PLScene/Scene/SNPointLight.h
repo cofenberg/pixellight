@@ -132,7 +132,7 @@ class SNPointLight : public SNLight {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGeneral::uint8 m_nInternalLightFlags;	/**< Internal light flags */
+		PLCore::uint8 m_nInternalLightFlags;	/**< Internal light flags */
 
 
 	//[-------------------------------------------------------]

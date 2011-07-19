@@ -29,8 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <IGame/IGame.h>
-#include <PLGeneral/String/String.h>
-#include <PLGeneral/Container/Array.h>
+#include <PLCore/String/String.h>
+#include <PLCore/Container/Array.h>
 #include <PLMesh/Loader/MeshFile.h>
 #include "PL3dsMaxSceneExport/PLTools.h"
 #include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
@@ -84,9 +84,9 @@ class PLSceneMesh {
 			float fSpeed;
 		};
 		struct Animation {
-			PLMesh::MeshFile::Animation							sAnimation;		/**< General animation information */
-			PLGeneral::Array<FrameSpeed*>						lstFrameSpeed;	/**< Frame speed */
-			PLGeneral::Array<PLMesh::MeshFile::AnimationEvent*> lstEvents;		/**< Events */
+			PLMesh::MeshFile::Animation						 sAnimation;	/**< General animation information */
+			PLCore::Array<FrameSpeed*>						 lstFrameSpeed;	/**< Frame speed */
+			PLCore::Array<PLMesh::MeshFile::AnimationEvent*> lstEvents;		/**< Events */
 			int nStartTime;
 			int nEndTime;
 			int nTicksPerFrame;
@@ -131,7 +131,7 @@ class PLSceneMesh {
 		*  @return
 		*    A list of all morph channels
 		*/
-		const PLGeneral::Array<morphChannel*> &GetMorphChannels() const;
+		const PLCore::Array<morphChannel*> &GetMorphChannels() const;
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class PLSceneMesh {
 		*  @return
 		*    The list of animation
 		*/
-		const PLGeneral::Array<Animation*> &GetAnimations() const;
+		const PLCore::Array<Animation*> &GetAnimations() const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class PLSceneMesh {
 		*  @return
 		*    The list of materials
 		*/
-		const PLGeneral::Array<PLSceneMaterial*> &GetMaterials() const;
+		const PLCore::Array<PLSceneMaterial*> &GetMaterials() const;
 
 
 	//[-------------------------------------------------------]
@@ -497,25 +497,25 @@ class PLSceneMesh {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLScene							   *m_pScene;											/**< PL owner scene (always valid!) */
-		IGameNode						   *m_pIGameNode;										/**< IGame node this scene node represents (always valid!) */
-		Object							   *m_p3dsMaxObject;									/**< 3ds Max object node this scene node represents */
-		std::string							m_sName;											/**< Name of this mesh */
-		PLGeneral::Array<PLSceneMaterial*>	m_lstMaterials;										/**< List of materials (pointer to scene materials - do NOT delete!) */
-		Box3								m_cLocalBox;										/**< Local bounding box */
-		int									m_nNumOfVertices;									/**< Number of vertices */
-		int									m_nOriginalNumOfVertices;							/**< Original number of vertices (hold for error checks...) */
-		int									m_nNumOfTriangles;									/**< Number of triangles */
-		int									m_nNumOfGeometries;									/**< Number of geometries */
-		bool								m_bTexCoord[PLSceneExportOptions::MaxTexCoords];	/**< Texture coordinates filled or not? */
-		PLGeneral::Array<morphChannel*>		m_lstMorphChannels;									/**< List of all morph channels (pointer to morph channels - do NOT delete!) */
-		PLGeneral::Array<PLGeneral::String>	m_lstPointCaches;									/**< List of 'PointCache'-filenames (if there are any) */
-		PLGeneral::uint32					m_nTotalNumOfVertexWeights;							/**< Total number of vertex weights */
+		PLScene							*m_pScene;											/**< PL owner scene (always valid!) */
+		IGameNode						*m_pIGameNode;										/**< IGame node this scene node represents (always valid!) */
+		Object						    *m_p3dsMaxObject;									/**< 3ds Max object node this scene node represents */
+		std::string						 m_sName;											/**< Name of this mesh */
+		PLCore::Array<PLSceneMaterial*>	 m_lstMaterials;									/**< List of materials (pointer to scene materials - do NOT delete!) */
+		Box3							 m_cLocalBox;										/**< Local bounding box */
+		int								 m_nNumOfVertices;									/**< Number of vertices */
+		int								 m_nOriginalNumOfVertices;							/**< Original number of vertices (hold for error checks...) */
+		int								 m_nNumOfTriangles;									/**< Number of triangles */
+		int								 m_nNumOfGeometries;								/**< Number of geometries */
+		bool							 m_bTexCoord[PLSceneExportOptions::MaxTexCoords];	/**< Texture coordinates filled or not? */
+		PLCore::Array<morphChannel*>	 m_lstMorphChannels;								/**< List of all morph channels (pointer to morph channels - do NOT delete!) */
+		PLCore::Array<PLCore::String>	 m_lstPointCaches;									/**< List of 'PointCache'-filenames (if there are any) */
+		PLCore::uint32					 m_nTotalNumOfVertexWeights;						/**< Total number of vertex weights */
 		// Skeleton
-		PLGeneral::Array<IGameNode*> m_lstBones;			/**< List of all bones, contains ONLY valid pointers! (pointer to scene nodes - do NOT delete!) */
-		PLGeneral::Array<GMatrix>	 m_lstBonesInitPose;	/**< Initial transform of each bone */
+		PLCore::Array<IGameNode*> m_lstBones;			/**< List of all bones, contains ONLY valid pointers! (pointer to scene nodes - do NOT delete!) */
+		PLCore::Array<GMatrix>	 m_lstBonesInitPose;	/**< Initial transform of each bone */
 		// Animation
-		PLGeneral::Array<Animation*> m_lstAnimations;		/**< Animation list, destruction required */
+		PLCore::Array<Animation*> m_lstAnimations;		/**< Animation list, destruction required */
 
 
 };

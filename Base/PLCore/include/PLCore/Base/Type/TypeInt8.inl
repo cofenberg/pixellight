@@ -33,7 +33,7 @@
 *    Type wrapper for 'int8'
 */
 template <>
-class Type<PLGeneral::int8> {
+class Type<int8> {
 
 
 	//[-------------------------------------------------------]
@@ -41,200 +41,200 @@ class Type<PLGeneral::int8> {
 	//[-------------------------------------------------------]
 	public:
 		// Type
-		typedef PLGeneral::int8 _Type;			/**< Real type */
-		typedef PLGeneral::int8 _StorageType;	/**< Storage type, for this type identical to the real type */
+		typedef int8 _Type;			/**< Real type */
+		typedef int8 _StorageType;	/**< Storage type, for this type identical to the real type */
 
 		// Type ID
-		static const PLGeneral::uint32 TypeID = TypeInt8;
+		static const uint32 TypeID = TypeInt8;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return "int8";
 		}
 
 		// Convert var to int8
-		static PLGeneral::int8 ConvertFromVar(const DynVar *pValue)
+		static int8 ConvertFromVar(const DynVar *pValue)
 		{
 			return pValue->GetInt8();
 		}
 
 		// Convert int8 to bool
-		static bool ConvertToBool(PLGeneral::int8 nValue)
+		static bool ConvertToBool(int8 nValue)
 		{
 			return static_cast<bool>(nValue != 0);
 		}
 
 		// Convert bool to int8
-		static PLGeneral::int8 ConvertFromBool(bool bValue)
+		static int8 ConvertFromBool(bool bValue)
 		{
-			return static_cast<PLGeneral::int8>(bValue);
+			return static_cast<int8>(bValue);
 		}
 
 		// Convert int8 to int
-		static int ConvertToInt(PLGeneral::int8 nValue)
+		static int ConvertToInt(int8 nValue)
 		{
 			return static_cast<int>(nValue);
 		}
 
 		// Convert int to int8
-		static PLGeneral::int8 ConvertFromInt(int nValue)
+		static int8 ConvertFromInt(int nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to int8
-		static PLGeneral::int8 ConvertToInt8(PLGeneral::int8 nValue)
+		static int8 ConvertToInt8(int8 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to int8
-		static PLGeneral::int8 ConvertFromInt8(PLGeneral::int8 nValue)
+		static int8 ConvertFromInt8(int8 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to int16
-		static PLGeneral::int16 ConvertToInt16(PLGeneral::int8 nValue)
+		static int16 ConvertToInt16(int8 nValue)
 		{
-			return static_cast<PLGeneral::int16>(nValue);
+			return static_cast<int16>(nValue);
 		}
 
 		// Convert int16 to int8
-		static PLGeneral::int8 ConvertFromInt16(PLGeneral::int16 nValue)
+		static int8 ConvertFromInt16(int16 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to int32
-		static PLGeneral::int32 ConvertToInt32(PLGeneral::int8 nValue)
+		static int32 ConvertToInt32(int8 nValue)
 		{
-			return static_cast<PLGeneral::int32>(nValue);
+			return static_cast<int32>(nValue);
 		}
 
 		// Convert int32 to int8
-		static PLGeneral::int8 ConvertFromInt32(PLGeneral::int32 nValue)
+		static int8 ConvertFromInt32(int32 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to int64
-		static PLGeneral::int64 ConvertToInt64(PLGeneral::int8 nValue)
+		static int64 ConvertToInt64(int8 nValue)
 		{
-			return static_cast<PLGeneral::int64>(nValue);
+			return static_cast<int64>(nValue);
 		}
 
 		// Convert int64 to int8
-		static PLGeneral::int8 ConvertFromInt64(PLGeneral::int64 nValue)
+		static int8 ConvertFromInt64(int64 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint8
-		static PLGeneral::uint8 ConvertToUInt8(PLGeneral::int8 nValue)
+		static uint8 ConvertToUInt8(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint8>(nValue);
+			return static_cast<uint8>(nValue);
 		}
 
 		// Convert uint8 to int8
-		static PLGeneral::int8 ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static int8 ConvertFromUInt8(uint8 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint16
-		static PLGeneral::uint16 ConvertToUInt16(PLGeneral::int8 nValue)
+		static uint16 ConvertToUInt16(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint16>(nValue);
+			return static_cast<uint16>(nValue);
 		}
 
 		// Convert uint16 to int8
-		static PLGeneral::int8 ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static int8 ConvertFromUInt16(uint16 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint32
-		static PLGeneral::uint32 ConvertToUInt32(PLGeneral::int8 nValue)
+		static uint32 ConvertToUInt32(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint32>(nValue);
+			return static_cast<uint32>(nValue);
 		}
 
 		// Convert uint32 to int8
-		static PLGeneral::int8 ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static int8 ConvertFromUInt32(uint32 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint64
-		static PLGeneral::uint64 ConvertToUInt64(PLGeneral::int8 nValue)
+		static uint64 ConvertToUInt64(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint64>(nValue);
+			return static_cast<uint64>(nValue);
 		}
 
 		// Convert uint64 to int8
-		static PLGeneral::int8 ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static int8 ConvertFromUInt64(uint64 nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(PLGeneral::int8 nValue)
+		static uint_ptr ConvertToUIntPtr(int8 nValue)
 		{
-			return static_cast<PLGeneral::uint_ptr>(nValue);
+			return static_cast<uint_ptr>(nValue);
 		}
 
 		// Convert uint_ptr to int8
-		static PLGeneral::int8 ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static int8 ConvertFromUIntPtr(uint_ptr nValue)
 		{
-			return static_cast<PLGeneral::int8>(nValue);
+			return static_cast<int8>(nValue);
 		}
 
 		// Convert int8 to float
-		static float ConvertToFloat(PLGeneral::int8 nValue)
+		static float ConvertToFloat(int8 nValue)
 		{
 			return static_cast<float>(nValue);
 		}
 
 		// Convert float to int8
-		static PLGeneral::int8 ConvertFromFloat(float fValue)
+		static int8 ConvertFromFloat(float fValue)
 		{
-			return static_cast<PLGeneral::int8>(fValue);
+			return static_cast<int8>(fValue);
 		}
 
 		// Convert int8 to double
-		static double ConvertToDouble(PLGeneral::int8 nValue)
+		static double ConvertToDouble(int8 nValue)
 		{
 			return static_cast<double>(nValue);
 		}
 
 		// Convert double to int8
-		static PLGeneral::int8 ConvertFromDouble(double dValue)
+		static int8 ConvertFromDouble(double dValue)
 		{
-			return static_cast<PLGeneral::int8>(dValue);
+			return static_cast<int8>(dValue);
 		}
 
 		// Convert int8 to string
-		static PLGeneral::String ConvertToString(PLGeneral::int8 nValue)
+		static String ConvertToString(int8 nValue)
 		{
-			return PLGeneral::String() + static_cast<int>(nValue);
+			return String() + static_cast<int>(nValue);
 		}
 
-		// Convert string to PLGeneral::int8
-		static PLGeneral::int8 ConvertFromString(const PLGeneral::String &sString)
+		// Convert string to int8
+		static int8 ConvertFromString(const String &sString)
 		{
-			return static_cast<PLGeneral::int8>(sString.GetInt());
+			return static_cast<int8>(sString.GetInt());
 		}
 
 		// Convert real to storage type
-		static PLGeneral::int8 ConvertRealToStorage(PLGeneral::int8 nValue)
+		static int8 ConvertRealToStorage(int8 nValue)
 		{
 			return nValue;
 		}
 
 		// Convert storage to real type
-		static PLGeneral::int8 ConvertStorageToReal(PLGeneral::int8 nValue)
+		static int8 ConvertStorageToReal(int8 nValue)
 		{
 			return nValue;
 		}

@@ -74,7 +74,7 @@ class VirtualController : public Controller {
 		*  @param[in] sDescription
 		*    Controller description
 		*/
-		PLINPUT_API VirtualController(const PLGeneral::String &sName, const PLGeneral::String &sDescription);
+		PLINPUT_API VirtualController(const PLCore::String &sName, const PLCore::String &sDescription);
 
 		/**
 		*  @brief

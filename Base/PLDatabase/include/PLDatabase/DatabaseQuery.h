@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGeneral {
+namespace PLCore {
 	class String;
 }
 namespace PLDatabase {
@@ -73,7 +73,7 @@ class DatabaseQuery {
 		*  @return
 		*    'true' if the given SQL statement is a SELECT one, else 'false'
 		*/
-		PLDATABASE_API static bool IsSelect(const PLGeneral::String &sSQL);
+		PLDATABASE_API static bool IsSelect(const PLCore::String &sSQL);
 
 
 	//[-------------------------------------------------------]
@@ -111,7 +111,7 @@ class DatabaseQuery {
 		*    A pointer to a newly created query result you have to delete by own or a null pointer
 		*    if the SQL statement is not a select (ie: INSERT, UPDATE, etc.)
 		*/
-		virtual DatabaseQueryResult *Execute(const PLGeneral::String &sSQL) = 0;
+		virtual DatabaseQueryResult *Execute(const PLCore::String &sSQL) = 0;
 
 
 	//[-------------------------------------------------------]

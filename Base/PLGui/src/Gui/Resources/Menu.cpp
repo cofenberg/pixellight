@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGeneral;
+using namespace PLCore;
 namespace PLGui {
 
 
@@ -167,7 +167,7 @@ void Menu::RemoveItem(MenuItem *pItem)
 *  @brief
 *    Adds a standard item with a text
 */
-MenuItem *Menu::AddItem(const PLGeneral::String &sText)
+MenuItem *Menu::AddItem(const String &sText)
 {
 	// Create item
 	MenuItem *pItem = new MenuItem(*m_pGui);
@@ -184,7 +184,7 @@ MenuItem *Menu::AddItem(const PLGeneral::String &sText)
 *  @brief
 *    Adds a standard item with a text and an icon
 */
-MenuItem *Menu::AddItem(const PLGeneral::String &sText, const Image &cIcon)
+MenuItem *Menu::AddItem(const String &sText, const Image &cIcon)
 {
 	// Create item
 	MenuItem *pItem = new MenuItem(*m_pGui);

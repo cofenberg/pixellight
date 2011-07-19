@@ -50,7 +50,7 @@ class Type< FlagType<ENUM> > {
 		static const int TypeID = Type<_BaseType>::TypeID;
 
 		// Get type name
-		static PLGeneral::String GetTypeName()
+		static String GetTypeName()
 		{
 			return Type<_BaseType>::GetTypeName();
 		}
@@ -89,109 +89,109 @@ class Type< FlagType<ENUM> > {
 		}
 
 		// Convert type to int8
-		static PLGeneral::int8 ConvertToInt8(_BaseType Value)
+		static int8 ConvertToInt8(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToInt8(Value);
 		}
 
 		// Convert int8 to type
-		static _BaseType ConvertFromInt8(PLGeneral::int8 nValue)
+		static _BaseType ConvertFromInt8(int8 nValue)
 		{
 			return Type<_BaseType>::ConvertFromInt8(nValue);
 		}
 
 		// Convert type to int16
-		static PLGeneral::int16 ConvertToInt16(_BaseType Value)
+		static int16 ConvertToInt16(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToInt16(Value);
 		}
 
 		// Convert int16 to type
-		static _BaseType ConvertFromInt16(PLGeneral::int16 nValue)
+		static _BaseType ConvertFromInt16(int16 nValue)
 		{
 			return Type<_BaseType>::ConvertFromInt16(nValue);
 		}
 
 		// Convert type to int32
-		static PLGeneral::int32 ConvertToInt32(_BaseType Value)
+		static int32 ConvertToInt32(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToInt32(Value);
 		}
 
 		// Convert int32 to type
-		static _BaseType ConvertFromInt32(PLGeneral::int32 nValue)
+		static _BaseType ConvertFromInt32(int32 nValue)
 		{
 			return Type<_BaseType>::ConvertFromInt32(nValue);
 		}
 
 		// Convert type to int64
-		static PLGeneral::int64 ConvertToInt64(_BaseType Value)
+		static int64 ConvertToInt64(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToInt64(Value);
 		}
 
 		// Convert int64 to type
-		static _BaseType ConvertFromInt64(PLGeneral::int64 nValue)
+		static _BaseType ConvertFromInt64(int64 nValue)
 		{
 			return Type<_BaseType>::ConvertFromInt64(nValue);
 		}
 
 		// Convert type to uint8
-		static PLGeneral::uint8 ConvertToUInt8(_BaseType Value)
+		static uint8 ConvertToUInt8(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToUInt8(Value);
 		}
 
 		// Convert uint8 to type
-		static _BaseType ConvertFromUInt8(PLGeneral::uint8 nValue)
+		static _BaseType ConvertFromUInt8(uint8 nValue)
 		{
 			return Type<_BaseType>::ConvertFromUInt8(nValue);
 		}
 
 		// Convert type to uint16
-		static PLGeneral::uint16 ConvertToUInt16(_BaseType Value)
+		static uint16 ConvertToUInt16(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToUInt16(Value);
 		}
 
 		// Convert uint16 to type
-		static _BaseType ConvertFromUInt16(PLGeneral::uint16 nValue)
+		static _BaseType ConvertFromUInt16(uint16 nValue)
 		{
 			return Type<_BaseType>::ConvertFromUInt16(nValue);
 		}
 
 		// Convert type to uint32
-		static PLGeneral::uint32 ConvertToUInt32(_BaseType Value)
+		static uint32 ConvertToUInt32(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToUInt32(Value);
 		}
 
 		// Convert uint32 to type
-		static _BaseType ConvertFromUInt32(PLGeneral::uint32 nValue)
+		static _BaseType ConvertFromUInt32(uint32 nValue)
 		{
 			return Type<_BaseType>::ConvertFromUInt32(nValue);
 		}
 
 		// Convert type to uint64
-		static PLGeneral::uint64 ConvertToUInt64(_BaseType Value)
+		static uint64 ConvertToUInt64(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToUInt64(Value);
 		}
 
 		// Convert uint64 to type
-		static _BaseType ConvertFromUInt64(PLGeneral::uint64 nValue)
+		static _BaseType ConvertFromUInt64(int64 nValue)
 		{
 			return Type<_BaseType>::ConvertFromUInt64(nValue);
 		}
 
 		// Convert type to uint_ptr
-		static PLGeneral::uint_ptr ConvertToUIntPtr(_BaseType Value)
+		static uint_ptr ConvertToUIntPtr(_BaseType Value)
 		{
 			return Type<_BaseType>::ConvertToUIntPtr(Value);
 		}
 
 		// Convert uint_ptr to type
-		static _BaseType ConvertFromUIntPtr(PLGeneral::uint_ptr nValue)
+		static _BaseType ConvertFromUIntPtr(uint_ptr nValue)
 		{
 			return Type<_BaseType>::ConvertFromUIntPtr(nValue);
 		}
@@ -221,14 +221,14 @@ class Type< FlagType<ENUM> > {
 		}
 
 		// Convert type to string
-		static PLGeneral::String ConvertToString(_BaseType Value)
+		static String ConvertToString(_BaseType Value)
 		{
 			// Init return value
-			PLGeneral::String sFlags;
+			String sFlags;
 			_BaseType nValue = Value;
 
 			// Loop through enum values
-			PLGeneral::String sName, sDesc;
+			String sName, sDesc;
 			_EnumType nFlag;
 			for (int i=0; ENUM::GetEnumValue(i, nFlag, sName, sDesc); i++) {
 				// Check if flag is set
@@ -254,20 +254,20 @@ class Type< FlagType<ENUM> > {
 		}
 
 		// Convert string to type
-		static _BaseType ConvertFromString(const PLGeneral::String &sString)
+		static _BaseType ConvertFromString(const String &sString)
 		{
 			// Init return value
 			_BaseType nFlags = 0;
 
 			// Tokenizer flags string
 			if (sString.GetLength()) {
-				PLGeneral::Tokenizer cTokenizer;
+				Tokenizer cTokenizer;
 				cTokenizer.Start(sString);
 				cTokenizer.SetDelimiters(" \t\r\n&,|");
 				while (cTokenizer.GetNextToken().GetLength()) {
 					// Get next token
-					PLGeneral::String sToken = cTokenizer.GetToken();
-					PLGeneral::String sDesc;
+					String sToken = cTokenizer.GetToken();
+					String sDesc;
 
 					// Try to convert token to number, else look up name in enum
 					_EnumType nValue = static_cast<_EnumType>(sToken.GetInt());

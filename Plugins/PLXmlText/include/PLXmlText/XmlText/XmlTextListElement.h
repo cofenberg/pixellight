@@ -72,7 +72,7 @@ class XmlTextListElement : public XmlTextElement {
 	//[ Protected virtual XmlTextElement functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLGeneral::XmlNode &cXmlNode);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
 		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
 
 
