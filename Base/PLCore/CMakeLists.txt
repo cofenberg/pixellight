@@ -14,7 +14,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLScript)
 ##################################################
 add_sources(
 	src/PLCore.cpp
-	src/PCoreLinux.cpp
+	src/PLCoreLinux.cpp
 	src/Core.cpp
 	src/Container/Functions.cpp
 	src/Container/Bitset.cpp
@@ -195,6 +195,7 @@ add_include_directories(
 	include
 	${ZLIB_INCLUDE_DIR}
 	${PCRE_INCLUDE_DIR}
+	${CMAKE_BINARY_DIR}	# For "PixelLight.h"
 )
 
 ##################################################
