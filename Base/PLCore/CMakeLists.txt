@@ -14,7 +14,6 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLScript)
 ##################################################
 add_sources(
 	src/PLCore.cpp
-	src/PLCoreLinux.cpp
 	src/Core.cpp
 	src/Container/Functions.cpp
 	src/Container/Bitset.cpp
