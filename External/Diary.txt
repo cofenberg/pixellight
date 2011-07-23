@@ -1,3 +1,10 @@
+>> 23.07.2011
+[CO]
+- Added Assimp (Open Asset Import Library)
+- Removed lib3ds (was used by the removed PLDefaultFileFormats)
+
+
+
 >> 16.07.2011
 [CO]
 - Added "VC2010Redistributable" containing "vcredist_x86.exe", "msvcr100.dll" and "msvcp100.dll" within the downloadable external package

@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{ea33c7ae-dd61-4436-93d2-3543e1dec98f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="MeshLoader">
+      <UniqueIdentifier>{973216d5-c673-4634-85cc-0adfeaa72748}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLAssimp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssimpMeshLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderWavefrontObject.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIMesh.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIMesh.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIIMesh.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIIBSP.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderMilkshape3D.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderLightWave.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderDoom3.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoader3dsMaxASE.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoader3dsMax3DS.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderCollada.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderBlender3D.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderStanfordPolygonLibrary.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderAutoCADDXF.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderModo.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderStereolithography.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderAC3D.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderTrueSpace.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderValveModel.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderReturnToCastleWolfenstein.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderSense8WorldToolKit.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderTerragenTerrain.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudio.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudioTerrain.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderBlitzBasic3D.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderDirectXX.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderIrrlichtMesh.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderIrrlichtScene.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderIzwareNendo.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderNeutralFileFormat.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderObjectFileFormat.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderOgreXML.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderPovRAYRaw.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuick3D.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLAssimp\AssimpMeshLoader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMax3DS.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMaxASE.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderDoom3.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderLightWave.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderMilkshape3D.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIIBSP.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIIMesh.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIMesh.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIMesh.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderWavefrontObject.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderCollada.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderBlender3D.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderStanfordPolygonLibrary.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderAutoCADDXF.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderModo.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderStereolithography.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderAC3D.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderTrueSpace.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderValveModel.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderReturnToCastleWolfenstein.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderOgreXML.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderPovRAYRaw.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuick3D.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderSense8WorldToolKit.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderTerragenTerrain.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudio.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudioTerrain.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderBlitzBasic3D.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderDirectXX.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIrrlichtMesh.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIrrlichtScene.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIzwareNendo.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderNeutralFileFormat.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderObjectFileFormat.h">
+      <Filter>MeshLoader</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -13,7 +13,7 @@ add_custom_target(External-Optional)
 ##################################################
 add_subdirectory(FMOD)
 add_subdirectory(FMODEx)
-add_subdirectory(lib3ds)
+add_subdirectory(Assimp)
 add_subdirectory(OpenEXR)
 add_subdirectory(xulrunnersdk)
 add_subdirectory(SQLite)

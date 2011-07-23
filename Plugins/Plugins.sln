@@ -4,8 +4,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLImageLoaderEXR", "PLImage
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPostProcessEffects", "PLPostProcessEffects\PLPostProcessEffects.vcxproj", "{C1E61563-AC6C-4E49-89D1-B414C57CABF8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLDefaultFileFormats", "PLDefaultFileFormats\PLDefaultFileFormats.vcxproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLParticleGroups", "PLParticleGroups\PLParticleGroups.vcxproj", "{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPlugin", "PLPlugin\PLPlugin.vcxproj", "{83BE427B-1F76-45F2-9301-A3E9838537DD}"
@@ -76,6 +74,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLJabber", "PLJabber\PLJabb
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLXmlText", "PLXmlText\PLXmlText.vcxproj", "{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLAssimp", "PLAssimp\PLAssimp.vcxproj", "{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -100,14 +100,6 @@ Global
 		{C1E61563-AC6C-4E49-89D1-B414C57CABF8}.Release|Win32.Build.0 = Release|Win32
 		{C1E61563-AC6C-4E49-89D1-B414C57CABF8}.Release|x64.ActiveCfg = Release|x64
 		{C1E61563-AC6C-4E49-89D1-B414C57CABF8}.Release|x64.Build.0 = Release|x64
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|Win32.Build.0 = Debug|Win32
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|x64.ActiveCfg = Debug|x64
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|x64.Build.0 = Debug|x64
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|Win32.ActiveCfg = Release|Win32
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|Win32.Build.0 = Release|Win32
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|x64.ActiveCfg = Release|x64
-		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|x64.Build.0 = Release|x64
 		{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}.Debug|Win32.Build.0 = Debug|Win32
 		{AC63AB34-44D4-4A1E-9444-E9DDA01452CB}.Debug|x64.ActiveCfg = Debug|x64
@@ -382,6 +374,14 @@ Global
 		{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}.Release|Win32.ActiveCfg = Release|Win32
 		{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}.Release|Win32.Build.0 = Release|Win32
 		{DCFD2AD6-88C6-465D-A1BD-243F9CF3D93E}.Release|x64.ActiveCfg = Release|Win32
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|Win32.Build.0 = Debug|Win32
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|x64.ActiveCfg = Debug|x64
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Debug|x64.Build.0 = Debug|x64
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|Win32.ActiveCfg = Release|Win32
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|Win32.Build.0 = Release|Win32
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|x64.ActiveCfg = Release|x64
+		{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -83,7 +83,7 @@ namespace PLCompositing {
 *    - DiffuseMap:                 Diffuse map (2D, RGB, other usual name: 'decal map')
 *      - AlphaReference:           Alpha reference 0.0-1.0, only used if the diffuse map has an alpha channel, if 0 no alpha test is performed at all
 *    - SpecularColor:              Multiplied with the final specular term, normally values from 0-1, default: 1 for all components. If all 0, there's no specular lighting at all.
-*      - SpecularExponent:         The 'power' of the specular lighting, normally values from 1-128, default: 45
+*      - SpecularExponent:         The 'power' (aka 'gloss' aka 'shininess') of the specular lighting, normally values from 1-128, default: 45
 *      - SpecularMap:              Specular control map (2D, RGB, if there's an alpha channel it's used for specular power control)
 *    - NormalMap:                  Normal map (sometimes also called 'Dot3 bump map') required for 'per pixel lighting' (2D, RGB, tangent space)
 *      - NormalMapBumpiness:       The 'bumpiness' of the normal map, normally values from 0-2, default: 1

@@ -63,7 +63,7 @@ namespace PLCompositing {
 *    - DiffuseMap:          Diffuse map (2D, RGB, other usual name: 'decal map')
 *    - AlphaReference:      Alpha reference 0.0-1.0, only used if the diffuse map has an alpha channel, if 0 no alpha test is performed at all
 *    - SpecularColor:       Multiplied with the final specular term, normally values from 0-1, default: 1 for all components. If all 0, there's no specular lighting at all.
-*    - SpecularExponent:    The 'power' of the specular lighting, normally values from 1-128, default: 45
+*    - SpecularExponent:    The 'power' (aka 'gloss' aka 'shininess') of the specular lighting, normally values from 1-128, default: 45
 *    - LightMap:            'Static lighting/shadowing', not influenced by any light but influcences the lighting (2D, RGB)
 *    - AmbientOcclusionMap: 'Static global ambient occlusion', not influenced by any light but influcences the lighting (2D, grayscale)
 *    - ReflectionMap:       'Reflections', not influenced by any light (2D/cube map, RGB, other usual name: 'environment map')

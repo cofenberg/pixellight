@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FCC59F42-CB09-4B58-8D7C-3B4B169926CA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../External/_Windows_x86_32/Assimp/include/;include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>assimp.lib;PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLAssimpD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Assimp/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)PLAssimpD.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)PLAssimpD.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy build\debug\PLAssimpD.dll ..\..\Bin\Runtime\Plugins\PLScene\
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../External/_Windows_x86_64/Assimp/include/;include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;_HAS_ITERATOR_DEBUGGING=0;_SECURE_SCL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>assimp64.lib;PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLAssimpD64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Assimp/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCM;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)PLAssimpD64.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)PLAssimpD.lib</ImportLibrary>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy build\debug64\PLAssimpD64.dll ..\..\Bin\Runtime\Plugins\PLScene\
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>../../External/_Windows_x86_32/Assimp/include/;include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>assimp.lib;PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLAssimp.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Assimp/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCM;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
+      <ImportLibrary>$(OutDir)PLAssimp.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy build\release\PLAssimp.dll ..\..\Bin\Runtime\Plugins\PLScene\
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>../../External/_Windows_x86_64/Assimp/include/;include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>assimp64.lib;PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLAssimp64.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Assimp/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBCM;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <ImportLibrary>$(OutDir)PLAssimp.lib</ImportLibrary>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy build\release64\PLAssimp64.dll ..\..\Bin\Runtime\Plugins\PLScene\
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AssimpMeshLoader.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudio.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudioTerrain.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoader3dsMax3DS.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoader3dsMaxASE.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderAC3D.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderAutoCADDXF.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderBlender3D.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderBlitzBasic3D.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderCollada.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderDirectXX.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderDoom3.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderIrrlichtMesh.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderIrrlichtScene.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderIzwareNendo.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderLightWave.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderMilkshape3D.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderModo.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderNeutralFileFormat.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderObjectFileFormat.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderOgreXML.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderPovRAYRaw.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIIBSP.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIIMesh.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIIMesh.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuakeIMesh.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderQuick3D.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderReturnToCastleWolfenstein.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderSense8WorldToolKit.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderStanfordPolygonLibrary.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderStereolithography.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderTerragenTerrain.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderTrueSpace.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderValveModel.cpp" />
+    <ClCompile Include="src\MeshLoader\MeshLoaderWavefrontObject.cpp" />
+    <ClCompile Include="src\PLAssimp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\PLScene\PLScene.vcxproj">
+      <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLAssimp\AssimpMeshLoader.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudio.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudioTerrain.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMax3DS.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMaxASE.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderAC3D.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderAutoCADDXF.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderBlender3D.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderBlitzBasic3D.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderCollada.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderDirectXX.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderDoom3.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIrrlichtMesh.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIrrlichtScene.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderIzwareNendo.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderLightWave.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderMilkshape3D.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderModo.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderNeutralFileFormat.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderObjectFileFormat.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderOgreXML.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderPovRAYRaw.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIIBSP.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIIMesh.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIIMesh.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuakeIMesh.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderQuick3D.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderReturnToCastleWolfenstein.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderSense8WorldToolKit.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderStanfordPolygonLibrary.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderStereolithography.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderTerragenTerrain.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderTrueSpace.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderValveModel.h" />
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderWavefrontObject.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,100 @@
+﻿>> 24.07.2011
+[CO]
+- Added support for several material attributes, vertex normals etc. -> I was now able to load in and render a lot of the Assimp test meshes.
+  There's still work to be done like adding animation import, scene loaders etc. - but it's a start, meaning it's time to commit the current state.
+  The rest will be done as usual - one step after another.
+
+
+
+>> 23.07.2011
+[CO]
+- Uh, nearly three years past since the last entry within this diary... maybe another argument why I removed "PLDefaultFileFormats"
+  today and replaced it by the just started "PLAssimp"-project.
+  It took me weeks to write the mesh importers within "PLDefaultFileFormats", but they often failed certain file format variations
+  and so on. With such a small team, it appears to be impossible to provide an acceptable numbers of decent mesh format importers
+  so that users can use their content in various file formats within PixelLight. It's even more impossible to maintain (! writing them in
+  the first place is just one side of the coin !) those exporters so that they keep on working while PixelLight is evolving.
+  On the other hand, there were already people asking for an Maya exporter and an Blender exporter like within this comment
+    "I also recommend investing time to write a Blender exporter since I know many open projects use it, rather than 3ds max."
+    (http://www.youtube.com/watch?v=pJULptSW-SY)
+  ... it took me years to get the Autodesk 3ds Max exporter to the point were it's finally usable and I see absolutely no chance to
+  find enough spare time to get into one or multiple other content creation tools and their APIs and then writing and especially, again,
+  maintaining exporters. The PixelLight project is just to huge for the current development team for even more stuff.
+  So, this one gave me an headache for some months now. It looks like that more people are using Maya, Blender or even want to directly
+  load in file formats like 3ds, obj, Collada etc. while I can't remember that many comments regarding the Autodesk 3ds Max exporter. :/
+  As mentioned, far to few developers really working on, and no one is contributing to PixelLight - but using external content (without
+  the mentioned already really good working exporter... I exported the whole dungeon demo scene with just a click...) is really
+  important so people can use PixelLight in the first place for something like games. A few weeks ago, I stumbled over
+  "ASSIMP - Open Asset Import Library" (http://assimp.sourceforge.net/ - released years after we started with PixelLight)... and of course,
+  I put this at once onto my "have a look into it"-list.
+  Now that there's just one exam left at the university at next friday, I spend some hours playing around with Assimp and got impressive
+  results at once. The API has a really good design and is extensively commented... they even comment whether or not a pointer can be nullptr
+  or not, just as I do within PixelLight. :D
+  -> Just wrote 34 (!!) mesh loader RTTI classes for a huge number of mesh/scene file formats, even for Collada which I wanted to write an
+     exporter but never found the time because there was always something even more important. Those 34 mesh loader classes are just there to
+     connect Assimp in a decent and universal way as a plugin to PixelLight. Internally, all those classes redirect into the "AssimpMeshLoader"
+     class doing the real work. Meaning, instead of 34 implementations I now have to maintain just a single implementation for a huge number
+     of file formats at once. Wow, it really looks like that Assimp solves the content issue! Assimp can also directly load in Blender files, so
+     that I don't see any need to write a special Blender exporter right now! Even if the Blender exporter may fail in a situation, one of the
+     other 33 file formats should do the job - there are a lot of already existing exporters for Blender available.
+  -> This was definitely one of the better project kick-offs, but there's of course still some work to be done until the Assimp plugin is usable
+     in a decent way. The extreme plugin architecture of PixelLight is getting more and more useful because one can just write additional loose
+     plugins for further features without the need to hack around within the PixelLight project itself... so, I just try to focus on the base
+     components of PixelLight instead to trying to write everything else like xxx mesh importers, particle engines, complex GUI systems usable for
+     editors and so on on my own... which just won't work.
+
+
+
+/*********************************************************\
+ *  The entries below are in German only
+\*********************************************************/
+
+
+
+>> 24.08.2008
+[CO]
+- Wo sinnvoll 'Win32' zu 'Windows' gemacht da für 32 Bit als auch für 64 Bit
+
+
+
+>> 16.05.2008
+[CO]
+- "PLPlugins_idSoftware" in "PLDefaultFileFormats" umbenannt
+- Mesh und Scene Loader aus PLMesh und PLEngine nach "PLDefaultFileFormats" verschoben
+- "EffectLoaderFX" Effect Loader aus PLRenderer nach "PLDefaultFileFormats" verschoben
+
+
+
+>> 20.10.2007
+[CO]
+- Einige 'const' eingefügt
+
+
+
+>> 17.09.2007
+[CO]
+- Alle Projekte von PLBool auf bool zurückgestellt (siehe PLBase Diary-Entrag von heute)
+
+
+
+>> 23.07.2007
+[CO]
+- Einige Zeiger auf Referenzen umgestellt
+
+
+
+>> 19.04.2007
+[CO]
+- Ein paar 'return' entfernt
+- Header Änderungen
+- 'using namespace' Änderungen
+
+
+
+>> 07.04.2007
+[CO]
+Neues Projekt: PLPlugins_idSoftware:
+- In diesem seperaten Plugin-Projekt befinden sich nun die verschiedenen Loader für Quake2, Quake3 und Doom3 - diese wollte
+  ich einfach nicht mehr direkt in PLMesh haben. So vermeidet man auch eventuelle Rechtliche Probleme + kann locker andere
+  diese Plugins weiterentwickeln lassen so das sich später eventuell ganze Doom3-Level direkt einladen und darstellen
+  lassen können.

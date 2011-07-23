@@ -93,7 +93,7 @@ namespace PLCompositing {
 *    - HeightMap:                  Height map required for 'per pixel lighting' with "Parallax Mapping" or also called "Offset Normal Mapping" or "Virtual Displacement Mapping" (2D, grayscale, other usual name: 'bump map')
 *      - Parallax:                 Controls the 'depth' of the material if parallax mapping is used, normally values from 0.01-0.04, default: 0.04. Parallax mapping can ONLY be used if a height map is given!
 *    - SpecularColor:              Multiplied with the final specular term, normally values from 0-1, default: 1 for all components. If all 0, there's no specular lighting at all.
-*      - SpecularExponent:         The 'power' of the specular lighting, normally values from 1-128, default: 45
+*      - SpecularExponent:         The 'power' (aka 'gloss' aka 'shininess') of the specular lighting, normally values from 1-128, default: 45
 *      - SpecularMap:              Specular control map (2D, RGB, if there's an alpha channel it's used for specular power control)
 *      - SpecularRampMap:          Can be used for 'cell shading' (1D, grayscale)
 *    - EdgeRampMap:                Can be used for cartoon silhouettes (1D, grayscale)
