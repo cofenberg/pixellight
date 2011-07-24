@@ -1,30 +1,31 @@
 <?xml version="1.0" ?>
-<Plugin Version="1" PixelLightVersion="PixelLight 0.9.7-R1">
-	<Active>1</Active>
-	<Delayed>1</Delayed>
-	<ForceBuildTypeMatch>0</ForceBuildTypeMatch>
-	<Name>PLDefaultFileFormats</Name>
-	<Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
-	<License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
-	<Description>Various PixelLight default file format plugins adding loader implementations</Description>
-	<Platform Name="Win32">
-		<Library Type="Release">PLDefaultFileFormats.dll</Library>
-		<Library Type="Debug">PLDefaultFileFormatsD.dll</Library>
-	</Platform>
-	<Platform Name="Win64">
-		<Library Type="Release">PLDefaultFileFormats64.dll</Library>
-		<Library Type="Debug">PLDefaultFileFormatsD64.dll</Library>
-	</Platform>
-	<Platform Name="Linux">
-		<Library Type="Release">libPLDefaultFileFormats.so</Library>
-		<Library Type="Debug">libPLDefaultFileFormatsD.so</Library>
-	</Platform>
-	<Classes>
-		<Class Name="Script" Namespace="PLScriptLua" BaseClassName="PLScript::Script" Description="Lua (http://www.lua.org/) script implementation" HasConstructor="true" HasDefaultConstructor="true">
-			<Properties>
-				<Property Name="Formats">lua,LUA</Property>
-				<Property Name="Language">Lua</Property>
-			</Properties>
-		</Class>
-	</Classes>
+<Plugin Version="1" PixelLightVersion="PixelLight 0.9.8-R1">
+    <Active>1</Active>
+    <Delayed>1</Delayed>
+    <Name>PLRendererOpenGL</Name>
+    <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
+    <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
+    <Description>OpenGL 1.1 + extensions (http://www.opengl.org/) renderer implementation using FreeType for font support</Description>
+    <Platform Name="Win32">
+        <Library Type="Release">PLRendererOpenGL.dll</Library>
+        <Library Type="Debug">PLRendererOpenGLD.dll</Library>
+    </Platform>
+    <Platform Name="Win64">
+        <Library Type="Release">PLRendererOpenGL64.dll</Library>
+        <Library Type="Debug">PLRendererOpenGLD64.dll</Library>
+    </Platform>
+    <Platform Name="Linux">
+        <Library Type="Release">libPLRendererOpenGL.so</Library>
+        <Library Type="Debug">libPLRendererOpenGLD.so</Library>
+    </Platform>
+    <Classes>
+        <Class Name="Renderer" Namespace="PLRendererOpenGL" BaseClassName="PLRenderer::RendererBackend" Description="OpenGL 1.1 + extensions renderer backend" HasConstructor="1" HasDefaultConstructor="0" />
+        <Class Name="ShaderLanguage" Namespace="PLRendererOpenGL" BaseClassName="PLRenderer::ShaderLanguage" Description="Abstract OpenGL shader language class" HasConstructor="0" HasDefaultConstructor="0" />
+        <Class Name="ShaderLanguageGLSL" Namespace="PLRendererOpenGL" BaseClassName="PLRendererOpenGL::ShaderLanguage" Description="Build in OpenGL GLSL shader language class" HasConstructor="1" HasDefaultConstructor="0">
+            <Properties>
+                <Property Name="ShaderLanguage">GLSL</Property>
+            </Properties>
+        </Class>
+        <Class Name="RendererOpenGLExtensionConfig" Namespace="PLRendererOpenGL" BaseClassName="PLCore::ConfigGroup" Description="Renderer OpenGL extension configuration class" HasConstructor="1" HasDefaultConstructor="1" />
+    </Classes>
 </Plugin>
