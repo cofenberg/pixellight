@@ -1,4 +1,10 @@
-﻿>> 24.07.2011
+﻿>> 25.07.2011
+[CO]
+- Added scene loader counterparts for all mesh loaders... even if there are some "not really a scene"-formats
+
+
+
+>> 24.07.2011
 [CO]
 - Added support for several material attributes, vertex normals etc. -> I was now able to load in and render a lot of the Assimp test meshes.
   There's still work to be done like adding animation import, scene loaders etc. - but it's a start, meaning it's time to commit the current state.
