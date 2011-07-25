@@ -208,6 +208,12 @@ if(LINUX)
 	)
 endif()
 
+if(LINUX)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Assimp/lib/libassimp.so.2			"${PL_BIN_DIR}/Runtime/Plugins/PLScene/"
+	)
+endif()
+
 ##################################################
 ## Install
 ##################################################
@@ -222,3 +228,10 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLScene/${CMAKETOOLS_CURRENT_PLUGIN}
 	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLScene				COMPONENT Runtime
 )
+
+
+if(LINUX)
+	install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLScene/libassimp.so.2
+		DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
+	)
+endif()
