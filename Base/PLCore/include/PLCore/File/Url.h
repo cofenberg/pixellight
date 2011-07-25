@@ -307,7 +307,7 @@ class Url {
 		*    Returns the path (without root and filename)
 		*
 		*  @return
-		*    Path (e.g. "Programme/")
+		*    Path (e.g. "Programs/")
 		*/
 		PLCORE_API String GetPath() const;
 
@@ -322,39 +322,93 @@ class Url {
 
 		/**
 		*  @brief
-		*    Returns the filename without it's extension
+		*    Returns the path without the filename
 		*
 		*  @return
-		*    Filename without extension (e.g. "readme")
+		*    Path without filename (e.g. "C:\Programs\App\App.exe"->"C:\Programs\App\")
+		*/
+		PLCORE_API String CutFilename() const;
+
+		/**
+		*  @brief
+		*    Returns the filename without it's complete extension (one may also call the result "basename)
+		*
+		*  @remarks
+		*  @verbatim
+		*   Example showing the difference between "GetTitle()", "GetCompleteTitle()", "GetExtension()", "CutExtension()", "GetCompleteExtension()" and "CutCompleteExtension()":
+		*     Url cUrl("C:\\Programs\\App\\archive.tar.gz");
+		*     String sTitle                = cUrl.GetTitle();              // Result is "archive"
+		*     String sCompleteTitle        = cUrl.GetCompleteTitle();      // Result is "archive.tar"
+		*     String sExtension            = cUrl.GetExtension();          // Result is "gz"
+		*     String sCutExtension         = cUrl.CutExtension();          // Result is "C:\Programs\App\archive.tar"
+		*     String sCompleteExtension    = cUrl.GetCompleteExtension();  // Result is "tar.gz"
+		*     String sCutCompleteExtension = cUrl.CutCompleteExtension();  // Result is "C:\Programs\App\archive"
+		*  @endverbatim
+		*
+		*  @return
+		*    Filename without complete extension (e.g. "readme" if the filename was "readme.txt", "archive" if the filename was "archive.tar.gz")
 		*/
 		PLCORE_API String GetTitle() const;
 
 		/**
 		*  @brief
-		*    Returns the file extension
+		*    Returns the filename without it's extension (one may also call the result "basename)
 		*
 		*  @return
-		*    File extension (e.g. "txt")
+		*    Filename without extension (e.g. "readme" if the filename was "readme.txt", "archive.tar" if the filename was "archive.tar.gz")
+		*
+		*  @see
+		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String GetExtension() const;
+		PLCORE_API String GetCompleteTitle() const;
 
 		/**
 		*  @brief
-		*    Returns the path without the filename
+		*    Returns the file extension (aka "suffix")
 		*
 		*  @return
-		*    Path without filename (e.g. "C:\Programme\App\App.exe" -> "C:\Programme\App\")
+		*    File extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
+		*
+		*  @see
+		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String CutFilename() const;
+		PLCORE_API String GetExtension() const;
 
 		/**
 		*  @brief
 		*    Returns the path and filename without extension
 		*
 		*  @return
-		*    Path and filename without extension (e.g. "C:\Programme\App\App.exe" -> "C:\Programme\App\App")
+		*    Path and filename without extension (e.g. "C:\Programs\App\App.exe"->"C:\Programs\App\App" or "C:\Programs\App\archive.tar.gz"->"C:\Programs\App\archive.tar")
+		*
+		*  @see
+		*    - "GetTitle()" for an usage example
 		*/
 		PLCORE_API String CutExtension() const;
+
+		/**
+		*  @brief
+		*    Returns the complete file extension (aka "suffix")
+		*
+		*  @return
+		*    File extension (e.g. "txt" if the filename was "readme.txt", "tar.gz" if the filename was "archive.tar.gz")
+		*
+		*  @see
+		*    - "GetTitle()" for an usage example
+		*/
+		PLCORE_API String GetCompleteExtension() const;
+
+		/**
+		*  @brief
+		*    Returns the path and filename without complete extension
+		*
+		*  @return
+		*    Path and filename without complete extension (e.g. "C:\Programs\App\App.exe"->"C:\Programs\App\App" or "C:\Programs\App\archive.tar.gz"->"C:\Programs\App\archive")
+		*
+		*  @see
+		*    - "GetTitle()" for an usage example
+		*/
+		PLCORE_API String CutCompleteExtension() const;
 
 		/**
 		*  @brief
@@ -368,7 +422,7 @@ class Url {
 		*
 		*  @note
 		*    - Ignores the root (e.g. "C:/" or "/")
-		*    - Example: "test/foo.bar" -> "test"
+		*    - Example: "test/foo.bar"->"test"
 		*/
 		PLCORE_API String GetFirstPath(uint32 &nPathPos) const;
 
@@ -381,7 +435,7 @@ class Url {
 		*
 		*  @note
 		*    - Ignores the root (e.g. "C:/" or "/")
-		*    - Example: "test/foo.bar" -> "test"
+		*    - Example: "test/foo.bar"->"test"
 		*/
 		PLCORE_API String GetFirstPath() const;
 
@@ -459,7 +513,7 @@ class Url {
 		String m_sUrl;		/**< Path or URL */
 		String m_sProtocol;	/**< Protocol part (e.g. "http://") */
 		String m_sRoot;		/**< Root part (e.g. "/" or "C:\") */
-		String m_sPath;		/**< Path (e.g. "Programme\") */
+		String m_sPath;		/**< Path (e.g. "Programs\") */
 		String m_sFilename;	/**< Filename (e.g. "readme.txt") */
 		bool   m_bValid;	/**< Is the URL valid? */
 

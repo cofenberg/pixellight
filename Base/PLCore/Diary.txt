@@ -1,3 +1,20 @@
+>> 25.07.2011
+[CO]
+- "Url": "GetTitle()" and "GetExtension()": For a filename like "archive.tar.gz" the method "GetTitle()" returns "archive.tar" and "GetExtension()" returns "gz". While this is
+  ok/standard for some use cases, there are also situations were "archive" as title and "tar.gz" as extension is desired/standard. I checked other libraries/frameworks like Qt
+  in order to see how they deal with this topic. In Qt, they offer the following methods:
+    "QFileInfo::baseName()"="archive"
+    "QFileInfo::completeBaseName()"=archive.tar"
+    "QFileInfo::suffix()"="gz"
+    "QFileInfo::completeSuffix()"="tar.gz"
+  This naming convention sounds reasonable and at least "suffix()" is handled the same way as PL's "GetExtension()".
+  -> Added some more comments to avoid confusion (or at least reduce it) when dealing with filenames like "archive.tar.gz"
+  -> Renamed "GetTitle()" into "GetCompleteTitle()" returning "archive.tar"
+  -> Added "GetTitle()" returning "archive"
+  -> Added "GetCompleteExtension()" returning "tar.gz" and also added "CutCompleteExtension()"
+
+
+
 >> 21.07.2011
 [CO]
 - PLGeneral->PLCore - done

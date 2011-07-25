@@ -238,7 +238,7 @@ bool PLScenePLMesh::WriteMesh(FILE &cFile, ChunkStack &cChunkStack)
 
 								// Animation name = point cache filename without path and extension
 								Url cUrl(sPointCache);
-								strcpy(sAnimation.szName, cUrl.GetTitle());
+								strcpy(sAnimation.szName, cUrl.GetCompleteTitle());
 
 								sAnimation.nType   = 0; // Vertex animation
 								sAnimation.nStart  = 0; // Inclusive
@@ -628,7 +628,7 @@ bool PLScenePLMesh::WritePointCacheMorphTargets(FILE &cFile, ChunkStack &cChunkS
 					// Morph target name = point cache filename without path and extension
 					char szPointCacheTitle[64];
 					Url cUrl(cPointCacheFile.GetUrl().GetFilename());
-					strcpy(szPointCacheTitle, cUrl.GetTitle());
+					strcpy(szPointCacheTitle, cUrl.GetCompleteTitle());
 
 					// Write the morph targets
 					for (int nSample=0; nSample<nNumOfSamples; nSample++) {
