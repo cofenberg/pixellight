@@ -25,7 +25,7 @@ define_external_project(Assimp)
 	if(WIN32)
 		set(ASSIMP_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/assimp.lib CACHE INTERNAL "")
 	elseif(LINUX)
-		# Under linux currently only dynamic lib is buildable by the build system of assimp
+		# Under Linux, only a dynamic library is currently buildable by the build system of Assimp
 		set(ASSIMP_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libassimp.so CACHE INTERNAL "")
 	endif()
 
