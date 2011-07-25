@@ -290,8 +290,9 @@ class Host {
 		*  @brief
 		*    Server thread class
 		*/
-		class ServerThread : public Thread
-		{
+		class ServerThread : public Thread {
+
+
 			//[-------------------------------------------------------]
 			//[ Friends                                               ]
 			//[-------------------------------------------------------]
