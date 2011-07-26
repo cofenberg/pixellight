@@ -82,6 +82,10 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 				// Get loader, assigned to the current loadable type, capable of processing the file
 				Loader *pLoader = pLoadableType->GetLoaderForLoadingByFile(cFile);
 				if (pLoader) {
+					// Because 'm_sAbsFilename' is reset before loading within the Unload()-function,
+					// and 'sFilename' can be a reference to this string, we need to duplicate the string!
+					const String sFilenameBackup = String(sFilename);
+
 					// Unload the loadable
 					Unload();
 
@@ -96,9 +100,8 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 					const bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
 					if (bResult) {
 						// Backup filename
-						const Url &cUrl = cFile.GetUrl();
-						m_sUrl		= cUrl.GetUrl();
-						m_sFilename	= cUrl.GetFilename();
+						m_sUrl		= cFile.GetUrl().GetUrl();
+						m_sFilename	= sFilenameBackup;	// The filename this loadable was given to load from
 					}
 
 					// Done
@@ -148,9 +151,7 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 				bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
 				if (bResult) {
 					// Backup filename
-					const Url &cUrl = cFile.GetUrl();
-					m_sUrl		= cUrl.GetUrl();
-					m_sFilename	= cUrl.GetFilename();
+					m_sFilename	= m_sUrl = cFile.GetUrl().GetFilename();
 				}
 
 				// Done
