@@ -95,6 +95,7 @@ class SystemWindows : public SystemImpl {
 	private:
 		virtual String GetPlatform() const;
 		virtual String GetOS() const;
+		virtual char GetSeparator() const;
 		virtual uint32 GetCPUMhz() const;
 		virtual String GetComputerName() const;
 		virtual String GetUserName() const;

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/File/File.h>
+#include <PLCore/System/System.h>
 #include "PLAssimp/IOStream.h"
 #include "PLAssimp/IOSystem.h"
 
@@ -82,11 +83,8 @@ bool IOSystem::Exists(const char *pFile) const
 
 char IOSystem::getOsSeparator() const
 {
-	#ifdef _WIN32
-		return '\\';
-	#else
-		return '/';
-	#endif
+	static const char nSeparator = System::GetInstance()->GetSeparator();
+	return nSeparator;
 }
 
 Assimp::IOStream *IOSystem::Open(const char *pFile, const char *pMode)

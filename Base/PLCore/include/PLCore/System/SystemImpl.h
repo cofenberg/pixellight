@@ -104,6 +104,15 @@ class SystemImpl {
 
 		/**
 		*  @brief
+		*    Returns the directory separator used by the operation system
+		*
+		*  @return
+		*    The directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)
+		*/
+		virtual char GetSeparator() const = 0;
+
+		/**
+		*  @brief
 		*    Get the CPU mhz
 		*
 		*  @return
