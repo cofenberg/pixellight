@@ -585,7 +585,7 @@ bool Tokenizer::ParseNumber(double &dNumber)
 *  @brief
 *    Expects the next tokens to be a vector and returns it as an array of strings
 */
-bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const String &sEnd, const String &sSeperator)
+bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const String &sEnd, const String &sSeparator)
 {
 	// Start parsing
 	PushState();
@@ -595,9 +595,9 @@ bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const 
 		// Read elements
 		bool bFirst = true;
 		while (!ExpectToken(sEnd)) {
-			// Expect seperator
+			// Expect separator
 			if (bFirst) bFirst = false;
-			else if (sSeperator.GetLength() && !ExpectToken(sSeperator)) {
+			else if (sSeparator.GetLength() && !ExpectToken(sSeparator)) {
 				PopState();
 
 				// Error!
@@ -606,7 +606,7 @@ bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const 
 
 			// Expect an element
 			String sElement = GetNextToken();
-			if (!sElement.GetLength() || CompareToken(sSeperator) || CompareToken(sEnd)) {
+			if (!sElement.GetLength() || CompareToken(sSeparator) || CompareToken(sEnd)) {
 				// Error!
 				PopState();
 				return false;
@@ -629,11 +629,11 @@ bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const 
 *  @brief
 *    Expects the next tokens to be a vector and returns it as an array of ints
 */
-bool Tokenizer::ParseVector(Array<int> &cVector, const String &sStart, const String &sEnd, const String &sSeperator)
+bool Tokenizer::ParseVector(Array<int> &cVector, const String &sStart, const String &sEnd, const String &sSeparator)
 {
 	// Parse string vector
 	Array<String> cStringVector;
-	if (!ParseVector(cStringVector, sStart, sEnd, sSeperator)) return false; // Error!
+	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator)) return false; // Error!
 
 	// Create int vector
 	for (uint32 i=0; i<cStringVector.GetNumOfElements(); i++)
@@ -647,11 +647,11 @@ bool Tokenizer::ParseVector(Array<int> &cVector, const String &sStart, const Str
 *  @brief
 *    Expects the next tokens to be a vector and returns it as an array of floats
 */
-bool Tokenizer::ParseVector(Array<float> &cVector, const String &sStart, const String &sEnd, const String &sSeperator)
+bool Tokenizer::ParseVector(Array<float> &cVector, const String &sStart, const String &sEnd, const String &sSeparator)
 {
 	// Parse string vector
 	Array<String> cStringVector;
-	if (!ParseVector(cStringVector, sStart, sEnd, sSeperator)) return false; // Error!
+	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator)) return false; // Error!
 
 	// Create int vector
 	for (uint32 i=0; i<cStringVector.GetNumOfElements(); i++)
@@ -665,11 +665,11 @@ bool Tokenizer::ParseVector(Array<float> &cVector, const String &sStart, const S
 *  @brief
 *    Expects the next tokens to be a vector and returns it as an array of doubles
 */
-bool Tokenizer::ParseVector(Array<double> &cVector, const String &sStart, const String &sEnd, const String &sSeperator)
+bool Tokenizer::ParseVector(Array<double> &cVector, const String &sStart, const String &sEnd, const String &sSeparator)
 {
 	// Parse string vector
 	Array<String> cStringVector;
-	if (!ParseVector(cStringVector, sStart, sEnd, sSeperator))
+	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator))
 		return false; // Error!
 
 	// Create int vector

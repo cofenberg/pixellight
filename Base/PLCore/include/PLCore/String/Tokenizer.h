@@ -453,8 +453,8 @@ class Tokenizer {
 		*    Open bracket (e.g. "[")
 		*  @param[in]  sEnd
 		*    Closed bracket (e.g. "]")
-		*  @param[in]  sSeperator
-		*    Seperator between the elements (e.g. ","). Can also be ""
+		*  @param[in]  sSeparator
+		*    Separator between the elements (e.g. ","). Can also be ""
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -466,7 +466,7 @@ class Tokenizer {
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stayes at the current token
 		*/
-		PLCORE_API bool ParseVector(Array<String> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeperator = ",");
+		PLCORE_API bool ParseVector(Array<String> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
 		/**
 		*  @brief
@@ -478,8 +478,8 @@ class Tokenizer {
 		*    Open bracket (e.g. "[")
 		*  @param[in]  sEnd
 		*    Closed bracket (e.g. "]")
-		*  @param[in]  sSeperator
-		*    Seperator between the elements (e.g. ","). Can also be ""
+		*  @param[in]  sSeparator
+		*    Separator between the elements (e.g. ","). Can also be ""
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -491,7 +491,7 @@ class Tokenizer {
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stayes at the current token
 		*/
-		PLCORE_API bool ParseVector(Array<int> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeperator = ",");
+		PLCORE_API bool ParseVector(Array<int> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
 		/**
 		*  @brief
@@ -503,8 +503,8 @@ class Tokenizer {
 		*    Open bracket (e.g. "[")
 		*  @param[in]  sEnd
 		*    Closed bracket (e.g. "]")
-		*  @param[in]  sSeperator
-		*    Seperator between the elements (e.g. ","). Can also be ""
+		*  @param[in]  sSeparator
+		*    Separator between the elements (e.g. ","). Can also be ""
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -516,7 +516,7 @@ class Tokenizer {
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stayes at the current token
 		*/
-		PLCORE_API bool ParseVector(Array<float> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeperator = ",");
+		PLCORE_API bool ParseVector(Array<float> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
 		/**
 		*  @brief
@@ -528,8 +528,8 @@ class Tokenizer {
 		*    Open bracket (e.g. "[")
 		*  @param[in]  sEnd
 		*    Closed bracket (e.g. "]")
-		*  @param[in]  sSeperator
-		*    Seperator between the elements (e.g. ","). Can also be ""
+		*  @param[in]  sSeparator
+		*    Separator between the elements (e.g. ","). Can also be ""
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -541,7 +541,7 @@ class Tokenizer {
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stayes at the current token
 		*/
-		PLCORE_API bool ParseVector(Array<double> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeperator = ",");
+		PLCORE_API bool ParseVector(Array<double> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
 		/**
 		*  @brief

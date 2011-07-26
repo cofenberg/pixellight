@@ -189,7 +189,7 @@ Array<String> CommandLine::StringToArguments(const String &sCmdLine)
 	Array<String> lstArray;
 	String sToken = cTokenizer.GetNextToken();
 	while (sToken.GetLength()) {
-		// Seperator found?
+		// Separator found?
 		if (sToken == '\'' || sToken == '\"') {
 			sToken = cTokenizer.GetNextToken();
 			lstArray.Add(sToken);
