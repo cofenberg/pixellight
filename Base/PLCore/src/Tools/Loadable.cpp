@@ -77,7 +77,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 		const String sExtension = Url(sFilename).GetExtension();
 		if (sExtension.GetLength()) {
 			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
+			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
 				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
@@ -149,7 +149,7 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 		String sExtension = cUrl.GetExtension();
 		if (sExtension.GetLength()) {
 			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
+			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
 				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
@@ -209,7 +209,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 		String sExtension = cUrl.GetExtension();
 		if (sExtension.GetLength()) {
 			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
+			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
 				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
@@ -268,7 +268,7 @@ bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
 			String sExtension = cUrl.GetExtension();
 			if (sExtension.GetLength()) {
 				// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-				const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
+				const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
 				if (pLoadableType) {
 					// Get loader, assigned to the current loadable type, capable of processing the file extension
 					Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);

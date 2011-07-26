@@ -56,9 +56,9 @@ uint32 LoadableManager::GetNumOfTypes()
 
 /**
 *  @brief
-*    Returns a loadable type
+*    Returns a loadable type by using an index
 */
-LoadableType *LoadableManager::GetType(uint32 nIndex)
+LoadableType *LoadableManager::GetTypeByIndex(uint32 nIndex)
 {
 	RegisterClasses();
 	return m_lstTypes.Get(nIndex);
@@ -68,7 +68,7 @@ LoadableType *LoadableManager::GetType(uint32 nIndex)
 *  @brief
 *    Returns a loadable type by using it's name
 */
-LoadableType *LoadableManager::GetType(const String &sName)
+LoadableType *LoadableManager::GetTypeByName(const String &sName)
 {
 	RegisterClasses();
 	return m_mapTypes.Get(sName);
@@ -142,7 +142,7 @@ bool LoadableManager::IsFormatLoadSupported(const String &sExtension, const Stri
 {
 	RegisterClasses();
 	if (sType.GetLength()) {
-		const LoadableType *pLoadableType = GetType(sType);
+		const LoadableType *pLoadableType = GetTypeByName(sType);
 		if (pLoadableType) {
 			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)
@@ -166,7 +166,7 @@ bool LoadableManager::IsFormatSaveSupported(const String &sExtension, const Stri
 {
 	RegisterClasses();
 	if (sType.GetLength()) {
-		const LoadableType *pLoadableType = GetType(sType);
+		const LoadableType *pLoadableType = GetTypeByName(sType);
 		if (pLoadableType) {
 			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)

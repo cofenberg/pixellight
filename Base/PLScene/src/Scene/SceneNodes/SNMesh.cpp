@@ -234,7 +234,7 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 					PL_LOG(Debug, "Load skin: " + sFilename)
 
 					// Get loadable type
-					const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType("Skin");
+					const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName("Skin");
 					if (pLoadableType) {
 						// Get loader, assigned to the current loadable type, capable of processing the file extension
 						Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
@@ -320,7 +320,7 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 		PL_LOG(Debug, "Save skin: " + sFilename)
 
 		// Get loadable type
-		LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType("Skin");
+		LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName("Skin");
 		if (!pLoadableType) {
 			PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type 'Skin' is unknown!")
 
