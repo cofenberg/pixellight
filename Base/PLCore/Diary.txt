@@ -1,6 +1,7 @@
 >> 26.07.2011
 [CO]
 - "LoadableType::AddLoader()" fixed log messages ("[Info]: Loader 'PLAssimp::SceneLoader3DGameStudio': Format 'mdl' is already used by loader 'PLAssimp::SceneLoader3DGameStudio")
+- "Loadable::Load()"/"Loadable::Save()": Moved the "IsDerivedFrom()" security check into "LoadableManager::RegisterClasses()"
 
 
 
