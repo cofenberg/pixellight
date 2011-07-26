@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/Log/Log.h"
 #include "PLCore/File/Url.h"
+#include "PLCore/File/File.h"
 #include "PLCore/System/System.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Tools/Loader.h"
@@ -140,6 +141,36 @@ Loader *LoadableType::GetLoaderByIndex(uint32 nIndex) const
 Loader *LoadableType::GetLoaderByExtension(const String &sExtension) const
 {
 	return m_mapLoaders.Get(sExtension);
+}
+
+/**
+*  @brief
+*    Returns a loader for loading by using a loadable file
+*/
+Loader *LoadableType::GetLoaderForLoadingByFile(File &cFile) const
+{
+	// Get the file URL
+	const Url &cUrl = cFile.GetUrl();
+
+	// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
+	const String sExtension = cUrl.GetExtension();
+	if (sExtension.GetLength()) {
+		// Get a loader by using the loadable extension
+		Loader *pLoader = m_mapLoaders.Get(sExtension);
+
+		// Is there a loader and is this loader capable of loading?
+		if (pLoader && pLoader->CanLoad()) {
+			// Done
+			return pLoader;
+		} else {
+			// Error: Loading of this file format is not supported!
+		}
+	} else {
+		// Error: No filename extension
+	}
+
+	// Error!
+	return nullptr;
 }
 
 

@@ -73,58 +73,44 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 {
 	// Check the given filename
 	if (sFilename.GetLength()) {
-		// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
-		const String sExtension = Url(sFilename).GetExtension();
-		if (sExtension.GetLength()) {
-			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
-			if (pLoadableType) {
-				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
+		// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+		const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+		if (pLoadableType) {
+			// Open the file
+			File cFile;
+			if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
+				// Get loader, assigned to the current loadable type, capable of processing the file
+				Loader *pLoader = pLoadableType->GetLoaderForLoadingByFile(cFile);
 				if (pLoader) {
-					// Is this loader capable of loading?
-					if (pLoader->CanLoad()) {
-						// Open the file
-						File cFile;
-						if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
-							// Because 'm_sAbsFilename' is reset before loading within the Unload()-function,
-							// and 'sFilename' can be a reference to this string, we need to duplicate the string!
-							const String sFilenameBackup = String(sFilename);
+					// Unload the loadable
+					Unload();
 
-							// Unload the loadable
-							Unload();
+					// Get method name
+					static const String sLoad = "Load";
+					static const String sLoadParams = "LoadParams";
+					String sMethodName = sMethod;
+					if (!sMethodName.GetLength())
+						sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
 
-							// Get method name
-							static const String sLoad = "Load";
-							static const String sLoadParams = "LoadParams";
-							String sMethodName = sMethod;
-							if (!sMethodName.GetLength())
-								sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
-
-							// Load the loadable
-							const bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
-							if (bResult) {
-								// Backup filenames
-								m_sFilename	= sFilenameBackup;
-								m_sUrl		= cFile.GetUrl().GetUrl();
-							}
-
-							// Done
-							return bResult;
-						} else {
-							PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
-						}
-					} else {
-						PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is no valid '" + GetLoadableTypeName() + "' format!")
+					// Load the loadable
+					const bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
+					if (bResult) {
+						// Backup filename
+						const Url &cUrl = cFile.GetUrl();
+						m_sUrl		= cUrl.GetUrl();
+						m_sFilename	= cUrl.GetFilename();
 					}
+
+					// Done
+					return bResult;
 				} else {
 					PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is not supported!")
 				}
 			} else {
-				PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+				PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
 			}
 		} else {
-			PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because there's no filename extension!")
+			PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
 		}
 	} else {
 		PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
@@ -142,51 +128,38 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Check whether file reading is allowed
 	if (cFile.IsReadable()) {
-		// Get the filename of the given file
-		Url	cUrl = cFile.GetUrl();
+		// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+		const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+		if (pLoadableType) {
+			// Get loader, assigned to the current loadable type, capable of processing the file
+			Loader *pLoader = pLoadableType->GetLoaderForLoadingByFile(cFile);
+			if (pLoader) {
+				// Unload the loadable
+				Unload();
 
-		// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
-		String sExtension = cUrl.GetExtension();
-		if (sExtension.GetLength()) {
-			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
-			if (pLoadableType) {
-				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
-				if (pLoader) {
-					// Is this loader capable of loading?
-					if (pLoader->CanLoad()) {
-						// Unload the loadable
-						Unload();
+				// Get method name
+				static const String sLoad = "Load";
+				static const String sLoadParams = "LoadParams";
+				String sMethodName = sMethod;
+				if (!sMethodName.GetLength())
+					sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
 
-						// Get method name
-						static const String sLoad = "Load";
-						static const String sLoadParams = "LoadParams";
-						String sMethodName = sMethod;
-						if (!sMethodName.GetLength())
-							sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
-
-						// Load the loadable
-						bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
-						if (bResult) {
-							// Backup filenames
-							m_sUrl		= cUrl.GetUrl();
-							m_sFilename	= cUrl.GetFilename();
-						}
-
-						// Done
-						return bResult;
-					} else {
-						PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because loading of this file format is not supported!")
-					}
-				} else {
-					PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because the file format is not supported!")
+				// Load the loadable
+				bool bResult = CallLoadable(cFile, *pLoader, sMethodName, sParams);
+				if (bResult) {
+					// Backup filename
+					const Url &cUrl = cFile.GetUrl();
+					m_sUrl		= cUrl.GetUrl();
+					m_sFilename	= cUrl.GetFilename();
 				}
+
+				// Done
+				return bResult;
 			} else {
-				PL_LOG(Error, "Can't load '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+				PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cFile.GetUrl().GetNativePath() + "' because the file format is not supported!")
 			}
 		} else {
-			PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cUrl.GetNativePath() + "' because there's no filename extension!")
+			PL_LOG(Error, "Can't load '" + cFile.GetUrl().GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
 		}
 	} else {
 		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not readable!")

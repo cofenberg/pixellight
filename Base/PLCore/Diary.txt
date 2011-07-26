@@ -8,6 +8,7 @@
 - Renamed "LoadableManager::GetLoader(const String &sExtension)" into "LoadableManager::GetLoaderByExtension(const String &sExtension)"
 - Renamed "LoadableManager::GetType(uint32 nIndex)" into "LoadableManager::GetTypeByIndex(uint32 nIndex)"
 - Renamed "LoadableManager::GetType(const String &sName)" into "LoadableManager::GetTypeByName(const String &sName)"
+- Added "LoadableType::GetLoaderForLoadingByFile()" which currently is using, as before, just the filename extension to find the proper loader
 
 
 
