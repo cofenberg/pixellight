@@ -135,7 +135,7 @@ bool SurfaceWindow::Init()
 																			// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
 											nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
-			PL_LOG(Warning, "Could not create OpenGL ES surface");
+			PL_LOG(Warning, "Could not create OpenGL ES surface")
 
 			// Error!
 			return false;

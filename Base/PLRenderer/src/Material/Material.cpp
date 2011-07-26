@@ -490,7 +490,7 @@ bool Material::Load(const String &sFilename, const String &sParams, const String
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, '\'' + sFilename + "' is no known texture!");
+		PL_LOG(Error, '\'' + sFilename + "' is no known texture!")
 	}
 
 	// Cleanup on error
