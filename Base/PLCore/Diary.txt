@@ -1,3 +1,9 @@
+>> 26.07.2011
+[CO]
+- "LoadableType::AddLoader()" fixed log messages ("[Info]: Loader 'PLAssimp::SceneLoader3DGameStudio': Format 'mdl' is already used by loader 'PLAssimp::SceneLoader3DGameStudio")
+
+
+
 >> 25.07.2011
 [CO]
 - "Url": "GetTitle()" and "GetExtension()": For a filename like "archive.tar.gz" the method "GetTitle()" returns "archive.tar" and "GetExtension()" returns "gz". While this is
