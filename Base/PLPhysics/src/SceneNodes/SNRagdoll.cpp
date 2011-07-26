@@ -1060,7 +1060,7 @@ void SNRagdoll::OnUpdate()
 SNMMeshUpdate *SNRagdoll::GetSNMMeshUpdate()
 {
 	// Is there already an instance of the "PLScene::SNMMeshUpdate" scene node modifier?
-	const static String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
+	static const String sSNMMeshUpdate = "PLScene::SNMMeshUpdate";
 	SNMMeshUpdate *pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(GetModifier(sSNMMeshUpdate));
 	if (!pSNMMeshUpdate)
 		pSNMMeshUpdate = reinterpret_cast<SNMMeshUpdate*>(AddModifier(sSNMMeshUpdate, "Flags=\"Automatic\""));

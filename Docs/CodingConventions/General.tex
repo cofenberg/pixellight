@@ -78,6 +78,12 @@ because the user should be able to see whether or not a function is going to man
 
 
 
+\section{static const Vs. const static}
+Use \emph{static const} instead of \emph{const static}. Have a look at e.g. the GCC option \emph{Wold-style-declaration} resulting in the warning \begin{quote}`static' is not at beginning of declaration\end{quote} or into chapter 6.11 of ISO C99 (\emph{Future Language Directions} -> \emph{Storage-class specifiers}).
+
+
+
+
 \section{Namespaces}
 PixelLight is using multiple namespaces, one for each sub-project. If you want to use for instance the string class which is defined in \emph{PLCore} you need to do this:
 

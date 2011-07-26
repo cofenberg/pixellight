@@ -1,3 +1,10 @@
+>> 26.07.2011
+[CO]
+- Coding convention: Added "static const Vs. const static"-section... just another confusing "freedom of speech" (more or less, according to which C specification version
+  you're using :)
+
+
+
 >> 14.07.2011
 [CO]
 - Renamed the "UML"-directory into the more general "Diagrams"

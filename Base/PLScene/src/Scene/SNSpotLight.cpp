@@ -310,7 +310,7 @@ void SNSpotLight::OnPositionRotation()
 Quaternion SNSpotLight::CalculateViewRotation() const
 {
 	// Static constant 180 degree y view rotation offset quaternion
-	const static Quaternion ViewRotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
+	static const Quaternion ViewRotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
 
 	// Calculate view rotation with a 180 degree y offset (see SNSpotLight class documentation)
 	return GetTransform().GetRotation()*ViewRotationOffset;
