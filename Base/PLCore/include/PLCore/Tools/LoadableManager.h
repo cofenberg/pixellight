@@ -161,7 +161,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(uint32 nIndex);
+		PLCORE_API Loader *GetLoaderByIndex(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(const String &sExtension);
+		PLCORE_API Loader *GetLoaderByExtension(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Formats                                               ]

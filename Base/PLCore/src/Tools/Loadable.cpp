@@ -80,7 +80,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoader(sExtension);
+				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 				if (pLoader) {
 					// Is this loader capable of loading?
 					if (pLoader->CanLoad()) {
@@ -152,7 +152,7 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoader(sExtension);
+				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 				if (pLoader) {
 					// Is this loader capable of loading?
 					if (pLoader->CanLoad()) {
@@ -212,7 +212,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
 			if (pLoadableType) {
 				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoader(sExtension);
+				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 				if (pLoader) {
 					// Is this loader capable of saving?
 					if (pLoader->CanSave()) {
@@ -271,7 +271,7 @@ bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
 				const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType(GetLoadableTypeName());
 				if (pLoadableType) {
 					// Get loader, assigned to the current loadable type, capable of processing the file extension
-					Loader *pLoader = pLoadableType->GetLoader(sExtension);
+					Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 					if (pLoader) {
 						// Is this loader capable of saving?
 						if (pLoader->CanSave()) {

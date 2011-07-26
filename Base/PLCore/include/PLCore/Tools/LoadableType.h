@@ -147,7 +147,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(uint32 nIndex) const;
+		PLCORE_API Loader *GetLoaderByIndex(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader, a null pointer on error (format is not supported)
 		*/
-		PLCORE_API Loader *GetLoader(const String &sExtension) const;
+		PLCORE_API Loader *GetLoaderByExtension(const String &sExtension) const;
 
 
 	//[-------------------------------------------------------]

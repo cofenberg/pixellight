@@ -128,7 +128,7 @@ uint32 LoadableType::GetNumOfLoaders() const
 *  @brief
 *    Returns a loader by using an index
 */
-Loader *LoadableType::GetLoader(uint32 nIndex) const
+Loader *LoadableType::GetLoaderByIndex(uint32 nIndex) const
 {
 	return m_lstLoaders.Get(nIndex);
 }
@@ -137,7 +137,7 @@ Loader *LoadableType::GetLoader(uint32 nIndex) const
 *  @brief
 *    Returns a loader by using a loadable extension
 */
-Loader *LoadableType::GetLoader(const String &sExtension) const
+Loader *LoadableType::GetLoaderByExtension(const String &sExtension) const
 {
 	return m_mapLoaders.Get(sExtension);
 }

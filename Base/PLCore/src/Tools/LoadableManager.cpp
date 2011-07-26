@@ -98,7 +98,7 @@ uint32 LoadableManager::GetNumOfLoaders()
 *  @brief
 *    Returns a loader by using an index
 */
-Loader *LoadableManager::GetLoader(uint32 nIndex)
+Loader *LoadableManager::GetLoaderByIndex(uint32 nIndex)
 {
 	RegisterClasses();
 	return m_lstLoaders.Get(nIndex);
@@ -108,7 +108,7 @@ Loader *LoadableManager::GetLoader(uint32 nIndex)
 *  @brief
 *    Returns a loader by using a extension
 */
-Loader *LoadableManager::GetLoader(const String &sExtension)
+Loader *LoadableManager::GetLoaderByExtension(const String &sExtension)
 {
 	RegisterClasses();
 	return m_mapLoaders.Get(sExtension);
@@ -144,12 +144,12 @@ bool LoadableManager::IsFormatLoadSupported(const String &sExtension, const Stri
 	if (sType.GetLength()) {
 		const LoadableType *pLoadableType = GetType(sType);
 		if (pLoadableType) {
-			const Loader *pLoader = pLoadableType->GetLoader(sExtension);
+			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)
 				return pLoader->CanLoad();
 		}
 	} else {
-		const Loader *pLoader = GetLoader(sExtension);
+		const Loader *pLoader = GetLoaderByExtension(sExtension);
 		if (pLoader)
 			return pLoader->CanLoad();
 	}
@@ -168,12 +168,12 @@ bool LoadableManager::IsFormatSaveSupported(const String &sExtension, const Stri
 	if (sType.GetLength()) {
 		const LoadableType *pLoadableType = GetType(sType);
 		if (pLoadableType) {
-			const Loader *pLoader = pLoadableType->GetLoader(sExtension);
+			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)
 				return pLoader->CanSave();
 		}
 	} else {
-		const Loader *pLoader = GetLoader(sExtension);
+		const Loader *pLoader = GetLoaderByExtension(sExtension);
 		if (pLoader)
 			return pLoader->CanSave();
 	}

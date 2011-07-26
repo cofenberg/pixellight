@@ -2,6 +2,10 @@
 [CO]
 - "LoadableType::AddLoader()" fixed log messages ("[Info]: Loader 'PLAssimp::SceneLoader3DGameStudio': Format 'mdl' is already used by loader 'PLAssimp::SceneLoader3DGameStudio")
 - "Loadable::Load()"/"Loadable::Save()": Moved the "IsDerivedFrom()" security check into "LoadableManager::RegisterClasses()"
+- Renamed "LoadableType::GetLoader(uint32 nIndex)" into "LoadableType::GetLoaderByIndex(uint32 nIndex)"
+- Renamed "LoadableType::GetLoader(const String &sExtension)" into "LoadableType::GetLoaderByExtension(const String &sExtension)"
+- Renamed "LoadableManager::GetLoader(uint32 nIndex)" into "LoadableManager::GetLoaderByIndex(uint32 nIndex)"
+- Renamed "LoadableManager::GetLoader(const String &sExtension)" into "LoadableManager::GetLoaderByExtension(const String &sExtension)"
 
 
 
