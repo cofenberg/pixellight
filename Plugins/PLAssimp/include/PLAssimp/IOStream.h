@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AssimpSceneLoader.h                            *
+ *  File: IOStream.h                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,26 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLASSIMP_ASSIMPSCENELOADER_H__
-#define __PLASSIMP_ASSIMPSCENELOADER_H__
+#ifndef __PLASSIMP_IOSTREAM_H__
+#define __PLASSIMP_IOSTREAM_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneLoader/SceneLoader.h>
+#include <Assimp/IOStream.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-struct aiScene;
 namespace PLCore {
 	class File;
-}
-namespace PLScene {
-	class SceneContainer;
 }
 
 
@@ -54,9 +50,15 @@ namespace PLAssimp {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene loader using Assimp
+*    Assimp IO stream implementation
 */
-class AssimpSceneLoader {
+class IOStream : public Assimp::IOStream {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class IOSystem;
 
 
 	//[-------------------------------------------------------]
@@ -65,40 +67,77 @@ class AssimpSceneLoader {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
-		*/
-		AssimpSceneLoader();
-
-		/**
-		*  @brief
 		*    Destructor
 		*/
-		~AssimpSceneLoader();
+		virtual ~IOStream();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cFile
+		*    File to load from, must be opened and readable
+		*  @param[in] bTakeOver
+		*    Take over the control of the file object?
+		*/
+		IOStream(PLCore::File &cFile, bool bTakeOver);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Assimp::IOStream functions             ]
+	//[-------------------------------------------------------]
+	public:
+		virtual size_t Read(void *pvBuffer, size_t pSize, size_t pCount);
+		virtual size_t Write(const void *pvBuffer, size_t pSize, size_t pCount);
+		virtual aiReturn Seek(size_t pOffset, aiOrigin pOrigin);
+		virtual size_t Tell() const;
+		virtual size_t FileSize() const;
+		virtual void Flush();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		IOStream();
 
 		/**
 		*  @brief
-		*    Loads the scene
+		*    Copy constructor
 		*
-		*  @param[in,out] cContainer
-		*    Scene container to fill
-		*  @param[in]     cFile
-		*    File to load from, must be opened and readable
-		*  @param[in]     sHint
-		*    Filename extension hint for Assimp, if empty string (e.g. load from memory), the filename
-		*    extension (if there's one) of the used file will be given to Assimp
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		IOStream(const IOStream &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
 		*
 		*  @return
-		*    'true' if all went fine, else 'false'
+		*    Reference to this instance
 		*/
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile, const PLCore::String &sHint = "");
+		IOStream &operator =(const IOStream &cSource);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene::SceneContainer *m_pContainer;		/**< Scene container to fill, can be a null pointer */
-		const aiScene			*m_pAssimpScene;	/**< Used Assimp scene, can be a null pointer */
+		PLCore::File *m_pFile;		/**< File to load from, must be always valid, opened and readable */
+		bool		  m_bTakeOver;	/**< Take over the control of the file object? */
 
 
 };
@@ -110,4 +149,4 @@ class AssimpSceneLoader {
 } // PLAssimp
 
 
-#endif // __PLASSIMP_ASSIMPSCENELOADER_H__
+#endif // __PLASSIMP_IOSTREAM_H__

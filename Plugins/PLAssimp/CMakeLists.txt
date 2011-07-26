@@ -8,6 +8,8 @@ define_project(PLAssimp)
 ##################################################
 add_sources(
 	src/PLAssimp.cpp
+	src/IOSystem.cpp
+	src/IOStream.cpp
 	src/AssimpMeshLoader.cpp
 	src/AssimpSceneLoader.cpp
 # Mesh loaders

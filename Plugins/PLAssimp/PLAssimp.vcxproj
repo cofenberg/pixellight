@@ -257,6 +257,8 @@
   <ItemGroup>
     <ClCompile Include="src\AssimpMeshLoader.cpp" />
     <ClCompile Include="src\AssimpSceneLoader.cpp" />
+    <ClCompile Include="src\IOStream.cpp" />
+    <ClCompile Include="src\IOSystem.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudio.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudioTerrain.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3dsMax3DS.cpp" />
@@ -340,6 +342,8 @@
   <ItemGroup>
     <ClInclude Include="include\PLAssimp\AssimpMeshLoader.h" />
     <ClInclude Include="include\PLAssimp\AssimpSceneLoader.h" />
+    <ClInclude Include="include\PLAssimp\IOStream.h" />
+    <ClInclude Include="include\PLAssimp\IOSystem.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudio.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudioTerrain.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMax3DS.h" />

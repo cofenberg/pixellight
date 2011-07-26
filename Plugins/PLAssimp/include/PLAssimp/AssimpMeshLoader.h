@@ -88,7 +88,7 @@ class AssimpMeshLoader {
 		*  @param[in,out] cMesh
 		*    Mesh to fill
 		*  @param[in]     cFile
-		*    File to read from
+		*    File to load from, must be opened and readable
 		*  @param[in]     bStatic
 		*    'true' if the mesh is static, else 'false'
 		*  @param[in]     sHint

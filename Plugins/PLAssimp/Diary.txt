@@ -1,4 +1,10 @@
-﻿>> 25.07.2011
+﻿>> 26.07.2011
+[CO]
+- Added custom "IOSystem" and "IOStream"
+
+
+
+>> 25.07.2011
 [CO]
 - Added scene loader counterparts for all mesh loaders... even if there are some "not really a scene"-formats
 
