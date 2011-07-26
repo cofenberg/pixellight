@@ -99,53 +99,11 @@ Assimp::IOStream *IOSystem::Open(const char *pFile, const char *pMode)
 		// Wrap the file into an Assimp IO stream and return the IO stream
 		return new IOStream(*m_pFile, false);
 	} else {
-		// Get access flags
-		uint32 nAccess = 0;
-		{
-			const String sMode = pMode;
-
-			// Read, write and file must exist
-			if (sMode.IsSubstring("r+")) {
-				nAccess |= File::FileRead;		// File can be read
-				nAccess |= File::FileWrite;		// File can be written
-
-			// Read, write and create new empty file (content of previous file is destroyed)
-			} else if (sMode.IsSubstring("w+")) {
-				nAccess |= File::FileRead;		// File can be read
-				nAccess |= File::FileWrite;		// File can be written
-				nAccess |= File::FileCreate;	// File will be created
-
-			// Read and append
-			} else if (sMode.IsSubstring("a+")) {
-				nAccess |= File::FileRead;		// File can be read
-				nAccess |= File::FileAppend;	// File will be appended
-
-			// Read and file must exist
-			} else if (sMode.IsSubstring("r")) {
-				nAccess |= File::FileRead;		// File can be read
-
-			// Write and create new empty file (content of previous file is destroyed)
-			} else if (sMode.IsSubstring("w")) {
-				nAccess |= File::FileWrite;		// File can be written
-				nAccess |= File::FileCreate;	// File will be created
-
-			// Append
-			} else if (sMode.IsSubstring("a")) {
-				nAccess |= File::FileAppend;	// File will be appended
-			}
-
-			// Text mode
-			if (sMode.IsSubstring("t"))
-				nAccess |= File::FileText;		// File will be opened in text mode
-
-			// Check for "b" not required, this is default if text mode is not set
-		}
-
 		// Create the file object
 		File *pFileObject = new File(GetRealFilename(pFile));
 
 		// Open the file, or at least try it
-		if (pFileObject->Open(nAccess)) {
+		if (pFileObject->Open(File::CFileModeToAccessFlags(pMode))) {
 			// Wrap the file into an Assimp IO stream and return the IO stream
 			return new IOStream(*pFileObject, true);
 		}

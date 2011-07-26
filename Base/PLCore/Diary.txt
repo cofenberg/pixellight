@@ -13,6 +13,7 @@
   "mesh.xml" can now be used as well)
 - Added "System::GetSeparator()" returning the directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)... interesting that such a method was still
   missing...
+- Added "File::CFileModeToAccessFlags" translating a given C file mode ("r", "r+", "w", "w+", "a", "a+", "t", "r+t" etc. used for e.g. "fopen") into access flags
 
 
 

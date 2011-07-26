@@ -85,6 +85,23 @@ class File : public FileObject {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Translates a given C file mode into access flags
+		*
+		*  @param[in] sMode
+		*    C file mode ("r", "r+", "w", "w+", "a", "a+", "t", "r+t" etc. used for e.g. "fopen") to translate
+		*
+		*  @return
+		*    The access flags (see EAccess)
+		*/
+		PLCORE_API static uint32 CFileModeToAccessFlags(const String &sMode);
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

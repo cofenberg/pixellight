@@ -44,6 +44,58 @@ File File::StandardError (stderr, File::FileWrite);
 
 
 //[-------------------------------------------------------]
+//[ Public static functions                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Translates a given C file mode into access flags
+*/
+uint32 File::CFileModeToAccessFlags(const String &sMode)
+{
+	uint32 nAccess = 0;
+
+	// Read, write and file must exist
+	if (sMode.IsSubstring("r+")) {
+		nAccess |= File::FileRead;		// File can be read
+		nAccess |= File::FileWrite;		// File can be written
+
+	// Read, write and create new empty file (content of previous file is destroyed)
+	} else if (sMode.IsSubstring("w+")) {
+		nAccess |= File::FileRead;		// File can be read
+		nAccess |= File::FileWrite;		// File can be written
+		nAccess |= File::FileCreate;	// File will be created
+
+	// Read and append
+	} else if (sMode.IsSubstring("a+")) {
+		nAccess |= File::FileRead;		// File can be read
+		nAccess |= File::FileAppend;	// File will be appended
+
+	// Read and file must exist
+	} else if (sMode.IsSubstring("r")) {
+		nAccess |= File::FileRead;		// File can be read
+
+	// Write and create new empty file (content of previous file is destroyed)
+	} else if (sMode.IsSubstring("w")) {
+		nAccess |= File::FileWrite;		// File can be written
+		nAccess |= File::FileCreate;	// File will be created
+
+	// Append
+	} else if (sMode.IsSubstring("a")) {
+		nAccess |= File::FileAppend;	// File will be appended
+	}
+
+	// Text mode
+	if (sMode.IsSubstring("t"))
+		nAccess |= File::FileText;		// File will be opened in text mode
+
+	// Check for "b" not required, this is default if text mode is not set
+
+	// Done, return the result
+	return nAccess;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
