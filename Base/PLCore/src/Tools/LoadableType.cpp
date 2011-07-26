@@ -152,21 +152,42 @@ Loader *LoadableType::GetLoaderForLoadingByFile(File &cFile) const
 	// Get the file URL
 	const Url &cUrl = cFile.GetUrl();
 
-	// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
-	const String sExtension = cUrl.GetExtension();
-	if (sExtension.GetLength()) {
-		// Get a loader by using the loadable extension
-		Loader *pLoader = m_mapLoaders.Get(sExtension);
+	{ // Use file extension
+		// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
+		const String sExtension = cUrl.GetExtension();
+		if (sExtension.GetLength()) {
+			// Get a loader by using the loadable extension
+			Loader *pLoader = m_mapLoaders.Get(sExtension);
 
-		// Is there a loader and is this loader capable of loading?
-		if (pLoader && pLoader->CanLoad()) {
-			// Done
-			return pLoader;
+			// Is there a loader and is this loader capable of loading?
+			if (pLoader && pLoader->CanLoad()) {
+				// Done
+				return pLoader;
+			} else {
+				// Error: Loading of this file format is not supported!
+			}
 		} else {
-			// Error: Loading of this file format is not supported!
+			// Error: No filename extension
 		}
-	} else {
-		// Error: No filename extension
+	}
+
+	{ // Still here? Let's try the complete file extension
+		// Get complete file extension (e.g. "txt" if the filename was "readme.txt", "tar.gz" if the filename was "archive.tar.gz")
+		const String sCompleteExtension = cUrl.GetCompleteExtension();
+		if (sCompleteExtension.GetLength()) {
+			// Get a loader by using the complete loadable extension
+			Loader *pLoader = m_mapLoaders.Get(sCompleteExtension);
+
+			// Is there a loader and is this loader capable of loading?
+			if (pLoader && pLoader->CanLoad()) {
+				// Done
+				return pLoader;
+			} else {
+				// Error: Loading of this file format is not supported!
+			}
+		} else {
+			// Error: No filename extension at all
+		}
 	}
 
 	// Error!

@@ -9,6 +9,8 @@
 - Renamed "LoadableManager::GetType(uint32 nIndex)" into "LoadableManager::GetTypeByIndex(uint32 nIndex)"
 - Renamed "LoadableManager::GetType(const String &sName)" into "LoadableManager::GetTypeByName(const String &sName)"
 - Added "LoadableType::GetLoaderForLoadingByFile()" which currently is using, as before, just the filename extension to find the proper loader
+- "LoadableType::GetLoaderForLoadingByFile()": If there's no loader for the given file extension, the complete file extension is checked as well (file format extensions like
+  "mesh.xml" can now be used as well)
 
 
 
