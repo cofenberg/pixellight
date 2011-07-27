@@ -82,6 +82,7 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		*/
 		Attribute(_Type DefaultValue, Object *pObject) : Var<T, ACCESS, STORAGE>(DefaultValue, pObject)
 		{
+			// Ensure that the compiler will actually create static instances
 			Desc.Dummy();
 		}
 

@@ -60,6 +60,7 @@ FuncDesc::~FuncDesc()
 */
 void FuncDesc::Dummy()
 {
+	// This method is just here to ensure, that the compiler will actually create static instances
 }
 
 /**

@@ -70,6 +70,7 @@ class Constructor : public DESC::ConstType {
 		*/
 		Constructor() : DESC::ConstType()
 		{
+			// Ensure that the compiler will actually create static instances
 			Desc.Dummy();
 		}
 
@@ -79,24 +80,6 @@ class Constructor : public DESC::ConstType {
 		*/
 		virtual ~Constructor()
 		{
-		}
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual DynFunc functions                      ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Get construction descriptor
-		*
-		*  @return
-		*    Construction descriptor
-		*/
-		virtual const ConstructorDesc *GetDesc()
-		{
-			// Return descriptor
-			return &Desc;
 		}
 
 

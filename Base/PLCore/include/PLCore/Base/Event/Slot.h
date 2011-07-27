@@ -78,6 +78,7 @@ class Slot : public DESC::EventHandlerType {
 		Slot(const typename DESC::MethType::MemFuncType &pMemFunc, typename DESC::ClassType *pObject) :
 			DESC::EventHandlerType(pMemFunc, pObject)
 		{
+			// Ensure that the compiler will actually create static instances
 			Desc.Dummy();
 		}
 
@@ -85,7 +86,7 @@ class Slot : public DESC::EventHandlerType {
 		*  @brief
 		*    Destructor
 		*/
-		~Slot()
+		virtual ~Slot()
 		{
 		}
 

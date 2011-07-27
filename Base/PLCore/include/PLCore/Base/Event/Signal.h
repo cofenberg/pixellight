@@ -73,6 +73,7 @@ class Signal : public DESC::EventType {
 		Signal() :
 			DESC::EventType()
 		{
+			// Ensure that the compiler will actually create static instances
 			Desc.Dummy();
 		}
 
@@ -80,7 +81,7 @@ class Signal : public DESC::EventType {
 		*  @brief
 		*    Destructor
 		*/
-		~Signal()
+		virtual ~Signal()
 		{
 		}
 

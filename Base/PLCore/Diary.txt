@@ -1,6 +1,14 @@
 >> 27.07.2011
 [CO]
 - Using PLCore to check whether or not "override" from C++0x (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override) will cause any problems
+  -> By using "override", the compiler found the following: "Constructor" implemented the virtual method "GetDesc()" and a comment stated that it's a
+     "DynFunc"-method. Ok, the name is a "DynFunc"-method, but the signature is "const FuncDesc *DynFunc::GetDesc() const" while the other signature is
+     "const ConstructorDesc *Constructor::GetDesc()". "ConstructorDesc" is not derived from "DynFunc". To be fair, to the compiler would also have found it without "override"
+     if "Constructor::GetDesc()" would have been declared as constant as well, but it wasn't. So, "override" really did the trick and exactly such errors are the reason
+     why I'am so interested in this language feature in the first place. I'am sure that there are some more of such errors in the hundred thousends lines of code... :D
+     If I'am not totally wrong and missed something, "Constructor::GetDesc()" is a dead method. Removed it.
+  -> In the dungeon demo, I found at once an error using this new language feature: The "Application::LoadScene" signature had changed, but the dungeon demo wasn't updated...
+     I'am starting to really like "override" :D
 - PixelLight was already using "extern templates" which are part of C++0x (http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)... added comments to avoid confusion...
 
 

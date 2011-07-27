@@ -75,6 +75,7 @@ class Method : public DESC::FuncType {
 		Method(const typename DESC::MethType::MemFuncType &pMemFunc, typename DESC::ClassType *pObject) :
 			DESC::FuncType(pMemFunc, pObject)
 		{
+			// Ensure that the compiler will actually create static instances
 			Desc.Dummy();
 		}
 
@@ -82,7 +83,7 @@ class Method : public DESC::FuncType {
 		*  @brief
 		*    Destructor
 		*/
-		~Method()
+		virtual ~Method()
 		{
 		}
 
