@@ -47,7 +47,7 @@
 	// To import classes, methods and variables
 	#define PLINPUT_API
 
-	// To import explicit template instanciations
+	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLINPUT_TEMPLATE extern
 #endif
 

@@ -144,7 +144,7 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 	// To import classes, methods and variables
 	#define PLCORE_API __declspec(dllimport)
 
-	// To import explicit template instanciations
+	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLCORE_TEMPLATE extern
 
 	// To import RTTI elements

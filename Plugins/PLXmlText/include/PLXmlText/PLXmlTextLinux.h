@@ -55,7 +55,7 @@
 	// To import RTTI elements
 	#define PLXMLTEXT_RTTI_EXPORT 0
 
-	// To import explicit template instanciations
+	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLXMLTEXT_TEMPLATE extern
 #endif
 
