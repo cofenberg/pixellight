@@ -166,7 +166,7 @@ copy build\release\PLXmlText.lib ..\..\Bin\Lib\
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\Base\PLGui.vcxproj">
+    <ProjectReference Include="..\..\Base\PLGui\PLGui.vcxproj">
       <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
