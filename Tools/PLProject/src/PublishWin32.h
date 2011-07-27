@@ -29,7 +29,7 @@
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-const static PLCore::String sRuntimeSharedLibraries[] =
+static const PLCore::String sRuntimeSharedLibraries[] =
 {
 	"PLCore.dll",
 	"PLMath.dll",
@@ -44,7 +44,7 @@ const static PLCore::String sRuntimeSharedLibraries[] =
 	"PLSound.dll",
 	""
 };
-const static PLCore::String sRuntimeDataFiles[] =
+static const PLCore::String sRuntimeDataFiles[] =
 {
 	"Standard.zip",
 	""

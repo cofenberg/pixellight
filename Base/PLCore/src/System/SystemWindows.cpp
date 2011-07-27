@@ -341,6 +341,11 @@ String SystemWindows::GetOS() const
 	return sVersion;
 }
 
+char SystemWindows::GetSeparator() const
+{
+	return '\\';
+}
+
 uint32 SystemWindows::GetCPUMhz() const
 {
 #if !defined(WIN64) && !defined(NO_INLINE_ASM)

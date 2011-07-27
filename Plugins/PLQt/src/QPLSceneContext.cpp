@@ -117,7 +117,7 @@ void QPLSceneContext::InitScene()
 		m_pSceneContext = new SceneContext(*pContext);
 		CreateRootScene();
 	} else {
-		PL_LOG(Error, "RenderContext not created");
+		PL_LOG(Error, "RenderContext not created")
 	}
 }
 

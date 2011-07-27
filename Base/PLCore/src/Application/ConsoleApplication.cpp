@@ -514,24 +514,24 @@ void ConsoleApplication::OnInitLog()
 
 		{ // Print out directory information:
 			// System directories
-			PL_LOG(Info, "System directories:");
-			PL_LOG(Info, "- Executable: " + System::GetInstance()->GetExecutableFilename());
-			PL_LOG(Info, "- Home:       " + System::GetInstance()->GetUserHomeDir());
-			PL_LOG(Info, "- Data:       " + System::GetInstance()->GetUserDataDir());
-			PL_LOG(Info, "- Current:    " + System::GetInstance()->GetCurrentDir());
-			PL_LOG(Quiet, '\n');
+			PL_LOG(Info, "System directories:")
+			PL_LOG(Info, "- Executable: " + System::GetInstance()->GetExecutableFilename())
+			PL_LOG(Info, "- Home:       " + System::GetInstance()->GetUserHomeDir())
+			PL_LOG(Info, "- Data:       " + System::GetInstance()->GetUserDataDir())
+			PL_LOG(Info, "- Current:    " + System::GetInstance()->GetCurrentDir())
+			PL_LOG(Quiet, '\n')
 
 			// PixelLight directories
-			PL_LOG(Info, "PixelLight directories:");
-			PL_LOG(Info, "- Runtime:    " + PLCore::Core::GetRuntimeDirectory());
-			PL_LOG(Quiet, '\n');
+			PL_LOG(Info, "PixelLight directories:")
+			PL_LOG(Info, "- Runtime:    " + PLCore::Core::GetRuntimeDirectory())
+			PL_LOG(Quiet, '\n')
 
 			// Application context
-			PL_LOG(Info, "Application context:");
-			PL_LOG(Info, "- Executable: " + GetApplicationContext().GetExecutableFilename());
-			PL_LOG(Info, "- Startup:    " + GetApplicationContext().GetStartupDirectory());
-			PL_LOG(Info, "- AppDir:     " + GetApplicationContext().GetAppDirectory());
-			PL_LOG(Quiet, '\n');
+			PL_LOG(Info, "Application context:")
+			PL_LOG(Info, "- Executable: " + GetApplicationContext().GetExecutableFilename())
+			PL_LOG(Info, "- Startup:    " + GetApplicationContext().GetStartupDirectory())
+			PL_LOG(Info, "- AppDir:     " + GetApplicationContext().GetAppDirectory())
+			PL_LOG(Quiet, '\n')
 		}
 
 		// Print out the general system info:

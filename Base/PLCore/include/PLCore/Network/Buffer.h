@@ -183,7 +183,7 @@ class Buffer {
 		char	*m_pBuffer;				/**< Data buffer, can be a null pointer */
 		uint32   m_nSize;				/**< Size of buffer */
 		uint32   m_nUsed;				/**< Currenty used size */
-		bool	m_bRemoveDelimiters;	/**< Remove line delimiters (CR/LF)? */
+		bool	 m_bRemoveDelimiters;	/**< Remove line delimiters (CR/LF)? */
 
 
 };

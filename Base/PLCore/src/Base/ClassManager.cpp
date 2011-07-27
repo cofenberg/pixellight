@@ -418,7 +418,7 @@ ClassManager::~ClassManager()
 				// Is it a real class implementation?
 				if (!pClassImpl->IsDummy()) {
 					// Write an error into the log (if it still exists...) because there shouldn't be any classes left in here
-					PL_LOG(Error, "Class '" + pClassImpl->GetName() + "' [module '" + pModule->GetName() + "']: Failed to unregister the class automatically, maybe there's no \"pl_implement_class\" within the class implementation?");
+					PL_LOG(Error, "Class '" + pClassImpl->GetName() + "' [module '" + pModule->GetName() + "']: Failed to unregister the class automatically, maybe there's no \"pl_implement_class\" within the class implementation?")
 				}
 
 				// Unregister the class
@@ -666,7 +666,7 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 				const String sOldModule	= pOldClass->GetModule()->GetName();
 
 				// Add warning to log that the class will not be available through e.g. GetClass()
-				PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']");
+				PL_LOG(Warning, "Class '" + sClass + "' [module '" + sModule + "']: Name conflict with already registered class '" + sClass + "' [module '" + sOldModule + "']")
 			}
 		}
 	} else {

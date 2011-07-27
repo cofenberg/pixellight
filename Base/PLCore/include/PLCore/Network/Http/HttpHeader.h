@@ -443,30 +443,30 @@ class HttpHeader {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:	
-		Array<String>			m_lstEntries;			/**< Header entries */
-		EHttpProtocol			m_nProtocol;			/**< HTTP protocol version */
-		EHttpMessageType		m_nMessageType;			/**< Message type (request or response) */
-		EHttpRequest			m_nRequest;				/**< Request type */
-		String					m_sRequestUrl;			/**< Request URL */
-		EHttpConnection			m_nConnection;			/**< Connection type (Close or KeepAlive) */
-		EHttpStatus				m_nStatusCode;			/**< Status code */
-		String					m_sStatusString;		/**< Status string */
-		String					m_sLocation;			/**< Location */
-		String					m_sDate;				/**< Date */
-		String					m_sServer;				/**< Server signature */
-		String					m_sUserAgent;			/**< Client signature */
-		EHttpAuth				m_nAuthType;			/**< Authentication type */
-		String					m_sAuthRealm;			/**< Authentication realm */
-		String					m_sAuthorization;		/**< Authorization string */
-		String					m_sTransferEncoding;	/**< Transfer encoding */
-		uint32					m_nContentLength;		/**< Content size */
-		String					m_sContentLanguage;		/**< Content language */
-		String					m_sContentType;			/**< Content type (MIME type) */
-		String					m_sETag;				/**< ETag (identifier for content) */
-		bool					m_bPartial;				/**< Partial download? */
-		uint32					m_nRangeMin;			/**< Start of range (for partical content) */
-		uint32					m_nRangeMax;			/**< End of range   (for partical content) */
-		uint32					m_nRangeTotal;			/**< Total size     (for partical content) */
+		Array<String>		m_lstEntries;			/**< Header entries */
+		EHttpProtocol		m_nProtocol;			/**< HTTP protocol version */
+		EHttpMessageType	m_nMessageType;			/**< Message type (request or response) */
+		EHttpRequest		m_nRequest;				/**< Request type */
+		String				m_sRequestUrl;			/**< Request URL */
+		EHttpConnection		m_nConnection;			/**< Connection type (Close or KeepAlive) */
+		EHttpStatus			m_nStatusCode;			/**< Status code */
+		String				m_sStatusString;		/**< Status string */
+		String				m_sLocation;			/**< Location */
+		String				m_sDate;				/**< Date */
+		String				m_sServer;				/**< Server signature */
+		String				m_sUserAgent;			/**< Client signature */
+		EHttpAuth			m_nAuthType;			/**< Authentication type */
+		String				m_sAuthRealm;			/**< Authentication realm */
+		String				m_sAuthorization;		/**< Authorization string */
+		String				m_sTransferEncoding;	/**< Transfer encoding */
+		uint32				m_nContentLength;		/**< Content size */
+		String				m_sContentLanguage;		/**< Content language */
+		String				m_sContentType;			/**< Content type (MIME type) */
+		String				m_sETag;				/**< ETag (identifier for content) */
+		bool				m_bPartial;				/**< Partial download? */
+		uint32				m_nRangeMin;			/**< Start of range (for partical content) */
+		uint32				m_nRangeMax;			/**< End of range   (for partical content) */
+		uint32				m_nRangeTotal;			/**< Total size     (for partical content) */
 	
 
 };

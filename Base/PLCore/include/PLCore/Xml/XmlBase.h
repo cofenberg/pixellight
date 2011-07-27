@@ -312,9 +312,9 @@ class XmlBase {
 		//				ef bb bf (Microsoft "lead bytes")
 		//				ef bf be
 		//				ef bf bf 
-		const static unsigned char UTF_LEAD_0 = 0xefU;
-		const static unsigned char UTF_LEAD_1 = 0xbbU;
-		const static unsigned char UTF_LEAD_2 = 0xbfU;
+		static const unsigned char UTF_LEAD_0 = 0xefU;
+		static const unsigned char UTF_LEAD_1 = 0xbbU;
+		static const unsigned char UTF_LEAD_2 = 0xbfU;
 
 
 	//[-------------------------------------------------------]

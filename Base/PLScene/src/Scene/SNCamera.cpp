@@ -511,7 +511,7 @@ void SNCamera::OnPositionRotation()
 Quaternion SNCamera::CalculateViewRotation() const
 {
 	// Static constant 180 degree y view rotation offset quaternion
-	const static Quaternion ViewRotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
+	static const Quaternion ViewRotationOffset(-4.3711388e-008f, 0.0f, 1.0f, 0.0f);
 
 	// Calculate view rotation with a 180 degree y offset (see SNCamera class documentation) and an user controlled view rotation offset
 	return GetTransform().GetRotation()*ViewRotationOffset*m_qViewRotationOffset;

@@ -23,16 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <Assimp/aiScene.h>
 #include <Assimp/assimp.hpp>
 #include <Assimp/aiPostProcess.h>
-#include <Assimp/aiScene.h>
-#include <Assimp/DefaultLogger.h>
-#include <Assimp/LogStream.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
 #include <PLCore/File/Url.h>
-#include <PLCore/Container/Bitset.h>
-#include <PLCore/Tools/Wrapper.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
@@ -42,6 +38,7 @@
 #include <PLMesh/Geometry.h>
 #include <PLMesh/MeshLODLevel.h>
 #include <PLMesh/MeshMorphTarget.h>
+#include "PLAssimp/IOSystem.h"
 #include "PLAssimp/AssimpMeshLoader.h"
 
 
@@ -96,20 +93,18 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 	for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++)
 		m_mNumUVComponents[nChannel] = 0;
 
-	// Load in the whole file
-	const uint32 nFileSize = cFile.GetSize();
-	uint8 *pnFileData = new uint8[nFileSize];
-	cFile.Read(pnFileData, nFileSize, 1);
-
 	// Create an instance of the Assimp importer class
 	Assimp::Importer cAssimpImporter;
 
-	// Let Assimp load in the scene (scene remains in possession of the importer instance)
-	m_pAssimpScene = cAssimpImporter.ReadFileFromMemory(pnFileData, nFileSize, aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords, sHint.GetLength() ? sHint : cFile.GetUrl().GetExtension());
-	if (m_pAssimpScene) {
-		// Cleanup
-		delete [] pnFileData;
+	// Get the magic filename (concept based on "Assimp::MemoryIOSystem")
+	const String sMagicFilename = (IOSystem::MagicDefaultFilename + String('.') + (sHint.GetLength() ? sHint : cFile.GetUrl().GetExtension()));
 
+	// Set IO handler (the importer takes ownership of the object and will destroy it afterwards)
+	cAssimpImporter.SetIOHandler(new IOSystem(cFile, sMagicFilename.GetASCII(), sMagicFilename.GetLength()));
+
+	// Let Assimp load in the scene (scene remains in possession of the importer instance)
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords);
+	if (m_pAssimpScene) {
 		// Get the total number of vertices and indices required for everything as one PixelLight mesh recursively
 		uint32 nNumOfVertices = 0;
 		uint32 nNumOfIndices  = 0;
@@ -189,18 +184,12 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 		// Error!
 		return false;
 	} else {
-		// Cleanup
-		delete [] pnFileData;
-
 		// Write an error message into the log
 		PL_LOG(Error, cAssimpImporter.GetErrorString())
 
 		// Error!
 		return false;
 	}
-
-	// Done
-	return true;
 }
 
 
@@ -235,9 +224,7 @@ void AssimpMeshLoader::AddMaterials()
 		}
 
 		// Add the PixelLight material
-		Material *pMaterial = cMaterialManager.LoadResource(sMaterialName);
-		if (!pMaterial)
-			pMaterial = cMaterialManager.Create(sMaterialName);
+		Material *pMaterial = cMaterialManager.Create(sMaterialName);
 		m_pMesh->AddMaterial(pMaterial);
 
 		// Fill the material
@@ -502,7 +489,9 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 							pfVertex[0] = cAssimpVertexTexCoord.x;
 							if (m_mNumUVComponents[nChannel] > 1) {
 								if (cAssimpMesh.mNumUVComponents[nChannel] > 1) {
-									pfVertex[1] = 1.0f - cAssimpVertexTexCoord.y;
+									// [TODO] When do I need to flip and when not? ("Koerper.mesh.xml" no flip, "duck.dae" flip... ?!)
+									pfVertex[1] = cAssimpVertexTexCoord.y;
+//									pfVertex[1] = 1.0f - cAssimpVertexTexCoord.y;
 									if (m_mNumUVComponents[nChannel] > 2) {
 										if (cAssimpMesh.mNumUVComponents[nChannel] > 2)
 											pfVertex[2] = cAssimpVertexTexCoord.z;

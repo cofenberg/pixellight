@@ -328,26 +328,6 @@ String Url::GetFilename() const
 
 /**
 *  @brief
-*    Returns the filename without it's extension
-*/
-String Url::GetTitle() const
-{
-	const int nColon = m_sFilename.LastIndexOf(".");
-	return (nColon >= 0) ? m_sFilename.GetSubstring(0, nColon) : m_sFilename;
-}
-
-/**
-*  @brief
-*    Returns the file extension
-*/
-String Url::GetExtension() const
-{
-	const int nColon = m_sFilename.LastIndexOf(".");
-	return (nColon >= 0) ? m_sFilename.GetSubstring(nColon+1) : "";
-}
-
-/**
-*  @brief
 *    Returns the path without the filename
 */
 String Url::CutFilename() const
@@ -362,9 +342,63 @@ String Url::CutFilename() const
 
 /**
 *  @brief
+*    Returns the filename without it's complete extension (one may also call the result "basename)
+*/
+String Url::GetTitle() const
+{
+	const int nColon = m_sFilename.IndexOf(".");
+	return (nColon >= 0) ? m_sFilename.GetSubstring(0, nColon) : m_sFilename;
+}
+
+/**
+*  @brief
+*    Returns the filename without it's extension (one may also call the result "basename)
+*/
+String Url::GetCompleteTitle() const
+{
+	const int nColon = m_sFilename.LastIndexOf(".");
+	return (nColon >= 0) ? m_sFilename.GetSubstring(0, nColon) : m_sFilename;
+}
+
+/**
+*  @brief
+*    Returns the file extension (aka "suffix")
+*/
+String Url::GetExtension() const
+{
+	const int nColon = m_sFilename.LastIndexOf(".");
+	return (nColon >= 0) ? m_sFilename.GetSubstring(nColon+1) : "";
+}
+
+/**
+*  @brief
 *    Returns the path and filename without extension
 */
 String Url::CutExtension() const
+{
+	// Return complete path, omit protocol for local path
+	String sPath;
+	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol != "")
+		sPath = m_sProtocol;
+	sPath += m_sRoot + m_sPath + GetCompleteTitle();
+	return sPath;
+}
+
+/**
+*  @brief
+*    Returns the complete file extension (aka "suffix")
+*/
+String Url::GetCompleteExtension() const
+{
+	const int nColon = m_sFilename.IndexOf(".");
+	return (nColon >= 0) ? m_sFilename.GetSubstring(nColon+1) : "";
+}
+
+/**
+*  @brief
+*    Returns the path and filename without complete extension
+*/
+String Url::CutCompleteExtension() const
 {
 	// Return complete path, omit protocol for local path
 	String sPath;
@@ -413,7 +447,7 @@ Url &Url::Collapse()
 				if (sName == ".." && sTop != ".." && (sTop != "" || m_sRoot != "")) {
 					// Delete last subdir when '..' occurs
 					// Note: m_sRoot != "" is there because e.g. "C:\.." is a valid directory on Windows systems.
-					// To avoid directory names like C:\..\..\Programme\", this function will therefore ignore
+					// To avoid directory names like C:\..\..\Programs\", this function will therefore ignore
 					// ".." at the beginning of a filename, but ONLY if the root is not empty (relative paths
 					// can of cause begin with "..")
 					if (sTop != "")

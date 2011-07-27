@@ -105,7 +105,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 
 		/**
 		*  @brief
-		*    Returns a loadable type
+		*    Returns a loadable type by using an index
 		*
 		*  @param[in] nIndex
 		*    Loadable type index
@@ -113,7 +113,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetType(uint32 nIndex);
+		PLCORE_API LoadableType *GetTypeByIndex(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetType(const String &sName);
+		PLCORE_API LoadableType *GetTypeByName(const String &sName);
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*    Extension of loadable
 		*
 		*  @return
-		*    The requested loadable type, a null pointer on error
+		*    The requested loadable type (first found if there are multiple candidates), a null pointer on error
 		*/
 		PLCORE_API LoadableType *GetTypeByExtension(const String &sExtension);
 
@@ -161,7 +161,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(uint32 nIndex);
+		PLCORE_API Loader *GetLoaderByIndex(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -171,9 +171,9 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*    Extension of loadable
 		*
 		*  @return
-		*    The requested loader, a null pointer on error
+		*    The requested loader (first found if there are multiple candidates), a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoader(const String &sExtension);
+		PLCORE_API Loader *GetLoaderByExtension(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Formats                                               ]

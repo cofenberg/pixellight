@@ -307,18 +307,18 @@ class HttpClient : protected Client {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		EClientSignature			 m_nClientSignature;	/**< Used client signature (Default: ClientPixelLight) */
-		EHttpProtocol				 m_nHttpProtocol;		/**< Used protocol version (Default: Http11) */
-		EHttpConnection				 m_nConnection;			/**< Used connection type  (Default: Close) */
-		EHttpAuth					 m_nHttpAuth;			/**< Used authentication   (Default: NoAuth) */
-		String						 m_sAddress;			/**< Host address */
-		uint32						 m_nPort;				/**< Port number */
-		String						 m_sUsername;			/**< User name (for authentication) */
-		String						 m_sPassword;			/**< Password  (for authentication) */
-		HttpClientConnection		*m_pConnection;			/**< Current connection */
-		HttpHeader					 m_cHttpHeader;			/**< Received HTTP header */
-		int							 m_nChunkSize;			/**< Size of current chunk (only for chunked transfer-coding) */
-		int							 m_nChunkLeft;			/**< Size of chunk remaining (only for chunked transfer-coding) */
+		EClientSignature		 m_nClientSignature;	/**< Used client signature (Default: ClientPixelLight) */
+		EHttpProtocol			 m_nHttpProtocol;		/**< Used protocol version (Default: Http11) */
+		EHttpConnection			 m_nConnection;			/**< Used connection type  (Default: Close) */
+		EHttpAuth				 m_nHttpAuth;			/**< Used authentication   (Default: NoAuth) */
+		String					 m_sAddress;			/**< Host address */
+		uint32					 m_nPort;				/**< Port number */
+		String					 m_sUsername;			/**< User name (for authentication) */
+		String					 m_sPassword;			/**< Password  (for authentication) */
+		HttpClientConnection	*m_pConnection;			/**< Current connection */
+		HttpHeader				 m_cHttpHeader;			/**< Received HTTP header */
+		int						 m_nChunkSize;			/**< Size of current chunk (only for chunked transfer-coding) */
+		int						 m_nChunkLeft;			/**< Size of chunk remaining (only for chunked transfer-coding) */
 
 
 };

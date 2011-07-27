@@ -256,6 +256,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AssimpMeshLoader.cpp" />
+    <ClCompile Include="src\AssimpSceneLoader.cpp" />
+    <ClCompile Include="src\IOStream.cpp" />
+    <ClCompile Include="src\IOSystem.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudio.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3DGameStudioTerrain.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoader3dsMax3DS.cpp" />
@@ -291,6 +294,40 @@
     <ClCompile Include="src\MeshLoader\MeshLoaderValveModel.cpp" />
     <ClCompile Include="src\MeshLoader\MeshLoaderWavefrontObject.cpp" />
     <ClCompile Include="src\PLAssimp.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoader3DGameStudio.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoader3DGameStudioTerrain.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoader3dsMax3DS.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoader3dsMaxASE.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderAC3D.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderAutoCADDXF.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderBlender3D.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderBlitzBasic3D.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderCollada.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderDirectXX.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderDoom3.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderIrrlichtMesh.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderIrrlichtScene.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderIzwareNendo.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderLightWave.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderMilkshape3D.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderModo.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderNeutralFileFormat.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderObjectFileFormat.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderOgreXML.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderPovRAYRaw.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderQuakeIIIBSP.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderQuakeIIIMesh.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderQuakeIIMesh.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderQuakeIMesh.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderQuick3D.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderReturnToCastleWolfenstein.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderSense8WorldToolKit.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderStanfordPolygonLibrary.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderStereolithography.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderTerragenTerrain.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderTrueSpace.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderValveModel.cpp" />
+    <ClCompile Include="src\SceneLoader\SceneLoaderWavefrontObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -304,6 +341,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLAssimp\AssimpMeshLoader.h" />
+    <ClInclude Include="include\PLAssimp\AssimpSceneLoader.h" />
+    <ClInclude Include="include\PLAssimp\IOStream.h" />
+    <ClInclude Include="include\PLAssimp\IOSystem.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudio.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3DGameStudioTerrain.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader3dsMax3DS.h" />
@@ -338,6 +378,40 @@
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderTrueSpace.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderValveModel.h" />
     <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoaderWavefrontObject.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoader3DGameStudio.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoader3DGameStudioTerrain.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoader3dsMax3DS.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoader3dsMaxASE.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderAC3D.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderAutoCADDXF.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderBlender3D.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderBlitzBasic3D.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderCollada.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderDirectXX.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderDoom3.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderIrrlichtMesh.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderIrrlichtScene.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderIzwareNendo.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderLightWave.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderMilkshape3D.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderModo.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderNeutralFileFormat.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderObjectFileFormat.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderOgreXML.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderPovRAYRaw.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderQuakeIIIBSP.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderQuakeIIIMesh.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderQuakeIIMesh.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderQuakeIMesh.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderQuick3D.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderReturnToCastleWolfenstein.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderSense8WorldToolKit.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderStanfordPolygonLibrary.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderStereolithography.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderTerragenTerrain.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderTrueSpace.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderValveModel.h" />
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoaderWavefrontObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

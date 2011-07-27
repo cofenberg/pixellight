@@ -235,7 +235,7 @@ void QPLRenderWindow::SetPainter()
 			// Set the Painter tor the Surface
 			GetSurface()->SetPainter(pPainter);
 		} else {
-			PL_LOG(Error, "Can't create Painter instance " + QtStringAdapter::QtToPL(m_pContext->GetPainterName()));
+			PL_LOG(Error, "Can't create Painter instance " + QtStringAdapter::QtToPL(m_pContext->GetPainterName()))
 		}
 	}
 }
@@ -267,7 +267,7 @@ void QPLRenderWindow::InitWindow(const PLRenderer::DisplayMode *pDisplayMode)
 		ChangeContext(m_pContext);
 	} else {
 		// Error!
-		PL_LOG(Error, "Can't init window without an renderer context");
+		PL_LOG(Error, "Can't init window without an renderer context")
 	}
 }
 

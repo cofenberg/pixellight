@@ -96,6 +96,16 @@ String System::GetOS() const
 
 /**
 *  @brief
+*    Returns the directory separator used by the operation system
+*/
+char System::GetSeparator() const
+{
+	// Call system function
+	return m_pSystemImpl->GetSeparator();
+}
+
+/**
+*  @brief
 *    Get the CPU mhz
 */
 uint32 System::GetCPUMhz() const

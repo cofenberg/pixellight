@@ -125,7 +125,7 @@ Font *FontManager::CreateFontTexture(const String &sFilename, uint32 nSize, uint
 		// Create the font
 		pFont = CreateFontTexture(cFile, nSize, nResolution);
 	} else {
-		PL_LOG(Error, "Failed to open font file '" + sFilename + '\'');
+		PL_LOG(Error, "Failed to open font file '" + sFilename + '\'')
 	}
 
 	// Return the created font

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Log/Log.h"
 #include "PLCore/File/Url.h"
 #include "PLCore/File/File.h"
 #include "PLCore/File/Directory.h"
@@ -55,9 +56,9 @@ uint32 LoadableManager::GetNumOfTypes()
 
 /**
 *  @brief
-*    Returns a loadable type
+*    Returns a loadable type by using an index
 */
-LoadableType *LoadableManager::GetType(uint32 nIndex)
+LoadableType *LoadableManager::GetTypeByIndex(uint32 nIndex)
 {
 	RegisterClasses();
 	return m_lstTypes.Get(nIndex);
@@ -67,7 +68,7 @@ LoadableType *LoadableManager::GetType(uint32 nIndex)
 *  @brief
 *    Returns a loadable type by using it's name
 */
-LoadableType *LoadableManager::GetType(const String &sName)
+LoadableType *LoadableManager::GetTypeByName(const String &sName)
 {
 	RegisterClasses();
 	return m_mapTypes.Get(sName);
@@ -97,7 +98,7 @@ uint32 LoadableManager::GetNumOfLoaders()
 *  @brief
 *    Returns a loader by using an index
 */
-Loader *LoadableManager::GetLoader(uint32 nIndex)
+Loader *LoadableManager::GetLoaderByIndex(uint32 nIndex)
 {
 	RegisterClasses();
 	return m_lstLoaders.Get(nIndex);
@@ -107,7 +108,7 @@ Loader *LoadableManager::GetLoader(uint32 nIndex)
 *  @brief
 *    Returns a loader by using a extension
 */
-Loader *LoadableManager::GetLoader(const String &sExtension)
+Loader *LoadableManager::GetLoaderByExtension(const String &sExtension)
 {
 	RegisterClasses();
 	return m_mapLoaders.Get(sExtension);
@@ -141,14 +142,14 @@ bool LoadableManager::IsFormatLoadSupported(const String &sExtension, const Stri
 {
 	RegisterClasses();
 	if (sType.GetLength()) {
-		const LoadableType *pLoadableType = GetType(sType);
+		const LoadableType *pLoadableType = GetTypeByName(sType);
 		if (pLoadableType) {
-			const Loader *pLoader = pLoadableType->GetLoader(sExtension);
+			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)
 				return pLoader->CanLoad();
 		}
 	} else {
-		const Loader *pLoader = GetLoader(sExtension);
+		const Loader *pLoader = GetLoaderByExtension(sExtension);
 		if (pLoader)
 			return pLoader->CanLoad();
 	}
@@ -165,14 +166,14 @@ bool LoadableManager::IsFormatSaveSupported(const String &sExtension, const Stri
 {
 	RegisterClasses();
 	if (sType.GetLength()) {
-		const LoadableType *pLoadableType = GetType(sType);
+		const LoadableType *pLoadableType = GetTypeByName(sType);
 		if (pLoadableType) {
-			const Loader *pLoader = pLoadableType->GetLoader(sExtension);
+			const Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 			if (pLoader)
 				return pLoader->CanSave();
 		}
 	} else {
-		const Loader *pLoader = GetLoader(sExtension);
+		const Loader *pLoader = GetLoaderByExtension(sExtension);
 		if (pLoader)
 			return pLoader->CanSave();
 	}
@@ -535,10 +536,10 @@ void LoadableManager::RegisterClasses()
 			// Get the class
 			const Class *pClass = cIterator.Next();
 
-			// Check parameter and base class
+			// Check base class, in here, we're only interested in loader implementation classes
 			static const String sClassString = "PLCore::LoaderImpl";
-			if (pClass->IsDerivedFrom(sClassString)) {
-				// Get the loadable type
+			if (pClass->IsDerivedFrom(sClassString) && pClass->HasConstructor()) {
+				// Get the loadable type ("Mesh", "Scene" etc.)
 				const String sType = pClass->GetProperties().Get("Type");
 				if (sType.GetLength()) {
 					// Try to get an instance of the loadable type
@@ -546,23 +547,49 @@ void LoadableManager::RegisterClasses()
 					if (!pLoadableType) {
 						// Currently, there's no such loadable type, add one
 
-						// Find the base class, all loader implementations of this type are derived from
-						const Class *pLoaderClass = ClassManager::GetInstance()->GetClass(sClassString);
+						// Find the base class (the one directly derived from "PLCore::LoaderImpl"), all loader implementations of this type are derived from
 						const Class *pLoaderTypeClass = pClass->GetBaseClass();
-						while (pLoaderTypeClass && pLoaderTypeClass->GetBaseClass() != pLoaderClass)
+						const Class *pBaseLoaderClass = ClassManager::GetInstance()->GetClass(sClassString);
+						while (pLoaderTypeClass && pLoaderTypeClass->GetBaseClass() != pBaseLoaderClass)
 							pLoaderTypeClass = pLoaderTypeClass->GetBaseClass();
-
-						// Create type
 						if (pLoaderTypeClass) {
-							pLoadableType = new LoadableType(sType, *pLoaderTypeClass);
-							m_lstTypes.Add(pLoadableType);
-							m_mapTypes.Add(sType, pLoadableType);
+							// Get the loadable type of the loadable type class
+							const String sBaseType = pLoaderTypeClass->GetProperties().Get("Type");
+							if (sBaseType.GetLength()) {
+								// Security check: The type of the loader class and it's loader base class must match
+								if (sType == sBaseType) {
+									// Create an instance of the loadable type
+									pLoadableType = new LoadableType(sBaseType, *pLoaderTypeClass);
+									m_lstTypes.Add(pLoadableType);
+									m_mapTypes.Add(sBaseType, pLoadableType);
+								} else {
+									// Error!
+									PL_LOG(Error, "Failed to register the loader class '" + pClass->GetClassName() + "': Loader base class 'Type'-property and loader class 'Type'-property mismatch")
+								}
+							} else {
+								// Error!
+								PL_LOG(Error, "Failed to register the loader class '" + pClass->GetClassName() + "': Loader base class has no 'Type'-property")
+							}
+						} else {
+							// Error!
+							PL_LOG(Error, "Failed to register the loader class '" + pClass->GetClassName() + "': Unable to find the loader base class")
 						}
 					}
 
-					// Create loader instance and add loader to this loadable type
-					if (pLoadableType)
-						pLoadableType->AddLoader(*(new Loader(*pClass)));
+					// Loadable type instance found?
+					if (pLoadableType) {
+						// Security check: All loader classes of a certain type must be derived from one and the same loader type class
+						if (pClass->IsDerivedFrom(pLoadableType->GetClass())) {
+							// Finally, create loader instance and add loader to this loadable type
+							pLoadableType->AddLoader(*(new Loader(*pClass)));
+						} else {
+							// Error!
+							PL_LOG(Error, "Failed to register the loader class '" + pClass->GetClassName() + "': Loader base class doesn't match the one specified by the 'Type'-property")
+						}
+					}
+				} else {
+					// Error!
+					PL_LOG(Error, "Failed to register the loader class '" + pClass->GetClassName() + "': Class has no 'Type'-property")
 				}
 			}
 		}

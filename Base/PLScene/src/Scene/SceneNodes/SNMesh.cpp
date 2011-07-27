@@ -234,47 +234,39 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 					PL_LOG(Debug, "Load skin: " + sFilename)
 
 					// Get loadable type
-					const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType("Skin");
+					const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName("Skin");
 					if (pLoadableType) {
-						// Get loader
-						Loader *pLoader = pLoadableType->GetLoader(sExtension);
-						if (pLoader) {
-							if (pLoader->GetClass().IsDerivedFrom("PLScene::SkinLoader")) {
-								if (pLoader->CanLoad()) {
-									// Open the file
-									File cFile;
-									if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
-										// Get method name
-										static const String sLoad = "Load";
-										static const String sLoadParams = "LoadParams";
-										String sMethodName = sMethod;
-										if (!sMethodName.GetLength())
-											sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
+						// Open the file
+						File cFile;
+						if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
+							// Get loader, assigned to the current loadable type, capable of processing the file
+							Loader *pLoader = pLoadableType->GetLoaderForLoadingByFile(cFile);
+							if (pLoader) {
+								// Get method name
+								static const String sLoad = "Load";
+								static const String sLoadParams = "LoadParams";
+								String sMethodName = sMethod;
+								if (!sMethodName.GetLength())
+									sMethodName = sParams.GetLength() ? sLoadParams : sLoad;
 
-										// Get the loader implementation
-										LoaderImpl *pLoaderImpl = pLoader->GetImpl();
-										if (pLoaderImpl) {
-											// Finally, load the skin!
-											if (sParams.GetLength()) {
-												pLoaderImpl->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
-												return true;
-											} else {
-												Params<bool, SNMesh&, File&> cParams(*this, cFile);
-												pLoaderImpl->CallMethod(sMethodName, cParams);
-												return cParams.Return;
-											}
-										}
+								// Get the loader implementation
+								LoaderImpl *pLoaderImpl = pLoader->GetImpl();
+								if (pLoaderImpl) {
+									// Finally, load the skin!
+									if (sParams.GetLength()) {
+										pLoaderImpl->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+										return true;
 									} else {
-										PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable 'Skin'!")
+										Params<bool, SNMesh&, File&> cParams(*this, cFile);
+										pLoaderImpl->CallMethod(sMethodName, cParams);
+										return cParams.Return;
 									}
-								} else {
-									PL_LOG(Error, "Can't load the loadable 'Skin' from '" + sFilename + "' because loading of this file format is not supported!")
 								}
 							} else {
-								PL_LOG(Error, "Can't load the loadable 'Skin' from '" + sFilename + "' because the file format is no valid 'Skin' format!")
+								PL_LOG(Error, "Can't load the loadable 'Skin' from '" + sFilename + "' because the file format is not supported!")
 							}
 						} else {
-							PL_LOG(Error, "Can't load the loadable 'Skin' from '" + sFilename + "' because the file format is not supported!")
+							PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable 'Skin'!")
 						}
 					} else {
 						PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type 'Skin' is unknown!")
@@ -323,7 +315,7 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 		PL_LOG(Debug, "Save skin: " + sFilename)
 
 		// Get loadable type
-		LoadableType *pLoadableType = LoadableManager::GetInstance()->GetType("Skin");
+		LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName("Skin");
 		if (!pLoadableType) {
 			PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type 'Skin' is unknown!")
 
@@ -331,8 +323,8 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 			return false;
 		}
 
-		// Get loader
-		Loader *pLoader = pLoadableType->GetLoader(sExtension);
+		// Get loader, assigned to the current loadable type, capable of processing the file extension
+		Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
 		if (!pLoader) {
 			PL_LOG(Error, "Can't save the loadable 'Skin' from '" + sFilename + "' because the file format is not supported!")
 

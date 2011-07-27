@@ -119,6 +119,15 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
+		*    Returns the directory separator used by the operation system
+		*
+		*  @return
+		*    The directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)
+		*/
+		PLCORE_API char GetSeparator() const;
+
+		/**
+		*  @brief
 		*    Get the CPU mhz
 		*
 		*  @return

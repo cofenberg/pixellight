@@ -128,6 +128,11 @@ String SystemLinux::GetOS() const
 	}
 }
 
+char SystemLinux::GetSeparator() const
+{
+	return '/';
+}
+
 uint32 SystemLinux::GetCPUMhz() const
 {
 	// Initialize

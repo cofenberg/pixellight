@@ -1,3 +1,39 @@
+>> 26.07.2011
+[CO]
+- "LoadableType::AddLoader()" fixed log messages ("[Info]: Loader 'PLAssimp::SceneLoader3DGameStudio': Format 'mdl' is already used by loader 'PLAssimp::SceneLoader3DGameStudio")
+- "Loadable::Load()"/"Loadable::Save()": Moved the "IsDerivedFrom()" security check into "LoadableManager::RegisterClasses()"
+- Renamed "LoadableType::GetLoader(uint32 nIndex)" into "LoadableType::GetLoaderByIndex(uint32 nIndex)"
+- Renamed "LoadableType::GetLoader(const String &sExtension)" into "LoadableType::GetLoaderByExtension(const String &sExtension)"
+- Renamed "LoadableManager::GetLoader(uint32 nIndex)" into "LoadableManager::GetLoaderByIndex(uint32 nIndex)"
+- Renamed "LoadableManager::GetLoader(const String &sExtension)" into "LoadableManager::GetLoaderByExtension(const String &sExtension)"
+- Renamed "LoadableManager::GetType(uint32 nIndex)" into "LoadableManager::GetTypeByIndex(uint32 nIndex)"
+- Renamed "LoadableManager::GetType(const String &sName)" into "LoadableManager::GetTypeByName(const String &sName)"
+- Added "LoadableType::GetLoaderForLoadingByFile()" which currently is using, as before, just the filename extension to find the proper loader
+- "LoadableType::GetLoaderForLoadingByFile()": If there's no loader for the given file extension, the complete file extension is checked as well (file format extensions like
+  "mesh.xml" can now be used as well)
+- Added "System::GetSeparator()" returning the directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)... interesting that such a method was still
+  missing...
+- Added "File::CFileModeToAccessFlags" translating a given C file mode ("r", "r+", "w", "w+", "a", "a+", "t", "r+t" etc. used for e.g. "fopen") into access flags
+
+
+
+>> 25.07.2011
+[CO]
+- "Url": "GetTitle()" and "GetExtension()": For a filename like "archive.tar.gz" the method "GetTitle()" returns "archive.tar" and "GetExtension()" returns "gz". While this is
+  ok/standard for some use cases, there are also situations were "archive" as title and "tar.gz" as extension is desired/standard. I checked other libraries/frameworks like Qt
+  in order to see how they deal with this topic. In Qt, they offer the following methods:
+    "QFileInfo::baseName()"="archive"
+    "QFileInfo::completeBaseName()"=archive.tar"
+    "QFileInfo::suffix()"="gz"
+    "QFileInfo::completeSuffix()"="tar.gz"
+  This naming convention sounds reasonable and at least "suffix()" is handled the same way as PL's "GetExtension()".
+  -> Added some more comments to avoid confusion (or at least reduce it) when dealing with filenames like "archive.tar.gz"
+  -> Renamed "GetTitle()" into "GetCompleteTitle()" returning "archive.tar"
+  -> Added "GetTitle()" returning "archive"
+  -> Added "GetCompleteExtension()" returning "tar.gz" and also added "CutCompleteExtension()"
+
+
+
 >> 21.07.2011
 [CO]
 - PLGeneral->PLCore - done
