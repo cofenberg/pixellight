@@ -63,7 +63,7 @@ IERemovePalette::~IERemovePalette()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IERemovePalette::Apply(ImageBuffer &cImageBuffer) const
 {

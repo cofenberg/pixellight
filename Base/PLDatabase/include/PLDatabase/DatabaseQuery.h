@@ -97,7 +97,7 @@ class DatabaseQuery {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual DatabaseQuery functions                ]
 	//[-------------------------------------------------------]
 	public:
 		/**

@@ -112,7 +112,7 @@ class SurfaceTextureBuffer : public Surface {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SurfaceTextureBuffer functions         ]
 	//[-------------------------------------------------------]
 	public:
 		/**

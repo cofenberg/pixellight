@@ -78,8 +78,8 @@ class ClipBoardWindows : public ClipBoardImpl {
 	//[ Private virtual ClipBoardImpl functions               ]
 	//[-------------------------------------------------------]
 	private:
-		PLGUI_API virtual DataObject GetData();
-		PLGUI_API virtual void SetData(const DataObject &cData);
+		PLGUI_API virtual DataObject GetData() override;
+		PLGUI_API virtual void SetData(const DataObject &cData) override;
 
 
 };

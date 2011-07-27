@@ -81,8 +81,8 @@ class CursorWindows : public CursorImpl {
 	//[ Public virtual CursorImpl functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Load(EMouseCursor nCursor);
-		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
+		virtual void Load(EMouseCursor nCursor) override;
+		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot) override;
 
 
 	//[-------------------------------------------------------]

@@ -223,7 +223,7 @@ class Polygon {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Polygon functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**

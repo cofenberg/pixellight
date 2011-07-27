@@ -100,7 +100,7 @@ class SurfaceWindow : public Surface {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SurfaceWindow functions                ]
 	//[-------------------------------------------------------]
 	public:
 		/**

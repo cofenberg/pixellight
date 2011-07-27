@@ -1273,11 +1273,11 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnMessage(const GuiMessage &cMessage);
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnThemeChanged();
-		PLGUI_API virtual void OnUpdateContent();
-		PLGUI_API virtual void OnAdjustContent();
+		PLGUI_API virtual void OnMessage(const GuiMessage &cMessage) override;
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnThemeChanged() override;
+		PLGUI_API virtual void OnUpdateContent() override;
+		PLGUI_API virtual void OnAdjustContent() override;
 
 
 	//[-------------------------------------------------------]

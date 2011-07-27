@@ -89,8 +89,8 @@ class ContainerWidget : public Widget {
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnThemeChanged();
-		PLGUI_API virtual void OnAdjustContent();
+		PLGUI_API virtual void OnThemeChanged() override;
+		PLGUI_API virtual void OnAdjustContent() override;
 
 
 	//[-------------------------------------------------------]

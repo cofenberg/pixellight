@@ -162,29 +162,29 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 	//[ Public virtual PLRenderer::SurfaceTexture functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLRenderer::TextureBuffer *GetTextureBuffer() const;
-		virtual PLCore::uint8 GetTextureBufferFace() const;
-		virtual void TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::SurfaceTextureBuffer &cSurfaceTextureBuffer);
+		virtual PLRenderer::TextureBuffer *GetTextureBuffer() const override;
+		virtual PLCore::uint8 GetTextureBufferFace() const override;
+		virtual void TakeDepthBufferFromSurfaceTextureBuffer(PLRenderer::SurfaceTextureBuffer &cSurfaceTextureBuffer) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Surface functions          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLMath::Vector2i GetSize() const;
+		virtual PLMath::Vector2i GetSize() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Surface functions         ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool Init();
-		virtual void DeInit();
-		virtual bool MakeCurrent(PLCore::uint8 nFace = 0);
-		virtual bool UnmakeCurrent();
-		virtual bool Present();
-		virtual void BackupDeviceData();
-		virtual void RestoreDeviceData();
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool UnmakeCurrent() override;
+		virtual bool Present() override;
+		virtual void BackupDeviceData() override;
+		virtual void RestoreDeviceData() override;
 
 
 };

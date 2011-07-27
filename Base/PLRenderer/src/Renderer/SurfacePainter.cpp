@@ -90,7 +90,7 @@ SurfacePainter &SurfacePainter::operator =(const SurfacePainter &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual SurfacePainter functions            ]
 //[-------------------------------------------------------]
 /**
 *  @brief

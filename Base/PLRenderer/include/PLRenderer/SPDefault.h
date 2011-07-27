@@ -89,7 +89,7 @@ class SPDefault : public SurfacePainter {
 	//[ Private virtual SurfacePainter functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnPaint(Surface &cSurface);
+		virtual void OnPaint(Surface &cSurface) override;
 
 
 };

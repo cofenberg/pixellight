@@ -95,22 +95,22 @@ class OcclusionQuery : public PLRenderer::OcclusionQuery {
 	//[ Public virtual PLRenderer::OcclusionQuery functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool BeginOcclusionQuery();
-		virtual void EndOcclusionQuery();
-		virtual bool PullOcclusionQuery(PLCore::uint32 *pnNumOfFragments = nullptr);
-		virtual PLCore::uint32 GetLastQuerysPixelCount() const;
-		virtual PLCore::uint32 GetSkipRate() const;
-		virtual void SetSkipRate(PLCore::uint32 nRate = 0);
-		virtual PLCore::uint32 GetMinFragments() const;
-		virtual void SetMinFragments(PLCore::uint32 nMinFragments = 0);
+		virtual bool BeginOcclusionQuery() override;
+		virtual void EndOcclusionQuery() override;
+		virtual bool PullOcclusionQuery(PLCore::uint32 *pnNumOfFragments = nullptr) override;
+		virtual PLCore::uint32 GetLastQuerysPixelCount() const override;
+		virtual PLCore::uint32 GetSkipRate() const override;
+		virtual void SetSkipRate(PLCore::uint32 nRate = 0) override;
+		virtual PLCore::uint32 GetMinFragments() const override;
+		virtual void SetMinFragments(PLCore::uint32 nMinFragments = 0) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup) override;
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup) override;
 
 
 };

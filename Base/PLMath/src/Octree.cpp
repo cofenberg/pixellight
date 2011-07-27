@@ -364,7 +364,7 @@ Octree &Octree::operator =(const Octree &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual functions                             ]
+//[ Private virtual Octree functions                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief

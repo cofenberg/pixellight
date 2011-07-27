@@ -99,11 +99,11 @@ class FragmentShaderGLSL : public PLRenderer::FragmentShader {
 	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetShaderLanguage() const;
-		virtual PLCore::String GetSourceCode() const;
-		virtual PLCore::String GetProfile() const;
-		virtual PLCore::String GetEntry() const;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		virtual PLCore::String GetShaderLanguage() const override;
+		virtual PLCore::String GetSourceCode() const override;
+		virtual PLCore::String GetProfile() const override;
+		virtual PLCore::String GetEntry() const override;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
 
 
 };

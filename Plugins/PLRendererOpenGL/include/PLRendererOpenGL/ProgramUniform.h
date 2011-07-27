@@ -49,7 +49,7 @@ class ProgramUniform : public PLRenderer::ProgramUniform {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ProgramUniform functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

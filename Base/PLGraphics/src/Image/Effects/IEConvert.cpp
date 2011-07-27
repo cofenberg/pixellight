@@ -581,7 +581,7 @@ IEConvert::~IEConvert()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IEConvert::Apply(ImageBuffer &cImageBuffer) const
 {

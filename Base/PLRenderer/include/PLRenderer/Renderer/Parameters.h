@@ -122,7 +122,7 @@ class Parameters {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Parameters functions                   ]
 	//[-------------------------------------------------------]
 	public:
 		/**

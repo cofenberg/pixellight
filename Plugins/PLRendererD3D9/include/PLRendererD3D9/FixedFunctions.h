@@ -159,45 +159,45 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 	//[ Public virtual PLRenderer::FixedFunctions functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual const Capabilities &GetCapabilities() const;
-		virtual void Reset();
+		virtual const Capabilities &GetCapabilities() const override;
+		virtual void Reset() override;
 		// Render states
-		virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
-		virtual void ResetRenderStates();
-		virtual int GetRenderState(RenderState::Enum nState) const;
-		virtual bool SetRenderState(RenderState::Enum nState, PLCore::uint32 nValue);
-		virtual PLGraphics::Color4 GetColor() const;
-		virtual void SetColor(const PLGraphics::Color4 &cColor = PLGraphics::Color4::White);
+		virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const override;
+		virtual void ResetRenderStates() override;
+		virtual int GetRenderState(RenderState::Enum nState) const override;
+		virtual bool SetRenderState(RenderState::Enum nState, PLCore::uint32 nValue) override;
+		virtual PLGraphics::Color4 GetColor() const override;
+		virtual void SetColor(const PLGraphics::Color4 &cColor = PLGraphics::Color4::White) override;
 		// Transform states
-		virtual const PLMath::Matrix4x4 &GetTransformState(Transform::Enum nState, bool bOriginal = true) const;
-		virtual void ResetTransformStates();
-		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix3x4 &mTrans);
-		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix4x4 &mTrans);
+		virtual const PLMath::Matrix4x4 &GetTransformState(Transform::Enum nState, bool bOriginal = true) const override;
+		virtual void ResetTransformStates() override;
+		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix3x4 &mTrans) override;
+		virtual bool SetTransformState(Transform::Enum nState, const PLMath::Matrix4x4 &mTrans) override;
 		// Texture stage states
-		virtual PLCore::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const;
-		virtual void ResetTextureStageStates();
-		virtual int GetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState) const;
-		virtual bool SetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState, PLCore::uint32 nValue);
+		virtual PLCore::uint32 GetDefaultTextureStageState(TextureStage::Enum nState) const override;
+		virtual void ResetTextureStageStates() override;
+		virtual int GetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState) const override;
+		virtual bool SetTextureStageState(PLCore::uint32 nStage, TextureStage::Enum nState, PLCore::uint32 nValue) override;
 		// Material states
-		virtual PLCore::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const;
-		virtual void ResetMaterialStates();
-		virtual int GetMaterialState(MaterialState::Enum nState) const;
-		virtual bool SetMaterialState(MaterialState::Enum nState, PLCore::uint32 nValue);
+		virtual PLCore::uint32 GetDefaultMaterialState(MaterialState::Enum nState) const override;
+		virtual void ResetMaterialStates() override;
+		virtual int GetMaterialState(MaterialState::Enum nState) const override;
+		virtual bool SetMaterialState(MaterialState::Enum nState, PLCore::uint32 nValue) override;
 		// Light states
-		virtual void GetDefaultLightSettings(Light &sLight) const;
-		virtual void ResetLights();
-		virtual bool IsLightEnabled(PLCore::uint32 nLightID) const;
-		virtual bool SetLightEnabled(PLCore::uint32 nLightID, bool bEnabled);
-		virtual bool GetLight(PLCore::uint32 nLightID, Light &sLight) const;
-		virtual bool SetLight(PLCore::uint32 nLightID, const Light &sLight);
+		virtual void GetDefaultLightSettings(Light &sLight) const override;
+		virtual void ResetLights() override;
+		virtual bool IsLightEnabled(PLCore::uint32 nLightID) const override;
+		virtual bool SetLightEnabled(PLCore::uint32 nLightID, bool bEnabled) override;
+		virtual bool GetLight(PLCore::uint32 nLightID, Light &sLight) const override;
+		virtual bool SetLight(PLCore::uint32 nLightID, const Light &sLight) override;
 		// Clip plane states
-		virtual bool IsClipPlaneEnabled(PLCore::uint8 nIndex) const;
-		virtual bool SetClipPlaneEnabled(char nIndex = -1, bool bEnable = false);
-		virtual bool GetClipPlane(PLCore::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const;
-		virtual bool SetClipPlane(char nIndex = -1, float fA = 0.0f, float fB = 0.0f, float fC = 0.0f, float fD = 0.0f);
+		virtual bool IsClipPlaneEnabled(PLCore::uint8 nIndex) const override;
+		virtual bool SetClipPlaneEnabled(char nIndex = -1, bool bEnable = false) override;
+		virtual bool GetClipPlane(PLCore::uint8 nIndex, float &fA, float &fB, float &fC, float &fD) const override;
+		virtual bool SetClipPlane(char nIndex = -1, float fA = 0.0f, float fB = 0.0f, float fC = 0.0f, float fD = 0.0f) override;
 		// Vertex buffer states
-		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLCore::uint32 nStreamNumber = 0, PLCore::uint32 *pnOffset = nullptr) const;
-		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = nullptr, PLCore::uint32 nOffset = 0, PLCore::uint32 nStreamNumber = 0);
+		virtual PLRenderer::VertexBuffer *GetVertexBuffer(PLCore::uint32 nStreamNumber = 0, PLCore::uint32 *pnOffset = nullptr) const override;
+		virtual bool SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer = nullptr, PLCore::uint32 nOffset = 0, PLCore::uint32 nStreamNumber = 0) override;
 
 
 };

@@ -192,6 +192,10 @@ const AnimationEventManager &AnimationInfo::GetEventManager() const
 	return m_cEventManager;
 }
 
+
+//[-------------------------------------------------------]
+//[ Public virtual AnimationInfo functions                ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Copy operator

@@ -214,7 +214,7 @@ class IndexBuffer : public Buffer {
 	//[ Public virtual Buffer functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual void *GetData();
+		PLRENDERER_API virtual void *GetData() override;
 
 
 };

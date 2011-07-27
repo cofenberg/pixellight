@@ -403,7 +403,7 @@ class TextureBuffer : public Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual TextureBuffer functions                ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -497,7 +497,7 @@ class TextureBuffer : public Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual TextureBuffer functions             ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

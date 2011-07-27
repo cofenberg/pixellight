@@ -80,8 +80,8 @@ class SlimEntry : public Widget {
 	//[ Protected virtual Widget functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnDraw(PLGui::Graphics &cGraphics);
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnDraw(PLGui::Graphics &cGraphics) override;
 
 
 };

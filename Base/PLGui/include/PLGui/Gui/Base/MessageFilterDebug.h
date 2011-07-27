@@ -89,7 +89,7 @@ class MessageFilterDebug : public MessageFilter {
 	//[ Protected virtual MessageFilter functions             ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnGuiMessage(const GuiMessage &cMessage);
+		PLGUI_API virtual void OnGuiMessage(const GuiMessage &cMessage) override;
 
 
 	//[-------------------------------------------------------]

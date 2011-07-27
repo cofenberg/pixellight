@@ -77,7 +77,7 @@ class HIDProvider : public Provider {
 	//[ Private virtual Provider functions                    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void QueryDevices();
+		virtual void QueryDevices() override;
 
 
 	//[-------------------------------------------------------]

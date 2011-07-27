@@ -82,7 +82,7 @@ class OcclusionQuery : public Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual OcclusionQuery functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

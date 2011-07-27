@@ -104,20 +104,20 @@ class ScrollBar : public AbstractSlider {
 	//[ Protected virtual AbstractSlider functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnChangeValue(int nValue);
+		PLGUI_API virtual void OnChangeValue(int nValue) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Widget functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnDisable();
-		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnDisable() override;
+		PLGUI_API virtual void OnMouseLeave() override;
+		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
 
 
 	//[-------------------------------------------------------]

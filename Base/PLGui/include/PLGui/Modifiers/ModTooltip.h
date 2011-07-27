@@ -108,15 +108,15 @@ class ModTooltip : public Modifier {
 	//[ Protected virtual Modifier functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnAttach(Widget &cWidget);
-		virtual void OnDetach(Widget &cWidget);
+		virtual void OnAttach(Widget &cWidget) override;
+		virtual void OnDetach(Widget &cWidget) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		void OnMouseHover();
+		virtual void OnMouseHover() override;
 
 
 	//[-------------------------------------------------------]

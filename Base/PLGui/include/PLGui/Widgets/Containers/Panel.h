@@ -101,9 +101,9 @@ class Panel : public ContainerWidget {
 	//[ Public virtual Widget functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnAdjustContent();
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnAdjustContent() override;
 
 
 	//[-------------------------------------------------------]

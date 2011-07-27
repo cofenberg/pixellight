@@ -186,7 +186,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API virtual bool ReloadTextures();
+		PLRENDERER_API bool ReloadTextures();
 
 		//[-------------------------------------------------------]
 		//[ Materials                                             ]
@@ -347,10 +347,10 @@ class Material : public PLCore::Resource<Material> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLRENDERER_API virtual bool Reload();
-		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool Reload() override;
+		PLRENDERER_API virtual bool Unload() override;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

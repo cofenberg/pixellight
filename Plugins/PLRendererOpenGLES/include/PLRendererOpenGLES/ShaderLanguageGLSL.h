@@ -85,12 +85,12 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 	//[ Public virtual PLRenderer::ShaderLanguage functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetShaderLanguage() const;
-		virtual PLRenderer::VertexShader *CreateVertexShader();
-		virtual PLRenderer::GeometryShader *CreateGeometryShader();
-		virtual PLRenderer::FragmentShader *CreateFragmentShader();
-		virtual PLRenderer::Program *CreateProgram();
-		virtual PLRenderer::UniformBuffer *CreateUniformBuffer();
+		virtual PLCore::String GetShaderLanguage() const override;
+		virtual PLRenderer::VertexShader *CreateVertexShader() override;
+		virtual PLRenderer::GeometryShader *CreateGeometryShader() override;
+		virtual PLRenderer::FragmentShader *CreateFragmentShader() override;
+		virtual PLRenderer::Program *CreateProgram() override;
+		virtual PLRenderer::UniformBuffer *CreateUniformBuffer() override;
 
 
 	//[-------------------------------------------------------]

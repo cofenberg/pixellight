@@ -113,29 +113,29 @@ class GeometryShaderCg : public PLRenderer::GeometryShader {
 	//[ Public virtual PLRenderer::GeometryShader functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual EInputPrimitiveType GetInputPrimitiveType() const;
-		virtual EOutputPrimitiveType GetOutputPrimitiveType() const;
-		virtual PLCore::uint32 GetNumOfOutputVertices() const;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		virtual EInputPrimitiveType GetInputPrimitiveType() const override;
+		virtual EOutputPrimitiveType GetOutputPrimitiveType() const override;
+		virtual PLCore::uint32 GetNumOfOutputVertices() const override;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Shader functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetShaderLanguage() const;
-		virtual PLCore::String GetSourceCode() const;
-		virtual PLCore::String GetProfile() const;
-		virtual PLCore::String GetEntry() const;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		virtual PLCore::String GetShaderLanguage() const override;
+		virtual PLCore::String GetSourceCode() const override;
+		virtual PLCore::String GetProfile() const override;
+		virtual PLCore::String GetEntry() const override;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup) override;
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup) override;
 
 
 };

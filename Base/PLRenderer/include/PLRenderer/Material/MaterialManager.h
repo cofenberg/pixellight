@@ -117,7 +117,7 @@ class MaterialManager : public PLCore::ResourceManager<Material> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Material *CreateResource(const PLCore::String &sName);
+		virtual Material *CreateResource(const PLCore::String &sName) override;
 
 
 };

@@ -75,7 +75,7 @@ class AniInfoManager : public PLCore::ElementManager<AniInfo> {
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AniInfo *CreateElement(const PLCore::String &sName);
+		virtual AniInfo *CreateElement(const PLCore::String &sName) override;
 
 
 };

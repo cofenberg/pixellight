@@ -91,7 +91,7 @@ class LayoutBox : public Layout {
 	//[ Protected virtual Layout functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void ApplyLayout();
+		virtual void ApplyLayout() override;
 
 
 	//[-------------------------------------------------------]

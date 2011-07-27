@@ -115,7 +115,7 @@ void ResourceHandler::SetResource(Resource *pResource)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ResourceHandler functions              ]
 //[-------------------------------------------------------]
 /**
 *  @brief

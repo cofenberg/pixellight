@@ -216,7 +216,7 @@ Surface &Surface::operator =(const Surface &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual Surface functions                   ]
 //[-------------------------------------------------------]
 bool Surface::IsAPISwapY() const
 {

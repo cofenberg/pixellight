@@ -247,16 +247,16 @@ class AbstractButton : public Widget {
 	//[ Protected virtual Widget functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnDisable();
-		PLGUI_API virtual void OnGetFocus();
-		PLGUI_API virtual void OnLooseFocus();
-		PLGUI_API virtual void OnMouseEnter();
-		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
-		PLGUI_API virtual void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		PLGUI_API virtual void OnDisable() override;
+		PLGUI_API virtual void OnGetFocus() override;
+		PLGUI_API virtual void OnLooseFocus() override;
+		PLGUI_API virtual void OnMouseEnter() override;
+		PLGUI_API virtual void OnMouseLeave() override;
+		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers) override;
+		PLGUI_API virtual void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers) override;
 
 
 	//[-------------------------------------------------------]

@@ -266,6 +266,10 @@ void HIDDevice::ParseInputReport(const uint8 *pInputReport, uint32 nSize)
 	// for a while, until someone with time and knowledge takes the challenge :-)
 }
 
+
+//[-------------------------------------------------------]
+//[ Public virtual HIDDevice functions                    ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Send HID output report

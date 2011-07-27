@@ -114,7 +114,7 @@ class Graph : public PLCore::Resource<Graph>, public PLCore::ElementManager<Grap
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual GraphNode *CreateElement(const PLCore::String &sName);
+		virtual GraphNode *CreateElement(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]
@@ -128,8 +128,8 @@ class Graph : public PLCore::Resource<Graph>, public PLCore::ElementManager<Grap
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API virtual bool Unload();
-		PLMATH_API virtual PLCore::String GetLoadableTypeName() const;
+		PLMATH_API virtual bool Unload() override;
+		PLMATH_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

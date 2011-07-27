@@ -127,7 +127,7 @@ IEMonochrome::~IEMonochrome()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IEMonochrome::Apply(ImageBuffer &cImageBuffer) const
 {

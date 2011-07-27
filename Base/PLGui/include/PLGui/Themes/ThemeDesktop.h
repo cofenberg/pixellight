@@ -86,30 +86,30 @@ class ThemeDesktop : public Theme {
 	//[ Public virtual Theme functions                        ]
 	//[-------------------------------------------------------]
 	public:
-		PLGUI_API virtual void DrawRect(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, ELineStyle nStyle, const PLGraphics::Color4 &cColor, int nWidth, int nRound = 0);
-		PLGUI_API virtual void DrawBorder(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle);
-		PLGUI_API virtual void DrawFocusRect(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2);
-		PLGUI_API virtual void DrawSeparator(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation);
-		PLGUI_API virtual void DrawRule(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation);
+		PLGUI_API virtual void DrawRect(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, ELineStyle nStyle, const PLGraphics::Color4 &cColor, int nWidth, int nRound = 0) override;
+		PLGUI_API virtual void DrawBorder(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle) override;
+		PLGUI_API virtual void DrawFocusRect(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2) override;
+		PLGUI_API virtual void DrawSeparator(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation) override;
+		PLGUI_API virtual void DrawRule(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation) override;
 
-		PLGUI_API virtual void DrawPanel(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle);
-		PLGUI_API virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLCore::uint32 nWidgetState, const PLCore::String &sTitle, const PLGui::Image &cIcon);
-		PLGUI_API virtual void DrawSystemButton(Graphics &cGraphics, const PLMath::Vector2i &vPos, ESystemCommand nSystemCommand, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawToggleButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState, ECheckState nChecked);
-		PLGUI_API virtual void DrawRadioButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked);
-		PLGUI_API virtual void DrawCheckBox(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked);
-		PLGUI_API virtual void DrawTooltip(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawSlider(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawSliderHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawScrollBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawScrollBarPlusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawScrollBarMinusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawScrollBarHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawSplitter(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation);
-		PLGUI_API virtual void DrawMenuBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawPopupMenu(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState);
-		PLGUI_API virtual void DrawMenuItem(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, bool bDrawArrow, EMenuItemType nType, EOrientation nOrientation, PLCore::uint32 nWidgetState);
+		PLGUI_API virtual void DrawPanel(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EBorderStyle nBorderStyle) override;
+		PLGUI_API virtual void DrawWindow(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, bool bBorder, PLCore::uint32 nWidgetState, const PLCore::String &sTitle, const PLGui::Image &cIcon) override;
+		PLGUI_API virtual void DrawSystemButton(Graphics &cGraphics, const PLMath::Vector2i &vPos, ESystemCommand nSystemCommand, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawToggleButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, PLCore::uint32 nWidgetState, ECheckState nChecked) override;
+		PLGUI_API virtual void DrawRadioButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked) override;
+		PLGUI_API virtual void DrawCheckBox(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, PLCore::uint32 nWidgetState, ECheckState nChecked) override;
+		PLGUI_API virtual void DrawTooltip(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawSlider(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawSliderHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawScrollBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawScrollBarPlusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawScrollBarMinusButton(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawScrollBarHandle(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawSplitter(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation) override;
+		PLGUI_API virtual void DrawMenuBar(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawPopupMenu(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
+		PLGUI_API virtual void DrawMenuItem(Graphics &cGraphics, const PLMath::Vector2i &vPos1, const PLMath::Vector2i &vPos2, const PLCore::String &sTitle, const Image &cImage, bool bDrawArrow, EMenuItemType nType, EOrientation nOrientation, PLCore::uint32 nWidgetState) override;
 
 
 	//[-------------------------------------------------------]

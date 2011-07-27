@@ -199,6 +199,11 @@ class AnimationInfo {
 		PLRENDERER_API AnimationEventManager &GetEventManager();
 		PLRENDERER_API const AnimationEventManager &GetEventManager() const;
 
+
+	//[-------------------------------------------------------]
+	//[ Public virtual AnimationInfo functions                ]
+	//[-------------------------------------------------------]
+	public:
 		/**
 		*  @brief
 		*    Copy operator

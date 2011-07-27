@@ -104,7 +104,7 @@ class PopupMenu : public AbstractMenu {
 	//[ Protected virtual Widget functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
 
 
 	//[-------------------------------------------------------]

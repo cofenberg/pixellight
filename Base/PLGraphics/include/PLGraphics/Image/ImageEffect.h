@@ -92,7 +92,7 @@ class ImageEffect : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ImageEffect functions                  ]
 	//[-------------------------------------------------------]
 	public:
 		/**

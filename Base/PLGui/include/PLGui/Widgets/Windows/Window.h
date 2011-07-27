@@ -201,19 +201,19 @@ class Window : public ContainerWidget {
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
-		PLGUI_API virtual void OnAdjustContent();
-		PLGUI_API virtual void OnWindowState(EWindowState nWindowState);
-		PLGUI_API virtual void OnEnterFullscreen();
-		PLGUI_API virtual void OnLeaveFullscreen();
-		PLGUI_API virtual void OnActivate(bool bActivate);
-		PLGUI_API virtual void OnMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMousePosUpdate(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDoubleClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
+		PLGUI_API virtual void OnAdjustContent() override;
+		PLGUI_API virtual void OnWindowState(EWindowState nWindowState) override;
+		PLGUI_API virtual void OnEnterFullscreen() override;
+		PLGUI_API virtual void OnLeaveFullscreen() override;
+		PLGUI_API virtual void OnActivate(bool bActivate) override;
+		PLGUI_API virtual void OnMove(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMousePosUpdate(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseLeave() override;
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonDoubleClick(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
 
 
 	//[-------------------------------------------------------]

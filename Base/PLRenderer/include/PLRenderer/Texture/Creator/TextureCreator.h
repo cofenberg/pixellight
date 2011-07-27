@@ -100,7 +100,7 @@ class TextureCreator : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual TextureCreator functions            ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

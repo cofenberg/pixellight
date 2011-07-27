@@ -392,7 +392,7 @@ class Image : public PLCore::Loadable {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLGRAPHICS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLGRAPHICS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]

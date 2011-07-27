@@ -100,8 +100,8 @@ class ImageLinux : public ImageImpl {
 	//[ Public virtual ImageImpl functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLCore::String &sFilename);
-		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor);
+		virtual bool Load(const PLCore::String &sFilename) override;
+		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor) override;
 
 
 	//[-------------------------------------------------------]

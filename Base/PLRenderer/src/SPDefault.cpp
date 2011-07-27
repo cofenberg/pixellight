@@ -73,7 +73,7 @@ SPDefault::~SPDefault()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::SurfacePainter functions  ]
+//[ Private virtual SurfacePainter functions              ]
 //[-------------------------------------------------------]
 void SPDefault::OnPaint(Surface &cSurface)
 {

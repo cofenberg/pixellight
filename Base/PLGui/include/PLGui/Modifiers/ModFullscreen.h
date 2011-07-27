@@ -77,15 +77,15 @@ class ModFullscreen : public Modifier {
 	//[ Protected virtual Modifier functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnAttach(Widget &cWidget);
-		virtual void OnDetach(Widget &cWidget);
+		virtual void OnAttach(Widget &cWidget) override;
+		virtual void OnDetach(Widget &cWidget) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		virtual void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers) override;
 
 
 };

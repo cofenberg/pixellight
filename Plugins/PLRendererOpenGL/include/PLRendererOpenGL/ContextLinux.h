@@ -98,9 +98,9 @@ class ContextLinux : public Context {
 	//[ Public virtual Context methods                        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool IsValid() const;
-		virtual void MakeDummyCurrent() const;
-		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList);
+		virtual bool IsValid() const override;
+		virtual void MakeDummyCurrent() const override;
+		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
 
 
 	//[-------------------------------------------------------]

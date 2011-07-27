@@ -260,7 +260,7 @@ class WiiMote : public Device {
 	//[ Public virtual Controller functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual void UpdateOutputControl(Control *pControl);
+		PLINPUT_API virtual void UpdateOutputControl(Control *pControl) override;
 
 
 	//[-------------------------------------------------------]

@@ -197,7 +197,7 @@ class Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual Resource functions                  ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

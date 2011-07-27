@@ -81,7 +81,7 @@ class TextureCreatorSpot2D : public TextureCreator {
 	//[ Private virtual TextureCreator functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = nullptr) const;
+		virtual Texture *Create(TextureManager &cTextureManager, Texture *pTexture = nullptr) const override;
 
 
 };

@@ -79,7 +79,7 @@ class Database : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Database functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**

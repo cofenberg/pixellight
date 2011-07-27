@@ -77,7 +77,7 @@ class DatabaseQueryResult {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual DatabaseQueryResult functions          ]
 	//[-------------------------------------------------------]
 	public:
 		/**

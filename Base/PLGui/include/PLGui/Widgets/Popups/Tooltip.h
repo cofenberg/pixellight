@@ -86,15 +86,15 @@ class Tooltip : public AbstractTooltip {
 	//[ Protected virtual AbstractTooltip functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnShowTooltip();
-		PLGUI_API virtual void OnTimeout();
+		PLGUI_API virtual void OnShowTooltip() override;
+		PLGUI_API virtual void OnTimeout() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
 
 
 	//[-------------------------------------------------------]

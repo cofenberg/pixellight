@@ -79,7 +79,7 @@ class HIDDevice : public ConnectionDevice {
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API ~HIDDevice();
+		PLINPUT_API virtual ~HIDDevice();
 
 		/**
 		*  @brief
@@ -188,6 +188,11 @@ class HIDDevice : public ConnectionDevice {
 		*/
 		void ParseInputReport(const PLCore::uint8 *pInputReport, PLCore::uint32 nSize);
 
+
+	//[-------------------------------------------------------]
+	//[ Public virtual HIDDevice functions                    ]
+	//[-------------------------------------------------------]
+	public:
 		/**
 		*  @brief
 		*    Send HID output report

@@ -93,12 +93,12 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[ Public virtual PLRenderer::Font functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
-		virtual bool IsValid() const;
-		virtual float GetAscender() const;
-		virtual float GetDescender() const;
-		virtual float GetHeight() const;
-		virtual float GetTextWidth(const PLCore::String &sText);
+		virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) override;
+		virtual bool IsValid() const override;
+		virtual float GetAscender() const override;
+		virtual float GetDescender() const override;
+		virtual float GetHeight() const override;
+		virtual float GetTextWidth(const PLCore::String &sText) override;
 
 
 	//[-------------------------------------------------------]
@@ -166,8 +166,8 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup) override;
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup) override;
 
 
 };

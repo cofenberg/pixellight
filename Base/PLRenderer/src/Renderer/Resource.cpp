@@ -176,7 +176,7 @@ Resource &Resource::operator =(const Resource &cSource)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual Resource functions                  ]
 //[-------------------------------------------------------]
 /**
 *  @brief

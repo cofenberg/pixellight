@@ -129,7 +129,7 @@ class FontManager : public PLRenderer::FontManager {
 	//[ Public virtual PLRenderer::FontManager functions      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLRenderer::Font *CreateFontTexture(PLCore::File &cFile, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
+		virtual PLRenderer::Font *CreateFontTexture(PLCore::File &cFile, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) override;
 
 
 	//[-------------------------------------------------------]

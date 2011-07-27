@@ -99,13 +99,13 @@ class FontTexture : public PLRenderer::FontTexture {
 	//[ Public virtual PLRenderer::Font functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
-		virtual bool IsValid() const;
-		virtual float GetAscender() const;
-		virtual float GetDescender() const;
-		virtual float GetHeight() const;
-		virtual float GetTextWidth(const PLCore::String &sText);
-		virtual void Draw(const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLCore::uint32 nFlags = 0);
+		virtual bool SetSize(PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) override;
+		virtual bool IsValid() const override;
+		virtual float GetAscender() const override;
+		virtual float GetDescender() const override;
+		virtual float GetHeight() const override;
+		virtual float GetTextWidth(const PLCore::String &sText) override;
+		virtual void Draw(const PLCore::String &sText, const PLGraphics::Color4 &cColor, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, const PLMath::Vector2 &vScale = PLMath::Vector2::One, const PLMath::Vector2 &vBias = PLMath::Vector2::Zero, PLCore::uint32 nFlags = 0) override;
 
 
 	//[-------------------------------------------------------]

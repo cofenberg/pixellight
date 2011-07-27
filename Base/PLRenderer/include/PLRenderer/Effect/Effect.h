@@ -315,9 +315,9 @@ class Effect : public PLCore::Resource<Effect> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Reload();
-		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual bool Reload() override;
+		PLRENDERER_API virtual bool Unload() override;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

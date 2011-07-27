@@ -80,21 +80,21 @@ class GuiWindows : public GuiImpl {
 	//[ Public virtual GuiImpl functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool HasPendingMessages();
-		virtual void ProcessMessage();
-		virtual void PostMessage(const GuiMessage &cMessage);
-		virtual void EnumerateScreens(PLCore::List<Screen*> &lstScreens);
-		virtual PLMath::Vector2i GetScreenSize() const;
-		virtual bool HasTaskbar();
-		virtual void SetMouseVisible(bool bVisible);
-		virtual void ListFonts(PLCore::List<FontInfo> &lstFonts) const;
-		virtual WidgetImpl *CreateWidgetImpl(Widget &cWidget) const;
-		virtual GraphicsImpl *CreateGraphicsImpl(Graphics &cGraphics) const;
-		virtual ImageImpl *CreateImageImpl(Image &cImage) const;
-		virtual FontImpl *CreateFontImpl(Font &cFont) const;
-		virtual CursorImpl *CreateCursorImpl(Cursor &cCursor) const;
-		virtual TrayIconImpl *CreateTrayIconImpl(TrayIcon &cTrayIcon) const;
-		virtual ClipBoardImpl *CreateClipBoardImpl(ClipBoard &cClipBoard) const;
+		virtual bool HasPendingMessages() override;
+		virtual void ProcessMessage() override;
+		virtual void PostMessage(const GuiMessage &cMessage) override;
+		virtual void EnumerateScreens(PLCore::List<Screen*> &lstScreens) override;
+		virtual PLMath::Vector2i GetScreenSize() const override;
+		virtual bool HasTaskbar() override;
+		virtual void SetMouseVisible(bool bVisible) override;
+		virtual void ListFonts(PLCore::List<FontInfo> &lstFonts) const override;
+		virtual WidgetImpl *CreateWidgetImpl(Widget &cWidget) const override;
+		virtual GraphicsImpl *CreateGraphicsImpl(Graphics &cGraphics) const override;
+		virtual ImageImpl *CreateImageImpl(Image &cImage) const override;
+		virtual FontImpl *CreateFontImpl(Font &cFont) const override;
+		virtual CursorImpl *CreateCursorImpl(Cursor &cCursor) const override;
+		virtual TrayIconImpl *CreateTrayIconImpl(TrayIcon &cTrayIcon) const override;
+		virtual ClipBoardImpl *CreateClipBoardImpl(ClipBoard &cClipBoard) const override;
 
 
 	//[-------------------------------------------------------]

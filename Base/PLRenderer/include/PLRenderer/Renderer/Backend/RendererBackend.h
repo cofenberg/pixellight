@@ -297,72 +297,72 @@ class RendererBackend : public Renderer {
 	//[ Public virtual Renderer functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual RendererContext &GetRendererContext() const;
-		PLRENDERER_API virtual EMode GetMode() const;
-		PLRENDERER_API virtual DrawHelpers &GetDrawHelpers() const;
-		PLRENDERER_API virtual void BackupDeviceObjects();
-		PLRENDERER_API virtual void RestoreDeviceObjects();
-		PLRENDERER_API virtual PLCore::uint32 GetNumOfDisplayModes() const;
-		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLCore::uint32 nIndex) const;
-		PLRENDERER_API virtual const Capabilities &GetCapabilities() const;
-		PLRENDERER_API virtual bool IsValidTextureBuffer1DSize(int nSize) const;
-		PLRENDERER_API virtual bool IsValidTextureBuffer2DSize(int nSize) const;
-		PLRENDERER_API virtual bool IsValidTextureBufferRectangleSize(int nSize) const;
-		PLRENDERER_API virtual bool IsValidTextureBuffer3DSize(int nSize) const;
-		PLRENDERER_API virtual bool IsValidTextureBufferCubeSize(int nSize) const;
-		PLRENDERER_API virtual const Statistics &GetStatistics() const;
-		PLRENDERER_API virtual const PLMath::Vector2 &GetTexelToPixelOffset() const;
-		PLRENDERER_API virtual void Update();
-		PLRENDERER_API virtual void Reset();
+		PLRENDERER_API virtual RendererContext &GetRendererContext() const override;
+		PLRENDERER_API virtual EMode GetMode() const override;
+		PLRENDERER_API virtual DrawHelpers &GetDrawHelpers() const override;
+		PLRENDERER_API virtual void BackupDeviceObjects() override;
+		PLRENDERER_API virtual void RestoreDeviceObjects() override;
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfDisplayModes() const override;
+		PLRENDERER_API virtual const DisplayMode *GetDisplayMode(PLCore::uint32 nIndex) const override;
+		PLRENDERER_API virtual const Capabilities &GetCapabilities() const override;
+		PLRENDERER_API virtual bool IsValidTextureBuffer1DSize(int nSize) const override;
+		PLRENDERER_API virtual bool IsValidTextureBuffer2DSize(int nSize) const override;
+		PLRENDERER_API virtual bool IsValidTextureBufferRectangleSize(int nSize) const override;
+		PLRENDERER_API virtual bool IsValidTextureBuffer3DSize(int nSize) const override;
+		PLRENDERER_API virtual bool IsValidTextureBufferCubeSize(int nSize) const override;
+		PLRENDERER_API virtual const Statistics &GetStatistics() const override;
+		PLRENDERER_API virtual const PLMath::Vector2 &GetTexelToPixelOffset() const override;
+		PLRENDERER_API virtual void Update() override;
+		PLRENDERER_API virtual void Reset() override;
 
 		//[-------------------------------------------------------]
 		//[ Surfaces                                              ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLCore::uint32 GetNumOfSurfaces() const;
-		PLRENDERER_API virtual Surface *GetSurface(PLCore::uint32 nIndex = 0) const;
-		PLRENDERER_API virtual bool AddSurface(Surface &cSurface);
-		PLRENDERER_API virtual bool RemoveSurface(Surface &cSurface);
-		PLRENDERER_API virtual SurfacePainter *CreateSurfacePainter(const PLCore::String &sClass);
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfSurfaces() const override;
+		PLRENDERER_API virtual Surface *GetSurface(PLCore::uint32 nIndex = 0) const override;
+		PLRENDERER_API virtual bool AddSurface(Surface &cSurface) override;
+		PLRENDERER_API virtual bool RemoveSurface(Surface &cSurface) override;
+		PLRENDERER_API virtual SurfacePainter *CreateSurfacePainter(const PLCore::String &sClass) override;
 
 		//[-------------------------------------------------------]
 		//[ Resources                                             ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLCore::uint32 GetNumOfResources() const;
-		PLRENDERER_API virtual Resource *GetResource(PLCore::uint32 nIndex = 0) const;
-		PLRENDERER_API virtual bool AddResource(Resource &cResource);
-		PLRENDERER_API virtual bool RemoveResource(Resource &cResource);
+		PLRENDERER_API virtual PLCore::uint32 GetNumOfResources() const override;
+		PLRENDERER_API virtual Resource *GetResource(PLCore::uint32 nIndex = 0) const override;
+		PLRENDERER_API virtual bool AddResource(Resource &cResource) override;
+		PLRENDERER_API virtual bool RemoveResource(Resource &cResource) override;
 
 		//[-------------------------------------------------------]
 		//[ States                                                ]
 		//[-------------------------------------------------------]
 		// Render states
-		PLRENDERER_API virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const;
-		PLRENDERER_API virtual void ResetRenderStates();
-		PLRENDERER_API virtual int GetRenderState(RenderState::Enum nState) const;
+		PLRENDERER_API virtual PLCore::uint32 GetDefaultRenderState(RenderState::Enum nState) const override;
+		PLRENDERER_API virtual void ResetRenderStates() override;
+		PLRENDERER_API virtual int GetRenderState(RenderState::Enum nState) const override;
 		// Sampler states
-		PLRENDERER_API virtual PLCore::uint32 GetDefaultSamplerState(Sampler::Enum nState) const;
-		PLRENDERER_API virtual void ResetSamplerStates();
-		PLRENDERER_API virtual int GetSamplerState(PLCore::uint32 nStage, Sampler::Enum nState) const;
+		PLRENDERER_API virtual PLCore::uint32 GetDefaultSamplerState(Sampler::Enum nState) const override;
+		PLRENDERER_API virtual void ResetSamplerStates() override;
+		PLRENDERER_API virtual int GetSamplerState(PLCore::uint32 nStage, Sampler::Enum nState) const override;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual PLCore::uint32 GetSwapInterval() const;
-		PLRENDERER_API virtual void SetSwapInterval(PLCore::uint32 nSwapInterval = 1);
-		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const;
-		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f);
-		PLRENDERER_API virtual const PLMath::Rectangle &GetScissorRect() const;
-		PLRENDERER_API virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr);
+		PLRENDERER_API virtual PLCore::uint32 GetSwapInterval() const override;
+		PLRENDERER_API virtual void SetSwapInterval(PLCore::uint32 nSwapInterval = 1) override;
+		PLRENDERER_API virtual const PLMath::Rectangle &GetViewport(float *pfMinZ = nullptr, float *pfMaxZ = nullptr) const override;
+		PLRENDERER_API virtual bool SetViewport(const PLMath::Rectangle *pRectangle = nullptr, float fMinZ = 0.0f, float fMaxZ = 1.0f) override;
+		PLRENDERER_API virtual const PLMath::Rectangle &GetScissorRect() const override;
+		PLRENDERER_API virtual bool SetScissorRect(const PLMath::Rectangle *pRectangle = nullptr) override;
 	
 		//[-------------------------------------------------------]
 		//[ Get/set current resources                             ]
 		//[-------------------------------------------------------]
-		PLRENDERER_API virtual Surface *GetRenderTarget(PLCore::uint8 *pnFace = nullptr) const;
-		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLCore::uint8 nColorIndex = 0) const;
-		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLCore::uint32 nStage) const;
-		PLRENDERER_API virtual IndexBuffer *GetIndexBuffer() const;
-		PLRENDERER_API virtual Program *GetProgram() const;
-		PLRENDERER_API virtual bool SetProgram(Program *pProgram = nullptr);
+		PLRENDERER_API virtual Surface *GetRenderTarget(PLCore::uint8 *pnFace = nullptr) const override;
+		PLRENDERER_API virtual TextureBuffer *GetColorRenderTarget(PLCore::uint8 nColorIndex = 0) const override;
+		PLRENDERER_API virtual TextureBuffer *GetTextureBuffer(PLCore::uint32 nStage) const override;
+		PLRENDERER_API virtual IndexBuffer *GetIndexBuffer() const override;
+		PLRENDERER_API virtual Program *GetProgram() const override;
+		PLRENDERER_API virtual bool SetProgram(Program *pProgram = nullptr) override;
 
 
 };

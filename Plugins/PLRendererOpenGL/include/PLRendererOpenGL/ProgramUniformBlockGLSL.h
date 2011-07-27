@@ -96,12 +96,12 @@ class ProgramUniformBlockGLSL : public PLRenderer::ProgramUniformBlock {
 	//[ Public virtual PLRenderer::ProgramUniformBlock functions ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool SetUniformBuffer(PLRenderer::UniformBuffer *pUniformBuffer, PLCore::uint32 nBindingPoint);
-		virtual PLCore::uint32 GetIndex() const;
-		virtual PLCore::uint32 GetSize() const;
-		virtual PLCore::uint32 GetUniformOffset(const PLCore::String &sUniformName) const;
-		virtual PLCore::uint32 GetUniformSize(const PLCore::String &sUniformName) const;
-		virtual PLCore::uint32 GetUniformNumOfArrayElements(const PLCore::String &sUniformName) const;
+		virtual bool SetUniformBuffer(PLRenderer::UniformBuffer *pUniformBuffer, PLCore::uint32 nBindingPoint) override;
+		virtual PLCore::uint32 GetIndex() const override;
+		virtual PLCore::uint32 GetSize() const override;
+		virtual PLCore::uint32 GetUniformOffset(const PLCore::String &sUniformName) const override;
+		virtual PLCore::uint32 GetUniformSize(const PLCore::String &sUniformName) const override;
+		virtual PLCore::uint32 GetUniformNumOfArrayElements(const PLCore::String &sUniformName) const override;
 
 
 };

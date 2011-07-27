@@ -114,26 +114,26 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	//[ Public virtual PLRenderer::SurfaceWindow functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const;
-		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f);
+		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const override;
+		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Surface functions          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLMath::Vector2i GetSize() const;
+		virtual PLMath::Vector2i GetSize() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Surface functions         ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool Init();
-		virtual void DeInit();
-		virtual bool MakeCurrent(PLCore::uint8 nFace = 0);
-		virtual bool UnmakeCurrent();
-		virtual bool Present();
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool UnmakeCurrent() override;
+		virtual bool Present() override;
 
 
 	//[-------------------------------------------------------]

@@ -99,7 +99,7 @@ class TimerThread : public PLCore::Thread {
 	//[ Private virtual PLCore::ThreadFunction functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual int Run();
+		virtual int Run() override;
 
 
 	//[-------------------------------------------------------]

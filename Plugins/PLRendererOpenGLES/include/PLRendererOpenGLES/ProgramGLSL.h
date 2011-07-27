@@ -159,29 +159,29 @@ class ProgramGLSL : public PLRenderer::Program {
 	//[ Public virtual PLRenderer::Program functions          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetShaderLanguage() const;
-		virtual PLRenderer::VertexShader *GetVertexShader() const;
-		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader);
-		virtual PLRenderer::GeometryShader *GetGeometryShader() const;
-		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader);
-		virtual PLRenderer::FragmentShader *GetFragmentShader() const;
-		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader);
-		virtual bool IsValid();
-		virtual PLCore::String GetCompiledProgram();
-		virtual const PLCore::Array<PLRenderer::ProgramAttribute*> &GetAttributes();
-		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLCore::String &sName);
-		virtual const PLCore::Array<PLRenderer::ProgramUniform*> &GetUniforms();
-		virtual PLRenderer::ProgramUniform *GetUniform(const PLCore::String &sName);
-		virtual const PLCore::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks();
-		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName);
+		virtual PLCore::String GetShaderLanguage() const override;
+		virtual PLRenderer::VertexShader *GetVertexShader() const override;
+		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) override;
+		virtual PLRenderer::GeometryShader *GetGeometryShader() const override;
+		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) override;
+		virtual PLRenderer::FragmentShader *GetFragmentShader() const override;
+		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader) override;
+		virtual bool IsValid() override;
+		virtual PLCore::String GetCompiledProgram() override;
+		virtual const PLCore::Array<PLRenderer::ProgramAttribute*> &GetAttributes() override;
+		virtual PLRenderer::ProgramAttribute *GetAttribute(const PLCore::String &sName) override;
+		virtual const PLCore::Array<PLRenderer::ProgramUniform*> &GetUniforms() override;
+		virtual PLRenderer::ProgramUniform *GetUniform(const PLCore::String &sName) override;
+		virtual const PLCore::Array<PLRenderer::ProgramUniformBlock*> &GetUniformBlocks() override;
+		virtual PLRenderer::ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLRenderer::Program functions       ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual bool MakeCurrent();
-		virtual bool UnmakeCurrent();
+		virtual bool MakeCurrent() override;
+		virtual bool UnmakeCurrent() override;
 
 
 };

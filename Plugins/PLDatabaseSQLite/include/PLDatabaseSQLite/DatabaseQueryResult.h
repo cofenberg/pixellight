@@ -121,10 +121,10 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	//[ Public virtual PLDatabase::DatabaseQueryResult functions ]
 	//[-------------------------------------------------------]
 	public:
-		PLDATABASESQLITE_API virtual bool IsEmpty() const;
-		PLDATABASESQLITE_API virtual void FirstRow();
-		PLDATABASESQLITE_API virtual const PLCore::Array<PLCore::String> &FetchFieldList();
-		PLDATABASESQLITE_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow();
+		PLDATABASESQLITE_API virtual bool IsEmpty() const override;
+		PLDATABASESQLITE_API virtual void FirstRow() override;
+		PLDATABASESQLITE_API virtual const PLCore::Array<PLCore::String> &FetchFieldList() override;
+		PLDATABASESQLITE_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow() override;
 
 
 };

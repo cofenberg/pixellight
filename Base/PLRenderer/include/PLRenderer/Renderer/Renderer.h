@@ -115,7 +115,7 @@ class Renderer : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Renderer functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**

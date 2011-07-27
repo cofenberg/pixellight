@@ -79,7 +79,7 @@ class GraphManager : public PLCore::ResourceManager<Graph>, public PLCore::Singl
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Graph *CreateResource(const PLCore::String &sName);
+		virtual Graph *CreateResource(const PLCore::String &sName) override;
 
 
 };

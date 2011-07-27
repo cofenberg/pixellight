@@ -129,7 +129,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    - Call OnCreateMainWindow()
 		*    - Return and go on with OnInit()
 		*/
-		PLGUI_API virtual bool Init();
+		PLGUI_API virtual bool Init() override;
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    - Run GUI main loop (processing GUI messages)
 		*    - Exit loop when either the GUI or the application has been stopped
 		*/
-		PLGUI_API virtual void Main();
+		PLGUI_API virtual void Main() override;
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    - Everything that ConsoleApplication::DeInit() does
 		*    - De-initialize system GUI
 		*/
-		PLGUI_API virtual void DeInit();
+		PLGUI_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]

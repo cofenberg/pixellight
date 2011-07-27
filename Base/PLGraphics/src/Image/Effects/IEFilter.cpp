@@ -60,7 +60,7 @@ IEFilter::~IEFilter()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IEFilter::Apply(ImageBuffer &cImageBuffer) const
 {

@@ -62,7 +62,7 @@ IEFlipYAxis::~IEFlipYAxis()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IEFlipYAxis::Apply(ImageBuffer &cImageBuffer) const
 {

@@ -74,7 +74,7 @@ ImageEffect *ImageEffectWrapper::GetImageEffect() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool ImageEffectWrapper::Apply(Image &cImage) const
 {

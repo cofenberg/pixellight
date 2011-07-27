@@ -108,7 +108,7 @@ class Buffer : public Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Buffer functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**

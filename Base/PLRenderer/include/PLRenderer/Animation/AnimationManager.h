@@ -85,7 +85,7 @@ class AnimationManager : public PLCore::ElementManager<PLRenderer::Animation> {
 	//[ Protected virtual PLCore::ElementManager functions    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLRENDERER_API virtual PLRenderer::Animation *CreateElement(const PLCore::String &sName);
+		PLRENDERER_API virtual PLRenderer::Animation *CreateElement(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]

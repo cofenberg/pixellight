@@ -86,12 +86,12 @@ class ImageEffectWrapper: public ImageEffect {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ImageEffect functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Apply(Image &cImage) const;
-		virtual bool Apply(ImagePart &cPart) const;
-		virtual bool Apply(ImageBuffer &cBuffer) const;
+		virtual bool Apply(Image &cImage) const override;
+		virtual bool Apply(ImagePart &cPart) const override;
+		virtual bool Apply(ImageBuffer &cBuffer) const override;
 
 
 	//[-------------------------------------------------------]

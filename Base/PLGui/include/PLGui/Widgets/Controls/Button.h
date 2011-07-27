@@ -80,17 +80,17 @@ class Button : public AbstractButton {
 	//[ Protected virtual AbstractButton functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnButtonClicked();
+		PLGUI_API virtual void OnButtonClicked() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnMouseEnter();
-		PLGUI_API virtual void OnMouseLeave();
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnMouseEnter() override;
+		PLGUI_API virtual void OnMouseLeave() override;
 
 
 };

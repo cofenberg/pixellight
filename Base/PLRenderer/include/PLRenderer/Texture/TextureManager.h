@@ -272,7 +272,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Texture *CreateResource(const PLCore::String &sName);
+		virtual Texture *CreateResource(const PLCore::String &sName) override;
 
 
 };

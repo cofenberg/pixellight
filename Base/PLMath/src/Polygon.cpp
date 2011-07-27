@@ -315,7 +315,7 @@ Polygon Polygon::Clip(const Plane &cPlane) const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Polygon functions                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief

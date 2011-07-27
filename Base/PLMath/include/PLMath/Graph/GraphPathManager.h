@@ -79,7 +79,7 @@ class GraphPathManager : public PLCore::ResourceManager<GraphPath>, public PLCor
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual GraphPath *CreateResource(const PLCore::String &sName);
+		virtual GraphPath *CreateResource(const PLCore::String &sName) override;
 
 
 };

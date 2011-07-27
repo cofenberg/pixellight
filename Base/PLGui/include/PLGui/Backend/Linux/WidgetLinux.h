@@ -86,40 +86,40 @@ class WidgetLinux : public WidgetImpl {
 	//[ Public virtual WidgetImpl functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void CreateWidget();
-		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle);
-		virtual bool IsDestroyed() const;
-		virtual void Destroy();
-		virtual PLCore::handle GetWindowHandle() const;
-		virtual void SetParent(WidgetImpl *pParent);
-		virtual bool IsShowInTaskbar() const;
-		virtual void SetShowInTaskbar(bool bShowInTaskbar);
-		virtual void MoveToScreen(Screen &cScreen);
-		virtual PLMath::Vector2i GetPos() const;
-		virtual void SetPos(const PLMath::Vector2i &vPos);
-		virtual PLMath::Vector2i GetSize() const;
-		virtual void SetSize(const PLMath::Vector2i &vSize);
-		virtual void SetZPos(EZPos nZPos, Widget *pWidget);
-		virtual bool IsTopmost() const;
-		virtual void SetTopmost(bool bTopmost);
-		virtual EWindowState GetWindowState() const;
-		virtual void SetWindowState(EWindowState nWindowState);
-		virtual void SetTransparency(ETransparency nTransparency, const PLGraphics::Color4 &cColor);
-		virtual bool IsVisible() const;
-		virtual void SetVisible(bool bVisible);
-		virtual bool IsEnabled() const;
-		virtual void SetEnabled(bool bEnabled);
-		virtual void Activate();
-		virtual void SetFocus();
-		virtual void Redraw();
-		virtual void SetCaptureMouse(bool bCapture);
-		virtual void SetTrapMouse(bool bTrap);
-		virtual void SetTitle(const PLCore::String &sTitle);
-		virtual void SetIcon(const Image &cIcon);
-		virtual PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey);
-		virtual void UnregisterHotkey(PLCore::uint32 nID);
-		virtual void SetCursor(const Cursor &cCursor);
-		virtual bool GetMousePos(PLMath::Vector2i &vPos);
+		virtual void CreateWidget() override;
+		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle) override;
+		virtual bool IsDestroyed() const override;
+		virtual void Destroy() override;
+		virtual PLCore::handle GetWindowHandle() const override;
+		virtual void SetParent(WidgetImpl *pParent) override;
+		virtual bool IsShowInTaskbar() const override;
+		virtual void SetShowInTaskbar(bool bShowInTaskbar) override;
+		virtual void MoveToScreen(Screen &cScreen) override;
+		virtual PLMath::Vector2i GetPos() const override;
+		virtual void SetPos(const PLMath::Vector2i &vPos) override;
+		virtual PLMath::Vector2i GetSize() const override;
+		virtual void SetSize(const PLMath::Vector2i &vSize) override;
+		virtual void SetZPos(EZPos nZPos, Widget *pWidget) override;
+		virtual bool IsTopmost() const override;
+		virtual void SetTopmost(bool bTopmost) override;
+		virtual EWindowState GetWindowState() const override;
+		virtual void SetWindowState(EWindowState nWindowState) override;
+		virtual void SetTransparency(ETransparency nTransparency, const PLGraphics::Color4 &cColor) override;
+		virtual bool IsVisible() const override;
+		virtual void SetVisible(bool bVisible) override;
+		virtual bool IsEnabled() const override;
+		virtual void SetEnabled(bool bEnabled) override;
+		virtual void Activate() override;
+		virtual void SetFocus() override;
+		virtual void Redraw() override;
+		virtual void SetCaptureMouse(bool bCapture) override;
+		virtual void SetTrapMouse(bool bTrap) override;
+		virtual void SetTitle(const PLCore::String &sTitle) override;
+		virtual void SetIcon(const Image &cIcon) override;
+		virtual PLCore::uint32 RegisterHotkey(PLCore::uint32 nModKey, PLCore::uint32 nKey) override;
+		virtual void UnregisterHotkey(PLCore::uint32 nID) override;
+		virtual void SetCursor(const Cursor &cCursor) override;
+		virtual bool GetMousePos(PLMath::Vector2i &vPos) override;
 
 
 	//[-------------------------------------------------------]

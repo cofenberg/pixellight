@@ -204,7 +204,7 @@ class Texture : public PLCore::Resource<Texture> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Texture functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -275,11 +275,11 @@ class Texture : public PLCore::Resource<Texture> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLRENDERER_API virtual bool Save(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLRENDERER_API virtual bool Unload();
-		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const;
+		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool Save(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool Save(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool Unload() override;
+		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

@@ -72,7 +72,7 @@ class LinuxKeyboardDevice : public UpdateDevice {
 	//[ Public virtual UpdateDevice functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Update();
+		virtual void Update() override;
 
 
 	//[-------------------------------------------------------]

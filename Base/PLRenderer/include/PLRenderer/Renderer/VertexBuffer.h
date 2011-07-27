@@ -254,7 +254,7 @@ class VertexBuffer : public Buffer {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual VertexBuffer functions                 ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -355,7 +355,7 @@ class VertexBuffer : public Buffer {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual VertexBuffer functions                ]
 	//[-------------------------------------------------------]
 	private:
 		/**
@@ -376,7 +376,7 @@ class VertexBuffer : public Buffer {
 	//[ Public virtual Buffer functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual void *GetData();
+		PLRENDERER_API virtual void *GetData() override;
 
 
 };

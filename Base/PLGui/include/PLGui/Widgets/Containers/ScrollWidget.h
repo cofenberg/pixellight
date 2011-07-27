@@ -146,8 +146,8 @@ class ScrollWidget : public ContainerWidget {
 	//[ Public virtual Widget functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLGUI_API virtual void OnSize(const PLMath::Vector2i &vSize);
-		PLGUI_API virtual void OnAdjustContent();
+		PLGUI_API virtual void OnSize(const PLMath::Vector2i &vSize) override;
+		PLGUI_API virtual void OnAdjustContent() override;
 
 
 	//[-------------------------------------------------------]

@@ -80,15 +80,15 @@ class ModClose : public Modifier {
 	//[ Protected virtual Modifier functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnAttach(Widget &cWidget);
-		virtual void OnDetach(Widget &cWidget);
+		virtual void OnAttach(Widget &cWidget) override;
+		virtual void OnDetach(Widget &cWidget) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual WidgetFunctions functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnClose();
+		virtual void OnClose() override;
 
 
 };

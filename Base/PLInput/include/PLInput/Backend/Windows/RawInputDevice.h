@@ -161,7 +161,7 @@ class RawInputDevice : public UpdateDevice {
 	//[ Public virtual UpdateDevice functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual void Update();
+		PLINPUT_API virtual void Update() override;
 
 
 	//[-------------------------------------------------------]

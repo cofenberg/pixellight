@@ -75,7 +75,7 @@ String ImageEffect::GetDescription() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 /**
 *  @brief

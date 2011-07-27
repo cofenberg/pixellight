@@ -125,27 +125,27 @@ class UniformBufferCg : public PLRenderer::UniformBuffer {
 	//[ Public virtual PLRenderer::UniformBuffer functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetShaderLanguage() const;
+		virtual PLCore::String GetShaderLanguage() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Buffer functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
-		virtual bool Clear();
-		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
-		virtual void *GetData();
-		virtual bool Unlock();
+		virtual bool IsAllocated() const override;
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false) override;
+		virtual bool Clear() override;
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite) override;
+		virtual void *GetData() override;
+		virtual bool Unlock() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLRenderer::Resource functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup) override;
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup) override;
 
 
 };

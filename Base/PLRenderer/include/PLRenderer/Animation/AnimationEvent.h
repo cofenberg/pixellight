@@ -143,7 +143,7 @@ class AnimationEventManager : public PLCore::ElementManager<AnimationEvent> {
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AnimationEvent *CreateElement(const PLCore::String &sName);
+		virtual AnimationEvent *CreateElement(const PLCore::String &sName) override;
 
 
 };

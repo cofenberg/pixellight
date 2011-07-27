@@ -75,7 +75,7 @@ class IEFlipYAxis : public ImageEffect {
 	//[ Public virtual ImageEffect functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Apply(ImageBuffer &cBuffer) const;
+		virtual bool Apply(ImageBuffer &cBuffer) const override;
 
 
 };

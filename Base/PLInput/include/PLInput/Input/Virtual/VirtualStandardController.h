@@ -242,7 +242,7 @@ class VirtualStandardController : public VirtualController {
 	//[ Public virtual VirtualController functions            ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual void ConnectToDevices();
+		PLINPUT_API virtual void ConnectToDevices() override;
 
 
 };

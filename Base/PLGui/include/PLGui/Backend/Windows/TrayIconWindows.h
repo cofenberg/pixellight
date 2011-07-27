@@ -83,11 +83,11 @@ class TrayIconWindows : public TrayIconImpl {
 	//[ Private virtual TrayIconImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
-		PLGUI_API virtual void CreateTrayIcon();
-		PLGUI_API virtual void DestroyTrayIcon();
-		PLGUI_API virtual void SetVisible(bool bVisible);
-		PLGUI_API virtual void Update();
-		PLGUI_API virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText);
+		PLGUI_API virtual void CreateTrayIcon() override;
+		PLGUI_API virtual void DestroyTrayIcon() override;
+		PLGUI_API virtual void SetVisible(bool bVisible) override;
+		PLGUI_API virtual void Update() override;
+		PLGUI_API virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText) override;
 
 
 	//[-------------------------------------------------------]

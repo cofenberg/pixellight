@@ -187,7 +187,7 @@ float IEColorKey::GetTolerance() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 bool IEColorKey::Apply(ImageBuffer &cImageBuffer) const
 {

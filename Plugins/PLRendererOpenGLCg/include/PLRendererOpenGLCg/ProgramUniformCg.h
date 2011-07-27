@@ -58,7 +58,7 @@ class ProgramUniformCg : public PLRendererOpenGL::ProgramUniform {
 	//[ Public virtual ProgramUniform functions               ]
 	//[-------------------------------------------------------]
 	public:
-		virtual int Set(GLenum nOpenGLTextureTarget, GLuint nOpenGLTexture);
+		virtual int Set(GLenum nOpenGLTextureTarget, GLuint nOpenGLTexture) override;
 
 
 	//[-------------------------------------------------------]
@@ -93,75 +93,75 @@ class ProgramUniformCg : public PLRendererOpenGL::ProgramUniform {
 	//[-------------------------------------------------------]
 	public:
 		// 1 component
-		virtual void Get(int &nX);
-		virtual void Get(float &fX);
-		virtual void Get(double &fX);
-		virtual void Set(int nX);
-		virtual void Set(float fX);
-		virtual void Set(double fX);
+		virtual void Get(int &nX) override;
+		virtual void Get(float &fX) override;
+		virtual void Get(double &fX) override;
+		virtual void Set(int nX) override;
+		virtual void Set(float fX) override;
+		virtual void Set(double fX) override;
 		// 2 components
-		virtual void Get(int &nX, int &nY);
-		virtual void Get(float &fX, float &fY);
-		virtual void Get(double &fX, double &fY);
-		virtual void Get(PLMath::Vector2i &vVector);
-		virtual void Get(PLMath::Vector2 &vVector);
-		virtual void Get2(int *pnComponents);
-		virtual void Get2(float *pfComponents);
-		virtual void Get2(double *pfComponents);
-		virtual void Set(int nX, int nY);
-		virtual void Set(float fX, float fY);
-		virtual void Set(double fX, double fY);
-		virtual void Set(const PLMath::Vector2i &vVector);
-		virtual void Set(const PLMath::Vector2 &vVector);
-		virtual void Set2(const int *pnComponents);
-		virtual void Set2(const float *pfComponents);
-		virtual void Set2(const double *pfComponents);
+		virtual void Get(int &nX, int &nY) override;
+		virtual void Get(float &fX, float &fY) override;
+		virtual void Get(double &fX, double &fY) override;
+		virtual void Get(PLMath::Vector2i &vVector) override;
+		virtual void Get(PLMath::Vector2 &vVector) override;
+		virtual void Get2(int *pnComponents) override;
+		virtual void Get2(float *pfComponents) override;
+		virtual void Get2(double *pfComponents) override;
+		virtual void Set(int nX, int nY) override;
+		virtual void Set(float fX, float fY) override;
+		virtual void Set(double fX, double fY) override;
+		virtual void Set(const PLMath::Vector2i &vVector) override;
+		virtual void Set(const PLMath::Vector2 &vVector) override;
+		virtual void Set2(const int *pnComponents) override;
+		virtual void Set2(const float *pfComponents) override;
+		virtual void Set2(const double *pfComponents) override;
 		// 3 components
-		virtual void Get(int &nX, int &nY, int &nZ);
-		virtual void Get(float &fX, float &fY, float &fZ);
-		virtual void Get(double &fX, double &fY, double &fZ);
-		virtual void Get(PLMath::Vector3i &vVector);
-		virtual void Get(PLMath::Vector3 &vVector);
-		virtual void Get(PLGraphics::Color3 &cColor);	// Floating point
-		virtual void Get3(int *pnComponents);
-		virtual void Get3(float *pfComponents);
-		virtual void Get3(double *pfComponents);
-		virtual void Set(int nX, int nY, int nZ);
-		virtual void Set(float fX, float fY, float fZ);
-		virtual void Set(double fX, double fY, double fZ);
-		virtual void Set(const PLMath::Vector3i &vVector);
-		virtual void Set(const PLMath::Vector3 &vVector);
-		virtual void Set(const PLGraphics::Color3 &cColor);
-		virtual void Set3(const int *pnComponents);
-		virtual void Set3(const float *pfComponents);
-		virtual void Set3(const double *pfComponents);
+		virtual void Get(int &nX, int &nY, int &nZ) override;
+		virtual void Get(float &fX, float &fY, float &fZ) override;
+		virtual void Get(double &fX, double &fY, double &fZ) override;
+		virtual void Get(PLMath::Vector3i &vVector) override;
+		virtual void Get(PLMath::Vector3 &vVector) override;
+		virtual void Get(PLGraphics::Color3 &cColor) override;	// Floating point
+		virtual void Get3(int *pnComponents) override;
+		virtual void Get3(float *pfComponents) override;
+		virtual void Get3(double *pfComponents) override;
+		virtual void Set(int nX, int nY, int nZ) override;
+		virtual void Set(float fX, float fY, float fZ) override;
+		virtual void Set(double fX, double fY, double fZ) override;
+		virtual void Set(const PLMath::Vector3i &vVector) override;
+		virtual void Set(const PLMath::Vector3 &vVector) override;
+		virtual void Set(const PLGraphics::Color3 &cColor) override;
+		virtual void Set3(const int *pnComponents) override;
+		virtual void Set3(const float *pfComponents) override;
+		virtual void Set3(const double *pfComponents) override;
 		// 4 components
-		virtual void Get(int &nX, int &nY, int &nZ, int &nW);
-		virtual void Get(float &fX, float &fY, float &fZ, float &fW);
-		virtual void Get(double &fX, double &fY, double &fZ, double &fW);
-		virtual void Get(PLMath::Vector4 &vVector);
-		virtual void Get(PLGraphics::Color4 &cColor);	// Floating point
-		virtual void Get(PLMath::Quaternion &qQuaternion);
-		virtual void Get4(int *pnComponents);
-		virtual void Get4(float *pfComponents);
-		virtual void Get4(double *pfComponents);
-		virtual void Set(int nX, int nY, int nZ, int nW);
-		virtual void Set(float fX, float fY, float fZ, float fW);
-		virtual void Set(double fX, double fY, double fZ, double fW);
-		virtual void Set(const PLMath::Vector4 &vVector);
-		virtual void Set(const PLGraphics::Color4 &cColor);
-		virtual void Set(const PLMath::Quaternion &qQuaternion);
-		virtual void Set4(const int *pnComponents);
-		virtual void Set4(const float *pfComponents);
-		virtual void Set4(const double *pfComponents);
+		virtual void Get(int &nX, int &nY, int &nZ, int &nW) override;
+		virtual void Get(float &fX, float &fY, float &fZ, float &fW) override;
+		virtual void Get(double &fX, double &fY, double &fZ, double &fW) override;
+		virtual void Get(PLMath::Vector4 &vVector) override;
+		virtual void Get(PLGraphics::Color4 &cColor) override;	// Floating point
+		virtual void Get(PLMath::Quaternion &qQuaternion) override;
+		virtual void Get4(int *pnComponents) override;
+		virtual void Get4(float *pfComponents) override;
+		virtual void Get4(double *pfComponents) override;
+		virtual void Set(int nX, int nY, int nZ, int nW) override;
+		virtual void Set(float fX, float fY, float fZ, float fW) override;
+		virtual void Set(double fX, double fY, double fZ, double fW) override;
+		virtual void Set(const PLMath::Vector4 &vVector) override;
+		virtual void Set(const PLGraphics::Color4 &cColor) override;
+		virtual void Set(const PLMath::Quaternion &qQuaternion) override;
+		virtual void Set4(const int *pnComponents) override;
+		virtual void Set4(const float *pfComponents) override;
+		virtual void Set4(const double *pfComponents) override;
 		// Matrix
-		virtual void Get(PLMath::Matrix3x3 &mMatrix);
-		virtual void Get(PLMath::Matrix4x4 &mMatrix);
-		virtual void Set(const PLMath::Matrix3x3 &mMatrix, bool bTranspose = false);
-		virtual void Set(const PLMath::Matrix4x4 &mMatrix, bool bTranspose = false);
+		virtual void Get(PLMath::Matrix3x3 &mMatrix) override;
+		virtual void Get(PLMath::Matrix4x4 &mMatrix) override;
+		virtual void Set(const PLMath::Matrix3x3 &mMatrix, bool bTranspose = false) override;
+		virtual void Set(const PLMath::Matrix4x4 &mMatrix, bool bTranspose = false) override;
 		// Texture
-		virtual int GetTextureUnit() const;
-		virtual int Set(PLRenderer::TextureBuffer *pTextureBuffer);
+		virtual int GetTextureUnit() const override;
+		virtual int Set(PLRenderer::TextureBuffer *pTextureBuffer) override;
 
 
 };

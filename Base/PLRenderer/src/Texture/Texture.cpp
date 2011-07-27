@@ -144,7 +144,7 @@ bool Texture::Bind(uint32 nStage) const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Texture functions                      ]
 //[-------------------------------------------------------]
 bool Texture::IsAnimated() const
 {

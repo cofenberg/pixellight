@@ -228,7 +228,7 @@ bool IEScale::GetUseMipmaps() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ImageEffect functions                  ]
 //[-------------------------------------------------------]
 /**
 *  @brief

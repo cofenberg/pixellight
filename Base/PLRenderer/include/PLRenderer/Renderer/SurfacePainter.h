@@ -109,7 +109,7 @@ class SurfacePainter : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SurfacePainter functions            ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

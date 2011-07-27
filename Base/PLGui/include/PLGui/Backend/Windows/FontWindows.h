@@ -81,8 +81,8 @@ class FontWindows : public FontImpl {
 	//[ Public virtual FontImpl functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, EFontStyle nStyle);
-		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight);
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, EFontStyle nStyle) override;
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight) override;
 
 
 	//[-------------------------------------------------------]

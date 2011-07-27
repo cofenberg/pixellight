@@ -102,6 +102,10 @@ bool Connection::IsValid() const
 	return m_bValid;
 }
 
+
+//[-------------------------------------------------------]
+//[ Public virtual Connection functions                   ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Pass value from input to output

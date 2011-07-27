@@ -108,7 +108,7 @@ class Box : public Widget {
 	//[ Private virtual Widget functions                      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
+		virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
 
 
 	//[-------------------------------------------------------]

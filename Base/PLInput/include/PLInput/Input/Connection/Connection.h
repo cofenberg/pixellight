@@ -110,6 +110,11 @@ class Connection {
 		*/
 		PLINPUT_API bool IsValid() const;
 
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Connection functions                   ]
+	//[-------------------------------------------------------]
+	public:
 		/**
 		*  @brief
 		*    Pass value from input to output

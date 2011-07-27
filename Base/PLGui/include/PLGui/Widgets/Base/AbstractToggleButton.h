@@ -168,7 +168,7 @@ class AbstractToggleButton : public AbstractButton {
 	//[ Protected virtual AbstractButton functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnButtonClicked();
+		virtual void OnButtonClicked() override;
 
 
 	//[-------------------------------------------------------]

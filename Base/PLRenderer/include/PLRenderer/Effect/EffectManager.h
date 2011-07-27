@@ -151,7 +151,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Effect *CreateResource(const PLCore::String &sName);
+		virtual Effect *CreateResource(const PLCore::String &sName) override;
 
 
 };

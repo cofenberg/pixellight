@@ -193,7 +193,7 @@ class Surface {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Surface functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -236,7 +236,7 @@ class Surface {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual Surface functions                   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

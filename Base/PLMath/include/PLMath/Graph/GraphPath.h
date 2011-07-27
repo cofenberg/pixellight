@@ -257,8 +257,8 @@ class GraphPath : public PLCore::Resource<GraphPath> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API virtual bool Unload();
-		PLMATH_API virtual PLCore::String GetLoadableTypeName() const;
+		PLMATH_API virtual bool Unload() override;
+		PLMATH_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

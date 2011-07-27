@@ -80,8 +80,8 @@ class RadioButton : public AbstractToggleButton {
 	//[ Protected virtual Widget functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnDraw(Graphics &cGraphics);
-		virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
+		virtual void OnDraw(Graphics &cGraphics) override;
+		virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
 
 
 };

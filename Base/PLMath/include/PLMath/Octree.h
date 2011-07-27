@@ -340,7 +340,7 @@ class Octree {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual Octree functions                      ]
 	//[-------------------------------------------------------]
 	private:
 		/**

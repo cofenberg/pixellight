@@ -107,7 +107,7 @@ class Mouse : public Device {
 	//[ Public virtual Controller functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual void Update();
+		PLINPUT_API virtual void Update() override;
 
 
 };

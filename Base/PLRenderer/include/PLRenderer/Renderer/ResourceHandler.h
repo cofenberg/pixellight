@@ -111,7 +111,7 @@ class ResourceHandler {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ResourceHandler functions              ]
 	//[-------------------------------------------------------]
 	public:
 		/**

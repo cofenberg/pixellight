@@ -86,7 +86,7 @@ class HIDWindows : public HIDImpl {
 	//[ Private virtual HIDImpl functions                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void EnumerateDevices(PLCore::List<HIDDevice*> &lstDevices);
+		virtual void EnumerateDevices(PLCore::List<HIDDevice*> &lstDevices) override;
 
 
 	//[-------------------------------------------------------]

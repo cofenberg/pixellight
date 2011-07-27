@@ -186,13 +186,13 @@ class Splitter : public Widget {
 	//[ Public virtual Widget functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLGUI_API virtual void OnDraw(Graphics &cGraphics);
-		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const;
-		PLGUI_API virtual void OnAdjustContent();
-		PLGUI_API virtual void OnMouseLeave();
-		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		PLGUI_API virtual void OnDraw(Graphics &cGraphics) override;
+		PLGUI_API virtual PLMath::Vector2i OnPreferredSize(const PLMath::Vector2i &vRefSize) const override;
+		PLGUI_API virtual void OnAdjustContent() override;
+		PLGUI_API virtual void OnMouseLeave() override;
+		PLGUI_API virtual void OnMouseMove(const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		PLGUI_API virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
 
 
 	//[-------------------------------------------------------]

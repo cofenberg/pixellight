@@ -122,13 +122,12 @@ class Database : public PLDatabase::Database {
 	//[ Public virtual PLDatabase::Database functions         ]
 	//[-------------------------------------------------------]
 	public:
-		PLDATABASEMYSQL_API virtual PLCore::String GetVersion() const;
-		PLDATABASEMYSQL_API virtual bool Connect(const PLCore::String &sServer, const PLCore::String &sUserName,
-												 const PLCore::String &sUserPassword, const PLCore::String &sDatabase);
-		PLDATABASEMYSQL_API virtual bool IsConnected() const;
-		PLDATABASEMYSQL_API virtual bool IsConnectionActive() const;
-		PLDATABASEMYSQL_API virtual bool Disconnect();
-		PLDATABASEMYSQL_API virtual PLDatabase::DatabaseQuery *CreateQuery();
+		PLDATABASEMYSQL_API virtual PLCore::String GetVersion() const override;
+		PLDATABASEMYSQL_API virtual bool Connect(const PLCore::String &sServer, const PLCore::String &sUserName, const PLCore::String &sUserPassword, const PLCore::String &sDatabase) override;
+		PLDATABASEMYSQL_API virtual bool IsConnected() const override;
+		PLDATABASEMYSQL_API virtual bool IsConnectionActive() const override;
+		PLDATABASEMYSQL_API virtual bool Disconnect() override;
+		PLDATABASEMYSQL_API virtual PLDatabase::DatabaseQuery *CreateQuery() override;
 
 
 	//[-------------------------------------------------------]

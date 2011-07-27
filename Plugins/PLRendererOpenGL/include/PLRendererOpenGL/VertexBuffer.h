@@ -127,36 +127,36 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 	//[ Public virtual PLRenderer::VertexBuffer functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void *GetData(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel = 0);
-		virtual PLGraphics::Color4 GetColor(PLCore::uint32 nIndex, PLCore::uint32 nChannel = 0);
-		virtual bool SetColor(PLCore::uint32 nIndex, const PLGraphics::Color4 &cColor, PLCore::uint32 nChannel = 0);
+		virtual void *GetData(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel = 0) override;
+		virtual PLGraphics::Color4 GetColor(PLCore::uint32 nIndex, PLCore::uint32 nChannel = 0) override;
+		virtual bool SetColor(PLCore::uint32 nIndex, const PLGraphics::Color4 &cColor, PLCore::uint32 nChannel = 0) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::VertexBuffer functions    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void VertexAttributeAdded(Attribute &cAttribute);
+		virtual void VertexAttributeAdded(Attribute &cAttribute) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLRenderer::Buffer functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool IsAllocated() const;
-		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false);
-		virtual bool Clear();
-		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite);
-		virtual void *GetData();
-		virtual bool Unlock();
+		virtual bool IsAllocated() const override;
+		virtual bool Allocate(PLCore::uint32 nElements, PLRenderer::Usage::Enum nUsage = PLRenderer::Usage::Dynamic, bool bManaged = true, bool bKeepData = false) override;
+		virtual bool Clear() override;
+		virtual void *Lock(PLCore::uint32 nFlag = PLRenderer::Lock::ReadWrite) override;
+		virtual void *GetData() override;
+		virtual bool Unlock() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::Resource functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void BackupDeviceData(PLCore::uint8 **ppBackup);
-		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup);
+		virtual void BackupDeviceData(PLCore::uint8 **ppBackup) override;
+		virtual void RestoreDeviceData(PLCore::uint8 **ppBackup) override;
 
 
 };

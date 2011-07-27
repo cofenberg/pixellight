@@ -114,10 +114,10 @@ class DatabaseQueryResult : public PLDatabase::DatabaseQueryResult {
 	//[ Public virtual PLDatabase::DatabaseQueryResult functions ]
 	//[-------------------------------------------------------]
 	public:
-		PLDATABASEPOSTGRESQL_API virtual bool IsEmpty() const;
-		PLDATABASEPOSTGRESQL_API virtual void FirstRow();
-		PLDATABASEPOSTGRESQL_API virtual const PLCore::Array<PLCore::String> &FetchFieldList();
-		PLDATABASEPOSTGRESQL_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow();
+		PLDATABASEPOSTGRESQL_API virtual bool IsEmpty() const override;
+		PLDATABASEPOSTGRESQL_API virtual void FirstRow() override;
+		PLDATABASEPOSTGRESQL_API virtual const PLCore::Array<PLCore::String> &FetchFieldList() override;
+		PLDATABASEPOSTGRESQL_API virtual const PLCore::HashMap<PLCore::String, PLCore::String> *FetchRow() override;
 
 
 };

@@ -97,8 +97,8 @@
 	} nullptr = {};
 #endif
 
-// "override"-definition, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override (C++0x keyword is introduced in GCC 4.7 or clang 2.9 )
-#if ((__GNUC__ < 4 || __GNUC_MINOR__ < 7)  && !defined(__clang__))
+// "override"-definition, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override (C++0x keyword is introduced in GCC 4.7 or clang 2.9)
+#if ((__GNUC__ < 4 || __GNUC_MINOR__ < 7) && !defined(__clang__))
 	#define override
 #endif
 
