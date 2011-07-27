@@ -219,7 +219,7 @@ class ProfileGroup : public Element<ProfileGroup>, public ElementManager<Profile
 	//[ Private virtual ElementManager functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual ProfileGroupElement *CreateElement(const String &sName);
+		virtual ProfileGroupElement *CreateElement(const String &sName) override;
 
 
 };
@@ -422,7 +422,7 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 	//[ Private virtual ElementManager functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual ProfileGroup *CreateElement(const String &sName);
+		virtual ProfileGroup *CreateElement(const String &sName) override;
 
 
 };

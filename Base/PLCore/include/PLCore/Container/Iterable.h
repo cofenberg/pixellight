@@ -67,7 +67,7 @@ class Iterable {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**

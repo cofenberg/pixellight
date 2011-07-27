@@ -96,17 +96,17 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -129,12 +129,12 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -149,7 +149,7 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -164,13 +164,13 @@ class Event : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Emit(cParams);
@@ -230,17 +230,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -262,12 +262,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -282,7 +282,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -297,13 +297,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Emit(cParams);
@@ -362,17 +362,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -393,12 +393,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -413,7 +413,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -428,13 +428,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Emit(cParams);
@@ -492,17 +492,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -522,12 +522,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -542,7 +542,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -557,13 +557,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Emit(cParams);
@@ -620,17 +620,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -649,12 +649,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -668,7 +668,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -682,13 +682,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Emit(cParams);
@@ -744,17 +744,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -772,12 +772,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -791,7 +791,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -805,13 +805,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Emit(cParams);
@@ -866,17 +866,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -893,12 +893,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -912,7 +912,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -926,13 +926,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Emit(cParams);
@@ -986,17 +986,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1012,12 +1012,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1031,7 +1031,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1045,13 +1045,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Emit(cParams);
@@ -1104,17 +1104,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1129,12 +1129,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1147,7 +1147,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1160,13 +1160,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Emit(cParams);
@@ -1218,17 +1218,17 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1242,12 +1242,12 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1260,7 +1260,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1273,13 +1273,13 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Emit(cParams);
@@ -1330,17 +1330,17 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1353,12 +1353,12 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1371,7 +1371,7 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1384,13 +1384,13 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Emit(cParams);
@@ -1440,17 +1440,17 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1462,12 +1462,12 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3, T4>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1480,7 +1480,7 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1493,13 +1493,13 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Emit(cParams);
@@ -1548,17 +1548,17 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1569,12 +1569,12 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2, T3>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1586,7 +1586,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1598,13 +1598,13 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
 			Emit(cParams);
@@ -1652,17 +1652,17 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1672,12 +1672,12 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1, T2>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1689,7 +1689,7 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1701,13 +1701,13 @@ class Event<T0, T1, T2> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
 			Emit(cParams);
@@ -1754,17 +1754,17 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1773,12 +1773,12 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0, T1>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1790,7 +1790,7 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1802,13 +1802,13 @@ class Event<T0, T1> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
 			Emit(cParams);
@@ -1856,17 +1856,17 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1874,12 +1874,12 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void, T0>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1891,7 +1891,7 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1903,13 +1903,13 @@ class Event<T0> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
 			Emit(cParams);
@@ -1954,28 +1954,28 @@ class Event<> : public DynEvent {
 			}
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return TypeSignature::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 0;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
 		}
 
-		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const
+		virtual DynEventHandler *CreateGenericEventHandler(const FUNC &pFunc, void *pUserData = nullptr) const override
 		{
 			return new TypeHandler(new FuncGenFunPtr<void>(pFunc, pUserData));
 		}
 
-		virtual void Emit(DynParams &cParams) const
+		virtual void Emit(DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1984,7 +1984,7 @@ class Event<> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const DynParams &cParams) const
+		virtual void Emit(const DynParams &cParams) const override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1993,13 +1993,13 @@ class Event<> : public DynEvent {
 			}
 		}
 
-		virtual void Emit(const String &sParams) const
+		virtual void Emit(const String &sParams) const override
 		{
 			Params<void> cParams = Params<void>::FromString(sParams);
 			Emit(cParams);
 		}
 
-		virtual void Emit(const XmlElement &cElement) const
+		virtual void Emit(const XmlElement &cElement) const override
 		{
 			Params<void> cParams = Params<void>::FromXml(cElement);
 			Emit(cParams);

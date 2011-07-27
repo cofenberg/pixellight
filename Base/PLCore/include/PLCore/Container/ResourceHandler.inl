@@ -66,6 +66,10 @@ AType *ResourceHandler<AType>::GetResource() const
 	return m_pResource;
 }
 
+
+//[-------------------------------------------------------]
+//[ Public virtual ResourceHandler functions              ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Sets the handlers resource

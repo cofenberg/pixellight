@@ -225,7 +225,7 @@ uint32 ResourceManager<AType>::GetNumOfElements() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ResourceManager functions              ]
 //[-------------------------------------------------------]
 /**
 *  @brief

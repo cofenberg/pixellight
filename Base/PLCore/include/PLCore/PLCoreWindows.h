@@ -119,7 +119,8 @@
 //[-------------------------------------------------------]
 PL_WARNING_DISABLE(4100) // "'identifier' : unreferenced formal parameter"
 PL_WARNING_DISABLE(4201) // "nonstandard extension used : nameless struct/union"
-PL_WARNING_DISABLE(4231) // "nonstandard extension used : 'identifier' before template explicit instantiation"
+PL_WARNING_DISABLE(4231) // "nonstandard extension used : 'identifier' before template explicit instantiation" -> It's part of C++0x (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'override'" -> It's part of C++0x (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override)
 
 
 //[-------------------------------------------------------]

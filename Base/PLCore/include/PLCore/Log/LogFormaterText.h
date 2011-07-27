@@ -100,10 +100,10 @@ class LogFormaterText : public LogFormater {
 	//[ Private virtual LogFormater functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool Open(const String &sFilename);
-		virtual bool Close();
-		virtual bool Output(uint8 nLogLevel, const String &sText);
-		virtual bool Flush();
+		virtual bool Open(const String &sFilename) override;
+		virtual bool Close() override;
+		virtual bool Output(uint8 nLogLevel, const String &sText) override;
+		virtual bool Flush() override;
 
 
 };

@@ -57,12 +57,12 @@ class ConsoleLinux : public Console {
 	//[ Public virtual Console functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Print(const String &sString) const;
-		virtual int IsKeyHit() const;
-		virtual int GetCharacter(bool bEcho = false) const;
-		virtual void ClearScreen() const;
-		virtual void GetCursorPosition(uint16 &nX, uint16 &nY) const;
-		virtual void SetCursorPosition(uint16 nX, uint16 nY) const;
+		virtual void Print(const String &sString) const override;
+		virtual int IsKeyHit() const override;
+		virtual int GetCharacter(bool bEcho = false) const override;
+		virtual void ClearScreen() const override;
+		virtual void GetCursorPosition(uint16 &nX, uint16 &nY) const override;
+		virtual void SetCursorPosition(uint16 nX, uint16 nY) const override;
 
 
 	//[-------------------------------------------------------]

@@ -81,7 +81,7 @@ class SearchFilterWildcard : public SearchFilter {
 	//[ Public virtual SearchFilter functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual bool CheckFile(const String &sFilename);
+		PLCORE_API virtual bool CheckFile(const String &sFilename) override;
 
 
 	//[-------------------------------------------------------]

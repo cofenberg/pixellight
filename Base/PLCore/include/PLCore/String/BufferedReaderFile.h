@@ -77,16 +77,16 @@ class BufferedReaderFile : public BufferedReader {
 	//[ Public virtual BufferedReader functions               ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Close();
-		virtual bool IsEof() const;
-		virtual char GetChar();
-		virtual String GetString(uint32 nSize);
-		virtual char ReadChar();
-		virtual String ReadString(uint32 nSize);
-		virtual bool IsString(const String &sString);
-		virtual bool IsStringNoCase(const String &sString);
-		virtual uint32 Tell() const;
-		virtual bool Seek(uint32 nPos);
+		virtual void Close() override;
+		virtual bool IsEof() const override;
+		virtual char GetChar() override;
+		virtual String GetString(uint32 nSize) override;
+		virtual char ReadChar() override;
+		virtual String ReadString(uint32 nSize) override;
+		virtual bool IsString(const String &sString) override;
+		virtual bool IsStringNoCase(const String &sString) override;
+		virtual uint32 Tell() const override;
+		virtual bool Seek(uint32 nPos) override;
 
 
 	//[-------------------------------------------------------]

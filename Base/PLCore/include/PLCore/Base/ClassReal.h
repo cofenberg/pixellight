@@ -61,24 +61,24 @@ class ClassReal : public ClassImpl {
 	//[ Protected virtual ClassImpl functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual bool IsDummy() const;
-		PLCORE_API virtual void InitClass() const;
-		PLCORE_API virtual void DeInitClass() const;
-		PLCORE_API virtual const List<VarDesc*> &GetAttributes() const;
-		PLCORE_API virtual const VarDesc *GetAttribute(const String &sName) const;
-		PLCORE_API virtual const List<FuncDesc*> &GetMethods() const;
-		PLCORE_API virtual const FuncDesc *GetMethod(const String &sName) const;
-		PLCORE_API virtual const List<EventDesc*> &GetSignals() const;
-		PLCORE_API virtual const EventDesc *GetSignal(const String &sName) const;
-		PLCORE_API virtual const List<EventHandlerDesc*> &GetSlots() const;
-		PLCORE_API virtual const EventHandlerDesc *GetSlot(const String &sName) const;
-		PLCORE_API virtual bool HasConstructor() const;
-		PLCORE_API virtual bool HasDefaultConstructor() const;
-		PLCORE_API virtual const List<ConstructorDesc*> &GetConstructors() const;
-		PLCORE_API virtual const ConstructorDesc *GetConstructor(const String &sName) const;
-		PLCORE_API virtual Object *Create() const;
-		PLCORE_API virtual Object *Create(const DynParams &cParams) const;
-		PLCORE_API virtual Object *Create(const String &sName, const DynParams &cParams) const;
+		PLCORE_API virtual bool IsDummy() const override;
+		PLCORE_API virtual void InitClass() const override;
+		PLCORE_API virtual void DeInitClass() const override;
+		PLCORE_API virtual const List<VarDesc*> &GetAttributes() const override;
+		PLCORE_API virtual const VarDesc *GetAttribute(const String &sName) const override;
+		PLCORE_API virtual const List<FuncDesc*> &GetMethods() const override;
+		PLCORE_API virtual const FuncDesc *GetMethod(const String &sName) const override;
+		PLCORE_API virtual const List<EventDesc*> &GetSignals() const override;
+		PLCORE_API virtual const EventDesc *GetSignal(const String &sName) const override;
+		PLCORE_API virtual const List<EventHandlerDesc*> &GetSlots() const override;
+		PLCORE_API virtual const EventHandlerDesc *GetSlot(const String &sName) const override;
+		PLCORE_API virtual bool HasConstructor() const override;
+		PLCORE_API virtual bool HasDefaultConstructor() const override;
+		PLCORE_API virtual const List<ConstructorDesc*> &GetConstructors() const override;
+		PLCORE_API virtual const ConstructorDesc *GetConstructor(const String &sName) const override;
+		PLCORE_API virtual Object *Create() const override;
+		PLCORE_API virtual Object *Create(const DynParams &cParams) const override;
+		PLCORE_API virtual Object *Create(const String &sName, const DynParams &cParams) const override;
 
 
 	//[-------------------------------------------------------]

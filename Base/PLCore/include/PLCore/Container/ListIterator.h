@@ -116,11 +116,11 @@ class ListIterator : public IteratorImpl<ValueType> {
 	//[ Private virtual IteratorImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
-		virtual IteratorImpl<ValueType> *Clone() const;
-		virtual bool HasNext() const;
-		virtual ValueType &Next();
-		virtual bool HasPrevious() const;
-		virtual ValueType &Previous();
+		virtual IteratorImpl<ValueType> *Clone() const override;
+		virtual bool HasNext() const override;
+		virtual ValueType &Next() override;
+		virtual bool HasPrevious() const override;
+		virtual ValueType &Previous() override;
 
 
 };

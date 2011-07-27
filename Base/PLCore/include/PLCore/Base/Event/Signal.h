@@ -96,7 +96,8 @@ class Signal : public DESC::EventType {
 		*  @return
 		*    Event descriptor
 		*/
-		virtual const EventDesc *GetDesc() const {
+		virtual const EventDesc *GetDesc() const override
+		{
 			// Return descriptor
 			return &Desc;
 		}

@@ -86,7 +86,7 @@ template <class AType> class ResourceHandler {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ResourceHandler functions              ]
 	//[-------------------------------------------------------]
 	public:
 		/**

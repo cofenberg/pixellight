@@ -190,177 +190,177 @@ class Var : public DynVar {
 	//[ Public virtual DynVar functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		virtual DynTypeInfo &GetType() const
+		virtual DynTypeInfo &GetType() const override
 		{
 			return TypeInfo<T>::Instance;
 		}
 
-		virtual String GetTypeName() const
+		virtual String GetTypeName() const override
 		{
 			return Type<T>::GetTypeName();
 		}
 
-		virtual int GetTypeID() const
+		virtual int GetTypeID() const override
 		{
 			return Type<T>::TypeID;
 		}
 
-		virtual bool IsDefault() const
+		virtual bool IsDefault() const override
 		{
 			return (m_Value.Get() == m_Value.GetDefault());
 		}
 
-		virtual void SetDefault()
+		virtual void SetDefault() override
 		{
 			m_Value.Set(m_Value.GetDefault());
 		}
 
-		virtual String GetDefault() const
+		virtual String GetDefault() const override
 		{
 			return Type<T>::ConvertToString(m_Value.GetDefault());
 		}
 
-		virtual void SetVar(const DynVar *pValue)
+		virtual void SetVar(const DynVar *pValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromVar(pValue));
 		}
 
-		virtual bool GetBool() const
+		virtual bool GetBool() const override
 		{
 			return Type<T>::ConvertToBool(m_Value.Get());
 		}
 
-		virtual void SetBool(bool bValue)
+		virtual void SetBool(bool bValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromBool(bValue));
 		}
 
-		virtual int GetInt() const
+		virtual int GetInt() const override
 		{
 			return Type<T>::ConvertToInt(m_Value.Get());
 		}
 
-		virtual void SetInt(int nValue)
+		virtual void SetInt(int nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromInt(nValue));
 		}
 
-		virtual int8 GetInt8() const
+		virtual int8 GetInt8() const override
 		{
 			return Type<T>::ConvertToInt8(m_Value.Get());
 		}
 
-		virtual void SetInt8(int8 nValue)
+		virtual void SetInt8(int8 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromInt8(nValue));
 		}
 
-		virtual int16 GetInt16() const
+		virtual int16 GetInt16() const override
 		{
 			return Type<T>::ConvertToInt16(m_Value.Get());
 		}
 
-		virtual void SetInt16(int16 nValue)
+		virtual void SetInt16(int16 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromInt16(nValue));
 		}
 
-		virtual int32 GetInt32() const
+		virtual int32 GetInt32() const override
 		{
 			return Type<T>::ConvertToInt32(m_Value.Get());
 		}
 
-		virtual void SetInt32(int32 nValue)
+		virtual void SetInt32(int32 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromInt32(nValue));
 		}
 
-		virtual int64 GetInt64() const
+		virtual int64 GetInt64() const override
 		{
 			return Type<T>::ConvertToInt64(m_Value.Get());
 		}
 
-		virtual void SetInt64(int64 nValue)
+		virtual void SetInt64(int64 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromInt64(nValue));
 		}
 
-		virtual uint8 GetUInt8() const
+		virtual uint8 GetUInt8() const override
 		{
 			return Type<T>::ConvertToUInt8(m_Value.Get());
 		}
 
-		virtual void SetUInt8(uint8 nValue)
+		virtual void SetUInt8(uint8 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt8(nValue));
 		}
 
-		virtual uint16 GetUInt16() const
+		virtual uint16 GetUInt16() const override
 		{
 			return Type<T>::ConvertToUInt16(m_Value.Get());
 		}
 
-		virtual void SetUInt16(uint16 nValue)
+		virtual void SetUInt16(uint16 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt16(nValue));
 		}
 
-		virtual uint32 GetUInt32() const
+		virtual uint32 GetUInt32() const override
 		{
 			return Type<T>::ConvertToUInt32(m_Value.Get());
 		}
 
-		virtual void SetUInt32(uint32 nValue)
+		virtual void SetUInt32(uint32 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt32(nValue));
 		}
 
-		virtual uint64 GetUInt64() const
+		virtual uint64 GetUInt64() const override
 		{
 			return Type<T>::ConvertToUInt64(m_Value.Get());
 		}
 
-		virtual void SetUInt64(uint64 nValue)
+		virtual void SetUInt64(uint64 nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromUInt64(nValue));
 		}
 
-		virtual uint_ptr GetUIntPtr() const
+		virtual uint_ptr GetUIntPtr() const override
 		{
 			return Type<T>::ConvertToUIntPtr(m_Value.Get());
 		}
 
-		virtual void SetUIntPtr(uint_ptr nValue)
+		virtual void SetUIntPtr(uint_ptr nValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromUIntPtr(nValue));
 		}
 
-		virtual float GetFloat() const
+		virtual float GetFloat() const override
 		{
 			return Type<T>::ConvertToFloat(m_Value.Get());
 		}
 
-		virtual void SetFloat(float fValue)
+		virtual void SetFloat(float fValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromFloat(fValue));
 		}
 
-		virtual double GetDouble() const
+		virtual double GetDouble() const override
 		{
 			return Type<T>::ConvertToDouble(m_Value.Get());
 		}
 
-		virtual void SetDouble(double dValue)
+		virtual void SetDouble(double dValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromDouble(dValue));
 		}
 
-		virtual String GetString() const
+		virtual String GetString() const override
 		{
 			return Type<T>::ConvertToString(m_Value.Get());
 		}
 
-		virtual void SetString(const String &sValue)
+		virtual void SetString(const String &sValue) override
 		{
 			m_Value.Set(Type<T>::ConvertFromString(sValue));
 		}

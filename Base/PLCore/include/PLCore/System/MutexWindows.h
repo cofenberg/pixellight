@@ -75,9 +75,9 @@ class MutexWindows : public MutexImpl {
 	//[ Private virtual MutexImpl functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool Lock();
-		virtual bool TryLock(uint64 nTimeout);
-		virtual bool Unlock();
+		virtual bool Lock() override;
+		virtual bool TryLock(uint64 nTimeout) override;
+		virtual bool Unlock() override;
 
 
 	//[-------------------------------------------------------]

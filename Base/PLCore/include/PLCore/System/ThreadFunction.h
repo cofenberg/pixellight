@@ -65,7 +65,7 @@ class ThreadFunction {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ThreadFunction functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

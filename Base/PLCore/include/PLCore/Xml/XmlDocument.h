@@ -162,7 +162,7 @@ class XmlDocument : public XmlNode {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API virtual bool Load(File &cFile, EEncoding nEncoding = EncodingUnknown);
+		PLCORE_API bool Load(File &cFile, EEncoding nEncoding = EncodingUnknown);
 
 		/**
 		*  @brief
@@ -318,16 +318,16 @@ class XmlDocument : public XmlNode {
 	//[ Public virtual XmlBase functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual bool Save(File &cFile, uint32 nDepth = 0);
-		PLCORE_API virtual String ToString(uint32 nDepth = 0) const;
-		PLCORE_API const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown);
+		PLCORE_API virtual bool Save(File &cFile, uint32 nDepth = 0) override;
+		PLCORE_API virtual String ToString(uint32 nDepth = 0) const override;
+		PLCORE_API virtual const char *Parse(const char *pszData, XmlParsingData *pData = nullptr, EEncoding nEncoding = EncodingUnknown) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual XmlNode functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual XmlNode *Clone() const;
+		PLCORE_API virtual XmlNode *Clone() const override;
 
 
 	//[-------------------------------------------------------]

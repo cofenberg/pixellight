@@ -491,8 +491,8 @@ class ChecksumMD5 : public Checksum {
 	//[ Private virtual Checksum functions                    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Update(const uint8 nInput[], uint32 nInputLen);
-		virtual String Final();
+		virtual void Update(const uint8 nInput[], uint32 nInputLen) override;
+		virtual String Final() override;
 
 
 };

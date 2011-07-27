@@ -76,7 +76,7 @@ class FuncGenMemPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
@@ -91,7 +91,7 @@ class FuncGenMemPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -136,7 +136,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
@@ -146,7 +146,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -191,7 +191,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
@@ -206,7 +206,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -250,7 +250,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
@@ -260,7 +260,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -304,7 +304,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
@@ -319,7 +319,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -362,7 +362,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
@@ -372,7 +372,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -415,7 +415,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
@@ -430,7 +430,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -472,7 +472,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
@@ -482,7 +482,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -524,7 +524,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> 
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
@@ -539,7 +539,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -580,7 +580,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
@@ -590,7 +590,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -631,7 +631,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : pub
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
@@ -646,7 +646,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : pub
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -686,7 +686,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : 
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
@@ -696,7 +696,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -736,7 +736,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public F
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
@@ -751,7 +751,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public F
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -790,7 +790,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : publi
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
@@ -800,7 +800,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : publi
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -839,7 +839,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8);
@@ -854,7 +854,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -892,7 +892,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Fu
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams(t0, t1, t2, t3, t4, t5, t6, t7, t8);
@@ -902,7 +902,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Fu
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -940,7 +940,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6, T7> cParams(t0, t1, t2, t3, t4, t5, t6, t7);
@@ -955,7 +955,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -992,7 +992,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<v
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams(t0, t1, t2, t3, t4, t5, t6, t7);
@@ -1002,7 +1002,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<v
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1039,7 +1039,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5, T6> cParams(t0, t1, t2, t3, t4, t5, t6);
@@ -1054,7 +1054,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1090,7 +1090,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6> : public Func<void,
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5, T6> cParams(t0, t1, t2, t3, t4, t5, t6);
@@ -1100,7 +1100,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6> : public Func<void,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1136,7 +1136,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4, T5> cParams(t0, t1, t2, t3, t4, t5);
@@ -1151,7 +1151,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1186,7 +1186,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5> : public Func<void, T0,
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4, T5> cParams(t0, t1, t2, t3, t4, t5);
@@ -1196,7 +1196,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5> : public Func<void, T0,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1231,7 +1231,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3, T4> cParams(t0, t1, t2, t3, t4);
@@ -1246,7 +1246,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1280,7 +1280,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4> : public Func<void, T0, T1,
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3, T4> cParams(t0, t1, t2, t3, t4);
@@ -1290,7 +1290,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4> : public Func<void, T0, T1,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1324,7 +1324,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2, T3> cParams(t0, t1, t2, t3);
@@ -1339,7 +1339,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1372,7 +1372,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3> : public Func<void, T0, T1, T2,
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2, T3> cParams(t0, t1, t2, t3);
@@ -1382,7 +1382,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2, T3> : public Func<void, T0, T1, T2,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1415,7 +1415,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1, T2> cParams(t0, t1, t2);
@@ -1430,7 +1430,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1462,7 +1462,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1, T2> cParams(t0, t1, t2);
@@ -1472,7 +1472,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1504,7 +1504,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1> : public Func<R, T0, T1> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1) {
+		virtual _R operator ()(_T0 t0, _T1 t1) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0, T1> cParams(t0, t1);
@@ -1519,7 +1519,7 @@ class FuncGenMemPtr<CLASS, R, T0, T1> : public Func<R, T0, T1> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1550,7 +1550,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1> : public Func<void, T0, T1> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1) {
+		virtual void operator ()(_T0 t0, _T1 t1) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0, T1> cParams(t0, t1);
@@ -1560,7 +1560,7 @@ class FuncGenMemPtr<CLASS, void, T0, T1> : public Func<void, T0, T1> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1591,7 +1591,7 @@ class FuncGenMemPtr<CLASS, R, T0> : public Func<R, T0> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0) {
+		virtual _R operator ()(_T0 t0) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R, T0> cParams(t0);
@@ -1606,7 +1606,7 @@ class FuncGenMemPtr<CLASS, R, T0> : public Func<R, T0> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1636,7 +1636,7 @@ class FuncGenMemPtr<CLASS, void, T0> : public Func<void, T0> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0) {
+		virtual void operator ()(_T0 t0) override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void, T0> cParams(t0);
@@ -1646,7 +1646,7 @@ class FuncGenMemPtr<CLASS, void, T0> : public Func<void, T0> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1676,7 +1676,7 @@ class FuncGenMemPtr<CLASS, R> : public Func<R> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual _R operator ()() {
+		virtual _R operator ()() override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<R> cParams();
@@ -1691,7 +1691,7 @@ class FuncGenMemPtr<CLASS, R> : public Func<R> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 
@@ -1720,7 +1720,7 @@ class FuncGenMemPtr<CLASS, void> : public Func<void> {
 		virtual ~FuncGenMemPtr() {
 		}
 
-		virtual void operator ()() {
+		virtual void operator ()() override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
 				Params<void> cParams;
@@ -1730,7 +1730,7 @@ class FuncGenMemPtr<CLASS, void> : public Func<void> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncGenMemPtr(m_pMemFunc, m_pObject, m_pUserData);
 		}
 

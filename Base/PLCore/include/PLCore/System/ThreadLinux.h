@@ -93,16 +93,16 @@ class ThreadLinux : public ThreadImpl {
 	//[ Private virtual ThreadImpl functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual uint32 GetID() const;
-		virtual bool IsActive() const;
-		virtual bool Start();
-		virtual bool Terminate();
-		virtual bool Join();
-		virtual bool Join(uint64 nTimeout);
-		virtual Thread::EPriorityClass GetPriorityClass() const;
-		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass);
-		virtual Thread::EPriority GetPriority() const;
-		virtual bool SetPriority(Thread::EPriority nPriority);
+		virtual uint32 GetID() const override;
+		virtual bool IsActive() const override;
+		virtual bool Start() override;
+		virtual bool Terminate() override;
+		virtual bool Join() override;
+		virtual bool Join(uint64 nTimeout) override;
+		virtual Thread::EPriorityClass GetPriorityClass() const override;
+		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass) override;
+		virtual Thread::EPriority GetPriority() const override;
+		virtual bool SetPriority(Thread::EPriority nPriority) override;
 
 
 	//[-------------------------------------------------------]

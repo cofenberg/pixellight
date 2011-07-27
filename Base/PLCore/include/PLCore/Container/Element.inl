@@ -143,7 +143,7 @@ ElementHandler<AType> *Element<AType>::GetHandler(uint32 nIndex) const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Element functions                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -220,7 +220,7 @@ Element<AType>::~Element()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual functions                             ]
+//[ Private virtual Element functions                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief

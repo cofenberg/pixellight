@@ -66,7 +66,7 @@ class Heap : public Iterable<ValueType> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual Heap functions                         ]
 	//[-------------------------------------------------------]
 	public:
 		/**

@@ -84,22 +84,22 @@ class Func : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -122,7 +122,7 @@ class Func : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -138,7 +138,7 @@ class Func : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -154,26 +154,26 @@ class Func : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Call(cParams);
@@ -220,17 +220,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -253,7 +253,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -269,7 +269,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -285,26 +285,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::FromXml(cElement);
 			Call(cParams);
@@ -352,22 +352,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -389,7 +389,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -405,7 +405,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -421,26 +421,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> :
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Call(cParams);
@@ -486,17 +486,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -518,7 +518,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -534,7 +534,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -550,26 +550,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::FromXml(cElement);
 			Call(cParams);
@@ -617,22 +617,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -653,7 +653,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -669,7 +669,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -685,26 +685,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : publ
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Call(cParams);
@@ -749,17 +749,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -780,7 +780,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -796,7 +796,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -812,26 +812,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::FromXml(cElement);
 			Call(cParams);
@@ -877,22 +877,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -912,7 +912,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -928,7 +928,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -944,26 +944,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public Dy
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Call(cParams);
@@ -1007,17 +1007,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1037,7 +1037,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1053,7 +1053,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1069,26 +1069,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::FromXml(cElement);
 			Call(cParams);
@@ -1133,22 +1133,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1167,7 +1167,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1182,7 +1182,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1197,26 +1197,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynFunc
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Call(cParams);
@@ -1259,17 +1259,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1288,7 +1288,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1303,7 +1303,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1318,26 +1318,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynF
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::FromXml(cElement);
 			Call(cParams);
@@ -1381,22 +1381,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1414,7 +1414,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1429,7 +1429,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1444,26 +1444,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Call(cParams);
@@ -1505,17 +1505,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1533,7 +1533,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1548,7 +1548,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1563,26 +1563,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::FromXml(cElement);
 			Call(cParams);
@@ -1625,22 +1625,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -1657,7 +1657,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1672,7 +1672,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1687,26 +1687,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Call(cParams);
@@ -1747,17 +1747,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -1774,7 +1774,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1789,7 +1789,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1804,26 +1804,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::FromXml(cElement);
 			Call(cParams);
@@ -1865,22 +1865,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -1896,7 +1896,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1911,7 +1911,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -1926,26 +1926,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Call(cParams);
@@ -1985,17 +1985,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2011,7 +2011,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2026,7 +2026,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2041,26 +2041,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::FromXml(cElement);
 			Call(cParams);
@@ -2101,22 +2101,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2131,7 +2131,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2145,7 +2145,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2159,26 +2159,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Call(cParams);
@@ -2217,17 +2217,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2242,7 +2242,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2256,7 +2256,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2270,26 +2270,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6, T7> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6, T7>::FromXml(cElement);
 			Call(cParams);
@@ -2329,22 +2329,22 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2358,7 +2358,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2372,7 +2372,7 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2386,26 +2386,26 @@ class Func<R, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5, T6> cParams = Params<R, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Call(cParams);
@@ -2443,17 +2443,17 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2467,7 +2467,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2481,7 +2481,7 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2495,26 +2495,26 @@ class Func<void, T0, T1, T2, T3, T4, T5, T6> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5, T6> cParams = Params<void, T0, T1, T2, T3, T4, T5, T6>::FromXml(cElement);
 			Call(cParams);
@@ -2553,22 +2553,22 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2581,7 +2581,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2595,7 +2595,7 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2609,26 +2609,26 @@ class Func<R, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5> cParams = Params<R, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5> cParams = Params<R, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5> cParams = Params<R, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4, T5> cParams = Params<R, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Call(cParams);
@@ -2665,17 +2665,17 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2688,7 +2688,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2702,7 +2702,7 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2716,26 +2716,26 @@ class Func<void, T0, T1, T2, T3, T4, T5> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4, T5> cParams = Params<void, T0, T1, T2, T3, T4, T5>::FromXml(cElement);
 			Call(cParams);
@@ -2773,22 +2773,22 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2800,7 +2800,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2813,7 +2813,7 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2826,26 +2826,26 @@ class Func<R, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4> cParams = Params<R, T0, T1, T2, T3, T4>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4> cParams = Params<R, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3, T4> cParams = Params<R, T0, T1, T2, T3, T4>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3, T4> cParams = Params<R, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Call(cParams);
@@ -2881,17 +2881,17 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -2903,7 +2903,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2916,7 +2916,7 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -2929,26 +2929,26 @@ class Func<void, T0, T1, T2, T3, T4> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3, T4> cParams = Params<void, T0, T1, T2, T3, T4>::FromXml(cElement);
 			Call(cParams);
@@ -2985,22 +2985,22 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3011,7 +3011,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3023,7 +3023,7 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3035,26 +3035,26 @@ class Func<R, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3> cParams = Params<R, T0, T1, T2, T3>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3> cParams = Params<R, T0, T1, T2, T3>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2, T3> cParams = Params<R, T0, T1, T2, T3>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2, T3> cParams = Params<R, T0, T1, T2, T3>::FromXml(cElement);
 			Call(cParams);
@@ -3089,17 +3089,17 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3110,7 +3110,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3122,7 +3122,7 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3134,26 +3134,26 @@ class Func<void, T0, T1, T2, T3> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2, T3> cParams = Params<void, T0, T1, T2, T3>::FromXml(cElement);
 			Call(cParams);
@@ -3189,22 +3189,22 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3214,7 +3214,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3226,7 +3226,7 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3238,19 +3238,19 @@ class Func<R, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1, T2> cParams = Params<R, T0, T1, T2>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1, T2> cParams = Params<R, T0, T1, T2>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1, T2> cParams = Params<R, T0, T1, T2>::FromString(sParams);
 			Call(cParams);
@@ -3291,17 +3291,17 @@ class Func<void, T0, T1, T2> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3311,7 +3311,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3323,7 +3323,7 @@ class Func<void, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3335,26 +3335,26 @@ class Func<void, T0, T1, T2> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1, T2> cParams = Params<void, T0, T1, T2>::FromXml(cElement);
 			Call(cParams);
@@ -3389,22 +3389,22 @@ class Func<R, T0, T1> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3413,7 +3413,7 @@ class Func<R, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3425,7 +3425,7 @@ class Func<R, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3437,19 +3437,19 @@ class Func<R, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0, T1> cParams = Params<R, T0, T1>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0, T1> cParams = Params<R, T0, T1>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0, T1> cParams = Params<R, T0, T1>::FromString(sParams);
 			Call(cParams);
@@ -3489,17 +3489,17 @@ class Func<void, T0, T1> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3508,7 +3508,7 @@ class Func<void, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3520,7 +3520,7 @@ class Func<void, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3532,26 +3532,26 @@ class Func<void, T0, T1> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0, T1> cParams = Params<void, T0, T1>::FromXml(cElement);
 			Call(cParams);
@@ -3585,22 +3585,22 @@ class Func<R, T0> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3608,7 +3608,7 @@ class Func<R, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3620,7 +3620,7 @@ class Func<R, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3632,26 +3632,26 @@ class Func<R, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R, T0> cParams = Params<R, T0>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R, T0> cParams = Params<R, T0>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R, T0> cParams = Params<R, T0>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R, T0> cParams = Params<R, T0>::FromXml(cElement);
 			Call(cParams);
@@ -3684,17 +3684,17 @@ class Func<void, T0> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0>::TypeID;
@@ -3702,7 +3702,7 @@ class Func<void, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3714,7 +3714,7 @@ class Func<void, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3726,26 +3726,26 @@ class Func<void, T0> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void, T0> cParams = Params<void, T0>::FromXml(cElement);
 			Call(cParams);
@@ -3778,28 +3778,28 @@ class Func<R> : public DynFunc {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 0;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3811,7 +3811,7 @@ class Func<R> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3820,26 +3820,26 @@ class Func<R> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<R> cParams = Params<R>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<R> cParams = Params<R>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<R> cParams = Params<R>::FromString(sParams);
 			Call(cParams);
 			return Type<R>::ConvertToString(Type<R>::ConvertStorageToReal(cParams.Return));
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<R> cParams = Params<R>::FromXml(cElement);
 			Call(cParams);
@@ -3869,18 +3869,18 @@ class Func<void> : public DynFunc {
 		{
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void>::GetSignatureID();
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			// There are no candidates, so the choice is pretty simple
 			return TypeInvalid;
 		}
 
-		virtual void Call(DynParams &cParams)
+		virtual void Call(DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3889,7 +3889,7 @@ class Func<void> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const DynParams &cParams)
+		virtual void Call(const DynParams &cParams) override
 		{
 			// Check signature
 			if (cParams.GetSignature() == GetSignature()) {
@@ -3898,26 +3898,26 @@ class Func<void> : public DynFunc {
 			}
 		}
 
-		virtual void Call(const String &sParams)
+		virtual void Call(const String &sParams) override
 		{
 			Params<void> cParams = Params<void>::FromString(sParams);
 			Call(cParams);
 		}
 
-		virtual void Call(const XmlElement &cElement)
+		virtual void Call(const XmlElement &cElement) override
 		{
 			Params<void> cParams = Params<void>::FromXml(cElement);
 			Call(cParams);
 		}
 
-		virtual String CallWithReturn(const String &sParams)
+		virtual String CallWithReturn(const String &sParams) override
 		{
 			Params<void> cParams = Params<void>::FromString(sParams);
 			Call(cParams);
 			return "";
 		}
 
-		virtual String CallWithReturn(const XmlElement &cElement)
+		virtual String CallWithReturn(const XmlElement &cElement) override
 		{
 			Params<void> cParams = Params<void>::FromXml(cElement);
 			Call(cParams);

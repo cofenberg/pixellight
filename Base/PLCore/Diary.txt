@@ -1,3 +1,9 @@
+>> 27.07.2011
+[CO]
+- Using PLCore to check whether or not "override" from C++0x (http://www2.research.att.com/~bs/C++0xFAQ.html#override) will cause any problems
+
+
+
 >> 26.07.2011
 [CO]
 - "LoadableType::AddLoader()" fixed log messages ("[Info]: Loader 'PLAssimp::SceneLoader3DGameStudio': Format 'mdl' is already used by loader 'PLAssimp::SceneLoader3DGameStudio")

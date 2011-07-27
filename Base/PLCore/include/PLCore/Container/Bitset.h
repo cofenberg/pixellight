@@ -285,10 +285,10 @@ class Bitset : public Container<bool> {
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual Iterator<bool> GetIterator(uint32 nIndex = 0) const;
-		PLCORE_API virtual ConstIterator<bool> GetConstIterator(uint32 nIndex = 0) const;
-		PLCORE_API virtual Iterator<bool> GetEndIterator() const;
-		PLCORE_API virtual ConstIterator<bool> GetConstEndIterator() const;
+		PLCORE_API virtual Iterator<bool> GetIterator(uint32 nIndex = 0) const override;
+		PLCORE_API virtual ConstIterator<bool> GetConstIterator(uint32 nIndex = 0) const override;
+		PLCORE_API virtual Iterator<bool> GetEndIterator() const override;
+		PLCORE_API virtual ConstIterator<bool> GetConstEndIterator() const override;
 
 
 	//[-------------------------------------------------------]
@@ -299,29 +299,29 @@ class Bitset : public Container<bool> {
 		inline virtual uint32 GetNumOfElements() const;
 		inline virtual uint32 GetElementSize() const;
 		inline virtual uint32 GetSize() const;
-		PLCORE_API virtual void Clear();
+		PLCORE_API virtual void Clear() override;
 		inline virtual bool IsElement(const bool &Element) const;
 		inline virtual int GetIndex(const bool &Element) const;
 		inline virtual bool &Get(uint32 nIndex) const;
 		inline virtual bool &operator [](uint32 nIndex) const;
 		inline virtual bool Replace(const bool &Element1, const bool &Element2);
 		inline virtual bool ReplaceAtIndex(uint32 nIndex, const bool &Element);
-		PLCORE_API virtual bool &Add();
-		PLCORE_API virtual bool &Add(const bool &Element);
-		PLCORE_API virtual uint32 Add(const bool *pElements, uint32 nCount);
+		PLCORE_API virtual bool &Add() override;
+		PLCORE_API virtual bool &Add(const bool &Element) override;
+		PLCORE_API virtual uint32 Add(const bool *pElements, uint32 nCount) override;
 		inline virtual Container<bool> &operator +=(const bool &Element);
-		PLCORE_API virtual bool Add(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
+		PLCORE_API virtual bool Add(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator +=(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool &AddAtIndex(int nIndex);
-		PLCORE_API virtual bool AddAtIndex(const bool &Element, int nIndex);
+		PLCORE_API virtual bool &AddAtIndex(int nIndex) override;
+		PLCORE_API virtual bool AddAtIndex(const bool &Element, int nIndex) override;
 		inline virtual bool Remove(const bool &Element);
-		PLCORE_API virtual bool RemoveAtIndex(uint32 nElement);
+		PLCORE_API virtual bool RemoveAtIndex(uint32 nElement) override;
 		inline virtual Container<bool> &operator -=(const bool &Element);
-		PLCORE_API virtual bool Remove(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
+		PLCORE_API virtual bool Remove(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator -=(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool Copy(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
+		PLCORE_API virtual bool Copy(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator =(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool Compare(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const;
+		PLCORE_API virtual bool Compare(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const override;
 		inline virtual bool operator ==(const Container<bool> &lstContainer) const;
 		inline virtual bool operator !=(const Container<bool> &lstContainer) const;
 

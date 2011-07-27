@@ -77,7 +77,7 @@ class Constructor : public DESC::ConstType {
 		*  @brief
 		*    Destructor
 		*/
-		~Constructor()
+		virtual ~Constructor()
 		{
 		}
 
@@ -93,7 +93,8 @@ class Constructor : public DESC::ConstType {
 		*  @return
 		*    Construction descriptor
 		*/
-		virtual const ConstructorDesc *GetDesc() {
+		virtual const ConstructorDesc *GetDesc()
+		{
 			// Return descriptor
 			return &Desc;
 		}

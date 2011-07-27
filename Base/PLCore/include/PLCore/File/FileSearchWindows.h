@@ -81,8 +81,8 @@ class FileSearchWindows : public FileSearchImpl {
 	//[ Private virtual FileSearchImpl functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool HasNextFile();
-		virtual String GetNextFile();
+		virtual bool HasNextFile() override;
+		virtual String GetNextFile() override;
 
 
 	//[-------------------------------------------------------]

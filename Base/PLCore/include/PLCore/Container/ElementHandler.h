@@ -86,7 +86,7 @@ template <class AType> class ElementHandler {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ElementHandler functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

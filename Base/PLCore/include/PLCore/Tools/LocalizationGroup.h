@@ -251,8 +251,8 @@ class LocalizationGroup : public Loadable {
 	//[ Public virtual Loadable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual bool Unload();
-		PLCORE_API virtual String GetLoadableTypeName() const;
+		PLCORE_API virtual bool Unload() override;
+		PLCORE_API virtual String GetLoadableTypeName() const override;
 
 
 };

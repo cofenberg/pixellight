@@ -52,7 +52,7 @@ class Container : public Iterable<ValueType> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual Container functions                    ]
 	//[-------------------------------------------------------]
 	public:
 		/**

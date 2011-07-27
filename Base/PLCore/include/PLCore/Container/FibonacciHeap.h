@@ -213,29 +213,29 @@ class FibonacciHeap : public Heap<KeyType, ValueType> {
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const;
-		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const;
-		virtual Iterator<ValueType> GetEndIterator() const;
-		virtual ConstIterator<ValueType> GetConstEndIterator() const;
+		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<ValueType> GetEndIterator() const override;
+		virtual ConstIterator<ValueType> GetConstEndIterator() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Heap functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Clear();
-		virtual bool IsEmpty() const;
-		virtual uint32 GetNumOfElements() const;
-		virtual bool Add(const KeyType &Key, const ValueType &Value);
-		virtual bool GetTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) const;
-		virtual bool ExtractTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr);
+		virtual void Clear() override;
+		virtual bool IsEmpty() const override;
+		virtual uint32 GetNumOfElements() const override;
+		virtual bool Add(const KeyType &Key, const ValueType &Value) override;
+		virtual bool GetTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) const override;
+		virtual bool ExtractTop(ValueType *pValue = nullptr, KeyType *pKey = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual Heap functions                        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Heap<KeyType, ValueType> &operator =(const Heap<KeyType, ValueType> &cHeap);
+		virtual Heap<KeyType, ValueType> &operator =(const Heap<KeyType, ValueType> &cHeap) override;
 
 
 };

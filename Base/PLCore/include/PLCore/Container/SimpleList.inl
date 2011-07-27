@@ -106,7 +106,7 @@ SimpleList<ValueType> &SimpleList<ValueType>::operator =(const SimpleList<ValueT
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Iterable functions                     ]
+//[ Public Iterable functions                             ]
 //[-------------------------------------------------------]
 template <class ValueType>
 Iterator<ValueType> SimpleList<ValueType>::GetIterator(uint32 nIndex) const
@@ -138,7 +138,7 @@ ConstIterator<ValueType> SimpleList<ValueType>::GetConstEndIterator() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Container functions                    ]
+//[ Public Container functions                            ]
 //[-------------------------------------------------------]
 template <class ValueType>
 bool SimpleList<ValueType>::IsEmpty() const

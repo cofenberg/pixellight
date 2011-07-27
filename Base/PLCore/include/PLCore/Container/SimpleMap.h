@@ -127,37 +127,37 @@ class SimpleMap : public Map<KeyType, ValueType> {
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const;
-		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const;
-		virtual Iterator<ValueType> GetEndIterator() const;
-		virtual ConstIterator<ValueType> GetConstEndIterator() const;
+		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<ValueType> GetEndIterator() const override;
+		virtual ConstIterator<ValueType> GetConstEndIterator() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Map functions                          ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Clear();
-		virtual bool IsEmpty() const;
-		virtual uint32 GetNumOfElements() const;
-		virtual bool Add(const KeyType &Key, const ValueType &Value);
-		virtual bool Replace(const KeyType &Key, const ValueType &NewValue);
-		virtual bool Set(const KeyType &Key, const ValueType &Value);
-		virtual bool Remove(const KeyType &Key);
-		virtual uint32 RemoveValue(const ValueType &Value);
-		virtual const ValueType &Get(const KeyType &Key) const;
-		virtual ValueType &Get(const KeyType &Key);
-		virtual Iterator<KeyType> GetKeyIterator(uint32 nIndex = 0) const;
-		virtual ConstIterator<KeyType> GetConstKeyIterator(uint32 nIndex = 0) const;
-		virtual Iterator<KeyType> GetEndKeyIterator() const;
-		virtual ConstIterator<KeyType> GetConstEndKeyIterator() const;
+		virtual void Clear() override;
+		virtual bool IsEmpty() const override;
+		virtual uint32 GetNumOfElements() const override;
+		virtual bool Add(const KeyType &Key, const ValueType &Value) override;
+		virtual bool Replace(const KeyType &Key, const ValueType &NewValue) override;
+		virtual bool Set(const KeyType &Key, const ValueType &Value) override;
+		virtual bool Remove(const KeyType &Key) override;
+		virtual uint32 RemoveValue(const ValueType &Value) override;
+		virtual const ValueType &Get(const KeyType &Key) const override;
+		virtual ValueType &Get(const KeyType &Key) override;
+		virtual Iterator<KeyType> GetKeyIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<KeyType> GetConstKeyIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<KeyType> GetEndKeyIterator() const override;
+		virtual ConstIterator<KeyType> GetConstEndKeyIterator() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual Map functions                         ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Map<KeyType, ValueType> &operator =(const Map<KeyType, ValueType> &cMap);
+		virtual Map<KeyType, ValueType> &operator =(const Map<KeyType, ValueType> &cMap) override;
 
 
 };

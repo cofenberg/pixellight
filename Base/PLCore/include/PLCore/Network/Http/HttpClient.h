@@ -273,8 +273,8 @@ class HttpClient : protected Client {
 	//[ Protected virtual Client functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual Connection *CreateOutgoingConnection();
-		PLCORE_API virtual void OnDisconnect(Connection &cConnection);
+		PLCORE_API virtual Connection *CreateOutgoingConnection() override;
+		PLCORE_API virtual void OnDisconnect(Connection &cConnection) override;
 
 
 	//[-------------------------------------------------------]

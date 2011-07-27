@@ -94,7 +94,12 @@
 			template<class C, class T> operator T C::*() const  { return 0; }
 		private:
 			void operator&() const;
-	} nullptr = {}; 
+	} nullptr = {};
+#endif
+
+// "override"-definition, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override (C++0x keyword is introduced in GCC 4.7)
+#if (__GNUC__ < 4 || __GNUC_MINOR__ < 7)
+	#define override
 #endif
 
 

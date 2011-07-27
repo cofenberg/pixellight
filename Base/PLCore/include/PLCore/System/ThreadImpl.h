@@ -90,7 +90,7 @@ class ThreadImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual ThreadImpl functions                ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

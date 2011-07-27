@@ -81,7 +81,7 @@ class SystemImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SystemImpl functions                ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

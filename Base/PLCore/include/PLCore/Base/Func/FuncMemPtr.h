@@ -76,11 +76,11 @@ class FuncMemPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -124,12 +124,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -173,11 +173,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -220,12 +220,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -268,11 +268,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -314,12 +314,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -361,11 +361,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -406,12 +406,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -452,11 +452,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : p
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -496,12 +496,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -541,11 +541,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -584,12 +584,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : pub
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -628,11 +628,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -670,12 +670,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public F
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -713,11 +713,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -754,12 +754,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -796,11 +796,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -836,12 +836,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -877,11 +877,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -916,12 +916,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5, t6);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -956,11 +956,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -994,12 +994,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4, t5);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1033,11 +1033,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, 
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1070,12 +1070,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3, t4);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1108,11 +1108,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1144,12 +1144,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2, t3);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1181,11 +1181,11 @@ class FuncMemPtr<CLASS, R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1, t2) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1216,12 +1216,12 @@ class FuncMemPtr<CLASS, void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1, t2);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1252,11 +1252,11 @@ class FuncMemPtr<CLASS, R, T0, T1> : public Func<R, T0, T1> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1) {
+		virtual _R operator ()(_T0 t0, _T1 t1) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0, t1) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1286,12 +1286,12 @@ class FuncMemPtr<CLASS, void, T0, T1> : public Func<void, T0, T1> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1) {
+		virtual void operator ()(_T0 t0, _T1 t1) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0, t1);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1321,11 +1321,11 @@ class FuncMemPtr<CLASS, R, T0> : public Func<R, T0> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0) {
+		virtual _R operator ()(_T0 t0) override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)(t0) : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1354,12 +1354,12 @@ class FuncMemPtr<CLASS, void, T0> : public Func<void, T0> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()(_T0 t0) {
+		virtual void operator ()(_T0 t0) override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)(t0);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1388,11 +1388,11 @@ class FuncMemPtr<CLASS, R> : public Func<R> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual _R operator ()() {
+		virtual _R operator ()() override {
 			return (m_pMemFunc && m_pObject) ? ((*m_pObject).*m_pMemFunc)() : DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 
@@ -1420,12 +1420,12 @@ class FuncMemPtr<CLASS, void> : public Func<void> {
 		virtual ~FuncMemPtr() {
 		}
 
-		virtual void operator ()() {
+		virtual void operator ()() override {
 			if (m_pMemFunc && m_pObject)
 				((*m_pObject).*m_pMemFunc)();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncMemPtr(m_pMemFunc, m_pObject);
 		}
 

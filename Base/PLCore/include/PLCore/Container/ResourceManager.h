@@ -211,7 +211,7 @@ template <class AType> class ResourceManager {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual ResourceManager functions              ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -341,7 +341,7 @@ template <class AType> class ResourceManager {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual ResourceManager functions           ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

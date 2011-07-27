@@ -114,11 +114,11 @@ class BitsetIterator : public IteratorImpl<bool> {
 	//[ Privat virtual IteratorImpl functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual IteratorImpl<bool> *Clone() const;
-		virtual bool HasNext() const;
-		virtual bool &Next();
-		virtual bool HasPrevious() const;
-		virtual bool &Previous();
+		virtual IteratorImpl<bool> *Clone() const override;
+		virtual bool HasNext() const override;
+		virtual bool &Next() override;
+		virtual bool HasPrevious() const override;
+		virtual bool &Previous() override;
 
 
 };

@@ -370,7 +370,7 @@ class Connection : protected Thread {
 	//[ Private virtual ThreadFunction functions              ]
 	//[-------------------------------------------------------]
 	private:
-		PLCORE_API virtual int Run();
+		PLCORE_API virtual int Run() override;
 
 
 };

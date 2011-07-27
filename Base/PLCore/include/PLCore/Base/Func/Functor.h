@@ -234,7 +234,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 	//[ Public virtual DynFunc functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
@@ -242,7 +242,7 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -338,13 +338,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -434,7 +434,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
@@ -442,7 +442,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -531,13 +531,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -626,7 +626,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
@@ -634,7 +634,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -722,13 +722,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -816,7 +816,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
@@ -824,7 +824,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -912,13 +912,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1005,7 +1005,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
@@ -1013,7 +1013,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1100,13 +1100,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1192,7 +1192,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
@@ -1200,7 +1200,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1286,13 +1286,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1377,7 +1377,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
@@ -1385,7 +1385,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1469,13 +1469,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1559,7 +1559,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8);
@@ -1567,7 +1567,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1650,13 +1650,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1739,7 +1739,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6, T7>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7);
@@ -1747,7 +1747,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1829,13 +1829,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6, T7>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -1917,7 +1917,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5, T6>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6);
@@ -1925,7 +1925,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2006,13 +2006,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5, T6>* >(m_pFunc))(t0, t1, t2, t3, t4, t5, t6);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2093,7 +2093,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4, T5>* >(m_pFunc))(t0, t1, t2, t3, t4, t5);
@@ -2101,7 +2101,7 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2181,13 +2181,13 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4, T5>* >(m_pFunc))(t0, t1, t2, t3, t4, t5);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2267,7 +2267,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3, T4>* >(m_pFunc))(t0, t1, t2, t3, t4);
@@ -2275,7 +2275,7 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2354,13 +2354,13 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3, T4>* >(m_pFunc))(t0, t1, t2, t3, t4);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2439,7 +2439,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2, T3>* >(m_pFunc))(t0, t1, t2, t3);
@@ -2447,7 +2447,7 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2525,13 +2525,13 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2, T3>* >(m_pFunc))(t0, t1, t2, t3);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2609,7 +2609,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2)
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1, T2>* >(m_pFunc))(t0, t1, t2);
@@ -2617,7 +2617,7 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2694,13 +2694,13 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2)
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1, T2>* >(m_pFunc))(t0, t1, t2);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2777,7 +2777,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1)
+		virtual _R operator ()(_T0 t0, _T1 t1) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0, T1>* >(m_pFunc))(t0, t1);
@@ -2785,7 +2785,7 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2861,13 +2861,13 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1)
+		virtual void operator ()(_T0 t0, _T1 t1) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0, T1>* >(m_pFunc))(t0, t1);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -2943,7 +2943,7 @@ class Functor<R, T0> : public Func<R, T0> {
 			return *this;
 		}
 
-		virtual _R operator ()(_T0 t0)
+		virtual _R operator ()(_T0 t0) override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R, T0>* >(m_pFunc))(t0);
@@ -2951,7 +2951,7 @@ class Functor<R, T0> : public Func<R, T0> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -3027,13 +3027,13 @@ class Functor<void, T0> : public Func<void, T0> {
 			return *this;
 		}
 
-		virtual void operator ()(_T0 t0)
+		virtual void operator ()(_T0 t0) override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void, T0>* >(m_pFunc))(t0);
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -3108,7 +3108,7 @@ class Functor<R> : public Func<R> {
 			return *this;
 		}
 
-		virtual _R operator ()()
+		virtual _R operator ()() override
 		{
 			if (m_pFunc)
 				return (*static_cast<Func<R>* >(m_pFunc))();
@@ -3116,7 +3116,7 @@ class Functor<R> : public Func<R> {
 				return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}
@@ -3189,13 +3189,13 @@ class Functor<void> : public Func<void> {
 			return *this;
 		}
 
-		virtual void operator ()()
+		virtual void operator ()() override
 		{
 			if (m_pFunc)
 				(*static_cast<Func<void>* >(m_pFunc))();
 		}
 
-		virtual DynFunc *Clone() const
+		virtual DynFunc *Clone() const override
 		{
 			return new Functor(m_pFunc ? m_pFunc->Clone() : nullptr);
 		}

@@ -166,7 +166,7 @@ template <class AType> class Resource : public Loadable {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Resource functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -220,7 +220,7 @@ template <class AType> class Resource : public Loadable {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual Resource functions                    ]
 	//[-------------------------------------------------------]
 	private:
 		/**

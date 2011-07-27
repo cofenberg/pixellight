@@ -217,45 +217,45 @@ class PLCORE_TMPL Array : public Container<ValueType> {
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const;
-		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const;
-		virtual Iterator<ValueType> GetEndIterator() const;
-		virtual ConstIterator<ValueType> GetConstEndIterator() const;
+		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<ValueType> GetEndIterator() const override;
+		virtual ConstIterator<ValueType> GetConstEndIterator() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Container functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool IsEmpty() const;
-		virtual uint32 GetNumOfElements() const;
-		virtual uint32 GetElementSize() const;
-		virtual uint32 GetSize() const;
-		virtual void Clear();
-		virtual bool IsElement(const ValueType &Element) const;
-		virtual int GetIndex(const ValueType &Element) const;
-		virtual ValueType &Get(uint32 nIndex) const;
-		virtual ValueType &operator [](uint32 nIndex) const;
-		virtual bool Replace(const ValueType &Element1, const ValueType &Element2);
-		virtual bool ReplaceAtIndex(uint32 nIndex, const ValueType &Element);
-		virtual ValueType &Add();
-		virtual ValueType &Add(const ValueType &Element);
-		virtual uint32 Add(const ValueType *pElements, uint32 nCount);
-		virtual Container<ValueType> &operator +=(const ValueType &Element);
-		virtual bool Add(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
-		virtual Container<ValueType> &operator +=(const Container<ValueType> &lstContainer);
-		virtual ValueType &AddAtIndex(int nIndex);
-		virtual bool AddAtIndex(const ValueType &Element, int nIndex);
-		virtual bool Remove(const ValueType &Element);
-		virtual bool RemoveAtIndex(uint32 nElement);
-		virtual Container<ValueType> &operator -=(const ValueType &Element);
-		virtual bool Remove(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
-		virtual Container<ValueType> &operator -=(const Container<ValueType> &lstContainer);
-		virtual bool Copy(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
-		virtual Container<ValueType> &operator =(const Container<ValueType> &lstContainer);
-		virtual bool Compare(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const;
-		virtual bool operator ==(const Container<ValueType> &lstContainer) const;
-		virtual bool operator !=(const Container<ValueType> &lstContainer) const;
+		virtual bool IsEmpty() const override;
+		virtual uint32 GetNumOfElements() const override;
+		virtual uint32 GetElementSize() const override;
+		virtual uint32 GetSize() const override;
+		virtual void Clear() override;
+		virtual bool IsElement(const ValueType &Element) const override;
+		virtual int GetIndex(const ValueType &Element) const override;
+		virtual ValueType &Get(uint32 nIndex) const override;
+		virtual ValueType &operator [](uint32 nIndex) const override;
+		virtual bool Replace(const ValueType &Element1, const ValueType &Element2) override;
+		virtual bool ReplaceAtIndex(uint32 nIndex, const ValueType &Element) override;
+		virtual ValueType &Add() override;
+		virtual ValueType &Add(const ValueType &Element) override;
+		virtual uint32 Add(const ValueType *pElements, uint32 nCount) override;
+		virtual Container<ValueType> &operator +=(const ValueType &Element) override;
+		virtual bool Add(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual Container<ValueType> &operator +=(const Container<ValueType> &lstContainer) override;
+		virtual ValueType &AddAtIndex(int nIndex) override;
+		virtual bool AddAtIndex(const ValueType &Element, int nIndex) override;
+		virtual bool Remove(const ValueType &Element) override;
+		virtual bool RemoveAtIndex(uint32 nElement) override;
+		virtual Container<ValueType> &operator -=(const ValueType &Element) override;
+		virtual bool Remove(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual Container<ValueType> &operator -=(const Container<ValueType> &lstContainer) override;
+		virtual bool Copy(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual Container<ValueType> &operator =(const Container<ValueType> &lstContainer) override;
+		virtual bool Compare(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const override;
+		virtual bool operator ==(const Container<ValueType> &lstContainer) const override;
+		virtual bool operator !=(const Container<ValueType> &lstContainer) const override;
 
 
 };

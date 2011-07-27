@@ -75,11 +75,11 @@ class DynLibWindows : public DynLibImpl {
 	//[ Private virtual DynLibImpl functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool IsLoaded() const;
-		virtual bool Load(const Url &cUrl);
-		virtual String GetAbsPath() const;
-		virtual bool Unload();
-		virtual void *GetSymbol(const String &sSymbol) const;
+		virtual bool IsLoaded() const override;
+		virtual bool Load(const Url &cUrl) override;
+		virtual String GetAbsPath() const override;
+		virtual bool Unload() override;
+		virtual void *GetSymbol(const String &sSymbol) const override;
 
 
 	//[-------------------------------------------------------]

@@ -63,7 +63,7 @@ String Loadable::GetUrl() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Loadable functions                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -348,7 +348,7 @@ Loadable::~Loadable()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual Loadable functions                    ]
+//[ Protected virtual Loadable functions                  ]
 //[-------------------------------------------------------]
 bool Loadable::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
 {

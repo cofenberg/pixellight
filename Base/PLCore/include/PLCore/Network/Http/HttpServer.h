@@ -120,9 +120,9 @@ class HttpServer : public Server {
 	//[ Protected virtual Server functions                    ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual Connection *CreateIncomingConnection();
-		PLCORE_API virtual void OnConnect(Connection &cConnection);
-		PLCORE_API virtual void OnDisconnect(Connection &cConnection);
+		PLCORE_API virtual Connection *CreateIncomingConnection() override;
+		PLCORE_API virtual void OnConnect(Connection &cConnection) override;
+		PLCORE_API virtual void OnDisconnect(Connection &cConnection) override;
 
 
 	//[-------------------------------------------------------]

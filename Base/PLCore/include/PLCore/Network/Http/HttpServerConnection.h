@@ -148,9 +148,9 @@ class HttpServerConnection : public Connection {
 	//[ Protected virtual Connection functions                ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual void OnConnect();
-		PLCORE_API virtual void OnDisconnect();
-		PLCORE_API virtual void OnReceive(const char *pBuffer, uint32 nSize);
+		PLCORE_API virtual void OnConnect() override;
+		PLCORE_API virtual void OnDisconnect() override;
+		PLCORE_API virtual void OnReceive(const char *pBuffer, uint32 nSize) override;
 
 
 	//[-------------------------------------------------------]

@@ -103,7 +103,7 @@ class EventDesc : public MemberDesc {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual FuncDesc functions                     ]
+	//[ Public virtual EventDesc functions                    ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -120,7 +120,7 @@ class EventDesc : public MemberDesc {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		String m_sSignature;		/**< Signature */
+		String m_sSignature;	/**< Signature */
 
 
 };

@@ -236,7 +236,7 @@ class XmlBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual XmlBase functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**

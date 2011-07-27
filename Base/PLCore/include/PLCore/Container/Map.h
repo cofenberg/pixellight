@@ -74,7 +74,7 @@ class Map : public Iterable<ValueType> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual Map functions                          ]
 	//[-------------------------------------------------------]
 	public:
 		/**

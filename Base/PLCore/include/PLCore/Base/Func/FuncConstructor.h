@@ -70,15 +70,14 @@ class FuncConstructor : public Func<Object*, T0, T1, T2, T3, T4, T5, T6, T7, T8,
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -112,15 +111,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -153,15 +151,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -193,15 +190,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -232,15 +228,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> :
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -270,15 +265,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : publ
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -307,15 +301,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Fu
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8, t9);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -343,15 +336,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<O
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7, t8);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -378,15 +370,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<Objec
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6, t7);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -412,15 +403,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5, T6> : public Func<Object*, 
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
 			return new CLASS(t0, t1, t2, t3, t4, t5, t6);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -445,15 +435,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4, T5> : public Func<Object*, T0, 
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
 			return new CLASS(t0, t1, t2, t3, t4, t5);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -477,15 +466,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3, T4> : public Func<Object*, T0, T1, 
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
 			return new CLASS(t0, t1, t2, t3, t4);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -508,15 +496,14 @@ class FuncConstructor<CLASS, T0, T1, T2, T3> : public Func<Object*, T0, T1, T2, 
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
 			return new CLASS(t0, t1, t2, t3);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -538,15 +525,14 @@ class FuncConstructor<CLASS, T0, T1, T2> : public Func<Object*, T0, T1, T2> {
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1, _T2 t2)
-		{
+		Object *operator ()(_T0 t0, _T1 t1, _T2 t2) {
 			return new CLASS(t0, t1, t2);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -567,15 +553,14 @@ class FuncConstructor<CLASS, T0, T1> : public Func<Object*, T0, T1> {
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0, _T1 t1)
-		{
+		Object *operator ()(_T0 t0, _T1 t1) {
 			return new CLASS(t0, t1);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -595,15 +580,14 @@ class FuncConstructor<CLASS, T0> : public Func<Object*, T0> {
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()(_T0 t0)
-		{
+		Object *operator ()(_T0 t0) {
 			return new CLASS(t0);
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };
@@ -621,15 +605,14 @@ class FuncConstructor<CLASS> : public Func<Object*> {
 		FuncConstructor() {
 		}
 
-		~FuncConstructor() {
+		virtual ~FuncConstructor() {
 		}
 
-		Object *operator ()()
-		{
+		Object *operator ()() {
 			return new CLASS();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncConstructor();
 		}
 };

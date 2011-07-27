@@ -145,7 +145,7 @@ class QuickSort {
 
 
 	//[-------------------------------------------------------]
-	//[ Virtual private functions                             ]
+	//[ Virtual private QuickSort functions                   ]
 	//[-------------------------------------------------------]
 	private:
 		/**

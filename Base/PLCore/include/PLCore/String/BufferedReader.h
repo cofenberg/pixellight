@@ -52,7 +52,7 @@ class BufferedReader {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual BufferedReader functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

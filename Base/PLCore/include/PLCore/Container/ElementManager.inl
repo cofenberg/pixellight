@@ -288,7 +288,7 @@ uint32 ElementManager<AType>::GetNumOfElements() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ElementHandler functions               ]
 //[-------------------------------------------------------]
 /**
 *  @brief

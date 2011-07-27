@@ -298,7 +298,7 @@ class Thread : public ThreadFunction {
 	//[ Public virtual ThreadFunction functions               ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual int Run();
+		PLCORE_API virtual int Run() override;
 
 
 	//[-------------------------------------------------------]

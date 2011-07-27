@@ -143,7 +143,7 @@ ResourceHandler<AType> *Resource<AType>::GetHandler(uint32 nIndex) const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Resource functions                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -220,7 +220,7 @@ Resource<AType>::~Resource()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual functions                             ]
+//[ Private virtual Resource functions                    ]
 //[-------------------------------------------------------]
 /**
 *  @brief

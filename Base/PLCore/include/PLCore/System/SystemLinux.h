@@ -104,36 +104,36 @@ class SystemLinux : public SystemImpl {
 	//[ Private virtual SystemImpl functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual String GetPlatform() const;
-		virtual String GetOS() const;
-		virtual char GetSeparator() const;
-		virtual uint32 GetCPUMhz() const;
-		virtual String GetComputerName() const;
-		virtual String GetUserName() const;
-		virtual String GetUserHomeDir() const;
-		virtual String GetUserDataDir() const;
-		virtual String GetDataDirName(const String &sName) const;
-		virtual String GetExecutableFilename() const;
-		virtual String GetEnvironmentVariable(const String &sName) const;
-		virtual bool SetEnvironmentVariable(const String &sName, const String &sValue) const;
-		virtual void DeleteEnvironmentVariable(const String &sName) const;
-		virtual bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir) const;
-		virtual String GetLocaleLanguage() const;
-		virtual String GetCurrentDir() const;
-		virtual bool SetCurrentDir(const String &sPath);
-		virtual Thread *GetCurrentThread() const;
-		virtual void Exit(int nReturn);
-		virtual const Console &GetConsole() const;
-		virtual Time GetTime() const;
-		virtual uint64 GetMilliseconds() const;
-		virtual uint64 GetMicroseconds() const;
-		virtual void Sleep(uint64 nMilliseconds) const;
-		virtual void Yield() const;
-		virtual float GetPercentageOfUsedPhysicalMemory() const;
-		virtual uint64 GetTotalPhysicalMemory() const;
-		virtual uint64 GetFreePhysicalMemory() const;
-		virtual uint64 GetTotalVirtualMemory() const;
-		virtual uint64 GetFreeVirtualMemory() const;
+		virtual String GetPlatform() const override;
+		virtual String GetOS() const override;
+		virtual char GetSeparator() const override;
+		virtual uint32 GetCPUMhz() const override;
+		virtual String GetComputerName() const override;
+		virtual String GetUserName() const override;
+		virtual String GetUserHomeDir() const override;
+		virtual String GetUserDataDir() const override;
+		virtual String GetDataDirName(const String &sName) const override;
+		virtual String GetExecutableFilename() const override;
+		virtual String GetEnvironmentVariable(const String &sName) const override;
+		virtual bool SetEnvironmentVariable(const String &sName, const String &sValue) const override;
+		virtual void DeleteEnvironmentVariable(const String &sName) const override;
+		virtual bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir) const override;
+		virtual String GetLocaleLanguage() const override;
+		virtual String GetCurrentDir() const override;
+		virtual bool SetCurrentDir(const String &sPath) override;
+		virtual Thread *GetCurrentThread() const override;
+		virtual void Exit(int nReturn) override;
+		virtual const Console &GetConsole() const override;
+		virtual Time GetTime() const override;
+		virtual uint64 GetMilliseconds() const override;
+		virtual uint64 GetMicroseconds() const override;
+		virtual void Sleep(uint64 nMilliseconds) const override;
+		virtual void Yield() const override;
+		virtual float GetPercentageOfUsedPhysicalMemory() const override;
+		virtual uint64 GetTotalPhysicalMemory() const override;
+		virtual uint64 GetFreePhysicalMemory() const override;
+		virtual uint64 GetTotalVirtualMemory() const override;
+		virtual uint64 GetFreeVirtualMemory() const override;
 
 
 	//[-------------------------------------------------------]

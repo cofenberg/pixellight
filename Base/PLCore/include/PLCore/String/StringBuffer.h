@@ -124,7 +124,7 @@ class StringBuffer {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual StringBuffer functions                 ]
 	//[-------------------------------------------------------]
 	public:
 		/**

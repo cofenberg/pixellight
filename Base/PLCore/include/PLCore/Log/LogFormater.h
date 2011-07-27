@@ -115,7 +115,7 @@ class LogFormater {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual LogFormater functions               ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

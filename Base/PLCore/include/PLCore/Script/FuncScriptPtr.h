@@ -84,7 +84,7 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -110,7 +110,7 @@ class FuncScriptPtr : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -157,7 +157,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14, _T15 t15) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -179,7 +179,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -226,7 +226,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -251,7 +251,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -297,7 +297,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13, _T14 t14) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -318,7 +318,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -364,7 +364,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -388,7 +388,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T1
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -433,7 +433,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12, _T13 t13) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -453,7 +453,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12,
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -498,7 +498,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -521,7 +521,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -565,7 +565,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11, _T12 t12) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -584,7 +584,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -628,7 +628,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -650,7 +650,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : publi
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -693,7 +693,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10, _T11 t11) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -711,7 +711,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : pu
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -754,7 +754,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -775,7 +775,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Fun
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -817,7 +817,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9, _T10 t10) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -834,7 +834,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public 
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -876,7 +876,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -896,7 +896,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -937,7 +937,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8, _T9 t9) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -953,7 +953,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -994,7 +994,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1013,7 +1013,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1053,7 +1053,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7, _T8 t8) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1068,7 +1068,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1108,7 +1108,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1126,7 +1126,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1165,7 +1165,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6, _T7 t7) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1179,7 +1179,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1218,7 +1218,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5, T6>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1235,7 +1235,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1273,7 +1273,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5, _T6 t6) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5, T6>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1286,7 +1286,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1324,7 +1324,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4, T5>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1340,7 +1340,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1377,7 +1377,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4, _T5 t5) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4, T5>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1389,7 +1389,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1426,7 +1426,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3, T4>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1441,7 +1441,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> 
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1477,7 +1477,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3, _T4 t4) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3, T4>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1488,7 +1488,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1524,7 +1524,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2, T3>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1538,7 +1538,7 @@ class FuncScriptPtr<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1573,7 +1573,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2, _T3 t3) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2, T3>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1583,7 +1583,7 @@ class FuncScriptPtr<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1618,7 +1618,7 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual _R operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1, T2>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1631,7 +1631,7 @@ class FuncScriptPtr<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1665,7 +1665,7 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) {
+		virtual void operator ()(_T0 t0, _T1 t1, _T2 t2) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1, T2>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1674,7 +1674,7 @@ class FuncScriptPtr<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1708,7 +1708,7 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0, _T1 t1) {
+		virtual _R operator ()(_T0 t0, _T1 t1) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0, T1>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1720,7 +1720,7 @@ class FuncScriptPtr<R, T0, T1> : public Func<R, T0, T1> {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1753,7 +1753,7 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0, _T1 t1) {
+		virtual void operator ()(_T0 t0, _T1 t1) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0, T1>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->PushArgument(t1);
@@ -1761,7 +1761,7 @@ class FuncScriptPtr<void, T0, T1> : public Func<void, T0, T1> {
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1794,7 +1794,7 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()(_T0 t0) {
+		virtual _R operator ()(_T0 t0) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R, T0>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				if (m_pScript->EndCall()) {
@@ -1805,7 +1805,7 @@ class FuncScriptPtr<R, T0> : public Func<R, T0> {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1837,14 +1837,14 @@ class FuncScriptPtr<void, T0> : public Func<void, T0> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()(_T0 t0) {
+		virtual void operator ()(_T0 t0) override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void, T0>::GetSignature(), m_sNamespace)) {
 				m_pScript->PushArgument(t0);
 				m_pScript->EndCall();
 			}
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1876,7 +1876,7 @@ class FuncScriptPtr<R> : public Func<R> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual _R operator ()() {
+		virtual _R operator ()() override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<R>::GetSignature(), m_sNamespace)) {
 				if (m_pScript->EndCall()) {
 					_R r = DefaultValue<R>::Default();
@@ -1886,7 +1886,7 @@ class FuncScriptPtr<R> : public Func<R> {
 			return DefaultValue<R>::Default();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 
@@ -1915,12 +1915,12 @@ class FuncScriptPtr<void> : public Func<void> {
 		virtual ~FuncScriptPtr() {
 		}
 
-		virtual void operator ()() {
+		virtual void operator ()() override {
 			if (m_pScript && m_pScript->BeginCall(m_sFunction, Func<void>::GetSignature(), m_sNamespace))
 				m_pScript->EndCall();
 		}
 
-		virtual DynFunc *Clone() const {
+		virtual DynFunc *Clone() const override {
 			return new FuncScriptPtr(m_pScript, m_sFunction, m_sNamespace);
 		}
 

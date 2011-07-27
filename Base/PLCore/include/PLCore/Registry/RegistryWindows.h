@@ -75,26 +75,26 @@ class RegistryWindows : public RegistryImpl {
 	//[ Private virtual RegistryImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Registry::ERegistry GetRegistryType() const;
-		virtual bool Open(Registry::EKey nKey, const String &sSubKey, uint32 nAccess);
-		virtual bool Create(Registry::EKey nKey, const String &sSubKey, uint32 nAccess);
-		virtual bool Delete();
-		virtual void Close();
-		virtual Registry::EKey GetOpenKey() const;
-		virtual String GetOpenSubKey() const;
-		virtual uint32 GetOpenAccessMode() const;
-		virtual uint32 GetNumOfSubKeys() const;
-		virtual String GetSubKey(uint32 nIndex) const;
-		virtual uint32 GetNumOfValues() const;
-		virtual String GetValue(uint32 nIndex) const;
-		virtual Registry::EType GetValueType(const String &sName) const;
-		virtual String GetValueString(const String &sName) const;
-		virtual uint32 GetValueDWord(const String &sName) const;
-		virtual uint32 GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const;
-		virtual bool SetValueString(const String &sName, const String &sValue);
-		virtual bool SetValueDWord(const String &sName, uint32 nValue);
-		virtual bool SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 nSize);
-		virtual void Flush();
+		virtual Registry::ERegistry GetRegistryType() const override;
+		virtual bool Open(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) override;
+		virtual bool Create(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) override;
+		virtual bool Delete() override;
+		virtual void Close() override;
+		virtual Registry::EKey GetOpenKey() const override;
+		virtual String GetOpenSubKey() const override;
+		virtual uint32 GetOpenAccessMode() const override;
+		virtual uint32 GetNumOfSubKeys() const override;
+		virtual String GetSubKey(uint32 nIndex) const override;
+		virtual uint32 GetNumOfValues() const override;
+		virtual String GetValue(uint32 nIndex) const override;
+		virtual Registry::EType GetValueType(const String &sName) const override;
+		virtual String GetValueString(const String &sName) const override;
+		virtual uint32 GetValueDWord(const String &sName) const override;
+		virtual uint32 GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const override;
+		virtual bool SetValueString(const String &sName, const String &sValue) override;
+		virtual bool SetValueDWord(const String &sName, uint32 nValue) override;
+		virtual bool SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 nSize) override;
+		virtual void Flush() override;
 
 
 	//[-------------------------------------------------------]

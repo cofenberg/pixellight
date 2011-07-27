@@ -79,27 +79,27 @@ class TypeInfo< FlagType<ENUM> > : public DynTypeInfo {
 	//[ Public virtual DynTypeInfo functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual int GetTypeID() const
+		virtual int GetTypeID() const override
 		{
 			return Type<_Type>::TypeID;
 		}
 
-		virtual String GetTypeName() const
+		virtual String GetTypeName() const override
 		{
 			return Type<_Type>::GetTypeName();
 		}
 
-		virtual bool IsEnumType() const
+		virtual bool IsEnumType() const override
 		{
 			return false;
 		}
 
-		virtual bool IsFlagType() const
+		virtual bool IsFlagType() const override
 		{
 			return true;
 		}
 
-		virtual String GetEnumValue(const String &sEnum) const
+		virtual String GetEnumValue(const String &sEnum) const override
 		{
 			String sName = sEnum;
 			String sDesc;
@@ -108,7 +108,7 @@ class TypeInfo< FlagType<ENUM> > : public DynTypeInfo {
 			return Type<_Type>::ConvertToString(nValue);
 		}
 
-		virtual String GetEnumDescription(const String &sEnum) const
+		virtual String GetEnumDescription(const String &sEnum) const override
 		{
 			String sName = sEnum;
 			String sDesc;

@@ -73,8 +73,8 @@ class Client : public Host {
 	//[ Protected virtual Host functions                      ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual Connection *CreateIncomingConnection();
-		PLCORE_API virtual Connection *CreateOutgoingConnection();
+		PLCORE_API virtual Connection *CreateIncomingConnection() override;
+		PLCORE_API virtual Connection *CreateOutgoingConnection() override;
 
 
 };

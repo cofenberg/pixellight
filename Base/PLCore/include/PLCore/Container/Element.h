@@ -166,7 +166,7 @@ template <class AType> class Element {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Element functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -220,7 +220,7 @@ template <class AType> class Element {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual Element functions                     ]
 	//[-------------------------------------------------------]
 	private:
 		/**

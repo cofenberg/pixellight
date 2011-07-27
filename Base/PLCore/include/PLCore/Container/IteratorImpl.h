@@ -63,7 +63,7 @@ class IteratorImpl : protected RefCount<ValueType> {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Protected virtual IteratorImpl functions              ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

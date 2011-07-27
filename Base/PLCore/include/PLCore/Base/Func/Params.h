@@ -240,27 +240,27 @@ class Params : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -283,7 +283,7 @@ class Params : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -478,17 +478,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 16;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -511,7 +511,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -703,27 +703,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -745,7 +745,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -930,17 +930,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 15;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -962,7 +962,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1145,27 +1145,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1186,7 +1186,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : pu
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1362,17 +1362,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 14;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1393,7 +1393,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> :
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1567,27 +1567,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1607,7 +1607,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public 
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1774,17 +1774,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 13;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -1804,7 +1804,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : publ
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -1969,27 +1969,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2008,7 +2008,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynPa
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2166,17 +2166,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 12;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2195,7 +2195,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Dy
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2351,27 +2351,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2389,7 +2389,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynParams 
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2538,17 +2538,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 11;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2566,7 +2566,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynPara
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2713,27 +2713,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2750,7 +2750,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -2890,17 +2890,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 10;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -2917,7 +2917,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3055,27 +3055,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3091,7 +3091,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3222,17 +3222,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 9;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3248,7 +3248,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3377,27 +3377,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3412,7 +3412,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3534,17 +3534,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6, T7>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 8;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3559,7 +3559,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6, T7> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3679,27 +3679,27 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3713,7 +3713,7 @@ class Params<R, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3826,17 +3826,17 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5, T6>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 7;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3850,7 +3850,7 @@ class Params<void, T0, T1, T2, T3, T4, T5, T6> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -3961,27 +3961,27 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -3994,7 +3994,7 @@ class Params<R, T0, T1, T2, T3, T4, T5> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4098,17 +4098,17 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4, T5>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 6;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4121,7 +4121,7 @@ class Params<void, T0, T1, T2, T3, T4, T5> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4223,27 +4223,27 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4255,7 +4255,7 @@ class Params<R, T0, T1, T2, T3, T4> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4350,17 +4350,17 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3, T4>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 5;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4372,7 +4372,7 @@ class Params<void, T0, T1, T2, T3, T4> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4465,27 +4465,27 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2, T3>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4496,7 +4496,7 @@ class Params<R, T0, T1, T2, T3> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4582,17 +4582,17 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2, T3>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 4;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4603,7 +4603,7 @@ class Params<void, T0, T1, T2, T3> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4687,27 +4687,27 @@ class Params<R, T0, T1, T2> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1, T2>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4717,7 +4717,7 @@ class Params<R, T0, T1, T2> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4794,17 +4794,17 @@ class Params<void, T0, T1, T2> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1, T2>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 3;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4814,7 +4814,7 @@ class Params<void, T0, T1, T2> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4889,27 +4889,27 @@ class Params<R, T0, T1> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0, T1>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -4918,7 +4918,7 @@ class Params<R, T0, T1> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -4986,17 +4986,17 @@ class Params<void, T0, T1> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0, T1>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 2;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5005,7 +5005,7 @@ class Params<void, T0, T1> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5071,27 +5071,27 @@ class Params<R, T0> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R, T0>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5099,7 +5099,7 @@ class Params<R, T0> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5158,17 +5158,17 @@ class Params<void, T0> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void, T0>::GetSignatureID();
 		}
 
-		virtual uint32 GetNumOfParameters() const
+		virtual uint32 GetNumOfParameters() const override
 		{
 			return 1;
 		}
 
-		virtual int GetParameterTypeID(uint32 nIndex) const
+		virtual int GetParameterTypeID(uint32 nIndex) const override
 		{
 			switch (nIndex) {
 				case 0:		return Type<T0> ::TypeID;
@@ -5176,7 +5176,7 @@ class Params<void, T0> : public DynParams {
 			}
 		}
 
-		virtual void *GetPointerToParameterValue(uint32 nIndex)
+		virtual void *GetPointerToParameterValue(uint32 nIndex) override
 		{
 			switch (nIndex) {
 				case 0:		return (void*)&Param0;
@@ -5231,17 +5231,17 @@ class Params<R> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<R>::GetSignatureID();
 		}
 
-		virtual int GetReturnTypeID() const
+		virtual int GetReturnTypeID() const override
 		{
 			return Type<R>::TypeID;
 		}
 
-		virtual void *GetPointerToReturnValue()
+		virtual void *GetPointerToReturnValue() override
 		{
 			return (void*)&Return;
 		}
@@ -5283,7 +5283,7 @@ class Params<void> : public DynParams {
 			return *this;
 		}
 
-		virtual String GetSignature() const
+		virtual String GetSignature() const override
 		{
 			return Signature<void>::GetSignatureID();
 		}

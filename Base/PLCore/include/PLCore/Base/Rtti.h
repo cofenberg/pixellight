@@ -330,7 +330,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 */
 #define __pl_getclass() \
 		/* Public virtual PLCore::Object function */ \
-		virtual PLCore::Class *GetClass() const \
+		virtual PLCore::Class *GetClass() const override \
 		{ \
 			return _Class::GetSingleton()->GetClass(); \
 		} \
@@ -433,7 +433,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const { \
+				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override { \
 					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
 				} \
 		}; \
@@ -511,7 +511,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				} \
 				~NAME##_Desc() { \
 				} \
-				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) const { \
+				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) const override { \
 					return new NAME##_Method(reinterpret_cast<_Self&>(cObject)); \
 				} \
 			private: \
@@ -565,7 +565,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const { \
+				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const override { \
 					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
 				} \
 		}; \
@@ -623,7 +623,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const { \
+				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const override { \
 					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->Slot##NAME; \
 				} \
 		}; \
@@ -682,10 +682,10 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynFunc *GetConstructor() const { \
+				virtual PLCore::DynFunc *GetConstructor() const override { \
 					return const_cast<PLCore::DynFunc*>(reinterpret_cast<const PLCore::DynFunc*>(&m_Constructor)); \
 				} \
-				virtual PLCore::Object *Create(const PLCore::DynParams &cConstParams) { \
+				virtual PLCore::Object *Create(const PLCore::DynParams &cConstParams) override { \
 					if (cConstParams.GetSignature() == m_Constructor.GetSignature()) { \
 						ParamType cParams = static_cast<ConstParamType&>(cConstParams); \
 						m_Constructor.Call(cParams); \

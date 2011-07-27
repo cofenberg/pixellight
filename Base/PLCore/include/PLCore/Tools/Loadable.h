@@ -82,7 +82,7 @@ class Loadable {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Loadable functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -210,7 +210,7 @@ class Loadable {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual Loadable functions                  ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

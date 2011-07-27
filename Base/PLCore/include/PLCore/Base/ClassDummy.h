@@ -57,24 +57,24 @@ class ClassDummy : public ClassImpl {
 	//[ Protected virtual ClassImpl functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual bool IsDummy() const;
-		virtual void InitClass() const;
-		virtual void DeInitClass() const;
-		virtual const List<VarDesc*> &GetAttributes() const;
-		virtual const VarDesc *GetAttribute(const String &sName) const;
-		virtual const List<FuncDesc*> &GetMethods() const;
-		virtual const FuncDesc *GetMethod(const String &sName) const;
-		virtual const List<EventDesc*> &GetSignals() const;
-		virtual const EventDesc *GetSignal(const String &sName) const;
-		virtual const List<EventHandlerDesc*> &GetSlots() const;
-		virtual const EventHandlerDesc *GetSlot(const String &sName) const;
-		virtual bool HasConstructor() const;
-		virtual bool HasDefaultConstructor() const;
-		virtual const List<ConstructorDesc*> &GetConstructors() const;
-		virtual const ConstructorDesc *GetConstructor(const String &sName) const;
-		virtual Object *Create() const;
-		virtual Object *Create(const DynParams &cParams) const;
-		virtual Object *Create(const String &sName, const DynParams &cParams) const;
+		virtual bool IsDummy() const override;
+		virtual void InitClass() const override;
+		virtual void DeInitClass() const override;
+		virtual const List<VarDesc*> &GetAttributes() const override;
+		virtual const VarDesc *GetAttribute(const String &sName) const override;
+		virtual const List<FuncDesc*> &GetMethods() const override;
+		virtual const FuncDesc *GetMethod(const String &sName) const override;
+		virtual const List<EventDesc*> &GetSignals() const override;
+		virtual const EventDesc *GetSignal(const String &sName) const override;
+		virtual const List<EventHandlerDesc*> &GetSlots() const override;
+		virtual const EventHandlerDesc *GetSlot(const String &sName) const override;
+		virtual bool HasConstructor() const override;
+		virtual bool HasDefaultConstructor() const override;
+		virtual const List<ConstructorDesc*> &GetConstructors() const override;
+		virtual const ConstructorDesc *GetConstructor(const String &sName) const override;
+		virtual Object *Create() const override;
+		virtual Object *Create(const DynParams &cParams) const override;
+		virtual Object *Create(const String &sName, const DynParams &cParams) const override;
 
 
 	//[-------------------------------------------------------]

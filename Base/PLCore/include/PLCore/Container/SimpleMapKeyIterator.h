@@ -116,11 +116,11 @@ class SimpleMapKeyIterator : public IteratorImpl<KeyType> {
 	//[ Private virtual IteratorImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
-		virtual IteratorImpl<KeyType> *Clone() const;
-		virtual bool HasNext() const;
-		virtual KeyType &Next();
-		virtual bool HasPrevious() const;
-		virtual KeyType &Previous();
+		virtual IteratorImpl<KeyType> *Clone() const override;
+		virtual bool HasNext() const override;
+		virtual KeyType &Next() override;
+		virtual bool HasPrevious() const override;
+		virtual KeyType &Previous() override;
 
 
 };

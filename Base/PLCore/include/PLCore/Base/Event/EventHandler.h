@@ -135,7 +135,8 @@ class EventHandler : public DynEventHandler {
 	//[ Public virtual DynEventHandler functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual String GetSignature() const {
+		virtual String GetSignature() const override
+		{
 			return TypeSignature::GetSignatureID();
 		}
 
