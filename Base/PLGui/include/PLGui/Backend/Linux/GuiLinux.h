@@ -134,7 +134,7 @@ class GuiLinux : public GuiImpl {
 		virtual FontImpl *CreateFontImpl(Font &cFont) const override;
 		virtual CursorImpl *CreateCursorImpl(Cursor &cCursor) const override;
 		virtual TrayIconImpl *CreateTrayIconImpl(TrayIcon &cTrayIcon) const override;
-		virtual ClipBoardImpl *CreateClipBoardImpl(ClipBoard &cClipBoard) const override
+		virtual ClipBoardImpl *CreateClipBoardImpl(ClipBoard &cClipBoard) const override;
 
 
 	//[-------------------------------------------------------]

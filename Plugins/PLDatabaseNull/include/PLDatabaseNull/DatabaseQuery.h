@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/PLCore.h>	// Contains "override" fallback in case the compiler doesn't support it
 #include <PLDatabase/DatabaseQuery.h>
 #include "PLDatabaseNull/PLDatabaseNull.h"
 

@@ -90,7 +90,7 @@ class TrayIconLinux : public TrayIconImpl {
 		PLGUI_API virtual void DestroyTrayIcon() override;
 		PLGUI_API virtual void SetVisible(bool bVisible) override;
 		PLGUI_API virtual void Update() override;
-		PLGUI_API virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText) override
+		PLGUI_API virtual void ShowNotification(const PLCore::String &sTitle, const PLCore::String &sText) override;
 
 
 	//[-------------------------------------------------------]
