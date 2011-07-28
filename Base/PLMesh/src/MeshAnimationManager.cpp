@@ -134,7 +134,7 @@ MeshAnimationManager::~MeshAnimationManager()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual MeshAnimationManager functions         ]
 //[-------------------------------------------------------]
 bool MeshAnimationManager::Update(float fTimeDifference)
 {

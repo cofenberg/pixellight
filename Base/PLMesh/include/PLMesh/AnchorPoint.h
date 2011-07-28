@@ -174,7 +174,7 @@ class AnchorPointManager : public PLCore::ElementManager<AnchorPoint> {
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual AnchorPoint *CreateElement(const PLCore::String &sName);
+		virtual AnchorPoint *CreateElement(const PLCore::String &sName) override;
 
 
 };

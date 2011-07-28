@@ -126,7 +126,7 @@ class SNProjectivePointLight : public SNPointLight {
 	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsProjectivePointLight() const;
+		PLS_API virtual bool IsProjectivePointLight() const override;
 
 
 };

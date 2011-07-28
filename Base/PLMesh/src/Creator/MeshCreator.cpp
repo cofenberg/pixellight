@@ -68,7 +68,7 @@ MeshCreator::~MeshCreator()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual MeshCreator functions               ]
 //[-------------------------------------------------------]
 /**
 *  @brief

@@ -117,7 +117,7 @@ class JointHinge : public Joint {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual JointHinge functions                   ]
 	//[-------------------------------------------------------]
 	public:
 		/**

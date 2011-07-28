@@ -268,7 +268,7 @@ class SceneHierarchy : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SceneHierarchy functions            ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

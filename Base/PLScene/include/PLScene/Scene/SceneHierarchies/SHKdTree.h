@@ -76,7 +76,7 @@ class SHKdTree : public SceneHierarchy {
 	//[ Private virtual SceneHierarchy functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SceneHierarchyNode &CreateNode();
+		virtual SceneHierarchyNode &CreateNode() override;
 
 
 };
@@ -156,16 +156,16 @@ class SHKdTreeNode : public SceneHierarchyNode {
 	//[ Public virtual SceneHierarchyNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void Touch(bool bRecursive = false);
-		PLS_API virtual PLCore::uint32 GetNumOfNodes() const;
-		PLS_API virtual SceneHierarchyNode *GetNode(PLCore::uint32 nIndex) const;
+		PLS_API virtual void Touch(bool bRecursive = false) override;
+		PLS_API virtual PLCore::uint32 GetNumOfNodes() const override;
+		PLS_API virtual SceneHierarchyNode *GetNode(PLCore::uint32 nIndex) const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneHierarchyNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Init();
+		virtual void Init() override;
 
 
 };

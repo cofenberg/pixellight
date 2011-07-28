@@ -66,7 +66,7 @@ class JointImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual JointImpl functions                    ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -78,11 +78,7 @@ class JointImpl {
 		*/
 		virtual Joint *GetJoint() const = 0;
 
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Joint functions                        ]
-	//[-------------------------------------------------------]
-	public:
+		// For comments, see Joint
 		virtual bool IsBreakable() const = 0;
 		virtual void SetBreakable(bool bBreakable) = 0;
 		virtual void GetBreakForce(PLMath::Vector3 &vForce) const = 0;
@@ -92,7 +88,7 @@ class JointImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

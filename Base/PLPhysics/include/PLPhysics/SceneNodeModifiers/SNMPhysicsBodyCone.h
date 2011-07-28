@@ -105,7 +105,7 @@ class SNMPhysicsBodyCone : public SNMPhysicsBody {
 	//[ Private virtual SNMPhysicsBody functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CreatePhysicsBody();
+		virtual void CreatePhysicsBody() override;
 
 
 };

@@ -703,8 +703,8 @@ class Mesh : public PLCore::Resource<Mesh> {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API virtual bool Unload();
-		PLMESH_API virtual PLCore::String GetLoadableTypeName() const;
+		PLMESH_API virtual bool Unload() override;
+		PLMESH_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

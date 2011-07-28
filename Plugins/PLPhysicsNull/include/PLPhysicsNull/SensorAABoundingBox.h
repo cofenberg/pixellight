@@ -89,7 +89,7 @@ class SensorAABoundingBox : public PLPhysics::SensorAABoundingBox {
 	//[ Public virtual PLPhysics::Sensor functions            ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNULL_API virtual PLCore::uint32 Check();
+		PLPHYSICSNULL_API virtual PLCore::uint32 Check() override;
 
 
 };

@@ -152,7 +152,7 @@ class Sensor : public Element {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Sensor functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -169,9 +169,9 @@ class Sensor : public Element {
 	//[ Public virtual Element functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool IsBody() const;
-		PLPHYSICS_API virtual bool IsJoint() const;
-		PLPHYSICS_API virtual bool IsSensor() const;
+		PLPHYSICS_API virtual bool IsBody() const override;
+		PLPHYSICS_API virtual bool IsJoint() const override;
+		PLPHYSICS_API virtual bool IsSensor() const override;
 
 
 	//[-------------------------------------------------------]
@@ -212,7 +212,7 @@ class Sensor : public Element {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual Sensor functions                    ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

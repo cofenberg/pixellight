@@ -839,7 +839,7 @@ void SceneNode::ClearModifiers()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual SceneNode functions                    ]
 //[-------------------------------------------------------]
 /**
 *  @brief

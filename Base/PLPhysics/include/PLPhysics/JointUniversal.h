@@ -167,7 +167,7 @@ class JointUniversal : public Joint {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual JointUniversal functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

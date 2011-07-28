@@ -94,7 +94,7 @@ class JointUniversal : public PLPhysics::JointUniversal {
 	//[ Public virtual PLPhysics::JointUniversal functions    ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSODE_API virtual void AddOmega(float fOmega1, float fOmega2);
+		PLPHYSICSODE_API virtual void AddOmega(float fOmega1, float fOmega2) override;
 
 
 };

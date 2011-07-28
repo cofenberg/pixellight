@@ -98,17 +98,17 @@ class WorldThread : public WorldUpdate, public PLCore::Thread {
 	//[ Private virtual WorldUpdate functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool IsThread();
-		virtual bool Lock();
-		virtual bool Update(float fTimeScaleFactor, float fMaxTimeDifference, float fSimulationSpeed, float fFrameRate);
-		virtual bool Unlock();
+		virtual bool IsThread() override;
+		virtual bool Lock() override;
+		virtual bool Update(float fTimeScaleFactor, float fMaxTimeDifference, float fSimulationSpeed, float fFrameRate) override;
+		virtual bool Unlock() override;
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLCore::Thread functions            ]
+	//[ Public virtual PLCore::Thread functions               ]
 	//[-------------------------------------------------------]
 	public:
-		virtual int Run();
+		virtual int Run() override;
 
 
 };

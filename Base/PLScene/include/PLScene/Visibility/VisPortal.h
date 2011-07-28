@@ -117,7 +117,7 @@ class VisPortal : public VisNode {
 	//[ Public virtual VisNode functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsPortal() const;
+		PLS_API virtual bool IsPortal() const override;
 
 
 };

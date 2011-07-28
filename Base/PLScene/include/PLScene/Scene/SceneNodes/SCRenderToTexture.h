@@ -229,15 +229,15 @@ class SCRenderToTexture : public SceneContainer {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InitFunction();
+		PLS_API virtual void InitFunction() override;
 
 
 };

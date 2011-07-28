@@ -101,7 +101,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	public:
 		PLPHYSICS_API PLCore::String GetTarget() const;
 		PLPHYSICS_API void SetTarget(const PLCore::String &sValue);
-		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue);
+		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue) override;	// From PLScene::SceneNodeModifier
 
 
 	//[-------------------------------------------------------]
@@ -189,7 +189,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SNMPhysicsJoint functions           ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -212,7 +212,7 @@ class SNMPhysicsJoint : public SNMPhysics {
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InformedOnInit();
+		PLPHYSICS_API virtual void InformedOnInit() override;
 
 
 };

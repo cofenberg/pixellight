@@ -614,31 +614,31 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
+		PLPHYSICS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InitFunction();
-		PLPHYSICS_API virtual void DeInitFunction();
-		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+		PLPHYSICS_API virtual void InitFunction() override;
+		PLPHYSICS_API virtual void DeInitFunction() override;
+		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool Unload();
-		PLPHYSICS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLPHYSICS_API virtual bool Unload() override;
+		PLPHYSICS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::Loadable functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
+		PLPHYSICS_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams) override;
 
 
 };

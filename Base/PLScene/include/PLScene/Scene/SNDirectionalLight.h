@@ -80,8 +80,8 @@ class SNDirectionalLight : public SNLight {
 	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsRenderLight() const;
-		PLS_API virtual bool IsDirectionalLight() const;
+		PLS_API virtual bool IsRenderLight() const override;
+		PLS_API virtual bool IsDirectionalLight() const override;
 
 
 };

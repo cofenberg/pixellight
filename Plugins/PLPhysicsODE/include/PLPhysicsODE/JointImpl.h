@@ -87,13 +87,13 @@ class JointImpl : public PLPhysics::JointImpl {
 	//[ Public virtual PLPhysics::JointImpl functions         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSODE_API virtual PLPhysics::Joint *GetJoint() const;
-		PLPHYSICSODE_API virtual bool IsBreakable() const;
-		PLPHYSICSODE_API virtual void SetBreakable(bool bBreakable);
-		PLPHYSICSODE_API virtual void GetBreakForce(PLMath::Vector3 &vForce) const;
-		PLPHYSICSODE_API virtual void SetBreakForce(const PLMath::Vector3 &vForce);
-		PLPHYSICSODE_API virtual void GetBreakTorque(PLMath::Vector3 &vTorque) const;
-		PLPHYSICSODE_API virtual void SetBreakTorque(const PLMath::Vector3 &vTorque);
+		PLPHYSICSODE_API virtual PLPhysics::Joint *GetJoint() const override;
+		PLPHYSICSODE_API virtual bool IsBreakable() const override;
+		PLPHYSICSODE_API virtual void SetBreakable(bool bBreakable) override;
+		PLPHYSICSODE_API virtual void GetBreakForce(PLMath::Vector3 &vForce) const override;
+		PLPHYSICSODE_API virtual void SetBreakForce(const PLMath::Vector3 &vForce) override;
+		PLPHYSICSODE_API virtual void GetBreakTorque(PLMath::Vector3 &vTorque) const override;
+		PLPHYSICSODE_API virtual void SetBreakTorque(const PLMath::Vector3 &vTorque) override;
 
 
 	//[-------------------------------------------------------]

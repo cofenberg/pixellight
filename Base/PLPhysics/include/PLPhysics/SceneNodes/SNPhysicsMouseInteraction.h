@@ -126,15 +126,15 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const;
+		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InitFunction();
-		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+		PLPHYSICS_API virtual void InitFunction() override;
+		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

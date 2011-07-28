@@ -109,7 +109,7 @@ class SNMPhysicsJointUpVector : public SNMPhysicsJoint {
 	//[ Private virtual SNMPhysicsJoint functions             ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CreatePhysicsJoint();
+		virtual void CreatePhysicsJoint() override;
 
 
 };

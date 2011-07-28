@@ -68,7 +68,7 @@ class WorldUpdate {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual WorldUpdate functions               ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

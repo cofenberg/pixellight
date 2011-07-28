@@ -165,24 +165,24 @@ class SNPointLight : public SNLight {
 	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsRenderLight() const;
-		PLS_API virtual bool IsPointLight() const;
+		PLS_API virtual bool IsRenderLight() const override;
+		PLS_API virtual bool IsPointLight() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void UpdateAABoundingBox();
-		PLS_API virtual void GetBoundingSphere(PLMath::Sphere &cSphere);
-		PLS_API virtual void GetContainerBoundingSphere(PLMath::Sphere &cSphere);
+		PLS_API virtual void UpdateAABoundingBox() override;
+		PLS_API virtual void GetBoundingSphere(PLMath::Sphere &cSphere) override;
+		PLS_API virtual void GetContainerBoundingSphere(PLMath::Sphere &cSphere) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 };

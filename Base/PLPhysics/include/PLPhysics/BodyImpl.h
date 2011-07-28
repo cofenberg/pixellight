@@ -69,7 +69,7 @@ class BodyImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual BodyImpl functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -81,11 +81,7 @@ class BodyImpl {
 		*/
 		virtual Body *GetBody() const = 0;
 
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Body functions                         ]
-	//[-------------------------------------------------------]
-	public:
+		// For comments, see Body
 		virtual bool IsActive() const = 0;
 		virtual void SetActive(bool bActive = true) = 0;
 		virtual float GetCollisionVolume() const = 0;
@@ -127,7 +123,7 @@ class BodyImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

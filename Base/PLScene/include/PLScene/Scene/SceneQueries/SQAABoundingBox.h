@@ -125,7 +125,7 @@ class SQAABoundingBox : public SceneQuery {
 	//[ Public virtual SceneQuery functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool PerformQuery();
+		PLS_API virtual bool PerformQuery() override;
 
 
 };

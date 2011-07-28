@@ -75,7 +75,7 @@ class Element : public PLCore::Element<Element> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Element functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**

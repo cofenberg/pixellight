@@ -177,7 +177,7 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Mesh *CreateResource(const PLCore::String &sName);
+		virtual Mesh *CreateResource(const PLCore::String &sName) override;
 
 
 };

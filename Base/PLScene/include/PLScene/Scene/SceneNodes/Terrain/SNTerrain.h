@@ -143,29 +143,29 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneNode functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Unload();
-		PLS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLS_API virtual bool Unload() override;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Loadable functions            ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
+		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams) override;
 
 
 };

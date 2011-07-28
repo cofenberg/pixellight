@@ -190,7 +190,7 @@ class SceneRendererPass : public PLCore::Object, public PLCore::Element<SceneRen
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual SceneRendererPass functions           ]
 	//[-------------------------------------------------------]
 	private:
 		/**

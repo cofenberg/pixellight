@@ -129,7 +129,7 @@ class SNArea : public SceneNode, public PLMath::PlaneSet {
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InitFunction();
+		PLS_API virtual void InitFunction() override;
 
 
 };

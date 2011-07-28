@@ -130,7 +130,7 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLCore::Ele
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private virtual SceneRenderer functions               ]
 	//[-------------------------------------------------------]
 	private:
 		/**
@@ -149,15 +149,15 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLCore::Ele
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Unload();
-		PLS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLS_API virtual bool Unload() override;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual SceneRendererPass *CreateElement(const PLCore::String &sName);
+		PLS_API virtual SceneRendererPass *CreateElement(const PLCore::String &sName) override;
 
 
 };

@@ -246,7 +246,7 @@ void SceneHierarchyNode::FreeNode(SceneHierarchyNode &cNode)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual SceneHierarchyNode functions        ]
 //[-------------------------------------------------------]
 /**
 *  @brief

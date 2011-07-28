@@ -285,7 +285,7 @@ class SPScene : public PLRenderer::SurfacePainter {
 	//[ Public virtual PLRenderer::SurfacePainter functions   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnPaint(PLRenderer::Surface &cSurface);
+		virtual void OnPaint(PLRenderer::Surface &cSurface) override;
 
 
 };

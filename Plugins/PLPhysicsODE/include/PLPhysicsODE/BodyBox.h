@@ -85,7 +85,7 @@ class BodyBox : public PLPhysics::BodyBox {
 	//[ Public virtual PLPhysics::Body functions              ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSODE_API virtual void SetMass(float fMass = 0.0f);
+		PLPHYSICSODE_API virtual void SetMass(float fMass = 0.0f) override;
 
 
 };

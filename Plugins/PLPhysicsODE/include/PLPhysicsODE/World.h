@@ -129,7 +129,7 @@ class World : public PLPhysics::World {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual World functions                       ]
 	//[-------------------------------------------------------]
 	private:
 		/**
@@ -227,72 +227,65 @@ class World : public PLPhysics::World {
 		//[-------------------------------------------------------]
 		//[ Physics body creation                                 ]
 		//[-------------------------------------------------------]
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodySphere(float fRadius, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
-																	const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic = false);
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodySphere(float fRadius, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[], const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSODE_API virtual PLPhysics::Body *CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic = false) override;
 
 		//[-------------------------------------------------------]
 		//[ Physics joint creation                                ]
 		//[-------------------------------------------------------]
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																   const PLMath::Vector3 &vPinDir);
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																	 const PLMath::Vector3 &vPinDir);
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																	const PLMath::Vector3 &vPinDir);
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointUniversal(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																		const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2);
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																		const PLMath::Vector3 &vPinDir);
-		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointUpVector(PLPhysics::Body &cParentBody, const PLMath::Vector3 &vPinDir);
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointUniversal(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2) override;
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSODE_API virtual PLPhysics::Joint *CreateJointUpVector(PLPhysics::Body &cParentBody, const PLMath::Vector3 &vPinDir) override;
 
 		//[-------------------------------------------------------]
 		//[ Physics sensor creation                               ]
 		//[-------------------------------------------------------]
-		PLPHYSICSODE_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
-		PLPHYSICSODE_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
+		PLPHYSICSODE_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) override;
+		PLPHYSICSODE_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) override;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLPHYSICSODE_API virtual void GetWorldSize(PLMath::Vector3 &vMin, PLMath::Vector3 &vMax) const;
-		PLPHYSICSODE_API virtual void SetWorldSize(const PLMath::Vector3 &vMin = PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),
-												   const PLMath::Vector3 &vMax = PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f));
-		PLPHYSICSODE_API virtual bool IsSimulationActive() const;
-		PLPHYSICSODE_API virtual void SetSimulationActive(bool bActive = true);
-		PLPHYSICSODE_API virtual float GetSimulationSpeed() const;
-		PLPHYSICSODE_API virtual bool SetSimulationSpeed(float fSpeed = 1.0f);
-		PLPHYSICSODE_API virtual float GetSimulationQuality() const;
-		PLPHYSICSODE_API virtual bool SetSimulationQuality(float fQuality = 1.0f);
-		PLPHYSICSODE_API virtual float GetFrameRate() const;
-		PLPHYSICSODE_API virtual bool SetFrameRate(float fFrameRate = 60.0f);
-		PLPHYSICSODE_API virtual void GetGravity(PLMath::Vector3 &vGravity) const;
-		PLPHYSICSODE_API virtual void SetGravity(const PLMath::Vector3 &vGravity = PLMath::Vector3(0.0f, -9.81f, 0.0f));
-		PLPHYSICSODE_API virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const;
-		PLPHYSICSODE_API virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true);
-		PLPHYSICSODE_API virtual PLCore::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const;
-		PLPHYSICSODE_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags = 0);
-		PLPHYSICSODE_API virtual bool IsBuoyancyActive() const;
-		PLPHYSICSODE_API virtual void SetBuoyancyActive(bool bActive = false);
-		PLPHYSICSODE_API virtual float GetBuoyancyPlaneY() const;
-		PLPHYSICSODE_API virtual void SetBuoyancyPlaneY(float fY = 0.0f);
-		PLPHYSICSODE_API virtual void UpdateSimulation();
-		PLPHYSICSODE_API virtual bool IsAlwaysStatic() const;
+		PLPHYSICSODE_API virtual void GetWorldSize(PLMath::Vector3 &vMin, PLMath::Vector3 &vMax) const override;
+		PLPHYSICSODE_API virtual void SetWorldSize(const PLMath::Vector3 &vMin = PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f), const PLMath::Vector3 &vMax = PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f)) override;
+		PLPHYSICSODE_API virtual bool IsSimulationActive() const override;
+		PLPHYSICSODE_API virtual void SetSimulationActive(bool bActive = true) override;
+		PLPHYSICSODE_API virtual float GetSimulationSpeed() const override;
+		PLPHYSICSODE_API virtual bool SetSimulationSpeed(float fSpeed = 1.0f) override;
+		PLPHYSICSODE_API virtual float GetSimulationQuality() const override;
+		PLPHYSICSODE_API virtual bool SetSimulationQuality(float fQuality = 1.0f) override;
+		PLPHYSICSODE_API virtual float GetFrameRate() const override;
+		PLPHYSICSODE_API virtual bool SetFrameRate(float fFrameRate = 60.0f) override;
+		PLPHYSICSODE_API virtual void GetGravity(PLMath::Vector3 &vGravity) const override;
+		PLPHYSICSODE_API virtual void SetGravity(const PLMath::Vector3 &vGravity = PLMath::Vector3(0.0f, -9.81f, 0.0f)) override;
+		PLPHYSICSODE_API virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const override;
+		PLPHYSICSODE_API virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true) override;
+		PLPHYSICSODE_API virtual PLCore::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const override;
+		PLPHYSICSODE_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags = 0) override;
+		PLPHYSICSODE_API virtual bool IsBuoyancyActive() const override;
+		PLPHYSICSODE_API virtual void SetBuoyancyActive(bool bActive = false) override;
+		PLPHYSICSODE_API virtual float GetBuoyancyPlaneY() const override;
+		PLPHYSICSODE_API virtual void SetBuoyancyPlaneY(float fY = 0.0f) override;
+		PLPHYSICSODE_API virtual void UpdateSimulation() override;
+		PLPHYSICSODE_API virtual bool IsAlwaysStatic() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLPhysics::Element *CreateElement(const PLCore::String &sName);
+		virtual PLPhysics::Element *CreateElement(const PLCore::String &sName) override;
 
 
 };

@@ -82,7 +82,7 @@ Body *Joint::GetChildBody() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Joint functions                        ]
 //[-------------------------------------------------------]
 /**
 *  @brief

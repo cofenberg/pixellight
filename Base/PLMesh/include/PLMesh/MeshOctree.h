@@ -122,7 +122,7 @@ class MeshOctree : public PLMath::Octree {
 	//[ Private virtual PLMath::Octree functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CustomVisible(PLCore::Bitset *pBitset = nullptr);
+		virtual void CustomVisible(PLCore::Bitset *pBitset = nullptr) override;
 
 
 };

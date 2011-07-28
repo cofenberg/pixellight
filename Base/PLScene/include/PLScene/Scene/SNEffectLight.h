@@ -137,7 +137,7 @@ class SNEffectLight : public SNLight {
 	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsEffectLight() const;
+		PLS_API virtual bool IsEffectLight() const override;
 
 
 };

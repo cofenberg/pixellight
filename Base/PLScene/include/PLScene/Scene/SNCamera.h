@@ -424,14 +424,14 @@ class SNCamera : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void UpdateAABoundingBox();
+		PLS_API virtual void UpdateAABoundingBox() override;
 
 
 };

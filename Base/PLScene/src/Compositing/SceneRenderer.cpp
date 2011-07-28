@@ -109,7 +109,7 @@ SceneRenderer::~SceneRenderer()
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Private virtual SceneRenderer functions               ]
 //[-------------------------------------------------------]
 /**
 *  @brief

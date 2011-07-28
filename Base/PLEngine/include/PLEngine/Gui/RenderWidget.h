@@ -87,8 +87,8 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 	//[ Protected virtual WindowConnection functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnDisplayMode();
-		PL_API virtual void OnFullscreenMode();
+		PL_API virtual void OnDisplayMode() override;
+		PL_API virtual void OnFullscreenMode() override;
 
 
 	//[-------------------------------------------------------]

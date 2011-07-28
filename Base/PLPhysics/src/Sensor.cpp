@@ -106,7 +106,7 @@ const Sensor::BodyInfo *Sensor::GetClosestBody() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Sensor functions                       ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -181,7 +181,7 @@ void Sensor::FreeBodyInfo(Sensor::BodyInfo &cBodyInfo)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual Sensor functions                    ]
 //[-------------------------------------------------------]
 /**
 *  @brief

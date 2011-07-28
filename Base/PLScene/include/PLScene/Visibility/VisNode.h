@@ -204,7 +204,7 @@ class VisNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual VisNodes functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**

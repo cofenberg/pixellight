@@ -154,7 +154,7 @@ class MeshAnimationManager : public PLRenderer::AnimationManager, public PLCore:
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual MeshAnimationManager functions         ]
 	//[-------------------------------------------------------]
 	public:
 		/**

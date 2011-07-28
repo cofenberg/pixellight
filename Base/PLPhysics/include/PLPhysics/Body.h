@@ -141,18 +141,6 @@ class Body : public Element {
 
 		/**
 		*  @brief
-		*    Sets the mass of the physics body
-		*
-		*  @param[in] fMass
-		*    New mass of the physics body, 0 = static body
-		*
-		*  @see
-		*    - World::IsAlwaysStatic()
-		*/
-		PLPHYSICS_API virtual void SetMass(float fMass = 0.0f);
-
-		/**
-		*  @brief
 		*    Gets the relativ center of the mass
 		*
 		*  @param[out] vPosition
@@ -528,12 +516,29 @@ class Body : public Element {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual Body functions                         ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Sets the mass of the physics body
+		*
+		*  @param[in] fMass
+		*    New mass of the physics body, 0 = static body
+		*
+		*  @see
+		*    - World::IsAlwaysStatic()
+		*/
+		PLPHYSICS_API virtual void SetMass(float fMass = 0.0f);
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual Element functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool IsBody() const;
-		PLPHYSICS_API virtual bool IsJoint() const;
-		PLPHYSICS_API virtual bool IsSensor() const;
+		PLPHYSICS_API virtual bool IsBody() const override;
+		PLPHYSICS_API virtual bool IsJoint() const override;
+		PLPHYSICS_API virtual bool IsSensor() const override;
 
 
 	//[-------------------------------------------------------]

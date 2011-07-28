@@ -102,16 +102,16 @@ class SNSphereFog : public SNFog {
 	//[ Public virtual SNFog functions                        ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsSphereFog() const;
+		PLS_API virtual bool IsSphereFog() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void UpdateAABoundingBox();
-		PLS_API virtual void GetBoundingSphere(PLMath::Sphere &cSphere);
-		PLS_API virtual void GetContainerBoundingSphere(PLMath::Sphere &cSphere);
+		PLS_API virtual void UpdateAABoundingBox() override;
+		PLS_API virtual void GetBoundingSphere(PLMath::Sphere &cSphere) override;
+		PLS_API virtual void GetContainerBoundingSphere(PLMath::Sphere &cSphere) override;
 
 
 };

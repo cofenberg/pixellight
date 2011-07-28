@@ -115,15 +115,15 @@ class SNBitmap3D : public SNBitmap {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneNode functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void UpdateAABoundingBox();
+		virtual void UpdateAABoundingBox() override;
 
 
 };

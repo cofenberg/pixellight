@@ -220,7 +220,7 @@ class SceneHierarchyNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SceneHierarchyNode functions           ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -314,7 +314,7 @@ class SceneHierarchyNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SceneHierarchyNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

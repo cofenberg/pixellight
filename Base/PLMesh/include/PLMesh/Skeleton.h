@@ -133,7 +133,7 @@ class Skeleton : public PLCore::Resource<Skeleton>, public PLCore::ElementManage
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Joint *CreateElement(const PLCore::String &sName);
+		virtual Joint *CreateElement(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]
@@ -141,15 +141,15 @@ class Skeleton : public PLCore::Resource<Skeleton>, public PLCore::ElementManage
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API Skeleton &operator =(const Skeleton &cSource);
-		PLMESH_API virtual PLCore::String GetSourceName() const;
+		PLMESH_API virtual PLCore::String GetSourceName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API virtual bool Unload();
-		PLMESH_API virtual PLCore::String GetLoadableTypeName() const;
+		PLMESH_API virtual bool Unload() override;
+		PLMESH_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 };

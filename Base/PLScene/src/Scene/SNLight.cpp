@@ -40,7 +40,7 @@ pl_implement_class(SNLight)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual SNLight functions                      ]
 //[-------------------------------------------------------]
 bool SNLight::IsRenderLight() const
 {

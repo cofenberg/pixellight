@@ -341,42 +341,42 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InitFunction();
-		PLS_API virtual void DeInitFunction();
-		PLS_API virtual void OnActivate(bool bActivate);
+		PLS_API virtual void InitFunction() override;
+		PLS_API virtual void DeInitFunction() override;
+		PLS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::ElementManager functions       ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool DeInit();
-		PLS_API virtual SceneNode *GetByIndex(PLCore::uint32 nIndex = 0) const;
-		PLS_API virtual SceneNode *GetByName(const PLCore::String &sName) const;
+		PLS_API virtual bool DeInit() override;
+		PLS_API virtual SceneNode *GetByIndex(PLCore::uint32 nIndex = 0) const override;
+		PLS_API virtual SceneNode *GetByName(const PLCore::String &sName) const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLS_API virtual bool Unload();
-		PLS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLS_API virtual bool Unload() override;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::Loadable functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
+		PLS_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual SceneNode *CreateElement(const PLCore::String &sName);
+		PLS_API virtual SceneNode *CreateElement(const PLCore::String &sName) override;
 
 
 };

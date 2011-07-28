@@ -111,7 +111,7 @@ class SNMPositionLinearAnimation : public SNMTransform {
 	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void OnActivate(bool bActivate);
+		PLS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

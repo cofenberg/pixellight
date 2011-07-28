@@ -73,8 +73,8 @@ class CursorPL : public PLGui::CursorImpl {
 	//[ Public virtual PLGui::CursorImpl functions            ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void Load(PLGui::EMouseCursor nCursor);
-		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot);
+		virtual void Load(PLGui::EMouseCursor nCursor) override;
+		virtual void Load(const PLCore::String &sFilename, const PLMath::Vector2i &vHotspot) override;
 
 
 };

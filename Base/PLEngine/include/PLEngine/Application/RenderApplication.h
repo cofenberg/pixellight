@@ -231,7 +231,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    - Call OnCreateInputController()
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init();
+		PL_API virtual bool Init() override;
 
 		/**
 		*  @brief
@@ -242,7 +242,7 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    - Run GUI main loop and update engine (non-blocking loop)
 		*    - Exit loop when either the GUI or the application has been stopped
 		*/
-		PL_API virtual void Main();
+		PL_API virtual void Main() override;
 
 		/**
 		*  @brief
@@ -254,14 +254,14 @@ class RenderApplication : public PLGui::GuiApplication {
 		*    - Destroy renderer context
 		*    - Everything that GuiApplication::DeInit() does
 		*/
-		PL_API virtual void DeInit();
+		PL_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLGui::GuiApplication functions     ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnCreateMainWindow();
+		PL_API virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]

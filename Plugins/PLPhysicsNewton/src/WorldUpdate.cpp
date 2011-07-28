@@ -52,7 +52,7 @@ WorldUpdate::WorldUpdate(World &cWorld) :
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual WorldUpdate functions               ]
 //[-------------------------------------------------------]
 /**
 *  @brief

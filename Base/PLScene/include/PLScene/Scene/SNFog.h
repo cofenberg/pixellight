@@ -58,7 +58,7 @@ class SNFog : public SceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SNFog functions                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**

@@ -430,7 +430,7 @@ bool SNMesh::GetSkeletonJointWorldPosition(const String &sJointName, Vector3 &vP
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual SNMesh functions                    ]
 //[-------------------------------------------------------]
 /**
 *  @brief

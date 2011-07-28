@@ -130,7 +130,7 @@ class SNProjectiveSpotLight : public SNSpotLight {
 	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsProjectiveSpotLight() const;
+		PLS_API virtual bool IsProjectiveSpotLight() const override;
 
 
 };

@@ -79,8 +79,8 @@ class ClipBoardPL : public PLGui::ClipBoardImpl {
 	//[ Private virtual PLGui::ClipBoardImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual PLGui::DataObject GetData();
-		PLS_API virtual void SetData(const PLGui::DataObject &cData);
+		PLS_API virtual PLGui::DataObject GetData() override;
+		PLS_API virtual void SetData(const PLGui::DataObject &cData) override;
 
 
 };

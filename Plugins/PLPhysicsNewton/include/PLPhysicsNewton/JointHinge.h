@@ -119,14 +119,14 @@ class JointHinge : public PLPhysics::JointHinge {
 	//[ Public virtual PLPhysics::Joint functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNEWTON_API virtual void GetCurrentPivotPoint(PLMath::Vector3 &vPosition) const;
+		PLPHYSICSNEWTON_API virtual void GetCurrentPivotPoint(PLMath::Vector3 &vPosition) const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLPhysics::JointHinge functions        ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNEWTON_API virtual void AddOmega(float fOmega);
+		PLPHYSICSNEWTON_API virtual void AddOmega(float fOmega) override;
 
 
 };

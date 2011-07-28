@@ -95,7 +95,7 @@ class SNMDeactivationOnTimeout : public SceneNodeModifier {
 	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void OnActivate(bool bActivate);
+		PLS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

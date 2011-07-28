@@ -729,7 +729,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -1079,15 +1079,15 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 	//[ Public virtual PLCore::Element functions              ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Delete(bool bProtectedToo = false);
-		PLS_API virtual bool SetName(const PLCore::String &sName);
+		PLS_API virtual bool Delete(bool bProtectedToo = false) override;
+		PLS_API virtual bool SetName(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Element functions             ]
 	//[-------------------------------------------------------]
 	private:
-		PLS_API virtual void DeleteElement();
+		PLS_API virtual void DeleteElement() override;
 
 
 };

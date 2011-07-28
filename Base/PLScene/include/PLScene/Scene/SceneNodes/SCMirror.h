@@ -145,18 +145,18 @@ class SCMirror : public SCRenderToTexture {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler() override;
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneNode functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
-		virtual void UpdateAABoundingBox();
+		virtual void InitFunction() override;
+		virtual void UpdateAABoundingBox() override;
 
 
 };

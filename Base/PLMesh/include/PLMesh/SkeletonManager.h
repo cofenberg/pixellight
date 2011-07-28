@@ -79,7 +79,7 @@ class SkeletonManager : public PLCore::ResourceManager<Skeleton> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Skeleton *CreateResource(const PLCore::String &sName);
+		virtual Skeleton *CreateResource(const PLCore::String &sName) override;
 
 
 };

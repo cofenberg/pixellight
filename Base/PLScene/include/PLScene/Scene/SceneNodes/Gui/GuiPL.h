@@ -162,21 +162,21 @@ class GuiPL : public PLGui::GuiImpl {
 	//[ Public virtual PLGui::GuiImpl functions               ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool HasPendingMessages();
-		virtual void ProcessMessage();
-		virtual void PostMessage(const PLGui::GuiMessage &cMessage);
-		virtual void EnumerateScreens(PLCore::List<PLGui::Screen*> &lstScreens);
-		virtual PLMath::Vector2i GetScreenSize() const;
-		virtual bool HasTaskbar();
-		virtual void SetMouseVisible(bool bVisible);
-		virtual void ListFonts(PLCore::List<PLGui::FontInfo> &lstFonts) const;
-		virtual PLGui::WidgetImpl *CreateWidgetImpl(PLGui::Widget &cWidget) const;
-		virtual PLGui::GraphicsImpl *CreateGraphicsImpl(PLGui::Graphics &cGraphics) const;
-		virtual PLGui::ImageImpl *CreateImageImpl(PLGui::Image &cImage) const;
-		virtual PLGui::FontImpl *CreateFontImpl(PLGui::Font &cFont) const;
-		virtual PLGui::CursorImpl *CreateCursorImpl(PLGui::Cursor &cCursor) const;
-		virtual PLGui::TrayIconImpl *CreateTrayIconImpl(PLGui::TrayIcon &cTrayIcon) const;
-		virtual PLGui::ClipBoardImpl *CreateClipBoardImpl(PLGui::ClipBoard &cClipBoard) const;
+		virtual bool HasPendingMessages() override;
+		virtual void ProcessMessage() override;
+		virtual void PostMessage(const PLGui::GuiMessage &cMessage) override;
+		virtual void EnumerateScreens(PLCore::List<PLGui::Screen*> &lstScreens) override;
+		virtual PLMath::Vector2i GetScreenSize() const override;
+		virtual bool HasTaskbar() override;
+		virtual void SetMouseVisible(bool bVisible) override;
+		virtual void ListFonts(PLCore::List<PLGui::FontInfo> &lstFonts) const override;
+		virtual PLGui::WidgetImpl *CreateWidgetImpl(PLGui::Widget &cWidget) const override;
+		virtual PLGui::GraphicsImpl *CreateGraphicsImpl(PLGui::Graphics &cGraphics) const override;
+		virtual PLGui::ImageImpl *CreateImageImpl(PLGui::Image &cImage) const override;
+		virtual PLGui::FontImpl *CreateFontImpl(PLGui::Font &cFont) const override;
+		virtual PLGui::CursorImpl *CreateCursorImpl(PLGui::Cursor &cCursor) const override;
+		virtual PLGui::TrayIconImpl *CreateTrayIconImpl(PLGui::TrayIcon &cTrayIcon) const override;
+		virtual PLGui::ClipBoardImpl *CreateClipBoardImpl(PLGui::ClipBoard &cClipBoard) const override;
 
 
 	//[-------------------------------------------------------]

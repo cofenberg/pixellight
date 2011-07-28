@@ -332,72 +332,65 @@ class World : public PLPhysics::World {
 		//[-------------------------------------------------------]
 		//[ Physics body creation                                 ]
 		//[-------------------------------------------------------]
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodySphere(float fRadius, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
-																	   const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic = false);
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyBox(const PLMath::Vector3 &vDimension, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodySphere(float fRadius, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyEllipsoid(const PLMath::Vector3 &vRadius, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[], const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCylinder(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCone(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyCapsule(float fRadius, float fHeight, bool bStatic = false) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Body *CreateBodyChamferCylinder(float fRadius, float fHeight, bool bStatic = false) override;
 
 		//[-------------------------------------------------------]
 		//[ Physics joint creation                                ]
 		//[-------------------------------------------------------]
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																	  const PLMath::Vector3 &vPinDir);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																		const PLMath::Vector3 &vPinDir);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																	   const PLMath::Vector3 &vPinDir);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointUniversal(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																		   const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-																		   const PLMath::Vector3 &vPinDir);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointUpVector(PLPhysics::Body &cParentBody, const PLMath::Vector3 &vPinDir);
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointBall(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointSlider(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointHinge(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointUniversal(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Joint *CreateJointUpVector(PLPhysics::Body &cParentBody, const PLMath::Vector3 &vPinDir) override;
 
 		//[-------------------------------------------------------]
 		//[ Physics sensor creation                               ]
 		//[-------------------------------------------------------]
-		PLPHYSICSNEWTON_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
-		PLPHYSICSNEWTON_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0);
+		PLPHYSICSNEWTON_API virtual PLPhysics::Sensor *CreateSensorRaycast(const PLMath::Vector3 &vStart = PLMath::Vector3::Zero, const PLMath::Vector3 &vEnd = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) override;
+		PLPHYSICSNEWTON_API virtual PLPhysics::Sensor *CreateSensorAABoundingBox(const PLMath::Vector3 &vMin = PLMath::Vector3::Zero, const PLMath::Vector3 &vMax = PLMath::Vector3::Zero, PLCore::uint32 nFlags = 0) override;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLPHYSICSNEWTON_API virtual void GetWorldSize(PLMath::Vector3 &vMin, PLMath::Vector3 &vMax) const;
-		PLPHYSICSNEWTON_API virtual void SetWorldSize(const PLMath::Vector3 &vMin = PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),
-													  const PLMath::Vector3 &vMax = PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f));
-		PLPHYSICSNEWTON_API virtual bool IsSimulationActive() const;
-		PLPHYSICSNEWTON_API virtual void SetSimulationActive(bool bActive = true);
-		PLPHYSICSNEWTON_API virtual float GetSimulationSpeed() const;
-		PLPHYSICSNEWTON_API virtual bool SetSimulationSpeed(float fSpeed = 1.0f);
-		PLPHYSICSNEWTON_API virtual float GetSimulationQuality() const;
-		PLPHYSICSNEWTON_API virtual bool SetSimulationQuality(float fQuality = 1.0f);
-		PLPHYSICSNEWTON_API virtual float GetFrameRate() const;
-		PLPHYSICSNEWTON_API virtual bool SetFrameRate(float fFrameRate = 60.0f);
-		PLPHYSICSNEWTON_API virtual void GetGravity(PLMath::Vector3 &vGravity) const;
-		PLPHYSICSNEWTON_API virtual void SetGravity(const PLMath::Vector3 &vGravity = PLMath::Vector3(0.0f, -9.81f, 0.0f));
-		PLPHYSICSNEWTON_API virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const;
-		PLPHYSICSNEWTON_API virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true);
-		PLPHYSICSNEWTON_API virtual PLCore::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const;
-		PLPHYSICSNEWTON_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags = 0);
-		PLPHYSICSNEWTON_API virtual bool IsBuoyancyActive() const;
-		PLPHYSICSNEWTON_API virtual void SetBuoyancyActive(bool bActive = false);
-		PLPHYSICSNEWTON_API virtual float GetBuoyancyPlaneY() const;
-		PLPHYSICSNEWTON_API virtual void SetBuoyancyPlaneY(float fY = 0.0f);
-		PLPHYSICSNEWTON_API virtual void UpdateSimulation();
-		PLPHYSICSNEWTON_API virtual bool IsAlwaysStatic() const;
+		PLPHYSICSNEWTON_API virtual void GetWorldSize(PLMath::Vector3 &vMin, PLMath::Vector3 &vMax) const override;
+		PLPHYSICSNEWTON_API virtual void SetWorldSize(const PLMath::Vector3 &vMin = PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f), const PLMath::Vector3 &vMax = PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f)) override;
+		PLPHYSICSNEWTON_API virtual bool IsSimulationActive() const override;
+		PLPHYSICSNEWTON_API virtual void SetSimulationActive(bool bActive = true) override;
+		PLPHYSICSNEWTON_API virtual float GetSimulationSpeed() const override;
+		PLPHYSICSNEWTON_API virtual bool SetSimulationSpeed(float fSpeed = 1.0f) override;
+		PLPHYSICSNEWTON_API virtual float GetSimulationQuality() const override;
+		PLPHYSICSNEWTON_API virtual bool SetSimulationQuality(float fQuality = 1.0f) override;
+		PLPHYSICSNEWTON_API virtual float GetFrameRate() const override;
+		PLPHYSICSNEWTON_API virtual bool SetFrameRate(float fFrameRate = 60.0f) override;
+		PLPHYSICSNEWTON_API virtual void GetGravity(PLMath::Vector3 &vGravity) const override;
+		PLPHYSICSNEWTON_API virtual void SetGravity(const PLMath::Vector3 &vGravity = PLMath::Vector3(0.0f, -9.81f, 0.0f)) override;
+		PLPHYSICSNEWTON_API virtual bool GetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2) const override;
+		PLPHYSICSNEWTON_API virtual void SetGroupCollision(PLCore::uint8 nGroup1, PLCore::uint8 nGroup2, bool bActive = true) override;
+		PLPHYSICSNEWTON_API virtual PLCore::uint8 GetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2) const override;
+		PLPHYSICSNEWTON_API virtual void SetBodyPairFlags(const PLPhysics::Body &cBody1, const PLPhysics::Body &cBody2, PLCore::uint8 nFlags = 0) override;
+		PLPHYSICSNEWTON_API virtual bool IsBuoyancyActive() const override;
+		PLPHYSICSNEWTON_API virtual void SetBuoyancyActive(bool bActive = false) override;
+		PLPHYSICSNEWTON_API virtual float GetBuoyancyPlaneY() const override;
+		PLPHYSICSNEWTON_API virtual void SetBuoyancyPlaneY(float fY = 0.0f) override;
+		PLPHYSICSNEWTON_API virtual void UpdateSimulation() override;
+		PLPHYSICSNEWTON_API virtual bool IsAlwaysStatic() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLPhysics::Element *CreateElement(const PLCore::String &sName);
+		virtual PLPhysics::Element *CreateElement(const PLCore::String &sName) override;
 
 
 };

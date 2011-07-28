@@ -84,7 +84,7 @@ class SNMPhysicsForce : public SNMPhysics {
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

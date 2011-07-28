@@ -78,15 +78,15 @@ class ModTrapMouse : public PLGui::Modifier {
 	//[ Protected virtual PLGui::Modifier functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnAttach(PLGui::Widget &cWidget);
-		PL_API virtual void OnDetach(PLGui::Widget &cWidget);
+		PL_API virtual void OnAttach(PLGui::Widget &cWidget) override;
+		PL_API virtual void OnDetach(PLGui::Widget &cWidget) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLGui::WidgetFunctions functions    ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnActivate(bool bActivate);
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 };

@@ -115,7 +115,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual World functions                        ]
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]
@@ -184,8 +184,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*    using 'cached data'. Therefore this function is using a mesh manager and mesh name instead of a direct
 		*    mesh instance to just load/use the mesh 'on demand'.
 		*/
-		virtual Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh,
-										   const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false) = 0;
+		virtual Body *CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bStatic = false) = 0;
 
 		/**
 		*  @brief
@@ -208,8 +207,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*    using 'cached data'. Therefore this function is using a mesh manager and mesh name instead of a direct
 		*    mesh instance to just load/use the mesh 'on demand'.
 		*/
-		virtual Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh,
-									 const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false) = 0;
+		virtual Body *CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const PLCore::String &sMesh, const PLMath::Vector3 &vMeshScale = PLMath::Vector3::One, bool bOptimize = false) = 0;
 
 		/**
 		*  @brief
@@ -231,8 +229,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @return
 		*    The created physics body, a null pointer on error (body type not supported?)
 		*/
-		virtual Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[],
-										const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) = 0;
+		virtual Body *CreateBodyTerrain(PLCore::uint32 nWidth, PLCore::uint32 nHeight, const float fTerrain[], const PLMath::Vector3 &vBoxMin, const PLMath::Vector3 &vBoxMax, const PLMath::Vector3 &vScale) = 0;
 
 		/**
 		*  @brief
@@ -322,8 +319,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*    - ONLY 'pParentBody' OR 'pChildBody' can be a null pointer, if both are a null pointer this function will return a null pointer
 		*    - If 'pParentBody' is the same as 'pChildBody' this function will return a null pointer
 		*/
-		virtual Joint *CreateJointBall(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-									   const PLMath::Vector3 &vPinDir) = 0;
+		virtual Joint *CreateJointBall(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) = 0;
 
 		/**
 		*  @brief
@@ -344,8 +340,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @see
 		*    - CreateJointBall()
 		*/
-		virtual Joint *CreateJointSlider(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-										 const PLMath::Vector3 &vPinDir) = 0;
+		virtual Joint *CreateJointSlider(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) = 0;
 
 		/**
 		*  @brief
@@ -366,8 +361,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @see
 		*    - CreateJointBall()
 		*/
-		virtual Joint *CreateJointHinge(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-										const PLMath::Vector3 &vPinDir) = 0;
+		virtual Joint *CreateJointHinge(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) = 0;
 
 		/**
 		*  @brief
@@ -390,8 +384,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @see
 		*    - CreateJointBall()
 		*/
-		virtual Joint *CreateJointUniversal(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-											const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2) = 0;
+		virtual Joint *CreateJointUniversal(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir1, const PLMath::Vector3 &vPinDir2) = 0;
 
 		/**
 		*  @brief
@@ -412,8 +405,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @see
 		*    - CreateJointBall()
 		*/
-		virtual Joint *CreateJointCorkscrew(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint,
-											const PLMath::Vector3 &vPinDir) = 0;
+		virtual Joint *CreateJointCorkscrew(Body *pParentBody, Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir) = 0;
 
 		/**
 		*  @brief

@@ -147,7 +147,7 @@ class SceneQuery : public PLCore::Object, public PLCore::Element<SceneQuery> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SceneQuery functions                   ]
 	//[-------------------------------------------------------]
 	public:
 		/**

@@ -132,15 +132,15 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const;
+		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InformedOnInit();
-		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+		PLPHYSICS_API virtual void InformedOnInit() override;
+		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

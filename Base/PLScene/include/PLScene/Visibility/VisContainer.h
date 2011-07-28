@@ -191,8 +191,8 @@ class VisContainer : public VisNode {
 	//[ Public virtual VisNode functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool IsContainer() const;
-		PLS_API virtual bool IsCell() const;
+		PLS_API virtual bool IsContainer() const override;
+		PLS_API virtual bool IsCell() const override;
 
 
 };

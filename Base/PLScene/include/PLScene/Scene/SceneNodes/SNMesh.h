@@ -241,7 +241,7 @@ class SNMesh : public SceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SNMesh functions                    ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -279,15 +279,15 @@ class SNMesh : public SceneNode {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler();
-		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual PLMesh::MeshHandler *GetMeshHandler() override;
+		PLS_API virtual void DrawDebug(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNode functions                 ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void DeInitFunction();
+		PLS_API virtual void DeInitFunction() override;
 
 
 };

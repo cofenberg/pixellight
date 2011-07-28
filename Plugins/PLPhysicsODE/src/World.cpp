@@ -225,7 +225,7 @@ PLPhysics::JointImpl &World::CreateJointImpl() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual functions                             ]
+//[ Private virtual World functions                       ]
 //[-------------------------------------------------------]
 /**
 *  @brief

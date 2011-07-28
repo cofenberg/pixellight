@@ -198,7 +198,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLCore::Element<
 	//[-------------------------------------------------------]
 	public:
 		PLMESH_API virtual MorphTargetAni &operator =(const MorphTargetAni &cSource);
-		PLMESH_API virtual PLCore::String GetSourceName() const;
+		PLMESH_API virtual PLCore::String GetSourceName() const override;
 
 
 };
@@ -232,7 +232,7 @@ class MorphTargetAniManager : public PLCore::ElementManager<MorphTargetAni> {
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual MorphTargetAni *CreateElement(const PLCore::String &sName);
+		virtual MorphTargetAni *CreateElement(const PLCore::String &sName) override;
 
 
 };

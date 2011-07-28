@@ -95,15 +95,6 @@ float Body::GetMass() const
 
 /**
 *  @brief
-*    Sets the mass of the physics body
-*/
-void Body::SetMass(float fMass)
-{
-	m_pBodyImpl->SetMass(fMass);
-}
-
-/**
-*  @brief
 *    Gets the relativ center of the mass
 */
 void Body::GetCenterOfMass(Vector3 &vPosition) const
@@ -397,6 +388,19 @@ uint32 Body::GetNumOfPartners() const
 Body *Body::GetPartner(uint32 nIndex) const
 {
 	return m_pBodyImpl->GetPartner(nIndex);
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Body functions                         ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Sets the mass of the physics body
+*/
+void Body::SetMass(float fMass)
+{
+	m_pBodyImpl->SetMass(fMass);
 }
 
 

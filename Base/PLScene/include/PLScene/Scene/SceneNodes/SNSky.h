@@ -260,37 +260,37 @@ class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public 
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr);
+		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneNode functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
-		virtual void OnActivate(bool bActivate);
+		virtual void InitFunction() override;
+		virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SkyLayer *CreateElement(const PLCore::String &sName);
+		virtual SkyLayer *CreateElement(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Unload();
-		PLS_API virtual PLCore::String GetLoadableTypeName() const;
+		PLS_API virtual bool Unload() override;
+		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::Loadable functions            ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams);
+		virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams) override;
 
 
 	//[-------------------------------------------------------]

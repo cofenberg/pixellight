@@ -92,7 +92,7 @@ class JointHinge : public PLPhysics::JointHinge {
 	//[ Public virtual PLPhysics::JointHinge functions        ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSPHYSX_API virtual void AddOmega(float fOmega);
+		PLPHYSICSPHYSX_API virtual void AddOmega(float fOmega) override;
 
 
 };

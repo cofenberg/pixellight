@@ -89,7 +89,7 @@ class SensorRaycast : public PLPhysics::SensorRaycast {
 	//[ Public virtual PLPhysics::Sensor functions            ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNULL_API virtual PLCore::uint32 Check();
+		PLPHYSICSNULL_API virtual PLCore::uint32 Check() override;
 
 
 };

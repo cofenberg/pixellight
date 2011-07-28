@@ -77,7 +77,7 @@ class MeshAnimationManagerSoftware : public MeshAnimationManager {
 	//[ Public virtual MeshAnimationManager functions         ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API virtual bool Apply(MeshHandler &cMeshHandler) const;
+		PLMESH_API virtual bool Apply(MeshHandler &cMeshHandler) const override;
 
 
 };

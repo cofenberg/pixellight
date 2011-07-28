@@ -39,7 +39,7 @@ pl_implement_class(SNFog)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual SNFog functions                        ]
 //[-------------------------------------------------------]
 /**
 *  @brief

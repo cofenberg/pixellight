@@ -78,7 +78,7 @@ class SceneQueryManager : public PLCore::ElementManager<SceneQuery> {
 	//[ Private virtual PLCore::ElementManager functions      ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SceneQuery *CreateElement(const PLCore::String &sName);
+		virtual SceneQuery *CreateElement(const PLCore::String &sName) override;
 
 
 };

@@ -149,7 +149,7 @@ class SNMRotationKeyframeRecord : public PLScene::SNMTransform {
 	//[ Private virtual PLScene::SceneNodeModifier functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 };

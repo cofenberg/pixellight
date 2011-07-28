@@ -90,7 +90,7 @@ class SNMMeshMorphCameraNear : public SNMMeshMorph {
 	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void OnActivate(bool bActivate);
+		PLS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

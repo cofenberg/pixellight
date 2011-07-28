@@ -256,14 +256,14 @@ class BasicSceneApplication : public SceneApplication {
 		*    - Initialize screenshot tool
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init();
+		PL_API virtual bool Init() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneApplication functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnCreateRootScene();
+		PL_API virtual void OnCreateRootScene() override;
 
 
 	//[-------------------------------------------------------]

@@ -93,15 +93,15 @@ class SNMOrbitingController : public SNMOrbiting {
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLInput::Controller *GetInputController() const;
+		PLS_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNodeModifier functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InformedOnInit();
-		PLS_API virtual void OnActivate(bool bActivate);
+		PLS_API virtual void InformedOnInit() override;
+		PLS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

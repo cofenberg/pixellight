@@ -84,15 +84,14 @@ class JointHinge : public PLPhysics::JointHinge {
 		*  @param[in] vPinDir
 		*    The line of action of the hinge in world space
 		*/
-		JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody,
-				   const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir);
+		JointHinge(PLPhysics::World &cWorld, PLPhysics::Body *pParentBody, PLPhysics::Body *pChildBody, const PLMath::Vector3 &vPivotPoint, const PLMath::Vector3 &vPinDir);
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLPhysics::JointHinge functions        ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNULL_API virtual void AddOmega(float fOmega);
+		PLPHYSICSNULL_API virtual void AddOmega(float fOmega) override;
 
 
 };

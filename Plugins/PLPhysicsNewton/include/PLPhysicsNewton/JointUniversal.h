@@ -121,14 +121,14 @@ class JointUniversal : public PLPhysics::JointUniversal {
 	//[ Public virtual PLPhysics::Joint functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNEWTON_API virtual void GetCurrentPivotPoint(PLMath::Vector3 &vPosition) const;
+		PLPHYSICSNEWTON_API virtual void GetCurrentPivotPoint(PLMath::Vector3 &vPosition) const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLPhysics::JointUniversal functions    ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICSNEWTON_API virtual void AddOmega(float fOmega1, float fOmega2);
+		PLPHYSICSNEWTON_API virtual void AddOmega(float fOmega1, float fOmega2) override;
 
 
 };

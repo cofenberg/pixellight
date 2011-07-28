@@ -244,7 +244,7 @@ class SceneApplication : public RenderApplication {
 		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init();
+		PL_API virtual bool Init() override;
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class SceneApplication : public RenderApplication {
 		*    - Destroy scene context
 		*    - Everything that RenderApplication::DeInit() does
 		*/
-		PL_API virtual void DeInit();
+		PL_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]
@@ -276,7 +276,7 @@ class SceneApplication : public RenderApplication {
 		*    - Update the scene context
 		*    - Everything that RenderApplication::OnUpdate() does
 		*/
-		PL_API virtual bool OnUpdate();
+		PL_API virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

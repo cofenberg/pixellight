@@ -113,7 +113,7 @@ class MeshCreator : public PLCore::Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual MeshCreator functions               ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

@@ -126,14 +126,14 @@ class SNMPhysicsBodyBox : public SNMPhysicsBody {
 	//[ Private virtual PLScene::SceneNodeModifier functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SNMPhysicsBody functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CreatePhysicsBody();
+		virtual void CreatePhysicsBody() override;
 
 
 };

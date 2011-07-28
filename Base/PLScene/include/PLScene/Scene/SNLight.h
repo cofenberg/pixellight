@@ -101,7 +101,7 @@ class SNLight : public SceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SNLight functions                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**

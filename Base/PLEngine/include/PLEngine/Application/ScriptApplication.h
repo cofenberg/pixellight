@@ -155,7 +155,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    - Call optional <OnInitFunction> script function
 		*    - Return and go on with Main()
 		*/
-		PL_API virtual void OnInit();
+		PL_API virtual void OnInit() override;
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    - Destroy the script
 		*    - Everything that BasicSceneApplication::OnDeInit() does
 		*/
-		PL_API virtual void OnDeInit();
+		PL_API virtual void OnDeInit() override;
 
 
 	//[-------------------------------------------------------]
@@ -187,7 +187,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    - Call optional <OnUpdateFunction> script function
 		*    - Everything that BasicSceneApplication::OnUpdate() does
 		*/
-		PL_API virtual bool OnUpdate();
+		PL_API virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

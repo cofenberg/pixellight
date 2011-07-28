@@ -203,7 +203,7 @@ float VisNode::GetSquaredDistanceToCamera() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual VisNode functions                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief

@@ -102,7 +102,7 @@ class SceneRendererManager : public PLCore::ResourceManager<SceneRenderer> {
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SceneRenderer *CreateResource(const PLCore::String &sName);
+		virtual SceneRenderer *CreateResource(const PLCore::String &sName) override;
 
 
 	//[-------------------------------------------------------]

@@ -89,10 +89,10 @@ class SNText3D : public SNText {
 	public:
 		PLS_API PLCore::String GetBackgroundMaterial() const;
 		PLS_API void SetBackgroundMaterial(const PLCore::String &sValue);
-		PLS_API virtual void SetText(const PLCore::String &sValue);
-		PLS_API virtual void SetFont(const PLCore::String &sValue);
-		PLS_API virtual void SetFontSize(PLCore::uint32 nValue);
-		PLS_API virtual void SetFlags(PLCore::uint32 nValue);
+		PLS_API virtual void SetText(const PLCore::String &sValue) override;
+		PLS_API virtual void SetFont(const PLCore::String &sValue) override;
+		PLS_API virtual void SetFontSize(PLCore::uint32 nValue) override;
+		PLS_API virtual void SetFlags(PLCore::uint32 nValue) override;
 
 
 	//[-------------------------------------------------------]
@@ -134,14 +134,14 @@ class SNText3D : public SNText {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+		PLS_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual SceneNode functions                   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void UpdateAABoundingBox();
+		virtual void UpdateAABoundingBox() override;
 
 
 };

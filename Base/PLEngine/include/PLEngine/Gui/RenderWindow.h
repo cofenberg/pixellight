@@ -99,7 +99,7 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 	//[ Protected virtual WindowConnection functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnDisplayMode();
+		PL_API virtual void OnDisplayMode() override;
 
 
 	//[-------------------------------------------------------]

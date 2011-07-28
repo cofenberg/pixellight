@@ -305,7 +305,7 @@ class SkeletonHandler : public PLCore::ResourceHandler<Skeleton> {
 	//[ Public virtual PLCore::ResourceHandler functions      ]
 	//[-------------------------------------------------------]
 	public:
-		PLMESH_API virtual bool SetResource(Skeleton *pResource = nullptr);
+		PLMESH_API virtual bool SetResource(Skeleton *pResource = nullptr) override;
 
 
 };

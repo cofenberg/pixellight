@@ -104,7 +104,7 @@ class Joint : public Element {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Joint functions                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -190,9 +190,9 @@ class Joint : public Element {
 	//[ Public virtual Element functions                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool IsBody() const;
-		PLPHYSICS_API virtual bool IsJoint() const;
-		PLPHYSICS_API virtual bool IsSensor() const;
+		PLPHYSICS_API virtual bool IsBody() const override;
+		PLPHYSICS_API virtual bool IsJoint() const override;
+		PLPHYSICS_API virtual bool IsSensor() const override;
 
 
 	//[-------------------------------------------------------]

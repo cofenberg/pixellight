@@ -178,17 +178,17 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InitFunction();
-		PLPHYSICS_API virtual void DeInitFunction();
-		PLPHYSICS_API virtual void OnActivate(bool bActivate);
+		PLPHYSICS_API virtual void InitFunction() override;
+		PLPHYSICS_API virtual void DeInitFunction() override;
+		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
-		PLPHYSICS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");
+		PLPHYSICS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLPHYSICS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
 
 
 };
