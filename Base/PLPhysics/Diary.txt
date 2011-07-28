@@ -1,3 +1,9 @@
+>> 28.07.2011
+[CO]
+- Bugfix: "SNMPhysicsBody::CreatePhysicsBody()" was marked with "= 0", but on the other hand, there was an implementation
+
+
+
 >> 07.06.2011
 [CO]
 - "PLPhysics::World" events are now implemented as RTTI signals

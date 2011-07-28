@@ -116,7 +116,7 @@ class SNMPhysicsBody : public SNMPhysics {
 		PLPHYSICS_API void SetPositionOffset(const PLMath::Vector3 &vValue);
 		PLPHYSICS_API PLCore::uint8 GetCollisionGroup() const;
 		PLPHYSICS_API void SetCollisionGroup(PLCore::uint8 nValue);
-		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue);
+		PLPHYSICS_API virtual void SetFlags(PLCore::uint32 nValue) override;	// From PLScene::SceneNodeModifier
 
 
 	//[-------------------------------------------------------]
@@ -180,14 +180,14 @@ class SNMPhysicsBody : public SNMPhysics {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual SNMPhysicsBody functions            ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
 		*  @brief
 		*    Creates the PL physics body
 		*/
-		virtual void CreatePhysicsBody() = 0;
+		PLPHYSICS_API virtual void CreatePhysicsBody();
 
 
 	//[-------------------------------------------------------]

@@ -256,7 +256,7 @@ void SNMPhysicsBody::OnActivate(bool bActivate)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual SNMPhysicsBody functions            ]
 //[-------------------------------------------------------]
 void SNMPhysicsBody::CreatePhysicsBody()
 {
