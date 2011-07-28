@@ -21,6 +21,24 @@ First of all, we use the old fashion \emph{.h}-file extension to mark header fil
 
 
 
+\section{C++0x language features}
+Using C++0x language features is fine as long as
+\begin{itemize}
+\item{It's possible to emulate, or at least deactivate the feature within compilers don't supporting it (yet)}
+\item{There's no comfortable/acceptable way to solve a task without using the feature, \emph{extern templates} is an example for such a situation - ugly hacks just to support out-of-date compilers often isn't worth the effort}
+\end{itemize}
+\textsl{}
+Currently the following C++0x language features are used:
+\begin{itemize}
+\item{\emph{nullptr} - a null pointer literal}
+\item{\emph{extern templates} - avoid template instantiation in other modules}
+\item{\emph{override} - gives the compiler a chance to detect and blame errors related to overwriting methods}
+\end{itemize}
+
+
+
+
+
 \section{For-scope}
 Within the PixelLight projects, the \emph{for-scope} is active by default. The following for instance will produce a compiler error:
 \begin{lstlisting}[caption=for-scope]

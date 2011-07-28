@@ -1,6 +1,7 @@
 >> 28.07.2011
 [CO]
 - Coding convention: Added section "Overwriting methods"
+- Coding convention: Added section "C++0x language features"
 
 
 
