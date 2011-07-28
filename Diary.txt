@@ -4,6 +4,13 @@
 
 
 
+>> 28.07.2011
+[CO]
+- Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods.
+  See PLCore diary entry "27.07.2011" for details.
+
+
+
 >> 18.07.2011
 [CO]
 - Documents: Noticed that within the runtime directory it's named "Doc" while it's called "Docs" in other places. Renamed "Doc" into "Docs".
