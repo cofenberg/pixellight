@@ -112,7 +112,7 @@ class Stream {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Stream functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**

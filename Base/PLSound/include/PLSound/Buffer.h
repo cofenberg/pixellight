@@ -105,7 +105,7 @@ class Buffer : public Resource, public PLCore::Resource<Buffer> {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Buffer functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**

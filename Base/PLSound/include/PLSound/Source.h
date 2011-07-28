@@ -117,7 +117,7 @@ class Source : public Resource {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual Source functions                       ]
 	//[-------------------------------------------------------]
 	public:
 		/**

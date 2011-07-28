@@ -135,8 +135,8 @@ class SCSound : public PLScene::SceneContainer {
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLSOUND_API virtual void InitFunction();
-		PLSOUND_API virtual void OnActivate(bool bActivate);
+		PLSOUND_API virtual void InitFunction() override;
+		PLSOUND_API virtual void OnActivate(bool bActivate) override;
 
 
 };

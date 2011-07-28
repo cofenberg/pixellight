@@ -119,7 +119,7 @@ class SNSound : public PLScene::SceneNode {
 		PLSOUND_API void SetMaxDistance(float fValue);
 		PLSOUND_API float GetRolloffFactor() const;
 		PLSOUND_API void SetRolloffFactor(float fValue);
-		PLSOUND_API virtual void SetFlags(PLCore::uint32 nValue);	// From PLScene::SceneNode
+		PLSOUND_API virtual void SetFlags(PLCore::uint32 nValue) override;	// From PLScene::SceneNode
 
 
 	//[-------------------------------------------------------]
@@ -197,7 +197,7 @@ class SNSound : public PLScene::SceneNode {
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLSOUND_API virtual void InitFunction();
+		PLSOUND_API virtual void InitFunction() override;
 
 };
 

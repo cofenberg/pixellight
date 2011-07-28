@@ -88,7 +88,7 @@ Source::Source(SoundManager &cSoundManager) : Resource(cSoundManager, Resource::
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual Source functions                       ]
 //[-------------------------------------------------------]
 /**
 *  @brief

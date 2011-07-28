@@ -115,7 +115,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 		PLSOUND_API void SetMaxDistance(float fValue);
 		PLSOUND_API float GetRolloffFactor() const;
 		PLSOUND_API void SetRolloffFactor(float fValue);
-		PLSOUND_API virtual void SetFlags(PLCore::uint32 nValue);
+		PLSOUND_API virtual void SetFlags(PLCore::uint32 nValue) override;	// From PLScene::SceneNodeModifier
 
 
 	//[-------------------------------------------------------]
@@ -151,7 +151,7 @@ class SNMSound : public PLScene::SceneNodeModifier {
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLSOUND_API virtual void OnActivate(bool bActivate);
+		PLSOUND_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

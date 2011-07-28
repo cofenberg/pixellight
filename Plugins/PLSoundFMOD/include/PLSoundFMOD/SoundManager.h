@@ -191,42 +191,42 @@ class SoundManager : public PLSound::SoundManager {
 	//[ Public virtual PLSound::SoundManager functions        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::String GetDescription() const;
-		virtual bool GetFormatList(PLCore::List<Format> &lstList) const;
-		virtual float GetVolume() const;
-		virtual void SetVolume(float fVolume = 1.0f);
-		virtual float GetPitch() const;
-		virtual void SetPitch(float fPitch = 1.0f);
-		virtual float GetDopplerFactor() const;
-		virtual void SetDopplerFactor(float fFactor = 1.0f);
+		virtual PLCore::String GetDescription() const override;
+		virtual bool GetFormatList(PLCore::List<Format> &lstList) const override;
+		virtual float GetVolume() const override;
+		virtual void SetVolume(float fVolume = 1.0f) override;
+		virtual float GetPitch() const override;
+		virtual void SetPitch(float fPitch = 1.0f) override;
+		virtual float GetDopplerFactor() const override;
+		virtual void SetDopplerFactor(float fFactor = 1.0f) override;
 
 		//[-------------------------------------------------------]
 		//[ Create sound buffer/source                            ]
 		//[-------------------------------------------------------]
-		virtual PLSound::Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false);
-		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr);
+		virtual PLSound::Buffer *CreateSoundBuffer(const PLCore::String &sFilename = "", bool bStream = false) override;
+		virtual PLSound::Source *CreateSoundSource(PLSound::Buffer *pSoundBuffer = nullptr) override;
 
 		//[-------------------------------------------------------]
 		//[ Listener                                              ]
 		//[-------------------------------------------------------]
-		virtual PLMath::Vector3 GetListenerAttribute(EListener nAttribute) const;
-		virtual bool SetListenerAttribute(EListener nAttribute, const PLMath::Vector3 &vV);
+		virtual PLMath::Vector3 GetListenerAttribute(EListener nAttribute) const override;
+		virtual bool SetListenerAttribute(EListener nAttribute, const PLMath::Vector3 &vV) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLCore::ResourceManager functions      ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Init();
-		virtual bool DeInit();
-		virtual bool Update();
+		virtual bool Init() override;
+		virtual bool DeInit() override;
+		virtual bool Update() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLSound::Buffer *CreateResource(const PLCore::String &sName);
+		virtual PLSound::Buffer *CreateResource(const PLCore::String &sName) override;
 
 
 };

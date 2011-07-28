@@ -253,9 +253,9 @@ bool Buffer::IsStreamed() const
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLCore::Resource functions             ]
+//[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
-bool Buffer::Load(const String &sName)
+bool Buffer::Load(const String &sName, const String &sParams, const String &sMethod)
 {
 	return LoadBuffer(sName, false);
 }

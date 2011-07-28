@@ -1,4 +1,11 @@
-﻿>> 26.05.2011
+﻿>> 28.07.2011
+[CO]
+- Within sound backends, "Buffer" implementations were overwriting the virtual function "PLCore::Resource::Load()"... or at least they did before the signature of the method
+  within the base class had been changed without updating this derived classes. By adding the new C++0x keyword "override", the compiler complained at once.
+
+
+
+>> 26.05.2011
 [CO]
 - "PLSound" was designed as a component one can use as a completely loose plugin, or link against it to have access to advanced features
   using C++... so this RTTI module should really be defined as "pl_module_plugin" instead of "pl_module"...

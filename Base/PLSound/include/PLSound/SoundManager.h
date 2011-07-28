@@ -192,7 +192,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SoundManager functions                 ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -416,7 +416,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 	//[ Private virtual PLCore::ResourceManager functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Buffer *CreateResource(const PLCore::String &sName);
+		virtual Buffer *CreateResource(const PLCore::String &sName) override;
 
 
 };

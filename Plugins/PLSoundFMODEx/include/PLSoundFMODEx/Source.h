@@ -99,29 +99,29 @@ class Source : public PLSound::Source {
 	//[ Public virtual PLSound::Source functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(PLSound::Buffer *pBuffer = nullptr);
-		virtual void Unload();
-		virtual bool Play(bool bRestart = false);
-		virtual bool IsPlaying() const;
-		virtual void Pause();
-		virtual bool IsPaused() const;
-		virtual void Stop();
-		virtual float GetVolume() const;
-		virtual void SetVolume(float fVolume = 1.0f);
-		virtual bool Is2D() const;
-		virtual void Set2D(bool b2D = false);
-		virtual bool IsLooping() const;
-		virtual void SetLooping(bool bLooping = false);
-		virtual float GetPitch() const;
-		virtual void SetPitch(float fPitch = 1.0f);
-		virtual float GetReferenceDistance() const;
-		virtual void SetReferenceDistance(float fReferenceDistance = 1.0f);
-		virtual float GetMaxDistance() const;
-		virtual void SetMaxDistance(float fMaxDistance = 10000.0f);
-		virtual float GetRolloffFactor() const;
-		virtual void SetRolloffFactor(float fRolloffFactor = 1.0f);
-		virtual PLMath::Vector3 GetAttribute(EAttributes nAttribute) const;
-		virtual bool SetAttribute(EAttributes nAttribute, const PLMath::Vector3 &vV);
+		virtual bool Load(PLSound::Buffer *pBuffer = nullptr) override;
+		virtual void Unload() override;
+		virtual bool Play(bool bRestart = false) override;
+		virtual bool IsPlaying() const override;
+		virtual void Pause() override;
+		virtual bool IsPaused() const override;
+		virtual void Stop() override;
+		virtual float GetVolume() const override;
+		virtual void SetVolume(float fVolume = 1.0f) override;
+		virtual bool Is2D() const override;
+		virtual void Set2D(bool b2D = false) override;
+		virtual bool IsLooping() const override;
+		virtual void SetLooping(bool bLooping = false) override;
+		virtual float GetPitch() const override;
+		virtual void SetPitch(float fPitch = 1.0f) override;
+		virtual float GetReferenceDistance() const override;
+		virtual void SetReferenceDistance(float fReferenceDistance = 1.0f) override;
+		virtual float GetMaxDistance() const override;
+		virtual void SetMaxDistance(float fMaxDistance = 10000.0f) override;
+		virtual float GetRolloffFactor() const override;
+		virtual void SetRolloffFactor(float fRolloffFactor = 1.0f) override;
+		virtual PLMath::Vector3 GetAttribute(EAttributes nAttribute) const override;
+		virtual bool SetAttribute(EAttributes nAttribute, const PLMath::Vector3 &vV) override;
 
 
 };

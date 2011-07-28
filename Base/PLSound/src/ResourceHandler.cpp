@@ -115,7 +115,7 @@ void ResourceHandler::SetResource(Resource *pResource)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual ResourceHandler functions              ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -123,6 +123,7 @@ void ResourceHandler::SetResource(Resource *pResource)
 */
 void ResourceHandler::OnLost()
 {
+	// Nothing to do by default
 }
 
 

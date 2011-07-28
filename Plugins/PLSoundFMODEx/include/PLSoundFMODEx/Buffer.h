@@ -104,18 +104,18 @@ class Buffer : public PLSound::Buffer {
 	//[ Public virtual PLSound::Buffer functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadBuffer(const PLCore::String &sFilename, bool bStream);
-		virtual bool LoadBuffer(const PLCore::uint8 nData[], PLCore::uint32 nSize, bool bStream = false);
-		virtual bool IsLoaded() const;
-		virtual bool IsStreamed() const;
+		virtual bool LoadBuffer(const PLCore::String &sFilename, bool bStream) override;
+		virtual bool LoadBuffer(const PLCore::uint8 nData[], PLCore::uint32 nSize, bool bStream = false) override;
+		virtual bool IsLoaded() const override;
+		virtual bool IsStreamed() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLCore::Resource functions             ]
+	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLCore::String &sName);
-		virtual bool Unload();
+		virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		virtual bool Unload() override;
 
 
 };

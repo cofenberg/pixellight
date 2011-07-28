@@ -119,10 +119,10 @@ class StreamOgg : public Stream {
 	//[ Public virtual Stream functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Init();
-		virtual bool IsInitialized() const;
-		virtual void DeInit();
-		virtual bool Update();
+		virtual bool Init() override;
+		virtual bool IsInitialized() const override;
+		virtual void DeInit() override;
+		virtual bool Update() override;
 
 
 };
