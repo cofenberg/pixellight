@@ -1,3 +1,9 @@
+>> 28.07.2011
+[CO]
+- Coding convention: Added section "Overwriting methods"
+
+
+
 >> 26.07.2011
 [CO]
 - Coding convention: Added "static const Vs. const static"-section... just another confusing "freedom of speech" (more or less, according to which C specification version

@@ -43,6 +43,27 @@ char *pszMyString = nullptr;
 
 
 
+\section{Overwriting methods}
+Put the methods within the base class, which are allowed to be overwritten, into a separate code block so everyone is able to find them at once.
+\begin{lstlisting}[caption=Virtual methods within a base class]
+//[-------------------------------------------------------]
+//[ Public virtual MyClass functions                      ]
+//[-------------------------------------------------------]
+virtual void MyMethod() = 0;
+\end{lstlisting}
+
+When overwriting virtual methods within a derived class, put the overwritten methods into a code block telling were those methods originally came from.
+\begin{lstlisting}[caption=Overwriting virtual methods within a derived class]
+//[-------------------------------------------------------]
+//[ Public virtual MyClass functions                      ]
+//[-------------------------------------------------------]
+virtual void MyMethod() override;
+\end{lstlisting}
+Although technically not required, do also add a \emph{virtual} to make it absolutely clear that this is a virtual method. To give the compiler a chance to find and blame possible errors like a signature change within the base class, use the C++0x language keyword \emph{override}.
+
+
+
+
 \section{Casting}
 PixelLight is using \emph{C++ style casts} (\emph{int i = static\_cast<int>(42.21f)}), not \emph{C style casts} (\emph{int i = (int)42.21f}). It's much easier to search for \emph{C++ style casts}\footnote{\emph{static\_cast}, \emph{reinterpret\_cast}, \emph{const\_cast}, and \emph{dynamic\_cast}} and they are less vulnerable to unintended effects as well - and because they are not that compact as the \emph{C style casts}, one may think about it a second time why there's a need for a cast.
 
