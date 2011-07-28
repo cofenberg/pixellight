@@ -64,10 +64,10 @@ class PluginOpenGL : public Plugin {
 	//[ Private virtual Plugin functions                      ]
 	//[-------------------------------------------------------]
 	private:
-		PLPLUGIN_API virtual void OnInit();
-		PLPLUGIN_API virtual void OnDeInit();
-		PLPLUGIN_API virtual void OnDraw();
-		PLPLUGIN_API virtual void OnSize();
+		PLPLUGIN_API virtual void OnInit() override;
+		PLPLUGIN_API virtual void OnDeInit() override;
+		PLPLUGIN_API virtual void OnDraw() override;
+		PLPLUGIN_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]

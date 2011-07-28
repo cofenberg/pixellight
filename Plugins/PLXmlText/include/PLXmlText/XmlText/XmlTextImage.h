@@ -82,8 +82,8 @@ class XmlTextImage : public XmlTextElement {
 	//[ Protected virtual XmlTextElement functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
-		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode) override;
+		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer) override;
 
 
 	//[-------------------------------------------------------]

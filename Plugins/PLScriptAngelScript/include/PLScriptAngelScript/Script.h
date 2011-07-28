@@ -95,58 +95,58 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual bool RemoveAllGlobalFunctions();
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual bool RemoveAllGlobalFunctions() override;
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetSourceCode() const;
-		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetSourceCode() const override;
+		PLSCRIPTANGELSCRIPT_API virtual bool SetSourceCode(const PLCore::String &sSourceCode) override;
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
+		PLSCRIPTANGELSCRIPT_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "") override;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(bool bValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLCore::String &sString);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject);
-		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object &cObject);
-		PLSCRIPTANGELSCRIPT_API virtual bool EndCall();
-		PLSCRIPTANGELSCRIPT_API virtual bool GetReturn(bool nValue);
-		PLSCRIPTANGELSCRIPT_API virtual float GetReturn(float nValue);
-		PLSCRIPTANGELSCRIPT_API virtual double GetReturn(double nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetReturn(PLCore::String nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
-		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
+		PLSCRIPTANGELSCRIPT_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(bool bValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(float fValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(double fValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int8 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int16 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int32 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::int64 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint8 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint16 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint32 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::uint64 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(const PLCore::String &sString) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object *pObject) override;
+		PLSCRIPTANGELSCRIPT_API virtual void PushArgument(PLCore::Object &cObject) override;
+		PLSCRIPTANGELSCRIPT_API virtual bool EndCall() override;
+		PLSCRIPTANGELSCRIPT_API virtual bool GetReturn(bool nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual float GetReturn(float nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual double GetReturn(double nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::String GetReturn(PLCore::String nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue) override;
+		PLSCRIPTANGELSCRIPT_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue) override;
 
 
 	//[-------------------------------------------------------]

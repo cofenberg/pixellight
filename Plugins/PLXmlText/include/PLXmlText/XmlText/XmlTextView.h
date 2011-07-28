@@ -136,8 +136,8 @@ class XmlTextView : public PLGui::Widget {
 	//[ Public virtual Window functions                       ]
 	//[-------------------------------------------------------]
 	public:
-		PLXMLTEXT_API virtual void OnDraw(PLGui::Graphics &cGraphics);
-		PLXMLTEXT_API virtual void OnSize(const PLMath::Vector2i &vSize);
+		PLXMLTEXT_API virtual void OnDraw(PLGui::Graphics &cGraphics) override;
+		PLXMLTEXT_API virtual void OnSize(const PLMath::Vector2i &vSize) override;
 
 
 };

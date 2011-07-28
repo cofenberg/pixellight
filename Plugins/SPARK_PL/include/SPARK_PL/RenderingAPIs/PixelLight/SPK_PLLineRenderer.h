@@ -88,8 +88,8 @@ class SPK_PLLineRenderer : public SPK_PLRenderer, public SPK::LineRendererInterf
 	//[ Public virtual SPK::BufferHandler functions           ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void createBuffers(const SPK::Group &group);
-		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group);
+		SPARK_PL_API virtual void createBuffers(const SPK::Group &group) override;
+		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

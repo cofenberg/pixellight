@@ -136,7 +136,7 @@ class SNMPostProcess : public PLScene::SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual SNMPostProcess functions               ]
 	//[-------------------------------------------------------]
 	public:
 		/**

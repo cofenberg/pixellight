@@ -91,10 +91,10 @@ class IOSystem : public Assimp::IOSystem {
 	//[ Public virtual Assimp::IOSystem functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Exists(const char *pFile) const;
-		virtual char getOsSeparator() const;
-		virtual Assimp::IOStream *Open(const char *pFile, const char *pMode = "rb");
-		virtual void Close(Assimp::IOStream *pFile);
+		virtual bool Exists(const char *pFile) const override;
+		virtual char getOsSeparator() const override;
+		virtual Assimp::IOStream *Open(const char *pFile, const char *pMode = "rb") override;
+		virtual void Close(Assimp::IOStream *pFile) override;
 
 
 	//[-------------------------------------------------------]

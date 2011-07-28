@@ -130,7 +130,7 @@ bool SNMPostProcess::GetParameters(const String &sName, Array<Parameter*> &lstPa
 
 
 //[-------------------------------------------------------]
-//[ Public virtual functions                              ]
+//[ Public virtual SNMPostProcess functions               ]
 //[-------------------------------------------------------]
 /**
 *  @brief

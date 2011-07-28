@@ -213,7 +213,7 @@ class PLQT_API Application : public QApplication {
 	//[ Protected virtual QObject functions                   ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void timerEvent(QTimerEvent *pQTimerEvent);
+		virtual void timerEvent(QTimerEvent *pQTimerEvent) override;
 
 
 	//[-------------------------------------------------------]

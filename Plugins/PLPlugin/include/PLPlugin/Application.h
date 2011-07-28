@@ -82,7 +82,7 @@ class Application : public PLEngine::RenderApplication {
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnInit();
+		virtual void OnInit() override;
 
 
 	//[-------------------------------------------------------]

@@ -81,7 +81,7 @@ class ShadowMappingLiSPSM : public ShadowMapping {
 	//[ Public virtual ShadowMapping functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void CalculateLightMatrices(PLScene::SNLight &cLight, PLMath::Matrix4x4 &mLightView, PLMath::Matrix4x4 &mLightProjection);
+		virtual void CalculateLightMatrices(PLScene::SNLight &cLight, PLMath::Matrix4x4 &mLightView, PLMath::Matrix4x4 &mLightProjection) override;
 
 
 };

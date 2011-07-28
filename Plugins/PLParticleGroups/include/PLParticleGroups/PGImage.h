@@ -89,9 +89,9 @@ class PGImage : public SNParticleGroup {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
-		virtual void OnActivate(bool bActivate);
-		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+		virtual void InitFunction() override;
+		virtual void OnActivate(bool bActivate) override;
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode) override;
 
 
 	//[-------------------------------------------------------]

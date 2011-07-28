@@ -158,14 +158,14 @@ class SRPDirectionalLightingFixedFunctions : public SRPDirectionalLighting {
 	//[ Private virtual SRPDirectionalLighting functions      ]
 	//[-------------------------------------------------------]
 	private:
-		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer);
+		virtual void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, PLScene::SceneNode &cSceneNode, const PLMesh::MeshHandler &cMeshHandler, const PLMesh::Mesh &cMesh, const PLMesh::MeshLODLevel &cMeshLODLevel, PLRenderer::VertexBuffer &cVertexBuffer) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLScene::SceneRendererPass functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
 };

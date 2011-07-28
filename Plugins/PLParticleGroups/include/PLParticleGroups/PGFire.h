@@ -82,8 +82,8 @@ class PGFire : public PGPhysics {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
-		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+		virtual void OnActivate(bool bActivate) override;
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode) override;
 
 
 	//[-------------------------------------------------------]

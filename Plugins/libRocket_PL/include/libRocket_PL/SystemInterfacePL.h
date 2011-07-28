@@ -73,9 +73,9 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 	//[ Public virtual Rocket::Core::SystemInterface functions ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual float GetElapsedTime();
-		LIBROCKET_PL_API virtual int TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input);
-		LIBROCKET_PL_API virtual bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message);
+		LIBROCKET_PL_API virtual float GetElapsedTime() override;
+		LIBROCKET_PL_API virtual int TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input) override;
+		LIBROCKET_PL_API virtual bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message) override;
 
 
 	//[-------------------------------------------------------]

@@ -753,7 +753,7 @@ void IRCConnection::RemoveAllChannels()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual functions                           ]
+//[ Protected virtual IRCConnection functions             ]
 //[-------------------------------------------------------]
 /**
 *  @brief

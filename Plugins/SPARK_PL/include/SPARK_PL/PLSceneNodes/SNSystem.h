@@ -118,7 +118,7 @@ class SNSystem : public PLScene::SceneNode {
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr);
+		SPARK_PL_API virtual void DrawTransparent(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
@@ -202,9 +202,9 @@ class SNSystem : public PLScene::SceneNode {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		SPARK_PL_API virtual void OnActivate(bool bActivate);
-		SPARK_PL_API virtual void UpdateAABoundingBox();
-		SPARK_PL_API virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+		SPARK_PL_API virtual void OnActivate(bool bActivate) override;
+		SPARK_PL_API virtual void UpdateAABoundingBox() override;
+		SPARK_PL_API virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode) override;
 
 
 	//[-------------------------------------------------------]

@@ -113,14 +113,14 @@ class PLQT_API QPLRenderWindow : public QWidget, public PLRenderer::SurfaceWindo
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void paintEvent(QPaintEvent *);
-		virtual void resizeEvent(QResizeEvent *);
-		virtual void showEvent(QShowEvent *);
-		virtual void mousePressEvent(QMouseEvent* );
-		virtual void mouseReleaseEvent(QMouseEvent* );
-		virtual void mouseMoveEvent(QMouseEvent* );
-		virtual void keyPressEvent(QKeyEvent* );
-		virtual void keyReleaseEvent(QKeyEvent* );
+		virtual void paintEvent(QPaintEvent *) override;
+		virtual void resizeEvent(QResizeEvent *) override;
+		virtual void showEvent(QShowEvent *) override;
+		virtual void mousePressEvent(QMouseEvent* ) override;
+		virtual void mouseReleaseEvent(QMouseEvent* ) override;
+		virtual void mouseMoveEvent(QMouseEvent* ) override;
+		virtual void keyPressEvent(QKeyEvent* ) override;
+		virtual void keyReleaseEvent(QKeyEvent* ) override;
 
 
 	//[-------------------------------------------------------]

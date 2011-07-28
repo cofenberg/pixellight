@@ -69,7 +69,7 @@ class IRCClient : public PLCore::Client {
 	//[ Protected virtual PLCore::Client functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLIRC_API virtual PLCore::Connection *CreateOutgoingConnection();
+		PLIRC_API virtual PLCore::Connection *CreateOutgoingConnection() override;
 
 
 	//[-------------------------------------------------------]

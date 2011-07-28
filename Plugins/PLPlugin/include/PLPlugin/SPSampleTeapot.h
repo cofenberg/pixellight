@@ -99,7 +99,7 @@ class SPSampleTeapot : public PLRenderer::SurfacePainter {
 	//[ Private virtual PLRenderer::SurfacePainter functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnPaint(PLRenderer::Surface &cSurface);
+		virtual void OnPaint(PLRenderer::Surface &cSurface) override;
 
 
 };

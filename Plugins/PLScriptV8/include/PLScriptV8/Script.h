@@ -91,58 +91,58 @@ class Script : public PLCore::Script {
 		//[-------------------------------------------------------]
 		//[ Global functions                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool RemoveAllGlobalFunctions();
+		PLSCRIPTV8_API virtual bool IsGlobalFunction(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual bool AddGlobalFunction(const PLCore::String &sFunction, const PLCore::DynFunc &cDynFunc, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual bool RemoveAllGlobalFunctions() override;
 
 		//[-------------------------------------------------------]
 		//[ Script source code                                    ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual PLCore::String GetSourceCode() const;
-		PLSCRIPTV8_API virtual bool SetSourceCode(const PLCore::String &sSourceCode);
+		PLSCRIPTV8_API virtual PLCore::String GetSourceCode() const override;
+		PLSCRIPTV8_API virtual bool SetSourceCode(const PLCore::String &sSourceCode) override;
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "");
+		PLSCRIPTV8_API virtual void GetGlobalVariables(PLCore::Array<PLCore::String> &lstGlobalVariables, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual bool IsGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual PLCore::ETypeID GetGlobalVariableTypeID(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual PLCore::String GetGlobalVariable(const PLCore::String &sName, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual void SetGlobalVariable(const PLCore::String &sName, const PLCore::DynVar &cValue, const PLCore::String &sNamespace = "") override;
 
 		//[-------------------------------------------------------]
 		//[ Global function call, used by "FuncScriptPtr"         ]
 		//[-------------------------------------------------------]
-		PLSCRIPTV8_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "");
-		PLSCRIPTV8_API virtual void PushArgument(bool bValue);
-		PLSCRIPTV8_API virtual void PushArgument(float fValue);
-		PLSCRIPTV8_API virtual void PushArgument(double fValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::int8 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::int16 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::int32 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::int64 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint8 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint16 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint32 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint64 nValue);
-		PLSCRIPTV8_API virtual void PushArgument(const PLCore::String &sString);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object *pObject);
-		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object &cObject);
-		PLSCRIPTV8_API virtual bool EndCall();
-		PLSCRIPTV8_API virtual bool GetReturn(bool nValue);
-		PLSCRIPTV8_API virtual float GetReturn(float nValue);
-		PLSCRIPTV8_API virtual double GetReturn(double nValue);
-		PLSCRIPTV8_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue);
-		PLSCRIPTV8_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue);
-		PLSCRIPTV8_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue);
-		PLSCRIPTV8_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue);
-		PLSCRIPTV8_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue);
-		PLSCRIPTV8_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue);
-		PLSCRIPTV8_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue);
-		PLSCRIPTV8_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue);
-		PLSCRIPTV8_API virtual PLCore::String GetReturn(PLCore::String nValue);
-		PLSCRIPTV8_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue);
-		PLSCRIPTV8_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue);
+		PLSCRIPTV8_API virtual bool BeginCall(const PLCore::String &sFunctionName, const PLCore::String &sFunctionSignature, const PLCore::String &sNamespace = "") override;
+		PLSCRIPTV8_API virtual void PushArgument(bool bValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(float fValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(double fValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int8 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int16 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int32 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::int64 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint8 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint16 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint32 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::uint64 nValue) override;
+		PLSCRIPTV8_API virtual void PushArgument(const PLCore::String &sString) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object *pObject) override;
+		PLSCRIPTV8_API virtual void PushArgument(PLCore::Object &cObject) override;
+		PLSCRIPTV8_API virtual bool EndCall() override;
+		PLSCRIPTV8_API virtual bool GetReturn(bool nValue) override;
+		PLSCRIPTV8_API virtual float GetReturn(float nValue) override;
+		PLSCRIPTV8_API virtual double GetReturn(double nValue) override;
+		PLSCRIPTV8_API virtual PLCore::int8 GetReturn(PLCore::int8 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::int16 GetReturn(PLCore::int16 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::int32 GetReturn(PLCore::int32 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::int64 GetReturn(PLCore::int64 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::uint8 GetReturn(PLCore::uint8 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::uint16 GetReturn(PLCore::uint16 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::uint32 GetReturn(PLCore::uint32 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::uint64 GetReturn(PLCore::uint64 nValue) override;
+		PLSCRIPTV8_API virtual PLCore::String GetReturn(PLCore::String nValue) override;
+		PLSCRIPTV8_API virtual PLCore::Object *GetReturn(PLCore::Object *nValue) override;
+		PLSCRIPTV8_API virtual PLCore::Object &GetReturn(PLCore::Object &nValue) override;
 
 
 	//[-------------------------------------------------------]

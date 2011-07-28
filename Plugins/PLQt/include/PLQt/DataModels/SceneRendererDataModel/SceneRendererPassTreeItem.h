@@ -70,7 +70,7 @@ class SceneRendererPassTreeItem : public TreeItemBase {
 	//[-------------------------------------------------------]
 	public:
 		explicit SceneRendererPassTreeItem(PLScene::SceneRendererPass *item, QObject *parent = nullptr);
-		virtual QVariant data(const int column, const int role);
+		virtual QVariant data(const int column, const int role) override;
 
 
 	//[-------------------------------------------------------]

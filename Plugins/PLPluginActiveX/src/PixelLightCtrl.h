@@ -91,7 +91,7 @@ END_MSG_MAP()
 	//[ Private virtual PluginImpl functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Redraw();
+		virtual void Redraw() override;
 
 	private:
 //		PLPlugin::PluginOpenGL		m_cPlugin;

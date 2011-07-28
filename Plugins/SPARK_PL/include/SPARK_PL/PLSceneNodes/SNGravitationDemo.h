@@ -90,14 +90,14 @@ class SNGravitationDemo : public SNSystem {
 	//[ Protected virtual SNSystem functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		SPARK_PL_API virtual void Update();
+		SPARK_PL_API virtual void Update() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 	//[-------------------------------------------------------]

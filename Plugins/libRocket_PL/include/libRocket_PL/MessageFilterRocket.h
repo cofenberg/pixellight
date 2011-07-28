@@ -106,7 +106,7 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 	//[ Protected virtual PLGui::MessageFilter functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		LIBROCKET_PL_API virtual void OnGuiMessage(const PLGui::GuiMessage &cMessage);
+		LIBROCKET_PL_API virtual void OnGuiMessage(const PLGui::GuiMessage &cMessage) override;
 
 
 	//[-------------------------------------------------------]

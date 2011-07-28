@@ -68,8 +68,8 @@ class PLDynVarStringTreeItem : public TreeItemBase {
 	//[-------------------------------------------------------]
 	public:
 		explicit PLDynVarStringTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
-		virtual QVariant data(const int column, const int role);
-		virtual bool setData(const int column, const QVariant &value, const int role);
+		virtual QVariant data(const int column, const int role) override;
+		virtual bool setData(const int column, const QVariant &value, const int role) override;
 
 
 	//[-------------------------------------------------------]

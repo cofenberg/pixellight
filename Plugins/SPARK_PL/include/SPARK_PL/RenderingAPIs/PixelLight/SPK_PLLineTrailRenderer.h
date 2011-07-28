@@ -196,15 +196,15 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 	//[ Public virtual SPK::BufferHandler functions           ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void createBuffers(const SPK::Group &group);
-		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group);
+		SPARK_PL_API virtual void createBuffers(const SPK::Group &group) override;
+		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SPK::BufferHandler functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		SPARK_PL_API virtual bool checkBuffers(const SPK::Group &group);
+		SPARK_PL_API virtual bool checkBuffers(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

@@ -114,7 +114,7 @@ class SPK_PLLineTrailRendererShaders : public SPK_PLLineTrailRenderer {
 	//[ Public virtual SPK::Renderer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
+		SPARK_PL_API virtual void render(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

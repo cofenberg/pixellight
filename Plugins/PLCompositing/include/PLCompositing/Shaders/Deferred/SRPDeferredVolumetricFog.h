@@ -170,7 +170,7 @@ class SRPDeferredVolumetricFog : public SRPDeferred {
 	//[ Private virtual PLScene::SceneRendererPass functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
 };

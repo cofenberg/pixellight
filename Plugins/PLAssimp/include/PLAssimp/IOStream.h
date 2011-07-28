@@ -92,12 +92,12 @@ class IOStream : public Assimp::IOStream {
 	//[ Public virtual Assimp::IOStream functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual size_t Read(void *pvBuffer, size_t pSize, size_t pCount);
-		virtual size_t Write(const void *pvBuffer, size_t pSize, size_t pCount);
-		virtual aiReturn Seek(size_t pOffset, aiOrigin pOrigin);
-		virtual size_t Tell() const;
-		virtual size_t FileSize() const;
-		virtual void Flush();
+		virtual size_t Read(void *pvBuffer, size_t pSize, size_t pCount) override;
+		virtual size_t Write(const void *pvBuffer, size_t pSize, size_t pCount) override;
+		virtual aiReturn Seek(size_t pOffset, aiOrigin pOrigin) override;
+		virtual size_t Tell() const override;
+		virtual size_t FileSize() const override;
+		virtual void Flush() override;
 
 
 	//[-------------------------------------------------------]

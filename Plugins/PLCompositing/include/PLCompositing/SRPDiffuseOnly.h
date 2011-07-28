@@ -167,7 +167,7 @@ class SRPDiffuseOnly : public PLScene::SceneRendererPass {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected SRPDiffuseOnly functions                    ]
+	//[ Protected virtual SRPDiffuseOnly functions            ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

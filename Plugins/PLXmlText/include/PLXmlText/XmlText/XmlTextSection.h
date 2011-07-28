@@ -81,9 +81,9 @@ class XmlTextSection : public XmlTextElement {
 	//[ Protected virtual XmlTextNew functions                ]
 	//[-------------------------------------------------------]
 	protected:
-		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode);
-		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer);
-		PLXMLTEXT_API virtual PLMath::Vector2i OnGetSize() const;
+		PLXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode) override;
+		PLXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer) override;
+		PLXMLTEXT_API virtual PLMath::Vector2i OnGetSize() const override;
 
 
 	//[-------------------------------------------------------]

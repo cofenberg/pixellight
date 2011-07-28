@@ -114,10 +114,10 @@ class SNMScript : public PLScene::SceneNodeModifier {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]

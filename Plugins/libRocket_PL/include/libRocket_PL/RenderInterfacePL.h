@@ -98,16 +98,16 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 	//[ Public virtual Rocket::Core::RenderInterface functions ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual void RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture, const Rocket::Core::Vector2f& translation);
-		LIBROCKET_PL_API virtual Rocket::Core::CompiledGeometryHandle CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture);
-		LIBROCKET_PL_API virtual void ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry);
-		LIBROCKET_PL_API virtual void EnableScissorRegion(bool enable);
-		LIBROCKET_PL_API virtual void SetScissorRegion(int x, int y, int width, int height);
-		LIBROCKET_PL_API virtual bool LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source);
-		LIBROCKET_PL_API virtual bool GenerateTexture(Rocket::Core::TextureHandle& texture_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions);
-		LIBROCKET_PL_API virtual void ReleaseTexture(Rocket::Core::TextureHandle texture);
-		LIBROCKET_PL_API virtual float GetHorizontalTexelOffset();
-		LIBROCKET_PL_API virtual float GetVerticalTexelOffset();
+		LIBROCKET_PL_API virtual void RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture, const Rocket::Core::Vector2f& translation) override;
+		LIBROCKET_PL_API virtual Rocket::Core::CompiledGeometryHandle CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture) override;
+		LIBROCKET_PL_API virtual void ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry) override;
+		LIBROCKET_PL_API virtual void EnableScissorRegion(bool enable) override;
+		LIBROCKET_PL_API virtual void SetScissorRegion(int x, int y, int width, int height) override;
+		LIBROCKET_PL_API virtual bool LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source) override;
+		LIBROCKET_PL_API virtual bool GenerateTexture(Rocket::Core::TextureHandle& texture_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions) override;
+		LIBROCKET_PL_API virtual void ReleaseTexture(Rocket::Core::TextureHandle texture) override;
+		LIBROCKET_PL_API virtual float GetHorizontalTexelOffset() override;
+		LIBROCKET_PL_API virtual float GetVerticalTexelOffset() override;
 
 
 	//[-------------------------------------------------------]

@@ -75,11 +75,11 @@ class QPLInputHandler : public QObject, public InputHandler {
 		explicit QPLInputHandler(QPLSceneContext *context, QObject *parent = nullptr);
 		virtual ~QPLInputHandler();
 
-		virtual void mousePressEvent(QMouseEvent*);
-		virtual void mouseReleaseEvent(QMouseEvent*);
-		virtual void mouseMoveEvent(QMouseEvent*);
-		virtual void keyPressEvent(QKeyEvent*);
-		virtual void keyReleaseEvent(QKeyEvent*);
+		virtual void mousePressEvent(QMouseEvent*) override;
+		virtual void mouseReleaseEvent(QMouseEvent*) override;
+		virtual void mouseMoveEvent(QMouseEvent*) override;
+		virtual void keyPressEvent(QKeyEvent*) override;
+		virtual void keyReleaseEvent(QKeyEvent*) override;
 
 		void AddSceneNode(PLScene::SceneNode* pSceneNode);
 		void RemoveSceneNode(PLScene::SceneNode* pSceneNode);

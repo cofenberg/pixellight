@@ -81,14 +81,14 @@ class RenderInterfacePLShaders : public RenderInterfacePL {
 	//[ Public virtual RenderInterfacePL functions            ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual bool ConfigureRenderSystem();
+		LIBROCKET_PL_API virtual bool ConfigureRenderSystem() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Rocket::Core::RenderInterface functions ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual void RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation);
+		LIBROCKET_PL_API virtual void RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation) override;
 
 
 	//[-------------------------------------------------------]

@@ -111,7 +111,7 @@ Script *SNMScript::GetScriptInstance() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneNodeModifier functions         ]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
 //[-------------------------------------------------------]
 void SNMScript::OnActivate(bool bActivate)
 {

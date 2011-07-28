@@ -61,7 +61,7 @@ class PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
 	//[-------------------------------------------------------]
 	public:
 		explicit PLDynVarVector3TreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
-		virtual QVariant data(const int column, const int role);
+		virtual QVariant data(const int column, const int role) override;
 
 
 	//[-------------------------------------------------------]
@@ -91,7 +91,7 @@ class PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
 			//[-------------------------------------------------------]
 			public:
 				Vector3ValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector3TreeItem *parentItem);
-				virtual QVariant data(const int column, const int role);
+				virtual QVariant data(const int column, const int role) override;
 				bool setData(const int column, const QVariant &value, const int role);
 
 
@@ -147,8 +147,8 @@ class PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
 			//[ Protected virtual Vector3ValueBaseTreeItem functions  ]
 			//[-------------------------------------------------------]
 			protected:
-				float GetVectorData(const PLMath::Vector3 &vector);
-				void SetVectorData(PLMath::Vector3 &vector, float newValue);
+				virtual float GetVectorData(const PLMath::Vector3 &vector) override;
+				virtual void SetVectorData(PLMath::Vector3 &vector, float newValue) override;
 
 
 		};
@@ -167,8 +167,8 @@ class PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
 			//[ Protected virtual Vector3ValueBaseTreeItem functions  ]
 			//[-------------------------------------------------------]
 			protected:
-				float GetVectorData(const PLMath::Vector3 &vector);
-				void SetVectorData(PLMath::Vector3 &vector, float newValue);
+				virtual float GetVectorData(const PLMath::Vector3 &vector) override;
+				virtual void SetVectorData(PLMath::Vector3 &vector, float newValue) override;
 
 
 		};

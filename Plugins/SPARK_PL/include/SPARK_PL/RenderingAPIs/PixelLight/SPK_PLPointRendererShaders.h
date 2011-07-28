@@ -118,7 +118,7 @@ class SPK_PLPointRendererShaders : public SPK_PLPointRenderer {
 	//[ Public virtual SPK::Renderer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
+		SPARK_PL_API virtual void render(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

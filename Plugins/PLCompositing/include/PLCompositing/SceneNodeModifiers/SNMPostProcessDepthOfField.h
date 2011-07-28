@@ -99,7 +99,7 @@ class SNMPostProcessDepthOfField : public SNMPostProcess {
 	//[ Public virtual SNMPostProcess functions               ]
 	//[-------------------------------------------------------]
 	public:
-		PLCOM_API virtual void SetParameters();
+		PLCOM_API virtual void SetParameters() override;
 
 
 };

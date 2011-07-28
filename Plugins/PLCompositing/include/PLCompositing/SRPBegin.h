@@ -213,7 +213,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 	//[ Protected virtual PLScene::SceneRendererPass functions ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
 	//[-------------------------------------------------------]

@@ -124,7 +124,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		PLPG_API void SetTextureAnimationColumns(const PLCore::uint32 &nValue);
 		PLPG_API PLCore::uint32 GetTextureAnimationRows() const;
 		PLPG_API void SetTextureAnimationRows(const PLCore::uint32 &nValue);
-		PLPG_API virtual void SetFlags(PLCore::uint32 nValue);	// From SceneNode
+		PLPG_API virtual void SetFlags(PLCore::uint32 nValue) override;	// From PLScene::SceneNode
 
 
 	//[-------------------------------------------------------]

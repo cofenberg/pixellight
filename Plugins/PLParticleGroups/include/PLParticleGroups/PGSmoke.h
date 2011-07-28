@@ -130,8 +130,8 @@ class PGSmoke : public SNParticleGroup {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
-		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode);
+		virtual void OnActivate(bool bActivate) override;
+		virtual void OnAddedToVisibilityTree(PLScene::VisNode &cVisNode) override;
 
 
 	//[-------------------------------------------------------]
@@ -175,7 +175,7 @@ class PGSmoke : public SNParticleGroup {
 	//[ Public virtual SNParticleGroup functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool InitParticleGroup(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "", const void *pData = nullptr);
+		virtual bool InitParticleGroup(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "", const void *pData = nullptr) override;
 	
 
 };

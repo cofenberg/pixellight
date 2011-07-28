@@ -96,7 +96,7 @@ class SRPFunctionsPost : public SRPFunctions {
 	//[ Private virtual PLScene::SceneRendererPass functions  ]
 	//[-------------------------------------------------------]
 	private:
-		void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
 };

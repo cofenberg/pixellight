@@ -159,7 +159,7 @@ class SRPDeferredHDAO : public SRPDeferredSSAO {
 	//[ Protected virtual SRPDeferredSSAO functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void DrawAO(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer);
+		virtual void DrawAO(const PLCore::String &sShaderLanguage, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::TextureBufferRectangle &cNormalDepthTextureBuffer) override;
 
 
 };

@@ -205,9 +205,9 @@ class JabberConnection : public PLCore::Connection {
 	//[ Protected virtual PLCore::Connection functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLJABBER_API virtual void OnConnect();
-		PLJABBER_API virtual void OnDisconnect();
-		PLJABBER_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
+		PLJABBER_API virtual void OnConnect() override;
+		PLJABBER_API virtual void OnDisconnect() override;
+		PLJABBER_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize) override;
 
 
 	//[-------------------------------------------------------]

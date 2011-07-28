@@ -139,9 +139,9 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int IndexMetamethod(lua_State *pLuaState);
-		virtual int NewIndexMetamethod(lua_State *pLuaState);
-		virtual void CallMetamethod(lua_State *pLuaState);
+		virtual int IndexMetamethod(lua_State *pLuaState) override;
+		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
+		virtual void CallMetamethod(lua_State *pLuaState) override;
 
 
 	//[-------------------------------------------------------]

@@ -61,7 +61,7 @@ class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 	//[-------------------------------------------------------]
 	public:
 		explicit PLDynVarFlagsTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
-		virtual QVariant data(const int column, const int role);
+		virtual QVariant data(const int column, const int role) override;
 
 
 	//[-------------------------------------------------------]
@@ -91,7 +91,7 @@ class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 			//[-------------------------------------------------------]
 			public:
 				FlagValueTreeItem(QObject *parent, QString flagName, PLCore::uint32 flagValue, PLDynVarFlagsTreeItem *parentItem);
-				virtual QVariant data(const int column, const int role);
+				virtual QVariant data(const int column, const int role) override;
 				bool setData(const int column, const QVariant &value, const int role);
 
 

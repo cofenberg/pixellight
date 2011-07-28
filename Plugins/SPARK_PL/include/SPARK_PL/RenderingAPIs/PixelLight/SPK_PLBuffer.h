@@ -119,7 +119,7 @@ class SPK_PLBuffer : public SPK::Buffer {
 	//[ Private virtual SPK::Buffer functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void swap(size_t index0, size_t index1);
+		virtual void swap(size_t index0, size_t index1) override;
 
 
 	//[-------------------------------------------------------]
@@ -164,7 +164,7 @@ class PLBufferCreator : public SPK::BufferCreator {
 	//[ Private virtual SPK::BufferCreator functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual SPK::Buffer *createBuffer(size_t nbParticles, const SPK::Group &group) const;
+		virtual SPK::Buffer *createBuffer(size_t nbParticles, const SPK::Group &group) const override;
 
 
 	//[-------------------------------------------------------]

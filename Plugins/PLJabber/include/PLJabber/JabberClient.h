@@ -69,7 +69,7 @@ class JabberClient : public PLCore::Client {
 	//[ Protected virtual PLCore::Client functions            ]
 	//[-------------------------------------------------------]
 	protected:
-		PLJABBER_API virtual PLCore::Connection *CreateOutgoingConnection();
+		PLJABBER_API virtual PLCore::Connection *CreateOutgoingConnection() override;
 
 
 	//[-------------------------------------------------------]

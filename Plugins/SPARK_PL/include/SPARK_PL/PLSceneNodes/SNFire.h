@@ -80,7 +80,7 @@ class SNFire : public SNSystem {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 };

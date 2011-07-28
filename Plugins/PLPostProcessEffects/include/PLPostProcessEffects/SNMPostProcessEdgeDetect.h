@@ -96,7 +96,7 @@ class SNMPostProcessEdgeDetect : public PLCompositing::SNMPostProcess {
 	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void SetParameters();
+		virtual void SetParameters() override;
 
 
 };

@@ -88,7 +88,7 @@ class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 	//[ Private virtual PLScene::SceneNodeModifier functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class SNMPostProcessOldFilm : public PLCompositing::SNMPostProcess {
 	//[ Public virtual PLCompositing::SNMPostProcess functions ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void SetParameters();
+		virtual void SetParameters() override;
 
 
 };

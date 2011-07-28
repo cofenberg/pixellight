@@ -76,8 +76,8 @@ class PLQT_API QPLSceneContext : public QPLContext {
 	public:
 		QPLSceneContext(const QString& sPainterName = "PLScene::SPScene", PLRenderer::RendererContext* pRendererContext = nullptr);
 		virtual ~QPLSceneContext();
-		virtual void Update();
-		virtual PLRenderer::SurfacePainter* CreateSurfacePainter();
+		virtual void Update() override;
+		virtual PLRenderer::SurfacePainter* CreateSurfacePainter() override;
 		void InitScene();
 		PLScene::SceneContext* GetSceneContext();
 		PLScene::SceneContainer* GetScene();

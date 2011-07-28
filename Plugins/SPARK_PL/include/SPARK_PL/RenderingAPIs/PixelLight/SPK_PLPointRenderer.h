@@ -169,15 +169,15 @@ class SPK_PLPointRenderer : public SPK_PLRenderer, public SPK::PointRendererInte
 	//[ Public virtual SPK::PointRendererInterface functions  ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual bool setType(SPK::PointType type);
+		SPARK_PL_API virtual bool setType(SPK::PointType type) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::BufferHandler functions           ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void createBuffers(const SPK::Group &group);
-		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group);
+		SPARK_PL_API virtual void createBuffers(const SPK::Group &group) override;
+		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

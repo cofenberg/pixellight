@@ -209,7 +209,7 @@ class SRPEndHDR : public SRPEnd {
 	//[ Protected virtual PLScene::SceneRendererPass functions ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery);
+		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
 };

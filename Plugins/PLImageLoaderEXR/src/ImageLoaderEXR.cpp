@@ -81,26 +81,27 @@ class EXRIStream : public Imf::IStream {
 	//[-------------------------------------------------------]
 	public:
 		EXRIStream(File &cFile, const char *pszFilename) :
-			Imf::IStream(pszFilename), m_cFile(cFile)
+			Imf::IStream(pszFilename),
+			m_cFile(cFile)
 		{
 		}
 
-		virtual bool read(char c[], int n)
+		virtual bool read(char c[], int n) override
 		{
 			return m_cFile.Read(c, n, 1) > 0;
 		}
 
-		virtual Imf::Int64 tellg()
+		virtual Imf::Int64 tellg() override
 		{
 			return m_cFile.Tell();
 		}
 
-		virtual void seekg(Imf::Int64 pos)
+		virtual void seekg(Imf::Int64 pos) override
 		{
 			m_cFile.Seek((long)pos);
 		}
 
-		virtual void clear()
+		virtual void clear() override
 		{
 		}
 
@@ -126,21 +127,22 @@ class EXROStream : public Imf::OStream {
 	//[-------------------------------------------------------]
 	public:
 		EXROStream(File &cFile, const char *pszFilename) :
-			Imf::OStream(pszFilename), m_cFile(cFile)
+			Imf::OStream(pszFilename),
+			m_cFile(cFile)
 		{
 		}
 
-		virtual void write(const char c[], int n)
+		virtual void write(const char c[], int n) override
 		{
 			m_cFile.Write(c, n, 1);
 		}
 
-		virtual Imf::Int64 tellp()
+		virtual Imf::Int64 tellp() override
 		{
 			return m_cFile.Tell();
 		}
 
-		virtual void seekp(Imf::Int64 pos)
+		virtual void seekp(Imf::Int64 pos) override
 		{
 			m_cFile.Seek((long)pos);
 		}

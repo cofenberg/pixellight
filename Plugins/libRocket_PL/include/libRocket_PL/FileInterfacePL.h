@@ -69,11 +69,11 @@ class FileInterfacePL : public Rocket::Core::FileInterface {
 	//[ Public virtual Rocket::Core::FileInterface functions  ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual Rocket::Core::FileHandle Open(const Rocket::Core::String& path);
-		LIBROCKET_PL_API virtual void Close(Rocket::Core::FileHandle file);
-		LIBROCKET_PL_API virtual size_t Read(void* buffer, size_t size, Rocket::Core::FileHandle file);
-		LIBROCKET_PL_API virtual bool Seek(Rocket::Core::FileHandle file, long offset, int origin);
-		LIBROCKET_PL_API virtual size_t Tell(Rocket::Core::FileHandle file);
+		LIBROCKET_PL_API virtual Rocket::Core::FileHandle Open(const Rocket::Core::String& path) override;
+		LIBROCKET_PL_API virtual void Close(Rocket::Core::FileHandle file) override;
+		LIBROCKET_PL_API virtual size_t Read(void* buffer, size_t size, Rocket::Core::FileHandle file) override;
+		LIBROCKET_PL_API virtual bool Seek(Rocket::Core::FileHandle file, long offset, int origin) override;
+		LIBROCKET_PL_API virtual size_t Tell(Rocket::Core::FileHandle file) override;
 
 
 	//[-------------------------------------------------------]

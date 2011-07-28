@@ -125,15 +125,15 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 	//[ Public virtual SPK::QuadRendererInterface functions   ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual bool setTexturingMode(SPK::TexturingMode mode);
+		SPARK_PL_API virtual bool setTexturingMode(SPK::TexturingMode mode) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual SPK::BufferHandler functions           ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void createBuffers(const SPK::Group &group);
-		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group);
+		SPARK_PL_API virtual void createBuffers(const SPK::Group &group) override;
+		SPARK_PL_API virtual void destroyBuffers(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

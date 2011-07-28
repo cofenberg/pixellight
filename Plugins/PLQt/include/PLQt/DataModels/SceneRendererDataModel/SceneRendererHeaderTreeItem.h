@@ -61,7 +61,7 @@ class SceneRendererHeaderTreeItem : public TreeItemBase {
 	//[-------------------------------------------------------]
 	public:
 		explicit SceneRendererHeaderTreeItem(QObject *parent = nullptr);
-		virtual QVariant data(const int column, const int role);
+		virtual QVariant data(const int column, const int role) override;
 
 
 };

@@ -120,7 +120,7 @@ class SPK_PLQuadRendererShaders : public SPK_PLQuadRenderer {
 	//[ Public virtual SPK::Renderer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void render(const SPK::Group &group);
+		SPARK_PL_API virtual void render(const SPK::Group &group) override;
 
 
 	//[-------------------------------------------------------]

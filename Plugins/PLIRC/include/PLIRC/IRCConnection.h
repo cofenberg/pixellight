@@ -164,7 +164,7 @@ class IRCConnection : public PLCore::Connection {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected IRCConnection virtual functions             ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -272,9 +272,9 @@ class IRCConnection : public PLCore::Connection {
 	//[ Protected virtual PLCore::Connection functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLIRC_API virtual void OnConnect();
-		PLIRC_API virtual void OnDisconnect();
-		PLIRC_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
+		PLIRC_API virtual void OnConnect() override;
+		PLIRC_API virtual void OnDisconnect() override;
+		PLIRC_API virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize) override;
 
 
 };

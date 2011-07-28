@@ -156,7 +156,7 @@ class SPK_PLRenderer : public SPK::Renderer {
 	//[ Public virtual SPK::Renderer functions                ]
 	//[-------------------------------------------------------]
 	public:
-		SPARK_PL_API virtual void setBlending(SPK::BlendingMode blendMode);
+		SPARK_PL_API virtual void setBlending(SPK::BlendingMode blendMode) override;
 
 
 	//[-------------------------------------------------------]
