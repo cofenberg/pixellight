@@ -76,7 +76,7 @@ FocusWidget::~FocusWidget()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Widget functions                       ]
+//[ Public virtual PLGui::Widget functions                ]
 //[-------------------------------------------------------]
 void FocusWidget::OnDraw(Graphics &cGraphics)
 {

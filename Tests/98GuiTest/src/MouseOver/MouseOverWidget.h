@@ -71,13 +71,13 @@ class MouseOverWidget : public PLGui::Widget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Widget functions                       ]
+	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
-		virtual void OnMouseEnter();
-		virtual void OnMouseLeave();
-		virtual void OnMouseOver(bool bMouseOver);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
+		virtual void OnMouseEnter() override;
+		virtual void OnMouseLeave() override;
+		virtual void OnMouseOver(bool bMouseOver) override;
 
 
 };

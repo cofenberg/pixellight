@@ -84,14 +84,14 @@ class SNGravitationSample : public SPARK_PL::SNSystem {
 	//[ Protected virtual SNSystem functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void Update();
+		virtual void Update() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 	//[-------------------------------------------------------]

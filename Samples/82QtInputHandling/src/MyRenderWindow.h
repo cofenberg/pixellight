@@ -90,11 +90,11 @@ class MyRenderWindow : public PLQt::QPLRenderWindow {
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void mousePressEvent(QMouseEvent *pQMouseEvent);
-		virtual void mouseReleaseEvent(QMouseEvent *pQMouseEvent);
-		virtual void mouseMoveEvent(QMouseEvent *pQMouseEvent);
-		virtual void keyPressEvent(QKeyEvent *pQKeyEvent);
-		virtual void keyReleaseEvent(QKeyEvent *pQKeyEvent);
+		virtual void mousePressEvent(QMouseEvent *pQMouseEvent) override;
+		virtual void mouseReleaseEvent(QMouseEvent *pQMouseEvent) override;
+		virtual void mouseMoveEvent(QMouseEvent *pQMouseEvent) override;
+		virtual void keyPressEvent(QKeyEvent *pQKeyEvent) override;
+		virtual void keyReleaseEvent(QKeyEvent *pQKeyEvent) override;
 
 
 	//[-------------------------------------------------------]

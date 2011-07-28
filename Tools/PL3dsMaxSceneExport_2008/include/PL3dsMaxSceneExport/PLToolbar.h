@@ -64,9 +64,9 @@ class PLToolbar : public UtilityObj {
 	//[ Public virtual UtilityObj functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void BeginEditParams(Interface *ip, IUtil *iu);
-		virtual void EndEditParams(Interface *ip, IUtil *iu);
-		virtual void DeleteThis();
+		virtual void BeginEditParams(Interface *ip, IUtil *iu) override;
+		virtual void EndEditParams(Interface *ip, IUtil *iu) override;
+		virtual void DeleteThis() override;
 
 
 };

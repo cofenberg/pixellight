@@ -89,14 +89,14 @@ class Application : public PLEngine::RenderApplication {
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreatePainter();
+		virtual void OnCreatePainter() override;
 
 
 };

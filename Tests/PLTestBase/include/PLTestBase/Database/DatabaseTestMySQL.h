@@ -45,14 +45,14 @@ class DatabaseTestMySQL : public DatabaseTest {
 	//[ Public virtual TestCase functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual const char *GetName() const;
+		virtual const char *GetName() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual TestCase functions                    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Test();
+		virtual void Test() override;
 
 
 };

@@ -99,7 +99,7 @@ void TestWidget::SetColor(const PLGraphics::Color4 &cColor)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Widget functions                       ]
+//[ Public virtual PLGui::Widget functions                ]
 //[-------------------------------------------------------]
 void TestWidget::OnClose()
 {

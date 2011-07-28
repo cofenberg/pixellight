@@ -147,7 +147,7 @@ class PLSceneMaterial {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual PLSceneMaterial functions           ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

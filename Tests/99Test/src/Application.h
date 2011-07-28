@@ -90,7 +90,7 @@ class Application : public PLCore::ConsoleApplication {
 	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Main();
+		virtual void Main() override;
 
 
 };

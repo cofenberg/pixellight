@@ -73,7 +73,7 @@ ThemeTestWidget::~ThemeTestWidget()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual WidgetFunctions functions           ]
+//[ Protected virtual PLGui::WidgetFunctions functions    ]
 //[-------------------------------------------------------]
 void ThemeTestWidget::OnDraw(Graphics &cGraphics)
 {

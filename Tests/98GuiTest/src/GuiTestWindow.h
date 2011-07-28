@@ -85,10 +85,10 @@ class GuiTestWindow : public PLGui::Window {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual WidgetFunctions functions           ]
+	//[ Protected virtual PLGui::WidgetFunctions functions    ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnShow();
+		virtual void OnShow() override;
 
 
 	//[-------------------------------------------------------]

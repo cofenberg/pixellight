@@ -93,7 +93,7 @@ class SPMeshShaders : public SPMesh {
 	//[ Private virtual PLRenderer::SurfacePainter functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnPaint(PLRenderer::Surface &cSurface);
+		virtual void OnPaint(PLRenderer::Surface &cSurface) override;
 
 
 };

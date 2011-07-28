@@ -95,14 +95,14 @@ class SNGun : public PLSound::SNSound {
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLInput::Controller *GetInputController() const;
+		virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 	//[-------------------------------------------------------]
@@ -140,7 +140,7 @@ class SNGun : public PLSound::SNSound {
 	//[ Private virtual PLScene::SceneNode functions          ] 
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 };

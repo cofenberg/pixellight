@@ -140,22 +140,22 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnInit();
-		virtual void OnCreateMainWindow();
+		virtual void OnInit() override;
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool OnUpdate();
+		virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 	//[-------------------------------------------------------]

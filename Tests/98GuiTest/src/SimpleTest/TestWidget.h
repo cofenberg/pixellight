@@ -90,13 +90,13 @@ class TestWidget : public PLGui::Widget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Widget functions                       ]
+	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnClose();
-		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		virtual void OnGetFocus();
-		virtual void OnLooseFocus();
+		virtual void OnClose() override;
+		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		virtual void OnGetFocus() override;
+		virtual void OnLooseFocus() override;
 
 
 	//[-------------------------------------------------------]

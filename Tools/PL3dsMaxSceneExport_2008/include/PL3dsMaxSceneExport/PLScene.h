@@ -338,12 +338,12 @@ class PLScene : public PLSceneContainer {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLContainer functions                  ]
+	//[ Public virtual PLSceneContainer functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool AddIGameNode(IGameNode &cIGameNode);
-		virtual void PostProcess();
-		virtual void OutputStatistics();
+		virtual bool AddIGameNode(IGameNode &cIGameNode) override;
+		virtual void PostProcess() override;
+		virtual void OutputStatistics() override;
 
 
 };

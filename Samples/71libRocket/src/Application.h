@@ -97,22 +97,22 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnDeInit();
-		virtual void OnInit();
+		virtual void OnDeInit() override;
+		virtual void OnInit() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 	//[-------------------------------------------------------]

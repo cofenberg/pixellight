@@ -46,7 +46,7 @@ class ChunkTest : public TestCase {
 	//[ Public virtual TestCase functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual const char *GetName() const;
+		virtual const char *GetName() const override;
 
 
 	//[-------------------------------------------------------]
@@ -67,7 +67,7 @@ class ChunkTest : public TestCase {
 	//[ Private virtual TestCase functions                    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Test();
+		virtual void Test() override;
 
 
 };

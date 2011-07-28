@@ -79,7 +79,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Public virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void SetCamera(PLScene::SNCamera *pCamera);
+		virtual void SetCamera(PLScene::SNCamera *pCamera) override;
 
 
 	//[-------------------------------------------------------]
@@ -102,21 +102,21 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool OnUpdate();
+		virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 	//[-------------------------------------------------------]

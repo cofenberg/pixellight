@@ -62,7 +62,7 @@ class MySceneContext : public PLQt::QPLSceneContext {
 	//[ Protected virtual PLQt::QPLSceneContext functions     ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 };

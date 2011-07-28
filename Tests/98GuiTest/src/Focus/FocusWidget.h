@@ -71,13 +71,13 @@ class FocusWidget : public PLGui::Widget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Widget functions                       ]
+	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
-		virtual void OnGetFocus();
-		virtual void OnLooseFocus();
-		virtual void OnActivate(bool bActivate);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
+		virtual void OnGetFocus() override;
+		virtual void OnLooseFocus() override;
+		virtual void OnActivate(bool bActivate) override;
 
 
 };

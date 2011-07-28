@@ -98,9 +98,9 @@ class ChatClientConnection : public PLCore::Connection {
 	//[ Private PLCore::Connection functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnConnect();
-		virtual void OnDisconnect();
-		virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize);
+		virtual void OnConnect() override;
+		virtual void OnDisconnect() override;
+		virtual void OnReceive(const char *pBuffer, PLCore::uint32 nSize) override;
 
 
 };

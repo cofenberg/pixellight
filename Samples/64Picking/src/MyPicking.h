@@ -78,7 +78,7 @@ class MyPicking : public PLEngine::MousePicking {
 	//[ Private virtual PLEngine::Picking functions           ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool OnPickingCandidate(PLScene::SceneNode &cSceneNode);
+		virtual bool OnPickingCandidate(PLScene::SceneNode &cSceneNode) override;
 
 
 	//[-------------------------------------------------------]

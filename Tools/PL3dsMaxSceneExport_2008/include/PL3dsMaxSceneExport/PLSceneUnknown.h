@@ -75,7 +75,7 @@ class PLSceneUnknown : public PLSceneNode {
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
 
 
 };

@@ -165,7 +165,7 @@ class PLSceneContainer : public PLSceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual PLSceneContainer functions          ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -232,7 +232,7 @@ class PLSceneContainer : public PLSceneNode {
 	//[ Protected virtual PLSceneNode functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
 
 
 };

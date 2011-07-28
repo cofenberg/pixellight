@@ -112,7 +112,7 @@ DragDropWidget::~DragDropWidget()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Widget functions                       ]
+//[ Public virtual PLGui::Widget functions                ]
 //[-------------------------------------------------------]
 void DragDropWidget::OnDrop(const DataObject &cData)
 {

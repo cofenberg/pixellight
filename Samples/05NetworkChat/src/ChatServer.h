@@ -88,7 +88,7 @@ class ChatServer : public PLCore::Server {
 	//[ Private virtual PLCore::Server functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLCore::Connection *CreateIncomingConnection();
+		virtual PLCore::Connection *CreateIncomingConnection() override;
 
 
 };

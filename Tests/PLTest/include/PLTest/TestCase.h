@@ -117,7 +117,7 @@ class TestCase {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual functions                              ]
+	//[ Public virtual TestCase functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -169,7 +169,7 @@ class TestCase {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual functions                             ]
+	//[ Private virtual TestCase functions                    ]
 	//[-------------------------------------------------------]
 	private:
 		/**

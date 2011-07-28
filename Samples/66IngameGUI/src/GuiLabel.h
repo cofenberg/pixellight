@@ -183,7 +183,7 @@ class GuiLabel : public GuiBase {
 	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
 
 
 };

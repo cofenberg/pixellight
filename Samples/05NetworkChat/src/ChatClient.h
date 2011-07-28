@@ -99,7 +99,7 @@ class ChatClient : public PLCore::Client {
 	//[ Private virtual PLCore::Client functions              ]
 	//[-------------------------------------------------------]
 	private:
-		virtual PLCore::Connection *CreateOutgoingConnection();
+		virtual PLCore::Connection *CreateOutgoingConnection() override;
 
 
 };

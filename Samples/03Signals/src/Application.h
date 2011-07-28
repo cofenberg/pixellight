@@ -71,15 +71,15 @@ class Application : public PLCore::ConsoleApplication {
 	//[ Private virtual PLCore::ConsoleApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Main();
-		virtual bool OnSignal(ESignal nSignal);
+		virtual void Main() override;
+		virtual bool OnSignal(ESignal nSignal) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		volatile bool m_bExit;		/**< Shall the application exit? */
+		volatile bool m_bExit;	/**< Shall the application exit? */
 
 
 };

@@ -71,7 +71,7 @@ class Application : public PLGui::GuiApplication {
 	//[ Protected virtual PLGui::GuiApplication functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 };

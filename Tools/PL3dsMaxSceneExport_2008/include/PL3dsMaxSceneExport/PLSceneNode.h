@@ -263,7 +263,7 @@ class PLSceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual functions                           ]
+	//[ Protected virtual PLSceneNode functions               ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

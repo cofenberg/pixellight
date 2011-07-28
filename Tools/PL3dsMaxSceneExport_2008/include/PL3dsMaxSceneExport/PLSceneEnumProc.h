@@ -82,7 +82,7 @@ class PLSceneEnumProc : public ITreeEnumProc {
 	//[ Public virtual ITreeEnumProc functions                ]
 	//[-------------------------------------------------------]
 	public:
-		int callback(INode *pMaxNode);
+		virtual int callback(INode *pMaxNode) override;
 
 
 };

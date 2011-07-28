@@ -932,7 +932,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLContainer functions               ]
+//[ Protected virtual PLSceneContainer functions          ]
 //[-------------------------------------------------------]
 bool PLScene::AddIGameNode(IGameNode &cIGameNode)
 {

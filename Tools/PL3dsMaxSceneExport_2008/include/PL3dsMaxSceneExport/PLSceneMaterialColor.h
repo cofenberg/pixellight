@@ -83,7 +83,7 @@ class PLSceneMaterialColor : public PLSceneMaterial {
 	//[ Private virtual PLSceneMaterial functions             ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void SaveParameters(PLCore::XmlElement &cMaterialElement);
+		virtual void SaveParameters(PLCore::XmlElement &cMaterialElement) override;
 
 
 };

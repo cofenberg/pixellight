@@ -103,7 +103,7 @@ class SPRTTFixedFunctions : public SPRTT {
 	//[ Private virtual PLRenderer::SurfacePainter functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnPaint(PLRenderer::Surface &cSurface);
+		virtual void OnPaint(PLRenderer::Surface &cSurface) override;
 
 
 };

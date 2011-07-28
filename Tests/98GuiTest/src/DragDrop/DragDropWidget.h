@@ -82,10 +82,10 @@ class DragDropWidget : public PLGui::ContainerWidget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Widget functions                       ]
+	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDrop(const PLGui::DataObject &cData);
+		virtual void OnDrop(const PLGui::DataObject &cData) override;
 
 
 	//[-------------------------------------------------------]

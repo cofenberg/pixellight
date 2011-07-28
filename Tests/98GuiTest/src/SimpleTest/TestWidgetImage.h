@@ -72,10 +72,10 @@ class TestWidgetImage : public PLGui::Widget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Widget functions                       ]
+	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
 
 
 	//[-------------------------------------------------------]

@@ -112,7 +112,7 @@ class TestObject : public PLCore::Object {
 		};
 
 		/* Public virtual PLCore::Object function */
-		virtual PLCore::Class *GetClass() const;
+		virtual PLCore::Class *GetClass() const override;
 
 
 		/*****************************************************/
@@ -136,13 +136,13 @@ class TestObject : public PLCore::Object {
 				}
 
 			private:
-				virtual PLCore::DynFunc *GetConstructor() {
-					return &m_Constructor;
+				virtual PLCore::DynFunc *GetConstructor() const override {
+					return const_cast<PLCore::DynFunc*>(reinterpret_cast<const PLCore::DynFunc*>(&m_Constructor));
 				}
-				virtual PLCore::Object *Create(PLCore::DynParams &cParams) {
-					if (cParams.GetSignature() == m_Constructor.GetSignature()) {
-						m_Constructor.Call(cParams);
-						return ((ParamType&)cParams).Return;
+				virtual PLCore::Object *Create(const PLCore::DynParams &cConstParams) override {
+					if (cConstParams.GetSignature() == m_Constructor.GetSignature()) {
+						m_Constructor.Call(cConstParams);
+						return ((ParamType&)cConstParams).Return;
 					} else return nullptr;
 				}
 				ConstType m_Constructor;
@@ -170,7 +170,7 @@ class TestObject : public PLCore::Object {
 				~BoolValue_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) {
+				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
 					return &((TestObject*)pObject)->BoolValue;
 				}
 		};
@@ -200,7 +200,7 @@ class TestObject : public PLCore::Object {
 				~IntValue_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) {
+				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
 					return &((TestObject*)pObject)->IntValue;
 				}
 		};
@@ -230,7 +230,7 @@ class TestObject : public PLCore::Object {
 				~IntValue2_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) {
+				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
 					return &((TestObject*)pObject)->IntValue2;
 				}
 		};
@@ -265,7 +265,7 @@ class TestObject : public PLCore::Object {
 				}
 				~MethodTest_Desc() {
 				}
-				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) {
+				virtual PLCore::DynFuncPtr GetMethod(Object &cObject) const override {
 					return new MethodTest_Method(reinterpret_cast<_Self&>(cObject));
 				}
 		};
@@ -302,7 +302,7 @@ class TestObject : public PLCore::Object {
 				~Event0_Desc() {
 				}
 			private:
-				virtual PLCore::DynEvent *GetEvent(const Object *pObject) {
+				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const override {
 					return &((TestObject*)pObject)->Event0;
 				}
 		};
@@ -338,7 +338,7 @@ class TestObject : public PLCore::Object {
 				~EventHandler0_Desc() {
 				}
 			private:
-				virtual PLCore::DynEventHandler *GetEventHandler(const Object *pObject) {
+				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const override {
 					return &((TestObject*)pObject)->EventHandler0;
 				}
 		};

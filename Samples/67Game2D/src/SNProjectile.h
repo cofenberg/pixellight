@@ -98,7 +98,7 @@ class SNProjectile : public PLScene::SceneNode {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnActivate(bool bActivate);
+		virtual void OnActivate(bool bActivate) override;
 
 
 };

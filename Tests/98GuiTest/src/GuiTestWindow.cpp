@@ -189,7 +189,7 @@ GuiTestWindow::~GuiTestWindow()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual WidgetFunctions functions           ]
+//[ Protected virtual PLGui::WidgetFunctions functions    ]
 //[-------------------------------------------------------]
 void GuiTestWindow::OnShow()
 {

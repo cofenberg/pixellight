@@ -95,21 +95,21 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::SceneApplication functions  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
+		virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 };

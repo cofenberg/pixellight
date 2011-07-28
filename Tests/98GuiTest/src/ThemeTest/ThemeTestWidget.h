@@ -79,10 +79,10 @@ class ThemeTestWidget : public PLGui::Widget {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual WidgetFunctions functions           ]
+	//[ Protected virtual PLGui::WidgetFunctions functions    ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
 
 
 };

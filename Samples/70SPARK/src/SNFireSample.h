@@ -74,7 +74,7 @@ class SNFireSample : public SPARK_PL::SNSystem {
 	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void InitFunction();
+		virtual void InitFunction() override;
 
 
 };

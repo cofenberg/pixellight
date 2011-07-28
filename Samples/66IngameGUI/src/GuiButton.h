@@ -231,12 +231,12 @@ class GuiButton : public GuiBase {
 	//[ Public virtual PLGui::Widget functions                ]
 	//[-------------------------------------------------------]
 	public:
-		virtual void OnDraw(PLGui::Graphics &cGraphics);
-		virtual void OnMouseMove(const PLMath::Vector2i &vPos);
-		virtual void OnMouseEnter();
-		virtual void OnMouseLeave();
-		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
-		virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos);
+		virtual void OnDraw(PLGui::Graphics &cGraphics) override;
+		virtual void OnMouseMove(const PLMath::Vector2i &vPos) override;
+		virtual void OnMouseEnter() override;
+		virtual void OnMouseLeave() override;
+		virtual void OnMouseButtonDown(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
+		virtual void OnMouseButtonUp(PLCore::uint32 nButton, const PLMath::Vector2i &vPos) override;
 
 
 };

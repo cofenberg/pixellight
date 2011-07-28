@@ -105,21 +105,21 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Protected virtual PLCore::ConsoleApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnDeInit();
+		virtual void OnDeInit() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLGui::GuiApplication functions       ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateMainWindow();
+		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 
 
 	//[-------------------------------------------------------]

@@ -75,7 +75,7 @@ TestWidgetImage::~TestWidgetImage()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Widget functions                       ]
+//[ Public virtual PLGui::Widget functions                ]
 //[-------------------------------------------------------]
 void TestWidgetImage::OnDraw(Graphics &cGraphics)
 {

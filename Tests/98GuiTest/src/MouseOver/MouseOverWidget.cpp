@@ -72,7 +72,7 @@ MouseOverWidget::~MouseOverWidget()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual Widget functions                       ]
+//[ Public virtual PLGui::Widget functions                ]
 //[-------------------------------------------------------]
 void MouseOverWidget::OnDraw(Graphics &cGraphics)
 {
