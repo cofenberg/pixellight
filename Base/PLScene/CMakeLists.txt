@@ -14,10 +14,6 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLScene)
 ## Source files
 ##################################################
 add_sources(
-	src/Scene/SceneNodes/Console/SNConsoleBase.cpp
-	src/Scene/SceneNodes/Console/ConsoleCommand.cpp
-	src/Scene/SceneNodes/Console/SNConsole.cpp
-	src/Scene/SceneNodes/Console/ConsoleDefaultCommands.cpp
 	src/Scene/SceneNodes/Loader/SkinLoaderPL.cpp
 	src/Scene/SceneNodes/Loader/SkyLoaderPL.cpp
 	src/Scene/SceneNodes/Loader/SkinLoader.cpp
@@ -28,23 +24,11 @@ add_sources(
 	src/Scene/SceneNodes/Terrain/SNTerrain.cpp
 	src/Scene/SceneNodes/Terrain/GMMSurfacePatch.cpp
 	src/Scene/SceneNodes/Terrain/GMMSurface.cpp
-	src/Scene/SceneNodes/Gui/SNGui.cpp
-	src/Scene/SceneNodes/Gui/GraphicsPL.cpp
-	src/Scene/SceneNodes/Gui/GuiPL.cpp
-	src/Scene/SceneNodes/Gui/ImagePL.cpp
-	src/Scene/SceneNodes/Gui/FontPL.cpp
-	src/Scene/SceneNodes/Gui/WidgetPL.cpp
-	src/Scene/SceneNodes/Gui/CursorPL.cpp
-	src/Scene/SceneNodes/Gui/ClipBoardPL.cpp
-	src/Scene/SceneNodes/SNLoadScreenBase.cpp
-	src/Scene/SceneNodes/SNLoadScreenPL.cpp
-	src/Scene/SceneNodes/SNLoadScreen.cpp
 	src/Scene/SceneNodes/SNCoordinateAxis.cpp
 	src/Scene/SceneNodes/SNLineGrid.cpp
 	src/Scene/SceneNodes/SNString.cpp
 	src/Scene/SceneNodes/SNEventArea.cpp
 	src/Scene/SceneNodes/SNCoordinateAxisRotation.cpp
-	src/Scene/SceneNodes/SNEngineInformation.cpp
 	src/Scene/SceneNodes/SNText.cpp
 	src/Scene/SceneNodes/SNText2D.cpp
 	src/Scene/SceneNodes/SNText3D.cpp
@@ -165,7 +149,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLGui/include
 	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
@@ -185,7 +168,6 @@ add_libs(
 	PLCore
 	PLMath
 	PLGraphics
-	PLGui
 	PLInput
 	PLRenderer
 	PLMesh
@@ -269,7 +251,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLInput PLRenderer PLMesh)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

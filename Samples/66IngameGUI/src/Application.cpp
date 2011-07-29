@@ -30,7 +30,7 @@
 #include <PLGui/Gui/Resources/Font.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include <PLScene/Scene/SceneNodes/Gui/SNGui.h>
+#include <PLEngine/Compositing/Gui/SNGui.h>
 #include "IngameGui.h"
 #include "Application.h"
 
@@ -43,6 +43,7 @@ using namespace PLMath;
 using namespace PLGui;
 using namespace PLRenderer;
 using namespace PLScene;
+using namespace PLEngine;
 
 
 //[-------------------------------------------------------]
@@ -154,7 +155,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	SceneContainer *pContainer = cContainer.GetContainer();
 	if (pContainer) {
 		// Create a 'ingame'-GUI scene node
-		const SNGui *pGuiSceneNode = static_cast<SNGui*>(pContainer->Create("PLScene::SNGui", "GUI"));
+		const SNGui *pGuiSceneNode = static_cast<SNGui*>(pContainer->Create("PLEngine::SNGui", "GUI"));
 		if (pGuiSceneNode) {
 			// Setup the GUI
 			Gui *pGui = pGuiSceneNode->GetGui();

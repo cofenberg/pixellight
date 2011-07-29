@@ -1,3 +1,16 @@
+>> 29.07.2011
+[CO]
+- Started the roadmap-point (http://www.pixellight.org/site/index.php/page/Roadmap.html) "Make elements like ingame GUI, ingame console and load
+  screens to compositing layers" by moving several classes from "PLScene" into "PLEngine"
+  -> Moved "SNEngineInformation" from "PLScene" to "PLEngine"
+  -> Moved "SNGui" from "PLScene" to "PLEngine"
+  -> Moved "SNConsole", "SNConsoleBase" from "PLScene" to "PLEngine"
+  -> Moved "SNLoadScreen", "SNLoadScreenBase" and "SNLoadScreenBase" from "PLScene" to "PLEngine"
+  -> More details in the PLEngine diary
+  -> As a side effect, PLScene no longer depends on PLGui
+
+
+
 >> 18.06.2011
 [CO]
 - "SceneNode": Renamed "RemoveModifier(SceneNodeModifier &cModifier)" into "RemoveModifierByReference(SceneNodeModifier &cModifier)" in order

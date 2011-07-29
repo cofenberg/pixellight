@@ -33,8 +33,8 @@
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Scene/SceneNodes/SNKeyValue.h>
-#include <PLScene/Scene/SceneNodes/Console/ConsoleCommand.h>
-#include <PLScene/Scene/SceneNodes/Console/SNConsoleBase.h>
+#include "PLEngine/Compositing/Console/ConsoleCommand.h"
+#include "PLEngine/Compositing/Console/SNConsoleBase.h"
 #include "PLEngine/Application/BasicSceneApplication.h"
 
 
@@ -357,14 +357,14 @@ void BasicSceneApplication::OnCreateRootScene()
 			}
 
 			// Create scene node for engine information
-			SceneNode *pSceneNode = pRootContainer->Create("PLScene::SNEngineInformation");
+			SceneNode *pSceneNode = pRootContainer->Create("PLEngine::SNEngineInformation");
 			if (pSceneNode)
 				pSceneNode->SetActive(m_bEditModeEnabled);
 
 			// Create console scene node - using the console command 'timescale <value>' we
 			// can change the scene time (slowdown or accelerate)
-			pSceneNode = pRootContainer->Create("PLScene::SNConsole");
-			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLScene::SNConsoleBase")) {
+			pSceneNode = pRootContainer->Create("PLEngine::SNConsole");
+			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLEngine::SNConsoleBase")) {
 				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
@@ -481,7 +481,7 @@ void BasicSceneApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNod
 		}
 
 	// Load screen scene node?
-	} else if (cSceneNode.IsInstanceOf("PLScene::SNLoadScreenBase")) {
+	} else if (cSceneNode.IsInstanceOf("PLEngine::SNLoadScreenBase")) {
 		m_bHasLoadScreen = true;
 	}
 }

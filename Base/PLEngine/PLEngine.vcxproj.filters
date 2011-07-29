@@ -19,6 +19,18 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{05f4bc58-495c-476d-9efb-ca9fdea8f1a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compositing">
+      <UniqueIdentifier>{54926373-bb25-4058-a9db-366dc6cca5a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compositing\Gui">
+      <UniqueIdentifier>{1bf03b7d-a95b-40b6-a2ee-08d1744060df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compositing\Console">
+      <UniqueIdentifier>{21990120-4475-4945-bc5b-b88788c82776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Compositing\LoadScreen">
+      <UniqueIdentifier>{36bb81fc-2010-4d5b-a199-6e817cb8aa47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\BasicSceneApplication.cpp">
@@ -77,6 +89,54 @@
     </ClCompile>
     <ClCompile Include="src\Tools\SNMPositionKeyframeRecord.cpp">
       <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\ImagePL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\SNGui.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\WidgetPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\ClipBoardPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\CursorPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\FontPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\GraphicsPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Gui\GuiPL.cpp">
+      <Filter>Compositing\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Console\SNConsole.cpp">
+      <Filter>Compositing\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Console\SNConsoleBase.cpp">
+      <Filter>Compositing\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Console\ConsoleCommand.cpp">
+      <Filter>Compositing\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\Console\ConsoleDefaultCommands.cpp">
+      <Filter>Compositing\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\LoadScreen\SNLoadScreenPL.cpp">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\LoadScreen\SNLoadScreen.cpp">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\LoadScreen\SNLoadScreenBase.cpp">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\SNEngineInformation.cpp">
+      <Filter>Compositing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +202,54 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Tools\SNMRotationKeyframeRecord.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\GuiPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\ImagePL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\SNGui.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\WidgetPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\ClipBoardPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\CursorPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\FontPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Gui\GraphicsPL.h">
+      <Filter>Compositing\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Console\SNConsole.h">
+      <Filter>Compositing\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Console\SNConsoleBase.h">
+      <Filter>Compositing\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleCommand.h">
+      <Filter>Compositing\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleDefaultCommands.h">
+      <Filter>Compositing\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\LoadScreen\SNLoadScreenPL.h">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\LoadScreen\SNLoadScreen.h">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\LoadScreen\SNLoadScreenBase.h">
+      <Filter>Compositing\LoadScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Compositing\SNEngineInformation.h">
+      <Filter>Compositing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

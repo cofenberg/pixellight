@@ -11,17 +11,11 @@
     <Filter Include="Scene\SceneNodes">
       <UniqueIdentifier>{fb08537b-877c-43b0-a6ea-b3d9315aacf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\SceneNodes\Console">
-      <UniqueIdentifier>{850f07e7-7802-47fe-874e-434c717af871}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene\SceneNodes\Terrain">
       <UniqueIdentifier>{ee706b66-eaee-43a8-95e1-b7bbde17c2ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene\SceneNodes\Loader">
       <UniqueIdentifier>{13fb1a16-a351-4aa8-9b52-c81d150a8c24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneNodes\Gui">
-      <UniqueIdentifier>{39949a23-b58b-428c-a949-ef684be7fe98}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene\SceneHierarchies">
       <UniqueIdentifier>{6cbe6038-ad87-4e45-b701-5f3b6ceba0ac}</UniqueIdentifier>
@@ -157,9 +151,6 @@
     <ClCompile Include="src\Scene\SceneNodes\SNCoordinateAxisRotation.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNEngineInformation.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNEventArea.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
@@ -176,15 +167,6 @@
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNLineGrid.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreen.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreenBase.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreenPL.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNMesh.cpp">
@@ -210,18 +192,6 @@
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNUnknown.cpp">
       <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Console\ConsoleCommand.cpp">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Console\ConsoleDefaultCommands.cpp">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Console\SNConsole.cpp">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Console\SNConsoleBase.cpp">
-      <Filter>Scene\SceneNodes\Console</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurface.cpp">
       <Filter>Scene\SceneNodes\Terrain</Filter>
@@ -252,30 +222,6 @@
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkyLoaderPL.cpp">
       <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\ClipBoardPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\CursorPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\FontPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\GraphicsPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\GuiPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\ImagePL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\SNGui.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Gui\WidgetPL.cpp">
-      <Filter>Scene\SceneNodes\Gui</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneHierarchies\SHKdTree.cpp">
       <Filter>Scene\SceneHierarchies</Filter>
@@ -588,9 +534,6 @@
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNCoordinateAxisRotation.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNEngineInformation.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNEventArea.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
@@ -607,15 +550,6 @@
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLineGrid.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreen.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreenBase.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreenPL.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNMesh.h">
@@ -641,18 +575,6 @@
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNUnknown.h">
       <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\ConsoleCommand.h">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\ConsoleDefaultCommands.h">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\SNConsole.h">
-      <Filter>Scene\SceneNodes\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\SNConsoleBase.h">
-      <Filter>Scene\SceneNodes\Console</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurface.h">
       <Filter>Scene\SceneNodes\Terrain</Filter>
@@ -683,30 +605,6 @@
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkyLoaderPL.h">
       <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\ClipBoardPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\CursorPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\FontPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\GraphicsPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\GuiPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\ImagePL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\SNGui.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\WidgetPL.h">
-      <Filter>Scene\SceneNodes\Gui</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneHierarchies\SHKdTree.h">
       <Filter>Scene\SceneHierarchies</Filter>

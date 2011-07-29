@@ -28,8 +28,8 @@
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include <PLScene/Scene/SceneNodes/Console/ConsoleCommand.h>
-#include <PLScene/Scene/SceneNodes/Console/SNConsoleBase.h>
+#include "PLEngine/Compositing/Console/ConsoleCommand.h"
+#include "PLEngine/Compositing/Console/SNConsoleBase.h"
 #include "PLEngine/Application/SceneApplication.h"
 
 
@@ -124,10 +124,10 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		SceneContainer *pRootScene = GetRootScene();
 		if (pRootScene) {
 			// Enable/disable standard edit features from the PixelLight scene graph (if the user hasn't changed anything :)
-			SceneNode *pSceneNode = pRootScene->GetByName("PLScene::SNEngineInformation0");
+			SceneNode *pSceneNode = pRootScene->GetByName("PLEngine::SNEngineInformation0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
-			pSceneNode = pRootScene->GetByName("PLScene::SNConsole0");
+			pSceneNode = pRootScene->GetByName("PLEngine::SNConsole0");
 			if (pSceneNode)
 				pSceneNode->SetActive(bEnabled);
 		}
@@ -329,14 +329,14 @@ void SceneApplication::OnCreateRootScene()
 			}
 
 			// Create scene node for engine information
-			SceneNode *pSceneNode = pRootContainer->Create("PLScene::SNEngineInformation");
+			SceneNode *pSceneNode = pRootContainer->Create("PLEngine::SNEngineInformation");
 			if (pSceneNode)
 				pSceneNode->SetActive(m_bEditModeEnabled);
 
 			// Create console scene node - using the console command 'timescale <value>' we
 			// can change the scene time (slowdown or accelerate)
-			pSceneNode = pRootContainer->Create("PLScene::SNConsole");
-			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLScene::SNConsoleBase")) {
+			pSceneNode = pRootContainer->Create("PLEngine::SNConsole");
+			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLEngine::SNConsoleBase")) {
 				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands

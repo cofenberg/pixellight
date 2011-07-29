@@ -40,8 +40,10 @@ namespace PLInput {
 }
 namespace PLScene {
 	class SceneContext;
-	class ConsoleCommand;
 	class SceneContainer;
+}
+namespace PLEngine {
+	class ConsoleCommand;
 }
 
 
@@ -199,7 +201,7 @@ class SceneApplication : public RenderApplication {
 		*  @param[in] cCommand
 		*    Calling command
 		*/
-		PL_API void ConsoleCommandQuit(PLScene::ConsoleCommand &cCommand);
+		PL_API void ConsoleCommandQuit(ConsoleCommand &cCommand);
 
 		/**
 		*  @brief
@@ -208,7 +210,7 @@ class SceneApplication : public RenderApplication {
 		*  @param[in] cCommand
 		*    Calling command
 		*/
-		PL_API void ConsoleCommandEditDialog(PLScene::ConsoleCommand &cCommand);
+		PL_API void ConsoleCommandEditDialog(ConsoleCommand &cCommand);
 
 
 	//[-------------------------------------------------------]

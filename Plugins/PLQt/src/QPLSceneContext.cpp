@@ -284,7 +284,7 @@ void QPLSceneContext::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 		}
 
 	// Load screen scene node?
-	} /*else if (cSceneNode.IsInstanceOf("PLScene::SNLoadScreenBase")) {
+	} /*else if (cSceneNode.IsInstanceOf("PLEngine::SNLoadScreenBase")) {
 		m_bHasLoadScreen = true;
 	}*/
 }

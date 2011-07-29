@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -105,7 +105,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSceneD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,7 +128,7 @@ copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -144,7 +144,7 @@ copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSceneD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -169,7 +169,7 @@ copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -189,7 +189,7 @@ copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScene.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -218,7 +218,7 @@ copy build\release\PLScene.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -234,7 +234,7 @@ copy build\release\PLScene.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScene64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -291,16 +291,12 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Scene\SceneNodes\SNCoordinateAxis.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNCoordinateAxis3D.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNCoordinateAxisRotation.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\SNEngineInformation.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNEventArea.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNHelper.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNKeyValue.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNLine.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNLineBox.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNLineGrid.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreen.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreenBase.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\SNLoadScreenPL.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNMesh.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNPoint.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNSky.cpp" />
@@ -309,10 +305,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Scene\SceneNodes\SNText2D.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNText3D.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\SNUnknown.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Console\ConsoleCommand.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Console\ConsoleDefaultCommands.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Console\SNConsole.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Console\SNConsoleBase.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurface.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurfaceLevel.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurfacePatch.cpp" />
@@ -323,14 +315,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkinLoaderPL.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkyLoader.cpp" />
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkyLoaderPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\ClipBoardPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\CursorPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\FontPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\GraphicsPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\GuiPL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\ImagePL.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\SNGui.cpp" />
-    <ClCompile Include="src\Scene\SceneNodes\Gui\WidgetPL.cpp" />
     <ClCompile Include="src\Scene\SceneHierarchies\SHKdTree.cpp" />
     <ClCompile Include="src\Scene\SceneHierarchies\SHList.cpp" />
     <ClCompile Include="src\Scene\SceneNodeModifiers\CameraZoomController.cpp" />
@@ -436,16 +420,12 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNCoordinateAxis.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNCoordinateAxis3D.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNCoordinateAxisRotation.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNEngineInformation.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNEventArea.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNHelper.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNKeyValue.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLine.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLineBox.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLineGrid.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreen.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreenBase.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNLoadScreenPL.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNMesh.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNPoint.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNSky.h" />
@@ -454,10 +434,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNText2D.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNText3D.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNUnknown.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\ConsoleCommand.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\ConsoleDefaultCommands.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\SNConsole.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Console\SNConsoleBase.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurface.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurfaceLevel.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurfacePatch.h" />
@@ -468,14 +444,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkinLoaderPL.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkyLoader.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkyLoaderPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\ClipBoardPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\CursorPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\FontPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\GraphicsPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\GuiPL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\ImagePL.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\SNGui.h" />
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Gui\WidgetPL.h" />
     <ClInclude Include="include\PLScene\Scene\SceneHierarchies\SHKdTree.h" />
     <ClInclude Include="include\PLScene\Scene\SceneHierarchies\SHList.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\CameraZoomController.h" />
@@ -557,10 +525,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     </ProjectReference>
     <ProjectReference Include="..\..\Base\PLMath\PLMath.vcxproj">
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGui\PLGui.vcxproj">
-      <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PLInput\PLInput.vcxproj">

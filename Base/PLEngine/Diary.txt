@@ -1,3 +1,24 @@
+>> 29.07.2011
+[CO]
+- Started the roadmap-point (http://www.pixellight.org/site/index.php/page/Roadmap.html) "Make elements like ingame GUI, ingame console and load
+  screens to compositing layers" by moving several classes from "PLScene" into "PLEngine"
+  -> Moved "SNEngineInformation" from "PLScene" to "PLEngine"
+  -> Moved "SNGui" from "PLScene" to "PLEngine"
+  -> Moved "SNConsole", "SNConsoleBase" from "PLScene" to "PLEngine"
+  -> Moved "SNLoadScreen", "SNLoadScreenBase" and "SNLoadScreenBase" from "PLScene" to "PLEngine"
+  Years ago this was a nice idea to have only one universal scene graph which also deals with stuff like ingame GUI, load screens or even clearing the
+  screen... but it has not really proven useful or easily usable to put also 2D-Layer stuff as well as render instructions into the scene graph.
+  Years ago Stefan and I discussed a scene graph refactoring to enhance the 2D-Layer support - but this idea was never realized. Instead, over the time
+  it became clear to me that this stuff is not really scene graph related, instead it's more like the "layer"-concept used e.g. in photo editing programs.
+  The compositing system was born (although it's currently still named scene renderer). Using a scene graph for scene stuff, and the compositing system
+  for layered/rendering stuff is just much easier to deal with and more intuitive - at least to me after trying for 10 years to wrap my head around how
+  all the stuff can be combined. In my personal opinion, a decent GUI system is the better way to deal with 2D stuff like ingame-GUI, load screen and so
+  on while the scene graph is for 3D or 2D scenes. But scenes, just data, no render instructions.
+  Today, I finally had my last exam for this semester. Time to do some long time planned PixelLight refactoring to fix certain remaining issues. I'll do
+  this refactoring as I always do refactoring - in small steps towards the goal instead of trying to perform a huge jump.
+
+
+
 >> 19.06.2011
 [CO]
 - Moved the application component "Camcorder" (together with "SNMPositionKeyframeRecord" and "SNMRotationKeyframeRecord") from the dungeon demo into the
