@@ -2,6 +2,9 @@
 [CO]
 - Moved "SNPhysicsMouseInteraction" from PLPhysics into PLEngine (another refactoring on this problematic "scene node" will follow)
   -> As a side effect, PLPhysics no longer depends on PLGui (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+- Moved "SNMPhysicsCharacter" and "SNMPhysicsCharacterController" from PLPhysics into PLEngine
+  -> As a side effect, PLPhysics no longer depends on PLInput (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+  -> More details in the PLEngine diary
 
 
 

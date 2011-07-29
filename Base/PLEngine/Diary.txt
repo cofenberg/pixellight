@@ -20,6 +20,9 @@
   -> As a side effect, PLEngine now depends on PLPhysics (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
      ... but this is probably ok because within the PLEngine project, everything comes together... and maybe this special scene node will completely disappear
      in the feature... then this depencency can be removed again...
+- Moved "SNMPhysicsCharacter" and "SNMPhysicsCharacterController" from PLPhysics into PLEngine
+  -> This simple character controller, which is usually only useful for a quick'n'dirty test, isn't worth the dependency to a complete other project... it's really
+     nothing one would want to use in a slightly more complex project (then, it's probably better to e.g. script the control)
 
 
 

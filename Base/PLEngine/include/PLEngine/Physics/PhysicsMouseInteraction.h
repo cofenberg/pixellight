@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsCharacterController.h                   *
+ *  File: PhysicsMouseInteraction.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
+#ifndef __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__
+#define __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLPhysics/PLPhysics.h"
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -45,15 +45,18 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Physics character input controller
+*    Mouse physics interaction input controller
+*
+*  @note
+*    - Primary intended for fast prototyping
 */
-class PhysicsCharacterController : public PLInput::Controller {
+class PhysicsMouseInteraction : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, PhysicsCharacterController, "PLPhysics", PLInput::Controller, "Physics character input controller")
+	pl_class(PL_RTTI_EXPORT, PhysicsMouseInteraction, "PLEngine", PLInput::Controller, "Mouse physics interaction input controller")
 	pl_class_end
 
 
@@ -61,21 +64,13 @@ class PhysicsCharacterController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis		TransX;			/**< X translation axis: Strafe left/right (+/-) */
-		PLInput::Axis		TransY;			/**< Y translation axis: Move up/down (+/-) */
-		PLInput::Axis		TransZ;			/**< Z translation axis: Move forwards/backwards (+/-) */
-		PLInput::Axis		RotY;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
-		PLInput::Button		Forward;		/**< Move forwards */
-		PLInput::Button		Backward;		/**< Move backwards */
-		PLInput::Button		Left;			/**< Move (rotate) left */
-		PLInput::Button		Right;			/**< Move (rotate) right */
-		PLInput::Button		StrafeLeft;		/**< Strafe left */
-		PLInput::Button		StrafeRight;	/**< Strafe right */
-		PLInput::Button		Up;				/**< Move up */
-		PLInput::Button		Down;			/**< Move down */
-		PLInput::Button		Run;			/**< Keep pressed to run */
-		PLInput::Button		Crouch;			/**< Keep pressed to crouch */
-		PLInput::Button		Jump;			/**< Jump */
+		PLInput::Button	Pickup;			/**< Keep pressed to pickup */
+		PLInput::Button	Throw;			/**< Throw the picked object */
+		PLInput::Button	IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
+		PLInput::Button	DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
+		PLInput::Axis	PushPull;		/**< Used to push/pull the picked object */
+		PLInput::Axis	MouseX;			/**< X-position of the mouse */
+		PLInput::Axis	MouseY;			/**< Y-position of the mouse */
 
 
 	//[-------------------------------------------------------]
@@ -86,13 +81,13 @@ class PhysicsCharacterController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLPHYSICS_API PhysicsCharacterController();
+		PL_API PhysicsMouseInteraction();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~PhysicsCharacterController();
+		PL_API virtual ~PhysicsMouseInteraction();
 
 
 };
@@ -101,7 +96,7 @@ class PhysicsCharacterController : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_CONTROLLER_H__
+#endif // __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__

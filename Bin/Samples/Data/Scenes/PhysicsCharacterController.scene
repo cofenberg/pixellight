@@ -35,7 +35,7 @@
             <Modifier Class="PLScene::SNMMeshJoint" Flags="UseFallbackRotation" Name="Soldat Head" RotationFrom="HeadLookAtHelper" Min="-70.0 -40.0 -10.0" Max="70.0 60.0 10.0" />
             <Modifier Class="PLPhysics::SNMPhysicsBodyEllipsoid" Mass="1" Flags="InitUnfrozen|NoRotation" />
             <Modifier Class="PLPhysics::SNMPhysicsJointUpVector" />
-            <Modifier Class="PLPhysics::SNMPhysicsCharacterController" YRotVelocity="15" IdleAnimation="idle_0" WalkAnimation="walk_0" />
+            <Modifier Class="PLEngine::SNMPhysicsCharacterController" YRotVelocity="15" IdleAnimation="idle_0" WalkAnimation="walk_0" />
             <Modifier Class="PLScene::SNMAnchor" AttachedNode="CameraTargetPositionHelper" PositionOffset="0 300 -400" />
             <Modifier Class="PLScene::SNMAnchor" AttachedNode="SoldierTargetHelper" PositionOffset="0 180 0" />
             <Modifier Class="PLScene::SNMAnchor" AttachedNode="HeadLookAtHelper" SkeletonJoint="Soldat Head" />

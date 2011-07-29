@@ -273,8 +273,11 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Compositing\LoadScreen\SNLoadScreenBase.cpp" />
     <ClCompile Include="src\Compositing\LoadScreen\SNLoadScreenPL.cpp" />
     <ClCompile Include="src\Compositing\SNEngineInformation.cpp" />
-    <ClCompile Include="src\Picking\PhysicsMouseInteraction.cpp" />
-    <ClCompile Include="src\Picking\SNPhysicsMouseInteraction.cpp" />
+    <ClCompile Include="src\Physics\PhysicsCharacterController.cpp" />
+    <ClCompile Include="src\Physics\PhysicsMouseInteraction.cpp" />
+    <ClCompile Include="src\Physics\SNMPhysicsCharacter.cpp" />
+    <ClCompile Include="src\Physics\SNMPhysicsCharacterController.cpp" />
+    <ClCompile Include="src\Physics\SNPhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\PLEngine.cpp" />
     <ClCompile Include="src\Picking\MousePicking.cpp" />
     <ClCompile Include="src\Picking\Picking.cpp" />
@@ -312,8 +315,11 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLEngine\Compositing\LoadScreen\SNLoadScreenBase.h" />
     <ClInclude Include="include\PLEngine\Compositing\LoadScreen\SNLoadScreenPL.h" />
     <ClInclude Include="include\PLEngine\Compositing\SNEngineInformation.h" />
-    <ClInclude Include="include\PLEngine\Picking\PhysicsMouseInteraction.h" />
-    <ClInclude Include="include\PLEngine\Picking\SNPhysicsMouseInteraction.h" />
+    <ClInclude Include="include\PLEngine\Physics\PhysicsCharacterController.h" />
+    <ClInclude Include="include\PLEngine\Physics\PhysicsMouseInteraction.h" />
+    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacter.h" />
+    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacterController.h" />
+    <ClInclude Include="include\PLEngine\Physics\SNPhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLEngine\PLEngine.h" />
     <ClInclude Include="include\PLEngine\PLEngineLinux.h" />
     <ClInclude Include="include\PLEngine\PLEngineWindows.h" />

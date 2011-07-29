@@ -108,9 +108,6 @@
     <ClCompile Include="src\SceneNodes\SNRagdoll.cpp">
       <Filter>SceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneNodeModifiers\PhysicsCharacterController.cpp">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClCompile>
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysics.cpp">
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
@@ -145,12 +142,6 @@
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyTerrain.cpp">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacter.cpp">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacterController.cpp">
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCorrectDistance.cpp">
@@ -296,9 +287,6 @@
     <ClInclude Include="include\PLPhysics\SceneNodes\SNRagdoll.h">
       <Filter>SceneNodes</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\PhysicsCharacterController.h">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysics.h">
       <Filter>SceneNodeModifiers</Filter>
     </ClInclude>
@@ -333,12 +321,6 @@
       <Filter>SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyTerrain.h">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacter.h">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacterController.h">
       <Filter>SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCorrectDistance.h">

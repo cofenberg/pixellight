@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__
-#define __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__
+#ifndef __PLENGINE_PHYSICS_SNPHYSICSMOUSEINTERACTION_H__
+#define __PLENGINE_PHYSICS_SNPHYSICSMOUSEINTERACTION_H__
 #pragma once
 
 
@@ -65,7 +65,7 @@ namespace PLEngine {
 *      t-key to 'throw away' the picked object
 *
 *  @note
-*    - The main purpose of this scene node is easy physics debugging
+*    - Primary intended for fast prototyping
 *    - If there's a scene node for instance named 'PhysicsForceLine' (default value of the variable 'ForceLineName')
 *      within the same scene container, it's variables 'StartPosition' and 'EndPosition' will be manipulated so you can see
 *      the applied 'picking force'
@@ -183,4 +183,4 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 } // PLEngine
 
 
-#endif // __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__
+#endif // __PLENGINE_PHYSICS_SNPHYSICSMOUSEINTERACTION_H__

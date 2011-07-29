@@ -36,7 +36,7 @@
         <Node Class="PLScene::SNMesh" Name="Marble" Position="0 -0.5 -5" Mesh="Create PLMesh::MeshCreatorSphere Material='Data/Textures/Checker.dds' Radius='0.1' Detail='16.0'" >
             <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="2.0" Flags="InitUnfrozen" />
             <Modifier Class="PLScene::SNMAnchor" AttachedNode="MarbleHelper" Flags="NoRotation" />
-            <Modifier Class="PLPhysics::SNMPhysicsCharacterController" JumpForce="0" Speed="10" Acceleration="2" RotationNode="MarbleHelper" />
+            <Modifier Class="PLEngine::SNMPhysicsCharacterController" JumpForce="0" Speed="10" Acceleration="2" RotationNode="MarbleHelper" />
         </Node>
         <Node Class="PLScene::SNHelper" Name="MarbleHelper">
             <Modifier Class="PLScene::SNMRotationTarget" Target="LookAtCamera" />

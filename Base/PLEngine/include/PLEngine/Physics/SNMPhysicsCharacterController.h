@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
+#ifndef __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__
+#define __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__
 #pragma once
 
 
@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsCharacter.h"
+#include "PLEngine/Physics/SNMPhysicsCharacter.h"
 
 
 //[-------------------------------------------------------]
@@ -38,7 +38,7 @@
 namespace PLScene {
 	class SNMMeshUpdate;
 }
-namespace PLPhysics {
+namespace PLEngine {
 	class PhysicsCharacterController;
 }
 
@@ -46,7 +46,7 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -62,6 +62,7 @@ namespace PLPhysics {
 *    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
 *
 *  @note
+*    - Primary intended for fast prototyping
 *    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 */
 class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
@@ -91,7 +92,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCharacterController, "PLPhysics", PLPhysics::SNMPhysicsCharacter, "Basic PL physics character controller scene node modifier class")
+	pl_class(PL_RTTI_EXPORT, SNMPhysicsCharacterController, "PLEngine", PLEngine::SNMPhysicsCharacter, "Basic PL physics character controller scene node modifier class")
 		// Attributes
 		pl_attribute(InputSemantic,			PLCore::String,			"",		ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",												"")
 		pl_attribute(YRotVelocity,			float,					0.0f,	ReadWrite,	DirectValue,	"Y rotation velocity, if 0, there's no rotation control",											"")
@@ -119,28 +120,28 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLPHYSICS_API SNMPhysicsCharacterController(PLScene::SceneNode &cSceneNode);
+		PL_API SNMPhysicsCharacterController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~SNMPhysicsCharacterController();
+		PL_API virtual ~SNMPhysicsCharacterController();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InformedOnInit() override;
-		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InformedOnInit() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -187,7 +188,7 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_CHARACTERCONTROLLER_H__
+#endif // __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__

@@ -32,9 +32,6 @@ add_sources(
 	src/SceneNodeModifiers/SNMPhysicsBodyMesh.cpp
 	src/SceneNodeModifiers/SNMPhysicsBodySphere.cpp
 	src/SceneNodeModifiers/SNMPhysicsBodyTerrain.cpp
-	src/SceneNodeModifiers/SNMPhysicsCharacter.cpp
-	src/SceneNodeModifiers/SNMPhysicsCharacterController.cpp
-	src/SceneNodeModifiers/PhysicsCharacterController.cpp
 	src/SceneNodeModifiers/SNMPhysicsCorrectDistance.cpp
 	src/SceneNodeModifiers/SNMPhysicsForce.cpp
 	src/SceneNodeModifiers/SNMPhysicsJoint.cpp
@@ -82,7 +79,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
@@ -102,7 +98,6 @@ add_libs(
 	PLCore
 	PLMath
 	PLGraphics
-	PLInput
 	PLRenderer
 	PLMesh
 	PLScene
@@ -177,7 +172,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
 add_dependencies(Base             	         	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

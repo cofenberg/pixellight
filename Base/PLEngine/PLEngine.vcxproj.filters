@@ -31,6 +31,9 @@
     <Filter Include="Compositing\LoadScreen">
       <UniqueIdentifier>{36bb81fc-2010-4d5b-a199-6e817cb8aa47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{b3abfba4-9f6a-4349-b27c-764ed5268eb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\BasicSceneApplication.cpp">
@@ -138,11 +141,20 @@
     <ClCompile Include="src\Compositing\SNEngineInformation.cpp">
       <Filter>Compositing</Filter>
     </ClCompile>
-    <ClCompile Include="src\Picking\SNPhysicsMouseInteraction.cpp">
-      <Filter>Picking</Filter>
+    <ClCompile Include="src\Physics\SNMPhysicsCharacterController.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Picking\PhysicsMouseInteraction.cpp">
-      <Filter>Picking</Filter>
+    <ClCompile Include="src\Physics\SNPhysicsMouseInteraction.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsCharacterController.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsMouseInteraction.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\SNMPhysicsCharacter.cpp">
+      <Filter>Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,11 +269,20 @@
     <ClInclude Include="include\PLEngine\Compositing\SNEngineInformation.h">
       <Filter>Compositing</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Picking\SNPhysicsMouseInteraction.h">
-      <Filter>Picking</Filter>
+    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacter.h">
+      <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Picking\PhysicsMouseInteraction.h">
-      <Filter>Picking</Filter>
+    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacterController.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Physics\SNPhysicsMouseInteraction.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Physics\PhysicsCharacterController.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Physics\PhysicsMouseInteraction.h">
+      <Filter>Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

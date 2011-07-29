@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -127,7 +127,7 @@ copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -142,7 +142,7 @@ copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -167,7 +167,7 @@ copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -187,7 +187,7 @@ copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysics.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -216,7 +216,7 @@ copy build\release\PLPhysics.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -232,7 +232,7 @@ copy build\release\PLPhysics.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysics64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -283,7 +283,6 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\SceneNodes\RagdollLoaderPL.cpp" />
     <ClCompile Include="src\SceneNodes\SCPhysicsWorld.cpp" />
     <ClCompile Include="src\SceneNodes\SNRagdoll.cpp" />
-    <ClCompile Include="src\SceneNodeModifiers\PhysicsCharacterController.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysics.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBody.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyBox.cpp" />
@@ -296,8 +295,6 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyMesh.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodySphere.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyTerrain.cpp" />
-    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacter.cpp" />
-    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCharacterController.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCorrectDistance.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsForce.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsJoint.cpp" />
@@ -347,7 +344,6 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollLoaderPL.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\SCPhysicsWorld.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\SNRagdoll.h" />
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\PhysicsCharacterController.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysics.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBody.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyBox.h" />
@@ -360,8 +356,6 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyMesh.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodySphere.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyTerrain.h" />
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacter.h" />
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCharacterController.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCorrectDistance.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsForce.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsJoint.h" />

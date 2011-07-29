@@ -26,11 +26,11 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include "PLPhysics/Body.h"
-#include "PLPhysics/World.h"
-#include "PLPhysics/Sensor.h"
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h"
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsCharacter.h"
+#include <PLPhysics/Body.h>
+#include <PLPhysics/World.h>
+#include <PLPhysics/Sensor.h>
+#include <PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h>
+#include "PLEngine/Physics/SNMPhysicsCharacter.h"
 
 
 //[-------------------------------------------------------]
@@ -39,7 +39,8 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLScene;
-namespace PLPhysics {
+using namespace PLPhysics;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -324,4 +325,4 @@ void SNMPhysicsCharacter::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine

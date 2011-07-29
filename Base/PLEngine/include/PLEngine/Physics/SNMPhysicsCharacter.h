@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_CHARACTER_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_CHARACTER_H__
+#ifndef __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__
+#define __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__
 #pragma once
 
 
@@ -30,19 +30,22 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLMath/Vector3.h>
-#include "PLPhysics/SceneNodeModifiers/SNMPhysics.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLPhysics {
+#include <PLPhysics/SceneNodeModifiers/SNMPhysics.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Body;
+namespace PLPhysics {
+	class Body;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -56,8 +59,11 @@ class Body;
 *    This class will access the PLPhysics::SNMPhysicsBody scene node modifier and take over
 *    control of the physics body. So, this modifier makes only sense if there's a
 *    PLPhysics::SNMPhysicsBody, too.
+*
+*  @note
+*    - Primary intended for fast prototyping
 */
-class SNMPhysicsCharacter : public SNMPhysics {
+class SNMPhysicsCharacter : public PLPhysics::SNMPhysics {
 
 
 	//[-------------------------------------------------------]
@@ -80,7 +86,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsCharacter, "PLPhysics", PLPhysics::SNMPhysics, "Basic PL physics character scene node modifier class")
+	pl_class(PL_RTTI_EXPORT, SNMPhysicsCharacter, "PLEngine", PLPhysics::SNMPhysics, "Basic PL physics character scene node modifier class")
 		// Attributes
 		pl_attribute(Speed,					float,					2.0f,	ReadWrite,	DirectValue,	"Speed",										"Min='0.0'")
 		pl_attribute(Acceleration,			float,					20.0f,	ReadWrite,	DirectValue,	"Acceleration",									"Min='0.0'")
@@ -106,13 +112,13 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLPHYSICS_API SNMPhysicsCharacter(PLScene::SceneNode &cSceneNode);
+		PL_API SNMPhysicsCharacter(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~SNMPhysicsCharacter();
+		PL_API virtual ~SNMPhysicsCharacter();
 
 		/**
 		*  @brief
@@ -121,7 +127,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @return
 		*    'true' if the character runs, else 'false'
 		*/
-		PLPHYSICS_API bool IsRunning() const;
+		PL_API bool IsRunning() const;
 
 		/**
 		*  @brief
@@ -130,7 +136,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @param[in] bRun
 		*    Did the character run?
 		*/
-		PLPHYSICS_API void SetRunning(bool bRun = false);
+		PL_API void SetRunning(bool bRun = false);
 
 		/**
 		*  @brief
@@ -139,7 +145,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @return
 		*    'true' if the character creeps, else 'false'
 		*/
-		PLPHYSICS_API bool IsCreeping() const;
+		PL_API bool IsCreeping() const;
 
 		/**
 		*  @brief
@@ -148,7 +154,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @param[in] bCreep
 		*    Did the character creep?
 		*/
-		PLPHYSICS_API void SetCreeping(bool bCreep = false);
+		PL_API void SetCreeping(bool bCreep = false);
 
 		/**
 		*  @brief
@@ -160,7 +166,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @note
 		*    - The movement vector should be normalized
 		*/
-		PLPHYSICS_API const PLMath::Vector3 &GetMovement() const;
+		PL_API const PLMath::Vector3 &GetMovement() const;
 
 		/**
 		*  @brief
@@ -172,7 +178,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @see
 		*    - GetMovement()
 		*/
-		PLPHYSICS_API void SetMovement(const PLMath::Vector3 &vMovement);
+		PL_API void SetMovement(const PLMath::Vector3 &vMovement);
 
 		/**
 		*  @brief
@@ -182,7 +188,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*    'true' if all went fine an the jump is performed, else 'false'
 		*    (maybe the character does not stand on the ground)
 		*/
-		PLPHYSICS_API bool Jump();
+		PL_API bool Jump();
 
 
 	//[-------------------------------------------------------]
@@ -196,14 +202,14 @@ class SNMPhysicsCharacter : public SNMPhysics {
 		*  @return
 		*    The PL physics body of the scene node, a null pointer if there's no such body
 		*/
-		PLPHYSICS_API Body *GetPhysicsBody() const;
+		PL_API PLPhysics::Body *GetPhysicsBody() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -241,7 +247,7 @@ class SNMPhysicsCharacter : public SNMPhysics {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PL
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_CHARACTER_H__
+#endif // __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__

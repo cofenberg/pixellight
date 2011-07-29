@@ -31,8 +31,8 @@
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/SNMesh.h>
-#include "PLPhysics/SceneNodeModifiers/PhysicsCharacterController.h"
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsCharacterController.h"
+#include "PLEngine/Physics/PhysicsCharacterController.h"
+#include "PLEngine/Physics/SNMPhysicsCharacterController.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,8 @@ using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLMesh;
 using namespace PLScene;
-namespace PLPhysics {
+using namespace PLPhysics;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -312,4 +313,4 @@ SNMMeshUpdate *SNMPhysicsCharacterController::GetSNMMeshUpdate() const
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine
