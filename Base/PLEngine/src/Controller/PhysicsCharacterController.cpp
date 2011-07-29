@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Physics/PhysicsCharacterController.h"
+#include "PLEngine/Controller/PhysicsCharacterController.h"
 
 
 //[-------------------------------------------------------]

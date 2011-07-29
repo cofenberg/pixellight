@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__
-#define __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTER_H__
+#define __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTER_H__
 #pragma once
 
 
@@ -61,7 +61,7 @@ namespace PLEngine {
 *    PLPhysics::SNMPhysicsBody, too.
 *
 *  @note
-*    - Primary intended for fast prototyping
+*    - Primary intended for rapid prototyping
 */
 class SNMPhysicsCharacter : public PLPhysics::SNMPhysics {
 
@@ -250,4 +250,4 @@ class SNMPhysicsCharacter : public PLPhysics::SNMPhysics {
 } // PL
 
 
-#endif // __PLENGINE_PHYSICS_SNMPHYSICSCHARACTER_H__
+#endif // __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTER_H__

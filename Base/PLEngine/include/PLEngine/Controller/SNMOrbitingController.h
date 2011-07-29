@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMMoveController.h                            *
+ *  File: SNMOrbitingController.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_MOVECONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_MOVECONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMORBITINGCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMORBITINGCONTROLLER_H__
 #pragma once
 
 
@@ -29,19 +29,20 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
+#include <PLScene/Scene/SceneNodeModifiers/SNMOrbiting.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class MoveController;
+class OrbitingController;
 
 
 //[-------------------------------------------------------]
@@ -49,25 +50,26 @@ class MoveController;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node move input controller modifier class
+*    Scene node modifier class rotating a scene node towards a target scene node using an input controller
 *
 *  @remarks
 *    When using the unchanged virtual standard controller:
-*    Use a/w/d/s or cursor keys to walk. 'PageUp/PageDown' to move upwards/downwards.
-*    Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
+*    Hold the left mouse button to rotate, the right mouse button to zoom and the middle mouse button to pan.
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class SNMMoveController : public SNMTransform {
+class SNMOrbitingController : public PLScene::SNMOrbiting {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMMoveController, "PLScene", PLScene::SNMTransform, "Scene node move input controller modifier class")
+	pl_class(PL_RTTI_EXPORT, SNMOrbitingController, "PLEngine", PLScene::SNMOrbiting, "Scene node modifier class rotating a scene node towards a target scene node using an input controller")
 		// Attributes
-		pl_attribute(InputSemantic,	PLCore::String,	"",		ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
-		pl_attribute(Speed,			float,			1.0f,	ReadWrite,	DirectValue,	"Movement speed",										"Min='0.0001'")
+		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 		// Constructors
-		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -82,28 +84,28 @@ class SNMMoveController : public SNMTransform {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMMoveController(SceneNode &cSceneNode);
+		PL_API SNMOrbitingController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMMoveController();
+		PL_API virtual ~SNMOrbitingController();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InformedOnInit() override;
-		PLS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InformedOnInit() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -128,7 +130,7 @@ class SNMMoveController : public SNMTransform {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		MoveController *m_pController;	/**< Move input controller instance, always valid! */
+		OrbitingController *m_pController;	/**< Orbiting input controller instance, always valid! */
 
 
 };
@@ -137,7 +139,7 @@ class SNMMoveController : public SNMTransform {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_MOVECONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMORBITINGCONTROLLER_H__

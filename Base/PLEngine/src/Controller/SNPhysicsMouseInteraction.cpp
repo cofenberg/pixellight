@@ -35,8 +35,8 @@
 #include <PLPhysics/World.h>
 #include <PLPhysics/Sensor.h>
 #include <PLPhysics/SceneNodes/SCPhysicsWorld.h>
-#include "PLEngine/Physics/PhysicsMouseInteraction.h"
-#include "PLEngine/Physics/SNPhysicsMouseInteraction.h"
+#include "PLEngine/Controller/PhysicsMouseInteraction.h"
+#include "PLEngine/Controller/SNPhysicsMouseInteraction.h"
 
 
 //[-------------------------------------------------------]

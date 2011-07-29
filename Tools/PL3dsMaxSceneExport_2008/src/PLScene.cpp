@@ -788,7 +788,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 
 					// Add scene node modifier so we can automatically orbiting
 					XmlElement *pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class",  "PLScene::SNMOrbitingController");
+					pModifierElement->SetAttribute("Class",  "PLEngine::SNMOrbitingController");
 					pModifierElement->SetAttribute("Target", sTargetName.c_str());
 					pNodeElement->LinkEndChild(*pModifierElement);
 
@@ -816,7 +816,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				} else {
 					// Add scene node modifier so we can automatically look around
 					XmlElement *pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class", "PLScene::SNMLookController");
+					pModifierElement->SetAttribute("Class", "PLEngine::SNMLookController");
 					pNodeElement->LinkEndChild(*pModifierElement);
 
 					// Add scene node modifier automatically fixing rotation
@@ -826,7 +826,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 
 					// Add scene node modifier so we can automatically move around
 					pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class", "PLScene::SNMMoveController");
+					pModifierElement->SetAttribute("Class", "PLEngine::SNMMoveController");
 					pNodeElement->LinkEndChild(*pModifierElement);
 				}
 

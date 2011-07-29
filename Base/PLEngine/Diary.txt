@@ -23,6 +23,11 @@
 - Moved "SNMPhysicsCharacter" and "SNMPhysicsCharacterController" from PLPhysics into PLEngine
   -> This simple character controller, which is usually only useful for a quick'n'dirty test, isn't worth the dependency to a complete other project... it's really
      nothing one would want to use in a slightly more complex project (then, it's probably better to e.g. script the control)
+- Moved "SNMCameraZoomController", "SNMLookController", "SNMMoveController" and "SNMOrbitingController" from "PLScene" to "PLEngine"
+  -> I'am not sure whether or not the scene graph project is really the right place for input controllers. In my point of view, the scene graph stuff should be as
+     passive as possible. Also, by moving all controllers into one PLEngine directory, one doesn't have to search for them across all projects. As for
+     "SNMPhysicsCharacterController", I'am pretty sure that those controllers are more or less only useful for rapit prototyping or really simple projects. By e.g.
+     using scripting one doesn't have the fixed build in limitations those standard controllers naturally have.
 
 
 

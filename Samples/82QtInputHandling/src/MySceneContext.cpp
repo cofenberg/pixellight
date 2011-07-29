@@ -67,26 +67,26 @@ void MySceneContext::OnCreateScene(SceneContainer &cContainer)
 		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 		// Add a controller modifier so we can look around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMLookController");
+		pCamera->AddModifier("PLEngine::SNMLookController");
 
 		// Fix roll to avoid a camera twist
 		pCamera->AddModifier("PLScene::SNMRotationFixRoll");
 
 		// Add a controller modifier so we can move around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMMoveController");
+		pCamera->AddModifier("PLEngine::SNMMoveController");
 	}
 
 	// Create second camera
 	pCamera = cContainer.Create("PLScene::SNCamera", "FreeCamera2", "Position=\"1 2 -3\" Rotation=\"25 0 0\"");
 	if (pCamera && pCamera->IsInstanceOf("PLScene::SNCamera")) {
 		// Add a controller modifier so we can look around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMLookController");
+		pCamera->AddModifier("PLEngine::SNMLookController");
 
 		// Fix roll to avoid a camera twist
 		pCamera->AddModifier("PLScene::SNMRotationFixRoll");
 
 		// Add a controller modifier so we can move around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMMoveController");
+		pCamera->AddModifier("PLEngine::SNMMoveController");
 	}
 
 	// Create the floor

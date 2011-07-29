@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMCameraZoomController.h                      *
+ *  File: SNMMoveController.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,27 +20,29 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMMOVECONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMMOVECONTROLLER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/SNMCameraZoom.h"
+#include <PLCore/Base/Event/EventHandler.h>
+#include <PLScene/Scene/SceneNodeModifiers/SNMTransform.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class CameraZoomController;
+class MoveController;
 
 
 //[-------------------------------------------------------]
@@ -48,25 +50,28 @@ class CameraZoomController;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node modifier class implementing camera zoom input control
+*    Scene node move input controller modifier class
 *
 *  @remarks
 *    When using the unchanged virtual standard controller:
-*    Hold the right mouse button to zoom.
+*    Use a/w/d/s or cursor keys to walk. 'PageUp/PageDown' to move upwards/downwards.
+*    Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class SNMCameraZoomController : public SNMCameraZoom {
+class SNMMoveController : public PLScene::SNMTransform {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMCameraZoomController, "PLScene", PLScene::SNMCameraZoom, "Scene node modifier class implementing camera zoom input control")
+	pl_class(PL_RTTI_EXPORT, SNMMoveController, "PLEngine", PLScene::SNMTransform, "Scene node move input controller modifier class")
 		// Attributes
-		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
+		pl_attribute(InputSemantic,	PLCore::String,	"",		ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
+		pl_attribute(Speed,			float,			1.0f,	ReadWrite,	DirectValue,	"Movement speed",										"Min='0.0001'")
 		// Constructors
-		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
-		// Slot
-		pl_slot_1(OnControl,	PLInput::Control*,	"Called when a control event has occured, the control causing the event as first parameter",	"")
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
@@ -81,28 +86,28 @@ class SNMCameraZoomController : public SNMCameraZoom {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMCameraZoomController(SceneNode &cSceneNode);
+		PL_API SNMMoveController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMCameraZoomController();
+		PL_API virtual ~SNMMoveController();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual SceneNodeModifier functions            ]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InformedOnInit() override;
-		PLS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InformedOnInit() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -111,19 +116,23 @@ class SNMCameraZoomController : public SNMCameraZoom {
 	private:
 		/**
 		*  @brief
-		*    Called when a control event has occured
-		*
-		*  @param[in] pControl
-		*    The control causing the event
+		*    Called when the scene node modifier needs to be updated
 		*/
-		void OnControl(PLInput::Control *pControl);
+		void OnUpdate();
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> EventHandlerUpdate;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		CameraZoomController *m_pController;	/**< Camera zoom input controller instance, always valid! */
+		MoveController *m_pController;	/**< Move input controller instance, always valid! */
 
 
 };
@@ -132,7 +141,7 @@ class SNMCameraZoomController : public SNMCameraZoom {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMMOVECONTROLLER_H__

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMOrbitingController.h                        *
+ *  File: SNMLookController.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,28 +20,28 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
-#include "PLScene/Scene/SceneNodeModifiers/SNMOrbiting.h"
+#include <PLScene/Scene/SceneNodeModifiers/SNMTransform.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class OrbitingController;
+class LookController;
 
 
 //[-------------------------------------------------------]
@@ -49,23 +49,43 @@ class OrbitingController;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node modifier class rotating a scene node towards a target scene node using an input controller
+*    Scene node rotation input controller modifier class
 *
-*  @remarks
-*    When using the unchanged virtual standard controller:
-*    Hold the left mouse button to rotate, the right mouse button to zoom and the middle mouse button to pan.
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class SNMOrbitingController : public SNMOrbiting {
+class SNMLookController : public PLScene::SNMTransform {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definition                                     ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Scene node modifier flags (PLScene::SceneNodeModifier flags extension)
+		*/
+		enum EFlags {
+			UseRotationKey = 1<<2	/**< If this flag is set, it's required to keep the rotation key pressed in order to rotate */
+		};
+		pl_enum(EFlags)
+			pl_enum_base(PLScene::SNMTransform::EFlags)
+			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate")
+		pl_enum_end
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMOrbitingController, "PLScene", PLScene::SNMOrbiting, "Scene node modifier class rotating a scene node towards a target scene node using an input controller")
+	pl_class(PL_RTTI_EXPORT, SNMLookController, "PLEngine", PLScene::SNMTransform, "Scene node rotation input controller modifier class")
 		// Attributes
-		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
+		pl_attribute(InputSemantic,	PLCore::String,			"",				ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
+			// Overwritten PLScene::SceneNodeModifier attributes
+		pl_attribute(Flags,			pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,			"Flags",												"")
 		// Constructors
-		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slots
+		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
 	pl_class_end
 
 
@@ -80,28 +100,28 @@ class SNMOrbitingController : public SNMOrbiting {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMOrbitingController(SceneNode &cSceneNode);
+		PL_API SNMLookController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMOrbitingController();
+		PL_API virtual ~SNMLookController();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InformedOnInit() override;
-		PLS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InformedOnInit() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -116,17 +136,10 @@ class SNMOrbitingController : public SNMOrbiting {
 
 
 	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OrbitingController *m_pController;	/**< Orbiting input controller instance, always valid! */
+		LookController *m_pController;	/**< Look input controller instance, always valid! */
 
 
 };
@@ -135,7 +148,7 @@ class SNMOrbitingController : public SNMOrbiting {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__

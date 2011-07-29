@@ -416,13 +416,13 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 
 		// Add a controller modifier so we can look around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMLookController");
+		pCamera->AddModifier("PLEngine::SNMLookController");
 
 		// Fix roll to avoid a camera twist
 		pCamera->AddModifier("PLScene::SNMRotationFixRoll");
 
 		// Add a controller modifier so we can move around the camera by using a default control
-		pCamera->AddModifier("PLScene::SNMMoveController");
+		pCamera->AddModifier("PLEngine::SNMMoveController");
 	}
 
 	// Create a scene node with the statue mesh which can produce a shadow

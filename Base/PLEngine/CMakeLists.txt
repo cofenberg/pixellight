@@ -27,11 +27,19 @@ add_sources(
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
 	src/Picking/MousePicking.cpp
-	src/Physics/PhysicsMouseInteraction.cpp
-	src/Physics/SNPhysicsMouseInteraction.cpp
-	src/Physics/SNMPhysicsCharacter.cpp
-	src/Physics/SNMPhysicsCharacterController.cpp
-	src/Physics/PhysicsCharacterController.cpp
+	src/Controller/PhysicsMouseInteraction.cpp
+	src/Controller/SNPhysicsMouseInteraction.cpp
+	src/Controller/SNMPhysicsCharacter.cpp
+	src/Controller/SNMPhysicsCharacterController.cpp
+	src/Controller/PhysicsCharacterController.cpp
+	src/Controller/SNMLookController.cpp
+	src/Controller/LookController.cpp
+	src/Controller/SNMMoveController.cpp
+	src/Controller/MoveController.cpp
+	src/Controller/SNMOrbitingController.cpp
+	src/Controller/OrbitingController.cpp
+	src/Controller/SNMCameraZoomController.cpp
+	src/Controller/CameraZoomController.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
     src/Tools/Camcorder.cpp

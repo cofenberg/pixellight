@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMLookController.h                            *
+ *  File: SNMCameraZoomController.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,27 +20,33 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMCAMERAZOOMCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMCAMERAZOOMCONTROLLER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLScene {
+#include <PLScene/Scene/SceneNodeModifiers/SNMCameraZoom.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class LookController;
+namespace PLInput {
+	class Control;
+}
+namespace PLEngine {
+	class CameraZoomController;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -48,40 +54,28 @@ class LookController;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node rotation input controller modifier class
+*    Scene node modifier class implementing camera zoom input control
+*
+*  @remarks
+*    When using the unchanged virtual standard controller:
+*    Hold the right mouse button to zoom.
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class SNMLookController : public SNMTransform {
-
-
-	//[-------------------------------------------------------]
-	//[ Public definition                                     ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Scene node modifier flags (SceneNodeModifier flags extension)
-		*/
-		enum EFlags {
-			UseRotationKey = 1<<2	/**< If this flag is set, it's required to keep the rotation key pressed in order to rotate */
-		};
-		pl_enum(EFlags)
-			pl_enum_base(SNMTransform::EFlags)
-			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate")
-		pl_enum_end
+class SNMCameraZoomController : public PLScene::SNMCameraZoom {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNMLookController, "PLScene", PLScene::SNMTransform, "Scene node rotation input controller modifier class")
+	pl_class(PL_RTTI_EXPORT, SNMCameraZoomController, "PLEngine", PLScene::SNMCameraZoom, "Scene node modifier class implementing camera zoom input control")
 		// Attributes
-		pl_attribute(InputSemantic,	PLCore::String,			"",				ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
-			// Overwritten SceneNodeModifier attributes
-		pl_attribute(Flags,			pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,			"Flags",												"")
+		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 		// Constructors
-		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
-		// Slots
-		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		// Slot
+		pl_slot_1(OnControl,	PLInput::Control*,	"Called when a control event has occured, the control causing the event as first parameter",	"")
 	pl_class_end
 
 
@@ -96,28 +90,28 @@ class SNMLookController : public SNMTransform {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PLS_API SNMLookController(SceneNode &cSceneNode);
+		PL_API SNMCameraZoomController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNMLookController();
+		PL_API virtual ~SNMCameraZoomController();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual SceneNodeModifier functions            ]
+	//[ Public virtual PLScene::SceneNodeModifier functions   ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneNodeModifier functions         ]
+	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLS_API virtual void InformedOnInit() override;
-		PLS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InformedOnInit() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -126,16 +120,19 @@ class SNMLookController : public SNMTransform {
 	private:
 		/**
 		*  @brief
-		*    Called when the scene node modifier needs to be updated
+		*    Called when a control event has occured
+		*
+		*  @param[in] pControl
+		*    The control causing the event
 		*/
-		void OnUpdate();
+		void OnControl(PLInput::Control *pControl);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LookController *m_pController;	/**< Look input controller instance, always valid! */
+		CameraZoomController *m_pController;	/**< Camera zoom input controller instance, always valid! */
 
 
 };
@@ -144,7 +141,7 @@ class SNMLookController : public SNMTransform {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMCAMERAZOOMCONTROLLER_H__

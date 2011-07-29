@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LookController.cpp                             *
+ *  File: OrbitingController.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,20 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/LookController.h"
+#include "PLEngine/Controller/OrbitingController.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(LookController)
+pl_implement_class(OrbitingController)
 
 
 //[-------------------------------------------------------]
@@ -46,11 +46,19 @@ pl_implement_class(LookController)
 *  @brief
 *    Constructor
 */
-LookController::LookController() : Controller(ControllerVirtual, "LookController", "Look input controller"),
-	RotX  (this, "RotX",	"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
-	RotY  (this, "RotY",	"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
-	RotZ  (this, "RotZ",	"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
-	Rotate(this, "Rotate",	"Keep pressed to rotate (optional)")
+OrbitingController::OrbitingController() : Controller(ControllerVirtual, "OrbitingController", "Orbiting input controller"),
+	RotX	(this, "RotX",		"X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)"),
+	RotY	(this, "RotY",		"Y rotation axis: Yaw (also called 'heading') change is turning to the left or right"),
+	RotZ	(this, "RotZ",		"Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down"),
+	PanX	(this, "PanX",		"X pan translation axis: Strafe left/right (+/-)"),
+	PanY	(this, "PanY",		"Y pan translation axis: Move up/down (+/-)"),
+	PanZ	(this, "PanZ",		"Z pan translation axis: Move forwards/backwards (+/-)"),
+	Rotate	(this, "Rotate",	"Keep pressed to rotate"),
+	Pan		(this, "Pan",		"Keep pressed to pan"),
+	Zoom	(this, "Zoom",		"Keep pressed to zoom"),
+	ZoomAxis(this, "ZoomAxis",	"Zoom axis to zoom in or out (+/-)"),
+	Run		(this, "Run",		"Keep pressed to run"),
+	Crouch	(this, "Crouch",	"Keep pressed to crouch")
 {
 }
 
@@ -58,7 +66,7 @@ LookController::LookController() : Controller(ControllerVirtual, "LookController
 *  @brief
 *    Destructor
 */
-LookController::~LookController()
+OrbitingController::~OrbitingController()
 {
 }
 
@@ -66,4 +74,4 @@ LookController::~LookController()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine

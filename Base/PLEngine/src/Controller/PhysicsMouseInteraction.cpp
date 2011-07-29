@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: CameraZoomController.cpp                       *
+ *  File: PhysicsMouseInteraction.cpp                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,20 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/CameraZoomController.h"
+#include "PLEngine/Controller/PhysicsMouseInteraction.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(CameraZoomController)
+pl_implement_class(PhysicsMouseInteraction)
 
 
 //[-------------------------------------------------------]
@@ -46,8 +46,14 @@ pl_implement_class(CameraZoomController)
 *  @brief
 *    Constructor
 */
-CameraZoomController::CameraZoomController() : Controller(ControllerVirtual, "CameraZoomController", "Camera zoom input controller"),
-	Zoom(this, "Zoom", "Zoom")
+PhysicsMouseInteraction::PhysicsMouseInteraction() : Controller(ControllerVirtual, "PhysicsMouseInteraction", "Mouse physics interaction input controller"),
+	Pickup			(this, "Pickup",		"Keep pressed to pickup",											0x00),
+	Throw			(this, "Throw",			"Throw the picked object",											0x00),
+	IncreaseForce	(this, "IncreaseForce",	"Keep pressed to increase the force applied to the picked object",	0x00),
+	DecreaseForce	(this, "DecreaseForce",	"Keep pressed to decrease the force applied to the picked object",	0x00),
+	PushPull		(this, "PushPull",		"Used to push/pull the picked object"),
+	MouseX			(this, "MouseX",		"X-position of the mouse"),
+	MouseY			(this, "MouseY",		"Y-position of the mouse")
 {
 }
 
@@ -55,7 +61,7 @@ CameraZoomController::CameraZoomController() : Controller(ControllerVirtual, "Ca
 *  @brief
 *    Destructor
 */
-CameraZoomController::~CameraZoomController()
+PhysicsMouseInteraction::~PhysicsMouseInteraction()
 {
 }
 
@@ -63,4 +69,4 @@ CameraZoomController::~CameraZoomController()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine

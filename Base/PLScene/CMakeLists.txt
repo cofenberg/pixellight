@@ -48,10 +48,6 @@ add_sources(
 	src/Scene/SceneNodes/SNLine.cpp
 	src/Scene/SceneNodes/SNPoint.cpp
 	src/Scene/SceneNodes/SNMesh.cpp
-	src/Scene/SceneNodeModifiers/SNMLookController.cpp
-	src/Scene/SceneNodeModifiers/LookController.cpp
-	src/Scene/SceneNodeModifiers/SNMMoveController.cpp
-	src/Scene/SceneNodeModifiers/MoveController.cpp
 	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
 	src/Scene/SceneNodeModifiers/SNMTransform.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionPath.cpp
@@ -79,12 +75,8 @@ add_sources(
 	src/Scene/SceneNodeModifiers/SNMKeyValue.cpp
 	src/Scene/SceneNodeModifiers/SNMDeactivationOnTimeout.cpp
 	src/Scene/SceneNodeModifiers/SNMOrbiting.cpp
-	src/Scene/SceneNodeModifiers/SNMOrbitingController.cpp
-	src/Scene/SceneNodeModifiers/OrbitingController.cpp
 	src/Scene/SceneNodeModifiers/SNMUnknown.cpp
 	src/Scene/SceneNodeModifiers/SNMCameraZoom.cpp
-	src/Scene/SceneNodeModifiers/SNMCameraZoomController.cpp
-	src/Scene/SceneNodeModifiers/CameraZoomController.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionRandomAnimation.cpp
 	src/Scene/SceneNodeModifiers/SNMScaleRandomAnimation.cpp
 	src/Scene/SceneNodeModifiers/SNMLightRandomAnimation.cpp

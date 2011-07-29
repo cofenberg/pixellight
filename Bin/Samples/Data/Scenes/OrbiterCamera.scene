@@ -2,12 +2,12 @@
 <Scene Version="1" Name="Scene">
     <Node Class="PLScene::SNHelper" Name="SoldierTargetHelper" />
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Mouse">
-        <Modifier Class="PLScene::SNMOrbitingController" Target="SoldierTargetHelper" Distance="3" />
+        <Modifier Class="PLEngine::SNMOrbitingController" Target="SoldierTargetHelper" Distance="3" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
     </Node>
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Keys">
         <Modifier Class="PLScene::SNMRotationTarget" Target="SoldierTargetHelper" />
-        <Modifier Class="PLScene::SNMMoveController" Speed="4" />
+        <Modifier Class="PLEngine::SNMMoveController" Speed="4" />
     </Node>
     <Node Class="PLScene::SNMesh" Position="0 -2.1 -5" Scale="4 0.1 4" Rotation="0 180 0" Name="Floor" Mesh="Default" />
     <Node Class="PLScene::SNMesh" Position="0 -1.5 -5" Scale="0.5 0.5 0.5" Name="BigBox" Mesh="Default" />

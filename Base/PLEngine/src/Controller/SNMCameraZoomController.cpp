@@ -23,9 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodeModifiers/CameraZoomController.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMCameraZoomController.h"
+#include <PLScene/Scene/SceneContext.h>
+#include "PLEngine/Controller/CameraZoomController.h"
+#include "PLEngine/Controller/SNMCameraZoomController.h"
 
 
 //[-------------------------------------------------------]
@@ -33,7 +33,8 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLInput;
-namespace PLScene {
+using namespace PLScene;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -70,7 +71,7 @@ SNMCameraZoomController::~SNMCameraZoomController()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual SceneNodeModifier functions            ]
+//[ Public virtual PLScene::SceneNodeModifier functions   ]
 //[-------------------------------------------------------]
 Controller *SNMCameraZoomController::GetInputController() const
 {
@@ -79,7 +80,7 @@ Controller *SNMCameraZoomController::GetInputController() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneNodeModifier functions         ]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
 //[-------------------------------------------------------]
 void SNMCameraZoomController::InformedOnInit()
 {

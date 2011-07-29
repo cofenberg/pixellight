@@ -30,7 +30,7 @@
 #include <PLPhysics/World.h>
 #include <PLPhysics/Sensor.h>
 #include <PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h>
-#include "PLEngine/Physics/SNMPhysicsCharacter.h"
+#include "PLEngine/Controller/SNMPhysicsCharacter.h"
 
 
 //[-------------------------------------------------------]

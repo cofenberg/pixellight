@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMMoveController.cpp                          *
+ *  File: SNMLookController.cpp                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,9 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodeModifiers/MoveController.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMMoveController.h"
+#include <PLMath/EulerAngles.h>
+#include <PLScene/Scene/SceneContext.h>
+#include "PLEngine/Controller/LookController.h"
+#include "PLEngine/Controller/SNMLookController.h"
 
 
 //[-------------------------------------------------------]
@@ -35,13 +36,14 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLInput;
-namespace PLScene {
+using namespace PLScene;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMMoveController)
+pl_implement_class(SNMLookController)
 
 
 //[-------------------------------------------------------]
@@ -51,19 +53,21 @@ pl_implement_class(SNMMoveController)
 *  @brief
 *    Constructor
 */
-SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
+SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	InputSemantic(this),
-	Speed(this),
-	EventHandlerUpdate(&SNMMoveController::OnUpdate, this),
-	m_pController(new MoveController())
+	Flags(this),
+	SlotOnUpdate(this),
+	m_pController(new LookController())
 {
+	// Overwrite the default setting of the flags
+	SetFlags(GetFlags()|UseRotationKey);
 }
 
 /**
 *  @brief
 *    Destructor
 */
-SNMMoveController::~SNMMoveController()
+SNMLookController::~SNMLookController()
 {
 	// Destroy the input controller
 	delete m_pController;
@@ -73,30 +77,30 @@ SNMMoveController::~SNMMoveController()
 //[-------------------------------------------------------]
 //[ Public virtual PLScene::SceneNodeModifier functions   ]
 //[-------------------------------------------------------]
-Controller *SNMMoveController::GetInputController() const
+Controller *SNMLookController::GetInputController() const
 {
 	return m_pController;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneNodeModifier functions         ]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
 //[-------------------------------------------------------]
-void SNMMoveController::InformedOnInit()
+void SNMLookController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
-void SNMMoveController::OnActivate(bool bActivate)
+void SNMLookController::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		if (bActivate)
-			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
-			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
 	}
 }
 
@@ -108,57 +112,43 @@ void SNMMoveController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMMoveController::OnUpdate()
+void SNMLookController::OnUpdate()
 {
-	// Check if input is active
-	if (m_pController->GetActive()) {
-		// Get the scene node
-		SceneNode &cSceneNode = GetSceneNode();
+	// [HACK][TODO] Currently it's not possible to define/script a control logic within the control connection to, for instance
+	// "pass through" a rotation value from a space mouse, but "passing" movements from the mouse only if, for example, the left
+	// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
+	// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
+	// the space mouse (provides us with absolute values!) can be used as expected during the last steps of the input system refactoring.
+	const bool bSpaceMouseRotationHack = ((GetFlags() & UseRotationKey) && (!m_pController->RotX.IsValueRelative() || !m_pController->RotY.IsValueRelative()));
 
-		// Get direction vectors
-		const Quaternion &qRot = cSceneNode.GetTransform().GetRotation();
-		const Vector3 vDirLeftVector = qRot.GetXAxis();
-		const Vector3 vDirUpVector   = qRot.GetYAxis();
-		const Vector3 vDirVector     = qRot.GetZAxis();
+	// Check if input is active and whether or not the rotation key required and pressed
+	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed() || bSpaceMouseRotationHack)) {
+		// Get rotation
+		float fX = m_pController->RotX.GetValue();
+		float fY = m_pController->RotY.GetValue();
+		float fZ = m_pController->RotZ.GetValue();
+		if (fX || fY || fZ) {
+			// Get the current time difference
+			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
-		// Set movement speed and don't forget to apply the current time difference
-		float fCurrentSpeed = Speed*Timing::GetInstance()->GetTimeDifference();
+			// Do we need to take the current time difference into account?
+			if (!m_pController->RotX.IsValueRelative())
+				fX *= fTimeDiff;
+			if (!m_pController->RotY.IsValueRelative())
+				fY *= fTimeDiff;
+			if (!m_pController->RotZ.IsValueRelative())
+				fZ *= fTimeDiff;
 
-		// Speed up
-		if (m_pController->Run.IsPressed())
-			fCurrentSpeed *= 4;
+			// Get a quaternion representation of the rotation delta
+			Quaternion qRotInc;
+			EulerAngles::ToQuaternion(static_cast<float>(fX*Math::DegToRad),
+									  static_cast<float>(fY*Math::DegToRad),
+									  static_cast<float>(fZ*Math::DegToRad),
+									  qRotInc);
 
-		// Slow down
-		else if (m_pController->Crouch.IsPressed())
-			fCurrentSpeed /= 4;
-
-		// Movement vector
-		Vector3 vMovement;
-
-		// Forward/backward
-		if (m_pController->Forward.IsPressed())
-			vMovement += vDirVector*fCurrentSpeed;
-		if (m_pController->Backward.IsPressed())
-			vMovement -= vDirVector*fCurrentSpeed;
-		vMovement += vDirVector*(m_pController->TransZ.IsValueRelative() ? m_pController->TransZ.GetValue() : m_pController->TransZ.GetValue()*fCurrentSpeed);
-
-		// Left/right
-		if (m_pController->StrafeLeft.IsPressed())
-			vMovement += vDirLeftVector*fCurrentSpeed;
-		if (m_pController->StrafeRight.IsPressed())
-			vMovement -= vDirLeftVector*fCurrentSpeed;
-		vMovement += vDirLeftVector*(m_pController->TransX.IsValueRelative() ? m_pController->TransX.GetValue() : m_pController->TransX.GetValue()*fCurrentSpeed);
-
-		// Upward/downward
-		if (m_pController->Up.IsPressed())
-			vMovement += vDirUpVector*fCurrentSpeed;
-		if (m_pController->Down.IsPressed())
-			vMovement -= vDirUpVector*fCurrentSpeed;
-		vMovement += vDirUpVector*(m_pController->TransY.IsValueRelative() ? m_pController->TransY.GetValue() : m_pController->TransY.GetValue()*fCurrentSpeed);
-
-		// 'Move' to the new position
-		if (!vMovement.IsNull())
-			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition() + vMovement);
+			// Update rotation
+			GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
+		}
 	}
 }
 
@@ -166,4 +156,4 @@ void SNMMoveController::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine

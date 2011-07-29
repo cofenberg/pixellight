@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMOrbitingController.cpp                      *
+ *  File: SNMMoveController.cpp                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,10 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
-#include <PLMath/EulerAngles.h>
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodeModifiers/OrbitingController.h"
-#include "PLScene/Scene/SceneNodeModifiers/SNMOrbitingController.h"
+#include <PLScene/Scene/SceneContext.h>
+#include "PLEngine/Controller/MoveController.h"
+#include "PLEngine/Controller/SNMMoveController.h"
 
 
 //[-------------------------------------------------------]
@@ -36,13 +35,14 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLInput;
-namespace PLScene {
+using namespace PLScene;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMOrbitingController)
+pl_implement_class(SNMMoveController)
 
 
 //[-------------------------------------------------------]
@@ -52,10 +52,11 @@ pl_implement_class(SNMOrbitingController)
 *  @brief
 *    Constructor
 */
-SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbiting(cSceneNode),
+SNMMoveController::SNMMoveController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	InputSemantic(this),
-	EventHandlerUpdate(&SNMOrbitingController::OnUpdate, this),
-	m_pController(new OrbitingController())
+	Speed(this),
+	EventHandlerUpdate(&SNMMoveController::OnUpdate, this),
+	m_pController(new MoveController())
 {
 }
 
@@ -63,7 +64,7 @@ SNMOrbitingController::SNMOrbitingController(SceneNode &cSceneNode) : SNMOrbitin
 *  @brief
 *    Destructor
 */
-SNMOrbitingController::~SNMOrbitingController()
+SNMMoveController::~SNMMoveController()
 {
 	// Destroy the input controller
 	delete m_pController;
@@ -71,28 +72,25 @@ SNMOrbitingController::~SNMOrbitingController()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual SceneNodeModifier functions            ]
+//[ Public virtual PLScene::SceneNodeModifier functions   ]
 //[-------------------------------------------------------]
-Controller *SNMOrbitingController::GetInputController() const
+Controller *SNMMoveController::GetInputController() const
 {
 	return m_pController;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneNodeModifier functions         ]
+//[ Protected virtual PLScene::SceneNodeModifier functions ]
 //[-------------------------------------------------------]
-void SNMOrbitingController::InformedOnInit()
+void SNMMoveController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
 	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
-void SNMOrbitingController::OnActivate(bool bActivate)
+void SNMMoveController::OnActivate(bool bActivate)
 {
-	// Call base implementation
-	SNMOrbiting::OnActivate(bActivate);
-
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
@@ -111,72 +109,57 @@ void SNMOrbitingController::OnActivate(bool bActivate)
 *  @brief
 *    Called when the scene node modifier needs to be updated
 */
-void SNMOrbitingController::OnUpdate()
+void SNMMoveController::OnUpdate()
 {
 	// Check if input is active
 	if (m_pController->GetActive()) {
-		// Get the current speed
-		float fSpeed = 1.0f;
+		// Get the scene node
+		SceneNode &cSceneNode = GetSceneNode();
+
+		// Get direction vectors
+		const Quaternion &qRot = cSceneNode.GetTransform().GetRotation();
+		const Vector3 vDirLeftVector = qRot.GetXAxis();
+		const Vector3 vDirUpVector   = qRot.GetYAxis();
+		const Vector3 vDirVector     = qRot.GetZAxis();
+
+		// Set movement speed and don't forget to apply the current time difference
+		float fCurrentSpeed = Speed*Timing::GetInstance()->GetTimeDifference();
+
+		// Speed up
 		if (m_pController->Run.IsPressed())
-			fSpeed *= 4.0f;
+			fCurrentSpeed *= 4;
+
+		// Slow down
 		else if (m_pController->Crouch.IsPressed())
-			fSpeed /= 4.0f;
-		const float fTimedSpeed = fSpeed*Timing::GetInstance()->GetTimeDifference();
+			fCurrentSpeed /= 4;
 
-		// Rotation
-		if (m_pController->Rotate.IsPressed()) {
-			float fX = m_pController->RotX.GetValue();
-			float fY = m_pController->RotY.GetValue();
-			float fZ = m_pController->RotZ.GetValue();
-			if (fX || fY || fZ) {
-				// Do we need to take the current time difference into account?
-				fX *= m_pController->RotX.IsValueRelative() ? fSpeed : fTimedSpeed;
-				fY *= m_pController->RotY.IsValueRelative() ? fSpeed : fTimedSpeed;
-				fZ *= m_pController->RotZ.IsValueRelative() ? fSpeed : fTimedSpeed;
+		// Movement vector
+		Vector3 vMovement;
 
-				// Get a quaternion representation of the rotation delta
-				Quaternion qRotInc;
-				EulerAngles::ToQuaternion(-static_cast<float>(fX*Math::DegToRad),
-										  -static_cast<float>(fY*Math::DegToRad),
-										  -static_cast<float>(fZ*Math::DegToRad),
-										  qRotInc);
+		// Forward/backward
+		if (m_pController->Forward.IsPressed())
+			vMovement += vDirVector*fCurrentSpeed;
+		if (m_pController->Backward.IsPressed())
+			vMovement -= vDirVector*fCurrentSpeed;
+		vMovement += vDirVector*(m_pController->TransZ.IsValueRelative() ? m_pController->TransZ.GetValue() : m_pController->TransZ.GetValue()*fCurrentSpeed);
 
-				// Update rotation
-				GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
-			}
-		}
+		// Left/right
+		if (m_pController->StrafeLeft.IsPressed())
+			vMovement += vDirLeftVector*fCurrentSpeed;
+		if (m_pController->StrafeRight.IsPressed())
+			vMovement -= vDirLeftVector*fCurrentSpeed;
+		vMovement += vDirLeftVector*(m_pController->TransX.IsValueRelative() ? m_pController->TransX.GetValue() : m_pController->TransX.GetValue()*fCurrentSpeed);
 
-		// Pan
-		if (m_pController->Pan.IsPressed()) {
-			float fX = m_pController->PanX.GetValue();
-			float fY = m_pController->PanY.GetValue();
-			float fZ = m_pController->PanZ.GetValue();
-			if (fX || fY || fZ) {
-				// Do we need to take the current time difference into account?
-				fX *= m_pController->PanX.IsValueRelative() ? fSpeed : fTimedSpeed;
-				fY *= m_pController->PanY.IsValueRelative() ? fSpeed : fTimedSpeed;
-				fZ *= m_pController->PanZ.IsValueRelative() ? fSpeed : fTimedSpeed;
+		// Upward/downward
+		if (m_pController->Up.IsPressed())
+			vMovement += vDirUpVector*fCurrentSpeed;
+		if (m_pController->Down.IsPressed())
+			vMovement -= vDirUpVector*fCurrentSpeed;
+		vMovement += vDirUpVector*(m_pController->TransY.IsValueRelative() ? m_pController->TransY.GetValue() : m_pController->TransY.GetValue()*fCurrentSpeed);
 
-				// Set pan
-				Vector3 vPan = Pan.Get();
-				vPan.x += fX;
-				vPan.y += fY;
-				vPan.z += fZ;
-				Pan.Set(vPan);
-			}
-		}
-
-		// Zoom
-		if (m_pController->Zoom.IsPressed()) {
-			float fZoomAxis = m_pController->ZoomAxis.GetValue();
-			if (fZoomAxis) {
-				// Do we need to take the current time difference into account?
-				fZoomAxis *= m_pController->ZoomAxis.IsValueRelative() ? fSpeed : fTimedSpeed;
-
-				// Set new distance
-				SetDistance(GetDistance() - fZoomAxis);
-			}
-		}
+		// 'Move' to the new position
+		if (!vMovement.IsNull())
+			cSceneNode.MoveTo(cSceneNode.GetTransform().GetPosition() + vMovement);
 	}
 }
 
@@ -184,4 +167,4 @@ void SNMOrbitingController::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine

@@ -8,6 +8,7 @@
   -> Moved "SNLoadScreen", "SNLoadScreenBase" and "SNLoadScreenBase" from "PLScene" to "PLEngine"
   -> More details in the PLEngine diary
   -> As a side effect, PLScene no longer depends on PLGui (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+- Moved "SNMCameraZoomController", "SNMLookController", "SNMMoveController" and "SNMOrbitingController" from "PLScene" to "PLEngine" (more details in the PLEngine diary)
 
 
 

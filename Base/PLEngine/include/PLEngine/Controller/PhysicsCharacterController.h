@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LookController.h                               *
+ *  File: PhysicsCharacterController.h                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_PHYSICSCHARACTERCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_PHYSICSCHARACTERCONTROLLER_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLScene/PLScene.h"
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -45,15 +45,18 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Look input controller
+*    Physics character input controller
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class LookController : public PLInput::Controller {
+class PhysicsCharacterController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, LookController, "PLScene", PLInput::Controller, "Look input controller")
+	pl_class(PL_RTTI_EXPORT, PhysicsCharacterController, "PLEngine", PLInput::Controller, "Physics character input controller")
 	pl_class_end
 
 
@@ -61,10 +64,21 @@ class LookController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	RotX;	/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
-		PLInput::Axis	RotY;	/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
-		PLInput::Axis	RotZ;	/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
-		PLInput::Button	Rotate;	/**< Keep pressed to rotate (optional) */
+		PLInput::Axis		TransX;			/**< X translation axis: Strafe left/right (+/-) */
+		PLInput::Axis		TransY;			/**< Y translation axis: Move up/down (+/-) */
+		PLInput::Axis		TransZ;			/**< Z translation axis: Move forwards/backwards (+/-) */
+		PLInput::Axis		RotY;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		PLInput::Button		Forward;		/**< Move forwards */
+		PLInput::Button		Backward;		/**< Move backwards */
+		PLInput::Button		Left;			/**< Move (rotate) left */
+		PLInput::Button		Right;			/**< Move (rotate) right */
+		PLInput::Button		StrafeLeft;		/**< Strafe left */
+		PLInput::Button		StrafeRight;	/**< Strafe right */
+		PLInput::Button		Up;				/**< Move up */
+		PLInput::Button		Down;			/**< Move down */
+		PLInput::Button		Run;			/**< Keep pressed to run */
+		PLInput::Button		Crouch;			/**< Keep pressed to crouch */
+		PLInput::Button		Jump;			/**< Jump */
 
 
 	//[-------------------------------------------------------]
@@ -75,13 +89,13 @@ class LookController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLS_API LookController();
+		PL_API PhysicsCharacterController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~LookController();
+		PL_API virtual ~PhysicsCharacterController();
 
 
 };
@@ -90,7 +104,7 @@ class LookController : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_LOOKCONTROLLER_CONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_PHYSICSCHARACTERCONTROLLER_H__

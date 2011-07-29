@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: CameraZoomController.h                         *
+ *  File: PhysicsMouseInteraction.h                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_PHYSICSMOUSEINTERACTION_H__
+#define __PLENGINE_CONTROLLER_PHYSICSMOUSEINTERACTION_H__
 #pragma once
 
 
@@ -29,14 +29,15 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLScene/PLScene.h"
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -44,15 +45,18 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Camera zoom input controller
+*    Mouse physics interaction input controller
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class CameraZoomController : public PLInput::Controller {
+class PhysicsMouseInteraction : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, CameraZoomController, "PLScene", PLInput::Controller, "Camera zoom input controller")
+	pl_class(PL_RTTI_EXPORT, PhysicsMouseInteraction, "PLEngine", PLInput::Controller, "Mouse physics interaction input controller")
 	pl_class_end
 
 
@@ -60,7 +64,13 @@ class CameraZoomController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Button	Zoom;	/**< Keep pressed to zoom */
+		PLInput::Button	Pickup;			/**< Keep pressed to pickup */
+		PLInput::Button	Throw;			/**< Throw the picked object */
+		PLInput::Button	IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
+		PLInput::Button	DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
+		PLInput::Axis	PushPull;		/**< Used to push/pull the picked object */
+		PLInput::Axis	MouseX;			/**< X-position of the mouse */
+		PLInput::Axis	MouseY;			/**< Y-position of the mouse */
 
 
 	//[-------------------------------------------------------]
@@ -71,13 +81,13 @@ class CameraZoomController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLS_API CameraZoomController();
+		PL_API PhysicsMouseInteraction();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~CameraZoomController();
+		PL_API virtual ~PhysicsMouseInteraction();
 
 
 };
@@ -86,7 +96,7 @@ class CameraZoomController : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_CAMERAZOOMCONTROLLER_CONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_PHYSICSMOUSEINTERACTION_H__

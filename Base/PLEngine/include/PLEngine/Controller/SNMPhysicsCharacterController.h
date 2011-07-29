@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__
-#define __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTERCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTERCONTROLLER_H__
 #pragma once
 
 
@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLEngine/Physics/SNMPhysicsCharacter.h"
+#include "PLEngine/Controller/SNMPhysicsCharacter.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +62,7 @@ namespace PLEngine {
 *    to move upwards/downwards. Hold the 'shift'-key to speed up, hold the 'strg'-key to slow down.
 *
 *  @note
-*    - Primary intended for fast prototyping
+*    - Primary intended for rapid prototyping
 *    - Adds automatically a "PLScene::SNMMeshUpdate" scene node modifier (if there's not yet one) in order to frequently update the mesh
 */
 class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
@@ -191,4 +191,4 @@ class SNMPhysicsCharacterController : public SNMPhysicsCharacter {
 } // PLEngine
 
 
-#endif // __PLENGINE_PHYSICS_SNMPHYSICSCHARACTERCONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMPHYSICSCHARACTERCONTROLLER_H__

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsMouseInteraction.cpp                    *
+ *  File: CameraZoomController.h                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,53 +20,76 @@
 \*********************************************************/
 
 
+#ifndef __PLENGINE_CONTROLLER_CAMERAZOOMCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_CAMERAZOOMCONTROLLER_H__
+#pragma once
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Physics/PhysicsMouseInteraction.h"
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Button.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLInput;
 namespace PLEngine {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(PhysicsMouseInteraction)
-
-
-//[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Camera zoom input controller
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-PhysicsMouseInteraction::PhysicsMouseInteraction() : Controller(ControllerVirtual, "PhysicsMouseInteraction", "Mouse physics interaction input controller"),
-	Pickup			(this, "Pickup",		"Keep pressed to pickup",											0x00),
-	Throw			(this, "Throw",			"Throw the picked object",											0x00),
-	IncreaseForce	(this, "IncreaseForce",	"Keep pressed to increase the force applied to the picked object",	0x00),
-	DecreaseForce	(this, "DecreaseForce",	"Keep pressed to decrease the force applied to the picked object",	0x00),
-	PushPull		(this, "PushPull",		"Used to push/pull the picked object"),
-	MouseX			(this, "MouseX",		"X-position of the mouse"),
-	MouseY			(this, "MouseY",		"Y-position of the mouse")
-{
-}
+class CameraZoomController : public PLInput::Controller {
 
-/**
-*  @brief
-*    Destructor
-*/
-PhysicsMouseInteraction::~PhysicsMouseInteraction()
-{
-}
+
+	//[-------------------------------------------------------]
+	//[ Class definition                                      ]
+	//[-------------------------------------------------------]
+	pl_class(PL_RTTI_EXPORT, CameraZoomController, "PLEngine", PLInput::Controller, "Camera zoom input controller")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Controller definition                                 ]
+	//[-------------------------------------------------------]
+	public:
+		PLInput::Button	Zoom;	/**< Keep pressed to zoom */
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PL_API CameraZoomController();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PL_API virtual ~CameraZoomController();
+
+
+};
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLEngine
+
+
+#endif // __PLENGINE_CONTROLLER_CAMERAZOOMCONTROLLER_H__

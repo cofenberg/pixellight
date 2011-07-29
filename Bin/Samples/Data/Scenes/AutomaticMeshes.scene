@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <Scene Version="1">
     <Node Class="PLScene::SNCamera" Name="FreeCamera" Position="0.0 0.0 10.0" Rotation="0.0 180.0 0.0">
-        <Modifier Class="PLScene::SNMLookController" />
+        <Modifier Class="PLEngine::SNMLookController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
-        <Modifier Class="PLScene::SNMMoveController" Speed="4.0" />
+        <Modifier Class="PLEngine::SNMMoveController" Speed="4.0" />
     </Node>
     <Node Class="PLScene::SNMesh" Name="Triangle" Position="0.0 0.0 0.0" Mesh="Create PLMesh::MeshCreatorTriangle Material='Data/Textures/Checker.dds'" />
     <Node Class="PLScene::SNMesh" Name="Quad" Position="3.0 0.0 0.0" Mesh="Create PLMesh::MeshCreatorQuad Material='Data/Textures/Checker.dds'" />

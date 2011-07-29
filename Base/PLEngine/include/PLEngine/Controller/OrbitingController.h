@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PhysicsMouseInteraction.h                      *
+ *  File: OrbitingController.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__
-#define __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__
+#ifndef __PLENGINE_CONTROLLER_ORBITINGCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_ORBITINGCONTROLLER_H__
 #pragma once
 
 
@@ -45,18 +45,18 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mouse physics interaction input controller
+*    Orbiting input controller
 *
 *  @note
-*    - Primary intended for fast prototyping
+*    - Primary intended for rapid prototyping
 */
-class PhysicsMouseInteraction : public PLInput::Controller {
+class OrbitingController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, PhysicsMouseInteraction, "PLEngine", PLInput::Controller, "Mouse physics interaction input controller")
+	pl_class(PL_RTTI_EXPORT, OrbitingController, "PLEngine", PLInput::Controller, "Orbiting input controller")
 	pl_class_end
 
 
@@ -64,13 +64,18 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Button	Pickup;			/**< Keep pressed to pickup */
-		PLInput::Button	Throw;			/**< Throw the picked object */
-		PLInput::Button	IncreaseForce;	/**< Keep pressed to increase the force applied to the picked object */
-		PLInput::Button	DecreaseForce;	/**< Keep pressed to decrease the force applied to the picked object */
-		PLInput::Axis	PushPull;		/**< Used to push/pull the picked object */
-		PLInput::Axis	MouseX;			/**< X-position of the mouse */
-		PLInput::Axis	MouseY;			/**< Y-position of the mouse */
+		PLInput::Axis	RotX;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		PLInput::Axis	RotY;		/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		PLInput::Axis	RotZ;		/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		PLInput::Axis	PanX;		/**< X pan translation axis: Strafe left/right (+/-) */
+		PLInput::Axis	PanY;		/**< Y pan translation axis: Move up/down (+/-) */
+		PLInput::Axis	PanZ;		/**< Z pan translation axis: Move forwards/backwards (+/-) */
+		PLInput::Button	Rotate;		/**< Keep pressed to rotate */
+		PLInput::Button	Pan;		/**< Keep pressed to pan */
+		PLInput::Button	Zoom;		/**< Keep pressed to zoom */
+		PLInput::Axis	ZoomAxis;	/**< Zoom axis to zoom in or out (+/-) */
+		PLInput::Button	Run;		/**< Keep pressed to run */
+		PLInput::Button	Crouch;		/**< Keep pressed to crouch */
 
 
 	//[-------------------------------------------------------]
@@ -81,13 +86,13 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PL_API PhysicsMouseInteraction();
+		PL_API OrbitingController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~PhysicsMouseInteraction();
+		PL_API virtual ~OrbitingController();
 
 
 };
@@ -99,4 +104,4 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 } // PLEngine
 
 
-#endif // __PLENGINE_PHYSICS_PHYSICSMOUSEINTERACTION_H__
+#endif // __PLENGINE_CONTROLLER_ORBITINGCONTROLLER_H__

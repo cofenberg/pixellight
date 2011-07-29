@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: OrbitingController.h                           *
+ *  File: LookController.h                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__
-#define __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_LOOKCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_LOOKCONTROLLER_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLScene/PLScene.h"
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -45,15 +45,18 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Orbiting input controller
+*    Look input controller
+*
+*  @note
+*    - Primary intended for rapid prototyping
 */
-class OrbitingController : public PLInput::Controller {
+class LookController : public PLInput::Controller {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, OrbitingController, "PLScene", PLInput::Controller, "Orbiting input controller")
+	pl_class(PL_RTTI_EXPORT, LookController, "PLEngine", PLInput::Controller, "Look input controller")
 	pl_class_end
 
 
@@ -61,18 +64,10 @@ class OrbitingController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	RotX;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
-		PLInput::Axis	RotY;		/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
-		PLInput::Axis	RotZ;		/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
-		PLInput::Axis	PanX;		/**< X pan translation axis: Strafe left/right (+/-) */
-		PLInput::Axis	PanY;		/**< Y pan translation axis: Move up/down (+/-) */
-		PLInput::Axis	PanZ;		/**< Z pan translation axis: Move forwards/backwards (+/-) */
-		PLInput::Button	Rotate;		/**< Keep pressed to rotate */
-		PLInput::Button	Pan;		/**< Keep pressed to pan */
-		PLInput::Button	Zoom;		/**< Keep pressed to zoom */
-		PLInput::Axis	ZoomAxis;	/**< Zoom axis to zoom in or out (+/-) */
-		PLInput::Button	Run;		/**< Keep pressed to run */
-		PLInput::Button	Crouch;		/**< Keep pressed to crouch */
+		PLInput::Axis	RotX;	/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		PLInput::Axis	RotY;	/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		PLInput::Axis	RotZ;	/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		PLInput::Button	Rotate;	/**< Keep pressed to rotate (optional) */
 
 
 	//[-------------------------------------------------------]
@@ -83,13 +78,13 @@ class OrbitingController : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLS_API OrbitingController();
+		PL_API LookController();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~OrbitingController();
+		PL_API virtual ~LookController();
 
 
 };
@@ -98,7 +93,7 @@ class OrbitingController : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine
 
 
-#endif // __PLSCENE_SCENENODEMODIFIER_ORBITINGCONTROLLER_CONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_LOOKCONTROLLER_H__

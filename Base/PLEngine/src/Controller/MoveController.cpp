@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodeModifiers/MoveController.h"
+#include "PLEngine/Controller/MoveController.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLScene {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -73,4 +73,4 @@ MoveController::~MoveController()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLEngine

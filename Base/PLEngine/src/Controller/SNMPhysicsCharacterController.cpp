@@ -31,8 +31,8 @@
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodes/SNMesh.h>
-#include "PLEngine/Physics/PhysicsCharacterController.h"
-#include "PLEngine/Physics/SNMPhysicsCharacterController.h"
+#include "PLEngine/Controller/PhysicsCharacterController.h"
+#include "PLEngine/Controller/SNMPhysicsCharacterController.h"
 
 
 //[-------------------------------------------------------]

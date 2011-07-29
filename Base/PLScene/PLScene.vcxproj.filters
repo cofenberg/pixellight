@@ -229,18 +229,6 @@
     <ClCompile Include="src\Scene\SceneHierarchies\SHList.cpp">
       <Filter>Scene\SceneHierarchies</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\CameraZoomController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\LookController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\MoveController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\OrbitingController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMAnchor.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
@@ -256,9 +244,6 @@
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMCameraZoom.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMCameraZoomController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMDeactivationOnTimeout.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
@@ -272,9 +257,6 @@
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMLightRandomAnimation.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMLookController.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMMesh.cpp">
@@ -298,13 +280,7 @@
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMMeshUpdate.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMMoveController.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMOrbiting.cpp">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMOrbitingController.cpp">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodeModifiers\SNMPositionKeyframeAnimation.cpp">
@@ -612,18 +588,6 @@
     <ClInclude Include="include\PLScene\Scene\SceneHierarchies\SHList.h">
       <Filter>Scene\SceneHierarchies</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\CameraZoomController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\LookController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\MoveController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\OrbitingController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMAnchor.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
@@ -639,9 +603,6 @@
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMCameraZoom.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMCameraZoomController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMDeactivationOnTimeout.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
@@ -655,9 +616,6 @@
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMLightRandomAnimation.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMLookController.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMMesh.h">
@@ -681,13 +639,7 @@
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMMeshUpdate.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMMoveController.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMOrbiting.h">
-      <Filter>Scene\SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMOrbitingController.h">
       <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMPositionKeyframeAnimation.h">

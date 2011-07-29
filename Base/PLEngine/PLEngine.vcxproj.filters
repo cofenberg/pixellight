@@ -31,7 +31,7 @@
     <Filter Include="Compositing\LoadScreen">
       <UniqueIdentifier>{36bb81fc-2010-4d5b-a199-6e817cb8aa47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics">
+    <Filter Include="Controller">
       <UniqueIdentifier>{b3abfba4-9f6a-4349-b27c-764ed5268eb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -141,20 +141,44 @@
     <ClCompile Include="src\Compositing\SNEngineInformation.cpp">
       <Filter>Compositing</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\SNMPhysicsCharacterController.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="src\Controller\OrbitingController.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\SNPhysicsMouseInteraction.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="src\Controller\PhysicsCharacterController.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\PhysicsCharacterController.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="src\Controller\PhysicsMouseInteraction.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\PhysicsMouseInteraction.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="src\Controller\SNMCameraZoomController.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\SNMPhysicsCharacter.cpp">
-      <Filter>Physics</Filter>
+    <ClCompile Include="src\Controller\SNMLookController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMMoveController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMOrbitingController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMPhysicsCharacter.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMPhysicsCharacterController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNPhysicsMouseInteraction.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\CameraZoomController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\LookController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\MoveController.cpp">
+      <Filter>Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,20 +293,44 @@
     <ClInclude Include="include\PLEngine\Compositing\SNEngineInformation.h">
       <Filter>Compositing</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacter.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="include\PLEngine\Controller\OrbitingController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Physics\SNMPhysicsCharacterController.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="include\PLEngine\Controller\PhysicsCharacterController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Physics\SNPhysicsMouseInteraction.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="include\PLEngine\Controller\PhysicsMouseInteraction.h">
+      <Filter>Controller</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Physics\PhysicsCharacterController.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="include\PLEngine\Controller\SNMCameraZoomController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\Physics\PhysicsMouseInteraction.h">
-      <Filter>Physics</Filter>
+    <ClInclude Include="include\PLEngine\Controller\SNMLookController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMMoveController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMOrbitingController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMPhysicsCharacter.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMPhysicsCharacterController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNPhysicsMouseInteraction.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\CameraZoomController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\LookController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\MoveController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
