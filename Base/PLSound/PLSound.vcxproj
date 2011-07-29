@@ -289,10 +289,6 @@ copy build\release64\PLSound64.lib ..\..\Bin\Lib\
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\PLInput\PLInput.vcxproj">
-      <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\PLMesh\PLMesh.vcxproj">
       <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
