@@ -8,6 +8,14 @@
 [CO]
 - Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods.
   See PLCore diary entry "27.07.2011" for details.
+- When using the CMake 2.8.5 I received the following warning
+	CMake Warning at C:/Program Files (x86)/CMake 2.8/share/cmake-2.8/Modules/CPack.cmake:236 (MESSAGE):
+	  CPack.cmake has already been included!!
+	Call Stack (most recent call first):
+	  Packages/Pack-Runtime.cmake:100 (include)
+	  Packages/CMakeLists.txt:23 (include)
+  -> When removing "#include(CPack)" from "Pack-Docs.cmake", "Pack-Runtime.cmake" and "Pack-SDK.cmake" the warning disappears, but building the SDK by using MS
+     Windows and VisualStudio 2010 will fail
 
 
 

@@ -42,7 +42,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Chunk of data
+*    Chunk of data - one may also call it BLOB (binary large object)
 *
 *  @remarks
 *    This class encapsulates a chunk of data in a quite primitive way. The semantic of the chunk data can be provided, but

@@ -2,6 +2,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Feature: The adapter project "PLQt", used to bring PixelLight and Qt together, is now part of the SDK (use PixelLight to e.g. render into one or multiple Qt widgets)
 - Feature: Added plugin "PLAssimp" using "ASSIMP - Open Asset Import Library" in order to provide loader implementations for 3ds, obj, Blender, Collada...
 - Feature: Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods
+- Feature: Clang (http://clang.llvm.org/) v3.0 (currently in development) is now supported
 - Change: Updated libpng from "1.4.5" to "1.4.8"
 - Change: Moved the PLProject executable from the runtime directory into the tools directory
 - Change: Merged "Demos" into "Samples" in order to simplify the structure of PixelLight

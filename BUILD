@@ -75,23 +75,25 @@ Then start 'Build'.
 --------------------
 
 Here's a list of required programs that you need to fully build the SDK on Windows.
-- cmake-2.8.4-win32-x86.exe (http://www.cmake.org)
+- cmake-2.8.5-win32-x86.exe
+	- CMake(http://www.cmake.org)
 	- Cross platform build tool used to build the SDK
 
 - nsis-2.46-setup.exe
+	- NSIS (Nullsoft Scriptable Install System) (http://nsis.sourceforge.net/)
 	- Used to create the Windows installer
 
 - doxygen-1.7.4-setup.exe
 	- Doxygen (http://www.doxygen.org)
 	- Used to create the code documentations.
 
-- graphviz-2.26.3.msi
+- graphviz-2.28.0.msi
 	- Graphviz (http://www.graphviz.org)
 	  Used from Doxygen to create diagrams.
 	- Ensure that the Graphviz binaries directory is correctly set in the PATH and/or DOT_PATH environment variables,
 	  otherwise Doxygen can't find Graphviz and as a result there will be no graphs within the generated document.
 
-- setup-2.9.3959.exe
+- setup-2.9.4222.exe
 	- MiKTeX (http://miktex.org/)
 	- Used to create the LaTex documentations.
 
