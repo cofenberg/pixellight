@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
-#define __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
+#ifndef __PLENGINE_PICKING_PHYSICSMOUSEINTERACTION_H__
+#define __PLENGINE_PICKING_PHYSICSMOUSEINTERACTION_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Axis.h>
 #include <PLInput/Input/Controls/Button.h>
-#include "PLPhysics/PLPhysics.h"
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, PhysicsMouseInteraction, "PLPhysics", PLInput::Controller, "Mouse physics interaction input controller")
+	pl_class(PL_RTTI_EXPORT, PhysicsMouseInteraction, "PLEngine", PLInput::Controller, "Mouse physics interaction input controller")
 	pl_class_end
 
 
@@ -78,13 +78,13 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 		*  @brief
 		*    Constructor
 		*/
-		PLPHYSICS_API PhysicsMouseInteraction();
+		PL_API PhysicsMouseInteraction();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~PhysicsMouseInteraction();
+		PL_API virtual ~PhysicsMouseInteraction();
 
 
 };
@@ -93,7 +93,7 @@ class PhysicsMouseInteraction : public PLInput::Controller {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine
 
 
-#endif // __PLPHYSICS_SCENENODES_MOUSEINTERACTION_CONTROLLER_H__
+#endif // __PLENGINE_PICKING_PHYSICSMOUSEINTERACTION_H__

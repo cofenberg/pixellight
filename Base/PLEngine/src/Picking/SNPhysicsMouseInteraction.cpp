@@ -31,12 +31,12 @@
 #include <PLScene/Scene/SNCamera.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include "PLPhysics/Body.h"
-#include "PLPhysics/World.h"
-#include "PLPhysics/Sensor.h"
-#include "PLPhysics/SceneNodes/SCPhysicsWorld.h"
-#include "PLPhysics/SceneNodes/PhysicsMouseInteraction.h"
-#include "PLPhysics/SceneNodes/SNPhysicsMouseInteraction.h"
+#include <PLPhysics/Body.h>
+#include <PLPhysics/World.h>
+#include <PLPhysics/Sensor.h>
+#include <PLPhysics/SceneNodes/SCPhysicsWorld.h>
+#include "PLEngine/Picking/PhysicsMouseInteraction.h"
+#include "PLEngine/Picking/SNPhysicsMouseInteraction.h"
 
 
 //[-------------------------------------------------------]
@@ -47,7 +47,8 @@ using namespace PLMath;
 using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
-namespace PLPhysics {
+using namespace PLPhysics;
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -448,4 +449,4 @@ void SNPhysicsMouseInteraction::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine

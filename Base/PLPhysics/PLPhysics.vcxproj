@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -127,7 +127,7 @@ copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -142,7 +142,7 @@ copy build\debug\PLPhysicsD.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -167,7 +167,7 @@ copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -187,7 +187,7 @@ copy build\debug64\PLPhysicsD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysics.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -216,7 +216,7 @@ copy build\release\PLPhysics.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;../PLScene/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLPHYSICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -232,7 +232,7 @@ copy build\release\PLPhysics.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysics64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -277,13 +277,11 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\SensorAABoundingBox.cpp" />
     <ClCompile Include="src\SensorRaycast.cpp" />
     <ClCompile Include="src\World.cpp" />
-    <ClCompile Include="src\SceneNodes\PhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\SceneNodes\RagdollBody.cpp" />
     <ClCompile Include="src\SceneNodes\RagdollJoint.cpp" />
     <ClCompile Include="src\SceneNodes\RagdollLoader.cpp" />
     <ClCompile Include="src\SceneNodes\RagdollLoaderPL.cpp" />
     <ClCompile Include="src\SceneNodes\SCPhysicsWorld.cpp" />
-    <ClCompile Include="src\SceneNodes\SNPhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\SceneNodes\SNRagdoll.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\PhysicsCharacterController.cpp" />
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysics.cpp" />
@@ -343,13 +341,11 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLPhysics\SensorAABoundingBox.h" />
     <ClInclude Include="include\PLPhysics\SensorRaycast.h" />
     <ClInclude Include="include\PLPhysics\World.h" />
-    <ClInclude Include="include\PLPhysics\SceneNodes\PhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollBody.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollJoint.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollLoader.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollLoaderPL.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\SCPhysicsWorld.h" />
-    <ClInclude Include="include\PLPhysics\SceneNodes\SNPhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLPhysics\SceneNodes\SNRagdoll.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\PhysicsCharacterController.h" />
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysics.h" />
@@ -381,36 +377,6 @@ copy build\release64\PLPhysics64.lib ..\..\Bin\Lib\
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGraphics\PLGraphics.vcxproj">
-      <Project>{46f614f4-fa79-4a0f-a17e-b888a4878465}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLMath\PLMath.vcxproj">
-      <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLInput\PLInput.vcxproj">
-      <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLMesh\PLMesh.vcxproj">
-      <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLRenderer\PLRenderer.vcxproj">
-      <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLScene\PLScene.vcxproj">
-      <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

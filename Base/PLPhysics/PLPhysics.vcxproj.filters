@@ -90,9 +90,6 @@
     <ClCompile Include="src\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneNodes\PhysicsMouseInteraction.cpp">
-      <Filter>SceneNodes</Filter>
-    </ClCompile>
     <ClCompile Include="src\SceneNodes\RagdollBody.cpp">
       <Filter>SceneNodes</Filter>
     </ClCompile>
@@ -106,9 +103,6 @@
       <Filter>SceneNodes</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneNodes\SCPhysicsWorld.cpp">
-      <Filter>SceneNodes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SceneNodes\SNPhysicsMouseInteraction.cpp">
       <Filter>SceneNodes</Filter>
     </ClCompile>
     <ClCompile Include="src\SceneNodes\SNRagdoll.cpp">
@@ -284,9 +278,6 @@
     <ClInclude Include="include\PLPhysics\World.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodes\PhysicsMouseInteraction.h">
-      <Filter>SceneNodes</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodes\RagdollBody.h">
       <Filter>SceneNodes</Filter>
     </ClInclude>
@@ -300,9 +291,6 @@
       <Filter>SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodes\SCPhysicsWorld.h">
-      <Filter>SceneNodes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodes\SNPhysicsMouseInteraction.h">
       <Filter>SceneNodes</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodes\SNRagdoll.h">

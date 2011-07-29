@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODES_MOUSEINTERACTION_H__
-#define __PLPHYSICS_SCENENODES_MOUSEINTERACTION_H__
+#ifndef __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__
+#define __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__
 #pragma once
 
 
@@ -30,19 +30,24 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector2i.h>
 #include <PLScene/Scene/SceneNodeHandler.h>
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLPhysics {
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Body;
-class PhysicsMouseInteraction;
+namespace PLPhysics {
+	class Body;
+}
+namespace PLEngine {
+	class PhysicsMouseInteraction;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -72,7 +77,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, SNPhysicsMouseInteraction, "PLPhysics", PLScene::SceneNode, "Mouse physics interaction scene node")
+	pl_class(PL_RTTI_EXPORT, SNPhysicsMouseInteraction, "PLEngine", PLScene::SceneNode, "Mouse physics interaction scene node")
 		// Attributes
 		pl_attribute(InputSemantic,		PLCore::String,			"",					ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",								"")
 		pl_attribute(MaxPickingRange,	float,					0.0f,				ReadWrite,	DirectValue,	"Maximum picking range, if 0.0, there's no range limit (physics container space)",	"Min='0.0'")
@@ -89,8 +94,8 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API PLCore::String GetForceLineName() const;
-		PLPHYSICS_API void SetForceLineName(const PLCore::String &sValue);
+		PL_API PLCore::String GetForceLineName() const;
+		PL_API void SetForceLineName(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -101,13 +106,13 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		*  @brief
 		*    Default constructor
 		*/
-		PLPHYSICS_API SNPhysicsMouseInteraction();
+		PL_API SNPhysicsMouseInteraction();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~SNPhysicsMouseInteraction();
+		PL_API virtual ~SNPhysicsMouseInteraction();
 
 		/**
 		*  @brief
@@ -119,22 +124,22 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		*  @return
 		*    'true' if picking is currently performed, else 'false'
 		*/
-		PLPHYSICS_API bool IsPicking(PLMath::Vector2i *pvMousePos = nullptr) const;
+		PL_API bool IsPicking(PLMath::Vector2i *pvMousePos = nullptr) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual PLInput::Controller *GetInputController() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNode functions        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLPHYSICS_API virtual void InitFunction() override;
-		PLPHYSICS_API virtual void OnActivate(bool bActivate) override;
+		PL_API virtual void InitFunction() override;
+		PL_API virtual void OnActivate(bool bActivate) override;
 
 
 	//[-------------------------------------------------------]
@@ -162,7 +167,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 		PLCore::String				m_sForceLineName;		/**< Name of the force visualization line node */
 		bool						m_bPicking;				/**< Are we currently picking? */
 		PLMath::Vector2i			m_vPickingMousePos;		/**< Mouse position used for picking */
-		Body					   *m_pPickedPhysicsBody;	/**< The currently picked physics body, can be a null pointer */
+		PLPhysics::Body			   *m_pPickedPhysicsBody;	/**< The currently picked physics body, can be a null pointer */
 		float						m_fPickedDistance;		/**< Picking distance */
 		PLMath::Vector3				m_vAttachmentPoint;		/**< Picking attachment point */
 		PLScene::SceneNodeHandler	m_cForceLineHandler;	/**< Scene handler for the physics force line */
@@ -175,7 +180,7 @@ class SNPhysicsMouseInteraction : public PLScene::SceneNode {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine
 
 
-#endif // __PLPHYSICS_SCENENODES_MOUSEINTERACTION_H__
+#endif // __PLENGINE_PICKING_SNPHYSICSMOUSEINTERACTION_H__

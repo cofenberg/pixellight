@@ -16,6 +16,10 @@
   on while the scene graph is for 3D or 2D scenes. But scenes, just data, no render instructions.
   Today, I finally had my last exam for this semester. Time to do some long time planned PixelLight refactoring to fix certain remaining issues. I'll do
   this refactoring as I always do refactoring - in small steps towards the goal instead of trying to perform a huge jump.
+- Moved "SNPhysicsMouseInteraction" from PLPhysics into PLEngine (another refactoring on this problematic "scene node" will follow)
+  -> As a side effect, PLEngine now depends on PLPhysics (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+     ... but this is probably ok because within the PLEngine project, everything comes together... and maybe this special scene node will completely disappear
+     in the feature... then this depencency can be removed again...
 
 
 

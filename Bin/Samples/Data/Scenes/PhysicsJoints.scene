@@ -45,7 +45,7 @@
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1" />
             <Modifier Class="PLPhysics::SNMPhysicsJointHinge" Target="Stick" PivotPoint="-1 1 0" PinDir="1 0 0" />
         </Node>
-        <Node Class="PLPhysics::SNPhysicsMouseInteraction" />
+        <Node Class="PLEngine::SNPhysicsMouseInteraction" />
         <Node Class="PLScene::SNLine" Name="PhysicsForceLine" Flags="Inactive" />
     </Container>
 </Scene>

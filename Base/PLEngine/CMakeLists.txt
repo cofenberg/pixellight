@@ -27,6 +27,8 @@ add_sources(
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
 	src/Picking/MousePicking.cpp
+	src/Picking/PhysicsMouseInteraction.cpp
+	src/Picking/SNPhysicsMouseInteraction.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
     src/Tools/Camcorder.cpp

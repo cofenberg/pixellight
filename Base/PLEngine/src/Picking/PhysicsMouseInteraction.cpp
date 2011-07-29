@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPhysics/SceneNodes/PhysicsMouseInteraction.h"
+#include "PLEngine/Picking/PhysicsMouseInteraction.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLInput;
-namespace PLPhysics {
+namespace PLEngine {
 
 
 //[-------------------------------------------------------]
@@ -69,4 +69,4 @@ PhysicsMouseInteraction::~PhysicsMouseInteraction()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLEngine

@@ -138,6 +138,12 @@
     <ClCompile Include="src\Compositing\SNEngineInformation.cpp">
       <Filter>Compositing</Filter>
     </ClCompile>
+    <ClCompile Include="src\Picking\SNPhysicsMouseInteraction.cpp">
+      <Filter>Picking</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Picking\PhysicsMouseInteraction.cpp">
+      <Filter>Picking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
@@ -250,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Compositing\SNEngineInformation.h">
       <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Picking\SNPhysicsMouseInteraction.h">
+      <Filter>Picking</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Picking\PhysicsMouseInteraction.h">
+      <Filter>Picking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

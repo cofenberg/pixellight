@@ -7,7 +7,7 @@
   -> Moved "SNConsole", "SNConsoleBase" from "PLScene" to "PLEngine"
   -> Moved "SNLoadScreen", "SNLoadScreenBase" and "SNLoadScreenBase" from "PLScene" to "PLEngine"
   -> More details in the PLEngine diary
-  -> As a side effect, PLScene no longer depends on PLGui
+  -> As a side effect, PLScene no longer depends on PLGui (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
 
 
 

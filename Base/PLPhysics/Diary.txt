@@ -1,3 +1,10 @@
+>> 29.07.2011
+[CO]
+- Moved "SNPhysicsMouseInteraction" from PLPhysics into PLEngine (another refactoring on this problematic "scene node" will follow)
+  -> As a side effect, PLPhysics no longer depends on PLGui (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+
+
+
 >> 28.07.2011
 [CO]
 - Bugfix: "SNMPhysicsBody::CreatePhysicsBody()" was marked with "= 0", but on the other hand, there was an implementation

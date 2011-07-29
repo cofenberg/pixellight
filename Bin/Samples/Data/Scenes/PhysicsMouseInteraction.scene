@@ -38,7 +38,7 @@
             <Modifier Class="PLScene::SNMRotationTarget" Target="Marble" />
         </Node>
         <Node Class="PLPhysics::SNRagdoll" Position="0 -2.0 -3" Scale="0.007 0.007 0.007" Name="Ragdoll" Mesh="Data/Meshes/Soldier.mesh" RagdollFilename="Data/Misc/Soldier.ragdoll" />
-        <Node Class="PLPhysics::SNPhysicsMouseInteraction" />
+        <Node Class="PLEngine::SNPhysicsMouseInteraction" />
         <Node Class="PLScene::SNLine" Name="PhysicsForceLine" Flags="Inactive" />
     </Container>
 </Scene>

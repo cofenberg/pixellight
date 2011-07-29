@@ -304,44 +304,6 @@
     <None Include="..\..\Base\PLPhysics\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGraphics\PLGraphics.vcxproj">
-      <Project>{46f614f4-fa79-4a0f-a17e-b888a4878465}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLMath\PLMath.vcxproj">
-      <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Tools\PLProject\PLProject.vcxproj">
-      <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLInput\PLInput.vcxproj">
-      <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLMesh\PLMesh.vcxproj">
-      <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLPhysics\PLPhysics.vcxproj">
-      <Project>{4156a4dd-014c-4150-9330-f975dce3bfb4}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLRenderer\PLRenderer.vcxproj">
-      <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLScene\PLScene.vcxproj">
-      <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
