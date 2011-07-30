@@ -7,6 +7,9 @@
   -> Renamed "Controller::OnActivate" into "Controller::SignalOnActivate"
   -> Renamed "Controller::OnControl" into "Controller::SignalOnControl"
   -> Renamed "Controller::OnChanged" into "Controller::SignalOnChanged"
+- "Controller::SignalOnControl" provided a pointer to "Control" without stating whether or not a null pointer can occurre (in this case you always have
+  to check for null pointer to be on the safe side). Changed it to a reference because it can never be null and this way we don't have to document or even
+  check for it.
 
 
 

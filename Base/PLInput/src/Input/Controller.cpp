@@ -354,7 +354,7 @@ void Controller::InformControl(Control *pControl)
 		}
 
 		// Emit event
-		SignalOnControl(pControl);
+		SignalOnControl(*pControl);
 
 		// Check connections
 		for (uint32 i=0; i<m_lstConnections.GetNumOfElements(); i++) {
