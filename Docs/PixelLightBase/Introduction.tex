@@ -1,0 +1,21 @@
+\chapter{Introduction}
+
+
+\paragraph{'this' Used In Constructor Initializer List}
+When you try to compile examples shown within this document, you will probably get a compiler warning like \begin{quote}warning C4355: 'this' : used in base member initializer list\end{quote}. This warning occurs because within the initializer-list, the current object denoted by \emph{this} may not be fully initialized, yet. In here, you can just ignore this warning because internally the given pointer is just stored but not yet accessed - so, there is no immediate danger in using \emph{this}. Source~code~\ref{Code:DisableThisInitializerListWarning} shows how this warning can be disabled within \emph{Microsoft Visual Studio 2010}.
+\begin{lstlisting}[float=htb,label=Code:DisableThisInitializerListWarning,caption={Disable warning when using \emph{this} within the initializer list}]
+// Disable warning
+PL_WARNING_PUSH
+PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
+
+	// Default constructor
+	MyClass::MyClass() :
+		MyInt(this),
+		MyFloat(this)
+	{
+	}
+
+// Reset to previous warning settings
+PL_WARNING_POP
+\end{lstlisting}
+While doing this for each case in a controlled way would be the clean way - it would also mean that, for each class, there would be more typing work and the code wouldn't look that compact any more. Therefore, we decided to disable this one warning by default within \emph{PLCoreWindows.h} - usually we don't do that because warnings are in general there for a good and helpful reason, but in this case the alternative wouldn't be better.

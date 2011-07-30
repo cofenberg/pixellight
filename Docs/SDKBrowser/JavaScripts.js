@@ -75,25 +75,13 @@ text_shortcut("License_cc_by_nc_sa_3",	"cc-by-nc-sa-3.txt");
 
 // Documentation shortcuts
 shortcut("Doc_ReleaseNotes",		"ReleaseNotes.txt");
-shortcut("Doc_CodingConventions",	"Docs\\CodingConventions.pdf");
 shortcut("Doc_PLFeatures",			"Docs\\PLFeatures.pdf");
-shortcut("Doc_PLCore",				"Docs\\PLCore.pdf");
-shortcut("Doc_PLMath",				"Docs\\PLMath.pdf");
-shortcut("Doc_PLGraphics",			"Docs\\PLGraphics.pdf");
-shortcut("Doc_PLScript",			"Docs\\PLScript.pdf");
-shortcut("Doc_PLDatabase",			"Docs\\PLDatabase.pdf");
-shortcut("Doc_PLGui",				"Docs\\PLGui.pdf");
-shortcut("Doc_PLInput",				"Docs\\PLInput.pdf");
-shortcut("Doc_PLRenderer",			"Docs\\PLRenderer.pdf");
-shortcut("Doc_PLMesh",				"Docs\\PLMesh.pdf");
-shortcut("Doc_PLScene",				"Docs\\PLScene.pdf");
-shortcut("Doc_PLCompositing",		"Docs\\PLCompositing.pdf");
-shortcut("Doc_PLSound",				"Docs\\PLSound.pdf");
-shortcut("Doc_PLPhysics",			"Docs\\PLPhysics.pdf");
-shortcut("Doc_PLEngine",			"Docs\\PLEngine.pdf");
+shortcut("Doc_PixelLightBase",		"Docs\\PixelLightBase.pdf");
 shortcut("Doc_PixelLightAPI",		"Docs\\PixelLightAPI.chm");
+shortcut("Doc_PLCompositing",		"Docs\\PLCompositing.pdf");
+shortcut("Doc_CodingConventions",	"Docs\\CodingConventions.pdf");
+shortcut("Doc_PLScript",			"Docs\\PLScript.pdf");
 shortcut("Doc_PL3dsMaxSceneExport",	"Docs\\PL3dsMaxSceneExport.pdf");
-shortcut("Doc_PL3dsMaxModelExport", "Docs\\PL3dsMaxModelExport.pdf");
 
 
 // Directory shortcuts
