@@ -109,7 +109,7 @@ void HttpServer::OnGet(HttpServerConnection *pConnection, const HttpHeader *pHea
 
 /**
 *  @brief
-*    An error occured
+*    An error occurred
 */
 void HttpServer::OnError(HttpServerConnection *pConnection, EHttpStatus nStatus)
 {

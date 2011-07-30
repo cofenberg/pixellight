@@ -75,7 +75,7 @@ class SNMCameraZoomController : public PLScene::SNMCameraZoom {
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slot
-		pl_slot_1(OnControl,	PLInput::Control*,	"Called when a control event has occured, the control causing the event as first parameter",	"")
+		pl_slot_1(OnControl,	PLInput::Control*,	"Called when a control event has occurred, the control causing the event as first parameter",	"")
 	pl_class_end
 
 
@@ -120,7 +120,7 @@ class SNMCameraZoomController : public PLScene::SNMCameraZoom {
 	private:
 		/**
 		*  @brief
-		*    Called when a control event has occured
+		*    Called when a control event has occurred
 		*
 		*  @param[in] pControl
 		*    The control causing the event

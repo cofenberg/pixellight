@@ -106,7 +106,7 @@ class HttpServer : public Server {
 
 		/**
 		*  @brief
-		*    An error occured
+		*    An error occurred
 		*
 		*  @param[in] pConnection
 		*    Connection

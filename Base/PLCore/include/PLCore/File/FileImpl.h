@@ -304,7 +304,7 @@ class FileImpl {
 		*    Maximum number of items to be read
 		*
 		*  @return
-		*    Number of fully read items, if != 'nCount' an error occured
+		*    Number of fully read items, if != 'nCount' an error occurred
 		*/
 		virtual uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount) = 0;
 
@@ -320,7 +320,7 @@ class FileImpl {
 		*    Maximum number of items to be written
 		*
 		*  @return
-		*    Number of fully written items, if != 'nCount' an error occured
+		*    Number of fully written items, if != 'nCount' an error occurred
 		*/
 		virtual uint32 Write(const void *pBuffer, uint32 nSize, uint32 nCount) = 0;
 

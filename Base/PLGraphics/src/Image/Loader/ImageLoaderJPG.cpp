@@ -59,12 +59,12 @@ typedef struct {
 } JpgReadStruct;
 const uint32 InputBufferSize = 4096;
 // [TODO] Error handling?
-//static bool jpgErrorOccured = false;
+//static bool jpgErrorOccurred = false;
 
 // Overrides libjpeg's stupid error/warning handlers. =P
 void ExitErrorHandle (struct jpeg_common_struct *JpegInfo)
 {
-	// jpgErrorOccured = true;
+	// jpgErrorOccurred = true;
 	return;
 }
 
@@ -87,7 +87,7 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
 	if (!nReadBytes) {
 		if (pJpgReadStruct->bStartOfFile) {
 			// Treat empty input file as fatal error
-//			jpgErrorOccured = true;
+//			jpgErrorOccurred = true;
 		}
 
 		// Insert a fake EOI marker

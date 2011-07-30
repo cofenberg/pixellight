@@ -236,7 +236,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or a null pointer if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occurred
 		*/
 		PLCORE_API XmlNode *InsertEndChild(const XmlNode &cAddThis);
 
@@ -268,7 +268,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or a null pointer if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occurred
 		*/
 		PLCORE_API XmlNode *InsertBeforeChild(XmlNode &cBeforeThis, const XmlNode &cAddThis);
 
@@ -282,7 +282,7 @@ class XmlNode : public XmlBase {
 		*    Node to insert
 		*
 		*  @return
-		*    Returns a pointer to the new object or a null pointer if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occurred
 		*/
 		PLCORE_API XmlNode *InsertAfterChild(XmlNode &cAfterThis, const XmlNode &cAddThis);
 
@@ -296,7 +296,7 @@ class XmlNode : public XmlBase {
 		*    New node replacing the old
 		*
 		*  @return
-		*    Returns a pointer to the new object or a null pointer if an error occured
+		*    Returns a pointer to the new object or a null pointer if an error occurred
 		*/
 		PLCORE_API XmlNode *ReplaceChild(XmlNode &cReplaceThis, const XmlNode &cWithThis);
 

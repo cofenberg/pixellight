@@ -258,7 +258,7 @@ class XmlDocument : public XmlNode {
 
 		/**
 		*  @brief
-		*    The column where the error occured
+		*    The column where the error occurred
 		*
 		*  @return
 		*    Column the error occurred

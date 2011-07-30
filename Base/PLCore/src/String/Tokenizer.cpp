@@ -713,7 +713,7 @@ bool Tokenizer::ParseEquation(String &sName, String &sValue, const String &sEqua
 		}
 	}
 
-	// An error has occured
+	// An error has occurred
 	PopState();
 	return false;
 }

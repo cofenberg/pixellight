@@ -104,7 +104,7 @@ void SNMCameraZoomController::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a control event has occured
+*    Called when a control event has occurred
 */
 void SNMCameraZoomController::OnControl(Control *pControl)
 {

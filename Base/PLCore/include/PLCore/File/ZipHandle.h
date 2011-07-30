@@ -303,7 +303,7 @@ class ZipHandle {
 		*    Number of items to read
 		*
 		*  @return
-		*    Number of full read items, if != 'nCount' an error occured
+		*    Number of full read items, if != 'nCount' an error occurred
 		*/
 		PLCORE_API uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount);
 

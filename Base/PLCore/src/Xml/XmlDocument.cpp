@@ -318,7 +318,7 @@ int XmlDocument::GetErrorRow() const
 
 /**
 *  @brief
-*    The column where the error occured
+*    The column where the error occurred
 */
 int XmlDocument::GetErrorColumn() const
 {

@@ -141,7 +141,7 @@ void ModSnap::OnDetach(Widget &cWidget)
 //[-------------------------------------------------------]
 void ModSnap::OnMove(const Vector2i &vPos)
 {
-	// Has a snap occured in the last cycle?
+	// Has a snap occurred in the last cycle?
 	if (m_bPerformedSnap) {
 		// Yes. Update to new position and don't do anything else this single time
 		m_vPos = vPos;

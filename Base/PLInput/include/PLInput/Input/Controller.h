@@ -82,7 +82,7 @@ class Controller : public PLCore::Object {
 		pl_attribute(Active,		bool,							true,				ReadWrite,	GetSet,	"State of controller",		"")
 		// Signals
 		pl_signal_1(OnActivate,	bool,		"Controller has been activated or deactivated",	"")
-		pl_signal_1(OnControl,	Control*,	"Control event has occured",					"")
+		pl_signal_1(OnControl,	Control*,	"Control event has occurred",					"")
 		pl_signal_0(OnChanged,				"Controller state has changed",					"")
 	pl_class_end
 
