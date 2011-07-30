@@ -46,9 +46,9 @@ add_sources(
     src/Tools/SNMPositionKeyframeRecord.cpp
     src/Tools/SNMRotationKeyframeRecord.cpp
 	src/Compositing/SNEngineInformation.cpp
-	src/Compositing/SNLoadScreenBase.cpp
-	src/Compositing/SNLoadScreenPL.cpp
-	src/Compositing/SNLoadScreen.cpp
+	src/Compositing/LoadScreen/SNLoadScreenBase.cpp
+	src/Compositing/LoadScreen/SNLoadScreenPL.cpp
+	src/Compositing/LoadScreen/SNLoadScreen.cpp
 	src/Compositing/Console/SNConsoleBase.cpp
 	src/Compositing/Console/SNConsole.cpp
 	src/Compositing/Console/ConsoleCommand.cpp
@@ -77,6 +77,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLPhysics/include
 )
 
 ##################################################
@@ -98,6 +99,7 @@ add_libs(
 	PLRenderer
 	PLMesh
 	PLScene
+	PLPhysics
 )
 if(WIN32)
 	##################################################
@@ -178,7 +180,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLPhysics)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
