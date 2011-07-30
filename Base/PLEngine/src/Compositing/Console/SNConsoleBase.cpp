@@ -29,6 +29,7 @@
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Keyboard.h>
 #include <PLScene/Scene/SceneContext.h>
+#include "PLEngine/Application/RenderApplication.h"
 #include "PLEngine/Compositing/Console/ConsoleDefaultCommands.h"
 #include "PLEngine/Compositing/Console/ConsoleCommand.h"
 #include "PLEngine/Compositing/Console/SNConsoleBase.h"
@@ -233,7 +234,7 @@ void SNConsoleBase::ProcessKeyMessage()
 {
 	// Check if input is active
 	// [TODO] Don't use devices directly, use a virtual controller instead
-	Controller *pController = reinterpret_cast<Controller*>(GetSceneContext()->GetDefaultInputController());
+	Controller *pController = reinterpret_cast<Controller*>(static_cast<RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
 	if ((pController && pController->GetActive()) || !pController) {
 		// Get keyboard input device
 		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();

@@ -247,9 +247,6 @@ bool SceneApplication::Init()
 			// Create scene context
 			m_pSceneContext = new SceneContext(*pRendererContext);
 
-			// Set default input controller
-			m_pSceneContext->SetDefaultInputController(GetInputController());
-
 			// Connect the input controller found event handler to the corresponding scene context event
 			InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
 

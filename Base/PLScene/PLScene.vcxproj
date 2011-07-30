@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -105,7 +105,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSceneD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,7 +128,7 @@ copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -144,7 +144,7 @@ copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;PLMeshD64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSceneD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -169,7 +169,7 @@ copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -189,7 +189,7 @@ copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScene.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -218,7 +218,7 @@ copy build\release\PLScene.lib ..\..\Bin\Lib\
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLInput/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLRenderer/include/;../PLMesh/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLSCENE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -234,7 +234,7 @@ copy build\release\PLScene.lib ..\..\Bin\Lib\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLMesh64.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScene64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -509,10 +509,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     </ProjectReference>
     <ProjectReference Include="..\..\Base\PLMath\PLMath.vcxproj">
       <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLInput\PLInput.vcxproj">
-      <Project>{40522b50-4dac-47ef-beb9-f519ee6fec3e}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\PLMesh\PLMesh.vcxproj">

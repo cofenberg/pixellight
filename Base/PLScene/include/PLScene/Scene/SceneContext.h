@@ -42,9 +42,6 @@ namespace PLRenderer {
 namespace PLMesh {
 	class MeshManager;
 }
-namespace PLInput {
-	class VirtualController;
-}
 namespace PLScene {
 	class SceneNode;
 	class VisManager;
@@ -174,24 +171,6 @@ class SceneContext {
 		*/
 		PLS_API VisManager &GetVisManager();
 
-		/**
-		*  @brief
-		*    Get default virtual input controller
-		*
-		*  @return
-		*    Virtual input controller (can be a null pointer)
-		*/
-		PLS_API PLInput::VirtualController *GetDefaultInputController() const;
-
-		/**
-		*  @brief
-		*    Set default virtual input controller
-		*
-		*  @param[in] pInputController
-		*    Virtual input controller (can be a null pointer)
-		*/
-		PLS_API void SetDefaultInputController(PLInput::VirtualController *pInputController);
-
 
 		//[-------------------------------------------------------]
 		//[ Processing                                            ]
@@ -264,15 +243,14 @@ class SceneContext {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::RendererContext  *m_pRendererContext;			/**< The used renderer context, not destroyed by the scene context (always valid!) */
-		PLMesh::MeshManager			 *m_pMeshManager;				/**< The mesh manager, can be a null pointer */
-		SceneNodeHandler			 *m_pRoot;						/**< The root of the scene graph (always valid!) */
-		PLCore::Array<SceneNode*>	  m_lstDeleteNodes;				/**< List of scene nodes to delete */
-		SceneRendererManager		 *m_pSceneRendererManager;		/**< Scene renderer manager, can be a null pointer */
-		VisManager					 *m_pVisManager;				/**< Visibility manager, can be a null pointer */
-		bool						  m_bProcessActive;				/**< Is there currently an active process? */
-		PLCore::uint32				  m_nProcessCounter;			/**< Internal process counter */
-		PLInput::VirtualController	 *m_pDefaultInputController;	/**< Default input controller, can be a null pointer */
+		PLRenderer::RendererContext  *m_pRendererContext;		/**< The used renderer context, not destroyed by the scene context (always valid!) */
+		PLMesh::MeshManager			 *m_pMeshManager;			/**< The mesh manager, can be a null pointer */
+		SceneNodeHandler			 *m_pRoot;					/**< The root of the scene graph (always valid!) */
+		PLCore::Array<SceneNode*>	  m_lstDeleteNodes;			/**< List of scene nodes to delete */
+		SceneRendererManager		 *m_pSceneRendererManager;	/**< Scene renderer manager, can be a null pointer */
+		VisManager					 *m_pVisManager;			/**< Visibility manager, can be a null pointer */
+		bool						  m_bProcessActive;			/**< Is there currently an active process? */
+		PLCore::uint32				  m_nProcessCounter;		/**< Internal process counter */
 
 
 };

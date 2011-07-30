@@ -31,7 +31,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLInput;
 namespace PLScene {
 
 
@@ -124,7 +123,7 @@ void SceneNodeModifier::SetActive(bool bActive)
 *  @brief
 *    Get input controller
 */
-Controller *SceneNodeModifier::GetInputController() const
+PLInput::Controller *SceneNodeModifier::GetInputController() const
 {
 	// The default implementation is empty
 	return nullptr;

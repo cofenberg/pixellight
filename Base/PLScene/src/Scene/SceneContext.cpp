@@ -28,7 +28,6 @@
 #include <PLCore/Tools/Profiling.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLMesh/MeshManager.h>
-#include <PLInput/Input/Virtual/VirtualController.h>
 #include "PLScene/Scene/SceneContainer.h"
 #include "PLScene/Scene/SceneNodeHandler.h"
 #include "PLScene/Visibility/VisManager.h"
@@ -42,7 +41,6 @@
 using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLMesh;
-using namespace PLInput;
 namespace PLScene {
 
 
@@ -60,8 +58,7 @@ SceneContext::SceneContext(RendererContext &cRendererContext) :
 	m_pSceneRendererManager(nullptr),
 	m_pVisManager(nullptr),
 	m_bProcessActive(false),
-	m_nProcessCounter(0),
-	m_pDefaultInputController(nullptr)
+	m_nProcessCounter(0)
 {
 }
 
@@ -208,24 +205,6 @@ VisManager &SceneContext::GetVisManager()
 	if (!m_pVisManager)
 		m_pVisManager = new VisManager();
 	return *m_pVisManager;
-}
-
-/**
-*  @brief
-*    Get default virtual input controller
-*/
-VirtualController *SceneContext::GetDefaultInputController() const
-{
-	return m_pDefaultInputController;
-}
-
-/**
-*  @brief
-*    Set default virtual input controller
-*/
-void SceneContext::SetDefaultInputController(VirtualController *pInputController)
-{
-	m_pDefaultInputController = pInputController;
 }
 
 /**

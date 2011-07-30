@@ -1,7 +1,11 @@
 >> 30.07.2011
 [CO]
 - Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"
-
+- "SceneContext": Removed "GetDefaultInputController()" and "SetDefaultInputController()"... the applicaton controller provided by the application framework
+  should be sufficient
+  -> As a side effect, PLScene no longer depends on PLInput (see "Docs\Diagrams\PixelLight_PackageDiagram.png")
+  -> "SceneNode::GetInputController()" & "SceneNodeModifier::GetInputController()" is still there, but it doesn't add a dependency between the projects because
+     only a forward declaration is used
 
 
 
