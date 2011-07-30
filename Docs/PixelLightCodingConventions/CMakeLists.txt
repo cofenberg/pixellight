@@ -1,12 +1,12 @@
 ##################################################
 ## Project
 ##################################################
-cmaketools_doc_project(PLFeatures)
+cmaketools_doc_project(PixelLightCodingConventions)
 
 ##################################################
 ## Latex document
 ##################################################
-cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PLFeatures.tex)
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLightCodingConventions.tex)
 
 ##################################################
 ## PDF document
@@ -16,7 +16,7 @@ cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-PLFeatures)
+add_dependencies(Docs Docs-PixelLightCodingConventions)
 
 ##################################################
 ## Post-Build

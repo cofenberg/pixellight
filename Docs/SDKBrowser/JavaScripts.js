@@ -74,14 +74,14 @@ text_shortcut("License_cc_by_nc_sa_3",	"cc-by-nc-sa-3.txt");
 
 
 // Documentation shortcuts
-shortcut("Doc_ReleaseNotes",		"ReleaseNotes.txt");
-shortcut("Doc_PLFeatures",			"Docs\\PLFeatures.pdf");
-shortcut("Doc_PixelLightBase",		"Docs\\PixelLightBase.pdf");
-shortcut("Doc_PixelLightAPI",		"Docs\\PixelLightAPI.chm");
-shortcut("Doc_PLCompositing",		"Docs\\PLCompositing.pdf");
-shortcut("Doc_CodingConventions",	"Docs\\CodingConventions.pdf");
-shortcut("Doc_PLScript",			"Docs\\PLScript.pdf");
-shortcut("Doc_PL3dsMaxSceneExport",	"Docs\\PL3dsMaxSceneExport.pdf");
+shortcut("Doc_ReleaseNotes",				"ReleaseNotes.txt");
+shortcut("Doc_PixelLightFeatures",			"Docs\\PixelLightFeatures.pdf");
+shortcut("Doc_PixelLightBase",				"Docs\\PixelLightBase.pdf");
+shortcut("Doc_PixelLightAPI",				"Docs\\PixelLightAPI.chm");
+shortcut("Doc_PixelLightCompositing",		"Docs\\PixelLightCompositing.pdf");
+shortcut("Doc_PixelLightCodingConventions",	"Docs\\PixelLightCodingConventions.pdf");
+shortcut("Doc_PixelLightScript",			"Docs\\PixelLightScript.pdf");
+shortcut("Doc_PixelLight3dsMaxSceneExport",	"Docs\\PixelLight3dsMaxSceneExport.pdf");
 
 
 // Directory shortcuts

@@ -472,7 +472,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 							pszBuffer[nLength] = '\0';
 
 							// Construct the absolute filename
-							sDocumentFile = std::string(pszBuffer) + "Doc\\PL3dsMaxSceneExport.pdf";
+							sDocumentFile = std::string(pszBuffer) + "Docs\\PixelLight3dsMaxSceneExport.pdf";
 						}
 
 						// Cleanup

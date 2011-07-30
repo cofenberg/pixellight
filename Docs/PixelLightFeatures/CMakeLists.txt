@@ -1,12 +1,12 @@
 ##################################################
 ## Project
 ##################################################
-cmaketools_doc_project(PL3dsMaxSceneExport)
+cmaketools_doc_project(PixelLightFeatures)
 
 ##################################################
 ## Latex document
 ##################################################
-cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PL3dsMaxSceneExport.tex)
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLightFeatures.tex)
 
 ##################################################
 ## PDF document
@@ -16,7 +16,7 @@ cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-PL3dsMaxSceneExport)
+add_dependencies(Docs Docs-PixelLightFeatures)
 
 ##################################################
 ## Post-Build

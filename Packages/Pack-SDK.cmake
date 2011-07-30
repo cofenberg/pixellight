@@ -101,13 +101,13 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		CreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Tools\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Tools\\\\PLViewer.lnk\\\" \\\"$INSTDIR\\\\Tools\\\\Bin\\\\PLViewer\\\\PLViewer${PROJECT_SUFFIX}.exe\\\"
 		CreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PLFeatures.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PLFeatures.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightFeatures.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightFeatures.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightBase.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightBase.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightAPI.chm.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightAPI.chm\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PLCompositing.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PLCompositing.pdf\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\CodingConventions.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\CodingConventions.pdf\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PLScript.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PLScript.pdf\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PL3dsMaxSceneExport.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PL3dsMaxSceneExport.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightCompositing.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightCompositing.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightCodingConventions.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightCodingConventions.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightScript.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightScript.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLight3dsMaxSceneExport.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLight3dsMaxSceneExport.pdf\\\"
 	")
 
 	# Delete icons
@@ -136,13 +136,13 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		RMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Samples\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Tools\\\\PLViewer.lnk\\\"
 		RMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Tools\\\"
-		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PLFeatures.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightFeatures.pdf.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightBase.pdf.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightAPI.chm.lnk\\\"
-		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PLCompositing.pdf.lnk\\\"
-		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\CodingConventions.pdf.lnk\\\"
-		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PLScript.pdf.lnk\\\"
-		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PL3dsMaxSceneExport.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightCompositing.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightCodingConventions.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightScript.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLight3dsMaxSceneExport.pdf.lnk\\\"
 		RMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\"
 	")
 

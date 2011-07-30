@@ -1,12 +1,12 @@
 ##################################################
 ## Project
 ##################################################
-cmaketools_doc_project(CodingConventions)
+cmaketools_doc_project(PixelLightScript)
 
 ##################################################
 ## Latex document
 ##################################################
-cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} CodingConventions.tex)
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLightScript.tex)
 
 ##################################################
 ## PDF document
@@ -16,7 +16,7 @@ cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-CodingConventions)
+add_dependencies(Docs Docs-PixelLightScript)
 
 ##################################################
 ## Post-Build

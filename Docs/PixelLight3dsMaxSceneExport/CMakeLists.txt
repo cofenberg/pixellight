@@ -1,12 +1,12 @@
 ##################################################
 ## Project
 ##################################################
-cmaketools_doc_project(PLCompositing)
+cmaketools_doc_project(PixelLight3dsMaxSceneExport)
 
 ##################################################
 ## Latex document
 ##################################################
-cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PLCompositing.tex)
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLight3dsMaxSceneExport.tex)
 
 ##################################################
 ## PDF document
@@ -16,7 +16,7 @@ cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-PLCompositing)
+add_dependencies(Docs Docs-PixelLight3dsMaxSceneExport)
 
 ##################################################
 ## Post-Build

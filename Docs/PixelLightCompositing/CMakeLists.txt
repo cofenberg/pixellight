@@ -1,12 +1,12 @@
 ##################################################
 ## Project
 ##################################################
-cmaketools_doc_project(PLScript)
+cmaketools_doc_project(PixelLightCompositing)
 
 ##################################################
 ## Latex document
 ##################################################
-cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PLScript.tex)
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLightCompositing.tex)
 
 ##################################################
 ## PDF document
@@ -16,7 +16,7 @@ cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-PLScript)
+add_dependencies(Docs Docs-PixelLightCompositing)
 
 ##################################################
 ## Post-Build
