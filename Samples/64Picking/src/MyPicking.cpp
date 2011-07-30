@@ -81,7 +81,7 @@ MyPicking::~MyPicking()
 void MyPicking::PerformPicking()
 {
 	// Get the default input controller of the application
-	Controller *pController = reinterpret_cast<Controller*>(m_pApplication->GetSceneContext()->GetDefaultInputController());
+	Controller *pController = reinterpret_cast<Controller*>(m_pApplication->GetInputController());
 	if ((pController && pController->GetActive()) || !pController) {
 		// Get the "MouseLeft" control
 		Control *pControl = pController->GetControl("MouseLeft");

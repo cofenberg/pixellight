@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
+#include <PLInput/Input/InputManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQAABoundingBox.h>
@@ -230,7 +231,7 @@ void SNGun::InitFunction()
 	SNSound::InitFunction();
 
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
+	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNGun::OnActivate(bool bActivate)

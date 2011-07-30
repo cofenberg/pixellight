@@ -1,3 +1,10 @@
+>> 30.07.2011
+[CO]
+- Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"
+
+
+
+
 >> 29.07.2011
 [CO]
 - Started the roadmap-point (http://www.pixellight.org/site/index.php/page/Roadmap.html) "Make elements like ingame GUI, ingame console and load

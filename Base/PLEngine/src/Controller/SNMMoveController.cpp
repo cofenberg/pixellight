@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
+#include <PLInput/Input/InputManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLEngine/Controller/MoveController.h"
 #include "PLEngine/Controller/SNMMoveController.h"
@@ -86,7 +87,7 @@ Controller *SNMMoveController::GetInputController() const
 void SNMMoveController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
+	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNMMoveController::OnActivate(bool bActivate)

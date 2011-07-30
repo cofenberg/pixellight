@@ -1,3 +1,9 @@
+>> 30.07.2011
+[CO]
+- Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"
+
+
+
 /*********************************************************\
  *  The entries below are in German only
 \*********************************************************/

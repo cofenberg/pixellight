@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLInput/Input/InputManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLEngine/Controller/CameraZoomController.h"
 #include "PLEngine/Controller/SNMCameraZoomController.h"
@@ -85,7 +86,7 @@ Controller *SNMCameraZoomController::GetInputController() const
 void SNMCameraZoomController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
+	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNMCameraZoomController::OnActivate(bool bActivate)

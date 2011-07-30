@@ -43,7 +43,6 @@ namespace PLMesh {
 	class MeshManager;
 }
 namespace PLInput {
-	class Controller;
 	class VirtualController;
 }
 namespace PLScene {
@@ -81,8 +80,7 @@ class SceneContext {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<PLInput::Controller*, PLCore::String>	EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
-		PLCore::Event<>										EventUpdate;				/**< Scene context update event */
+		PLCore::Event<>	EventUpdate;	/**< Scene context update event */
 
 
 	//[-------------------------------------------------------]

@@ -308,7 +308,7 @@ class SceneApplication : public RenderApplication {
 		*    Use this virtual method for instance to connect the input controller to real input devices.
 		*
 		*  @note
-		*    - Connected to the "PLScene::SceneContext::EventInputControllerFound"-event
+		*    - Connected to the "PLInput::InputManager::EventInputControllerFound"-event
 		*    - The default implementation tries to connect all controls automatically with the virtual standard controller
 		*/
 		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);

@@ -26,6 +26,7 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLGui/Widgets/Widget.h>
 #include <PLGui/Application/GuiApplication.h>
+#include <PLInput/Input/InputManager.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/SurfaceWindow.h>
 #include <PLScene/Scene/SNCamera.h>
@@ -138,7 +139,7 @@ void SNPhysicsMouseInteraction::InitFunction()
 	SceneNode::InitFunction();
 
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
+	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNPhysicsMouseInteraction::OnActivate(bool bActivate)

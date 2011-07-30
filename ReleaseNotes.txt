@@ -9,8 +9,8 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: Merged "Demos" into "Samples" in order to simplify the structure of PixelLight
 - Change: Merged "PLGeneral" into "PLCore" in order to simplify the structure of PixelLight
 - Change: "PLCore::Url": Renamed "GetTitle()" into "GetCompleteTitle()" and added some more filename title/extension related methods
-- Change: Moved "SNMPhysicsCharacter" and "SNMPhysicsCharacterController", primary intended for fast prototyping, from "PLPhysics" into "PLEngine"
-- Change: Moved "SNMCameraZoomController", "SNMLookController", "SNMMoveController" and "SNMOrbitingController" from "PLScene" to "PLEngine"
+- Change: Moved "SNMPhysicsCharacter" and "SNMPhysicsCharacterController", primary intended for rapid prototyping, from "PLPhysics" into "PLEngine"
+- Change: Moved "SNMCameraZoomController", "SNMLookController", "SNMMoveController" and "SNMOrbitingController", primary intended for rapid prototyping, from "PLScene" to "PLEngine"
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
 
 

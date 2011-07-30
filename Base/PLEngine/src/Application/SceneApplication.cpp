@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -250,7 +251,7 @@ bool SceneApplication::Init()
 			m_pSceneContext->SetDefaultInputController(GetInputController());
 
 			// Connect the input controller found event handler to the corresponding scene context event
-			m_pSceneContext->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
+			InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
 
 			// Create root scene
 			OnCreateRootScene();

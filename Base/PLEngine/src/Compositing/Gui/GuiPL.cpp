@@ -210,7 +210,7 @@ void GuiPL::Render()
 void GuiPL::Update()
 {
 	// Check if input is active
-	// [TODO] Don't use devices directly, use a virtual controller instead and use "PLScene::SceneContext::EventInputControllerFound"
+	// [TODO] Don't use devices directly, use a virtual controller instead and use "PLInput::InputManager::EventInputControllerFound"
 	if ((m_pInputController && m_pInputController->GetActive()) || !m_pInputController) {
 		// Update the ingame GUI keyboard
 		UpdateKeyboard();

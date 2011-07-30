@@ -48,6 +48,7 @@ namespace PLInput {
 	class Keyboard;
 	class Mouse;
 	class Control;
+	class Controller;
 }
 
 
@@ -83,7 +84,8 @@ class InputManager : public PLCore::Singleton<InputManager> {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<bool>	EventOnDetectDevices;	/**< Called when device detection has started or stopped */
+		PLCore::Event<bool>							EventOnDetectDevices;		/**< Called when device detection has started or stopped */
+		PLCore::Event<Controller*, PLCore::String>	EventInputControllerFound;	/**< An input controller has been found. Use this event to for instance connect the input controller to real input devices. Found input controller as first parameter, input semantic as second parameter. */
 
 
 	//[-------------------------------------------------------]

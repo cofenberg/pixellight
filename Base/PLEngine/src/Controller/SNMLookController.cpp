@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
+#include <PLInput/Input/InputManager.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLEngine/Controller/LookController.h"
 #include "PLEngine/Controller/SNMLookController.h"
@@ -89,7 +90,7 @@ Controller *SNMLookController::GetInputController() const
 void SNMLookController::InformedOnInit()
 {
 	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	GetSceneNode().GetSceneContext()->EventInputControllerFound(m_pController, InputSemantic);
+	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
 }
 
 void SNMLookController::OnActivate(bool bActivate)
