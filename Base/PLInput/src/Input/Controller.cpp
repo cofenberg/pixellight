@@ -126,7 +126,7 @@ void Controller::SetActive(bool bActive)
 		m_bActive = bActive;
 
 		// Emit event
-		OnActivate(m_bActive);
+		SignalOnActivate(m_bActive);
 	}
 }
 
@@ -354,7 +354,7 @@ void Controller::InformControl(Control *pControl)
 		}
 
 		// Emit event
-		OnControl(pControl);
+		SignalOnControl(pControl);
 
 		// Check connections
 		for (uint32 i=0; i<m_lstConnections.GetNumOfElements(); i++) {
