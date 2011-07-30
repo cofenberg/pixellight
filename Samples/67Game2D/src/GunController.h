@@ -54,10 +54,10 @@ class GunController : public PLInput::Controller {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	X;			/**< X rotation axis */
-		PLInput::Button	Left;		/**< Move (rotate) left */
-		PLInput::Button	Right;		/**< Move (rotate) right */
-		PLInput::Button	Fire;		/**< Fire gun */
+		PLInput::Axis	X;		/**< X rotation axis */
+		PLInput::Button	Left;	/**< Move (rotate) left */
+		PLInput::Button	Right;	/**< Move (rotate) right */
+		PLInput::Button	Fire;	/**< Fire gun */
 
 
 	//[-------------------------------------------------------]

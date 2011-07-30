@@ -5,6 +5,7 @@
 - Renamed "PLCompositing"->"PixelLightCompositing", "PLScript"->"PixelLightScript", "PLFeatures"->"PixelLightFeatures", "CodingConventions"->"PixelLightCodingConventions",
   "PL3dsMaxSceneExport"->"PixelLight3dsMaxSceneExport"... those documents are also available online at http://www.pixellight.org/site/index.php/page/17.html and by having "PixelLight" in
   front of the filename, I hope it's easier to figure out the purpose of downloaded documents by just looking at the filename...
+- "PixelLightScript": Added "PLInput RTTI classes"
 
 
 

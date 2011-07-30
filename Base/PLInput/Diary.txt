@@ -1,6 +1,8 @@
 >> 30.07.2011
 [CO]
 - Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"
+- Connected "Control" to the RTTI as well as the derived classes "Axis", "Button", "Effect" and "LED" (meaning they can now be used e.g. by scripts)
+  -> The Lua script used by the dungeon demo is now using PLInput instead of PLGui to get and process input events
 
 
 
