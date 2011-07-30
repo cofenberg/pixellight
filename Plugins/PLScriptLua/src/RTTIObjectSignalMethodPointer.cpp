@@ -179,6 +179,7 @@ void RTTIObjectSignalMethodPointer::EventCallback(DynParams &cDynParams, void *p
 					case TypeUInt8:		lua_pushinteger(pLuaState,							*static_cast<uint8*> (cDynParams.GetPointerToParameterValue(i)));	break;
 
 					// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
+					case TypeRef:
 					case TypePtr:
 					case TypeObjectPtr:
 						RTTIObjectPointer::LuaStackPush(*pScript, *static_cast<Object**>(cDynParams.GetPointerToParameterValue(i)));
