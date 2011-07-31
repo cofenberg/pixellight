@@ -1,7 +1,4 @@
-\chapter{Scene renderer}
-
-
-\paragraph{PixelLight Scene Renderer System}
+\chapter{Scene Renderer}
 The scene renderer system of PixelLight consists of several render passes. One can add or remove scene renderer passes as wanted. The scene renderer passes can be categorized in the following way:
 \begin{itemize}
 \item{Fixed function: For legacy hardware without shader support and just fixed build in graphics features}
@@ -13,7 +10,7 @@ This document only describes the deferred scene renderer of PixelLight.
 
 
 
-\section{Deferred scene renderer}
+\section{Deferred Scene Renderer}
 The deferred scene renderer of PixelLight is, like other PixelLight scene renderer implementations, a collection of render passes working together to form the render pipeline. This scene renderer is using \emph{Image Based Lighting} (IBL) and requires Shader 3.0 as a minimum. The XML-file \emph{DeferredRendering.sr} describes the render passes to use and their order.
 \begin{itemize}
 \item{PLScene::SRPBegin (independent from the deferred scene renderer)}
@@ -78,7 +75,7 @@ Table ~\ref{Table:GBufferLayout}.
 By default, the GBuffer is using FP16 render targets - but FP32 render targets can be enabled as well.
 
 
-\paragraph{Stencil buffer}
+\paragraph{Stencil Buffer}
 By default, the \emph{PLCompositing::SRPDeferredGBuffer} scene renderer pass writes into the stencil buffer whether or not a pixel has valid content. 1 within the stencil buffer means: The GBuffer has no information about the pixel because no geometry is covering it. Later on, for example within the \emph{PLCompositing::SRPDeferredAmbient} scene render pass, this stencil buffer information can be used to draw only pixels with valid GBuffer content, everything else is not drawn. This is quite useful if there's for example a bitmap or sky already drawn and should remain in the \emph{background}.
 
 
@@ -90,7 +87,7 @@ Parallax Mapping as described in \url{http://www8.cs.umu.se/kurser/5DV051/VT09/l
 Two-sided polygons are handled when filling the GBuffer by drawing the mesh a second time, but with flipped normal vectors. This is a simple, universal and robust way to solve this problem. As a result, there's no need to implement special two-sided lighting in later render passes.
 
 
-\paragraph{Gamma correction}
+\paragraph{Gamma Correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the material parameters \emph{DiffuseMap}, \emph{LightMap}, \emph{EmissiveMap} and \emph{ReflectionMap}. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::GBufferGammaCorrection} shows how the used gamma correction technique.
 \begin{lstlisting}[float=htb,label=Code::GBufferGammaCorrection,caption={GBuffer gamma correction}]
@@ -175,7 +172,7 @@ Lighting, wich is not connected to a particular realtime light, is also rendered
 As BRDF model, Blinn-Phong with half vector specular highlights was chosen.
 
 
-\paragraph{Gamma correction}
+\paragraph{Gamma Correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the texture maps of projective light sources. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::LightingGammaCorrection} shows how the used gamma correction technique.
 \begin{lstlisting}[float=htb,label=Code::LightingGammaCorrection,caption={GBuffer gamma correction}]
@@ -185,7 +182,7 @@ float3 linearRGBColor = pow(sRGBColor, 2.2);
 
 
 
-\section{Post process effects}
+\section{Post Process Effects}
 PixelLight comes with a compact and comfortable post processing (is also called 'image processing') system. For image processing like bloom the scene is rendered into a texture instead the usual output. Then the post processing manager is taking this texture and applies different effects on it. At the end you will receive the final composition you can draw on screen using for instance a full screen rectangle. In today's hardware, high dynamic range (HDR) rendering must also be  implemented as image processing because of the lack of the output devices like monitor to display such HDR data directly. Therefore this HDR data must be mapped to the 'usual' RGB data using tone mapping.
 
 The post processing system of PixelLight can be subdivided into two categories:
@@ -319,7 +316,7 @@ Here's a list of some provided post processing effects defined within PLPostProc
 
 
 
-\subsubsection{Post process file format}
+\subsubsection{Post Process File Format}
 Here's a short post process file ('pp' extension) example:
 
 \begin{lstlisting}[caption=Post process file example]

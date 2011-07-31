@@ -3,7 +3,7 @@
 
 
 
-\section{Keep it simple!}
+\section{Keep it Simple!}
 The world is complicated enough - if there are multiple solutions, prefer the simplest over the most complicated one! This way, the chances are high that other will understand the solution as well as you when looking at the code some years later.
 
 
@@ -15,13 +15,13 @@ We work with multiple operation systems so we have to take into account \emph{ho
 
 
 
-\section{File extension}
+\section{File Extension}
 First of all, we use the old fashion \emph{.h}-file extension to mark header files - \emph{hpp} would be the \emph{correct} extension for C++, but it's not widely used. Usually, we outsource inline implementations into files with an \emph{inl}-extension to keep the header files good readable. For source codes, we use the file extension \emph{cpp}.
 
 
 
 
-\section{C++0x language features}
+\section{C++0x Language Features}
 Using C++0x language features is fine as long as
 \begin{itemize}
 \item{It's possible to emulate, or at least deactivate the feature within compilers don't supporting it (yet)}
@@ -39,7 +39,7 @@ Currently the following C++0x language features are used:
 
 
 
-\section{For-scope}
+\section{For-Scope}
 Within the PixelLight projects, the \emph{for-scope} is active by default. The following for instance will produce a compiler error:
 \begin{lstlisting}[caption=for-scope]
 for (int i=0; i<1; i++) {
@@ -51,7 +51,7 @@ i = 20;  // i has already gone out of scope
 
 
 
-\section{Null pointer}
+\section{Null Pointer}
 For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
 
 \begin{lstlisting}[caption=Null pointer]
@@ -61,7 +61,7 @@ char *pszMyString = nullptr;
 
 
 
-\section{Overwriting methods}
+\section{Overwriting Methods}
 Put the methods within the base class, which are allowed to be overwritten, into a separate code block so everyone is able to find them at once.
 \begin{lstlisting}[caption=Virtual methods within a base class]
 //[-------------------------------------------------------]
@@ -91,7 +91,7 @@ GCC, the GNU compiler, offers an option called \emph{-Wold-style-cast} to let th
 
 
 
-\section{Const correctness}
+\section{Const Correctness}
 Define functions, variables etc. whenever possible to be constant. By giving the compiler this hint, it may be possible to use special optimizations or uncover bugs within the implementation.
 
 There's one situation were we do not use \emph{const} - when dealing with function parameters because
@@ -143,7 +143,7 @@ Try to avoid using \emph{using namespace} too often or this will result in name 
 
 
 
-\section{Dynamic parameters}
+\section{Dynamic Parameters}
 When dynamic parameters are used and the name of the parameters inside a string is irrelevant, as this is the case for \emph{PLCore::Params::FromString}, the parameters are named using \emph{Param<x>} were x starts with $0$ (example: \emph{Param0=1 Param1=''Hello''}).  
 
 
@@ -240,19 +240,19 @@ We recommend you to use the PixelLight name convention and marking debug version
 
 
 
-\section{Events and signals}
+\section{Events and Signals}
 As soon as an event is inside a class, we refer to it as \emph{signal}. As such, the prefix \emph{Event} like within \emph{EventKeyDown} is used outside classes while prefix \emph{Signal} like within \emph{SignalKeyDown} is used inside classes.
 
 
 
 
-\section{Event handlers and slots}
+\section{Event Handlers and Slots}
 Within our name convention for event handlers and RTTI slot names, there's a \emph{On} within for example \emph{OnMyEvent} indicating that this is a handler/slot method. The other part of the name consists of the name of the event/signal - for \emph{OnMyEvent} this would be an event/signal with the name \emph{MyEvent}.
 
 
 
 
-\section{RTTI interface}
+\section{RTTI Interface}
 Within PixelLight, the RTTI class properties and members are always defined in the following order:
 \begin{itemize}
 \item Properties
@@ -293,7 +293,7 @@ pl_class_end
 
 
 
-\section{Reuseability and adding new stuff}
+\section{Reuseability and adding new Stuff}
 Before you add new classes, functions an so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
 
 Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does NOT mean that it's possible to copy'n'past it and then hacking around for a certain project! Reuseability means that it's possible to directly reuse, to share, something between multiple projects in a quite universal way without the need to enhance and hack around constantly!

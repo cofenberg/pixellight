@@ -3,7 +3,7 @@
 
 
 
-\subsection{String class}
+\subsection{String Class}
 Sequences of characters, also called \emph{strings}, are often used and frequently come with some nasty features like memory leaks, buffer overruns (security risk!) or even crash's if you are not careful. Also dealing with Unicode is normally not that much fun\ldots so we wrote a comfortable string class making our and especially your life much easier!
 
 Because strings are quite fundamental, there are several optimizations in place to make dealing with strings as fast as possible. The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be ASCII OR Unicode in a quite flexible way. To enhance the string performance, the internal string buffers are managed by a string buffer manager to avoid to many memory allocations/deallocations. For an additional performance improvement, memory is traded for speed, meaning that additional characters are allocated within the internal string buffer manager for future use. This way, appending new characters to a string is usually quite fast.
@@ -63,11 +63,11 @@ To make it even more interesting, there's a compiler flag called "wchar\_t is tr
 So, be carefully when using \emph{wchar\_t} to serialize data or to pass strings to other libraries, or better, don't do it and use UTF8 instead!
 
 
-\paragraph{Single characters}
+\paragraph{Single Characters}
 If you care about best possible performance (even if nearly not measurable), use character string methods when dealing with characters - for example, write \begin{quote}String sS = 'A';\end{quote} instead of \begin{quote}String sS = "A";\end{quote}. This way, the string method already knows that you provided just a single character and don't need to count characters internally.
 
 
-\paragraph{Strings and dynamic variable parameters}
+\paragraph{Strings and Dynamic Variable Parameters}
 Often it's required to give for instance a function a string which is composed of different substrings. For instance \emph{DrawText("My text")} is trivial, \emph{DrawText("\%d: My text '\%s'", 1, "Text")} will only work if the function supports dynamic variable parameters. For PixelLight, we decided to NOT providing such functions with dynamic variable parameters for various reasons. Instead, one can compose own strings by hand or by using the \emph{PLCore::String}-class. With \emph{String} the previous example would look like this \emph{DrawText(String::Format("\%d: My text '\%s'", 1, "Text"))}. \emph{String::Format} will compose the string for you and there can't be a buffer overflow if the resulting string gets to long.
 
 Here's an example how to use this string class and how not:
@@ -91,7 +91,7 @@ If possible, try to avoid to use this method because it's usually considered to 
 \begin{quote}String sMyString = String("The number ") + 42 + " is fantastic!";\end{quote} instead of \begin{quote}String sMyString = String::Format("The number \%d is fantastic!", 42);\end{quote}
 
 
-\paragraph{Strings as function parameters}
+\paragraph{Strings as Function Parameters}
 When using strings as function parameters and/or return values we recommend the following solution:
 
 \begin{lstlisting}[caption=String as function parameter and return value]
@@ -155,7 +155,7 @@ It's practical to only support regular expressions or wildcards, but not both - 
 
 
 
-\subsection{Qt string adapter}
+\subsection{Qt String Adapter}
 Within the project \emph{PLQt}, there's a static adapter class for mapping Qt\footnote{Qt is a cross-platform application and UI framework, \url{http://qt.nokia.com/}} strings to PixelLight strings and vice versa.
 
 We provide this string adapter class because it's nice to be able to use PixelLight within Qt as comfortable as possible. Please note that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are used!\footnote{That's the reason why there's just a header file for this class, and no c++ file}

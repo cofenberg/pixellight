@@ -3,7 +3,7 @@
 
 
 
-\subsection{Types And Variables}
+\subsection{Types and Variables}
 \paragraph{RTTI Data Type: PLCore::Type}
 The \emph{PLCore::Type} template is the foundation of RTTI variables because each variable is from a certain data type. Therefore, you can see the \emph{PLCore::Type} template as a kind of counterpart to \emph{primitive data types in C}. Each RTTI data type must fulfil the \emph{PLCore::Type} interface offering numerous \emph{ConvertTo} and \emph{ConvertFrom} methods so it's possible to convert one data type into another one using known standard data types. This is the key for many RTTI components making the system quite flexible.
 
@@ -26,11 +26,11 @@ This class is the core of the RTTI flexibility. If you request for example a var
 This class offers the typed specializations and is realized as a template - as a result, using those variables is type safe. For instance, \emph{PLCore::Var<int>} is a variable of the type \emph{int}, \emph{PLCore::Var<PLCore::String>} of type \emph{PLCore::String} and so on. Because \emph{PLCore::Var} is derived from \emph{PLCore::DynVar}, it offers the same interface as \emph{PLCore::DynVar}, this is the specialization. In addition to type safe getter and setter methods, there are operators which enable the direct C like usage of the variable like for instance \emph{PLCore::Var<int> cVar = 42}. The mentioned example would not work if you just had a \emph{PLCore::DynVar} pointer.
 
 
-\paragraph{Variable Within A Class: PLCore::Attribute}
+\paragraph{Variable within a Class: PLCore::Attribute}
 An attribute is a variable which is a member of an object. Like \emph{PLCore::Var}, \emph{PLCore::Attribute} is also typed and just adds a descriptor containing name, description and so on. At first glance, an attribute looks just like a variable, but internally there's more going on. There are different kind of attribute storages, meaning how and where the actual value of the variable is stored - but this is hidden from the daily programmers life through the RTTI macros so that you don't really need to care about the internal storage. The \emph{PLCore::Attribute} template also manages the allowed variable access like read-only or read/write, but this are just internal details, too. More details about attributes and practical examples will be presented within chapter~\ref{Chapter:ClassesModulesAndPlugins}.
 
 
-\paragraph{RTTI Data Type Information: PLCore::TypeInfo And PLCore::DynTypeInfo}
+\paragraph{RTTI Data Type Information: PLCore::TypeInfo and PLCore::DynTypeInfo}
 \emph{PLCore::Type} can only be used directly if the C++ header, the data type is defined in, is available to you. This is not always the case and therefore an alternative approach is required to deal with this situation. Imagine you just received a fancy new \emph{PixelLight plugin}\footnote{PixelLight plugins will be explained within a following chapter in detail}, but you just got the shared library and no C++ headers at all to work with. By using the RTTI, you can access attributes, methods and so on in a generic way without the need for C++ headers - but sometimes, you may need more information about the data type of, for example an RTTI attribute.
 
 By using an \emph{PLCore::DynVar} instance, it's possible to get dynamic type information by using the method \emph{PLCore::DynVar::GetType} which returns an \emph{PLCore::DynTypeInfo} instance. Through the \emph{PLCore::DynTypeInfo} interface, it's possible to get the ID of the data type and the data type as string. This information can for instance be used to present the end user a proper GUI allowing to edit the value of an attribute of this data type in a comfortable way.
@@ -142,7 +142,7 @@ Only the attributes of the given XML element are used, the name of the element i
 
 
 
-\subsection{Events And Event Handlers}
+\subsection{Events and Event Handlers}
 \label{Chapter:EventsAndEventHandlers}
 The event system is an implementation of the \emph{observer design pattern} and consists of events (\emph{Subject}/\emph{Observable}, the source) an event handlers (\emph{Observer}, the destination). In general, this is a quite universal and elegant way to send and receive messages within an application. Within the first years of PixelLight we've used a listener approach quite similar to the Java one. But we noticed that for PixelLight, this wasn't the right thing because it was to complicated and not as universal and flexible as the solution we're now using.
 

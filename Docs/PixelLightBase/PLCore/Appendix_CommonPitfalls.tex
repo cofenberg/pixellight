@@ -3,7 +3,7 @@
 This appendix presents common pitfalls you may step into, or already have. If you read this before using PixelLight, you may remember some of the written later and then avoiding problematic situations. If you're already working with PixelLight and currently there's a problem and you've got no idea what's wrong - this appendix may provide you with information which may help.
 
 
-\paragraph{Class Constructor And Virtual Methods}
+\paragraph{Class Constructor and Virtual Methods}
 In C++, classes may not yet be fully initialized within the class constructor, therefore the usage of virtual methods is quite dangerous and should be avoided in general. This is also true when using RTTI features within class constructors, this should be avoided, too. A good concept is the use of lightweight constructors that just set class attributes to known states, but not performing tons of work within the constructor. \emph{Init-On-Use} and \emph{Lazy-Evaluation} design patterns are usually a good and less problematic approach to avoid class constructor relevant problems.
 
 
@@ -11,7 +11,7 @@ In C++, classes may not yet be fully initialized within the class constructor, t
 If the RTTI class manager adds new classes, a \emph{ClassManager::EventClassLoaded} event is generated. Please note: At the time you receive this event, the class may not yet be fully initialized. For example, there may still class attributes missing. As a result, when catching the mentioned event, be carefully what you're doing with the new class. A good idea would be do set some \emph{dirty state} and then using a \emph{Init-On-Use} design pattern to initialize features depending on the new class as soon as they are used the first time.
 
 
-\paragraph{RTTI Method And String Reference Parameter}
+\paragraph{RTTI Method and String Reference Parameter}
 \label{Appendix:CommonPitfalls:RTTIMethodStringReferenceParameter}
 Within PixelLight, when using strings as parameters we're usually using a reference to strings like \begin{quote}void MyFunction(const PLCore::String \&sString) \{ /* ... */ \}\end{quote}. The example function can then be called by writing for instance \begin{quote}MyFunction("My string");\end{quote} and all works as expected. When using a string reference as a parameter to a RTTI method, described within \ref{ClassMembers:Method}, one has to look out when dynamically calling the RTTI method. Have a look at the following example source~code~\ref{Code:ProblematicRTTIMethodStringReferenceDefinition}.
 \begin{lstlisting}[label=Code:ProblematicRTTIMethodStringReferenceDefinition,caption={Problematic RTTI method and string reference parameter definition}]

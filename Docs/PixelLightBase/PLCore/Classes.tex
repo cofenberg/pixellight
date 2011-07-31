@@ -1,10 +1,10 @@
-\section{Classes, Modules And Plugins}
+\section{Classes, Modules and Plugins}
 \label{Chapter:ClassesModulesAndPlugins}
 
 
 
 \subsection{Classes}
-\paragraph{Defining A New Class}
+\paragraph{Defining a new Class}
 A RTTI class is always derived from \emph{PLCore::Object} either directly or by deriving from another RTTI class which is usually done within header files. The next step is to tell the RTTI about the class, this can be done by using the macros \emph{pl\_class} to initiate the RTTI class definition and \emph{pl\_class\_end} to conclude the RTTI class definition inside the C++ class. While \emph{pl\_class\_end} is parameterless, \emph{pl\_class} takes multiple parameters. The first parameter defines whether or not the RTTI class is currently exported or imported, more on this shortly. While the second macro parameter is the class name without namespace, the third parameter is the namespace the class is in as string - this way, the RTTI is able to know in which namespace the class is in. As fourth parameter you need to specify the class your new class is derived from, the namespace of this base class must also be provided - even if your new class is within the same namespace. The most basic RTTI class one can derive from is \emph{PLCore::Object}. The RTTI class definition is finished by a description of the class, by doing so, one can figure out through the RTTI what this class should be good for. Source~code~\ref{Code:RTTIClassDefinitionWithoutNamespace} shows how a basic RTTI class can be defined without a namespace, and source~code~\ref{Code:RTTIClassDefinitionWithNamespace} shows the same with namespace. More on namespaces will follow shortly.
 \begin{lstlisting}[float=htb,label=Code:RTTIClassDefinitionWithoutNamespace,caption={Defining a new RTTI class without namespace}]
 #include <PLCore/Base/Object.h>
@@ -77,7 +77,7 @@ Please note that it's not required that the RTTI namespace the class is in is ex
 Multiple inheritance for RTTI classes is not supported. This would increase the complexity of the RTTI design and would lead to fault-prone situations as they also appear when using C++ in general. It's recommended to use for example the \emph{composite design pattern} instead.
 
 
-\paragraph{Creating An Instance Of A RTTI Class}
+\paragraph{Creating an Instance of a RTTI Class}
 In order to create an instance of a RTTI class, you first need to request the class description. This can be done using the method \emph{PLCore::ClassManager::GetClass} and a given class name including the namespace the class is in. If the requested class can't be found, for example because the class is within a currently not loaded plugin, a null pointer is returned. So, it's strongly recommended to always check for a null pointer in here. After you've received the RTTI class description, you're able to use the method \emph{PLCore::Class::Create} to create an instance of this class. This instantiation may fail if there's no, or no proper constructor within the class, so, you may want to check for a null pointer, too. Within the source~code~\ref{Code:RTTICreateClassInstance}, you can see the described process.
 \begin{lstlisting}[float=htb,label=Code:RTTICreateClassInstance,caption={Creating an instance of a RTTI class}]
 // Get RTTI class description
@@ -125,8 +125,8 @@ Within this example, a list of all classes derived from \emph{PLCore::Object} wi
 
 
 
-\subsection{Modules And Plugins}
-\paragraph{Defining A New Module}
+\subsection{Modules and Plugins}
+\paragraph{Defining a new Module}
 A RTTI module is a unit like for example an executable or a shared library that contains RTTI content. There can only be one RTTI module per executable or a shared library. A module can either be a plugin or not. The term plugin means in this case that a module is not explicitly linked to the executable or to a used shared library and therefore not loaded automatically by the operation system on start-up. A RTTI module is defined by using RTTI macros as seen within source~code~\ref{Code:RTTIModuleDefinition}.
 \begin{lstlisting}[float=htb,label=Code:RTTIModuleDefinition,caption={Defining a new RTTI module}]
 #include <PLCore/ModuleMain.h>
@@ -204,7 +204,7 @@ Multiple classes within different modules, but with the same class name - don't 
 \begin{quote}[Warning]: Class 'MyClass' [module 'MyFirstModule']: Name conflict with already registered class 'MyClass' [module 'MySecondModule']\end{quote}.
 
 
-\paragraph{Accessing The Current Module}
+\paragraph{Accessing the Current Module}
 To access the current executed module you can use the macro \emph{pl\_current\_module\_id} ( just a short cut for \emph{PLCore::ModuleID<int>::GetModuleID} to request the ID of this module. This module ID can then be used to request a pointer to this module by using \emph{PLCore::ClassManager::GetModule}. The following source~code~\ref{Code:CurrentDirectoryToCurrentModuleDirectory} shows how this can be used to set the current directory to the one the current module is in.
 \begin{lstlisting}[label=Code:CurrentDirectoryToCurrentModuleDirectory,caption={Setting the current directory to the one the current module is in}]
 // Includes
@@ -245,7 +245,7 @@ The RTTI class consists of the fundamental components, variables, functions, eve
 In C++, variables inside a class are called \emph{attribute}, for the RTTI, we're using the same terminology.
 
 
-\paragraph{Overview Of RTTI Class Attributes}
+\paragraph{Overview of RTTI Class Attributes}
 Within this paragraph, just a short first overview of RTTI class attribute should be provided so you can make your first steps without reading the whole section. The topic about class members is more extensive, therefore, details are discussed after this preview. Let's jump directly into a code sample without so much introduction. Have a look at source~code~\ref{Code:RTTIClassWithAttributes}.
 \begin{lstlisting}[float=htb,label=Code:RTTIClassWithAttributes,caption={Defining a new RTTI class with attributes}]
 // Class definition of MyClass
@@ -339,7 +339,7 @@ The default value of an attribute can be received by using \emph{PLCore::Object:
 calling the \emph{PLCore::DynVar::GetDefault} method. Because at this abstraction level the attribute type is not known to the compiler, this method will return the default value as string. By using \emph{PLCore::Object::SetAttributeDefault} an attribute given by it's name can be set to it's default value in a comfortable way. If all attributes should be set to their default values at once, the \emph{PLCore::Object::SetDefaultValues} method will do the job.
 
 
-\paragraph{Accessing Attributes By Using Getter And Setter Methods}
+\paragraph{Accessing Attributes by using Getter and Setter Methods}
 Within the introduction paragraph at the beginning of this section, the option \emph{DirectValue} was used as parameter of the RTTI macro \emph{pl\_attribute} - this enabled unrestricted C++ like public access to the attribute. Sometimes, it's desired to restrict the access to attributes or to be informed when the attribute is going to be read or written to. An example for read notification would be the usage of an \emph{lazy evaluation} scheme, that means that before a correct value can be returned, the internal value may need to be recalculated first as soon as it's accessed. The same example can be applied to write notification - if an attribute has been changed from outside, other implementation internal values may need an immediate or delayed update, too. A reason for restricting the write access may be, that some value settings may not be valid. For instance, if an object is part of a collection of objects, and every of this objects is required to have an unique name, the setter method may check whether or not the new name, the object should be set to, is already used by another object of the collection. Further, if the situation occurs that in the described example there's a name conflict, the setter method may manipulate the new name to set in order to make it conflict free, or reject the new name completely. As a result, if an attribute was defined with the option \emph{GetSet}, a read access to the attribute may not return the same value you just set the attribute to. Actually, it's even not guaranteed that either the getter nor the setter method will do anything, because it's completely implementation dependent what this implemented methods really do. This means that your attribute, defined with the option \emph{GetSet}, doesn't refer directly to a real attribute but only to a getter and a setter C++ method. If you've defined an attribute with the name \emph{MyInt} of type \emph{int} and the option \emph{GetSet}, there must be a getter C++ method with the name \emph{GetMyInt} returning an \emph{int}, and a setter C++ method with the name \emph{SetMyInt} accepting a \emph{int} as parameter. Whether or not, for example the setter method looks like \begin{quote}void SetMyInt(int nValue);\end{quote} or \begin{quote}void SetMyInt(const int \&nValue);\end{quote} or even \begin{quote}bool SetMyInt(const int \&nValue);\end{quote} is up to you. Read and write requests on the attribute will be redirected into these C++ methods. The C++ methods can be \emph{public}, \emph{protected} or \emph{private}. For the RTTI, this doesn't make any difference - but we recommend to make this methods always \emph{public} because through the RTTI, they are public accessible anyway. Whether or not this C++ methods are defined as constant, is up to you and has no direct influence on the RTTI. The getter and setter C++ methods can be virtual as well, which can be helpful as well.
 
 The third parameter of the \emph{pl\_attribute} RTTI macro representing the default value, and the fourth parameter representing the access mode still have an effect when using the option \emph{GetSet}. When using \emph{PLCore::Object::IsDefault}, the getter method is called internally to compare the \emph{current value} with the defined \emph{default value}. When the attribute was defined as read-only by using \emph{ReadOnly}, the setter method is never called.
@@ -409,7 +409,7 @@ When using the RTTI storage type \emph{GetSet}, actually as mentioned before, th
 Of course, the presented source~code~\ref{Code:RTTIGetSetAttributeDefinition} should not be used as a reference how to deal with attribute default values. In general, even if the C++ setter method of the \emph{GetSet} RTTI attribute is not called during initialization with the defined RTTI attribute default value, we strongly recommended to use one and same default value within \emph{pl\_attribute} and the internal C++ attribute, if there's one. Everything else would only lead to confusion and would be error prone.
 
 
-\paragraph{Overwriting Attributes Within Derived Classes}
+\paragraph{Overwriting Attributes within Derived Classes}
 Sometimes it's useful to be able to overwrite attributes from base classes within derived classes - for example to add even more enumeration values or to change the default value of an attribute. Therefore, beside \emph{DirectValue} and \emph{GetSet}, there's also a \emph{ModifyAttr} which denotes that this attribute is an overwritten version of an attribute of the base class. Source~code~\ref{Code:RTTIAttributeOverwrite} shows how \emph{ModifyAttr} is used.
 \begin{lstlisting}[label=Code:RTTIAttributeOverwrite,caption={Overwriting RTTI attributes in derived classes}]
 // Class definition of MyClass
@@ -563,7 +563,7 @@ if (pMyClass != nullptr) {
 
 
 
-\subsubsection{Enumeration And Flag Attributes}
+\subsubsection{Enumeration and Flag Attributes}
 \label{ClassMembers:EnumerationAndFlagAttributes}
 There are two, in some way, special RTTI data types: Enumerations and flags. You may already know enumerations from, for example the C++ \emph{enum} - the RTTI enumeration data type is nearly the same. This data type is quite useful if there are well defined values a variable can be set to. Flags are a derivation of an enumeration data type and internally, they are the same for the RTTI. Because, in practice, this two data types are quite handy, the RTTI offers special features to use those two data types as comfortable as possible. Although the usage of RTTI enumeration and flag is not that complex, this section will discuss the topic in detail because there are many possible variations which may help you within certain situations.
 
@@ -640,7 +640,7 @@ if (pMyClass != nullptr) {
 Please note that an RTTI enumeration is not just limited to the defined enumerations values, \begin{quote}pMyObject->MyEnumNumber = 5;\end{quote} would also work. This is no bug, or a poor RTTI implementation, it's indented behaviour to not artificially limit the usage of enumeration attributes. This is the same as when using a C++ \emph{enum} like \begin{quote}MyEnum nValue = (MyEnum)5;\end{quote}, which works, too\footnote{Although this wouldn't be a picture book usage of C++ \emph{enum}}.
 
 
-\paragraph{Enumerations And Namespaces/Classes}
+\paragraph{Enumerations and Namespaces/Classes}
 RTTI enumerations can also be within namespaces and classes as shown within source~code~\ref{Code:DefineRTTIEnumNamespaceTogether}.
 \begin{lstlisting}[float=htb,label=Code:DefineRTTIEnumNamespaceTogether,caption={Defining a new RTTI enumeration within a namespace}]
 namespace MyNamespace {
@@ -755,7 +755,7 @@ pl_enum_end
 The new RTTI enumeration \emph{MyExtendedEnum} can than be used just like every other RTTI enumeration.
 
 
-\paragraph{Enumerations Which Differ From Classic C++ Enumerations}
+\paragraph{Enumerations which Differ from Classic C++ Enumerations}
 While the C++ \emph{enum} can only deal with integer data types, the RTTI enumeration can also work for example with floating point data types. In such a case, the RTTI macros \emph{pl\_enum\_direct} and \emph{pl\_enum\_value\_direct} can be used instead of \emph{pl\_enum} and \emph{pl\_enum\_value} so the enumeration values can be specified directly. The first parameter of the \emph{pl\_enum\_direct} macro is the name of the RTTI enumeration, we recommend to use the same name as the one used for the C++ \emph{enum}, although this is no requirement. The second parameter of the macro is the primitive data type the enumeration should use. Usually \emph{int} will do the job, but as seen within source~code~\ref{Code:DefineRTTIEnumerationsFloat}, you are free to choose otherwise.
 \begin{lstlisting}[label=Code:DefineRTTIEnumerationsFloat,caption={Defining RTTI enumerations which differ from classic C++ enumerations}]
 // Define enum in RTTI
@@ -850,7 +850,7 @@ if (pMyClass != nullptr) {
 \end{lstlisting}
 
 
-\paragraph{Dynamic Usage Of Enumerations And Flags}
+\paragraph{Dynamic Usage of Enumerations and Flags}
 As seen in source code examples before, enumerations and flags can be used dynamically through for instance \emph{PLCore::Object::GetAttribute} and \emph{PLCore::Object::SetAttribute} by using strings, too. This way, you don't need to have the C++ headers the RTTI enumerations are defined in.
 
 By using for example \emph{PLCore::Object::GetAttribute} is possible to get an instance to \emph{PLCore::DynVar} which can also be used to request more information about the variable. To do so, just call \emph{PLCore::DynVar::GetType} and you'll receive an \emph{PLCore::DynTypeInfo} instance. The \emph{PLCore::DynTypeInfo} interface offers methods for dealing with enumeration data types. Whether or not a data type is an enumeration can be figured out by using the \emph{PLCore::DynTypeInfo::IsEnumType} method. If \emph{PLCore::DynTypeInfo::IsFlagType} returns \emph{true}, you know this is a flag data type. If it's an enumeration data type, a list of all known values as a string representation can be requested by using the \emph{PLCore::DynTypeInfo::GetEnumValues} method. If you already have an enumeration value as string, the concrete value this enumeration represents can be figured out by using \emph{PLCore::DynTypeInfo::GetEnumValue} - this is a string, too. If you have absolutely no clue what an enumeration value is good for, call the \emph{PLCore::DynTypeInfo::GetEnumDescription} method to get a, hopefully human readable, description of the enumeration value. Please note that this will only return a satisfactory description if the author if the RTTI enumeration value wrote such a description. Source~code~\ref{Code:RTTIDynamicUsageOfDynTypeInfoForEnumerationInformation} shows how to use \emph{PLCore::DynTypeInfo} to get additional enumeration information.

@@ -1,9 +1,4 @@
 \chapter{Script}
-
-
-
-
-\section{Overview}
 Because Lua is shipped with the official PixelLight SDK, this script language will be used within the examples. Please note that the PixelLight script API is script language independent. In fact, there's not even such a PixelLight script API. Everything that is connected to the RTTI of PixelLight can be accessed through script languages as long as the script backend has support for RTTI objects.
 
 Within the PLCore documentation, there's a lot of inside detail information on how the RTTI works. The script support itself is implemented within PLCore because scripting is heavily using PLCore features like the RTTI. Therefore, adding script bindings or using RTTI objects within scripts is fairly straightforward and doesn't require the writing of thousands of proxy/wrapper classes exposing C++ functionality to script languages.
@@ -73,7 +68,7 @@ I hope you got the idea why using namespaces, even in scripts, is a good and han
 
 
 
-\section{Global variables}
+\section{Global Variables}
 \label{Script_GlobalVariables}
 There's nothing fancy about global variables, so this section is quite compact. When using Lua, just assign somewhere within your script, as seen in source~code~\ref{Code:GlobalVariables}, a value to a name and et voila, you've created a new global variable\footnote{Lua is loosely typed, the type of a variable depends on the value assigned to it and can be changed every time by just assigning another value with another type to it}.
 \begin{lstlisting}[float=htb,label=Code:GlobalVariables,caption={Global variables}]
@@ -92,14 +87,15 @@ local Gold = 21
 \end{lstlisting}
 From the C++ side, it's possible to interact with global variables while local variables can not be seen. So, while the C++ side can access your global variable \emph{Health}, it can't access your local variable \emph{Gold}.
 
-\paragraph{Global variables added by the C++ host}
+
+\paragraph{Global Variables added by the C++ Host}
 The C++ side is also able to create new, or to delete existing global variables. Whether or not this is in general useful is up to you. PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. If you want to know more about the global \emph{this} variable, have a look into section~\ref{Script_RTTIObjects}.
 
 
 
 
 
-\section{Global functions}
+\section{Global Functions}
 \label{Script_GlobalFunctions}
 As soon as your script grows over a hand full of source code lines, the need for functions arises. Within Lua, global functions look like as seen in source~code~\ref{Code:GlobalFunctions}.
 \begin{lstlisting}[float=htb,label=Code:GlobalFunctions,caption={Global functions}]
@@ -112,11 +108,11 @@ The global function \emph{MyFunction} can then be called by writing \emph{MyFunc
 From the C++ side, it's possible to interact with global functions. Such global functions are usually used as script entry points and typical names for such global functions used as entry points are \emph{OnInit}, \emph{OnUpdate} and \emph{OnDeInit} which are called after as script has been loaded, when a script should perform an update step and shortly before a script is going to die. Please note that this was only an example of the naming convention used within PixelLight. Within the script system there are no such fixed build in names and you're free to choose your own entry point names. But in general, it makes the life easier to always use the same function names for the same purpose.
 
 
-\paragraph{Global functions added by the C++ host}
+\paragraph{Global Functions added by the C++ Host}
 Beside writing own global functions directly within the script, the C++ side is able to add global functions during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduce script initialization cost and also trash the global script namespace, although there's namespace support to reduce the probability of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using RTTI objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the RTTI object approach is not adding script initialization cost.
 
 
-\paragraph{Functions used as callbacks}
+\paragraph{Functions used as Callbacks}
 Just calling global function directly is not the only possible way to use them. Global functions can also be used as slots, meaning that when the signal they are connected with is emitted, the global function is called. Please note that this is also true for local functions, local functions can be used as slots as well. See section~\ref{Script_RTTIObjects_Slots} for details about slots and section~\ref{Script_RTTIObjects_Signals} for information about signals.
 
 As seen within the following source~code~\ref{Code:VariableWithAFunctionAsValue}, within Lua it's also possible to use a function as a value of a variable.
@@ -148,7 +144,7 @@ MyMovie(MyCallbackFunction)
 
 
 
-\section{Object-oriented programming (OOP)}
+\section{Object-Oriented Programming (OOP)}
 First at all, please note that this section has nothing to do with PixelLight RTTI objects which are explained in section~\ref{Script_RTTIObjects}.
 
 Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
@@ -237,7 +233,7 @@ At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all w
 
 
 
-\section{RTTI objects}
+\section{RTTI Objects}
 \label{Script_RTTIObjects}
 RTTI objects is, were the scripting gets really interesting because it's possible to directly access and manipulate PixelLight RTTI C++ objects by using a script. Within the Lua script backend, RTTI objects are realized by using the \emph{user data} feature of Lua together with Lua's metatables. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the RTTI system of PixelLight.
 

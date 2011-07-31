@@ -15,7 +15,7 @@
 \end{itemize}
 
 
-\subsection{Text processing}
+\subsection{Text Processing}
 \begin{itemize}
 \item{An advanced dynamic string class with ASCII, Unicode and UTF-8 support + extensive UTF-8 tool class}
 \item{An advanced tokenizer which allows you to parse texts without any effort}
@@ -45,7 +45,7 @@
 \end{itemize}
 
 
-\subsection{File system}
+\subsection{File System}
 \begin{itemize}
 \item{File class for access to standard OS files, archives like zip\footnote{Internally zlib (\url{http://www.zlib.org/}) is used} and even http with password support and other special access settings}
 \item{Quite universal design. For instance, it is possible to open a file within an archive from an http server.}
@@ -65,7 +65,7 @@
 \end{itemize}
 
 
-\subsection{A huge set of additional tools}
+\subsection{A huge set of Additional Tools}
 \begin{itemize}
 \item{Log with flexible implementation so we can output into a file (unformatted text, XML, html) or into the console}
 \item{Unified abstract checksum interface. (the SDK comes with a MD5, CRC32 and SHA-1 plugin) Supports checksum from string, memory or files.}
@@ -169,7 +169,7 @@
 \end{itemize}
 
 
-\subsection{Materials \& effects}
+\subsection{Materials \& Effects}
 \begin{itemize}
 \item{PixelLight comes with a powerful material \& effect system which enables you to create amazing effects like Normal-Mapping etc.}
 \item{Each material consists of different flexible properties like color, shininess etc.}
@@ -193,7 +193,7 @@
 \end{itemize}
 
 
-\subsection{Animation system}
+\subsection{Animation System}
 \begin{itemize}
 \item{All animation types are handled equally, meaning that the same animation interface is used to control vertex, skeleton, texture etc. animation. So every animation type can be accessed in the same way and with the same features!}
 \item{Animations can cause events at certain frames. Those events will be sent to their owner entity which can react on it}
@@ -207,7 +207,7 @@
 \section{PLScene}
 
 
-\subsection{Scene system}
+\subsection{Scene System}
 The dynamic and universal hierarchical scene system consists of scene nodes and scene containers. (composite design pattern) A scene node is the most basic scene element, and a scene container manages such scene nodes. A scene container can also manage child scene containers for a hierarchical scene. Within a scene container, a scene hierarchy like a KD-tree can be used to manage/access the scene nodes in a more effective way. Scene queries operate on this scene description. For instance, there is a query which returns all scene nodes intersecting a line or plane set. To make the system more efficient, scene nodes can have different modifiers. For instance, you can use a physics scene node modifier to give your scene node a physical behaviour. Physics are NOT fixed build in the scene graph itself - it comes through such plugins to make the framework more universal.
 \begin{itemize}
 \item{Powerfull 'scene node modifier' concept allowing to add as many modifiers to scene nodes you want taking for instance control over the position of the node, controlling morph targets of meshes and so on - the possibilities are nearly unlimited!}
@@ -224,7 +224,7 @@ The dynamic and universal hierarchical scene system consists of scene nodes and 
 \end{itemize}
 
 
-\subsection{Compositing system}
+\subsection{Compositing System}
 Scenes are rendered using a realtime compositing system. For example a first layer may clear the screen color to black, another may write down depth information and ambient color, a next may add lighting, another one fog and so on. The system is using the PixelLight RTTI, as such, it's expandable and can be heavily configured\footnote{Adding new layers, changing layer order, changing layer attributes, everything directly while a program is running}.
 \begin{itemize}
 \item{There are fixed functions and shaders based compositing layers to support a broad range of graphics cards}

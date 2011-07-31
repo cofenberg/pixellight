@@ -1,6 +1,7 @@
 >> 31.07.2011
 [CO]
 - Added "target audience" information within the documents so that e.g. an artists can stop reading at once as soon as he figured out that the document is meant for C++ programmers
+- "\chapter", "\section", "\subsection", "\subsubsection": The capitalization is now hopefully correct
 
 
 

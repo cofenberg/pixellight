@@ -1,4 +1,4 @@
-\section{Scene system}
+\section{Scene System}
 The scene system is one of the main components of PixelLight because it brings together multiple components using a scene graph. Within this chapter you get an idea what the \emph{scene system} from PixelLight is and what components it consists of.
 
 The PixelLight scene system is divided into 4 parts: nodes, hierarchies, queries and scene render queries were a renderer can be seen as an advanced scene query.
@@ -10,11 +10,11 @@ We decided against an explicit \emph{world space} design because this would rest
 This is the base of the scene system - create a scene node container and add scene nodes into it - a node can also be a container with more nodes within it. Each node is relative to it's container node, move your container and all your nodes will \emph{automatically move} with it. If a scene node changes position, rotation and so on, events are generated other components can react on. A node can also have modifiers which adds new functionality - see it as a kind of multi inheritance. For instance you can add physical behaviour to a node by adding a physics body modifier - then this physics modifier will take over the control of position and rotation. Normally this modifier will also listening it's owner node by using events, if for instance the position of the node is changed using \emph{SetPosition()}, the physics modifier will update it's rigid body. In reverse, if the rigid body changes translation it informs the node - but this is another story.
 
 
-\paragraph{Scene hierarchy}
+\paragraph{Scene Hierarchy}
 Each container can have a hierarchy assigned to manage the sub-nodes in a more effective way. If such a hierarchy is created it will create sub-hierarchies basing on the volumes of the nodes within the container. If a certain spatial subdivision is reached such a sub hierarchy contains links to nodes within this sub-hierarchy volume. Therefore, if one or more nodes are manipulated in that way their position, scale, rotation or volume was changed the container hierarchy must be updated. If you have a lot of dynamic nodes you have to select a hierarchy type which can deal efficient with frequently changing nodes. This node/container/hierarchy combination can be seen as a database holding your scene description.
 
 
-\paragraph{Scene query}
+\paragraph{Scene Query}
 To access the \emph{scene database} you can use a query. For instance, if you want to know which nodes of the scene intersecting a line you can create a \emph{line intersection}-query, set the line start and end point and perform the query. Internally the query will now use the hierarchy of the root container and checks which which sub-hierarchies intersecting this line. If a sub-hierarchy with one or more nodes is found the query will inform it's event listeners about this nodes - were each node is only visited one time. We mentioned that because in fact, one node can be within different sub-hierarchies if the node volume is intersecting the volumes of different sub-hierarchies. If a container node is found this container will be traversed using it's own hierarchy, too. (recursive traverse)
 
 The most queries are created and destroyed frequently - but some may exist over multiple frames or for the complete program life time. The general renderer query which offers different visibility determination techniques for instance is such a \emph{long life} query - because for some special visibility algorithms like \emph{coherent occlusion culling} information from the previous frame is used.
@@ -22,7 +22,7 @@ The most queries are created and destroyed frequently - but some may exist over 
 In general such a query informs you only about \emph{touched} nodes. For instance, if you want to know which node is the first intersecting this line you have to sort the resulting nodes by self.
 
 
-\paragraph{Scene renderer}
+\paragraph{Scene Renderer}
 As mentioned before, a scene renderer itself is also a kind of query. First, we define what we mean with the term \emph{scene renderer}. If something is drawn on the screen you will often read the word renderer - \emph{amazing per pixel lighting renderer}... but WHAT is a renderer, and can I eat it? You known that there are different graphics API's like OpenGL or Direct3D - we call them \emph{renderer API}. Their main task is to deal with render states, textures, shaders, primitives and so on - in short, the most basic rendering stuff. Ignore here that Direct3D is in fact a small framework itself with the possibility to also render whole complex meshes. The PixelLight renderer is a wrapper around this renderer APIs, so the user normally don't have to care about which renderer API is used internally and how for instance rendering into texture is managed internally. So, this renderer will only deal with the basics of rendering - it is NOT able to render large and complex scenes by self, it even does not know that where is something like a \emph{mesh} or a \emph{large scene}. It's world only consists of render states, textures, shaders, primitives and so on. :)
 
 A scene renderer is using the \emph{scene database} (THE scene graph) you provided and the PixelLight renderer tries to visualize your scene in a performant and suitable manner. A very basic scene renderer will traverse your scene and draws each found node using the draw functions of the node interface - maybe before the node is drawn, someone is checking whether or not this node is potential visible by checking whether or not this node is within the camera frustum. But even it such a frustum intersection test is performed, for a large scene with some thousand of nodes this will be quite inefficent to \emph{touch} each node visible or not. The task of a \emph{real} scene renderer can be divided into two parts: visibility determination (optimal: frustum, occlusion \& lod processing) and rendering. If the scene renderer is using complex per pixel lighting, the rendering of the scene is different to the rendering of the basic scene using old fashioned fix pass rendering. Instead only calling the draw functions of the node interface this renderer must set the different render states, textures, shaders etc. by self and therefore the user itself has less control over the rendering itself. But here, such user limitations are required to overcome more complex rendering. Such a complex renderer normally comes with it's internal \emph{shader library} which offers certain shaders for different purposes. For instance shaders for different light types like spot, projective or volumetric light and per light type variations for different surfaces and shading. If the scene renderer should render something, it will \emph{look into} it's shader library to find a shader which fits the requirements. Here, the PixelLight materials are only a kind of \emph{would nice to have} wishes from the artist. If a material doesn't provide a normal map, there's no need to perform normal mapping. Instead a more simple and more performant shader can be chosen. Or if the surface should use nice environment mapping a special shader combination must be chosen by the renderer. As you see, this is a more advanced and not that universal topic - but  you have to make compromises if something should be able to look good and be fast at the same time. Therefore, for PixelLight we decided to implement this scene renderer as \emph{loose} plugins - \footnote{As nearly everything in PixelLight - thank's to the clever RTTI system} and usually, a scene renderer consists of several scene renderer passes, a realtime compositing.
@@ -32,7 +32,7 @@ So, there are different scene renderer for different requirements, each with oth
 
 
 
-\section{Class name conventions}
+\section{Class Name Conventions}
 In order to be able to know what exactly a file/class is for by only looking at the name, there's a name convention for the scene system relevant things:
 
 \begin{tabular}{|p{2cm}|p{5cm}|p{7cm}|}
@@ -56,19 +56,19 @@ SR  & RenderQuery       & Scene render query\\
 
 
 
-\section{Scene context}
+\section{Scene Context}
 Equally to a renderer context, a scene context is an instance that brings together everything that depends on each other. Within scene nodes there may be rendering data like vertex data, so a scene context is using a render context. Besides the renderer context there are other components that are shared amongst all elements within a scene context like meshes. Scene context instances can't share data. For this reasons you usually have only one scene context within your project - else meshes, textures and so on are loaded multiple times.
 
 
 
 
-\section{What's a scene node?}
+\section{What's a Scene Node?}
 All objects within your 3D environment are scene nodes. The most obvious example is an actor that moves through the world. But not each scene node has a mesh, lights, triggers etc. are also scene nodes... even load screens can be scene nodes! (but it does not mean that's the best solution) The most time you will spend in programming those elements for different purposes. If you programmed a scene node once you are able to it use for many things... you can even create new scene nodes using another scene node as basis. Or you are able to add new features to a scene node by adding scene node modifier. All scene nodes are managed automatically by a scene node container, using such a container you can e.g. create new scene nodes.
 
 
 
 
-\section{Scene node names}
+\section{Scene Node Names}
 Because there can be multiple scene nodes in different scene containers with the same names we need a name convention for scene nodes. If you have a pointer to a container and want to get a scene node from it, one can use for instance \emph{pMyContainer->GetByName("MyNode")} without any troubles. If a camera should always look at a target scene node and both, the camera and the target scene nodes are in the same container, you can use \emph{pMyCamera->SetAttribute("TargetNode", "MyTargetNode")}\footnote{Just an example, the camera scene node does not offer this} and you will get the assumed result - your camera will look at the scene node \emph{MyTargetNode}. But what if you have multiple containers and you only know that there's a scene container children node or parent node which has a node with the name \emph{MyTargetNode} inside it, but you don't know the container name at the moment? The scene system overloads the virtual \emph{Get()}-function of the element manager template to deal with such situations - the \emph{Get()}-function of a scene container is not restricted to \emph{it's own nodes} but also to ALL scene nodes available. Therefore you can use \emph{absolute names} like \emph{Root.DefaultSceneRoot.Scene.MyTargetNode} or \emph{relative names} like \emph{Scene.MyTargetNode} if you currently \emph{in} a container which has a scene container named \emph{Scene} which has a scene node called \emph{MyTargetNode}.
 
 Because this, you are NOT allowed to use \emph{.} characters within \emph{concrete} scene node names you can set for instance by using \emph{pMyNode->SetName("MyNode")}. Further the name \emph{Root} is NOT allowed for scene nodes, this name is reserved for the \emph{scene root container} of PixelLight you can request using \emph{SceneContext::GetRoot()} or by \emph{pMyContainer->GetByName("Root")}. The name of the this \emph{root scene container} can NOT be changed. \emph{pMyContainer->GetByName("Parent")} will return the parent scene container. \emph{pMyContainer->GetByName("Parent.MyNode")} returns the scene node \emph{MyNode} of the parent scene container. \emph{pMyContainer->GetByName("This")} will return \emph{pMyContainer}. The sample application \emph{PLDemoSimpleScene} shipped with the SDK contains some more name examples using a concrete scene.
@@ -76,7 +76,7 @@ Because this, you are NOT allowed to use \emph{.} characters within \emph{concre
 
 
 
-\section{Create, manage and remove scene node instances}
+\section{Create, Manage and Remove Scene Node Instances}
 OK, enough scene system theory - now to praxis. First at all, we need to create a scene context using an existing renderer context.
 
 \begin{lstlisting}[caption=Creating a scene context instance]
@@ -155,7 +155,7 @@ pNode->Delete();
 
 
 
-\section{Scene file format}
+\section{Scene File Format}
 PixelLight saves it's scenes within the XML (eXtensible Markup Language) scene format with the extension \emph{scene}. Here's a short example scene:
 
 \begin{lstlisting}[caption=Scene file example]
@@ -203,13 +203,13 @@ In words: A scene consists of nodes, containers, modifiers and a hierarchy. Scen
 
 
 
-\section{Scene node classes}
+\section{Scene Node Classes}
 Each scene node is basing on a node class you create instances from. All this classes are derived from the PixelLight base node class called \emph{PLScene::SceneNode} and therefore all other classes have the full functionality of this base class! There are some framework node base classes like \emph{PLScene::SNLight} defined within the framework itself... but only the core stuff is fixed. There are also many tool-nodes within the different plugins shipped together with PixelLight. With this given tools you are able to create your first scene without any effort in just a few minutes. It's not recommended to manipulate this standard nodes because they will be updated together with the framework. The better way would be to derive this standard tool nodes like all other nodes to expand their functionality... or you take the node class as base of your own complete new node by coping it.
 
 
 
 
-\section{Creating own scene node classes}
+\section{Creating own Scene Node Classes}
 In the most cases you will create your own node classes for an unique behaviour by deriving them from other nodes... at least from \emph{PLScene::SceneNode}. Creating an own scene node class is quite simple:
 
 \begin{lstlisting}[caption=Creating a new own scene node class]
@@ -232,11 +232,11 @@ This node class definition isn't complete yet. You still have to register your n
 
 
 
-\section{Scene system and RTTI}
+\section{Scene System and RTTI}
 The next section will teach you how to use the PixelLight RTTI together with the scene system. In fact, there's no special RTTI stuff within the scene system and if you already read the RTTI documentation here's nothing new for you.
 
 
-\paragraph{Register scene node classes}
+\paragraph{Register Scene Node Classes}
 All nodes classes must be registered in the RTTI plugin system in order to be able to use them within the framework. If this nodes are defined within shared libraries all other programs using the framework are able to use this node class, too. For instance you can create instances of this scene nodes within the scene editor. The class registration is done through:
 
 \begin{lstlisting}[caption=RTTI and own new scene node class]
@@ -274,7 +274,7 @@ This node plugins are automatically managed by the framework and the classes can
 
 
 
-\section{Scene node meshes}
+\section{Scene Node Meshes}
 Normally it's recommended use scene nodes when dealing with meshes. There's a standard class named \emph{PLScene::SNMesh} with comes with a mesh interface by default. If a mesh is loaded the node function \emph{MeshInitFunction()} is called were you can initialize different mesh related stuff like animations. \emph{MeshDeInitFunction()} is called if the mesh get's unloaded.
 
 Because normally you only work with the animations provided by the mesh handlers animation list it's a good idea to store direct pointers to the different animation information in order to increase code readability and performance! This should be done after to mesh was loaded, \emph{MeshInitFunction()} is predicted for such an usage. Example:
@@ -330,5 +330,5 @@ In this example \emph{MyGoblin} is derived from \emph{PLScene::SNMesh} which loa
 
 
 
-\section{Debug flags}
+\section{Debug Flags}
 It's possible to visualize anchor points, joints, vertices etc. during runtime using the debug flags. This can be quite useful while debugging.

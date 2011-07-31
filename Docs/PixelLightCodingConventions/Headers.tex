@@ -1,9 +1,4 @@
 \chapter{Headers}
-
-
-
-
-\section{Overview}
 During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and API independent the project is.
 
 We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works REALLY well and solves many problems occurring when using such \emph{nasty} headers directly.
@@ -11,7 +6,7 @@ We have several rules for our header files. See below. At the first look some or
 
 
 
-\section{\emph{Header guard} and \emph{\#pragma once}}
+\section{\emph{Header Guard} and \emph{\#pragma once}}
 Each header has to use definitions and \emph{\#pragma once} to prevent multiple inclusion - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
 
 \begin{lstlisting}[caption=Header guard]
@@ -121,7 +116,7 @@ To be as platform and API independent as possible, we keep the usage of OS and A
 
 
 
-\section{Forward declarations}
+\section{Forward Declarations}
 Use \emph{forward declarations} whenever possible instead of includes when something is just referred without the need of knowing exactly what it. Here's a compact example class:
 
 \begin{lstlisting}[caption=Using forward declaration]
@@ -170,13 +165,13 @@ It's not allowed to use \emph{using namespace} - this may introduce ugly name co
 
 
 
-\section{Number of classes}
+\section{Number of Classes}
 Whenever advisable, do only put one class into one header. The name of the header and the name of the class have to be equal. Within seldom situations when it's really a good idea, you can put multiple classes into one header, but as mentioned, do this only if you are sure this is a good way to go.
 
 
 
 
-\section{Template implementations}
+\section{Template Implementations}
 When defining templates within a header, do not put it's implementation into the same file, too! Normally, templates are not really good readable, the implementation directly in the same file would not increase the readability! (maybe it would even scare of the reader :)
 
 Put the template implementation in special files with the same filename as the header, but with the file extension \emph{.inl}. Include this file at the bottom of the template header.

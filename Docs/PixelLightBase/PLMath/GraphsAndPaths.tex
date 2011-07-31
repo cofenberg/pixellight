@@ -1,4 +1,4 @@
-\section{Graphs and paths}
+\section{Graphs and Paths}
 
 
 
@@ -32,7 +32,7 @@ Normally for path finding, only the \emph{distances} between the nodes are taken
 
 
 
-\subsubsection{File format}
+\subsubsection{File Format}
 PixelLight graph files have the extension \emph{graph}.
 
 Note that the distance attribute of a neighbour node is optional, if this attribute is not given or has a negative value, the distance is calculated automatically. Normally you can ignore this distance attribute - manipulate it only for special tasks by hand!
@@ -80,7 +80,7 @@ Paths can be build by hand or automatically as result of for instance a graph qu
 
 
 
-\subsubsection{Create paths by hand}
+\subsubsection{Create Paths by Hand}
 It's possible to build a path by hand during runtime. Call the graph path managers creation function \emph{GraphPathManager::Create()} to generate a new path. The function will return a pointer to the new path and now it's up to you to fill up this path with nodes.
 
 New nodes are added using the path function \emph{GraphPath::AddNode()} which will take a path node as parameter. Note that this path node is just linked. The path node itself is in the simplest case only a world coordinate. \emph{GraphNode} also offers some tool functions like to compute the distance to another node using \emph{GetDistance()}.
@@ -130,5 +130,5 @@ cPath.SetClosed(true);
 
 
 
-\subsubsection{File format}
+\subsubsection{File Format}
 PixelLight path files have the extension \emph{path}.

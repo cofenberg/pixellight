@@ -1,4 +1,4 @@
-\chapter{Cells, portals and instancing}
+\chapter{Cells, Portals and Instancing}
 \textbf{For the scene exporter, the \emph{Autodesk 3ds Max} node names are quite important because they are used to identify cells, portals, instancing and so on.} Within \emph{Autodesk 3ds Max} this names are NOT cases sensitive, (\emph{cell\_Room1\_Char = cell\_ROOm1\_ChAr}) but it's recommended to take account of HOW you write something because PixelLight itself is case-sensitive.
 
 Your scene should be divided into cells which are connected through portals. Each node of your scene MUST be within a cell, else the exporter will write a hint into the log and append this node at the root of the exported PixelLight scene. The spatial subdivision of your scene is defined by using the \emph{Autodesk 3ds Max} node names. \emph{cell\_Room1\_Table1}, \emph{cell\_Room1\_Wall2}, \emph{cell\_Room2\_Monster}, \emph{cell\_Room2\_Floor} -> This will result in two cells called \emph{Room1} and \emph{Room2}. Within \emph{Room1} are the nodes \emph{Table1} and \emph{Wall2}, within \emph{Room2} are the nodes \emph{Monster} and \emph{Floor}.
