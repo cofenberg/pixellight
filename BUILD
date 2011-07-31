@@ -185,6 +185,11 @@ To install all required packages at once, just use:
 
   apt-get install libpcre3-de libjpeg62-dev libpng12-dev libfreetype6-dev libopenal-dev libogg-dev libvorbis-dev
 
+Currently we're using the following compilers and compiler versions:
+- GCC 4.6
+- Clang 3.0 (July 2011, currently in development)
+Other compilers and compiler versions may work as well, but are untested.
+
 
 2.2.  Maketool
 --------------
@@ -230,7 +235,7 @@ To avoid setting the parameters "--externals", "--username" and "--password" ove
 	$pl_external_pass = "";
 
 
-1.1.1 External packages
+2.2.1 External packages
 -----------------------
 
 Just as with the Windows build, it is necessary to obtain all the external packages used by the engine and install
