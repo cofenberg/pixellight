@@ -1,6 +1,7 @@
 ﻿>> 31.07.2011
 [CO]
 - "GraphManager" is no longer a singleton
+- "GraphPathManager" is no longer a singleton
 
 
 

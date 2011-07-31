@@ -39,15 +39,9 @@
 		// To export classes, methods and variables
 		#define PLMATH_API
 	#endif
-
-	// To export explicit template instanciations
-	#define PLMATH_TEMPLATE
 #else
 	// To import classes, methods and variables
 	#define PLMATH_API
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLMATH_TEMPLATE extern
 #endif
 
 // To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly

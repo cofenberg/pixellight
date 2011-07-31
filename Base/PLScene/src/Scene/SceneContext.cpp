@@ -26,6 +26,7 @@
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Stopwatch.h>
 #include <PLCore/Tools/Profiling.h>
+#include <PLMath/Graph/GraphPathManager.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLMesh/MeshManager.h>
 #include "PLScene/Scene/SceneContainer.h"
@@ -39,6 +40,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLMesh;
 namespace PLScene {
@@ -54,6 +56,7 @@ namespace PLScene {
 SceneContext::SceneContext(RendererContext &cRendererContext) :
 	m_pRendererContext(&cRendererContext),
 	m_pMeshManager(nullptr),
+	m_pGraphPathManager(nullptr),
 	m_pRoot(new SceneNodeHandler()),
 	m_pSceneRendererManager(nullptr),
 	m_pVisManager(nullptr),
@@ -91,6 +94,10 @@ SceneContext::~SceneContext()
 	if (m_pMeshManager)
 		delete m_pMeshManager;
 
+	// Destroy the graph path manager
+	if (m_pGraphPathManager)
+		delete m_pGraphPathManager;
+
 	// We don't destory 'm_pRendererContext' because we don't own it!
 }
 
@@ -112,6 +119,17 @@ MeshManager &SceneContext::GetMeshManager()
 	if (!m_pMeshManager)
 		m_pMeshManager = new MeshManager(m_pRendererContext->GetRenderer());
 	return *m_pMeshManager;
+}
+
+/**
+*  @brief
+*    Returns the graph path manager
+*/
+GraphPathManager &SceneContext::GetGraphPathManager()
+{
+	if (!m_pGraphPathManager)
+		m_pGraphPathManager = new GraphPathManager();
+	return *m_pGraphPathManager;
 }
 
 /**

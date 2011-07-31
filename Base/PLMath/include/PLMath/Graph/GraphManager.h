@@ -52,20 +52,20 @@ class GraphManager : public PLCore::ResourceManager<Graph> {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	private:
+	public:
 		/**
 		*  @brief
 		*    Constructor
 		*/
-		GraphManager();
+		PLMATH_API GraphManager();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~GraphManager();
+		PLMATH_API virtual ~GraphManager();
 
 
 	//[-------------------------------------------------------]

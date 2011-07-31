@@ -36,6 +36,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLMath {
+	class GraphPathManager;
+}
 namespace PLRenderer {
 	class RendererContext;
 }
@@ -116,6 +119,15 @@ class SceneContext {
 		*    The mesh manager
 		*/
 		PLS_API PLMesh::MeshManager &GetMeshManager();
+
+		/**
+		*  @brief
+		*    Returns the graph path manager
+		*
+		*  @return
+		*    The graph path manager
+		*/
+		PLS_API PLMath::GraphPathManager &GetGraphPathManager();
 
 		/**
 		*  @brief
@@ -245,6 +257,7 @@ class SceneContext {
 	private:
 		PLRenderer::RendererContext  *m_pRendererContext;		/**< The used renderer context, not destroyed by the scene context (always valid!) */
 		PLMesh::MeshManager			 *m_pMeshManager;			/**< The mesh manager, can be a null pointer */
+		PLMath::GraphPathManager	 *m_pGraphPathManager;		/**< The graph path manager, can be a null pointer */
 		SceneNodeHandler			 *m_pRoot;					/**< The root of the scene graph (always valid!) */
 		PLCore::Array<SceneNode*>	  m_lstDeleteNodes;			/**< List of scene nodes to delete */
 		SceneRendererManager		 *m_pSceneRendererManager;	/**< Scene renderer manager, can be a null pointer */
