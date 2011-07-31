@@ -30,8 +30,9 @@
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
 #include <PLGui/Gui/Gui.h>
-#include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SPScene.h>
 #include "Application.h"
@@ -42,6 +43,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 using namespace PLEngine;
@@ -69,7 +71,7 @@ const String Application::DefaultFilename = "";
 *    Constructor
 */
 Application::Application() :
-	SlotOnKeyDown(this),
+	SlotOnControl(this),
 	SlotOnDrop(this),
 	m_pFileDialog(nullptr)
 {
@@ -98,43 +100,6 @@ Application::Application() :
 Application::~Application()
 {
 	// PLGui will destroy the file dialog automatically...
-}
-
-/**
-*  @brief
-*    Openes a file dialog in which the user can choose a resource
-*/
-String Application::ChooseFilename()
-{
-	// [TODO] PLGui
-	return "";
-	/*
-	// Create and show a file choose dialog in which the user can select a resource file which should be loaded
-	if (m_pFileDialog && m_pFileDialog->IsVisible())
-		return "";
-
-	// Create the choose file dialog
-	if (!m_pFileDialog) {
-		m_pFileDialog = new DialogChooseFile();
-		m_pFileDialog->SetTitle(PLT("Choose resource"));
-
-		// Add 'scene' file filter
-		m_pFileDialog->AddFiltersFromLoadableType("Scene", true, false);
-
-		// Add 'all files' file filter
-		m_pFileDialog->AddFilter("*.*", PLT("All files"));
-
-		// Setup the other stuff...
-		m_pFileDialog->SetMode(false, true);
-
-		// Set the start directory
-		m_pFileDialog->SetStartDir(System::GetInstance()->GetCurrentDir() + "/Data/Scenes/");
-	}
-
-	// Show choose file dialog
-	m_pFileDialog->GetGui()->ShowDialogModal(*m_pFileDialog, GetMainWindow());
-	return m_pFileDialog->GetSelectedFile();
-	*/
 }
 
 /**
@@ -188,27 +153,30 @@ bool Application::LoadResource(const String &sFilename)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
-	// Make a screenshot from the current render target
-	if (nKey == PLGUIKEY_F12)
-		GetScreenshotTool().SaveScreenshot();
+	// Is it a button and was it just hit?
+	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
+		// Check whether the escape key was pressed
+		if (cControl.GetName() == "Escape") {
+			// Shut down the application
+			Exit(0);
 
-	// Toggle mouse cursor visibility
-	else if (nKey == PLGUIKEY_M) {
-		// Get the system GUI
-		Gui *pGui = Gui::GetSystemGui();
-		if (pGui) {
-			// Toggle mouse cursor visibility
-			pGui->SetMouseVisible(!pGui->IsMouseVisible());
+		// Make a screenshot from the current render target
+		} else if (cControl.GetName() == "F12") {
+			GetScreenshotTool().SaveScreenshot();
+
+		// Toggle mouse cursor visibility
+		} else if (cControl.GetName() == "M") {
+			// Get the system GUI
+			Gui *pGui = Gui::GetSystemGui();
+			if (pGui) {
+				// Toggle mouse cursor visibility
+				pGui->SetMouseVisible(!pGui->IsMouseVisible());
+			}
 		}
-	}
-
-	// Exit viewer
-	else if (nKey == PLGUIKEY_ESCAPE) {
-		Exit(0);
 	}
 }
 
@@ -252,8 +220,7 @@ void Application::OnInit()
 				// Set the default filename
 				sFilename = DefaultFilename;
 			} else {
-				// Choose the filename
-				sFilename = ChooseFilename();
+				// No filename provided
 			}
 		}
 	}
@@ -292,14 +259,26 @@ void Application::OnCreateMainWindow()
 	// Connect event handler
 	Widget *pWidget = GetMainWindow();
 	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		pWidget->SignalDrop.   Connect(SlotOnDrop);
+		pWidget->SignalDrop.Connect(SlotOnDrop);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-			pWidget->GetContentWidget()->SignalDrop.   Connect(SlotOnDrop);
-		}
+		if (pWidget->GetContentWidget() != pWidget)
+			pWidget->GetContentWidget()->SignalDrop.Connect(SlotOnDrop);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLEngine::RenderApplication functions ]
+//[-------------------------------------------------------]
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	ScriptApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }
 
 

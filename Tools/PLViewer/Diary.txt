@@ -1,3 +1,9 @@
+>> 31.07.2011
+[CO]
+- The PLViewer application is now using PLInput instead of PLGui to get and process input events
+
+
+
 >> 13.06.2011
 [CO]
 - PLViewer can now also run scripted stand-alone applications instead of just showing scenes

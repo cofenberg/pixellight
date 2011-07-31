@@ -26,7 +26,6 @@
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLGui/Gui/Gui.h>
-#include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Gui/Resources/Font.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>

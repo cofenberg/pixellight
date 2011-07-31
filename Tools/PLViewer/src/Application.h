@@ -38,6 +38,9 @@ namespace PLGui {
 	class DataObject;
 	class DialogChooseFile;
 }
+namespace PLInput {
+	class Control;
+}
 
 
 //[-------------------------------------------------------]
@@ -57,8 +60,8 @@ class Application : public PLEngine::ScriptApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnKeyDown,	PLCore::uint32,				PLCore::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
-		pl_slot_1(OnDrop,		const PLGui::DataObject&,					"Called when something was dropped down, dropped data object as first parameter",									"")
+		pl_slot_1(OnControl,	PLInput::Control&,			"Called when a control event has occurred, occurred control as first parameter",	"")
+		pl_slot_1(OnDrop,		const PLGui::DataObject&,	"Called when something was dropped down, dropped data object as first parameter",	"")
 	pl_class_end
 
 
@@ -87,15 +90,6 @@ class Application : public PLEngine::ScriptApplication {
 
 		/**
 		*  @brief
-		*    Openes a file dialog in which the user can choose a resource
-		*
-		*  @return
-		*    The chooen resource
-		*/
-		PLCore::String ChooseFilename();
-
-		/**
-		*  @brief
 		*    Loads a resource
 		*
 		*  @param[in] sFilename
@@ -113,14 +107,12 @@ class Application : public PLEngine::ScriptApplication {
 	private:
 		/**
 		*  @brief
-		*    Called when a key is pressed down
+		*    Called when a control event has occurred
 		*
-		*  @param[in] nKey
-		*    Pressed key
-		*  @param[in] nModifiers
-		*    Modifier keys pressed
+		*  @param[in] cControl
+		*    Occurred control
 		*/
-		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		void OnControl(PLInput::Control &cControl);
 
 		/**
 		*  @brief
@@ -145,6 +137,13 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateMainWindow();
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLEngine::RenderApplication functions ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnCreateInputController() override;
 
 
 	//[-------------------------------------------------------]
