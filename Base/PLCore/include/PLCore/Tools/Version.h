@@ -214,12 +214,12 @@ class Version {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		String m_sName;			/**< Project name */
-		String m_sCodename;		/**< Code name for this release */
-		uint16 m_nMajor;		/**< Major version number */
-		uint16 m_nMinor;		/**< Minor version number */
-		uint16 m_nPatch;		/**< Patch number */
-		String m_sRelease;		/**< Release name (e.g. "r1") */
+		String m_sName;		/**< Project name */
+		String m_sCodename;	/**< Code name for this release */
+		uint16 m_nMajor;	/**< Major version number */
+		uint16 m_nMinor;	/**< Minor version number */
+		uint16 m_nPatch;	/**< Patch number */
+		String m_sRelease;	/**< Release name (e.g. "r1") */
 
 
 };

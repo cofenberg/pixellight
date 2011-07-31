@@ -73,6 +73,8 @@ class ConsoleApplication : public Object {
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			// Methods
+			pl_method_1(Exit,	pl_ret_type(void),	int,	"Exit application. Return code for application as first parameter (usually 0 means no error).",	"")
 		#endif
 	pl_class_end
 
@@ -350,7 +352,7 @@ class ConsoleApplication : public Object {
 		*    Exit application
 		*
 		*  @param[in] nResult
-		*    Return code for application
+		*    Return code for application (usually 0 means no error)
 		*
 		*  @remarks
 		*    This will set the application return code and set m_bRunning to 'false', so that the application

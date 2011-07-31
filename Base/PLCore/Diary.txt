@@ -1,3 +1,9 @@
+>> 31.07.2011
+[CO]
+- Exposed "ConsoleApplication::Exit()" to the RTTI
+
+
+
 >> 30.07.2011
 [CO]
 - "PLScriptLua::RTTIObjectSignalMethodPointer::EventCallback": "TypeRef" was missing
