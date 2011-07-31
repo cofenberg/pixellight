@@ -1,3 +1,9 @@
+>> 31.07.2011
+[CO]
+- "SceneContext": Added "GetGraphPathManager()"
+
+
+
 >> 30.07.2011
 [CO]
 - Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"

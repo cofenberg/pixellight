@@ -70,8 +70,11 @@ void SNMPositionPath::SetFilename(const String &sValue)
 	if (m_sFilename != sValue) {
 		m_sFilename = sValue;
 
-		// Load path
-		m_pPathHandler->SetResource(GraphPathManager::GetInstance()->LoadResource(m_sFilename));
+		{ // Load path
+			SceneContext *pSceneContext =  GetSceneContext();
+			if (pSceneContext)
+				m_pPathHandler->SetResource(pSceneContext->GetGraphPathManager().LoadResource(m_sFilename));
+		}
 
 		// Is this modifier currently active?
 		if (IsActive()) {

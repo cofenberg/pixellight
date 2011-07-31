@@ -15,6 +15,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: Moved "SNMCameraZoomController", "SNMLookController", "SNMMoveController" and "SNMOrbitingController", primary intended for rapid prototyping, from "PLScene" to "PLEngine"
 - Change: Merged documentation for "PLCore", "PLDatabase", "PLMath", "PLGraphics", "PLRenderer", "PLMesh", "PLScene", "PLPhysics", "PLSound", "PLInput", "PLGui", "PLEngine" into "PixelLightBase"
 - Change: The sample applications are now using "PLInput" instead of "PLGui" to get and process input events
+- Change: "PLMath::GraphManager" and "PLMath::GraphPathManager" are no longer singletons
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
 
 

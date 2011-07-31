@@ -481,12 +481,6 @@ copy "build\release_2008_64\PL3dsMaxSceneExport_2008.dle" ..\..\Bin\Tools\3dsMax
     <None Include="Diary.txt" />
     <None Include="resource\pl_logo.bmp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLCore\PLCoreStat.vcxproj">
-      <Project>{e795f59a-0152-4143-9809-6eeef19360a7}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

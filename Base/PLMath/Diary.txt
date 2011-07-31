@@ -1,4 +1,11 @@
-﻿>> 15.04.2011
+﻿>> 31.07.2011
+[CO]
+- "GraphManager" is no longer a singleton
+- "GraphPathManager" is no longer a singleton
+
+
+
+>> 15.04.2011
 [CO]
 - Igh! The destructor of Matrix3x3 & Matrix3x4 & Matrix4x4 was virtual. This caused the addition of a virtual table which resulted in
   +4 bytes in a 32 bit build. This was a relic of the previous RTTI.

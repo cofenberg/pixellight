@@ -1,7 +1,7 @@
 # [TODO] Update vcproj (Microsoft Visual Studio 2008) to vcxproj (Microsoft Visual Studio 2010)
 # [TODO] Add verbose command line option
 # [TODO] Write the current PixelLight version into the XML plugin file
-# [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.7-R1 (Python)")
+# [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.8-R1 (Python)")
 # [TODO] Add "Delayed" option within the resulting XML plugin file
 # [TODO] Add RTTI class metadata within the resulting XML plugin file
 

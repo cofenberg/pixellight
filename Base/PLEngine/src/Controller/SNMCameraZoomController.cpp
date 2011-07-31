@@ -106,10 +106,10 @@ void SNMCameraZoomController::OnActivate(bool bActivate)
 *  @brief
 *    Called when a control event has occurred
 */
-void SNMCameraZoomController::OnControl(Control *pControl)
+void SNMCameraZoomController::OnControl(Control &cControl)
 {
-	if (pControl == &m_pController->Zoom)
-		ZoomFactor = static_cast<Button*>(pControl)->IsPressed() ? 1.0f : 0.0f;
+	if (&cControl == &m_pController->Zoom)
+		ZoomFactor = static_cast<Button&>(cControl).IsPressed() ? 1.0f : 0.0f;
 }
 
 

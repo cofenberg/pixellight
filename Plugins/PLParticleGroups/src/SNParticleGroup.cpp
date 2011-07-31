@@ -832,6 +832,7 @@ void SNParticleGroup::DeInitFunction()
 void SNParticleGroup::UpdateAABoundingBox()
 {
 	float fBoundingBox[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
+	bool bActiveParticles = false;	// Is there at least one active particle?
 
 	{ // Get the bounding box
 		// Initialize bounding box by using the position of the first found active particle
@@ -839,6 +840,7 @@ void SNParticleGroup::UpdateAABoundingBox()
 		while (cIterator.HasNext()) {
 			const Particle &cParticle = cIterator.Next();
 			if (cParticle.bActive) {
+				bActiveParticles = true;
 				for (int i=0; i<3; i++) {
 					fBoundingBox[0][i] = cParticle.vPos[i];
 					fBoundingBox[1][i] = cParticle.vPos[i];
@@ -883,7 +885,7 @@ void SNParticleGroup::UpdateAABoundingBox()
 								 fBoundingBox[1][Vector3::X], fBoundingBox[1][Vector3::Y], fBoundingBox[1][Vector3::Z]);
 
 	// Are the particles within the local scene node space?
-	if (!(GetFlags() & SceneNodeSpaceParticles)) {
+	if (bActiveParticles && !(GetFlags() & SceneNodeSpaceParticles)) {
 		// To scene node space
 		cAABoundingBox.vMin -= GetTransform().GetPosition();
 		cAABoundingBox.vMax -= GetTransform().GetPosition();

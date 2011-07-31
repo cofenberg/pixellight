@@ -300,20 +300,6 @@ copy build\release64\PLDatabasePostgreSQL64.lib ..\..\Bin\Lib\
     <None Include="..\..\Base\PLDatabase\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Tools\PLProject\PLProject.vcxproj">
-      <Project>{8ee15fb2-cbed-4e78-a49c-62100ba6a962}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLDatabase\PLDatabase.vcxproj">
-      <Project>{d32c2ca0-8d6f-4801-98d1-78d871a00945}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

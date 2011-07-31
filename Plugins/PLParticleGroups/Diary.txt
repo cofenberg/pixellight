@@ -1,4 +1,10 @@
-﻿>> 17.02.2011
+﻿>> 31.07.2011
+[CO]
+- "SNParticleGroup::UpdateAABoundingBox()": If there were no active particle, there was the possibility that the scene node bounding box calculation was wrong
+
+
+
+>> 17.02.2011
 [CO]
 - Moved the somewhat out-dated particle group base class "PLScene::SNParticleGroup" into the "PLParticleGroups" plugin
   project - the full class name is now "PLParticleGroups::SNParticleGroup". The reason for this is simple: This is one

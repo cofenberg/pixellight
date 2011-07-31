@@ -35,17 +35,11 @@
 	// To export classes, methods and variables
 	#define PLMATH_API __declspec(dllexport)
 
-	// To export explicit template instanciations
-	#define PLMATH_TEMPLATE
-
 	// To export RTTI elements
 	#define PLMATH_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLMATH_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLMATH_TEMPLATE extern
 
 	// To import RTTI elements
 	#define PLMATH_RTTI_EXPORT 0

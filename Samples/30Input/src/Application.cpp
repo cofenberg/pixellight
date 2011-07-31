@@ -336,28 +336,28 @@ void Application::TestConnections()
 *  @brief
 *    Called when a control of the input controller has been activated
 */
-void Application::OnControl(Control *pControl)
+void Application::OnControl(Control &cControl)
 {
 	// Get name of control
-	String sControl = pControl->GetName();
+	String sControl = cControl.GetName();
 
 	// Display control value
 	String sValue;
-	if (pControl->GetType() == ControlButton) {
-		sValue = static_cast<Button*>(pControl)->IsPressed() ? "<pressed>" : "<released>";
-	} else if (pControl->GetType() == ControlAxis) {
-		sValue = String::Format("%5.2f", static_cast<Axis*>(pControl)->GetValue());
+	if (cControl.GetType() == ControlButton) {
+		sValue = static_cast<Button&>(cControl).IsPressed() ? "<pressed>" : "<released>";
+	} else if (cControl.GetType() == ControlAxis) {
+		sValue = String::Format("%5.2f", static_cast<Axis&>(cControl).GetValue());
 	}
 	System::GetInstance()->GetConsole().Print("- '" + sControl + "': " + sValue + '\n');
 
 	// LED test
-	if ((pControl->GetName() == "Plus" || pControl->GetName() == "Minus") && static_cast<Button*>(pControl)->IsPressed()) {
+	if ((cControl.GetName() == "Plus" || cControl.GetName() == "Minus") && static_cast<Button&>(cControl).IsPressed()) {
 		// Get LED control
-		LED *pLED = static_cast<LED*>(pControl->GetController()->GetControl("LED"));
+		LED *pLED = static_cast<LED*>(cControl.GetController()->GetControl("LED"));
 		if (pLED) {
 			// Change LED value
 			uint32 nLED = pLED->GetLEDs();
-			if (pControl->GetName() == "Plus")	nLED++;
+			if (cControl.GetName() == "Plus")	nLED++;
 			else								nLED--;
 			if (nLED > 15) nLED = 0;
 			pLED->SetLEDs(nLED);
@@ -365,15 +365,15 @@ void Application::OnControl(Control *pControl)
 	}
 
 	// Rumble test
-	if (pControl->GetName() == "Button1" || pControl->GetName() == "Button2") {
+	if (cControl.GetName() == "Button1" || cControl.GetName() == "Button2") {
 		// Get rumble control (try "Rumble3" first for joystick, then "Rumble1" for WiiMote)
-		Effect *pRumble = static_cast<Effect*>(pControl->GetController()->GetControl("Rumble3"));
-		if (!pRumble) pRumble = static_cast<Effect*>(pControl->GetController()->GetControl("Rumble1"));
+		Effect *pRumble = static_cast<Effect*>(cControl.GetController()->GetControl("Rumble3"));
+		if (!pRumble) pRumble = static_cast<Effect*>(cControl.GetController()->GetControl("Rumble1"));
 		if (pRumble) {
 			// Enable or disable rumble?
-			if (pControl->GetName() == "Button1")
+			if (cControl.GetName() == "Button1")
 				pRumble->SetValue(1.0f);
-			if (pControl->GetName() == "Button2")
+			if (cControl.GetName() == "Button2")
 				pRumble->SetValue(0.0f);
 		}
 	}
@@ -383,10 +383,10 @@ void Application::OnControl(Control *pControl)
 *  @brief
 *    Called when a control of the input controller has been activated
 */
-void Application::OnControlExit(Control *pControl)
+void Application::OnControlExit(Control &cControl)
 {
 	// Exit?
-	if (pControl->GetName() == "Escape" || pControl->GetName() == "Q") {
+	if (cControl.GetName() == "Escape" || cControl.GetName() == "Q") {
 		m_bExit = true;
 	}
 }
