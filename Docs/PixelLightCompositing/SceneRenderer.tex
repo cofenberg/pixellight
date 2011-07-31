@@ -1,7 +1,7 @@
 \chapter{Scene renderer}
 
 
-\paragraph{PixelLight Scene Renderer System}$\;$ \\
+\paragraph{PixelLight Scene Renderer System}
 The scene renderer system of PixelLight consists of several render passes. One can add or remove scene renderer passes as wanted. The scene renderer passes can be categorized in the following way:
 \begin{itemize}
 \item{Fixed function: For legacy hardware without shader support and just fixed build in graphics features}
@@ -32,7 +32,7 @@ The deferred scene renderer of PixelLight is, like other PixelLight scene render
 \end{itemize}
 
 
-\paragraph{Terminology}$\;$ \\
+\paragraph{Terminology}
 Often, there are many names describing the same thing. Therefore here's a list of names PixelLight is using. (the first one)
 \begin{itemize}
 \item{\emph{view space} = \emph{camera space} = \emph{eye space}}
@@ -40,11 +40,11 @@ Often, there are many names describing the same thing. Therefore here's a list o
 \end{itemize}
 
 
-\paragraph{Data Driven}$\;$ \\
+\paragraph{Data Driven}
 The deferred scene renderer is using a \emph{data driven} approach. This means that instead forcing the user to define shaders by hand, just material descriptions are provided by the user and the scene renderer has to interpret them as best as possible. This way, the user only has to create the data and materials once, and then it's possible to use one and the same data set on totally different scene renderer techniques without the need to rewrite all material descriptions and shaders. By using this concept, the scene renderer is also able to optimize automatically and to scale with the available hardware.
 
 
-\paragraph{Über Shaders}$\;$ \\
+\paragraph{Über Shaders}
 The deferred scene renderer is using so called \emph{Über Shaders}. This simply means that shaders of the scene renderer are written within a high level shader language and making heavy usage of precompiler directives like \emph{\#ifdef}. Therefore, most times, there's only one high level shader that takes everything into account that is supported. During runtime, only the features a current material is really using is taken into account. This means that many versions of one shader are compiled during runtime resulting in effective shaders. This \emph{Über Shaders} may look confusing on the first look, but they have the big advantage of code reuse. If there's a bug, this bug will probably influence all or most compiled shader versions and therefore the possibility that it can be found and fixed is high. The bug only has to be fixed at one place, and not hundreds of places which would just lead to a high probability of even more bugs.
 
 
@@ -78,19 +78,19 @@ Table ~\ref{Table:GBufferLayout}.
 By default, the GBuffer is using FP16 render targets - but FP32 render targets can be enabled as well.
 
 
-\paragraph{Stencil buffer}$\;$ \\
+\paragraph{Stencil buffer}
 By default, the \emph{PLCompositing::SRPDeferredGBuffer} scene renderer pass writes into the stencil buffer whether or not a pixel has valid content. 1 within the stencil buffer means: The GBuffer has no information about the pixel because no geometry is covering it. Later on, for example within the \emph{PLCompositing::SRPDeferredAmbient} scene render pass, this stencil buffer information can be used to draw only pixels with valid GBuffer content, everything else is not drawn. This is quite useful if there's for example a bitmap or sky already drawn and should remain in the \emph{background}.
 
 
-\paragraph{Parallax Mapping}$\;$ \\
+\paragraph{Parallax Mapping}
 Parallax Mapping as described in \url{http://www8.cs.umu.se/kurser/5DV051/VT09/lab/parallax_mapping.pdf}.
 
 
-\paragraph{Two-Sided Polygons}$\;$ \\
+\paragraph{Two-Sided Polygons}
 Two-sided polygons are handled when filling the GBuffer by drawing the mesh a second time, but with flipped normal vectors. This is a simple, universal and robust way to solve this problem. As a result, there's no need to implement special two-sided lighting in later render passes.
 
 
-\paragraph{Gamma correction}$\;$ \\
+\paragraph{Gamma correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the material parameters \emph{DiffuseMap}, \emph{LightMap}, \emph{EmissiveMap} and \emph{ReflectionMap}. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::GBufferGammaCorrection} shows how the used gamma correction technique.
 \begin{lstlisting}[float=htb,label=Code::GBufferGammaCorrection,caption={GBuffer gamma correction}]
@@ -104,12 +104,12 @@ float3 linearRGBColor = pow(sRGBColor, 2.2);
 The \textbf{rgb}-components of \emph{RT0} contain the albedo. The albedo is calculated using \emph{DiffuseMap.rgb * DiffuseColor.rgb}. The \textbf{a}-component of \emph{RT0} is used for ambient occlusion, either static\footnote{Some call it \emph{Baked Occ}} pre-calculated or dynamic\footnote{Later on within the scene renderer pipeline, for example \emph{PLCompositing::SRPDeferredHBAO} renders ambient occlusion into this alpha channel}.
 
 
-\paragraph{Fresnel Reflection}$\;$ \\
+\paragraph{Fresnel Reflection}
 Due to the fresnel effect, a surface becomes more reflective near grazing angle. Fresnel reflection is implemented as described within \url{http://developer.download.nvidia.com/SDK/9.5/Samples/DEMOS/Direct3D9/src/HLSL_FresnelReflection/docs/FresnelReflection.pdf}.
 Fresnel reflection is controlled by using the \emph{IndexOfRefraction} and \emph{FresnelReflectionPower} material parameters.
 
 
-\paragraph{Spherical Environment Mapping}$\;$ \\
+\paragraph{Spherical Environment Mapping}
 If the given \emph{ReflectionMap} material parameter is a 2D map, spherical environment mapping as described within \url{http://www.ozone3d.net/tutorials/glsl_texturing_p04.php} is performed. The spherical map has to fulfil the following conditions:
 \begin{itemize}
 \item{The texture coordinate of the center of the map is (0,0), and the sphere's image has radius 1}
@@ -117,7 +117,7 @@ If the given \emph{ReflectionMap} material parameter is a 2D map, spherical envi
 \end{itemize}
 
 
-\paragraph{Cubic Environment Mapping}$\;$ \\
+\paragraph{Cubic Environment Mapping}
 If the given \emph{ReflectionMap} material parameter is a cube map, cubic environment mapping is performed. More information about cubic environment mapping can for example be found at \url{http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter07.html}.
 
 
@@ -171,11 +171,11 @@ Lighting, wich is not connected to a particular realtime light, is also rendered
 \subsection{Lighting}
 
 
-\paragraph{BRDF Model}$\;$ \\
+\paragraph{BRDF Model}
 As BRDF model, Blinn-Phong with half vector specular highlights was chosen.
 
 
-\paragraph{Gamma correction}$\;$ \\
+\paragraph{Gamma correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the texture maps of projective light sources. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::LightingGammaCorrection} shows how the used gamma correction technique.
 \begin{lstlisting}[float=htb,label=Code::LightingGammaCorrection,caption={GBuffer gamma correction}]
@@ -200,7 +200,7 @@ and is performed after the scene rendering is finished. This type of post proces
 
 
 \subsection{Scene Render Pipeline Post Processing}
-\paragraph{Depth Fog}$\;$ \\
+\paragraph{Depth Fog}
 Classic depth fog is realized as a post processing effect. Three fog modes are implemented:
 \begin{itemize}
 \item{LinearMode: Fog effect intensifies linearly between the start and end points $(f=(end-d)/(end-start))$}
@@ -210,11 +210,11 @@ Classic depth fog is realized as a post processing effect. Three fog modes are i
 This effect is implemented within the \emph{PLCompositing::SRPDeferredDepthFog} scene renderer pass.
 
 
-\paragraph{EdgeAA}$\;$ \\
+\paragraph{EdgeAA}
 Anti-aliasing is realized using resolution-independent edge detection as described within \url{http://http.developer.nvidia.com/GPUGems3/gpugems3_ch19.html}. This effect is implemented within the \emph{PLCompositing::SRPDeferredEdgeAA} scene renderer pass.
 
 
-\paragraph{Screen-Space Ambient Occlusion (SSAO)}$\;$ \\
+\paragraph{Screen-Space Ambient Occlusion (SSAO)}
 SSAO is calculated dynamically during runtime using per fragment depth and optionally also normal data. SSAO overwrites the static ambient occlusion value from GBuffer RT0. As a result, you can either have static ambient occlusion maps, or dynamic ambient occlusion, but not both at the same time. SSAO can be implemented in several ways. Currently the following techniques are implemented:
 \begin{itemize}
 \item{PLCompositing::SRPDeferredHBAO: Horizon Based Ambient Occlusion (HBAO) as described within the NVIDIA Direct3D SDK 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}}
@@ -223,19 +223,19 @@ SSAO is calculated dynamically during runtime using per fragment depth and optio
 The concrete SSAO implementations are derived from the \emph{PLCompositing::SRPDeferredSSAO} class which offers \emph{Cross Bilateral Filter} as described within the NVIDIA Direct3D SDK 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}.
 
 
-\paragraph{Volumetric Light Scattering}$\;$ \\
+\paragraph{Volumetric Light Scattering}
 \emph{Volumetric Light Scattering} as described within \url{http://http.developer.nvidia.com/GPUGems3/gpugems3_ch13.html}. This effect is also known as crepuscular rays, sunbeams, sunbursts, star flare, god rays, sun shafts, or light shafts. Within PixelLight, we chosen the name \emph{god rays} because it's short. The emissive/light map content of the GBuffer is used as glowing parts. This effect is implemented within the \emph{PLCompositing::SRPDeferredGodRays} scene renderer pass.
 
 
-\paragraph{Glow}$\;$ \\
+\paragraph{Glow}
 This effect is implemented within the \emph{PLCompositing::SRPDeferredGlow} scene renderer pass and is loosely basing on the technique described within \url{http://http.developer.nvidia.com/GPUGems/gpugems_ch21.html}.
 
 
-\paragraph{Depth Of Field}$\;$ \\
+\paragraph{Depth Of Field}
 This effect is implemented within the \emph{PLCompositing::SRPDeferredDOF} scene renderer pass and is using the technique described within \url{http://ati.amd.com/developer/gdc/Scheuermann_DepthOfField.pdf}.
 
 
-\paragraph{HDR Tone Mapping}$\;$ \\
+\paragraph{HDR Tone Mapping}
 The scene render pass \emph{SRPEndHDR} finishes the HDR render pipeline by converting the HDR image using tone mapping into an LDR image (the available color range is compressed). As tone mapping operator we've chosen \emph{Reinhard tone mapping} as described within \url{http://www.cs.ucf.edu/~reinhard/cdrom/}.
 
 For the tone mapping, the logarithmic average luminance of the current HDR image is required. While calculating this luminance value on the CPU is trivial, a parallel approach is required for calculating this value on the GPU. Within the literature, there are many ways this logarithmic average luminance can be calculated on the GPU. We decided to use the technique described within \url{http://developer.download.nvidia.com/SDK/9.5/Samples/DEMOS/Direct3D9/HDR_FP16x2.zip}, it looks like this is one of the more popular ways to solve the problem. The technique consists of three steps:

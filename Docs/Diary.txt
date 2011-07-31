@@ -1,3 +1,9 @@
+>> 31.07.2011
+[CO]
+- Added "target audience" information within the documents so that e.g. an artists can stop reading at once as soon as he figured out that the document is meant for C++ programmers
+
+
+
 >> 30.07.2011
 [CO]
 - Merged documentation for "PLCore", "PLDatabase", "PLMath", "PLGraphics", "PLRenderer", "PLMesh", "PLScene", "PLPhysics", "PLSound", "PLInput", "PLGui", "PLEngine" into "PixelLightBase"
