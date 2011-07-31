@@ -2,6 +2,7 @@
 [CO]
 - Added "target audience" information within the documents so that e.g. an artists can stop reading at once as soon as he figured out that the document is meant for C++ programmers
 - "\chapter", "\section", "\subsection", "\subsubsection": The capitalization is now hopefully correct
+- "Dynamic Parameters": Documented the behavior of "PLCore::Params" in case of providing superfluous or an insufficient number of parameters
 
 
 
