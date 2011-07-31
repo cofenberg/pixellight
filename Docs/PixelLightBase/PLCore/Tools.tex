@@ -4,10 +4,16 @@
 
 
 \subsection{Log}
-Normally PixelLight will write down different information in the text file \emph{PLLog.txt} in the current application root directory when using \emph{PLEngine} and above. This log will receive e.g. system information and warning/error messages. After an error or even crash occurred it's useful to have a look at the log which can maybe offer some information about the error. You can write into the log by self using \emph{Log::Output()}.
+In the default configuration, PixelLight will write down different information into the text file \emph{<application name>.log} within your user data directory. Examples on different systems:
+\begin{itemize}
+\item{Linux: \begin{quote}home/<username>/pixellight\end{quote}}
+\item{Windows XP: \begin{quote}C:\textbackslash Documents and Settings\textbackslash <Username>\textbackslash Application Data\textbackslash PixelLight\end{quote}}
+\item{Windows 7: \begin{quote}C:\textbackslash Users\textbackslash <UserName>\textbackslash AppData\textbackslash Roaming\textbackslash PixelLight\end{quote}}
+\end{itemize}
+
+This log will receive e.g. system information and warning/error messages. After an error or even crash occurred it's useful to have a look at the log which can maybe offer some information about the error. You can write into the log by self using \emph{Log::Output()}.
 
 Example:
-
 \begin{lstlisting}[caption=Using the log singleton directly]
 Log::GetInstance()->Output(String::Format("State of my variable is %d", nMyVariable));
 \end{lstlisting}
@@ -15,7 +21,6 @@ Log::GetInstance()->Output(String::Format("State of my variable is %d", nMyVaria
 There's a special log write function for debugging proposes taking as first parameter the log mode level at which this message should be written into the log. This should be used if you want to write special messages into the log only if the framework currently runs in a special log mode. The current log level of the log can be set with \emph{Log::SetLogLevel()}. There's a log macro that is more comfortable to use than using the log singleton directly.
 
 Example:
-
 \begin{lstlisting}[caption=Using the log singleton though the log macros]
 PL_LOG(Error, "Can't find 'Effect' element")
 \end{lstlisting}
