@@ -28,8 +28,8 @@
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Base/Keys.h>
-#include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Control.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "Application.h"
@@ -39,7 +39,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 
@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() :
-	SlotOnKeyDown(this)
+	SlotOnControl(this)
 {
 	// Set application name and title
 	SetName("61Sound");
@@ -132,19 +132,9 @@ bool Application::ChooseSoundAPI()
 			// An API was 'chosen'...
 			bResult = true; // Done
 		} else {
-			// [TODO] PLGui: Selection dialog
+			// Use the default sound API
 			m_sSoundAPI = "PLSoundOpenAL::SoundManager";
 			bResult = true; // Done
-			/*
-			// Show your choose dialog
-			ChooseSoundAPIGui *pDialog = new ChooseSoundAPIGui();
-			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, nullptr) && m_sSoundAPI != pDialog->GetName()) {
-				// A new API was chosen...
-				m_sSoundAPI = pDialog->GetName();
-				bResult = true; // Done
-			}
-			pDialog->Destroy();
-			*/
 		}
 
 		// Was an API chosen?
@@ -179,51 +169,36 @@ bool Application::ChooseSoundAPI()
 
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
-	switch (nKey) {
+	// Is it a button?
+	if (cControl.GetType() == ControlButton) {
 		// Check whether the escape key was pressed
-		case PLGUIKEY_ESCAPE:
+		if (cControl.GetName() == "Escape") {
 			// Shut down the application
 			Exit(0);
-			break;
-
-		// Choose another sound API?
-		// [TODO] PLGui: Selection dialog
-//		case PLGUIKEY_C:
-//			ChooseSoundAPI();
-//			break;
-
-		// Time scale
-		default:
-		{
+		} else {
 			// Get current time difference
 			Timing *pTimer = Timing::GetInstance();
 			float fTimeDiff        = pTimer->GetTimeDifference();
 			float fTimeScaleFactor = pTimer->GetTimeScaleFactor();
 
-			// Check key
-			switch (nKey) {
+			// Check button
+			if (cControl.GetName() == "1") {
 				// Decrease timescale
-				case PLGUIKEY_1:
-					pTimer->SetTimeScaleFactor(fTimeScaleFactor-fTimeDiff);
-					if (pTimer->GetTimeScaleFactor() < 0.1f)
-						pTimer->SetTimeScaleFactor(0.1f);
-					break;
-
+				pTimer->SetTimeScaleFactor(fTimeScaleFactor-fTimeDiff);
+				if (pTimer->GetTimeScaleFactor() < 0.1f)
+					pTimer->SetTimeScaleFactor(0.1f);
+			} else if (cControl.GetName() == "2") {
 				// Increase timescale
-				case PLGUIKEY_2:
-					pTimer->SetTimeScaleFactor(fTimeScaleFactor+fTimeDiff);
-					if (pTimer->GetTimeScaleFactor() > 4.0f)
-						pTimer->SetTimeScaleFactor(4.0f);
-					break;
-
+				pTimer->SetTimeScaleFactor(fTimeScaleFactor+fTimeDiff);
+				if (pTimer->GetTimeScaleFactor() > 4.0f)
+					pTimer->SetTimeScaleFactor(4.0f);
+			} else if (cControl.GetName() == "3") {
 				// Reset timescale
-				case PLGUIKEY_0:
-					pTimer->SetTimeScaleFactor();
-					break;
+				pTimer->SetTimeScaleFactor();
 			}
 
 			// Time scale factor changed?
@@ -236,7 +211,6 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				if (pSceneContainer)
 					pSceneContainer->SetAttribute("Pitch", String::Format("%g", pTimer->GetTimeScaleFactor()));
 			}
-			break;
 		}
 	}
 }
@@ -269,19 +243,19 @@ void Application::OnInit()
 	}
 }
 
-void Application::OnCreateMainWindow()
+
+//[-------------------------------------------------------]
+//[ Private virtual PLEngine::RenderApplication functions ]
+//[-------------------------------------------------------]
+void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
+	BasicSceneApplication::OnCreateInputController();
 
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-	}
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }
 
 
@@ -376,8 +350,6 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 					// Draw keys information
 					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                      + '\"');
-					// [TODO] PLGui: Selection dialog
-			//		pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another sound API") + '\"');
 					pInfoTextContainer->Create("PLScene::SNText2D", "TimeScale", "Position=\"0.06 0.08\" Flags=\"No3DPosition|NoCenter\"");
 					UpdateTimeScaleTextNode();
 				}

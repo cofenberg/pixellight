@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Base/Keys.h>
-#include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Control.h>
 #include <PLRenderer/RendererContext.h>
 #include "Application.h"
 
@@ -35,7 +35,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 
 
@@ -53,7 +53,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : RenderApplication(),
-	SlotOnKeyDown(this)
+	SlotOnControl(this)
 {
 	// Set application name and title
 	SetName("50RendererTriangle");
@@ -75,32 +75,13 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
 	// Check whether the escape key was pressed
-	if (nKey == PLGUIKEY_ESCAPE)
+	if (cControl.GetType() == ControlButton && cControl.GetName() == "Escape")
 		Exit(0); // Shut down the application
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
-//[-------------------------------------------------------]
-void Application::OnCreateMainWindow()
-{
-	// Call base implementation
-	RenderApplication::OnCreateMainWindow();
-
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-	}
 }
 
 
@@ -118,4 +99,15 @@ void Application::OnCreatePainter()
 		// Create and set the surface painter
 		SetPainter(pRendererContext->GetRenderer().CreateSurfacePainter(bShaders ? "SPTriangleShaders" : "SPTriangleFixedFunctions"));
 	}
+}
+
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	RenderApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }

@@ -34,6 +34,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLInput {
+	class Control;
+}
 class MyPicking;
 
 
@@ -54,7 +57,7 @@ class Application : public PLEngine::BasicSceneApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnKeyDown,	PLCore::uint32,	PLCore::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
+		pl_slot_1(OnControl,	PLInput::Control&,	"Called when a control event has occurred, occurred control as first parameter",	"")
 	pl_class_end
 
 
@@ -88,27 +91,19 @@ class Application : public PLEngine::BasicSceneApplication {
 	private:
 		/**
 		*  @brief
-		*    Called when a key is pressed down
+		*    Called when a control event has occurred
 		*
-		*  @param[in] nKey
-		*    Pressed key
-		*  @param[in] nModifiers
-		*    Modifier keys pressed
+		*  @param[in] cControl
+		*    Occurred control
 		*/
-		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLGui::GuiApplication functions       ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnCreateMainWindow() override;
+		void OnControl(PLInput::Control &cControl);
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
+		virtual void OnCreateInputController() override;
 		virtual bool OnUpdate() override;
 
 

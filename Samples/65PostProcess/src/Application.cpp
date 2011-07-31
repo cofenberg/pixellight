@@ -26,8 +26,8 @@
 #include <PLCore/System/System.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Base/Keys.h>
-#include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLRenderer/Renderer/Surface.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -39,7 +39,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 
@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	SlotOnKeyDown(this),
+	SlotOnControl(this),
 	m_nCurrentSelectedModifier(0)
 {
 	// Set application name and title
@@ -81,32 +81,29 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
-	switch (nKey) {
+	// Is it a button and was it just hit?
+	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
 		// Check whether the escape key was pressed
-		case PLGUIKEY_ESCAPE:
+		if (cControl.GetName() == "Escape") {
 			// Shut down the application
 			Exit(0);
-			break;
 
 		// Show/hide the help text
-		case PLGUIKEY_F1:
-		{
+		} else if (cControl.GetName() == "F1") {
 			// Get the info text scene node
 			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->GetByName("InfoText") : nullptr;
 			if (pSceneNode) {
 				// Toggle the active state of the scene node
 				pSceneNode->SetActive(!pSceneNode->IsActive());
 			}
-			break;
-		}
 
 		// Toggle post processing
-		case PLGUIKEY_SPACE:
-		{
+		} else if (cControl.GetName() == "Space") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Loop through all available post process scene node modifiers
@@ -120,12 +117,10 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 					pModifier = pCamera->GetModifier("PLCompositing::SNMPostProcess", ++nIndex);
 				}
 			}
-			break;
-		}
 
 		// Next post process effect
-		case PLGUIKEY_PRIOR:
-		{
+		} else if (cControl.GetName() == "PageUp") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Increase the current selected modifier index
@@ -137,12 +132,10 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->ClearModifiers();
 				pCamera->AddModifier(m_lstModifierClasses[m_nCurrentSelectedModifier]->GetClassName());
 			}
-			break;
-		}
 
 		// Previous post process effect
-		case PLGUIKEY_NEXT:
-		{
+		} else if (cControl.GetName() == "PageDown") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Decrease the current selected modifier index
@@ -155,24 +148,20 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->ClearModifiers();
 				pCamera->AddModifier(m_lstModifierClasses[m_nCurrentSelectedModifier]->GetClassName());
 			}
-			break;
-		}
 
 		// Custom post process effect: "Rainbow"
-		case PLGUIKEY_1:
-		{
+		} else if (cControl.GetName() == "1") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessCrazyBars", "ColorScaleY=\"0.002\"");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Cartoon"
-		case PLGUIKEY_2:
-		{
+		} else if (cControl.GetName() == "2") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
@@ -180,12 +169,10 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessEdgeDetect", "LuminanceConvert=\"-0.2125 -0.7154 -0.0721\"");
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessCombineMultiplicate");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Animated cartoon"
-		case PLGUIKEY_3:
-		{
+		} else if (cControl.GetName() == "3") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
@@ -194,12 +181,10 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm");
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessCombineMultiplicate");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Animated old cartoon"
-		case PLGUIKEY_4:
-		{
+		} else if (cControl.GetName() == "4") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
@@ -208,24 +193,20 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessCombineMultiplicate");
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Scatch"
-		case PLGUIKEY_5:
-		{
+		} else if (cControl.GetName() == "5") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessEdgeDetect", "LuminanceConvert=\"-0.2125 -0.7154 -0.0721\"");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Animated old scatch"
-		case PLGUIKEY_6:
-		{
+		} else if (cControl.GetName() == "6") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new ones
@@ -233,40 +214,33 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessEdgeDetect", "LuminanceConvert=\"-0.2125 -0.7154 -0.0721\"");
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm");
 			}
-			break;
-		}
 
 		// Custom post process effect: "Edeg glow"
-		case PLGUIKEY_7:
-		{
+		} else if (cControl.GetName() == "7") {
+			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
 				// Remove all old modifiers add the new one
 				pCamera->ClearModifiers();
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessEdgeDetect", "Filename=\"Data/PostProcesses/EdgeGlow.pp\"");
 			}
-			break;
 		}
 	}
 }
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
+//[ Private virtual PLEngine::RenderApplication functions ]
 //[-------------------------------------------------------]
-void Application::OnCreateMainWindow()
+void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
+	BasicSceneApplication::OnCreateInputController();
 
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-	}
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }
 
 

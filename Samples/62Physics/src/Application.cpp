@@ -27,8 +27,8 @@
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Base/Keys.h>
-#include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLPhysics/Body.h>
@@ -44,7 +44,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 using namespace PLPhysics;
@@ -64,8 +64,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	SlotOnKeyDown(this),
-	SlotOnKeyUp(this),
+	SlotOnControl(this),
 	SlotOnContact(this),
 	m_pLine(nullptr),
 	m_pFallingBox(nullptr),
@@ -143,8 +142,8 @@ bool Application::ChoosePhysicsAPI()
 	bool bResult = false; // Error by default
 
 	// Are there multiple physics API's available?
-	List<const PLCore::Class*> lstClasses;
-	PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLPhysics::World", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, "PLPhysics::World", Recursive, NoBase, NoAbstract);
 	if (lstClasses.GetNumOfElements()) {
 		if (lstClasses.GetNumOfElements() == 1) {
 			// Get the class name of the physics API
@@ -153,19 +152,9 @@ bool Application::ChoosePhysicsAPI()
 			// An API was 'chosen'...
 			bResult = true; // Done
 		} else {
-			// [TODO] PLGui: Selection dialog
+			// Use the default physics API
 			m_sPhysicsAPI = "PLPhysicsNewton::World";
 			bResult = true; // Done
-			/*
-			// Show your choose dialog
-			ChoosePhysicsAPIGui *pDialog = new ChoosePhysicsAPIGui();
-			if (PLGui::GuiManager::GetInstance()->GetSystemGui()->ShowDialogModal(*pDialog, nullptr) && m_sPhysicsAPI != pDialog->GetName()) {
-				// A new API was chosen...
-				m_sPhysicsAPI = pDialog->GetName();
-				bResult = true; // Done
-			}
-			pDialog->Destroy();
-			*/
 		}
 
 		// Was an API chosen?
@@ -219,27 +208,21 @@ Body *Application::GetPhysicsBody(SceneNode &cSceneNode) const
 
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
-	switch (nKey) {
+	// Is it a button?
+	if (cControl.GetType() == ControlButton) {
 		// Check whether the escape key was pressed
-		case PLGUIKEY_ESCAPE:
-			// Shut down application
+		if (cControl.GetName() == "Escape") {
+			// Shut down the application
 			Exit(0);
-			break;
-
-		// Choose another physics API?
-		// [TODO] PLGui: Selection dialog
-//		case PLGUIKEY_C:
-//			ChoosePhysicsAPI();
-//			break;
 
 		// Reset the small falling physics box?
-		case PLGUIKEY_R:
+		} else if (cControl.GetName() == "R") {
 			// Check your pointer to the falling box
-			if (m_pFallingBox) {
+			if (reinterpret_cast<Button&>(cControl).IsHit() && m_pFallingBox) {
 				// Reset the position and rotation
 				m_pFallingBox->GetTransform().SetPosition(Vector3(1.5f, 4.0f, 7.2f));
 				m_pFallingBox->GetTransform().SetRotation(Quaternion::Identity);
@@ -255,28 +238,27 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 					pBody->SetFrozen(false);
 				}
 			}
-			break;
 
 		// Apply a force to the small falling physics box?
-		case PLGUIKEY_F:
-			m_bApplyForce = true;
+		} else if (cControl.GetName() == "F") {
+			// Toggle state
+			m_bApplyForce = !m_bApplyForce;
 
 			// Update the line scene node
 			if (m_pLine) {
-				m_pLine->SetActive(true);
+				m_pLine->SetActive(m_bApplyForce);
 				m_pLine->SetAttribute("StartPosition", "1.5 4.0 7.7");
 			}
-			break;
 
 		// Apply a torque to the small falling physics box?
-		case PLGUIKEY_T:
-			m_bTorqueForce = true;
-			break;
+		} else if (cControl.GetName() == "T") {
+			// Toggle state
+			m_bTorqueForce = !m_bTorqueForce;
 
 		// Change mass of the small falling physics box?
-		case PLGUIKEY_M:
+		} else if (cControl.GetName() == "M") {
 			// Check your pointer to the falling box
-			if (m_pFallingBox) {
+			if (reinterpret_cast<Button&>(cControl).IsHit() && m_pFallingBox) {
 				SceneNodeModifier *pModifier = m_pFallingBox->GetModifier("PLPhysics::SNMPhysicsBodyBox");
 				if (pModifier) {
 					// Get the current mass
@@ -296,30 +278,7 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 					UpdateMassTextNode();
 				}
 			}
-			break;
-	}
-}
-
-/**
-*  @brief
-*    Called when a key is released
-*/
-void Application::OnKeyUp(uint32 nKey, uint32 nModifiers)
-{
-	switch (nKey) {
-		// Apply a force to the small falling physics box?
-		case PLGUIKEY_F:
-			m_bApplyForce = false;
-
-			// Update the line scene node
-			if (m_pLine)
-				m_pLine->SetActive(false);
-			break;
-
-		// Apply a torque to the small falling physics box?
-		case PLGUIKEY_T:
-			m_bTorqueForce = false;
-			break;
+		}
 	}
 }
 
@@ -368,7 +327,7 @@ void Application::OnInit()
 	// Valid default physics API given?
 	String sClassName = m_cCommandLine.GetValue("PhysicsAPI");
 	if (sClassName.GetLength()) {
-		const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass(sClassName);
+		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
 		if (pClass && pClass->IsDerivedFrom("PLPhysics::World")) {
 			m_sPhysicsAPI = sClassName;
 
@@ -384,28 +343,21 @@ void Application::OnInit()
 	}
 }
 
-void Application::OnCreateMainWindow()
-{
-	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
-
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		pWidget->SignalKeyUp.  Connect(SlotOnKeyUp);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget) {
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-			pWidget->GetContentWidget()->SignalKeyUp.  Connect(SlotOnKeyUp);
-		}
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	BasicSceneApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
+}
+
 bool Application::OnUpdate()
 {
 	// One important word at the beginning: DON'T COPYCAT THIS!
@@ -422,7 +374,7 @@ bool Application::OnUpdate()
 				// Apply force?
 				if (m_bApplyForce) {
 					const Vector3 &vPos = m_pFallingBox->GetTransform().GetPosition();
-					Vector3 vDir = Vector3(1.5f, 4.0f, 7.7f) - vPos;
+					Vector3 vDir = (Vector3(1.5f, 4.0f, 7.7f) - vPos)*5;
 
 					// Add a force (f=m*a) to the start position of the box
 					pBody->AddForce(vDir*pBody->GetMass());
@@ -435,7 +387,7 @@ bool Application::OnUpdate()
 				// Apply torque?
 				if (m_bTorqueForce) {
 					// Add a torque
-					pBody->AddTorque(Vector3(0.1f, 0.0f, 0.1f)*pBody->GetMass());
+					pBody->AddTorque(Vector3(3.0f, 0.0f, 1.0f)*pBody->GetMass());
 				}
 			}
 		}
@@ -531,8 +483,6 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 					// Draw keys information
 					pInfoTextContainer->Create("PLScene::SNText2D", "Keys",      "Position=\"0.01 0.04\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("Keys:")                                 + '\"');
-					// [TODO] PLGui: Selection dialog
-				//	pInfoTextContainer->Create("PLScene::SNText2D", "Choose",    "Position=\"0.06 0.06\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("c=Choose another physics API")          + '\"');
 					pInfoTextContainer->Create("PLScene::SNText2D", "Reset",     "Position=\"0.06 0.08\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("r=Reset small falling box")             + '\"');
 					pInfoTextContainer->Create("PLScene::SNText2D", "AddForce",  "Position=\"0.06 0.10\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("f=Add force to the small falling box")  + '\"');
 					pInfoTextContainer->Create("PLScene::SNText2D", "AddTorque", "Position=\"0.06 0.12\" Flags=\"No3DPosition|NoCenter\" Text=\"" + PLT("t=Add torque to the small falling box") + '\"');

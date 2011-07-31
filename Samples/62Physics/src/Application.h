@@ -34,6 +34,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLInput {
+	class Control;
+}
 namespace PLPhysics {
 	class Body;
 	class ContactInformation;
@@ -57,9 +60,8 @@ class Application : public PLEngine::BasicSceneApplication {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
-		pl_slot_2(OnKeyDown,	PLCore::uint32,					PLCore::uint32,	"Called when a key is pressed down. pressed key as first parameter and modifier keys pressed as second parameter",	"")
-		pl_slot_2(OnKeyUp,		PLCore::uint32,					PLCore::uint32,	"Called when a key is released. pressed key as first parameter and modifier keys pressed as second parameter",		"")
-		pl_slot_1(OnContact,	PLPhysics::ContactInformation&,					"Called when a contact between two bodies was detected by the physics, contact information as first parameter",		"")
+		pl_slot_1(OnControl,	PLInput::Control&,				"Called when a control event has occurred, occurred control as first parameter",								"")
+		pl_slot_1(OnContact,	PLPhysics::ContactInformation&,	"Called when a contact between two bodies was detected by the physics, contact information as first parameter",	"")
 	pl_class_end
 
 
@@ -125,25 +127,12 @@ class Application : public PLEngine::BasicSceneApplication {
 
 		/**
 		*  @brief
-		*    Called when a key is pressed down
+		*    Called when a control event has occurred
 		*
-		*  @param[in] nKey
-		*    Pressed key
-		*  @param[in] nModifiers
-		*    Modifier keys pressed
+		*  @param[in] cControl
+		*    Occurred control
 		*/
-		void OnKeyDown(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
-
-		/**
-		*  @brief
-		*    Called when a key is released
-		*
-		*  @param[in] nKey
-		*    Pressed key
-		*  @param[in] nModifiers
-		*    Modifier keys pressed
-		*/
-		void OnKeyUp(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		void OnControl(PLInput::Control &cControl);
 
 		/**
 		*  @brief
@@ -160,13 +149,13 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnInit() override;
-		virtual void OnCreateMainWindow() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
+		virtual void OnCreateInputController() override;
 		virtual bool OnUpdate() override;
 
 

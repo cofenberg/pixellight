@@ -28,6 +28,8 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Gui/Resources/Font.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Control.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLEngine/Compositing/Gui/SNGui.h>
@@ -41,6 +43,7 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 using namespace PLEngine;
@@ -66,7 +69,7 @@ PLGui::Font *Application::GuiFont = nullptr;
 *    Constructor
 */
 Application::Application() :
-	SlotOnKeyDown(this),
+	SlotOnControl(this),
 	m_pIngameGui(nullptr)
 {
 	// Set application name and title
@@ -89,14 +92,13 @@ Application::~Application()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
 	// Check whether the escape key was pressed
-	if (nKey == PLGUIKEY_ESCAPE)
-		// Shut down the application
-		Exit(0);
+	if (cControl.GetType() == ControlButton && cControl.GetName() == "Escape")
+		Exit(0); // Shut down the application
 }
 
 
@@ -117,21 +119,17 @@ void Application::OnDeInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
+//[ Private virtual PLEngine::RenderApplication functions ]
 //[-------------------------------------------------------]
-void Application::OnCreateMainWindow()
+void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
+	BasicSceneApplication::OnCreateInputController();
 
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-	}
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }
 
 

@@ -1,3 +1,9 @@
+>> 31.07.2011
+[CO]
+- The sample applications are now using PLInput instead of PLGui to get and process input events
+
+
+
 >> 16.07.2011
 [CO]
 - "20Gui" & "30Input": There was a special SDK version of the VC project missing

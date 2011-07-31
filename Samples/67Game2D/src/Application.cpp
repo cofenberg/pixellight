@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLGui/Gui/Base/Keys.h>
-#include <PLGui/Widgets/Widget.h>
+#include <PLInput/Input/Controller.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContext.h>
@@ -40,7 +40,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
 using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
@@ -60,7 +59,7 @@ pl_implement_class(Application)
 *    Constructor
 */
 Application::Application() : BasicSceneApplication(),
-	SlotOnKeyDown(this)
+	SlotOnControl(this)
 {
 	// Set application name and title
 	SetName("67Game2D");
@@ -112,24 +111,23 @@ void Application::Restart()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a key is pressed down
+*    Called when a control event has occurred
 */
-void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
+void Application::OnControl(Control &cControl)
 {
-	switch (nKey) {
+	// Is it a button and was it just hit?
+	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
 		// Check whether the escape key was pressed
-		case PLGUIKEY_ESCAPE:
-			Exit(0); // Shut down the application
-			break;
+		if (cControl.GetName() == "Escape") {
+			// Shut down the application
+			Exit(0);
 
 		// Restart the game
-		case PLGUIKEY_R:
+		} else if (cControl.GetName() == "R") {
 			Restart();
-			break;
 
 		// Toggle post processing
-		case PLGUIKEY_P:
-		{
+		} else if (cControl.GetName() == "P") {
 			// Get the camera
 			const SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -150,28 +148,23 @@ void Application::OnKeyDown(uint32 nKey, uint32 nModifiers)
 				// Enable/disable render to texture for the post processing feature
 				GetSceneRendererTool().SetPassAttribute("Begin", "Flags", bRenderToTexture ? "" : "Inactive");
 			}
-			break;
 		}
 	}
 }
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
+//[ Private virtual PLEngine::RenderApplication functions ]
 //[-------------------------------------------------------]
-void Application::OnCreateMainWindow()
+void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateMainWindow();
+	BasicSceneApplication::OnCreateInputController();
 
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalKeyDown.Connect(SlotOnKeyDown);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalKeyDown.Connect(SlotOnKeyDown);
-	}
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }
 
 

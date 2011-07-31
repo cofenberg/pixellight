@@ -47,7 +47,6 @@ add_libs(
 	PLCore
 	PLMath
 	PLGraphics
-	PLGui
 	PLInput
 	PLRenderer
 	PLMesh
@@ -121,7 +120,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLMath PLGraphics PLGui PLRenderer PLMesh PLScene PLSound PLEngine)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLMath PLGraphics PLRenderer PLMesh PLScene PLSound PLEngine)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

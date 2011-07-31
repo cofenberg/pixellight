@@ -107,7 +107,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGui.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)71libRocket.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -148,7 +148,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGui64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)71libRocket64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -181,7 +181,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGui.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)71libRocketD.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -216,7 +216,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGui64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;libRocket_PL64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)71libRocketD64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
