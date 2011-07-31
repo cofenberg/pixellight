@@ -103,6 +103,8 @@ if (pMyClass != nullptr && pMyClass->IsDerivedFrom("MyBaseClass")) {
 \end{lstlisting}
 If you're just using the code parts presented in this chapter, the \emph{PLCore::Class:IsDerivedFrom} test within the example will fail because \emph{MyNamespace::MyClass} is not derived from \emph{MyBaseClass}.
 
+A similar feature is available for instances of classes by using \emph{PLCore::Object::IsInstanceOf} returning \emph{true} if the object is an instance of the class or one of it's derived classes, else \emph{false}.
+
 
 \paragraph{Enumerating RTTI Classes}
 The method \emph{PLCore::ClassManager::GetClasses} is the central RTTI class enumeration method. By using this method, one can for example request a list of all RTTI classes which are derived from another RTTI class. The method has several parameters which are used to control which RTTI classes will land within the filled RTTI class list. The source~code~\ref{Code:EnumeratingRTTIClasses} shows this method in action.
