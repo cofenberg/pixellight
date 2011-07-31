@@ -99,6 +99,10 @@ double fResult1 = cMyFunction1(42, 3.1415f);
 Both, \emph{cMyFunction0} and \emph{cMyFunction1} are functors with a signature indicating that there's return value of the type \emph{double}, and two parameters with the type \emph{int} and \emph{float}. While \emph{cMyFunction0} points to a static function, \emph{cMyFunction1} points to a member method - as result the last one also needs an object instance. After the definition of the two functors, there's no difference between the usage of the both. It's no longer relevant whether they point to a static function or to a member method.
 
 
+\paragraph{Generic Functions and Methods}
+There are situations, like within the Lua script backend, were it's e.g. not possible to create a typed functor because the types are unknown to compile time. In this case, \emph{PLCore::FuncGenFunPtr} or \emph{PLCore::FuncGenMemPtr} using functions/methods with the generic signature "PLCore::Signature<void, PLCore::DynParams&, void*>". can be used. By using these templates, it's possible to pass around and use functions/methods because they're using a generic, common signature.
+
+
 \paragraph{Dynamic Parameters}
 \label{Functions:DynamicParameters}
 Using functors like native C++ functions is not the only possible way, it's also possible to use dynamic parameters by using the \emph{PLCore::Params} template.
