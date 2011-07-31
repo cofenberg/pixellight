@@ -115,10 +115,10 @@ Url Url::operator +(const Url &cUrl) const
 	// Check if the first URL is valid
 	if (m_bValid) {
 		// Check if the second URL is valid and can be added
-		if ( cUrl.IsValid() &&														// URL must be valid
-			(cUrl.GetProtocol() == GetProtocol() || cUrl.GetProtocol() == "") &&	// Protocols must match
-			 cUrl.IsRelative() &&													// URL must be relative
-			 IsDirectory()) {														// First URL must not have a filename
+		if ( cUrl.IsValid() &&															// URL must be valid
+			(cUrl.GetProtocol() == GetProtocol() || !cUrl.GetProtocol().GetLength()) &&	// Protocols must match
+			 cUrl.IsRelative() &&														// URL must be relative
+			 IsDirectory()) {															// First URL must not have a filename
 			// Compose URLs
 			return Url(GetProtocol() + GetRoot() + GetPath() + cUrl.GetPath() + cUrl.GetFilename());
 		}
@@ -140,10 +140,10 @@ Url &Url::operator +=(const Url &cUrl)
 	// Check if the first URL is valid
 	if (m_bValid) {
 		// Check if the second URL is valid and can be added
-		if ( cUrl.IsValid() &&														// URL must be valid
-			(cUrl.GetProtocol() == GetProtocol() || cUrl.GetProtocol() == "") &&	// Protocols must match
-			 cUrl.IsRelative() &&													// URL must be relative
-			 IsDirectory()) {														// First URL must not have a filename
+		if ( cUrl.IsValid() &&															// URL must be valid
+			(cUrl.GetProtocol() == GetProtocol() || !cUrl.GetProtocol().GetLength()) &&	// Protocols must match
+			 cUrl.IsRelative() &&														// URL must be relative
+			 IsDirectory()) {															// First URL must not have a filename
 			// Compose URLs
 			SetValue(GetProtocol() + GetRoot() + GetPath() + cUrl.GetPath() + cUrl.GetFilename());
 		}
@@ -182,7 +182,7 @@ String Url::GetNativePath() const
 String Url::GetWindowsPath() const
 {
 	// Convert to Windows path
-	if (m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") {
+	if (m_sProtocol.CompareNoCase("file://") || !m_sProtocol.GetLength()) {
 		// Compose Windows path
 		String sUrl = m_sRoot + m_sPath + m_sFilename;
 		sUrl.Replace('/', '\\');
@@ -200,7 +200,7 @@ String Url::GetWindowsPath() const
 String Url::GetUnixPath() const
 {
 	// Convert to Unix path
-	if (m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") {
+	if (m_sProtocol.CompareNoCase("file://") || !m_sProtocol.GetLength()) {
 		// Compose Unix path
 		return m_sRoot + m_sPath + m_sFilename;
 	} else {
@@ -238,7 +238,7 @@ bool Url::IsValidNativePath() const
 */
 bool Url::IsValidWindowsPath() const
 {
-	return ((m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") && (m_sRoot.GetSubstring(1, 2) == ":/" || m_sRoot == ""));
+	return ((m_sProtocol.CompareNoCase("file://") || !m_sProtocol.GetLength()) && (m_sRoot.GetSubstring(1, 2) == ":/" || !m_sRoot.GetLength()));
 }
 
 /**
@@ -247,7 +247,7 @@ bool Url::IsValidWindowsPath() const
 */
 bool Url::IsValidUnixPath() const
 {
-	return ((m_sProtocol.CompareNoCase("file://") || m_sProtocol == "") && (m_sRoot == '/' || m_sRoot == ""));
+	return ((m_sProtocol.CompareNoCase("file://") || !m_sProtocol.GetLength()) && (m_sRoot == '/' || !m_sRoot.GetLength()));
 }
 
 /**
@@ -256,7 +256,7 @@ bool Url::IsValidUnixPath() const
 */
 bool Url::IsEmpty() const
 {
-	return (m_bValid && m_sRoot == "" && m_sPath == "" && m_sFilename == "");
+	return (m_bValid && !m_sRoot.GetLength() && !m_sPath.GetLength() && !m_sFilename.GetLength());
 }
 
 /**
@@ -265,7 +265,7 @@ bool Url::IsEmpty() const
 */
 bool Url::IsAbsolute() const
 {
-	return (m_bValid && m_sRoot != "");
+	return (m_bValid && m_sRoot.GetLength());
 }
 
 /**
@@ -274,7 +274,7 @@ bool Url::IsAbsolute() const
 */
 bool Url::IsRelative() const
 {
-	return (m_bValid && m_sRoot == "");
+	return (m_bValid && !m_sRoot.GetLength());
 }
 
 /**
@@ -283,7 +283,7 @@ bool Url::IsRelative() const
 */
 bool Url::IsDirectory() const
 {
-	return (m_bValid && (m_sRoot != "" || m_sPath != "") && m_sFilename == "");
+	return (m_bValid && (m_sRoot.GetLength() || m_sPath.GetLength()) && !m_sFilename.GetLength());
 }
 
 /**
@@ -334,7 +334,7 @@ String Url::CutFilename() const
 {
 	// Return complete path, omit protocol for local path
 	String sPath;
-	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol != "")
+	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol.GetLength())
 		sPath = m_sProtocol;
 	sPath += m_sRoot + m_sPath;
 	return sPath;
@@ -378,7 +378,7 @@ String Url::CutExtension() const
 {
 	// Return complete path, omit protocol for local path
 	String sPath;
-	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol != "")
+	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol.GetLength())
 		sPath = m_sProtocol;
 	sPath += m_sRoot + m_sPath + GetCompleteTitle();
 	return sPath;
@@ -402,7 +402,7 @@ String Url::CutCompleteExtension() const
 {
 	// Return complete path, omit protocol for local path
 	String sPath;
-	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol != "")
+	if (!m_sProtocol.CompareNoCase("file://") && m_sProtocol.GetLength())
 		sPath = m_sProtocol;
 	sPath += m_sRoot + m_sPath + GetTitle();
 	return sPath;
@@ -440,19 +440,19 @@ Url &Url::Collapse()
 		Stack<String> cNameStack;
 		uint32 nPos;
 		String sName = GetFirstPath(nPos);
-		while (sName != "") {
+		while (sName.GetLength()) {
 			// Check next subdir
 			const String sTop = cNameStack.Top();
 			if (sName.GetLength()) {
-				if (sName == ".." && sTop != ".." && (sTop != "" || m_sRoot != "")) {
+				if (sName == ".." && sTop != ".." && (sTop.GetLength() || m_sRoot.GetLength())) {
 					// Delete last subdir when '..' occurs
-					// Note: m_sRoot != "" is there because e.g. "C:\.." is a valid directory on Windows systems.
+					// Note: m_sRoot.GetLength() is there because e.g. "C:\.." is a valid directory on Windows systems.
 					// To avoid directory names like C:\..\..\Programs\", this function will therefore ignore
 					// ".." at the beginning of a filename, but ONLY if the root is not empty (relative paths
 					// can of cause begin with "..")
-					if (sTop != "")
+					if (sTop.GetLength())
 						cNameStack.Pop();
-				} else if (sName == ".") {
+				} else if (sName == '.') {
 					// Ignore '.'
 				} else {
 					// Push subdir on stack
@@ -466,14 +466,14 @@ Url &Url::Collapse()
 
 		// Look for .. or . in the filename
 		const String sTop = cNameStack.Top();
-		if (m_sFilename == ".." && sTop != ".." && (sTop != "" || m_sRoot != "")) {
+		if (m_sFilename == ".." && sTop != ".." && (sTop.GetLength() || m_sRoot.GetLength())) {
 			cNameStack.Pop();
 			m_sFilename = cNameStack.Top();
 			cNameStack.Pop();
-		} else if (m_sFilename == ".") {
+		} else if (m_sFilename == '.') {
 			m_sFilename = cNameStack.Top();
 			if (!m_sFilename.GetLength())
-				m_sFilename = ".";
+				m_sFilename = '.';
 			cNameStack.Pop();
 		}
 
@@ -607,12 +607,12 @@ void Url::SetValue(const String &sUrl)
 		}
 
 		// Set protocol to "file://", if there is no protocol and the root is not empty
-		if (sProtocol == "" && sRoot != "")
+		if (!sProtocol.GetLength() && sRoot.GetLength())
 			sProtocol = "file://";
 
 		// Check path
 		String sPath, sFilename;
-		while (sTemp != "") {
+		while (sTemp.GetLength()) {
 			// Get '/' or '\'
 			const int nBacks = sTemp.IndexOf('\\');
 			int nSlash = sTemp.IndexOf('/');

@@ -163,7 +163,7 @@ void HttpServerConnection::SendHeader(EHttpStatus nStatus, const String &sMimeTy
 	Send("Date: " + System::GetInstance()->GetTime().ToString() + "\r\n");
 
 	// Content type
-	if (sMimeType != "")
+	if (sMimeType.GetLength())
 		Send("Content-Type: " + sMimeType + "; charset=ISO-8859-1\r\n");
 
 	// Content length

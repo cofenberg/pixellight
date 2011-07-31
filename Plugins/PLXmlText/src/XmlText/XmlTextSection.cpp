@@ -152,7 +152,7 @@ void XmlTextSection::OnDraw(XmlTextRenderer &cRenderer)
 	}
 
 	// Draw background image
-	if (m_sBackground != "")
+	if (m_sBackground.GetLength())
 		cRenderer.GetGraphics()->DrawImage(LoadImage(cRenderer.GetGui(), m_sBackground), m_vPos, m_vSize);
 
 	// Draw children

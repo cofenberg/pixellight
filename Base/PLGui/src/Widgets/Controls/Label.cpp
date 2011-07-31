@@ -351,7 +351,7 @@ PLMath::Vector2i Label::OnPreferredSize(const Vector2i &vRefSize) const
 
 			// Add '\n' after last line
 			String sLastWord = lstWords.Get(lstWords.GetNumOfElements()-1);
-			if (sLastWord != "" && sLastWord != '\n') {
+			if (sLastWord.GetLength() && sLastWord != '\n') {
 				lstWords.Add('\n');
 				nNumLines++;
 			}
@@ -513,7 +513,7 @@ void Label::OnDraw(Graphics &cGraphics)
 
 			// Add '\n' after last line
 			String sLastWord = lstWords.Get(lstWords.GetNumOfElements()-1);
-			if (sLastWord != "" && sLastWord != '\n') {
+			if (sLastWord.GetLength() && sLastWord != '\n') {
 				lstWords.Add('\n');
 				nNumLines++;
 			}

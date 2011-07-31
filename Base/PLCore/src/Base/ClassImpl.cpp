@@ -63,7 +63,7 @@ ClassImpl::ClassImpl(uint32 nModuleID, const String &sName, const String &sDescr
 	m_pClass(nullptr),
 	m_sName(sName),
 	m_sNamespace(sNamespace),
-	m_sClassName((m_sNamespace != "") ? m_sNamespace + "::" + m_sName : m_sName),
+	m_sClassName(m_sNamespace.GetLength() ? m_sNamespace + "::" + m_sName : m_sName),
 	m_sDescription(sDescription),
 	m_sBaseClass(sBaseClass),
 	m_nModuleID(nModuleID),
@@ -211,7 +211,7 @@ void ClassImpl::AddProperty(const String &sName, const String &sValue)
 		DeInitClass();
 
 	// Check if name is valid
-	if (sName != "") {
+	if (sName.GetLength()) {
 		// Add property
 		m_mapOwnProperties.Add(sName, sValue);
 	}

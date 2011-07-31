@@ -266,11 +266,11 @@ bool HTMLParser::Parse()
 bool HTMLParser::HasNextToken()
 {
 	// If there is no token, try to parse next one
-	if (m_sToken == "")
+	if (!m_sToken.GetLength())
 		m_sToken = GetNextToken();
 
 	// Check if there is a token waiting
-	return (m_sToken != "");
+	return m_sToken.GetLength();
 }
 
 /**
@@ -283,7 +283,7 @@ String HTMLParser::GetNextToken()
 	static RegEx cRegExToken("(([^\\s\\h\\v\"<>]+)|(\"[^\"]*\")|(<[^>]*>))");
 
 	// Is there a token waiting?
-	if (m_sToken != "") {
+	if (m_sToken.GetLength()) {
 		// Return waiting token
 		String sToken = m_sToken;
 		m_sToken = "";

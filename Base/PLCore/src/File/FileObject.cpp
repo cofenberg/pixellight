@@ -120,7 +120,7 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 {
 	// Get URL
 	Url cFinalUrl;
-	if (cUrl.IsDirectory() && cUrl.GetPath() != "") {
+	if (cUrl.IsDirectory() && cUrl.GetPath().GetLength()) {
 		const String sUrl = cUrl.GetUrl();
 		cFinalUrl = sUrl.GetSubstring(0, sUrl.GetLength() - 1);
 	} else {

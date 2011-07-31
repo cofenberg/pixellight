@@ -118,7 +118,7 @@ void MessageFilter::AddMessage(const GuiMessage &cMessage)
 				// Message type rejected
 				bTypeReject = true;
 			}
-		} else if (cRule.GetWidgetName() != "") {
+		} else if (cRule.GetWidgetName().GetLength()) {
 			// Set default value for name-based checks
 			if (!bNameRules) {
 				if (cRule.GetFilterType() == FilterInclusive) bNameDefault = false;

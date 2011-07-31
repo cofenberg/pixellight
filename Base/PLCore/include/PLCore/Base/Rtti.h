@@ -198,9 +198,9 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 *    Enumeration description
 */
 #define __pl_enum_value(VALUE, DESCRIPTION) \
-					 if (nIndex == nCount)								 { nValue = VALUE; sName = #VALUE; return true; } \
-				else if (nIndex == -1 && sName == "" && nValue == VALUE) { sName = #VALUE; return true; } \
-				else if (nIndex == -1 && sName == #VALUE)				 { nValue = VALUE; sDescription = DESCRIPTION; return true; } \
+					 if (nIndex == nCount)										{ nValue = VALUE; sName = #VALUE; return true; } \
+				else if (nIndex == -1 && !sName.GetLength() && nValue == VALUE)	{ sName = #VALUE; return true; } \
+				else if (nIndex == -1 && sName == #VALUE)						{ nValue = VALUE; sDescription = DESCRIPTION; return true; } \
 				nCount++; \
 
 /**
@@ -215,9 +215,9 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 *    Enumeration description
 */
 #define __pl_enum_value_direct(NAME, VALUE, DESCRIPTION) \
-					 if (nIndex == nCount)								 { nValue = VALUE; sName = #NAME; return true; } \
-				else if (nIndex == -1 && sName == "" && nValue == VALUE) { sName = #NAME;  return true; } \
-				else if (nIndex == -1 && sName == #NAME)				 { nValue = VALUE; sDescription = DESCRIPTION; return true; } \
+					 if (nIndex == nCount)										{ nValue = VALUE; sName = #NAME; return true; } \
+				else if (nIndex == -1 && !sName.GetLength() && nValue == VALUE)	{ sName = #NAME;  return true; } \
+				else if (nIndex == -1 && sName == #NAME)						{ nValue = VALUE; sDescription = DESCRIPTION; return true; } \
 				nCount++; \
 
 /**

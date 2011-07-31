@@ -106,7 +106,7 @@ void XmlTextImage::OnParse(XmlNode &cXmlNode)
 void XmlTextImage::OnDraw(XmlTextRenderer &cRenderer)
 {
 	// Draw image
-	if (m_sFilename != "") {
+	if (m_sFilename.GetLength()) {
 		// Load the image right now?
 		if (!m_pImage) {
 			// Create the image object

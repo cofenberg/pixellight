@@ -177,7 +177,7 @@ bool HttpHeader::IsComplete() const
 		const String sLine = m_lstEntries.Get(m_lstEntries.GetNumOfElements()-1);
 
 		// Check if this line is the separator
-		if (sLine == "") {
+		if (!sLine.GetLength()) {
 			// Header is complete
 			return true;
 		}
