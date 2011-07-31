@@ -1,6 +1,7 @@
 >> 31.07.2011
 [CO]
 - The sample applications are now using PLInput instead of PLGui to get and process input events
+- The scripted stand-alone application "45ScriptApplication.lua" now also shows how to get and process input events by using scripts
 
 
 

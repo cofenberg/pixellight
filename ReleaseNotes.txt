@@ -4,6 +4,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Feature: Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods
 - Feature: Clang (http://clang.llvm.org/) v3.0 (currently in development) is now supported
 - Feature: Connected "PLInput::Control" to the RTTI as well as the derived classes "PLInput::Axis", "PLInput::Button", "PLInput::Effect" and "PLInput::LED" (meaning they can now be used e.g. by scripts)
+- Feature: The scripted stand-alone application "45ScriptApplication.lua" now also shows how to get and process input events by using scripts
 - Change: Please note that this release comes with several breaking changes with the goal to simplify the overall structure of PixelLight, have a look into the diaries (Git repository) for details
 - Change: Updated libpng from "1.4.5" to "1.4.8"
 - Change: Moved the PLProject executable from the runtime directory into the tools directory

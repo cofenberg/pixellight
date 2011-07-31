@@ -34,6 +34,13 @@ function OnInit()
 
 	-- Create the scene
 	CreateScene()
+
+	-- Get the input controller of the application
+	local inputController = this:GetInputController()
+	if inputController ~= nil then
+		-- Use the script function "OnControl" as slot and connect it with the RTTI "SignalOnControl"-signal of our RTTI controller class instance
+		inputController.SignalOnControl.Connect(OnControl)
+	end
 end
 
 --@brief
@@ -94,5 +101,18 @@ function CreateScene()
 
 		-- Create the floor scene node
 		sceneContainer:Create("PLScene::SNMesh", "Floor", "Flags='CastShadow|ReceiveShadow' Position='0.0 0.0 -5.0' Rotation='0.0 180.0 0.0' Scale='4.0 0.1 4.0' Mesh='Default'")
+	end
+end
+
+--@brief
+--  Slot function is called by C++ when a control event has occured
+--
+--@param[in] control
+--  Occured control
+function OnControl(control)
+	-- Check whether the escape key was pressed
+	if control:GetName() == "Escape" then
+		-- Shut down the application
+		this:Exit(0)
 	end
 end
