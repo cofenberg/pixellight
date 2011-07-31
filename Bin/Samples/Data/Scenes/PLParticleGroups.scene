@@ -12,7 +12,7 @@
     <Node Class="PLParticleGroups::PGSpring" Position="50 0 -50" />
     <Node Class="PLParticleGroups::PGRain" Position="50 0 0" />
     <Node Class="PLParticleGroups::PGImage" Position="0 0 0" />
-    <Node Class="PLParticleGroups::PLParticleGroups::PGFire" Position="-50 0 0" />
+    <Node Class="PLParticleGroups::PGFire" Position="-50 0 0" />
     <Node Class="PLParticleGroups::PGMagic1" Position="-50 0 50" />
     <Node Class="PLParticleGroups::PGMagic2" Position="-100 0 50" />
     <Node Class="PLParticleGroups::PGFountain" Position="0 0 50" />
