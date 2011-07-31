@@ -245,24 +245,6 @@ copy build\release64\PLPlugin64.lib ..\..\Bin\Lib\
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLEngine\PLEngine.vcxproj">
-      <Project>{cc92ebb3-44c5-429c-992c-cf71c8c69d29}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLRenderer\PLRenderer.vcxproj">
-      <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLScene\PLScene.vcxproj">
-      <Project>{2791052d-4680-4288-8f9c-77d8ff3c4469}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGui\PLGui.vcxproj">
-      <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

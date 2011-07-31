@@ -190,12 +190,6 @@
   <ItemGroup>
     <ResourceCompile Include="resource\PLPluginActiveX.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PLPlugin\PLPlugin.vcxproj">
-      <Project>{83be427b-1f76-45f2-9301-a3e9838537dd}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

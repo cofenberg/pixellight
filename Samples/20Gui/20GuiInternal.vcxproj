@@ -126,16 +126,6 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGui\PLGui.vcxproj">
-      <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
