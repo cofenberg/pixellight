@@ -120,6 +120,10 @@ void Application::RemoveBasePath(const QString &path)
 */
 PLRenderer::RendererContext *Application::GetRendererContext()
 {
+	// Create renderer context when the context is requested for the first time
+	if (!m_pRendererContext)
+		CreateRenderContext();
+
 	return m_pRendererContext;
 }
 
@@ -195,7 +199,6 @@ void Application::Init()
 
 	bool useRuntimeDir = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
 	InitCore(useRuntimeDir);
-	CreateRenderContext();
 
 	SetUpdateInterval(10);
 }
