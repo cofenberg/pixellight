@@ -240,20 +240,23 @@ endif()
 # suo	= VisualStudio 2010 file
 # user	= VisualStudio 2010 file
 # *.*~	= Backup file ending used by some editors under Linux
-set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user|.*~")
+set(PL_EXCLUDE_FILE_EXTENSIONS ".*\\.(sdf|ncb|suo|user|.*~")							# Set opening bracket as well as some standard unwanted file extensions
+if(NOT WIN32)
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|sln|vcxproj|filters")	# VisualStudio 2010 files only for MS Windows, please
+endif()
 if(NOT PL_PLUGIN_SCRIPT_LUA)
-	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|lua")					# Lua
 endif()
 if(NOT PL_PLUGIN_SCRIPT_V8)
-	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|js")
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|js")					# JavaScript
 endif()
 if(NOT PL_PLUGIN_SCRIPT_PYTHON)
-	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|py")
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|py")					# Python
 endif()
 if(NOT PL_PLUGIN_SCRIPT_ANGELSCRIPT)
-	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|as")
+	set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS}|as")					# AngelScript
 endif()
-set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS})")
+set(PL_EXCLUDE_FILE_EXTENSIONS "${PL_EXCLUDE_FILE_EXTENSIONS})")						# Set closing bracket
 message(STATUS "Extensions of files to exclude when e.g. copying a directory: ${PL_EXCLUDE_FILE_EXTENSIONS}")
 
 

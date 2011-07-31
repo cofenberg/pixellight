@@ -4,6 +4,12 @@
 
 
 
+>> 31.07.2011
+[CO]
+- "PixelLight/PixelLight.cmake": VisualStudio 2010 files are only copied into the SDK on the MS Windows platform
+
+
+
 >> 28.07.2011
 [CO]
 - Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods.
