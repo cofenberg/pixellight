@@ -120,13 +120,13 @@ class Application : public PLCore::ConsoleApplication {
 		*  @brief
 		*    Called when a control of the input controller has been activated
 		*/
-		void OnControl(PLInput::Control *pControl);
+		void OnControl(PLInput::Control &cControl);
 
 		/**
 		*  @brief
 		*    Called when a control of the input controller has been activated
 		*/
-		void OnControlExit(PLInput::Control *pControl);
+		void OnControlExit(PLInput::Control &cControl);
 
 
 	//[-------------------------------------------------------]
@@ -141,8 +141,8 @@ class Application : public PLCore::ConsoleApplication {
 	//[-------------------------------------------------------]
 	private:
 		// Event handlers
-		PLCore::EventHandler<PLInput::Control*> EventHandlerOnControl;
-		PLCore::EventHandler<PLInput::Control*> EventHandlerOnControlExit;
+		PLCore::EventHandler<PLInput::Control&> EventHandlerOnControl;
+		PLCore::EventHandler<PLInput::Control&> EventHandlerOnControlExit;
 
 		// Status
 		bool m_bExit;
