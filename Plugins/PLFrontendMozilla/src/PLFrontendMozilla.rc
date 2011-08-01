@@ -46,7 +46,7 @@ BEGIN
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", " \0"
-            VALUE "FileDescription", "PixelLight Browser Plugin\0"
+            VALUE "FileDescription", "PixelLight Browser Frontend\0"
             VALUE "FileExtents", "\0"
             VALUE "FileOpenName", "nppl3d\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
@@ -56,7 +56,7 @@ BEGIN
             VALUE "MIMEType", "application/x-pixellight\0"
             VALUE "OriginalFilename", "nppl3d.dll\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "PixelLight Browser Plugin for Mozilla\0"
+            VALUE "ProductName", "PixelLight Browser Frontend for Mozilla\0"
             VALUE "ProductVersion", "1, 0, 0, 1\0"
             VALUE "SpecialBuild", "\0"
         END

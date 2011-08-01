@@ -79,7 +79,7 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
   mInitialized(FALSE),
-  m_cPlugin(*this)
+  m_cFrontend(*this)
 {
   mhWnd = nullptr;
 }
@@ -100,16 +100,16 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
   if(mhWnd == nullptr)
     return FALSE;
 	// Save window and device context handles
-	m_hPluginWnd = (HWND)aWindow->window;
-	m_hPluginDC  = GetDC(m_hPluginWnd);
+	m_hFrontendWnd = (HWND)aWindow->window;
+	m_hFrontendDC  = GetDC(m_hFrontendWnd);
 
-	// Initialize plugin
-	PluginImpl::OnInit();
+	// Initialize frontend
+	FrontendImpl::OnInit();
 
 	// Save size
 	m_nWidth  = aWindow->width;
 	m_nHeight = aWindow->height;
-	PluginImpl::OnSize();
+	FrontendImpl::OnSize();
 
   // subclass window so we can intercept window messages and
   // do our drawing to it
@@ -149,14 +149,14 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 			// Save new size
 			m_nWidth  = LOWORD(lParam);
 			m_nHeight = HIWORD(lParam);
-			PluginImpl::OnSize();
+			FrontendImpl::OnSize();
 			return 0;
 		}
 
 		case WM_PAINT:
 		{
-			// Draw plugin
-			PluginImpl::OnDraw();
+			// Draw frontend
+			FrontendImpl::OnDraw();
 			return 0;
 		}
 
@@ -167,13 +167,27 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+
 //[-------------------------------------------------------]
-//[ Private virtual PluginImpl functions                  ]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[-------------------------------------------------------]
+PLCore::handle nsPluginInstance::GetWindowHandle() const
+{
+	return (PLCore::handle)m_hFrontendWnd;
+}
+
+PLCore::handle nsPluginInstance::GetDeviceContext() const
+{
+	return (PLCore::handle)m_hFrontendDC;
+}
+
+//[-------------------------------------------------------]
+//[ Private virtual PLFrontend::FrontendImpl functions    ]
 //[-------------------------------------------------------]
 void nsPluginInstance::Redraw()
 {
-	// Redraw plugin window
-	RedrawWindow(m_hPluginWnd, nullptr, nullptr, 0);
+	// Redraw frontend window
+	RedrawWindow(m_hFrontendWnd, nullptr, nullptr, 0);
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

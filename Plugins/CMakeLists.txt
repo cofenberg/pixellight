@@ -133,9 +133,6 @@ endif()
 if(WIN32)
 	add_subdirectory(PLPlugin)
 endif(WIN32)
-if(PL_BROWSER_PLUGIN_MOZILLA)
-	add_subdirectory(PLPluginMozilla)
-endif()
 
 ##################################################
 ## Dependencies

@@ -39,11 +39,10 @@
 #define __PLUGIN_H__
 
 #include <pluginbase.h>
-#include <PLPlugin/PluginImpl.h>
-#include <PLPlugin/PluginOpenGL.h>
-#include <PLPlugin/PluginPixelLight.h>
+#include <PLFrontend/FrontendImpl.h>
+#include <PLFrontend/FrontendOpenGL.h>	// [TODO] Just a test
 
-class nsPluginInstance : public PLPlugin::PluginImpl, public nsPluginInstanceBase
+class nsPluginInstance : public PLFrontend::FrontendImpl, public nsPluginInstanceBase
 {
 public:
   nsPluginInstance(NPP aInstance);
@@ -62,16 +61,26 @@ private:
   NPP mInstance;
   NPBool mInitialized;
   HWND mhWnd;
+  HWND	m_hFrontendWnd;	/**< Window handle of the plugin container */
+  HDC	m_hFrontendDC;	/**< Device context */
+
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PluginImpl functions                  ]
+	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLCore::handle GetWindowHandle() const;
+		virtual PLCore::handle GetDeviceContext() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLFrontend::FrontendImpl functions    ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Redraw() override;
 
 	private:
-//		PLPlugin::PluginOpenGL		m_cPlugin;
-		PLPlugin::PluginPixelLight	m_cPlugin;
+		PLFrontend::FrontendOpenGL		m_cFrontend;
 };
 
 #endif // __PLUGIN_H__
