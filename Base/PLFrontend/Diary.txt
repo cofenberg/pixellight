@@ -43,6 +43,8 @@
 - Copied the diaries of "PLPlugin", "PLPluginActiveX" and "PLPluginMozilla" into this diary because PLFrontend will be the successor of the "PLPlugin"-project... which is not limited
   to "PixelLight application as a plugin for e.g. a browser" but will also cover the "PixelLight application as executable" use case. Meaning, in the future it will be possible to just
   recompile a C++ PixelLight as shared library and then be able to use it in any available frontend.
+- Using "PLPlugin::Plugin" as start point for the class "Frontend"
+- Renamed "PLPluginActiveX" (still working, just tested it :) into "PLFrontendActiveX"
 
 
 

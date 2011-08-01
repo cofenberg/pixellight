@@ -1,9 +1,9 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by PLPluginActiveX.rc
+// Used by PLFrontendActiveX.rc
 //
 #define IDS_PROJNAME                    100
-#define IDR_PLPLUGINACTIVEX             101
+#define IDR_PLFRONTENDACTIVEX           101
 #define IDB_PIXELLIGHTCTRL              102
 #define IDR_PIXELLIGHTCTRL              103
 

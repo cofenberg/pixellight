@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -187,7 +187,7 @@ copy build\debug64\PLFrontendD64.lib ..\..\Bin\Lib\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontend.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -251,9 +251,15 @@ copy build\release64\PLFrontend64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Frontend.cpp" />
+    <ClCompile Include="src\FrontendImpl.cpp" />
+    <ClCompile Include="src\FrontendOpenGL.cpp" />
     <ClCompile Include="src\PLFrontend.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLFrontend\Frontend.h" />
+    <ClInclude Include="include\PLFrontend\FrontendImpl.h" />
+    <ClInclude Include="include\PLFrontend\FrontendOpenGL.h" />
     <ClInclude Include="include\PLFrontend\PLFrontend.h" />
     <ClInclude Include="include\PLFrontend\PLFrontendLinux.h" />
     <ClInclude Include="include\PLFrontend\PLFrontendWindows.h" />

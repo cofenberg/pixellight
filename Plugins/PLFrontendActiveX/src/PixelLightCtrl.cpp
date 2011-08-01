@@ -6,7 +6,7 @@
 // PixelLightCtrl
 
 PixelLightCtrl::PixelLightCtrl() :
-	m_cPlugin(*this)
+	m_cFrontend(*this)
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
@@ -18,7 +18,21 @@ PixelLightCtrl::~PixelLightCtrl()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PluginImpl functions                  ]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[-------------------------------------------------------]
+PLCore::handle PixelLightCtrl::GetWindowHandle() const
+{
+	return (PLCore::handle)m_hFrontendWnd;
+}
+
+PLCore::handle PixelLightCtrl::GetDeviceContext() const
+{
+	return (PLCore::handle)m_hFrontendDC;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLFrontend::Impl functions            ]
 //[-------------------------------------------------------]
 void PixelLightCtrl::Redraw()
 {
@@ -28,8 +42,8 @@ void PixelLightCtrl::Redraw()
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
-	// Draw plugin
-	PluginImpl::OnDraw();
+	// Draw frontend
+	FrontendImpl::OnDraw();
 
 	// Done
 	return S_OK;
@@ -38,11 +52,11 @@ HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 {
 	// Save window and device context handles
-	m_hPluginWnd = m_hWnd;
-	m_hPluginDC  = GetDC();
+	m_hFrontendWnd = m_hWnd;
+	m_hFrontendDC  = GetDC();
 
-	// Initialize plugin
-	PluginImpl::OnInit();
+	// Initialize frontend
+	FrontendImpl::OnInit();
 
 	// Done
 	return 0;
@@ -59,7 +73,7 @@ LRESULT PixelLightCtrl::OnSize(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &bH
 	// Save new size
 	m_nWidth  = LOWORD(lParam);
 	m_nHeight = HIWORD(lParam);
-	PluginImpl::OnSize();
+	FrontendImpl::OnSize();
 
 	// Done
 	return 0;

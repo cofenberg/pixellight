@@ -72,7 +72,7 @@ END
 
 3 TEXTINCLUDE 
 BEGIN
-    "1 TYPELIB ""PLPluginActiveX.tlb""\r\n"
+    "1 TYPELIB ""PLFrontendActiveX.tlb""\r\n"
     "\0"
 END
 
@@ -105,8 +105,8 @@ BEGIN
             VALUE "FileDescription", "TODO: <File description>"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
-            VALUE "InternalName", "PLPluginActiveX.dll"
-            VALUE "OriginalFilename", "PLPluginActiveX.dll"
+            VALUE "InternalName", "PLFrontendActiveX.dll"
+            VALUE "OriginalFilename", "PLFrontendActiveX.dll"
             VALUE "ProductName", "TODO: <Product name>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -123,7 +123,7 @@ END
 // REGISTRY
 //
 
-IDR_PLPLUGINACTIVEX     REGISTRY                "PLPluginActiveX.rgs"
+IDR_PLFRONTENDACTIVEX     REGISTRY                "PLFrontendActiveX.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -132,7 +132,7 @@ IDR_PLPLUGINACTIVEX     REGISTRY                "PLPluginActiveX.rgs"
 
 STRINGTABLE 
 BEGIN
-    IDS_PROJNAME            "PLPluginActiveX"
+    IDS_PROJNAME            "PLFrontendActiveX"
 END
 
 #endif    // English (U.S.) resources
@@ -145,7 +145,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-1 TYPELIB "PLPluginActiveX.tlb"
+1 TYPELIB "PLFrontendActiveX.tlb"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

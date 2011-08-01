@@ -1,6 +1,6 @@
-; PLPluginActiveX.def : Declares the module parameters.
+; PLFrontendActiveX.def : Declares the module parameters.
 
-LIBRARY      "PLPluginActiveX.DLL"
+LIBRARY      "PLFrontendActiveX.DLL"
 
 EXPORTS
 	DllCanUnloadNow		PRIVATE

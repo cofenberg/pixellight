@@ -2,8 +2,8 @@ HKCR
 {
 	NoRemove AppID
 	{
-		'%APPID%' = s 'PLPluginActiveX'
-		'PLPluginActiveX.DLL'
+		'%APPID%' = s 'PLFrontendActiveX'
+		'PLFrontendActiveX.DLL'
 		{
 			val AppID = s '%APPID%'
 		}

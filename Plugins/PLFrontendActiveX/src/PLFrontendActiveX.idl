@@ -1,8 +1,8 @@
-// PLPluginActiveX.idl : IDL source for PLPluginActiveX
+// PLFrontendActiveX.idl : IDL source for PLFrontendActiveX
 //
 
 // This file will be processed by the MIDL tool to
-// produce the type library (PLPluginActiveX.tlb) and marshalling code.
+// produce the type library (PLFrontendActiveX.tlb) and marshalling code.
 
 #include "olectl.h"
 import "oaidl.idl";
@@ -22,9 +22,9 @@ interface IPixelLightCtrl : IDispatch{
 [
 	uuid(F4D3DAA8-A984-4929-A61A-4F19F33A9D9E),
 	version(1.0),
-	helpstring("PLPluginActiveX 1.0 Type Library")
+	helpstring("PLFrontendActiveX 1.0 Type Library")
 ]
-library PLPluginActiveXLib
+library PLFrontendActiveXLib
 {
 	importlib("stdole2.tlb");
 	[

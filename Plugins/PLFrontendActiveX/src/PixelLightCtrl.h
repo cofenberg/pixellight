@@ -2,10 +2,9 @@
 #pragma once
 #include "resource.h"       // main symbols
 #include <atlctl.h>
-#include "PLPluginActiveX_i.h"
-#include "PLPlugin/PluginImpl.h"
-#include "PLPlugin/PluginOpenGL.h"
-#include "PLPlugin/PluginPixelLight.h"
+#include "PLFrontendActiveX_i.h"
+#include <PLFrontend/FrontendImpl.h>
+#include <PLFrontend/FrontendOpenGL.h>
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
@@ -14,9 +13,9 @@
 
 // PixelLightCtrl
 class ATL_NO_VTABLE PixelLightCtrl :
-	public PLPlugin::PluginImpl,
+	public PLFrontend::FrontendImpl,
 	public CComObjectRootEx<CComSingleThreadModel>,
-	public IDispatchImpl<IPixelLightCtrl, &IID_IPixelLightCtrl, &LIBID_PLPluginActiveXLib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
+	public IDispatchImpl<IPixelLightCtrl, &IID_IPixelLightCtrl, &LIBID_PLFrontendActiveXLib, /*wMajor =*/ 1, /*wMinor =*/ 0>,
 	public IPersistStreamInitImpl<PixelLightCtrl>,
 	public IOleControlImpl<PixelLightCtrl>,
 	public IOleObjectImpl<PixelLightCtrl>,
@@ -87,15 +86,25 @@ END_MSG_MAP()
 // IViewObjectEx
 	DECLARE_VIEW_STATUS(VIEWSTATUS_SOLIDBKGND | VIEWSTATUS_OPAQUE)
 
+
 	//[-------------------------------------------------------]
-	//[ Private virtual PluginImpl functions                  ]
+	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLCore::handle GetWindowHandle() const override;
+		virtual PLCore::handle GetDeviceContext() const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLFrontend::FrontendImpl functions    ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Redraw() override;
 
 	private:
-//		PLPlugin::PluginOpenGL		m_cPlugin;
-		PLPlugin::PluginPixelLight	m_cPlugin;
+		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */
+		HDC							m_hFrontendDC;	/**< Device context */
+		PLFrontend::FrontendOpenGL	m_cFrontend;	// [TODO] Just a test
 
 // IPixelLightCtrl
 public:

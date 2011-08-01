@@ -1,2 +1,2 @@
 @echo off
-regsvr32 PLPluginActiveX.dll
+regsvr32 ..\Runtime\Plugins\PLFrontend\PLFrontendActiveX.dll

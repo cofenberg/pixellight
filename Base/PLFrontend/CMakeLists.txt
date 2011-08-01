@@ -15,6 +15,9 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLFrontend)
 ##################################################
 add_sources(
 	src/PLFrontend.cpp
+	src/Frontend.cpp
+	src/FrontendImpl.cpp
+	# src/FrontendOpenGL.cpp # Just a test not added in here
 )
 
 ##################################################

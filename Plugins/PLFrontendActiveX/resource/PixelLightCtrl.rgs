@@ -1,20 +1,20 @@
 HKCR
 {
-	PLPluginActiveX.PixelLightCtrl.1 = s 'PixelLightCtrl Class'
+	PLFrontendActiveX.PixelLightCtrl.1 = s 'PixelLightCtrl Class'
 	{
 		CLSID = s '{AF181E78-519B-4A35-99CE-2348A32E28EA}'
 	}
-	PLPluginActiveX.PixelLightCtrl = s 'PixelLightCtrl Class'
+	PLFrontendActiveX.PixelLightCtrl = s 'PixelLightCtrl Class'
 	{
 		CLSID = s '{AF181E78-519B-4A35-99CE-2348A32E28EA}'
-		CurVer = s 'PLPluginActiveX.PixelLightCtrl.1'
+		CurVer = s 'PLFrontendActiveX.PixelLightCtrl.1'
 	}
 	NoRemove CLSID
 	{
 		ForceRemove {AF181E78-519B-4A35-99CE-2348A32E28EA} = s 'PixelLightCtrl Class'
 		{
-			ProgID = s 'PLPluginActiveX.PixelLightCtrl.1'
-			VersionIndependentProgID = s 'PLPluginActiveX.PixelLightCtrl'
+			ProgID = s 'PLFrontendActiveX.PixelLightCtrl.1'
+			VersionIndependentProgID = s 'PLFrontendActiveX.PixelLightCtrl'
 			ForceRemove 'Programmable'
 			InprocServer32 = s '%MODULE%'
 			{
