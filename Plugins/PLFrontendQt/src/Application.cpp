@@ -264,16 +264,20 @@ void Application::CreateRenderContext(const String &sRendererName)
 */
 void Application::InitCore(bool useRuntimeDir)
 {
+	// Use PixelLight runtime?
 	if (useRuntimeDir) {
+		// Get PixelLight runtime directory
 		String sPLDirectory = Core::GetRuntimeDirectory();
-		if (sPLDirectory.GetLength() > 0) {
-			String str = sPLDirectory + "/Plugins/";
+		if (sPLDirectory.GetLength()) {
+			// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
+			// for projects which can be used completely dynamically, but can also be used in other C++ projects
+			// to access certain features.
+			ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
 
-			// Add the plugins within the PixelLight runtime plugins directory
-			ClassManager::GetInstance()->ScanPlugins(str);
+			// Scan for plugins in PixelLight runtime directory
+			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
 
-			str = sPLDirectory + "/Data/";
-			ScanFSArchives(str);
+			ScanFSArchives(sPLDirectory + "/Data/");
 		}
 	}
 }
