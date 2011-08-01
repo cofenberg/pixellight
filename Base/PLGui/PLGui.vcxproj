@@ -118,7 +118,7 @@
     <PostBuildEvent>
       <Command>copy  build\debug\PLGuiD.dll ..\..\Bin\Runtime\
 copy build\debug\PLGuiD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -165,7 +165,7 @@ copy build\debug\PLGuiD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy  build\release\PLGui.dll ..\..\Bin\Runtime\
 copy build\release\PLGui.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -203,7 +203,7 @@ copy build\release\PLGui.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy  build\debug64\PLGuiD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLGuiD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -247,7 +247,7 @@ copy build\debug64\PLGuiD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy  build\release64\PLGui64.dll ..\..\Bin\Runtime\
 copy build\release64\PLGui64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

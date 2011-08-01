@@ -120,7 +120,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLMathD.dll ..\..\Bin\Runtime\
 copy build\debug\PLMathD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,7 +160,7 @@ copy build\debug\PLMathD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLMathD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLMathD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -207,7 +207,7 @@ copy build\debug64\PLMathD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLMath.dll ..\..\Bin\Runtime\
 copy build\release\PLMath.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -251,7 +251,7 @@ copy build\release\PLMath.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLMath64.dll ..\..\Bin\Runtime\
 copy build\release64\PLMath64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

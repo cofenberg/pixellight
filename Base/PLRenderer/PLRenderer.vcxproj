@@ -119,7 +119,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLRendererD.dll ..\..\Bin\Runtime\
 copy build\debug\PLRendererD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -157,7 +157,7 @@ copy build\debug\PLRendererD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLRendererD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLRendererD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -204,7 +204,7 @@ copy build\debug64\PLRendererD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLRenderer.dll ..\..\Bin\Runtime\
 copy build\release\PLRenderer.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -248,7 +248,7 @@ copy build\release\PLRenderer.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLRenderer64.dll ..\..\Bin\Runtime\
 copy build\release64\PLRenderer64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

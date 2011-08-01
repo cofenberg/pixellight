@@ -119,7 +119,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLSceneD.dll ..\..\Bin\Runtime\
 copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -158,7 +158,7 @@ copy build\debug\PLSceneD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLSceneD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -205,7 +205,7 @@ copy build\debug64\PLSceneD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLScene.dll ..\..\Bin\Runtime\
 copy build\release\PLScene.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -249,7 +249,7 @@ copy build\release\PLScene.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLScene64.dll ..\..\Bin\Runtime\
 copy build\release64\PLScene64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -497,28 +497,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
     <None Include="include\PLScene\Scene\SceneQuery.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLGraphics\PLGraphics.vcxproj">
-      <Project>{46f614f4-fa79-4a0f-a17e-b888a4878465}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Base\PLMath\PLMath.vcxproj">
-      <Project>{43032fd4-d3bb-41b9-bc18-5ac8a76bca96}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLMesh\PLMesh.vcxproj">
-      <Project>{16438279-a781-44b2-8687-652aa26611d6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\PLRenderer\PLRenderer.vcxproj">
-      <Project>{40854ae4-668d-41fb-9af3-c3ae013fa2c6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

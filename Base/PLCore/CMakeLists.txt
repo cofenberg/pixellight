@@ -305,6 +305,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 
 ##################################################
 ## Dependencies
@@ -360,6 +361,11 @@ endif()
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
 	DESTINATION ${PL_INSTALL_INCLUDE} 			COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+)
+
+# Plugin file
+install(FILES ${PL_BIN_DIR}/Runtime/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_SHARED}			COMPONENT Runtime
 )
 
 ##################################################

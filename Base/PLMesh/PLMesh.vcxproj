@@ -120,7 +120,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLMeshD.dll ..\..\Bin\Runtime\
 copy build\debug\PLMeshD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -159,7 +159,7 @@ copy build\debug\PLMeshD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLMeshD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLMeshD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -207,7 +207,7 @@ copy build\debug64\PLMeshD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLMesh.dll ..\..\Bin\Runtime\
 copy build\release\PLMesh.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -252,7 +252,7 @@ copy build\release\PLMesh.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLMesh64.dll ..\..\Bin\Runtime\
 copy build\release64\PLMesh64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

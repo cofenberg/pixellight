@@ -111,7 +111,7 @@
     <PostBuildEvent>
       <Command>copy build\debug\PLGraphicsD.dll ..\..\Bin\Runtime\
 copy build\debug\PLGraphicsD.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,7 +141,7 @@ copy build\debug\PLGraphicsD.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\debug64\PLGraphicsD64.dll ..\..\Bin\Runtime\
 copy build\debug64\PLGraphicsD64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -184,7 +184,7 @@ copy build\debug64\PLGraphicsD64.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release\PLGraphics.dll ..\..\Bin\Runtime\
 copy build\release\PLGraphics.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -229,7 +229,7 @@ copy build\release\PLGraphics.lib ..\..\Bin\Lib\
     <PostBuildEvent>
       <Command>copy build\release64\PLGraphics64.dll ..\..\Bin\Runtime\
 copy build\release64\PLGraphics64.lib ..\..\Bin\Lib\
-</Command>
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
