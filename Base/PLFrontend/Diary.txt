@@ -1,0 +1,42 @@
+﻿>> 01.08.2011
+[CO]
+- Started the PLFrontend project (kind of "PLPlugin"-project successor)... now that scripting is working, it's finally time to attack another big design task.
+  When we started the development of the PixelLight engine on 16 September 2002, we just had one single project: "PLEngine"
+  This project just used a quite simple OS window to render stuff into it. Back then, the world was more simple regarding to required supported platforms.
+  Providing support to be able to render into multiple OS windows was really a cool feature because most engines were just able to render into a single
+  OS window. Over the years, the GUI stuff was moved into an own, platform independent, GUI library called PLGui. All other PixelLight projects were build
+  on the top of it. PLGui is currently already within it's third (!) reincarnation.
+  In the last past 9 years, the world has dramatically evolved regarding to the platforms one should really support and the current PixelLight design regarding
+  to GUI handling does no longer really completely satisfies the changed needs. Now those are the requirements to be fulfilled:
+  -> Be able to have absolutely no GUI at all, e.g. for server side applications or applications rendering just into a buffer *currently there's always a PLGui dependency*
+  -> A quite primitive OS window for applications requiring no GUI handling, except for the OS window it's running in *PLGui is an overkill for this use case*
+  -> "PLGui": PixelLight own GUI system (OS & ingame) perfectly integrated into the complete system, stuff like scripting doesn't need wrappers, it just works out of the box *currently used way*
+  -> Be able to just use third party GUI systems like Qt for front-ends *currently there's always a PLGui dependency*
+    -> The PixelLight editor will be Qt based because getting PLGui to the point were it's possible to write such an complex editor is just impossible with a team of two
+       active spare-time developers (we already tried it years ago *PixelLab* and it was a total failure :/)
+  -> Be able to embed an PixelLight application into another application, meaning another GUI system has the control and we're just a slave
+    -> Be able to run in a web browser (e.g. by using "Java Web Start"/"JNLP" or/and by writing special browser plugins)
+    -> Be able to run on mobile devices, e.g. Android based
+    -> Be able to use ActiveX under MS Windows to embed 3D stuff into e.g. a MFC dialog (we already had to do this for a project some years ago)
+    ... scripting is especially useful for the first two mentioned embed-points. This way, an application developer doesn't need to care about the target platform and is just
+        writing some scripts...
+  Ok, as you can see, a whole bunch of new requirements since the start of the PixelLight engine. In "Docs\Diagrams\PixelLight_PackageDiagram.png" I outlined how it will probably
+  look when PLFrontend is up and running.
+  Please note that the PLFrontend approach doesn't mean that I abandon the PLGui project, but having the whole system be dependent of a GUI system is not working any more with
+  the changed requirements. Also, while the third reincarnation of Stefans PLGui is really cool and can be used for OS and ingame and has, by using the PL RTTI, automatic support
+  for scripting and therefore integrates itself perfectly into the whole system... PLGui is still missing some features and fine-tuning. Sadly, such a GUI system is a huge task
+  and currently, as already mentioned, there are only two active spare-time developers. Personally, I finally want to get PixelLight to the point were it's possible to create
+  simple prototype applications in a matter of minutes by using e.g. a Lua script to load in a scene and adding some interaction - and then be able to run this on multiple
+  platforms/targets. So, my focus is on that instead of taking over the development of Stefans PLGui (I already ruined the previous second reincarnation and don't want to repeat
+  this experience). I really hope that in the future there's someone continuing the development of PLGui because especially the scripting-argument is a really cool argument for PLGui!
+  (connecting e.g. libRocket or Qt to the PL RTTI and scripting system will be probably lot of work while it's no work at all with PLGui!)
+  ... enough introduction and explanation why there's need for the PLFrontend project. Let's go to work...
+- Added the (currently empty) frontend plugins
+  - "PLFrontendNull": The usual dummy project doing nothing at all
+  - "PLFrontendOS": Just a totally primitve OS window
+  - "PLFrontendPLGui": PLGui connection
+  - "PLFrontendQt": Qt connection (the new "PLQt")
+  - "PLFrontendActiveX": ActiveX connection (the new "PLPluginActiveX")
+  - "PLFrontendMozilla": Mozilla connection  (the new "PLPluginMozilla")
+  ... while "PLFrontendNull", "PLFrontendOS", "PLFrontendActiveX" and "PLFrontendMozilla" are intended to be 100% loose dynamic plugins, "PLFrontendPLGui" and "PLFrontendQt" are
+  of course also such plugins, but one is usually going to also use those libraries directly within an application (meaning linking aginst them).

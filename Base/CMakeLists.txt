@@ -31,6 +31,7 @@ add_subdirectory(PLScene)
 add_subdirectory(PLPhysics)
 add_subdirectory(PLSound)
 add_subdirectory(PLEngine)
+add_subdirectory(PLFrontend)
 
 ##################################################
 ## Dependencies
