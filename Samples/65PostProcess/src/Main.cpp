@@ -39,7 +39,7 @@ using namespace PLCore;
 
 
 //[-------------------------------------------------------]
-//[ Module implementation                                 ]
+//[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module("65PostProcess")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")

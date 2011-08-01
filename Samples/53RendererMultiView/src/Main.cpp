@@ -38,7 +38,7 @@ using namespace PLCore;
 
 
 //[-------------------------------------------------------]
-//[ Module implementation                                 ]
+//[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module("53RendererMultiView")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
