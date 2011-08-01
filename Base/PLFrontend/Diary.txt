@@ -40,3 +40,97 @@
   - "PLFrontendMozilla": Mozilla connection  (the new "PLPluginMozilla")
   ... while "PLFrontendNull", "PLFrontendOS", "PLFrontendActiveX" and "PLFrontendMozilla" are intended to be 100% loose dynamic plugins, "PLFrontendPLGui" and "PLFrontendQt" are
   of course also such plugins, but one is usually going to also use those libraries directly within an application (meaning linking aginst them).
+- Copied the diaries of "PLPlugin", "PLPluginActiveX" and "PLPluginMozilla" into this diary because PLFrontend will be the successor of the "PLPlugin"-project... which is not limited
+  to "PixelLight application as a plugin for e.g. a browser" but will also cover the "PixelLight application as executable" use case. Meaning, in the future it will be possible to just
+  recompile a C++ PixelLight as shared library and then be able to use it in any available frontend.
+
+
+
+/*********************************************************\
+ *  The entries below are in German only
+\*********************************************************/
+
+
+
+>> 16.04.2009
+[SB]
+PLPlugin:
+- Fehlende Abhängigkeiten in der CMakeLists.txt hinzugefügt.
+
+
+
+>> 03.12.2008
+[CO]
+PLPlugin:
+- 64 Bit VC Projekt Einstellungen hinzugefügt
+
+
+
+>> 03.12.2008
+[SB]
+PLPlugin:
+- BasicSceneApplet entfernt. Dies wäre eine totale Verkomplizierung, wenn man hier nochmal eine extra Ableitungshierarchie
+  aufmacht. Und damit könnte dann immer noch nicht eine Applikation zwischen Plugin und Exe 'geteilt' werden.
+- Statt dessen hat PluginPixelLight nun direkt einen Zeiger auf eine Applikation, die dann eingebettet wird. Dank der
+  Änderungen am Application-Framework kann nun generell jede Applikation (ab GuiApplication) in fremde Fenster eingebettet
+  werden, dies wird hier nun einfach verwendet. Es wird eine Application wie gewohnt instanziiert, dann wird aber nicht
+  Run() aufgerufen, sondern die Applikation in das Plugin-Window eingebettet. Als Test habe ich die Teapot-Application
+  verwendet, die Application kann aber jetzt ganz einfach ausgetauscht werden.
+
+
+
+>> 03.12.2008
+[CO]
+PLPluginMozilla:
+- 64 Bit VC Projekt Einstellungen hinzugefügt
+
+
+
+>> 16.10.2008
+[CO]
+PLPlugin:
+- Projekt ist wieder übersetzbar, aber noch nicht wirklich wieder lauffähig. 'PL::Init()' etc. gibts nun nicht mehr, habe erstmal
+  BasicSceneApplet angelegt - eine Klasse von 'BasicSceneApplication' abgeleitet die als 'Applet' fungieren soll.
+
+
+
+>> 29.06.2008
+[SB]
+PLPluginMozilla:
+- PLPluginMozilla implementiert.
+- Anbindung an unsere abstrakte Plugin-Klasse vorgenommen und PixelLight-Plugin erfolgreich im
+  Mozilla ausgeführt.
+
+
+
+>> 28.06.2008
+[SB]
+PLPlugin:
+- Projekt gestartet. PLPlugin stellt eine Schnittstelle zur Verfügung, um PixelLight als Plugin in andere
+  Umgebungen/Applikationen einzubinden. Also PixelLight als Plugin für z.B. Browser, nicht Plugins für PixelLight :-)
+  Dazu wird eine abstrakte Plugin-Klasse bereitgestellt, die von konkreten Wrappern für verschiedene Plugin-Schnittstellen
+  angesprochen wird. Von dieser Plugin-Klasse werden dann konkrete Plugins abgeleitet, z.B. das standard PixelLight-Plugin,
+  das wir letztlich im Browser oder sonstwo sehen wollen.
+- Basisklasse Plugin implementiert, die das abstrakte Plugin-Interface darstellt.
+- Basisklasse PluginImpl implementiert, die nach dem Backend-Prinzip das Interface
+  für konkrete Backends bereitstellt.
+- PluginOpenGL als Testplugin implementiert, in dem eine minimale OpenGL Szene angezeigt wird.
+- PluginPixelLight erstellt für das standard PixelLight-Plugin. 
+- Das Triangle-Sample genommen und als vorläufiges PixelLight-Plugin implementiert :-)
+PLPluginActiveX:
+- PLPluginActiveX implementiert. Diese konkrete Implementation von PluginImpl
+  stellt das ActiveX Backend für unsere eigene Plugin-Klasse dar.
+- Den Wrapper auf die Verwendung unseres abstrakten Plugin-Interfaces umgestellt.
+- Den OpenGL-Test hier entfernt und dafür als PluginOpenGL in PLPlugin implementiert.
+- Das PixelLight-Plugin läuft nun zum ersten Mal korrekt im Browserfenster :-)
+
+
+
+>> 24.06.2008
+[SB]
+PLPluginActiveX:
+- Projekt gestartet. PLPluginActiveX ist ein Container und Wrapper für ActiveX, über den das PLPlugin-Interface unter
+  ActiveX verwendet werden kann.
+- ActiveX control erstellt und an unsere Projektstruktur angepasst. Einstellungen
+  gefunden, die zur Einbindung von OpenGL erforderlich sind.
+- Kleines OpenGL Testplugin implementiert.
