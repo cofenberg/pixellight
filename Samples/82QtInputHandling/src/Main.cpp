@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
  *      PixelLight Sample 82 - Qt
- *      Simple input handling application using PLQt
+ *      Simple input handling application using PLFrontendQt
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,7 +26,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/ModuleMain.h>
-#include <PLQt/Application.h>
+#include <PLFrontendQt/Application.h>
 #include "MySceneContext.h"
 #include "MyRenderWindow.h"
 
@@ -46,8 +46,8 @@ pl_module_end
 //[-------------------------------------------------------]
 int main(int argc, char **argv)
 {
-	// Create an "PLQt::Application"-instance
-	PLQt::Application cApplication(argc, argv);
+	// Create an "PLFrontendQt::Application"-instance
+	PLFrontendQt::Application cApplication(argc, argv);
 
 	// Create the scene context
 	MySceneContext cContext;
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 	cApplication.EnableRendererContextUpdates(true);
 	cApplication.SetContextForUpdate(&cContext);
 
-	// Create two "PLQt::QPLRenderWindow"-instances
+	// Create two "PLFrontendQt::QPLRenderWindow"-instances
 	MyRenderWindow cWindow1(cContext, "FreeCamera1");
 	cWindow1.resize(640, 480);											// Resize the first window
 	cWindow1.show();													// Make first window visible

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLQt/QPLRenderWindow.h>
+#include <PLFrontendQt/QPLRenderWindow.h>
 #include <PLInput/Input/Virtual/VirtualStandardController.h>
 
 
@@ -38,7 +38,7 @@
 namespace PLScene {
 	class SceneNode;
 }
-namespace PLQt {
+namespace PLFrontendQt {
 	class QPLSceneContext;
 }
 
@@ -50,7 +50,7 @@ namespace PLQt {
 *  @brief
 *    Render window
 */
-class MyRenderWindow : public PLQt::QPLRenderWindow {
+class MyRenderWindow : public PLFrontendQt::QPLRenderWindow {
 
 
 	//[-------------------------------------------------------]
@@ -77,7 +77,7 @@ class MyRenderWindow : public PLQt::QPLRenderWindow {
 		*  @param[in] pParent
 		*    Parent window, can be a null pointer
 		*/
-		MyRenderWindow(PLQt::QPLSceneContext &cContext, const QString &sCameraNodeName, const PLRenderer::DisplayMode *pDisplayMode = nullptr, QWidget *pParent = nullptr);
+		MyRenderWindow(PLFrontendQt::QPLSceneContext &cContext, const QString &sCameraNodeName, const PLRenderer::DisplayMode *pDisplayMode = nullptr, QWidget *pParent = nullptr);
 
 		/**
 		*  @brief

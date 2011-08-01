@@ -88,8 +88,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLFrontendQt/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../External/_Windows_x86_32/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDQT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -104,9 +104,9 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLFrontendD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQtD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLFrontendQtD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -117,7 +117,10 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLFrontendQtD.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin
+copy build\debug\PLFrontendQtD.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -127,8 +130,8 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLFrontendQt/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../External/_Windows_x86_64/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDQT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -142,9 +145,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLFrontendD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD264.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLEngineD64.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQtD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLFrontendQtD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -155,7 +158,10 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\PLFrontendQtD64.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin
+copy build\debug64\PLFrontendQtD64.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
+..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -167,8 +173,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLFrontendQt/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../External/_Windows_x86_32/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDQT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -187,9 +193,9 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLFrontend.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQt.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -202,6 +208,9 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release\PLFrontendQt.dll ..\..\Bin\Runtime\
+copy build\release\PLFrontendQt.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
 ..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
@@ -216,8 +225,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLFrontendQt/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../External/_Windows_x86_64/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDQT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -232,9 +241,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLFrontend64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQt64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -246,19 +255,304 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\PLFrontendQt64.dll ..\..\Bin\Runtime\
+copy build\release64\PLFrontendQt64.lib ..\..\Bin\Lib\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
 ..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\DataModels\moc_PLIntrospectionModel.cpp" />
+    <ClCompile Include="src\DataModels\moc_SceneGraphNodeTreeItemBase.cpp" />
+    <ClCompile Include="src\DataModels\moc_SceneGraphTreeModel.cpp" />
+    <ClCompile Include="src\DataModels\moc_SceneNodeInfoDelegate.cpp" />
+    <ClCompile Include="src\DataModels\moc_SceneNodeInfoModel.cpp" />
+    <ClCompile Include="src\DataModels\moc_TreeItemBase.cpp" />
+    <ClCompile Include="src\DataModels\moc_TreeModelBase.cpp" />
+    <ClCompile Include="src\DataModels\PLIntrospectionModel.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarColorTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarFlagsTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarFloatTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarStringTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarVector3TreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarColorTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarFloatTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarStringTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.cpp" />
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector3TreeItem.cpp" />
+    <ClCompile Include="src\DataModels\SceneGraphNodeTreeItemBase.cpp" />
+    <ClCompile Include="src\DataModels\SceneGraphTreeModel.cpp" />
+    <ClCompile Include="src\DataModels\SceneNodeInfoDelegate.cpp" />
+    <ClCompile Include="src\DataModels\SceneNodeInfoModel.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererDataModel.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererHeaderTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererPassTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererDataModel.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererHeaderTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.cpp" />
+    <ClCompile Include="src\DataModels\TreeItemBase.cpp" />
+    <ClCompile Include="src\DataModels\TreeModelBase.cpp" />
+    <ClCompile Include="src\External\moc_qtcolorbutton.cpp" />
+    <ClCompile Include="src\External\qtcolorbutton.cpp" />
+    <ClCompile Include="src\moc_Application.cpp" />
+    <ClCompile Include="src\moc_QPLContext.cpp" />
+    <ClCompile Include="src\moc_QPLDebugDialog.cpp" />
+    <ClCompile Include="src\moc_QPLInputHandler.cpp" />
+    <ClCompile Include="src\moc_QPLRenderWindow.cpp" />
+    <ClCompile Include="src\moc_QPLSceneContext.cpp" />
     <ClCompile Include="src\PLFrontendQt.cpp" />
+    <ClCompile Include="src\QPLContext.cpp" />
+    <ClCompile Include="src\QPLDebugDialog.cpp" />
+    <ClCompile Include="src\QPLInputHandler.cpp" />
+    <ClCompile Include="src\QPLRenderWindow.cpp" />
+    <ClCompile Include="src\QPLSceneContext.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="include\PLFrontendQt\Application.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLIntrospectionModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneGraphNodeTreeItemBase.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneGraphTreeModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneNodeInfoDelegate.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneNodeInfoModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\TreeItemBase.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\TreeModelBase.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\DataModels\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarColorTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFloatTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarStringTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h" />
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3TreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\PLTreeItems\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererDataModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererHeaderTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\..\src\DataModels\SceneRendererDataModel\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\External\qtcolorbutton.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\External\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\..\src\External\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\..\src\External\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\..\src\External\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="include\PLFrontendQt\InputHandler.h" />
     <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h" />
+    <ClInclude Include="include\PLFrontendQt\PLFrontendQtLinux.h" />
+    <ClInclude Include="include\PLFrontendQt\PLFrontendQtWindows.h" />
+    <CustomBuild Include="include\PLFrontendQt\QPLContext.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLInputHandler.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLRenderWindow.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLSceneContext.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\src\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="include\PLFrontendQt\QtStringAdapter.h" />
+    <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Base\PLFrontend\Diary.txt" />
     <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.ui">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt UIC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/uic.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt UIC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/uic.exe</AdditionalInputs>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

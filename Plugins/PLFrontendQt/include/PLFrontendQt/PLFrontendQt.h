@@ -21,18 +21,32 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_PLFRONTENDQT_H__
-#define __PLFRONTENDQT_PLFRONTENDQT_H__
-#pragma once
-
-
 /**
 *  @mainpage PLFrontendQt
 *
 *  @section intro_sec Introduction
 *
-*  This is the PLFrontendQt API reference.
+*  This is the PLFrontendQt reference.
 */
 
 
-#endif // __PLFRONTENDQT_PLFRONTENDQT_H__
+#ifndef __PLFRONTENDQT_H__
+#define __PLFRONTENDQT_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ OS definitions                                        ]
+//[-------------------------------------------------------]
+// Windows platform
+#ifdef WIN32
+	#include "PLFrontendQt/PLFrontendQtWindows.h"
+#endif
+
+// Linux platform
+#ifdef LINUX
+	#include "PLFrontendQt/PLFrontendQtLinux.h"
+#endif
+
+
+#endif // __PLFRONTENDQT_H__

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLQt/QPLSceneContext.h>
+#include <PLFrontendQt/QPLSceneContext.h>
 
 
 //[-------------------------------------------------------]
@@ -38,7 +38,7 @@
 *  @brief
 *    Scene context
 */
-class MySceneContext : public PLQt::QPLSceneContext {
+class MySceneContext : public PLFrontendQt::QPLSceneContext {
 
 
 	//[-------------------------------------------------------]
@@ -59,7 +59,7 @@ class MySceneContext : public PLQt::QPLSceneContext {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLQt::QPLSceneContext functions     ]
+	//[ Protected virtual PLFrontendQt::QPLSceneContext functions ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;

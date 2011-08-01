@@ -1,7 +1,0 @@
-﻿>> 02.07.2011
-[CO]
-- Added empty project "PLQt". In the next steps, PLQt (https://sourceforge.net/projects/pixellight/) from Stephan Wezel will be integrated directly into the PixelLight
-  Git repository and SDK because e.g. the editor will be Qt based. I currently use Qt 4.7.0 and I know that there's already a newer version available... but I already
-  had Qt 4.7.0 compiled for VisualStudio 2010 (to avoid using VC 2008 within the PL SDK) a while ago and right now I don't want to spend time in recompiling Qt, again.
-- Moved "QtStringAdapter" from PLGeneral into PLQt
-- Integrated PLQt, I'am sure it's not yet final and that over time, there will be multiple simplifications

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
  *      PixelLight Sample 81 - Qt
- *      Simple scene application using PLQt
+ *      Simple scene application using PLFrontendQt
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,8 +26,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/ModuleMain.h>
-#include <PLQt/Application.h>
-#include <PLQt/QPLRenderWindow.h>
+#include <PLFrontendQt/Application.h>
+#include <PLFrontendQt/QPLRenderWindow.h>
 #include "MySceneContext.h"
 
 
@@ -46,8 +46,8 @@ pl_module_end
 //[-------------------------------------------------------]
 int main(int argc, char **argv)
 {
-	// Create an "PLQt::Application"-instance
-	PLQt::Application cApplication(argc, argv);
+	// Create an "PLFrontendQt::Application"-instance
+	PLFrontendQt::Application cApplication(argc, argv);
 
 	// Create the scene context
 	MySceneContext cContext;
@@ -56,8 +56,8 @@ int main(int argc, char **argv)
 	cApplication.EnableRendererContextUpdates(true);
 	cApplication.SetContextForUpdate(&cContext);
 
-	// Create an "PLQt::QPLRenderWindow"-instance
-	PLQt::QPLRenderWindow cWindow(&cContext);
+	// Create an "PLFrontendQt::QPLRenderWindow"-instance
+	PLFrontendQt::QPLRenderWindow cWindow(&cContext);
 
 	// Resize the window
 	cWindow.resize(640, 480);

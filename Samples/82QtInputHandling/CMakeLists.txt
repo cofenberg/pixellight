@@ -37,7 +37,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-	${CMAKE_SOURCE_DIR}/Plugins/PLQt/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
 	${QT_INCLUDE_DIRS}
 )
 
@@ -61,7 +61,7 @@ add_libs(
 	PLMesh
 	PLScene
 	PLEngine
-	PLQt
+	PLFrontendQt
 	${QT_LIBRARIES}
 )
 
@@ -130,7 +130,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} External-Qt PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine PLQt)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} External-Qt PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine PLFrontendQt)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

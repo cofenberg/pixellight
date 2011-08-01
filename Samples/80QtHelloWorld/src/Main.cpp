@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
  *      PixelLight Sample 80 - Qt
- *      Simple 'Hello World'-Application using PLQt
+ *      Simple 'Hello World'-Application using PLFrontendQt
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,9 +26,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/ModuleMain.h>
-#include <PLQt/QPLContext.h>
-#include <PLQt/Application.h>
-#include <PLQt/QPLRenderWindow.h>
+#include <PLFrontendQt/QPLContext.h>
+#include <PLFrontendQt/Application.h>
+#include <PLFrontendQt/QPLRenderWindow.h>
 
 
 //[-------------------------------------------------------]
@@ -46,12 +46,12 @@ pl_module_end
 //[-------------------------------------------------------]
 int main(int argc, char **argv)
 {
-	// Create an "PLQt::Application"-instance
-	PLQt::Application cApplication(argc, argv);
+	// Create an "PLFrontendQt::Application"-instance
+	PLFrontendQt::Application cApplication(argc, argv);
 
-	// Create an "PLQt::QPLRenderWindow"-instance
-	PLQt::QPLContext cContext;
-	PLQt::QPLRenderWindow cWindow(&cContext);
+	// Create an "PLFrontendQt::QPLRenderWindow"-instance
+	PLFrontendQt::QPLContext cContext;
+	PLFrontendQt::QPLRenderWindow cWindow(&cContext);
 
 	// Enable updating the renderer context via the application instance
 	cApplication.EnableRendererContextUpdates(true);

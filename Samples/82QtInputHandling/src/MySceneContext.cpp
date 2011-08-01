@@ -57,7 +57,7 @@ MySceneContext::~MySceneContext()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLQt::QPLSceneContext functions     ]
+//[ Protected virtual PLFrontendQt::QPLSceneContext functions ]
 //[-------------------------------------------------------]
 void MySceneContext::OnCreateScene(SceneContainer &cContainer)
 {

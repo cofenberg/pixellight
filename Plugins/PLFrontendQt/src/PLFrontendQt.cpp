@@ -32,5 +32,9 @@
 pl_module_plugin("PLFrontendQt")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("Qt frontend implementation")
+	pl_module_description("Qt (4.7.0) adapter and frontend for PixelLight")
+	pl_module_dependencies_win32_release("QtCore4.dll QtGui4.dll")
+	pl_module_dependencies_win32_debug("QtCore4.dll QtGui4.dll")
+	pl_module_dependencies_win64_release("QtCore4.dll QtGui4.dll")
+	pl_module_dependencies_win64_debug("QtCore4.dll QtGui4.dll")
 pl_module_end

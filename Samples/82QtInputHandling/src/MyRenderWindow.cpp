@@ -26,9 +26,9 @@
 #include <QtGui/QMouseEvent>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
-#include <PLQt/Application.h>
-#include <PLQt/QtStringAdapter.h>
-#include <PLQt/QPLSceneContext.h>
+#include <PLFrontendQt/Application.h>
+#include <PLFrontendQt/QtStringAdapter.h>
+#include <PLFrontendQt/QPLSceneContext.h>
 #include "MyRenderWindow.h"
 
 
@@ -38,7 +38,7 @@
 using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;
-using namespace PLQt;
+using namespace PLFrontendQt;
 
 
 //[-------------------------------------------------------]
