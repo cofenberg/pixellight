@@ -48,6 +48,7 @@
 - Renamed "PLQt" into "PLFrontendQt"
 - Renamed "PLPluginMozilla" into "PLFrontendMozilla", when testing it with Firefox 5.0 the browser didn't want to load it (sayed something about corrupt... before I did the changes...)...
   I'll check it later when PLFrontend is working as a whole...
+- Removed "PLPlugin", it's been replaced by "PLFrontend"
 
 
 

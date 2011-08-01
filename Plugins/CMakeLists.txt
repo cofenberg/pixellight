@@ -129,10 +129,6 @@ endif()
 if(PL_PLUGIN_FRONTEND_MOZILLA)
 	add_subdirectory(PLFrontendMozilla)
 endif()
-# PixelLight as plugin within other programs like e.g. web browsers
-if(WIN32)
-	add_subdirectory(PLPlugin)
-endif(WIN32)
 
 ##################################################
 ## Dependencies
