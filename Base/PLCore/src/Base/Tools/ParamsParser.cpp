@@ -116,7 +116,7 @@ bool ParamsParser::Next()
 */
 bool ParamsParser::HasParam() const
 {
-	return m_sName.GetLength();
+	return (m_sName.GetLength() != 0);
 }
 
 /**

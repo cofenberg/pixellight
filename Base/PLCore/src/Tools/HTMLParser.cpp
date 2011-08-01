@@ -270,7 +270,7 @@ bool HTMLParser::HasNextToken()
 		m_sToken = GetNextToken();
 
 	// Check if there is a token waiting
-	return m_sToken.GetLength();
+	return (m_sToken.GetLength() != 0);
 }
 
 /**
