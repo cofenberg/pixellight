@@ -75,7 +75,7 @@ STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 
 
 //[-------------------------------------------------------]
-//[ Plugin implementation                                 ]
+//[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLFrontendActiveX")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")

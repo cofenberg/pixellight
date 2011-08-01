@@ -27,7 +27,7 @@
 
 
 //[-------------------------------------------------------]
-//[ Plugin implementation                                 ]
+//[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLFrontendOS")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
