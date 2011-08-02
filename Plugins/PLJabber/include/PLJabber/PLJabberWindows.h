@@ -34,19 +34,10 @@
 #ifdef PLJABBER_EXPORTS
 	// To export classes, methods and variables
 	#define PLJABBER_API __declspec(dllexport)
-
-	// To export explicit template instanciations
-	#define PLJABBER_TEMPLATE
 #else
 	// To import classes, methods and variables
 	#define PLJABBER_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLJABBER_TEMPLATE extern
 #endif
-
-// To export/import class templates
-#define PLJABBER_TMPL
 
 // To export plugin functions
 #define PLJABBER_PLUGIN_API __declspec(dllexport)

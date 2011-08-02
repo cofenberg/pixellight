@@ -35,18 +35,12 @@
 
 	// To export RTTI elements
 	#define PLRENDERER_RTTI_EXPORT 1
-
-	// To export explicit template instanciations
-	#define PLRENDERERAPI_TEMPLATE
 #else
 	// To import classes, methods and variables
 	#define PLRENDERER_API __declspec(dllimport)
 
 	// To import RTTI elements
 	#define PLRENDERER_RTTI_EXPORT 0
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLRENDERERAPI_TEMPLATE extern
 #endif
 
 

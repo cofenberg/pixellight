@@ -33,17 +33,11 @@
 	// To import classes, methods and variables
 	#define PLCOM_API __declspec(dllexport)
 
-	// To export explicit template instanciations
-	#define PLCOM_TEMPLATE
-
 	// To export RTTI elements
 	#define PLCOM_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLCOM_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCOM_TEMPLATE extern
 
 	// To import RTTI elements
 	#define PLCOM_RTTI_EXPORT 0

@@ -34,19 +34,10 @@
 #ifdef PLIRC_EXPORTS
 	// To export classes, methods and variables
 	#define PLIRC_API __declspec(dllexport)
-
-	// To export explicit template instanciations
-	#define PLIRC_TEMPLATE
 #else
 	// To import classes, methods and variables
 	#define PLIRC_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLIRC_TEMPLATE extern
 #endif
-
-// To export/import class templates
-#define PLIRC_TMPL
 
 // To export plugin functions
 #define PLIRC_PLUGIN_API __declspec(dllexport)

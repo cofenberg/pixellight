@@ -33,17 +33,11 @@
 	// To export classes, methods and variables
 	#define PLMESH_API __declspec(dllexport)
 
-	// To export explicit template instanciations
-	#define PLMESHAPI_TEMPLATE
-
 	// To export RTTI elements
 	#define PLMESH_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLMESH_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLMESHAPI_TEMPLATE extern
 
 	// To import RTTI elements
 	#define PLMESH_RTTI_EXPORT 0

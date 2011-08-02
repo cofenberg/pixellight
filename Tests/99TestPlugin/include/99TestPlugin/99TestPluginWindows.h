@@ -32,17 +32,11 @@
 	// To export classes, methods and variables
 	#define TESTPLUGIN_API __declspec(dllexport)
 
-	// To export explicit template instanciations
-	#define TESTPLUGIN_TEMPLATE
-
 	// To export RTTI elements
 	#define TESTPLUGIN_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define TESTPLUGIN_API __declspec(dllimport)
-
-	// To import explicit template instanciations
-	#define TESTPLUGIN_TEMPLATE extern
 
 	// To import RTTI elements
 	#define TESTPLUGIN_RTTI_EXPORT 0

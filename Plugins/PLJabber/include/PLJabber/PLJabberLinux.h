@@ -35,34 +35,19 @@
 	#ifdef HAVE_VISIBILITY_ATTR
 		// To export classes, methods and variables
 		#define PLJABBER_API __attribute__ ((visibility("default")))
-
-		// To export explicit template instanciations
-		#define PLJABBER_TEMPLATE
 	#else
 		// To export classes, methods and variables
 		#define PLJABBER_API
-
-		// To export explicit template instanciations
-		#define PLJABBER_TEMPLATE
 	#endif
 #else
 	// To import classes, methods and variables
 	#define PLJABBER_API
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLJABBER_TEMPLATE extern
 #endif
 
 #ifdef HAVE_VISIBILITY_ATTR
-		// To import/export class templates
-		#define PLJABBER_TMPL __attribute__ ((visibility("default")))
-
 		// To export plugin functions
 		#define PLJABBER_PLUGIN_API __attribute__ ((visibility("default")))
 #else
-		// To import/export class templates
-		#define PLJABBER_TMPL
-
 		// To export plugin functions
 		#define PLJABBER_PLUGIN_API
 #endif

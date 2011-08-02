@@ -35,18 +35,12 @@
 
 		// To export RTTI elements
 		#define PLGUIXMLTEXT_RTTI_EXPORT 1
-
-		// To export explicit template instanciations
-		#define PLGUIXMLTEXT_TEMPLATE
 	#else
 		// To export classes, methods and variables
 		#define PLGUIXMLTEXT_API
 
 		// To export RTTI elements
 		#define PLGUIXMLTEXT_RTTI_EXPORT 1
-
-		// To export explicit template instanciations
-		#define PLGUIXMLTEXT_TEMPLATE
 	#endif
 #else
 	// To import classes, methods and variables
@@ -54,17 +48,6 @@
 
 	// To import RTTI elements
 	#define PLGUIXMLTEXT_RTTI_EXPORT 0
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLGUIXMLTEXT_TEMPLATE extern
-#endif
-
-#ifdef HAVE_VISIBILITY_ATTR
-		// To import/export class templates
-		#define PLGUIXMLTEXT_TMPL __attribute__ ((visibility("default")))
-#else
-		// To import/export class templates
-		#define PLGUIXMLTEXT_TMPL
 #endif
 
 

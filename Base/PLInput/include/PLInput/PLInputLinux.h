@@ -51,14 +51,6 @@
 	#define PLINPUT_TEMPLATE extern
 #endif
 
-#ifdef HAVE_VISIBILITY_ATTR
-	// To import/export class templates
-	#define PLINPUT_TMPL __attribute__ ((visibility("default")))
-#else
-	// To import/export class templates
-	#define PLINPUT_TMPL
-#endif
-
 // To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLINPUT_RTTI_EXPORT 1
 

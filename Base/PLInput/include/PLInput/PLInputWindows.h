@@ -49,8 +49,5 @@
 	#define PLINPUT_RTTI_EXPORT 0
 #endif
 
-// To export/import class templates
-#define PLINPUT_TMPL
-
 
 #endif // __PLINPUT_WINDOWS_H__

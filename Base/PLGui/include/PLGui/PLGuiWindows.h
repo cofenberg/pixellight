@@ -32,17 +32,11 @@
 	// To export classes, methods and variables
 	#define PLGUI_API __declspec(dllexport)
 
-	// To export explicit template instanciations
-	#define PLGUI_TEMPLATE
-
 	// To export RTTI elements
 	#define PLGUI_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLGUI_API __declspec(dllimport)
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLGUI_TEMPLATE extern
 
 	// To import RTTI elements
 	#define PLGUI_RTTI_EXPORT 0

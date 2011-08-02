@@ -32,30 +32,13 @@
 	#ifdef HAVE_VISIBILITY_ATTR
 		// To export classes, methods and variables
 		#define PLGUI_API __attribute__ ((visibility("default")))
-
-		// To export explicit template instanciations
-		#define PLGUI_TEMPLATE
 	#else
 		// To export classes, methods and variables
 		#define PLGUI_API
-
-		// To export explicit template instanciations
-		#define PLGUI_TEMPLATE
 	#endif
 #else
 	// To import classes, methods and variables
 	#define PLGUI_API
-
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLGUI_TEMPLATE extern
-#endif
-
-#ifdef HAVE_VISIBILITY_ATTR
-	// To import/export class templates
-	#define PLGUI_TMPL __attribute__ ((visibility("default")))
-#else
-	// To import/export class templates
-	#define PLGUI_TMPL
 #endif
 
 // To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
