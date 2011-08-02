@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextBreak.cpp                               *
+ *  File: XmlTextImage.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,14 +23,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextBreak.h"
+#include <PLCore/Xml/XmlElement.h>
+#include <PLCore/Xml/XmlAttribute.h>
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextImage.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLGui;
 namespace PLGuiXmlText {
 
 
@@ -41,7 +44,8 @@ namespace PLGuiXmlText {
 *  @brief
 *    Constructor
 */
-XmlTextBreak::XmlTextBreak(XmlTextElement *pParent) : XmlTextElement(pParent)
+XmlTextImage::XmlTextImage(XmlTextElement *pParent) : XmlTextElement(pParent),
+	m_pImage(nullptr)
 {
 }
 
@@ -49,22 +53,73 @@ XmlTextBreak::XmlTextBreak(XmlTextElement *pParent) : XmlTextElement(pParent)
 *  @brief
 *    Destructor
 */
-XmlTextBreak::~XmlTextBreak()
+XmlTextImage::~XmlTextImage()
 {
+	// Destroy the image
+	if (m_pImage)
+		delete m_pImage;
 }
 
 
 //[-------------------------------------------------------]
 //[ Protected virtual XmlTextElement functions            ]
 //[-------------------------------------------------------]
-void XmlTextBreak::OnParse(XmlNode &cXmlNode)
+void XmlTextImage::OnParse(XmlNode &cXmlNode)
 {
+	// Is this an XML element?
+	if (cXmlNode.GetType() == XmlNode::Element) {
+		// Destroy the previous image
+		if (m_pImage) {
+			delete m_pImage;
+			m_pImage = nullptr;
+		}
+
+		// Get XML element
+		XmlElement &cXmlElement = static_cast<XmlElement&>(cXmlNode);
+
+		// Parse attributes
+		XmlAttribute *pAttribute = cXmlElement.GetFirstAttribute();
+		while (pAttribute) {
+			// Get name and value
+			String sName  = pAttribute->GetName();
+			String sValue = pAttribute->GetValue();
+
+			// Save attribute
+			if (sName.CompareNoCase("Src")) {
+				// Image filename
+				m_sFilename = sValue;
+			} else if (sName.CompareNoCase("Width")) {
+				// Image width
+				m_vSize.x = sValue.GetInt();
+			} if (sName.CompareNoCase("Height")) {
+				// Image height
+				m_vSize.y = sValue.GetInt();
+			}
+
+			// Next attribute
+			pAttribute = pAttribute->GetNext();
+		}
+
+	}
 }
 
-void XmlTextBreak::OnDraw(XmlTextRenderer &cRenderer)
+void XmlTextImage::OnDraw(XmlTextRenderer &cRenderer)
 {
-	// Insert line break
-	cRenderer.AddLineBreak(true);
+	// Draw image
+	if (m_sFilename.GetLength()) {
+		// Load the image right now?
+		if (!m_pImage) {
+			// Create the image object
+			m_pImage = new Image(cRenderer.GetGui());
+			
+			// Load the image
+			*m_pImage = LoadImage(cRenderer.GetGui(), m_sFilename);
+		}
+
+		// Draw the image
+		if (m_pImage)
+			cRenderer.DrawImage(m_pImage, m_vSize);
+	}
 }
 
 

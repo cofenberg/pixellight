@@ -30,8 +30,8 @@
 //[-------------------------------------------------------]
 #include <PLGui/Widgets/Widget.h>
 #include "PLGuiXmlText/PLGuiXmlText.h"
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextElement.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextElement.h"
 
 
 //[-------------------------------------------------------]

@@ -121,35 +121,6 @@ copy build\release\PLGuiXmlText.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\PLGuiXmlText.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextBreak.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextElement.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextImage.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextList.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextListElement.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextRenderer.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextSection.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextText.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextTextNode.cpp" />
-    <ClCompile Include="src\XmlText\XmlTextView.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlText.h" />
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextLinux.h" />
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextBreak.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextElement.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextImage.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextList.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextListElement.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextPrimitive.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextRenderer.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextSection.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextText.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextTextNode.h" />
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextView.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
   </ItemGroup>
@@ -170,6 +141,35 @@ copy build\release\PLGuiXmlText.lib ..\..\Bin\Lib\
       <Project>{be939bc0-5787-4ab9-a3d8-0259f58be436}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLGuiXmlText.cpp" />
+    <ClCompile Include="src\XmlTextBreak.cpp" />
+    <ClCompile Include="src\XmlTextElement.cpp" />
+    <ClCompile Include="src\XmlTextImage.cpp" />
+    <ClCompile Include="src\XmlTextList.cpp" />
+    <ClCompile Include="src\XmlTextListElement.cpp" />
+    <ClCompile Include="src\XmlTextRenderer.cpp" />
+    <ClCompile Include="src\XmlTextSection.cpp" />
+    <ClCompile Include="src\XmlTextText.cpp" />
+    <ClCompile Include="src\XmlTextTextNode.cpp" />
+    <ClCompile Include="src\XmlTextView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlText.h" />
+    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextLinux.h" />
+    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextBreak.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextElement.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextImage.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextList.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextListElement.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextPrimitive.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextRenderer.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextSection.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextText.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextTextNode.h" />
+    <ClInclude Include="include\PLGuiXmlText\XmlTextView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

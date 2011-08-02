@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextTextNode.h                              *
+ *  File: XmlTextBreak.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +20,16 @@
 \*********************************************************/
 
 
-#ifndef __PLGUIXMLTEXT_TEXTNODE_H__
-#define __PLGUIXMLTEXT_TEXTNODE_H__
+#ifndef __PLGUIXMLTEXT_BREAK_H__
+#define __PLGUIXMLTEXT_BREAK_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
 #include "PLGuiXmlText/PLGuiXmlText.h"
-#include "PLGuiXmlText/XmlText/XmlTextElement.h"
+#include "PLGuiXmlText/XmlTextElement.h"
 
 
 //[-------------------------------------------------------]
@@ -44,9 +43,9 @@ namespace PLGuiXmlText {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Element describing containing a real text node
+*    Element inserting a line break
 */
-class XmlTextTextNode : public XmlTextElement {
+class XmlTextBreak : public XmlTextElement {
 
 
 	//[-------------------------------------------------------]
@@ -60,13 +59,13 @@ class XmlTextTextNode : public XmlTextElement {
 		*  @param[in] pParent
 		*    Parent object, can be a null pointer
 		*/
-		PLGUIXMLTEXT_API XmlTextTextNode(XmlTextElement *pParent = nullptr);
+		PLGUIXMLTEXT_API XmlTextBreak(XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGUIXMLTEXT_API virtual ~XmlTextTextNode();
+		PLGUIXMLTEXT_API virtual ~XmlTextBreak();
 
 
 	//[-------------------------------------------------------]
@@ -75,13 +74,6 @@ class XmlTextTextNode : public XmlTextElement {
 	protected:
 		PLGUIXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode) override;
 		PLGUIXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::String m_sText;	/**< Contained text */
 
 
 };
@@ -93,4 +85,4 @@ class XmlTextTextNode : public XmlTextElement {
 } // PLGuiXmlText
 
 
-#endif // __PLGUIXMLTEXT_TEXTNODE_H__
+#endif // __PLGUIXMLTEXT_BREAK_H__

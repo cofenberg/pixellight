@@ -1,6 +1,7 @@
 >> 02.08.2011
 [CO]
 - Renamed "PLXmlText" into "PLGuiXmlText" to make clear that this project is PLGui related and not for instance a generic XML parser library
+- Moved all files from the "XmlText" sub-directory into the root-directory of the project
 
 
 

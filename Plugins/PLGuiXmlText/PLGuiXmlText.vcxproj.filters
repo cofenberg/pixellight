@@ -5,91 +5,88 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="XmlText">
-      <UniqueIdentifier>{5a5d6075-a7c2-4845-b9fb-ac82c3905061}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\XmlTextListElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlTextList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlTextImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlTextElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\XmlTextBreak.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\PLGuiXmlText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextBreak.cpp">
-      <Filter>XmlText</Filter>
+    <ClCompile Include="src\XmlTextView.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextElement.cpp">
-      <Filter>XmlText</Filter>
+    <ClCompile Include="src\XmlTextTextNode.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextImage.cpp">
-      <Filter>XmlText</Filter>
+    <ClCompile Include="src\XmlTextText.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextList.cpp">
-      <Filter>XmlText</Filter>
+    <ClCompile Include="src\XmlTextSection.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextListElement.cpp">
-      <Filter>XmlText</Filter>
-    </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextRenderer.cpp">
-      <Filter>XmlText</Filter>
-    </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextSection.cpp">
-      <Filter>XmlText</Filter>
-    </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextText.cpp">
-      <Filter>XmlText</Filter>
-    </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextTextNode.cpp">
-      <Filter>XmlText</Filter>
-    </ClCompile>
-    <ClCompile Include="src\XmlText\XmlTextView.cpp">
-      <Filter>XmlText</Filter>
+    <ClCompile Include="src\XmlTextRenderer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextBreak.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextElement.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextImage.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextList.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextListElement.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextPrimitive.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextRenderer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextSection.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextText.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextTextNode.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGuiXmlText\XmlTextView.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\PLGuiXmlText\PLGuiXmlText.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextLinux.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextBreak.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextElement.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextImage.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextList.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextListElement.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextPrimitive.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextRenderer.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextSection.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextText.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextTextNode.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\XmlText\XmlTextView.h">
-      <Filter>XmlText</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
   </ItemGroup>
 </Project>

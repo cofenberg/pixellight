@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextListElement.cpp                         *
+ *  File: XmlTextTextNode.cpp                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextListElement.h"
+#include <PLCore/String/RegEx.h>
+#include <PLCore/Xml/XmlText.h>
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextTextNode.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +43,7 @@ namespace PLGuiXmlText {
 *  @brief
 *    Constructor
 */
-XmlTextListElement::XmlTextListElement(XmlTextElement *pParent) : XmlTextElement(pParent)
+XmlTextTextNode::XmlTextTextNode(XmlTextElement *pParent) : XmlTextElement(pParent)
 {
 }
 
@@ -49,7 +51,7 @@ XmlTextListElement::XmlTextListElement(XmlTextElement *pParent) : XmlTextElement
 *  @brief
 *    Destructor
 */
-XmlTextListElement::~XmlTextListElement()
+XmlTextTextNode::~XmlTextTextNode()
 {
 }
 
@@ -57,20 +59,26 @@ XmlTextListElement::~XmlTextListElement()
 //[-------------------------------------------------------]
 //[ Protected virtual XmlTextElement functions            ]
 //[-------------------------------------------------------]
-void XmlTextListElement::OnParse(XmlNode &cXmlNode)
+void XmlTextTextNode::OnParse(XmlNode &cXmlNode)
 {
+	// Get XML text
+	XmlText &cXmlText = static_cast<XmlText&>(cXmlNode);
+	m_sText = cXmlText.GetValue();
 }
 
-void XmlTextListElement::OnDraw(XmlTextRenderer &cRenderer)
+void XmlTextTextNode::OnDraw(XmlTextRenderer &cRenderer)
 {
-	// Draw bullet
-	cRenderer.DrawBullet();
+	// Get text word for word
+	RegEx cRegEx("\\s*([^\\s]+)");
+	uint32 nParsePos = 0;
+	while (cRegEx.Match(m_sText, nParsePos)) {
+		// Get next word
+		nParsePos = cRegEx.GetPosition();
+		String sWord = cRegEx.GetResult(0);
 
-	// Draw children
-	DrawChildren(cRenderer);
-
-	// End line
-	cRenderer.AddLineBreak();
+		// Draw word
+		cRenderer.DrawText(sWord);
+	}
 }
 
 

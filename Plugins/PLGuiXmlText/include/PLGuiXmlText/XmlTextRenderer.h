@@ -32,7 +32,7 @@
 #include <PLMath/Vector2i.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLGuiXmlText/PLGuiXmlText.h"
-#include "PLGuiXmlText/XmlText/XmlTextPrimitive.h"
+#include "PLGuiXmlText/XmlTextPrimitive.h"
 
 
 //[-------------------------------------------------------]

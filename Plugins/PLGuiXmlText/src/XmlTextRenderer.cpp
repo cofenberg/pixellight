@@ -27,7 +27,7 @@
 #include <PLGui/Gui/Resources/Graphics.h>
 #include <PLGui/Gui/Resources/Font.h>
 #include <PLGui/Gui/Resources/Image.h>
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
 
 
 //[-------------------------------------------------------]

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextTextNode.cpp                            *
+ *  File: XmlTextList.cpp                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,10 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/RegEx.h>
-#include <PLCore/Xml/XmlText.h>
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextTextNode.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextList.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +41,7 @@ namespace PLGuiXmlText {
 *  @brief
 *    Constructor
 */
-XmlTextTextNode::XmlTextTextNode(XmlTextElement *pParent) : XmlTextElement(pParent)
+XmlTextList::XmlTextList(XmlTextElement *pParent) : XmlTextElement(pParent)
 {
 }
 
@@ -51,7 +49,7 @@ XmlTextTextNode::XmlTextTextNode(XmlTextElement *pParent) : XmlTextElement(pPare
 *  @brief
 *    Destructor
 */
-XmlTextTextNode::~XmlTextTextNode()
+XmlTextList::~XmlTextList()
 {
 }
 
@@ -59,26 +57,29 @@ XmlTextTextNode::~XmlTextTextNode()
 //[-------------------------------------------------------]
 //[ Protected virtual XmlTextElement functions            ]
 //[-------------------------------------------------------]
-void XmlTextTextNode::OnParse(XmlNode &cXmlNode)
+void XmlTextList::OnParse(XmlNode &cXmlNode)
 {
-	// Get XML text
-	XmlText &cXmlText = static_cast<XmlText&>(cXmlNode);
-	m_sText = cXmlText.GetValue();
 }
 
-void XmlTextTextNode::OnDraw(XmlTextRenderer &cRenderer)
+void XmlTextList::OnDraw(XmlTextRenderer &cRenderer)
 {
-	// Get text word for word
-	RegEx cRegEx("\\s*([^\\s]+)");
-	uint32 nParsePos = 0;
-	while (cRegEx.Match(m_sText, nParsePos)) {
-		// Get next word
-		nParsePos = cRegEx.GetPosition();
-		String sWord = cRegEx.GetResult(0);
+	// End paragraph
+	cRenderer.AddLineBreak();
+	cRenderer.AddVerticalSpace(8);
 
-		// Draw word
-		cRenderer.DrawText(sWord);
-	}
+	// Set indent
+	int nOldIndent = cRenderer.GetIndent();
+	cRenderer.SetIndent(nOldIndent + 10);
+
+	// Draw children
+	DrawChildren(cRenderer);
+
+	// Restore indent
+	cRenderer.SetIndent(nOldIndent);
+
+	// End paragraph
+	cRenderer.AddLineBreak();
+	cRenderer.AddVerticalSpace(8);
 }
 
 

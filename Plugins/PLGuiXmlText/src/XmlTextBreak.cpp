@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextImage.cpp                               *
+ *  File: XmlTextBreak.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,17 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Xml/XmlElement.h>
-#include <PLCore/Xml/XmlAttribute.h>
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextImage.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextBreak.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
 namespace PLGuiXmlText {
 
 
@@ -44,8 +41,7 @@ namespace PLGuiXmlText {
 *  @brief
 *    Constructor
 */
-XmlTextImage::XmlTextImage(XmlTextElement *pParent) : XmlTextElement(pParent),
-	m_pImage(nullptr)
+XmlTextBreak::XmlTextBreak(XmlTextElement *pParent) : XmlTextElement(pParent)
 {
 }
 
@@ -53,73 +49,22 @@ XmlTextImage::XmlTextImage(XmlTextElement *pParent) : XmlTextElement(pParent),
 *  @brief
 *    Destructor
 */
-XmlTextImage::~XmlTextImage()
+XmlTextBreak::~XmlTextBreak()
 {
-	// Destroy the image
-	if (m_pImage)
-		delete m_pImage;
 }
 
 
 //[-------------------------------------------------------]
 //[ Protected virtual XmlTextElement functions            ]
 //[-------------------------------------------------------]
-void XmlTextImage::OnParse(XmlNode &cXmlNode)
+void XmlTextBreak::OnParse(XmlNode &cXmlNode)
 {
-	// Is this an XML element?
-	if (cXmlNode.GetType() == XmlNode::Element) {
-		// Destroy the previous image
-		if (m_pImage) {
-			delete m_pImage;
-			m_pImage = nullptr;
-		}
-
-		// Get XML element
-		XmlElement &cXmlElement = static_cast<XmlElement&>(cXmlNode);
-
-		// Parse attributes
-		XmlAttribute *pAttribute = cXmlElement.GetFirstAttribute();
-		while (pAttribute) {
-			// Get name and value
-			String sName  = pAttribute->GetName();
-			String sValue = pAttribute->GetValue();
-
-			// Save attribute
-			if (sName.CompareNoCase("Src")) {
-				// Image filename
-				m_sFilename = sValue;
-			} else if (sName.CompareNoCase("Width")) {
-				// Image width
-				m_vSize.x = sValue.GetInt();
-			} if (sName.CompareNoCase("Height")) {
-				// Image height
-				m_vSize.y = sValue.GetInt();
-			}
-
-			// Next attribute
-			pAttribute = pAttribute->GetNext();
-		}
-
-	}
 }
 
-void XmlTextImage::OnDraw(XmlTextRenderer &cRenderer)
+void XmlTextBreak::OnDraw(XmlTextRenderer &cRenderer)
 {
-	// Draw image
-	if (m_sFilename.GetLength()) {
-		// Load the image right now?
-		if (!m_pImage) {
-			// Create the image object
-			m_pImage = new Image(cRenderer.GetGui());
-			
-			// Load the image
-			*m_pImage = LoadImage(cRenderer.GetGui(), m_sFilename);
-		}
-
-		// Draw the image
-		if (m_pImage)
-			cRenderer.DrawImage(m_pImage, m_vSize);
-	}
+	// Insert line break
+	cRenderer.AddLineBreak(true);
 }
 
 

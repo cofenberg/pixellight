@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextImage.h                                 *
+ *  File: XmlTextList.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,26 +20,16 @@
 \*********************************************************/
 
 
-#ifndef __PLGUIXMLTEXT_IMAGE_H__
-#define __PLGUIXMLTEXT_IMAGE_H__
+#ifndef __PLGUIXMLTEXT_LIST_H__
+#define __PLGUIXMLTEXT_LIST_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
-#include <PLMath/Vector2i.h>
 #include "PLGuiXmlText/PLGuiXmlText.h"
-#include "PLGuiXmlText/XmlText/XmlTextElement.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLGui {
-	class Image;
-}
+#include "PLGuiXmlText/XmlTextElement.h"
 
 
 //[-------------------------------------------------------]
@@ -53,9 +43,9 @@ namespace PLGuiXmlText {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Element displaying an image
+*    Element describing a list
 */
-class XmlTextImage : public XmlTextElement {
+class XmlTextList : public XmlTextElement {
 
 
 	//[-------------------------------------------------------]
@@ -69,13 +59,13 @@ class XmlTextImage : public XmlTextElement {
 		*  @param[in] pParent
 		*    Parent object, can be a null pointer
 		*/
-		PLGUIXMLTEXT_API XmlTextImage(XmlTextElement *pParent = nullptr);
+		PLGUIXMLTEXT_API XmlTextList(XmlTextElement *pParent = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGUIXMLTEXT_API virtual ~XmlTextImage();
+		PLGUIXMLTEXT_API virtual ~XmlTextList();
 
 
 	//[-------------------------------------------------------]
@@ -84,16 +74,6 @@ class XmlTextImage : public XmlTextElement {
 	protected:
 		PLGUIXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode) override;
 		PLGUIXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		// Image data
-		PLCore::String	  m_sFilename;	/**< Image filename */
-		PLMath::Vector2i  m_vSize;		/**< Image size */
-		PLGui::Image	 *m_pImage;		/**< Image, can be a null pointer */
 
 
 };
@@ -105,4 +85,4 @@ class XmlTextImage : public XmlTextElement {
 } // PLGuiXmlText
 
 
-#endif // __PLGUIXMLTEXT_IMAGE_H__
+#endif // __PLGUIXMLTEXT_LIST_H__

@@ -26,8 +26,8 @@
 #include <PLCore/Xml/XmlElement.h>
 #include <PLCore/Xml/XmlAttribute.h>
 #include <PLGui/Gui/Resources/Graphics.h>
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextSection.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextSection.h"
 
 
 //[-------------------------------------------------------]

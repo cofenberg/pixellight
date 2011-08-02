@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/File/Url.h>
-#include "PLGuiXmlText/XmlText/XmlTextView.h"
+#include "PLGuiXmlText/XmlTextView.h"
 
 
 //[-------------------------------------------------------]

@@ -8,16 +8,16 @@ define_project(PLGuiXmlText)
 ##################################################
 add_sources(
 	src/PLGuiXmlText.cpp
-	src/XmlText/XmlTextBreak.cpp
-	src/XmlText/XmlTextElement.cpp
-	src/XmlText/XmlTextImage.cpp
-	src/XmlText/XmlTextList.cpp
-	src/XmlText/XmlTextListElement.cpp
-	src/XmlText/XmlTextRenderer.cpp
-	src/XmlText/XmlTextSection.cpp
-	src/XmlText/XmlTextText.cpp
-	src/XmlText/XmlTextTextNode.cpp
-	src/XmlText/XmlTextView.cpp
+	src/XmlTextBreak.cpp
+	src/XmlTextElement.cpp
+	src/XmlTextImage.cpp
+	src/XmlTextList.cpp
+	src/XmlTextListElement.cpp
+	src/XmlTextRenderer.cpp
+	src/XmlTextSection.cpp
+	src/XmlTextText.cpp
+	src/XmlTextTextNode.cpp
+	src/XmlTextView.cpp
 )
 
 ##################################################

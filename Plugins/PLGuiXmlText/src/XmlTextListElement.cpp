@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XmlTextBreak.h                                   *
+ *  File: XmlTextListElement.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,69 +20,61 @@
 \*********************************************************/
 
 
-#ifndef __PLGUIXMLTEXT_BREAK_H__
-#define __PLGUIXMLTEXT_BREAK_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLGuiXmlText/PLGuiXmlText.h"
-#include "PLGuiXmlText/XmlText/XmlTextElement.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextListElement.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 namespace PLGuiXmlText {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Element inserting a line break
+*    Constructor
 */
-class XmlTextBreak : public XmlTextElement {
+XmlTextListElement::XmlTextListElement(XmlTextElement *pParent) : XmlTextElement(pParent)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+XmlTextListElement::~XmlTextListElement()
+{
+}
 
 
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] pParent
-		*    Parent object, can be a null pointer
-		*/
-		PLGUIXMLTEXT_API XmlTextBreak(XmlTextElement *pParent = nullptr);
+//[-------------------------------------------------------]
+//[ Protected virtual XmlTextElement functions            ]
+//[-------------------------------------------------------]
+void XmlTextListElement::OnParse(XmlNode &cXmlNode)
+{
+}
 
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLGUIXMLTEXT_API virtual ~XmlTextBreak();
+void XmlTextListElement::OnDraw(XmlTextRenderer &cRenderer)
+{
+	// Draw bullet
+	cRenderer.DrawBullet();
 
+	// Draw children
+	DrawChildren(cRenderer);
 
-	//[-------------------------------------------------------]
-	//[ Protected virtual XmlTextElement functions            ]
-	//[-------------------------------------------------------]
-	protected:
-		PLGUIXMLTEXT_API virtual void OnParse(PLCore::XmlNode &cXmlNode) override;
-		PLGUIXMLTEXT_API virtual void OnDraw(XmlTextRenderer &cRenderer) override;
-
-
-};
+	// End line
+	cRenderer.AddLineBreak();
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGuiXmlText
-
-
-#endif // __PLGUIXMLTEXT_BREAK_H__

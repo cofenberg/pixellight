@@ -28,16 +28,16 @@
 #include <PLCore/Xml/XmlDocument.h>
 #include <PLCore/Xml/XmlElement.h>
 #include <PLGui/Gui/Gui.h>
-#include "PLGuiXmlText/XmlText/XmlTextView.h"
-#include "PLGuiXmlText/XmlText/XmlTextRenderer.h"
-#include "PLGuiXmlText/XmlText/XmlTextElement.h"
-#include "PLGuiXmlText/XmlText/XmlTextBreak.h"
-#include "PLGuiXmlText/XmlText/XmlTextImage.h"
-#include "PLGuiXmlText/XmlText/XmlTextList.h"
-#include "PLGuiXmlText/XmlText/XmlTextListElement.h"
-#include "PLGuiXmlText/XmlText/XmlTextSection.h"
-#include "PLGuiXmlText/XmlText/XmlTextText.h"
-#include "PLGuiXmlText/XmlText/XmlTextTextNode.h"
+#include "PLGuiXmlText/XmlTextView.h"
+#include "PLGuiXmlText/XmlTextRenderer.h"
+#include "PLGuiXmlText/XmlTextElement.h"
+#include "PLGuiXmlText/XmlTextBreak.h"
+#include "PLGuiXmlText/XmlTextImage.h"
+#include "PLGuiXmlText/XmlTextList.h"
+#include "PLGuiXmlText/XmlTextListElement.h"
+#include "PLGuiXmlText/XmlTextSection.h"
+#include "PLGuiXmlText/XmlTextText.h"
+#include "PLGuiXmlText/XmlTextTextNode.h"
 
 
 //[-------------------------------------------------------]
