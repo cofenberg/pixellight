@@ -1,6 +1,6 @@
 /*********************************************************\
- *  File: PLFrontendPLGui.h                              *
- *      Main header file of this project
+ *  File: PLFrontendPLGuiWindows.h                       *
+ *      Windows definitions for PLFrontendPLGui
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,32 +21,27 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDPLGUI_PLFRONTENDPLGUI_H__
-#define __PLFRONTENDPLGUI_PLFRONTENDPLGUI_H__
+#ifndef __PLFRONTENDPLGUI_WINDOWS_H__
+#define __PLFRONTENDPLGUI_WINDOWS_H__
 #pragma once
 
 
-/**
-*  @mainpage PLFrontendPLGui
-*
-*  @section intro_sec Introduction
-*
-*  This is the PLFrontendPLGui API reference.
-*/
-
-
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Import/Export                                         ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLFrontendPLGui/PLFrontendPLGuiWindows.h"
-#endif
+#ifdef PLFRONTENDPLGUI_EXPORTS
+	// To import classes, methods and variables
+	#define PLFRONTENDPLGUI_API __declspec(dllexport)
 
-// Linux platform
-#ifdef LINUX
-	#include "PLFrontendPLGui/PLFrontendPLGuiLinux.h"
+	// To export RTTI elements
+	#define PLFRONTENDPLGUI_RTTI_EXPORT 1
+#else
+	// To import classes, methods and variables
+	#define PLFRONTENDPLGUI_API __declspec(dllimport)
+
+	// To import RTTI elements
+	#define PLFRONTENDPLGUI_RTTI_EXPORT 0
 #endif
 
 
-#endif // __PLFRONTENDPLGUI_PLFRONTENDPLGUI_H__
+#endif // __PLFRONTENDPLGUI_WINDOWS_H__

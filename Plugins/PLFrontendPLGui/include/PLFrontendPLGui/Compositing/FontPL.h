@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ImagePL.h                                      *
+ *  File: FontPL.h                                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,30 +20,32 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_IMAGE_H__
-#define __PLENGINE_COMPOSITING_GUI_IMAGE_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_FONT_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_FONT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGui/Backend/ImageImpl.h>
-#include "PLEngine/PLEngine.h"
+#include <PLGui/PLGuiDefinitions.h>
+#include <PLGui/Backend/FontImpl.h>
+#include <PLRenderer/Renderer/ResourceHandler.h>
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
-	class TextureBuffer;
+	class Font;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -51,9 +53,9 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    PixelLight ingame GUI image implementation
+*    PixelLight ingame GUI font implementation
 */
-class ImagePL : public PLGui::ImageImpl {
+class FontPL : public PLGui::FontImpl {
 
 
 	//[-------------------------------------------------------]
@@ -64,47 +66,41 @@ class ImagePL : public PLGui::ImageImpl {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cImage
-		*    Reference to platform independent image
+		*  @param[in] cFont
+		*    Reference to platform independent font
 		*/
-		PL_API ImagePL(PLGui::Image &cImage);
+		PLFRONTENDPLGUI_API FontPL(PLGui::Font &cFont);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~ImagePL();
+		PLFRONTENDPLGUI_API virtual ~FontPL();
 
 		/**
 		*  @brief
-		*    Unload image
-		*/
-		PL_API void Unload();
-
-		/**
-		*  @brief
-		*    Returns the texture buffer
+		*    Returns the renderer font
 		*
 		*  @return
-		*    The texture buffer, a null pointer on error
+		*    Renderer font, can be a null pointer
 		*/
-		PL_API PLRenderer::TextureBuffer *GetTextureBuffer();
+		PLFRONTENDPLGUI_API PLRenderer::Font *GetRendererFont();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGui::ImageImpl functions             ]
+	//[ Public virtual PLGui::FontImpl functions              ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLCore::String &sFilename) override;
-		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor) override;
+		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, PLGui::EFontStyle nStyle) override;
+		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Image			  *m_pImage;			/**< Pointer to the platform independent image object */
-		PLRenderer::TextureBuffer *m_pTextureBuffer;	/**< The texture buffer, can be a null pointer */
+		PLGui::Font					*m_pFont;			/**< Pointer to the platform independent font object */
+		PLRenderer::ResourceHandler  m_cRendererFont;	/**< Renderer font resource handler */
 
 
 };
@@ -113,7 +109,7 @@ class ImagePL : public PLGui::ImageImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_IMAGE_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_FONT_H__

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNGui.h                                        *
+ *  File: ImagePL.h                                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,30 +20,30 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_H__
-#define __PLENGINE_COMPOSITING_GUI_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_IMAGE_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_IMAGE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNode.h>
-#include "PLEngine/PLEngine.h"
+#include <PLGui/Backend/ImageImpl.h>
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGui {
-	class Gui;
+namespace PLRenderer {
+	class TextureBuffer;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -51,21 +51,9 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    GUI scene node
-*
-*  @note
-*    - Should be used within a scene root container only
+*    PixelLight ingame GUI image implementation
 */
-class SNGui : public PLScene::SceneNode {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SNGui, "PLEngine", PLScene::SceneNode, "GUI scene node")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-	pl_class_end
+class ImagePL : public PLGui::ImageImpl {
 
 
 	//[-------------------------------------------------------]
@@ -74,82 +62,49 @@ class SNGui : public PLScene::SceneNode {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] cImage
+		*    Reference to platform independent image
 		*/
-		PL_API SNGui();
+		PLFRONTENDPLGUI_API ImagePL(PLGui::Image &cImage);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~SNGui();
+		PLFRONTENDPLGUI_API virtual ~ImagePL();
 
 		/**
 		*  @brief
-		*    Returns the GUI
+		*    Unload image
+		*/
+		PLFRONTENDPLGUI_API void Unload();
+
+		/**
+		*  @brief
+		*    Returns the texture buffer
 		*
 		*  @return
-		*    GUI, a null pointer on error
+		*    The texture buffer, a null pointer on error
 		*/
-		PL_API PLGui::Gui *GetGui() const;
-
-		/**
-		*  @brief
-		*    Returns whether this GUI has the focus or not
-		*
-		*  @return
-		*    'true' if this GUI has the focus, else 'false'
-		*/
-		PL_API bool HasFocus() const;
-
-		/**
-		*  @brief
-		*    Sets whether this GUI has the focus or not
-		*
-		*  @param[in] bFocus
-		*    'true' if this GUI has the focus, else 'false'
-		*/
-		PL_API void SetFocus(bool bFocus = true);
+		PLFRONTENDPLGUI_API PLRenderer::TextureBuffer *GetTextureBuffer();
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Public virtual PLGui::ImageImpl functions             ]
 	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Called when the scene node needs to be updated
-		*/
-		void OnUpdate();
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<> EventHandlerUpdate;
+	public:
+		virtual bool Load(const PLCore::String &sFilename) override;
+		virtual bool LoadWithColorKey(const PLCore::String &sFilename, const PLGraphics::Color3 &cColor) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Gui *m_pGui;
-		bool		m_bFocus;
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SceneNode functions           ]
-	//[-------------------------------------------------------]
-	public:
-		PL_API virtual void DrawPost(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneNode functions          ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void InitFunction() override;
+		PLGui::Image			  *m_pImage;			/**< Pointer to the platform independent image object */
+		PLRenderer::TextureBuffer *m_pTextureBuffer;	/**< The texture buffer, can be a null pointer */
 
 
 };
@@ -158,7 +113,7 @@ class SNGui : public PLScene::SceneNode {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_IMAGE_H__

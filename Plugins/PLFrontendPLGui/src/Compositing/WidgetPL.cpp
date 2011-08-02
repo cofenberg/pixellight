@@ -28,8 +28,8 @@
 #include <PLGui/Gui/Screen.h>
 #include <PLGui/Gui/Base/GuiMessage.h>
 #include <PLGui/Widgets/Widget.h>
-#include "PLEngine/Compositing/Gui/GuiPL.h"
-#include "PLEngine/Compositing/Gui/WidgetPL.h"
+#include "PLFrontendPLGui/Compositing/GuiPL.h"
+#include "PLFrontendPLGui/Compositing/WidgetPL.h"
 
 
 /* [TODO] Send messages
@@ -77,7 +77,7 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -513,4 +513,4 @@ void WidgetPL::SetZPos(Array<Widget*> &lstChildren, EZPos nZPos, Widget *pWidget
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

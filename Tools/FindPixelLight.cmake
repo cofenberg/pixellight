@@ -88,66 +88,55 @@ _pixellight_find_lib(PL_PLCORE PLCore/PLCore.h PLCore Base/PLCore/include)
 #message("PLCore include: ${PL_PLCORE_INCLUDE_DIR}")
 #message("PLCore library: ${PL_PLCORE_LIBRARY}")
 
-# PLGraphics
-_pixellight_find_lib(PL_PLGRAPHICS PLGraphics/PLGraphics.h PLGraphics Base/PLGraphics/include)
-#message("PLGraphics include: ${PL_PLGRAPHICS_INCLUDE_DIR}")
-#message("PLGraphics library: ${PL_PLGRAPHICS_LIBRARY}")
+# PLDatabase
+_pixellight_find_lib(PL_PLDATABASE PLDatabase/PLDatabase.h PLDatabase Base/PLDatabase/include)
+#message("PLDatabase include: ${PL_PLDATABASE_INCLUDE_DIR}")
+#message("PLDatabase library: ${PL_PLDATABASE_LIBRARY}")
 
 # PLMath
 _pixellight_find_lib(PL_PLMATH PLMath/PLMath.h PLMath Base/PLMath/include)
 #message("PLMath include: ${PL_PLMATH_INCLUDE_DIR}")
 #message("PLMath library: ${PL_PLMATH_LIBRARY}")
 
-# PLDatabase
-_pixellight_find_lib(PL_PLDATABASE PLDatabase/PLDatabase.h PLDatabase Base/PLDatabase/include)
-#message("PLDatabase include: ${PL_PLDATABASE_INCLUDE_DIR}")
-#message("PLDatabase library: ${PL_PLDATABASE_LIBRARY}")
-
-
-# PLGui
+# PLGraphics
+_pixellight_find_lib(PL_PLGRAPHICS PLGraphics/PLGraphics.h PLGraphics Base/PLGraphics/include)
+#message("PLGraphics include: ${PL_PLGRAPHICS_INCLUDE_DIR}")
+#message("PLGraphics library: ${PL_PLGRAPHICS_LIBRARY}")
 
 # PLGui
 _pixellight_find_lib(PL_PLGUI PLGui/PLGui.h PLGui PLGui/PLGui/include)
 #message("PLGui include: ${PL_PLGUI_INCLUDE_DIR}")
 #message("PLGui library: ${PL_PLGUI_LIBRARY}")
 
-
-# PLEngine
-
-# PLEngine
-_pixellight_find_lib(PL_PLENGINE PLEngine/PLEngine.h PLEngine Base/PLEngine/include)
-#message("PLEngine include: ${PL_PLENGINE_INCLUDE_DIR}")
-#message("PLEngine library: ${PL_PLENGINE_LIBRARY}")
-
-# PLCompositing
-_pixellight_find_lib(PL_PLCOMPOSITING PLCompositing/PLCompositing.h PLCompositing PLEngine/PLCompositing/include)
-#message("PLCompositing include: ${PL_PLCOMPOSITING_INCLUDE_DIR}")
-#message("PLCompositing library: ${PL_PLCOMPOSITING_LIBRARY}")
-
 # PLInput
 _pixellight_find_lib(PL_PLINPUT PLInput/PLInput.h PLInput Base/PLInput/include)
 #message("PLInput include: ${PL_PLINPUT_INCLUDE_DIR}")
 #message("PLInput library: ${PL_PLINPUT_LIBRARY}")
-
-# PLMesh
-_pixellight_find_lib(PL_PLMESH PLMesh/PLMesh.h PLMesh Base/PLMesh/include)
-#message("PLMesh include: ${PL_PLMESH_INCLUDE_DIR}")
-#message("PLMesh library: ${PL_PLMESH_LIBRARY}")
-
-# PLPhysics
-_pixellight_find_lib(PL_PLPHYSICS PLPhysics/PLPhysics.h PLPhysics Base/PLPhysics/include)
-#message("PLPhysics include: ${PL_PLPHYSICS_INCLUDE_DIR}")
-#message("PLPhysics library: ${PL_PLPHYSICS_LIBRARY}")
 
 # PLRenderer
 _pixellight_find_lib(PL_PLRENDERER PLRenderer/PLRenderer.h PLRenderer Base/PLRenderer/include)
 #message("PLRenderer include: ${PL_PLRENDERER_INCLUDE_DIR}")
 #message("PLRenderer library: ${PL_PLRENDERER_LIBRARY}")
 
+# PLMesh
+_pixellight_find_lib(PL_PLMESH PLMesh/PLMesh.h PLMesh Base/PLMesh/include)
+#message("PLMesh include: ${PL_PLMESH_INCLUDE_DIR}")
+#message("PLMesh library: ${PL_PLMESH_LIBRARY}")
+
 # PLScene
 _pixellight_find_lib(PL_PLSCENE PLScene/PLScene.h PLScene Base/PLScene/include)
 #message("PLScene include: ${PL_PLSCENE_INCLUDE_DIR}")
 #message("PLScene library: ${PL_PLSCENE_LIBRARY}")
+
+# PLEngine
+_pixellight_find_lib(PL_PLENGINE PLEngine/PLEngine.h PLEngine Base/PLEngine/include)
+#message("PLEngine include: ${PL_PLENGINE_INCLUDE_DIR}")
+#message("PLEngine library: ${PL_PLENGINE_LIBRARY}")
+
+# PLPhysics
+_pixellight_find_lib(PL_PLPHYSICS PLPhysics/PLPhysics.h PLPhysics Base/PLPhysics/include)
+#message("PLPhysics include: ${PL_PLPHYSICS_INCLUDE_DIR}")
+#message("PLPhysics library: ${PL_PLPHYSICS_LIBRARY}")
 
 # PLSound
 _pixellight_find_lib(PL_PLSOUND PLSound/PLSound.h PLSound Base/PLSound/include)
@@ -156,6 +145,11 @@ _pixellight_find_lib(PL_PLSOUND PLSound/PLSound.h PLSound Base/PLSound/include)
 
 
 # Plugins
+
+# PLCompositing
+_pixellight_find_lib(PL_PLCOMPOSITING PLCompositing/PLCompositing.h PLCompositing PLEngine/PLCompositing/include)
+#message("PLCompositing include: ${PL_PLCOMPOSITING_INCLUDE_DIR}")
+#message("PLCompositing library: ${PL_PLCOMPOSITING_LIBRARY}")
 
 # PLIRC
 _pixellight_find_lib(PL_PLIRC PLIRC/PLIRC.h PLIRC Plugins/PLIRC/include)
@@ -171,6 +165,11 @@ _pixellight_find_lib(PL_PLJABBER PLJabber/PLJabber.h PLJabber Plugins/PLJabber/i
 _pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText Plugins/PLXmlText/include)
 #message("PLXmlText include: ${PL_PLXMLTEXT_INCLUDE_DIR}")
 #message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
+
+# PLFrontendPLGui
+_pixellight_find_lib(PL_PLFRONTENDPLGUI PLFrontendPLGui/PLFrontendPLGui.h PLFrontendPLGui PLFrontendPLGui/PLFrontendPLGui/include)
+#message("PLFrontendPLGui include: ${PL_PLFRONTENDPLGUI_INCLUDE_DIR}")
+#message("PLFrontendPLGui library: ${PL_PLFRONTENDPLGUI_LIBRARY}")
 
 
 # Set PixelLight_FOUND variable based on PLCore (we need at least that lib)

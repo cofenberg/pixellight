@@ -1,4 +1,11 @@
-﻿>> 01.08.2011
+﻿>> 02.08.2011
+[CO]
+PLFrontendPLGui:
+- Moved "SNGui" from "PLEngine" to "PLFrontendPLGui" because it's using PLGui
+
+
+
+>> 01.08.2011
 [CO]
 - Started the PLFrontend project (kind of "PLPlugin"-project successor)... now that scripting is working, it's finally time to attack another big design task.
   When we started the development of the PixelLight engine on 16 September 2002, we just had one single project: "PLEngine"

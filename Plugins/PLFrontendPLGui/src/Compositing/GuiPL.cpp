@@ -42,13 +42,13 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Effect/EffectManager.h>
-#include "PLEngine/Compositing/Gui/WidgetPL.h"
-#include "PLEngine/Compositing/Gui/GraphicsPL.h"
-#include "PLEngine/Compositing/Gui/ImagePL.h"
-#include "PLEngine/Compositing/Gui/FontPL.h"
-#include "PLEngine/Compositing/Gui/CursorPL.h"
-#include "PLEngine/Compositing/Gui/ClipBoardPL.h"
-#include "PLEngine/Compositing/Gui/GuiPL.h"
+#include "PLFrontendPLGui/Compositing/WidgetPL.h"
+#include "PLFrontendPLGui/Compositing/GraphicsPL.h"
+#include "PLFrontendPLGui/Compositing/ImagePL.h"
+#include "PLFrontendPLGui/Compositing/FontPL.h"
+#include "PLFrontendPLGui/Compositing/CursorPL.h"
+#include "PLFrontendPLGui/Compositing/ClipBoardPL.h"
+#include "PLFrontendPLGui/Compositing/GuiPL.h"
 
 
 //[-------------------------------------------------------]
@@ -58,7 +58,7 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
 using namespace PLInput;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -740,4 +740,4 @@ Widget *GuiPL::FindWidgetAtPos(const Vector2i &vMousePos, Widget &cParentWidget)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

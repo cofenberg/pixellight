@@ -8,6 +8,14 @@ define_project(PLFrontendPLGui)
 ##################################################
 add_sources(
 	src/PLFrontendPLGui.cpp
+	src/Compositing/SNGui.cpp
+	src/Compositing/GraphicsPL.cpp
+	src/Compositing/GuiPL.cpp
+	src/Compositing/ImagePL.cpp
+	src/Compositing/FontPL.cpp
+	src/Compositing/WidgetPL.cpp
+	src/Compositing/CursorPL.cpp
+	src/Compositing/ClipBoardPL.cpp
 )
 
 ##################################################
@@ -16,6 +24,14 @@ add_sources(
 add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/Base/PLGui/include
+	${CMAKE_SOURCE_DIR}/Base/PLInput/include
+	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 )
 
@@ -31,6 +47,14 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLCore
+	PLMath
+	PLGraphics
+	PLGui
+	PLInput
+	PLRenderer
+	PLMesh
+	PLScene
+	PLEngine
 	PLFrontend
 )
 
@@ -103,7 +127,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLFrontend)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine PLFrontend)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

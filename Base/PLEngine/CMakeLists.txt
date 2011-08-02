@@ -53,14 +53,6 @@ add_sources(
 	src/Compositing/Console/SNConsole.cpp
 	src/Compositing/Console/ConsoleCommand.cpp
 	src/Compositing/Console/ConsoleDefaultCommands.cpp
-	src/Compositing/Gui/SNGui.cpp
-	src/Compositing/Gui/GraphicsPL.cpp
-	src/Compositing/Gui/GuiPL.cpp
-	src/Compositing/Gui/ImagePL.cpp
-	src/Compositing/Gui/FontPL.cpp
-	src/Compositing/Gui/WidgetPL.cpp
-	src/Compositing/Gui/CursorPL.cpp
-	src/Compositing/Gui/ClipBoardPL.cpp
 	src/PLEngine.cpp
 )
 

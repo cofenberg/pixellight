@@ -1,3 +1,9 @@
+>> 02.08.2011
+[CO]
+- Moved "SNGui" from "PLEngine" to "PLFrontendPLGui" because it's using PLGui
+
+
+
 >> 29.07.2011
 [CO]
 - Started the roadmap-point (http://www.pixellight.org/site/index.php/page/Roadmap.html) "Make elements like ingame GUI, ingame console and load

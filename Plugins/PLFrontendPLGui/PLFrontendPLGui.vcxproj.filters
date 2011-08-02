@@ -5,14 +5,71 @@
       <UniqueIdentifier>{1d0c72c4-4c5f-44bc-8f7f-69669c76f22f}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
+    <Filter Include="Compositing">
+      <UniqueIdentifier>{6b6f667d-63ff-4a29-9cfe-621c29122145}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLFrontendPLGui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Compositing\FontPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\GraphicsPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\GuiPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\ImagePL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\SNGui.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\WidgetPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\ClipBoardPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Compositing\CursorPL.cpp">
+      <Filter>Compositing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\GraphicsPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\GuiPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\ImagePL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\SNGui.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\WidgetPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\ClipBoardPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\CursorPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\FontPL.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

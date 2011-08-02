@@ -28,8 +28,8 @@
 #include <PLRenderer/Renderer/Font.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/FontManager.h>
-#include "PLEngine/Compositing/Gui/GuiPL.h"
-#include "PLEngine/Compositing/Gui/FontPL.h"
+#include "PLFrontendPLGui/Compositing/GuiPL.h"
+#include "PLFrontendPLGui/Compositing/FontPL.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +37,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLGui;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -115,4 +115,4 @@ bool FontPL::LoadFont(const String &sFilename, uint32 nHeight)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

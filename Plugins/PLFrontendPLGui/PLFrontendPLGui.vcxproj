@@ -88,8 +88,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDPLGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLFrontendD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;PLFrontendD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendPLGuiD.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -117,6 +117,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLFrontendPLGuiD.dll ..\..\Bin\Runtime\
+copy build\debug\PLFrontendPLGuiD.lib ..\..\Bin\Lib\
 ..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
@@ -127,8 +128,8 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDPLGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -142,7 +143,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLFrontendD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLEngineD64.lib;PLFrontendD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendPLGuiD64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -155,6 +156,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug64\PLFrontendPLGuiD64.dll ..\..\Bin\Runtime\
+copy build\debug64\PLFrontendPLGuiD64.lib ..\..\Bin\Lib\
 ..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
@@ -167,8 +169,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDPLGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -187,7 +189,7 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLFrontend.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;PLFrontend.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendPLGui.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -202,6 +204,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release\PLFrontendPLGui.dll ..\..\Bin\Runtime\
+copy build\release\PLFrontendPLGui.lib ..\..\Bin\Lib\
 ..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
@@ -216,8 +219,8 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLGui/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Base/PLFrontend/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDPLGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -232,7 +235,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLFrontend64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;PLFrontend64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendPLGui64.dll</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -246,15 +249,34 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release64\PLFrontendPLGui64.dll ..\..\Bin\Runtime\
+copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
 ..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Compositing\ClipBoardPL.cpp" />
+    <ClCompile Include="src\Compositing\CursorPL.cpp" />
+    <ClCompile Include="src\Compositing\FontPL.cpp" />
+    <ClCompile Include="src\Compositing\GraphicsPL.cpp" />
+    <ClCompile Include="src\Compositing\GuiPL.cpp" />
+    <ClCompile Include="src\Compositing\ImagePL.cpp" />
+    <ClCompile Include="src\Compositing\SNGui.cpp" />
+    <ClCompile Include="src\Compositing\WidgetPL.cpp" />
     <ClCompile Include="src\PLFrontendPLGui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\ClipBoardPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\CursorPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\FontPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\GraphicsPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\GuiPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\ImagePL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\SNGui.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Compositing\WidgetPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h" />
+    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h" />
+    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLFrontend\Diary.txt" />

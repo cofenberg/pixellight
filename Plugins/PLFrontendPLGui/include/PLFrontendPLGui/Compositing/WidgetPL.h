@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_WIDGET_H__
-#define __PLENGINE_COMPOSITING_GUI_WIDGET_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_WIDGET_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_WIDGET_H__
 #pragma once
 
 
@@ -31,7 +31,7 @@
 #include <PLCore/Tools/QuickSort.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLGui/Backend/WidgetImpl.h>
-#include "PLEngine/PLEngine.h"
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +45,7 @@ namespace PLGui {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -75,13 +75,13 @@ class WidgetPL : public PLGui::WidgetImpl {
 		*  @param[in] cWidget
 		*    Reference to platform independent widget
 		*/
-		PL_API WidgetPL(PLGui::Widget &cWidget);
+		PLFRONTENDPLGUI_API WidgetPL(PLGui::Widget &cWidget);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~WidgetPL();
+		PLFRONTENDPLGUI_API virtual ~WidgetPL();
 
 
 	//[-------------------------------------------------------]
@@ -169,7 +169,7 @@ class WidgetPL : public PLGui::WidgetImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_WIDGET_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_WIDGET_H__

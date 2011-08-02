@@ -26,9 +26,9 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "PLEngine/Application/RenderApplication.h"
-#include "PLEngine/Compositing/Gui/GuiPL.h"
-#include "PLEngine/Compositing/Gui/SNGui.h"
+#include <PLEngine/Application/RenderApplication.h>
+#include "PLFrontendPLGui/Compositing/GuiPL.h"
+#include "PLFrontendPLGui/Compositing/SNGui.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +37,7 @@
 using namespace PLCore;
 using namespace PLRenderer;
 using namespace PLScene;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -154,14 +154,14 @@ void SNGui::InitFunction()
 
 	// Create the GUI
 	if (!m_pGui) {
-		m_pGui = new PLGui::Gui("PLEngine::GuiPL");
+		m_pGui = new PLGui::Gui("PLFrontendPLGui::GuiPL");
 
 		// [TODO] The GUI already needs a renderer instance during the initialization...
 		// Get the PixelLight ingame GUI implementation
 		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 		if (pGuiPL) {
 			pGuiPL->m_pRenderer = &GetSceneContext()->GetRendererContext().GetRenderer();
-			pGuiPL->SetInputController(static_cast<RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
+			pGuiPL->SetInputController(static_cast<PLEngine::RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
 		}
 	}
 
@@ -175,4 +175,4 @@ void SNGui::InitFunction()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

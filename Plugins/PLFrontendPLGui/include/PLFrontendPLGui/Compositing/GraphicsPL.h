@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_GRAPHICS_H__
-#define __PLENGINE_COMPOSITING_GUI_GRAPHICS_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_GRAPHICS_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_GRAPHICS_H__
 #pragma once
 
 
@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLGraphics/Color/Color4.h>
 #include <PLGui/Backend/GraphicsImpl.h>
-#include "PLEngine/PLEngine.h"
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -77,7 +77,7 @@ class GraphicsPL : public PLGui::GraphicsImpl {
 		*    If nMode is ColorKey, all pixels of the specified color will be transparent.
 		*    If nMode is Alpha, only the alpha channel of the color will be used (1.0 = opaque, 0.0 = transparent)
 		*/
-		PL_API GraphicsPL(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vAbsPos, const PLMath::Vector2i &vScreenSize, PLGui::ETransparency nTransparency, const PLGraphics::Color4 &cTransparencyColor);
+		PLFRONTENDPLGUI_API GraphicsPL(PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vAbsPos, const PLMath::Vector2i &vScreenSize, PLGui::ETransparency nTransparency, const PLGraphics::Color4 &cTransparencyColor);
 
 		/**
 		*  @brief
@@ -95,13 +95,13 @@ class GraphicsPL : public PLGui::GraphicsImpl {
 		*    If nMode is ColorKey, all pixels of the specified color will be transparent.
 		*    If nMode is Alpha, only the alpha channel of the color will be used (1.0 = opaque, 0.0 = transparent)
 		*/
-		PL_API GraphicsPL(PLGui::Graphics &cGraphics, PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vAbsPos, PLGui::ETransparency nTransparency, const PLGraphics::Color4 &cTransparencyColor);
+		PLFRONTENDPLGUI_API GraphicsPL(PLGui::Graphics &cGraphics, PLRenderer::Renderer &cRenderer, const PLMath::Vector2i &vAbsPos, PLGui::ETransparency nTransparency, const PLGraphics::Color4 &cTransparencyColor);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~GraphicsPL();
+		PLFRONTENDPLGUI_API virtual ~GraphicsPL();
 
 
 	//[-------------------------------------------------------]
@@ -135,7 +135,7 @@ class GraphicsPL : public PLGui::GraphicsImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_GRAPHICS_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_GRAPHICS_H__

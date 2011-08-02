@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_CURSOR_H__
-#define __PLENGINE_COMPOSITING_GUI_CURSOR_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_CURSOR_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_CURSOR_H__
 #pragma once
 
 
@@ -30,13 +30,13 @@
 //[-------------------------------------------------------]
 #include <PLGui/PLGuiDefinitions.h>
 #include <PLGui/Backend/CursorImpl.h>
-#include "PLEngine/PLEngine.h"
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -60,13 +60,13 @@ class CursorPL : public PLGui::CursorImpl {
 		*  @param[in] cCursor
 		*    Reference to platform independent cursor
 		*/
-		PL_API CursorPL(PLGui::Cursor &cCursor);
+		PLFRONTENDPLGUI_API CursorPL(PLGui::Cursor &cCursor);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~CursorPL();
+		PLFRONTENDPLGUI_API virtual ~CursorPL();
 
 
 	//[-------------------------------------------------------]
@@ -83,7 +83,7 @@ class CursorPL : public PLGui::CursorImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_CURSOR_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_CURSOR_H__

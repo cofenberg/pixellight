@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FontPL.h                                       *
+ *  File: ClipBoardPL.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,32 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_FONT_H__
-#define __PLENGINE_COMPOSITING_GUI_FONT_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_CLIPBOARD_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_CLIPBOARD_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGui/PLGuiDefinitions.h>
-#include <PLGui/Backend/FontImpl.h>
-#include <PLRenderer/Renderer/ResourceHandler.h>
-#include "PLEngine/PLEngine.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class Font;
-}
+#include <PLGui/Backend/ClipBoardImpl.h>
+#include <PLGui/Gui/Data/DataObject.h>
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -53,54 +44,43 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    PixelLight ingame GUI font implementation
+*    ClipBoard implementation for the PixelLight ingame GUI
 */
-class FontPL : public PLGui::FontImpl {
+class ClipBoardPL : public PLGui::ClipBoardImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	public:
+	friend class GuiPL;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
 		/**
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cFont
-		*    Reference to platform independent font
+		*  @param[in] cClipBoard
+		*    Reference to platform independent clipboard
 		*/
-		PL_API FontPL(PLGui::Font &cFont);
+		PLFRONTENDPLGUI_API ClipBoardPL(PLGui::ClipBoard &cClipBoard);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~FontPL();
-
-		/**
-		*  @brief
-		*    Returns the renderer font
-		*
-		*  @return
-		*    Renderer font, can be a null pointer
-		*/
-		PL_API PLRenderer::Font *GetRendererFont();
+		PLFRONTENDPLGUI_API virtual ~ClipBoardPL();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLGui::FontImpl functions              ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool LoadFont(const PLCore::String &sFamily, PLCore::uint32 nHeight, PLCore::uint32 nWeight, PLGui::EFontStyle nStyle) override;
-		virtual bool LoadFont(const PLCore::String &sFilename, PLCore::uint32 nHeight) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Private virtual PLGui::ClipBoardImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Font					*m_pFont;			/**< Pointer to the platform independent font object */
-		PLRenderer::ResourceHandler  m_cRendererFont;	/**< Renderer font resource handler */
+		PLFRONTENDPLGUI_API virtual PLGui::DataObject GetData() override;
+		PLFRONTENDPLGUI_API virtual void SetData(const PLGui::DataObject &cData) override;
 
 
 };
@@ -109,7 +89,7 @@ class FontPL : public PLGui::FontImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_FONT_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_CLIPBOARD_H__

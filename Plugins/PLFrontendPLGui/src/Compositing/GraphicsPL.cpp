@@ -28,9 +28,9 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Renderer/SamplerStates.h>
-#include "PLEngine/Compositing/Gui/FontPL.h"
-#include "PLEngine/Compositing/Gui/ImagePL.h"
-#include "PLEngine/Compositing/Gui/GraphicsPL.h"
+#include "PLFrontendPLGui/Compositing/FontPL.h"
+#include "PLFrontendPLGui/Compositing/ImagePL.h"
+#include "PLFrontendPLGui/Compositing/GraphicsPL.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +41,7 @@ using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;
 using namespace PLRenderer;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -158,7 +158,7 @@ void GraphicsPL::DrawGradientBox(const Color4 &cColor1, const Color4 &cColor2, f
 
 void GraphicsPL::DrawImage(const PLGui::Image &cImage, const Vector2i &vPos, const Vector2i &vSize)
 {
-	// cImage must be an instance of PLEngine::ImagePL!
+	// cImage must be an instance of PLFrontendPLGui::ImagePL!
 	ImagePL *pImagePL = static_cast<ImagePL*>(cImage.GetImpl());
 	if (pImagePL) {
 		// Get the texture buffer
@@ -187,7 +187,7 @@ void GraphicsPL::DrawImage(const PLGui::Image &cImage, const Vector2i &vPos, con
 
 void GraphicsPL::DrawText(const PLGui::Font &cFont, const Color4 &cTextColor, const Color4 &cBkColor, const Vector2i &vPos, const String &sText)
 {
-	// cFont must be an instance of PLEngine::FontPL!
+	// cFont must be an instance of PLFrontendPLGui::FontPL!
 	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
@@ -219,7 +219,7 @@ void GraphicsPL::DrawText(const PLGui::Font &cFont, const Color4 &cTextColor, co
 
 uint32 GraphicsPL::GetTextWidth(const PLGui::Font &cFont, const String &sText)
 {
-	// cFont must be an instance of PLEngine::FontPL!
+	// cFont must be an instance of PLFrontendPLGui::FontPL!
 	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
@@ -234,7 +234,7 @@ uint32 GraphicsPL::GetTextWidth(const PLGui::Font &cFont, const String &sText)
 
 uint32 GraphicsPL::GetTextHeight(const PLGui::Font &cFont, const String &sText)
 {
-	// cFont must be an instance of PLEngine::FontPL!
+	// cFont must be an instance of PLFrontendPLGui::FontPL!
 	FontPL *pFontPL = static_cast<FontPL*>(cFont.GetImpl());
 	if (pFontPL) {
 		// Get the renderer font
@@ -251,4 +251,4 @@ uint32 GraphicsPL::GetTextHeight(const PLGui::Font &cFont, const String &sText)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

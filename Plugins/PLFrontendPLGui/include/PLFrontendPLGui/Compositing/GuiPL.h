@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_COMPOSITING_GUI_GUI_H__
-#define __PLENGINE_COMPOSITING_GUI_GUI_H__
+#ifndef __PLFRONTENDPLGUI_COMPOSITING_GUI_GUI_H__
+#define __PLFRONTENDPLGUI_COMPOSITING_GUI_GUI_H__
 #pragma once
 
 
@@ -31,7 +31,7 @@
 #include <PLCore/Container/Bitset.h>
 #include <PLGui/Backend/GuiImpl.h>
 #include <PLGui/Gui/Base/GuiMessage.h>
-#include "PLEngine/PLEngine.h"
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
@@ -56,7 +56,7 @@ namespace PLInput {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -79,7 +79,7 @@ class GuiPL : public PLGui::GuiImpl {
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, GuiPL, "PLEngine", PLGui::GuiImpl, "PixelLight ingame GUI implementation")
+	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, GuiPL, "PLFrontendPLGui", PLGui::GuiImpl, "PixelLight ingame GUI implementation")
 		// Attributes
 		pl_attribute(InputSemantic,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
 		// Constructors
@@ -98,13 +98,13 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @param[in] pGui
 		*    Platform independent GUI
 		*/
-		PL_API GuiPL(PLGui::Gui *pGui);
+		PLFRONTENDPLGUI_API GuiPL(PLGui::Gui *pGui);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~GuiPL();
+		PLFRONTENDPLGUI_API virtual ~GuiPL();
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @param[in] vScreenSize
 		*    Screen size (default is 1024x768)
 		*/
-		PL_API void SetScreenSize(const PLMath::Vector2i &vScreenSize);
+		PLFRONTENDPLGUI_API void SetScreenSize(const PLMath::Vector2i &vScreenSize);
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @return
 		*    The used renderer, a null pointer on error
 		*/
-		PL_API PLRenderer::Renderer *GetRenderer() const;
+		PLFRONTENDPLGUI_API PLRenderer::Renderer *GetRenderer() const;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @return
 		*    Virtual input controller (can be a null pointer)
 		*/
-		PL_API PLInput::VirtualController *GetInputController() const;
+		PLFRONTENDPLGUI_API PLInput::VirtualController *GetInputController() const;
 
 		/**
 		*  @brief
@@ -140,13 +140,13 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @param[in] pInputController
 		*    Virtual input controller (can be a null pointer)
 		*/
-		PL_API void SetInputController(PLInput::VirtualController *pInputController);
+		PLFRONTENDPLGUI_API void SetInputController(PLInput::VirtualController *pInputController);
 
 		/**
 		*  @brief
 		*    Renders the ingame GUI
 		*/
-		PL_API void Render();
+		PLFRONTENDPLGUI_API void Render();
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class GuiPL : public PLGui::GuiImpl {
 		*  @note
 		*    - Generates for example keyboard and mouse GUI messages
 		*/
-		PL_API void Update();
+		PLFRONTENDPLGUI_API void Update();
 
 
 	//[-------------------------------------------------------]
@@ -313,7 +313,7 @@ class GuiPL : public PLGui::GuiImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_COMPOSITING_GUI_GUI_H__
+#endif // __PLFRONTENDPLGUI_COMPOSITING_GUI_GUI_H__

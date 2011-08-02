@@ -30,8 +30,8 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
-#include "PLEngine/Compositing/Gui/GuiPL.h"
-#include "PLEngine/Compositing/Gui/ImagePL.h"
+#include "PLFrontendPLGui/Compositing/GuiPL.h"
+#include "PLFrontendPLGui/Compositing/ImagePL.h"
 
 
 //[-------------------------------------------------------]
@@ -40,7 +40,7 @@
 using namespace PLCore;
 using namespace PLGraphics;
 using namespace PLGui;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -187,4 +187,4 @@ bool ImagePL::LoadWithColorKey(const String &sFilename, const Color3 &cColor)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

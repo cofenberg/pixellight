@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: CursorPL.cpp                                   *
+ *  File: ClipBoardPL.cpp                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,26 +23,25 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Compositing/Gui/CursorPL.h"
+#include <PLGui/Gui/Gui.h>
+#include "PLFrontendPLGui/Compositing/ClipBoardPL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-using namespace PLMath;
 using namespace PLGui;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-CursorPL::CursorPL(Cursor &cCursor) : CursorImpl(cCursor)
+ClipBoardPL::ClipBoardPL(ClipBoard &cClipBoard) : ClipBoardImpl(cClipBoard)
 {
 }
 
@@ -50,30 +49,28 @@ CursorPL::CursorPL(Cursor &cCursor) : CursorImpl(cCursor)
 *  @brief
 *    Destructor
 */
-CursorPL::~CursorPL()
+ClipBoardPL::~ClipBoardPL()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Public virtual CursorImpl functions                   ]
+//[ Private virtual ClipBoardImpl functions               ]
 //[-------------------------------------------------------]
-void CursorPL::Load(EMouseCursor nCursor)
+DataObject ClipBoardPL::GetData()
 {
-	// Store data
-	m_sFilename		= "";
-	m_nMouseCursor	= nCursor;
-
-	// [TODO] Implement me
+	// Use the implementation of the system GUI
+	return Gui::GetSystemGui()->GetClipBoard().GetData();
 }
 
-void CursorPL::Load(const String &sFilename, const Vector2i &vHotspot)
+void ClipBoardPL::SetData(const DataObject &cData)
 {
-	// [TODO] Implement me
+	// Use the implementation of the system GUI
+	return Gui::GetSystemGui()->GetClipBoard().SetData(cData);
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
