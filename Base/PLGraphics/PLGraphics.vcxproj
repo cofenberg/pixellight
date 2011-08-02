@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../External/_Windows_x86_32/libpng/include/png/;../../External/_Windows_x86_32/libjpg/include/jpg/;../../External/_Windows_x86_32/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_32/libpng/include/png/;../../External/_Windows_x86_32/libjpg/include/jpg/;../../External/_Windows_x86_32/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -120,7 +120,7 @@ copy build\debug\PLGraphicsD.lib ..\..\Bin\Lib\
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../External/_Windows_x86_64/libpng/include/;../../External/_Windows_x86_64/libjpg/include/;../../External/_Windows_x86_64/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_64/libpng/include/;../../External/_Windows_x86_64/libjpg/include/;../../External/_Windows_x86_64/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -151,7 +151,7 @@ copy build\debug64\PLGraphicsD64.lib ..\..\Bin\Lib\
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../External/_Windows_x86_32/libpng/include/png/;../../External/_Windows_x86_32/libjpg/include/jpg/;../../External/_Windows_x86_32/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_32/libpng/include/png/;../../External/_Windows_x86_32/libjpg/include/jpg/;../../External/_Windows_x86_32/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -197,7 +197,7 @@ copy build\release\PLGraphics.lib ..\..\Bin\Lib\
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../External/_Windows_x86_64/libpng/include/;../../External/_Windows_x86_64/libjpg/include/;../../External/_Windows_x86_64/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_64/libpng/include/;../../External/_Windows_x86_64/libjpg/include/;../../External/_Windows_x86_64/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
