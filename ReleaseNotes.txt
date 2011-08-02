@@ -18,6 +18,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: "PLMath::GraphManager" and "PLMath::GraphPathManager" are no longer singletons
 - Change: Renamed "PLPluginActiveX" into "PLFrontendActiveX"
 - Change: Renamed "PLPluginMozilla" into "PLFrontendMozilla"
+- Change: Renamed "PLXmlText" into "PLGuiXmlText" to make clear that this project is PLGui related and not for instance a generic XML parser library
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
 
 

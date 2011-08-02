@@ -161,10 +161,10 @@ _pixellight_find_lib(PL_PLJABBER PLJabber/PLJabber.h PLJabber Plugins/PLJabber/i
 #message("PLJabber include: ${PL_PLJABBER_INCLUDE_DIR}")
 #message("PLJabber library: ${PL_PLJABBER_LIBRARY}")
 
-# PLXmlText
-_pixellight_find_lib(PL_PLXMLTEXT PLXmlText/PLXmlText.h PLXmlText Plugins/PLXmlText/include)
-#message("PLXmlText include: ${PL_PLXMLTEXT_INCLUDE_DIR}")
-#message("PLXmlText library: ${PL_PLXMLTEXT_LIBRARY}")
+# PLGuiXmlText
+_pixellight_find_lib(PL_PLGUIXMLTEXT PLGuiXmlText/PLGuiXmlText.h PLGuiXmlText Plugins/PLGuiXmlText/include)
+#message("PLGuiXmlText include: ${PL_PLGUIXMLTEXT_INCLUDE_DIR}")
+#message("PLGuiXmlText library: ${PL_PLGUIXMLTEXT_LIBRARY}")
 
 # PLFrontendPLGui
 _pixellight_find_lib(PL_PLFRONTENDPLGUI PLFrontendPLGui/PLFrontendPLGui.h PLFrontendPLGui PLFrontendPLGui/PLFrontendPLGui/include)
