@@ -19,11 +19,6 @@ add_sources(
 	src/Application/BasicSceneApplication.cpp
 	src/Application/ScriptApplication.cpp
 	src/Config/RendererConfigGroup.cpp
-	src/Gui/WindowConnection.cpp
-	src/Gui/RenderWidget.cpp
-	src/Gui/PreviewWidget.cpp
-	src/Gui/RenderWindow.cpp
-	src/Gui/ModTrapMouse.cpp
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
 	src/Picking/MousePicking.cpp

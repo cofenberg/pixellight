@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGui/Gui/WidgetHandler.h>
 #include "PLEngine/Application/RenderApplication.h"
 
 

@@ -20,21 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_PREVIEWWIDGET_H__
-#define __PLENGINE_PREVIEWWIDGET_H__
+#ifndef __PLFRONTENDPLGUI_PREVIEWWIDGET_H__
+#define __PLFRONTENDPLGUI_PREVIEWWIDGET_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Gui/RenderWidget.h"
+#include "PLFrontendPLGui/RenderWidget.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -54,7 +54,7 @@ class PreviewWidget : public RenderWidget {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, PreviewWidget, "PLEngine", PLEngine::RenderWidget, "GUI renderer preview widget")
+	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, PreviewWidget, "PLFrontendPLGui", PLFrontendPLGui::RenderWidget, "GUI renderer preview widget")
 	pl_class_end
 
 
@@ -71,19 +71,19 @@ class PreviewWidget : public RenderWidget {
 		*  @param[in] pParent
 		*    Parent widget, can be a null pointer
 		*/
-		PL_API PreviewWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr);
+		PLFRONTENDPLGUI_API PreviewWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~PreviewWidget();
+		PLFRONTENDPLGUI_API virtual ~PreviewWidget();
 
 		/**
 		*  @brief
 		*    Resets the view
 		*/
-		PL_API void ResetView();
+		PLFRONTENDPLGUI_API void ResetView();
 
 
 	//[-------------------------------------------------------]
@@ -136,7 +136,7 @@ class PreviewWidget : public RenderWidget {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_PREVIEWWIDGET_H__
+#endif // __PLFRONTENDPLGUI_PREVIEWWIDGET_H__

@@ -251,6 +251,8 @@ void Application::OnInit()
 //[-------------------------------------------------------]
 //[ Private virtual PLGui::GuiApplication functions       ]
 //[-------------------------------------------------------]
+// [TODO] Drag'n'Drop
+/*
 void Application::OnCreateMainWindow()
 {
 	// Call base implementation
@@ -264,7 +266,7 @@ void Application::OnCreateMainWindow()
 		if (pWidget->GetContentWidget() != pWidget)
 			pWidget->GetContentWidget()->SignalDrop.Connect(SlotOnDrop);
 	}
-}
+}*/
 
 
 //[-------------------------------------------------------]

@@ -1,3 +1,9 @@
+>> 04.08.2011
+[CO]
+- Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
+
+
+
 >> 03.08.2011
 [CO]
 - SceneApplication: It's been over a year since PLGui2 was replaced through PLGui3 (the current PLGui) and since then, the previous debug dialog has gone and

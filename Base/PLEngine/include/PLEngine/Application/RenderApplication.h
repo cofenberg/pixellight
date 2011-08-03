@@ -36,11 +36,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGui {
-	class Widget;
-};
 namespace PLRenderer {
-	class Surface;
 	class SurfacePainter;
 	class RendererContext;
 }
@@ -64,11 +60,6 @@ namespace PLEngine {
 *
 *  @remarks
 *    An application class for programs that open a single widget to render into.
-*
-*  @note
-*    - "OnCreateMainWindow()": The created main window automatically activates itself and therefore is catching the focus
-*    - "OnCreateMainWindow()": Adds a "PLGui::ModClose" modifier with "ExitApplication=true" to the created main window,
-*      therefore the application will shut down as soon as clicking on 'x' within the window title
 */
 class RenderApplication : public PLCore::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
 
@@ -207,10 +198,9 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::Init() does (yes, really)
+		*    - Everything that ConsoleApplication::Init() does
 		*    - Call OnCreateRendererContext()
 		*    - Set default font according to config
-		*    - Call OnCreateMainWindow()
 		*    - Call OnCreatePainter()
 		*    - Initialize input system
 		*    - Call OnCreateInputController()
@@ -229,14 +219,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    - Everything that GuiApplication::DeInit() does
 		*/
 		PL_API virtual void DeInit() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual PLGui::GuiApplication functions     ]
-	//[-------------------------------------------------------]
-	protected:
-//		PL_API virtual void OnCreateMainWindow() override;
-		PL_API virtual void OnCreateMainWindow(); // [TODO] Cleanup
 
 
 	//[-------------------------------------------------------]
@@ -281,24 +263,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 
 		/**
 		*  @brief
-		*    Called when the display mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		PL_API virtual void OnDisplayMode();
-
-		/**
-		*  @brief
-		*    Called when the fullscreen mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		PL_API virtual void OnFullscreenMode();
-
-		/**
-		*  @brief
 		*    Function that is called once per update loop
 		*
 		*  @return
@@ -320,42 +284,12 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 
 
 	//[-------------------------------------------------------]
-	//[ Protected event handlers                              ]
-	//[-------------------------------------------------------]
-	protected:
-		PLCore::EventHandler<>		EventHandlerDestroy;
-		PLCore::EventHandler<bool>	EventHandlerActivate;
-		PLCore::EventHandler<>		EventHandlerDisplayMode;
-		PLCore::EventHandler<>		EventHandlerFullscreenMode;
-
-
-	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
 		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
 		PLRenderer::RendererContext	*m_pRendererContext;	/**< The renderer context, can be a null pointer */
 		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be a null pointer */
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Called when main window was destroyed
-		*/
-		void OnDestroy();
-
-		/**
-		*  @brief
-		*    Called when main window was (de-)activated
-		*
-		*  @param[in] bActivate
-		*    'true' if window is activated, else 'false'
-		*/
-		void OnActivate(bool bActivate);
 
 
 };

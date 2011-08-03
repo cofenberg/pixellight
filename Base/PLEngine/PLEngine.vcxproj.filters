@@ -10,9 +10,6 @@
     <Filter Include="Picking">
       <UniqueIdentifier>{43ca270e-c824-4baf-8e78-22c5579a0cd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Gui">
-      <UniqueIdentifier>{e8c40946-35cc-4bd1-80a8-d6107af9bbc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Config">
       <UniqueIdentifier>{d7727eb9-0d5c-48be-8c10-747009ceeebe}</UniqueIdentifier>
     </Filter>
@@ -53,21 +50,6 @@
     </ClCompile>
     <ClCompile Include="src\Picking\PickingResult.cpp">
       <Filter>Picking</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gui\ModTrapMouse.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gui\PreviewWidget.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gui\RenderWidget.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gui\RenderWindow.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Gui\WindowConnection.cpp">
-      <Filter>Gui</Filter>
     </ClCompile>
     <ClCompile Include="src\Config\RendererConfigGroup.cpp">
       <Filter>Config</Filter>
@@ -181,21 +163,6 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h">
       <Filter>Picking</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Gui\ModTrapMouse.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Gui\PreviewWidget.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Gui\RenderWidget.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Gui\RenderWindow.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Gui\WindowConnection.h">
-      <Filter>Gui</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h">
       <Filter>Config</Filter>

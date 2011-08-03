@@ -42,7 +42,8 @@
 #undef GetFirstChild
 #undef GetNextSibling
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendOpenGL.h>	// [TODO] Just a test
+#include <PLCore/Frontend/FrontendPixelLight.h>
+//#include <PLCore/Frontend/FrontendPixelLight.h>	// [TODO] For testing
 
 class nsPluginInstance : public PLCore::FrontendImpl, public nsPluginInstanceBase
 {
@@ -87,7 +88,9 @@ private:
 		virtual void Redraw() override;
 
 	private:
-		PLCore::FrontendOpenGL	m_cFrontend;
+		PLCore::FrontendPixelLight	m_cFrontend;
+//		PLCore::FrontendOpenGL		m_cFrontend;	// [TODO] For testing
+			
 };
 
 #endif // __PLUGIN_H__

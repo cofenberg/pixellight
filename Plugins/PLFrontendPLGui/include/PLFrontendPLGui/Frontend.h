@@ -66,7 +66,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Frontend, "PLFrontendPLGui", PLCore::FrontendImpl, "PLGui frontend implementation class")
+	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, Frontend, "PLFrontendPLGui", PLCore::FrontendImpl, "PLGui frontend implementation class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -135,8 +135,49 @@ class Frontend : public PLCore::FrontendImpl {
 		*    The default implementation does the following tasks:
 		*    - If a GUI filename is provided, create a window by loading that file
 		*    - Otherwise, create an empty top-level window
+		*
+		*  @note
+		*    - "OnCreateMainWindow()": The created main window automatically activates itself and therefore is catching the focus
+		*    - "OnCreateMainWindow()": Adds a "PLGui::ModClose" modifier with "ExitApplication=true" to the created main window,
+		*      therefore the application will shut down as soon as clicking on 'x' within the window title
 		*/
 		PLFRONTENDPLGUI_API virtual void OnCreateMainWindow();
+
+		/**
+		*  @brief
+		*    Called when the display mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLFRONTENDPLGUI_API virtual void OnDisplayMode();
+
+		/**
+		*  @brief
+		*    Called when the fullscreen mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLFRONTENDPLGUI_API virtual void OnFullscreenMode();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected event handlers                              ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCore::EventHandler<>		EventHandlerDestroy;
+		PLCore::EventHandler<bool>	EventHandlerActivate;
+		PLCore::EventHandler<>		EventHandlerDisplayMode;
+		PLCore::EventHandler<>		EventHandlerFullscreenMode;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCore::FrontendPixelLight	m_cFrontend;	/**< The frontend instance */
+		PLGui::Widget			   *m_pMainWindow;	/**< Main window of the application (can be a null pointer) */
 
 
 	//[-------------------------------------------------------]
@@ -147,16 +188,16 @@ class Frontend : public PLCore::FrontendImpl {
 		*  @brief
 		*    Called when main window was destroyed
 		*/
-		void OnDestroyMainWindow();
+		void OnDestroy();
 
-
-	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
-	//[-------------------------------------------------------]
-	protected:
-		PLCore::FrontendPixelLight	m_cFrontend;			/**< The frontend instance */
-		PLCore::EventHandler<>		EventHandlerOnDestroy;
-		PLGui::Widget			   *m_pMainWindow;			/**< Main window of the application (can be a null pointer) */
+		/**
+		*  @brief
+		*    Called when main window was (de-)activated
+		*
+		*  @param[in] bActivate
+		*    'true' if window is activated, else 'false'
+		*/
+		void OnActivate(bool bActivate);
 
 
 };

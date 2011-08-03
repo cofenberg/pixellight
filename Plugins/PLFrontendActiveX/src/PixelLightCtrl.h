@@ -4,7 +4,8 @@
 #include <atlctl.h>
 #include "PLFrontendActiveX_i.h"
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendOpenGL.h>	// [TODO] Just a test
+//#include <PLCore/Frontend/FrontendOpenGL.h>	// [TODO] For testing
+#include <PLCore/Frontend/FrontendPixelLight.h>
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
 #error "Single-threaded COM objects are not properly supported on Windows CE platform, such as the Windows Mobile platforms that do not include full DCOM support. Define _CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA to force ATL to support creating single-thread COM object's and allow use of it's single-threaded COM object implementations. The threading model in your rgs file was set to 'Free' as that is the only threading model supported in non DCOM Windows CE platforms."
@@ -108,8 +109,9 @@ END_MSG_MAP()
 		virtual void Redraw() override;
 
 	private:
-		HWND					m_hFrontendWnd;	/**< Window handle of the plugin container */
-		PLCore::FrontendOpenGL	m_cFrontend;	// [TODO] Just a test
+		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */
+		PLCore::FrontendPixelLight	m_cFrontend;
+//		PLCore::FrontendOpenGL	m_cFrontend;	// [TODO] For testing
 
 // IPixelLightCtrl
 public:

@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_RENDERWINDOW_H__
-#define __PLENGINE_RENDERWINDOW_H__
+#ifndef __PLFRONTENDPLGUI_RENDERWINDOW_H__
+#define __PLFRONTENDPLGUI_RENDERWINDOW_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGui/Widgets/Windows/Window.h>
-#include "PLEngine/Gui/WindowConnection.h"
+#include "PLFrontendPLGui/WindowConnection.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -59,7 +59,7 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, RenderWindow, "PLEngine", PLGui::Window, "GUI window that implements a renderer surface")
+	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, RenderWindow, "PLFrontendPLGui", PLGui::Window, "GUI window that implements a renderer surface")
 	pl_class_end
 
 
@@ -85,13 +85,13 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 		*    - If 'pDisplayMode' is not given, default settings are used
 		*    - If no fullscreen mode, just the size from 'pDisplayMode' are used.
 		*/
-		PL_API RenderWindow(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr, const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
+		PLFRONTENDPLGUI_API RenderWindow(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr, const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~RenderWindow();
+		PLFRONTENDPLGUI_API virtual ~RenderWindow();
 
 
 
@@ -99,7 +99,7 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 	//[ Protected virtual WindowConnection functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnDisplayMode() override;
+		PLFRONTENDPLGUI_API virtual void OnDisplayMode() override;
 
 
 	//[-------------------------------------------------------]
@@ -143,7 +143,7 @@ class RenderWindow : public PLGui::Window, public WindowConnection {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_RENDERWINDOW_H__
+#endif // __PLFRONTENDPLGUI_RENDERWINDOW_H__

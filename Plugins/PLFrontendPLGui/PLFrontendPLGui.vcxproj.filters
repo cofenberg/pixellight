@@ -40,6 +40,21 @@
     <ClCompile Include="src\Frontend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PreviewWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WindowConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModTrapMouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h">
@@ -79,6 +94,21 @@
       <Filter>Compositing</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendPLGui\Frontend.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\RenderWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\WindowConnection.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\ModTrapMouse.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\PreviewWidget.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\RenderWidget.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

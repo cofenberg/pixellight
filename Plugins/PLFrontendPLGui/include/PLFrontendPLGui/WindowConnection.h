@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_WINDOWCONNECTION_H__
-#define __PLENGINE_WINDOWCONNECTION_H__
+#ifndef __PLFRONTENDPLGUI_WINDOWCONNECTION_H__
+#define __PLFRONTENDPLGUI_WINDOWCONNECTION_H__
 #pragma once
 
 
@@ -31,13 +31,13 @@
 #include <PLCore/Base/Event/Event.h>
 #include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
-#include "PLEngine/PLEngine.h"
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -80,13 +80,13 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @note
 		*    - Don't forget to call Initialize() to initialize the connection
 		*/
-		PL_API WindowConnection(PLRenderer::Renderer &cRenderer, PLGui::Widget &cWidget, PLGui::Widget *pEventWidget = nullptr);
+		PLFRONTENDPLGUI_API WindowConnection(PLRenderer::Renderer &cRenderer, PLGui::Widget &cWidget, PLGui::Widget *pEventWidget = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~WindowConnection();
+		PLFRONTENDPLGUI_API virtual ~WindowConnection();
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*    - If 'pDisplayMode' is not given, default settings are used
 		*    - If no fullscreen mode, just the size from 'pDisplayMode' are used
 		*/
-		PL_API void Initialize(const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
+		PLFRONTENDPLGUI_API void Initialize(const PLRenderer::DisplayMode *pDisplayMode = nullptr, bool bFullscreen = false);
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @return
 		*    Information about the used display mode
 		*/
-		PL_API const PLRenderer::DisplayMode &GetDisplayMode() const;
+		PLFRONTENDPLGUI_API const PLRenderer::DisplayMode &GetDisplayMode() const;
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @param[in] sDisplayMode
 		*    New display mode
 		*/
-		PL_API void SetDisplayMode(const PLRenderer::DisplayMode &sDisplayMode);
+		PLFRONTENDPLGUI_API void SetDisplayMode(const PLRenderer::DisplayMode &sDisplayMode);
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @return
 		*    'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'
 		*/
-		PL_API bool GetToggleFullscreenMode() const;
+		PLFRONTENDPLGUI_API bool GetToggleFullscreenMode() const;
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*    - AltGr-Return is registered at the given GUI widget as hotkey
 		*    - By default, it's not allowed to switch widgets into fullscreen mode using Alt-Return or AltGr-Return
 		*/
-		PL_API void SetToggleFullscreenMode(bool bToggleFullscreenMode);
+		PLFRONTENDPLGUI_API void SetToggleFullscreenMode(bool bToggleFullscreenMode);
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @note
 		*    - Widgets only
 		*/
-		PL_API bool GetFullscreenAltTab() const;
+		PLFRONTENDPLGUI_API bool GetFullscreenAltTab() const;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @see
 		*    - GetFullscreenAltTab()
 		*/
-		PL_API void SetFullscreenAltTab(bool bAllowed);
+		PLFRONTENDPLGUI_API void SetFullscreenAltTab(bool bAllowed);
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @return
 		*    'true' if the window is in fullscreen mode, else 'false'
 		*/
-		PL_API bool IsFullscreen() const;
+		PLFRONTENDPLGUI_API bool IsFullscreen() const;
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @param[in] bFullscreen
 		*    'true' if the window should be in fullscreen mode, else 'false'
 		*/
-		PL_API void SetFullscreen(bool bFullscreen);
+		PLFRONTENDPLGUI_API void SetFullscreen(bool bFullscreen);
 
 
 	//[-------------------------------------------------------]
@@ -201,7 +201,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @note
 		*    - The default implementation emits the EventDisplayMode event
 		*/
-		PL_API virtual void OnDisplayMode();
+		PLFRONTENDPLGUI_API virtual void OnDisplayMode();
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 		*  @note
 		*    - The default implementation emits the EventFullscreenMode event
 		*/
-		PL_API virtual void OnFullscreenMode();
+		PLFRONTENDPLGUI_API virtual void OnFullscreenMode();
 
 
 	//[-------------------------------------------------------]
@@ -307,7 +307,7 @@ class WindowConnection : public PLRenderer::SurfaceWindowHandler {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_WINDOWCONNECTION_H__
+#endif // __PLFRONTENDPLGUI_WINDOWCONNECTION_H__

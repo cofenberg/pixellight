@@ -1,3 +1,10 @@
+>> 04.08.2011
+[CO]
+PLFrontendPLGui:
+- Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
+
+
+
 >> 03.08.2011
 [CO]
 PLFrontend:

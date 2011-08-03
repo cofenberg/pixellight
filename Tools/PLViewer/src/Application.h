@@ -133,13 +133,6 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGui::GuiApplication functions       ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnCreateMainWindow();
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:

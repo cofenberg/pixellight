@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RenderWidget.cpp                               *
+ *  File: RenderWindow.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,22 +24,24 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGui/Gui/Base/Keys.h>
-#include "PLEngine/Gui/RenderWidget.h"
+#include "PLFrontendPLGui/RenderWindow.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
+using namespace PLGui;
 using namespace PLRenderer;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(RenderWidget)
+pl_implement_class(RenderWindow)
 
 
 //[-------------------------------------------------------]
@@ -49,21 +51,31 @@ pl_implement_class(RenderWidget)
 *  @brief
 *    Constructor
 */
-RenderWidget::RenderWidget(Renderer &cRenderer, PLGui::Widget *pParent, const DisplayMode *pDisplayMode) : PLGui::Widget(pParent), WindowConnection(cRenderer, *this),
+RenderWindow::RenderWindow(Renderer &cRenderer, Widget *pParent, const DisplayMode *pDisplayMode, bool bFullscreen) : PLGui::Window(pParent), WindowConnection(cRenderer, *this, this),
 	m_bBackupAvailable(false)
 {
 	// There's no need to have a widget background because we're render into it
-	SetBackgroundColor(Color4::Transparent);
+	GetContentWidget()->SetBackgroundColor(Color4::Transparent);
+
+	// By default, it's allowed to switch windows into fullscreen mode
+	SetToggleFullscreenMode(true);
+
+	// By default, it's allowed to use Alt-Tab
+	SetFullscreenAltTab(true);
 
 	// Initialize the window connection
-	Initialize(pDisplayMode, false);
+	Initialize(pDisplayMode, bFullscreen);
+
+	// Set widget into fullscreen state?
+	if (bFullscreen)
+		SetWindowState(StateFullscreen);
 }
 
 /**
 *  @brief
 *    Destructor
 */
-RenderWidget::~RenderWidget()
+RenderWindow::~RenderWindow()
 {
 }
 
@@ -71,57 +83,13 @@ RenderWidget::~RenderWidget()
 //[-------------------------------------------------------]
 //[ Protected virtual WindowConnection functions          ]
 //[-------------------------------------------------------]
-void RenderWidget::OnDisplayMode()
+void RenderWindow::OnDisplayMode()
 {
-	// Set the size of the widget depending on the current set display mode
+	// Set the size of the window depending on the current set display mode
 	SetSize(GetDisplayMode().vSize);
 
 	// Call base implementation
 	WindowConnection::OnDisplayMode();
-}
-
-void RenderWidget::OnFullscreenMode()
-{
-	// Widget mode backup stuff
-	if (IsFullscreen() && !m_bBackupAvailable) {
-		m_vBackupSize = GetSize();
-		if (m_vBackupSize.x || m_vBackupSize.y) {
-			m_bBackupAvailable = true;
-			m_vBackupPos	   = GetPos();
-		}
-	} else {
-		if (!IsFullscreen() && m_bBackupAvailable) {
-			SetPos (m_vBackupPos);
-			SetSize(m_vBackupSize);
-			m_bBackupAvailable = false;
-		}
-	}
-
-	// Is the frame currently in fullscreen mode or not?
-	if (IsFullscreen()) {
-		// Place the widget at the left top side of the screen
-		SetPos(Vector2i::Zero);
-
-		// Set the size of the widget depending on the current set display mode
-		SetSize(GetDisplayMode().vSize);
-	}
-
-	// Call base implementation
-	WindowConnection::OnFullscreenMode();
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Copy constructor
-*/
-RenderWidget::RenderWidget(const RenderWidget &cSource) : PLGui::Widget(cSource.GetParent()), WindowConnection(*cSource.GetRenderer(), *this),
-	m_bBackupAvailable(false)
-{
-	// No implementation because the copy constructor is never used
 }
 
 
@@ -130,9 +98,19 @@ RenderWidget::RenderWidget(const RenderWidget &cSource) : PLGui::Widget(cSource.
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Copy constructor
+*/
+RenderWindow::RenderWindow(const RenderWindow &cSource) : PLGui::Window(cSource.GetParent()), WindowConnection(*cSource.GetRenderer(), *GetContentWidget()),
+	m_bBackupAvailable(false)
+{
+	// No implementation because the copy constructor is never used
+}
+
+/**
+*  @brief
 *    Copy operator
 */
-RenderWidget &RenderWidget::operator =(const RenderWidget &cSource)
+RenderWindow &RenderWindow::operator =(const RenderWindow &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
@@ -142,4 +120,4 @@ RenderWidget &RenderWidget::operator =(const RenderWidget &cSource)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

@@ -26,7 +26,7 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLRenderer/Renderer/Surface.h>
 #include <PLRenderer/SPPreview.h>
-#include "PLEngine/Gui/PreviewWidget.h"
+#include "PLFrontendPLGui/PreviewWidget.h"
 
 
 //[-------------------------------------------------------]
@@ -36,7 +36,7 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
 using namespace PLRenderer;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -180,4 +180,4 @@ void PreviewWidget::OnMouseButtonUp(uint32 nButton, const Vector2i &vPos)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

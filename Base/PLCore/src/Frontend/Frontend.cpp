@@ -67,6 +67,20 @@ int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass,
 			// Destroy the frontend
 			delete pObject;
 		}
+	} else {
+		// [TODO] Fallback as test
+		pClass = ClassManager::GetInstance()->GetClass("PLEngine::RenderApplication");
+		if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
+			// Create the RTTI class instance
+			Object *pObject = pClass->Create();
+			if (pObject) {
+				// Let the frontend run
+				static_cast<FrontendImpl*>(pObject)->Run(sApplicationClass, sExecutableFilename, lstArguments);
+
+				// Destroy the frontend
+				delete pObject;
+			}
+		}
 	}
 
 	// Done

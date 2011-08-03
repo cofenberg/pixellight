@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RenderWidget.h                                 *
+ *  File: ModTrapMouse.h                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_RENDERWIDGET_H__
-#define __PLENGINE_RENDERWIDGET_H__
+#ifndef __PLFRONTENDPLGUI_MODTRAPMOUSE_H__
+#define __PLFRONTENDPLGUI_MODTRAPMOUSE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGui/Widgets/Widget.h>
-#include "PLEngine/Gui/WindowConnection.h"
+#include <PLGui/Modifiers/Modifier.h>
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -43,19 +43,17 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    GUI widget with implements a renderer surface
-*
-*  @remarks
-*    Use 'RenderWidget' to create a widget which automatically
-*    implements a renderer surface handler and creates the window surface.
+*    Modifier which traps the mouse within the widget as soon as it gets active
 */
-class RenderWidget : public PLGui::Widget, public WindowConnection {
+class ModTrapMouse : public PLGui::Modifier {
 
 
 	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
+	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, RenderWidget, "PLEngine", PLGui::Widget, "GUI widget with implements a renderer surface")
+	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, ModTrapMouse, "PLFrontendPLGui", PLGui::Modifier, "Modifier which traps the mouse within the widget as soon as it gets active")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -66,69 +64,29 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] cRenderer
-		*    Owner renderer
-		*  @param[in] pParent
-		*    Parent widget, can be a null pointer
-		*  @param[in] pDisplayMode
-		*    Display mode information, can be a null pointer
 		*/
-		PL_API RenderWidget(PLRenderer::Renderer &cRenderer, PLGui::Widget *pParent = nullptr, const PLRenderer::DisplayMode *pDisplayMode = nullptr);
+		PLFRONTENDPLGUI_API ModTrapMouse();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~RenderWidget();
+		PLFRONTENDPLGUI_API virtual ~ModTrapMouse();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual WindowConnection functions          ]
-	//[-------------------------------------------------------]
-	protected:
-		PL_API virtual void OnDisplayMode() override;
-		PL_API virtual void OnFullscreenMode() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Protected virtual PLGui::Modifier functions           ]
 	//[-------------------------------------------------------]
 	protected:
-		/**
-		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*/
-		PL_API RenderWidget(const RenderWidget &cSource);
+		PLFRONTENDPLGUI_API virtual void OnAttach(PLGui::Widget &cWidget) override;
+		PLFRONTENDPLGUI_API virtual void OnDetach(PLGui::Widget &cWidget) override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected virtual PLGui::WidgetFunctions functions    ]
 	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		RenderWidget &operator =(const RenderWidget &cSource);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		bool			 m_bBackupAvailable;
-		PLMath::Vector2i m_vBackupPos;
-		PLMath::Vector2i m_vBackupSize;
+	protected:
+		PLFRONTENDPLGUI_API virtual void OnActivate(bool bActivate) override;
 
 
 };
@@ -137,7 +95,7 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
 
 
-#endif // __PLENGINE_RENDERWIDGET_H__
+#endif // __PLFRONTENDPLGUI_MODTRAPMOUSE_H__

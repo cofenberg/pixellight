@@ -27,7 +27,6 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Frontend/Frontend.h>
-#include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLInput/Input/Virtual/VirtualStandardController.h>
@@ -36,8 +35,6 @@
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
 #include <PLRenderer/Texture/TextureManager.h>
-#include "PLEngine/Gui/RenderWidget.h"
-#include "PLEngine/Gui/RenderWindow.h"
 #include "PLEngine/Application/RenderApplication.h"
 
 
@@ -45,7 +42,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
 using namespace PLInput;
 using namespace PLRenderer;
 namespace PLEngine {
@@ -65,10 +61,6 @@ pl_implement_class(RenderApplication)
 *    Constructor
 */
 RenderApplication::RenderApplication(const String &sSurfacePainter) : FrontendApplication(),
-	EventHandlerDestroy       (&RenderApplication::OnDestroy,        this),
-	EventHandlerActivate	  (&RenderApplication::OnActivate,       this),
-	EventHandlerDisplayMode   (&RenderApplication::OnDisplayMode,    this),
-	EventHandlerFullscreenMode(&RenderApplication::OnFullscreenMode, this),
 	m_sSurfacePainter(sSurfacePainter),
 	m_pRendererContext(nullptr),
 	m_pInputController(nullptr)
@@ -287,40 +279,6 @@ void RenderApplication::DeInit()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLGui::GuiApplication functions     ]
-//[-------------------------------------------------------]
-void RenderApplication::OnCreateMainWindow()
-{
-	// [TODO]
-	/*
-	// Fill display mode information
-	DisplayMode sDisplayMode;
-	sDisplayMode.vSize.x    = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayWidth");
-	sDisplayMode.vSize.y    = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayHeight");
-	sDisplayMode.nColorBits = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayColorBits");
-	sDisplayMode.nFrequency = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayFrequency");
-
-	// Create renderer window
-	RenderWindow *pWindow = new RenderWindow(m_pRendererContext->GetRenderer(), nullptr, &sDisplayMode,
-											 GetConfig().GetVar("PLEngine::RendererConfig", "Fullscreen").GetBool());
-	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=true");	// By default, when clicking on 'x', close the application
-	pWindow->SetTitle(GetTitle());
-	pWindow->SetVisible(true);
-	pWindow->Activate();
-
-	// Connect event handler
-	pWindow->SignalActivate     .Connect(EventHandlerActivate);
-	pWindow->SignalDestroy      .Connect(EventHandlerDestroy);
-	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
-	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
-
-	// Set main window
-	SetMainWindow(pWindow);
-	*/
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendApplication functions ]
 //[-------------------------------------------------------]
 void RenderApplication::OnDraw()
@@ -414,24 +372,6 @@ void RenderApplication::OnCreateInputController()
 
 /**
 *  @brief
-*    Called when the display mode was changed
-*/
-void RenderApplication::OnDisplayMode()
-{
-	// Do nothing by default
-}
-
-/**
-*  @brief
-*    Called when the fullscreen mode was changed
-*/
-void RenderApplication::OnFullscreenMode()
-{
-	// Do nothing by default
-}
-
-/**
-*  @brief
 *    Function that is called once per update loop
 */
 bool RenderApplication::OnUpdate()
@@ -445,45 +385,6 @@ bool RenderApplication::OnUpdate()
 
 	// Done
 	return true;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when main window was destroyed
-*/
-void RenderApplication::OnDestroy()
-{
-	// [TODO]
-	/*
-	// Get the main widget
-	const Widget *pWidget = GetMainWindow();
-	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-		// Write fullscreen state back to the configuration
-		GetConfig().SetVar("PLEngine::RendererConfig", "Fullscreen", String::Format("%d", static_cast<const RenderWindow*>(pWidget)->IsFullscreen()));
-
-		// Write down display mode information
-		const DisplayMode &sDisplayMode = static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayWidth",     String::Format("%d", sDisplayMode.vSize.x));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayHeight",    String::Format("%d", sDisplayMode.vSize.y));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayColorBits", String::Format("%d", sDisplayMode.nColorBits));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayFrequency", String::Format("%d", sDisplayMode.nFrequency));
-	}
-	*/
-}
-
-/**
-*  @brief
-*    Called when main window was (de-)activated
-*/
-void RenderApplication::OnActivate(bool bActivate)
-{
-	// Activate input controller when window is active, otherwise stop input
-	if (m_pInputController)
-		m_pInputController->SetActive(bActivate);
 }
 
 

@@ -45,6 +45,7 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
+using namespace PLRenderer;
 namespace PLFrontendPLGui {
 
 
@@ -62,8 +63,11 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
+	EventHandlerDestroy       (&Frontend::OnDestroy,        this),
+	EventHandlerActivate	  (&Frontend::OnActivate,       this),
+	EventHandlerDisplayMode   (&Frontend::OnDisplayMode,    this),
+	EventHandlerFullscreenMode(&Frontend::OnFullscreenMode, this),
 	m_cFrontend(*this),
-	EventHandlerOnDestroy(&Frontend::OnDestroyMainWindow, this),
 	m_pMainWindow(nullptr)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
@@ -101,14 +105,14 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 {
 	// Disconnect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerOnDestroy);
+		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerDestroy);
 
 	// Set pointer to main window
 	m_pMainWindow = pMainWindow;
 
 	// Connect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Connect(EventHandlerOnDestroy);
+		m_pMainWindow->SignalDestroy.Connect(EventHandlerDestroy);
 }
 
 
@@ -177,9 +181,34 @@ void Frontend::OnCreateMainWindow()
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=1");
 	pWindow->SetSize(Vector2i(640, 480));
 	pWindow->SetVisible(true);
+	pWindow->Activate();
+
+	// Connect event handler
+	// [TODO]
+//	pWindow->SignalActivate     .Connect(EventHandlerActivate);
+//	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
+//	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
 
 	// Set main window
 	SetMainWindow(pWindow);
+}
+
+/**
+*  @brief
+*    Called when the display mode was changed
+*/
+void Frontend::OnDisplayMode()
+{
+	// Do nothing by default
+}
+
+/**
+*  @brief
+*    Called when the fullscreen mode was changed
+*/
+void Frontend::OnFullscreenMode()
+{
+	// Do nothing by default
 }
 
 
@@ -188,12 +217,40 @@ void Frontend::OnCreateMainWindow()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when a window was destroyed
+*    Called when main window was destroyed
 */
-void Frontend::OnDestroyMainWindow()
+void Frontend::OnDestroy()
 {
+	// [TODO]
+	/*
+	// Get the main widget
+	const Widget *pWidget = GetMainWindow();
+	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
+		// Write fullscreen state back to the configuration
+		GetConfig().SetVar("PLEngine::RendererConfig", "Fullscreen", String::Format("%d", static_cast<const RenderWindow*>(pWidget)->IsFullscreen()));
+
+		// Write down display mode information
+		const DisplayMode &sDisplayMode = static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
+		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayWidth",     String::Format("%d", sDisplayMode.vSize.x));
+		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayHeight",    String::Format("%d", sDisplayMode.vSize.y));
+		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayColorBits", String::Format("%d", sDisplayMode.nColorBits));
+		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayFrequency", String::Format("%d", sDisplayMode.nFrequency));
+	}
+	*/
+
 	// We lost our main window :/
 	m_pMainWindow = nullptr;
+}
+
+/**
+*  @brief
+*    Called when main window was (de-)activated
+*/
+void Frontend::OnActivate(bool bActivate)
+{
+	// Activate input controller when window is active, otherwise stop input
+//	if (m_pInputController)
+//		m_pInputController->SetActive(bActivate);
 }
 
 

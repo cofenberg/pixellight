@@ -24,14 +24,14 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGui/Widgets/Widget.h>
-#include "PLEngine/Gui/ModTrapMouse.h"
+#include "PLFrontendPLGui/ModTrapMouse.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLGui;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -85,4 +85,4 @@ void ModTrapMouse::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui

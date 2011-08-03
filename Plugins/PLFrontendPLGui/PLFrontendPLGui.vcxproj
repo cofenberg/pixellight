@@ -264,7 +264,12 @@ copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Compositing\SNGui.cpp" />
     <ClCompile Include="src\Compositing\WidgetPL.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
+    <ClCompile Include="src\ModTrapMouse.cpp" />
     <ClCompile Include="src\PLFrontendPLGui.cpp" />
+    <ClCompile Include="src\PreviewWidget.cpp" />
+    <ClCompile Include="src\RenderWidget.cpp" />
+    <ClCompile Include="src\RenderWindow.cpp" />
+    <ClCompile Include="src\WindowConnection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Base\PLCore\include\PLCore\Application\ConsoleApplication.h" />
@@ -277,9 +282,14 @@ copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLFrontendPLGui\Compositing\SNGui.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\WidgetPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Frontend.h" />
+    <ClInclude Include="include\PLFrontendPLGui\ModTrapMouse.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h" />
+    <ClInclude Include="include\PLFrontendPLGui\PreviewWidget.h" />
+    <ClInclude Include="include\PLFrontendPLGui\RenderWidget.h" />
+    <ClInclude Include="include\PLFrontendPLGui\RenderWindow.h" />
+    <ClInclude Include="include\PLFrontendPLGui\WindowConnection.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

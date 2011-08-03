@@ -28,7 +28,7 @@
 #include <PLGui/Widgets/Widget.h>
 #include <PLRenderer/Renderer/SurfaceWindow.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
-#include "PLEngine/Gui/WindowConnection.h"
+#include "PLFrontendPLGui/WindowConnection.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +37,7 @@
 using namespace PLCore;
 using namespace PLGui;
 using namespace PLRenderer;
-namespace PLEngine {
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -389,4 +389,4 @@ void WindowConnection::OnKeyDown(uint32 nKey, uint32 nModifiers)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLFrontendPLGui
