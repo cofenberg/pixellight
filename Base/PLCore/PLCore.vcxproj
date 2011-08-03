@@ -273,6 +273,17 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\File\SearchFilterWildcard.cpp" />
     <ClCompile Include="src\File\Url.cpp" />
     <ClCompile Include="src\File\ZipHandle.cpp" />
+    <ClCompile Include="src\Frontend\AbstractFrontendLifecycle.cpp" />
+    <ClCompile Include="src\Frontend\Frontend.cpp" />
+    <ClCompile Include="src\Frontend\FrontendApplication.cpp" />
+    <ClCompile Include="src\Frontend\FrontendImpl.cpp" />
+    <ClCompile Include="src\Frontend\FrontendOpenGL.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendPixelLight.cpp" />
     <ClCompile Include="src\Log\Log.cpp" />
     <ClCompile Include="src\Log\LogFormater.cpp" />
     <ClCompile Include="src\Log\LogFormaterHtml.cpp" />
@@ -510,6 +521,13 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\File\StdIo.h" />
     <ClInclude Include="include\PLCore\File\Url.h" />
     <ClInclude Include="include\PLCore\File\ZipHandle.h" />
+    <ClInclude Include="include\PLCore\Frontend\AbstractFrontendLifecycle.h" />
+    <ClInclude Include="include\PLCore\Frontend\Frontend.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendApplication.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendMain.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendOpenGL.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendPixelLight.h" />
     <ClInclude Include="include\PLCore\Log\Log.h" />
     <ClInclude Include="include\PLCore\Log\LogFormater.h" />
     <ClInclude Include="include\PLCore\Log\LogFormaterHtml.h" />

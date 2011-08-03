@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendApplication.cpp                        *
+ *  File: FrontendImpl.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,20 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/FrontendApplication.h"
+#include "PLCore/Frontend/Frontend.h"
+#include "PLCore/Frontend/FrontendImpl.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(FrontendApplication)
+pl_implement_class(FrontendImpl)
 
 
 //[-------------------------------------------------------]
@@ -46,49 +46,122 @@ pl_implement_class(FrontendApplication)
 *  @brief
 *    Constructor
 */
-FrontendApplication::FrontendApplication(const String &sFrontend) : ConsoleApplication(),
-	m_pFrontend(nullptr)
+FrontendImpl::FrontendImpl() :
+	m_pFrontend(nullptr),
+	m_nWidth(0),
+	m_nHeight(0)
 {
-	// Set application title
-	SetTitle("PixelLight frontend application");
-
-	// Set running state
-	m_bRunning = true;
 }
 
 /**
 *  @brief
 *    Destructor
 */
-FrontendApplication::~FrontendApplication()
+FrontendImpl::~FrontendImpl()
 {
 }
 
 /**
 *  @brief
-*    Get frontend
+*    Get window width
 */
-Frontend *FrontendApplication::GetFrontend() const
+uint32 FrontendImpl::GetWidth() const
 {
-	// Return pointer to frontend
-	return m_pFrontend;
+	// Return current width
+	return m_nWidth;
+}
+
+/**
+*  @brief
+*    Get window height
+*/
+uint32 FrontendImpl::GetHeight() const
+{
+	// Return current height
+	return m_nHeight;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual FrontendApplication functions       ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called to let the frontend application draw into it's window
+*    Called to let the frontend draw into it's window
 */
-void FrontendApplication::OnDraw()
+void FrontendImpl::OnDraw()
 {
-	// No default implementation
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDraw();
+}
+
+/**
+*  @brief
+*    Called when the window size has been changed
+*/
+void FrontendImpl::OnSize()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnSize();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[-------------------------------------------------------]
+void FrontendImpl::OnCreate()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnCreate();
+}
+
+void FrontendImpl::OnRestart()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnRestart();
+}
+
+void FrontendImpl::OnStart()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnStart();
+}
+
+void FrontendImpl::OnResume()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnResume();
+}
+
+void FrontendImpl::OnPause()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnPause();
+}
+
+void FrontendImpl::OnStop()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnStop();
+}
+
+void FrontendImpl::OnDestroy()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore

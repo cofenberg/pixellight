@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../Base/PLFrontend/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -101,7 +101,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLFrontendD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
@@ -122,7 +122,7 @@ copy build\debug\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\np
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../Base/PLFrontend/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -133,7 +133,7 @@ copy build\debug\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\np
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLFrontendD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)D64.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
@@ -155,7 +155,7 @@ copy build\debug64\PLFrontendMozillaD64.dll "C:\Programme\Mozilla Firefox\plugin
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../Base/PLFrontend/include/;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -174,7 +174,7 @@ copy build\debug64\PLFrontendMozillaD64.dll "C:\Programme\Mozilla Firefox\plugin
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLFrontend.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -198,7 +198,7 @@ copy build\release\PLFrontendMozilla.dll "C:\Programme\Mozilla Firefox\plugins\n
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../Base/PLFrontend/include/;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -208,7 +208,7 @@ copy build\release\PLFrontendMozilla.dll "C:\Programme\Mozilla Firefox\plugins\n
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLFrontend64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)64.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>

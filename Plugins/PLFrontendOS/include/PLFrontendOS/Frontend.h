@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLFrontend/FrontendImpl.h>
-#include <PLFrontend/FrontendPixelLight.h>
+#include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendPixelLight.h>
 
 
 //[-------------------------------------------------------]
@@ -51,7 +51,7 @@ class OSWindow;
 *  @brief
 *    OS frontend implementation class
 */
-class Frontend : public PLFrontend::FrontendImpl {
+class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
@@ -64,7 +64,7 @@ class Frontend : public PLFrontend::FrontendImpl {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Frontend, "PLFrontendOS", PLFrontend::FrontendImpl, "OS frontend implementation class")
+	pl_class(pl_rtti_export, Frontend, "PLFrontendOS", PLCore::FrontendImpl, "OS frontend implementation class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -88,14 +88,14 @@ class Frontend : public PLFrontend::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[ Public virtual PLCore::FrontendImpl functions         ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLFrontend::FrontendImpl functions    ]
+	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
 		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
@@ -106,8 +106,8 @@ class Frontend : public PLFrontend::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OSWindow					   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
-		PLFrontend::FrontendPixelLight  m_cFrontend;	/**< The frontend instance */
+		OSWindow				   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
+		PLCore::FrontendPixelLight  m_cFrontend;	/**< The frontend instance */
 
 
 };

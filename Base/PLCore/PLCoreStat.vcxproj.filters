@@ -68,6 +68,9 @@
     <Filter Include="Xml">
       <UniqueIdentifier>{2a16976e-92e0-48f4-81f2-504cfd831b85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Frontend">
+      <UniqueIdentifier>{68d0737d-3d36-4ad6-88be-8e1ab1d7c54c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core.cpp">
@@ -546,6 +549,24 @@
     </ClCompile>
     <ClCompile Include="src\PCoreLinux.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendImpl.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendOpenGL.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendPixelLight.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\AbstractFrontendLifecycle.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\Frontend.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendApplication.cpp">
+      <Filter>Frontend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1262,6 +1283,27 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\PLCoreWindowsIncludes.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendMain.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendOpenGL.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendPixelLight.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\AbstractFrontendLifecycle.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\Frontend.h">
+      <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendApplication.h">
+      <Filter>Frontend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

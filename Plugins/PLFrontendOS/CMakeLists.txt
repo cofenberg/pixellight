@@ -33,7 +33,6 @@ endif()
 add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 )
 
 ##################################################
@@ -48,7 +47,6 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLCore
-	PLFrontend
 )
 
 ##################################################
@@ -120,7 +118,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/P
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLFrontend)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

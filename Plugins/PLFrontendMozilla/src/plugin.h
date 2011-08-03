@@ -41,10 +41,10 @@
 #include <pluginbase.h>
 #undef GetFirstChild
 #undef GetNextSibling
-#include <PLFrontend/FrontendImpl.h>
-#include <PLFrontend/FrontendOpenGL.h>	// [TODO] Just a test
+#include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendOpenGL.h>	// [TODO] Just a test
 
-class nsPluginInstance : public PLFrontend::FrontendImpl, public nsPluginInstanceBase
+class nsPluginInstance : public PLCore::FrontendImpl, public nsPluginInstanceBase
 {
 public:
   nsPluginInstance(NPP aInstance);
@@ -73,21 +73,21 @@ private:
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[ Public virtual PLCore::FrontendImpl functions         ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::handle GetNativeWindowHandle() const;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLFrontend::FrontendImpl functions    ]
+	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
 		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual void Redraw() override;
 
 	private:
-		PLFrontend::FrontendOpenGL		m_cFrontend;
+		PLCore::FrontendOpenGL	m_cFrontend;
 };
 
 #endif // __PLUGIN_H__

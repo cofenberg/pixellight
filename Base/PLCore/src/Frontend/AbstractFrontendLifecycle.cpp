@@ -1,6 +1,5 @@
 /*********************************************************\
- *  File: PLFrontendLinux.h                              *
- *      Linux definitions for PLFrontend
+ *  File: AbstractFrontendLifecycle.cpp                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,29 +20,39 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_LINUX_H__
-#define __PLFRONTEND_LINUX_H__
-#pragma once
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/Frontend/AbstractFrontendLifecycle.h"
 
 
 //[-------------------------------------------------------]
-//[ Import/Export                                         ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
-#ifdef PLFRONTEND_EXPORTS
-	#ifdef HAVE_VISIBILITY_ATTR
-		// To export classes, methods and variables
-		#define PLFRONTEND_API __attribute__ ((visibility("default")))
-	#else
-		// To export classes, methods and variables
-		#define PLFRONTEND_API
-	#endif
-#else
-	// To import classes, methods and variables
-	#define PLFRONTEND_API
-#endif
-
-// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
-#define PLFRONTEND_RTTI_EXPORT 1
+namespace PLCore {
 
 
-#endif // __PLFRONTEND_LINUX_H__
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Default constructor
+*/
+AbstractFrontendLifecycle::AbstractFrontendLifecycle()
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+AbstractFrontendLifecycle::~AbstractFrontendLifecycle()
+{
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore

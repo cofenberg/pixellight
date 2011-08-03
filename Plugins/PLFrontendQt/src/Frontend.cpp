@@ -88,7 +88,7 @@ void Frontend::SetMainWindow(QWidget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[ Public virtual PLCore::FrontendImpl functions         ]
 //[-------------------------------------------------------]
 handle Frontend::GetNativeWindowHandle() const
 {
@@ -102,7 +102,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLFrontend::FrontendImpl functions  ]
+//[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {

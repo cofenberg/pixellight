@@ -35,8 +35,8 @@
 #include "PLCore/Tools/Timing.h"
 #include "PLCore/Tools/Stopwatch.h"
 #include "PLCore/Tools/LoadableManager.h"
-#include <PLCore/Tools/Localization.h>
-#include <PLCore/Tools/LocalizationGroup.h>
+#include "PLCore/Tools/Localization.h"
+#include "PLCore/Tools/LocalizationGroup.h"
 #include "PLCore/Application/ConsoleApplication.h"
 
 

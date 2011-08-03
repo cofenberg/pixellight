@@ -1,3 +1,111 @@
+>> 03.08.2011
+[CO]
+PLFrontend:
+- "PLFrontendNull", "PLFrontendOS", "PLFrontendPLGui", "PLFrontendQt" and "PLFrontendActiveX" (testing it within the MS Internet Explorer) are now up and running
+  ("PLFrontendMozilla" is still broken)
+- Added "PLFrontend::Frontend::Run()" to start an application inside a frontend. This is only required for executables and not if an application is running e.g. within
+  a browser. When using it, it looks like this:
+    int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments)
+    {
+        return PLFrontend::Frontend::Run("PLFrontendOS::Frontend", "Application", sFilename, lstArguments);
+    }
+- When the work on the frontend stuff is complete, PixelLight applications are usually "frontendless", meaning when compiling it as an executable, you as application developer
+  choose the frontend to use (or not if you just don't care about GUI). Additionally, in the future it should be possible to just recompile the application as shared library in
+  order to be able to embed it within other applications like a browser. To make this as easy as possible, I added the macro "pl_module_application_frontend" (yeah, too long
+  name, again... but it's only required once within a project and therefore a speaking name is fine) and when using it, the main C++ file usually looks like this:
+    #include <PLFrontend/FrontendMain.h>
+    pl_module_application_frontend("50RendererTriangle", "Application", "PLFrontendPLGui::Frontend")
+        pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+        pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+        pl_module_description("PixelLight triangle sample")
+    pl_module_end
+  ... should be quite handy to use ("pl_module" is usually already used, so not much additional work, it's even less work!). :D
+  There's also a shorter macro:
+    "pl_module_application("50RendererTriangle", "Application")
+  Which will use the frontend "PLFrontendOS::Frontend" as default. This totally primitive frontend is sufficient for many applications.
+PLFrontend<>PLCore
+- Merged PLFrontend into PLCore... another new project which didn't make it long on it's own. :D
+  Just like PLScript, PLFrontend was started as a separate project to see whether or not the idea/concept is working and then to see how it's integrating into the system as a whole.
+  The PLFrontend concept turned out to be the key in making PixelLight really easy runnable within other applications like browsers. As such, it feels just right to put it directly
+  into PLCore - it doesn't introduce new dependencies and is also not really a huge component.
+
+
+
+>> 02.08.2011
+[CO]
+PLFrontend:
+- Added "FrontendApplication" & "AbstractFrontendLifecycle" and started on the frontend design
+PLFrontendPLGui:
+- Moved "SNGui" from "PLEngine" to "PLFrontendPLGui" because it's using PLGui
+
+
+
+>> 01.08.2011
+PLFrontend:
+[CO]
+- Started the PLFrontend project (kind of "PLPlugin"-project successor)... now that scripting is working, it's finally time to attack another big design task.
+  When we started the development of the PixelLight engine on 16 September 2002, we just had one single project: "PLEngine"
+  This project just used a quite simple OS window to render stuff into it. Back then, the world was more simple regarding to required supported platforms.
+  Providing support to be able to render into multiple OS windows was really a cool feature because most engines were just able to render into a single
+  OS window. Over the years, the GUI stuff was moved into an own, platform independent, GUI library called PLGui. All other PixelLight projects were build
+  on the top of it. PLGui is currently already within it's third (!) reincarnation.
+  In the last past 9 years, the world has dramatically evolved regarding to the platforms one should really support and the current PixelLight design regarding
+  to GUI handling does no longer really completely satisfies the changed needs. Now those are the requirements to be fulfilled:
+  -> Be able to have absolutely no GUI at all, e.g. for server side applications or applications rendering just into a buffer *currently there's always a PLGui dependency*
+  -> A quite primitive OS window for applications requiring no GUI handling, except for the OS window it's running in *PLGui is an overkill for this use case*
+  -> "PLGui": PixelLight own GUI system (OS & ingame) perfectly integrated into the complete system, stuff like scripting doesn't need wrappers, it just works out of the box *currently used way*
+  -> Be able to just use third party GUI systems like Qt for front-ends *currently there's always a PLGui dependency*
+    -> The PixelLight editor will be Qt based because getting PLGui to the point were it's possible to write such an complex editor is just impossible with a team of two
+       active spare-time developers (we already tried it years ago *PixelLab* and it was a total failure :/)
+  -> Be able to embed an PixelLight application into another application, meaning another GUI system has the control and we're just a slave
+    -> Be able to run in a web browser (e.g. by using "Java Web Start"/"JNLP" or/and by writing special browser plugins)
+    -> Be able to run on mobile devices, e.g. Android based
+    -> Be able to use ActiveX under MS Windows to embed 3D stuff into e.g. a MFC dialog (we already had to do this for a project some years ago)
+    ... scripting is especially useful for the first two mentioned embed-points. This way, an application developer doesn't need to care about the target platform and is just
+        writing some scripts...
+  Ok, as you can see, a whole bunch of new requirements since the start of the PixelLight engine. In "Docs\Diagrams\PixelLight_PackageDiagram.png" I outlined how it will probably
+  look when PLFrontend is up and running.
+  Please note that the PLFrontend approach doesn't mean that I abandon the PLGui project, but having the whole system be dependent of a GUI system is not working any more with
+  the changed requirements. Also, while the third reincarnation of Stefans PLGui is really cool and can be used for OS and ingame and has, by using the PL RTTI, automatic support
+  for scripting and therefore integrates itself perfectly into the whole system... PLGui is still missing some features and fine-tuning. Sadly, such a GUI system is a huge task
+  and currently, as already mentioned, there are only two active spare-time developers. Personally, I finally want to get PixelLight to the point were it's possible to create
+  simple prototype applications in a matter of minutes by using e.g. a Lua script to load in a scene and adding some interaction - and then be able to run this on multiple
+  platforms/targets. So, my focus is on that instead of taking over the development of Stefans PLGui (I already ruined the previous second reincarnation and don't want to repeat
+  this experience). I really hope that in the future there's someone continuing the development of PLGui because especially the scripting-argument is a really cool argument for PLGui!
+  (connecting e.g. libRocket or Qt to the PL RTTI and scripting system will be probably lot of work while it's no work at all with PLGui!)
+  ... enough introduction and explanation why there's need for the PLFrontend project. Let's go to work...
+- Added the (currently empty) frontend plugins
+  - "PLFrontendNull": The usual dummy project doing nothing at all
+  - "PLFrontendOS": Just a totally primitve OS window
+  - "PLFrontendPLGui": PLGui connection
+  - "PLFrontendQt": Qt connection (the new "PLQt")
+  - "PLFrontendActiveX": ActiveX connection (the new "PLPluginActiveX")
+  - "PLFrontendMozilla": Mozilla connection  (the new "PLPluginMozilla")
+  ... while "PLFrontendNull", "PLFrontendOS", "PLFrontendActiveX" and "PLFrontendMozilla" are intended to be 100% loose dynamic plugins, "PLFrontendPLGui" and "PLFrontendQt" are
+  of course also such plugins, but one is usually going to also use those libraries directly within an application (meaning linking aginst them).
+- Copied the diaries of "PLPlugin", "PLPluginActiveX" and "PLPluginMozilla" into this diary because PLFrontend will be the successor of the "PLPlugin"-project... which is not limited
+  to "PixelLight application as a plugin for e.g. a browser" but will also cover the "PixelLight application as executable" use case. Meaning, in the future it will be possible to just
+  recompile a C++ PixelLight as shared library and then be able to use it in any available frontend.
+- Using "PLPlugin::Plugin" as start point for the class "Frontend"
+- Renamed "PLPluginActiveX" (still working, just tested it :) into "PLFrontendActiveX"
+- Renamed "PLQt" into "PLFrontendQt"
+- Renamed "PLPluginMozilla" into "PLFrontendMozilla", when testing it with Firefox 5.0 the browser didn't want to load it (sayed something about corrupt... before I did the changes...)...
+  I'll check it later when PLFrontend is working as a whole...
+- Removed "PLPlugin", it's been replaced by "PLFrontend"
+
+
+
+>> 02.07.2011
+[CO]
+PLQt:
+- Added empty project "PLQt". In the next steps, PLQt (https://sourceforge.net/projects/pixellight/) from Stephan Wezel will be integrated directly into the PixelLight
+  Git repository and SDK because e.g. the editor will be Qt based. I currently use Qt 4.7.0 and I know that there's already a newer version available... but I already
+  had Qt 4.7.0 compiled for VisualStudio 2010 (to avoid using VC 2008 within the PL SDK) a while ago and right now I don't want to spend time in recompiling Qt, again.
+- Moved "QtStringAdapter" from PLGeneral into PLQt
+- Integrated PLQt, I'am sure it's not yet final and that over time, there will be multiple simplifications
+
+
+
 >> 31.07.2011
 [CO]
 - Exposed "ConsoleApplication::Exit()" to the RTTI
@@ -2455,6 +2563,13 @@ PLCore:
 
 
 
+>> 16.04.2009
+[SB]
+PLPlugin:
+- Fehlende Abhängigkeiten in der CMakeLists.txt hinzugefügt.
+
+
+
 >> 15.04.2009
 [CO]
 - Spendierte der "File"-Klasse einen weiteren Konstruktor dem man einen Buffer übergeben kann... was hin und wieder
@@ -2644,6 +2759,14 @@ PLCore:
   Ansonsten hat man das Problem, dass eine Applikation, die noch nicht von PLEngine abhängig ist, auch diese Option nicht kennt und daher
   nicht die Plugins im PL-Runtime sucht. Daher muss diese Einstellung so früh wie möglich kommen, damit ist das Problem erstmal behoben.
   Jetzt müssen wir möglichst schnell die ganze Config-Problematik nochmal sauber angehen, ansonsten haben wir bald ein echtes Problem ...
+PLPlugin:
+- BasicSceneApplet entfernt. Dies wäre eine totale Verkomplizierung, wenn man hier nochmal eine extra Ableitungshierarchie
+  aufmacht. Und damit könnte dann immer noch nicht eine Applikation zwischen Plugin und Exe 'geteilt' werden.
+- Statt dessen hat PluginPixelLight nun direkt einen Zeiger auf eine Applikation, die dann eingebettet wird. Dank der
+  Änderungen am Application-Framework kann nun generell jede Applikation (ab GuiApplication) in fremde Fenster eingebettet
+  werden, dies wird hier nun einfach verwendet. Es wird eine Application wie gewohnt instanziiert, dann wird aber nicht
+  Run() aufgerufen, sondern die Applikation in das Plugin-Window eingebettet. Als Test habe ich die Teapot-Application
+  verwendet, die Application kann aber jetzt ganz einfach ausgetauscht werden.
 
 
 
@@ -2656,6 +2779,10 @@ PLCore:
   Installieren kann... und dann ein 64 Bit 3ds Max nutzt, das sucht dann nach dem Registry Eintrag um automatisch
   feststellen zu können wo der PLSceneViewer liegt - und findet das dann natürlich nicht da es in einem
   "Magischen" 'Wow6432Node'-Unterordner abgelegt wurde. :D
+PLPlugin:
+- 64 Bit VC Projekt Einstellungen hinzugefügt
+PLPluginMozilla:
+- 64 Bit VC Projekt Einstellungen hinzugefügt
 
 
 
@@ -2664,6 +2791,14 @@ PLCore:
 - Var: 'GetFlagsFromString()' & 'GetStringFromFlags()' public gemacht da man diese Funktionalität auch von außen brauchen kann
 - Da wir überall 'PL_VAR_FLAGS' als 'uint32' handhaben stellte ich die paar Stellen die 'int' nutzten hier auch auf 'uint32' um... macht nicht
   wirklich einen unterschied da beides 32 Bit, aber so ists konsequent. :D
+
+
+
+>> 16.10.2008
+[CO]
+PLPlugin:
+- Projekt ist wieder übersetzbar, aber noch nicht wirklich wieder lauffähig. 'PL::Init()' etc. gibts nun nicht mehr, habe erstmal
+  BasicSceneApplet angelegt - eine Klasse von 'BasicSceneApplication' abgeleitet die als 'Applet' fungieren soll.
 
 
 
@@ -3040,6 +3175,49 @@ PLCore:
 - EventHandler: Standard Konstruktor entfernt da es ansonnsten einen Crash gibt wenn man einen nicht Initialisierten
   EventHandler nutzt - eine Situation die es auf jedenfall zu vermeiden gilt. Habe bei mir diesen Konstruktor schon seit
   Wochen auskommentiert und es gab keine Probleme.
+
+
+
+>> 29.06.2008
+[SB]
+PLPluginMozilla:
+- PLPluginMozilla implementiert.
+- Anbindung an unsere abstrakte Plugin-Klasse vorgenommen und PixelLight-Plugin erfolgreich im
+  Mozilla ausgeführt.
+
+
+
+>> 28.06.2008
+[SB]
+PLPlugin:
+- Projekt gestartet. PLPlugin stellt eine Schnittstelle zur Verfügung, um PixelLight als Plugin in andere
+  Umgebungen/Applikationen einzubinden. Also PixelLight als Plugin für z.B. Browser, nicht Plugins für PixelLight :-)
+  Dazu wird eine abstrakte Plugin-Klasse bereitgestellt, die von konkreten Wrappern für verschiedene Plugin-Schnittstellen
+  angesprochen wird. Von dieser Plugin-Klasse werden dann konkrete Plugins abgeleitet, z.B. das standard PixelLight-Plugin,
+  das wir letztlich im Browser oder sonstwo sehen wollen.
+- Basisklasse Plugin implementiert, die das abstrakte Plugin-Interface darstellt.
+- Basisklasse PluginImpl implementiert, die nach dem Backend-Prinzip das Interface
+  für konkrete Backends bereitstellt.
+- PluginOpenGL als Testplugin implementiert, in dem eine minimale OpenGL Szene angezeigt wird.
+- PluginPixelLight erstellt für das standard PixelLight-Plugin. 
+- Das Triangle-Sample genommen und als vorläufiges PixelLight-Plugin implementiert :-)
+PLPluginActiveX:
+- PLPluginActiveX implementiert. Diese konkrete Implementation von PluginImpl
+  stellt das ActiveX Backend für unsere eigene Plugin-Klasse dar.
+- Den Wrapper auf die Verwendung unseres abstrakten Plugin-Interfaces umgestellt.
+- Den OpenGL-Test hier entfernt und dafür als PluginOpenGL in PLPlugin implementiert.
+- Das PixelLight-Plugin läuft nun zum ersten Mal korrekt im Browserfenster :-)
+
+
+
+>> 24.06.2008
+[SB]
+PLPluginActiveX:
+- Projekt gestartet. PLPluginActiveX ist ein Container und Wrapper für ActiveX, über den das PLPlugin-Interface unter
+  ActiveX verwendet werden kann.
+- ActiveX control erstellt und an unsere Projektstruktur angepasst. Einstellungen
+  gefunden, die zur Einbindung von OpenGL erforderlich sind.
+- Kleines OpenGL Testplugin implementiert.
 
 
 

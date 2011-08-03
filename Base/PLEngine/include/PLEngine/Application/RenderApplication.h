@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLFrontend/FrontendApplication.h>
+#include <PLCore/Frontend/FrontendApplication.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include "PLEngine/PLEngine.h"
 
@@ -70,13 +70,13 @@ namespace PLEngine {
 *    - "OnCreateMainWindow()": Adds a "PLGui::ModClose" modifier with "ExitApplication=true" to the created main window,
 *      therefore the application will shut down as soon as clicking on 'x' within the window title
 */
-class RenderApplication : public PLFrontend::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
+class RenderApplication : public PLCore::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLFrontend::FrontendApplication, "Render application class")
+	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLCore::FrontendApplication, "Render application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -240,7 +240,7 @@ class RenderApplication : public PLFrontend::FrontendApplication, public PLRende
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLFrontend::FrontendApplication functions ]
+	//[ Protected virtual PLCore::FrontendApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		PL_API virtual void OnDraw() override;

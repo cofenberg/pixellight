@@ -27,7 +27,7 @@ PixelLightCtrl::~PixelLightCtrl()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[ Public virtual PLCore::FrontendImpl functions         ]
 //[-------------------------------------------------------]
 PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
 {
@@ -36,7 +36,7 @@ PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLFrontend::Impl functions            ]
+//[ Private virtual PLCore::Impl functions                ]
 //[-------------------------------------------------------]
 int PixelLightCtrl::Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {

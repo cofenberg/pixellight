@@ -20,17 +20,17 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTENDMAIN_H__
-#define __PLFRONTEND_FRONTENDMAIN_H__
+#ifndef __PLCORE_FRONTENDMAIN_H__
+#define __PLCORE_FRONTENDMAIN_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Main.h>
-#include <PLCore/ModuleMain.h>
-#include "PLFrontend/Frontend.h"
+#include "PLCore/Main.h"
+#include "PLCore/ModuleMain.h"
+#include "PLCore/Frontend/Frontend.h"
 
 
 //[-------------------------------------------------------]
@@ -51,7 +51,7 @@
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLFrontend::Frontend::Run("PLFrontendOS::Frontend", ApplicationClass, sFilename, lstArguments); \
+		return PLCore::Frontend::Run("PLFrontendOS::Frontend", ApplicationClass, sFilename, lstArguments); \
 	} \
 	\
 	pl_module_plugin(ModuleName) \
@@ -73,10 +73,10 @@
 #define pl_module_application_frontend(ModuleName, ApplicationClass, FrontendClass) \
 	int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLFrontend::Frontend::Run(FrontendClass, ApplicationClass, sFilename, lstArguments); \
+		return PLCore::Frontend::Run(FrontendClass, ApplicationClass, sFilename, lstArguments); \
 	} \
 	\
 	pl_module_plugin(ModuleName) \
 
 
-#endif // __PLFRONTEND_FRONTENDMAIN_H__
+#endif // __PLCORE_FRONTENDMAIN_H__

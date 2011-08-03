@@ -154,6 +154,12 @@ add_sources(
 	src/Script/Script.cpp
 	src/Script/ScriptManager.cpp
 	src/Script/ScriptBinding.cpp
+	src/Frontend/AbstractFrontendLifecycle.cpp
+	src/Frontend/Frontend.cpp
+	src/Frontend/FrontendImpl.cpp
+	src/Frontend/FrontendPixelLight.cpp
+	# src/Frontend/FrontendOpenGL.cpp # Just a test, not added in here
+	src/Frontend/FrontendApplication.cpp
 )
 if(WIN32)
 	##################################################

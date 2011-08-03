@@ -20,22 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_APPLICATION_H__
-#define __PLFRONTEND_APPLICATION_H__
+#ifndef __PLCORE_APPLICATION_H__
+#define __PLCORE_APPLICATION_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
-#include "PLFrontend/PLFrontend.h"
+#include "PLCore/Application/ConsoleApplication.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -51,7 +50,7 @@ class Frontend;
 *  @brief
 *    Frontend application class
 */
-class FrontendApplication : public PLCore::ConsoleApplication {
+class FrontendApplication : public ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
@@ -63,10 +62,8 @@ class FrontendApplication : public PLCore::ConsoleApplication {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLFRONTEND_RTTI_EXPORT, FrontendApplication, "PLFrontend", PLCore::ConsoleApplication, "Frontend application class")
-		#ifdef PLFRONTEND_EXPORTS	// The following is only required when compiling PLFrontend
-			// Constructors
-			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	pl_class(PLCORE_RTTI_EXPORT, FrontendApplication, "PLCore", PLCore::ConsoleApplication, "Frontend application class")
+		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
 			pl_method_0(GetFrontend,	pl_ret_type(Frontend*),	"Get the frontend. Returns pointer to the frontend of the application, a null pointer on error.",	"")
 		#endif
@@ -79,27 +76,29 @@ class FrontendApplication : public PLCore::ConsoleApplication {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] sFrontend
-		*    Class name of the frontend implementation to use, can be empty
-		*/
-		PLFRONTEND_API FrontendApplication(const PLCore::String &sFrontend = "");
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLFRONTEND_API virtual ~FrontendApplication();
-
-		/**
-		*  @brief
 		*    Get frontend
 		*
 		*  @return
 		*    Frontend, can be a null pointer
 		*/
-		PLFRONTEND_API Frontend *GetFrontend() const;
+		PLCORE_API Frontend *GetFrontend() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		PLCORE_API FrontendApplication();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~FrontendApplication();
 
 
 	//[-------------------------------------------------------]
@@ -113,7 +112,7 @@ class FrontendApplication : public PLCore::ConsoleApplication {
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLFRONTEND_API virtual void OnDraw();
+		PLCORE_API virtual void OnDraw();
 
 
 	//[-------------------------------------------------------]
@@ -129,7 +128,7 @@ class FrontendApplication : public PLCore::ConsoleApplication {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore
 
 
-#endif // __PLFRONTEND_APPLICATION_H__
+#endif // __PLCORE_APPLICATION_H__

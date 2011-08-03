@@ -23,17 +23,16 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
-#include <PLCore/Base/Class.h>
-#include "PLFrontend/FrontendImpl.h"
-#include "PLFrontend/Frontend.h"
+#include "PLCore/Core.h"
+#include "PLCore/Base/Class.h"
+#include "PLCore/Frontend/FrontendImpl.h"
+#include "PLCore/Frontend/Frontend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -58,7 +57,7 @@ int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass,
 
 	// Get the RTTI class
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);
-	if (pClass && pClass->IsDerivedFrom("PLFrontend::FrontendImpl")) {
+	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
 		// Create the RTTI class instance
 		Object *pObject = pClass->Create();
 		if (pObject) {
@@ -155,4 +154,4 @@ FrontendImpl *Frontend::GetImpl() const
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore

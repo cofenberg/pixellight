@@ -20,21 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_PIXELLIGHT_H__
-#define __PLFRONTEND_FRONTEND_PIXELLIGHT_H__
+#ifndef __PLCORE_FRONTEND_PIXELLIGHT_H__
+#define __PLCORE_FRONTEND_PIXELLIGHT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
+#include "PLCore/Frontend/Frontend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -64,41 +64,41 @@ class FrontendPixelLight : public Frontend {
 		*  @param[in] cImpl
 		*    Implementation object
 		*/
-		PLFRONTEND_API FrontendPixelLight(FrontendImpl &cImpl);
+		PLCORE_API FrontendPixelLight(FrontendImpl &cImpl);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLFRONTEND_API virtual ~FrontendPixelLight();
+		PLCORE_API virtual ~FrontendPixelLight();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual FrontendFrontend functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLFRONTEND_API virtual bool IsRunning() const override;
+		PLCORE_API virtual bool IsRunning() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual FrontendFrontend functions            ]
 	//[-------------------------------------------------------]
 	private:
-		PLFRONTEND_API virtual void OnDraw() override;
-		PLFRONTEND_API virtual void OnSize() override;
+		PLCORE_API virtual void OnDraw() override;
+		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractFrontendLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLFRONTEND_API virtual void OnCreate() override;
-		PLFRONTEND_API virtual void OnRestart() override;
-		PLFRONTEND_API virtual void OnStart() override;
-		PLFRONTEND_API virtual void OnResume() override;
-		PLFRONTEND_API virtual void OnPause() override;
-		PLFRONTEND_API virtual void OnStop() override;
-		PLFRONTEND_API virtual void OnDestroy() override;
+		PLCORE_API virtual void OnCreate() override;
+		PLCORE_API virtual void OnRestart() override;
+		PLCORE_API virtual void OnStart() override;
+		PLCORE_API virtual void OnResume() override;
+		PLCORE_API virtual void OnPause() override;
+		PLCORE_API virtual void OnStop() override;
+		PLCORE_API virtual void OnDestroy() override;
 
 
 	//[-------------------------------------------------------]
@@ -115,7 +115,7 @@ class FrontendPixelLight : public Frontend {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore
 
 
-#endif // __PLFRONTEND_FRONTEND_PIXELLIGHT_H__
+#endif // __PLCORE_FRONTEND_PIXELLIGHT_H__

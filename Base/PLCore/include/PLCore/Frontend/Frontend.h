@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendImpl.h                                 *
+ *  File: Frontend.h                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,30 +20,30 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_IMPL_H__
-#define __PLFRONTEND_FRONTEND_IMPL_H__
+#ifndef __PLCORE_FRONTEND_H__
+#define __PLCORE_FRONTEND_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
-#include <PLCore/Base/Object.h>
-#include "PLFrontend/PLFrontend.h"
-#include "PLFrontend/AbstractFrontendLifecycle.h"
+#include "PLCore/PLCore.h"
+#include "PLCore/Frontend/AbstractFrontendLifecycle.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Frontend;
+class String;
+class FrontendImpl;
+template <class ValueType> class Array;
 
 
 //[-------------------------------------------------------]
@@ -51,117 +51,35 @@ class Frontend;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract frontend implementation base class
+*    Abstract frontend base class
 *
 *  @remarks
-*    This base class provides the backend interface for concrete implementations
-*    (e.g. for Internet Explorer or Mozilla Firefox frontends).
+*    This base class provides an abstract frontend API which is used to develop
+*    an actual PixelLight frontend class. Concrete wrappers for certain browsers,
+*    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
+*    specific frontend API to this general base class.
 */
-class FrontendImpl : public PLCore::Object, protected AbstractFrontendLifecycle {
+class Frontend : protected AbstractFrontendLifecycle {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class Frontend;
+	friend class FrontendImpl;
 
 
 	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLFRONTEND_RTTI_EXPORT, FrontendImpl, "PLFrontend", PLCore::Object, "Abstract frontend implementation base class")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*/
-		PLFRONTEND_API FrontendImpl();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLFRONTEND_API virtual ~FrontendImpl();
-
-		/**
-		*  @brief
-		*    Get window width
+		*    Run the frontend
 		*
-		*  @return
-		*    Width
-		*/
-		PLFRONTEND_API PLCore::uint32 GetWidth() const;
-
-		/**
-		*  @brief
-		*    Get window height
-		*
-		*  @return
-		*    Height
-		*/
-		PLFRONTEND_API PLCore::uint32 GetHeight() const;
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual FrontendImpl functions                 ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Get native window handle
-		*
-		*  @return
-		*    Native window handle for the frontend window, can be a null pointer
-		*/
-		virtual PLCore::handle GetNativeWindowHandle() const = 0;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Called to let the frontend draw into it's window
-		*/
-		PLFRONTEND_API void OnDraw();
-
-		/**
-		*  @brief
-		*    Called when the window size has been changed
-		*/
-		PLFRONTEND_API void OnSize();
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual AbstractFrontendLifecycle functions ]
-	//[-------------------------------------------------------]
-	protected:
-		PLFRONTEND_API virtual void OnCreate() override;
-		PLFRONTEND_API virtual void OnRestart() override;
-		PLFRONTEND_API virtual void OnStart() override;
-		PLFRONTEND_API virtual void OnResume() override;
-		PLFRONTEND_API virtual void OnPause() override;
-		PLFRONTEND_API virtual void OnStop() override;
-		PLFRONTEND_API virtual void OnDestroy() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual FrontendImpl functions              ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Called when the frontend should run
-		*
+		*  @param[in] sFrontendClass
+		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
 		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
 		*  @param[in] sExecutableFilename
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
@@ -171,22 +89,112 @@ class FrontendImpl : public PLCore::Object, protected AbstractFrontendLifecycle 
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) = 0;
+		PLCORE_API static int Run(const String &sFrontendClass, const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments);
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cImpl
+		*    Implementation object
+		*/
+		PLCORE_API Frontend(FrontendImpl &cImpl);
 
 		/**
 		*  @brief
-		*    Redraw the window
+		*    Destructor
 		*/
-		virtual void Redraw() = 0;
+		PLCORE_API virtual ~Frontend();
+
+		/**
+		*  @brief
+		*    Get native window handle
+		*
+		*  @return
+		*    Native window handle for the frontend window, can be a null pointer
+		*/
+		PLCORE_API handle GetNativeWindowHandle() const;
+
+		/**
+		*  @brief
+		*    Get window width
+		*
+		*  @return
+		*    Width
+		*/
+		PLCORE_API uint32 GetWidth() const;
+
+		/**
+		*  @brief
+		*    Get window height
+		*
+		*  @return
+		*    Height
+		*/
+		PLCORE_API uint32 GetHeight() const;
+
+		/**
+		*  @brief
+		*    Redraw frontend window
+		*/
+		PLCORE_API void Redraw();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Frontend functions                     ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns whether or not the frontend is currently running
+		*
+		*  @return
+		*    'true' if the frontend is currently running, else 'false'
+		*/
+		virtual bool IsRunning() const = 0;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Get frontend implementation
+		*
+		*  @return
+		*    Pointer to the implementation backend, can be a null pointer
+		*/
+		PLCORE_API FrontendImpl *GetImpl() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Frontend functions                  ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Called to let the frontend draw into it's window
+		*/
+		virtual void OnDraw() = 0;
+
+		/**
+		*  @brief
+		*    Called when the window size has been changed
+		*/
+		virtual void OnSize() = 0;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Frontend *m_pFrontend;	/**< Pointer to frontend, can be a null pointer */
-		int		  m_nWidth;		/**< Window width */
-		int		  m_nHeight;	/**< Window height */
+		FrontendImpl *m_pImpl;	/**< Pointer to implementation backend, can be a null pointer */
 
 
 };
@@ -195,7 +203,7 @@ class FrontendImpl : public PLCore::Object, protected AbstractFrontendLifecycle 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore
 
 
-#endif // __PLFRONTEND_FRONTEND_IMPL_H__
+#endif // __PLCORE_FRONTEND_H__

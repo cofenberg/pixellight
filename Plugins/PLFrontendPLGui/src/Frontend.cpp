@@ -33,7 +33,7 @@
 #include <PLCore/Tools/LocalizationGroup.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include <PLFrontend/Frontend.h>
+#include <PLCore/Frontend/Frontend.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Widgets/Windows/Window.h>
 #include "PLFrontendPLGui/Frontend.h"
@@ -113,7 +113,7 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[ Public virtual PLCore::FrontendImpl functions         ]
 //[-------------------------------------------------------]
 handle Frontend::GetNativeWindowHandle() const
 {
@@ -122,7 +122,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLFrontend::FrontendImpl functions  ]
+//[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {

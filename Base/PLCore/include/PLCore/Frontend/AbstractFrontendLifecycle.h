@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_ABSTRACTFRONTENDLIFECYCLE_H__
-#define __PLFRONTEND_ABSTRACTFRONTENDLIFECYCLE_H__
+#ifndef __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__
+#define __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -126,7 +126,7 @@ class AbstractFrontendLifecycle {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore
 
 
-#endif // __PLFRONTEND_ABSTRACTFRONTENDLIFECYCLE_H__
+#endif // __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__

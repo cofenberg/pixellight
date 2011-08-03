@@ -69,7 +69,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 	${CMAKE_SOURCE_DIR}/Base/PLPhysics/include
 )
 
@@ -92,7 +91,6 @@ add_libs(
 	PLRenderer
 	PLMesh
 	PLScene
-	PLFrontend
 	PLPhysics
 )
 if(WIN32)
@@ -175,7 +173,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLFrontend PLPhysics)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLPhysics)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -33,7 +33,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 )
 
 ##################################################
@@ -56,7 +55,6 @@ add_libs(
 	PLMesh
 	PLScene
 	PLEngine
-	PLFrontend
 )
 
 ##################################################
@@ -128,7 +126,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine PLFrontend)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -160,17 +158,17 @@ endif()
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_SHARED}	COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}		COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_SHARED}				COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_SHARED}				COMPONENT Runtime
+	ARCHIVE DESTINATION ${PL_INSTALL_LIB}					COMPONENT SDK
 )
 
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 								COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+	DESTINATION ${PL_INSTALL_INCLUDE} 						COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
 
 # Plugin file
 install(FILES ${PL_BIN_DIR}/Runtime/${CMAKETOOLS_CURRENT_PLUGIN}
-	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLFrontend			COMPONENT Runtime
+	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLFrontend	COMPONENT Runtime
 )

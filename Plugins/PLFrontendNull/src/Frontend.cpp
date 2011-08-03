@@ -65,7 +65,7 @@ Frontend::~Frontend()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[ Public virtual PLCore::FrontendImpl functions         ]
 //[-------------------------------------------------------]
 handle Frontend::GetNativeWindowHandle() const
 {
@@ -75,7 +75,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLFrontend::FrontendImpl functions    ]
+//[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {

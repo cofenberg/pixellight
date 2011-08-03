@@ -23,18 +23,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Class.h>
-#include <PLCore/System/System.h>
-#include "PLFrontend/FrontendImpl.h"
-#include "PLFrontend/FrontendApplication.h"
-#include "PLFrontend/FrontendPixelLight.h"
+#include "PLCore/Base/Class.h"
+#include "PLCore/System/System.h"
+#include "PLCore/Frontend/FrontendImpl.h"
+#include "PLCore/Frontend/FrontendApplication.h"
+#include "PLCore/Frontend/FrontendPixelLight.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -90,7 +89,7 @@ void FrontendPixelLight::OnCreate()
 {
 	// Get the RTTI class
 	const Class *pClass = ClassManager::GetInstance()->GetClass("Application");	// [TODO] Class name as parameter
-	if (pClass && pClass->IsDerivedFrom("PLFrontend::FrontendApplication")) {
+	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendApplication")) {
 		// Create the RTTI class instance
 		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create());
 		if (m_pFrontendApplication) {
@@ -159,4 +158,4 @@ void FrontendPixelLight::OnDestroy()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore

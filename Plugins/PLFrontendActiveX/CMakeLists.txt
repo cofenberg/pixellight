@@ -30,7 +30,6 @@ set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/PLFrontendActiveX_i.h PR
 add_include_directories(
 	src
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 	${CMAKE_CURRENT_BINARY_DIR}
 )
 
@@ -46,7 +45,6 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLCore
-	PLFrontend
 )
 
 ##################################################
@@ -88,7 +86,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/P
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLFrontend)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

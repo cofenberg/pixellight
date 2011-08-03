@@ -178,7 +178,7 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[ Public virtual PLCore::FrontendImpl functions         ]
 //[-------------------------------------------------------]
 PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
 {
@@ -187,7 +187,7 @@ PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLFrontend::FrontendImpl functions    ]
+//[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
 int nsPluginInstance::Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {

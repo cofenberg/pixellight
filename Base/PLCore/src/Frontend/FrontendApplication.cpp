@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractFrontendLifecycle.cpp                  *
+ *  File: FrontendApplication.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,13 +23,33 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/AbstractFrontendLifecycle.h"
+#include "PLCore/Frontend/FrontendApplication.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(FrontendApplication)
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Get frontend
+*/
+Frontend *FrontendApplication::GetFrontend() const
+{
+	// Return pointer to frontend
+	return m_pFrontend;
+}
 
 
 //[-------------------------------------------------------]
@@ -37,22 +57,41 @@ namespace PLFrontend {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
-AbstractFrontendLifecycle::AbstractFrontendLifecycle()
+FrontendApplication::FrontendApplication() : ConsoleApplication(),
+	m_pFrontend(nullptr)	// Set by FrontendPixelLight
 {
+	// Set application title
+	SetTitle("PixelLight frontend application");
+
+	// Set running state
+	m_bRunning = true;
 }
 
 /**
 *  @brief
 *    Destructor
 */
-AbstractFrontendLifecycle::~AbstractFrontendLifecycle()
+FrontendApplication::~FrontendApplication()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual FrontendApplication functions       ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called to let the frontend application draw into it's window
+*/
+void FrontendApplication::OnDraw()
+{
+	// No default implementation
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore

@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/System.h>
+#include <PLCore/Frontend/Frontend.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
@@ -35,7 +36,6 @@
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
 #include <PLRenderer/Texture/TextureManager.h>
-#include <PLFrontend/Frontend.h>
 #include "PLEngine/Gui/RenderWidget.h"
 #include "PLEngine/Gui/RenderWindow.h"
 #include "PLEngine/Application/RenderApplication.h"
@@ -48,7 +48,6 @@ using namespace PLCore;
 using namespace PLGui;
 using namespace PLInput;
 using namespace PLRenderer;
-using namespace PLFrontend;
 namespace PLEngine {
 
 
@@ -322,7 +321,7 @@ void RenderApplication::OnCreateMainWindow()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLFrontend::FrontendApplication functions ]
+//[ Protected virtual PLCore::FrontendApplication functions ]
 //[-------------------------------------------------------]
 void RenderApplication::OnDraw()
 {

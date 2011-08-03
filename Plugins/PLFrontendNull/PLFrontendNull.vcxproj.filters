@@ -24,6 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\Base\PLFrontend\Diary.txt" />
+    <None Include="..\..\Base\PLCore\Diary.txt" />
   </ItemGroup>
 </Project>

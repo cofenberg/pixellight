@@ -21,7 +21,6 @@ add_sources(
 add_include_directories(
 	src
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 	${XULRUNNERSDK_INCLUDE_DIRS}
 )
 
@@ -37,7 +36,6 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLCore
-	PLFrontend
 )
 
 ##################################################
@@ -114,7 +112,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/P
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-xulrunnersdk PLCore PLFrontend)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-xulrunnersdk PLCore)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -139,8 +137,8 @@ endif()
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_BROWSER}	COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_BROWSER}	COMPONENT Runtime
+	RUNTIME DESTINATION ${PL_INSTALL_BROWSER}				COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_BROWSER}				COMPONENT Runtime
 )
 
 # Plugin file

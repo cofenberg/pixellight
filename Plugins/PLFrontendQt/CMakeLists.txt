@@ -84,7 +84,6 @@ add_include_directories(
 	include
 	include/PLFrontendQt
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLFrontend/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLGui/include
@@ -112,7 +111,6 @@ add_link_directories(
 ##################################################
 add_libs(
 	PLCore
-	PLFrontend
 	PLMath
 	PLGraphics
 	PLGui
@@ -193,7 +191,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Qt PLCore PLFrontend PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Qt PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLEngine)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

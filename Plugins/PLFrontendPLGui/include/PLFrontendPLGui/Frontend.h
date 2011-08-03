@@ -29,8 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
-#include <PLFrontend/FrontendImpl.h>
-#include <PLFrontend/FrontendPixelLight.h>
+#include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendPixelLight.h>
 #include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
@@ -60,13 +60,13 @@ namespace PLFrontendPLGui {
 *    main loop that does the necessary message procressing and
 *    provides methods to manage a main application window.
 */
-class Frontend : public PLFrontend::FrontendImpl {
+class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Frontend, "PLFrontendPLGui", PLFrontend::FrontendImpl, "PLGui frontend implementation class")
+	pl_class(pl_rtti_export, Frontend, "PLFrontendPLGui", PLCore::FrontendImpl, "PLGui frontend implementation class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -108,14 +108,14 @@ class Frontend : public PLFrontend::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[ Public virtual PLCore::FrontendImpl functions         ]
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLFrontend::FrontendImpl functions  ]
+	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
@@ -154,9 +154,9 @@ class Frontend : public PLFrontend::FrontendImpl {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLFrontend::FrontendPixelLight	m_cFrontend;			/**< The frontend instance */
-		PLCore::EventHandler<>			EventHandlerOnDestroy;
-		PLGui::Widget				   *m_pMainWindow;			/**< Main window of the application (can be a null pointer) */
+		PLCore::FrontendPixelLight	m_cFrontend;			/**< The frontend instance */
+		PLCore::EventHandler<>		EventHandlerOnDestroy;
+		PLGui::Widget			   *m_pMainWindow;			/**< Main window of the application (can be a null pointer) */
 
 
 };

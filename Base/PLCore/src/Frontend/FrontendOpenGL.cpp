@@ -20,7 +20,7 @@
 \*********************************************************/
 
 
-// [TODO] Remove those libs if you don't use this frontend test
+// [TODO] Remove those libs if you don't use this frontend test (MS Windows)
 // opengl32.lib
 // glu32.lib
 
@@ -28,15 +28,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/FrontendImpl.h"
-#include "PLFrontend/FrontendOpenGL.h"
+#include "PLCore/Frontend/FrontendImpl.h"
+#include "PLCore/Frontend/FrontendOpenGL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -293,4 +292,4 @@ void FrontendOpenGL::DrawGL()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore

@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_OPENGL_H__
-#define __PLFRONTEND_FRONTEND_OPENGL_H__
+#ifndef __PLCORE_FRONTEND_OPENGL_H__
+#define __PLCORE_FRONTEND_OPENGL_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
+#include "PLCore/Frontend/Frontend.h"
 #ifdef WIN32
 	#include <windows.h>
 #endif
@@ -39,7 +39,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -51,7 +51,7 @@ namespace PLFrontend {
 *
 *  @remarks
 *    This is a test frontend which uses OpenGL to display a spinning colored
-*    rectangle. It can be used easily to test the PLFrontend integration when
+*    rectangle. It can be used easily to test the frontend integration when
 *    developing a new backend.
 */
 class FrontendOpenGL : public Frontend {
@@ -68,41 +68,41 @@ class FrontendOpenGL : public Frontend {
 		*  @param[in] cImpl
 		*    Implementation object
 		*/
-		PLFRONTEND_API FrontendOpenGL(FrontendImpl &cImpl);
+		PLCORE_API FrontendOpenGL(FrontendImpl &cImpl);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLFRONTEND_API virtual ~FrontendOpenGL();
+		PLCORE_API virtual ~FrontendOpenGL();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual FrontendFrontend functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLFRONTEND_API virtual bool IsRunning() const override;
+		PLCORE_API virtual bool IsRunning() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual FrontendFrontend functions            ]
 	//[-------------------------------------------------------]
 	private:
-		PLFRONTEND_API virtual void OnDraw() override;
-		PLFRONTEND_API virtual void OnSize() override;
+		PLCORE_API virtual void OnDraw() override;
+		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractFrontendLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PLFRONTEND_API virtual void OnCreate() override;
-		PLFRONTEND_API virtual void OnRestart() override;
-		PLFRONTEND_API virtual void OnStart() override;
-		PLFRONTEND_API virtual void OnResume() override;
-		PLFRONTEND_API virtual void OnPause() override;
-		PLFRONTEND_API virtual void OnStop() override;
-		PLFRONTEND_API virtual void OnDestroy() override;
+		PLCORE_API virtual void OnCreate() override;
+		PLCORE_API virtual void OnRestart() override;
+		PLCORE_API virtual void OnStart() override;
+		PLCORE_API virtual void OnResume() override;
+		PLCORE_API virtual void OnPause() override;
+		PLCORE_API virtual void OnStop() override;
+		PLCORE_API virtual void OnDestroy() override;
 
 
 	//[-------------------------------------------------------]
@@ -148,7 +148,7 @@ class FrontendOpenGL : public Frontend {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLCore
 
 
-#endif // __PLFRONTEND_FRONTEND_OPENGL_H__
+#endif // __PLCORE_FRONTEND_OPENGL_H__
