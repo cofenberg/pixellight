@@ -1,3 +1,9 @@
+>> 03.08.2011
+[CO]
+- Most samples are now using the new "pl_module_application"-macro to simplify the program entry point
+
+
+
 >> 31.07.2011
 [CO]
 - The sample applications are now using PLInput instead of PLGui to get and process input events
