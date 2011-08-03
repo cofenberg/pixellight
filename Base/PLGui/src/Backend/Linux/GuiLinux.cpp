@@ -185,7 +185,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	::Window nWindow = (pWidget ? static_cast< ::Window>(pWidget->GetWindowHandle()) : NULL_HANDLE);
+	::Window nNativeWindowHandle = (pWidget ? static_cast< ::Window>(pWidget->GetNativeWindowHandle) : NULL_HANDLE);
 
 	// Post message
 	switch (cMessage.GetType()) {
@@ -698,8 +698,8 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 			// Destroy widget
 			case DestroyNotify:
 				// Mark widget destroyed
-				pWidgetLinux->m_bDestroyed	= true;
-				pWidgetLinux->m_nWindow		= 0;
+				pWidgetLinux->m_bDestroyed			= true;
+				pWidgetLinux->m_nNativeWindowHandle	= 0;
 
 				// Send OnDestroy message
 				pGui->SendMessage(GuiMessage::OnDestroy(pWidget));
@@ -774,10 +774,10 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 					pGui->SendMessage(GuiMessage::OnMove(pWidget, Vector2i(pWidgetLinux->m_nX, pWidgetLinux->m_nY)));
 
 					// Inform about new mouse position
-					Window nRoot, nWindow;
+					Window nRoot, nNativeWindowHandle;
 					int nRootX, nRootY, nWindowX, nWindowY;
 					unsigned int nMask;
-					if (XQueryPointer(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nWindow, &nRoot, &nWindow, &nRootX, &nRootY, &nWindowX, &nWindowY, &nMask)) {
+					if (XQueryPointer(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nNativeWindowHandle, &nRoot, &nNativeWindowHandle, &nRootX, &nRootY, &nWindowX, &nWindowY, &nMask)) {
 						// Get mouse position
 						if (nWindowX >= 32768) nWindowX -= 65536;
 						if (nWindowY >= 32768) nWindowY -= 65536;
@@ -972,7 +972,7 @@ void GuiLinux::DestroyWidget(Widget *pWidget)
 	pWidgetLinux->m_bDestroyed = true;
 
 	// Destroy widget
-	XDestroyWindow(m_pDisplay, pWidgetLinux->m_nWindow);
+	XDestroyWindow(m_pDisplay, pWidgetLinux->m_nNativeWindowHandle);
 	XSync(m_pDisplay, False);
 }
 

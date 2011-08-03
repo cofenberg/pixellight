@@ -112,7 +112,7 @@ TrayIconWidgetLinux::TrayIconWidgetLinux(Widget *pParent) : Widget(pParent, true
 	unsigned long sXEmbedInfo[2];
     sXEmbedInfo[0] = 0;
     sXEmbedInfo[1] = 0;
-    XChangeProperty(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nWindow, pGuiLinux->m_sAtoms._XEMBED_INFO, pGuiLinux->m_sAtoms._XEMBED_INFO, 32, PropModeReplace, reinterpret_cast<unsigned char*>(sXEmbedInfo), 2);
+    XChangeProperty(pWidgetLinux->m_pDisplay, pWidgetLinux->m_nNativeWindowHandle, pGuiLinux->m_sAtoms._XEMBED_INFO, pGuiLinux->m_sAtoms._XEMBED_INFO, 32, PropModeReplace, reinterpret_cast<unsigned char*>(sXEmbedInfo), 2);
 
 	// Don't draw a background
 	SetBackgroundColor(Color4::Transparent);
@@ -150,14 +150,14 @@ void TrayIconWidgetLinux::ShowNotification(const String &sTitle, const String &s
 	long nSize = sText.GetNumOfBytes();
 
 	// Start tray message
-	SendSysTrayMessage(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nWindow, SYSTEM_TRAY_BEGIN_MESSAGE, 0, nSize, nID);
+	SendSysTrayMessage(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nNativeWindowHandle, SYSTEM_TRAY_BEGIN_MESSAGE, 0, nSize, nID);
 
 	// Send string
 	const char *pszString = sText.GetUTF8();
 	while (nSize > 0) {
 		// Send a portion of the data, max. 20 bytes
 		long nPortion = (nSize > 20 ? 20 : nSize);
-		SendSysTrayMessageData(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nWindow, pszString, nPortion);
+		SendSysTrayMessageData(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nNativeWindowHandle, pszString, nPortion);
 
 		// Go on
 		pszString += nPortion;
@@ -172,7 +172,7 @@ void TrayIconWidgetLinux::ShowNotification(const String &sTitle, const String &s
 void TrayIconWidgetLinux::EmbedIntoSysTray()
 {
 	// Send message
-	SendSysTrayMessage(m_nEmbedderWindow, SYSTEM_TRAY_REQUEST_DOCK, static_cast<WidgetLinux*>(GetImpl())->m_nWindow, 0, 0);
+	SendSysTrayMessage(m_nEmbedderWindow, SYSTEM_TRAY_REQUEST_DOCK, static_cast<WidgetLinux*>(GetImpl())->m_nNativeWindowHandle, 0, 0);
 }
 
 /**
@@ -377,14 +377,14 @@ void TrayIconWidgetLinux::SendXEmbedMessage(long nMessage, long nDetail, long nD
 *  @brief
 *    Send system tray message to XEMBED embedder window
 */
-void TrayIconWidgetLinux::SendSysTrayMessage(::Window nWindow, long nMessage, long nDetail, long nData1, long nData2)
+void TrayIconWidgetLinux::SendSysTrayMessage(::Window nNativeWindowHandle, long nMessage, long nDetail, long nData1, long nData2)
 {
 	// Have we found a system tray?
 	if (m_nEmbedderWindow) {
 		// Send tray message
 		XEvent sEvent;
 		sEvent.xclient.type			= ClientMessage;
-		sEvent.xclient.window		= nWindow;
+		sEvent.xclient.window		= nNativeWindowHandle;
 		sEvent.xclient.message_type = static_cast<GuiLinux*>(m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_OPCODE;
 		sEvent.xclient.format		= 32;
 		sEvent.xclient.data.l[0]	= CurrentTime;
@@ -401,7 +401,7 @@ void TrayIconWidgetLinux::SendSysTrayMessage(::Window nWindow, long nMessage, lo
 *  @brief
 *    Send system tray data message to XEMBED embedder window
 */
-void TrayIconWidgetLinux::SendSysTrayMessageData(::Window nWindow, const char *pszString, long nSize)
+void TrayIconWidgetLinux::SendSysTrayMessageData(::Window nNativeWindowHandle, const char *pszString, long nSize)
 {
 	// Have we found a system tray?
 	if (m_nEmbedderWindow) {
@@ -410,7 +410,7 @@ void TrayIconWidgetLinux::SendSysTrayMessageData(::Window nWindow, const char *p
 			// Send tray message
 			XEvent sEvent;
 			sEvent.xclient.type			= ClientMessage;
-			sEvent.xclient.window		= nWindow;
+			sEvent.xclient.window		= nNativeWindowHandle;
 			sEvent.xclient.message_type = static_cast<GuiLinux*>(m_pGui->GetImpl())->m_sAtoms._NET_SYSTEM_TRAY_MESSAGE_DATA;
 			sEvent.xclient.format		= 8;
 			for (uint32 i=0; i<nSize; i++) {

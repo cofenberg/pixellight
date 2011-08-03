@@ -85,15 +85,15 @@ class ToolsLinux {
 		*
 		*  @param[in] pDisplay
 		*    Display
-		*  @param[in] nWindow
-		*    Window
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*  @param[in] bDecorate
 		*    'true' to apply default window decoration, else 'false'
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API static bool SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool bDecorate);
+		PLGUI_API static bool SetNoWindowDecoration(Display *pDisplay, ::Window nNativeWindowHandle, bool bDecorate);
 
 		/**
 		*  @brief

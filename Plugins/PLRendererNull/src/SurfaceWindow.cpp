@@ -57,8 +57,8 @@ SurfaceWindow::~SurfaceWindow()
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen)
+SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
+	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen)
 {
 	// Init
 	Init();
@@ -86,10 +86,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 Vector2i SurfaceWindow::GetSize() const
 {
-	if (GetWindow()) {
+	if (GetNativeWindowHandle()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetWindow()), &sRect);
+			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		// [TODO] Linux

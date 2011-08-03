@@ -89,10 +89,10 @@ class WidgetPL : public PLGui::WidgetImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void CreateWidget() override;
-		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle) override;
+		virtual void CreateWrapperWidget(PLCore::handle nNativeWindowHandle) override;
 		virtual bool IsDestroyed() const override;
 		virtual void Destroy() override;
-		virtual PLCore::handle GetWindowHandle() const override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void SetParent(PLGui::WidgetImpl *pParent) override;
 		virtual bool IsShowInTaskbar() const override;
 		virtual void SetShowInTaskbar(bool bShowInTaskbar) override;

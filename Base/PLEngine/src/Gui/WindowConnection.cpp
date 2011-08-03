@@ -138,7 +138,7 @@ void WindowConnection::SetDisplayMode(const DisplayMode &sDisplayMode)
 
 			// Backup information
 			const SurfaceWindow *pSurface  = static_cast<SurfaceWindow*>(GetSurface());
-			if (pSurface && pSurface->GetWindow()) {
+			if (pSurface && pSurface->GetNativeWindowHandle()) {
 				// Backup information
 				bool			bFullscreen = IsFullscreen();
 				SurfacePainter *pPainter    = GetSurface()->GetPainter();
@@ -238,7 +238,7 @@ void WindowConnection::SetFullscreen(bool bFullscreen)
 	if (IsFullscreen() != bFullscreen) {
 		// Backup information
 		const SurfaceWindow *pSurface  = static_cast<SurfaceWindow*>(GetSurface());
-		if (pSurface && pSurface->GetWindow()) {
+		if (pSurface && pSurface->GetNativeWindowHandle()) {
 			// Backup information
 			SurfacePainter *pPainter = GetSurface()->GetPainter();
 			GetSurface()->SetPainter(nullptr, false);
@@ -330,10 +330,10 @@ WindowConnection &WindowConnection::operator =(const WindowConnection &cSource)
 void WindowConnection::InitWidget(bool bFullscreen)
 {
 	// Get the native window handle
-	handle nWindow = m_pWidget->GetContentWidget()->GetWindowHandle();
+	const handle nNativeWindow = m_pWidget->GetContentWidget()->GetNativeWindowHandle();
 
 	// Initialize renderer surface handler
-	Init(*m_pRenderer, nWindow, m_sDisplayMode, bFullscreen);
+	Init(*m_pRenderer, nNativeWindow, m_sDisplayMode, bFullscreen);
 
 	// Backup the fullscreen mode
 	m_bFullscreenMode = GetSurface() ? static_cast<SurfaceWindow*>(GetSurface())->IsFullscreen() : false;

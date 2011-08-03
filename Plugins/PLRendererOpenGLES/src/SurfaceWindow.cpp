@@ -60,8 +60,8 @@ SurfaceWindow::~SurfaceWindow()
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
+SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
+	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
 	m_hSurface(nullptr),
 	m_nSwapInterval(-1)
 {
@@ -91,10 +91,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 Vector2i SurfaceWindow::GetSize() const
 {
-	if (GetWindow()) {
+	if (GetNativeWindowHandle()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetWindow()), &sRect);
+			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		#ifdef LINUX
@@ -105,7 +105,7 @@ Vector2i SurfaceWindow::GetSize() const
 				::Window nRootWindow = 0;
 				int	nPositionX = 0, nPositionY = 0;
 				unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-				XGetGeometry(pDisplay, GetWindow(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+				XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 				return Vector2i(nWidth, nHeight);
 			}
 		#endif
@@ -121,18 +121,18 @@ Vector2i SurfaceWindow::GetSize() const
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()
 {
-	// First check if theres a window
-	const handle nWindow = GetWindow();
-	if (nWindow) {
+	// First check if theres a native window
+	const handle nNativeWindowHandle = GetNativeWindowHandle();
+	if (nNativeWindowHandle) {
 		// Get the OpenGL ES renderer
 		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 		// Create window surface
 		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetEGLDisplay(),
 											cRendererOpenGLES.GetEGLConfig(),
-											(EGLNativeWindowType)nWindow,	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
-																			// reinterpret_cast<EGLNativeWindowType>(nWindow) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nWindow)
-																			// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
+											(EGLNativeWindowType)nNativeWindowHandle,	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
+																						// reinterpret_cast<EGLNativeWindowType>(nNativeWindowHandle) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nNativeWindowHandle)
+																						// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
 											nullptr);
 		if (m_hSurface == EGL_NO_SURFACE) {
 			PL_LOG(Warning, "Could not create OpenGL ES surface")

@@ -84,8 +84,8 @@ ID3D11RenderTargetView *SurfaceWindow::GetD3D11RenderTargetView() const
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
+SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
+	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
 	m_pDXGISwapChain(nullptr),
 	m_pD3D11Texture2DBackBuffer(nullptr),
 	m_pD3D11RenderTargetView(nullptr)
@@ -119,10 +119,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 Vector2i SurfaceWindow::GetSize() const
 {
-	if (GetWindow()) {
+	if (GetNativeWindowHandle()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetWindow()), &sRect);
+			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 	} else {
@@ -155,7 +155,7 @@ bool SurfaceWindow::Init()
 		m_sDXGISwapChainDescription.SampleDesc.Quality					= 0;
 		m_sDXGISwapChainDescription.BufferUsage							= DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		m_sDXGISwapChainDescription.BufferCount							= 1;
-		m_sDXGISwapChainDescription.OutputWindow						= reinterpret_cast<HWND>(GetWindow());
+		m_sDXGISwapChainDescription.OutputWindow						= reinterpret_cast<HWND>(GetNativeWindowHandle());
 		m_sDXGISwapChainDescription.Windowed							= TRUE;
 		m_sDXGISwapChainDescription.SwapEffect							= DXGI_SWAP_EFFECT_DISCARD;
 		m_sDXGISwapChainDescription.Flags								= 0;

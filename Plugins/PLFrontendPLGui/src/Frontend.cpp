@@ -117,7 +117,7 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 //[-------------------------------------------------------]
 handle Frontend::GetNativeWindowHandle() const
 {
-	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetWindowHandle() : NULL_HANDLE;
+	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetNativeWindowHandle() : NULL_HANDLE;
 }
 
 

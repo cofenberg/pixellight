@@ -256,8 +256,8 @@ class TrayIconWidgetLinux : public Widget {
 		*  @brief
 		*    Send system tray message to XEMBED embedder window
 		*
-		*  @param[in] nWindow
-		*    Window
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*  @param[in] nMessage
 		*    Message opcode
 		*  @param[in] nDetail
@@ -267,20 +267,20 @@ class TrayIconWidgetLinux : public Widget {
 		*  @param[in] nData2
 		*    Second parameter
 		*/
-		void SendSysTrayMessage(::Window nWindow, long nMessage, long nDetail, long nData1, long nData2);
+		void SendSysTrayMessage(::Window nNativeWindowHandle, long nMessage, long nDetail, long nData1, long nData2);
 
 		/**
 		*  @brief
 		*    Send system tray data message to XEMBED embedder window
 		*
-		*  @param[in] nWindow
-		*    Window
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*  @param[in] pszString
 		*    String data
 		*  @param[in] nSize
 		*    Size of string data (excluding the terminating zero), max. 20!
 		*/
-		void SendSysTrayMessageData(::Window nWindow, const char *pszString, long nSize);
+		void SendSysTrayMessageData(::Window nNativeWindowHandle, const char *pszString, long nSize);
 
 
 	//[-------------------------------------------------------]

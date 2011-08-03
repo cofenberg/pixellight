@@ -132,9 +132,9 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()
 {
-	// First check if there is a window
-	const handle nWindow = GetWindow();
-	if (nWindow) {
+	// First check if there is a native window handle
+	const handle nNativeWindowHandle = GetNativeWindowHandle();
+	if (nNativeWindowHandle) {
 		// Initialize OpenGL window
 		int nBitsPerPixel = 16;
 
@@ -228,7 +228,7 @@ bool SurfaceWindow::Init()
 		int nBestSamples = 0;
 
 		// Get window device context
-		m_hDC = ::GetDC(reinterpret_cast<HWND>(nWindow));
+		m_hDC = ::GetDC(reinterpret_cast<HWND>(nNativeWindowHandle));
 		if (m_hDC) { // Did we get a device context?
 			// Choose pixel format
 			PL_LOG(Info, "Search for a suitable pixel format")
@@ -311,9 +311,9 @@ bool SurfaceWindow::Init()
 
 void SurfaceWindow::DeInit()
 {
-	// First check if there is a window
-	const handle nWindow = GetWindow();
-	if (nWindow) {
+	// First check if there is a native window handle
+	const handle nNativeWindowHandle = GetNativeWindowHandle();
+	if (nNativeWindowHandle) {
 		// We're going to perform a cruel act - so give OpenGL a chance to flush and finish it's data...
 		// just so be on the safe side, you never now...
 		glFinish();
@@ -330,7 +330,7 @@ void SurfaceWindow::DeInit()
 		}
 
 		// Release the Windows DC
-		if (m_hDC && !ReleaseDC(reinterpret_cast<HWND>(nWindow), m_hDC))
+		if (m_hDC && !ReleaseDC(reinterpret_cast<HWND>(nNativeWindowHandle), m_hDC))
 			PL_LOG(Error, "Release OpenGL device context failed")
 		m_hDC = nullptr;
 

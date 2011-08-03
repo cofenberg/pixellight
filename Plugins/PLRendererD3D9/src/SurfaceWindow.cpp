@@ -61,8 +61,8 @@ SurfaceWindow::~SurfaceWindow()
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
+SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
+	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
 	EventHandlerSize(&SurfaceWindow::OnSize, this),
 	m_pSwapChain(nullptr),
 	m_pBackBuffer(nullptr)
@@ -151,7 +151,7 @@ bool SurfaceWindow::Init()
 {
 	// Get renderer
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
-	if (GetWindow()) {
+	if (GetNativeWindowHandle()) {
 		LPDIRECT3D9 pD3D = cRenderer.GetInstance();
 		if (pD3D) {
 			// Get renderer device
@@ -234,9 +234,9 @@ bool SurfaceWindow::UnmakeCurrent()
 bool SurfaceWindow::Present()
 {
 	// Is there a swap chain and a back buffer?
-	if (m_pSwapChain && m_pBackBuffer && GetWindow()) {
+	if (m_pSwapChain && m_pBackBuffer && GetNativeWindowHandle()) {
 		// Get surface window and present swap chain to window
-		if (m_pSwapChain->Present(nullptr, nullptr, reinterpret_cast<HWND>(GetWindow()), nullptr, 0) == D3D_OK) {
+		if (m_pSwapChain->Present(nullptr, nullptr, reinterpret_cast<HWND>(GetNativeWindowHandle()), nullptr, 0) == D3D_OK) {
 			m_pBackBuffer->Release();
 			m_pBackBuffer = nullptr;
 

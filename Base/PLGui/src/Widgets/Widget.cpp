@@ -132,7 +132,7 @@ Widget::Widget(Widget *pParent, bool bManaged) :
 *  @brief
 *    Constructor
 */
-Widget::Widget(handle nWindowHandle) :
+Widget::Widget(handle nNativeWindowHandle) :
 	ID(this),
 	Name(this),
 	Title(this),
@@ -161,7 +161,7 @@ Widget::Widget(handle nWindowHandle) :
 {
 	// Create implementation
 	m_pWidgetImpl = m_pGui->CreateWidgetImpl(*this);
-	m_pWidgetImpl->CreateWrapperWidget(nWindowHandle);
+	m_pWidgetImpl->CreateWrapperWidget(nNativeWindowHandle);
 
 	// Add to list of wrapper widgets in Gui
 	m_pGui->AddWrapperWidget(this);
@@ -215,12 +215,12 @@ WidgetImpl *Widget::GetImpl() const
 
 /**
 *  @brief
-*    Get system window handle
+*    Get system native window handle
 */
-handle Widget::GetWindowHandle() const
+handle Widget::GetNativeWindowHandle() const
 {
-	// Return window handle
-	return m_pWidgetImpl->GetWindowHandle();
+	// Return native window handle
+	return m_pWidgetImpl->GetNativeWindowHandle();
 }
 
 //[-------------------------------------------------------]
@@ -282,9 +282,9 @@ String Widget::GetDescriptor() const
 		return String() + m_nID;
 	}
 
-	// Window handle available?
+	// Native window handle available?
 	else if (m_pWidgetImpl) {
-		return String() + static_cast<int>(m_pWidgetImpl->GetWindowHandle());
+		return String() + static_cast<int>(m_pWidgetImpl->GetNativeWindowHandle());
 	}
 
 	// Unknown widget

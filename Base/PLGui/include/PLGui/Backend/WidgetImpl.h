@@ -104,10 +104,10 @@ class WidgetImpl {
 		*  @brief
 		*    Create wrapper widget
 		*
-		*  @param[in] nWindowHandle
-		*    System window handle
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*/
-		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle) = 0;
+		virtual void CreateWrapperWidget(PLCore::handle nNativeWindowHandle) = 0;
 
 		/**
 		*  @brief
@@ -126,12 +126,12 @@ class WidgetImpl {
 
 		/**
 		*  @brief
-		*    Get system window handle
+		*    Get system native window handle
 		*
 		*  @return
-		*    Window handle
+		*    Native window handle
 		*/
-		virtual PLCore::handle GetWindowHandle() const = 0;
+		virtual PLCore::handle GetNativeWindowHandle() const = 0;
 
 		/**
 		*  @brief

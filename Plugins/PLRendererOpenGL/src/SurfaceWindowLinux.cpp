@@ -96,11 +96,11 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()
 {
-	// First check if there's a window
-	const handle nWindow = GetWindow();
-	if (nWindow) {
-		// Backup the window handle
-		m_nWindow = nWindow;
+	// First check if there's a native window
+	const handle nNativeWindowHandle = GetNativeWindowHandle();
+	if (nNativeWindowHandle) {
+		// Backup the native window handle
+		m_nWindowHandle = nNativeWindowHandle;
 
 		// Backup gamma
 		GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
@@ -173,8 +173,8 @@ bool SurfaceWindow::Init()
 
 void SurfaceWindow::DeInit()
 {
-	// First check if there's a window
-	if (m_nWindow) {
+	// First check if there's a native window handle
+	if (m_nNativeWindowHandle) {
 		// Get the renderer instance
 		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
@@ -213,13 +213,13 @@ void SurfaceWindow::DeInit()
 
 bool SurfaceWindow::MakeCurrent(uint8 nFace)
 {
-	// First check if there's a window
-	if (m_nWindow) {
+	// First check if there's a native window handle
+	if (m_nNativeWindowHandle) {
 		// Get the Linux OpenGL render context
 		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
 		if (pContextLinux) {
 			// Make this surface current
-			return glXMakeCurrent(pContextLinux->GetDisplay(), m_nWindow, pContextLinux->GetRenderContext());
+			return glXMakeCurrent(pContextLinux->GetDisplay(), m_nNativeWindowHandle, pContextLinux->GetRenderContext());
 		}
 	}
 
@@ -229,8 +229,8 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 
 bool SurfaceWindow::Present()
 {
-	// First check if there's a window
-	if (m_nWindow) {
+	// First check if there's a native window handle
+	if (m_nNativeWindowHandle) {
 		// Get the Linux OpenGL render context
 		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 		ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
@@ -243,7 +243,7 @@ bool SurfaceWindow::Present()
 			}
 
 			// Swap buffers
-			glXSwapBuffers(pContextLinux->GetDisplay(), m_nWindow);
+			glXSwapBuffers(pContextLinux->GetDisplay(), m_nNativeWindowHandle);
 		}
 
 		// Done

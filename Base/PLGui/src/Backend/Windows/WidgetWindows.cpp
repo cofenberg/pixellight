@@ -82,7 +82,7 @@ WidgetWindows::~WidgetWindows()
 void WidgetWindows::CreateWidget()
 {
 	// Get parent widget
-	HWND hParent = m_pWidget->GetParent() ? reinterpret_cast<HWND>(m_pWidget->GetParent()->GetWindowHandle()) : nullptr;
+	HWND hParent = m_pWidget->GetParent() ? reinterpret_cast<HWND>(m_pWidget->GetParent()->GetNativeWindowHandle()) : nullptr;
 
 	// Set window style
 	uint32 nWinStyle, nExtStyle;
@@ -106,13 +106,13 @@ void WidgetWindows::CreateWidget()
 	}
 }
 
-void WidgetWindows::CreateWrapperWidget(handle nWindowHandle)
+void WidgetWindows::CreateWrapperWidget(handle nNativeWindowHandle)
 {
 	// Mark as wrapper widget
 	m_bWrapper = true;
 
-	// Save window handle
-	m_hWnd = reinterpret_cast<HWND>(nWindowHandle);
+	// Save native window handle
+	m_hWnd = reinterpret_cast<HWND>(nNativeWindowHandle);
 }
 
 bool WidgetWindows::IsDestroyed() const
@@ -130,9 +130,9 @@ void WidgetWindows::Destroy()
 	}
 }
 
-handle WidgetWindows::GetWindowHandle() const
+handle WidgetWindows::GetNativeWindowHandle() const
 {
-	// Return window handle
+	// Return native window handle
 	return reinterpret_cast<handle>(m_hWnd);
 }
 
@@ -143,7 +143,7 @@ void WidgetWindows::SetParent(WidgetImpl *pParent)
 	// Get parent widget
 	HWND hParent = nullptr;
 	if (m_pWidget->GetParentWidget()) {
-		hParent = m_pWidget->GetParentWidget()->GetWindowHandle();
+		hParent = m_pWidget->GetParentWidget()->GetNativeWindowHandle();
 	}
 
 	// Set new parent widget
@@ -185,7 +185,7 @@ Vector2i WidgetWindows::GetPos() const
 	RECT sParentRect;
 	sParentRect.left = sParentRect.top = 0;
 	if (m_pWidget->GetParent()) {
-		GetWindowRect(reinterpret_cast<HWND>(m_pWidget->GetParent()->GetWindowHandle()), &sParentRect);
+		GetWindowRect(reinterpret_cast<HWND>(m_pWidget->GetParent()->GetNativeWindowHandle()), &sParentRect);
 	}
 
 	// Get position
@@ -226,10 +226,10 @@ void WidgetWindows::SetZPos(EZPos nZPos, Widget *pWidget)
 	HWND hWndAfter = nullptr;
 	if (nZPos == ZBehind && pWidget) {
 		// This widget will be in front of our widget
-		hWndAfter = reinterpret_cast<HWND>(pWidget->GetWindowHandle());
+		hWndAfter = reinterpret_cast<HWND>(pWidget->GetNativeWindowHandle());
 	} else if (nZPos == ZAbove && pWidget) {
 		// This widget will be behind our widget
-		hWndAfter = GetNextWindow(reinterpret_cast<HWND>(pWidget->GetWindowHandle()), GW_HWNDPREV);
+		hWndAfter = GetNextWindow(reinterpret_cast<HWND>(pWidget->GetNativeWindowHandle()), GW_HWNDPREV);
 		if (!hWndAfter) hWndAfter = HWND_TOP;
 	} else if (nZPos == ZTop) {
 		// Our widget will be on top of the screen
@@ -240,7 +240,7 @@ void WidgetWindows::SetZPos(EZPos nZPos, Widget *pWidget)
 	}
 
 	// Set Z position
-	SetWindowPos(reinterpret_cast<HWND>(GetWindowHandle()), hWndAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+	SetWindowPos(reinterpret_cast<HWND>(GetNativeWindowHandle()), hWndAfter, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 }
 
 bool WidgetWindows::IsTopmost() const

@@ -59,7 +59,7 @@ WidgetLinux::WidgetLinux(Widget &cWidget) :
 	WidgetImpl(cWidget),
 	m_pDisplay(static_cast<GuiLinux*>(cWidget.GetGui()->GetImpl())->GetDisplay()),
 	m_nScreen(0),
-	m_nWindow(0),
+	m_nNativeWindowHandle(0),
 	m_bWrapper(false),
 	m_bDestroyed(false),
 	m_bVisible(false),
@@ -100,7 +100,7 @@ void WidgetLinux::CreateWidget()
 							   PointerMotionMask | EnterWindowMask | LeaveWindowMask | ButtonPressMask | ButtonReleaseMask;
 
 	// Get parent widget
-	::Window nParent = (m_pWidget->GetParent() ? m_pWidget->GetParent()->GetWindowHandle() : DefaultRootWindow(m_pDisplay));
+	::Window nParent = (m_pWidget->GetParent() ? m_pWidget->GetParent()->GetNativeWindowHandle() : DefaultRootWindow(m_pDisplay));
 
 	// Initialize position and size
 	m_nX	  = 0;
@@ -109,18 +109,18 @@ void WidgetLinux::CreateWidget()
 	m_nHeight = 100;
 
 	// Create widget
-	m_nWindow = XCreateWindow(m_pDisplay, nParent, m_nX, m_nY, m_nWidth, m_nHeight, 0, CopyFromParent, InputOutput, CopyFromParent, CWBorderPixel | CWColormap | CWEventMask, &sWindowAttr);
-	if (m_nWindow) {
+	m_nNativeWindowHandle = XCreateWindow(m_pDisplay, nParent, m_nX, m_nY, m_nWidth, m_nHeight, 0, CopyFromParent, InputOutput, CopyFromParent, CWBorderPixel | CWColormap | CWEventMask, &sWindowAttr);
+	if (m_nNativeWindowHandle) {
 		// Set widget properties
 		XSetStandardProperties(
-			m_pDisplay,		// Display
-			m_nWindow,		// Window
-			"",				// Window name
-			"",				// Icon name
-			XLib::None,		// Icon pixmap
-			nullptr,		// argv
-			0,				// argc
-			nullptr			// Hints
+			m_pDisplay,				// Display
+			m_nNativeWindowHandle,	// Window
+			"",						// Window name
+			"",						// Icon name
+			XLib::None,				// Icon pixmap
+			nullptr,				// argv
+			0,						// argc
+			nullptr					// Hints
 		);
 
 		// Set positioning hints
@@ -128,23 +128,23 @@ void WidgetLinux::CreateWidget()
 		pSize->flags	  = PPosition | PSize | PMinSize;
 		pSize->min_width  = 10;
 		pSize->min_height = 10;
-		XSetWMNormalHints(m_pDisplay, m_nWindow, pSize);
+		XSetWMNormalHints(m_pDisplay, m_nNativeWindowHandle, pSize);
 		XFree(pSize);
 
 		// Set focus hints
 		XWMHints sWMHints;
 		sWMHints.flags = InputHint;
 		sWMHints.input = false;
-		XSetWMHints(m_pDisplay, m_nWindow, &sWMHints);
+		XSetWMHints(m_pDisplay, m_nNativeWindowHandle, &sWMHints);
 
 		// Remove window manager decoration
-		ToolsLinux::SetNoWindowDecoration(m_pDisplay, m_nWindow, false);
+		ToolsLinux::SetNoWindowDecoration(m_pDisplay, m_nNativeWindowHandle, false);
 
 		// Save pointer to virtual widget object
-		XSaveContext(m_pDisplay, m_nWindow, 0, reinterpret_cast<char*>(this));
+		XSaveContext(m_pDisplay, m_nNativeWindowHandle, 0, reinterpret_cast<char*>(this));
 
 		// Add custom message for 'Close Window'
-		XSetWMProtocols(m_pDisplay, m_nWindow, reinterpret_cast<Atom*>(&static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl())->m_sClientProtocols), 7);
+		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, reinterpret_cast<Atom*>(&static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl())->m_sClientProtocols), 7);
 
 		// Send OnCreate message
 		m_pWidget->GetGui()->SendMessage(GuiMessage::OnCreate(m_pWidget));
@@ -153,18 +153,18 @@ void WidgetLinux::CreateWidget()
 		m_pWidget->GetGui()->SendMessage(GuiMessage::OnSize(m_pWidget, Vector2i(m_nWidth, m_nHeight)));
 	} else {
 		// Could not create widget
-		m_bDestroyed = true;
-		m_nWindow	 = 0;
+		m_bDestroyed			= true;
+		m_nNativeWindowHandle	= 0;
 	}
 }
 
-void WidgetLinux::CreateWrapperWidget(handle nWindowHandle)
+void WidgetLinux::CreateWrapperWidget(handle nNativeWindowHandle)
 {
 	// Mark as wrapper widget
 	m_bWrapper = true;
 
-	// Save window handle
-	m_nWindow = static_cast< ::Window>(nWindowHandle);
+	// Save native window handle
+	m_nNativeWindowHandle = static_cast< ::Window>(nNativeWindowHandle);
 }
 
 bool WidgetLinux::IsDestroyed() const
@@ -183,23 +183,23 @@ void WidgetLinux::Destroy()
 		// Send destroy event
 		XEvent sEvent;
 		sEvent.type					= ClientMessage;
-		sEvent.xclient.window		= m_nWindow;
+		sEvent.xclient.window		= m_nNativeWindowHandle;
 		sEvent.xclient.message_type = 0;
 		sEvent.xclient.format		= 32;
 		sEvent.xclient.data.l[0]	= pGuiLinux->m_sClientProtocols.DestroyWidget;
 		sEvent.xclient.data.l[1]	= 0;
 		sEvent.xclient.data.l[2]	= 0;
-		XSendEvent(m_pDisplay, m_nWindow, False, NoEventMask, &sEvent);
+		XSendEvent(m_pDisplay, m_nNativeWindowHandle, False, NoEventMask, &sEvent);
 
 		// Do it!
 		XSync(m_pDisplay, False);
 	}
 }
 
-handle WidgetLinux::GetWindowHandle() const
+handle WidgetLinux::GetNativeWindowHandle() const
 {
-	// Return window handle
-	return static_cast<handle>(m_nWindow);
+	// Return native window handle
+	return static_cast<handle>(m_nNativeWindowHandle);
 }
 
 void WidgetLinux::SetParent(WidgetImpl *pParent)
@@ -247,7 +247,7 @@ void WidgetLinux::SetPos(const Vector2i &vPos)
 		int nFlags = CWX | CWY;
 		sChanges.x = vPos.x;
 		sChanges.y = vPos.y;
-		XConfigureWindow(m_pDisplay, m_nWindow, nFlags, &sChanges);
+		XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, nFlags, &sChanges);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -268,7 +268,7 @@ void WidgetLinux::SetSize(const Vector2i &vSize)
 		XWindowChanges sChanges;
 		sChanges.width  = vSize.x;
 		sChanges.height = vSize.y;
-		XConfigureWindow(m_pDisplay, m_nWindow, CWWidth | CWHeight, &sChanges);
+		XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, CWWidth | CWHeight, &sChanges);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -282,7 +282,7 @@ void WidgetLinux::SetZPos(EZPos nZPos, Widget *pWidget)
 	// Set window stacking order
 	XWindowChanges changes;
 	changes.stack_mode = bTop ? Above : Below;
-	XConfigureWindow(m_pDisplay, m_nWindow, CWStackMode, &changes);
+	XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, CWStackMode, &changes);
 	*/
 }
 
@@ -331,7 +331,7 @@ void WidgetLinux::SetWindowState(EWindowState nWindowState)
 			AddWMState(pGuiLinux->m_sAtoms._NET_WM_STATE_MAXIMIZED_HORZ, pGuiLinux->m_sAtoms._NET_WM_STATE_MAXIMIZED_VERT);
 		} else if (nWindowState == StateMinimized) {
 			// Minimize
-			XIconifyWindow(m_pDisplay, m_nWindow, m_nScreen);
+			XIconifyWindow(m_pDisplay, m_nNativeWindowHandle, m_nScreen);
 		} else {
 			// Restore window mode
 			RemoveWMState(pGuiLinux->m_sAtoms._NET_WM_STATE_FULLSCREEN);
@@ -357,8 +357,8 @@ void WidgetLinux::SetVisible(bool bVisible)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Show/hide
-		if (bVisible) XMapWindow(m_pDisplay, m_nWindow);
-		else		  XUnmapWindow(m_pDisplay, m_nWindow);
+		if (bVisible) XMapWindow(m_pDisplay, m_nNativeWindowHandle);
+		else		  XUnmapWindow(m_pDisplay, m_nNativeWindowHandle);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -403,7 +403,7 @@ void WidgetLinux::SetFocus()
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Set focus to this widget
-		XSetInputFocus(m_pDisplay, m_nWindow, RevertToParent, CurrentTime);
+		XSetInputFocus(m_pDisplay, m_nNativeWindowHandle, RevertToParent, CurrentTime);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -417,9 +417,9 @@ void WidgetLinux::Redraw()
 		// Send expose event
 		XEvent sEvent;
 		sEvent.type			 = Expose;
-		sEvent.xany.window	 = m_nWindow;
+		sEvent.xany.window	 = m_nNativeWindowHandle;
 		sEvent.xexpose.count = 0;
-		XSendEvent(m_pDisplay, m_nWindow, False, 0, &sEvent);
+		XSendEvent(m_pDisplay, m_nNativeWindowHandle, False, 0, &sEvent);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -433,7 +433,7 @@ void WidgetLinux::SetTrapMouse(bool bTrap)
 		// Set or release mouse capture?
 		if (bTrap) {
 			// Grab mouse
-			XGrabPointer(m_pDisplay, m_nWindow, True, 0, GrabModeAsync, GrabModeAsync, m_nWindow, XLib::None, CurrentTime);
+			XGrabPointer(m_pDisplay, m_nNativeWindowHandle, True, 0, GrabModeAsync, GrabModeAsync, m_nNativeWindowHandle, XLib::None, CurrentTime);
 		} else {
 			// Release mouse grab
 			XUngrabPointer(m_pDisplay, CurrentTime);
@@ -452,7 +452,7 @@ void WidgetLinux::SetCaptureMouse(bool bCapture)
 		if (bCapture) {
 			// Grab mouse
 			XGrabPointer(m_pDisplay,
-						 m_nWindow,
+						 m_nNativeWindowHandle,
 						 False,
 						 ButtonPressMask | ButtonReleaseMask | PointerMotionMask,
 						 GrabModeAsync,
@@ -489,9 +489,9 @@ void WidgetLinux::SetTitle(const String &sTitle)
 		GuiLinux *pGuiLinux = static_cast<GuiLinux*>(m_pWidget->GetGui()->GetImpl());
 
 		// Set window title
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms.WM_NAME,				 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_NAME,		 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_VISIBLE_NAME, pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, pGuiLinux->m_sAtoms.WM_NAME,				 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, pGuiLinux->m_sAtoms._NET_WM_NAME,		 pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, pGuiLinux->m_sAtoms._NET_WM_VISIBLE_NAME, pGuiLinux->m_sAtoms.UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -507,7 +507,7 @@ void WidgetLinux::SetIcon(const Image &cIcon)
 		sWMHints.flags = IconPixmapHint | IconMaskHint;
 		sWMHints.icon_pixmap = static_cast<ImageLinux*>(cIcon.GetImpl())->GetPixmap();
 		sWMHints.icon_mask   = static_cast<ImageLinux*>(cIcon.GetImpl())->GetMaskPixmap();
-		XSetWMHints(m_pDisplay, m_nWindow, &sWMHints);
+		XSetWMHints(m_pDisplay, m_nNativeWindowHandle, &sWMHints);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -519,7 +519,7 @@ void WidgetLinux::SetCursor(const Cursor &cCursor)
 	// Check if widget has been destroyed
 	if (!m_bDestroyed) {
 		// Set cursor
-		XDefineCursor(m_pDisplay, m_nWindow, static_cast<CursorLinux*>(cCursor.GetImpl())->GetXCursor());
+		XDefineCursor(m_pDisplay, m_nNativeWindowHandle, static_cast<CursorLinux*>(cCursor.GetImpl())->GetXCursor());
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -532,7 +532,7 @@ bool WidgetLinux::GetMousePos(Vector2i &vPos)
 	XEvent sXEvent;
 
 	// Get the window directly below the current mouse cursor position - do only continue if this is our window
-	if (XQueryPointer(m_pDisplay, m_nWindow, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
+	if (XQueryPointer(m_pDisplay, m_nNativeWindowHandle, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
 		&sXEvent.xbutton.x_root, &sXEvent.xbutton.y_root, &sXEvent.xbutton.x, &sXEvent.xbutton.y, &sXEvent.xbutton.state) == True) {
 		// Write out the mouse cursor position inside this window
 		vPos.x = sXEvent.xbutton.x;
@@ -558,7 +558,7 @@ void WidgetLinux::AddWMState(::Atom sAtom1, ::Atom sAtom2)
 	// Send _NET_WM_STATE_ADD event
 	XEvent sEvent;
 	sEvent.type					= ClientMessage;
-	sEvent.xclient.window		= m_nWindow;
+	sEvent.xclient.window		= m_nNativeWindowHandle;
 	sEvent.xclient.message_type = pGuiLinux->m_sAtoms._NET_WM_STATE;
 	sEvent.xclient.format		= 32;
 	sEvent.xclient.data.l[0]	= _NET_WM_STATE_ADD;
@@ -578,7 +578,7 @@ void WidgetLinux::RemoveWMState(::Atom sAtom1, ::Atom sAtom2)
 	// Send _NET_WM_STATE_REMOVE event
 	XEvent sEvent;
 	sEvent.type					= ClientMessage;
-	sEvent.xclient.window		= m_nWindow;
+	sEvent.xclient.window		= m_nNativeWindowHandle;
 	sEvent.xclient.message_type = pGuiLinux->m_sAtoms._NET_WM_STATE;
 	sEvent.xclient.format		= 32;
 	sEvent.xclient.data.l[0]	= _NET_WM_STATE_REMOVE;
@@ -607,7 +607,7 @@ void WidgetLinux::UpdateWMStates()
 		int nFormat;
 		unsigned char *pData;
 		unsigned long nItemsRead, nItemsLeft;
-		int nResult = XGetWindowProperty(m_pDisplay, m_nWindow, pGuiLinux->m_sAtoms._NET_WM_STATE, 0, 8192, False, XA_ATOM, &nType, &nFormat, &nItemsRead, &nItemsLeft, &pData);
+		int nResult = XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, pGuiLinux->m_sAtoms._NET_WM_STATE, 0, 8192, False, XA_ATOM, &nType, &nFormat, &nItemsRead, &nItemsLeft, &pData);
 		if (nResult == XLib::Success) {
 			// Get atoms
 			Atom *pAtoms = reinterpret_cast<Atom*>(pData);

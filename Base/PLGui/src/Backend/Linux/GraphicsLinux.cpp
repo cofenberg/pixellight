@@ -52,10 +52,10 @@ namespace PLGui {
 *  @brief
 *    Constructor
 */
-GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow) : GraphicsImpl(),
+GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nNativeWindowHandle) : GraphicsImpl(),
 	m_pDisplay(pDisplay),
 	m_nScreen(nScreen),
-	m_nWindow(nWindow),
+	m_nNativeWindowHandle(nNativeWindowHandle),
 	m_nColorDepth(16)
 {
 	// Get color depth
@@ -65,7 +65,7 @@ GraphicsLinux::GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow)
 	::XGCValues	sGCValues;
 	sGCValues.function   = GXcopy;
 	sGCValues.foreground = ToolsLinux::GetXColor(Color3::Black, m_nColorDepth);
-	m_sGC = XCreateGC(m_pDisplay, m_nWindow, GCFunction | GCForeground, &sGCValues);
+	m_sGC = XCreateGC(m_pDisplay, m_nNativeWindowHandle, GCFunction | GCForeground, &sGCValues);
 }
 
 /**
@@ -78,8 +78,8 @@ GraphicsLinux::GraphicsLinux(Graphics &cGraphics) : GraphicsImpl(cGraphics)
 	GuiLinux *pGuiLinux = static_cast<GuiLinux*>(cGraphics.GetGui()->GetImpl());
 	m_pDisplay = pGuiLinux->m_pDisplay;
 	m_nScreen = DefaultScreen(m_pDisplay);
-	m_nWindow = RootWindow(m_pDisplay, m_nScreen);
-	Pixmap offscreen = XCreatePixmap(m_pDisplay, m_nWindow, 512, 512, 1);
+	m_nNativeWindowHandle = RootWindow(m_pDisplay, m_nScreen);
+	Pixmap offscreen = XCreatePixmap(m_pDisplay, m_nNativeWindowHandle, 512, 512, 1);
 
 	// Get color depth
 	m_nColorDepth = DefaultDepth(m_pDisplay, m_nScreen);
@@ -88,7 +88,7 @@ GraphicsLinux::GraphicsLinux(Graphics &cGraphics) : GraphicsImpl(cGraphics)
 	::XGCValues	sGCValues;
 	sGCValues.function   = GXcopy;
 	sGCValues.foreground = ToolsLinux::GetXColor(Color3::Black, m_nColorDepth);
-	m_sGC = XCreateGC(m_pDisplay, m_nWindow, GCFunction | GCForeground, &sGCValues);
+	m_sGC = XCreateGC(m_pDisplay, m_nNativeWindowHandle, GCFunction | GCForeground, &sGCValues);
 }
 
 /**
@@ -107,8 +107,8 @@ GraphicsLinux::~GraphicsLinux()
 //[-------------------------------------------------------]
 void GraphicsLinux::DrawLine(const Color4 &cColor, const Vector2i &vPos1, const Vector2i &vPos2, uint32 nWidth)
 {
-	// Check if window handle is valid
-	if (m_nWindow) {
+	// Check if native window handle is valid
+	if (m_nNativeWindowHandle) {
 		// Set graphics options
 		::XGCValues	sGCValues;
 		sGCValues.function   = GXcopy;
@@ -117,14 +117,14 @@ void GraphicsLinux::DrawLine(const Color4 &cColor, const Vector2i &vPos1, const 
 		XChangeGC(m_pDisplay, m_sGC, GCFunction | GCForeground | GCLineWidth, &sGCValues);
 
 		// Draw line
-		XDrawLine(m_pDisplay, m_nWindow, m_sGC, vPos1.x, vPos1.y, vPos2.x, vPos2.y);
+		XDrawLine(m_pDisplay, m_nNativeWindowHandle, m_sGC, vPos1.x, vPos1.y, vPos2.x, vPos2.y);
 	}
 }
 
 void GraphicsLinux::DrawRect(const Color4 &cColor, const Vector2i &vPos1, const Vector2i &vPos2, uint32 nRoundX, uint32 nRoundY, uint32 nWidth)
 {
-	// Check if window handle is valid
-	if (m_nWindow) {
+	// Check if native window handle is valid
+	if (m_nNativeWindowHandle) {
 		// Set graphics options
 		::XGCValues	sGCValues;
 		sGCValues.function   = GXcopy;
@@ -133,14 +133,14 @@ void GraphicsLinux::DrawRect(const Color4 &cColor, const Vector2i &vPos1, const 
 		XChangeGC(m_pDisplay, m_sGC, GCFunction | GCForeground | GCLineWidth, &sGCValues);
 
 		// Draw rectangle
-		XDrawRectangle(m_pDisplay, m_nWindow, m_sGC, vPos1.x, vPos1.y, vPos2.x-vPos1.x, vPos2.y-vPos1.y);
+		XDrawRectangle(m_pDisplay, m_nNativeWindowHandle, m_sGC, vPos1.x, vPos1.y, vPos2.x-vPos1.x, vPos2.y-vPos1.y);
 	}
 }
 
 void GraphicsLinux::DrawBox(const Color4 &cColor, const Vector2i &vPos1, const Vector2i &vPos2, uint32 nRoundX, uint32 nRoundY)
 {
-	// Check if window handle is valid
-	if (m_nWindow) {
+	// Check if native window handle is valid
+	if (m_nNativeWindowHandle) {
 		// Set graphics options
 		::XGCValues	sGCValues;
 		sGCValues.function   = GXcopy;
@@ -149,7 +149,7 @@ void GraphicsLinux::DrawBox(const Color4 &cColor, const Vector2i &vPos1, const V
 		XChangeGC(m_pDisplay, m_sGC, GCFunction | GCForeground | GCBackground, &sGCValues);
 
 		// Draw box
-		XFillRectangle(m_pDisplay, m_nWindow, m_sGC, vPos1.x, vPos1.y, vPos2.x-vPos1.x+1, vPos2.y-vPos1.y+1);
+		XFillRectangle(m_pDisplay, m_nNativeWindowHandle, m_sGC, vPos1.x, vPos1.y, vPos2.x-vPos1.x+1, vPos2.y-vPos1.y+1);
 	}
 }
 
@@ -162,8 +162,8 @@ void GraphicsLinux::DrawImage(const Image &cImage, const Vector2i &vPos, const V
 {
 	// [TODO] Currently, the image is always drawn with the source size (no scaling implemented)
 
-	// Check if window handle is valid
-	if (m_nWindow) {
+	// Check if native window handle is valid
+	if (m_nNativeWindowHandle) {
 		// Get image and mask pixmaps
 		Pixmap pixmap = static_cast<ImageLinux*>(cImage.GetImpl())->GetPixmap();
 		Pixmap mask   = static_cast<ImageLinux*>(cImage.GetImpl())->GetMaskPixmap();
@@ -178,7 +178,7 @@ void GraphicsLinux::DrawImage(const Image &cImage, const Vector2i &vPos, const V
 		// Draw image
 		unsigned int nWidth  = vSize.x ? vSize.x : cImage.GetSize().x;
 		unsigned int nHeight = vSize.y ? vSize.y : cImage.GetSize().y;
-		XCopyArea(m_pDisplay, pixmap, m_nWindow, m_sGC, 0, 0, nWidth, nHeight, vPos.x, vPos.y);
+		XCopyArea(m_pDisplay, pixmap, m_nNativeWindowHandle, m_sGC, 0, 0, nWidth, nHeight, vPos.x, vPos.y);
 
 		// Reset mask
 		sGCValues.clip_mask		= XLib::None;
@@ -203,11 +203,11 @@ void GraphicsLinux::DrawText(const Font &cFont, const Color4 &cTextColor, const 
 
 	// Draw text
 	if (sText.GetFormat() == String::ASCII)
-		XDrawString(m_pDisplay, m_nWindow, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
+		XDrawString(m_pDisplay, m_nNativeWindowHandle, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
 	else if (sText.GetFormat() == String::Unicode)
 		// [TODO] For UTC-2 strings, look at FontSet instead of FontStruct and
 		//        XmbDrawString or Xutf8DrawString instead of XDrawString
-		XDrawString(m_pDisplay, m_nWindow, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
+		XDrawString(m_pDisplay, m_nNativeWindowHandle, m_sGC, vPos.x, vPos.y + nHeight, sText.GetASCII(), sText.GetLength());
 }
 
 uint32 GraphicsLinux::GetTextWidth(const Font &cFont, const String &sText)

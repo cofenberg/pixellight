@@ -86,11 +86,11 @@ Surface *SurfaceWindowHandler::GetSurface() const
 *  @brief
 *    Initializes the surface window handler
 */
-void SurfaceWindowHandler::Init(Renderer &cRenderer, handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen)
+void SurfaceWindowHandler::Init(Renderer &cRenderer, handle nNativeWindowHandle, const DisplayMode &sDisplayMode, bool bFullscreen)
 {
 	// Create the surface window
 	m_pRenderer = &cRenderer;
-	m_pSurfaceHandler->SetSurface(m_pRenderer->CreateSurfaceWindow(*this, nWindow, sDisplayMode, bFullscreen));
+	m_pSurfaceHandler->SetSurface(m_pRenderer->CreateSurfaceWindow(*this, nNativeWindowHandle, sDisplayMode, bFullscreen));
 }
 
 /**

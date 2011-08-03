@@ -4,6 +4,12 @@
 
 
 
+>> 03.08.2011
+[CO]
+- Naming cleanup: "Window" can have many meanings (OS window? PLGui window? etc.) - so made it clear when "Window" is a "system native window handle" to avoid confusion
+
+
+
 >> 31.07.2011
 [CO]
 - "PixelLight/PixelLight.cmake": VisualStudio 2010 files are only copied into the SDK on the MS Windows platform

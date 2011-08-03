@@ -96,7 +96,7 @@ long ToolsLinux::GetXColor(const Color3 &cColor, int nColorDepth)
 *  @brief
 *    Set window decoration for a window
 */
-bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool bDecorate)
+bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nNativeWindowHandle, bool bDecorate)
 {
 	// First try to set MWM hints
 	Atom WM_HINTS = XInternAtom(pDisplay, "_MOTIF_WM_HINTS", True);
@@ -109,7 +109,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 		// Set hints property
 		XChangeProperty(
 			pDisplay,
-			nWindow,
+			nNativeWindowHandle,
 			WM_HINTS,
 			WM_HINTS,
 			32,
@@ -133,7 +133,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 		// Set hints property
 		XChangeProperty(
 			pDisplay,
-			nWindow,
+			nNativeWindowHandle,
 			WM_HINTS,
 			WM_HINTS,
 			32,
@@ -157,7 +157,7 @@ bool ToolsLinux::SetNoWindowDecoration(Display *pDisplay, ::Window nWindow, bool
 		// Set hints property
 		XChangeProperty(
 			pDisplay,
-			nWindow,
+			nNativeWindowHandle,
 			WM_HINTS,
 			WM_HINTS,
 			32,

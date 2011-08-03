@@ -156,7 +156,7 @@ void WidgetPL::CreateWidget()
 	m_pWidget->GetGui()->SendMessage(GuiMessage::OnCreate(m_pWidget));
 }
 
-void WidgetPL::CreateWrapperWidget(handle nWindowHandle)
+void WidgetPL::CreateWrapperWidget(handle nNativeWindowHandle)
 {
 	// Mark as wrapper widget
 	m_bWrapper = true;
@@ -206,7 +206,7 @@ void WidgetPL::Destroy()
 	}
 }
 
-handle WidgetPL::GetWindowHandle() const
+handle WidgetPL::GetNativeWindowHandle() const
 {
 	// The ingame GUI doesn't have such a native window handle
 	return NULL_HANDLE;

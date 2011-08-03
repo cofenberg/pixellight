@@ -109,7 +109,7 @@ void TrayIconWindows::SetVisible(bool bVisible)
 		// Set options to create the icon
 		memset(&m_sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		m_sNotifyIcon.cbSize			= sizeof(NOTIFYICONDATA);
-		m_sNotifyIcon.hWnd				= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
+		m_sNotifyIcon.hWnd				= reinterpret_cast<HWND>(m_pWindow->GetNativeWindowHandle());
 		m_sNotifyIcon.uID				= m_nID;
 		m_sNotifyIcon.uFlags			= NIF_MESSAGE | NIF_ICON | NIF_TIP;
 		m_sNotifyIcon.uCallbackMessage	= PL_TRAYICON;
@@ -128,7 +128,7 @@ void TrayIconWindows::SetVisible(bool bVisible)
 		NOTIFYICONDATA sNotifyIcon;
 		memset(&sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		sNotifyIcon.cbSize	= sizeof(NOTIFYICONDATA);
-		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
+		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetNativeWindowHandle());
 		sNotifyIcon.uID		= m_nID;
 		sNotifyIcon.uFlags	= 0;
 
@@ -152,7 +152,7 @@ void TrayIconWindows::Update()
 		NOTIFYICONDATA sNotifyIcon;
 		memset(&sNotifyIcon, 0, sizeof(NOTIFYICONDATA));
 		sNotifyIcon.cbSize	= sizeof(NOTIFYICONDATA);
-		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetWindowHandle());
+		sNotifyIcon.hWnd	= reinterpret_cast<HWND>(m_pWindow->GetNativeWindowHandle());
 		sNotifyIcon.uID		= m_nID;
 		sNotifyIcon.uFlags	= NIF_ICON | NIF_TIP;
 		sNotifyIcon.hIcon	= hIcon;

@@ -506,14 +506,14 @@ void Renderer::RestoreDeviceObjects()
 //[-------------------------------------------------------]
 //[ Create surface/resource                               ]
 //[-------------------------------------------------------]
-PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
 {
 	// Is the surface window handler valid?
 	if (cHandler.GetRenderer() != this)
 		return nullptr; // Error!
 
 	// Create and register renderer surface
-	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nWindow, bFullscreen);
+	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen);
 	m_lstSurfaces.Add(pRendererSurface);
 
 	// Return created renderer surface

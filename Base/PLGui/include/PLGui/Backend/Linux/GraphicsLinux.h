@@ -60,10 +60,10 @@ class GraphicsLinux : public GraphicsImpl {
 		*    Pointer to X Display
 		*  @param[in] nScreen
 		*    Index of screen
-		*  @param[in] nWindow
-		*    System window handle
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*/
-		PLGUI_API GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nWindow);
+		PLGUI_API GraphicsLinux(::Display *pDisplay, int nScreen, ::Window nNativeWindowHandle);
 
 		/**
 		*  @brief
@@ -99,11 +99,11 @@ class GraphicsLinux : public GraphicsImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		::Display	*m_pDisplay;	/**< X Display */
-		int			 m_nScreen;		/**< X screen */
-		::Window	 m_nWindow;		/**< Window that is used */
-		int			 m_nColorDepth; /**< Color depth (e.g. 16 or 24) */
-		::GC		 m_sGC;			/**< Graphics context */
+		::Display	*m_pDisplay;			/**< X Display */
+		int			 m_nScreen;				/**< X screen */
+		::Window	 m_nNativeWindowHandle;	/**< Native window that is used */
+		int			 m_nColorDepth;			/**< Color depth (e.g. 16 or 24) */
+		::GC		 m_sGC;					/**< Graphics context */
 
 
 };

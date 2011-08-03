@@ -87,10 +87,10 @@ class WidgetLinux : public WidgetImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual void CreateWidget() override;
-		virtual void CreateWrapperWidget(PLCore::handle nWindowHandle) override;
+		virtual void CreateWrapperWidget(PLCore::handle nNativeWindowHandle) override;
 		virtual bool IsDestroyed() const override;
 		virtual void Destroy() override;
-		virtual PLCore::handle GetWindowHandle() const override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void SetParent(WidgetImpl *pParent) override;
 		virtual bool IsShowInTaskbar() const override;
 		virtual void SetShowInTaskbar(bool bShowInTaskbar) override;
@@ -135,22 +135,22 @@ class WidgetLinux : public WidgetImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Display		*m_pDisplay;		/**< X display */
-		int			 m_nScreen;			/**< X screen */
-		::Window	 m_nWindow;			/**< X window handle */
-		bool		 m_bWrapper;		/**< 'true' if this is a wrapper for a system window */
-		bool		 m_bDestroyed;		/**< 'true' if the window has already been destroyed */
-		bool		 m_bVisible;		/**< 'true' if the window is visible */
-		bool		 m_bEnabled;		/**< 'true' if the window is enabled */
-		bool		 m_bTopmost;		/**< 'true' if the window is on top of all other windows */
-		bool		 m_bShowInTaskbar;	/**< 'true' if a toplevel window is to be shown in the taskbar */
-		int			 m_nX;				/**< X position */
-		int			 m_nY;				/**< Y position */
-		int			 m_nWidth;			/**< Width */
-		int			 m_nHeight;			/**< Height */
-		bool		 m_bFullscreen;		/**< Fullscreen mode? */
-		bool		 m_bMaximized;		/**< Maximized? */
-		bool		 m_bMinimized;		/**< Minimized? */
+		Display		*m_pDisplay;			/**< X display */
+		int			 m_nScreen;				/**< X screen */
+		::Window	 m_nNativeWindowHandle;	/**< X window handle */
+		bool		 m_bWrapper;			/**< 'true' if this is a wrapper for a system window */
+		bool		 m_bDestroyed;			/**< 'true' if the window has already been destroyed */
+		bool		 m_bVisible;			/**< 'true' if the window is visible */
+		bool		 m_bEnabled;			/**< 'true' if the window is enabled */
+		bool		 m_bTopmost;			/**< 'true' if the window is on top of all other windows */
+		bool		 m_bShowInTaskbar;		/**< 'true' if a toplevel window is to be shown in the taskbar */
+		int			 m_nX;					/**< X position */
+		int			 m_nY;					/**< Y position */
+		int			 m_nWidth;				/**< Width */
+		int			 m_nHeight;				/**< Height */
+		bool		 m_bFullscreen;			/**< Fullscreen mode? */
+		bool		 m_bMaximized;			/**< Maximized? */
+		bool		 m_bMinimized;			/**< Minimized? */
 
 
 };

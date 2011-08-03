@@ -62,13 +62,13 @@ SurfaceWindow::~SurfaceWindow()
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nWindow, bFullscreen),
+SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
+	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
 	#ifdef WIN32
 		m_hDC(nullptr),
 	#endif
 	#ifdef LINUX
-		m_nWindow(NULL_HANDLE),
+		m_nNativeWindowHandle(NULL_HANDLE),
 	#endif
 		m_nSwapInterval(-1),
 		m_bGammaChanged(false)
@@ -89,10 +89,10 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 //[-------------------------------------------------------]
 Vector2i SurfaceWindow::GetSize() const
 {
-	if (GetWindow()) {
+	if (GetNativeWindowHandle()) {
 		#ifdef WIN32
 			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetWindow()), &sRect);
+			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
 			return Vector2i(sRect.right, sRect.bottom);
 		#endif
 		#ifdef LINUX
@@ -107,7 +107,7 @@ Vector2i SurfaceWindow::GetSize() const
 				Display *pDisplay = pContextLinux->GetDisplay();
 				if (pDisplay) {
 					// Get X window geometry information
-					XGetGeometry(pDisplay, GetWindow(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+					XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 				}
 			}
 

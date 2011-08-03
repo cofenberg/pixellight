@@ -177,15 +177,15 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] nWindowHandle
-		*    System window handle
+		*  @param[in] nNativeWindowHandle
+		*    System native window handle
 		*
 		*  @remarks
 		*    This constructor can be used to wrap an already existing system window into a PLGui Widget,
 		*    there you need to pass a valid system handle for the window being wrapped. This only works
 		*    with the system GUI, which is being used automatically.
 		*/
-		PLGUI_API Widget(PLCore::handle nWindowHandle);
+		PLGUI_API Widget(PLCore::handle nNativeWindowHandle);
 
 		/**
 		*  @brief
@@ -213,12 +213,12 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 
 		/**
 		*  @brief
-		*    Get system window handle
+		*    Get system native window handle
 		*
 		*  @return
-		*    Window handle
+		*    Native window handle
 		*/
-		PLGUI_API PLCore::handle GetWindowHandle() const;
+		PLGUI_API PLCore::handle GetNativeWindowHandle() const;
 
 		//[-------------------------------------------------------]
 		//[ Widget information                                    ]

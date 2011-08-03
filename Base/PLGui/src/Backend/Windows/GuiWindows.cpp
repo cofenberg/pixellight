@@ -162,7 +162,7 @@ void GuiWindows::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	HWND hWnd = (pWidget ? reinterpret_cast<HWND>(pWidget->GetWindowHandle()) : nullptr);
+	HWND hWnd = (pWidget ? reinterpret_cast<HWND>(pWidget->GetNativeWindowHandle()) : nullptr);
 
 	// Post message
 	switch (cMessage.GetType()) {

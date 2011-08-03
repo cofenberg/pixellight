@@ -111,14 +111,14 @@ class SurfaceWindowHandler {
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
-		*  @param[in] nWindow
+		*  @param[in] nNativeWindowHandle
 		*    Native window of renderer surface handler is assigned with
 		*  @param[in] sDisplayMode
 		*    Display mode information
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		PLRENDERER_API void Init(Renderer &cRenderer, PLCore::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false);
+		PLRENDERER_API void Init(Renderer &cRenderer, PLCore::handle nNativeWindowHandle, const DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 		/**
 		*  @brief

@@ -87,7 +87,7 @@ class SurfaceWindow : public Surface {
 		*  @return
 		*    The native window the surface is assigned with, can be a null pointer
 		*/
-		PLRENDERER_API PLCore::handle GetWindow() const;
+		PLRENDERER_API PLCore::handle GetNativeWindowHandle() const;
 
 		/**
 		*  @brief
@@ -148,12 +148,12 @@ class SurfaceWindow : public Surface {
 		*
 		*  @param[in] cHandler
 		*    Renderer surface handler this surface is assigned with (MUST be valid!)
-		*  @param[in] nWindow
-		*    Window the surface is assigned with
+		*  @param[in] nNativeWindowHandle
+		*    Native window the surface is assigned with
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		PLRENDERER_API SurfaceWindow(SurfaceWindowHandler &cHandler, PLCore::handle nWindow, bool bFullscreen = false);
+		PLRENDERER_API SurfaceWindow(SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]
@@ -193,9 +193,8 @@ class SurfaceWindow : public Surface {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SurfaceWindowHandler *m_pHandler;	/**< Renderer surface handler this surface
-												 is assigned with, can be a null pointer */
-		PLCore::handle		  m_nWindow;	/**< Window the surface is assigned with, can be a null pointer */
+		SurfaceWindowHandler *m_pHandler;				/**< Renderer surface handler this surface is assigned with, can be a null pointer */
+		PLCore::handle		  m_nNativeWindowHandle;	/**< System native window handle the surface is assigned with, can be a null pointer */
 
 
 };

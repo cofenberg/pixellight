@@ -74,12 +74,12 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*
 		*  @param[in] cHandler
 		*    Renderer surface handler this surface is assigned with (MUST be valid!)
-		*  @param[in] nWindow
+		*  @param[in] nNativeWindowHandle
 		*    Handle to the native window the renderer surface is assigned with
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nWindow, bool bFullscreen = false);
+		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]

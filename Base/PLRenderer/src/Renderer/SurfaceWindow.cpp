@@ -62,11 +62,11 @@ SurfaceWindowHandler *SurfaceWindow::GetHandler() const
 
 /**
 *  @brief
-*    Returns the window the surface is assigned with
+*    Returns the native window the surface is assigned with
 */
-handle SurfaceWindow::GetWindow() const
+handle SurfaceWindow::GetNativeWindowHandle() const
 {
-	return m_nWindow;
+	return m_nNativeWindowHandle;
 }
 
 /**
@@ -86,11 +86,11 @@ bool SurfaceWindow::IsFullscreen() const
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(SurfaceWindowHandler &cHandler, handle nWindow, bool bFullscreen) :
+SurfaceWindow::SurfaceWindow(SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
 	Surface(*cHandler.GetRenderer(), Surface::Window),
 	m_bIsFullscreen(bFullscreen),
 	m_pHandler(&cHandler),
-	m_nWindow(nWindow)
+	m_nNativeWindowHandle(nNativeWindowHandle)
 {
 }
 
@@ -105,7 +105,7 @@ SurfaceWindow::SurfaceWindow(SurfaceWindowHandler &cHandler, handle nWindow, boo
 SurfaceWindow::SurfaceWindow(const SurfaceWindow &cSource) : Surface(cSource.GetRenderer(), cSource.GetType()),
 	m_bIsFullscreen(cSource.IsFullscreen()),
 	m_pHandler(cSource.GetHandler()),
-	m_nWindow(cSource.GetWindow())
+	m_nNativeWindowHandle(cSource.GetNativeWindowHandle())
 {
 	// No implementation because the copy constructor is never used
 }

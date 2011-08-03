@@ -532,7 +532,7 @@ class Renderer : public PLCore::Object {
 		*
 		*  @param[in] cHandler
 		*    Renderer surface handler the new renderer surface is assigned with
-		*  @param[in] nWindow
+		*  @param[in] nNativeWindowHandle
 		*    Handle to the native window the renderer surface is assigned with
 		*  @param[in] sDisplayMode
 		*    Display mode information
@@ -547,7 +547,7 @@ class Renderer : public PLCore::Object {
 		*    - The renderer surface handler is required because this kind of surface is assigned
 		*      with a window and if the surface or window is lost they have to be informed
 		*/
-		virtual SurfaceWindow *CreateSurfaceWindow(SurfaceWindowHandler &cHandler, PLCore::handle nWindow, const DisplayMode &sDisplayMode, bool bFullscreen = false) = 0;
+		virtual SurfaceWindow *CreateSurfaceWindow(SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const DisplayMode &sDisplayMode, bool bFullscreen = false) = 0;
 
 		/**
 		*  @brief

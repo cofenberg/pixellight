@@ -101,14 +101,14 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*
 		*  @param[in] cHandler
 		*    Renderer surface handler this surface is assigned with (MUST be valid!)
-		*  @param[in] nWindow
+		*  @param[in] nNativeWindowHandle
 		*    Handle to the native window the renderer surface is assigned with
 		*  @param[in] sDisplayMode
 		*    Display mode information
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nWindow, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]
@@ -120,7 +120,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		HDC m_hDC;	/**< Private GDI device context */
 	#endif
 	#ifdef LINUX
-		::Window			m_nWindow;
+		::Window			m_nNativeWindowHandle;
 		XF86VidModeModeInfo	m_sDesktopModeBackup;	/**< Saved desktop-resolution before switching modes */
 	#endif
 		int	  m_nSwapInterval;		/**< The swap interval (vertical synchronisation), <0 means not yet set */
