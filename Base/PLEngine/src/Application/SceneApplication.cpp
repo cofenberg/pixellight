@@ -117,10 +117,6 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 		// Backup the new state
 		m_bEditModeEnabled = bEnabled;
 
-		// Close the edit dialog if edit mode is disabled
-		if (!bEnabled)
-			CloseEditDialog();
-
 		// Get the root scene
 		SceneContainer *pRootScene = GetRootScene();
 		if (pRootScene) {
@@ -140,83 +136,11 @@ void SceneApplication::SetEditModeEnabled(bool bEnabled)
 
 /**
 *  @brief
-*    Returns whether the edit dialog is currently opened or not
-*/
-bool SceneApplication::IsEditDialogOpend()
-{
-	// [TODO] PLGui: New edit GUI
-//	return m_cEditDialog.IsLoaded();
-	return false;
-}
-
-/**
-*  @brief
-*    Opens the edit dialog
-*/
-void SceneApplication::OpenEditDialog(PLGui::Widget *pParent)
-{
-	// [TODO] PLGui: New edit GUI
-/*	// Is edit mode enabled and isn't the edit dialog already opened?
-	if (m_pSceneContext && m_bEditModeEnabled && !m_cEditDialog.IsLoaded()) {
-		// Create dialog
-		GuiEdit *pEdit = new GuiEdit(*m_pSceneContext, pParent);
-		pEdit->SetVisible(true);
-		m_cEditDialog.Load(pEdit);
-	}
-*/
-}
-
-/**
-*  @brief
-*    Closes the edit dialog
-*/
-bool SceneApplication::CloseEditDialog()
-{
-	// [TODO] PLGui: New edit GUI
-	/*
-	if (m_cEditDialog.IsLoaded()) {
-		m_cEditDialog.GetWindow()->Destroy();
-
-		// Native GUI
-		Gui *pGui = GuiManager::GetInstance()->GetSystemGui();
-		if (pGui) {
-			// Process GUI messages
-			if (pGui->PendingMessages())
-				pGui->ProcessMessages();
-		}
-
-		// Done
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
-	*/
-	return false;
-}
-
-/**
-*  @brief
 *    Quit the engine
 */
 void SceneApplication::ConsoleCommandQuit(ConsoleCommand &cCommand)
 {
 	Exit(0);
-}
-
-/**
-*  @brief
-*    Opens the engine edit dialog and deactivates the owner console automatically
-*/
-void SceneApplication::ConsoleCommandEditDialog(ConsoleCommand &cCommand)
-{
-	// Deactivate the owner console
-	SNConsoleBase *pConsole = cCommand.GetConsole();
-	if (pConsole)
-		pConsole->Deactivate();
-
-	// Open the edit dialog
-	OpenEditDialog();
 }
 
 
@@ -266,9 +190,6 @@ bool SceneApplication::Init()
 
 void SceneApplication::DeInit()
 {
-	// Close the edit dialog
-	CloseEditDialog();
-
 	// Destroy the scene context
 	if (m_pSceneContext)
 		delete m_pSceneContext;
@@ -338,13 +259,10 @@ void SceneApplication::OnCreateRootScene()
 				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
-				pConsole->RegisterCommand(0,	"quit",			"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"exit",			"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"bye",			"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"logout",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-
-				// Edit commands
-				pConsole->RegisterCommand(1,	"editdialog",	"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandEditDialog, this));
+				pConsole->RegisterCommand(0,	"quit",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"exit",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"bye",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"logout",	"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
 
 				// Set active state
 				pConsole->SetActive(m_bEditModeEnabled);

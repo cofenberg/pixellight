@@ -203,9 +203,6 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 	if (!pContainer)
 		return false; // Error! (should NEVER happen...)
 
-	// Ensure that the edit dialog is closed...
-	CloseEditDialog();
-
 	// Disable the ingame GUI
 	SceneNode *pGui = pContainer->GetContainer()->GetByName("GUI");
 	if (pGui)
@@ -368,13 +365,10 @@ void BasicSceneApplication::OnCreateRootScene()
 				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
-				pConsole->RegisterCommand(0,	"quit",			"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"exit",			"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"bye",			"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"logout",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-
-				// Edit commands
-				pConsole->RegisterCommand(1,	"editdialog",	"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandEditDialog, this));
+				pConsole->RegisterCommand(0,	"quit",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"exit",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"bye",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"logout",	"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
 
 				// Set active state
 				pConsole->SetActive(m_bEditModeEnabled);

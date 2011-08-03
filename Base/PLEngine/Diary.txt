@@ -1,3 +1,11 @@
+>> 03.08.2011
+[CO]
+- SceneApplication: It's been over a year since PLGui2 was replaced through PLGui3 (the current PLGui) and since then, the previous debug dialog has gone and
+  there was never time to write a new one. So, time to finally remove it completely from PLEngine. Such stuff like debug dialogs are the job of concrete frontends...
+  PLFrontendQt already has several debug related widgets/dialogs...
+
+
+
 >> 02.08.2011
 [CO]
 - Moved "SNGui" from "PLEngine" to "PLFrontendPLGui" because it's using PLGui

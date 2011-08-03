@@ -61,7 +61,7 @@ namespace PLEngine {
 *    Scene application class
 *
 *  @remarks
-*    An application class that provides a scene graph for rendering as well as a generic edit-dialog.
+*    An application class that provides a scene graph for rendering
 *
 *  @note
 *    - The 'OnCreatePainter()'-implementation creates a 'SPScene' surface painter
@@ -143,53 +143,13 @@ class SceneApplication : public RenderApplication {
 		*    'true' if edit mode is enabled, else 'false'
 		*
 		*  @remarks
-		*    If edit mode is disabled, this function will automatically close the edit dialog if it's currently
-		*    opened. Also the scene nodes 'SNEngineInformation0' and 'SNConsole0' from the root scene are enabled/disabled.
+		*    Also the scene nodes 'SNEngineInformation0' and 'SNConsole0' from the root scene are enabled/disabled.
 		*    By default, edit mode is enabled.
 		*
 		*  @see
 		*    - IsEditModeEnabled()
 		*/
 		PL_API void SetEditModeEnabled(bool bEnabled = true);
-
-		/**
-		*  @brief
-		*    Returns whether the edit dialog is currently opened or not
-		*
-		*  @return
-		*    'true' if the edit dialog is currently opened, else 'false'
-		*
-		*  @see
-		*    - IsEditModeEnabled()
-		*/
-		PL_API bool IsEditDialogOpend();
-
-		/**
-		*  @brief
-		*    Opens the edit dialog
-		*
-		*  @param[in] pParent
-		*    Parent widget, can be a null pointer
-		*
-		*  @note
-		*    - Can only be opened if edit mode is enabled!
-		*
-		*  @see
-		*    - IsEditModeEnabled()
-		*/
-		PL_API void OpenEditDialog(PLGui::Widget *pParent = nullptr);
-
-		/**
-		*  @brief
-		*    Closes the edit dialog
-		*
-		*  @return
-		*    'true' if the edit dialog was closed, else 'false'
-		*
-		*  @see
-		*    - IsEditModeEnabled()
-		*/
-		PL_API bool CloseEditDialog();
 
 		//[-------------------------------------------------------]
 		//[ Console functions                                     ]
@@ -202,15 +162,6 @@ class SceneApplication : public RenderApplication {
 		*    Calling command
 		*/
 		PL_API void ConsoleCommandQuit(ConsoleCommand &cCommand);
-
-		/**
-		*  @brief
-		*    Opens the engine edit dialog and deactivates the owner console automatically
-		*
-		*  @param[in] cCommand
-		*    Calling command
-		*/
-		PL_API void ConsoleCommandEditDialog(ConsoleCommand &cCommand);
 
 
 	//[-------------------------------------------------------]
@@ -254,7 +205,6 @@ class SceneApplication : public RenderApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Close edit dialog
 		*    - Destroy scene context
 		*    - Everything that RenderApplication::DeInit() does
 		*/
@@ -328,7 +278,6 @@ class SceneApplication : public RenderApplication {
 		PLScene::SceneContext	*m_pSceneContext;		/**< The scene context, can be a null pointer */
 		PLScene::SceneContainer	*m_pRootScene;			/**< Root scene (can be a null pointer) */
 		bool					 m_bEditModeEnabled;	/**< Edit mode enabled? */
-		PLGui::WidgetHandler	 m_cEditDialog;			/**< Edit dialog handler */
 
 
 };
