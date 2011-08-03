@@ -1,5 +1,33 @@
-﻿>> 02.08.2011
+﻿>> 03.08.2011
 [CO]
+- "PLFrontendNull", "PLFrontendOS", "PLFrontendPLGui", "PLFrontendQt" and "PLFrontendActiveX" (testing it within the MS Internet Explorer) are now up and running
+  ("PLFrontendMozilla" is still broken)
+- Added "PLFrontend::Frontend::Run()" to start an application inside a frontend. This is only required for executables and not if an application is running e.g. within
+  a browser. When using it, it looks like this:
+    int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments)
+    {
+        return PLFrontend::Frontend::Run("PLFrontendOS::Frontend", "Application", sFilename, lstArguments);
+    }
+- When the work on the frontend stuff is complete, PixelLight applications are usually "frontendless", meaning when compiling it as an executable, you as application developer
+  choose the frontend to use (or not if you just don't care about GUI). Additionally, in the future it should be possible to just recompile the application as shared library in
+  order to be able to embed it within other applications like a browser. To make this as easy as possible, I added the macro "pl_module_application_frontend" and when using it,
+  the main C++ file usually looks like this:
+    #include <PLFrontend/FrontendMain.h>
+    pl_module_application_frontend("50RendererTriangle", "Application", "PLFrontendPLGui::Frontend")
+        pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+        pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+        pl_module_description("PixelLight triangle sample")
+    pl_module_end
+  ... should be quite handy to use ("pl_module" is usually already used, so not much additional work, it's even less work!). :D
+  There's also a shorter macro:
+    "pl_module_application("50RendererTriangle", "Application")
+  Which will use the frontend "PLFrontendOS::Frontend" as default. This totally primitive frontend is sufficient for many applications.
+
+
+
+>> 02.08.2011
+[CO]
+- Added "FrontendApplication" & "AbstractFrontendLifecycle" and started on the frontend design
 PLFrontendPLGui:
 - Moved "SNGui" from "PLEngine" to "PLFrontendPLGui" because it's using PLGui
 

@@ -19,6 +19,18 @@
     <ClInclude Include="include\PLFrontend\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontend\FrontendApplication.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontend\AbstractFrontendLifecycle.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontend\FrontendPixelLight.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontend\FrontendMain.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -40,6 +52,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FrontendOpenGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrontendApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AbstractFrontendLifecycle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrontendPixelLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

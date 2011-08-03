@@ -8,6 +8,7 @@ define_project(PLFrontendPLGui)
 ##################################################
 add_sources(
 	src/PLFrontendPLGui.cpp
+	src/Frontend.cpp
 	src/Compositing/SNGui.cpp
 	src/Compositing/GraphicsPL.cpp
 	src/Compositing/GuiPL.cpp

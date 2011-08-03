@@ -1,7 +1,5 @@
 /*********************************************************\
- *  File: Main.cpp                                       *
- *      This is a very basic sample showing you an amazing rotating triangle created
- *      by using a renderer vertex buffer.
+ *  File: OSWindow.cpp                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,14 +23,36 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLFrontend/FrontendMain.h>
+#include "PLFrontendOS/OSWindow.h"
 
 
 //[-------------------------------------------------------]
-//[ Module definition                                     ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
-pl_module_application("50RendererTriangle", "Application")
-	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("PixelLight triangle sample")
-pl_module_end
+namespace PLFrontendOS {
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+OSWindow::OSWindow()
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+OSWindow::~OSWindow()
+{
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLFrontendOS

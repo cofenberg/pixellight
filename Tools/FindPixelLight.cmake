@@ -88,6 +88,11 @@ _pixellight_find_lib(PL_PLCORE PLCore/PLCore.h PLCore Base/PLCore/include)
 #message("PLCore include: ${PL_PLCORE_INCLUDE_DIR}")
 #message("PLCore library: ${PL_PLCORE_LIBRARY}")
 
+# PLFrontend
+_pixellight_find_lib(PL_PLFRONTEND PLFrontend/PLFrontend.h PLFrontend Base/PLFrontend/include)
+#message("PLFrontend include: ${PL_PLFRONTEND_INCLUDE_DIR}")
+#message("PLFrontend library: ${PL_PLFRONTEND_LIBRARY}")
+
 # PLDatabase
 _pixellight_find_lib(PL_PLDATABASE PLDatabase/PLDatabase.h PLDatabase Base/PLDatabase/include)
 #message("PLDatabase include: ${PL_PLDATABASE_INCLUDE_DIR}")

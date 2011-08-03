@@ -39,7 +39,7 @@
 *  @brief
 *    Defines a module inside an application or library
 *
-*  @param[in] Name
+*  @param[in] ModuleName
 *    Module name
 *
 *  @remarks
@@ -47,7 +47,7 @@
 *    directly to the main project (statically or dynamically),
 *    but not inside a dynamically loaded plugin library.
 */
-#define pl_module(Name) \
+#define pl_module(ModuleName) \
 	class ModuleInfo { \
 		public: \
 			ModuleInfo() { \
@@ -56,7 +56,7 @@
 		private: \
 			static void Register() \
 			{ \
-				PLCore::String sName        = Name; \
+				PLCore::String sName        = ModuleName; \
 				PLCore::String sVendor      = "Unknown"; \
 				PLCore::String sLicense     = "Unknown"; \
 				PLCore::String sDescription = "Unknown module"; \
@@ -65,13 +65,13 @@
 *  @brief
 *    Defines a module inside a plugin library
 *
-*  @param[in] Name
+*  @param[in] ModuleName
 *    Module name
 *
 *  @remarks
 *    Use this in a library that is dynamically loaded as a plugin
 */
-#define pl_module_plugin(Name) \
+#define pl_module_plugin(ModuleName) \
 	extern "C" PLCORE_PLUGIN_API bool PLIsPluginDebugBuild() \
 	{ \
 		return PLCORE_IS_DEBUGMODE; \
@@ -82,7 +82,7 @@
 		return PLCore::ModuleID<int>::GetModuleID(); \
 	} \
 	\
-	pl_module(Name) \
+	pl_module(ModuleName) \
 
 /**
 *  @brief

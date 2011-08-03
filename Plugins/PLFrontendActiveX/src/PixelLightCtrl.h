@@ -88,22 +88,27 @@ END_MSG_MAP()
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	// No RTTI interface, this frontend is not allowed to be instanced by using the RTTI
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual PLFrontend::FrontendImpl functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::handle GetWindowHandle() const override;
-		virtual PLCore::handle GetDeviceContext() const override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLFrontend::FrontendImpl functions    ]
 	//[-------------------------------------------------------]
 	private:
+		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual void Redraw() override;
 
 	private:
 		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */
-		HDC							m_hFrontendDC;	/**< Device context */
 		PLFrontend::FrontendOpenGL	m_cFrontend;	// [TODO] Just a test
 
 // IPixelLightCtrl

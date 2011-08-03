@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendOpenGL.h                               *
+ *  File: FrontendPixelLight.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_OPENGL_H__
-#define __PLFRONTEND_FRONTEND_OPENGL_H__
+#ifndef __PLFRONTEND_FRONTEND_PIXELLIGHT_H__
+#define __PLFRONTEND_FRONTEND_PIXELLIGHT_H__
 #pragma once
 
 
@@ -29,11 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontend/Frontend.h"
-#ifdef WIN32
-	#include <windows.h>
-#endif
-#include <GL/gl.h>
-#include <GL/glu.h>
 
 
 //[-------------------------------------------------------]
@@ -43,18 +38,19 @@ namespace PLFrontend {
 
 
 //[-------------------------------------------------------]
+//[ Forward declaration                                   ]
+//[-------------------------------------------------------]
+class FrontendApplication;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Simple test frontend that uses OpenGL
-*
-*  @remarks
-*    This is a test frontend which uses OpenGL to display a spinning colored
-*    rectangle. It can be used easily to test the PLFrontend integration when
-*    developing a new backend.
+*    PixelLight frontend
 */
-class FrontendOpenGL : public Frontend {
+class FrontendPixelLight : public Frontend {
 
 
 	//[-------------------------------------------------------]
@@ -68,13 +64,13 @@ class FrontendOpenGL : public Frontend {
 		*  @param[in] cImpl
 		*    Implementation object
 		*/
-		PLFRONTEND_API FrontendOpenGL(FrontendImpl &cImpl);
+		PLFRONTEND_API FrontendPixelLight(FrontendImpl &cImpl);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLFRONTEND_API virtual ~FrontendOpenGL();
+		PLFRONTEND_API virtual ~FrontendPixelLight();
 
 
 	//[-------------------------------------------------------]
@@ -106,40 +102,11 @@ class FrontendOpenGL : public Frontend {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Initialize OpenGL
-		*/
-		void InitGL();
-
-		/**
-		*  @brief
-		*    Resize GL scene to fit the current window size
-		*/
-		void ResizeGL();
-
-		/**
-		*  @brief
-		*    Draw scene
-		*/
-		void DrawGL();
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		// Platform specific
-		#ifdef WIN32
-			HDC   m_hDC;	/**< Device context, can be a null pointer */
-			HGLRC m_hRC;	/**< OpenGL rendering context, can be a null pointer */
-		#endif
-
-		// Platform independent
-		float m_fAngle;	/**< Current rotation angle of the rectangle */
+		FrontendApplication *m_pFrontendApplication;			/**< Frontend application instance, can be a null pointer */
+		bool				 m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 
 
 };
@@ -151,4 +118,4 @@ class FrontendOpenGL : public Frontend {
 } // PLFrontend
 
 
-#endif // __PLFRONTEND_FRONTEND_OPENGL_H__
+#endif // __PLFRONTEND_FRONTEND_PIXELLIGHT_H__

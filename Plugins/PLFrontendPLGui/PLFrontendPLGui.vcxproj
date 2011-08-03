@@ -263,9 +263,11 @@ copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Compositing\ImagePL.cpp" />
     <ClCompile Include="src\Compositing\SNGui.cpp" />
     <ClCompile Include="src\Compositing\WidgetPL.cpp" />
+    <ClCompile Include="src\Frontend.cpp" />
     <ClCompile Include="src\PLFrontendPLGui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Base\PLCore\include\PLCore\Application\ConsoleApplication.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\ClipBoardPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\CursorPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\FontPL.h" />
@@ -274,6 +276,7 @@ copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLFrontendPLGui\Compositing\ImagePL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\SNGui.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\WidgetPL.h" />
+    <ClInclude Include="include\PLFrontendPLGui\Frontend.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h" />

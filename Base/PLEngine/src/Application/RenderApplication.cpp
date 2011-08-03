@@ -35,6 +35,7 @@
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/SurfacePainter.h>
 #include <PLRenderer/Texture/TextureManager.h>
+#include <PLFrontend/Frontend.h>
 #include "PLEngine/Gui/RenderWidget.h"
 #include "PLEngine/Gui/RenderWindow.h"
 #include "PLEngine/Application/RenderApplication.h"
@@ -47,6 +48,7 @@ using namespace PLCore;
 using namespace PLGui;
 using namespace PLInput;
 using namespace PLRenderer;
+using namespace PLFrontend;
 namespace PLEngine {
 
 
@@ -63,7 +65,7 @@ pl_implement_class(RenderApplication)
 *  @brief
 *    Constructor
 */
-RenderApplication::RenderApplication(const String &sSurfacePainter) : GuiApplication(),
+RenderApplication::RenderApplication(const String &sSurfacePainter) : FrontendApplication(),
 	EventHandlerDestroy       (&RenderApplication::OnDestroy,        this),
 	EventHandlerActivate	  (&RenderApplication::OnActivate,       this),
 	EventHandlerDisplayMode   (&RenderApplication::OnDisplayMode,    this),
@@ -99,15 +101,11 @@ RendererContext *RenderApplication::GetRendererContext() const
 */
 SurfacePainter *RenderApplication::GetPainter() const
 {
-	// Get the main widget
-	const Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		// Get the surface
-		const Surface *pSurface = GetSurface(pWidget);
-		if (pSurface) {
-			// Return painter
-			return pSurface->GetPainter();
-		}
+	// Get the surface
+	const Surface *pSurface = GetSurface();
+	if (pSurface) {
+		// Return painter
+		return pSurface->GetPainter();
 	}
 
 	// Error!
@@ -120,15 +118,11 @@ SurfacePainter *RenderApplication::GetPainter() const
 */
 void RenderApplication::SetPainter(SurfacePainter *pPainter)
 {
-	// Get the main widget
-	const Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		// Get the surface
-		Surface *pSurface = GetSurface(pWidget);
-		if (pSurface) {
-			// Set painter
-			pSurface->SetPainter(pPainter);
-		}
+	// Get the surface
+	Surface *pSurface = GetSurface();
+	if (pSurface) {
+		// Set painter
+		pSurface->SetPainter(pPainter);
 	}
 }
 
@@ -158,12 +152,14 @@ void RenderApplication::SetInputController(VirtualController *pInputController)
 */
 bool RenderApplication::IsFullscreen() const
 {
+	// [TODO]
+	/*
 	// Get the main widget
 	Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
 		// Return the current state
 		return static_cast<RenderWindow*>(pWidget)->IsFullscreen();
-	}
+	}*/
 
 	// Error!
 	return false;
@@ -175,12 +171,15 @@ bool RenderApplication::IsFullscreen() const
 */
 void RenderApplication::SetFullscreen(bool bFullscreen)
 {
+	// [TODO]
+	/*
 	// Get the main widget
 	Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
 		// Set the current state
 		static_cast<RenderWindow*>(pWidget)->SetFullscreen(bFullscreen);
 	}
+	*/
 }
 
 /**
@@ -189,10 +188,6 @@ void RenderApplication::SetFullscreen(bool bFullscreen)
 */
 bool RenderApplication::Update(bool bForceUpdate)
 {
-	// Check if there are system messages waiting (make a non-blocking main loop)
-	if (Gui::GetSystemGui()->HasPendingMessages())
-		Gui::GetSystemGui()->ProcessMessages();
-
 	// Force or is it time for an update?
 	if (bForceUpdate) {
 		// Update timing
@@ -221,30 +216,6 @@ bool RenderApplication::Update(bool bForceUpdate)
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get render surface from a window
-*/
-Surface *RenderApplication::GetSurface(const Widget *pWidget) const
-{
-	// Valid widget given?
-	if (pWidget) {
-		// Get surface from RenderWidget or RenderWindow
-		if (pWidget->IsInstanceOf("PLEngine::RenderWidget")) {
-			return static_cast<const RenderWidget*>(pWidget)->GetSurface();
-		} else if (pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-			return static_cast<const RenderWindow*>(pWidget)->GetSurface();
-		}
-	}
-
-	// No surface attached to this widget
-	return nullptr;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected virtual PLCore::ConsoleApplication functions ]
 //[-------------------------------------------------------]
 /**
@@ -254,8 +225,7 @@ Surface *RenderApplication::GetSurface(const Widget *pWidget) const
 bool RenderApplication::Init()
 {
 	// Call base implementation
-	// Note: GuiApplication::Init() is not used, because OnCreateRendererContext() has to be called prior to OnCreateMainWindow()
-	if (ConsoleApplication::Init()) {
+	if (FrontendApplication::Init()) {
 		// Create renderer context
 		OnCreateRendererContext();
 		if (!m_bRunning)
@@ -271,11 +241,6 @@ bool RenderApplication::Init()
 			const String sDefaultFontTexture     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTexture");
 			const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTextureSize").GetInt();
 			cFontManager.SetDefaultFontTexture(cFontManager.GetFontTexture(sDefaultFontTexture, nDefaultFontTextureSize));
-
-			// Create main window
-			OnCreateMainWindow();
-			if (!m_bRunning)
-				return false;
 
 			// Create surface painter
 			OnCreatePainter();
@@ -301,30 +266,10 @@ bool RenderApplication::Init()
 
 /**
 *  @brief
-*    Main function
-*/
-void RenderApplication::Main()
-{
-	// Run main loop
-	Gui *pGui = Gui::GetSystemGui();
-	while (pGui->IsActive() && m_bRunning) {
-		// Update application
-		Update();
-	}
-}
-
-/**
-*  @brief
 *    De-initialization function that is called after OnDeInit()
 */
 void RenderApplication::DeInit()
 {
-	// Destroy main widget before the renderer context is destroyed, this way we have a clean and safe shutdown
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->Destroy();
-	}
-
 	// Destroy renderer context
 	if (m_pRendererContext) {
 		delete m_pRendererContext;
@@ -338,7 +283,7 @@ void RenderApplication::DeInit()
 	}
 
 	// Call base implementation
-	GuiApplication::DeInit();
+	FrontendApplication::DeInit();
 }
 
 
@@ -347,6 +292,8 @@ void RenderApplication::DeInit()
 //[-------------------------------------------------------]
 void RenderApplication::OnCreateMainWindow()
 {
+	// [TODO]
+	/*
 	// Fill display mode information
 	DisplayMode sDisplayMode;
 	sDisplayMode.vSize.x    = GetConfig().GetVarInt("PLEngine::RendererConfig", "DisplayWidth");
@@ -370,6 +317,16 @@ void RenderApplication::OnCreateMainWindow()
 
 	// Set main window
 	SetMainWindow(pWindow);
+	*/
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLFrontend::FrontendApplication functions ]
+//[-------------------------------------------------------]
+void RenderApplication::OnDraw()
+{
+	Update();
 }
 
 
@@ -412,6 +369,18 @@ void RenderApplication::OnCreateRendererContext()
 		cTextureManager.SetTextureQuality			(GetConfig().GetVar("PLEngine::RendererConfig", "TextureQuality").GetFloat());
 		cTextureManager.SetTextureMipmapsAllowed	(GetConfig().GetVar("PLEngine::RendererConfig", "TextureMipmaps").GetBool());
 		cTextureManager.SetTextureCompressionAllowed(GetConfig().GetVar("PLEngine::RendererConfig", "TextureCompression").GetBool());
+
+		// [TODO] Move this somewere else
+		Frontend *pFrontend = GetFrontend();
+		if (pFrontend) {
+			// [TODO] No build in options
+			DisplayMode sDisplayMode;
+			sDisplayMode.vSize.x = pFrontend->GetWidth();
+			sDisplayMode.vSize.y = pFrontend->GetHeight();
+			sDisplayMode.nColorBits = 32;
+			sDisplayMode.nFrequency = 60;
+			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), pFrontend->GetNativeWindowHandle(), sDisplayMode);
+		}
 	}
 }
 
@@ -489,6 +458,8 @@ bool RenderApplication::OnUpdate()
 */
 void RenderApplication::OnDestroy()
 {
+	// [TODO]
+	/*
 	// Get the main widget
 	const Widget *pWidget = GetMainWindow();
 	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
@@ -502,6 +473,7 @@ void RenderApplication::OnDestroy()
 		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayColorBits", String::Format("%d", sDisplayMode.nColorBits));
 		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayFrequency", String::Format("%d", sDisplayMode.nFrequency));
 	}
+	*/
 }
 
 /**

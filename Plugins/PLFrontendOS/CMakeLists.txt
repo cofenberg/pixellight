@@ -8,7 +8,24 @@ define_project(PLFrontendOS)
 ##################################################
 add_sources(
 	src/PLFrontendOS.cpp
+	src/Frontend.cpp
+	src/OSWindow.cpp
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_sources(
+		src/OSWindowWindows.cpp
+	)
+elseif(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_sources(
+		src/OSWindowLinux.cpp
+	)
+endif()
 
 ##################################################
 ## Include directories

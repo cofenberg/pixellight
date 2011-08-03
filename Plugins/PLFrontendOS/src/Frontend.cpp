@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendImpl.cpp                               *
+ *  File: Frontend.cpp                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,21 +23,25 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
-#include "PLFrontend/FrontendImpl.h"
+#if defined(WIN32)
+	#include "PLFrontendOS/OSWindowWindows.h"
+#elif defined(LINUX)
+	#include "PLFrontendOS/OSWindowLinux.h"
+#endif
+#include "PLFrontendOS/Frontend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace PLFrontend {
+namespace PLFrontendOS {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(FrontendImpl)
+pl_implement_class(Frontend)
 
 
 //[-------------------------------------------------------]
@@ -47,122 +51,91 @@ pl_implement_class(FrontendImpl)
 *  @brief
 *    Constructor
 */
-FrontendImpl::FrontendImpl() :
-	m_pFrontend(nullptr),
-	m_nWidth(0),
-	m_nHeight(0)
+Frontend::Frontend() :
+	m_cFrontend(*this),
+	m_pOSWindow(nullptr)
 {
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	OnCreate();
 }
 
 /**
 *  @brief
 *    Destructor
 */
-FrontendImpl::~FrontendImpl()
+Frontend::~Frontend()
 {
-}
-
-/**
-*  @brief
-*    Get window width
-*/
-uint32 FrontendImpl::GetWidth() const
-{
-	// Return current width
-	return m_nWidth;
-}
-
-/**
-*  @brief
-*    Get window height
-*/
-uint32 FrontendImpl::GetHeight() const
-{
-	// Return current height
-	return m_nHeight;
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Called to let the frontend draw into it's window
-*/
-void FrontendImpl::OnDraw()
+handle Frontend::GetNativeWindowHandle() const
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDraw();
-}
-
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
-void FrontendImpl::OnSize()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnSize();
+	return m_pOSWindow ? m_pOSWindow->GetNativeWindowHandle() : NULL_HANDLE;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[ Private virtual PLFrontend::FrontendImpl functions    ]
 //[-------------------------------------------------------]
-void FrontendImpl::OnCreate()
+int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnCreate();
+	// Create system implementation for the right platform
+	#if defined(WIN32)
+		// Create Windows implementation
+		m_pOSWindow = new OSWindowWindows(*this);
+	#elif defined(LINUX)
+		// Create Linux implementation
+		m_pOSWindow = new OSWindowLinux(*this);
+	#else
+		// Unknown system
+		#error "Unsupported platform"
+	#endif
+
+	// Do the frontend lifecycle thing - initialize
+	OnStart();
+	OnResume();
+
+	// The Windows message loop
+	bool bQuit = false;
+	while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+		// Look if messages are waiting
+		MSG sMsg;
+		while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
+			if (sMsg.message == WM_QUIT)
+				bQuit = true;
+			TranslateMessage(&sMsg);
+			DispatchMessage(&sMsg);
+		}
+
+		// [TODO] Update stuff
+		OnDraw();
+	}
+
+	// Do the frontend lifecycle thing - de-initialize
+	OnPause();
+	OnStop();
+
+	// Destroy the OS specific window implementation
+	if (m_pOSWindow) {
+		delete m_pOSWindow;
+		m_pOSWindow = nullptr;
+	}
+
+	// Done
+	return 0;
 }
 
-void FrontendImpl::OnRestart()
+void Frontend::Redraw()
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnRestart();
-}
-
-void FrontendImpl::OnStart()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStart();
-}
-
-void FrontendImpl::OnResume()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnResume();
-}
-
-void FrontendImpl::OnPause()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnPause();
-}
-
-void FrontendImpl::OnStop()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStop();
-}
-
-void FrontendImpl::OnDestroy()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLFrontendOS

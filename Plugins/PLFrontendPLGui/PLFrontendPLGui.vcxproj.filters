@@ -37,6 +37,9 @@
     <ClCompile Include="src\Compositing\CursorPL.cpp">
       <Filter>Compositing</Filter>
     </ClCompile>
+    <ClCompile Include="src\Frontend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h">
@@ -70,6 +73,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Base\PLCore\include\PLCore\Application\ConsoleApplication.h">
+      <Filter>Compositing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendPLGui\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

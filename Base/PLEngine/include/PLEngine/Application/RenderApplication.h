@@ -28,7 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLGui/Application/GuiApplication.h>
+#include <PLFrontend/FrontendApplication.h>
+#include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include "PLEngine/PLEngine.h"
 
 
@@ -69,13 +70,13 @@ namespace PLEngine {
 *    - "OnCreateMainWindow()": Adds a "PLGui::ModClose" modifier with "ExitApplication=true" to the created main window,
 *      therefore the application will shut down as soon as clicking on 'x' within the window title
 */
-class RenderApplication : public PLGui::GuiApplication {
+class RenderApplication : public PLFrontend::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLGui::GuiApplication, "Render application class")
+	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLFrontend::FrontendApplication, "Render application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -194,22 +195,6 @@ class RenderApplication : public PLGui::GuiApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Get render surface from a widget
-		*
-		*  @param[in] pWidget
-		*    Widget from which we want to get the attached render surface
-		*  @return
-		*    Pointer to surface, or a null pointer if widget is not a valid rendering widget
-		*/
-		PL_API PLRenderer::Surface *GetSurface(const PLGui::Widget *pWidget) const;
-
-
-	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::ConsoleApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
@@ -235,17 +220,6 @@ class RenderApplication : public PLGui::GuiApplication {
 
 		/**
 		*  @brief
-		*    Main function
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Run GUI main loop and update engine (non-blocking loop)
-		*    - Exit loop when either the GUI or the application has been stopped
-		*/
-		PL_API virtual void Main() override;
-
-		/**
-		*  @brief
 		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
@@ -261,7 +235,15 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[ Protected virtual PLGui::GuiApplication functions     ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnCreateMainWindow() override;
+//		PL_API virtual void OnCreateMainWindow() override;
+		PL_API virtual void OnCreateMainWindow(); // [TODO] Cleanup
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLFrontend::FrontendApplication functions ]
+	//[-------------------------------------------------------]
+	protected:
+		PL_API virtual void OnDraw() override;
 
 
 	//[-------------------------------------------------------]
@@ -352,7 +334,7 @@ class RenderApplication : public PLGui::GuiApplication {
 	//[-------------------------------------------------------]
 	protected:
 		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
-		PLRenderer::RendererContext *m_pRendererContext;	/**< The renderer context, can be a null pointer */
+		PLRenderer::RendererContext	*m_pRendererContext;	/**< The renderer context, can be a null pointer */
 		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be a null pointer */
 
 

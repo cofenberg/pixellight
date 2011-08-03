@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendImpl.cpp                               *
+ *  File: FrontendApplication.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
-#include "PLFrontend/FrontendImpl.h"
+#include "PLFrontend/FrontendApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +36,7 @@ namespace PLFrontend {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(FrontendImpl)
+pl_implement_class(FrontendApplication)
 
 
 //[-------------------------------------------------------]
@@ -47,118 +46,45 @@ pl_implement_class(FrontendImpl)
 *  @brief
 *    Constructor
 */
-FrontendImpl::FrontendImpl() :
-	m_pFrontend(nullptr),
-	m_nWidth(0),
-	m_nHeight(0)
+FrontendApplication::FrontendApplication(const String &sFrontend) : ConsoleApplication(),
+	m_pFrontend(nullptr)
 {
+	// Set application title
+	SetTitle("PixelLight frontend application");
+
+	// Set running state
+	m_bRunning = true;
 }
 
 /**
 *  @brief
 *    Destructor
 */
-FrontendImpl::~FrontendImpl()
+FrontendApplication::~FrontendApplication()
 {
 }
 
 /**
 *  @brief
-*    Get window width
+*    Get frontend
 */
-uint32 FrontendImpl::GetWidth() const
+Frontend *FrontendApplication::GetFrontend() const
 {
-	// Return current width
-	return m_nWidth;
-}
-
-/**
-*  @brief
-*    Get window height
-*/
-uint32 FrontendImpl::GetHeight() const
-{
-	// Return current height
-	return m_nHeight;
+	// Return pointer to frontend
+	return m_pFrontend;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Protected virtual FrontendApplication functions       ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called to let the frontend draw into it's window
+*    Called to let the frontend application draw into it's window
 */
-void FrontendImpl::OnDraw()
+void FrontendApplication::OnDraw()
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDraw();
-}
-
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
-void FrontendImpl::OnSize()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnSize();
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
-//[-------------------------------------------------------]
-void FrontendImpl::OnCreate()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnCreate();
-}
-
-void FrontendImpl::OnRestart()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnRestart();
-}
-
-void FrontendImpl::OnStart()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStart();
-}
-
-void FrontendImpl::OnResume()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnResume();
-}
-
-void FrontendImpl::OnPause()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnPause();
-}
-
-void FrontendImpl::OnStop()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStop();
-}
-
-void FrontendImpl::OnDestroy()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDestroy();
+	// No default implementation
 }
 
 

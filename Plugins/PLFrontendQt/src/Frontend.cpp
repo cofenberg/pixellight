@@ -23,56 +23,22 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
-#include <PLCore/Base/Class.h>
-#include "PLFrontend/FrontendImpl.h"
-#include "PLFrontend/Frontend.h"
+#include <QtGui/qapplication.h>
+#include "PLFrontendQt/FrontendMainWindow.h"
+#include "PLFrontendQt/Frontend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace PLFrontend {
+namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
-//[ Public static functions                               ]
+//[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Run the frontend
-*/
-int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
-{
-	int nResult = 0;	// No error by default
-
-	// [TODO] Make this optional?
-	// Get PixelLight runtime directory
-	const String sPLDirectory = Core::GetRuntimeDirectory();
-	if (sPLDirectory.GetLength()) {
-		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
-	}
-
-	// Get the RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);
-	if (pClass && pClass->IsDerivedFrom("PLFrontend::FrontendImpl")) {
-		// Create the RTTI class instance
-		Object *pObject = pClass->Create();
-		if (pObject) {
-			// Let the frontend run
-			static_cast<FrontendImpl*>(pObject)->Run(sApplicationClass, sExecutableFilename, lstArguments);
-
-			// Destroy the frontend
-			delete pObject;
-		}
-	}
-
-	// Done
-	return nResult;
-}
+pl_implement_class(Frontend)
 
 
 //[-------------------------------------------------------]
@@ -82,11 +48,12 @@ int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass,
 *  @brief
 *    Constructor
 */
-Frontend::Frontend(FrontendImpl &cImpl) :
-	m_pImpl(&cImpl)
+Frontend::Frontend() :
+	m_cFrontend(*this),
+	m_pMainWindow(nullptr)
 {
-	// Set frontend
-	m_pImpl->m_pFrontend = this;
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	OnCreate();
 }
 
 /**
@@ -95,64 +62,81 @@ Frontend::Frontend(FrontendImpl &cImpl) :
 */
 Frontend::~Frontend()
 {
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	OnDestroy();
 }
 
 /**
 *  @brief
-*    Get native window handle
+*    Get main window
 */
+QWidget *Frontend::GetMainWindow() const
+{
+	// Return pointer to main window
+	return m_pMainWindow;
+}
+
+/**
+*  @brief
+*    Set main window
+*/
+void Frontend::SetMainWindow(QWidget *pMainWindow)
+{
+	// Set pointer to main window
+	m_pMainWindow = pMainWindow;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
+//[-------------------------------------------------------]
 handle Frontend::GetNativeWindowHandle() const
 {
-	// Call backend
-	return m_pImpl->GetNativeWindowHandle();
+	if (m_pMainWindow) {
+		// Get window system identifier of the widget
+		return reinterpret_cast<handle>(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
+	} else {
+		return NULL_HANDLE;
+	}
 }
 
-/**
-*  @brief
-*    Get window width
-*/
-uint32 Frontend::GetWidth() const
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLFrontend::FrontendImpl functions  ]
+//[-------------------------------------------------------]
+int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Call backend
-	return m_pImpl->GetWidth();
+	// Create the Qt application instance on the C runtime stack
+	int argc = 0;
+	QApplication cQApplication(argc, nullptr);	// [TODO] Command line arguments
+
+	// Create and set the main window
+	QMainWindow *pQMainWindow = new FrontendMainWindow(*this);
+	pQMainWindow->resize(640, 480);
+	pQMainWindow->show();
+	SetMainWindow(pQMainWindow);
+
+	// Do the frontend lifecycle thing - initialize
+	OnStart();
+	OnResume();
+
+	// Run the Qt application
+	const int nResult = cQApplication.exec();
+
+	// Do the frontend lifecycle thing - de-initialize
+	OnPause();
+	OnStop();
+
+	// Done
+	return nResult;
 }
 
-/**
-*  @brief
-*    Get window height
-*/
-uint32 Frontend::GetHeight() const
-{
-	// Call backend
-	return m_pImpl->GetHeight();
-}
-
-/**
-*  @brief
-*    Redraw frontend window
-*/
 void Frontend::Redraw()
 {
-	// Call backend
-	m_pImpl->Redraw();
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get frontend implementation
-*/
-FrontendImpl *Frontend::GetImpl() const
-{
-	// Return implementation
-	return m_pImpl;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLFrontendQt

@@ -49,8 +49,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-namespace PLGui
-{
+namespace PLGui {
 
 
 //[-------------------------------------------------------]
@@ -95,8 +94,7 @@ GuiWindows::GuiWindows(Gui *pGui) : GuiImpl(pGui),
 	m_WndClass.lpszClassName	= TEXT("PLGuiWidget");
 
 	// Register window class
-	if (!RegisterClass(&m_WndClass))
-	{
+	if (!RegisterClass(&m_WndClass)) {
 		// Error registering window class
 	}
 
@@ -114,8 +112,7 @@ GuiWindows::~GuiWindows()
 	Gdiplus::GdiplusShutdown(gdiplusToken);
 
 	// Unregister window class
-	if (!UnregisterClass(L"PLGuiWidget", m_hInstance))
-	{
+	if (!UnregisterClass(L"PLGuiWidget", m_hInstance)) {
 		// Error unregistering window class
 	}
 }

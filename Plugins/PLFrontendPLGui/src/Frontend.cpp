@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: GuiApplication.cpp                            *
+ *  File: Frontend.cpp                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -33,16 +33,10 @@
 #include <PLCore/Tools/LocalizationGroup.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include "PLGui/Gui/Gui.h"
-#include "PLGui/Widgets/Windows/Window.h"
-#include "PLGui/Application/GuiApplication.h"
-
-
-//[-------------------------------------------------------]
-//[ Disable warnings                                      ]
-//[-------------------------------------------------------]
-PL_WARNING_PUSH
-PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
+#include <PLFrontend/Frontend.h>
+#include <PLGui/Gui/Gui.h>
+#include <PLGui/Widgets/Windows/Window.h>
+#include "PLFrontendPLGui/Frontend.h"
 
 
 //[-------------------------------------------------------]
@@ -50,13 +44,14 @@ PL_WARNING_DISABLE(4355) // "'this' : used in base member initializer list"
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-namespace PLGui {
+using namespace PLGui;
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(GuiApplication)
+pl_implement_class(Frontend)
 
 
 //[-------------------------------------------------------]
@@ -66,27 +61,33 @@ pl_implement_class(GuiApplication)
 *  @brief
 *    Constructor
 */
-GuiApplication::GuiApplication(const String &sGuiFilename) : ConsoleApplication(),
-	EventHandlerOnDestroy(&GuiApplication::OnDestroyMainWindow, this),
+Frontend::Frontend() :
+	m_cFrontend(*this),
+	EventHandlerOnDestroy(&Frontend::OnDestroyMainWindow, this),
 	m_pMainWindow(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight GUI application");
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	OnCreate();
 }
 
 /**
 *  @brief
 *    Destructor
 */
-GuiApplication::~GuiApplication()
+Frontend::~Frontend()
 {
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	OnDestroy();
+
+	// Shut down system GUI
+	Gui::GetSystemGui()->Shutdown();
 }
 
 /**
 *  @brief
 *    Get main window
 */
-Widget *GuiApplication::GetMainWindow() const
+Widget *Frontend::GetMainWindow() const
 {
 	// Return pointer to main window
 	return m_pMainWindow;
@@ -96,7 +97,7 @@ Widget *GuiApplication::GetMainWindow() const
 *  @brief
 *    Set main window
 */
-void GuiApplication::SetMainWindow(Widget *pMainWindow)
+void Frontend::SetMainWindow(Widget *pMainWindow)
 {
 	// Disconnect event handler
 	if (m_pMainWindow)
@@ -112,71 +113,68 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Initialization function that is called prior to OnInit()
-*/
-bool GuiApplication::Init()
+handle Frontend::GetNativeWindowHandle() const
 {
-	// Call base implementation
-	if (ConsoleApplication::Init()) {
-		// Create main window
-		OnCreateMainWindow();
-		if (!m_bRunning) return false;
-
-		// Done
-		return true;
-	}
-
-	// Error
-	return false;
+	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetWindowHandle() : NULL_HANDLE;
 }
 
-/**
-*  @brief
-*    Main function
-*/
-void GuiApplication::Main()
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLFrontend::FrontendImpl functions  ]
+//[-------------------------------------------------------]
+int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Run main loop
+	// Create main window
+	OnCreateMainWindow();
+
+	// Do the frontend lifecycle thing - initialize
+	OnStart();
+	OnResume();
+
+	// The frontend main loop
 	Gui *pGui = Gui::GetSystemGui();
-	while (pGui->IsActive() && m_bRunning) {
-		// Get GUI messages
-		pGui->ProcessMessages();
+	while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
+		// Check if there are system messages waiting (make a non-blocking main loop)
+		if (pGui->HasPendingMessages())
+			pGui->ProcessMessages();
+
+		// [TODO] Update stuff
+		OnDraw();
 	}
+
+	// Do the frontend lifecycle thing - de-initialize
+	OnPause();
+	OnStop();
+
+	// Destroy main window
+	if (m_pMainWindow) {
+		m_pMainWindow->Destroy();
+		m_pMainWindow = nullptr;
+	}
+
+	// Done
+	return 0;
 }
 
-/**
-*  @brief
-*    De-initialization function that is called after OnDeInit()
-*/
-void GuiApplication::DeInit()
+void Frontend::Redraw()
 {
-	// Call base implementation
-	ConsoleApplication::DeInit();
-
-	// Shut down system GUI
-	Gui::GetSystemGui()->Shutdown();
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual GuiApplication functions            ]
+//[ Protected virtual Frontend functions                  ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Function that is called to open the application's main window
 */
-void GuiApplication::OnCreateMainWindow()
+void Frontend::OnCreateMainWindow()
 {
-	// [TODO] Load GUI from file if filename is provided
-
 	// Create standard window
 	Window *pWindow = new Window();
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=1");
-	pWindow->SetTitle(GetTitle());
 	pWindow->SetSize(Vector2i(640, 480));
 	pWindow->SetVisible(true);
 
@@ -192,7 +190,7 @@ void GuiApplication::OnCreateMainWindow()
 *  @brief
 *    Called when a window was destroyed
 */
-void GuiApplication::OnDestroyMainWindow()
+void Frontend::OnDestroyMainWindow()
 {
 	// We lost our main window :/
 	m_pMainWindow = nullptr;
@@ -202,10 +200,4 @@ void GuiApplication::OnDestroyMainWindow()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLGui
-
-
-//[-------------------------------------------------------]
-//[ Compiler settings                                     ]
-//[-------------------------------------------------------]
-PL_WARNING_POP
+} // PLFrontendPLGui

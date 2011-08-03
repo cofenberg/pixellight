@@ -30,18 +30,25 @@
 //[-------------------------------------------------------]
 #include <PLCore/PLCore.h>
 #include "PLFrontend/PLFrontend.h"
+#include "PLFrontend/AbstractFrontendLifecycle.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class String;
+	template <class ValueType> class Array;
+}
+namespace PLFrontend {
+	class FrontendImpl;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontend {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class FrontendImpl;
 
 
 //[-------------------------------------------------------]
@@ -57,13 +64,37 @@ class FrontendImpl;
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
 */
-class Frontend {
+class Frontend : protected AbstractFrontendLifecycle {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class FrontendImpl;
+
+
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Run the frontend
+		*
+		*  @param[in] sFrontendClass
+		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+		*  @param[in] sExecutableFilename
+		*    Absolute application executable filename
+		*  @param[in] lstArguments
+		*    List of arguments to the program
+		*
+		*  @return
+		*    Exit code (usually 0 means no error), usually <0 when there was an error
+		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*/
+		PLFRONTEND_API static int Run(const PLCore::String &sFrontendClass, const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments);
 
 
 	//[-------------------------------------------------------]
@@ -84,6 +115,15 @@ class Frontend {
 		*    Destructor
 		*/
 		PLFRONTEND_API virtual ~Frontend();
+
+		/**
+		*  @brief
+		*    Get native window handle
+		*
+		*  @return
+		*    Native window handle for the frontend window, can be a null pointer
+		*/
+		PLFRONTEND_API PLCore::handle GetNativeWindowHandle() const;
 
 		/**
 		*  @brief
@@ -111,6 +151,20 @@ class Frontend {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual Frontend functions                     ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns whether or not the frontend is currently running
+		*
+		*  @return
+		*    'true' if the frontend is currently running, else 'false'
+		*/
+		virtual bool IsRunning() const = 0;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
@@ -128,18 +182,6 @@ class Frontend {
 	//[ Protected virtual Frontend functions                  ]
 	//[-------------------------------------------------------]
 	protected:
-		/**
-		*  @brief
-		*    Called to initialize the frontend
-		*/
-		virtual void OnInit() = 0;
-
-		/**
-		*  @brief
-		*    Called to deinitialize the frontend
-		*/
-		virtual void OnDeInit() = 0;
-
 		/**
 		*  @brief
 		*    Called to let the frontend draw into it's window

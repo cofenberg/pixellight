@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendOpenGL.h                               *
+ *  File: Frontend.h                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,26 +20,28 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_OPENGL_H__
-#define __PLFRONTEND_FRONTEND_OPENGL_H__
+#ifndef __PLFRONTENDOS_FRONTEND_H__
+#define __PLFRONTENDOS_FRONTEND_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
-#ifdef WIN32
-	#include <windows.h>
-#endif
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <PLFrontend/FrontendImpl.h>
+#include <PLFrontend/FrontendPixelLight.h>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLFrontendOS {
+
+
+//[-------------------------------------------------------]
+//[ Forward declaration                                   ]
+//[-------------------------------------------------------]
+class OSWindow;
 
 
 //[-------------------------------------------------------]
@@ -47,14 +49,25 @@ namespace PLFrontend {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Simple test frontend that uses OpenGL
-*
-*  @remarks
-*    This is a test frontend which uses OpenGL to display a spinning colored
-*    rectangle. It can be used easily to test the PLFrontend integration when
-*    developing a new backend.
+*    OS frontend implementation class
 */
-class FrontendOpenGL : public Frontend {
+class Frontend : public PLFrontend::FrontendImpl {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class OSWindowWindows;
+	friend class OSWindowLinux;
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(pl_rtti_export, Frontend, "PLFrontendOS", PLFrontend::FrontendImpl, "OS frontend implementation class")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -64,82 +77,37 @@ class FrontendOpenGL : public Frontend {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] cImpl
-		*    Implementation object
 		*/
-		PLFRONTEND_API FrontendOpenGL(FrontendImpl &cImpl);
+		Frontend();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLFRONTEND_API virtual ~FrontendOpenGL();
+		virtual ~Frontend();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual FrontendFrontend functions             ]
+	//[ Public virtual PLFrontend::FrontendImpl functions     ]
 	//[-------------------------------------------------------]
 	public:
-		PLFRONTEND_API virtual bool IsRunning() const override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual FrontendFrontend functions            ]
-	//[-------------------------------------------------------]
-	private:
-		PLFRONTEND_API virtual void OnDraw() override;
-		PLFRONTEND_API virtual void OnSize() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual AbstractFrontendLifecycle functions ]
-	//[-------------------------------------------------------]
-	protected:
-		PLFRONTEND_API virtual void OnCreate() override;
-		PLFRONTEND_API virtual void OnRestart() override;
-		PLFRONTEND_API virtual void OnStart() override;
-		PLFRONTEND_API virtual void OnResume() override;
-		PLFRONTEND_API virtual void OnPause() override;
-		PLFRONTEND_API virtual void OnStop() override;
-		PLFRONTEND_API virtual void OnDestroy() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private virtual PLFrontend::FrontendImpl functions    ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Initialize OpenGL
-		*/
-		void InitGL();
-
-		/**
-		*  @brief
-		*    Resize GL scene to fit the current window size
-		*/
-		void ResizeGL();
-
-		/**
-		*  @brief
-		*    Draw scene
-		*/
-		void DrawGL();
+		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
+		virtual void Redraw() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		// Platform specific
-		#ifdef WIN32
-			HDC   m_hDC;	/**< Device context, can be a null pointer */
-			HGLRC m_hRC;	/**< OpenGL rendering context, can be a null pointer */
-		#endif
-
-		// Platform independent
-		float m_fAngle;	/**< Current rotation angle of the rectangle */
+		OSWindow					   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
+		PLFrontend::FrontendPixelLight  m_cFrontend;	/**< The frontend instance */
 
 
 };
@@ -148,7 +116,7 @@ class FrontendOpenGL : public Frontend {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLFrontendOS
 
 
-#endif // __PLFRONTEND_FRONTEND_OPENGL_H__
+#endif // __PLFRONTENDOS_FRONTEND_H__

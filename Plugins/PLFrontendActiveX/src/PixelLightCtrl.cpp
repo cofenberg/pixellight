@@ -10,30 +10,40 @@ PixelLightCtrl::PixelLightCtrl() :
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
+
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	FrontendImpl::OnCreate();
 }
 
 PixelLightCtrl::~PixelLightCtrl()
 {
+	// Do the frontend lifecycle thing - de-initialize
+	FrontendImpl::OnPause();
+	FrontendImpl::OnStop();
+
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	FrontendImpl::OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Public virtual PLFrontend::FrontendImpl functions     ]
 //[-------------------------------------------------------]
-PLCore::handle PixelLightCtrl::GetWindowHandle() const
+PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
 {
-	return (PLCore::handle)m_hFrontendWnd;
-}
-
-PLCore::handle PixelLightCtrl::GetDeviceContext() const
-{
-	return (PLCore::handle)m_hFrontendDC;
+	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
 }
 
 
 //[-------------------------------------------------------]
 //[ Private virtual PLFrontend::Impl functions            ]
 //[-------------------------------------------------------]
+int PixelLightCtrl::Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
+{
+	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
+	return -1;
+}
+
 void PixelLightCtrl::Redraw()
 {
 	// Redraw control
@@ -53,10 +63,10 @@ LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &
 {
 	// Save window and device context handles
 	m_hFrontendWnd = m_hWnd;
-	m_hFrontendDC  = GetDC();
 
-	// Initialize frontend
-	FrontendImpl::OnInit();
+	// Do the frontend lifecycle thing - initialize
+	FrontendImpl::OnStart();
+	FrontendImpl::OnResume();
 
 	// Done
 	return 0;

@@ -380,7 +380,7 @@ class ConsoleApplication : public Object {
 		*    - Call DeInit()
 		*
 		*  @return
-		*    Exit code
+		*    Exit code (usually 0 means no error)
 		*/
 		PLCORE_API int Run(const String &sExecutableFilename, const Array<String> &lstArguments);
 

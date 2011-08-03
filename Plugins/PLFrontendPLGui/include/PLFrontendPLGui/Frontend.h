@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: GuiApplication.h                              *
+ *  File: Frontend.h                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,29 +20,32 @@
 \*********************************************************/
 
 
-#ifndef __PLGUI_GUI_APPLICATION_H__
-#define __PLGUI_GUI_APPLICATION_H__
+#ifndef __PLFRONTENDPLGUI_FRONTEND_H__
+#define __PLFRONTENDPLGUI_FRONTEND_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
 #include <PLCore/Base/Event/EventHandler.h>
-#include "PLGui/PLGui.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLGui {
+#include <PLFrontend/FrontendImpl.h>
+#include <PLFrontend/FrontendPixelLight.h>
+#include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Widget;
+namespace PLGui {
+	class Widget;
+}
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLFrontendPLGui {
 
 
 //[-------------------------------------------------------]
@@ -50,27 +53,22 @@ class Widget;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Gui application class
+*    PLGui frontend implementation class
 *
 *  @remarks
-*    An application class for a typical GUI application. Runs a
+*    An frontend class for a typical GUI application. Runs a
 *    main loop that does the necessary message procressing and
 *    provides methods to manage a main application window.
 */
-class GuiApplication : public PLCore::ConsoleApplication {
+class Frontend : public PLFrontend::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLGUI_RTTI_EXPORT, GuiApplication, "PLGui", PLCore::ConsoleApplication, "Gui application class")
-		#ifdef PLGUI_EXPORTS	// The following is only required when compiling PLGui
-			// Constructors
-			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-			// Methods
-			pl_method_0(GetMainWindow,	pl_ret_type(Widget*),				"Get the main window. Returns pointer to the main window of the application, a null pointer on error.",						"")
-			pl_method_1(SetMainWindow,	pl_ret_type(void),		Widget*,	"Set the main window, pointer to the main window of the application (a null pointer is also valid) as first parameter.",	"")
-		#endif
+	pl_class(pl_rtti_export, Frontend, "PLFrontendPLGui", PLFrontend::FrontendImpl, "PLGui frontend implementation class")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
 
 
@@ -81,17 +79,14 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] sGuiFilename
-		*    Filename of GUI to load, can be empty
 		*/
-		PLGUI_API GuiApplication(const PLCore::String &sGuiFilename = "");
+		PLFRONTENDPLGUI_API Frontend();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGUI_API virtual ~GuiApplication();
+		PLFRONTENDPLGUI_API virtual ~Frontend();
 
 		/**
 		*  @brief
@@ -100,7 +95,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*  @return
 		*    Main window, can be a null pointer
 		*/
-		PLGUI_API Widget *GetMainWindow() const;
+		PLFRONTENDPLGUI_API PLGui::Widget *GetMainWindow() const;
 
 		/**
 		*  @brief
@@ -109,53 +104,26 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*  @param[in] pMainWindow
 		*    Pointer to the main window of the application (a null pointer is also valid)
 		*/
-		PLGUI_API void SetMainWindow(Widget *pMainWindow);
+		PLFRONTENDPLGUI_API void SetMainWindow(PLGui::Widget *pMainWindow);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Public virtual PLFrontend::FrontendImpl functions     ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLCore::handle GetNativeWindowHandle() const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLFrontend::FrontendImpl functions  ]
 	//[-------------------------------------------------------]
 	protected:
-		/**
-		*  @brief
-		*    Initialization function that is called prior to OnInit()
-		*
-		*  @return
-		*    'true' if all went fine, else 'false' which will stop the application
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::Init() does
-		*    - Call OnCreateMainWindow()
-		*    - Return and go on with OnInit()
-		*/
-		PLGUI_API virtual bool Init() override;
-
-		/**
-		*  @brief
-		*    Main function
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Run GUI main loop (processing GUI messages)
-		*    - Exit loop when either the GUI or the application has been stopped
-		*/
-		PLGUI_API virtual void Main() override;
-
-		/**
-		*  @brief
-		*    De-initialization function that is called after OnDeInit()
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::DeInit() does
-		*    - De-initialize system GUI
-		*/
-		PLGUI_API virtual void DeInit() override;
+		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
+		virtual void Redraw() override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual GuiApplication functions            ]
+	//[ Protected virtual Frontend functions                  ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -168,7 +136,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*    - If a GUI filename is provided, create a window by loading that file
 		*    - Otherwise, create an empty top-level window
 		*/
-		PLGUI_API virtual void OnCreateMainWindow();
+		PLFRONTENDPLGUI_API virtual void OnCreateMainWindow();
 
 
 	//[-------------------------------------------------------]
@@ -186,11 +154,9 @@ class GuiApplication : public PLCore::ConsoleApplication {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		// Event handlers
-		PLCore::EventHandler<> EventHandlerOnDestroy;
-
-		// Data
-		Widget *m_pMainWindow;	/**< Main window of the application (can be a null pointer) */
+		PLFrontend::FrontendPixelLight	m_cFrontend;			/**< The frontend instance */
+		PLCore::EventHandler<>			EventHandlerOnDestroy;
+		PLGui::Widget				   *m_pMainWindow;			/**< Main window of the application (can be a null pointer) */
 
 
 };
@@ -199,7 +165,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLGui
+} // PLFrontendPLGui
 
 
-#endif // __PLGUI_GUI_APPLICATION_H__
+#endif // __PLFRONTENDPLGUI_FRONTEND_H__

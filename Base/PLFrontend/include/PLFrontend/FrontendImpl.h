@@ -29,7 +29,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/PLCore.h>
+#include <PLCore/Base/Object.h>
 #include "PLFrontend/PLFrontend.h"
+#include "PLFrontend/AbstractFrontendLifecycle.h"
 
 
 //[-------------------------------------------------------]
@@ -55,13 +57,20 @@ class Frontend;
 *    This base class provides the backend interface for concrete implementations
 *    (e.g. for Internet Explorer or Mozilla Firefox frontends).
 */
-class FrontendImpl {
+class FrontendImpl : public PLCore::Object, protected AbstractFrontendLifecycle {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Frontend;
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLFRONTEND_RTTI_EXPORT, FrontendImpl, "PLFrontend", PLCore::Object, "Abstract frontend implementation base class")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -105,39 +114,18 @@ class FrontendImpl {
 	public:
 		/**
 		*  @brief
-		*    Get window handle
+		*    Get native window handle
 		*
 		*  @return
-		*    System handle for the frontend window, can be a null pointer
+		*    Native window handle for the frontend window, can be a null pointer
 		*/
-		virtual PLCore::handle GetWindowHandle() const = 0;
-
-		/**
-		*  @brief
-		*    Get device context handle
-		*
-		*  @return
-		*    System handle for the device context, can be a null pointer
-		*/
-		virtual PLCore::handle GetDeviceContext() const = 0;
+		virtual PLCore::handle GetNativeWindowHandle() const = 0;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
-		/**
-		*  @brief
-		*    Called to initialize the frontend
-		*/
-		PLFRONTEND_API void OnInit();
-
-		/**
-		*  @brief
-		*    Called to deinitialize the frontend
-		*/
-		PLFRONTEND_API void OnDeInit();
-
 		/**
 		*  @brief
 		*    Called to let the frontend draw into it's window
@@ -152,9 +140,39 @@ class FrontendImpl {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual AbstractFrontendLifecycle functions ]
+	//[-------------------------------------------------------]
+	protected:
+		PLFRONTEND_API virtual void OnCreate() override;
+		PLFRONTEND_API virtual void OnRestart() override;
+		PLFRONTEND_API virtual void OnStart() override;
+		PLFRONTEND_API virtual void OnResume() override;
+		PLFRONTEND_API virtual void OnPause() override;
+		PLFRONTEND_API virtual void OnStop() override;
+		PLFRONTEND_API virtual void OnDestroy() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual FrontendImpl functions              ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Called when the frontend should run
+		*
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
+		*  @param[in] sExecutableFilename
+		*    Absolute application executable filename
+		*  @param[in] lstArguments
+		*    List of arguments to the program
+		*
+		*  @return
+		*    Exit code (usually 0 means no error), usually <0 when there was an error
+		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*/
+		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) = 0;
+
 		/**
 		*  @brief
 		*    Redraw the window

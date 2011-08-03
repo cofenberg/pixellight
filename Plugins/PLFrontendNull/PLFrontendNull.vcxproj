@@ -251,9 +251,11 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Frontend.cpp" />
     <ClCompile Include="src\PLFrontendNull.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLFrontendNull\Frontend.h" />
     <ClInclude Include="include\PLFrontendNull\PLFrontendNull.h" />
   </ItemGroup>
   <ItemGroup>

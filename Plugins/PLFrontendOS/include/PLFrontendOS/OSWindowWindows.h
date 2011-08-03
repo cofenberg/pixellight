@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendOpenGL.h                               *
+ *  File: OSWindowWindows.h                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,26 +20,28 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTEND_FRONTEND_OPENGL_H__
-#define __PLFRONTEND_FRONTEND_OPENGL_H__
+#ifndef __PLFRONTENDOS_OSWINDOW_WINDOWS_H__
+#define __PLFRONTENDOS_OSWINDOW_WINDOWS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
-#ifdef WIN32
-	#include <windows.h>
-#endif
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <PLCore/PLCoreWindowsIncludes.h>
+#include "PLFrontendOS/OSWindow.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLFrontend {
+namespace PLFrontendOS {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Frontend;
 
 
 //[-------------------------------------------------------]
@@ -47,62 +49,29 @@ namespace PLFrontend {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Simple test frontend that uses OpenGL
+*    OS Window frontend implementation class
 *
-*  @remarks
-*    This is a test frontend which uses OpenGL to display a spinning colored
-*    rectangle. It can be used easily to test the PLFrontend integration when
-*    developing a new backend.
+*  @note
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction
 */
-class FrontendOpenGL : public Frontend {
+class OSWindowWindows : public OSWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cImpl
-		*    Implementation object
-		*/
-		PLFRONTEND_API FrontendOpenGL(FrontendImpl &cImpl);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLFRONTEND_API virtual ~FrontendOpenGL();
+	friend class Frontend;
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual FrontendFrontend functions             ]
-	//[-------------------------------------------------------]
-	public:
-		PLFRONTEND_API virtual bool IsRunning() const override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual FrontendFrontend functions            ]
+	//[ Private static functions                              ]
 	//[-------------------------------------------------------]
 	private:
-		PLFRONTEND_API virtual void OnDraw() override;
-		PLFRONTEND_API virtual void OnSize() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual AbstractFrontendLifecycle functions ]
-	//[-------------------------------------------------------]
-	protected:
-		PLFRONTEND_API virtual void OnCreate() override;
-		PLFRONTEND_API virtual void OnRestart() override;
-		PLFRONTEND_API virtual void OnStart() override;
-		PLFRONTEND_API virtual void OnResume() override;
-		PLFRONTEND_API virtual void OnPause() override;
-		PLFRONTEND_API virtual void OnStop() override;
-		PLFRONTEND_API virtual void OnDestroy() override;
+		/**
+		*  @brief
+		*    Static window callback function
+		*/
+		static LRESULT CALLBACK WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
 	//[-------------------------------------------------------]
@@ -111,35 +80,37 @@ class FrontendOpenGL : public Frontend {
 	private:
 		/**
 		*  @brief
-		*    Initialize OpenGL
+		*    Constructor
+		*
+		*  @param[in] cFrontendOS
+		*    Owner frontend implementation instance
 		*/
-		void InitGL();
+		OSWindowWindows(Frontend &cFrontendOS);
 
 		/**
 		*  @brief
-		*    Resize GL scene to fit the current window size
+		*    Destructor
 		*/
-		void ResizeGL();
+		virtual ~OSWindowWindows();
 
-		/**
-		*  @brief
-		*    Draw scene
-		*/
-		void DrawGL();
+
+	//[-------------------------------------------------------]
+	//[ Private virtual OSWindow functions                    ]
+	//[-------------------------------------------------------]
+	private:
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		// Platform specific
-		#ifdef WIN32
-			HDC   m_hDC;	/**< Device context, can be a null pointer */
-			HGLRC m_hRC;	/**< OpenGL rendering context, can be a null pointer */
-		#endif
-
-		// Platform independent
-		float m_fAngle;	/**< Current rotation angle of the rectangle */
+		Frontend   *m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
+		HINSTANCE	m_hInstance;	/**< OS main process handle */
+		DWORD		m_nThreadID;	/**< OS main thread ID */
+		WNDCLASS	m_WndClass;		/**< OS window class */
+		HWND		m_hWnd;			/**< OS window handle, can be a null pointer */
+		bool		m_bDestroyed;	/**< 'true' if the widget has already been destroyed */
 
 
 };
@@ -148,7 +119,7 @@ class FrontendOpenGL : public Frontend {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLFrontendOS
 
 
-#endif // __PLFRONTEND_FRONTEND_OPENGL_H__
+#endif // __PLFRONTENDOS_OSWINDOW_WINDOWS_H__

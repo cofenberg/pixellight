@@ -113,6 +113,8 @@
     <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererDataModel.cpp">
       <Filter>DataModels\SceneRendererDataModel</Filter>
     </ClCompile>
+    <ClCompile Include="src\FrontendMainWindow.cpp" />
+    <ClCompile Include="src\Frontend.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h" />
@@ -124,6 +126,8 @@
       <Filter>DataModels\PLTreeItems</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h" />
+    <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />
+    <ClInclude Include="include\PLFrontendQt\Frontend.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

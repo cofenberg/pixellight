@@ -39,6 +39,8 @@
 #define __PLUGIN_H__
 
 #include <pluginbase.h>
+#undef GetFirstChild
+#undef GetNextSibling
 #include <PLFrontend/FrontendImpl.h>
 #include <PLFrontend/FrontendOpenGL.h>	// [TODO] Just a test
 
@@ -62,21 +64,26 @@ private:
   NPBool mInitialized;
   HWND mhWnd;
   HWND	m_hFrontendWnd;	/**< Window handle of the plugin container */
-  HDC	m_hFrontendDC;	/**< Device context */
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	// No RTTI interface, this frontend is not allowed to be instanced by using the RTTI
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual PLFrontend::FrontendImpl functions     ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::handle GetWindowHandle() const;
-		virtual PLCore::handle GetDeviceContext() const;
+		virtual PLCore::handle GetNativeWindowHandle() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLFrontend::FrontendImpl functions    ]
 	//[-------------------------------------------------------]
 	private:
+		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual void Redraw() override;
 
 	private:

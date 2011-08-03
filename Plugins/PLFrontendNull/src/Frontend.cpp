@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendImpl.cpp                               *
+ *  File: Frontend.cpp                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,21 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontend/Frontend.h"
-#include "PLFrontend/FrontendImpl.h"
+#include "PLFrontendNull/Frontend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace PLFrontend {
+namespace PLFrontendNull {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(FrontendImpl)
+pl_implement_class(Frontend)
 
 
 //[-------------------------------------------------------]
@@ -47,122 +46,63 @@ pl_implement_class(FrontendImpl)
 *  @brief
 *    Constructor
 */
-FrontendImpl::FrontendImpl() :
-	m_pFrontend(nullptr),
-	m_nWidth(0),
-	m_nHeight(0)
+Frontend::Frontend() :
+	m_cFrontend(*this)
 {
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	OnCreate();
 }
 
 /**
 *  @brief
 *    Destructor
 */
-FrontendImpl::~FrontendImpl()
+Frontend::~Frontend()
 {
-}
-
-/**
-*  @brief
-*    Get window width
-*/
-uint32 FrontendImpl::GetWidth() const
-{
-	// Return current width
-	return m_nWidth;
-}
-
-/**
-*  @brief
-*    Get window height
-*/
-uint32 FrontendImpl::GetHeight() const
-{
-	// Return current height
-	return m_nHeight;
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public virtual PLFrontend::FrontendImpl functions     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Called to let the frontend draw into it's window
-*/
-void FrontendImpl::OnDraw()
+handle Frontend::GetNativeWindowHandle() const
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDraw();
-}
-
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
-void FrontendImpl::OnSize()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnSize();
+	// There's no window handle!
+	return NULL_HANDLE;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[ Private virtual PLFrontend::FrontendImpl functions    ]
 //[-------------------------------------------------------]
-void FrontendImpl::OnCreate()
+int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnCreate();
+	// Do the frontend lifecycle thing - initialize
+	OnStart();
+	OnResume();
+
+	// The frontend main loop
+	while (m_cFrontend.IsRunning()) {
+		// [TODO] Update stuff
+		OnDraw();
+	}
+
+	// Do the frontend lifecycle thing - de-initialize
+	OnPause();
+	OnStop();
+
+	// Done
+	return 0;
 }
 
-void FrontendImpl::OnRestart()
+void Frontend::Redraw()
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnRestart();
-}
-
-void FrontendImpl::OnStart()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStart();
-}
-
-void FrontendImpl::OnResume()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnResume();
-}
-
-void FrontendImpl::OnPause()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnPause();
-}
-
-void FrontendImpl::OnStop()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStop();
-}
-
-void FrontendImpl::OnDestroy()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLFrontend
+} // PLFrontendNull

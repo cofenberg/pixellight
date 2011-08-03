@@ -8,6 +8,7 @@ define_project(PLFrontendNull)
 ##################################################
 add_sources(
 	src/PLFrontendNull.cpp
+	src/Frontend.cpp
 )
 
 ##################################################

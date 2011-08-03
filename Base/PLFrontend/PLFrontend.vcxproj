@@ -251,15 +251,22 @@ copy build\release64\PLFrontend64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AbstractFrontendLifecycle.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
+    <ClCompile Include="src\FrontendApplication.cpp" />
     <ClCompile Include="src\FrontendImpl.cpp" />
     <ClCompile Include="src\FrontendOpenGL.cpp" />
+    <ClCompile Include="src\FrontendPixelLight.cpp" />
     <ClCompile Include="src\PLFrontend.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLFrontend\AbstractFrontendLifecycle.h" />
     <ClInclude Include="include\PLFrontend\Frontend.h" />
+    <ClInclude Include="include\PLFrontend\FrontendApplication.h" />
     <ClInclude Include="include\PLFrontend\FrontendImpl.h" />
+    <ClInclude Include="include\PLFrontend\FrontendMain.h" />
     <ClInclude Include="include\PLFrontend\FrontendOpenGL.h" />
+    <ClInclude Include="include\PLFrontend\FrontendPixelLight.h" />
     <ClInclude Include="include\PLFrontend\PLFrontend.h" />
     <ClInclude Include="include\PLFrontend\PLFrontendLinux.h" />
     <ClInclude Include="include\PLFrontend\PLFrontendWindows.h" />

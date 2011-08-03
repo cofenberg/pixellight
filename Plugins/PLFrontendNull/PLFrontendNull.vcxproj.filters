@@ -10,9 +10,15 @@
     <ClCompile Include="src\PLFrontendNull.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Frontend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendNull\PLFrontendNull.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendNull\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

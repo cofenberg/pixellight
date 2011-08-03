@@ -82,10 +82,15 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   m_cFrontend(*this)
 {
   mhWnd = nullptr;
+
+	// Do the frontend lifecycle thing - let the world know that we have been created
+	FrontendImpl::OnCreate();
 }
 
 nsPluginInstance::~nsPluginInstance()
 {
+	// Do the frontend lifecycle thing - let the world know that we're going to die
+	FrontendImpl::OnDestroy();
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND, UINT, WPARAM, LPARAM);
@@ -101,10 +106,10 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
     return FALSE;
 	// Save window and device context handles
 	m_hFrontendWnd = (HWND)aWindow->window;
-	m_hFrontendDC  = GetDC(m_hFrontendWnd);
 
-	// Initialize frontend
-	FrontendImpl::OnInit();
+	// Do the frontend lifecycle thing - initialize
+	FrontendImpl::OnStart();
+	FrontendImpl::OnResume();
 
 	// Save size
 	m_nWidth  = aWindow->width;
@@ -125,6 +130,10 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 
 void nsPluginInstance::shut()
 {
+	// Do the frontend lifecycle thing - de-initialize
+	FrontendImpl::OnPause();
+	FrontendImpl::OnStop();
+
   // subclass it back
   SubclassWindow(mhWnd, lpOldProc);
   mhWnd = nullptr;
@@ -171,24 +180,27 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 //[-------------------------------------------------------]
 //[ Public virtual PLFrontend::FrontendImpl functions     ]
 //[-------------------------------------------------------]
-PLCore::handle nsPluginInstance::GetWindowHandle() const
+PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
 {
-	return (PLCore::handle)m_hFrontendWnd;
+	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
 }
 
-PLCore::handle nsPluginInstance::GetDeviceContext() const
-{
-	return (PLCore::handle)m_hFrontendDC;
-}
 
 //[-------------------------------------------------------]
 //[ Private virtual PLFrontend::FrontendImpl functions    ]
 //[-------------------------------------------------------]
+int nsPluginInstance::Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
+{
+	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
+	return -1;
+}
+
 void nsPluginInstance::Redraw()
 {
 	// Redraw frontend window
 	RedrawWindow(m_hFrontendWnd, nullptr, nullptr, 0);
 }
+
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
