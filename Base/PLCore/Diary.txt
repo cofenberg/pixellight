@@ -15,6 +15,8 @@ PLFrontendPLGui:
 PLFrontendOS:
 - The application lifecycle is now handled within the OS dependent implementation (e.g. "OSWindowWindows") instead of within "Frontend"... I hope this way the order is
   always correct... hopefully... eventually... *g*
+- When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)... it's just annyoing when you move
+  or size a window and the controlled scene camera is spinning around while you do so...
 
 
 

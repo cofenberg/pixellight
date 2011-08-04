@@ -94,12 +94,16 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 
 			// Got focus
 			case WM_SETFOCUS:
+			case WM_EXITSIZEMOVE:	// Beside focus, do the same for moving/sizing a window - it just feels right this way
+									// (e.g. no spinning around controlled camera while sizing a window)
 				// Do the frontend lifecycle thing - resume
 				pOSWindowWindows->m_pFrontendOS->OnResume();
 				return 0;
 
 			// Lost focus
 			case WM_KILLFOCUS:
+			case WM_ENTERSIZEMOVE:	// Beside focus, do the same for moving/sizing a window - it just feels right this way
+									// (e.g. no spinning around controlled camera while sizing a window)
 				// Do the frontend lifecycle thing - pause
 				pOSWindowWindows->m_pFrontendOS->OnPause();
 				return 0;
