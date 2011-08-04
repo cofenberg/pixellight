@@ -110,7 +110,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RenderApplication functions ]
+//[ Private virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 bool Application::OnUpdate()
 {

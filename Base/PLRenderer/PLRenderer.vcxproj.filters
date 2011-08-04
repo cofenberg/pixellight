@@ -310,7 +310,7 @@
     <ClCompile Include="src\Renderer\UniformBuffer.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\RenderApplication.cpp">
+    <ClCompile Include="src\Application\RendererApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
@@ -609,7 +609,7 @@
     <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRenderer\Application\RenderApplication.h">
+    <ClInclude Include="include\PLRenderer\Application\RendererApplication.h">
       <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>

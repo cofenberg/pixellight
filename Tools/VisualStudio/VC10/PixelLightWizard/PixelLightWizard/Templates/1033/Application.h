@@ -17,8 +17,8 @@
 [!if GUI_APPLICATION]
 #include <PLGui/Application/GuiApplication.h>
 [!endif]
-[!if RENDER_APPLICATION]
-#include <PLRenderer/Application/RenderApplication.h>
+[!if RENDERER_APPLICATION]
+#include <PLRenderer/Application/RendererApplication.h>
 [!endif]
 [!if SCENE_APPLICATION]
 #include <PLScene/Application/SceneApplication.h>
@@ -44,8 +44,8 @@ class Application : public PLCore::Application {
 [!if GUI_APPLICATION]
 class Application : public PLGui::GuiApplication {
 [!endif]
-[!if RENDER_APPLICATION]
-class Application : public PLRenderer::RenderApplication {
+[!if RENDERER_APPLICATION]
+class Application : public PLRenderer::RendererApplication {
 [!endif]
 [!if SCENE_APPLICATION]
 class Application : public PLScene::SceneApplication {

@@ -49,7 +49,7 @@ pl_implement_class(SceneApplication)
 *  @brief
 *    Constructor
 */
-SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
+SceneApplication::SceneApplication(const String &sSceneFilename) : RendererApplication("PLScene::SPScene"),
 	m_pSceneContext(nullptr),
 	m_pRootScene(nullptr)
 {
@@ -105,7 +105,7 @@ void SceneApplication::SetRootScene(SceneContainer *pRootScene)
 bool SceneApplication::Init()
 {
 	// Call base implementation
-	if (RenderApplication::Init()) {
+	if (RendererApplication::Init()) {
 		// Get renderer context
 		RendererContext *pRendererContext = GetRendererContext();
 		if (pRendererContext) {
@@ -133,12 +133,12 @@ void SceneApplication::DeInit()
 		delete m_pSceneContext;
 
 	// Call base implementation
-	RenderApplication::DeInit();
+	RendererApplication::DeInit();
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLRenderer::RenderApplication functions ]
+//[ Protected virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -155,7 +155,7 @@ bool SceneApplication::OnUpdate()
 	}
 
 	// Call base implementation
-	return RenderApplication::OnUpdate();
+	return RendererApplication::OnUpdate();
 }
 
 

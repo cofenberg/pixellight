@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Application/RenderApplication.h>
+#include <PLRenderer/Application/RendererApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -38,13 +38,13 @@
 *  @brief
 *    Application class
 */
-class Application : public PLRenderer::RenderApplication {
+class Application : public PLRenderer::RendererApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLRenderer::RenderApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLRenderer::RendererApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -75,7 +75,7 @@ class Application : public PLRenderer::RenderApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::RenderApplication functions ]
+	//[ Private virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreatePainter() override;

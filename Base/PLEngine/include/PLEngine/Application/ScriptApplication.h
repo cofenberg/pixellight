@@ -171,7 +171,7 @@ class ScriptApplication : public EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLRenderer::RenderApplication functions ]
+	//[ Protected virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

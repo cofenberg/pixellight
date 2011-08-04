@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RenderApplication.h                           *
+ *  File: RendererApplication.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -50,18 +50,18 @@ class RendererContext;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Render application class
+*    Renderer application class
 *
 *  @remarks
 *    An application class for programs that open a single widget to render into.
 */
-class RenderApplication : public PLCore::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
+class RendererApplication : public PLCore::FrontendApplication, public PLRenderer::SurfaceWindowHandler {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLRENDERER_RTTI_EXPORT, RenderApplication, "PLRenderer", PLCore::FrontendApplication, "Render application class")
+	pl_class(PLRENDERER_RTTI_EXPORT, RendererApplication, "PLRenderer", PLCore::FrontendApplication, "Renderer application class")
 		#ifdef PLRENDERER_EXPORTS	// The following is only required when compiling PLRenderer
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -86,13 +86,13 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @param[in] sSurfacePainter
 		*    Surface painter class to use
 		*/
-		PLRENDERER_API RenderApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
+		PLRENDERER_API RendererApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDERER_API virtual ~RenderApplication();
+		PLRENDERER_API virtual ~RendererApplication();
 
 		/**
 		*  @brief
@@ -200,7 +200,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual RenderApplication functions         ]
+	//[ Protected virtual RendererApplication functions       ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

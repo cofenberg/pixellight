@@ -107,7 +107,7 @@ add_sources(
 	src/Animation/AnimationHandler.cpp
 	src/Animation/AnimationInfo.cpp
 	src/Animation/AnimationManager.cpp
-	src/Application/RenderApplication.cpp
+	src/Application/RendererApplication.cpp
 )
 
 ##################################################

@@ -344,7 +344,7 @@ class EngineApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLRenderer::RenderApplication functions ]
+	//[ Protected virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

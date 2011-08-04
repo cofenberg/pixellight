@@ -427,7 +427,7 @@ void EngineApplication::DeInit()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLRenderer::RenderApplication functions ]
+//[ Protected virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief

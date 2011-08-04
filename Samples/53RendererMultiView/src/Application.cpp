@@ -55,7 +55,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : RenderApplication()
+Application::Application() : RendererApplication()
 {
 	// Set application name and title
 	SetName("53RendererMultiView");
@@ -78,7 +78,7 @@ Application::~Application()
 void Application::OnCreateMainWindow()
 {
 	// Call base implementation
-	RenderApplication::OnCreateMainWindow();
+	RendererApplication::OnCreateMainWindow();
 	Widget *pWidget = GetMainWindow();
 
 	// Get the display mode to use
@@ -119,7 +119,7 @@ void Application::OnCreateMainWindow()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RenderApplication functions ]
+//[ Private virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreatePainter()
 {

@@ -49,7 +49,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : RenderApplication()
+Application::Application() : RendererApplication()
 {
 	// Set application name and title
 	SetName("52RendererMesh");
@@ -67,7 +67,7 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RenderApplication functions ]
+//[ Private virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreatePainter()
 {

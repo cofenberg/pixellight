@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RenderApplication.cpp                         *
+ *  File: RendererApplication.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -33,7 +33,7 @@
 #include "PLRenderer/Renderer/FontManager.h"
 #include "PLRenderer/Renderer/SurfacePainter.h"
 #include "PLRenderer/Texture/TextureManager.h"
-#include "PLRenderer/Application/RenderApplication.h"
+#include "PLRenderer/Application/RendererApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -46,7 +46,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(RenderApplication)
+pl_implement_class(RendererApplication)
 
 
 //[-------------------------------------------------------]
@@ -56,7 +56,7 @@ pl_implement_class(RenderApplication)
 *  @brief
 *    Constructor
 */
-RenderApplication::RenderApplication(const String &sSurfacePainter) : FrontendApplication(),
+RendererApplication::RendererApplication(const String &sSurfacePainter) : FrontendApplication(),
 	m_sSurfacePainter(sSurfacePainter),
 	m_pRendererContext(nullptr)
 {
@@ -68,7 +68,7 @@ RenderApplication::RenderApplication(const String &sSurfacePainter) : FrontendAp
 *  @brief
 *    Destructor
 */
-RenderApplication::~RenderApplication()
+RendererApplication::~RendererApplication()
 {
 }
 
@@ -76,7 +76,7 @@ RenderApplication::~RenderApplication()
 *  @brief
 *    Returns the renderer context
 */
-RendererContext *RenderApplication::GetRendererContext() const
+RendererContext *RendererApplication::GetRendererContext() const
 {
 	return m_pRendererContext;
 }
@@ -85,7 +85,7 @@ RendererContext *RenderApplication::GetRendererContext() const
 *  @brief
 *    Get surface painter of the main window
 */
-SurfacePainter *RenderApplication::GetPainter() const
+SurfacePainter *RendererApplication::GetPainter() const
 {
 	// Get the surface
 	const Surface *pSurface = GetSurface();
@@ -102,7 +102,7 @@ SurfacePainter *RenderApplication::GetPainter() const
 *  @brief
 *    Set surface painter of the main window
 */
-void RenderApplication::SetPainter(SurfacePainter *pPainter)
+void RendererApplication::SetPainter(SurfacePainter *pPainter)
 {
 	// Get the surface
 	Surface *pSurface = GetSurface();
@@ -116,7 +116,7 @@ void RenderApplication::SetPainter(SurfacePainter *pPainter)
 *  @brief
 *    Returns whether or not the main window is currently fullscreen or not
 */
-bool RenderApplication::IsFullscreen() const
+bool RendererApplication::IsFullscreen() const
 {
 	// [TODO] Move this method into PLFrontend
 	/*
@@ -135,7 +135,7 @@ bool RenderApplication::IsFullscreen() const
 *  @brief
 *    Sets whether or not the main window is currently fullscreen or not
 */
-void RenderApplication::SetFullscreen(bool bFullscreen)
+void RendererApplication::SetFullscreen(bool bFullscreen)
 {
 	// [TODO] Move this method into PLFrontend
 	/*
@@ -152,7 +152,7 @@ void RenderApplication::SetFullscreen(bool bFullscreen)
 *  @brief
 *    Update application
 */
-bool RenderApplication::Update(bool bForceUpdate)
+bool RendererApplication::Update(bool bForceUpdate)
 {
 	// Force or is it time for an update?
 	if (bForceUpdate) {
@@ -188,7 +188,7 @@ bool RenderApplication::Update(bool bForceUpdate)
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool RenderApplication::Init()
+bool RendererApplication::Init()
 {
 	// Call base implementation
 	if (FrontendApplication::Init()) {
@@ -228,7 +228,7 @@ bool RenderApplication::Init()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void RenderApplication::DeInit()
+void RendererApplication::DeInit()
 {
 	// Destroy renderer context
 	if (m_pRendererContext) {
@@ -244,20 +244,20 @@ void RenderApplication::DeInit()
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendApplication functions ]
 //[-------------------------------------------------------]
-void RenderApplication::OnDraw()
+void RendererApplication::OnDraw()
 {
 	Update();
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual RenderApplication functions         ]
+//[ Protected virtual RendererApplication functions       ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Function that is called to create the application's renderer context
 */
-void RenderApplication::OnCreateRendererContext()
+void RendererApplication::OnCreateRendererContext()
 {
 	// [TODO] No "Config" usage in here
 
@@ -310,7 +310,7 @@ void RenderApplication::OnCreateRendererContext()
 *  @brief
 *    Function that is called to create the application's surface painter
 */
-void RenderApplication::OnCreatePainter()
+void RendererApplication::OnCreatePainter()
 {
 	// Is there a renderer context?
 	if (m_pRendererContext) {
@@ -323,7 +323,7 @@ void RenderApplication::OnCreatePainter()
 *  @brief
 *    Function that is called once per update loop
 */
-bool RenderApplication::OnUpdate()
+bool RendererApplication::OnUpdate()
 {
 	// Update renderer context
 	if (m_pRendererContext)

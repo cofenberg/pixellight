@@ -6,7 +6,7 @@ Source~code~\ref{Code:SimpleApplication} shows an extreme usage case of the appl
 // Includes
 #include <PLCore/Main.h>
 #include <PLCore/ModuleMain.h>
-#include <PLEngine/Application/RenderApplication.h>
+#include <PLEngine/Application/RendererApplication.h>
 
 // Namespace
 using namespace PLCore;
@@ -24,8 +24,8 @@ pl_module_end
 int PLMain(const String &sFilename, const Array<String> &lstArguments)
 {
 	// Create an instance (on the stack) of the default
-	// render application class
-	RenderApplication cApplication;
+	// renderer application class
+	RendererApplication cApplication;
 
 	// Let's rock'n'roll!
 	return cApplication.Run(sFilename, lstArguments);

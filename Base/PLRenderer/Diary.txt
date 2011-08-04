@@ -5,6 +5,7 @@
   It should be possible to write bare minimum applications just using PLRenderer for basic rendering without the need to use any high level components like meshes or
   the scene graph. This should also make it easier to port PixelLight to new platforms - in order to use e.g. the sample application 50RendererTriangle to test
   PLRenderer, one doesn't need to port/compile everything up to PLEngine to do so.
+- Renamed "RenderApplication" into "RendererApplication" so that one can guess the name of this class by just knowning the component name it's in
 
 
 

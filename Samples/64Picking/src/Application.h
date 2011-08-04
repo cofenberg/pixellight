@@ -100,7 +100,7 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::RenderApplication functions ]
+	//[ Private virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual bool OnUpdate() override;
