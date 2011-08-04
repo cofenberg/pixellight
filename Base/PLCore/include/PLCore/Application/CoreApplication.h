@@ -31,6 +31,7 @@
 #include "PLCore/Base/Object.h"
 #include "PLCore/Tools/Version.h"
 #include "PLCore/Tools/CommandLine.h"
+#include "PLCore/Application/AbstractLifecycle.h"
 #include "PLCore/Application/ApplicationContext.h"
 #include "PLCore/Config/Config.h"
 
@@ -63,7 +64,7 @@ namespace PLCore {
 *  @note
 *    - Implementation of the template method design pattern (although this class is not abstract)
 */
-class CoreApplication : public Object {
+class CoreApplication : public Object, protected AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]
@@ -373,11 +374,11 @@ class CoreApplication : public Object {
 		*    The implementation does the following tasks:
 		*    - Connect Linux signals
 		*    - Fill application context
-		*    - Call Init()
+		*    - Call OnStart()
 		*    - Call OnInit()
 		*    - Call Main()
 		*    - Call OnDeInit()
-		*    - Call DeInit()
+		*    - Call OnStop()
 		*
 		*  @return
 		*    Exit code (usually 0 means no error)
@@ -386,9 +387,21 @@ class CoreApplication : public Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual CoreApplication functions           ]
+	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Called directly after the object has been created
+		*/
+		PLCORE_API virtual void OnCreate() override;
+
+		/**
+		*  @brief
+		*    Called directly before a stopped object is going to start again (always followed by "OnStart()")
+		*/
+		PLCORE_API virtual void OnRestart() override;
+
 		/**
 		*  @brief
 		*    Initialization function that is called prior to OnInit()
@@ -406,8 +419,42 @@ class CoreApplication : public Object {
 		*    - Call OnInitData()
 		*    - Return and go on with OnInit()
 		*/
-		PLCORE_API virtual bool Init();
+		PLCORE_API virtual bool OnStart() override;
 
+		/**
+		*  @brief
+		*    Called when the object has the focus (keep the implementation lightweight)
+		*/
+		PLCORE_API virtual void OnResume() override;
+
+		/**
+		*  @brief
+		*    Called when the object has no longer the focus (keep the implementation lightweight)
+		*/
+		PLCORE_API virtual void OnPause() override;
+
+		/**
+		*  @brief
+		*    De-initialization function that is called after OnDeInit()
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Save configuration
+		*    - Close log
+		*/
+		PLCORE_API virtual void OnStop() override;
+
+		/**
+		*  @brief
+		*    Called before the object is going to be finally destroyed
+		*/
+		PLCORE_API virtual void OnDestroy() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual CoreApplication functions           ]
+	//[-------------------------------------------------------]
+	protected:
 		/**
 		*  @brief
 		*    Main function
@@ -420,17 +467,6 @@ class CoreApplication : public Object {
 
 		/**
 		*  @brief
-		*    De-initialization function that is called after OnDeInit()
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Save configuration
-		*    - Close log
-		*/
-		PLCORE_API virtual void DeInit();
-
-		/**
-		*  @brief
 		*    Called when application should initialize it's log
 		*
 		*  @remarks
@@ -440,7 +476,7 @@ class CoreApplication : public Object {
 		*    - Write some general information into the log
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLCORE_API virtual void OnInitLog();
 
@@ -455,7 +491,7 @@ class CoreApplication : public Object {
 		*      - On '--version', call OnPrintVersion() and exit
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*    - To end the application here, use Application::Exit()
 		*/
 		PLCORE_API virtual void OnInitCmdLine();
@@ -473,7 +509,7 @@ class CoreApplication : public Object {
 		*      - Read 'UsePixelLightRuntime' and update m_bUseRuntime accordingly
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLCORE_API virtual void OnInitConfig();
 
@@ -490,7 +526,7 @@ class CoreApplication : public Object {
 		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLCORE_API virtual void OnInitPlugins();
 
@@ -510,7 +546,7 @@ class CoreApplication : public Object {
 		*    - Get current language and load PixelLight localization file, if no language is defined, English is used as default
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLCORE_API virtual void OnInitData();
 

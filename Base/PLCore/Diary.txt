@@ -5,6 +5,10 @@
 - "AbstractFrontendLifecycle" really solved some nasty design issues when it comes to application lifecyle control. Time that also "CoreApplication"
   is using this interface so that frontends can control the applications in a proper way (e.g. deactivating input control as soon as the application gets
   paused because it e.g. lost the focus). For this, renamed "AbstractFrontendLifecycle" into "AbstractLifecycle".
+- Derived "CoreApplication" from "AbstractLifecycle". When possible, I try to avoid using multi-inheritance but in this case I see no other decent option -
+  sadly C++ has no Java like "implements". :/
+  -> Renamed "CoreApplication::Init()" into "CoreApplication::OnStart()", the "AbstractLifecycle" equivalent called as soon as something is started (not same as instanced)
+  -> Renamed "CoreApplication::DeInit()" into "CoreApplication::OnStop()", the "AbstractLifecycle" equivalent called as soon as something is stopped (not same as destroyed)
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
 

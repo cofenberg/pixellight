@@ -88,7 +88,7 @@ ScriptApplication::ScriptApplication(String sScriptFilename, String sName, Strin
 */
 ScriptApplication::~ScriptApplication()
 {
-	// The used script instance is destroyed within "DeInit()"
+	// The used script instance is destroyed within "OnDeInit()"
 }
 
 /**

@@ -182,16 +182,16 @@ bool RendererApplication::Update(bool bForceUpdate)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::CoreApplication functions   ]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool RendererApplication::Init()
+bool RendererApplication::OnStart()
 {
 	// Call base implementation
-	if (FrontendApplication::Init()) {
+	if (FrontendApplication::OnStart()) {
 		// Create renderer context
 		OnCreateRendererContext();
 		if (!m_bRunning)
@@ -228,7 +228,7 @@ bool RendererApplication::Init()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void RendererApplication::DeInit()
+void RendererApplication::OnStop()
 {
 	// Destroy renderer context
 	if (m_pRendererContext) {
@@ -237,7 +237,7 @@ void RendererApplication::DeInit()
 	}
 
 	// Call base implementation
-	FrontendApplication::DeInit();
+	FrontendApplication::OnStop();
 }
 
 

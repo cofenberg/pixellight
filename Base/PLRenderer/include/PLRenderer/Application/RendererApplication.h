@@ -160,7 +160,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::CoreApplication functions   ]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -172,13 +172,13 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that CoreApplication::Init() does
+		*    - Everything that PLCore::CoreApplication::OnStart() does
 		*    - Call OnCreateRendererContext()
 		*    - Set default font according to config
 		*    - Call OnCreatePainter()
 		*    - Return and go on with OnInit()
 		*/
-		PLRENDERER_API virtual bool Init() override;
+		PLRENDERER_API virtual bool OnStart() override;
 
 		/**
 		*  @brief
@@ -187,9 +187,9 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Destroy renderer context
-		*    - Everything that FrontendApplication::DeInit() does
+		*    - Everything that FrontendApplication::OnStop() does
 		*/
-		PLRENDERER_API virtual void DeInit() override;
+		PLRENDERER_API virtual void OnStop() override;
 
 
 	//[-------------------------------------------------------]
@@ -208,7 +208,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*    Function that is called to create the application's renderer context
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*    - Currently a 'RendererOpenGL' renderer context is created within the default implementation
 		*/
 		PLRENDERER_API virtual void OnCreateRendererContext();
@@ -218,7 +218,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*    Function that is called to create the application's surface painter
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLRENDERER_API virtual void OnCreatePainter();
 

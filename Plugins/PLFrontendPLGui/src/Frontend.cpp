@@ -133,23 +133,28 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	OnCreateMainWindow();
 
 	// Do the frontend lifecycle thing - initialize
-	OnStart();
-	OnResume();
+	int nResult = 0;	// By default, no error
+	if (OnStart()) {
+		OnResume();
 
-	// The frontend main loop
-	Gui *pGui = Gui::GetSystemGui();
-	while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
-		// Check if there are system messages waiting (make a non-blocking main loop)
-		if (pGui->HasPendingMessages())
-			pGui->ProcessMessages();
+		// The frontend main loop
+		Gui *pGui = Gui::GetSystemGui();
+		while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
+			// Check if there are system messages waiting (make a non-blocking main loop)
+			if (pGui->HasPendingMessages())
+				pGui->ProcessMessages();
 
-		// [TODO] Update stuff
-		OnDraw();
+			// [TODO] Update stuff
+			OnDraw();
+		}
+
+		// Do the frontend lifecycle thing - de-initialize
+		OnPause();
+		OnStop();
+	} else {
+		// Error!
+		nResult = -1;
 	}
-
-	// Do the frontend lifecycle thing - de-initialize
-	OnPause();
-	OnStop();
 
 	// Destroy main window
 	if (m_pMainWindow) {
@@ -158,7 +163,7 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	}
 
 	// Done
-	return 0;
+	return nResult;
 }
 
 void Frontend::Redraw()

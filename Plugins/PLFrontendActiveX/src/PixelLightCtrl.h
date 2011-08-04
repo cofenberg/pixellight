@@ -112,6 +112,7 @@ END_MSG_MAP()
 		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */
 		PLCore::FrontendPixelLight	m_cFrontend;
 //		PLCore::FrontendOpenGL	m_cFrontend;	// [TODO] For testing
+		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 
 // IPixelLightCtrl
 public:

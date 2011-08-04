@@ -75,8 +75,11 @@ class AbstractLifecycle {
 		/**
 		*  @brief
 		*    Called when the object becoming visible to the user
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (on failure, no "OnResume()", "OnPause()" or "OnStop()" will be called)
 		*/
-		virtual void OnStart() = 0;
+		virtual bool OnStart() = 0;
 
 		/**
 		*  @brief

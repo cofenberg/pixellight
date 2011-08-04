@@ -143,7 +143,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 	protected:
 		PLCORE_API virtual void OnCreate() override;
 		PLCORE_API virtual void OnRestart() override;
-		PLCORE_API virtual void OnStart() override;
+		PLCORE_API virtual bool OnStart() override;
 		PLCORE_API virtual void OnResume() override;
 		PLCORE_API virtual void OnPause() override;
 		PLCORE_API virtual void OnStop() override;

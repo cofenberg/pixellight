@@ -118,7 +118,7 @@ void FrontendOpenGL::OnRestart()
 	// Nothing to do in here
 }
 
-void FrontendOpenGL::OnStart()
+bool FrontendOpenGL::OnStart()
 {
 	#ifdef WIN32
 		// Get the native window handle
@@ -163,6 +163,9 @@ void FrontendOpenGL::OnStart()
 			}
 		}
 	#endif
+
+	// Done
+	return true;
 }
 
 void FrontendOpenGL::OnResume()

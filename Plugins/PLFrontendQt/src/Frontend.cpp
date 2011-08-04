@@ -117,15 +117,20 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	SetMainWindow(pQMainWindow);
 
 	// Do the frontend lifecycle thing - initialize
-	OnStart();
-	OnResume();
+	int nResult = 0;	// By default, no error
+	if (OnStart()) {
+		OnResume();
 
-	// Run the Qt application
-	const int nResult = cQApplication.exec();
+		// Run the Qt application
+		nResult = cQApplication.exec();
 
-	// Do the frontend lifecycle thing - de-initialize
-	OnPause();
-	OnStop();
+		// Do the frontend lifecycle thing - de-initialize
+		OnPause();
+		OnStop();
+	} else {
+		// Error!
+		nResult = -1;
+	}
 
 	// Done
 	return nResult;

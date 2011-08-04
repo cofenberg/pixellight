@@ -112,16 +112,16 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual CoreApplication functions           ]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool GuiApplication::Init()
+bool GuiApplication::OnStart()
 {
 	// Call base implementation
-	if (CoreApplication::Init()) {
+	if (CoreApplication::OnStart()) {
 		// Create main window
 		OnCreateMainWindow();
 		if (!m_bRunning) return false;
@@ -136,6 +136,23 @@ bool GuiApplication::Init()
 
 /**
 *  @brief
+*    De-initialization function that is called after OnDeInit()
+*/
+void GuiApplication::OnStop()
+{
+	// Call base implementation
+	CoreApplication::OnStop();
+
+	// Shut down system GUI
+	Gui::GetSystemGui()->Shutdown();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLCore::CoreApplication functions   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
 *    Main function
 */
 void GuiApplication::Main()
@@ -146,19 +163,6 @@ void GuiApplication::Main()
 		// Get GUI messages
 		pGui->ProcessMessages();
 	}
-}
-
-/**
-*  @brief
-*    De-initialization function that is called after OnDeInit()
-*/
-void GuiApplication::DeInit()
-{
-	// Call base implementation
-	CoreApplication::DeInit();
-
-	// Shut down system GUI
-	Gui::GetSystemGui()->Shutdown();
 }
 
 

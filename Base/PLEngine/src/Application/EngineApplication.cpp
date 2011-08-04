@@ -367,16 +367,16 @@ bool EngineApplication::LoadScene(const String &sFilename)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::CoreApplication functions   ]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool EngineApplication::Init()
+bool EngineApplication::OnStart()
 {
 	// Call base implementation
-	if (SceneApplication::Init()) {
+	if (SceneApplication::OnStart()) {
 		// Initialize input system
 		InputManager::GetInstance()->DetectDevices();
 
@@ -413,7 +413,7 @@ bool EngineApplication::Init()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void EngineApplication::DeInit()
+void EngineApplication::OnStop()
 {
 	// Destroy virtual input controller
 	if (m_pInputController) {
@@ -422,7 +422,7 @@ void EngineApplication::DeInit()
 	}
 
 	// Call base implementation
-	SceneApplication::DeInit();
+	SceneApplication::OnStop();
 }
 
 

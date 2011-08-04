@@ -186,7 +186,7 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    "GetSceneRendererTool().SetPassAttribute("BackgroundBitmap", "Material", "Data/Textures/Background.dds");"
 		*    one can usually (on standard scene renderer configurations) set directly a background bitmap.
 		*
-		*    This component is initialized within the application framework initialization function "Init()" that is called prior to "Main()".
+		*    This component is initialized within the application framework initialization function "OnStart()" that is called prior to "Main()".
 		*    As a result, using the returned component instance prior to the application-specific initialization routine "OnInit()" will not
 		*    work.
 		*/
@@ -212,7 +212,7 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    Screenshot tool instance
 		*
 		*  @remarks
-		*    This component is initialized within the application framework initialization function "Init()" that is called prior to "Main()".
+		*    This component is initialized within the application framework initialization function "OnStart()" that is called prior to "Main()".
 		*    As a result, using the returned component instance prior to the application-specific initialization routine "OnInit()" will not
 		*    work.
 		*/
@@ -310,7 +310,7 @@ class EngineApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::CoreApplication functions   ]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -322,14 +322,14 @@ class EngineApplication : public PLScene::SceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that PLScene::SceneApplication::Init() does
+		*    - Everything that PLScene::SceneApplication::OnStart() does
 		*    - Initialize input system
 		*    - Call OnCreateInputController()
 		*    - Initialize scene renderer tool
 		*    - Initialize screenshot tool
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init() override;
+		PL_API virtual bool OnStart() override;
 
 		/**
 		*  @brief
@@ -338,9 +338,9 @@ class EngineApplication : public PLScene::SceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Destroy input controller
-		*    - Everything that PLScene::SceneApplication::DeInit() does
+		*    - Everything that PLScene::SceneApplication::OnStop() does
 		*/
-		PL_API virtual void DeInit() override;
+		PL_API virtual void OnStop() override;
 
 
 	//[-------------------------------------------------------]
@@ -378,7 +378,7 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    Scene container where the 'concrete scene' should be created in
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*    - The default implementation creates an controllable camera and a simple mesh scene node
 		*    - Called from within "PLScene::SceneApplication::OnCreateRootScene()"
 		*/
@@ -389,7 +389,7 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    Function that is called to initialize the application's virtual input controller
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*    - In the default implementation, an instance of VirtualStandardController is created
 		*/
 		PL_API virtual void OnCreateInputController();

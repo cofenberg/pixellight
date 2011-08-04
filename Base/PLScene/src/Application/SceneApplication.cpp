@@ -100,12 +100,12 @@ void SceneApplication::SetRootScene(SceneContainer *pRootScene)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::CoreApplication functions   ]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
 //[-------------------------------------------------------]
-bool SceneApplication::Init()
+bool SceneApplication::OnStart()
 {
 	// Call base implementation
-	if (RendererApplication::Init()) {
+	if (RendererApplication::OnStart()) {
 		// Get renderer context
 		RendererContext *pRendererContext = GetRendererContext();
 		if (pRendererContext) {
@@ -126,14 +126,14 @@ bool SceneApplication::Init()
 	return false;
 }
 
-void SceneApplication::DeInit()
+void SceneApplication::OnStop()
 {
 	// Destroy the scene context
 	if (m_pSceneContext)
 		delete m_pSceneContext;
 
 	// Call base implementation
-	RendererApplication::DeInit();
+	RendererApplication::OnStop();
 }
 
 

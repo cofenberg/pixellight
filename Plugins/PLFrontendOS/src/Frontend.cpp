@@ -97,28 +97,33 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	#endif
 
 	// Do the frontend lifecycle thing - initialize
-	OnStart();
-	OnResume();
+	int nResult = 0;	// By default, no error
+	if (OnStart()) {
+		OnResume();
 
-	// The Windows message loop
-	bool bQuit = false;
-	while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
-		// Look if messages are waiting
-		MSG sMsg;
-		while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
-			if (sMsg.message == WM_QUIT)
-				bQuit = true;
-			TranslateMessage(&sMsg);
-			DispatchMessage(&sMsg);
+		// The Windows message loop
+		bool bQuit = false;
+		while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+			// Look if messages are waiting
+			MSG sMsg;
+			while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
+				if (sMsg.message == WM_QUIT)
+					bQuit = true;
+				TranslateMessage(&sMsg);
+				DispatchMessage(&sMsg);
+			}
+
+			// [TODO] Update stuff
+			OnDraw();
 		}
 
-		// [TODO] Update stuff
-		OnDraw();
+		// Do the frontend lifecycle thing - de-initialize
+		OnPause();
+		OnStop();
+	} else {
+		// Error!
+		nResult = -1;
 	}
-
-	// Do the frontend lifecycle thing - de-initialize
-	OnPause();
-	OnStop();
 
 	// Destroy the OS specific window implementation
 	if (m_pOSWindow) {
@@ -127,7 +132,7 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	}
 
 	// Done
-	return 0;
+	return nResult;
 }
 
 void Frontend::Redraw()

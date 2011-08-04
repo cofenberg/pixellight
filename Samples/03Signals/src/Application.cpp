@@ -48,7 +48,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::CoreApplication(),
+Application::Application() : CoreApplication(),
 	m_bExit(false)
 {
 	// Set application name and title

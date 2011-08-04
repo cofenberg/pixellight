@@ -110,14 +110,20 @@ void FrontendPixelLight::OnRestart()
 	// Nothing to do in here
 }
 
-void FrontendPixelLight::OnStart()
+bool FrontendPixelLight::OnStart()
 {
-	if (m_pFrontendApplication && m_pFrontendApplication->Init()) {
+	if (m_pFrontendApplication && m_pFrontendApplication->OnStart()) {
 		// Call application-specific initialization routine
 		m_pFrontendApplication->OnInit();
 
 		// Frontend application successfully initialized
 		m_bFrontendApplicationInitialized = true;
+
+		// Done
+		return true;
+	} else {
+		// Error!
+		return false;
 	}
 }
 
@@ -138,7 +144,7 @@ void FrontendPixelLight::OnStop()
 		m_pFrontendApplication->OnDeInit();
 
 		// De-Initialize application
-		m_pFrontendApplication->DeInit();
+		m_pFrontendApplication->OnStop();
 
 		// Frontend application is no longer initialized
 		m_bFrontendApplicationInitialized = false;

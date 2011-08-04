@@ -80,21 +80,25 @@ handle Frontend::GetNativeWindowHandle() const
 int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Do the frontend lifecycle thing - initialize
-	OnStart();
-	OnResume();
+	if (OnStart()) {
+		OnResume();
 
-	// The frontend main loop
-	while (m_cFrontend.IsRunning()) {
-		// [TODO] Update stuff
-		OnDraw();
+		// The frontend main loop
+		while (m_cFrontend.IsRunning()) {
+			// [TODO] Update stuff
+			OnDraw();
+		}
+
+		// Do the frontend lifecycle thing - de-initialize
+		OnPause();
+		OnStop();
+
+		// Done
+		return 0;
+	} else {
+		// Error!
+		return -1;
 	}
-
-	// Do the frontend lifecycle thing - de-initialize
-	OnPause();
-	OnStop();
-
-	// Done
-	return 0;
 }
 
 void Frontend::Redraw()

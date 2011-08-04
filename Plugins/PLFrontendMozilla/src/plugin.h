@@ -90,6 +90,8 @@ private:
 	private:
 		PLCore::FrontendPixelLight	m_cFrontend;
 //		PLCore::FrontendOpenGL		m_cFrontend;	// [TODO] For testing
+		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+
 			
 };
 

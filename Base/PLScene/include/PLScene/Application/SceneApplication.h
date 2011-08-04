@@ -129,7 +129,7 @@ class SceneApplication : public PLRenderer::RendererApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::CoreApplication functions   ]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -141,12 +141,12 @@ class SceneApplication : public PLRenderer::RendererApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that PLRenderer::RendererApplication::Init() does
+		*    - Everything that PLRenderer::RendererApplication::OnStart() does
 		*    - Create scene context
 		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
 		*/
-		PLS_API virtual bool Init() override;
+		PLS_API virtual bool OnStart() override;
 
 		/**
 		*  @brief
@@ -155,9 +155,9 @@ class SceneApplication : public PLRenderer::RendererApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Destroy scene context
-		*    - Everything that PLRenderer::RendererApplication::DeInit() does
+		*    - Everything that PLRenderer::RendererApplication::OnStop() does
 		*/
-		PLS_API virtual void DeInit() override;
+		PLS_API virtual void OnStop() override;
 
 
 	//[-------------------------------------------------------]
@@ -189,7 +189,7 @@ class SceneApplication : public PLRenderer::RendererApplication {
 		*    Function that is called to create the application's root scene
 		*
 		*  @note
-		*    - Part of the application framework initialization function "Init()"
+		*    - Part of the application framework initialization function "OnStart()"
 		*    - The default implementation creates a standard root scene
 		*/
 		PLS_API virtual void OnCreateRootScene();

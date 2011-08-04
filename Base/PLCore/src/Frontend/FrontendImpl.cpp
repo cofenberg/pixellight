@@ -125,11 +125,10 @@ void FrontendImpl::OnRestart()
 		m_pFrontend->OnRestart();
 }
 
-void FrontendImpl::OnStart()
+bool FrontendImpl::OnStart()
 {
 	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnStart();
+	return m_pFrontend ? m_pFrontend->OnStart() : true;
 }
 
 void FrontendImpl::OnResume()

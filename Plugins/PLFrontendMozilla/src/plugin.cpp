@@ -79,7 +79,8 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
   mInitialized(FALSE),
-  m_cFrontend(*this)
+  m_cFrontend(*this),
+  m_bFrontendApplicationInitialized(false)
 {
   mhWnd = nullptr;
 
@@ -108,8 +109,12 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 	m_hFrontendWnd = (HWND)aWindow->window;
 
 	// Do the frontend lifecycle thing - initialize
-	FrontendImpl::OnStart();
-	FrontendImpl::OnResume();
+	if (FrontendImpl::OnStart()) {
+		FrontendImpl::OnResume();
+
+		// Frontend application successfully initialized
+		m_bFrontendApplicationInitialized = true;
+	}
 
 	// Save size
 	m_nWidth  = aWindow->width;
@@ -131,8 +136,10 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 void nsPluginInstance::shut()
 {
 	// Do the frontend lifecycle thing - de-initialize
-	FrontendImpl::OnPause();
-	FrontendImpl::OnStop();
+	if (m_bFrontendApplicationInitialized) {
+		FrontendImpl::OnPause();
+		FrontendImpl::OnStop();
+	}
 
   // subclass it back
   SubclassWindow(mhWnd, lpOldProc);

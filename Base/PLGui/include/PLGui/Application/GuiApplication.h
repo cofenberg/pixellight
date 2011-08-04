@@ -113,7 +113,7 @@ class GuiApplication : public PLCore::CoreApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual CoreApplication functions           ]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -125,12 +125,28 @@ class GuiApplication : public PLCore::CoreApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that CoreApplication::Init() does
+		*    - Everything that CoreApplication::OnStart() does
 		*    - Call OnCreateMainWindow()
 		*    - Return and go on with OnInit()
 		*/
-		PLGUI_API virtual bool Init() override;
+		PLGUI_API virtual bool OnStart() override;
 
+		/**
+		*  @brief
+		*    De-initialization function that is called after OnDeInit()
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that CoreApplication::OnStop() does
+		*    - De-initialize system GUI
+		*/
+		PLGUI_API virtual void OnStop() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
+	//[-------------------------------------------------------]
+	protected:
 		/**
 		*  @brief
 		*    Main function
@@ -141,17 +157,6 @@ class GuiApplication : public PLCore::CoreApplication {
 		*    - Exit loop when either the GUI or the application has been stopped
 		*/
 		PLGUI_API virtual void Main() override;
-
-		/**
-		*  @brief
-		*    De-initialization function that is called after OnDeInit()
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Everything that CoreApplication::DeInit() does
-		*    - De-initialize system GUI
-		*/
-		PLGUI_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]

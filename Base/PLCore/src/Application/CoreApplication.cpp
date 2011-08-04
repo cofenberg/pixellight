@@ -369,7 +369,7 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 
 	// Initialize application
 	m_nResult  = 0;
-	if (Init()) {
+	if (OnStart()) {
 		// Call application-specific initialization routine
 		OnInit();
 
@@ -380,7 +380,7 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 		OnDeInit();
 
 		// De-Initialize application
-		DeInit();
+		OnStop();
 	}
 
 	// The application is no longer running
@@ -392,13 +392,31 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual CoreApplication functions           ]
+//[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called directly after the object has been created
+*/
+void CoreApplication::OnCreate()
+{
+	// No default implementation
+}
+
+/**
+*  @brief
+*    Called directly before a stopped object is going to start again (always followed by "OnStart()")
+*/
+void CoreApplication::OnRestart()
+{
+	// No default implementation
+}
+
 /**
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool CoreApplication::Init()
+bool CoreApplication::OnStart()
 {
 	// Parse command line
 	m_cCommandLine.ParseCommandLine(GetApplicationContext().GetArguments());
@@ -434,9 +452,18 @@ bool CoreApplication::Init()
 
 /**
 *  @brief
-*    Main function
+*    Called when the object has the focus (keep the implementation lightweight)
 */
-void CoreApplication::Main()
+void CoreApplication::OnResume()
+{
+	// No default implementation
+}
+
+/**
+*  @brief
+*    Called when the object has no longer the focus (keep the implementation lightweight)
+*/
+void CoreApplication::OnPause()
 {
 	// No default implementation
 }
@@ -445,7 +472,7 @@ void CoreApplication::Main()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void CoreApplication::DeInit()
+void CoreApplication::OnStop()
 {
 	// Save configuration
 	String sConfig = m_cApplicationContext.GetConfigFilename();
@@ -454,6 +481,28 @@ void CoreApplication::DeInit()
 
 	// Close log
 	Log::GetInstance()->Close();
+}
+
+/**
+*  @brief
+*    Called before the object is going to be finally destroyed
+*/
+void CoreApplication::OnDestroy()
+{
+	// No default implementation
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual CoreApplication functions           ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Main function
+*/
+void CoreApplication::Main()
+{
+	// No default implementation
 }
 
 /**

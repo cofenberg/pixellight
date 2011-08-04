@@ -6,7 +6,8 @@
 // PixelLightCtrl
 
 PixelLightCtrl::PixelLightCtrl() :
-	m_cFrontend(*this)
+	m_cFrontend(*this),
+	m_bFrontendApplicationInitialized(false)
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
@@ -18,8 +19,10 @@ PixelLightCtrl::PixelLightCtrl() :
 PixelLightCtrl::~PixelLightCtrl()
 {
 	// Do the frontend lifecycle thing - de-initialize
-	FrontendImpl::OnPause();
-	FrontendImpl::OnStop();
+	if (m_bFrontendApplicationInitialized) {
+		FrontendImpl::OnPause();
+		FrontendImpl::OnStop();
+	}
 
 	// Do the frontend lifecycle thing - let the world know that we're going to die
 	FrontendImpl::OnDestroy();
@@ -65,8 +68,12 @@ LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &
 	m_hFrontendWnd = m_hWnd;
 
 	// Do the frontend lifecycle thing - initialize
-	FrontendImpl::OnStart();
-	FrontendImpl::OnResume();
+	if (FrontendImpl::OnStart()) {
+		FrontendImpl::OnResume();
+
+		// Frontend application successfully initialized
+		m_bFrontendApplicationInitialized = true;
+	}
 
 	// Done
 	return 0;
