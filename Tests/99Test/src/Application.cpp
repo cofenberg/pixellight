@@ -111,7 +111,7 @@ void TestHandler3() {
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::ConsoleApplication()
+Application::Application() : PLCore::CoreApplication()
 {
 	// Set application name and title
 	SetName("99Test");
@@ -1084,7 +1084,7 @@ void Application::TestDebug()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::Main()
 {

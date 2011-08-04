@@ -66,7 +66,7 @@ pl_implement_class(GuiApplication)
 *  @brief
 *    Constructor
 */
-GuiApplication::GuiApplication(const String &sGuiFilename) : ConsoleApplication(),
+GuiApplication::GuiApplication(const String &sGuiFilename) : CoreApplication(),
 	EventHandlerOnDestroy(&GuiApplication::OnDestroyMainWindow, this),
 	m_pMainWindow(nullptr)
 {
@@ -112,7 +112,7 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Protected virtual CoreApplication functions           ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -121,7 +121,7 @@ void GuiApplication::SetMainWindow(Widget *pMainWindow)
 bool GuiApplication::Init()
 {
 	// Call base implementation
-	if (ConsoleApplication::Init()) {
+	if (CoreApplication::Init()) {
 		// Create main window
 		OnCreateMainWindow();
 		if (!m_bRunning) return false;
@@ -155,7 +155,7 @@ void GuiApplication::Main()
 void GuiApplication::DeInit()
 {
 	// Call base implementation
-	ConsoleApplication::DeInit();
+	CoreApplication::DeInit();
 
 	// Shut down system GUI
 	Gui::GetSystemGui()->Shutdown();

@@ -160,7 +160,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::ConsoleApplication functions ]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -172,7 +172,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::Init() does
+		*    - Everything that CoreApplication::Init() does
 		*    - Call OnCreateRendererContext()
 		*    - Set default font according to config
 		*    - Call OnCreatePainter()

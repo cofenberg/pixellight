@@ -100,7 +100,7 @@ void SceneApplication::SetRootScene(SceneContainer *pRootScene)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::ConsoleApplication functions ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 bool SceneApplication::Init()
 {

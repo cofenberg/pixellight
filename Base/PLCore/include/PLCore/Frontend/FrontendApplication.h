@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Application/ConsoleApplication.h"
+#include "PLCore/Application/CoreApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -50,7 +50,7 @@ class Frontend;
 *  @brief
 *    Frontend application class
 */
-class FrontendApplication : public ConsoleApplication {
+class FrontendApplication : public CoreApplication {
 
 
 	//[-------------------------------------------------------]
@@ -62,7 +62,7 @@ class FrontendApplication : public ConsoleApplication {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, FrontendApplication, "PLCore", PLCore::ConsoleApplication, "Frontend application class")
+	pl_class(PLCORE_RTTI_EXPORT, FrontendApplication, "PLCore", PLCore::CoreApplication, "Frontend application class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
 			pl_method_0(GetFrontend,	pl_ret_type(Frontend*),	"Get the frontend. Returns pointer to the frontend of the application, a null pointer on error.",	"")

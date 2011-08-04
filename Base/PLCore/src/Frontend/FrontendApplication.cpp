@@ -59,7 +59,7 @@ Frontend *FrontendApplication::GetFrontend() const
 *  @brief
 *    Constructor
 */
-FrontendApplication::FrontendApplication() : ConsoleApplication(),
+FrontendApplication::FrontendApplication() : CoreApplication(),
 	m_pFrontend(nullptr)	// Set by FrontendPixelLight
 {
 	// Set application title

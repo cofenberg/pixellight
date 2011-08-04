@@ -310,7 +310,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     </ClCompile>
     <ClCompile Include="src\PLCore.cpp" />
     <ClCompile Include="src\Application\ApplicationContext.cpp" />
-    <ClCompile Include="src\Application\ConsoleApplication.cpp" />
+    <ClCompile Include="src\Application\CoreApplication.cpp" />
     <ClCompile Include="src\Config\Config.cpp" />
     <ClCompile Include="src\Config\ConfigLoader.cpp" />
     <ClCompile Include="src\Config\ConfigLoaderPL.cpp" />
@@ -556,7 +556,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\PLCoreLinuxWrapper.h" />
     <ClInclude Include="include\PLCore\PLCoreWindows.h" />
     <ClInclude Include="include\PLCore\Application\ApplicationContext.h" />
-    <ClInclude Include="include\PLCore\Application\ConsoleApplication.h" />
+    <ClInclude Include="include\PLCore\Application\CoreApplication.h" />
     <ClInclude Include="include\PLCore\Config\Config.h" />
     <ClInclude Include="include\PLCore\Config\ConfigLoader.h" />
     <ClInclude Include="include\PLCore\Config\ConfigLoaderPL.h" />

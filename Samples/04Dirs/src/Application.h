@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLCore/Application/CoreApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -38,13 +38,13 @@
 *  @brief
 *    Application class
 */
-class Application : public PLCore::ConsoleApplication {
+class Application : public PLCore::CoreApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLCore::ConsoleApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLCore::CoreApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
@@ -68,7 +68,7 @@ class Application : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::ConsoleApplication functions  ]
+	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void Main() override;

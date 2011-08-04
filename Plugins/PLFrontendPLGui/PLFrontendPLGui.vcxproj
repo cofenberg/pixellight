@@ -272,7 +272,6 @@ copy build\release64\PLFrontendPLGui64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\WindowConnection.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Base\PLCore\include\PLCore\Application\ConsoleApplication.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\ClipBoardPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\CursorPL.h" />
     <ClInclude Include="include\PLFrontendPLGui\Compositing\FontPL.h" />

@@ -95,7 +95,7 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::ConsoleApplication functions  ]
+	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnDeInit() override;

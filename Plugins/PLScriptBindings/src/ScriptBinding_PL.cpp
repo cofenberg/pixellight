@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLCore/Application/CoreApplication.h>
 #include "PLScriptBindings/ScriptBinding_PL.h"
 
 
@@ -47,9 +47,9 @@ pl_implement_class(ScriptBinding_PL)
 *  @brief
 *    Returns the application instance
 */
-ConsoleApplication *ScriptBinding_PL::GetApplication()
+CoreApplication *ScriptBinding_PL::GetApplication()
 {
-	return ConsoleApplication::GetApplication();
+	return CoreApplication::GetApplication();
 }
 
 

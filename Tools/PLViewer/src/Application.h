@@ -125,7 +125,7 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::ConsoleApplication functions  ]
+	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnInitLog();

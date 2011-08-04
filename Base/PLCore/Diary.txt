@@ -1,5 +1,7 @@
 >> 04.08.2011
 [CO]
+- Renamed "ConsoleApplication" into "CoreApplication" so that one can guess the name of this class by just knowing the component name it's in
+  (it's also the base/core class of the application framework, so "core" maybe more suitable then "console")
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
 

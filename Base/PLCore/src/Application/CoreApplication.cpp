@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ConsoleApplication.cpp                         *
+ *  File: CoreApplication.cpp                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -37,7 +37,7 @@
 #include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Tools/Localization.h"
 #include "PLCore/Tools/LocalizationGroup.h"
-#include "PLCore/Application/ConsoleApplication.h"
+#include "PLCore/Application/CoreApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ConsoleApplication)
+pl_implement_class(CoreApplication)
 
 
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-ConsoleApplication *ConsoleApplication::g_pApplication = nullptr;	/**< Pointer to the current application instance */
+CoreApplication *CoreApplication::g_pApplication = nullptr;	/**< Pointer to the current application instance */
 
 
 //[-------------------------------------------------------]
@@ -65,7 +65,7 @@ ConsoleApplication *ConsoleApplication::g_pApplication = nullptr;	/**< Pointer t
 *  @brief
 *    Get pointer to current application
 */
-ConsoleApplication *ConsoleApplication::GetApplication()
+CoreApplication *CoreApplication::GetApplication()
 {
 	// Return global application pointer
 	return g_pApplication;
@@ -79,7 +79,7 @@ ConsoleApplication *ConsoleApplication::GetApplication()
 *  @brief
 *    Constructor
 */
-ConsoleApplication::ConsoleApplication() :
+CoreApplication::CoreApplication() :
 	m_bMultiUser(true),
 	m_bUseRuntime(true),
 	m_bDelayedPluginLoading(true),
@@ -112,7 +112,7 @@ ConsoleApplication::ConsoleApplication() :
 *  @brief
 *    Destructor
 */
-ConsoleApplication::~ConsoleApplication()
+CoreApplication::~CoreApplication()
 {
 	// Reset global application pointer
 	g_pApplication = nullptr;
@@ -122,7 +122,7 @@ ConsoleApplication::~ConsoleApplication()
 *  @brief
 *    Get application context
 */
-const ApplicationContext &ConsoleApplication::GetApplicationContext() const
+const ApplicationContext &CoreApplication::GetApplicationContext() const
 {
 	// Return application context
 	return m_cApplicationContext;
@@ -132,7 +132,7 @@ const ApplicationContext &ConsoleApplication::GetApplicationContext() const
 *  @brief
 *    Get application name
 */
-String ConsoleApplication::GetName() const
+String CoreApplication::GetName() const
 {
 	// Return name
 	return m_sName;
@@ -142,7 +142,7 @@ String ConsoleApplication::GetName() const
 *  @brief
 *    Set application name
 */
-void ConsoleApplication::SetName(const String &sName)
+void CoreApplication::SetName(const String &sName)
 {
 	// Semi-hack: Adjust config and log filenames, if they are set to their default values
 	if (m_sConfigName == m_sName + ".cfg")
@@ -158,7 +158,7 @@ void ConsoleApplication::SetName(const String &sName)
 *  @brief
 *    Get application title
 */
-String ConsoleApplication::GetTitle() const
+String CoreApplication::GetTitle() const
 {
 	// Return title
 	return m_sTitle;
@@ -168,7 +168,7 @@ String ConsoleApplication::GetTitle() const
 *  @brief
 *    Set application title
 */
-void ConsoleApplication::SetTitle(const String &sTitle)
+void CoreApplication::SetTitle(const String &sTitle)
 {
 	// Set title
 	m_sTitle = sTitle;
@@ -178,7 +178,7 @@ void ConsoleApplication::SetTitle(const String &sTitle)
 *  @brief
 *    Get version of application
 */
-const Version &ConsoleApplication::GetVersion() const
+const Version &CoreApplication::GetVersion() const
 {
 	// Return version
 	return m_cVersion;
@@ -188,7 +188,7 @@ const Version &ConsoleApplication::GetVersion() const
 *  @brief
 *    Set version of application
 */
-void ConsoleApplication::SetVersion(const Version &cVersion)
+void CoreApplication::SetVersion(const Version &cVersion)
 {
 	// Set version
 	m_cVersion = cVersion;
@@ -198,7 +198,7 @@ void ConsoleApplication::SetVersion(const Version &cVersion)
 *  @brief
 *    Check if application uses multi-user environment
 */
-bool ConsoleApplication::GetMultiUser() const
+bool CoreApplication::GetMultiUser() const
 {
 	// Return multi-user flag
 	return m_bMultiUser;
@@ -208,7 +208,7 @@ bool ConsoleApplication::GetMultiUser() const
 *  @brief
 *    Set if application uses multi-user environment
 */
-void ConsoleApplication::SetMultiUser(bool bMultiUser)
+void CoreApplication::SetMultiUser(bool bMultiUser)
 {
 	// Set multi-user flag
 	m_bMultiUser = bMultiUser;
@@ -218,7 +218,7 @@ void ConsoleApplication::SetMultiUser(bool bMultiUser)
 *  @brief
 *    Check if application uses the PixelLight runtime
 */
-bool ConsoleApplication::GetUseRuntime() const
+bool CoreApplication::GetUseRuntime() const
 {
 	// Return runtime flag
 	return m_bUseRuntime;
@@ -228,7 +228,7 @@ bool ConsoleApplication::GetUseRuntime() const
 *  @brief
 *    Set if application uses the PixelLight runtime
 */
-void ConsoleApplication::SetUseRuntime(bool bUseRuntime)
+void CoreApplication::SetUseRuntime(bool bUseRuntime)
 {
 	// Set runtime flag
 	m_bUseRuntime = bUseRuntime;
@@ -238,7 +238,7 @@ void ConsoleApplication::SetUseRuntime(bool bUseRuntime)
 *  @brief
 *    Check if application allows delayed shared library loading to speed up the program start
 */
-bool ConsoleApplication::GetDelayedPluginLoading() const
+bool CoreApplication::GetDelayedPluginLoading() const
 {
 	// Return the current value
 	return m_bDelayedPluginLoading;
@@ -248,7 +248,7 @@ bool ConsoleApplication::GetDelayedPluginLoading() const
 *  @brief
 *    Set if application allows delayed shared library loading to speed up the program start
 */
-void ConsoleApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
+void CoreApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
 {
 	// Set new value
 	m_bDelayedPluginLoading = bDelayedPluginLoading;
@@ -258,7 +258,7 @@ void ConsoleApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
 *  @brief
 *    Get name of config file
 */
-String ConsoleApplication::GetConfigName() const
+String CoreApplication::GetConfigName() const
 {
 	// Return config name
 	return m_sConfigName;
@@ -268,7 +268,7 @@ String ConsoleApplication::GetConfigName() const
 *  @brief
 *    Set name of config file
 */
-void ConsoleApplication::SetConfigName(const String &sConfigName)
+void CoreApplication::SetConfigName(const String &sConfigName)
 {
 	// Set config name
 	m_sConfigName = sConfigName;
@@ -278,7 +278,7 @@ void ConsoleApplication::SetConfigName(const String &sConfigName)
 *  @brief
 *    Get name of log file
 */
-String ConsoleApplication::GetLogName() const
+String CoreApplication::GetLogName() const
 {
 	// Return log name
 	return m_sLogName;
@@ -288,7 +288,7 @@ String ConsoleApplication::GetLogName() const
 *  @brief
 *    Set name of log file
 */
-void ConsoleApplication::SetLogName(const String &sLogName)
+void CoreApplication::SetLogName(const String &sLogName)
 {
 	// Set log name
 	m_sLogName = sLogName;
@@ -298,7 +298,7 @@ void ConsoleApplication::SetLogName(const String &sLogName)
 *  @brief
 *    Get subdirectory for application data files
 */
-String ConsoleApplication::GetAppDataSubdir() const
+String CoreApplication::GetAppDataSubdir() const
 {
 	// Return application data subdirectory
 	return m_sAppDataSubdir;
@@ -308,7 +308,7 @@ String ConsoleApplication::GetAppDataSubdir() const
 *  @brief
 *    Set subdirectory for application data files
 */
-void ConsoleApplication::SetAppDataSubdir(const String &sSubdir)
+void CoreApplication::SetAppDataSubdir(const String &sSubdir)
 {
 	// Set application data subdirectory
 	m_sAppDataSubdir = sSubdir;
@@ -318,7 +318,7 @@ void ConsoleApplication::SetAppDataSubdir(const String &sSubdir)
 *  @brief
 *    Returns the configuration instance
 */
-Config &ConsoleApplication::GetConfig()
+Config &CoreApplication::GetConfig()
 {
 	// Return config
 	return m_cConfig;
@@ -328,7 +328,7 @@ Config &ConsoleApplication::GetConfig()
 *  @brief
 *    Returns whether or not the application is currently running
 */
-bool ConsoleApplication::IsRunning() const
+bool CoreApplication::IsRunning() const
 {
 	// Set config
 	return m_bRunning;
@@ -338,7 +338,7 @@ bool ConsoleApplication::IsRunning() const
 *  @brief
 *    Exit application
 */
-void ConsoleApplication::Exit(int nResult)
+void CoreApplication::Exit(int nResult)
 {
 	// Set result
 	m_nResult = nResult;
@@ -351,12 +351,12 @@ void ConsoleApplication::Exit(int nResult)
 *  @brief
 *    Run the application
 */
-int ConsoleApplication::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
+int CoreApplication::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Connect Linux signals
 	#ifdef LINUX
-		signal(SIGINT,  ConsoleApplication::SignalHandler);
-		signal(SIGTERM, ConsoleApplication::SignalHandler);
+		signal(SIGINT,  CoreApplication::SignalHandler);
+		signal(SIGTERM, CoreApplication::SignalHandler);
 	#endif
 
 	// Fill application context
@@ -392,13 +392,13 @@ int ConsoleApplication::Run(const String &sExecutableFilename, const Array<Strin
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Protected virtual CoreApplication functions           ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool ConsoleApplication::Init()
+bool CoreApplication::Init()
 {
 	// Parse command line
 	m_cCommandLine.ParseCommandLine(GetApplicationContext().GetArguments());
@@ -436,7 +436,7 @@ bool ConsoleApplication::Init()
 *  @brief
 *    Main function
 */
-void ConsoleApplication::Main()
+void CoreApplication::Main()
 {
 	// No default implementation
 }
@@ -445,7 +445,7 @@ void ConsoleApplication::Main()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void ConsoleApplication::DeInit()
+void CoreApplication::DeInit()
 {
 	// Save configuration
 	String sConfig = m_cApplicationContext.GetConfigFilename();
@@ -460,7 +460,7 @@ void ConsoleApplication::DeInit()
 *  @brief
 *    Called when application should initialize it's log
 */
-void ConsoleApplication::OnInitLog()
+void CoreApplication::OnInitLog()
 {
 	// Create log
 	Log *pLog = Log::GetInstance();
@@ -547,7 +547,7 @@ void ConsoleApplication::OnInitLog()
 *  @brief
 *    Called when application should check command line options
 */
-void ConsoleApplication::OnInitCmdLine()
+void CoreApplication::OnInitCmdLine()
 {
 	// Check command line
 	if (m_cCommandLine.HasErrors() || m_cCommandLine.IsValueSet("--help")) {
@@ -565,7 +565,7 @@ void ConsoleApplication::OnInitCmdLine()
 *  @brief
 *    Called when application should initialize it's configuration
 */
-void ConsoleApplication::OnInitConfig()
+void CoreApplication::OnInitConfig()
 {
 	// Check if a config file has been given on the commandline
 	String sConfig = m_cCommandLine.GetValue("--configfile");
@@ -632,7 +632,7 @@ void ConsoleApplication::OnInitConfig()
 *  @brief
 *    Called when application should load it's plugins
 */
-void ConsoleApplication::OnInitPlugins()
+void CoreApplication::OnInitPlugins()
 {
 	// Start the stopwatch
 	Stopwatch cStopwatch(true);
@@ -668,7 +668,7 @@ void ConsoleApplication::OnInitPlugins()
 *  @brief
 *    Called when application should set it's data paths
 */
-void ConsoleApplication::OnInitData()
+void CoreApplication::OnInitData()
 {
 	// Is '.' (= the current directory) already a base directory? If not, add it right now...
 	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
@@ -718,7 +718,7 @@ void ConsoleApplication::OnInitData()
 *  @brief
 *    Called when application should initialize itself
 */
-void ConsoleApplication::OnInit()
+void CoreApplication::OnInit()
 {
 	// Reset timing class
 	Timing::GetInstance()->Reset();
@@ -728,7 +728,7 @@ void ConsoleApplication::OnInit()
 *  @brief
 *    Called when application should de-initialize itself
 */
-void ConsoleApplication::OnDeInit()
+void CoreApplication::OnDeInit()
 {
 	// No default implementation
 }
@@ -737,7 +737,7 @@ void ConsoleApplication::OnDeInit()
 *  @brief
 *    Function that is called when the program has been started for the first time
 */
-void ConsoleApplication::OnFirstProgramStart()
+void CoreApplication::OnFirstProgramStart()
 {
 	// Write message into log
 	PL_LOG(Info, "First application start detected")
@@ -747,7 +747,7 @@ void ConsoleApplication::OnFirstProgramStart()
 *  @brief
 *    Function that is called to display a help message about the application
 */
-void ConsoleApplication::OnPrintHelp()
+void CoreApplication::OnPrintHelp()
 {
 	// Print application title
 	System::GetInstance()->GetConsole().Print(m_sTitle + "\n\n");
@@ -760,7 +760,7 @@ void ConsoleApplication::OnPrintHelp()
 *  @brief
 *    Function that is called to display version information of the application
 */
-void ConsoleApplication::OnPrintVersion()
+void CoreApplication::OnPrintVersion()
 {
 	// Print application title and version
 	System::GetInstance()->GetConsole().Print(m_sTitle + " - V" + m_cVersion.ToString() + '\n');
@@ -770,7 +770,7 @@ void ConsoleApplication::OnPrintVersion()
 *  @brief
 *    Function that is called when a signal has arrive
 */
-bool ConsoleApplication::OnSignal(ESignal nSignal)
+bool CoreApplication::OnSignal(ESignal nSignal)
 {
 	// Catch signal
 	switch(nSignal) {
@@ -799,7 +799,7 @@ bool ConsoleApplication::OnSignal(ESignal nSignal)
 *  @brief
 *    Signal handler callback
 */
-void ConsoleApplication::SignalHandler(int nSignal)
+void CoreApplication::SignalHandler(int nSignal)
 {
 	// Linux implementation
 	#ifdef LINUX
@@ -808,9 +808,9 @@ void ConsoleApplication::SignalHandler(int nSignal)
 			// Interrupt (exit application by ctrl-c)
 			case SIGINT:
 				// Send signal to application
-				if (!ConsoleApplication::GetApplication()->OnSignal(SignalInterrupt)) {
+				if (!CoreApplication::GetApplication()->OnSignal(SignalInterrupt)) {
 					// Ignore signal and restore handler
-					signal(SIGINT, ConsoleApplication::SignalHandler);
+					signal(SIGINT, CoreApplication::SignalHandler);
 				} else {
 					// Signal handler has done it's job, re-raise signal
 					signal(nSignal, SIG_DFL);
@@ -821,9 +821,9 @@ void ConsoleApplication::SignalHandler(int nSignal)
 			// Terminate (exit application)
 			case SIGTERM:
 				// Send signal to application
-				if (!ConsoleApplication::GetApplication()->OnSignal(SignalTerm)) {
+				if (!CoreApplication::GetApplication()->OnSignal(SignalTerm)) {
 					// Ignore signal and restore handler
-					signal(SIGTERM, ConsoleApplication::SignalHandler);
+					signal(SIGTERM, CoreApplication::SignalHandler);
 				} else {
 					// Signal handler has done it's job, re-raise signal
 					signal(nSignal, SIG_DFL);

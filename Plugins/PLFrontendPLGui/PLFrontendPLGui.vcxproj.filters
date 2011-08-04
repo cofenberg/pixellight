@@ -90,9 +90,6 @@
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Base\PLCore\include\PLCore\Application\ConsoleApplication.h">
-      <Filter>Compositing</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLFrontendPLGui\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>

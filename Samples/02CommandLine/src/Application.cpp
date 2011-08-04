@@ -48,7 +48,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : PLCore::ConsoleApplication()
+Application::Application() : PLCore::CoreApplication()
 {
 	// Set application name and title
 	SetName("02CommandLine");
@@ -73,7 +73,7 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::Main()
 {

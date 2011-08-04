@@ -228,9 +228,9 @@ void SNEngineInformation::OnUpdate()
 	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
-		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::EngineApplication")) {
-			Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pConsoleApplication)->GetInputController());
+		CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+		if (pCoreApplication && pCoreApplication->IsInstanceOf("PLEngine::EngineApplication")) {
+			Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pCoreApplication)->GetInputController());
 			if ((pController && pController->GetActive()) || !pController) {
 				// Get keyboard input device
 				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
@@ -262,7 +262,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	//        use the application framework at all, be it a plugin or some own solution? One more reason
 	//        for not having a centralistic config approach...
 	//        For now, I just make sure that if we can't get the application config, we use an empty one
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	Config cEmptyConfig;
 	Config &cConfig = (pApplication ? pApplication->GetConfig() : cEmptyConfig);
 

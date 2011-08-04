@@ -393,7 +393,7 @@ void Application::OnControlExit(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::Main()
 {

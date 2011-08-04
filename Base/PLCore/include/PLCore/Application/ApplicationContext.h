@@ -187,7 +187,7 @@ class ApplicationContext {
 		*
 		*  @note
 		*    - Whenever possible, do not manipulate the current directory, this may backfire when you don't expect it
-		*    - Because the executable filename is used, which is set within "ConsoleApplication::Run()",
+		*    - Because the executable filename is used, which is set within "CoreApplication::Run()",
 		*      calling this method from inside a application constructor is not recommended
 		*/
 		PLCORE_API void ChangeIntoAppDirectory() const;

@@ -141,7 +141,7 @@ class ScriptApplication : public EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::ConsoleApplication functions]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

@@ -94,7 +94,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::OnDeInit()
 {

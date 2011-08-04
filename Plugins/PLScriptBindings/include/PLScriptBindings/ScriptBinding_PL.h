@@ -35,7 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	class ConsoleApplication;
+	class CoreApplication;
 }
 
 
@@ -66,7 +66,7 @@ class ScriptBinding_PL : public PLCore::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(GetApplication,	pl_ret_type(PLCore::ConsoleApplication*),	"Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)",	"")
+		pl_method_0(GetApplication,	pl_ret_type(PLCore::CoreApplication*),	"Returns the application instance, can be a null pointer (but \"usually\" it's no null pointer)",	"")
 	pl_class_end
 
 
@@ -81,7 +81,7 @@ class ScriptBinding_PL : public PLCore::ScriptBinding {
 		*  @return
 		*    The application instance, can be a null pointer (but "usually" it's no null pointer)
 		*/
-		PLCore::ConsoleApplication *GetApplication();
+		PLCore::CoreApplication *GetApplication();
 
 
 	//[-------------------------------------------------------]

@@ -150,7 +150,7 @@ add_sources(
 	src/Tools/LocalizationLoader.cpp
 	src/Tools/LocalizationLoaderPL.cpp
 	src/Application/ApplicationContext.cpp
-	src/Application/ConsoleApplication.cpp
+	src/Application/CoreApplication.cpp
 	src/Script/Script.cpp
 	src/Script/ScriptManager.cpp
 	src/Script/ScriptBinding.cpp

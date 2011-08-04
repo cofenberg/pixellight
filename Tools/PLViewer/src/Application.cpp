@@ -192,7 +192,7 @@ void Application::OnDrop(const DataObject &cDataObject)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::OnInitLog()
 {

@@ -161,9 +161,9 @@ void SNGui::InitFunction()
 		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 		if (pGuiPL) {
 			pGuiPL->m_pRenderer = &GetSceneContext()->GetRendererContext().GetRenderer();
-			ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
-			if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::EngineApplication")) {
-				pGuiPL->SetInputController(static_cast<PLEngine::EngineApplication*>(pConsoleApplication)->GetInputController());
+			CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+			if (pCoreApplication && pCoreApplication->IsInstanceOf("PLEngine::EngineApplication")) {
+				pGuiPL->SetInputController(static_cast<PLEngine::EngineApplication*>(pCoreApplication)->GetInputController());
 			}
 		}
 	}

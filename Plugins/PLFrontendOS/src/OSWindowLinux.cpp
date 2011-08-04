@@ -43,8 +43,8 @@ namespace PLFrontendOS {
 OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS)
 {
 	// Connect Linux signals
-//	signal(SIGINT,  ConsoleApplication::SignalHandler);
-//	signal(SIGTERM, ConsoleApplication::SignalHandler);
+//	signal(SIGINT,  CoreApplication::SignalHandler);
+//	signal(SIGTERM, CoreApplication::SignalHandler);
 }
 
 /**

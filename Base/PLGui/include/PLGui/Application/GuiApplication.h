@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLCore/Application/CoreApplication.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include "PLGui/PLGui.h"
 
@@ -57,13 +57,13 @@ class Widget;
 *    main loop that does the necessary message procressing and
 *    provides methods to manage a main application window.
 */
-class GuiApplication : public PLCore::ConsoleApplication {
+class GuiApplication : public PLCore::CoreApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLGUI_RTTI_EXPORT, GuiApplication, "PLGui", PLCore::ConsoleApplication, "Gui application class")
+	pl_class(PLGUI_RTTI_EXPORT, GuiApplication, "PLGui", PLCore::CoreApplication, "Gui application class")
 		#ifdef PLGUI_EXPORTS	// The following is only required when compiling PLGui
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -113,7 +113,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Protected virtual CoreApplication functions           ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -125,7 +125,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::Init() does
+		*    - Everything that CoreApplication::Init() does
 		*    - Call OnCreateMainWindow()
 		*    - Return and go on with OnInit()
 		*/
@@ -148,7 +148,7 @@ class GuiApplication : public PLCore::ConsoleApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that ConsoleApplication::DeInit() does
+		*    - Everything that CoreApplication::DeInit() does
 		*    - De-initialize system GUI
 		*/
 		PLGUI_API virtual void DeInit() override;

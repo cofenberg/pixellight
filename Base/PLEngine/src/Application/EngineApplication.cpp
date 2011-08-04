@@ -367,7 +367,7 @@ bool EngineApplication::LoadScene(const String &sFilename)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::ConsoleApplication functions ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 /**
 *  @brief

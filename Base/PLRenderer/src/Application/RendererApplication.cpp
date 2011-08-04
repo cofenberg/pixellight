@@ -182,7 +182,7 @@ bool RendererApplication::Update(bool bForceUpdate)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::ConsoleApplication functions ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 /**
 *  @brief

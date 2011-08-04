@@ -519,11 +519,11 @@ void GuiPL::UpdateKeyboard()
 */
 void GuiPL::UpdateMouse()
 {
-	// [TODO] Find a solution that works without using PLCore::ConsoleApplication::GetApplication()
+	// [TODO] Find a solution that works without using PLCore::CoreApplication::GetApplication()
 	// [TODO] PLGui::GuiApplication type check
 	// Get the main window of the application
-	if (PLCore::ConsoleApplication::GetApplication()) {
-		Widget *pWidget = static_cast<PLGui::GuiApplication*>(PLCore::ConsoleApplication::GetApplication())->GetMainWindow()->GetContentWidget();
+	if (PLCore::CoreApplication::GetApplication()) {
+		Widget *pWidget = static_cast<PLGui::GuiApplication*>(PLCore::CoreApplication::GetApplication())->GetMainWindow()->GetContentWidget();
 		if (pWidget) {
 			// Check if the mouse is currently over either the widget or one of it's child widgets
 			if (pWidget->IsMouseOver()) {

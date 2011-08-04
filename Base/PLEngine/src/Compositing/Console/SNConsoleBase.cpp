@@ -233,10 +233,10 @@ void SNConsoleBase::ProcessKeyMessage()
 {
 	// Check if input is active
 	// [TODO] Don't use devices directly, use a virtual controller instead
-	ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
-	if (!pConsoleApplication || !pConsoleApplication->IsInstanceOf("PLEngine::EngineApplication"))
+	CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+	if (!pCoreApplication || !pCoreApplication->IsInstanceOf("PLEngine::EngineApplication"))
 		return;	// Get us out of here right now!
-	Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pConsoleApplication)->GetInputController());
+	Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pCoreApplication)->GetInputController());
 	if ((pController && pController->GetActive()) || !pController) {
 		// Get keyboard input device
 		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
@@ -245,7 +245,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			// [TODO] Don't use an external config here, rather have a deactivated-flag *inside* this class
 			//        and set it from *outside* using the config! This is spaghetti logic...
 			bool bActivated = true;
-			ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication) {
 				bActivated = pApplication->GetConfig().GetVar("PLEngine::EngineGeneralConfig", "ConsoleActivated").GetBool();
 			}

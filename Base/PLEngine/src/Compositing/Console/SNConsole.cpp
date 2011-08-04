@@ -159,9 +159,9 @@ void SNConsole::OnUpdate()
 	if (m_nState == Active || m_nState == Activating) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
-		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::EngineApplication")) {
-			Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pConsoleApplication)->GetInputController());
+		CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+		if (pCoreApplication && pCoreApplication->IsInstanceOf("PLEngine::EngineApplication")) {
+			Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pCoreApplication)->GetInputController());
 			if ((pController && pController->GetActive()) || !pController) {
 				// Get keyboard input device
 				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();

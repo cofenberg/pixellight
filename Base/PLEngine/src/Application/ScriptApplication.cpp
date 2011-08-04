@@ -134,7 +134,7 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 
 
 //[-------------------------------------------------------]
-//[ Proteced virtual PLCore::ConsoleApplication functions ]
+//[ Proteced virtual PLCore::CoreApplication functions    ]
 //[-------------------------------------------------------]
 /**
 *  @brief

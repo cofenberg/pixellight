@@ -26,7 +26,7 @@
 #include <PLCore/Tools/Tools.h>
 #include <PLCore/Tools/Stopwatch.h>
 #include <PLCore/System/System.h>
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLCore/Application/CoreApplication.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>
 #include <PLRenderer/RendererContext.h>
@@ -1215,7 +1215,7 @@ bool SQCull::PerformQuery()
 				//        these from the config to this class (top-down).
 				float fSlopeScaleDepthBias	= -0.1f;
 				float fDepthBias			= -0.1f;
-				ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+				CoreApplication *pApplication = CoreApplication::GetApplication();
 				if (pApplication) {
 					fSlopeScaleDepthBias = pApplication->GetConfig().GetVar("PLScene::EngineGraphicConfig", "SlopeScaleDepthBias").GetFloat();
 					fDepthBias			 = pApplication->GetConfig().GetVar("PLScene::EngineGraphicConfig", "DepthBias").GetFloat();

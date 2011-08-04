@@ -27,7 +27,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Profiling.h>
-#include <PLCore/Application/ConsoleApplication.h>
+#include <PLCore/Application/CoreApplication.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLEngine/Compositing/Console/ConsoleCommand.h"
 #include "PLEngine/Compositing/Console/SNConsole.h"
@@ -122,7 +122,7 @@ void PLConsoleCommandVersion(ConsoleCommand &cCommand)
 */
 void PLConsoleCommandFPS(ConsoleCommand &cCommand)
 {
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
 		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowFPS").GetBool();
 		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowFPS", String::Format("%d", !bValue));
@@ -171,7 +171,7 @@ void PLConsoleCommandPreviousProfile(ConsoleCommand &cCommand)
 */
 void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand)
 {
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
 		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowCoordinateAxis").GetBool();
 		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowCoordinateAxis", String::Format("%d", !bValue));
@@ -184,7 +184,7 @@ void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand)
 */
 void PLConsoleCommandXZPlane(ConsoleCommand &cCommand)
 {
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
 		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowXZPlane").GetBool();
 		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowXZPlane", String::Format("%d", !bValue));
@@ -197,7 +197,7 @@ void PLConsoleCommandXZPlane(ConsoleCommand &cCommand)
 */
 void PLConsoleCommandXYPlane(ConsoleCommand &cCommand)
 {
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
 		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowXYPlane").GetBool();
 		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowXYPlane", String::Format("%d", !bValue));
@@ -210,7 +210,7 @@ void PLConsoleCommandXYPlane(ConsoleCommand &cCommand)
 */
 void PLConsoleCommandYZPlane(ConsoleCommand &cCommand)
 {
-	ConsoleApplication *pApplication = ConsoleApplication::GetApplication();
+	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
 		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowYZPlane").GetBool();
 		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowYZPlane", String::Format("%d", !bValue));

@@ -55,7 +55,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : ConsoleApplication(),
+Application::Application() : CoreApplication(),
 	SlotOnMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
@@ -158,7 +158,7 @@ MyRTTIClass *Application::GetMyRTTIClassInstance(MyRTTIClass *pObject)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::ConsoleApplication functions  ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::Main()
 {

@@ -103,7 +103,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::ConsoleApplication functions ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 void Application::OnDeInit()
 {

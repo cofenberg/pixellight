@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ConsoleApplication.h                           *
+ *  File: CoreApplication.h                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -63,13 +63,13 @@ namespace PLCore {
 *  @note
 *    - Implementation of the template method design pattern (although this class is not abstract)
 */
-class ConsoleApplication : public Object {
+class CoreApplication : public Object {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, ConsoleApplication, "PLCore", PLCore::Object, "Application class")
+	pl_class(PLCORE_RTTI_EXPORT, CoreApplication, "PLCore", PLCore::Object, "Application class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -110,14 +110,14 @@ class ConsoleApplication : public Object {
 		*    to use two or more Application instances after each other, you should *never*
 		*    use more than one Application instance at a time!
 		*/
-		PLCORE_API static ConsoleApplication *GetApplication();
+		PLCORE_API static CoreApplication *GetApplication();
 
 
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static ConsoleApplication *g_pApplication;		/**< Pointer to the current application instance */
+		static CoreApplication *g_pApplication;		/**< Pointer to the current application instance */
 
 
 	//[-------------------------------------------------------]
@@ -128,13 +128,13 @@ class ConsoleApplication : public Object {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API ConsoleApplication();
+		PLCORE_API CoreApplication();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~ConsoleApplication();
+		PLCORE_API virtual ~CoreApplication();
 
 		/**
 		*  @brief
@@ -386,7 +386,7 @@ class ConsoleApplication : public Object {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Protected virtual CoreApplication functions           ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

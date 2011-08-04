@@ -129,7 +129,7 @@ class SceneApplication : public PLRenderer::RendererApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::ConsoleApplication functions ]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
