@@ -45,7 +45,6 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
-using namespace PLRenderer;
 namespace PLFrontendPLGui {
 
 

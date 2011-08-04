@@ -1,7 +1,10 @@
 >> 04.08.2011
 [CO]
 - Moved "RenderApplication" from "PLEngine" into "PLRenderer". It's now finally possible to use RenderApplication for applications just using PLRenderer... until now
-  one had to also include a bunch of other high level components like PLMesh, PLScene, PLEngine...
+  one had to also include a bunch of other high level components like PLMesh, PLScene, PLEngine... and of course also the big project PLGui...
+  It should be possible to write bare minimum applications just using PLRenderer for basic rendering without the need to use any high level components like meshes or
+  the scene graph. This should also make it easier to port PixelLight to new platforms - in order to use e.g. the sample application 50RendererTriangle to test
+  PLRenderer, one doesn't need to port/compile everything up to PLEngine to do so.
 
 
 

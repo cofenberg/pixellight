@@ -229,7 +229,7 @@ void Application::OnInputControllerFound(Controller *pInputController, String sI
 }
 
 void Application::OnCreateInputController()
-
+{
 	// Call base implementation
 	BasicSceneApplication::OnCreateInputController();
 
