@@ -167,9 +167,10 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected event handlers                              ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::EventHandler<>	EventHandlerDestroy;
-		PLCore::EventHandler<>	EventHandlerDisplayMode;
-		PLCore::EventHandler<>	EventHandlerFullscreenMode;
+		PLCore::EventHandler<>		EventHandlerDestroyMainWindow;
+		PLCore::EventHandler<bool>	EventHandlerActivateMainWindow;
+		PLCore::EventHandler<>		EventHandlerDisplayMode;
+		PLCore::EventHandler<>		EventHandlerFullscreenMode;
 
 
 	//[-------------------------------------------------------]
@@ -188,7 +189,16 @@ class Frontend : public PLCore::FrontendImpl {
 		*  @brief
 		*    Called when main window was destroyed
 		*/
-		void OnDestroy();
+		void OnDestroyMainWindow();
+
+		/**
+		*  @brief
+		*    Called when main window was (de-)activated
+		*
+		*  @param[in] bActivate
+		*    'true' if window is activated, else 'false'
+		*/
+		void OnActivateMainWindow(bool bActivate);
 
 
 };

@@ -15,6 +15,7 @@
   frontend a chance to do some message processing. Whenever possible, don't use this method, do heavy work within e.g. threads.
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
+- Implemented correct application lifecycle and "Ping()"-method
 PLFrontendOS:
 - The application lifecycle is now handled within the OS dependent implementation (e.g. "OSWindowWindows") instead of within "Frontend"... I hope this way the order is
   always correct... hopefully... eventually... *g*

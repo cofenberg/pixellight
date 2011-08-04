@@ -44,6 +44,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 using namespace PLGui;
 namespace PLFrontendPLGui {
 
@@ -62,9 +63,10 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	EventHandlerDestroy       (&Frontend::OnDestroy,        this),
-	EventHandlerDisplayMode   (&Frontend::OnDisplayMode,    this),
-	EventHandlerFullscreenMode(&Frontend::OnFullscreenMode, this),
+	EventHandlerDestroyMainWindow (&Frontend::OnDestroyMainWindow,  this),
+	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
+	EventHandlerDisplayMode       (&Frontend::OnDisplayMode,        this),
+	EventHandlerFullscreenMode    (&Frontend::OnFullscreenMode,     this),
 	m_cFrontend(*this),
 	m_pMainWindow(nullptr)
 {
@@ -80,9 +82,6 @@ Frontend::~Frontend()
 {
 	// Do the frontend lifecycle thing - let the world know that we're going to die
 	OnDestroy();
-
-	// Shut down system GUI
-	Gui::GetSystemGui()->Shutdown();
 }
 
 /**
@@ -103,14 +102,14 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 {
 	// Disconnect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerDestroy);
+		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerDestroyMainWindow);
 
 	// Set pointer to main window
 	m_pMainWindow = pMainWindow;
 
 	// Connect event handler
 	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Connect(EventHandlerDestroy);
+		m_pMainWindow->SignalDestroy.Connect(EventHandlerDestroyMainWindow);
 }
 
 
@@ -124,7 +123,11 @@ handle Frontend::GetNativeWindowHandle() const
 
 void Frontend::Ping()
 {
-	// [TODO] Implement me
+	// Check if there are system messages waiting (non-blocking)
+	if (Gui::GetSystemGui()->HasPendingMessages()) {
+		// Process all waiting messages, blocks if no messages are waiting
+		Gui::GetSystemGui()->ProcessMessages();
+	}
 }
 
 
@@ -136,28 +139,15 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	// Create main window
 	OnCreateMainWindow();
 
-	// Do the frontend lifecycle thing - initialize
-	int nResult = 0;	// By default, no error
-	if (OnStart()) {
-		OnResume();
+	// The frontend main loop
+	Gui *pGui = Gui::GetSystemGui();
+	while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
+		// Check if there are system messages waiting (make a non-blocking main loop)
+		if (pGui->HasPendingMessages())
+			pGui->ProcessMessages();
 
-		// The frontend main loop
-		Gui *pGui = Gui::GetSystemGui();
-		while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
-			// Check if there are system messages waiting (make a non-blocking main loop)
-			if (pGui->HasPendingMessages())
-				pGui->ProcessMessages();
-
-			// [TODO] Update stuff
-			OnDraw();
-		}
-
-		// Do the frontend lifecycle thing - de-initialize
-		OnPause();
-		OnStop();
-	} else {
-		// Error!
-		nResult = -1;
+		// [TODO] Update stuff
+		OnDraw();
 	}
 
 	// Destroy main window
@@ -166,8 +156,11 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 		m_pMainWindow = nullptr;
 	}
 
+	// Shut down system GUI
+	Gui::GetSystemGui()->Shutdown();
+
 	// Done
-	return nResult;
+	return 0;
 }
 
 void Frontend::Redraw()
@@ -188,16 +181,31 @@ void Frontend::OnCreateMainWindow()
 	Window *pWindow = new Window();
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=1");
 	pWindow->SetSize(Vector2i(640, 480));
-	pWindow->SetVisible(true);
-	pWindow->Activate();
+
+	// There's no need to have a widget background because we're render into it
+	pWindow->GetContentWidget()->SetBackgroundColor(Color4::Transparent);
 
 	// Connect event handler
+	pWindow->SignalActivate     .Connect(EventHandlerActivateMainWindow);
 	// [TODO]
 //	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
 //	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
 
+	// [TODO] Add within PLGui something like MessageOnEnterMoveSize&MessageOnLeaveMoveSize?
+	//        Background: When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)...
+	//                    it's just annyoing when you move or size a window and the controlled scene camera is spinning around while you do so...
+
 	// Set main window
 	SetMainWindow(pWindow);
+
+	// Show the window, but do not activate it right now
+	pWindow->SetVisible(true);
+
+	// Do the frontend lifecycle thing - start
+	OnStart();
+
+	// Show and activate the window
+	pWindow->Activate();
 }
 
 /**
@@ -226,8 +234,11 @@ void Frontend::OnFullscreenMode()
 *  @brief
 *    Called when main window was destroyed
 */
-void Frontend::OnDestroy()
+void Frontend::OnDestroyMainWindow()
 {
+	// Do the frontend lifecycle thing - stop
+	OnStop();
+
 	// [TODO]
 	/*
 	// Get the main widget
@@ -247,6 +258,19 @@ void Frontend::OnDestroy()
 
 	// We lost our main window :/
 	m_pMainWindow = nullptr;
+}
+
+/**
+*  @brief
+*    Called when main window was (de-)activated
+*/
+void Frontend::OnActivateMainWindow(bool bActivate)
+{
+	// Do the frontend lifecycle thing - resume/pause
+	if (bActivate)
+		OnResume();
+	else
+		OnPause();
 }
 
 
