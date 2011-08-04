@@ -38,6 +38,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLInput {
+	class Controller;
+	class VirtualController;
+}
 namespace PLScene {
 	class SNCamera;
 	class SNKeyValue;
@@ -73,14 +77,16 @@ class BasicSceneApplication : public SceneApplication {
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),								"Returns the scene container (the 'concrete scene'), can be a null pointer.",																							"")
-			pl_method_1(SetScene,				pl_ret_type(void),						PLScene::SceneContainer*,	"Sets the scene container (the 'concrete scene'). New scene container as first parameter (can be a null pointer).",														"")
-			pl_method_0(ClearScene,				pl_ret_type(void),													"Clears the scene, after calling this method the scene is empty.",																										"")
-			pl_method_1(LoadScene,				pl_ret_type(bool),						const PLCore::String&,		"Loads a scene. Filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
-			pl_method_0(GetCamera,				pl_ret_type(PLScene::SNCamera*),									"Get the scene camera, can be a null pointer.",																															"")
-			pl_method_1(SetCamera,				pl_ret_type(void),						PLScene::SNCamera*,			"Sets the scene camera. New scene camera as first parameter (can be a null pointer).",																					"")
-			pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool&),									"Returns the scene renderer tool.",																																		"")
-			pl_method_0(GetScreenshotTool,		pl_ret_type(Screenshot&),											"Returns the screenshot tool.",																																			"")
+			pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),										"Returns the scene container (the 'concrete scene'), can be a null pointer.",																							"")
+			pl_method_1(SetScene,				pl_ret_type(void),							PLScene::SceneContainer*,		"Sets the scene container (the 'concrete scene'). New scene container as first parameter (can be a null pointer).",														"")
+			pl_method_0(ClearScene,				pl_ret_type(void),															"Clears the scene, after calling this method the scene is empty.",																										"")
+			pl_method_1(LoadScene,				pl_ret_type(bool),							const PLCore::String&,			"Loads a scene. Filename of the scene to load as first argument. Returns 'true' if all went fine, else 'false'. This method will completly replace the current scene.",	"")
+			pl_method_0(GetCamera,				pl_ret_type(PLScene::SNCamera*),											"Get the scene camera, can be a null pointer.",																															"")
+			pl_method_1(SetCamera,				pl_ret_type(void),							PLScene::SNCamera*,				"Sets the scene camera. New scene camera as first parameter (can be a null pointer).",																					"")
+			pl_method_0(GetInputController,		pl_ret_type(PLInput::VirtualController*),									"Get the virtual input controller (can be a null pointer).",																											"")
+			pl_method_1(SetInputController,		pl_ret_type(void),							PLInput::VirtualController*,	"Set the virtual input controller. Virtual input controller (can be a null pointer) as first parameter.",																"")
+			pl_method_0(GetSceneRendererTool,	pl_ret_type(SceneRendererTool&),											"Returns the scene renderer tool.",																																		"")
+			pl_method_0(GetScreenshotTool,		pl_ret_type(Screenshot&),													"Returns the screenshot tool.",																																			"")
 		#endif
 		// Signals
 		pl_signal_0(SignalCameraSet,			"A new camera has been set",					"")
@@ -146,6 +152,24 @@ class BasicSceneApplication : public SceneApplication {
 		*    Scene camera, can be a null pointer
 		*/
 		PL_API PLScene::SNCamera *GetCamera() const;
+
+		/**
+		*  @brief
+		*    Get virtual input controller
+		*
+		*  @return
+		*    Virtual input controller (can be a null pointer)
+		*/
+		PL_API PLInput::VirtualController *GetInputController() const;
+
+		/**
+		*  @brief
+		*    Set virtual input controller
+		*
+		*  @param[in] pInputController
+		*    Virtual input controller (can be a null pointer)
+		*/
+		PL_API void SetInputController(PLInput::VirtualController *pInputController);
 
 		/**
 		*  @brief
@@ -252,11 +276,40 @@ class BasicSceneApplication : public SceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Everything that SceneApplication::Init() does
+		*    - Initialize input system
+		*    - Call OnCreateInputController()
 		*    - Initialize scene renderer tool
 		*    - Initialize screenshot tool
 		*    - Return and go on with OnInit()
 		*/
 		PL_API virtual bool Init() override;
+
+		/**
+		*  @brief
+		*    De-initialization function that is called after OnDeInit()
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Destroy input controller
+		*    - Everything that SceneApplication::DeInit() does
+		*/
+		PL_API virtual void DeInit() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual RenderApplication functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Function that is called once per update loop
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Update input manager
+		*    - Everything that SceneApplication::OnUpdate() does
+		*/
+		PL_API virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
@@ -283,6 +336,50 @@ class BasicSceneApplication : public SceneApplication {
 		*    - Called from within "SceneApplication::OnCreateRootScene()"
 		*/
 		PL_API virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
+
+		/**
+		*  @brief
+		*    Function that is called to initialize the application's virtual input controller
+		*
+		*  @note
+		*    - Part of the application framework initialization function "Init()"
+		*    - In the default implementation, an instance of VirtualStandardController is created
+		*/
+		PL_API virtual void OnCreateInputController();
+
+		/**
+		*  @brief
+		*    Function that is called when an input controller has been found
+		*
+		*  @param[in] pInputController
+		*    Found input controller, always valid
+		*  @param[in] sInputSemantic
+		*    Purpose of this input controller
+		*
+		*  @remarks
+		*    Use this virtual method for instance to connect the input controller to real input devices.
+		*
+		*  @note
+		*    - Connected to the "PLInput::InputManager::EventInputControllerFound"-event
+		*    - The default implementation tries to connect all controls automatically with the virtual standard controller
+		*/
+		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		PLScene::SceneNodeHandler				   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
+		PLScene::SceneNodeHandler				   m_cCameraHandler;			/**< Scene node handler for the camera */
+		PLCore::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
+		PLCore::String							   m_sStartCamera;				/**< Name of the given start camera */
+		PLScene::SceneNode						  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
+		PLCore::Array<const PLScene::SNKeyValue*>  m_lstPostKeys;				/**< Keys to process AFTER all other */
+		bool									   m_bHasLoadScreen;			/**< Is there a load screen? */
+		PLInput::VirtualController				  *m_pInputController;			/**< Virtual input controller, can be a null pointer */
+		SceneRendererTool						   m_cSceneRendererTool;		/**< Scene renderer tool */
+		Screenshot								   m_cScreenshot;				/**< Screenshot tool */
 
 
 	//[-------------------------------------------------------]
@@ -316,21 +413,7 @@ class BasicSceneApplication : public SceneApplication {
 	private:
 		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &>	EventHandlerSceneNode;
 		PLCore::EventHandler<float>											EventHandlerLoadProgress;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLScene::SceneNodeHandler				   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
-		PLScene::SceneNodeHandler				   m_cCameraHandler;			/**< Scene node handler for the camera */
-		PLCore::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
-		PLCore::String							   m_sStartCamera;				/**< Name of the given start camera */
-		PLScene::SceneNode						  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
-		PLCore::Array<const PLScene::SNKeyValue*>  m_lstPostKeys;				/**< Keys to process AFTER all other */
-		bool									   m_bHasLoadScreen;			/**< Is there a load screen? */
-		SceneRendererTool						   m_cSceneRendererTool;		/**< Scene renderer tool */
-		Screenshot								   m_cScreenshot;				/**< Screenshot tool */
+		PLCore::EventHandler<PLInput::Controller*, PLCore::String>			EventHandlerInputControllerFound;
 
 
 };

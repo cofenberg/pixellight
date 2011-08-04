@@ -264,17 +264,6 @@ void Application::OnInit()
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
-void Application::OnCreateInputController()
-{
-	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
-
-	// Get virtual input controller
-	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
-	if (pController)
-		pController->SignalOnControl.Connect(SlotOnControl);
-}
-
 bool Application::OnUpdate()
 {
 	// One important word at the beginning: DON'T COPYCAT THIS!
@@ -413,4 +402,15 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			SetScene(pSceneContainer);
 		}
 	}
+}
+
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	BasicSceneApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }

@@ -26,6 +26,9 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/System.h>
+#include <PLInput/Input/InputManager.h>
+#include <PLInput/Input/Virtual/VirtualController.h>
+#include <PLInput/Input/Virtual/VirtualStandardController.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneQuery.h>
@@ -42,6 +45,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -67,11 +71,13 @@ const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
 *    Constructor
 */
 BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
-	EventHandlerSceneNode   (&BasicSceneApplication::OnSceneNode,    this),
-	EventHandlerLoadProgress(&BasicSceneApplication::OnLoadProgress, this),
+	EventHandlerSceneNode			(&BasicSceneApplication::OnSceneNode,            this),
+	EventHandlerLoadProgress		(&BasicSceneApplication::OnLoadProgress,         this),
+	EventHandlerInputControllerFound(&BasicSceneApplication::OnInputControllerFound, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
-	m_bHasLoadScreen(false)
+	m_bHasLoadScreen(false),
+	m_pInputController(nullptr)
 {
 	// Set application title
 	SetTitle("PixelLight basic scene application");
@@ -134,6 +140,26 @@ SNCamera *BasicSceneApplication::GetCamera() const
 {
 	// This cast is safe because we 'know' it can ONLY be a camera!
 	return reinterpret_cast<SNCamera*>(m_cCameraHandler.GetElement());
+}
+
+/**
+*  @brief
+*    Get virtual input controller
+*/
+VirtualController *BasicSceneApplication::GetInputController() const
+{
+	// Return input controller
+	return m_pInputController;
+}
+
+/**
+*  @brief
+*    Set virtual input controller
+*/
+void BasicSceneApplication::SetInputController(VirtualController *pInputController)
+{
+	// Set input controller
+	m_pInputController = pInputController;
 }
 
 /**
@@ -301,6 +327,17 @@ bool BasicSceneApplication::Init()
 {
 	// Call base implementation
 	if (SceneApplication::Init()) {
+		// Initialize input system
+		InputManager::GetInstance()->DetectDevices();
+
+		// Connect the input controller found event handler to the corresponding scene context event
+		InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
+
+		// Create virtual input controller
+		OnCreateInputController();
+		if (!m_bRunning)
+			return false;
+
 		// Initialize scene renderer tool
 		m_cSceneRendererTool.SetPainter(GetPainter());
 
@@ -320,6 +357,39 @@ bool BasicSceneApplication::Init()
 
 	// Error
 	return false;
+}
+
+/**
+*  @brief
+*    De-initialization function that is called after OnDeInit()
+*/
+void BasicSceneApplication::DeInit()
+{
+	// Destroy virtual input controller
+	if (m_pInputController) {
+		delete m_pInputController;
+		m_pInputController = nullptr;
+	}
+
+	// Call base implementation
+	SceneApplication::DeInit();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual RenderApplication functions         ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Function that is called once per update loop
+*/
+bool BasicSceneApplication::OnUpdate()
+{
+	// Update input manager
+	InputManager::GetInstance()->Update();
+
+	// Call base implementation
+	return SceneApplication::OnUpdate();
 }
 
 
@@ -424,6 +494,35 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 
 	// Set scene container
 	SetScene(&cContainer);
+}
+
+/**
+*  @brief
+*    Function that is called to initialize the application's virtual input controller
+*/
+void BasicSceneApplication::OnCreateInputController()
+{
+	// Create virtual standard controller
+	VirtualStandardController *pController = new VirtualStandardController();
+
+	// Connect to physical devices
+	pController->ConnectToDevices();
+
+	// Set virtual input controller
+	SetInputController(pController);
+}
+
+/**
+*  @brief
+*    Function that is called when an input controller has been found
+*/
+void BasicSceneApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+{
+	// Is there an application input controller?
+	if (m_pInputController) {
+		// Try to connect all controls automatically with the virtual standard controller
+		pInputController->ConnectAll(m_pInputController, "", sInputSemantic);
+	}
 }
 
 

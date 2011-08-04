@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Profiling.h>
-#include <PLCore/Application/ConsoleApplication.h>
 #include <PLMath/Intersect.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Keyboard.h>
@@ -40,7 +39,7 @@
 #include <PLScene/Visibility/VisNode.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SNCamera.h>
-#include "PLEngine/Application/RenderApplication.h"
+#include "PLEngine/Application/BasicSceneApplication.h"
 #include "PLEngine/Compositing/SNEngineInformation.h"
 
 
@@ -229,15 +228,18 @@ void SNEngineInformation::OnUpdate()
 	if ((InfoFlags & Profiling) && Profiling::GetInstance()->IsActive()) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		Controller *pController = reinterpret_cast<Controller*>(static_cast<RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
-		if ((pController && pController->GetActive()) || !pController) {
-			// Get keyboard input device
-			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-			if (pKeyboard) {
-				if (pKeyboard->KeyPageUp.IsHit())
-					Profiling::GetInstance()->SelectPreviousGroup();
-				if (pKeyboard->KeyPageDown.IsHit())
-					Profiling::GetInstance()->SelectNextGroup();
+		ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
+		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::BasicSceneApplication")) {
+			Controller *pController = reinterpret_cast<Controller*>(static_cast<BasicSceneApplication*>(pConsoleApplication)->GetInputController());
+			if ((pController && pController->GetActive()) || !pController) {
+				// Get keyboard input device
+				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+				if (pKeyboard) {
+					if (pKeyboard->KeyPageUp.IsHit())
+						Profiling::GetInstance()->SelectPreviousGroup();
+					if (pKeyboard->KeyPageDown.IsHit())
+						Profiling::GetInstance()->SelectNextGroup();
+				}
 			}
 		}
 	}

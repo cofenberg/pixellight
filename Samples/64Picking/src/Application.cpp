@@ -112,17 +112,6 @@ void Application::OnControl(Control &cControl)
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
-void Application::OnCreateInputController()
-{
-	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
-
-	// Get virtual input controller
-	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
-	if (pController)
-		pController->SignalOnControl.Connect(SlotOnControl);
-}
-
 bool Application::OnUpdate()
 {
 	// Call base implementation
@@ -181,4 +170,15 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 	// Create the picking component
 	m_pMyPicking = new MyPicking(*this);
+}
+
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	BasicSceneApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }

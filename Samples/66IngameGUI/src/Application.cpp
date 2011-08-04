@@ -119,21 +119,6 @@ void Application::OnDeInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::RenderApplication functions ]
-//[-------------------------------------------------------]
-void Application::OnCreateInputController()
-{
-	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
-
-	// Get virtual input controller
-	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
-	if (pController)
-		pController->SignalOnControl.Connect(SlotOnControl);
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLEngine::BasicSceneApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
@@ -179,4 +164,15 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 	// Set scene container
 	SetScene(&cContainer);
+}
+
+void Application::OnCreateInputController()
+{
+	// Call base implementation
+	BasicSceneApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }

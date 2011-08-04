@@ -27,9 +27,6 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Frontend/Frontend.h>
-#include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Virtual/VirtualController.h>
-#include <PLInput/Input/Virtual/VirtualStandardController.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Surface.h>
 #include <PLRenderer/Renderer/FontManager.h>
@@ -42,7 +39,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLInput;
 using namespace PLRenderer;
 namespace PLEngine {
 
@@ -62,8 +58,7 @@ pl_implement_class(RenderApplication)
 */
 RenderApplication::RenderApplication(const String &sSurfacePainter) : FrontendApplication(),
 	m_sSurfacePainter(sSurfacePainter),
-	m_pRendererContext(nullptr),
-	m_pInputController(nullptr)
+	m_pRendererContext(nullptr)
 {
 	// Set application title
 	SetTitle("PixelLight render application");
@@ -115,26 +110,6 @@ void RenderApplication::SetPainter(SurfacePainter *pPainter)
 		// Set painter
 		pSurface->SetPainter(pPainter);
 	}
-}
-
-/**
-*  @brief
-*    Get virtual input controller
-*/
-VirtualController *RenderApplication::GetInputController() const
-{
-	// Return input controller
-	return m_pInputController;
-}
-
-/**
-*  @brief
-*    Set virtual input controller
-*/
-void RenderApplication::SetInputController(VirtualController *pInputController)
-{
-	// Set input controller
-	m_pInputController = pInputController;
 }
 
 /**
@@ -238,14 +213,6 @@ bool RenderApplication::Init()
 			if (!m_bRunning)
 				return false;
 
-			// Initialize input system
-			InputManager::GetInstance()->DetectDevices();
-
-			// Create virtual input controller
-			OnCreateInputController();
-			if (!m_bRunning)
-				return false;
-
 			// Done
 			return true;
 		}
@@ -265,12 +232,6 @@ void RenderApplication::DeInit()
 	if (m_pRendererContext) {
 		delete m_pRendererContext;
 		m_pRendererContext = nullptr;
-	}
-
-	// Destroy virtual input controller
-	if (m_pInputController) {
-		delete m_pInputController;
-		m_pInputController = nullptr;
 	}
 
 	// Call base implementation
@@ -356,29 +317,10 @@ void RenderApplication::OnCreatePainter()
 
 /**
 *  @brief
-*    Function that is called to initialize the application's virtual input controller
-*/
-void RenderApplication::OnCreateInputController()
-{
-	// Create virtual standard controller
-	VirtualStandardController *pController = new VirtualStandardController();
-
-	// Connect to physical devices
-	pController->ConnectToDevices();
-
-	// Set virtual input controller
-	SetInputController(pController);
-}
-
-/**
-*  @brief
 *    Function that is called once per update loop
 */
 bool RenderApplication::OnUpdate()
 {
-	// Update input manager
-	InputManager::GetInstance()->Update();
-
 	// Update renderer context
 	if (m_pRendererContext)
 		m_pRendererContext->Update();

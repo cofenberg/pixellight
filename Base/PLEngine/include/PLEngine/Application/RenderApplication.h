@@ -40,9 +40,6 @@ namespace PLRenderer {
 	class SurfacePainter;
 	class RendererContext;
 }
-namespace PLInput {
-	class VirtualController;
-}
 
 
 //[-------------------------------------------------------]
@@ -72,13 +69,11 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetPainter,			pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",																																																																																															"")
-			pl_method_1(SetPainter,			pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",																																																																																												"")
-			pl_method_0(GetInputController,	pl_ret_type(PLInput::VirtualController*),									"Get the virtual input controller (can be a null pointer).",																																																																																																															"")
-			pl_method_1(SetInputController,	pl_ret_type(void),							PLInput::VirtualController*,	"Set the virtual input controller. Virtual input controller (can be a null pointer) as first parameter.",																																																																																																				"")
-			pl_method_0(IsFullscreen,		pl_ret_type(bool),															"Returns whether or not the main window is currently fullscreen or not. Returns 'true' if the main window is currently fullscreen, else 'false'.",																																																																																										"")
-			pl_method_1(SetFullscreen,		pl_ret_type(void),							bool,							"Sets whether or not the main window is currently fullscreen or not. 'true' as first parameter if the main window is currently fullscreen, else 'false'.",																																																																																								"")
-			pl_method_1(Update,				pl_ret_type(bool),							bool,							"Update the application. Force update at once? as first parameter (do this only if you really need it!). Returns 'true' when the update was performed, else 'false' (maybe there's a frame rate limitation and the update wasn't forced). This method is called continously from the main loop of the application. It is called either by the OnRun() method of an Application, or from the outside, if the application is embedded in another application's main loop (which is the case for e.g. browser plugins).",	"")
+			pl_method_0(GetPainter,		pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",																																																																																															"")
+			pl_method_1(SetPainter,		pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",																																																																																												"")
+			pl_method_0(IsFullscreen,	pl_ret_type(bool),															"Returns whether or not the main window is currently fullscreen or not. Returns 'true' if the main window is currently fullscreen, else 'false'.",																																																																																										"")
+			pl_method_1(SetFullscreen,	pl_ret_type(void),							bool,							"Sets whether or not the main window is currently fullscreen or not. 'true' as first parameter if the main window is currently fullscreen, else 'false'.",																																																																																								"")
+			pl_method_1(Update,			pl_ret_type(bool),							bool,							"Update the application. Force update at once? as first parameter (do this only if you really need it!). Returns 'true' when the update was performed, else 'false' (maybe there's a frame rate limitation and the update wasn't forced). This method is called continously from the main loop of the application. It is called either by the OnRun() method of an Application, or from the outside, if the application is embedded in another application's main loop (which is the case for e.g. browser plugins).",	"")
 		#endif
 	pl_class_end
 
@@ -128,24 +123,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    Pointer to surface painter of the main window, can be a null pointer
 		*/
 		PL_API void SetPainter(PLRenderer::SurfacePainter *pPainter);
-
-		/**
-		*  @brief
-		*    Get virtual input controller
-		*
-		*  @return
-		*    Virtual input controller (can be a null pointer)
-		*/
-		PL_API PLInput::VirtualController *GetInputController() const;
-
-		/**
-		*  @brief
-		*    Set virtual input controller
-		*
-		*  @param[in] pInputController
-		*    Virtual input controller (can be a null pointer)
-		*/
-		PL_API void SetInputController(PLInput::VirtualController *pInputController);
 
 		/**
 		*  @brief
@@ -202,8 +179,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    - Call OnCreateRendererContext()
 		*    - Set default font according to config
 		*    - Call OnCreatePainter()
-		*    - Initialize input system
-		*    - Call OnCreateInputController()
 		*    - Return and go on with OnInit()
 		*/
 		PL_API virtual bool Init() override;
@@ -214,9 +189,8 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Destroy main window
 		*    - Destroy renderer context
-		*    - Everything that GuiApplication::DeInit() does
+		*    - Everything that FrontendApplication::DeInit() does
 		*/
 		PL_API virtual void DeInit() override;
 
@@ -253,16 +227,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 
 		/**
 		*  @brief
-		*    Function that is called to initialize the application's virtual input controller
-		*
-		*  @note
-		*    - Part of the application framework initialization function "Init()"
-		*    - In the default implementation, an instance of VirtualStandardController is created
-		*/
-		PL_API virtual void OnCreateInputController();
-
-		/**
-		*  @brief
 		*    Function that is called once per update loop
 		*
 		*  @return
@@ -289,7 +253,6 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 	protected:
 		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
 		PLRenderer::RendererContext	*m_pRendererContext;	/**< The renderer context, can be a null pointer */
-		PLInput::VirtualController	*m_pInputController;	/**< Virtual input controller, can be a null pointer */
 
 
 };

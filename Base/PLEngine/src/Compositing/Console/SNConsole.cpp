@@ -36,7 +36,7 @@
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLRenderer/Material/MaterialManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "PLEngine/Application/RenderApplication.h"
+#include "PLEngine/Application/BasicSceneApplication.h"
 #include "PLEngine/Compositing/Console/SNConsole.h"
 
 
@@ -159,17 +159,20 @@ void SNConsole::OnUpdate()
 	if (m_nState == Active || m_nState == Activating) {
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
-		Controller *pController = reinterpret_cast<Controller*>(static_cast<RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
-		if ((pController && pController->GetActive()) || !pController) {
-			// Get keyboard input device
-			Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-			if (pKeyboard) {
-				if (pKeyboard->KeyPageUp.IsHit())
-					m_nRow += 27;
-				if (pKeyboard->KeyPageDown.IsHit()) {
-					m_nRow -= 27;
-					if (m_nRow < 0)
-						m_nRow = 0;
+		ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
+		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::BasicSceneApplication")) {
+			Controller *pController = reinterpret_cast<Controller*>(static_cast<BasicSceneApplication*>(pConsoleApplication)->GetInputController());
+			if ((pController && pController->GetActive()) || !pController) {
+				// Get keyboard input device
+				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+				if (pKeyboard) {
+					if (pKeyboard->KeyPageUp.IsHit())
+						m_nRow += 27;
+					if (pKeyboard->KeyPageDown.IsHit()) {
+						m_nRow -= 27;
+						if (m_nRow < 0)
+							m_nRow = 0;
+					}
 				}
 			}
 		}

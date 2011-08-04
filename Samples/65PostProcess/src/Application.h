@@ -92,17 +92,11 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::RenderApplication functions ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnCreateInputController() override;
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
+		virtual void OnCreateInputController() override;
 
 
 	//[-------------------------------------------------------]

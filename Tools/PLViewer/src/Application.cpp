@@ -270,7 +270,7 @@ void Application::OnCreateMainWindow()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::RenderApplication functions ]
+//[ Private virtual PLEngine::BasicSceneApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateInputController()
 {

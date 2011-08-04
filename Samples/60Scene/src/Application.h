@@ -102,7 +102,6 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateInputController() override;
 		virtual bool OnUpdate() override;
 
 
@@ -111,6 +110,7 @@ class Application : public PLEngine::BasicSceneApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
+		virtual void OnCreateInputController() override;
 
 
 };

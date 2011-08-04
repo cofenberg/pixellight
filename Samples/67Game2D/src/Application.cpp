@@ -154,47 +154,6 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::RenderApplication functions ]
-//[-------------------------------------------------------]
-void Application::OnCreateInputController()
-{
-	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
-
-	// Get virtual input controller
-	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
-	if (pController)
-		pController->SignalOnControl.Connect(SlotOnControl);
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLEngine::SceneApplication functions  ]
-//[-------------------------------------------------------]
-void Application::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
-{
-	// Call base implementation
-	BasicSceneApplication::OnInputControllerFound(pInputController, sInputSemantic);
-
-	// Is there an application input controller? If so, connect gun (SNGun)...
-	if (m_pInputController && sInputSemantic == "Gun") {
-		pInputController->Connect("X",		m_pInputController->GetControl("RotY"), -0.05f);
-		// "Left" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
-		// "Right" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
-		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
-		pInputController->Connect("Right",	m_pInputController->GetControl("Backward"));
-		pInputController->Connect("Left",	m_pInputController->GetControl("StrafeLeft"));
-		pInputController->Connect("Right",	m_pInputController->GetControl("StrafeRight"));
-		pInputController->Connect("Fire",	m_pInputController->GetControl("Button1"));
-		pInputController->Connect("Fire",	m_pInputController->GetControl("Button2"));
-		pInputController->Connect("Fire",	m_pInputController->GetControl("Button3"));
-		pInputController->Connect("Fire",	m_pInputController->GetControl("Button4"));
-		pInputController->Connect("Fire",	m_pInputController->GetControl("Button5"));
-	}
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLEngine::BasicSceneApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
@@ -245,4 +204,37 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		// Start the game
 		Restart();
 	}
+}
+
+void Application::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+{
+	// Call base implementation
+	BasicSceneApplication::OnInputControllerFound(pInputController, sInputSemantic);
+
+	// Is there an application input controller? If so, connect gun (SNGun)...
+	if (m_pInputController && sInputSemantic == "Gun") {
+		pInputController->Connect("X",		m_pInputController->GetControl("RotY"), -0.05f);
+		// "Left" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
+		// "Right" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
+		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
+		pInputController->Connect("Right",	m_pInputController->GetControl("Backward"));
+		pInputController->Connect("Left",	m_pInputController->GetControl("StrafeLeft"));
+		pInputController->Connect("Right",	m_pInputController->GetControl("StrafeRight"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button1"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button2"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button3"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button4"));
+		pInputController->Connect("Fire",	m_pInputController->GetControl("Button5"));
+	}
+}
+
+void Application::OnCreateInputController()
+
+	// Call base implementation
+	BasicSceneApplication::OnCreateInputController();
+
+	// Get virtual input controller
+	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
+	if (pController)
+		pController->SignalOnControl.Connect(SlotOnControl);
 }

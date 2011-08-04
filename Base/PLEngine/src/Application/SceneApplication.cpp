@@ -25,8 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
-#include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLEngine/Compositing/Console/ConsoleCommand.h"
@@ -38,7 +36,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -58,7 +55,6 @@ pl_implement_class(SceneApplication)
 *    Constructor
 */
 SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
-	EventHandlerInputControllerFound(&SceneApplication::OnInputControllerFound, this),
 	m_pSceneContext(nullptr),
 	m_pRootScene(nullptr),
 	m_bEditModeEnabled(false)
@@ -171,9 +167,6 @@ bool SceneApplication::Init()
 			// Create scene context
 			m_pSceneContext = new SceneContext(*pRendererContext);
 
-			// Connect the input controller found event handler to the corresponding scene context event
-			InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
-
 			// Create root scene
 			OnCreateRootScene();
 			if (!m_bRunning)
@@ -271,19 +264,6 @@ void SceneApplication::OnCreateRootScene()
 
 		// Set the root scene
 		SetRootScene(pRootContainer);
-	}
-}
-
-/**
-*  @brief
-*    Function that is called when an input controller has been found
-*/
-void SceneApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
-{
-	// Is there an application input controller?
-	if (m_pInputController) {
-		// Try to connect all controls automatically with the virtual standard controller
-		pInputController->ConnectAll(m_pInputController, "", sInputSemantic);
 	}
 }
 

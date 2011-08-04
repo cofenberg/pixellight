@@ -133,7 +133,7 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::RenderApplication functions ]
+	//[ Private virtual PLEngine::BasicSceneApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateInputController() override;

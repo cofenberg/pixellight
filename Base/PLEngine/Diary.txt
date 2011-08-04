@@ -1,6 +1,8 @@
 >> 04.08.2011
 [CO]
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
+- Moved input controller from RenderApplication into BasicSceneApplication. Now everything input releated within the application framework is gathered together
+  within BasicSceneApplication instead of be scattered all over the application classes.
 
 
 

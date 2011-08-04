@@ -34,9 +34,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Controller;
-}
 namespace PLScene {
 	class SceneContext;
 	class SceneContainer;
@@ -192,7 +189,6 @@ class SceneApplication : public RenderApplication {
 		*    The default implementation does the following tasks:
 		*    - Everything that RenderApplication::Init() does
 		*    - Create scene context
-		*    - Set default virtual input controller of scene context
 		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
 		*/
@@ -243,31 +239,6 @@ class SceneApplication : public RenderApplication {
 		*    - The default implementation creates a standard root scene
 		*/
 		PL_API virtual void OnCreateRootScene();
-
-		/**
-		*  @brief
-		*    Function that is called when an input controller has been found
-		*
-		*  @param[in] pInputController
-		*    Found input controller, always valid
-		*  @param[in] sInputSemantic
-		*    Purpose of this input controller
-		*
-		*  @remarks
-		*    Use this virtual method for instance to connect the input controller to real input devices.
-		*
-		*  @note
-		*    - Connected to the "PLInput::InputManager::EventInputControllerFound"-event
-		*    - The default implementation tries to connect all controls automatically with the virtual standard controller
-		*/
-		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
-
-
-	//[-------------------------------------------------------]
-	//[ Protected event handlers                              ]
-	//[-------------------------------------------------------]
-	protected:
-		PLCore::EventHandler<PLInput::Controller*, PLCore::String> EventHandlerInputControllerFound;
 
 
 	//[-------------------------------------------------------]
