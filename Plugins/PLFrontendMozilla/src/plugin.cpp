@@ -192,6 +192,11 @@ PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
 	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
 }
 
+void nsPluginInstance::Ping()
+{
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]

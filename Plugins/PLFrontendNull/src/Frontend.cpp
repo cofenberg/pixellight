@@ -73,6 +73,11 @@ handle Frontend::GetNativeWindowHandle() const
 	return NULL_HANDLE;
 }
 
+void Frontend::Ping()
+{
+	// Nothing to do in here
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]

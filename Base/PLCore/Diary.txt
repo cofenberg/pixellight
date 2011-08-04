@@ -10,6 +10,9 @@
   -> Renamed "CoreApplication::Init()" into "CoreApplication::OnStart()", the "AbstractLifecycle" equivalent called as soon as something is started (not same as instanced)
   -> Renamed "CoreApplication::DeInit()" into "CoreApplication::OnStop()", the "AbstractLifecycle" equivalent called as soon as something is stopped (not same as destroyed)
 - "FrontendPixelLight" is now calling all "AbstractLifecycle"-methods of it's petted application
+- "Frontend": Added "Ping()"-method to give the frontend a chance to process OS messages. There are situations (like current load screen implementations) were an application
+  may do some heavy work without letting the frontend a chance to process OS messages. In such situations, it may be wise to call this method from time to time to give the
+  frontend a chance to do some message processing. Whenever possible, don't use this method, do heavy work within e.g. threads.
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
 PLFrontendOS:

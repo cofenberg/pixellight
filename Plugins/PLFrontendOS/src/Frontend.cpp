@@ -78,6 +78,20 @@ handle Frontend::GetNativeWindowHandle() const
 	return m_pOSWindow ? m_pOSWindow->GetNativeWindowHandle() : NULL_HANDLE;
 }
 
+void Frontend::Ping()
+{
+	// Look if messages are waiting (non-blocking)
+	MSG sMsg;
+	while (PeekMessage(&sMsg, nullptr, 0, 0, PM_NOREMOVE)) {
+		// Get the waiting message
+		GetMessage(&sMsg, nullptr, 0, 0);
+
+		// Process message
+		TranslateMessage(&sMsg);
+		DispatchMessage(&sMsg);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]

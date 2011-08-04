@@ -77,7 +77,8 @@ private:
 	//[ Public virtual PLCore::FrontendImpl functions         ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLCore::handle GetNativeWindowHandle() const;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
+		virtual void Ping() override;
 
 
 	//[-------------------------------------------------------]

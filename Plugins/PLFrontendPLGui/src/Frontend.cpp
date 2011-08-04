@@ -122,6 +122,11 @@ handle Frontend::GetNativeWindowHandle() const
 	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetNativeWindowHandle() : NULL_HANDLE;
 }
 
+void Frontend::Ping()
+{
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]

@@ -122,6 +122,16 @@ handle Frontend::GetNativeWindowHandle() const
 
 /**
 *  @brief
+*    Give the frontend a chance to process OS messages
+*/
+void Frontend::Ping() const
+{
+	// Call backend
+	return m_pImpl->Ping();
+}
+
+/**
+*  @brief
 *    Get window width
 */
 uint32 Frontend::GetWidth() const

@@ -37,6 +37,11 @@ PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
 	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
 }
 
+void PixelLightCtrl::Ping()
+{
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::Impl functions                ]

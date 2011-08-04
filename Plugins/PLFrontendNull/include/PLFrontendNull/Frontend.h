@@ -79,6 +79,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
+		virtual void Ping() override;
 
 
 	//[-------------------------------------------------------]

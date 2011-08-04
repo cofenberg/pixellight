@@ -100,6 +100,11 @@ handle Frontend::GetNativeWindowHandle() const
 	}
 }
 
+void Frontend::Ping()
+{
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]

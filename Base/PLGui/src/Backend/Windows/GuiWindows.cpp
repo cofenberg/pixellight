@@ -124,8 +124,8 @@ GuiWindows::~GuiWindows()
 bool GuiWindows::HasPendingMessages()
 {
 	// Look if messages are waiting
-	MSG msg;
-	return PeekMessage(&msg, nullptr, 0, 0, PM_NOREMOVE) != 0;
+	MSG sMsg;
+	return PeekMessage(&sMsg, nullptr, 0, 0, PM_NOREMOVE) != 0;
 }
 
 void GuiWindows::ProcessMessage()

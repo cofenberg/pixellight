@@ -119,6 +119,21 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 		*/
 		virtual handle GetNativeWindowHandle() const = 0;
 
+		/**
+		*  @brief
+		*    Give the frontend a chance to process OS messages
+		*
+		*  @remarks
+		*    There are situations were an application may do some heavy work without letting
+		*    the frontend a chance to process OS messages. In such situations, it may be wise
+		*    to call this method from time to time to give the frontend a chance to do some
+		*    message processing.
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*/
+		virtual void Ping() = 0;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

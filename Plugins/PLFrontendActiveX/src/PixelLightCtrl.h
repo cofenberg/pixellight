@@ -99,6 +99,7 @@ END_MSG_MAP()
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
+		virtual void Ping() override;
 
 
 	//[-------------------------------------------------------]
