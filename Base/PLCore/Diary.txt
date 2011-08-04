@@ -12,6 +12,9 @@
 - "FrontendPixelLight" is now calling all "AbstractLifecycle"-methods of it's petted application
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
+PLFrontendOS:
+- The application lifecycle is now handled within the OS dependent implementation (e.g. "OSWindowWindows") instead of within "Frontend"... I hope this way the order is
+  always correct... hopefully... eventually... *g*
 
 
 

@@ -42,6 +42,9 @@ namespace PLFrontendOS {
 */
 OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS)
 {
+	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
+	m_pFrontendOS->m_pOSWindow = this;
+
 	// Connect Linux signals
 //	signal(SIGINT,  CoreApplication::SignalHandler);
 //	signal(SIGTERM, CoreApplication::SignalHandler);

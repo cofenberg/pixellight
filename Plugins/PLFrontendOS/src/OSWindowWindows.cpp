@@ -73,13 +73,35 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Set window pointer and handle (SetWindowLongPtr is the 64bit equivalent to SetWindowLong)
 				SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pOSWindowWindows));
 				pOSWindowWindows->m_hWnd = hWnd;
+
+				// Show the window, but do not activate it right now
+				ShowWindow(hWnd, SW_SHOWNOACTIVATE);
+
+				// Doing the following frontend lifecycle thing in here would be nice, but when done this way, the window border
+				// will be potentially invisible until OnStart() returns... but this may take some seconds... not nice to look at...
+				// pOSWindowWindows->m_pFrontendOS->OnStart();
 				return 0;
 
 			// Destroy window
 			case WM_DESTROY:
+				// Do the frontend lifecycle thing - stop
+				pOSWindowWindows->m_pFrontendOS->OnStop();
+
 				// Mark window destroyed
 				pOSWindowWindows->m_bDestroyed = true;
 				pOSWindowWindows->m_hWnd	   = nullptr;
+				return 0;
+
+			// Got focus
+			case WM_SETFOCUS:
+				// Do the frontend lifecycle thing - resume
+				pOSWindowWindows->m_pFrontendOS->OnResume();
+				return 0;
+
+			// Lost focus
+			case WM_KILLFOCUS:
+				// Do the frontend lifecycle thing - pause
+				pOSWindowWindows->m_pFrontendOS->OnPause();
 				return 0;
 
 			case WM_PAINT:
@@ -117,6 +139,9 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_hWnd(nullptr),
 	m_bDestroyed(false)
 {
+	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
+	m_pFrontendOS->m_pOSWindow = this;
+
 	// Create window class
 	m_WndClass.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	m_WndClass.lpfnWndProc		= static_cast<WNDPROC>(WndProc);
@@ -158,8 +183,11 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		}
 	}
 
+	// Do the frontend lifecycle thing - start
+	m_pFrontendOS->OnStart();
+
+	// Show and activate the window
 	ShowWindow(m_hWnd, SW_SHOW);
-	UpdateWindow(m_hWnd);
 }
 
 /**

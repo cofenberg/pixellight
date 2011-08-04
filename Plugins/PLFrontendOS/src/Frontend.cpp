@@ -96,33 +96,20 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 		#error "Unsupported platform"
 	#endif
 
-	// Do the frontend lifecycle thing - initialize
-	int nResult = 0;	// By default, no error
-	if (OnStart()) {
-		OnResume();
-
-		// The Windows message loop
-		bool bQuit = false;
-		while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
-			// Look if messages are waiting
-			MSG sMsg;
-			while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
-				if (sMsg.message == WM_QUIT)
-					bQuit = true;
-				TranslateMessage(&sMsg);
-				DispatchMessage(&sMsg);
-			}
-
-			// [TODO] Update stuff
-			OnDraw();
+	// The Windows message loop
+	bool bQuit = false;
+	while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+		// Look if messages are waiting
+		MSG sMsg;
+		while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
+			if (sMsg.message == WM_QUIT)
+				bQuit = true;
+			TranslateMessage(&sMsg);
+			DispatchMessage(&sMsg);
 		}
 
-		// Do the frontend lifecycle thing - de-initialize
-		OnPause();
-		OnStop();
-	} else {
-		// Error!
-		nResult = -1;
+		// [TODO] Update stuff
+		OnDraw();
 	}
 
 	// Destroy the OS specific window implementation
@@ -132,7 +119,7 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	}
 
 	// Done
-	return nResult;
+	return 0;
 }
 
 void Frontend::Redraw()
