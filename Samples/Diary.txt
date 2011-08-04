@@ -2,6 +2,8 @@
 [CO]
 - The primitive renderer samples "50RendererTriangle", "51RendererTexturing", "52RendererMesh", "53RendererMultiView" and "54RendererRTT" no longer use input stuff. Focus
   is on PLRenderer, and PLRenderer only.
+- The primitive renderer samples "50RendererTriangle", "51RendererTexturing", "52RendererMesh", "53RendererMultiView" and "54RendererRTT" no longer depend on high level stuff
+  like PLEngine
 
 
 

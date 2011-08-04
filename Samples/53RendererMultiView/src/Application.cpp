@@ -27,8 +27,8 @@
 #include <PLCore/Tools/Localization.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Surface.h>
-#include <PLEngine/Gui/RenderWidget.h>
-#include <PLEngine/Gui/RenderWindow.h>
+#include <PLFrontendPLGui/RenderWidget.h>
+#include <PLFrontendPLGui/RenderWindow.h>
 #include "Application.h"
 
 
@@ -37,9 +37,9 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-using namespace PLGui;
 using namespace PLRenderer;
-using namespace PLEngine;
+using namespace PLGui;
+using namespace PLFrontendPLGui;
 
 
 //[-------------------------------------------------------]
@@ -84,9 +84,9 @@ void Application::OnCreateMainWindow()
 	// Get the display mode to use
 	const DisplayMode *pDisplayMode = nullptr;
 	if (pWidget) {
-		if (pWidget->IsInstanceOf("PLEngine::RenderWidget"))
+		if (pWidget->IsInstanceOf("PLFrontendPLGui::RenderWidget"))
 			pDisplayMode = &static_cast<const RenderWidget*>(pWidget)->GetDisplayMode();
-		else if (pWidget->IsInstanceOf("PLEngine::RenderWindow"))
+		else if (pWidget->IsInstanceOf("PLFrontendPLGui::RenderWindow"))
 			pDisplayMode = &static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
 	}
 
