@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/PLCore.h"
-#include "PLCore/Frontend/AbstractFrontendLifecycle.h"
+#include "PLCore/Application/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +59,7 @@ template <class ValueType> class Array;
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
 */
-class Frontend : protected AbstractFrontendLifecycle {
+class Frontend : protected AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]

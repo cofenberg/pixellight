@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractFrontendLifecycle.h                    *
+ *  File: AbstractLifecycle.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__
-#define __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__
+#ifndef __PLCORE_ABSTRACTLIFECYCLE_H__
+#define __PLCORE_ABSTRACTLIFECYCLE_H__
 #pragma once
 
 
@@ -36,69 +36,69 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract frontend lifecycle class
+*    Abstract lifecycle class
 *
 *  @remarks
-*    The "Frontend Lifecycle" is:
-*      "OnCreate()"         - Called directly after the frontend has been created
-*        ("OnRestart()")    - Called directly before a stopped frontend is going to start again (always followed by "OnStart()")
-*        "OnStart()"        - Called when the frontend becoming visible to the user
-*          "OnResume()"     - Called when the frontend has the focus (keep the implementation lightweight)
-*          "OnPause()"      - Called when the frontend has no longer the focus (keep the implementation lightweight)
-*        "OnStop()"         - Called when the frontend is no longer visible to the user
-*      "OnDestroy()"        - Called before the frontend is going to be finally destroyed
+*    The "Lifecycle" is:
+*      "OnCreate()"         - Called directly after the object has been created
+*        ("OnRestart()")    - Called directly before a stopped object is going to start again (always followed by "OnStart()")
+*        "OnStart()"        - Called when the object becoming visible to the user
+*          "OnResume()"     - Called when the object has the focus (keep the implementation lightweight)
+*          "OnPause()"      - Called when the object has no longer the focus (keep the implementation lightweight)
+*        "OnStop()"         - Called when the object is no longer visible to the user
+*      "OnDestroy()"        - Called before the object is going to be finally destroyed
 *    This lifecycle has the same interface as the "Android Activity Lifecycle"
 *    (http://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle)
 *    because this interface looks just the right way to go for this purpose... also there
 *    are nice diagrams and documentations explaining the interface so it shouldn't be to
 *    hard to understand it.
 */
-class AbstractFrontendLifecycle {
+class AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual AbstractFrontendLifecycle functions    ]
+	//[ Public virtual AbstractLifecycle functions            ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Called directly after the frontend has been created
+		*    Called directly after the object has been created
 		*/
 		virtual void OnCreate() = 0;
 
 		/**
 		*  @brief
-		*    Called directly before a stopped frontend is going to start again (always followed by "OnStart()")
+		*    Called directly before a stopped object is going to start again (always followed by "OnStart()")
 		*/
 		virtual void OnRestart() = 0;
 
 		/**
 		*  @brief
-		*    Called when the frontend becoming visible to the user
+		*    Called when the object becoming visible to the user
 		*/
 		virtual void OnStart() = 0;
 
 		/**
 		*  @brief
-		*    Called when the frontend has the focus (keep the implementation lightweight)
+		*    Called when the object has the focus (keep the implementation lightweight)
 		*/
 		virtual void OnResume() = 0;
 
 		/**
 		*  @brief
-		*    Called when the frontend has no longer the focus (keep the implementation lightweight)
+		*    Called when the object has no longer the focus (keep the implementation lightweight)
 		*/
 		virtual void OnPause() = 0;
 
 		/**
 		*  @brief
-		*    Called when the frontend is no longer visible to the user
+		*    Called when the object is no longer visible to the user
 		*/
 		virtual void OnStop() = 0;
 
 		/**
 		*  @brief
-		*    Called before the frontend is going to be finally destroyed
+		*    Called before the object is going to be finally destroyed
 		*/
 		virtual void OnDestroy() = 0;
 
@@ -111,13 +111,13 @@ class AbstractFrontendLifecycle {
 		*  @brief
 		*    Default constructor
 		*/
-		AbstractFrontendLifecycle();
+		AbstractLifecycle();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~AbstractFrontendLifecycle();
+		virtual ~AbstractLifecycle();
 
 
 };
@@ -129,4 +129,4 @@ class AbstractFrontendLifecycle {
 } // PLCore
 
 
-#endif // __PLCORE_ABSTRACTFRONTENDLIFECYCLE_H__
+#endif // __PLCORE_ABSTRACTLIFECYCLE_H__

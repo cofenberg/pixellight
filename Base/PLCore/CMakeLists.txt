@@ -150,11 +150,11 @@ add_sources(
 	src/Tools/LocalizationLoader.cpp
 	src/Tools/LocalizationLoaderPL.cpp
 	src/Application/ApplicationContext.cpp
+	src/Application/AbstractLifecycle.cpp
 	src/Application/CoreApplication.cpp
 	src/Script/Script.cpp
 	src/Script/ScriptManager.cpp
 	src/Script/ScriptBinding.cpp
-	src/Frontend/AbstractFrontendLifecycle.cpp
 	src/Frontend/Frontend.cpp
 	src/Frontend/FrontendImpl.cpp
 	src/Frontend/FrontendPixelLight.cpp

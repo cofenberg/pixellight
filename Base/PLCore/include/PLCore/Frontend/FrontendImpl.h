@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Base/Object.h"
-#include "PLCore/Frontend/AbstractFrontendLifecycle.h"
+#include "PLCore/Application/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]
@@ -55,7 +55,7 @@ class Frontend;
 *    This base class provides the backend interface for concrete implementations
 *    (e.g. for Internet Explorer or Mozilla Firefox frontends).
 */
-class FrontendImpl : public Object, protected AbstractFrontendLifecycle {
+class FrontendImpl : public Object, protected AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]
@@ -138,7 +138,7 @@ class FrontendImpl : public Object, protected AbstractFrontendLifecycle {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual AbstractFrontendLifecycle functions ]
+	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:
 		PLCORE_API virtual void OnCreate() override;

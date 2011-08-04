@@ -106,7 +106,7 @@ void FrontendOpenGL::OnSize()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
 void FrontendOpenGL::OnCreate()
 {

@@ -109,7 +109,7 @@ void FrontendImpl::OnSize()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
 void FrontendImpl::OnCreate()
 {

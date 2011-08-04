@@ -2,6 +2,9 @@
 [CO]
 - Renamed "ConsoleApplication" into "CoreApplication" so that one can guess the name of this class by just knowing the component name it's in
   (it's also the base/core class of the application framework, so "core" maybe more suitable then "console")
+- "AbstractFrontendLifecycle" really solved some nasty design issues when it comes to application lifecyle control. Time that also "CoreApplication"
+  is using this interface so that frontends can control the applications in a proper way (e.g. deactivating input control as soon as the application gets
+  paused because it e.g. lost the focus). For this, renamed "AbstractFrontendLifecycle" into "AbstractLifecycle".
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
 

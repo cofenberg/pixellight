@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractFrontendLifecycle.cpp                  *
+ *  File: AbstractLifecycle.cpp                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Frontend/AbstractFrontendLifecycle.h"
+#include "PLCore/Application/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]
@@ -39,7 +39,7 @@ namespace PLCore {
 *  @brief
 *    Default constructor
 */
-AbstractFrontendLifecycle::AbstractFrontendLifecycle()
+AbstractLifecycle::AbstractLifecycle()
 {
 }
 
@@ -47,7 +47,7 @@ AbstractFrontendLifecycle::AbstractFrontendLifecycle()
 *  @brief
 *    Destructor
 */
-AbstractFrontendLifecycle::~AbstractFrontendLifecycle()
+AbstractLifecycle::~AbstractLifecycle()
 {
 }
 

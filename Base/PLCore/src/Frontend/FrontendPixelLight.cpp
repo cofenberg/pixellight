@@ -83,7 +83,7 @@ void FrontendPixelLight::OnSize()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontendLifecycle functions ]
+//[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
 void FrontendPixelLight::OnCreate()
 {

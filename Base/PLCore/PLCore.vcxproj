@@ -230,6 +230,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\AbstractLifecycle.cpp" />
     <ClCompile Include="src\Base\ClassDummy.cpp" />
     <ClCompile Include="src\Base\ClassImpl.cpp" />
     <ClCompile Include="src\Base\ClassReal.cpp" />
@@ -273,7 +274,6 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\File\SearchFilterWildcard.cpp" />
     <ClCompile Include="src\File\Url.cpp" />
     <ClCompile Include="src\File\ZipHandle.cpp" />
-    <ClCompile Include="src\Frontend\AbstractFrontendLifecycle.cpp" />
     <ClCompile Include="src\Frontend\Frontend.cpp" />
     <ClCompile Include="src\Frontend\FrontendApplication.cpp" />
     <ClCompile Include="src\Frontend\FrontendImpl.cpp" />
@@ -429,6 +429,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Xml\XmlUnknown.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLCore\Application\AbstractLifecycle.h" />
     <ClInclude Include="include\PLCore\Base\ClassDummy.h" />
     <ClInclude Include="include\PLCore\Base\ClassImpl.h" />
     <ClInclude Include="include\PLCore\Base\ClassReal.h" />
@@ -521,7 +522,6 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\File\StdIo.h" />
     <ClInclude Include="include\PLCore\File\Url.h" />
     <ClInclude Include="include\PLCore\File\ZipHandle.h" />
-    <ClInclude Include="include\PLCore\Frontend\AbstractFrontendLifecycle.h" />
     <ClInclude Include="include\PLCore\Frontend\Frontend.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendApplication.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h" />

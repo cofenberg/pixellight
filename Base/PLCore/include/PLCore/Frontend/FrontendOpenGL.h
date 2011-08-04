@@ -93,7 +93,7 @@ class FrontendOpenGL : public Frontend {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual AbstractFrontendLifecycle functions ]
+	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:
 		PLCORE_API virtual void OnCreate() override;
