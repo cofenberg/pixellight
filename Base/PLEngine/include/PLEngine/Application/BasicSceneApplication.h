@@ -297,7 +297,7 @@ class BasicSceneApplication : public SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual RenderApplication functions         ]
+	//[ Protected virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

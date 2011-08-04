@@ -171,7 +171,7 @@ class ScriptApplication : public BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual RenderApplication functions         ]
+	//[ Protected virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

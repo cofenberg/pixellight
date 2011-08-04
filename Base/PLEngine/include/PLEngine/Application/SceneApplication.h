@@ -28,7 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Application/RenderApplication.h"
+#include <PLRenderer/Application/RenderApplication.h>
+#include "PLEngine/PLEngine.h"
 
 
 //[-------------------------------------------------------]
@@ -62,13 +63,13 @@ namespace PLEngine {
 *  @note
 *    - The 'OnCreatePainter()'-implementation creates a 'SPScene' surface painter
 */
-class SceneApplication : public RenderApplication {
+class SceneApplication : public PLRenderer::RenderApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SceneApplication, "PLEngine", PLEngine::RenderApplication, "Scene application class")
+	pl_class(PL_RTTI_EXPORT, SceneApplication, "PLEngine", PLRenderer::RenderApplication, "Scene application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -187,7 +188,7 @@ class SceneApplication : public RenderApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that RenderApplication::Init() does
+		*    - Everything that PLRenderer::RenderApplication::Init() does
 		*    - Create scene context
 		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
@@ -201,13 +202,13 @@ class SceneApplication : public RenderApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Destroy scene context
-		*    - Everything that RenderApplication::DeInit() does
+		*    - Everything that PLRenderer::RenderApplication::DeInit() does
 		*/
 		PL_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual RenderApplication functions         ]
+	//[ Protected virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -221,7 +222,7 @@ class SceneApplication : public RenderApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Update the scene context
-		*    - Everything that RenderApplication::OnUpdate() does
+		*    - Everything that PLRenderer::RenderApplication::OnUpdate() does
 		*/
 		PL_API virtual bool OnUpdate() override;
 

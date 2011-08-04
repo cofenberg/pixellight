@@ -69,7 +69,7 @@ int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass,
 		}
 	} else {
 		// [TODO] Fallback as test
-		pClass = ClassManager::GetInstance()->GetClass("PLEngine::RenderApplication");
+		pClass = ClassManager::GetInstance()->GetClass("PLRenderer::RenderApplication");
 		if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
 			// Create the RTTI class instance
 			Object *pObject = pClass->Create();

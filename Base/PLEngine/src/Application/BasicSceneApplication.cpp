@@ -377,7 +377,7 @@ void BasicSceneApplication::DeInit()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual RenderApplication functions         ]
+//[ Protected virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief

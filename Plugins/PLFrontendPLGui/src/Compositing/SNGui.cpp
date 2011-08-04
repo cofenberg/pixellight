@@ -26,7 +26,7 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SceneContext.h>
-#include <PLEngine/Application/RenderApplication.h>
+#include <PLEngine/Application/BasicSceneApplication.h>
 #include "PLFrontendPLGui/Compositing/GuiPL.h"
 #include "PLFrontendPLGui/Compositing/SNGui.h"
 
@@ -161,7 +161,10 @@ void SNGui::InitFunction()
 		GuiPL *pGuiPL = static_cast<GuiPL*>(m_pGui->GetImpl());
 		if (pGuiPL) {
 			pGuiPL->m_pRenderer = &GetSceneContext()->GetRendererContext().GetRenderer();
-			pGuiPL->SetInputController(static_cast<PLEngine::RenderApplication*>(ConsoleApplication::GetApplication())->GetInputController());
+			ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
+			if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::BasicSceneApplication")) {
+				pGuiPL->SetInputController(static_cast<PLEngine::BasicSceneApplication*>(pConsoleApplication)->GetInputController());
+			}
 		}
 	}
 

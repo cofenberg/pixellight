@@ -138,7 +138,7 @@ void Application::OnCreateMainWindow()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::RenderApplication functions ]
+//[ Private virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreatePainter()
 {

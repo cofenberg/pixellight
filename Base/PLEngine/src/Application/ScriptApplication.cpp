@@ -165,7 +165,7 @@ void ScriptApplication::OnDeInit()
 
 
 //[-------------------------------------------------------]
-//[ Proteced virtual RenderApplication functions          ]
+//[ Proteced virtual PLRenderer::RenderApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief

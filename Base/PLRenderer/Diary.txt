@@ -1,3 +1,10 @@
+>> 04.08.2011
+[CO]
+- Moved "RenderApplication" from "PLEngine" into "PLRenderer". It's now finally possible to use RenderApplication for applications just using PLRenderer... until now
+  one had to also include a bunch of other high level components like PLMesh, PLScene, PLEngine...
+
+
+
 >> 24.05.2011
 [CO]
 PLRendererOpenGLEs:

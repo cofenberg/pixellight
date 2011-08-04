@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLEngine/Application/RenderApplication.h>
+#include <PLRenderer/Application/RenderApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -46,13 +46,13 @@ namespace PLInput {
 *  @brief
 *    Application class
 */
-class Application : public PLEngine::RenderApplication {
+class Application : public PLRenderer::RenderApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLEngine::RenderApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLRenderer::RenderApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
@@ -99,7 +99,7 @@ class Application : public PLEngine::RenderApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::RenderApplication functions ]
+	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreatePainter() override;

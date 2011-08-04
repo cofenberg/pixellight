@@ -26,6 +26,9 @@
     <Filter Include="Renderer\Backend">
       <UniqueIdentifier>{2ed9562d-c592-4fe5-95a6-52c863b91051}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{5fe50286-9b2f-4b43-8df9-01173e3dc9df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLRenderer.cpp">
@@ -306,6 +309,9 @@
     </ClCompile>
     <ClCompile Include="src\Renderer\UniformBuffer.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\RenderApplication.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -602,6 +608,9 @@
     </ClInclude>
     <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRenderer\Application\RenderApplication.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

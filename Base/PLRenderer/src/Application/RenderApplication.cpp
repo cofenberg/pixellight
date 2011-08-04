@@ -25,22 +25,22 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Config/Config.h>	// [TODO] No "Config" usage in here
 #include <PLCore/System/System.h>
 #include <PLCore/Frontend/Frontend.h>
-#include <PLRenderer/RendererContext.h>
-#include <PLRenderer/Renderer/Surface.h>
-#include <PLRenderer/Renderer/FontManager.h>
-#include <PLRenderer/Renderer/SurfacePainter.h>
-#include <PLRenderer/Texture/TextureManager.h>
-#include "PLEngine/Application/RenderApplication.h"
+#include "PLRenderer/RendererContext.h"
+#include "PLRenderer/Renderer/Surface.h"
+#include "PLRenderer/Renderer/FontManager.h"
+#include "PLRenderer/Renderer/SurfacePainter.h"
+#include "PLRenderer/Texture/TextureManager.h"
+#include "PLRenderer/Application/RenderApplication.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLRenderer;
-namespace PLEngine {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
@@ -118,7 +118,7 @@ void RenderApplication::SetPainter(SurfacePainter *pPainter)
 */
 bool RenderApplication::IsFullscreen() const
 {
-	// [TODO]
+	// [TODO] Move this method into PLFrontend
 	/*
 	// Get the main widget
 	Widget *pWidget = GetMainWindow();
@@ -137,7 +137,7 @@ bool RenderApplication::IsFullscreen() const
 */
 void RenderApplication::SetFullscreen(bool bFullscreen)
 {
-	// [TODO]
+	// [TODO] Move this method into PLFrontend
 	/*
 	// Get the main widget
 	Widget *pWidget = GetMainWindow();
@@ -202,6 +202,8 @@ bool RenderApplication::Init()
 			// [TODO] Shouldn't this be done rather inside FontManager itself? What happens if we do not set a default
 			//        font here, do we then have no font at all? Or ist the a default-default-font in FontManager?
 
+			// [TODO] No "Config" usage in here
+
 			// Create default font
 			PLRenderer::FontManager &cFontManager = m_pRendererContext->GetRenderer().GetFontManager();
 			const String sDefaultFontTexture     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTexture");
@@ -257,6 +259,8 @@ void RenderApplication::OnDraw()
 */
 void RenderApplication::OnCreateRendererContext()
 {
+	// [TODO] No "Config" usage in here
+
 	// Get the class name of the renderer to use
 	const String sRenderer     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "RendererAPI");
 	const uint32 nRendererMode = GetConfig().GetVarInt("PLScene::EngineGraphicConfig", "RendererMode");
@@ -333,4 +337,4 @@ bool RenderApplication::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLRenderer

@@ -33,9 +33,6 @@
     <ClCompile Include="src\Application\BasicSceneApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\RenderApplication.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application\SceneApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
@@ -138,9 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Application\RenderApplication.h">
       <Filter>Application</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Application\SceneApplication.h">

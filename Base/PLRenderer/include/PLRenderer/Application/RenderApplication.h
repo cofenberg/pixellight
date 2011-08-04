@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_RENDER_APPLICATION_H__
-#define __PLENGINE_RENDER_APPLICATION_H__
+#ifndef __PLRENDERER_APPLICATION_H__
+#define __PLRENDERER_APPLICATION_H__
 #pragma once
 
 
@@ -29,23 +29,20 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Frontend/FrontendApplication.h>
-#include <PLRenderer/Renderer/SurfaceWindowHandler.h>
-#include "PLEngine/PLEngine.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRenderer {
-	class SurfacePainter;
-	class RendererContext;
-}
+#include "PLRenderer/Renderer/SurfaceWindowHandler.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLRenderer {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class SurfacePainter;
+class RendererContext;
 
 
 //[-------------------------------------------------------]
@@ -64,8 +61,8 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, RenderApplication, "PLEngine", PLCore::FrontendApplication, "Render application class")
-		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
+	pl_class(PLRENDERER_RTTI_EXPORT, RenderApplication, "PLRenderer", PLCore::FrontendApplication, "Render application class")
+		#ifdef PLRENDERER_EXPORTS	// The following is only required when compiling PLRenderer
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
@@ -89,13 +86,13 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @param[in] sSurfacePainter
 		*    Surface painter class to use
 		*/
-		PL_API RenderApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
+		PLRENDERER_API RenderApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~RenderApplication();
+		PLRENDERER_API virtual ~RenderApplication();
 
 		/**
 		*  @brief
@@ -104,7 +101,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @return
 		*    The renderer context, a null pointer on error
 		*/
-		PL_API PLRenderer::RendererContext *GetRendererContext() const;
+		PLRENDERER_API PLRenderer::RendererContext *GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -113,7 +110,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @return
 		*    Pointer to surface painter of the main window, can be a null pointer
 		*/
-		PL_API PLRenderer::SurfacePainter *GetPainter() const;
+		PLRENDERER_API PLRenderer::SurfacePainter *GetPainter() const;
 
 		/**
 		*  @brief
@@ -122,7 +119,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @param[in] pPainter
 		*    Pointer to surface painter of the main window, can be a null pointer
 		*/
-		PL_API void SetPainter(PLRenderer::SurfacePainter *pPainter);
+		PLRENDERER_API void SetPainter(PLRenderer::SurfacePainter *pPainter);
 
 		/**
 		*  @brief
@@ -131,7 +128,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @return
 		*    'true' if the main window is currently fullscreen, else 'false'
 		*/
-		PL_API bool IsFullscreen() const;
+		PLRENDERER_API bool IsFullscreen() const;
 
 		/**
 		*  @brief
@@ -140,7 +137,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @param[in] bFullscreen
 		*    'true' if the main window is currently fullscreen, else 'false'
 		*/
-		PL_API void SetFullscreen(bool bFullscreen);
+		PLRENDERER_API void SetFullscreen(bool bFullscreen);
 
 		/**
 		*  @brief
@@ -159,7 +156,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    if the application is embedded in another application's main loop (which is the
 		*    case for e.g. browser plugins).
 		*/
-		PL_API bool Update(bool bForceUpdate = false);
+		PLRENDERER_API bool Update(bool bForceUpdate = false);
 
 
 	//[-------------------------------------------------------]
@@ -181,7 +178,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    - Call OnCreatePainter()
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init() override;
+		PLRENDERER_API virtual bool Init() override;
 
 		/**
 		*  @brief
@@ -192,14 +189,14 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    - Destroy renderer context
 		*    - Everything that FrontendApplication::DeInit() does
 		*/
-		PL_API virtual void DeInit() override;
+		PLRENDERER_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::FrontendApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void OnDraw() override;
+		PLRENDERER_API virtual void OnDraw() override;
 
 
 	//[-------------------------------------------------------]
@@ -214,7 +211,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*    - Part of the application framework initialization function "Init()"
 		*    - Currently a 'RendererOpenGL' renderer context is created within the default implementation
 		*/
-		PL_API virtual void OnCreateRendererContext();
+		PLRENDERER_API virtual void OnCreateRendererContext();
 
 		/**
 		*  @brief
@@ -223,7 +220,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*  @note
 		*    - Part of the application framework initialization function "Init()"
 		*/
-		PL_API virtual void OnCreatePainter();
+		PLRENDERER_API virtual void OnCreatePainter();
 
 		/**
 		*  @brief
@@ -244,7 +241,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 		*      forget to call this function when overwriting it!
 		*    - Don't call this function directly, use 'Update()' instead
 		*/
-		PL_API virtual bool OnUpdate();
+		PLRENDERER_API virtual bool OnUpdate();
 
 
 	//[-------------------------------------------------------]
@@ -261,7 +258,7 @@ class RenderApplication : public PLCore::FrontendApplication, public PLRenderer:
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLRenderer
 
 
-#endif // __PLENGINE_RENDER_APPLICATION_H__
+#endif // __PLRENDERER_APPLICATION_H__
