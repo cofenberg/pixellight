@@ -141,7 +141,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64D.lib;PLMathD64.lib;PLGraphicsD264.lib;PLDatabaseD64.lib;PLTestD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64D.lib;PLMathD64.lib;PLGraphicsD64.lib;PLDatabaseD64.lib;PLTestD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLTestBaseD64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../PLTest/build/debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -227,7 +227,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics642.lib;PLDatabase64.lib;PLTest64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLDatabase64.lib;PLTest64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLTestBase64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Bin/Lib/;../PLTest/build/release/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
