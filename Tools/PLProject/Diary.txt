@@ -1,3 +1,9 @@
+>> 04.08.2011
+[CO]
+- Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case
+
+
+
 >> 12.07.2011
 [CO]
 - Moved the PLProject executable from the runtime directory into the tools directory... it's a tool used as post-compile step, but nothing

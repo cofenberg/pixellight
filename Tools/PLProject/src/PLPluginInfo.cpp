@@ -214,10 +214,16 @@ void PLPluginInfo::ParseFile(const String &sFilename)
 	String sContent = GetContentFromFile(sFilename);
 	if (sContent.GetLength()) {
 		RegEx cPLClassPLClassEndBlock("^\\s*(pl_class\\s*.*\\s*pl_class_end)", RegEx::Multiline | RegEx::DotAll);
-		if (cPLClassPLClassEndBlock.Match(sContent)) {
+
+		// Although not recommended, it's possible that there are multiple RTTI classes defined within a single file
+		while (cPLClassPLClassEndBlock.Match(sContent)) {
+			// Add RTTI class
 			PLPluginClassInfo *pInfo = new PLPluginClassInfo();
 			pInfo->ParsePLClassBlock(cPLClassPLClassEndBlock.GetResult(0));
 			m_lstClasses.Add(pInfo);
+
+			// Update the current position
+			sContent = sContent.GetSubstring(cPLClassPLClassEndBlock.GetPosition());
 		}
 	}
 }

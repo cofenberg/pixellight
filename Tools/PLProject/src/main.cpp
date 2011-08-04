@@ -101,11 +101,16 @@ bool g_bVerbose = false;
 void Message(int nType, const String &sMessage)
 {
 	// Print beginning of line
-	if (nType == STATUS && !g_bVerbose) return;
-	if (nType == DEBUG && !g_bDebug) return;
-	if (nType == STATUS) System::GetInstance()->GetConsole().Print("-- ");
-	if (nType == DEBUG)  System::GetInstance()->GetConsole().Print("** ");
-	if (nType == ERR)    System::GetInstance()->GetConsole().Print("!! ");
+	if (nType == STATUS && !g_bVerbose)
+		return;
+	if (nType == DEBUG && !g_bDebug)
+		return;
+	if (nType == STATUS)
+		System::GetInstance()->GetConsole().Print("-- ");
+	if (nType == DEBUG)
+		System::GetInstance()->GetConsole().Print("** ");
+	if (nType == ERR)
+		System::GetInstance()->GetConsole().Print("!! ");
 
 	// Print message
 	System::GetInstance()->GetConsole().Print(sMessage);
@@ -162,9 +167,8 @@ void Find(Array<String> &lstNames, const String &sPath, const String &sPattern, 
 		while (cSearch2.HasNextFile()) {
 			String sFilename =  cSearch2.GetNextFile();
 			String sFile = sPath + '/' + sFilename;
-			if (FileObject(sFile).IsDirectory() && bRecursive && sFilename != "." && sFilename != "..") {
+			if (FileObject(sFile).IsDirectory() && bRecursive && sFilename != "." && sFilename != "..")
 				Find(lstNames, sFile, sPattern, bRecursive);
-			}
 		}
 	}
 }
@@ -466,6 +470,7 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 		// Get path to project
 		sPath = lstArguments[0];
 
+		// The first argument is assumed to be the executable filename
 		if (!IsOption(sPath)) {
 			// Parse other argument
 			for (uint32 i=1; i<lstArguments.GetNumOfElements() && !bError; i++) {
@@ -480,12 +485,14 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 					} else if (sArgument == "--suffix") {
 						// Get project suffix
 						sSuffix = '-' + lstArguments[i+1];
-						if (i+1 >= lstArguments.GetNumOfElements() || IsOption(sSuffix)) bError = true;
+						if (i+1 >= lstArguments.GetNumOfElements() || IsOption(sSuffix))
+							bError = true;
 						i++;
 					} else if (sArgument == "--output-path") {
 						// Get output path
 						sOutputPath = lstArguments[i+1];
-						if (i+1 >= lstArguments.GetNumOfElements() || IsOption(sOutputPath)) bError = true;
+						if (i+1 >= lstArguments.GetNumOfElements() || IsOption(sOutputPath))
+							bError = true;
 						i++;
 
 						// If there's a slash or backslash at the end of the output path, remove it
@@ -496,33 +503,16 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 						// Write plugin file
 						bWritePlugin = true;
 					}
-				} else bError = true;
+				} else {
+					bError = true;
+				}
 			}
-		} else bError = true;
-	} else bError = true;
-
-	// [DEBUG] Static options
-	/*
-		// Ignore command line
-		bError = false;
-
-		// Path
-		sPath = "C:\\workspace\\projects\\PixelLight\\PLEngine\\PLSoundOpenAL";
-		// sPath = "C:\\workspace\\projects\\PixelLight\\PLBase\\PLMath";
-		// sPath = "C:\\workspace\\projects\\PixelLight\\Lab\\BaseTest";
-
-		// Suffix
-		sSuffix = "-dev";
-
-		// Output path
-		sOutputPath = "C:\\workspace\\projects\\PixelLight\\Bin\\Runtime\\Plugins\\PLSound";
-
-		// Write plugin
-		bWritePlugin = true;
-
-		// Debug
-		// g_bDebug = true;
-	*/
+		} else {
+			bError = true;
+		}
+	} else {
+		bError = true;
+	}
 
 	// Were all command line arguments valid?
 	if (!bError) {
@@ -540,7 +530,8 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 			// Write plugin file
 			if (bWritePlugin && sOutputPath.GetLength() > 0) {
 				cProject.sOutputPath = sOutputPath;
-				if (!CreatePluginFile(cProject)) return 1;
+				if (!CreatePluginFile(cProject))
+					return 1;
 			}
 		} else {
 			// If we just start PLProject with a path to a directory -> perform publish

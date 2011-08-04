@@ -20,6 +20,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: Renamed "PLPluginMozilla" into "PLFrontendMozilla"
 - Change: Renamed "PLXmlText" into "PLGuiXmlText" to make clear that this project is PLGui related and not for instance a generic XML parser library
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
+- Bugfix: PLProject: Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case
 
 
 Changes in PixelLight 0.9.7-R1 (released on June 23, 2011)
