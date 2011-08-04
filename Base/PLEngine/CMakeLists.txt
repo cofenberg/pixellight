@@ -14,7 +14,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLEngine)
 ## Source files
 ##################################################
 add_sources(
-	src/Application/BasicSceneApplication.cpp
+	src/Application/EngineApplication.cpp
 	src/Application/ScriptApplication.cpp
 	src/Config/RendererConfigGroup.cpp
 	src/Picking/Picking.cpp

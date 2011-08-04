@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: BasicSceneApplication.cpp                      *
+ *  File: EngineApplication.cpp                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -38,7 +38,7 @@
 #include <PLScene/Scene/SceneNodes/SNKeyValue.h>
 #include "PLEngine/Compositing/Console/ConsoleCommand.h"
 #include "PLEngine/Compositing/Console/SNConsoleBase.h"
-#include "PLEngine/Application/BasicSceneApplication.h"
+#include "PLEngine/Application/EngineApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -54,13 +54,13 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(BasicSceneApplication)
+pl_implement_class(EngineApplication)
 
 
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
+const String EngineApplication::DefaultSceneRenderer = "Forward.sr";
 
 
 //[-------------------------------------------------------]
@@ -70,10 +70,10 @@ const String BasicSceneApplication::DefaultSceneRenderer = "Forward.sr";
 *  @brief
 *    Constructor
 */
-BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
-	EventHandlerSceneNode			(&BasicSceneApplication::OnSceneNode,            this),
-	EventHandlerLoadProgress		(&BasicSceneApplication::OnLoadProgress,         this),
-	EventHandlerInputControllerFound(&BasicSceneApplication::OnInputControllerFound, this),
+EngineApplication::EngineApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
+	EventHandlerSceneNode			(&EngineApplication::OnSceneNode,            this),
+	EventHandlerLoadProgress		(&EngineApplication::OnLoadProgress,         this),
+	EventHandlerInputControllerFound(&EngineApplication::OnInputControllerFound, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false),
@@ -91,7 +91,7 @@ BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : Sce
 *  @brief
 *    Destructor
 */
-BasicSceneApplication::~BasicSceneApplication()
+EngineApplication::~EngineApplication()
 {
 }
 
@@ -99,7 +99,7 @@ BasicSceneApplication::~BasicSceneApplication()
 *  @brief
 *    Returns the scene container
 */
-SceneContainer *BasicSceneApplication::GetScene() const
+SceneContainer *EngineApplication::GetScene() const
 {
 	// This cast is safe because we 'know' it can ONLY be a scene container!
 	return static_cast<SceneContainer*>(m_cSceneContainerHandler.GetElement());
@@ -109,7 +109,7 @@ SceneContainer *BasicSceneApplication::GetScene() const
 *  @brief
 *    Sets the scene container
 */
-void BasicSceneApplication::SetScene(SceneContainer *pContainer)
+void EngineApplication::SetScene(SceneContainer *pContainer)
 {
 	m_cSceneContainerHandler.SetElement(pContainer);
 }
@@ -118,7 +118,7 @@ void BasicSceneApplication::SetScene(SceneContainer *pContainer)
 *  @brief
 *    Clears the scene, after calling this method the scene is empty
 */
-void BasicSceneApplication::ClearScene()
+void EngineApplication::ClearScene()
 {
 	// Get the scene container holding our scene
 	SceneContainer *pContainer = GetScene();
@@ -140,7 +140,7 @@ void BasicSceneApplication::ClearScene()
 *  @brief
 *    Get scene camera
 */
-SNCamera *BasicSceneApplication::GetCamera() const
+SNCamera *EngineApplication::GetCamera() const
 {
 	// This cast is safe because we 'know' it can ONLY be a camera!
 	return reinterpret_cast<SNCamera*>(m_cCameraHandler.GetElement());
@@ -150,7 +150,7 @@ SNCamera *BasicSceneApplication::GetCamera() const
 *  @brief
 *    Get virtual input controller
 */
-VirtualController *BasicSceneApplication::GetInputController() const
+VirtualController *EngineApplication::GetInputController() const
 {
 	// Return input controller
 	return m_pInputController;
@@ -160,7 +160,7 @@ VirtualController *BasicSceneApplication::GetInputController() const
 *  @brief
 *    Set virtual input controller
 */
-void BasicSceneApplication::SetInputController(VirtualController *pInputController)
+void EngineApplication::SetInputController(VirtualController *pInputController)
 {
 	// Set input controller
 	m_pInputController = pInputController;
@@ -170,7 +170,7 @@ void BasicSceneApplication::SetInputController(VirtualController *pInputControll
 *  @brief
 *    Get scene renderer tool
 */
-SceneRendererTool &BasicSceneApplication::GetSceneRendererTool()
+SceneRendererTool &EngineApplication::GetSceneRendererTool()
 {
 	// Return scene renderer tool
 	return m_cSceneRendererTool;
@@ -180,7 +180,7 @@ SceneRendererTool &BasicSceneApplication::GetSceneRendererTool()
 *  @brief
 *    Get scene renderer tool
 */
-const SceneRendererTool &BasicSceneApplication::GetSceneRendererTool() const
+const SceneRendererTool &EngineApplication::GetSceneRendererTool() const
 {
 	// Return scene renderer tool
 	return m_cSceneRendererTool;
@@ -190,7 +190,7 @@ const SceneRendererTool &BasicSceneApplication::GetSceneRendererTool() const
 *  @brief
 *    Get screenshot tool
 */
-Screenshot &BasicSceneApplication::GetScreenshotTool()
+Screenshot &EngineApplication::GetScreenshotTool()
 {
 	// Return screenshot tool
 	return m_cScreenshot;
@@ -200,7 +200,7 @@ Screenshot &BasicSceneApplication::GetScreenshotTool()
 *  @brief
 *    Returns whether or not edit mode is enabled
 */
-bool BasicSceneApplication::IsEditModeEnabled() const
+bool EngineApplication::IsEditModeEnabled() const
 {
 	return m_bEditModeEnabled;
 }
@@ -209,7 +209,7 @@ bool BasicSceneApplication::IsEditModeEnabled() const
 *  @brief
 *    Sets whether or not edit mode is enabled
 */
-void BasicSceneApplication::SetEditModeEnabled(bool bEnabled)
+void EngineApplication::SetEditModeEnabled(bool bEnabled)
 {
 	// State change?
 	if (m_bEditModeEnabled != bEnabled) {
@@ -237,20 +237,20 @@ void BasicSceneApplication::SetEditModeEnabled(bool bEnabled)
 *  @brief
 *    Quit the engine
 */
-void BasicSceneApplication::ConsoleCommandQuit(ConsoleCommand &cCommand)
+void EngineApplication::ConsoleCommandQuit(ConsoleCommand &cCommand)
 {
 	Exit(0);
 }
 
 
 //[-------------------------------------------------------]
-//[ Public virtual BasicSceneApplication functions        ]
+//[ Public virtual EngineApplication functions            ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Sets the scene camera
 */
-void BasicSceneApplication::SetCamera(SNCamera *pCamera)
+void EngineApplication::SetCamera(SNCamera *pCamera)
 {
 	// Deactivate the current camera
 	if (m_cCameraHandler.GetElement())
@@ -272,7 +272,7 @@ void BasicSceneApplication::SetCamera(SNCamera *pCamera)
 	SignalCameraSet();
 }
 
-bool BasicSceneApplication::LoadScene(const String &sFilename)
+bool EngineApplication::LoadScene(const String &sFilename)
 {
 	// Get the scene container holding our scene
 	SceneContainer *pContainer = GetScene();
@@ -373,7 +373,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 *  @brief
 *    Initialization function that is called prior to OnInit()
 */
-bool BasicSceneApplication::Init()
+bool EngineApplication::Init()
 {
 	// Call base implementation
 	if (SceneApplication::Init()) {
@@ -413,7 +413,7 @@ bool BasicSceneApplication::Init()
 *  @brief
 *    De-initialization function that is called after OnDeInit()
 */
-void BasicSceneApplication::DeInit()
+void EngineApplication::DeInit()
 {
 	// Destroy virtual input controller
 	if (m_pInputController) {
@@ -433,7 +433,7 @@ void BasicSceneApplication::DeInit()
 *  @brief
 *    Function that is called once per update loop
 */
-bool BasicSceneApplication::OnUpdate()
+bool EngineApplication::OnUpdate()
 {
 	// Update input manager
 	InputManager::GetInstance()->Update();
@@ -446,7 +446,7 @@ bool BasicSceneApplication::OnUpdate()
 //[-------------------------------------------------------]
 //[ Protected virtual PLScene::SceneApplication functions ]
 //[-------------------------------------------------------]
-void BasicSceneApplication::OnCreateRootScene()
+void EngineApplication::OnCreateRootScene()
 {
 	// Get the scene context
 	SceneContext *pSceneContext = GetSceneContext();
@@ -485,10 +485,10 @@ void BasicSceneApplication::OnCreateRootScene()
 				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
 
 				// Register default commands
-				pConsole->RegisterCommand(0,	"quit",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"exit",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"bye",		"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"logout",	"",	"",	Functor<void, ConsoleCommand &>(&BasicSceneApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"quit",		"",	"",	Functor<void, ConsoleCommand &>(&EngineApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"exit",		"",	"",	Functor<void, ConsoleCommand &>(&EngineApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"bye",		"",	"",	Functor<void, ConsoleCommand &>(&EngineApplication::ConsoleCommandQuit, this));
+				pConsole->RegisterCommand(0,	"logout",	"",	"",	Functor<void, ConsoleCommand &>(&EngineApplication::ConsoleCommandQuit, this));
 
 				// Set active state
 				pConsole->SetActive(m_bEditModeEnabled);
@@ -502,13 +502,13 @@ void BasicSceneApplication::OnCreateRootScene()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual BasicSceneApplication functions     ]
+//[ Protected virtual EngineApplication functions         ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Function that is called to create the application's scene container
 */
-void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
+void EngineApplication::OnCreateScene(SceneContainer &cContainer)
 {
 	// [TODO] Load 'm_sSceneFilename' if provided
 
@@ -550,7 +550,7 @@ void BasicSceneApplication::OnCreateScene(SceneContainer &cContainer)
 *  @brief
 *    Function that is called to initialize the application's virtual input controller
 */
-void BasicSceneApplication::OnCreateInputController()
+void EngineApplication::OnCreateInputController()
 {
 	// Create virtual standard controller
 	VirtualStandardController *pController = new VirtualStandardController();
@@ -566,7 +566,7 @@ void BasicSceneApplication::OnCreateInputController()
 *  @brief
 *    Function that is called when an input controller has been found
 */
-void BasicSceneApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
+void EngineApplication::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
 {
 	// Is there an application input controller?
 	if (m_pInputController) {
@@ -583,7 +583,7 @@ void BasicSceneApplication::OnInputControllerFound(Controller *pInputController,
 *  @brief
 *    Called when a scene node was found
 */
-void BasicSceneApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
+void EngineApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// Is this a camera?
 	if (cSceneNode.IsCamera()) {
@@ -633,7 +633,7 @@ void BasicSceneApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNod
 *  @brief
 *    Called on load progress
 */
-void BasicSceneApplication::OnLoadProgress(float fLoadProgress)
+void EngineApplication::OnLoadProgress(float fLoadProgress)
 {
 	// Call the 'update'-function so we can see the progress within the load screen
 	if (m_bHasLoadScreen)

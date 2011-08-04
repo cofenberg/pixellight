@@ -81,12 +81,12 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLEngine::BasicSceneApplication functions ]
+//[ Public virtual PLEngine::EngineApplication functions  ]
 //[-------------------------------------------------------]
 void Application::SetCamera(SNCamera *pCamera)
 {
 	// Call base implementation
-	BasicSceneApplication::SetCamera(pCamera);
+	EngineApplication::SetCamera(pCamera);
 
 	// Do also set the camera to use within the picking component
 	if (m_pMyPicking)
@@ -115,7 +115,7 @@ void Application::OnControl(Control &cControl)
 bool Application::OnUpdate()
 {
 	// Call base implementation
-	if (BasicSceneApplication::OnUpdate()) {
+	if (EngineApplication::OnUpdate()) {
 		// Perform the picking
 		if (m_pMyPicking)
 			m_pMyPicking->PerformPicking();
@@ -130,7 +130,7 @@ bool Application::OnUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -175,7 +175,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

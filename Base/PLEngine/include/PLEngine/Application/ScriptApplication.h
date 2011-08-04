@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCRIPT_APPLICATION_H__
-#define __PLENGINE_SCRIPT_APPLICATION_H__
+#ifndef __PLENGINE_SCRIPTAPPLICATION_H__
+#define __PLENGINE_SCRIPTAPPLICATION_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Application/BasicSceneApplication.h"
+#include "PLEngine/Application/EngineApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -59,13 +59,13 @@ namespace PLEngine {
 *    - If a script filename was given to the constructor, the script is started within the "OnInit()"-method
 *    - Adds the global variable "this" to the script so that it's able to access "this" RTTI class instance
 */
-class ScriptApplication : public BasicSceneApplication {
+class ScriptApplication : public EngineApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, ScriptApplication, "PLEngine", PLEngine::BasicSceneApplication, "Script application class")
+	pl_class(PL_RTTI_EXPORT, ScriptApplication, "PLEngine", PLEngine::EngineApplication, "Script application class")
 		// Attributes
 		pl_attribute(OnInitFunction,	PLCore::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should initialize itself",		"")
 		pl_attribute(OnUpdateFunction,	PLCore::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should update itself",			"")
@@ -150,7 +150,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that BasicSceneApplication::OnInit() does
+		*    - Everything that EngineApplication::OnInit() does
 		*    - Load the script given to the constructor
 		*    - Call optional <OnInitFunction> script function
 		*    - Return and go on with Main()
@@ -165,7 +165,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*    The default implementation does the following tasks:
 		*    - Call optional <OnDeInitFunction> script function
 		*    - Destroy the script
-		*    - Everything that BasicSceneApplication::OnDeInit() does
+		*    - Everything that EngineApplication::OnDeInit() does
 		*/
 		PL_API virtual void OnDeInit() override;
 
@@ -185,7 +185,7 @@ class ScriptApplication : public BasicSceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Call optional <OnUpdateFunction> script function
-		*    - Everything that BasicSceneApplication::OnUpdate() does
+		*    - Everything that EngineApplication::OnUpdate() does
 		*/
 		PL_API virtual bool OnUpdate() override;
 
@@ -237,4 +237,4 @@ class ScriptApplication : public BasicSceneApplication {
 } // PLEngine
 
 
-#endif // __PLENGINE_SCRIPT_APPLICATION_H__
+#endif // __PLENGINE_SCRIPTAPPLICATION_H__

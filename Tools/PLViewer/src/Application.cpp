@@ -270,7 +270,7 @@ void Application::OnCreateMainWindow()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateInputController()
 {
@@ -285,7 +285,7 @@ void Application::OnCreateInputController()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLEngine::BasicSceneApplication functions ]
+//[ Public virtual PLEngine::EngineApplication functions  ]
 //[-------------------------------------------------------]
 bool Application::LoadScene(String sFilename)
 {

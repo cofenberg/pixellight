@@ -41,7 +41,7 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class BasicSceneApplication;
+class EngineApplication;
 
 
 //[-------------------------------------------------------]
@@ -91,7 +91,7 @@ class Camcorder : public PLCore::Object {
 		*  @param[in] cApplication
 		*    Owner application
 		*/
-		PL_API Camcorder(BasicSceneApplication &cApplication);
+		PL_API Camcorder(EngineApplication &cApplication);
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class Camcorder : public PLCore::Object {
 		*  @return
 		*    The owner application
 		*/
-		PL_API BasicSceneApplication &GetApplication() const;
+		PL_API EngineApplication &GetApplication() const;
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class Camcorder : public PLCore::Object {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		BasicSceneApplication	  *m_pApplication;					/**< Owner application, always valid! */
+		EngineApplication	 	  *m_pApplication;					/**< Owner application, always valid! */
 		bool					   m_bRecording;					/**< Is recording currently enabled? */
 		bool					   m_bPlaying;						/**< Is playback currently enabled? */
 		bool					   m_bPlaybackFinished;				/**< Playback finished? */

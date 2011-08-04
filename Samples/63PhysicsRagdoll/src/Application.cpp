@@ -62,7 +62,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : BasicSceneApplication(),
+Application::Application() : EngineApplication(),
 	SlotOnControl(this),
 	m_pLine(nullptr),
 	m_pRagdoll(nullptr),
@@ -239,7 +239,7 @@ void Application::OnControl(Control &cControl)
 void Application::OnInit()
 {
 	// Call base implementation
-	BasicSceneApplication::OnInit();
+	EngineApplication::OnInit();
 
 	// Valid default physics API given?
 	String sClassName = m_cCommandLine.GetValue("PhysicsAPI");
@@ -272,7 +272,7 @@ bool Application::OnUpdate()
 	// Its quite to intricate, inflexible and not performant.
 
 	// Call base implementation
-	if (BasicSceneApplication::OnUpdate()) {
+	if (EngineApplication::OnUpdate()) {
 		// Check your pointer to the ragdoll
 		if (m_pRagdoll && (m_bApplyForce || m_bTorqueForce)) {
 			Body *pBody = GetPhysicsBody();
@@ -309,7 +309,7 @@ bool Application::OnUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -407,7 +407,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

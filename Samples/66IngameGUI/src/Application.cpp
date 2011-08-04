@@ -114,12 +114,12 @@ void Application::OnDeInit()
 	}
 
 	// Call base implementation
-	BasicSceneApplication::OnDeInit();
+	EngineApplication::OnDeInit();
 }
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -169,7 +169,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

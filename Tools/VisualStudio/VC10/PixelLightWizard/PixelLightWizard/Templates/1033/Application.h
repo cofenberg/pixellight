@@ -24,7 +24,7 @@
 #include <PLScene/Application/SceneApplication.h>
 [!endif]
 [!if BASIC_SCENE_APPLICATION]
-#include <PLEngine/Application/BasicSceneApplication.h>
+#include <PLEngine/Application/EngineApplication.h>
 [!endif]
 [!if SAMPLE_SCENE_APPLICATION]
 #include <PLEngine/Application/SampleSceneApplication.h>
@@ -51,7 +51,7 @@ class Application : public PLRenderer::RenderApplication {
 class Application : public PLScene::SceneApplication {
 [!endif]
 [!if BASIC_SCENE_APPLICATION]
-class Application : public PLEngine::BasicSceneApplication {
+class Application : public PLEngine::EngineApplication {
 [!endif]
 [!if SAMPLE_SCENE_APPLICATION]
 class Application : public PLEngine::SampleSceneApplication {

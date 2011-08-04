@@ -100,7 +100,7 @@ void Application::OnInit()
 	// At this point, the core components of the application are ready to be used.
 
 	// Call base implementation
-	BasicSceneApplication::OnInit();
+	EngineApplication::OnInit();
 
 	// Set the used scene renderer (optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as second parameter)
 	if (GetSceneRendererTool().SetSceneRenderer(GetScene(), "Deferred.sr", "FixedFunctions.sr")) {
@@ -128,7 +128,7 @@ bool Application::OnUpdate()
 	// added to your scene node (in this case 'the white light') for this job!
 
 	// Call base implementation
-	if (BasicSceneApplication::OnUpdate()) {
+	if (EngineApplication::OnUpdate()) {
 		// Get the scene container with our 'concrete scene'
 		SceneContainer *pSceneContainer = GetScene();
 		if (pSceneContainer) {
@@ -161,7 +161,7 @@ bool Application::OnUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -198,7 +198,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

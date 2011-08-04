@@ -6,6 +6,8 @@
 - Moved "RenderApplication" from "PLEngine" into "PLRenderer"
 - Moved edit & console stuff from "SceneApplication" into "BasicSceneApplication"
 - Moved "SceneApplication" from "PLEngine" into "PLScene"
+- Now that the renderer application class is within the renderer component, the scene application class within the scene component... "BasicSceneApplication"
+  tells me to name it "EngineApplication" because it's the primary application class within the engine component. :D (the scene application is just an extension)
 
 
 

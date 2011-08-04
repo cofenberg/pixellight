@@ -222,7 +222,7 @@ void Application::OnControl(Control &cControl)
 void Application::OnInit()
 {
 	// Call base implementation
-	BasicSceneApplication::OnInit();
+	EngineApplication::OnInit();
 
 	// Valid default sound API given?
 	String sClassName = m_cCommandLine.GetValue("SoundAPI");
@@ -245,7 +245,7 @@ void Application::OnInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -346,7 +346,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

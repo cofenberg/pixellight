@@ -36,7 +36,7 @@
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLRenderer/Material/MaterialManager.h>
 #include <PLScene/Scene/SceneContext.h>
-#include "PLEngine/Application/BasicSceneApplication.h"
+#include "PLEngine/Application/EngineApplication.h"
 #include "PLEngine/Compositing/Console/SNConsole.h"
 
 
@@ -160,8 +160,8 @@ void SNConsole::OnUpdate()
 		// Check if input is active
 		// [TODO] Don't use devices directly, use a virtual controller instead
 		ConsoleApplication *pConsoleApplication = ConsoleApplication::GetApplication();
-		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::BasicSceneApplication")) {
-			Controller *pController = reinterpret_cast<Controller*>(static_cast<BasicSceneApplication*>(pConsoleApplication)->GetInputController());
+		if (pConsoleApplication && pConsoleApplication->IsInstanceOf("PLEngine::EngineApplication")) {
+			Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pConsoleApplication)->GetInputController());
 			if ((pController && pController->GetActive()) || !pController) {
 				// Get keyboard input device
 				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();

@@ -58,7 +58,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : BasicSceneApplication(),
+Application::Application() : EngineApplication(),
 	SlotOnControl(this)
 {
 	// Set application name and title
@@ -154,7 +154,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -209,13 +209,13 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnInputControllerFound(Controller *pInputController, String sInputSemantic)
 {
 	// Call base implementation
-	BasicSceneApplication::OnInputControllerFound(pInputController, sInputSemantic);
+	EngineApplication::OnInputControllerFound(pInputController, sInputSemantic);
 
 	// Is there an application input controller? If so, connect gun (SNGun)...
 	if (m_pInputController && sInputSemantic == "Gun") {
 		pInputController->Connect("X",		m_pInputController->GetControl("RotY"), -0.05f);
-		// "Left" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
-		// "Right" is connected automatically within "BasicSceneApplication::OnInputControllerFound()" with the virtual standard controller
+		// "Left" is connected automatically within "EngineApplication::OnInputControllerFound()" with the virtual standard controller
+		// "Right" is connected automatically within "EngineApplication::OnInputControllerFound()" with the virtual standard controller
 		pInputController->Connect("Left",	m_pInputController->GetControl("Forward"));
 		pInputController->Connect("Right",	m_pInputController->GetControl("Backward"));
 		pInputController->Connect("Left",	m_pInputController->GetControl("StrafeLeft"));
@@ -231,7 +231,7 @@ void Application::OnInputControllerFound(Controller *pInputController, String sI
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

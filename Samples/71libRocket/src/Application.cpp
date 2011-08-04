@@ -105,7 +105,7 @@ void Application::OnDeInit()
 	}
 
 	// Call base implementation
-	BasicSceneApplication::OnDeInit();
+	EngineApplication::OnDeInit();
 }
 
 void Application::OnInit()
@@ -114,7 +114,7 @@ void Application::OnInit()
 	// At this point, the core components of the application are ready to be used.
 
 	// Call base implementation
-	BasicSceneApplication::OnInit();
+	EngineApplication::OnInit();
 
 	// Get the scene context
 	SceneContext *pSceneContext = GetSceneContext();
@@ -162,7 +162,7 @@ void Application::OnInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -191,7 +191,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

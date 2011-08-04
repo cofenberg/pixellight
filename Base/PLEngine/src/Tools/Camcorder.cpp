@@ -30,7 +30,7 @@
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Scene/SceneNodeModifiers/SNMPositionKeyframeAnimation.h>
 #include <PLScene/Scene/SceneNodeModifiers/SNMRotationKeyframeAnimation.h>
-#include "PLEngine/Application/BasicSceneApplication.h"
+#include "PLEngine/Application/EngineApplication.h"
 #include "PLEngine/Tools/Camcorder.h"
 
 
@@ -55,7 +55,7 @@ pl_implement_class(Camcorder)
 *  @brief
 *    Constructor
 */
-Camcorder::Camcorder(BasicSceneApplication &cApplication) :
+Camcorder::Camcorder(EngineApplication &cApplication) :
 	CamcorderDirectory(this),
 	SlotOnAnimationStop(this),
 	m_pApplication(&cApplication),
@@ -79,7 +79,7 @@ Camcorder::~Camcorder()
 *  @brief
 *    Returns the owner application
 */
-BasicSceneApplication &Camcorder::GetApplication() const
+EngineApplication &Camcorder::GetApplication() const
 {
 	return *m_pApplication;
 }

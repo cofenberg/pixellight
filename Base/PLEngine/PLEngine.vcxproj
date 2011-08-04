@@ -253,7 +253,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application\BasicSceneApplication.cpp" />
+    <ClCompile Include="src\Application\EngineApplication.cpp" />
     <ClCompile Include="src\Application\ScriptApplication.cpp" />
     <ClCompile Include="src\Compositing\Console\ConsoleCommand.cpp" />
     <ClCompile Include="src\Compositing\Console\ConsoleDefaultCommands.cpp" />
@@ -288,7 +288,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Tools\SNMRotationKeyframeRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
+    <ClInclude Include="include\PLEngine\Application\EngineApplication.h" />
     <ClInclude Include="include\PLEngine\Application\ScriptApplication.h" />
     <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleCommand.h" />
     <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleDefaultCommands.h" />

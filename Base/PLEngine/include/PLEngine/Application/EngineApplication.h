@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: BasicSceneApplication.h                        *
+ *  File: EngineApplication.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_BASICSCENE_APPLICATION_H__
-#define __PLENGINE_BASICSCENE_APPLICATION_H__
+#ifndef __PLENGINE_ENGINEAPPLICATION_H__
+#define __PLENGINE_ENGINEAPPLICATION_H__
 #pragma once
 
 
@@ -69,13 +69,13 @@ namespace PLEngine {
 *    An application class that provides a standard scene graph for usual 3D applications and offers functionality
 *    to load in whole scenes at once as well as load screen handling and screenshot capturing.
 */
-class BasicSceneApplication : public PLScene::SceneApplication {
+class EngineApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLScene::SceneApplication, "Basic scene application class")
+	pl_class(PL_RTTI_EXPORT, EngineApplication, "PLEngine", PLScene::SceneApplication, "Basic scene application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -115,13 +115,13 @@ class BasicSceneApplication : public PLScene::SceneApplication {
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PL_API BasicSceneApplication(const PLCore::String &sSceneFilename = "");
+		PL_API EngineApplication(const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~BasicSceneApplication();
+		PL_API virtual ~EngineApplication();
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class BasicSceneApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual BasicSceneApplication functions        ]
+	//[ Public virtual EngineApplication functions            ]
 	//[-------------------------------------------------------]
 	public:
 		/**
@@ -367,7 +367,7 @@ class BasicSceneApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual BasicSceneApplication functions     ]
+	//[ Protected virtual EngineApplication functions         ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -473,4 +473,4 @@ class BasicSceneApplication : public PLScene::SceneApplication {
 } // PLEngine
 
 
-#endif // __PLENGINE_BASICSCENE_APPLICATION_H__
+#endif // __PLENGINE_ENGINEAPPLICATION_H__

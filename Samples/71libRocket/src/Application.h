@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLEngine/Application/BasicSceneApplication.h>
+#include <PLEngine/Application/EngineApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -49,13 +49,13 @@ namespace libRocket_PL {
 *  @brief
 *    Application class
 */
-class Application : public PLEngine::BasicSceneApplication {
+class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLEngine::BasicSceneApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLEngine::EngineApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Slots
@@ -103,7 +103,7 @@ class Application : public PLEngine::BasicSceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::BasicSceneApplication functions ]
+	//[ Private virtual PLEngine::EngineApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;

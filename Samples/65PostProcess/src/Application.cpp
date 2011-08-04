@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : BasicSceneApplication(),
+Application::Application() : EngineApplication(),
 	SlotOnControl(this),
 	m_nCurrentSelectedModifier(0)
 {
@@ -230,7 +230,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLEngine::BasicSceneApplication functions ]
+//[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
@@ -288,7 +288,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 void Application::OnCreateInputController()
 {
 	// Call base implementation
-	BasicSceneApplication::OnCreateInputController();
+	EngineApplication::OnCreateInputController();
 
 	// Get virtual input controller
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());

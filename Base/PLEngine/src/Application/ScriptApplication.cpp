@@ -52,7 +52,7 @@ pl_implement_class(ScriptApplication)
 *  @brief
 *    Default constructor
 */
-ScriptApplication::ScriptApplication() : BasicSceneApplication(),
+ScriptApplication::ScriptApplication() : EngineApplication(),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
@@ -66,7 +66,7 @@ ScriptApplication::ScriptApplication() : BasicSceneApplication(),
 *  @brief
 *    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
 */
-ScriptApplication::ScriptApplication(String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : BasicSceneApplication(),
+ScriptApplication::ScriptApplication(String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : EngineApplication(),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
@@ -143,7 +143,7 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 void ScriptApplication::OnInit()
 {
 	// Call base implementation
-	BasicSceneApplication::OnInit();
+	EngineApplication::OnInit();
 
 	// Is there a script filename?
 	if (m_sScriptFilename.GetLength())
@@ -160,7 +160,7 @@ void ScriptApplication::OnDeInit()
 	DestroyScript();
 
 	// Call base implementation
-	BasicSceneApplication::OnDeInit();
+	EngineApplication::OnDeInit();
 }
 
 
@@ -180,7 +180,7 @@ bool ScriptApplication::OnUpdate()
 	}
 
 	// Call base implementation
-	return BasicSceneApplication::OnUpdate();
+	return EngineApplication::OnUpdate();
 }
 
 

@@ -30,7 +30,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application\BasicSceneApplication.cpp">
+    <ClCompile Include="src\Application\EngineApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
     <ClCompile Include="src\PLEngine.cpp">
@@ -131,7 +131,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
+    <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
       <Filter>Application</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\PLEngine.h">
