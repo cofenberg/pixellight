@@ -27,6 +27,7 @@
 #include <PLCore/Tools/Localization.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Surface.h>
+#include <PLGui/Gui/Gui.h>
 #include <PLFrontendPLGui/RenderWidget.h>
 #include <PLFrontendPLGui/RenderWindow.h>
 #include "Application.h"
@@ -73,22 +74,15 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RendererApplication functions ]
+//[ Private virtual PLCore::AbstractLifecycle functions   ]
 //[-------------------------------------------------------]
-void Application::OnCreatePainter()
+bool Application::OnStart()
 {
-	// Get the renderer context instance
-	RendererContext *pRendererContext = GetRendererContext();
-	if (pRendererContext) {
-		// Set the surface painter to use depending on whether or not there's a default shader language within the used renderer
-		const bool bShaders = (pRendererContext->GetRenderer().GetDefaultShaderLanguage().GetLength() != 0);
+	// Call base implementation
+	if (RendererApplication::OnStart() && GetRendererContext()) {
+		// Create the other two windows
 
-		// Create and set the surface painter
-		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(bShaders ? "SPMultiViewShaders" : "SPMultiViewFixedFunctions"));
-	}
-
-	// Create the other two windows - Get the used renderer
-	if (GetRendererContext()) {
+		// Get the used renderer
 		Renderer &cRenderer = GetRendererContext()->GetRenderer();
 
 		// Get the display mode to use
@@ -118,5 +112,34 @@ void Application::OnCreatePainter()
 		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTexturingShaders" : "SPTexturingFixedFunctions"));
 		pFrame->AddModifier("PLGui::ModClose", "CloseWindow=true");
 		pFrame->SetVisible(true);
+
+		// Done
+		return true;
+	} else {
+		// Error!
+		return false;
+	}
+}
+
+void Application::OnStop()
+{
+	// Shut down system GUI, this also automatically closes all windows
+	Gui::GetSystemGui()->Shutdown();
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLRenderer::RendererApplication functions ]
+//[-------------------------------------------------------]
+void Application::OnCreatePainter()
+{
+	// Get the renderer context instance
+	RendererContext *pRendererContext = GetRendererContext();
+	if (pRendererContext) {
+		// Set the surface painter to use depending on whether or not there's a default shader language within the used renderer
+		const bool bShaders = (pRendererContext->GetRenderer().GetDefaultShaderLanguage().GetLength() != 0);
+
+		// Create and set the surface painter
+		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(bShaders ? "SPMultiViewShaders" : "SPMultiViewFixedFunctions"));
 	}
 }

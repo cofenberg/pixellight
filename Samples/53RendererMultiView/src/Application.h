@@ -68,6 +68,14 @@ class Application : public PLRenderer::RendererApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::AbstractLifecycle functions   ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool OnStart() override;
+		virtual void OnStop() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	private:
