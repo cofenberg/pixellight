@@ -25,8 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
-#include <PLInput/Input/Controller.h>
-#include <PLInput/Input/Controls/Control.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Surface.h>
 #include <PLEngine/Gui/RenderWidget.h>
@@ -40,7 +38,6 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLGui;
-using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLEngine;
 
@@ -58,8 +55,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : RenderApplication(),
-	SlotOnControl(this)
+Application::Application() : RenderApplication()
 {
 	// Set application name and title
 	SetName("53RendererMultiView");
@@ -73,21 +69,6 @@ Application::Application() : RenderApplication(),
 */
 Application::~Application()
 {
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when a control event has occurred
-*/
-void Application::OnControl(Control &cControl)
-{
-	// Check whether the escape key was pressed
-	if (cControl.GetType() == ControlButton && cControl.GetName() == "Escape")
-		Exit(0); // Shut down the application
 }
 
 
@@ -151,15 +132,4 @@ void Application::OnCreatePainter()
 		// Create and set the surface painter
 		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(bShaders ? "SPMultiViewShaders" : "SPMultiViewFixedFunctions"));
 	}
-}
-
-void Application::OnCreateInputController()
-{
-	// Call base implementation
-	RenderApplication::OnCreateInputController();
-
-	// Get virtual input controller
-	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
-	if (pController)
-		pController->SignalOnControl.Connect(SlotOnControl);
 }

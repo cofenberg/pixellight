@@ -32,14 +32,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLInput {
-	class Control;
-}
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -55,8 +47,6 @@ class Application : public PLRenderer::RenderApplication {
 	pl_class(pl_rtti_export, Application, "", PLRenderer::RenderApplication, "Application class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Slots
-		pl_slot_1(OnControl,	PLInput::Control&,	"Called when a control event has occurred, occurred control as first parameter",	"")
 	pl_class_end
 
 
@@ -78,25 +68,10 @@ class Application : public PLRenderer::RenderApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Called when a control event has occurred
-		*
-		*  @param[in] cControl
-		*    Occurred control
-		*/
-		void OnControl(PLInput::Control &cControl);
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RenderApplication functions ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreatePainter() override;
-		virtual void OnCreateInputController() override;
 
 
 };

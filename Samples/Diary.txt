@@ -1,3 +1,10 @@
+>> 04.08.2011
+[CO]
+- The primitive renderer samples "50RendererTriangle", "51RendererTexturing", "52RendererMesh", "53RendererMultiView" and "54RendererRTT" no longer use input stuff. Focus
+  is on PLRenderer, and PLRenderer only.
+
+
+
 >> 03.08.2011
 [CO]
 - Most samples are now using the new "pl_module_application"-macro to simplify the program entry point
