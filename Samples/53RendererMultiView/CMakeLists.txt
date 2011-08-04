@@ -29,6 +29,8 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLGui/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendPLGui/include
 )
 
 ##################################################
@@ -47,6 +49,8 @@ add_libs(
 	PLGraphics
 	PLRenderer
 	PLMesh
+	PLGui
+	PLFrontendPLGui
 )
 
 ##################################################
@@ -114,7 +118,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLMath PLGraphics PLRenderer PLMesh)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore PLMath PLGraphics PLRenderer PLMesh PLGui PLFrontendPLGui)
 add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

@@ -4,6 +4,9 @@
   is on PLRenderer, and PLRenderer only.
 - The primitive renderer samples "50RendererTriangle", "51RendererTexturing", "52RendererMesh", "53RendererMultiView" and "54RendererRTT" no longer depend on high level stuff
   like PLEngine
+- Updated "53RendererMultiView", it's working again and is still using PLGui via PLFrontendPLGui. But that's ok so that one can see how to use PLGui to create multiple
+  renderer target windows (82QtInputHandling shows a similar thing using Qt). Using e.g. "PLFrontendOS::Frontend" instead of "PLFrontendPLGui::Frontend" will work as well
+  (meaning mixing frontends).
 
 
 

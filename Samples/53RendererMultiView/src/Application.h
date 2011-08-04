@@ -68,13 +68,6 @@ class Application : public PLRenderer::RendererApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGui::GuiApplication functions       ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnCreateMainWindow() override;
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLRenderer::RendererApplication functions ]
 	//[-------------------------------------------------------]
 	private:

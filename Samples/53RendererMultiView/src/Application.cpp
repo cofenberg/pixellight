@@ -73,52 +73,6 @@ Application::~Application()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
-//[-------------------------------------------------------]
-void Application::OnCreateMainWindow()
-{
-	// Call base implementation
-	RendererApplication::OnCreateMainWindow();
-	Widget *pWidget = GetMainWindow();
-
-	// Get the display mode to use
-	const DisplayMode *pDisplayMode = nullptr;
-	if (pWidget) {
-		if (pWidget->IsInstanceOf("PLFrontendPLGui::RenderWidget"))
-			pDisplayMode = &static_cast<const RenderWidget*>(pWidget)->GetDisplayMode();
-		else if (pWidget->IsInstanceOf("PLFrontendPLGui::RenderWindow"))
-			pDisplayMode = &static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
-	}
-
-	// Get the used renderer
-	if (GetRendererContext()) {
-		Renderer &cRenderer = GetRendererContext()->GetRenderer();
-
-		// Set the surface painter to use depending on whether or not there's a default shader language within the used renderer
-		const bool bShaders = (cRenderer.GetDefaultShaderLanguage().GetLength() != 0);
-
-		// Create the triangle sample window
-		RenderWindow *pFrame = new RenderWindow(cRenderer, nullptr, pDisplayMode);
-		pFrame->SetPos(Vector2i(600, 0));
-		pFrame->SetSize(Vector2i(300, 300));
-		pFrame->SetTitle(PLT("PL triangle sample window"));
-		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTriangleShaders" : "SPTriangleFixedFunctions"));
-		pFrame->AddModifier("PLGui::ModClose", "CloseWindow=true");
-		pFrame->SetVisible(true);
-
-		// Create the texturing sample window
-		pFrame = new RenderWindow(cRenderer, nullptr, pDisplayMode);
-		pFrame->SetPos(Vector2i(600, 300));
-		pFrame->SetSize(Vector2i(300, 300));
-		pFrame->SetTitle(PLT("PL texturing sample window"));
-		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTexturingShaders" : "SPTexturingFixedFunctions"));
-		pFrame->AddModifier("PLGui::ModClose", "CloseWindow=true");
-		pFrame->SetVisible(true);
-	}
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLRenderer::RendererApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreatePainter()
@@ -131,5 +85,38 @@ void Application::OnCreatePainter()
 
 		// Create and set the surface painter
 		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(bShaders ? "SPMultiViewShaders" : "SPMultiViewFixedFunctions"));
+	}
+
+	// Create the other two windows - Get the used renderer
+	if (GetRendererContext()) {
+		Renderer &cRenderer = GetRendererContext()->GetRenderer();
+
+		// Get the display mode to use
+		DisplayMode cDisplayMode;
+		cDisplayMode.vSize.x    = 320;
+		cDisplayMode.vSize.y    = 200;
+		cDisplayMode.nColorBits = 32;
+		cDisplayMode.nFrequency = 60;
+
+		// Set the surface painter to use depending on whether or not there's a default shader language within the used renderer
+		const bool bShaders = (cRenderer.GetDefaultShaderLanguage().GetLength() != 0);
+
+		// Create the triangle sample window
+		RenderWindow *pFrame = new RenderWindow(cRenderer, nullptr, &cDisplayMode);
+		pFrame->SetPos(Vector2i(600, 0));
+		pFrame->SetSize(Vector2i(300, 300));
+		pFrame->SetTitle(PLT("PL triangle sample window"));
+		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTriangleShaders" : "SPTriangleFixedFunctions"));
+		pFrame->AddModifier("PLGui::ModClose", "CloseWindow=true");
+		pFrame->SetVisible(true);
+
+		// Create the texturing sample window
+		pFrame = new RenderWindow(cRenderer, nullptr, &cDisplayMode);
+		pFrame->SetPos(Vector2i(600, 300));
+		pFrame->SetSize(Vector2i(300, 300));
+		pFrame->SetTitle(PLT("PL texturing sample window"));
+		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTexturingShaders" : "SPTexturingFixedFunctions"));
+		pFrame->AddModifier("PLGui::ModClose", "CloseWindow=true");
+		pFrame->SetVisible(true);
 	}
 }
