@@ -21,7 +21,7 @@
 #include <PLRenderer/Application/RenderApplication.h>
 [!endif]
 [!if SCENE_APPLICATION]
-#include <PLEngine/Application/SceneApplication.h>
+#include <PLScene/Application/SceneApplication.h>
 [!endif]
 [!if BASIC_SCENE_APPLICATION]
 #include <PLEngine/Application/BasicSceneApplication.h>
@@ -48,7 +48,7 @@ class Application : public PLGui::GuiApplication {
 class Application : public PLRenderer::RenderApplication {
 [!endif]
 [!if SCENE_APPLICATION]
-class Application : public PLEngine::SceneApplication {
+class Application : public PLScene::SceneApplication {
 [!endif]
 [!if BASIC_SCENE_APPLICATION]
 class Application : public PLEngine::BasicSceneApplication {

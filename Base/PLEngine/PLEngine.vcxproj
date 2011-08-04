@@ -254,7 +254,6 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\BasicSceneApplication.cpp" />
-    <ClCompile Include="src\Application\SceneApplication.cpp" />
     <ClCompile Include="src\Application\ScriptApplication.cpp" />
     <ClCompile Include="src\Compositing\Console\ConsoleCommand.cpp" />
     <ClCompile Include="src\Compositing\Console\ConsoleDefaultCommands.cpp" />
@@ -290,7 +289,6 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h" />
-    <ClInclude Include="include\PLEngine\Application\SceneApplication.h" />
     <ClInclude Include="include\PLEngine\Application\ScriptApplication.h" />
     <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleCommand.h" />
     <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleDefaultCommands.h" />

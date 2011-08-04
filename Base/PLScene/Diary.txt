@@ -1,3 +1,9 @@
+>> 04.08.2011
+[CO]
+- Moved "SceneApplication" from "PLEngine" into "PLScene"
+
+
+
 >> 31.07.2011
 [CO]
 - "SceneContext": Added "GetGraphPathManager()"

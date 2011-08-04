@@ -77,10 +77,14 @@ BasicSceneApplication::BasicSceneApplication(const String &sSceneFilename) : Sce
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false),
-	m_pInputController(nullptr)
+	m_pInputController(nullptr),
+	m_bEditModeEnabled(false)
 {
 	// Set application title
 	SetTitle("PixelLight basic scene application");
+
+	// By default, edit mode is enabled
+	SetEditModeEnabled(true);
 }
 
 /**
@@ -190,6 +194,52 @@ Screenshot &BasicSceneApplication::GetScreenshotTool()
 {
 	// Return screenshot tool
 	return m_cScreenshot;
+}
+
+/**
+*  @brief
+*    Returns whether or not edit mode is enabled
+*/
+bool BasicSceneApplication::IsEditModeEnabled() const
+{
+	return m_bEditModeEnabled;
+}
+
+/**
+*  @brief
+*    Sets whether or not edit mode is enabled
+*/
+void BasicSceneApplication::SetEditModeEnabled(bool bEnabled)
+{
+	// State change?
+	if (m_bEditModeEnabled != bEnabled) {
+		// Backup the new state
+		m_bEditModeEnabled = bEnabled;
+
+		// Get the root scene
+		SceneContainer *pRootScene = GetRootScene();
+		if (pRootScene) {
+			// Enable/disable standard edit features from the PixelLight scene graph (if the user hasn't changed anything :)
+			SceneNode *pSceneNode = pRootScene->GetByName("PLEngine::SNEngineInformation0");
+			if (pSceneNode)
+				pSceneNode->SetActive(bEnabled);
+			pSceneNode = pRootScene->GetByName("PLEngine::SNConsole0");
+			if (pSceneNode)
+				pSceneNode->SetActive(bEnabled);
+		}
+
+		// Setup log level
+		Log::GetInstance()->SetLogLevel(static_cast<uint8>(m_bEditModeEnabled ? Log::Debug : Log::Info));
+	}
+}
+
+/**
+*  @brief
+*    Quit the engine
+*/
+void BasicSceneApplication::ConsoleCommandQuit(ConsoleCommand &cCommand)
+{
+	Exit(0);
 }
 
 
@@ -317,7 +367,7 @@ bool BasicSceneApplication::LoadScene(const String &sFilename)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Protected virtual PLCore::ConsoleApplication functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -394,7 +444,7 @@ bool BasicSceneApplication::OnUpdate()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual SceneApplication functions          ]
+//[ Protected virtual PLScene::SceneApplication functions ]
 //[-------------------------------------------------------]
 void BasicSceneApplication::OnCreateRootScene()
 {

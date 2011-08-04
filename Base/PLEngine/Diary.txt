@@ -4,6 +4,8 @@
 - Moved input controller from RenderApplication into BasicSceneApplication. Now everything input releated within the application framework is gathered together
   within BasicSceneApplication instead of be scattered all over the application classes.
 - Moved "RenderApplication" from "PLEngine" into "PLRenderer"
+- Moved edit & console stuff from "SceneApplication" into "BasicSceneApplication"
+- Moved "SceneApplication" from "PLEngine" into "PLScene"
 
 
 

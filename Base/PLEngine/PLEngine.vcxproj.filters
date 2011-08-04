@@ -33,9 +33,6 @@
     <ClCompile Include="src\Application\BasicSceneApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\SceneApplication.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\BasicSceneApplication.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Application\SceneApplication.h">
       <Filter>Application</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\PLEngine.h">

@@ -30,9 +30,9 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/TextureBuffer.h>
 #include <PLScene/Scene/SceneNodeHandler.h>
+#include <PLScene/Application/SceneApplication.h>
 #include "PLEngine/Tools/Screenshot.h"
 #include "PLEngine/Tools/SceneRendererTool.h"
-#include "PLEngine/Application/SceneApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -46,6 +46,9 @@ namespace PLScene {
 	class SNCamera;
 	class SNKeyValue;
 	class SceneQuery;
+}
+namespace PLEngine {
+	class ConsoleCommand;
 }
 
 
@@ -66,13 +69,13 @@ namespace PLEngine {
 *    An application class that provides a standard scene graph for usual 3D applications and offers functionality
 *    to load in whole scenes at once as well as load screen handling and screenshot capturing.
 */
-class BasicSceneApplication : public SceneApplication {
+class BasicSceneApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLEngine::SceneApplication, "Basic scene application class")
+	pl_class(PL_RTTI_EXPORT, BasicSceneApplication, "PLEngine", PLScene::SceneApplication, "Basic scene application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
@@ -215,6 +218,50 @@ class BasicSceneApplication : public SceneApplication {
 		*/
 		PL_API Screenshot &GetScreenshotTool();
 
+		//[-------------------------------------------------------]
+		//[ Edit functions                                        ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Returns whether or not edit mode is enabled
+		*
+		*  @return
+		*    'true' if edit mode is enabled, else 'false'
+		*
+		*  @remarks
+		*    This class introduces some generic edit features which are enabled by default. For public release
+		*    versions you may disable the edit mode so users can't for example use edit features to chat.
+		*/
+		PL_API bool IsEditModeEnabled() const;
+
+		/**
+		*  @brief
+		*    Sets whether or not edit mode is enabled
+		*
+		*  @param[in] bEnabled
+		*    'true' if edit mode is enabled, else 'false'
+		*
+		*  @remarks
+		*    Also the scene nodes 'SNEngineInformation0' and 'SNConsole0' from the root scene are enabled/disabled.
+		*    By default, edit mode is enabled.
+		*
+		*  @see
+		*    - IsEditModeEnabled()
+		*/
+		PL_API void SetEditModeEnabled(bool bEnabled = true);
+
+		//[-------------------------------------------------------]
+		//[ Console functions                                     ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Quit the engine
+		*
+		*  @param[in] cCommand
+		*    Calling command
+		*/
+		PL_API void ConsoleCommandQuit(ConsoleCommand &cCommand);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual BasicSceneApplication functions        ]
@@ -263,7 +310,7 @@ class BasicSceneApplication : public SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Protected virtual PLCore::ConsoleApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -275,7 +322,7 @@ class BasicSceneApplication : public SceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that SceneApplication::Init() does
+		*    - Everything that PLScene::SceneApplication::Init() does
 		*    - Initialize input system
 		*    - Call OnCreateInputController()
 		*    - Initialize scene renderer tool
@@ -291,7 +338,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Destroy input controller
-		*    - Everything that SceneApplication::DeInit() does
+		*    - Everything that PLScene::SceneApplication::DeInit() does
 		*/
 		PL_API virtual void DeInit() override;
 
@@ -307,13 +354,13 @@ class BasicSceneApplication : public SceneApplication {
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Update input manager
-		*    - Everything that SceneApplication::OnUpdate() does
+		*    - Everything that PLScene::SceneApplication::OnUpdate() does
 		*/
 		PL_API virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual SceneApplication functions          ]
+	//[ Protected virtual PLScene::SceneApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		PL_API virtual void OnCreateRootScene() override;
@@ -333,7 +380,7 @@ class BasicSceneApplication : public SceneApplication {
 		*  @note
 		*    - Part of the application framework initialization function "Init()"
 		*    - The default implementation creates an controllable camera and a simple mesh scene node
-		*    - Called from within "SceneApplication::OnCreateRootScene()"
+		*    - Called from within "PLScene::SceneApplication::OnCreateRootScene()"
 		*/
 		PL_API virtual void OnCreateScene(PLScene::SceneContainer &cContainer);
 
@@ -380,6 +427,7 @@ class BasicSceneApplication : public SceneApplication {
 		PLInput::VirtualController				  *m_pInputController;			/**< Virtual input controller, can be a null pointer */
 		SceneRendererTool						   m_cSceneRendererTool;		/**< Scene renderer tool */
 		Screenshot								   m_cScreenshot;				/**< Screenshot tool */
+		bool									   m_bEditModeEnabled;			/**< Edit mode enabled? */
 
 
 	//[-------------------------------------------------------]

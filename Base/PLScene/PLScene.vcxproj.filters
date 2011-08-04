@@ -35,6 +35,9 @@
     <Filter Include="Visibility">
       <UniqueIdentifier>{f642f678-07df-47e9-afd9-82b97f021b61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{32e000f7-67d4-4a68-8a93-ac021962c093}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Config.cpp">
@@ -387,6 +390,9 @@
     </ClCompile>
     <ClCompile Include="src\Visibility\VisPortal.cpp">
       <Filter>Visibility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\SceneApplication.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -746,6 +752,9 @@
     </ClInclude>
     <ClInclude Include="include\PLScene\Visibility\VisPortal.h">
       <Filter>Visibility</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScene\Application\SceneApplication.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

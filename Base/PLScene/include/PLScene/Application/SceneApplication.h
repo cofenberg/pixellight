@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_SCENE_APPLICATION_H__
-#define __PLENGINE_SCENE_APPLICATION_H__
+#ifndef __PLSCENE_APPLICATION_H__
+#define __PLSCENE_APPLICATION_H__
 #pragma once
 
 
@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Application/RenderApplication.h>
-#include "PLEngine/PLEngine.h"
+#include "PLScene/PLScene.h"
 
 
 //[-------------------------------------------------------]
@@ -39,15 +39,12 @@ namespace PLScene {
 	class SceneContext;
 	class SceneContainer;
 }
-namespace PLEngine {
-	class ConsoleCommand;
-}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -69,8 +66,8 @@ class SceneApplication : public PLRenderer::RenderApplication {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SceneApplication, "PLEngine", PLRenderer::RenderApplication, "Scene application class")
-		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
+	pl_class(PLS_RTTI_EXPORT, SceneApplication, "PLScene", PLRenderer::RenderApplication, "Scene application class")
+		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
@@ -90,13 +87,13 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PL_API SceneApplication(const PLCore::String &sSceneFilename = "");
+		PLS_API SceneApplication(const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~SceneApplication();
+		PLS_API virtual ~SceneApplication();
 
 		/**
 		*  @brief
@@ -105,7 +102,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*  @return
 		*    The scene context, a null pointer on error
 		*/
-		PL_API PLScene::SceneContext *GetSceneContext() const;
+		PLS_API PLScene::SceneContext *GetSceneContext() const;
 
 		/**
 		*  @brief
@@ -114,51 +111,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*  @return
 		*    Pointer to root scene container, can be a null pointer
 		*/
-		PL_API PLScene::SceneContainer *GetRootScene() const;
-
-		//[-------------------------------------------------------]
-		//[ Edit functions                                        ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Returns whether or not edit mode is enabled
-		*
-		*  @return
-		*    'true' if edit mode is enabled, else 'false'
-		*
-		*  @remarks
-		*    This class introduces some generic edit features which are enabled by default. For public release
-		*    versions you may disable the edit mode so users can't for example use edit features to chat.
-		*/
-		PL_API bool IsEditModeEnabled() const;
-
-		/**
-		*  @brief
-		*    Sets whether or not edit mode is enabled
-		*
-		*  @param[in] bEnabled
-		*    'true' if edit mode is enabled, else 'false'
-		*
-		*  @remarks
-		*    Also the scene nodes 'SNEngineInformation0' and 'SNConsole0' from the root scene are enabled/disabled.
-		*    By default, edit mode is enabled.
-		*
-		*  @see
-		*    - IsEditModeEnabled()
-		*/
-		PL_API void SetEditModeEnabled(bool bEnabled = true);
-
-		//[-------------------------------------------------------]
-		//[ Console functions                                     ]
-		//[-------------------------------------------------------]
-		/**
-		*  @brief
-		*    Quit the engine
-		*
-		*  @param[in] cCommand
-		*    Calling command
-		*/
-		PL_API void ConsoleCommandQuit(ConsoleCommand &cCommand);
+		PLS_API PLScene::SceneContainer *GetRootScene() const;
 
 
 	//[-------------------------------------------------------]
@@ -172,11 +125,11 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*  @param[in] pSceneContainer
 		*    Pointer to root scene container, can be a null pointer
 		*/
-		PL_API void SetRootScene(PLScene::SceneContainer *pSceneContainer);
+		PLS_API void SetRootScene(PLScene::SceneContainer *pSceneContainer);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual ConsoleApplication functions        ]
+	//[ Protected virtual PLCore::ConsoleApplication functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -193,7 +146,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual bool Init() override;
+		PLS_API virtual bool Init() override;
 
 		/**
 		*  @brief
@@ -204,7 +157,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*    - Destroy scene context
 		*    - Everything that PLRenderer::RenderApplication::DeInit() does
 		*/
-		PL_API virtual void DeInit() override;
+		PLS_API virtual void DeInit() override;
 
 
 	//[-------------------------------------------------------]
@@ -224,7 +177,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*    - Update the scene context
 		*    - Everything that PLRenderer::RenderApplication::OnUpdate() does
 		*/
-		PL_API virtual bool OnUpdate() override;
+		PLS_API virtual bool OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
@@ -239,16 +192,15 @@ class SceneApplication : public PLRenderer::RenderApplication {
 		*    - Part of the application framework initialization function "Init()"
 		*    - The default implementation creates a standard root scene
 		*/
-		PL_API virtual void OnCreateRootScene();
+		PLS_API virtual void OnCreateRootScene();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLScene::SceneContext	*m_pSceneContext;		/**< The scene context, can be a null pointer */
-		PLScene::SceneContainer	*m_pRootScene;			/**< Root scene (can be a null pointer) */
-		bool					 m_bEditModeEnabled;	/**< Edit mode enabled? */
+		PLScene::SceneContext	*m_pSceneContext;	/**< The scene context, can be a null pointer */
+		PLScene::SceneContainer	*m_pRootScene;		/**< Root scene (can be a null pointer) */
 
 
 };
@@ -257,7 +209,7 @@ class SceneApplication : public PLRenderer::RenderApplication {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScene
 
 
-#endif // __PLENGINE_SCENE_APPLICATION_H__
+#endif // __PLSCENE_SCENE_APPLICATION_H__

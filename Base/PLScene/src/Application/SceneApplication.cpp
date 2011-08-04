@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneApplication.cpp                          *
+ *  File: SceneApplication.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,13 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Log/Log.h>
-#include <PLCore/Base/Class.h>
-#include <PLScene/Scene/SceneContext.h>
-#include <PLScene/Scene/SceneContainer.h>
-#include "PLEngine/Compositing/Console/ConsoleCommand.h"
-#include "PLEngine/Compositing/Console/SNConsoleBase.h"
-#include "PLEngine/Application/SceneApplication.h"
+#include "PLScene/Scene/SceneContext.h"
+#include "PLScene/Scene/SceneContainer.h"
+#include "PLScene/Application/SceneApplication.h"
 
 
 //[-------------------------------------------------------]
@@ -37,8 +33,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLRenderer;
-using namespace PLScene;
-namespace PLEngine {
+namespace PLScene {
 
 
 //[-------------------------------------------------------]
@@ -56,12 +51,8 @@ pl_implement_class(SceneApplication)
 */
 SceneApplication::SceneApplication(const String &sSceneFilename) : RenderApplication("PLScene::SPScene"),
 	m_pSceneContext(nullptr),
-	m_pRootScene(nullptr),
-	m_bEditModeEnabled(false)
+	m_pRootScene(nullptr)
 {
-	// By default, edit mode is enabled
-	SetEditModeEnabled(true);
-
 	// Set application title
 	SetTitle("PixelLight scene application");
 }
@@ -93,52 +84,6 @@ SceneContainer *SceneApplication::GetRootScene() const
 	return m_pRootScene;
 }
 
-/**
-*  @brief
-*    Returns whether or not edit mode is enabled
-*/
-bool SceneApplication::IsEditModeEnabled() const
-{
-	return m_bEditModeEnabled;
-}
-
-/**
-*  @brief
-*    Sets whether or not edit mode is enabled
-*/
-void SceneApplication::SetEditModeEnabled(bool bEnabled)
-{
-	// State change?
-	if (m_bEditModeEnabled != bEnabled) {
-		// Backup the new state
-		m_bEditModeEnabled = bEnabled;
-
-		// Get the root scene
-		SceneContainer *pRootScene = GetRootScene();
-		if (pRootScene) {
-			// Enable/disable standard edit features from the PixelLight scene graph (if the user hasn't changed anything :)
-			SceneNode *pSceneNode = pRootScene->GetByName("PLEngine::SNEngineInformation0");
-			if (pSceneNode)
-				pSceneNode->SetActive(bEnabled);
-			pSceneNode = pRootScene->GetByName("PLEngine::SNConsole0");
-			if (pSceneNode)
-				pSceneNode->SetActive(bEnabled);
-		}
-
-		// Setup log level
-		Log::GetInstance()->SetLogLevel(static_cast<uint8>(m_bEditModeEnabled ? Log::Debug : Log::Info));
-	}
-}
-
-/**
-*  @brief
-*    Quit the engine
-*/
-void SceneApplication::ConsoleCommandQuit(ConsoleCommand &cCommand)
-{
-	Exit(0);
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
@@ -155,7 +100,7 @@ void SceneApplication::SetRootScene(SceneContainer *pRootScene)
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual ConsoleApplication functions        ]
+//[ Protected virtual PLCore::ConsoleApplication functions ]
 //[-------------------------------------------------------]
 bool SceneApplication::Init()
 {
@@ -239,27 +184,6 @@ void SceneApplication::OnCreateRootScene()
 				// Protect this important container!
 				pSceneContainerNode->SetProtected(true);
 			}
-
-			// Create scene node for engine information
-			SceneNode *pSceneNode = pRootContainer->Create("PLEngine::SNEngineInformation");
-			if (pSceneNode)
-				pSceneNode->SetActive(m_bEditModeEnabled);
-
-			// Create console scene node - using the console command 'timescale <value>' we
-			// can change the scene time (slowdown or accelerate)
-			pSceneNode = pRootContainer->Create("PLEngine::SNConsole");
-			if (pSceneNode && pSceneNode->GetClass()->IsDerivedFrom("PLEngine::SNConsoleBase")) {
-				SNConsoleBase *pConsole = static_cast<SNConsoleBase*>(pSceneNode);
-
-				// Register default commands
-				pConsole->RegisterCommand(0,	"quit",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"exit",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"bye",		"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-				pConsole->RegisterCommand(0,	"logout",	"",	"",	Functor<void, ConsoleCommand &>(&SceneApplication::ConsoleCommandQuit, this));
-
-				// Set active state
-				pConsole->SetActive(m_bEditModeEnabled);
-			}
 		}
 
 		// Set the root scene
@@ -271,4 +195,4 @@ void SceneApplication::OnCreateRootScene()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLScene
