@@ -93,6 +93,7 @@ void FrontendPixelLight::OnCreate()
 		// Create the RTTI class instance
 		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create());
 		if (m_pFrontendApplication) {
+			// Set the frontend of the application
 			m_pFrontendApplication->m_pFrontend = this;
 
 			// Fill application context
@@ -101,17 +102,23 @@ void FrontendPixelLight::OnCreate()
 			// [TODO]
 //			cApplicationContext.SetExecutableFilename(sExecutableFilename);
 //			cApplicationContext.SetArguments(lstArguments);
+
+			// Do the frontend lifecycle thing - let the world know that we have been created
+			m_pFrontendApplication->OnCreate();
 		}
 	}
 }
 
 void FrontendPixelLight::OnRestart()
 {
-	// Nothing to do in here
+	// Do the frontend lifecycle thing
+	if (m_pFrontendApplication)
+		m_pFrontendApplication->OnRestart();
 }
 
 bool FrontendPixelLight::OnStart()
 {
+	// Do the frontend lifecycle thing
 	if (m_pFrontendApplication && m_pFrontendApplication->OnStart()) {
 		// Call application-specific initialization routine
 		m_pFrontendApplication->OnInit();
@@ -129,12 +136,16 @@ bool FrontendPixelLight::OnStart()
 
 void FrontendPixelLight::OnResume()
 {
-	// Nothing to do in here
+	// Do the frontend lifecycle thing
+	if (m_pFrontendApplication)
+		m_pFrontendApplication->OnResume();
 }
 
 void FrontendPixelLight::OnPause()
 {
-	// Nothing to do in here
+	// Do the frontend lifecycle thing
+	if (m_pFrontendApplication)
+		m_pFrontendApplication->OnPause();
 }
 
 void FrontendPixelLight::OnStop()
@@ -143,7 +154,7 @@ void FrontendPixelLight::OnStop()
 		// Call application-specific de-initialization routine
 		m_pFrontendApplication->OnDeInit();
 
-		// De-Initialize application
+		// Do the frontend lifecycle thing
 		m_pFrontendApplication->OnStop();
 
 		// Frontend application is no longer initialized
@@ -155,6 +166,10 @@ void FrontendPixelLight::OnDestroy()
 {
 	// Destroy the frontend application instance
 	if (m_pFrontendApplication) {
+		// Do the frontend lifecycle thing - let the world know that we're going to die
+		m_pFrontendApplication->OnDestroy();
+
+		// Destroy the frontend application instance
 		delete m_pFrontendApplication;
 		m_pFrontendApplication = nullptr;
 	}

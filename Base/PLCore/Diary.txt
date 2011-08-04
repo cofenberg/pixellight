@@ -9,6 +9,7 @@
   sadly C++ has no Java like "implements". :/
   -> Renamed "CoreApplication::Init()" into "CoreApplication::OnStart()", the "AbstractLifecycle" equivalent called as soon as something is started (not same as instanced)
   -> Renamed "CoreApplication::DeInit()" into "CoreApplication::OnStop()", the "AbstractLifecycle" equivalent called as soon as something is stopped (not same as destroyed)
+- "FrontendPixelLight" is now calling all "AbstractLifecycle"-methods of it's petted application
 PLFrontendPLGui:
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"
 
