@@ -411,6 +411,34 @@ bool EngineApplication::OnStart()
 
 /**
 *  @brief
+*    Called when the object has the focus (keep the implementation lightweight)
+*/
+void EngineApplication::OnResume()
+{
+	// Call base implementation
+	SceneApplication::OnResume();
+
+	// Activate input controller
+	if (m_pInputController)
+		m_pInputController->SetActive(true);
+}
+
+/**
+*  @brief
+*    Called when the object has no longer the focus (keep the implementation lightweight)
+*/
+void EngineApplication::OnPause()
+{
+	// Deactivate input controller
+	if (m_pInputController)
+		m_pInputController->SetActive(false);
+
+	// Call base implementation
+	SceneApplication::OnPause();
+}
+
+/**
+*  @brief
 *    De-initialization function that is called after OnDeInit()
 */
 void EngineApplication::OnStop()

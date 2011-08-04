@@ -393,12 +393,20 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		/**
 		*  @brief
 		*    Called directly after the object has been created
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnCreate() override;
 
 		/**
 		*  @brief
 		*    Called directly before a stopped object is going to start again (always followed by "OnStart()")
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnRestart() override;
 
@@ -424,12 +432,20 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		/**
 		*  @brief
 		*    Called when the object has the focus (keep the implementation lightweight)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnResume() override;
 
 		/**
 		*  @brief
 		*    Called when the object has no longer the focus (keep the implementation lightweight)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnPause() override;
 
@@ -447,6 +463,10 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		/**
 		*  @brief
 		*    Called before the object is going to be finally destroyed
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
 		*/
 		PLCORE_API virtual void OnDestroy() override;
 

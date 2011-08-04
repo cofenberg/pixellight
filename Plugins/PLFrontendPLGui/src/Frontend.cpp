@@ -63,7 +63,6 @@ pl_implement_class(Frontend)
 */
 Frontend::Frontend() :
 	EventHandlerDestroy       (&Frontend::OnDestroy,        this),
-	EventHandlerActivate	  (&Frontend::OnActivate,       this),
 	EventHandlerDisplayMode   (&Frontend::OnDisplayMode,    this),
 	EventHandlerFullscreenMode(&Frontend::OnFullscreenMode, this),
 	m_cFrontend(*this),
@@ -189,7 +188,6 @@ void Frontend::OnCreateMainWindow()
 
 	// Connect event handler
 	// [TODO]
-//	pWindow->SignalActivate     .Connect(EventHandlerActivate);
 //	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
 //	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
 
@@ -244,17 +242,6 @@ void Frontend::OnDestroy()
 
 	// We lost our main window :/
 	m_pMainWindow = nullptr;
-}
-
-/**
-*  @brief
-*    Called when main window was (de-)activated
-*/
-void Frontend::OnActivate(bool bActivate)
-{
-	// Activate input controller when window is active, otherwise stop input
-//	if (m_pInputController)
-//		m_pInputController->SetActive(bActivate);
 }
 
 

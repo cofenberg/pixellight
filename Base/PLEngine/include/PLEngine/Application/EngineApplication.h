@@ -333,6 +333,28 @@ class EngineApplication : public PLScene::SceneApplication {
 
 		/**
 		*  @brief
+		*    Called when the object has the focus (keep the implementation lightweight)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLScene::SceneApplication::OnResume() does
+		*    - Activate the input controller
+		*/
+		PL_API virtual void OnResume() override;
+
+		/**
+		*  @brief
+		*    Called when the object has no longer the focus (keep the implementation lightweight)
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLScene::SceneApplication::OnPause() does
+		*    - Deactivate the input controller
+		*/
+		PL_API virtual void OnPause() override;
+
+		/**
+		*  @brief
 		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
