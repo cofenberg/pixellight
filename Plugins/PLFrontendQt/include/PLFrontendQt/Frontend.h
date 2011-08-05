@@ -119,7 +119,8 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(int argc, char **argv, const PLCore::String &sApplicationClass) override;
 		virtual void Redraw() override;
 
 

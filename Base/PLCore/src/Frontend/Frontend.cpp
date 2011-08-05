@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Core.h"
+#include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Frontend/FrontendImpl.h"
 #include "PLCore/Frontend/Frontend.h"
@@ -42,49 +43,65 @@ namespace PLCore {
 *  @brief
 *    Run the frontend
 */
-int Frontend::Run(const String &sFrontendClass, const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendClass, const String &sApplicationClass)
 {
-	int nResult = 0;	// No error by default
+	// Create a frontend instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	if (pFrontendImpl) {
+		// Let the frontend run
+		const int nResult = pFrontendImpl->Run(sExecutableFilename, lstArguments, sApplicationClass);
 
-	// [TODO] Make this optional?
-	// Get PixelLight runtime directory
-	const String sPLDirectory = Core::GetRuntimeDirectory();
-	if (sPLDirectory.GetLength()) {
-		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
-	}
+		// Destroy the frontend
+		delete pFrontendImpl;
 
-	// Get the RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);
-	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
-		// Create the RTTI class instance
-		Object *pObject = pClass->Create();
-		if (pObject) {
-			// Let the frontend run
-			static_cast<FrontendImpl*>(pObject)->Run(sApplicationClass, sExecutableFilename, lstArguments);
-
-			// Destroy the frontend
-			delete pObject;
-		}
+		// Done
+		return nResult;
 	} else {
-		// [TODO] Fallback as test
-		pClass = ClassManager::GetInstance()->GetClass("PLRenderer::RendererApplication");
-		if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
-			// Create the RTTI class instance
-			Object *pObject = pClass->Create();
-			if (pObject) {
-				// Let the frontend run
-				static_cast<FrontendImpl*>(pObject)->Run(sApplicationClass, sExecutableFilename, lstArguments);
-
-				// Destroy the frontend
-				delete pObject;
-			}
-		}
+		// Error!
+		return -1;
 	}
+}
 
-	// Done
-	return nResult;
+/**
+*  @brief
+*    Run the frontend using traditional C-arguments
+*/
+int Frontend::Run(int argc, char **argv, const String &sFrontendClass, const String &sApplicationClass)
+{
+	// Create a frontend instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	if (pFrontendImpl) {
+		// Let the frontend run
+		const int nResult = pFrontendImpl->Run(argc, argv, sApplicationClass);
+
+		// Destroy the frontend
+		delete pFrontendImpl;
+
+		// Done
+		return nResult;
+	} else {
+		// Error!
+		return -1;
+	}
+}
+
+int Frontend::Run(int argc, wchar_t **argv, const String &sFrontendClass, const String &sApplicationClass)
+{
+	// Create a frontend instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	if (pFrontendImpl) {
+		// Let the frontend run
+		const int nResult = pFrontendImpl->Run(argc, argv, sApplicationClass);
+
+		// Destroy the frontend
+		delete pFrontendImpl;
+
+		// Done
+		return nResult;
+	} else {
+		// Error!
+		return -1;
+	}
 }
 
 
@@ -172,6 +189,49 @@ FrontendImpl *Frontend::GetImpl() const
 {
 	// Return implementation
 	return m_pImpl;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private static functions                              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates a frontend instance
+*/
+FrontendImpl *Frontend::CreateInstance(const String &sFrontendClass)
+{
+	// [TODO] Make this optional?
+	// Get PixelLight runtime directory
+	const String sPLDirectory = Core::GetRuntimeDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
+		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
+		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
+	}
+
+	// Get the frontend RTTI class
+	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);
+	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
+		// Create the frontend RTTI class instance
+		Object *pObject = pClass->Create();
+		if (pObject) {
+			// Write down a log message
+			PL_LOG(Info, "Using frontend '" + pClass->GetClassName() + "': " + pClass->GetDescription())
+
+			// Done
+			return static_cast<FrontendImpl*>(pObject);
+		} else {
+			// Error!
+			PL_LOG(Error, "Failed instancing frontend '" + pClass->GetClassName() + "': " + pClass->GetDescription())
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, "Frontend '" + sFrontendClass + "' is no valid frontend RTTI class")
+	}
+
+	// Error!
+	return nullptr;
 }
 
 

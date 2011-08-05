@@ -54,7 +54,7 @@ pl_module_end
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	{ // Add plugins
 		// Scan for plugins within in the current plugins directory

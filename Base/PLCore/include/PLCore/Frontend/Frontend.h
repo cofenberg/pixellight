@@ -76,20 +76,40 @@ class Frontend : protected AbstractLifecycle {
 		*  @brief
 		*    Run the frontend
 		*
-		*  @param[in] sFrontendClass
-		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
 		*  @param[in] sExecutableFilename
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
 		*    List of arguments to the program
+		*  @param[in] sFrontendClass
+		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(const String &sFrontendClass, const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments);
+		PLCORE_API static int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendClass, const String &sApplicationClass);
+
+		/**
+		*  @brief
+		*    Run the frontend using traditional C-arguments
+		*
+		*  @param[in] argc
+		*    Number of C-arguments
+		*  @param[in] argv
+		*    C-arguments, must be valid
+		*  @param[in] sFrontendClass
+		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+		*
+		*  @return
+		*    Exit code (usually 0 means no error), usually <0 when there was an error
+		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*/
+		PLCORE_API static int Run(int argc, char **argv, const String &sFrontendClass, const String &sApplicationClass);
+		PLCORE_API static int Run(int argc, wchar_t **argv, const String &sFrontendClass, const String &sApplicationClass);
 
 
 	//[-------------------------------------------------------]
@@ -210,6 +230,23 @@ class Frontend : protected AbstractLifecycle {
 	//[-------------------------------------------------------]
 	protected:
 		FrontendImpl *m_pImpl;	/**< Pointer to implementation backend, can be a null pointer */
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Creates a frontend instance
+		*
+		*  @param[in] sFrontendClass
+		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
+		*
+		*  @return
+		*    Frontend instance, null pointer on error
+		*/
+		PLCORE_API static FrontendImpl *CreateInstance(const String &sFrontendClass);
 
 
 };

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/System/System.h"
 #include "PLCore/Frontend/Frontend.h"
 #include "PLCore/Frontend/FrontendImpl.h"
 
@@ -157,6 +158,42 @@ void FrontendImpl::OnDestroy()
 	// Call virtual function from frontend
 	if (m_pFrontend)
 		m_pFrontend->OnDestroy();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual FrontendImpl functions              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the frontend should run
+*/
+int FrontendImpl::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+{
+	// Nothing to do in here
+	return 0;
+}
+
+/**
+*  @brief
+*    Run the frontend using traditional C-arguments
+*/
+int FrontendImpl::Run(int argc, char **argv, const String &sApplicationClass)
+{
+	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
+	Array<String> lstArguments;
+	for (int i=1; i<argc; i++)
+		lstArguments.Add(argv[i]);
+	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments, sApplicationClass);
+}
+
+int FrontendImpl::Run(int argc, wchar_t **argv, const String &sApplicationClass)
+{
+	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
+	Array<String> lstArguments;
+	for (int i=1; i<argc; i++)
+		lstArguments.Add(argv[i]);
+	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments, sApplicationClass);
 }
 
 

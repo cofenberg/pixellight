@@ -82,7 +82,7 @@ void Frontend::Ping()
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
 {
 	// Do the frontend lifecycle thing - initialize
 	if (OnStart()) {

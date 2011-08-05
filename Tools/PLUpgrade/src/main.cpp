@@ -92,13 +92,13 @@ void UpgradePreV0_8()
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// [DEBUG]
 //	g_bDebug = true;
 
 	// Change into app directory
-	System::GetInstance()->SetCurrentDir(Url(sFilename).CutFilename());
+	System::GetInstance()->SetCurrentDir(Url(sExecutableFilename).CutFilename());
 
 	// Open log
 	g_cLog.Assign("PLUpgradeLog.txt");

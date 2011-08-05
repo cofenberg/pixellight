@@ -21,14 +21,14 @@ pl_module("MyApplication")
 pl_module_end
 
 // Program entry point
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Create an instance (on the stack) of the default
 	// renderer application class
 	RendererApplication cApplication;
 
 	// Let's rock'n'roll!
-	return cApplication.Run(sFilename, lstArguments);
+	return cApplication.Run(sExecutableFilename, lstArguments);
 }
 \end{lstlisting}
 The example application results in a window in which you can see the PixelLight logo and a text.

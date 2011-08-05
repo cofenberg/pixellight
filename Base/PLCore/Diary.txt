@@ -1,5 +1,7 @@
 >> 05.08.2011
 [CO]
+- "Frontend": Added versions of the "Run()"-method using traditional C-arguments (char/wchar_t). Some frontends, like the Qt one, want to have the original C-arguments or someone
+  may want to run a frontend by providing it with traditional C-arguments.
 PLFrontendQt:
 - Implemented correct application lifecycle and "Ping()"-method (by the way, just noticed Qt's "QCoreApplication", so, "PLCore::CoreApplication" is probably really a decent name)
 - Instead of performing an immediate hard-coded repainting of the frontend within "FrontendMainWindow::timerEvent()", Qt is now asked politly to update (and repaint) the widget.

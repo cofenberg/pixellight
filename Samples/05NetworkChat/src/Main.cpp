@@ -172,7 +172,7 @@ void RunClient()
 *  @brief
 *    Main function
 */
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Start server or client
 	System::GetInstance()->GetConsole().Print("Please choose S)erver or C)lient\n");

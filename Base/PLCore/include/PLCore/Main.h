@@ -55,7 +55,7 @@
 *  @brief
 *    Program entry point
 *
-*  @param[in] sFilename
+*  @param[in] sExecutableFilename
 *    Absolute executable filename
 *  @param[in] lstArguments
 *    List of program arguments
@@ -63,7 +63,7 @@
 *  @return
 *    Exit code of the application (usually 0 means no error)
 */
-int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments);
+int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments);
 
 
 //[-------------------------------------------------------]
@@ -76,8 +76,7 @@ int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> 
 		int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR pszCmdLine, int nShow)
 	#endif
 		{
-			return PLMain( PLCore::System::GetInstance()->GetExecutableFilename(),
-						   PLCore::CommandLine::StringToArguments(pszCmdLine) );
+			return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), PLCore::CommandLine::StringToArguments(pszCmdLine));
 		}
 #endif
 

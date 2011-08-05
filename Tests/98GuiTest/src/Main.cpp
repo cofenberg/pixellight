@@ -47,8 +47,8 @@ pl_module_end
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	Application cApplication;
-	return cApplication.Run(sFilename, lstArguments);
+	return cApplication.Run(sExecutableFilename, lstArguments);
 }

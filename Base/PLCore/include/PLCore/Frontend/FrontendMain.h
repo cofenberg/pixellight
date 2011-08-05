@@ -49,9 +49,9 @@
 *    Use this when you don't want to care about the program entry point.
 */
 #define pl_module_application(ModuleName, ApplicationClass) \
-	int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments) \
+	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run("PLFrontendOS::Frontend", ApplicationClass, sFilename, lstArguments); \
+		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendOS::Frontend", ApplicationClass); \
 	} \
 	\
 	pl_module_plugin(ModuleName) \
@@ -71,9 +71,9 @@
 *    Use this when you don't want to care about the program entry point.
 */
 #define pl_module_application_frontend(ModuleName, ApplicationClass, FrontendClass) \
-	int PLMain(const PLCore::String &sFilename, const PLCore::Array<PLCore::String> &lstArguments) \
+	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(FrontendClass, ApplicationClass, sFilename, lstArguments); \
+		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, FrontendClass, ApplicationClass); \
 	} \
 	\
 	pl_module_plugin(ModuleName) \

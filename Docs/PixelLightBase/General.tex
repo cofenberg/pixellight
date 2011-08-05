@@ -67,7 +67,7 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
   // ... add some astounding code here...
   return 0;
@@ -76,18 +76,18 @@ int PLMain(const String &sFilename, const Array<String> &lstArguments)
 
 \begin{itemize}
 \item{This function returns \emph{0} (normally the standard error code of operation systems) if all went fine, else another number.}
-\item{\emph{sFilename} is the absolute application filename.}
+\item{\emph{sExecutableFilename} is the absolute application filename.}
 \item{\emph{lstArguments} is a list of arguments given to the application - because the string class is used, you don't brother yourself with Unicode, ASCII and so on. There's a class called \emph{CommandLine} you can use to parse the given arguments.}
 
 If an application is started, it's current directory may differ from the one the executable is in - for instance if it's started using a link. In the most cases this is undesired because the data the application is using is relative to the current directory - in this cases, the directory the executable is in. You can add the following lines of code into you \emph{PLMain()} function to change the current directory to the one the application executable is in:
 
 \begin{lstlisting}[caption=Set current directory example]
 // Use the executable directory as the current directory
-System::GetInstance()->SetCurrentDir(Url(sFilename).CutFilename());
+System::GetInstance()->SetCurrentDir(Url(sExecutableFilename).CutFilename());
 \end{lstlisting}
 \end{itemize}
 
-Where \emph{sFilename} is the absolute application filename provided by \emph{PLMain()}.
+Where \emph{sExecutableFilename} is the absolute application filename provided by \emph{PLMain()}.
 
 
 

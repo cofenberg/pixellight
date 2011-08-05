@@ -46,7 +46,7 @@ void PixelLightCtrl::Ping()
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::Impl functions                ]
 //[-------------------------------------------------------]
-int PixelLightCtrl::Run(const PLCore::String &sApplicationClass, const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
+int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass)
 {
 	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
 	return -1;

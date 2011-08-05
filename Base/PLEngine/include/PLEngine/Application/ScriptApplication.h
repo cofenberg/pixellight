@@ -107,9 +107,9 @@ class ScriptApplication : public EngineApplication {
 		*  @remarks
 		*  @verbatim
 		*    Usage example:
-		*    int PLMain(const String &sFilename, const Array<String> &lstArguments)
+		*    int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		*    {
-		*        return ScriptApplication("Data/Scripts/45ScriptApplication.lua").Run(sFilename, lstArguments);
+		*        return ScriptApplication("Data/Scripts/45ScriptApplication.lua").Run(sExecutableFilename, lstArguments);
 		*    }
 		*  @endverbatim
 		*/

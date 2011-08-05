@@ -94,10 +94,10 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
   // Use the executable directory as the current directory
-  System::GetInstance()->SetCurrentDir(Url(sFilename).CutFilename());
+  System::GetInstance()->SetCurrentDir(Url(sExecutableFilename).CutFilename());
 
   // Setup the localization system
   String sGroup = "MyApplication";

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qapplication.h>
+#include <PLCore/String/UTF8Tools.h>
 #include "PLFrontendQt/FrontendMainWindow.h"
 #include "PLFrontendQt/Frontend.h"
 
@@ -118,20 +119,52 @@ void Frontend::Ping()
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+{
+	// Get traditional C-arguments
+	const int argc = 1 + lstArguments.GetNumOfElements();
+	char **argv = new char *[argc];
+	{ // Fill C-arguments
+		{ // First one is the executable filename
+			const char *pszExecutableFilename = sExecutableFilename.GetUTF8();
+			const uint32 nNumOfExecutableFilenameBytes = UTF8Tools::GetNumOfStringBytes(pszExecutableFilename);
+			argv[0] = new char[nNumOfExecutableFilenameBytes + 1];	// +1 for the terminating zero
+			MemoryManager::Copy(argv[0], pszExecutableFilename, nNumOfExecutableFilenameBytes);
+			argv[0][nNumOfExecutableFilenameBytes] = '\0';	// The terminating zero
+		}
+
+		// ... and now the arguments...
+		for (uint32 i=0; i<lstArguments.GetNumOfElements(); i++) {
+			const char *pszArgument = lstArguments[i].GetUTF8();
+			const uint32 nNumOfArgumentBytes = UTF8Tools::GetNumOfStringBytes(pszArgument);
+			argv[i + 1] = new char[nNumOfArgumentBytes + 1];	// +1 for the terminating zero
+			MemoryManager::Copy(argv[i + 1], pszArgument, nNumOfArgumentBytes);
+			argv[i + 1][nNumOfArgumentBytes] = '\0';	// The terminating zero
+		}
+	}
+
+	// Run the frontend
+	const int nResult = Run(argc, argv, sApplicationClass);
+
+	// Cleanup traditional C-arguments
+	for (int i=0; i<argc; i++)
+		delete argv[i];
+	delete [] argv;
+
+	// Done
+	return nResult;
+}
+
+int Frontend::Run(int argc, char **argv, const String &sApplicationClass)
 {
 	// Create the Qt application instance on the C runtime stack
-	int argc = 0;
-	QApplication cQApplication(argc, nullptr);	// [TODO] Command line arguments
+	QApplication cQApplication(argc, argv);
 
 	// Create and set the main window
 	new FrontendMainWindow(*this);
 
 	// Run the Qt application
-	const int nResult = cQApplication.exec();
-
-	// Done
-	return 0;
+	return cQApplication.exec();
 }
 
 void Frontend::Redraw()

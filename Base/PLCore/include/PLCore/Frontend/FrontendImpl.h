@@ -173,18 +173,42 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 		*  @brief
 		*    Called when the frontend should run
 		*
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
 		*  @param[in] sExecutableFilename
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
 		*    List of arguments to the program
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*
+		*  @note
+		*    - The default implementation does nothing at all
 		*/
-		virtual int Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments) = 0;
+		PLCORE_API virtual int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass);
+
+		/**
+		*  @brief
+		*    Run the frontend using traditional C-arguments
+		*
+		*  @param[in] argc
+		*    Number of C-arguments
+		*  @param[in] argv
+		*    C-arguments, must be valid
+		*  @param[in] sApplicationClass
+		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+		*
+		*  @return
+		*    Exit code (usually 0 means no error), usually <0 when there was an error
+		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*
+		*  @note
+		*    - The default implementation calls the version of the "Run()"-method using PixelLight strings
+		*/
+		PLCORE_API virtual int Run(int argc, char **argv, const String &sApplicationClass);
+		PLCORE_API virtual int Run(int argc, wchar_t **argv, const String &sApplicationClass);
 
 		/**
 		*  @brief

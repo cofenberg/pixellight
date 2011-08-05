@@ -134,7 +134,7 @@ void Frontend::Ping()
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sApplicationClass, const String &sExecutableFilename, const Array<String> &lstArguments)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
 {
 	// Create main window
 	OnCreateMainWindow();

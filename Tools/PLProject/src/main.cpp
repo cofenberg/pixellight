@@ -451,7 +451,7 @@ bool CreatePluginFile(Project &cProject)
 //[-------------------------------------------------------]
 //[ Program entry point                                   ]
 //[-------------------------------------------------------]
-int PLMain(const String &sFilename, const Array<String> &lstArguments)
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// [HACK] Force the linker to keep this class!
 	LocalizationLoaderPL cHack;
