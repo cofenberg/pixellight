@@ -142,6 +142,23 @@ class Frontend : protected AbstractLifecycle {
 
 		/**
 		*  @brief
+		*    Redraw frontend window
+		*
+		*  @remarks
+		*    There are situations were an application may do some heavy work without letting
+		*    the frontend a chance to redraw. In such situations, it may be wise
+		*    to call this method from time to time to give the frontend a chance to do redraw
+		*    itself.
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*    - Depending on the frontend implementation, the redraw may not be immediate
+		*    - Doesn't include "Ping()"
+		*/
+		PLCORE_API void Redraw();
+
+		/**
+		*  @brief
 		*    Give the frontend a chance to process OS messages
 		*
 		*  @remarks
@@ -152,8 +169,21 @@ class Frontend : protected AbstractLifecycle {
 		*
 		*  @note
 		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*    - Doesn't include "Redraw()"
 		*/
 		PLCORE_API void Ping() const;
+
+		/**
+		*  @brief
+		*    Redraw frontend window and give the frontend a chance to process OS messages
+		*
+		*  @remarks
+		*    Calls "Redraw()", then "Ping()".
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*/
+		PLCORE_API void RedrawAndPing();
 
 		/**
 		*  @brief
@@ -172,12 +202,6 @@ class Frontend : protected AbstractLifecycle {
 		*    Height
 		*/
 		PLCORE_API uint32 GetHeight() const;
-
-		/**
-		*  @brief
-		*    Redraw frontend window
-		*/
-		PLCORE_API void Redraw();
 
 
 	//[-------------------------------------------------------]

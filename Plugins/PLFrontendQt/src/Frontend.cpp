@@ -89,34 +89,6 @@ void Frontend::SetMainWindow(QWidget *pMainWindow)
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-handle Frontend::GetNativeWindowHandle() const
-{
-	if (m_pMainWindow) {
-		// Get window system identifier of the widget
-		return reinterpret_cast<handle>(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
-	} else {
-		// There's no native window handle
-		return NULL_HANDLE;
-	}
-}
-
-void Frontend::Ping()
-{
-	// Ask Qt politly to update (and repaint) the widget
-	if (m_pMainWindow)
-		m_pMainWindow->update();
-
-	// Check if there are system messages waiting (non-blocking)
-	if (QApplication::instance()->hasPendingEvents()) {
-		// Process all waiting messages
-		QApplication::instance()->processEvents();
-	}
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
@@ -167,8 +139,31 @@ int Frontend::Run(int argc, char **argv, const String &sApplicationClass)
 	return cQApplication.exec();
 }
 
+handle Frontend::GetNativeWindowHandle() const
+{
+	if (m_pMainWindow) {
+		// Get window system identifier of the widget
+		return reinterpret_cast<handle>(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
+	} else {
+		// There's no native window handle
+		return NULL_HANDLE;
+	}
+}
+
 void Frontend::Redraw()
 {
+	// Ask Qt politly to update (and repaint) the widget
+	if (m_pMainWindow)
+		m_pMainWindow->update();
+}
+
+void Frontend::Ping()
+{
+	// Check if there are system messages waiting (non-blocking)
+	if (QApplication::instance()->hasPendingEvents()) {
+		// Process all waiting messages
+		QApplication::instance()->processEvents();
+	}
 }
 
 

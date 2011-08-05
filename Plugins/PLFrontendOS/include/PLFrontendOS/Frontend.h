@@ -88,19 +88,13 @@ class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLCore::FrontendImpl functions         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLCore::handle GetNativeWindowHandle() const override;
-		virtual void Ping() override;
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
 		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
+		virtual void Ping() override;
 
 
 	//[-------------------------------------------------------]
@@ -109,6 +103,7 @@ class Frontend : public PLCore::FrontendImpl {
 	private:
 		OSWindow				   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
 		PLCore::FrontendPixelLight  m_cFrontend;	/**< The frontend instance */
+		bool					    m_bQuit;		/**< Quit frontend? */
 
 
 };

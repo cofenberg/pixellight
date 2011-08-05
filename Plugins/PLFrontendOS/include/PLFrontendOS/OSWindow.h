@@ -86,6 +86,12 @@ class OSWindow {
 		*/
 		virtual PLCore::handle GetNativeWindowHandle() const = 0;
 
+		/**
+		*  @brief
+		*    Redraw window
+		*/
+		virtual void Redraw() = 0;
+
 
 };
 

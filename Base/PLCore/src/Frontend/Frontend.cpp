@@ -139,12 +139,33 @@ handle Frontend::GetNativeWindowHandle() const
 
 /**
 *  @brief
+*    Redraw frontend window
+*/
+void Frontend::Redraw()
+{
+	// Call backend
+	m_pImpl->Redraw();
+}
+
+/**
+*  @brief
 *    Give the frontend a chance to process OS messages
 */
 void Frontend::Ping() const
 {
 	// Call backend
-	return m_pImpl->Ping();
+	m_pImpl->Ping();
+}
+
+/**
+*  @brief
+*    Redraw frontend window and give the frontend a chance to process OS messages
+*/
+void Frontend:: RedrawAndPing()
+{
+	// Call backend methods
+	m_pImpl->Redraw();
+	m_pImpl->Ping();
 }
 
 /**
@@ -165,16 +186,6 @@ uint32 Frontend::GetHeight() const
 {
 	// Call backend
 	return m_pImpl->GetHeight();
-}
-
-/**
-*  @brief
-*    Redraw frontend window
-*/
-void Frontend::Redraw()
-{
-	// Call backend
-	m_pImpl->Redraw();
 }
 
 

@@ -99,6 +99,7 @@ class OSWindowWindows : public OSWindow {
 	//[-------------------------------------------------------]
 	private:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
+		virtual void Redraw() override;
 
 
 	//[-------------------------------------------------------]

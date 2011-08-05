@@ -95,19 +95,13 @@ END_MSG_MAP()
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLCore::FrontendImpl functions         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLCore::handle GetNativeWindowHandle() const override;
-		virtual void Ping() override;
-
-
-	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
 		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
+		virtual void Ping() override;
 
 	private:
 		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */

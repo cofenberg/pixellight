@@ -53,7 +53,8 @@ pl_implement_class(Frontend)
 */
 Frontend::Frontend() :
 	m_cFrontend(*this),
-	m_pOSWindow(nullptr)
+	m_pOSWindow(nullptr),
+	m_bQuit(false)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -67,29 +68,6 @@ Frontend::~Frontend()
 {
 	// Do the frontend lifecycle thing - let the world know that we're going to die
 	OnDestroy();
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-handle Frontend::GetNativeWindowHandle() const
-{
-	return m_pOSWindow ? m_pOSWindow->GetNativeWindowHandle() : NULL_HANDLE;
-}
-
-void Frontend::Ping()
-{
-	// Look if messages are waiting (non-blocking)
-	MSG sMsg;
-	while (PeekMessage(&sMsg, nullptr, 0, 0, PM_NOREMOVE)) {
-		// Get the waiting message
-		GetMessage(&sMsg, nullptr, 0, 0);
-
-		// Process message
-		TranslateMessage(&sMsg);
-		DispatchMessage(&sMsg);
-	}
 }
 
 
@@ -111,19 +89,11 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	#endif
 
 	// The Windows message loop
-	bool bQuit = false;
-	while (!bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
-		// Look if messages are waiting
-		MSG sMsg;
-		while (PeekMessage(&sMsg, nullptr, 0, 0, PM_REMOVE)) {
-			if (sMsg.message == WM_QUIT)
-				bQuit = true;
-			TranslateMessage(&sMsg);
-			DispatchMessage(&sMsg);
-		}
-
-		// [TODO] Update stuff
-		OnDraw();
+	m_bQuit = false;
+	while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+		// Redraw & ping
+		Redraw();
+		Ping();
 	}
 
 	// Destroy the OS specific window implementation
@@ -136,8 +106,32 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	return 0;
 }
 
+handle Frontend::GetNativeWindowHandle() const
+{
+	return m_pOSWindow ? m_pOSWindow->GetNativeWindowHandle() : NULL_HANDLE;
+}
+
 void Frontend::Redraw()
 {
+	// Ask the OS politly to update (and repaint) the widget
+	if (m_pOSWindow)
+		m_pOSWindow->Redraw();
+}
+
+void Frontend::Ping()
+{
+	// Look if messages are waiting (non-blocking)
+	MSG sMsg;
+	while (PeekMessage(&sMsg, nullptr, 0, 0, PM_NOREMOVE)) {
+		// Get the waiting message
+		GetMessage(&sMsg, nullptr, 0, 0);
+		if (sMsg.message == WM_QUIT)
+			m_bQuit = true;
+
+		// Process message
+		TranslateMessage(&sMsg);
+		DispatchMessage(&sMsg);
+	}
 }
 
 

@@ -65,21 +65,6 @@ Frontend::~Frontend()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-handle Frontend::GetNativeWindowHandle() const
-{
-	// There's no window handle!
-	return NULL_HANDLE;
-}
-
-void Frontend::Ping()
-{
-	// Nothing to do in here
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
@@ -90,8 +75,8 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 
 		// The frontend main loop
 		while (m_cFrontend.IsRunning()) {
-			// [TODO] Update stuff
-			OnDraw();
+			// Redraw
+			Redraw();
 		}
 
 		// Do the frontend lifecycle thing - de-initialize
@@ -106,8 +91,21 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	}
 }
 
+handle Frontend::GetNativeWindowHandle() const
+{
+	// There's no window handle!
+	return NULL_HANDLE;
+}
+
 void Frontend::Redraw()
 {
+	// [TODO] Update stuff
+	OnDraw();
+}
+
+void Frontend::Ping()
+{
+	// Nothing to do in here
 }
 
 

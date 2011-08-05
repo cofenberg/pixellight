@@ -107,35 +107,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual FrontendImpl functions                 ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Get native window handle
-		*
-		*  @return
-		*    Native window handle for the frontend window, can be a null pointer
-		*/
-		virtual handle GetNativeWindowHandle() const = 0;
-
-		/**
-		*  @brief
-		*    Give the frontend a chance to process OS messages
-		*
-		*  @remarks
-		*    There are situations were an application may do some heavy work without letting
-		*    the frontend a chance to process OS messages. In such situations, it may be wise
-		*    to call this method from time to time to give the frontend a chance to do some
-		*    message processing.
-		*
-		*  @note
-		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
-		*/
-		virtual void Ping() = 0;
-
-
-	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
@@ -212,9 +183,44 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 
 		/**
 		*  @brief
-		*    Redraw the window
+		*    Get native window handle
+		*
+		*  @return
+		*    Native window handle for the frontend window, can be a null pointer
+		*/
+		virtual handle GetNativeWindowHandle() const = 0;
+
+		/**
+		*  @brief
+		*    Redraw frontend window
+		*
+		*  @remarks
+		*    There are situations were an application may do some heavy work without letting
+		*    the frontend a chance to redraw. In such situations, it may be wise
+		*    to call this method from time to time to give the frontend a chance to do redraw
+		*    itself.
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*    - Depending on the frontend implementation, the redraw may not be immediate
+		*    - Doesn't include "Ping()"
 		*/
 		virtual void Redraw() = 0;
+
+		/**
+		*  @brief
+		*    Give the frontend a chance to process OS messages
+		*
+		*  @remarks
+		*    There are situations were an application may do some heavy work without letting
+		*    the frontend a chance to process OS messages. In such situations, it may be wise
+		*    to call this method from time to time to give the frontend a chance to do some
+		*    message processing.
+		*
+		*  @note
+		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
+		*/
+		virtual void Ping() = 0;
 
 
 	//[-------------------------------------------------------]

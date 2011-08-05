@@ -185,20 +185,6 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
-{
-	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
-}
-
-void nsPluginInstance::Ping()
-{
-	// [TODO] Implement me
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
 int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass)
@@ -207,12 +193,21 @@ int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCor
 	return -1;
 }
 
+PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
+{
+	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
+}
+
 void nsPluginInstance::Redraw()
 {
 	// Redraw frontend window
 	RedrawWindow(m_hFrontendWnd, nullptr, nullptr, 0);
 }
 
+void nsPluginInstance::Ping()
+{
+	// [TODO] Implement me
+}
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

@@ -39,6 +39,7 @@
 //[-------------------------------------------------------]
 namespace PLGui {
 	class Widget;
+	class Graphics;
 }
 
 
@@ -108,19 +109,13 @@ class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLCore::FrontendImpl functions         ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLCore::handle GetNativeWindowHandle() const override;
-		virtual void Ping() override;
-
-
-	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
+		virtual void Ping() override;
 
 
 	//[-------------------------------------------------------]
@@ -167,10 +162,11 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected event handlers                              ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::EventHandler<>		EventHandlerDestroyMainWindow;
-		PLCore::EventHandler<bool>	EventHandlerActivateMainWindow;
-		PLCore::EventHandler<>		EventHandlerDisplayMode;
-		PLCore::EventHandler<>		EventHandlerFullscreenMode;
+		PLCore::EventHandler<>					EventHandlerDestroyMainWindow;
+		PLCore::EventHandler<bool>				EventHandlerActivateMainWindow;
+		PLCore::EventHandler<PLGui::Graphics&>	EventHandlerDrawMainWindow;
+		PLCore::EventHandler<>					EventHandlerDisplayMode;
+		PLCore::EventHandler<>					EventHandlerFullscreenMode;
 
 
 	//[-------------------------------------------------------]
@@ -199,6 +195,15 @@ class Frontend : public PLCore::FrontendImpl {
 		*    'true' if window is activated, else 'false'
 		*/
 		void OnActivateMainWindow(bool bActivate);
+
+		/**
+		*  @brief
+		*    Called when main window was drawn
+		*
+		*  @param[in] cGraphics
+		*    Graphics object used for painting
+		*/
+		void OnDrawMainWindow(PLGui::Graphics &cGraphics);
 
 
 };

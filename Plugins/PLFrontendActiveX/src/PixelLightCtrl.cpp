@@ -30,20 +30,6 @@ PixelLightCtrl::~PixelLightCtrl()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
-{
-	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
-}
-
-void PixelLightCtrl::Ping()
-{
-	// [TODO] Implement me
-}
-
-
-//[-------------------------------------------------------]
 //[ Private virtual PLCore::Impl functions                ]
 //[-------------------------------------------------------]
 int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass)
@@ -52,10 +38,20 @@ int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore:
 	return -1;
 }
 
+PLCore::handle PixelLightCtrl::GetNativeWindowHandle() const
+{
+	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
+}
+
 void PixelLightCtrl::Redraw()
 {
 	// Redraw control
 	RedrawWindow();
+}
+
+void PixelLightCtrl::Ping()
+{
+	// [TODO] Implement me
 }
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)

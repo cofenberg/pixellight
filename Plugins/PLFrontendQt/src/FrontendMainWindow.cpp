@@ -133,6 +133,8 @@ void FrontendMainWindow::focusOutEvent(QFocusEvent *)
 
 void FrontendMainWindow::paintEvent(QPaintEvent *)
 {
+	// Qt only calls this method if the draw area isn't null
+
 	// [TODO] Update stuff
 	m_pFrontendQt->OnDraw();
 }

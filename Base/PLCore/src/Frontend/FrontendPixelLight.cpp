@@ -120,11 +120,11 @@ bool FrontendPixelLight::OnStart()
 {
 	// Do the frontend lifecycle thing
 	if (m_pFrontendApplication && m_pFrontendApplication->OnStart()) {
+		// Frontend application successfully initialized (the following "OnInit()" is just application-specific, not framework specific)
+		m_bFrontendApplicationInitialized = true;
+
 		// Call application-specific initialization routine
 		m_pFrontendApplication->OnInit();
-
-		// Frontend application successfully initialized
-		m_bFrontendApplicationInitialized = true;
 
 		// Done
 		return true;

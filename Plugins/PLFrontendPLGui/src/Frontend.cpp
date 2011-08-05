@@ -65,6 +65,7 @@ pl_implement_class(Frontend)
 Frontend::Frontend() :
 	EventHandlerDestroyMainWindow (&Frontend::OnDestroyMainWindow,  this),
 	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
+	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
 	EventHandlerDisplayMode       (&Frontend::OnDisplayMode,        this),
 	EventHandlerFullscreenMode    (&Frontend::OnFullscreenMode,     this),
 	m_cFrontend(*this),
@@ -101,32 +102,20 @@ Widget *Frontend::GetMainWindow() const
 void Frontend::SetMainWindow(Widget *pMainWindow)
 {
 	// Disconnect event handler
-	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Disconnect(EventHandlerDestroyMainWindow);
+	if (m_pMainWindow) {
+		m_pMainWindow->SignalDestroy .Disconnect(EventHandlerDestroyMainWindow);
+		m_pMainWindow->SignalActivate.Disconnect(EventHandlerActivateMainWindow);
+		m_pMainWindow->SignalDraw    .Disconnect(EventHandlerDrawMainWindow);
+	}
 
 	// Set pointer to main window
 	m_pMainWindow = pMainWindow;
 
 	// Connect event handler
-	if (m_pMainWindow)
-		m_pMainWindow->SignalDestroy.Connect(EventHandlerDestroyMainWindow);
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLCore::FrontendImpl functions         ]
-//[-------------------------------------------------------]
-handle Frontend::GetNativeWindowHandle() const
-{
-	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetNativeWindowHandle() : NULL_HANDLE;
-}
-
-void Frontend::Ping()
-{
-	// Check if there are system messages waiting (non-blocking)
-	if (Gui::GetSystemGui()->HasPendingMessages()) {
-		// Process all waiting messages
-		Gui::GetSystemGui()->ProcessMessages();
+	if (m_pMainWindow) {
+		m_pMainWindow->SignalDestroy .Connect(EventHandlerDestroyMainWindow);
+		m_pMainWindow->SignalActivate.Connect(EventHandlerActivateMainWindow);
+		m_pMainWindow->SignalDraw    .Connect(EventHandlerDrawMainWindow);
 	}
 }
 
@@ -140,14 +129,10 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	OnCreateMainWindow();
 
 	// The frontend main loop
-	Gui *pGui = Gui::GetSystemGui();
-	while (pGui->IsActive() && m_pMainWindow && m_cFrontend.IsRunning()) {
-		// Check if there are system messages waiting (make a non-blocking main loop)
-		if (pGui->HasPendingMessages())
-			pGui->ProcessMessages();
-
-		// [TODO] Update stuff
-		OnDraw();
+	while (Gui::GetSystemGui()->IsActive() && m_pMainWindow && m_pMainWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+		// Redraw & ping
+		Redraw();
+		Ping();
 	}
 
 	// Destroy main window
@@ -163,8 +148,25 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	return 0;
 }
 
+handle Frontend::GetNativeWindowHandle() const
+{
+	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetNativeWindowHandle() : NULL_HANDLE;
+}
+
 void Frontend::Redraw()
 {
+	// Ask PLGui politly to update (and repaint) the widget
+	if (m_pMainWindow)
+		m_pMainWindow->Redraw();
+}
+
+void Frontend::Ping()
+{
+	// Check if there are system messages waiting (non-blocking)
+	if (Gui::GetSystemGui()->HasPendingMessages()) {
+		// Process all waiting messages
+		Gui::GetSystemGui()->ProcessMessages();
+	}
 }
 
 
@@ -187,7 +189,6 @@ void Frontend::OnCreateMainWindow()
 	pWindow->GetContentWidget()->SetBackgroundColor(Color4::Transparent);
 
 	// Connect event handler
-	pWindow->SignalActivate     .Connect(EventHandlerActivateMainWindow);
 	// [TODO]
 //	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
 //	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
@@ -272,6 +273,18 @@ void Frontend::OnActivateMainWindow(bool bActivate)
 		OnResume();
 	else
 		OnPause();
+}
+
+/**
+*  @brief
+*    Called when main window was drawn
+*/
+void Frontend::OnDrawMainWindow(Graphics &cGraphics)
+{
+	// [TODO] Redraw, but only if the draw area isn't null - looks like PLGui currently doesn't provide the required information to perform this test
+
+	// [TODO] Update stuff
+	OnDraw();
 }
 
 

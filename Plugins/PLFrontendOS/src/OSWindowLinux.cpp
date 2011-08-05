@@ -62,9 +62,13 @@ OSWindowLinux::~OSWindowLinux()
 //[-------------------------------------------------------]
 //[ Private virtual OSWindow functions                    ]
 //[-------------------------------------------------------]
-handle OSWindowWindows::GetNativeWindowHandle() const
+handle OSWindowLinux::GetNativeWindowHandle() const
 {
 	return NULL_HANDLE;
+}
+
+void OSWindowLinux::Redraw()
+{
 }
 
 

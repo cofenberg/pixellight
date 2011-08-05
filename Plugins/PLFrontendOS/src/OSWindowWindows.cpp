@@ -114,8 +114,9 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				PAINTSTRUCT sPaint;
 				BeginPaint(hWnd, &sPaint);
 
-				// [TODO]
-				pOSWindowWindows->m_pFrontendOS->OnDraw();
+				// Redraw, but only if the draw area isn't null
+				if (!IsRectEmpty(&sPaint.rcPaint))
+					pOSWindowWindows->m_pFrontendOS->OnDraw();
 
 				// End paint
 				EndPaint(hWnd, &sPaint);
@@ -219,6 +220,12 @@ OSWindowWindows::~OSWindowWindows()
 handle OSWindowWindows::GetNativeWindowHandle() const
 {
 	return reinterpret_cast<handle>(m_hWnd);
+}
+
+void OSWindowWindows::Redraw()
+{
+	if (m_hWnd)
+		RedrawWindow(m_hWnd, nullptr, nullptr, RDW_INVALIDATE);
 }
 
 
