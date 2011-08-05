@@ -7,6 +7,10 @@ PLFrontendQt:
   had gone... but now there's "black flickering" from time to time. When debugging, it's clear that Qt still draws something into the window. After over a hour of research
   I wasn't able to figure out what's going on. The concept is ok, drawing only within Qt's "paintEvent()" and a redraw-timer only asks Qt politly to update (and repaint) the widget
   instead of directly draw (which wasn't working that well, messed up Qt's event processing). Time to stop working on this "detail" for now in order to finish the frontend work.
+- ... I wasn't able to stop thinking about the "black flickering"-issue... and found a solution:
+  -> Set "Qt::WA_OpaquePaintEvent"-attribute
+  -> Overwrite "QPaintDevice::paintEngine()"-method and just return a null pointer
+  ... the flickering is now gone and the whole main window is responding and behaving quite fine...
 
 
 

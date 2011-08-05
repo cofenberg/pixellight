@@ -47,15 +47,22 @@ namespace PLFrontendQt {
 */
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(nullptr, Qt::MSWindowsOwnDC),	// Same settings as used in Qt's QGLWidget
 	m_pFrontendQt(&cFrontendQt),
-	m_nWindowRedrawTimerID(startTimer(10))
+	m_nWindowRedrawTimerID(startTimer(10))	// An interval of 10 milliseconds should be enough
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendQt->SetMainWindow(this);
 
-	// Disable window system background to avoid flickering caused by automatic background overdraw
+	// Disable window system background to avoid "white flickering" caused by automatic overdraw
 	// (same settings as used in Qt's QGLWidget)
-	setAttribute(Qt::WA_PaintOnScreen,      true);
-	setAttribute(Qt::WA_NoSystemBackground, true);
+	setAttribute(Qt::WA_PaintOnScreen);
+	setAttribute(Qt::WA_NoSystemBackground);
+
+	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
+	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
+	// -> Set the following attribute
+	setAttribute(Qt::WA_OpaquePaintEvent, true);
+
+	// ... at this point, we should be finally flicker-free...
 
 	// Set window size
 	resize(640, 480);
@@ -96,6 +103,16 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 		// Ask Qt politly to update (and repaint) the widget
 		update();
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual QPaintDevice functions              ]
+//[-------------------------------------------------------]
+QPaintEngine *FrontendMainWindow::paintEngine() const
+{
+	// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
+	return nullptr;
 }
 
 
