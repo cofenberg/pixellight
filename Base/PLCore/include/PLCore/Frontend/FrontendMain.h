@@ -57,11 +57,10 @@
 	\
 	pl_module_plugin(ModuleName)
 #else
-	// [TODO] Frontend update - *work in progress* implement Linux version of "PLFrontendOS::Frontend"
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendPLGui::Frontend", ApplicationClass); \
+		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendOS::Frontend", ApplicationClass); \
 	} \
 	\
 	pl_module_plugin(ModuleName)

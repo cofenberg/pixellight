@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendOS/OSWindow.h"
-
+#include <X11/Xlib.h>
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -98,8 +98,17 @@ class OSWindowLinux : public OSWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend *m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
-
+		Frontend				*m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
+		Display					*m_pDisplay;
+		Window					m_window;
+		Visual					*m_pVisual;
+		int 					m_screen;
+		int 					m_depth; 
+		XSetWindowAttributes	m_attributes;
+		Atom 					m_wmDelete;
+		unsigned int 			m_width;
+		unsigned int 			m_height;
+		bool					m_bDestroyed;
 
 };
 

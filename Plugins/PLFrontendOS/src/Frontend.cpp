@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLFrontendOS/Frontend.h"
 #if defined(WIN32)
 	#include "PLFrontendOS/OSWindowWindows.h"
 #elif defined(LINUX)
+	// This header must be included after Frontend.h because the X11/Xlib.h header is included in this header,
+	// which has some defines which are also used in some header included by Frontend.h
 	#include "PLFrontendOS/OSWindowLinux.h"
 #endif
-#include "PLFrontendOS/Frontend.h"
-
-
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
