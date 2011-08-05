@@ -200,7 +200,7 @@ class UTF8Tools {
 		*    Number of string character to take into account, if 0, take all characters into account
 		*
 		*  @return
-		*    Returns the number of bytes the given string requires
+		*    Returns the number of bytes the given string requires (excluding the terminating zero)
 		*/
 		PLCORE_API static uint32 GetNumOfStringBytes(const char *pszString, uint32 nCount = 0);
 
@@ -212,7 +212,7 @@ class UTF8Tools {
 		*    Pointer to string to check, if a null pointer '0' will be returned
 		*
 		*  @return
-		*    The number of characters within a given string
+		*    The number of characters within a given string (excluding the terminating zero)
 		*/
 		PLCORE_API static uint32 GetNumOfCharacters(const char *pszString);
 
@@ -226,7 +226,7 @@ class UTF8Tools {
 		*    String size in bytes, MUST be valid!
 		*
 		*  @return
-		*    The number of characters within a given string
+		*    The number of characters within a given string (excluding the terminating zero)
 		*/
 		PLCORE_API static uint32 GetNumOfCharacters(const char *pszString, uint32 nNumOfBytes);
 
@@ -240,7 +240,7 @@ class UTF8Tools {
 		*    Receives the string size in bytes
 		*
 		*  @return
-		*    The number of characters within a given string
+		*    The number of characters within a given string (excluding the terminating zero)
 		*/
 		PLCORE_API static uint32 GetNumOfCharactersAndBytes(const char *pszString, uint32 &nNumOfBytes);
 
