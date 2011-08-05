@@ -96,13 +96,22 @@ handle Frontend::GetNativeWindowHandle() const
 		// Get window system identifier of the widget
 		return reinterpret_cast<handle>(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
 	} else {
+		// There's no native window handle
 		return NULL_HANDLE;
 	}
 }
 
 void Frontend::Ping()
 {
-	// [TODO] Implement me
+	// Ask Qt politly to update (and repaint) the widget
+	if (m_pMainWindow)
+		m_pMainWindow->update();
+
+	// Check if there are system messages waiting (non-blocking)
+	if (QApplication::instance()->hasPendingEvents()) {
+		// Process all waiting messages
+		QApplication::instance()->processEvents();
+	}
 }
 
 
@@ -116,29 +125,13 @@ int Frontend::Run(const String &sApplicationClass, const String &sExecutableFile
 	QApplication cQApplication(argc, nullptr);	// [TODO] Command line arguments
 
 	// Create and set the main window
-	QMainWindow *pQMainWindow = new FrontendMainWindow(*this);
-	pQMainWindow->resize(640, 480);
-	pQMainWindow->show();
-	SetMainWindow(pQMainWindow);
+	new FrontendMainWindow(*this);
 
-	// Do the frontend lifecycle thing - initialize
-	int nResult = 0;	// By default, no error
-	if (OnStart()) {
-		OnResume();
-
-		// Run the Qt application
-		nResult = cQApplication.exec();
-
-		// Do the frontend lifecycle thing - de-initialize
-		OnPause();
-		OnStop();
-	} else {
-		// Error!
-		nResult = -1;
-	}
+	// Run the Qt application
+	const int nResult = cQApplication.exec();
 
 	// Done
-	return nResult;
+	return 0;
 }
 
 void Frontend::Redraw()

@@ -1,3 +1,15 @@
+>> 05.08.2011
+[CO]
+PLFrontendQt:
+- Implemented correct application lifecycle and "Ping()"-method (by the way, just noticed Qt's "QCoreApplication", so, "PLCore::CoreApplication" is probably really a decent name)
+- Instead of performing an immediate hard-coded repainting of the frontend within "FrontendMainWindow::timerEvent()", Qt is now asked politly to update (and repaint) the widget.
+  This way, the main window stays always responsive - but now I had "white flickering" due to some Qt overdraw. After using same settings as in Qt's QGLWidget, the "white flickering"
+  had gone... but now there's "black flickering" from time to time. When debugging, it's clear that Qt still draws something into the window. After over a hour of research
+  I wasn't able to figure out what's going on. The concept is ok, drawing only within Qt's "paintEvent()" and a redraw-timer only asks Qt politly to update (and repaint) the widget
+  instead of directly draw (which wasn't working that well, messed up Qt's event processing). Time to stop working on this "detail" for now in order to finish the frontend work.
+
+
+
 >> 04.08.2011
 [CO]
 - Renamed "ConsoleApplication" into "CoreApplication" so that one can guess the name of this class by just knowing the component name it's in

@@ -54,9 +54,15 @@ class FrontendMainWindow : public QMainWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	public:
+	friend class Frontend;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
 		/**
 		*  @brief
 		*    Constructor
@@ -78,6 +84,18 @@ class FrontendMainWindow : public QMainWindow {
 	//[-------------------------------------------------------]
 	protected:
 		virtual void timerEvent(QTimerEvent *pQTimerEvent) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual QWidget functions                   ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void focusInEvent(QFocusEvent *) override;
+		virtual void focusOutEvent(QFocusEvent *) override;
+		virtual void paintEvent(QPaintEvent *) override;
+		#if defined(Q_WS_WIN)
+			virtual bool winEvent(MSG *message, long *result) override;
+		#endif
 
 
 	//[-------------------------------------------------------]

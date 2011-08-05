@@ -125,7 +125,7 @@ void Frontend::Ping()
 {
 	// Check if there are system messages waiting (non-blocking)
 	if (Gui::GetSystemGui()->HasPendingMessages()) {
-		// Process all waiting messages, blocks if no messages are waiting
+		// Process all waiting messages
 		Gui::GetSystemGui()->ProcessMessages();
 	}
 }
@@ -183,6 +183,7 @@ void Frontend::OnCreateMainWindow()
 	pWindow->SetSize(Vector2i(640, 480));
 
 	// There's no need to have a widget background because we're render into it
+	// (avoids flickering caused by automatic background overdraw)
 	pWindow->GetContentWidget()->SetBackgroundColor(Color4::Transparent);
 
 	// Connect event handler

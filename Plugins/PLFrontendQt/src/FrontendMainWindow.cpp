@@ -24,6 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/qcoreevent.h>
+#if defined(Q_WS_WIN)
+	#include <PLCore/PLCoreWindowsIncludes.h>
+	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
+#endif
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
@@ -35,16 +39,35 @@ namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
+FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(nullptr, Qt::MSWindowsOwnDC),	// Same settings as used in Qt's QGLWidget
 	m_pFrontendQt(&cFrontendQt),
 	m_nWindowRedrawTimerID(startTimer(10))
 {
+	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
+	m_pFrontendQt->SetMainWindow(this);
+
+	// Disable window system background to avoid flickering caused by automatic background overdraw
+	// (same settings as used in Qt's QGLWidget)
+	setAttribute(Qt::WA_PaintOnScreen,      true);
+	setAttribute(Qt::WA_NoSystemBackground, true);
+
+	// Set window size
+	resize(640, 480);
+
+	// Show the window, but do not activate it right now
+	show();
+
+	// Do the frontend lifecycle thing - start
+	m_pFrontendQt->OnStart();
+
+	// Activate the window by giving it the focus
+	setFocus(Qt::ActiveWindowFocusReason);
 }
 
 /**
@@ -53,6 +76,9 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 */
 FrontendMainWindow::~FrontendMainWindow()
 {
+	// Do the frontend lifecycle thing - stop
+	m_pFrontendQt->OnStop();
+
 	// Stop window redraw timer
 	if (m_nWindowRedrawTimerID) {
 		killTimer(m_nWindowRedrawTimerID);
@@ -67,10 +93,55 @@ FrontendMainWindow::~FrontendMainWindow()
 void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 {
 	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
-		// [TODO] Update stuff
-		m_pFrontendQt->OnDraw();
+		// Ask Qt politly to update (and repaint) the widget
+		update();
 	}
 }
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual QWidget functions                   ]
+//[-------------------------------------------------------]
+void FrontendMainWindow::focusInEvent(QFocusEvent *)
+{
+	// Do the frontend lifecycle thing - resume
+	m_pFrontendQt->OnResume();
+}
+
+void FrontendMainWindow::focusOutEvent(QFocusEvent *)
+{
+	// Do the frontend lifecycle thing - pause
+	m_pFrontendQt->OnPause();
+}
+
+void FrontendMainWindow::paintEvent(QPaintEvent *)
+{
+	// [TODO] Update stuff
+	m_pFrontendQt->OnDraw();
+}
+
+#if defined(Q_WS_WIN)
+	// Qt doesn't have a WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE (MS Windows) equivalent - so we have to use the native stuff in here
+	//   Background: When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)...
+	//               it's just annyoing when you move or size a window and the controlled scene camera is spinning around while you do so...
+	bool FrontendMainWindow::winEvent(MSG *message, long *result)
+	{
+		switch (message->message) {
+			case WM_EXITSIZEMOVE:
+				// Do the frontend lifecycle thing - resume
+				m_pFrontendQt->OnResume();
+				return true;	// Stop the event being handled by Qt
+
+			case WM_ENTERSIZEMOVE:
+				// Do the frontend lifecycle thing - pause
+				m_pFrontendQt->OnPause();
+				return true;	// Stop the event being handled by Qt
+		}
+
+		// Let the event being handled by Qt
+		return false;
+	}
+#endif
 
 
 //[-------------------------------------------------------]
