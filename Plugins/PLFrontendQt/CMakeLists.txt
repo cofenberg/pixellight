@@ -287,7 +287,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	# Copy the copyright information into the include directory
 	install(FILES	"${QT_EXTERNAL_DIR}/Readme.txt"
 					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
-		DESTINATION "${PL_INSTALL_INCLUDE}/Qt"	COMPONENT SDK
+		DESTINATION "${PL_INSTALL_INCLUDE}/Qt" COMPONENT SDK
 	)
 endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 
@@ -314,7 +314,7 @@ if(WIN32)
 		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt	COMPONENT SDK
 	)
 endif()
-if(LINUX)
+if(LINUX AND NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	# Copy shared libraries
 	install(FILES	${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
 					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
