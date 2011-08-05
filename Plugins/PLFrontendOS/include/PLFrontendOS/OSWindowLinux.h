@@ -31,6 +31,38 @@
 #include "PLFrontendOS/OSWindow.h"
 #include <X11/Xlib.h>
 
+// [TODO] This is a copy of some code from Base/PLGui/include/PLGui/PLGuiLinuxIncludes.h
+// Check if PLGuiLinuxIncludes.h can be included instead of X11/Xlib.h directly (this shouldn't pull PLGui as link dependency)
+/**
+*  @brief
+*    Misc
+*/
+#ifdef None
+        namespace OSWindowLinuxInclude {
+                enum {
+                        X11_None = None,
+                        X11_Always = Always,
+                        X11_Above = Above,
+                        X11_Success = Success
+                };
+        }
+
+        #undef None
+        #undef Always
+        #undef Above
+        #undef Success
+
+        namespace XLib {
+                enum {
+                        None = OSWindowLinuxInclude::X11_None,
+                        Always = OSWindowLinuxInclude::X11_Always,
+                        Above = OSWindowLinuxInclude::X11_Above,
+                        Success = OSWindowLinuxInclude::X11_Success
+                };
+        }
+#endif
+
+
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
@@ -53,8 +85,6 @@ class Frontend;
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction
 *
-*  @todo
-*    - [TODO] Implement me
 */
 class OSWindowLinux : public OSWindow {
 
