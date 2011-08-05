@@ -101,8 +101,8 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OSWindow				   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
 		PLCore::FrontendPixelLight  m_cFrontend;	/**< The frontend instance */
+		OSWindow				   *m_pOSWindow;	/**< The OS specific window implementation, can be a null pointer */
 		bool					    m_bQuit;		/**< Quit frontend? */
 
 

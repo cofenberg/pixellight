@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
 
 
@@ -69,6 +70,11 @@ handle OSWindowLinux::GetNativeWindowHandle() const
 
 void OSWindowLinux::Redraw()
 {
+}
+
+bool OSWindowLinux::Ping()
+{
+	return true;
 }
 
 

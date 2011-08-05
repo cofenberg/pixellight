@@ -92,6 +92,15 @@ class OSWindow {
 		*/
 		virtual void Redraw() = 0;
 
+		/**
+		*  @brief
+		*    Ping window
+		*
+		*  @return
+		*    'true' when to shut down the frontend, else 'false'
+		*/
+		virtual bool Ping() = 0;
+
 
 };
 

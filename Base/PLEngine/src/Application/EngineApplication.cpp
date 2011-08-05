@@ -71,14 +71,14 @@ const String EngineApplication::DefaultSceneRenderer = "Forward.sr";
 *    Constructor
 */
 EngineApplication::EngineApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
-	EventHandlerSceneNode			(&EngineApplication::OnSceneNode,            this),
-	EventHandlerLoadProgress		(&EngineApplication::OnLoadProgress,         this),
-	EventHandlerInputControllerFound(&EngineApplication::OnInputControllerFound, this),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false),
 	m_pInputController(nullptr),
-	m_bEditModeEnabled(false)
+	m_bEditModeEnabled(false),
+	EventHandlerSceneNode			(&EngineApplication::OnSceneNode,            this),
+	EventHandlerLoadProgress		(&EngineApplication::OnLoadProgress,         this),
+	EventHandlerInputControllerFound(&EngineApplication::OnInputControllerFound, this)
 {
 	// Set application title
 	SetTitle("PixelLight basic scene application");

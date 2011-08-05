@@ -143,7 +143,7 @@ handle Frontend::GetNativeWindowHandle() const
 {
 	if (m_pMainWindow) {
 		// Get window system identifier of the widget
-		return reinterpret_cast<handle>(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
+		return (handle)(m_pMainWindow->window() ? m_pMainWindow->window()->winId() : m_pMainWindow->winId());
 	} else {
 		// There's no native window handle
 		return NULL_HANDLE;

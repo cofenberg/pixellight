@@ -185,7 +185,7 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 
 	// Get widget
 	Widget *pWidget = cMessage.GetWidget();
-	::Window nNativeWindowHandle = (pWidget ? static_cast< ::Window>(pWidget->GetNativeWindowHandle) : NULL_HANDLE);
+	::Window nNativeWindowHandle = (pWidget ? static_cast< ::Window>(pWidget->GetNativeWindowHandle()) : NULL_HANDLE);
 
 	// Post message
 	switch (cMessage.GetType()) {

@@ -100,7 +100,7 @@ bool SurfaceWindow::Init()
 	const handle nNativeWindowHandle = GetNativeWindowHandle();
 	if (nNativeWindowHandle) {
 		// Backup the native window handle
-		m_nWindowHandle = nNativeWindowHandle;
+		m_nNativeWindowHandle = nNativeWindowHandle;
 
 		// Backup gamma
 		GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);

@@ -91,6 +91,14 @@ class OSWindowLinux : public OSWindow {
 	private:
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
+		virtual bool Ping() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		Frontend *m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
 
 
 };

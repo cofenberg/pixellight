@@ -88,7 +88,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 		#error "Unsupported platform"
 	#endif
 
-	// The Windows message loop
+	// The frontend message loop
 	m_bQuit = false;
 	while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
 		// Redraw & ping
@@ -120,18 +120,8 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
-	// Look if messages are waiting (non-blocking)
-	MSG sMsg;
-	while (PeekMessage(&sMsg, nullptr, 0, 0, PM_NOREMOVE)) {
-		// Get the waiting message
-		GetMessage(&sMsg, nullptr, 0, 0);
-		if (sMsg.message == WM_QUIT)
-			m_bQuit = true;
-
-		// Process message
-		TranslateMessage(&sMsg);
-		DispatchMessage(&sMsg);
-	}
+	if (m_pOSWindow)
+		m_bQuit = m_pOSWindow->Ping();
 }
 
 
