@@ -135,7 +135,7 @@ void FrontendMainWindow::paintEvent(QPaintEvent *)
 {
 	// Qt only calls this method if the draw area isn't null
 
-	// [TODO] Update stuff
+	// Let the frontend draw into it's window
 	m_pFrontendQt->OnDraw();
 }
 

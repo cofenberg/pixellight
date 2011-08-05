@@ -119,6 +119,8 @@ void Application::OnInit()
 	// Get the scene context
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
+		// [TODO] Frontend update
+		/*
 		// Create the libRocket adapter instance
 		m_pRocketAdapter = new libRocket_PL::libRocketAdapter(pSceneContext->GetRendererContext(), GetMainWindow());
 		Rocket::Core::Context *pRocketContext = m_pRocketAdapter->GetRocketContext();
@@ -156,7 +158,7 @@ void Application::OnInit()
 				if (pSRPlibRocket)
 					pSceneRenderer->Add(*reinterpret_cast<SceneRendererPass*>(pSRPlibRocket));
 			}
-		}
+		}*/
 	}
 }
 

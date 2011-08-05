@@ -171,7 +171,7 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 
 		case WM_PAINT:
 		{
-			// Draw frontend
+			// Let the frontend draw into it's window
 			FrontendImpl::OnDraw();
 			return 0;
 		}

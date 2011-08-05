@@ -99,7 +99,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 void Frontend::Redraw()
 {
-	// [TODO] Update stuff
+	// Let the frontend draw into it's window
 	OnDraw();
 }
 

@@ -55,12 +55,14 @@ MyPicking::MyPicking(Application &cApplication) :
 	m_pApplication(&cApplication),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime())
 {
+	// [TODO] Frontend update
+	/*
 	// Get the main window of the application
 	Widget *pWidget = m_pApplication->GetMainWindow();
 	if (pWidget) {
 		// Set the widget used for picking
 		SetWidget(pWidget->GetContentWidget());
-	}
+	}*/
 
 	// Set the camera used for picking
 	SetCamera(m_pApplication->GetCamera());
@@ -113,12 +115,14 @@ void MyPicking::PerformPicking()
 					// Backup the currently picked scene node
 					m_cCurrentPickedSceneNodeHandler.SetElement(pPickedSceneNode);
 
+					// [TODO] Frontend update
+					/*
 					// Set the mouse cursor
 					if (m_pApplication->GetMainWindow()) {
 						Cursor *pCursor = Gui::GetSystemGui()->GetCursorManager().GetCursor(pPickedSceneNode ? CursorHand : CursorArrow);
 						if (pCursor)
 							m_pApplication->GetMainWindow()->SetCursor(*pCursor);
-					}
+					}*/
 				}
 			}
 

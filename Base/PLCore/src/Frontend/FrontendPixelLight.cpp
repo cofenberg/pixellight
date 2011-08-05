@@ -99,8 +99,8 @@ void FrontendPixelLight::OnCreate()
 			// Fill application context
 			ApplicationContext &cApplicationContext = const_cast<ApplicationContext&>(m_pFrontendApplication->GetApplicationContext());	// [TODO] Casting away const is not nice
 			cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());
+			cApplicationContext.SetExecutableFilename(System::GetInstance()->GetExecutableFilename());
 			// [TODO]
-//			cApplicationContext.SetExecutableFilename(sExecutableFilename);
 //			cApplicationContext.SetArguments(lstArguments);
 
 			// Do the frontend lifecycle thing - let the world know that we have been created

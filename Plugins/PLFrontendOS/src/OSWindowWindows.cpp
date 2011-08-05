@@ -115,8 +115,10 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				BeginPaint(hWnd, &sPaint);
 
 				// Redraw, but only if the draw area isn't null
-				if (!IsRectEmpty(&sPaint.rcPaint))
+				if (!IsRectEmpty(&sPaint.rcPaint)) {
+					// Let the frontend draw into it's window
 					pOSWindowWindows->m_pFrontendOS->OnDraw();
+				}
 
 				// End paint
 				EndPaint(hWnd, &sPaint);

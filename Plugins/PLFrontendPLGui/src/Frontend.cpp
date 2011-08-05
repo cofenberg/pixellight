@@ -283,7 +283,7 @@ void Frontend::OnDrawMainWindow(Graphics &cGraphics)
 {
 	// [TODO] Redraw, but only if the draw area isn't null - looks like PLGui currently doesn't provide the required information to perform this test
 
-	// [TODO] Update stuff
+	// Let the frontend draw into it's window
 	OnDraw();
 }
 

@@ -56,7 +56,7 @@ void PixelLightCtrl::Ping()
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
-	// Draw frontend
+	// Let the frontend draw into it's window
 	FrontendImpl::OnDraw();
 
 	// Done

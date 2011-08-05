@@ -48,14 +48,23 @@
 *  @remarks
 *    Use this when you don't want to care about the program entry point.
 */
+#ifdef WIN32
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
 		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendOS::Frontend", ApplicationClass); \
 	} \
 	\
-	pl_module_plugin(ModuleName) \
-
+	pl_module_plugin(ModuleName)
+#else
+	// [TODO] Frontend update - *work in progress* implement Linux version of "PLFrontendOS::Frontend"
+	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
+	{ \
+		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendPLGui::Frontend", ApplicationClass); \
+	} \
+	\
+	pl_module_plugin(ModuleName)
+#endif
 /**
 *  @brief
 *    Defines a frontend for a module inside a plugin library
@@ -76,7 +85,7 @@
 		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, FrontendClass, ApplicationClass); \
 	} \
 	\
-	pl_module_plugin(ModuleName) \
+	pl_module_plugin(ModuleName)
 
 
 #endif // __PLCORE_FRONTENDMAIN_H__

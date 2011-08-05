@@ -53,5 +53,6 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// ... hm, what would be an appropriate comment for this line of code? Maybe "Run script"...? *g*
 	// [TODO] Frontend update
-	return _ScriptApplication("Data/Scripts/45ScriptApplication.lua").Run(sExecutableFilename, lstArguments);
+//	return ScriptApplication("Data/Scripts/45ScriptApplication.lua").Run(sExecutableFilename, lstArguments);
+	return -1;
 }
