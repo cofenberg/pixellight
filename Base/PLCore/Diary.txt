@@ -4,6 +4,7 @@
 - Added "Core::ScanRuntimeDirectoryPlugins()" because the same stuff was done in "CoreApplication::OnInitPlugins()", "PLCore::Frontend::CreateInstance()", the sample "40ScriptHelloWorld"
   not using the application framework at all, "PLFrontendQt::Application::InitCore()" and so on.
 - Added "Core::ScanRuntimeDirectoryData()", more stuff not only useful for "CoreApplication::OnInitData()"
+- MS Windows: "PLFrontendOS" is now using the standard PixelLight icon for the main window of this frontend
 
 
 

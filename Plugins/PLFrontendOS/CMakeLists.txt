@@ -16,6 +16,7 @@ if(WIN32)
 	## Win32
 	##################################################
 	add_sources(
+		PLFrontendOS.rc
 		src/OSWindowWindows.cpp
 	)
 elseif(LINUX)

@@ -268,10 +268,15 @@
     <ClInclude Include="include\PLFrontendOS\OSWindowLinux.h" />
     <ClInclude Include="include\PLFrontendOS\OSWindowWindows.h" />
     <ClInclude Include="include\PLFrontendOS\PLFrontendOS.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
+    <None Include="..\..\PixelLight\PL.ico" />
     <None Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PLFrontendOS.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

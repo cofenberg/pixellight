@@ -39,9 +39,14 @@
     <ClInclude Include="include\PLFrontendOS\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Base\PLCore\Diary.txt" />
+    <None Include="..\..\PixelLight\PL.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PLFrontendOS.rc" />
   </ItemGroup>
 </Project>

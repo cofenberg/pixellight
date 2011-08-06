@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "../resource.h"
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowWindows.h"
 
@@ -155,7 +156,17 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
 	m_WndClass.hInstance		= m_hInstance;
-	m_WndClass.hIcon			= nullptr;
+	{ // "GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
+		// Get the filename of this shared library
+		MEMORY_BASIC_INFORMATION sMemoryBasicInformation;
+		static const int nDummy = 0;
+		VirtualQuery(&nDummy, &sMemoryBasicInformation, sizeof(MEMORY_BASIC_INFORMATION));
+		wchar_t szModule[MAX_PATH];
+		GetModuleFileName(static_cast<HMODULE>(sMemoryBasicInformation.AllocationBase), szModule, sizeof(szModule));
+
+		// Finally, load the icon with the instance of this shared library
+		m_WndClass.hIcon		= LoadIcon(GetModuleHandle(szModule), MAKEINTRESOURCE(IDI_PL));
+	}
 	m_WndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
 	m_WndClass.hbrBackground	= nullptr;
 	m_WndClass.lpszMenuName		= nullptr;
