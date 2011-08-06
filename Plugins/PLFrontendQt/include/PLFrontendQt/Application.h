@@ -246,17 +246,6 @@ class PLFRONTENDQT_API Application : public QApplication {
 		*/
 		void CreateRenderContext(const PLCore::String &sRendererName = "PLRendererOpenGL::Renderer");
 
-		/**
-		*  @brief
-		*    Scan an directory for archives which gets added as base paths
-		*
-		*  @param[in] sDirectory
-		*    path of the directory to be scanned
-		*  @param[in] sExtension
-		*    extension of the archive to be used (default .zip)
-		*/
-		bool ScanFSArchives(const PLCore::String &sDirectory, const PLCore::String &sExtension = "*.zip");
-
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]

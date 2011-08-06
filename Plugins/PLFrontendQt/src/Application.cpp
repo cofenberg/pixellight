@@ -274,37 +274,6 @@ void Application::InitCore(bool useRuntimeDir)
 	}
 }
 
-/**
-*  @brief
-*    Scan an directory for archives which gets added as base paths
-*/
-bool Application::ScanFSArchives(const String &sDirectory, const String &sExtension)
-{
-	// Check parameters
-	if (sDirectory.GetLength() && sExtension.GetLength()) {
-		// Add FS base directories
-		Directory cDir(sDirectory);
-		if (cDir.IsDirectory()) {
-			FileSearch cSearch(cDir);
-			while (cSearch.HasNextFile()) {
-				// Get next file
-				String sFilename = cSearch.GetNextFile();
-				String sPath     = cDir.GetUrl().GetUrl() + "/" + sFilename;
-
-				// Add all found files to the base-directories (meaning these must be packages ...)
-				if (File(sPath).IsFile())
-					LoadableManager::GetInstance()->AddBaseDir(sPath + "/");
-			}
-
-			// Done
-			return true;
-		}
-	}
-
-	// Error!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
