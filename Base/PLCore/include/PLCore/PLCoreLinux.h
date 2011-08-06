@@ -182,7 +182,7 @@ namespace PLCore {
 
 	typedef size_t				uint_ptr;
 
-	typedef int					handle;
+	typedef unsigned long		handle;
 
 
 }

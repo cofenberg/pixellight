@@ -1,3 +1,9 @@
+>> 06.08.2011
+[CO]
+- Linux: Changed the type of "handle" from "int" to "unsigned long" (shouldn't really be a difference in the used bit length... even on 64 bit "long" is usually only 32 bit long...)
+
+
+
 >> 05.08.2011
 [CO]
 - "Frontend": Added versions of the "Run()"-method using traditional C-arguments (char/wchar_t). Some frontends, like the Qt one, want to have the original C-arguments or someone

@@ -101,7 +101,6 @@ OSWindowLinux::~OSWindowLinux()
 //[-------------------------------------------------------]
 handle OSWindowLinux::GetNativeWindowHandle() const
 {
-	// [TODO] handle is a int but Window (X11) is under Linux an unsigned long
 	return static_cast<handle>(m_nNativeWindowHandle);
 }
 
