@@ -55,9 +55,8 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 	}
 
 	// Disable screen saver and monitor power management...
-	// [TODO] Always? Shouldn't this be an option?
-//	if (nMsg == WM_SYSCOMMAND && (wParam == SC_SCREENSAVE || wParam == SC_MONITORPOWER))
-//		return 0;
+	if (nMsg == WM_SYSCOMMAND && (wParam == SC_SCREENSAVE || wParam == SC_MONITORPOWER))
+		return 0;
 
 	// If we get a message for a dead window, something is wrong
 	if (pOSWindowWindows && pOSWindowWindows->m_bDestroyed) {
@@ -157,6 +156,11 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
 	m_WndClass.hInstance		= m_hInstance;
+	m_WndClass.hIcon			= nullptr;	// ... set below...
+	m_WndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
+	m_WndClass.hbrBackground	= nullptr;
+	m_WndClass.lpszMenuName		= nullptr;
+	m_WndClass.lpszClassName	= TEXT("PLFrontendOS_OSWindowWindows");
 
 	{ // Use the default process icon... if there's one...
 		// Get the filename of this process
@@ -167,7 +171,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		m_WndClass.hIcon = m_hIcon = ExtractIcon(m_hInstance, szModule, 0);
 	}
 
-	// If there's no default application icon, we're using the standard PixelLight icon
+	// If there's no default process icon, we're using the standard PixelLight icon
 	if (!m_WndClass.hIcon) {
 		// "GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
 
@@ -179,20 +183,11 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		GetModuleFileName(static_cast<HMODULE>(sMemoryBasicInformation.AllocationBase), szModule, sizeof(szModule));
 
 		// Finally, load the icon with the instance of this shared library
-		m_WndClass.hIcon		= LoadIcon(GetModuleHandle(szModule), MAKEINTRESOURCE(IDI_PL));
+		m_WndClass.hIcon = LoadIcon(GetModuleHandle(szModule), MAKEINTRESOURCE(IDI_PL));
 	}
-
-	m_WndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
-	m_WndClass.hbrBackground	= nullptr;
-	m_WndClass.lpszMenuName		= nullptr;
-	m_WndClass.lpszClassName	= TEXT("PLFrontendOS_OSWindowWindows");
 
 	// Register window class
-	if (!RegisterClass(&m_WndClass)) {
-		// Error registering window class
-	}
-
-	{ // Create the window
+	if (RegisterClass(&m_WndClass)) {
 		// Get parent widget
 		const HWND hParent = nullptr;
 
@@ -200,7 +195,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		const DWORD dwStyle   = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
 		const DWORD dwExtStyle = 0;
 
-		// Create widget
+		// Create the window
 		m_hWnd = CreateWindowExA(dwExtStyle,
 								 "PLFrontendOS_OSWindowWindows",
 								 "",
@@ -210,17 +205,19 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 								 0,
 								 GetModuleHandle(nullptr),
 								 this);
-		if (!m_hWnd) {
+		if (m_hWnd) {
+			// Do the frontend lifecycle thing - start
+			m_pFrontendOS->OnStart();
+
+			// Show and activate the window
+			ShowWindow(m_hWnd, SW_SHOW);
+		} else {
 			// Could not create widget
 			m_bDestroyed = true;
 		}
+	} else {
+		// Error registering window class
 	}
-
-	// Do the frontend lifecycle thing - start
-	m_pFrontendOS->OnStart();
-
-	// Show and activate the window
-	ShowWindow(m_hWnd, SW_SHOW);
 }
 
 /**

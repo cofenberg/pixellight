@@ -89,11 +89,13 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	#endif
 
 	// The frontend message loop
-	m_bQuit = false;
-	while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
-		// Redraw & ping
-		Redraw();
-		Ping();
+	if (m_pOSWindow->GetNativeWindowHandle()) {
+		m_bQuit = false;
+		while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+			// Redraw & ping
+			Redraw();
+			Ping();
+		}
 	}
 
 	// Destroy the OS specific window implementation

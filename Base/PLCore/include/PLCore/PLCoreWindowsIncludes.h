@@ -47,7 +47,6 @@
 #define NOMENUS
 #define NOICONS
 #define NOKEYSTATES
-#define NOSYSCOMMANDS
 #define NORASTEROPS
 #define OEMRESOURCE
 #define NOATOM
