@@ -128,7 +128,7 @@ bool Pipe::Create()
 	// Linux implementation
 	#ifdef LINUX
 		// Create a pipe
-		return (pipe(m_hPipe) == 0);
+		return (pipe(reinterpret_cast<int*>(m_hPipe)) == 0);
 	#endif
 }
 
