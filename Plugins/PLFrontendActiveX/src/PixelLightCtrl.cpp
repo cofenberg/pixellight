@@ -51,13 +51,17 @@ void PixelLightCtrl::Redraw()
 
 void PixelLightCtrl::Ping()
 {
-	// [TODO] Implement me
+	// Let the frontend update it's states
+	FrontendImpl::OnUpdate();
 }
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
 	// Let the frontend draw into it's window
 	FrontendImpl::OnDraw();
+
+	// Ping
+	Ping();
 
 	// Done
 	return S_OK;

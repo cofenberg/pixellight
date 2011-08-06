@@ -39,7 +39,7 @@ namespace PLFrontendOS {
 //[-------------------------------------------------------]
 //[ Ugly global variables                                 ]
 //[-------------------------------------------------------]
-bool g_bSignalSystenQuit = false;	/**< Does the OS asks us to shut down? */
+bool g_bSignalSystemQuit = false;	/**< Does the OS asks us to shut down? */
 
 
 //[-------------------------------------------------------]
@@ -171,8 +171,12 @@ bool OSWindowLinux::Ping()
 		}
 	}
 
+	// Let the frontend update it's states
+	if (!bQuit && !g_bSignalSystemQuit)
+		m_pFrontendOS->OnUpdate();
+
 	// Done
-	return (bQuit || g_bSignalSystenQuit);
+	return (bQuit || g_bSignalSystemQuit);
 }
 
 
@@ -190,7 +194,7 @@ void OSWindowLinux::SignalHandler(int nSignal)
 		// Interrupt (exit application by ctrl-c)
 		case SIGINT:
 			// The OS asks us to shut down
-			g_bSignalSystenQuit = true;
+			g_bSignalSystemQuit = true;
 
 			// Signal handler has done it's job, re-raise signal
 			signal(nSignal, SIG_DFL);
@@ -200,7 +204,7 @@ void OSWindowLinux::SignalHandler(int nSignal)
 		// Terminate (exit application)
 		case SIGTERM:
 			// The OS asks us to shut down
-			g_bSignalSystenQuit = true;
+			g_bSignalSystemQuit = true;
 
 			// Signal handler has done it's job, re-raise signal
 			signal(nSignal, SIG_DFL);

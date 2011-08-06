@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/System.h>
+#include <PLCore/Frontend/Frontend.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLInput/Input/Virtual/VirtualStandardController.h>
@@ -455,19 +456,19 @@ void EngineApplication::OnStop()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLRenderer::RendererApplication functions ]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Function that is called once per update loop
+*    Called to let the frontend update it's states
 */
-bool EngineApplication::OnUpdate()
+void EngineApplication::OnUpdate()
 {
+	// Call base implementation
+	SceneApplication::OnUpdate();
+
 	// Update input manager
 	InputManager::GetInstance()->Update();
-
-	// Call base implementation
-	return SceneApplication::OnUpdate();
 }
 
 
@@ -664,8 +665,12 @@ void EngineApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 void EngineApplication::OnLoadProgress(float fLoadProgress)
 {
 	// Call the 'update'-function so we can see the progress within the load screen
-	if (m_bHasLoadScreen)
-		Update();
+	if (m_bHasLoadScreen) {
+		// Redraw & ping the frontend
+		Frontend *pFrontend = GetFrontend();
+		if (pFrontend)
+			pFrontend->RedrawAndPing();
+	}
 }
 
 

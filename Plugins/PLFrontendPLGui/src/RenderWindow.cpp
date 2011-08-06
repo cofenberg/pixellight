@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGui/Gui/Base/Keys.h>
+#include <PLRenderer/Renderer/Surface.h>
 #include "PLFrontendPLGui/RenderWindow.h"
 
 
@@ -52,6 +53,8 @@ pl_implement_class(RenderWindow)
 *    Constructor
 */
 RenderWindow::RenderWindow(Renderer &cRenderer, Widget *pParent, const DisplayMode *pDisplayMode, bool bFullscreen) : PLGui::Window(pParent), WindowConnection(cRenderer, *this, this),
+	SlotOnTimer(this),
+	m_cTimer(*GetGui()),
 	m_bBackupAvailable(false)
 {
 	// There's no need to have a widget background because we're render into it
@@ -69,6 +72,13 @@ RenderWindow::RenderWindow(Renderer &cRenderer, Widget *pParent, const DisplayMo
 	// Set widget into fullscreen state?
 	if (bFullscreen)
 		SetWindowState(StateFullscreen);
+
+	// Connect to timer
+	m_cTimer.EventFire.Connect(SlotOnTimer);
+
+	// Start timer - An interval of 10 milliseconds should be enough
+	// [TODO] PLGui-timers: Currently, this timer will pollute the PLGui message system - the message processing will never stop because while processing the messages, the threaded PLGui timer fires again...
+	// m_cTimer.Start(10);
 }
 
 /**
@@ -77,6 +87,23 @@ RenderWindow::RenderWindow(Renderer &cRenderer, Widget *pParent, const DisplayMo
 */
 RenderWindow::~RenderWindow()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLGui::WidgetFunctions functions    ]
+//[-------------------------------------------------------]
+void RenderWindow::OnDraw(Graphics &cGraphics)
+{
+	// Call base implementation
+	Window::OnDraw(cGraphics);
+
+	// Get the renderer surface
+	Surface *pSurface = GetSurface();
+	if (pSurface) {
+		// Update the renderer surface
+		pSurface->Update();
+	}
 }
 
 
@@ -101,6 +128,8 @@ void RenderWindow::OnDisplayMode()
 *    Copy constructor
 */
 RenderWindow::RenderWindow(const RenderWindow &cSource) : PLGui::Window(cSource.GetParent()), WindowConnection(*cSource.GetRenderer(), *GetContentWidget()),
+	SlotOnTimer(this),
+	m_cTimer(*GetGui()),
 	m_bBackupAvailable(false)
 {
 	// No implementation because the copy constructor is never used
@@ -114,6 +143,16 @@ RenderWindow &RenderWindow::operator =(const RenderWindow &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
+}
+
+/**
+*  @brief
+*    Timer callback
+*/
+void RenderWindow::OnTimer()
+{
+	// Ask PLGui politly to update (and repaint) the widget
+	Redraw();
 }
 
 

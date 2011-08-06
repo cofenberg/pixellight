@@ -26,7 +26,6 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Tools.h>
-#include <PLCore/Tools/Stopwatch.h>
 #include <PLCore/Tools/Profiling.h>
 #include <PLCore/System/System.h>
 #include <PLGraphics/Image/Image.h>
@@ -469,25 +468,6 @@ const Vector2 &RendererBackend::GetTexelToPixelOffset() const
 
 void RendererBackend::Update()
 {
-	// Reset some statistics
-	m_sStatistics.nRenderStateChanges		= 0;
-	m_sStatistics.nSamplerStateChanges		= 0;
-	m_sStatistics.nDrawPrimitivCalls		= 0;
-	m_sStatistics.nVertices					= 0;
-	m_sStatistics.nTriangles				= 0;
-	m_sStatistics.nTextureBufferBinds		= 0;
-	m_sStatistics.nVertexBuffersSetupTime	= 0;
-	m_sStatistics.nVertexBufferLocks		= 0;
-	m_sStatistics.nIndexBuffersSetupTime	= 0;
-	m_sStatistics.nIndexBufferLocks			= 0;
-
-	// Start the stopwatch
-	Stopwatch cStopwatch(true);
-
-	// Update renderer surfaces
-	for (uint32 i=0; i<m_lstSurfaces.GetNumOfElements(); i++)
-		m_lstSurfaces[i]->Update();
-
 	// Update profiling
 	Profiling *pProfiling = Profiling::GetInstance();
 	if (pProfiling->IsActive()) {
@@ -500,7 +480,7 @@ void RendererBackend::Update()
 		pProfiling->Set(sAPI, "Draw primitive calls",			sS.nDrawPrimitivCalls);
 		pProfiling->Set(sAPI, "Current triangles",				sS.nTriangles);
 		pProfiling->Set(sAPI, "Current vertices",				sS.nVertices);
-		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				cStopwatch.GetMilliseconds()));
+		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				sS.nRenderingTime));
 		// Texture buffers
 		pProfiling->Set(sAPI, "Number of texture buffers",		sS.nTextureBuffersNum);
 		const float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
@@ -522,6 +502,19 @@ void RendererBackend::Update()
 		pProfiling->Set(sAPI, "Uniform buffers memory",			String::Format("%g KB (%g MB)",			fUniformBufferMemKB, fUniformBufferMemKB/1024.0f));
 		pProfiling->Set(sAPI, "Uniform buffers update time",	String::Format("%.3f ms (%d locks)",	sS.nUniformBuffersSetupTime/1000.0f, sS.nUniformBufferLocks));
 	}
+
+	// Reset some statistics
+	m_sStatistics.nRenderStateChanges		= 0;
+	m_sStatistics.nSamplerStateChanges		= 0;
+	m_sStatistics.nDrawPrimitivCalls		= 0;
+	m_sStatistics.nVertices					= 0;
+	m_sStatistics.nTriangles				= 0;
+	m_sStatistics.nRenderingTime			= 0;
+	m_sStatistics.nTextureBufferBinds		= 0;
+	m_sStatistics.nVertexBuffersSetupTime	= 0;
+	m_sStatistics.nVertexBufferLocks		= 0;
+	m_sStatistics.nIndexBuffersSetupTime	= 0;
+	m_sStatistics.nIndexBufferLocks			= 0;
 }
 
 void RendererBackend::Reset()

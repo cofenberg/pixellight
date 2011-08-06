@@ -265,6 +265,12 @@ void FrontendOpenGL::DrawGL()
 //[-------------------------------------------------------]
 //[ Protected virtual AbstractFrontend functions          ]
 //[-------------------------------------------------------]
+void FrontendOpenGL::OnSize()
+{
+	// Adjust size of scene
+	ResizeGL();
+}
+
 void FrontendOpenGL::OnDraw()
 {
 	// Draw OpenGL scene
@@ -276,19 +282,16 @@ void FrontendOpenGL::OnDraw()
 			SwapBuffers(m_hDC);
 	#endif
 
-	// Rotate our rectangle
-	m_fAngle += 0.1f;	// To keep things simple in here, no framerate independent timing
-	if (m_fAngle >= 360.0f)
-		m_fAngle -= 360.0f;
-
 	// Issue a redraw request
 	Redraw();
 }
 
-void FrontendOpenGL::OnSize()
+void FrontendOpenGL::OnUpdate()
 {
-	// Adjust size of scene
-	ResizeGL();
+	// Rotate our rectangle
+	m_fAngle += 0.1f;	// To keep things simple in here, no framerate independent timing
+	if (m_fAngle >= 360.0f)
+		m_fAngle -= 360.0f;
 }
 
 

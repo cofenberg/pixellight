@@ -173,6 +173,9 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 		{
 			// Let the frontend draw into it's window
 			FrontendImpl::OnDraw();
+
+			// Ping
+			Ping();
 			return 0;
 		}
 
@@ -206,7 +209,8 @@ void nsPluginInstance::Redraw()
 
 void nsPluginInstance::Ping()
 {
-	// [TODO] Implement me
+	// Let the frontend update it's states
+	FrontendImpl::OnUpdate();
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

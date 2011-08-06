@@ -117,9 +117,9 @@ void Application::OnInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RendererApplication functions ]
+//[ Private virtual PLCore::AbstractFrontend functions    ]
 //[-------------------------------------------------------]
-bool Application::OnUpdate()
+void Application::OnUpdate()
 {
 	// One important word at the beginning: DON'T COPYCAT THIS!
 	// The following is 'just' a simple demonstration how the scene graph 'can' be used. It's
@@ -128,34 +128,28 @@ bool Application::OnUpdate()
 	// added to your scene node (in this case 'the white light') for this job!
 
 	// Call base implementation
-	if (EngineApplication::OnUpdate()) {
-		// Get the scene container with our 'concrete scene'
-		SceneContainer *pSceneContainer = GetScene();
-		if (pSceneContainer) {
-			// Get the scene node with the name 'Light' (our 'white light')
-			SceneNode *pLightSceneNode = pSceneContainer->GetByName("Light");
-			if (pLightSceneNode) {
-				// This variable is used for the light animation. Its just static you keep the implementation
-				// for a good sample overview completely within this function.
-				static float fLightTimer = 0.0f;
+	EngineApplication::OnUpdate();
 
-				// We set the current light position using the RTTI class interface. This is quite comfortable
-				// and universal because you haven't to care about the concrete class type - just set the
-				// variable values. For performance critical situations it's recommened to avoid using this RTTI
-				// functions to set your variables and use the conrete provided class interfaces instead.
-				pLightSceneNode->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
-					Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
+	// Get the scene container with our 'concrete scene'
+	SceneContainer *pSceneContainer = GetScene();
+	if (pSceneContainer) {
+		// Get the scene node with the name 'Light' (our 'white light')
+		SceneNode *pLightSceneNode = pSceneContainer->GetByName("Light");
+		if (pLightSceneNode) {
+			// This variable is used for the light animation. Its just static you keep the implementation
+			// for a good sample overview completely within this function.
+			static float fLightTimer = 0.0f;
 
-				// Update the light timer by using the time difference between the last and the current frame
-				fLightTimer += Timing::GetInstance()->GetTimeDifference();
-			}
+			// We set the current light position using the RTTI class interface. This is quite comfortable
+			// and universal because you haven't to care about the concrete class type - just set the
+			// variable values. For performance critical situations it's recommened to avoid using this RTTI
+			// functions to set your variables and use the conrete provided class interfaces instead.
+			pLightSceneNode->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
+				Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
+
+			// Update the light timer by using the time difference between the last and the current frame
+			fLightTimer += Timing::GetInstance()->GetTimeDifference();
 		}
-
-		// Done
-		return true;
-	} else {
-		// Not updated
-		return false;
 	}
 }
 

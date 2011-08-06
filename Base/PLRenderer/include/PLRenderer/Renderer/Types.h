@@ -486,6 +486,7 @@ struct Statistics {
 	PLCore::uint32 nDrawPrimitivCalls;			/**< Number of draw primitiv calls */
 	PLCore::uint32 nVertices;					/**< Number of rendered vertices */
 	PLCore::uint32 nTriangles;					/**< Number of rendered triangles */
+	PLCore::uint32 nRenderingTime;				/**< Rendering time in milliseconds */
 	// Texture buffers
 	PLCore::uint32 nTextureBuffersNum;			/**< Number of texture buffers */
 	PLCore::uint64 nTextureBuffersMem;			/**< Memory in bytes the texture buffers require */

@@ -28,9 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
-#include <PLCore/Container/List.h>
-#include <PLCore/Container/HashMap.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLMath/Vector2i.h>
 #include <PLCore/Base/Object.h>

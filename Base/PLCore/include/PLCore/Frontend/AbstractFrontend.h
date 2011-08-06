@@ -47,15 +47,27 @@ class AbstractFrontend {
 	public:
 		/**
 		*  @brief
+		*    Called when the window size has been changed
+		*/
+		virtual void OnSize() = 0;
+
+		/**
+		*  @brief
 		*    Called to let the frontend draw into it's window
 		*/
 		virtual void OnDraw() = 0;
 
 		/**
 		*  @brief
-		*    Called when the window size has been changed
+		*    Called to let the frontend update it's states
+		*
+		*  @remarks
+		*    You can use this method to do work you have to perform on a regular basis. It's
+		*    recommended to keep the work done within the implementation as compact as possible.
+		*    Don't use this function to perform 'polling'-everything, use events or if required
+		*    for example timers or threads instead.
 		*/
-		virtual void OnSize() = 0;
+		virtual void OnUpdate() = 0;
 
 
 	//[-------------------------------------------------------]

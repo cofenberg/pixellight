@@ -97,8 +97,9 @@ class FrontendPixelLight : public Frontend {
 	//[ Protected virtual AbstractFrontend functions          ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual void OnDraw() override;
 		PLCORE_API virtual void OnSize() override;
+		PLCORE_API virtual void OnDraw() override;
+		PLCORE_API virtual void OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

@@ -165,22 +165,22 @@ void ScriptApplication::OnDeInit()
 
 
 //[-------------------------------------------------------]
-//[ Proteced virtual PLRenderer::RendererApplication functions ]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Function that is called once per update loop
+*    Called to let the frontend update it's states
 */
-bool ScriptApplication::OnUpdate()
+void ScriptApplication::OnUpdate()
 {
+	// Call base implementation
+	EngineApplication::OnUpdate();
+
 	// Is there a script? If so, do also check whether or not our optional global script function is there.
 	if (m_pScript && m_pScript->IsGlobalFunction(OnUpdateFunction.Get())) {
 		// Call the update script function
 		FuncScriptPtr<void>(m_pScript, OnUpdateFunction.Get()).Call(Params<void>());
 	}
-
-	// Call base implementation
-	return EngineApplication::OnUpdate();
 }
 
 

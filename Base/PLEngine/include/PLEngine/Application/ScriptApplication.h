@@ -171,23 +171,19 @@ class ScriptApplication : public EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLRenderer::RendererApplication functions ]
+	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
 		*  @brief
-		*    Function that is called once per update loop
-		*
-		*  @return
-		*    'true' when the update was performed, else 'false'
-		*    (an implementation has blocked the update due some own criterion)
+		*    Called to let the frontend update it's states
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Call optional <OnUpdateFunction> script function
 		*    - Everything that EngineApplication::OnUpdate() does
+		*    - Call optional <OnUpdateFunction> script function
 		*/
-		PL_API virtual bool OnUpdate() override;
+		PL_API virtual void OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

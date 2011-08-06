@@ -167,6 +167,9 @@ void Frontend::Ping()
 		// Process all waiting messages
 		Gui::GetSystemGui()->ProcessMessages();
 	}
+
+	// Let the frontend update it's states
+	OnUpdate();
 }
 
 

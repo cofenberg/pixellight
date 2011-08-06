@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Stopwatch.h>
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Renderer/SurfaceHandler.h"
 #include "PLRenderer/Renderer/SurfacePainter.h"
@@ -131,6 +132,9 @@ void Surface::Update()
 {
 	// Is this surface active and is there a surface painter?
 	if (m_bActive && m_pPainter) {
+		// Start the stopwatch
+		Stopwatch cStopwatch(true);
+
 		// Emit paint begin event
 		EventPaintBegin();
 
@@ -148,6 +152,9 @@ void Surface::Update()
 
 		// Emit paint end event
 		EventPaintEnd();
+
+		// Update statistics
+		const_cast<Statistics&>(m_pRenderer->GetStatistics()).nRenderingTime += cStopwatch.GetMilliseconds();	// [TODO] Casting away the const isn't nice!
 	}
 }
 

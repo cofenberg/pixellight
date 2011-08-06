@@ -66,11 +66,10 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetPainter,		pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",																																																																																															"")
-			pl_method_1(SetPainter,		pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",																																																																																												"")
-			pl_method_0(IsFullscreen,	pl_ret_type(bool),															"Returns whether or not the main window is currently fullscreen or not. Returns 'true' if the main window is currently fullscreen, else 'false'.",																																																																																										"")
-			pl_method_1(SetFullscreen,	pl_ret_type(void),							bool,							"Sets whether or not the main window is currently fullscreen or not. 'true' as first parameter if the main window is currently fullscreen, else 'false'.",																																																																																								"")
-			pl_method_1(Update,			pl_ret_type(bool),							bool,							"Update the application. Force update at once? as first parameter (do this only if you really need it!). Returns 'true' when the update was performed, else 'false' (maybe there's a frame rate limitation and the update wasn't forced). This method is called continously from the main loop of the application. It is called either by the OnRun() method of an Application, or from the outside, if the application is embedded in another application's main loop (which is the case for e.g. browser plugins).",	"")
+			pl_method_0(GetPainter,		pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",								"")
+			pl_method_1(SetPainter,		pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",					"")
+			pl_method_0(IsFullscreen,	pl_ret_type(bool),															"Returns whether or not the main window is currently fullscreen or not. Returns 'true' if the main window is currently fullscreen, else 'false'.",			"")
+			pl_method_1(SetFullscreen,	pl_ret_type(void),							bool,							"Sets whether or not the main window is currently fullscreen or not. 'true' as first parameter if the main window is currently fullscreen, else 'false'.",	"")
 		#endif
 	pl_class_end
 
@@ -139,25 +138,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*/
 		PLRENDERER_API void SetFullscreen(bool bFullscreen);
 
-		/**
-		*  @brief
-		*    Update application
-		*
-		*  @param[in] bForceUpdate
-		*    Force update at once? (do this ONLY if you REALLY need it!)
-		*
-		*  @return
-		*    'true' when the update was performed, else 'false'
-		*    (maybe there's a frame rate limitation and the update wasn't forced)
-		*
-		*  @remarks
-		*    This method is called continously from the main loop of the application.
-		*    It is called either by the OnRun() method of an Application, or from the outside,
-		*    if the application is embedded in another application's main loop (which is the
-		*    case for e.g. browser plugins).
-		*/
-		PLRENDERER_API bool Update(bool bForceUpdate = false);
-
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -196,7 +176,26 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Called to let the frontend draw into it's window
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLCore::FrontendApplication::OnDraw() does
+		*/
 		PLRENDERER_API virtual void OnDraw() override;
+
+		/**
+		*  @brief
+		*    Called to let the frontend update it's states
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLCore::FrontendApplication::OnUpdate() does
+		*    - Update renderer context
+		*/
+		PLRENDERER_API virtual void OnUpdate() override;
 
 
 	//[-------------------------------------------------------]
@@ -221,27 +220,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*    - Part of the application framework initialization function "OnStart()"
 		*/
 		PLRENDERER_API virtual void OnCreatePainter();
-
-		/**
-		*  @brief
-		*    Function that is called once per update loop
-		*
-		*  @return
-		*    'true' when the update was performed, else 'false'
-		*    (an implementation has blocked the update due some own criterion)
-		*
-		*  @remarks
-		*    You can use this function to do work you have to to within each frame. It's
-		*    recommended to keep the work done within the implementation as compact as possible.
-		*    Don't use this function to perform 'polling'-everything, use events or if required
-		*    for example timers instead.
-		*
-		*  @note
-		*    - The default implementation updates for example the renderer context, so don't
-		*      forget to call this function when overwriting it!
-		*    - Don't call this function directly, use 'Update()' instead
-		*/
-		PLRENDERER_API virtual bool OnUpdate();
 
 
 	//[-------------------------------------------------------]

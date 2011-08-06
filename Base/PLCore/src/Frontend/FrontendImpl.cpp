@@ -138,13 +138,6 @@ void FrontendImpl::OnDestroy()
 //[-------------------------------------------------------]
 //[ Protected virtual AbstractFrontend functions          ]
 //[-------------------------------------------------------]
-void FrontendImpl::OnDraw()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDraw();
-}
-
 /**
 *  @brief
 *    Called when the window size has been changed
@@ -154,6 +147,20 @@ void FrontendImpl::OnSize()
 	// Call virtual function from frontend
 	if (m_pFrontend)
 		m_pFrontend->OnSize();
+}
+
+void FrontendImpl::OnDraw()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDraw();
+}
+
+void FrontendImpl::OnUpdate()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnUpdate();
 }
 
 

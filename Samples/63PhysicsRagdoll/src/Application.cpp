@@ -234,7 +234,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::OnInit()
 {
@@ -262,9 +262,9 @@ void Application::OnInit()
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RendererApplication functions ]
+//[ Private virtual PLCore::AbstractFrontend functions    ]
 //[-------------------------------------------------------]
-bool Application::OnUpdate()
+void Application::OnUpdate()
 {
 	// One important word at the beginning: DON'T COPYCAT THIS!
 	// The following is 'just' a simple demonstration how the scene graph 'can' be used. It's
@@ -272,38 +272,32 @@ bool Application::OnUpdate()
 	// Its quite to intricate, inflexible and not performant.
 
 	// Call base implementation
-	if (EngineApplication::OnUpdate()) {
-		// Check your pointer to the ragdoll
-		if (m_pRagdoll && (m_bApplyForce || m_bTorqueForce)) {
-			Body *pBody = GetPhysicsBody();
-			if (pBody && pBody->GetWorld().IsSimulationActive()) {
-				// Apply force?
-				if (m_bApplyForce) {
-					Vector3 vPos;
-					pBody->GetPosition(vPos);
-					Vector3 vDir = (Vector3(0.3f, 4.0f, 7.1f) - vPos)*16;
+	EngineApplication::OnUpdate();
 
-					// Add a force to the start position of the box
-					pBody->AddForce(vDir);
+	// Check your pointer to the ragdoll
+	if (m_pRagdoll && (m_bApplyForce || m_bTorqueForce)) {
+		Body *pBody = GetPhysicsBody();
+		if (pBody && pBody->GetWorld().IsSimulationActive()) {
+			// Apply force?
+			if (m_bApplyForce) {
+				Vector3 vPos;
+				pBody->GetPosition(vPos);
+				Vector3 vDir = (Vector3(0.3f, 4.0f, 7.1f) - vPos)*16;
 
-					// Update the line scene node
-					if (m_pLine)
-						m_pLine->SetAttribute("EndPosition", vPos.ToString());
-				}
+				// Add a force to the start position of the box
+				pBody->AddForce(vDir);
 
-				// Apply torque?
-				if (m_bTorqueForce) {
-					// Add a torque
-					pBody->AddTorque(Vector3(25.5f, 6.0f, 4.5f));
-				}
+				// Update the line scene node
+				if (m_pLine)
+					m_pLine->SetAttribute("EndPosition", vPos.ToString());
+			}
+
+			// Apply torque?
+			if (m_bTorqueForce) {
+				// Add a torque
+				pBody->AddTorque(Vector3(25.5f, 6.0f, 4.5f));
 			}
 		}
-
-		// Done
-		return true;
-	} else {
-		// Not updated
-		return false;
 	}
 }
 

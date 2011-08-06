@@ -1,3 +1,12 @@
+>> 06.08.2011
+[CO]
+- Removed "RendererApplication::Update()"
+- "RendererApplication::OnUpdate()" is now an overridden method of "PLCore::AbstractFrontend"
+- "RendererBackend::Update()" no longer updates (= redraws) the renderer surfaces
+- "RendererApplication::OnDraw()" now only updates the primary frontend renderer surface, while "update" only means "draw"
+
+
+
 >> 04.08.2011
 [CO]
 - Moved "RenderApplication" from "PLEngine" into "PLRenderer". It's now finally possible to use RenderApplication for applications just using PLRenderer... until now

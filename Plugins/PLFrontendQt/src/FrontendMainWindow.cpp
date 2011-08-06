@@ -102,6 +102,9 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
 		// Ask Qt politly to update (and repaint) the widget
 		update();
+
+		// Let the frontend update it's states
+		m_pFrontendQt->OnUpdate();
 	}
 }
 

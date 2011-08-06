@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGui/Widgets/Widget.h>
+#include <PLGui/Gui/Resources/Timer.h>
 #include "PLFrontendPLGui/WindowConnection.h"
 
 
@@ -56,6 +57,8 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLFRONTENDPLGUI_RTTI_EXPORT, RenderWidget, "PLFrontendPLGui", PLGui::Widget, "GUI widget with implements a renderer surface")
+		// Slots
+		pl_slot_0(OnTimer,	"Timer callback",	"");
 	pl_class_end
 
 
@@ -81,6 +84,13 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 		*    Destructor
 		*/
 		PLFRONTENDPLGUI_API virtual ~RenderWidget();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLGui::WidgetFunctions functions    ]
+	//[-------------------------------------------------------]
+	protected:
+		PLFRONTENDPLGUI_API virtual void OnDraw(PLGui::Graphics &cGraphics);
 
 
 	//[-------------------------------------------------------]
@@ -121,11 +131,18 @@ class RenderWidget : public PLGui::Widget, public WindowConnection {
 		*/
 		RenderWidget &operator =(const RenderWidget &cSource);
 
+		/**
+		*  @brief
+		*    Timer callback
+		*/
+		void OnTimer();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		PLGui::Timer	 m_cTimer;		/**< Timer */
 		bool			 m_bBackupAvailable;
 		PLMath::Vector2i m_vBackupPos;
 		PLMath::Vector2i m_vBackupSize;

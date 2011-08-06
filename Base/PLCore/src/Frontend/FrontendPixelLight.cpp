@@ -164,6 +164,13 @@ void FrontendPixelLight::OnDestroy()
 //[-------------------------------------------------------]
 //[ Protected virtual AbstractFrontend functions          ]
 //[-------------------------------------------------------]
+void FrontendPixelLight::OnSize()
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnSize();
+}
+
 void FrontendPixelLight::OnDraw()
 {
 	// Call virtual function from application
@@ -171,11 +178,11 @@ void FrontendPixelLight::OnDraw()
 		m_pFrontendApplication->OnDraw();
 }
 
-void FrontendPixelLight::OnSize()
+void FrontendPixelLight::OnUpdate()
 {
 	// Call virtual function from application
 	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
-		m_pFrontendApplication->OnSize();
+		m_pFrontendApplication->OnUpdate();
 }
 
 

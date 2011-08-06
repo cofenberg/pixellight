@@ -274,6 +274,10 @@ bool OSWindowWindows::Ping()
 		DispatchMessage(&sMsg);
 	}
 
+	// Let the frontend update it's states
+	if (!bQuit)
+		m_pFrontendOS->OnUpdate();
+
 	// Done
 	return bQuit;
 }

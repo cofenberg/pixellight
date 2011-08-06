@@ -126,17 +126,17 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGui::GuiApplication functions       ]
+	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnInit() override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::RendererApplication functions ]
+	//[ Private virtual PLCore::AbstractFrontend functions    ]
 	//[-------------------------------------------------------]
 	private:
-		virtual bool OnUpdate() override;
+		virtual void OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

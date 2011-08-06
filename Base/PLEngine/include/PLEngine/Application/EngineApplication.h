@@ -366,19 +366,19 @@ class EngineApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLRenderer::RendererApplication functions ]
+	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
 		*  @brief
-		*    Function that is called once per update loop
+		*    Called to let the frontend update it's states
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Update input manager
 		*    - Everything that PLScene::SceneApplication::OnUpdate() does
+		*    - Update input manager
 		*/
-		PL_API virtual bool OnUpdate() override;
+		PL_API virtual void OnUpdate() override;
 
 
 	//[-------------------------------------------------------]

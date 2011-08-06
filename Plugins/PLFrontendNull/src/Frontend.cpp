@@ -75,8 +75,9 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 
 		// The frontend main loop
 		while (m_cFrontend.IsRunning()) {
-			// Redraw
+			// Redraw & ping
 			Redraw();
+			Ping();
 		}
 
 		// Do the frontend lifecycle thing - de-initialize
@@ -105,7 +106,8 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
-	// Nothing to do in here
+	// Let the frontend update it's states
+	OnUpdate();
 }
 
 

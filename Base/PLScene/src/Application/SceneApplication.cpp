@@ -138,14 +138,17 @@ void SceneApplication::OnStop()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLRenderer::RendererApplication functions ]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Function that is called once per update loop
+*    Called to let the frontend update it's states
 */
-bool SceneApplication::OnUpdate()
+void SceneApplication::OnUpdate()
 {
+	// Call base implementation
+	RendererApplication::OnUpdate();
+
 	// Update the root scene container - we need to do this before drawing the first frame
 	if (m_pSceneContext) {
 		m_pSceneContext->Cleanup();
@@ -153,9 +156,6 @@ bool SceneApplication::OnUpdate()
 		// Update the scene context
 		m_pSceneContext->Update();
 	}
-
-	// Call base implementation
-	return RendererApplication::OnUpdate();
 }
 
 

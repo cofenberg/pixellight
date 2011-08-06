@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Tools/Timing.h"
+#include "PLCore/System/System.h"
 #include "PLCore/Frontend/FrontendApplication.h"
 
 
@@ -83,6 +85,15 @@ FrontendApplication::~FrontendApplication()
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Called when the window size has been changed
+*/
+void FrontendApplication::OnSize()
+{
+	// No default implementation
+}
+
+/**
+*  @brief
 *    Called to let the frontend draw into it's window
 */
 void FrontendApplication::OnDraw()
@@ -92,11 +103,20 @@ void FrontendApplication::OnDraw()
 
 /**
 *  @brief
-*    Called when the window size has been changed
+*    Called to let the frontend update it's states
 */
-void FrontendApplication::OnSize()
+void FrontendApplication::OnUpdate()
 {
-	// No default implementation
+	// Check if we're allowed to perform an update right now
+	uint64 nTimeToWait = 0;
+	if (!Timing::GetInstance()->Update(&nTimeToWait)) {
+		// [TODO] This in here might also be the job of the frontend
+		// Let the system some time to process other system tasks etc.
+		// If this isn't done the CPU usage is always up to 100%!!
+		// Please note that there's no guaranty that the resulting FPS always reaches
+		// exactly the maximum FPS limit.
+		// System::GetInstance()->Sleep(nTimeToWait);
+	}
 }
 
 

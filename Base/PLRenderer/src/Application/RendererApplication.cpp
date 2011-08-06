@@ -148,38 +148,6 @@ void RendererApplication::SetFullscreen(bool bFullscreen)
 	*/
 }
 
-/**
-*  @brief
-*    Update application
-*/
-bool RendererApplication::Update(bool bForceUpdate)
-{
-	// Force or is it time for an update?
-	if (bForceUpdate) {
-		// Update timing
-		Timing::GetInstance()->Update();
-
-		// Call the application's update function
-		return OnUpdate();
-	} else {
-		// Check if we're allowed to perform an update right now
-		uint64 nTimeToWait = 0;
-		if (Timing::GetInstance()->Update(&nTimeToWait)) {
-			// Call the application's update function
-			return OnUpdate();
-		} else {
-			// Let the system some time to process other system tasks etc.
-			// If this isn't done the CPU usage is always up to 100%!!
-			// Please note that there's no guaranty that the resulting FPS always reaches
-			// exactly the maximum FPS limit.
-			System::GetInstance()->Sleep(nTimeToWait);
-
-			// Not updated
-			return false;
-		}
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -246,7 +214,26 @@ void RendererApplication::OnStop()
 //[-------------------------------------------------------]
 void RendererApplication::OnDraw()
 {
-	Update();
+	// Get the surface
+	Surface *pSurface = GetSurface();
+	if (pSurface) {
+		// Update the surface
+		pSurface->Update();
+	}
+}
+
+/**
+*  @brief
+*    Called to let the frontend update it's states
+*/
+void RendererApplication::OnUpdate()
+{
+	// Call base implementation
+	FrontendApplication::OnUpdate();
+
+	// Update renderer context
+	if (m_pRendererContext)
+		m_pRendererContext->Update();
 }
 
 
@@ -317,20 +304,6 @@ void RendererApplication::OnCreatePainter()
 		// Create and set the surface painter
 		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(m_sSurfacePainter));
 	}
-}
-
-/**
-*  @brief
-*    Function that is called once per update loop
-*/
-bool RendererApplication::OnUpdate()
-{
-	// Update renderer context
-	if (m_pRendererContext)
-		m_pRendererContext->Update();
-
-	// Done
-	return true;
 }
 
 

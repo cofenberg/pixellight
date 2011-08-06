@@ -8,6 +8,7 @@
 - MS Windows: If a process has an own icon, "PLFrontendOS" is now using it instead of the standard PixelLight icon
 - "PLFrontendQt": Removed unused "Application::ScanFSArchives()"-method
 - Added "AbstractFrontend", same purpose as "AbstractLifecycle" => one and the same interface for the same task
+- "AbstractFrontend": Added "OnUpdate()"-method. Drawing and updating states are now two distinct things for the frontend & application framework.
 
 
 

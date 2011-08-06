@@ -110,22 +110,16 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::RendererApplication functions ]
+//[ Private virtual PLCore::AbstractFrontend functions    ]
 //[-------------------------------------------------------]
-bool Application::OnUpdate()
+void Application::OnUpdate()
 {
 	// Call base implementation
-	if (EngineApplication::OnUpdate()) {
-		// Perform the picking
-		if (m_pMyPicking)
-			m_pMyPicking->PerformPicking();
+	EngineApplication::OnUpdate();
 
-		// Done
-		return true;
-	} else {
-		// Not updated
-		return false;
-	}
+	// Perform the picking
+	if (m_pMyPicking)
+		m_pMyPicking->PerformPicking();
 }
 
 
