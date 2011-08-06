@@ -106,7 +106,7 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_library(nppl3d SHARED)
+build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLFrontend)
 
 ##################################################
