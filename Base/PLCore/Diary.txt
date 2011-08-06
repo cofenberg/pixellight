@@ -3,6 +3,7 @@
 - Linux: Changed the type of "handle" from "int" to "unsigned long" (shouldn't really be a difference in the used bit length... even on 64 bit "long" is usually only 32 bit long...)
 - Added "Core::ScanRuntimeDirectoryPlugins()" because the same stuff was done in "CoreApplication::OnInitPlugins()", "PLCore::Frontend::CreateInstance()", the sample "40ScriptHelloWorld"
   not using the application framework at all, "PLFrontendQt::Application::InitCore()" and so on.
+- Added "Core::ScanRuntimeDirectoryData()", more stuff not only useful for "CoreApplication::OnInitData()"
 
 
 

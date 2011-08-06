@@ -99,6 +99,21 @@ class Core {
 		*/
 		PLCORE_API static void ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading = true);
 
+		/**
+		*  @brief
+		*    Scan PL-runtime directory for compatible data and register it
+		*
+		*  @remarks
+		*    The implementation does the following tasks:
+		*    - Add PixelLight runtime directory "Data/" as a base directory to the loadable manager
+		*    - Scan for data in PixelLight runtime directory "Data/"
+		*
+		*  @see
+		*    - LoadableManager::AddBaseDir()
+		*    - LoadableManager::ScanPackages()
+		*/
+		PLCORE_API static void ScanRuntimeDirectoryData();
+
 
 };
 

@@ -269,10 +269,8 @@ void Application::InitCore(bool useRuntimeDir)
 		// Scan PL-runtime directory for compatible plugins and load them in
 		Core::ScanRuntimeDirectoryPlugins();
 
-		// Get PixelLight runtime directory
-		String sPLDirectory = Core::GetRuntimeDirectory();
-		if (sPLDirectory.GetLength())
-			ScanFSArchives(sPLDirectory + "/Data/");
+		// Scan PL-runtime directory for compatible data and register it
+		Core::ScanRuntimeDirectoryData();
 	}
 }
 

@@ -710,31 +710,22 @@ void CoreApplication::OnInitData()
 {
 	// Is '.' (= the current directory) already a base directory? If not, add it right now...
 	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
-	if (!pLoadableManager->IsBaseDir("."))
-		pLoadableManager->AddBaseDir(".");
+	if (!pLoadableManager->IsBaseDir('.'))
+		pLoadableManager->AddBaseDir('.');
 
 	// Scan for packages in current "Data" directory
-	LoadableManager::GetInstance()->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
+	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
 
 	// Is the application directory already a base directory? If not, add it right now...
 	if (!pLoadableManager->IsBaseDir(m_cApplicationContext.GetAppDirectory()))
 		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
 
 	// Scan for packages in application's "Data" directory
-	LoadableManager::GetInstance()->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
+	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
 
-	// Use PixelLight runtime?
-	if (m_bUseRuntime) {
-		// Get PixelLight runtime directory
-		String sPLDirectory = Core::GetRuntimeDirectory();
-		if (sPLDirectory.GetLength()) {
-			// Add runtime directory
-			pLoadableManager->AddBaseDir(sPLDirectory + "/Data/");
-
-			// Add packages from PixelLight runtime directory
-			LoadableManager::GetInstance()->ScanPackages(sPLDirectory + "/Data/");
-		}
-	}
+	// Scan PL-runtime directory for compatible data and register it?
+	if (m_bUseRuntime)
+		Core::ScanRuntimeDirectoryData();
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");

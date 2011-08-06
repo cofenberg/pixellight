@@ -28,6 +28,7 @@
 #include "PLCore/File/Directory.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Registry/Registry.h"
+#include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Core.h"
 
 
@@ -144,6 +145,23 @@ void Core::ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading)
 
 		// Scan for plugins in PixelLight runtime directory
 		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive, bDelayedPluginLoading);
+	}
+}
+
+/**
+*  @brief
+*    Scan PL-runtime directory for compatible data and register it
+*/
+void Core::ScanRuntimeDirectoryData()
+{
+	// Get PixelLight runtime directory
+	const String sPLDirectory = GetRuntimeDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Add runtime directory
+		LoadableManager::GetInstance()->AddBaseDir(sPLDirectory + "/Data/");
+
+		// Add packages from PixelLight runtime directory
+		LoadableManager::GetInstance()->ScanPackages(sPLDirectory + "/Data/");
 	}
 }
 
