@@ -114,10 +114,15 @@ handle OSWindowLinux::GetNativeWindowHandle() const
 void OSWindowLinux::Redraw()
 {
 	if (m_nNativeWindowHandle) {
-		// [TODO] Review: Would be nice if "OnDraw()" would "only" be called by the OS throught it's event system.... in here, the OS is the chef :D
-		// Call directly OnDraw. It isn't needed to go via the X11 event loop to trigger an redraw
-		// (if done via the X11 event loop, then the window reacts slow on close and Focus change events)
-		m_pFrontendOS->OnDraw();
+		// Send expose event
+		XEvent sEvent;
+		sEvent.type			 = Expose;
+		sEvent.xany.window	 = m_nNativeWindowHandle;
+		sEvent.xexpose.count = 0;
+		XSendEvent(m_pDisplay, m_nNativeWindowHandle, False, 0, &sEvent);
+
+		// Do it!
+		XSync(m_pDisplay, False);
 	}
 }
 
@@ -134,8 +139,7 @@ bool OSWindowLinux::Ping()
 		// Process message
 		switch (sXEvent.type) {
 			case Expose:
-				if (sXEvent.xexpose.count)
-					m_pFrontendOS->OnDraw();
+				m_pFrontendOS->OnDraw();
 				break;
 
 			case DestroyNotify:
