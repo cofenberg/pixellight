@@ -4,25 +4,25 @@ The PixelLight SDK comes with multiple optional plugins.
 
 
 
-\section{PLFrontendQt}
+\section{Frontends}
+Applications, including their lifecyle, are controlled by frontends. The SDK provides the choice between
 \begin{itemize}
-\item{Adapter project to bring PixelLight and Qt\footnote{Qt is a cross-platform application and UI framework, \url{http://qt.nokia.com/}} together, use PixelLight to e.g. render into one or multiple Qt widgets}
+\item{A null frontend without any GUI involved, useful for example when only rendering into background buffers}
+\item{A lightweight native OS frontend}
+\item{A frontend for PixelLight's own GUI system (uniform for OS \& ingame) perfectly integrated into the complete system\footnote{Stuff like scripting doesn't need wrappers, it just works out of the box thank's to the RTTI}}
+\item{A frontend for Qt\footnote{Qt is a cross-platform application and UI framework, \url{http://qt.nokia.com/}}}
+\item{Experimental frontends for Mozilla and ActiveX so you can run your PixelLight applications also for example within a browser window}
+\end{itemize}
+
+
+\paragraph{PLFrontendQt}
+\begin{itemize}
+\item{Frontend and adapter project to bring PixelLight and Qt together, use PixelLight to e.g. render into one or multiple Qt widgets}
 \item{Static adapter class for mapping Qt strings to PixelLight strings and vice versa}
 \end{itemize}
 
 
-
-
-\section{SPARK\_PL}
-\begin{itemize}
-\item{Integrates the free open source particle engine \emph{SPARK} (\url{http://spark.developpez.com}) as a plugin into PixelLight}
-\item{Particle systems are usual scene nodes}
-\end{itemize}
-
-
-
-
-\section{libRocket\_PL}
+\paragraph{libRocket\_PL}
 \begin{itemize}
 \item{Integrates the free open source HTML/CSS game interface middleware \emph{libRocket} (\url{http://librocket.com/}) into PixelLight}
 \end{itemize}
@@ -30,13 +30,14 @@ The PixelLight SDK comes with multiple optional plugins.
 
 
 
-\section{PLAssimp}
+\section{File Formats}
+
+
+\paragraph{PLAssimp}
 Mesh and scene loaders using \emph{ASSIMP - Open Asset Import Library} (\url{http://assimp.sourceforge.net/})
 
 
-
-
-\section{PLImageLoaderEXR}
+\paragraph{PLImageLoaderEXR}
 \begin{itemize}
 \item{EXR using OpenEXR (\url{http://www.openexr.com/}) and HDR image plugins}
 \end{itemize}
@@ -44,7 +45,17 @@ Mesh and scene loaders using \emph{ASSIMP - Open Asset Import Library} (\url{htt
 
 
 
-\section{PLParticleGroups}
+\section{Particle Effects}
+
+
+\paragraph{SPARK\_PL}
+\begin{itemize}
+\item{Integrates the free open source particle engine \emph{SPARK} (\url{http://spark.developpez.com}) as a plugin into PixelLight}
+\item{Particle systems are usual scene nodes}
+\end{itemize}
+
+
+\paragraph{PLParticleGroups}
 \begin{itemize}
 \item{Particle groups are usual scene nodes}
 \item{They emit and manage particles. Each particle can be customized in an easy way in order to create unique effects}
@@ -60,7 +71,7 @@ Mesh and scene loaders using \emph{ASSIMP - Open Asset Import Library} (\url{htt
 
 
 
-\section{PLPostProcessEffects}
+\section{Post Process Effects}
 \begin{itemize}
 \item{A collection of some useful\footnote{Edge detection, sharpen, bloom, blur, old film and so on} and some quite pointless\footnote{Pointless crazy bars and so on} post process effects}
 \end{itemize}
