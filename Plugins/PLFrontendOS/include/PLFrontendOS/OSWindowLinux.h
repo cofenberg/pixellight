@@ -28,39 +28,36 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendOS/OSWindow.h"
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xutil.h>
+	#ifdef None
+		// ... we undef these to avoid name conflicts...
+		namespace OSWindowLinuxInclude {
+			enum {
+				X11_None = None,
+				X11_Always = Always,
+				X11_Above = Above,
+				X11_Success = Success
+			};
+		}
 
-// [TODO] This is a copy of some code from Base/PLGui/include/PLGui/PLGuiLinuxIncludes.h
-// Check if PLGuiLinuxIncludes.h can be included instead of X11/Xlib.h directly (this shouldn't pull PLGui as link dependency)
-/**
-*  @brief
-*    Misc
-*/
-#ifdef None
-        namespace OSWindowLinuxInclude {
-                enum {
-                        X11_None = None,
-                        X11_Always = Always,
-                        X11_Above = Above,
-                        X11_Success = Success
-                };
-        }
+		#undef None
+		#undef Always
+		#undef Above
+		#undef Success
 
-        #undef None
-        #undef Always
-        #undef Above
-        #undef Success
-
-        namespace XLib {
-                enum {
-                        None = OSWindowLinuxInclude::X11_None,
-                        Always = OSWindowLinuxInclude::X11_Always,
-                        Above = OSWindowLinuxInclude::X11_Above,
-                        Success = OSWindowLinuxInclude::X11_Success
-                };
-        }
-#endif
+		namespace XLib {
+			enum {
+				None = OSWindowLinuxInclude::X11_None,
+				Always = OSWindowLinuxInclude::X11_Always,
+				Above = OSWindowLinuxInclude::X11_Above,
+				Success = OSWindowLinuxInclude::X11_Success
+			};
+		}
+		// ... now that the namespace is name conflict free, go on with includes...
+	#endif
+#include "PLFrontendOS/OSWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -84,7 +81,6 @@ class Frontend;
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction
-*
 */
 class OSWindowLinux : public OSWindow {
 
@@ -128,17 +124,11 @@ class OSWindowLinux : public OSWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend				*m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
-		Display					*m_pDisplay;
-		Window					m_window;
-		Visual					*m_pVisual;
-		int 					m_screen;
-		int 					m_depth; 
-		XSetWindowAttributes	m_attributes;
-		Atom 					m_wmDelete;
-		unsigned int 			m_width;
-		unsigned int 			m_height;
-		bool					m_bDestroyed;
+		Frontend *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
+		Display	 *m_pDisplay;				/**< System display, considered to be always valid */
+		Atom 	  m_wmDelete;				/**< System atom for delete */
+		Window	  m_nNativeWindowHandle;	/**< Native window handle, can be 0 */
+
 
 };
 
@@ -150,3 +140,4 @@ class OSWindowLinux : public OSWindow {
 
 
 #endif // __PLFRONTENDOS_OSWINDOW_LINUX_H__
+

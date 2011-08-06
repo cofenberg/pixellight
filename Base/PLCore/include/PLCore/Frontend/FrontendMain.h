@@ -48,7 +48,6 @@
 *  @remarks
 *    Use this when you don't want to care about the program entry point.
 */
-#ifdef WIN32
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
@@ -56,15 +55,7 @@
 	} \
 	\
 	pl_module_plugin(ModuleName)
-#else
-#define pl_module_application(ModuleName, ApplicationClass) \
-	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
-	{ \
-		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendOS::Frontend", ApplicationClass); \
-	} \
-	\
-	pl_module_plugin(ModuleName)
-#endif
+
 /**
 *  @brief
 *    Defines a frontend for a module inside a plugin library

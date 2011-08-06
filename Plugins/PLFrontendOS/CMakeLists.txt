@@ -48,7 +48,6 @@ add_link_directories(
 add_libs(
 	PLCore
 )
-
 if(LINUX)
 	##################################################
 	## Linux

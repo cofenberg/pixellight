@@ -23,11 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <string.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-#include <cstring>
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -43,41 +42,44 @@ namespace PLFrontendOS {
 *  @brief
 *    Constructor
 */
-OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS)
-	: m_pFrontendOS(&cFrontendOS)
+OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
+	m_pFrontendOS(&cFrontendOS),
+	m_pDisplay(XOpenDisplay(nullptr)),
+	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
+	m_nNativeWindowHandle(0)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
-	m_width = 640;
-	m_height = 480;
-	
-	m_pDisplay = XOpenDisplay(NULL); 
-	m_screen = DefaultScreen(m_pDisplay);
-	m_pVisual = DefaultVisual(m_pDisplay,m_screen);
-	m_depth  = DefaultDepth(m_pDisplay,m_screen);
-	
-	m_attributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask;
 
-	m_window = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay,m_screen),
-                   0,0, m_width,m_height,0, m_depth, InputOutput, m_pVisual,
-                   CWEventMask ,&m_attributes);
-	m_wmDelete = XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True);
-	XSetWMProtocols(m_pDisplay, m_window, &m_wmDelete, 1);
-		
-	XTextProperty windowName;
-	windowName.value    = (unsigned char *) "PLFrontendOS_OSWindowLinuxX11";
-	windowName.encoding = XA_STRING;
-	windowName.format   = 8;
-	windowName.nitems   = strlen((char *) windowName.value);
+	{ // Create the native OS window
+		const unsigned int  nWidth  = 640;
+		const unsigned int  nHeight = 480;
+		const int           nScreen = DefaultScreen(m_pDisplay);
+			  Visual       *pVisual = DefaultVisual(m_pDisplay, nScreen);
+		const int           nDepth  = DefaultDepth(m_pDisplay, nScreen);
 	
-	XSetWMName(m_pDisplay, m_window, &windowName );
-	XMapRaised(m_pDisplay, m_window);
+		// X events
+		XSetWindowAttributes sXSetWindowAttributes;
+		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask;
+
+		// Create the native OS window instance
+		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
+		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &m_wmDelete, 1);
+		XTextProperty sXTextProperty;
+		sXTextProperty.value    = const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>("PLFrontendOS_OSWindowLinuxX11"));
+		sXTextProperty.encoding = XA_STRING;
+		sXTextProperty.format   = 8;
+		sXTextProperty.nitems   = strlen(reinterpret_cast<const char*>(sXTextProperty.value));
+		XSetWMName(m_pDisplay, m_nNativeWindowHandle, &sXTextProperty);
+		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
+	}
 	
-	// Do the frontend lifecycle thing - start
-	m_pFrontendOS->OnStart();
-	// Connect Linux signals
+	// [TODO] Connect Linux signals?
 //	signal(SIGINT,  CoreApplication::SignalHandler);
 //	signal(SIGTERM, CoreApplication::SignalHandler);
+
+	// Do the frontend lifecycle thing - start
+	m_pFrontendOS->OnStart();
 }
 
 /**
@@ -87,9 +89,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS)
 OSWindowLinux::~OSWindowLinux()
 {
 	// Check if the window has already been destroyed
-	if (!m_bDestroyed) {
+	if (m_nNativeWindowHandle) {
 		// Send destroy message to window
-		XDestroyWindow(m_pDisplay, m_window);
+		XDestroyWindow(m_pDisplay, m_nNativeWindowHandle);
 	}
 }
 
@@ -99,14 +101,14 @@ OSWindowLinux::~OSWindowLinux()
 //[-------------------------------------------------------]
 handle OSWindowLinux::GetNativeWindowHandle() const
 {
-	// [TODO] handle is a int but Window (X11) is under linux an unsigned long
-	return static_cast<handle>(m_window);
+	// [TODO] handle is a int but Window (X11) is under Linux an unsigned long
+	return static_cast<handle>(m_nNativeWindowHandle);
 }
 
 void OSWindowLinux::Redraw()
 {
-	if (m_window)
-	{
+	if (m_nNativeWindowHandle) {
+		// [TODO] Review: Would be nice if "OnDraw()" would "only" be called by the OS throught it's event system.... in here, the OS is the chef :D
 		// Call directly OnDraw. It isn't needed to go via the X11 event loop to trigger an redraw
 		// (if done via the X11 event loop, then the window reacts slow on close and Focus change events)
 		m_pFrontendOS->OnDraw();
@@ -115,51 +117,48 @@ void OSWindowLinux::Redraw()
 
 bool OSWindowLinux::Ping()
 {
-	XEvent event;
 	bool bQuit = false;
-	while (XPending(m_pDisplay) > 0)
-	{
-		XNextEvent(m_pDisplay, &event);
-		switch (event.type) {
+
+	// Look if messages are waiting (non-blocking)
+	while (XPending(m_pDisplay) > 0) {
+		// Get the waiting message
+		XEvent sXEvent;
+		XNextEvent(m_pDisplay, &sXEvent);
+
+		// Process message
+		switch (sXEvent.type) {
 			case Expose:
-				if (event.xexpose.count != 0)
-					break;
-				//std::cout<<"onDraw"<<std::endl;
-				m_pFrontendOS->OnDraw();
+				if (sXEvent.xexpose.count)
+					m_pFrontendOS->OnDraw();
 				break;
-			case ConfigureNotify:
-				if ((event.xconfigure.width != m_width) ||
-						(event.xconfigure.height != m_height)) {
-					m_width = event.xconfigure.width;
-					m_height = event.xconfigure.height;
-				}
-				break;
+
 			case DestroyNotify:
 				// Do the frontend lifecycle thing - stop
 				m_pFrontendOS->OnStop();
 
 				// Mark window destroyed
-				m_bDestroyed = true;
-				m_window = 0;
-				bQuit = True;
+				m_nNativeWindowHandle = 0;
+				bQuit = true;
 				break;
+
 			case UnmapNotify:
 			case FocusOut:
 				m_pFrontendOS->OnPause();
 				break;
+
 			case MapNotify:
 			case FocusIn:
 				m_pFrontendOS->OnResume();
 				break;
+
 			case ClientMessage:
-				if (event.xclient.data.l[0] == m_wmDelete) {
-					bQuit = True;
-				}
-				break;
-			default:
+				if (sXEvent.xclient.data.l[0] == m_wmDelete)
+					bQuit = true;
 				break;
 		}
 	}
+
+	// Done
 	return bQuit;
 }
 
@@ -168,3 +167,4 @@ bool OSWindowLinux::Ping()
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLFrontendOS
+

@@ -6,6 +6,10 @@ define_project(PLCore)
 ##################################################
 ## Prerequisites
 ##################################################
+
+# Create 'Plugins/PLFrontend' directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLFrontend)
+
 # Create 'Plugins/PLScript' directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLScript)
 
