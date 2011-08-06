@@ -100,7 +100,7 @@ Both, \emph{cMyFunction0} and \emph{cMyFunction1} are functors with a signature 
 
 
 \paragraph{Generic Functions and Methods}
-There are situations, like within the Lua script backend, were it's e.g. not possible to create a typed functor because the types are unknown to compile time. In this case, \emph{PLCore::FuncGenFunPtr} or \emph{PLCore::FuncGenMemPtr} using functions/methods with the generic signature "PLCore::Signature<void, PLCore::DynParams&, void*>". can be used. By using these templates, it's possible to pass around and use functions/methods because they're using a generic, common signature.
+There are situations, like within the Lua script backend, were it's e.g. not possible to create a typed functor because the types are unknown to compile time. In this case, \emph{PLCore::FuncGenFunPtr} or \emph{PLCore::FuncGenMemPtr} using functions/methods with the generic signature \begin{quote}PLCore::Signature<void, PLCore::DynParams\&, void*>\end{quote} can be used. By using these templates, it's possible to pass around and use functions/methods because they're using a generic, common signature.
 
 
 \paragraph{Dynamic Parameters}
