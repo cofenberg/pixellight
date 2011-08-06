@@ -26,6 +26,7 @@
 #include <PixelLight.h>
 #include "PLCore/System/System.h"
 #include "PLCore/File/Directory.h"
+#include "PLCore/Base/ClassManager.h"
 #include "PLCore/Registry/Registry.h"
 #include "PLCore/Core.h"
 
@@ -41,7 +42,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Try to find the PL-Runtime directory by reading the registry
+*    Try to find the PL-runtime directory by reading the registry
 */
 String Core::GetRuntimeDirectory()
 {
@@ -125,6 +126,25 @@ Version Core::GetVersion()
 String Core::GetSuffix()
 {
 	return PIXELLIGHT_SUFFIX;
+}
+
+/**
+*  @brief
+*    Scan PL-runtime directory for compatible plugins and load them in
+*/
+void Core::ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading)
+{
+	// Get PixelLight runtime directory
+	const String sPLDirectory = GetRuntimeDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
+		// for projects which can be used completely dynamically, but can also be used in other C++ projects
+		// to access certain features.
+		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive, bDelayedPluginLoading);
+
+		// Scan for plugins in PixelLight runtime directory
+		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive, bDelayedPluginLoading);
+	}
 }
 
 

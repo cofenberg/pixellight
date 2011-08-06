@@ -53,10 +53,10 @@ class Core {
 	public:
 		/**
 		*  @brief
-		*    Try to find the PL-Runtime directory by reading the registry
+		*    Try to find the PL-runtime directory by reading the registry
 		*
 		*  @return
-		*    Path to the PL-Runtime directory (e.g. "C:\PixelLight\Runtime"), or ""
+		*    Path to the PL-runtime directory (e.g. "C:\PixelLight\Runtime"), or ""
 		*
 		*  @see
 		*    - 'Registry' class documentation
@@ -80,6 +80,24 @@ class Core {
 		*    Suffix of this PixelLight installation
 		*/
 		PLCORE_API static String GetSuffix();
+
+		/**
+		*  @brief
+		*    Scan PL-runtime directory for compatible plugins and load them in
+		*
+		*  @param[in] bDelayedPluginLoading
+		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
+		*
+		*  @remarks
+		*    The implementation does the following tasks:
+		*    - Scan for plugins in PixelLight runtime directory non-recursively
+		*    - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
+		*
+		*  @see
+		*    - Core::GetRuntimeDirectory()
+		*    - ClassManager::ScanPlugins()
+		*/
+		PLCORE_API static void ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading = true);
 
 
 };

@@ -184,7 +184,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 								 0,
 								 GetModuleHandle(nullptr),
 								 this);
-		if (m_hWnd == nullptr) {
+		if (!m_hWnd) {
 			// Could not create widget
 			m_bDestroyed = true;
 		}

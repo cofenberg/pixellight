@@ -81,12 +81,8 @@ void RunScript(const String &sScriptFilename)
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Get PixelLight runtime directory
-	const String sPLDirectory = Core::GetRuntimeDirectory();
-	if (sPLDirectory.GetLength()) {
-		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
-	}
+	// Scan PL-runtime directory for compatible plugins and load them in
+	Core::ScanRuntimeDirectoryPlugins();
 
 	// Bring the log into the verbose mode so that the log also writes log entries
 	// directly into the console. This way, we can e.g. see script errors at once.

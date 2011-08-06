@@ -140,7 +140,7 @@ bool OSWindowLinux::Ping()
 		switch (sXEvent.type) {
 			case Expose:
 				// There could be more then one Expose event currently in the event loop.
-				// To avoid too many redraw calls, call OnDraw only when the current processed Expose event is the last one
+				// To avoid too many redraw calls, call OnDraw only when the current processed Expose event is the last one.
 				if (!sXEvent.xexpose.count)
 					m_pFrontendOS->OnDraw();
 				break;
@@ -150,7 +150,7 @@ bool OSWindowLinux::Ping()
 				m_pFrontendOS->OnStop();
 
 				// Mark window destroyed
-				m_nNativeWindowHandle = 0;
+				m_nNativeWindowHandle = NULL_HANDLE;
 				bQuit = true;
 				break;
 

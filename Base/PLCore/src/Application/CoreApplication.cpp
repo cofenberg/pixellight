@@ -694,20 +694,9 @@ void CoreApplication::OnInitPlugins()
 	// Scan for plugins in "Plugins" directory (recursively)
 	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive, m_bDelayedPluginLoading);
 
-	// Use PixelLight runtime?
-	if (m_bUseRuntime) {
-		// Get PixelLight runtime directory
-		String sPLDirectory = Core::GetRuntimeDirectory();
-		if (sPLDirectory.GetLength()) {
-			// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
-			// for projects which can be used completely dynamically, but can also be used in other C++ projects
-			// to access certain features.
-			ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive, m_bDelayedPluginLoading);
-
-			// Scan for plugins in PixelLight runtime directory
-			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive, m_bDelayedPluginLoading);
-		}
-	}
+	// Scan PL-runtime directory for compatible plugins and load them in?
+	if (m_bUseRuntime)
+		Core::ScanRuntimeDirectoryPlugins(m_bDelayedPluginLoading);
 
 	// Write message into log
 	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")

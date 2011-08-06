@@ -213,13 +213,8 @@ FrontendImpl *Frontend::GetImpl() const
 FrontendImpl *Frontend::CreateInstance(const String &sFrontendClass)
 {
 	// [TODO] Make this optional?
-	// Get PixelLight runtime directory
-	const String sPLDirectory = Core::GetRuntimeDirectory();
-	if (sPLDirectory.GetLength()) {
-		// Scan for plugins in PixelLight runtime directory -> The script plugins are now ready to be used
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive);
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive);
-	}
+	// Scan PL-runtime directory for compatible plugins and load them in
+	Core::ScanRuntimeDirectoryPlugins();
 
 	// Get the frontend RTTI class
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);

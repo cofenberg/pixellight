@@ -60,12 +60,8 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		// Scan for plugins within in the current plugins directory
 		ClassManager::GetInstance()->ScanPlugins("Plugins/");
 
-		// Get the PixelLight runtime directory
-		String sPLDirectory = Core::GetRuntimeDirectory();
-		if (sPLDirectory.GetLength() > 0) {
-			// Add the plugins within the PixelLight runtime plugins directory
-			ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/");
-		}
+		// Scan PL-runtime directory for compatible plugins and load them in
+		Core::ScanRuntimeDirectoryPlugins();
 	}
 
 	// Perform general tests
