@@ -84,32 +84,6 @@ uint32 FrontendImpl::GetHeight() const
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called to let the frontend draw into it's window
-*/
-void FrontendImpl::OnDraw()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDraw();
-}
-
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
-void FrontendImpl::OnSize()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnSize();
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
 void FrontendImpl::OnCreate()
@@ -158,6 +132,28 @@ void FrontendImpl::OnDestroy()
 	// Call virtual function from frontend
 	if (m_pFrontend)
 		m_pFrontend->OnDestroy();
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual AbstractFrontend functions          ]
+//[-------------------------------------------------------]
+void FrontendImpl::OnDraw()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDraw();
+}
+
+/**
+*  @brief
+*    Called when the window size has been changed
+*/
+void FrontendImpl::OnSize()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnSize();
 }
 
 

@@ -242,7 +242,7 @@ void RendererApplication::OnStop()
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::FrontendApplication functions ]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
 void RendererApplication::OnDraw()
 {

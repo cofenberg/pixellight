@@ -274,6 +274,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\File\SearchFilterWildcard.cpp" />
     <ClCompile Include="src\File\Url.cpp" />
     <ClCompile Include="src\File\ZipHandle.cpp" />
+    <ClCompile Include="src\Frontend\AbstractFrontend.cpp" />
     <ClCompile Include="src\Frontend\Frontend.cpp" />
     <ClCompile Include="src\Frontend\FrontendApplication.cpp" />
     <ClCompile Include="src\Frontend\FrontendImpl.cpp" />
@@ -522,6 +523,7 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLCore\File\StdIo.h" />
     <ClInclude Include="include\PLCore\File\Url.h" />
     <ClInclude Include="include\PLCore\File\ZipHandle.h" />
+    <ClInclude Include="include\PLCore\Frontend\AbstractFrontend.h" />
     <ClInclude Include="include\PLCore\Frontend\Frontend.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendApplication.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h" />

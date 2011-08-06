@@ -568,6 +568,9 @@
     <ClCompile Include="src\Application\AbstractLifecycle.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\Frontend\AbstractFrontend.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Core.h">
@@ -1304,6 +1307,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Application\AbstractLifecycle.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\AbstractFrontend.h">
+      <Filter>Frontend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

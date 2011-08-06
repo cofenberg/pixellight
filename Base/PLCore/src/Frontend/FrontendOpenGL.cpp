@@ -66,42 +66,12 @@ FrontendOpenGL::~FrontendOpenGL()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual FrontendImpl functions                 ]
+//[ Public virtual Frontend functions                     ]
 //[-------------------------------------------------------]
 bool FrontendOpenGL::IsRunning() const
 {
 	// The frontend is running
 	return true;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual FrontendImpl functions                ]
-//[-------------------------------------------------------]
-void FrontendOpenGL::OnDraw()
-{
-	// Draw OpenGL scene
-	DrawGL();
-
-	// Swap buffers (double buffering)
-	#ifdef WIN32
-		if (m_hDC)
-			SwapBuffers(m_hDC);
-	#endif
-
-	// Rotate our rectangle
-	m_fAngle += 0.1f;	// To keep things simple in here, no framerate independent timing
-	if (m_fAngle >= 360.0f)
-		m_fAngle -= 360.0f;
-
-	// Issue a redraw request
-	Redraw();
-}
-
-void FrontendOpenGL::OnSize()
-{
-	// Adjust size of scene
-	ResizeGL();
 }
 
 
@@ -289,6 +259,36 @@ void FrontendOpenGL::DrawGL()
 			glVertex3f( 1.0f, -1.0f, -1.0f);
 		glEnd();
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual AbstractFrontend functions          ]
+//[-------------------------------------------------------]
+void FrontendOpenGL::OnDraw()
+{
+	// Draw OpenGL scene
+	DrawGL();
+
+	// Swap buffers (double buffering)
+	#ifdef WIN32
+		if (m_hDC)
+			SwapBuffers(m_hDC);
+	#endif
+
+	// Rotate our rectangle
+	m_fAngle += 0.1f;	// To keep things simple in here, no framerate independent timing
+	if (m_fAngle >= 360.0f)
+		m_fAngle -= 360.0f;
+
+	// Issue a redraw request
+	Redraw();
+}
+
+void FrontendOpenGL::OnSize()
+{
+	// Adjust size of scene
+	ResizeGL();
 }
 
 

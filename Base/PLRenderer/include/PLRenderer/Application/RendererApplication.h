@@ -193,7 +193,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::FrontendApplication functions ]
+	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
 		PLRENDERER_API virtual void OnDraw() override;

@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Frontend/AbstractFrontend.h"
 #include "PLCore/Application/CoreApplication.h"
 
 
@@ -50,7 +51,7 @@ class Frontend;
 *  @brief
 *    Frontend application class
 */
-class FrontendApplication : public CoreApplication {
+class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
@@ -102,17 +103,26 @@ class FrontendApplication : public CoreApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual FrontendApplication functions       ]
+	//[ Protected virtual AbstractFrontend functions          ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
 		*  @brief
-		*    Called to let the frontend application draw into it's window
+		*    Called to let the frontend draw into it's window
 		*
 		*  @note
 		*    - The default implementation is empty
 		*/
-		PLCORE_API virtual void OnDraw();
+		PLCORE_API virtual void OnDraw() override;
+
+		/**
+		*  @brief
+		*    Called when the window size has been changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]

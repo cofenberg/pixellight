@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Base/Object.h"
+#include "PLCore/Frontend/AbstractFrontend.h"
 #include "PLCore/Application/AbstractLifecycle.h"
 
 
@@ -55,7 +56,7 @@ class Frontend;
 *    This base class provides the backend interface for concrete implementations
 *    (e.g. for Internet Explorer or Mozilla Firefox frontends).
 */
-class FrontendImpl : public Object, protected AbstractLifecycle {
+class FrontendImpl : public Object, protected AbstractLifecycle, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
@@ -107,23 +108,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Called to let the frontend draw into it's window
-		*/
-		PLCORE_API void OnDraw();
-
-		/**
-		*  @brief
-		*    Called when the window size has been changed
-		*/
-		PLCORE_API void OnSize();
-
-
-	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:
@@ -134,6 +118,14 @@ class FrontendImpl : public Object, protected AbstractLifecycle {
 		PLCORE_API virtual void OnPause() override;
 		PLCORE_API virtual void OnStop() override;
 		PLCORE_API virtual void OnDestroy() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual AbstractFrontend functions          ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCORE_API virtual void OnDraw() override;
+		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]

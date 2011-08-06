@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/PLCore.h"
+#include "PLCore/Frontend/AbstractFrontend.h"
 #include "PLCore/Application/AbstractLifecycle.h"
 
 
@@ -59,7 +60,7 @@ template <class ValueType> class Array;
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
 */
-class Frontend : protected AbstractLifecycle {
+class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
@@ -230,23 +231,6 @@ class Frontend : protected AbstractLifecycle {
 		*    Pointer to the implementation backend, can be a null pointer
 		*/
 		PLCORE_API FrontendImpl *GetImpl() const;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual Frontend functions                  ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Called to let the frontend draw into it's window
-		*/
-		virtual void OnDraw() = 0;
-
-		/**
-		*  @brief
-		*    Called when the window size has been changed
-		*/
-		virtual void OnSize() = 0;
 
 
 	//[-------------------------------------------------------]

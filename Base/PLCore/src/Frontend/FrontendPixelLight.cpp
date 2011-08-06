@@ -59,26 +59,11 @@ FrontendPixelLight::~FrontendPixelLight()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual FrontendImpl functions                 ]
+//[ Public virtual Frontend functions                     ]
 //[-------------------------------------------------------]
 bool FrontendPixelLight::IsRunning() const
 {
 	return m_bFrontendApplicationInitialized;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual FrontendImpl functions                ]
-//[-------------------------------------------------------]
-void FrontendPixelLight::OnDraw()
-{
-	// Let the frontend application draw into it's window
-	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
-		m_pFrontendApplication->OnDraw();
-}
-
-void FrontendPixelLight::OnSize()
-{
 }
 
 
@@ -173,6 +158,24 @@ void FrontendPixelLight::OnDestroy()
 		delete m_pFrontendApplication;
 		m_pFrontendApplication = nullptr;
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual AbstractFrontend functions          ]
+//[-------------------------------------------------------]
+void FrontendPixelLight::OnDraw()
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnDraw();
+}
+
+void FrontendPixelLight::OnSize()
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnSize();
 }
 
 

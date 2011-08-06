@@ -159,6 +159,7 @@ add_sources(
 	src/Script/Script.cpp
 	src/Script/ScriptManager.cpp
 	src/Script/ScriptBinding.cpp
+	src/Frontend/AbstractFrontend.cpp
 	src/Frontend/Frontend.cpp
 	src/Frontend/FrontendImpl.cpp
 	src/Frontend/FrontendPixelLight.cpp

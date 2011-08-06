@@ -74,18 +74,10 @@ class FrontendPixelLight : public Frontend {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual FrontendFrontend functions             ]
+	//[ Public virtual Frontend functions                     ]
 	//[-------------------------------------------------------]
 	public:
 		PLCORE_API virtual bool IsRunning() const override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual FrontendFrontend functions            ]
-	//[-------------------------------------------------------]
-	private:
-		PLCORE_API virtual void OnDraw() override;
-		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]
@@ -99,6 +91,14 @@ class FrontendPixelLight : public Frontend {
 		PLCORE_API virtual void OnPause() override;
 		PLCORE_API virtual void OnStop() override;
 		PLCORE_API virtual void OnDestroy() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual AbstractFrontend functions          ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCORE_API virtual void OnDraw() override;
+		PLCORE_API virtual void OnSize() override;
 
 
 	//[-------------------------------------------------------]

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FrontendApplication.cpp                        *
+ *  File: AbstractFrontend.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Frontend/FrontendApplication.h"
+#include "PLCore/Frontend/AbstractFrontend.h"
 
 
 //[-------------------------------------------------------]
@@ -33,70 +33,22 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(FrontendApplication)
-
-
-//[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get frontend
-*/
-Frontend *FrontendApplication::GetFrontend() const
-{
-	// Return pointer to frontend
-	return m_pFrontend;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-FrontendApplication::FrontendApplication() : CoreApplication(),
-	m_pFrontend(nullptr)	// Set by FrontendPixelLight
+AbstractFrontend::AbstractFrontend()
 {
-	// Set application title
-	SetTitle("PixelLight frontend application");
-
-	// Set running state
-	m_bRunning = true;
 }
 
 /**
 *  @brief
 *    Destructor
 */
-FrontendApplication::~FrontendApplication()
+AbstractFrontend::~AbstractFrontend()
 {
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual AbstractFrontend functions          ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called to let the frontend draw into it's window
-*/
-void FrontendApplication::OnDraw()
-{
-	// No default implementation
-}
-
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
-void FrontendApplication::OnSize()
-{
-	// No default implementation
 }
 
 
