@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <string.h>
+#include <signal.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
 
@@ -33,6 +34,12 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLFrontendOS {
+
+
+//[-------------------------------------------------------]
+//[ Ugly global variables                                 ]
+//[-------------------------------------------------------]
+bool g_bSignalSystenQuit = false;	/**< Does the OS asks us to shut down? */
 
 
 //[-------------------------------------------------------]
@@ -46,10 +53,14 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
-	m_nNativeWindowHandle(0)
+	m_nNativeWindowHandle(NULL_HANDLE)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
+
+	// Connect Linux signals
+	signal(SIGINT,  OSWindowLinux::SignalHandler);
+	signal(SIGTERM, OSWindowLinux::SignalHandler);
 
 	{ // Create the native OS window
 		const unsigned int  nWidth  = 640;
@@ -73,10 +84,6 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XSetWMName(m_pDisplay, m_nNativeWindowHandle, &sXTextProperty);
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
 	}
-	
-	// [TODO] Connect Linux signals?
-//	signal(SIGINT,  CoreApplication::SignalHandler);
-//	signal(SIGTERM, CoreApplication::SignalHandler);
 
 	// Do the frontend lifecycle thing - start
 	m_pFrontendOS->OnStart();
@@ -158,7 +165,41 @@ bool OSWindowLinux::Ping()
 	}
 
 	// Done
-	return bQuit;
+	return (bQuit || g_bSignalSystenQuit);
+}
+
+
+//[-------------------------------------------------------]
+//[ Private static functions                              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Signal handler callback
+*/
+void OSWindowLinux::SignalHandler(int nSignal)
+{
+	// Catch signal
+	switch (nSignal) {
+		// Interrupt (exit application by ctrl-c)
+		case SIGINT:
+			// The OS asks us to shut down
+			g_bSignalSystenQuit = true;
+
+			// Signal handler has done it's job, re-raise signal
+			signal(nSignal, SIG_DFL);
+			raise(nSignal);
+			break;
+
+		// Terminate (exit application)
+		case SIGTERM:
+			// The OS asks us to shut down
+			g_bSignalSystenQuit = true;
+
+			// Signal handler has done it's job, re-raise signal
+			signal(nSignal, SIG_DFL);
+			raise(nSignal);
+			break;
+	}
 }
 
 

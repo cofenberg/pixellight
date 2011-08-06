@@ -121,6 +121,20 @@ class OSWindowLinux : public OSWindow {
 
 
 	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Signal handler callback
+		*
+		*  @param[in] nSignal
+		*    Signal
+		*/
+		static void SignalHandler(int nSignal);
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:

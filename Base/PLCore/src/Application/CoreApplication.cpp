@@ -822,7 +822,7 @@ void CoreApplication::OnPrintVersion()
 bool CoreApplication::OnSignal(ESignal nSignal)
 {
 	// Catch signal
-	switch(nSignal) {
+	switch (nSignal) {
 		// Interrupt (exit application by ctrl-c)
 		case SignalInterrupt:
 			// Exit application gracefully
@@ -853,7 +853,7 @@ void CoreApplication::SignalHandler(int nSignal)
 	// Linux implementation
 	#ifdef LINUX
 		// Catch signal
-		switch(nSignal) {
+		switch (nSignal) {
 			// Interrupt (exit application by ctrl-c)
 			case SIGINT:
 				// Send signal to application
