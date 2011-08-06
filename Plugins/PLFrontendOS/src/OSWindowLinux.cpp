@@ -139,7 +139,10 @@ bool OSWindowLinux::Ping()
 		// Process message
 		switch (sXEvent.type) {
 			case Expose:
-				m_pFrontendOS->OnDraw();
+				// There could be more then one Expose event currently in the event loop.
+				// To avoid too many redraw calls, call OnDraw only when the current processed Expose event is the last one
+				if (!sXEvent.xexpose.count)
+					m_pFrontendOS->OnDraw();
 				break;
 
 			case DestroyNotify:
