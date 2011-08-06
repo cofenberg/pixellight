@@ -5,6 +5,7 @@
   not using the application framework at all, "PLFrontendQt::Application::InitCore()" and so on.
 - Added "Core::ScanRuntimeDirectoryData()", more stuff not only useful for "CoreApplication::OnInitData()"
 - MS Windows: "PLFrontendOS" is now using the standard PixelLight icon for the main window of this frontend
+- MS Windows: If a process has an own icon, "PLFrontendOS" is now using it instead of the standard PixelLight icon
 - "PLFrontendQt": Removed unused "Application::ScanFSArchives()"-method
 
 

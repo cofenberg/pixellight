@@ -111,6 +111,7 @@ class OSWindowWindows : public OSWindow {
 		HINSTANCE	m_hInstance;	/**< OS main process handle */
 		DWORD		m_nThreadID;	/**< OS main thread ID */
 		WNDCLASS	m_WndClass;		/**< OS window class */
+		HICON		m_hIcon;		/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
 		HWND		m_hWnd;			/**< OS window handle, can be a null pointer */
 		bool		m_bDestroyed;	/**< 'true' if the widget has already been destroyed */
 

@@ -26,6 +26,7 @@
 #include "../resource.h"
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowWindows.h"
+#include <Shellapi.h>	// For "ExtractIcon()"
 
 
 //[-------------------------------------------------------]
@@ -156,7 +157,20 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
 	m_WndClass.hInstance		= m_hInstance;
-	{ // "GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
+
+	{ // Use the default process icon... if there's one...
+		// Get the filename of this process
+		wchar_t szModule[MAX_PATH];
+		GetModuleFileName(m_hInstance, szModule, sizeof(szModule));
+
+		// Extract the icon (don't forget to call "DestroyIcon()" on it)
+		m_WndClass.hIcon = m_hIcon = ExtractIcon(m_hInstance, szModule, 0);
+	}
+
+	// If there's no default application icon, we're using the standard PixelLight icon
+	if (!m_WndClass.hIcon) {
+		// "GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
+
 		// Get the filename of this shared library
 		MEMORY_BASIC_INFORMATION sMemoryBasicInformation;
 		static const int nDummy = 0;
@@ -167,6 +181,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		// Finally, load the icon with the instance of this shared library
 		m_WndClass.hIcon		= LoadIcon(GetModuleHandle(szModule), MAKEINTRESOURCE(IDI_PL));
 	}
+
 	m_WndClass.hCursor			= LoadCursor(nullptr, IDC_ARROW);
 	m_WndClass.hbrBackground	= nullptr;
 	m_WndClass.lpszMenuName		= nullptr;
@@ -224,6 +239,10 @@ OSWindowWindows::~OSWindowWindows()
 	if (!UnregisterClass(L"PLFrontendOS_OSWindowWindows", m_hInstance)) {
 		// Error unregistering window class
 	}
+
+	// Is there an extracted icon to destroy?
+	if (m_hIcon)
+		DestroyIcon(m_hIcon);
 }
 
 
