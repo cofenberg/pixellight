@@ -9,6 +9,8 @@
 - "Frontend": Added fullscreen mode support and implemented it for "PLFrontendOS::OSWindowWindows" (implementations for the other frontends will follow)
 - "PLFrontendPLGui": Implemented fullscreen mode support
 - "PLFrontendQt": Implemented fullscreen mode support
+- "FrontendApplication::GetFrontend()" now returns a reference instead of a pointer. An "FrontendApplication"-instance is always running within a frontend, else the system becomes
+  artificially complex. Therefore, the result of "GetFrontend()" must always be valid and there's no need for null pointer tests trashing the code.
 
 
 

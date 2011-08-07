@@ -72,8 +72,8 @@ class ScriptApplication : public EngineApplication {
 		pl_attribute(OnDeInitFunction,	PLCore::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the application should de-initialize itself",	"")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
-			pl_constructor_0(DefaultConstructor,																	"Default constructor",																																																															"")
-			pl_constructor_4(ConstructorParameter,	PLCore::String,	PLCore::String,	PLCore::String,	PLCore::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
+			pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,																	"Parameter constructor. Frontend this application instance is running in as first parameter.",																																													"")
+			pl_constructor_4(ParametersConstructor,	PLCore::Frontend&, PLCore::String,	PLCore::String,	PLCore::String,	PLCore::String,	"Constructor with the filename of the script to load as first parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 			// Methods
 			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application.",										"")
 			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application. Base directory as the first parameter.",	"")
@@ -87,9 +87,12 @@ class ScriptApplication : public EngineApplication {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		PL_API ScriptApplication();
+		PL_API ScriptApplication(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief
@@ -113,7 +116,7 @@ class ScriptApplication : public EngineApplication {
 		*    }
 		*  @endverbatim
 		*/
-		PL_API ScriptApplication(PLCore::String sScriptFilename, PLCore::String sName = "", PLCore::String sTitle = "", PLCore::String sAppDataSubdir = "");
+		PL_API ScriptApplication(PLCore::Frontend &cFrontend, PLCore::String sScriptFilename, PLCore::String sName = "", PLCore::String sTitle = "", PLCore::String sAppDataSubdir = "");
 
 		/**
 		*  @brief

@@ -49,7 +49,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : RendererApplication()
+Application::Application(Frontend &cFrontend) : RendererApplication(cFrontend)
 {
 	// Set application name and title
 	SetName("52RendererMesh");

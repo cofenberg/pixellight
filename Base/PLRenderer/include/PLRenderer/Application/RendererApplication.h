@@ -64,7 +64,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	pl_class(PLRENDERER_RTTI_EXPORT, RendererApplication, "PLRenderer", PLCore::FrontendApplication, "Renderer application class")
 		#ifdef PLRENDERER_EXPORTS	// The following is only required when compiling PLRenderer
 			// Constructors
-			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 			// Methods
 			pl_method_0(GetPainter,	pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",				"")
 			pl_method_1(SetPainter,	pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",	"")
@@ -80,10 +80,12 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*  @param[in] sSurfacePainter
 		*    Surface painter class to use
 		*/
-		PLRENDERER_API RendererApplication(const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
+		PLRENDERER_API RendererApplication(PLCore::Frontend &cFrontend, const PLCore::String &sSurfacePainter = "PLRenderer::SPDefault");
 
 		/**
 		*  @brief

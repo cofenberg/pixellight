@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Config/Config.h>	// [TODO] No "Config" usage in here
-#include <PLCore/Frontend/Frontend.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Surface.h"
 #include "PLRenderer/Renderer/FontManager.h"
@@ -54,7 +53,7 @@ pl_implement_class(RendererApplication)
 *  @brief
 *    Constructor
 */
-RendererApplication::RendererApplication(const String &sSurfacePainter) : FrontendApplication(),
+RendererApplication::RendererApplication(Frontend &cFrontend, const String &sSurfacePainter) : FrontendApplication(cFrontend),
 	m_sSurfacePainter(sSurfacePainter),
 	m_pRendererContext(nullptr),
 	m_pDisplayMode(nullptr)
@@ -192,7 +191,7 @@ void RendererApplication::OnDisplayMode()
 
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
-	if (pSurface && m_pDisplayMode && GetFrontend()) {
+	if (pSurface && m_pDisplayMode) {
 		// Backup information from renderer surface
 		SurfacePainter *pPainter = pSurface->GetPainter();
 		pSurface->SetPainter(nullptr, false);
@@ -201,7 +200,7 @@ void RendererApplication::OnDisplayMode()
 		DeInit();
 
 		// Initialize renderer surface
-		Init(*m_pRenderer, m_pFrontend->GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend()->IsFullscreen());
+		Init(*m_pRenderer, GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
 
 		// Set previous renderer surface painter
 		pSurface = GetSurface();
@@ -221,7 +220,7 @@ void RendererApplication::OnFullscreenMode()
 
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
-	if (pSurface && m_pDisplayMode && GetFrontend()) {
+	if (pSurface && m_pDisplayMode) {
 		// Backup information from renderer surface
 		SurfacePainter *pPainter = pSurface->GetPainter();
 		pSurface->SetPainter(nullptr, false);
@@ -230,7 +229,7 @@ void RendererApplication::OnFullscreenMode()
 		DeInit();
 
 		// Initialize renderer surface
-		Init(*m_pRenderer, m_pFrontend->GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend()->IsFullscreen());
+		Init(*m_pRenderer, GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
 
 		// Set previous renderer surface painter
 		pSurface = GetSurface();
@@ -309,18 +308,16 @@ void RendererApplication::OnCreateRendererContext()
 		cTextureManager.SetTextureMipmapsAllowed	(GetConfig().GetVar("PLEngine::RendererConfig", "TextureMipmaps").GetBool());
 		cTextureManager.SetTextureCompressionAllowed(GetConfig().GetVar("PLEngine::RendererConfig", "TextureCompression").GetBool());
 
-		// [TODO] Move this somewere else
-		Frontend *pFrontend = GetFrontend();
-		if (pFrontend) {
+		{ // [TODO] Move this somewere else
 			// [TODO] No build in options
 			m_pDisplayMode = new DisplayMode;
 			m_pDisplayMode->vSize.x = 1024;
 			m_pDisplayMode->vSize.y = 768;
-//			m_pDisplayMode->vSize.x = pFrontend->GetWidth();
-//			m_pDisplayMode->vSize.y = pFrontend->GetHeight();
+//			m_pDisplayMode->vSize.x = GetFrontend().GetWidth();
+//			m_pDisplayMode->vSize.y = GetFrontend().GetHeight();
 			m_pDisplayMode->nColorBits = 32;
 			m_pDisplayMode->nFrequency = 60;
-			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), pFrontend->GetNativeWindowHandle(), *m_pDisplayMode);
+			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode);
 		}
 	}
 }

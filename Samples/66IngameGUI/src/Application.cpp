@@ -68,7 +68,7 @@ PLGui::Font *Application::GuiFont = nullptr;
 *  @brief
 *    Constructor
 */
-Application::Application() :
+Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pIngameGui(nullptr)
 {

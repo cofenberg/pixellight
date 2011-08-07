@@ -43,12 +43,12 @@ pl_implement_class(FrontendApplication)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Get frontend
+*    Returns the frontend this application is running in
 */
-Frontend *FrontendApplication::GetFrontend() const
+Frontend &FrontendApplication::GetFrontend() const
 {
-	// Return pointer to frontend
-	return m_pFrontend;
+	// Return reference to the frontend
+	return *m_pFrontend;
 }
 
 
@@ -59,8 +59,8 @@ Frontend *FrontendApplication::GetFrontend() const
 *  @brief
 *    Constructor
 */
-FrontendApplication::FrontendApplication() : CoreApplication(),
-	m_pFrontend(nullptr)	// Set by FrontendPixelLight
+FrontendApplication::FrontendApplication(Frontend &cFrontend) : CoreApplication(),
+	m_pFrontend(&cFrontend)
 {
 	// Set application title
 	SetTitle("PixelLight frontend application");

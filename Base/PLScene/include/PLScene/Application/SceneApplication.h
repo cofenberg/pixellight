@@ -69,7 +69,7 @@ class SceneApplication : public PLRenderer::RendererApplication {
 	pl_class(PLS_RTTI_EXPORT, SceneApplication, "PLScene", PLRenderer::RendererApplication, "Scene application class")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Constructors
-			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 			// Methods
 			pl_method_0(GetRootScene,	pl_ret_type(PLScene::SceneContainer*),	"Returns the root scene container, can be a null pointer.",	"")
 		#endif
@@ -84,10 +84,12 @@ class SceneApplication : public PLRenderer::RendererApplication {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PLS_API SceneApplication(const PLCore::String &sSceneFilename = "");
+		PLS_API SceneApplication(PLCore::Frontend &cFrontend, const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief

@@ -78,7 +78,7 @@ class EngineApplication : public PLScene::SceneApplication {
 	pl_class(PL_RTTI_EXPORT, EngineApplication, "PLEngine", PLScene::SceneApplication, "Basic scene application class")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Constructors
-			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+			pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 			// Methods
 			pl_method_0(GetScene,				pl_ret_type(PLScene::SceneContainer*),										"Returns the scene container (the 'concrete scene'), can be a null pointer.",																							"")
 			pl_method_1(SetScene,				pl_ret_type(void),							PLScene::SceneContainer*,		"Sets the scene container (the 'concrete scene'). New scene container as first parameter (can be a null pointer).",														"")
@@ -112,10 +112,12 @@ class EngineApplication : public PLScene::SceneApplication {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*  @param[in] sSceneFilename
 		*    Filename of the scene to load
 		*/
-		PL_API EngineApplication(const PLCore::String &sSceneFilename = "");
+		PL_API EngineApplication(PLCore::Frontend &cFrontend, const PLCore::String &sSceneFilename = "");
 
 		/**
 		*  @brief

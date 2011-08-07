@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Frontend/AbstractFrontend.h"
+#include "PLCore/Frontend/Frontend.h"
 #include "PLCore/Application/CoreApplication.h"
 
 
@@ -50,6 +50,9 @@ class Frontend;
 /**
 *  @brief
 *    Frontend application class
+*
+*  @note
+*    - A frontend application is always running within a frontend
 */
 class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
@@ -66,7 +69,7 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 	pl_class(PLCORE_RTTI_EXPORT, FrontendApplication, "PLCore", PLCore::CoreApplication, "Frontend application class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
-			pl_method_0(GetFrontend,	pl_ret_type(Frontend*),	"Get the frontend. Returns pointer to the frontend of the application, a null pointer on error.",	"")
+			pl_method_0(GetFrontend,	pl_ret_type(Frontend&),	"Returns the frontend this application is running in.",	"")
 		#endif
 	pl_class_end
 
@@ -77,12 +80,12 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 	public:
 		/**
 		*  @brief
-		*    Get frontend
+		*    Returns the frontend this application is running in
 		*
 		*  @return
-		*    Frontend, can be a null pointer
+		*    Frontend this application instance is running in
 		*/
-		PLCORE_API Frontend *GetFrontend() const;
+		PLCORE_API Frontend &GetFrontend() const;
 
 
 	//[-------------------------------------------------------]
@@ -92,8 +95,11 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		PLCORE_API FrontendApplication();
+		PLCORE_API FrontendApplication(Frontend &cFrontend);
 
 		/**
 		*  @brief
@@ -159,10 +165,10 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
-	protected:
-		Frontend *m_pFrontend;	/**< Frontend of the application (can be a null pointer) */
+	private:
+		Frontend *m_pFrontend;	/**< Frontend the application is running in, always valid! */
 
 
 };

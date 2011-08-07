@@ -58,7 +58,7 @@ class Application : public PLEngine::EngineApplication {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLEngine::EngineApplication, "Application class")
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 		// Slots
 		pl_slot_1(OnControl,	PLInput::Control&,	"Called when a control event has occurred, occurred control as first parameter",	"")
 	pl_class_end
@@ -71,8 +71,11 @@ class Application : public PLEngine::EngineApplication {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		Application();
+		Application(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief

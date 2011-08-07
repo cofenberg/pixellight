@@ -58,7 +58,7 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLEngine::ScriptApplication, "Application class")
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 		// Slots
 		pl_slot_1(OnControl,	PLInput::Control&,			"Called when a control event has occurred, occurred control as first parameter",	"")
 		pl_slot_1(OnDrop,		const PLGui::DataObject&,	"Called when something was dropped down, dropped data object as first parameter",	"")
@@ -79,8 +79,11 @@ class Application : public PLEngine::ScriptApplication {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		Application();
+		Application(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief

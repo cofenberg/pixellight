@@ -62,7 +62,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : EngineApplication(),
+Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pLine(nullptr),
 	m_pRagdoll(nullptr),

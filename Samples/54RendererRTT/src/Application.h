@@ -46,7 +46,7 @@ class Application : public PLRenderer::RendererApplication {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Application, "", PLRenderer::RendererApplication, "Application class")
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 	pl_class_end
 
 
@@ -57,8 +57,11 @@ class Application : public PLRenderer::RendererApplication {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		Application();
+		Application(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief

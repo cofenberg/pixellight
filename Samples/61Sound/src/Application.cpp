@@ -57,7 +57,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() :
+Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
 	// Set application name and title

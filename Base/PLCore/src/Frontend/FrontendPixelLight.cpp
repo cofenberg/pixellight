@@ -76,11 +76,8 @@ void FrontendPixelLight::OnCreate()
 	const Class *pClass = ClassManager::GetInstance()->GetClass("Application");	// [TODO] Class name as parameter
 	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendApplication")) {
 		// Create the RTTI class instance
-		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create());
+		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create(Params<Object*, Frontend&>(*this)));
 		if (m_pFrontendApplication) {
-			// Set the frontend of the application
-			m_pFrontendApplication->m_pFrontend = this;
-
 			// Fill application context
 			ApplicationContext &cApplicationContext = const_cast<ApplicationContext&>(m_pFrontendApplication->GetApplicationContext());	// [TODO] Casting away const is not nice
 			cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());

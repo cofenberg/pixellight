@@ -49,7 +49,7 @@ pl_implement_class(SceneApplication)
 *  @brief
 *    Constructor
 */
-SceneApplication::SceneApplication(const String &sSceneFilename) : RendererApplication("PLScene::SPScene"),
+SceneApplication::SceneApplication(Frontend &cFrontend, const String &sSceneFilename) : RendererApplication(cFrontend, "PLScene::SPScene"),
 	m_pSceneContext(nullptr),
 	m_pRootScene(nullptr)
 {

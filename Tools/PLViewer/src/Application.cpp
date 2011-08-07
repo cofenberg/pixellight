@@ -70,7 +70,7 @@ const String Application::DefaultFilename = "";
 *  @brief
 *    Constructor
 */
-Application::Application() :
+Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 	SlotOnControl(this),
 	SlotOnDrop(this),
 	m_pFileDialog(nullptr)

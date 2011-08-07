@@ -26,7 +26,6 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/System.h>
-#include <PLCore/Frontend/Frontend.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
 #include <PLInput/Input/Virtual/VirtualStandardController.h>
@@ -71,7 +70,7 @@ const String EngineApplication::DefaultSceneRenderer = "Forward.sr";
 *  @brief
 *    Constructor
 */
-EngineApplication::EngineApplication(const String &sSceneFilename) : SceneApplication(sSceneFilename),
+EngineApplication::EngineApplication(Frontend &cFrontend, const String &sSceneFilename) : SceneApplication(cFrontend, sSceneFilename),
 	m_sDefaultSceneRenderer(DefaultSceneRenderer),
 	m_pFirstFoundCamera(nullptr),
 	m_bHasLoadScreen(false),
@@ -667,9 +666,7 @@ void EngineApplication::OnLoadProgress(float fLoadProgress)
 	// Call the 'update'-function so we can see the progress within the load screen
 	if (m_bHasLoadScreen) {
 		// Redraw & ping the frontend
-		Frontend *pFrontend = GetFrontend();
-		if (pFrontend)
-			pFrontend->RedrawAndPing();
+		GetFrontend().RedrawAndPing();
 	}
 }
 

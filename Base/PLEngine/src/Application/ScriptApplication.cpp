@@ -50,9 +50,9 @@ pl_implement_class(ScriptApplication)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
-ScriptApplication::ScriptApplication() : EngineApplication(),
+ScriptApplication::ScriptApplication(Frontend &cFrontend) : EngineApplication(cFrontend),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
@@ -66,7 +66,7 @@ ScriptApplication::ScriptApplication() : EngineApplication(),
 *  @brief
 *    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
 */
-ScriptApplication::ScriptApplication(String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : EngineApplication(),
+ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : EngineApplication(cFrontend),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
