@@ -77,21 +77,15 @@ class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::Surf
 		*  @param[in] parent
 		*    parent widget of this widget
 		*/
-		QPLRenderWindow(QPLContext *pContext, bool updateContext = true, const PLRenderer::DisplayMode *pDisplayMode = nullptr, QWidget *parent = nullptr);
+		QPLRenderWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode = nullptr, QWidget *parent = nullptr);
 		QPLRenderWindow(QWidget *parent = nullptr);
-		void SetupWindow(QPLContext *pContext, bool updateContext = true, const PLRenderer::DisplayMode *pDisplayMode = nullptr);
+		void SetupWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
 		virtual ~QPLRenderWindow();
-
-		/**
-		*  @brief
-		*    Let PL draw one frame
-		*/
-		void Update();
 
 		/**
 		*  @brief
@@ -110,12 +104,24 @@ class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::Surf
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual QObject functions                   ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void timerEvent(QTimerEvent *pQTimerEvent) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual QPaintDevice functions              ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual QPaintEngine *paintEngine() const;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual void paintEvent(QPaintEvent *) override;
-		virtual void resizeEvent(QResizeEvent *) override;
-		virtual void showEvent(QShowEvent *) override;
 		virtual void mousePressEvent(QMouseEvent* ) override;
 		virtual void mouseReleaseEvent(QMouseEvent* ) override;
 		virtual void mouseMoveEvent(QMouseEvent* ) override;
@@ -147,9 +153,9 @@ class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::Surf
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		int						 m_nWindowRedrawTimerID;	/**< Window redraw timer */
 		QPLContext				*m_pContext;
-		PLRenderer::DisplayMode	 m_sDisplayMode;	/**< Display mode information */
-		bool					 m_bUpdateContext;
+		PLRenderer::DisplayMode	 m_sDisplayMode;			/**< Display mode information */
 		InputHandler			*m_pInputHandler;
 
 

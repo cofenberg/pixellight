@@ -48,7 +48,7 @@ using namespace PLFrontendQt;
 *  @brief
 *    Constructor
 */
-MyRenderWindow::MyRenderWindow(QPLSceneContext &cContext, const QString &sCameraNodeName, const DisplayMode *pDisplayMode, QWidget *pParent): QPLRenderWindow(&cContext, false, pDisplayMode, pParent),
+MyRenderWindow::MyRenderWindow(QPLSceneContext &cContext, const QString &sCameraNodeName, const DisplayMode *pDisplayMode, QWidget *pParent): QPLRenderWindow(&cContext, pDisplayMode, pParent),
 	m_vPreviousMousePosition(0, 0),
 	m_pSceneNode(nullptr)
 {

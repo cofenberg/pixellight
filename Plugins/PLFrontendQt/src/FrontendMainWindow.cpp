@@ -87,10 +87,8 @@ FrontendMainWindow::~FrontendMainWindow()
 	m_pFrontendQt->OnStop();
 
 	// Stop window redraw timer
-	if (m_nWindowRedrawTimerID) {
+	if (m_nWindowRedrawTimerID)
 		killTimer(m_nWindowRedrawTimerID);
-		m_nWindowRedrawTimerID = 0;
-	}
 }
 
 

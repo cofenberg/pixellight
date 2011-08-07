@@ -55,38 +55,43 @@ namespace PLFrontendQt {
 *  @param[in] parent
 *    parent widget of this widget
 */
-QPLRenderWindow::QPLRenderWindow(QPLContext *pContext, bool updateContext, const PLRenderer::DisplayMode *pDisplayMode, QWidget *parent) : QWidget(parent),
+QPLRenderWindow::QPLRenderWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode, QWidget *parent) : QWidget(parent),
+	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
 	m_pContext(pContext),
-	m_bUpdateContext(updateContext),
 	m_pInputHandler(nullptr)
 {
-	// Set widget attribut to indicated that someone is directly drawing to the screen
-	// in this case it is PL which draws directly to the screen.
+	// Disable window system background to avoid "white flickering" caused by automatic overdraw
+	// (same settings as used in Qt's QGLWidget)
 	setAttribute(Qt::WA_PaintOnScreen);
-
-	// Set widget attribut that this window has no background. Avoids flicker when the widget gets resized because Qt doesn't paint the background
 	setAttribute(Qt::WA_NoSystemBackground);
+
+	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
+	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
+	// -> Set the following attribute
+	setAttribute(Qt::WA_OpaquePaintEvent, true);
 
 	InitWindow(pDisplayMode);
 }
 
 QPLRenderWindow::QPLRenderWindow(QWidget *parent) : QWidget(parent),
+	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
 	m_pContext(nullptr),
-	m_bUpdateContext(false),
 	m_pInputHandler(nullptr)
 {
-	// Set widget attribut to indicated that someone is directly drawing to the screen
-	// in this case it is PL which draws directly to the screen.
+	// Disable window system background to avoid "white flickering" caused by automatic overdraw
+	// (same settings as used in Qt's QGLWidget)
 	setAttribute(Qt::WA_PaintOnScreen);
-
-	// Set widget attribut that this window has no background. Avoids flicker when the widget gets resized because Qt doesn't paint the background
 	setAttribute(Qt::WA_NoSystemBackground);
+
+	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
+	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
+	// -> Set the following attribute
+	setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
 
-void QPLRenderWindow::SetupWindow(QPLContext *pContext, bool updateContext, const PLRenderer::DisplayMode *pDisplayMode)
+void QPLRenderWindow::SetupWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode)
 {
 	m_pContext = pContext;
-	m_bUpdateContext = updateContext;
 	InitWindow(pDisplayMode);
 }
 
@@ -96,22 +101,11 @@ void QPLRenderWindow::SetupWindow(QPLContext *pContext, bool updateContext, cons
 */
 QPLRenderWindow::~QPLRenderWindow()
 {
-	m_pContext = nullptr;
-}
+	// Stop window redraw timer
+	if (m_nWindowRedrawTimerID)
+		killTimer(m_nWindowRedrawTimerID);
 
-/**
-*  @brief
-*    Let PL draw one frame
-*/
-void QPLRenderWindow::Update()
-{
-	// Don't do update to surface when it's not visible
-	if (isVisible()) {
-		if (m_bUpdateContext && m_pContext)
-			m_pContext->Update();
-		else if (GetSurface())
-			GetSurface()->Update();
-	}
+	m_pContext = nullptr;
 }
 
 /**
@@ -140,7 +134,6 @@ void QPLRenderWindow::ChangeContext(QPLContext *pNewContext)
 	SetPainter();
 	connect(m_pContext, SIGNAL(ContextChanged()), this, SLOT(OnContextChanged()));
 	OnContextChanged();
-	Update();
 }
 
 void QPLRenderWindow::OnContextChanged()
@@ -159,33 +152,40 @@ void QPLRenderWindow::OnContextChanged()
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual QObject functions                   ]
+//[-------------------------------------------------------]
+void QPLRenderWindow::timerEvent(QTimerEvent *pQTimerEvent)
+{
+	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
+		// Ask Qt politly to update (and repaint) the widget
+		update();
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual QPaintDevice functions              ]
+//[-------------------------------------------------------]
+QPaintEngine *QPLRenderWindow::paintEngine() const
+{
+	// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
+	return nullptr;
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected virtual QWidget functions                   ]
 //[-------------------------------------------------------]
 void QPLRenderWindow::paintEvent(QPaintEvent *)
 {
-	if (isVisible()) {
-		// Let PL draw one frame
-		Update();
-	}
-}
+	// Qt only calls this method if the draw area isn't null
 
-void QPLRenderWindow::resizeEvent(QResizeEvent *)
-{
-	if (isVisible()) {
-		// Let PL draw one frame
-		Update();
+	// Get the renderer surface
+	Surface *pSurface = GetSurface();
+	if (pSurface) {
+		// Update the renderer surface
+		pSurface->Update();
 	}
-}
-
-void QPLRenderWindow::showEvent(QShowEvent *)
-{
-	// [TODO] Check this
-	/*
-	if (isVisible()) {
-		// Let PL draw one frame
-		Update();
-	}
-	*/
 }
 
 void QPLRenderWindow::mousePressEvent(QMouseEvent* ev)
