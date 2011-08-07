@@ -66,10 +66,8 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_0(GetPainter,		pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",								"")
-			pl_method_1(SetPainter,		pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",					"")
-			pl_method_0(IsFullscreen,	pl_ret_type(bool),															"Returns whether or not the main window is currently fullscreen or not. Returns 'true' if the main window is currently fullscreen, else 'false'.",			"")
-			pl_method_1(SetFullscreen,	pl_ret_type(void),							bool,							"Sets whether or not the main window is currently fullscreen or not. 'true' as first parameter if the main window is currently fullscreen, else 'false'.",	"")
+			pl_method_0(GetPainter,	pl_ret_type(PLRenderer::SurfacePainter*),									"Get the surface painter of the main window. Returns pointer to surface painter of the main window (can be a null pointer).",				"")
+			pl_method_1(SetPainter,	pl_ret_type(void),							PLRenderer::SurfacePainter*,	"Set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.",	"")
 		#endif
 	pl_class_end
 
@@ -120,24 +118,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*/
 		PLRENDERER_API void SetPainter(PLRenderer::SurfacePainter *pPainter);
 
-		/**
-		*  @brief
-		*    Returns whether or not the main window is currently fullscreen or not
-		*
-		*  @return
-		*    'true' if the main window is currently fullscreen, else 'false'
-		*/
-		PLRENDERER_API bool IsFullscreen() const;
-
-		/**
-		*  @brief
-		*    Sets whether or not the main window is currently fullscreen or not
-		*
-		*  @param[in] bFullscreen
-		*    'true' if the main window is currently fullscreen, else 'false'
-		*/
-		PLRENDERER_API void SetFullscreen(bool bFullscreen);
-
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -178,11 +158,34 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	protected:
 		/**
 		*  @brief
+		*    Called when the display mode was changed
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLCore::FrontendApplication::OnDisplayMode() does
+		*    - Update renderer surface
+		*/
+		PLRENDERER_API virtual void OnDisplayMode() override;
+
+		/**
+		*  @brief
+		*    Called when the fullscreen mode was changed
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that PLCore::FrontendApplication::OnFullscreenMode() does
+		*    - Update renderer surface
+		*/
+		PLRENDERER_API virtual void OnFullscreenMode() override;
+
+		/**
+		*  @brief
 		*    Called to let the frontend draw into it's window
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Everything that PLCore::FrontendApplication::OnDraw() does
+		*    - Draw renderer surface
 		*/
 		PLRENDERER_API virtual void OnDraw() override;
 
@@ -228,6 +231,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	protected:
 		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
 		PLRenderer::RendererContext	*m_pRendererContext;	/**< The renderer context, can be a null pointer */
+		PLRenderer::DisplayMode		*m_pDisplayMode;		/**< Display mode, can be a null pointer */
 
 
 };

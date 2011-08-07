@@ -116,14 +116,25 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
+		virtual PLCore::uint32 GetWidth() const override;
+		virtual PLCore::uint32 GetHeight() const override;
+		virtual bool GetToggleFullscreenMode() const override;
+		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode) override;
+		virtual bool GetFullscreenAltTab() const override;
+		virtual void SetFullscreenAltTab(bool bAllowed) override;
+		virtual bool IsFullscreen() const override;
+		virtual void SetFullscreen(bool bFullscreen) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::FrontendPixelLight	m_cFrontend;	/**< The frontend instance */
-		QWidget					   *m_pMainWindow;	/**< Main window of the application (can be a null pointer) */
+		PLCore::FrontendPixelLight	m_cFrontend;				/**< The frontend instance */
+		QWidget					   *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
+		bool						m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool						m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool						m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
 
 
 };

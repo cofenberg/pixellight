@@ -168,11 +168,59 @@ bool OSWindowLinux::Ping()
 				if (sXEvent.xclient.data.l[0] == m_wmDelete)
 					bQuit = true;
 				break;
+
+			case KeyPress:
+				// Is it allowed to toggle the fullscreen mode using hotkeys?
+				if (m_pFrontendOS->GetToggleFullscreenMode()) {
+					// It's allowed, toggle fullscreen right now?
+					const unsigned int nKey = XLookupKeysym(&sXEvent.xkey, 0);
+					if (nKey == XK_Return && (sXEvent.xkey.state & Mod1Mask)) {
+						// Toggle fullscreen mode
+						m_pFrontendOS->SetFullscreen(!m_pFrontendOS->IsFullscreen());
+					}
+				}
+				break;
+			}
 		}
 	}
 
 	// Done
 	return (bQuit || g_bSignalSystemQuit);
+}
+
+uint32 OSWindowLinux::GetWidth() const
+{
+	// Get X window geometry information
+	::Window nRootWindow = 0;
+	int nPositionX = 0, nPositionY = 0;
+	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+	// Return the window width
+	return nWidth;
+}
+
+uint32 OSWindowLinux::GetHeight() const
+{
+	// Get X window geometry information
+	::Window nRootWindow = 0;
+	int nPositionX = 0, nPositionY = 0;
+	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+	// Return the window height
+	return nHeight;
+}
+
+void OSWindowLinux::SetFullscreenAltTab(bool bAllowed)
+{
+	// Nothing to do in here
+}
+
+void OSWindowLinux::SetFullscreen(bool bFullscreen)
+{
+	// Inform that the fullscreen mode was changed
+	m_pFrontendOS->OnFullscreenMode();
 }
 
 
@@ -214,4 +262,3 @@ void OSWindowLinux::SignalHandler(int nSignal)
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLFrontendOS
-

@@ -51,7 +51,10 @@ pl_implement_class(Frontend)
 */
 Frontend::Frontend() :
 	m_cFrontend(*this),
-	m_pMainWindow(nullptr)
+	m_pMainWindow(nullptr),
+	m_bToggleFullscreenMode(true),
+	m_bFullscreenAltTab(true),
+	m_bIsFullscreen(false)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -164,6 +167,50 @@ void Frontend::Ping()
 		// Process all waiting messages
 		QApplication::instance()->processEvents();
 	}
+}
+
+uint32 Frontend::GetWidth() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->size().width() : 0;
+}
+
+uint32 Frontend::GetHeight() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->size().height() : 0;
+}
+
+bool Frontend::GetToggleFullscreenMode() const
+{
+	return m_bToggleFullscreenMode;
+}
+
+void Frontend::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	m_bToggleFullscreenMode = bToggleFullscreenMode;
+}
+
+bool Frontend::GetFullscreenAltTab() const
+{
+	return m_bFullscreenAltTab;
+}
+
+void Frontend::SetFullscreenAltTab(bool bAllowed)
+{
+	m_bFullscreenAltTab = bAllowed;
+	// [TODO] Implement me
+}
+
+bool Frontend::IsFullscreen() const
+{
+	return m_bIsFullscreen;
+}
+
+void Frontend::SetFullscreen(bool bFullscreen)
+{
+	m_bIsFullscreen = bFullscreen;
+	// [TODO] Implement me
 }
 
 

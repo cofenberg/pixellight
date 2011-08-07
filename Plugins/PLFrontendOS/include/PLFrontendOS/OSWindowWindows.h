@@ -93,6 +93,29 @@ class OSWindowWindows : public OSWindow {
 		*/
 		virtual ~OSWindowWindows();
 
+		/**
+		*  @brief
+		*    Register a hotkey
+		*
+		*  @param[in] nModKey
+		*    Modification key (for example VK_MENU (alt-key))
+		*  @param[in] nKey
+		*    Key (for example VK_RETURN)
+		*
+		*  @return
+		*    Hotkey ID, 0 on error
+		*/
+		int RegisterHotkey(UINT nModKey, UINT nKey);
+
+		/**
+		*  @brief
+		*    Unregister a hotkey
+		*
+		*  @param[in] nID
+		*    Hotkey ID
+		*/
+		void UnregisterHotkey(int nID);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual OSWindow functions                    ]
@@ -101,19 +124,27 @@ class OSWindowWindows : public OSWindow {
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual bool Ping() override;
+		virtual PLCore::uint32 GetWidth() const override;
+		virtual PLCore::uint32 GetHeight() const override;
+		virtual void SetFullscreenAltTab(bool bAllowed) override;
+		virtual void SetFullscreen(bool bFullscreen) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend   *m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
-		HINSTANCE	m_hInstance;	/**< OS main process handle */
-		DWORD		m_nThreadID;	/**< OS main thread ID */
-		WNDCLASS	m_WndClass;		/**< OS window class */
-		HICON		m_hIcon;		/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
-		HWND		m_hWnd;			/**< OS window handle, can be a null pointer */
-		bool		m_bDestroyed;	/**< 'true' if the widget has already been destroyed */
+		Frontend   *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
+		HINSTANCE	m_hInstance;			/**< OS main process handle */
+		DWORD		m_nThreadID;			/**< OS main thread ID */
+		WNDCLASS	m_WndClass;				/**< OS window class */
+		HICON		m_hIcon;				/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
+		HWND		m_hWnd;					/**< OS window handle, can be a null pointer */
+		bool		m_bDestroyed;			/**< 'true' if the widget has already been destroyed */
+		int			m_nHotkeyIDAltTab;		/**< Alt-Tab hotkey */
+		bool		m_bWindowRectBackup;	/**< Is there a window position & size backup? */
+		RECT		m_sWindowRectBackup;	/**< Window position & size backup */
+
 
 
 };

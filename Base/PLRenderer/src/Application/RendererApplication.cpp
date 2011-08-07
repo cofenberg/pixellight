@@ -24,9 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLCore/Tools/Timing.h>
 #include <PLCore/Config/Config.h>	// [TODO] No "Config" usage in here
-#include <PLCore/System/System.h>
 #include <PLCore/Frontend/Frontend.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Surface.h"
@@ -58,7 +56,8 @@ pl_implement_class(RendererApplication)
 */
 RendererApplication::RendererApplication(const String &sSurfacePainter) : FrontendApplication(),
 	m_sSurfacePainter(sSurfacePainter),
-	m_pRendererContext(nullptr)
+	m_pRendererContext(nullptr),
+	m_pDisplayMode(nullptr)
 {
 	// Set application title
 	SetTitle("PixelLight render application");
@@ -112,42 +111,6 @@ void RendererApplication::SetPainter(SurfacePainter *pPainter)
 	}
 }
 
-/**
-*  @brief
-*    Returns whether or not the main window is currently fullscreen or not
-*/
-bool RendererApplication::IsFullscreen() const
-{
-	// [TODO] Move this method into PLFrontend
-	/*
-	// Get the main widget
-	Widget *pWidget = GetMainWindow();
-	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-		// Return the current state
-		return static_cast<RenderWindow*>(pWidget)->IsFullscreen();
-	}*/
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Sets whether or not the main window is currently fullscreen or not
-*/
-void RendererApplication::SetFullscreen(bool bFullscreen)
-{
-	// [TODO] Move this method into PLFrontend
-	/*
-	// Get the main widget
-	Widget *pWidget = GetMainWindow();
-	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-		// Set the current state
-		static_cast<RenderWindow*>(pWidget)->SetFullscreen(bFullscreen);
-	}
-	*/
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -198,6 +161,12 @@ bool RendererApplication::OnStart()
 */
 void RendererApplication::OnStop()
 {
+	// Destroy display mode information
+	if (m_pDisplayMode) {
+		delete m_pDisplayMode;
+		m_pDisplayMode = nullptr;
+	}
+
 	// Destroy renderer context
 	if (m_pRendererContext) {
 		delete m_pRendererContext;
@@ -212,8 +181,69 @@ void RendererApplication::OnStop()
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the display mode was changed
+*/
+void RendererApplication::OnDisplayMode()
+{
+	// No need to call the empty base implementation
+	// FrontendApplication::OnDisplayMode();
+
+	// Get the renderer surface
+	Surface *pSurface = GetSurface();
+	if (pSurface && m_pDisplayMode && GetFrontend()) {
+		// Backup information from renderer surface
+		SurfacePainter *pPainter = pSurface->GetPainter();
+		pSurface->SetPainter(nullptr, false);
+
+		// De-init renderer surface
+		DeInit();
+
+		// Initialize renderer surface
+		Init(*m_pRenderer, m_pFrontend->GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend()->IsFullscreen());
+
+		// Set previous renderer surface painter
+		pSurface = GetSurface();
+		if (pSurface)
+			pSurface->SetPainter(pPainter, false);
+	}
+}
+
+/**
+*  @brief
+*    Called when the fullscreen mode was changed
+*/
+void RendererApplication::OnFullscreenMode()
+{
+	// No need to call the empty base implementation
+	// FrontendApplication::OnFullscreenMode();
+
+	// Get the renderer surface
+	Surface *pSurface = GetSurface();
+	if (pSurface && m_pDisplayMode && GetFrontend()) {
+		// Backup information from renderer surface
+		SurfacePainter *pPainter = pSurface->GetPainter();
+		pSurface->SetPainter(nullptr, false);
+
+		// De-init renderer surface
+		DeInit();
+
+		// Initialize renderer surface
+		Init(*m_pRenderer, m_pFrontend->GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend()->IsFullscreen());
+
+		// Set previous renderer surface painter
+		pSurface = GetSurface();
+		if (pSurface)
+			pSurface->SetPainter(pPainter, false);
+	}
+}
+
 void RendererApplication::OnDraw()
 {
+	// No need to call the empty base implementation
+	// FrontendApplication::OnDraw();
+
 	// Get the surface
 	Surface *pSurface = GetSurface();
 	if (pSurface) {
@@ -283,12 +313,14 @@ void RendererApplication::OnCreateRendererContext()
 		Frontend *pFrontend = GetFrontend();
 		if (pFrontend) {
 			// [TODO] No build in options
-			DisplayMode sDisplayMode;
-			sDisplayMode.vSize.x = pFrontend->GetWidth();
-			sDisplayMode.vSize.y = pFrontend->GetHeight();
-			sDisplayMode.nColorBits = 32;
-			sDisplayMode.nFrequency = 60;
-			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), pFrontend->GetNativeWindowHandle(), sDisplayMode);
+			m_pDisplayMode = new DisplayMode;
+			m_pDisplayMode->vSize.x = 1024;
+			m_pDisplayMode->vSize.y = 768;
+//			m_pDisplayMode->vSize.x = pFrontend->GetWidth();
+//			m_pDisplayMode->vSize.y = pFrontend->GetHeight();
+			m_pDisplayMode->nColorBits = 32;
+			m_pDisplayMode->nFrequency = 60;
+			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), pFrontend->GetNativeWindowHandle(), *m_pDisplayMode);
 		}
 	}
 }

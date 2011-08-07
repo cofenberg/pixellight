@@ -1,6 +1,7 @@
 >> 07.08.2011
 [CO]
 - Renamed "Surface::Update()" into "Surface::Draw()" to make clear that this method is considered to only draw and not e.g. update the complete game logic
+- "RendererApplication": Removed "IsFullscreen()" and "SetFullscreen()", this stuff is now part of the frontend-side
 
 
 

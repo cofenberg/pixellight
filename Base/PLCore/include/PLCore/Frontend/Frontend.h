@@ -204,6 +204,75 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*/
 		PLCORE_API uint32 GetHeight() const;
 
+		//[-------------------------------------------------------]
+		//[ Fullscreen                                            ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Gets whether it's allowed to toggle the fullscreen mode using hotkeys
+		*
+		*  @return
+		*    'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'
+		*/
+		PLCORE_API bool GetToggleFullscreenMode() const;
+
+		/**
+		*  @brief
+		*    Sets whether it's allowed to toggle the fullscreen mode using hotkeys
+		*
+		*  @param[in] bToggleFullscreenMode
+		*    Is it allowed to toggle the fullscreen mode using hotkeys?
+		*
+		*  @note
+		*    - By default, it's allowed to switch widgets into fullscreen mode using Alt-Return or AltGr-Return
+		*/
+		PLCORE_API void SetToggleFullscreenMode(bool bToggleFullscreenMode);
+
+		/**
+		*  @brief
+		*    Gets whether it's allowed to use Alt-Tab if fullscreen mode is used
+		*
+		*  @return
+		*    'true' if it's possible to use Alt-Tab if fullscreen mode is used, else 'false'
+		*
+		*  @note
+		*    - Widgets only
+		*/
+		PLCORE_API bool GetFullscreenAltTab() const;
+
+		/**
+		*  @brief
+		*    Sets whether it's allowed to use Alt-Tab if fullscreen mode is used
+		*
+		*  @param[in] bAllowed
+		*    Is it allowed to use Alt-Tab within fullscreen mode?
+		*
+		*  @note
+		*    - By default, it's allowed to use Alt-Tab
+		*
+		*  @see
+		*    - GetFullscreenAltTab()
+		*/
+		PLCORE_API void SetFullscreenAltTab(bool bAllowed);
+
+		/**
+		*  @brief
+		*    Returns whether the window is in fullscreen mode or not
+		*
+		*  @return
+		*    'true' if the window is in fullscreen mode, else 'false'
+		*/
+		PLCORE_API bool IsFullscreen() const;
+
+		/**
+		*  @brief
+		*    Sets the window's fullscreen mode
+		*
+		*  @param[in] bFullscreen
+		*    'true' if the window should be in fullscreen mode, else 'false'
+		*/
+		PLCORE_API void SetFullscreen(bool bFullscreen);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Frontend functions                     ]

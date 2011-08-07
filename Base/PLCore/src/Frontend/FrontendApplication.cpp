@@ -92,6 +92,24 @@ void FrontendApplication::OnSize()
 
 /**
 *  @brief
+*    Called when the display mode was changed
+*/
+void FrontendApplication::OnDisplayMode()
+{
+	// No default implementation
+}
+
+/**
+*  @brief
+*    Called when the fullscreen mode was changed
+*/
+void FrontendApplication::OnFullscreenMode()
+{
+	// No default implementation
+}
+
+/**
+*  @brief
 *    Called to let the frontend draw into it's window
 */
 void FrontendApplication::OnDraw()

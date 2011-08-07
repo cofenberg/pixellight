@@ -13,12 +13,3 @@ Write \emph{<RTTI object>:GetPainter()} in order to get the surface painter of t
 
 \paragraph{SetPainter()}
 Write \emph{<RTTI object>:SetPainter(<RTTI object>)} in order to set the surface painter of the main window. Pointer to surface painter of the main window (can be a null pointer) as first parameter.
-
-\paragraph{<bool> IsFullscreen()}
-Write \emph{<RTTI object>:IsFullscreen()} in order to check whether or not the main window is currently fullscreen or not. Returns \emph{true} if the main window is currently fullscreen, else \emph{false}.
-
-\paragraph{SetFullscreen(<bool>)}
-Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the main window is currently fullscreen or not. \emph{true} as first parameter if the main window is currently fullscreen, else \emph{false}.
-
-\paragraph{<bool> Update(<bool>)}
-Write \emph{<RTTI object>:Update(<bool>)} in order to update the application. Force update at once? as first parameter (do this only if you really need it!). Returns \emph{true} when the update was performed, else \emph{false} (maybe there's a frame rate limitation and the update wasn't forced). This method is called continously from the main loop of the application. It is called either by the \emph{OnRun()}-method of an Application, or from the outside, if the application is embedded in another application's main loop (which is the case for e.g. browser plugins).

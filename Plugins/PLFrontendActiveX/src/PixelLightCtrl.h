@@ -102,6 +102,14 @@ END_MSG_MAP()
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
+		virtual PLCore::uint32 GetWidth() const override;
+		virtual PLCore::uint32 GetHeight() const override;
+		virtual bool GetToggleFullscreenMode() const override;
+		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode) override;
+		virtual bool GetFullscreenAltTab() const override;
+		virtual void SetFullscreenAltTab(bool bAllowed) override;
+		virtual bool IsFullscreen() const override;
+		virtual void SetFullscreen(bool bFullscreen) override;
 
 	private:
 		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */

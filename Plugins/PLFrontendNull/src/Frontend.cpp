@@ -125,6 +125,51 @@ void Frontend::Ping()
 	}
 }
 
+uint32 Frontend::GetWidth() const
+{
+	// There's no window
+	return 0;
+}
+
+uint32 Frontend::GetHeight() const
+{
+	// There's still no window
+	return 0;
+}
+
+bool Frontend::GetToggleFullscreenMode() const
+{
+	// Exactly, no window
+	return false;
+}
+
+void Frontend::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	// No window, again
+}
+
+bool Frontend::GetFullscreenAltTab() const
+{
+	// Return whether or not it's allowed to use Alt-Tab - if there would be a window, but there's no
+	return false;
+}
+
+void Frontend::SetFullscreenAltTab(bool bAllowed)
+{
+	// Sorry, this frontend really has no window...
+}
+
+bool Frontend::IsFullscreen() const
+{
+	// ... no window at all...
+	return false;
+}
+
+void Frontend::SetFullscreen(bool bFullscreen)
+{
+	// No window = nothing to do in here
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

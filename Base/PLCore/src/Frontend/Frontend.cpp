@@ -161,7 +161,7 @@ void Frontend::Ping() const
 *  @brief
 *    Redraw frontend window and give the frontend a chance to process OS messages
 */
-void Frontend:: RedrawAndPing()
+void Frontend::RedrawAndPing()
 {
 	// Call backend methods
 	m_pImpl->Redraw();
@@ -186,6 +186,66 @@ uint32 Frontend::GetHeight() const
 {
 	// Call backend
 	return m_pImpl->GetHeight();
+}
+
+/**
+*  @brief
+*    Gets whether it's allowed to toggle the fullscreen mode using hotkeys
+*/
+bool Frontend::GetToggleFullscreenMode() const
+{
+	// Call backend
+	return m_pImpl->GetToggleFullscreenMode();
+}
+
+/**
+*  @brief
+*    Sets whether it's allowed to toggle the fullscreen mode using hotkeys
+*/
+void Frontend::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	// Call backend
+	m_pImpl->SetToggleFullscreenMode(bToggleFullscreenMode);
+}
+
+/**
+*  @brief
+*    Gets whether it's allowed to use Alt-Tab if fullscreen mode is used
+*/
+bool Frontend::GetFullscreenAltTab() const
+{
+	// Call backend
+	return m_pImpl->GetFullscreenAltTab();
+}
+
+/**
+*  @brief
+*    Sets whether it's allowed to use Alt-Tab if fullscreen mode is used
+*/
+void Frontend::SetFullscreenAltTab(bool bAllowed)
+{
+	// Call backend
+	m_pImpl->SetFullscreenAltTab(bAllowed);
+}
+
+/**
+*  @brief
+*    Returns whether the window is in fullscreen mode or not
+*/
+bool Frontend::IsFullscreen() const
+{
+	// Call backend
+	return m_pImpl->IsFullscreen();
+}
+
+/**
+*  @brief
+*    Sets the window's fullscreen mode
+*/
+void Frontend::SetFullscreen(bool bFullscreen)
+{
+	// Call backend
+	m_pImpl->SetFullscreen(bFullscreen);
 }
 
 

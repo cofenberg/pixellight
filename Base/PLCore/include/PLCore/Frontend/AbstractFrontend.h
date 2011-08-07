@@ -53,6 +53,18 @@ class AbstractFrontend {
 
 		/**
 		*  @brief
+		*    Called when the display mode was changed
+		*/
+		virtual void OnDisplayMode() = 0;
+
+		/**
+		*  @brief
+		*    Called when the fullscreen mode was changed
+		*/
+		virtual void OnFullscreenMode() = 0;
+
+		/**
+		*  @brief
 		*    Called to let the frontend draw into it's window
 		*/
 		virtual void OnDraw() = 0;

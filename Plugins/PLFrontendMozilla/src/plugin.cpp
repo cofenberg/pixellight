@@ -117,9 +117,7 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 		m_bFrontendApplicationInitialized = true;
 	}
 
-	// Save size
-	m_nWidth  = aWindow->width;
-	m_nHeight = aWindow->height;
+	// Inform that the window size has been changed
 	FrontendImpl::OnSize();
 
   // subclass window so we can intercept window messages and
@@ -162,23 +160,17 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 {
 	switch (msg) {
 		case WM_SIZE:
-		{
-			// Save new size
-			m_nWidth  = LOWORD(lParam);
-			m_nHeight = HIWORD(lParam);
+			// Inform that the window size has been changed
 			FrontendImpl::OnSize();
 			return 0;
-		}
 
 		case WM_PAINT:
-		{
 			// Let the frontend draw into it's window
 			FrontendImpl::OnDraw();
 
 			// Ping
 			Ping();
 			return 0;
-		}
 
 		default:
 			break;
@@ -215,6 +207,53 @@ void nsPluginInstance::Ping()
 		// Let the frontend update it's states
 		FrontendImpl::OnUpdate();
 	}
+}
+
+PLCore::uint32 nsPluginInstance::GetWidth() const
+{
+	RECT sRect;
+	::GetClientRect(m_hFrontendWnd, &sRect);
+	return sRect.right;
+}
+
+PLCore::uint32 nsPluginInstance::GetHeight() const
+{
+	RECT sRect;
+	::GetClientRect(m_hFrontendWnd, &sRect);
+	return sRect.bottom;
+}
+
+bool nsPluginInstance::GetToggleFullscreenMode() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void nsPluginInstance::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool nsPluginInstance::GetFullscreenAltTab() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void nsPluginInstance::SetFullscreenAltTab(bool bAllowed)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool nsPluginInstance::IsFullscreen() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void nsPluginInstance::SetFullscreen(bool bFullscreen)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

@@ -117,6 +117,24 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 		/**
 		*  @brief
+		*    Called when the display mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLCORE_API virtual void OnDisplayMode() override;
+
+		/**
+		*  @brief
+		*    Called when the fullscreen mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLCORE_API virtual void OnFullscreenMode() override;
+
+		/**
+		*  @brief
 		*    Called to let the frontend draw into it's window
 		*
 		*  @note

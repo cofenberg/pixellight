@@ -55,7 +55,10 @@ pl_implement_class(Frontend)
 Frontend::Frontend() :
 	m_cFrontend(*this),
 	m_pOSWindow(nullptr),
-	m_bQuit(false)
+	m_bQuit(false),
+	m_bToggleFullscreenMode(true),
+	m_bFullscreenAltTab(true),
+	m_bIsFullscreen(false)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -131,6 +134,58 @@ void Frontend::Ping()
 	if (!m_bQuit && Timing::GetInstance()->Update()) {
 		// Let the frontend update it's states
 		OnUpdate();
+	}
+}
+
+uint32 Frontend::GetWidth() const
+{
+	// Query the OS window implementation
+	return m_pOSWindow ? m_pOSWindow->GetWidth() : 0;
+}
+
+uint32 Frontend::GetHeight() const
+{
+	// Query the OS window implementation
+	return m_pOSWindow ? m_pOSWindow->GetHeight() : 0;
+}
+
+bool Frontend::GetToggleFullscreenMode() const
+{
+	return m_bToggleFullscreenMode;
+}
+
+void Frontend::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	m_bToggleFullscreenMode = bToggleFullscreenMode;
+}
+
+bool Frontend::GetFullscreenAltTab() const
+{
+	return m_bFullscreenAltTab;
+}
+
+void Frontend::SetFullscreenAltTab(bool bAllowed)
+{
+	// Is there a state change?
+	if (m_bFullscreenAltTab != bAllowed) {
+		m_bFullscreenAltTab = bAllowed;
+		if (m_pOSWindow)
+			m_pOSWindow->SetFullscreenAltTab(bAllowed);
+	}
+}
+
+bool Frontend::IsFullscreen() const
+{
+	return m_bIsFullscreen;
+}
+
+void Frontend::SetFullscreen(bool bFullscreen)
+{
+	// Is there a state change?
+	if (m_bIsFullscreen != bFullscreen) {
+		m_bIsFullscreen = bFullscreen;
+		if (m_pOSWindow)
+			m_pOSWindow->SetFullscreen(bFullscreen);
 	}
 }
 

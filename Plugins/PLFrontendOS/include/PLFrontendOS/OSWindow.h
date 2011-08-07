@@ -101,6 +101,42 @@ class OSWindow {
 		*/
 		virtual bool Ping() = 0;
 
+		/**
+		*  @brief
+		*    Get window width
+		*
+		*  @return
+		*    Width
+		*/
+		virtual PLCore::uint32 GetWidth() const = 0;
+
+		/**
+		*  @brief
+		*    Get window height
+		*
+		*  @return
+		*    Height
+		*/
+		virtual PLCore::uint32 GetHeight() const = 0;
+
+		/**
+		*  @brief
+		*    Sets whether it's allowed to use Alt-Tab if fullscreen mode is used
+		*
+		*  @param[in] bAllowed
+		*    Is it allowed to use Alt-Tab within fullscreen mode?
+		*/
+		virtual void SetFullscreenAltTab(bool bAllowed) = 0;
+
+		/**
+		*  @brief
+		*    Sets the window's fullscreen mode
+		*
+		*  @param[in] bFullscreen
+		*    'true' if the window should be in fullscreen mode, else 'false'
+		*/
+		virtual void SetFullscreen(bool bFullscreen) = 0;
+
 
 };
 

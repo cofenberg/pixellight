@@ -64,13 +64,16 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	EventHandlerDestroyMainWindow (&Frontend::OnDestroyMainWindow,  this),
-	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
-	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
-	EventHandlerDisplayMode       (&Frontend::OnDisplayMode,        this),
-	EventHandlerFullscreenMode    (&Frontend::OnFullscreenMode,     this),
+	EventHandlerDestroyMainWindow       (&Frontend::OnDestroyMainWindow,        this),
+	EventHandlerActivateMainWindow      (&Frontend::OnActivateMainWindow,       this),
+	EventHandlerDisplayModeMainWindow   (&Frontend::OnDisplayModeMainWindow,    this),
+	EventHandlerFullscreenModeMainWindow(&Frontend::OnFullscreenModeMainWindow, this),
+	EventHandlerDrawMainWindow          (&Frontend::OnDrawMainWindow,           this),
 	m_cFrontend(*this),
-	m_pMainWindow(nullptr)
+	m_pMainWindow(nullptr),
+	m_bToggleFullscreenMode(true),
+	m_bFullscreenAltTab(true),
+	m_bIsFullscreen(false)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -176,6 +179,49 @@ void Frontend::Ping()
 	}
 }
 
+uint32 Frontend::GetWidth() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->GetSize().x : 0;
+}
+
+uint32 Frontend::GetHeight() const
+{
+	return m_pMainWindow ? m_pMainWindow->GetSize().y : 0;
+}
+
+bool Frontend::GetToggleFullscreenMode() const
+{
+	return m_bToggleFullscreenMode;
+}
+
+void Frontend::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	m_bToggleFullscreenMode = bToggleFullscreenMode;
+}
+
+bool Frontend::GetFullscreenAltTab() const
+{
+	return m_bFullscreenAltTab;
+}
+
+void Frontend::SetFullscreenAltTab(bool bAllowed)
+{
+	m_bFullscreenAltTab = bAllowed;
+	// [TODO] Implement me
+}
+
+bool Frontend::IsFullscreen() const
+{
+	return m_bIsFullscreen;
+}
+
+void Frontend::SetFullscreen(bool bFullscreen)
+{
+	m_bIsFullscreen = bFullscreen;
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual Frontend functions                  ]
@@ -197,8 +243,8 @@ void Frontend::OnCreateMainWindow()
 
 	// Connect event handler
 	// [TODO]
-//	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayMode);
-//	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenMode);
+//	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayModeMainWindow);
+//	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenModeMainWindow);
 
 	// [TODO] Add within PLGui something like MessageOnEnterMoveSize&MessageOnLeaveMoveSize?
 	//        Background: When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)...
@@ -215,24 +261,6 @@ void Frontend::OnCreateMainWindow()
 
 	// Show and activate the window
 	pWindow->Activate();
-}
-
-/**
-*  @brief
-*    Called when the display mode was changed
-*/
-void Frontend::OnDisplayMode()
-{
-	// Do nothing by default
-}
-
-/**
-*  @brief
-*    Called when the fullscreen mode was changed
-*/
-void Frontend::OnFullscreenMode()
-{
-	// Do nothing by default
 }
 
 
@@ -280,6 +308,26 @@ void Frontend::OnActivateMainWindow(bool bActivate)
 		OnResume();
 	else
 		OnPause();
+}
+
+/**
+*  @brief
+*    Called when the display mode was changed
+*/
+void Frontend::OnDisplayModeMainWindow()
+{
+	// Inform that the display mode was changed
+	OnDisplayMode();
+}
+
+/**
+*  @brief
+*    Called when the fullscreen mode was changed
+*/
+void Frontend::OnFullscreenModeMainWindow()
+{
+	// Inform that fullscreen mode was changed
+	OnFullscreenMode();
 }
 
 /**

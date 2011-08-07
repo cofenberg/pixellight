@@ -59,6 +59,53 @@ void PixelLightCtrl::Ping()
 	}
 }
 
+PLCore::uint32 PixelLightCtrl::GetWidth() const
+{
+	RECT sRect;
+	::GetClientRect(m_hFrontendWnd, &sRect);
+	return sRect.right;
+}
+
+PLCore::uint32 PixelLightCtrl::GetHeight() const
+{
+	RECT sRect;
+	::GetClientRect(m_hFrontendWnd, &sRect);
+	return sRect.bottom;
+}
+
+bool PixelLightCtrl::GetToggleFullscreenMode() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void PixelLightCtrl::SetToggleFullscreenMode(bool bToggleFullscreenMode)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool PixelLightCtrl::GetFullscreenAltTab() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void PixelLightCtrl::SetFullscreenAltTab(bool bAllowed)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool PixelLightCtrl::IsFullscreen() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return false;
+}
+
+void PixelLightCtrl::SetFullscreen(bool bFullscreen)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
 	// Let the frontend draw into it's window
@@ -96,9 +143,7 @@ LRESULT PixelLightCtrl::OnEraseBkgnd(UINT nMsg, WPARAM wParam, LPARAM lParam, BO
 
 LRESULT PixelLightCtrl::OnSize(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 {
-	// Save new size
-	m_nWidth  = LOWORD(lParam);
-	m_nHeight = HIWORD(lParam);
+	// Inform that the window size has been changed
 	FrontendImpl::OnSize();
 
 	// Done

@@ -88,24 +88,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		PLCORE_API virtual ~FrontendImpl();
 
-		/**
-		*  @brief
-		*    Get window width
-		*
-		*  @return
-		*    Width
-		*/
-		PLCORE_API uint32 GetWidth() const;
-
-		/**
-		*  @brief
-		*    Get window height
-		*
-		*  @return
-		*    Height
-		*/
-		PLCORE_API uint32 GetHeight() const;
-
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractLifecycle functions         ]
@@ -125,6 +107,8 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 	//[-------------------------------------------------------]
 	protected:
 		PLCORE_API virtual void OnSize() override;
+		PLCORE_API virtual void OnDisplayMode() override;
+		PLCORE_API virtual void OnFullscreenMode() override;
 		PLCORE_API virtual void OnDraw() override;
 		PLCORE_API virtual void OnUpdate() override;
 
@@ -215,14 +199,99 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		virtual void Ping() = 0;
 
+		/**
+		*  @brief
+		*    Get window width
+		*
+		*  @return
+		*    Width
+		*/
+		virtual uint32 GetWidth() const = 0;
+
+		/**
+		*  @brief
+		*    Get window height
+		*
+		*  @return
+		*    Height
+		*/
+		virtual uint32 GetHeight() const = 0;
+
+		//[-------------------------------------------------------]
+		//[ Fullscreen                                            ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Gets whether it's allowed to toggle the fullscreen mode using hotkeys
+		*
+		*  @return
+		*    'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'
+		*/
+		virtual bool GetToggleFullscreenMode() const = 0;
+
+		/**
+		*  @brief
+		*    Sets whether it's allowed to toggle the fullscreen mode using hotkeys
+		*
+		*  @param[in] bToggleFullscreenMode
+		*    Is it allowed to toggle the fullscreen mode using hotkeys?
+		*
+		*  @note
+		*    - By default, it's allowed to switch widgets into fullscreen mode using Alt-Return or AltGr-Return
+		*/
+		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode) = 0;
+
+		/**
+		*  @brief
+		*    Gets whether it's allowed to use Alt-Tab if fullscreen mode is used
+		*
+		*  @return
+		*    'true' if it's possible to use Alt-Tab if fullscreen mode is used, else 'false'
+		*
+		*  @note
+		*    - Widgets only
+		*/
+		virtual bool GetFullscreenAltTab() const = 0;
+
+		/**
+		*  @brief
+		*    Sets whether it's allowed to use Alt-Tab if fullscreen mode is used
+		*
+		*  @param[in] bAllowed
+		*    Is it allowed to use Alt-Tab within fullscreen mode?
+		*
+		*  @note
+		*    - By default, it's allowed to use Alt-Tab
+		*
+		*  @see
+		*    - GetFullscreenAltTab()
+		*/
+		virtual void SetFullscreenAltTab(bool bAllowed) = 0;
+
+		/**
+		*  @brief
+		*    Returns whether the window is in fullscreen mode or not
+		*
+		*  @return
+		*    'true' if the window is in fullscreen mode, else 'false'
+		*/
+		virtual bool IsFullscreen() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the window's fullscreen mode
+		*
+		*  @param[in] bFullscreen
+		*    'true' if the window should be in fullscreen mode, else 'false'
+		*/
+		virtual void SetFullscreen(bool bFullscreen) = 0;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
 		Frontend *m_pFrontend;	/**< Pointer to frontend, can be a null pointer */
-		int		  m_nWidth;		/**< Window width */
-		int		  m_nHeight;	/**< Window height */
 
 
 };

@@ -116,6 +116,14 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
+		virtual PLCore::uint32 GetWidth() const override;
+		virtual PLCore::uint32 GetHeight() const override;
+		virtual bool GetToggleFullscreenMode() const override;
+		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode) override;
+		virtual bool GetFullscreenAltTab() const override;
+		virtual void SetFullscreenAltTab(bool bAllowed) override;
+		virtual bool IsFullscreen() const override;
+		virtual void SetFullscreen(bool bFullscreen) override;
 
 
 	//[-------------------------------------------------------]
@@ -139,24 +147,6 @@ class Frontend : public PLCore::FrontendImpl {
 		*/
 		PLFRONTENDPLGUI_API virtual void OnCreateMainWindow();
 
-		/**
-		*  @brief
-		*    Called when the display mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		PLFRONTENDPLGUI_API virtual void OnDisplayMode();
-
-		/**
-		*  @brief
-		*    Called when the fullscreen mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		PLFRONTENDPLGUI_API virtual void OnFullscreenMode();
-
 
 	//[-------------------------------------------------------]
 	//[ Protected event handlers                              ]
@@ -164,17 +154,20 @@ class Frontend : public PLCore::FrontendImpl {
 	protected:
 		PLCore::EventHandler<>					EventHandlerDestroyMainWindow;
 		PLCore::EventHandler<bool>				EventHandlerActivateMainWindow;
+		PLCore::EventHandler<>					EventHandlerDisplayModeMainWindow;
+		PLCore::EventHandler<>					EventHandlerFullscreenModeMainWindow;
 		PLCore::EventHandler<PLGui::Graphics&>	EventHandlerDrawMainWindow;
-		PLCore::EventHandler<>					EventHandlerDisplayMode;
-		PLCore::EventHandler<>					EventHandlerFullscreenMode;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::FrontendPixelLight	m_cFrontend;	/**< The frontend instance */
-		PLGui::Widget			   *m_pMainWindow;	/**< Main window of the application (can be a null pointer) */
+		PLCore::FrontendPixelLight	m_cFrontend;				/**< The frontend instance */
+		PLGui::Widget			   *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
+		bool						m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool						m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool						m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
 
 
 	//[-------------------------------------------------------]
@@ -195,6 +188,24 @@ class Frontend : public PLCore::FrontendImpl {
 		*    'true' if window is activated, else 'false'
 		*/
 		void OnActivateMainWindow(bool bActivate);
+
+		/**
+		*  @brief
+		*    Called when the display mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		void OnDisplayModeMainWindow();
+
+		/**
+		*  @brief
+		*    Called when the fullscreen mode was changed
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		void OnFullscreenModeMainWindow();
 
 		/**
 		*  @brief

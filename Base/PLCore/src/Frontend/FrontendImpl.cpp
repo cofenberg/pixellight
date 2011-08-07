@@ -48,9 +48,7 @@ pl_implement_class(FrontendImpl)
 *    Constructor
 */
 FrontendImpl::FrontendImpl() :
-	m_pFrontend(nullptr),
-	m_nWidth(0),
-	m_nHeight(0)
+	m_pFrontend(nullptr)
 {
 }
 
@@ -60,26 +58,6 @@ FrontendImpl::FrontendImpl() :
 */
 FrontendImpl::~FrontendImpl()
 {
-}
-
-/**
-*  @brief
-*    Get window width
-*/
-uint32 FrontendImpl::GetWidth() const
-{
-	// Return current width
-	return m_nWidth;
-}
-
-/**
-*  @brief
-*    Get window height
-*/
-uint32 FrontendImpl::GetHeight() const
-{
-	// Return current height
-	return m_nHeight;
 }
 
 
@@ -138,15 +116,25 @@ void FrontendImpl::OnDestroy()
 //[-------------------------------------------------------]
 //[ Protected virtual AbstractFrontend functions          ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when the window size has been changed
-*/
 void FrontendImpl::OnSize()
 {
 	// Call virtual function from frontend
 	if (m_pFrontend)
 		m_pFrontend->OnSize();
+}
+
+void FrontendImpl::OnDisplayMode()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDisplayMode();
+}
+
+void FrontendImpl::OnFullscreenMode()
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnFullscreenMode();
 }
 
 void FrontendImpl::OnDraw()

@@ -171,6 +171,20 @@ void FrontendPixelLight::OnSize()
 		m_pFrontendApplication->OnSize();
 }
 
+void FrontendPixelLight::OnDisplayMode()
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnDisplayMode();
+}
+
+void FrontendPixelLight::OnFullscreenMode()
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnFullscreenMode();
+}
+
 void FrontendPixelLight::OnDraw()
 {
 	// Call virtual function from application

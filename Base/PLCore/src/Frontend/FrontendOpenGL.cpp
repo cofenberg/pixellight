@@ -271,6 +271,16 @@ void FrontendOpenGL::OnSize()
 	ResizeGL();
 }
 
+void FrontendOpenGL::OnDisplayMode()
+{
+	// Nothing to do in here
+}
+
+void FrontendOpenGL::OnFullscreenMode()
+{
+	// Nothing to do in here
+}
+
 void FrontendOpenGL::OnDraw()
 {
 	// Draw OpenGL scene
