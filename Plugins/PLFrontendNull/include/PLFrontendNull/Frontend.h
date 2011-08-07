@@ -88,7 +88,8 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::FrontendPixelLight m_cFrontend;	/**< The frontend instance */
+		PLCore::FrontendPixelLight m_cFrontend;		/**< The frontend instance */
+		PLCore::uint64			   m_nTimeToWait;	/**< Time to wait */
 
 
 };

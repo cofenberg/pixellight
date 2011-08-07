@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Tools/Timing.h"
-#include "PLCore/System/System.h"
 #include "PLCore/Frontend/FrontendApplication.h"
 
 
@@ -107,16 +105,7 @@ void FrontendApplication::OnDraw()
 */
 void FrontendApplication::OnUpdate()
 {
-	// Check if we're allowed to perform an update right now
-	uint64 nTimeToWait = 0;
-	if (!Timing::GetInstance()->Update(&nTimeToWait)) {
-		// [TODO] This in here might also be the job of the frontend
-		// Let the system some time to process other system tasks etc.
-		// If this isn't done the CPU usage is always up to 100%!!
-		// Please note that there's no guaranty that the resulting FPS always reaches
-		// exactly the maximum FPS limit.
-		// System::GetInstance()->Sleep(nTimeToWait);
-	}
+	// No default implementation
 }
 
 

@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Timing.h>
+#include <PLCore/System/System.h>
 #include "PLFrontendNull/Frontend.h"
 
 
@@ -47,7 +49,8 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	m_cFrontend(*this)
+	m_cFrontend(*this),
+	m_nTimeToWait(0)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -75,6 +78,15 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 
 		// The frontend main loop
 		while (m_cFrontend.IsRunning()) {
+			// Time to wait?
+			if (m_nTimeToWait) {
+				// Let the system some time to process other system tasks etc.
+				// If this isn't done the CPU usage is always up to 100%!!
+				// Please note that there's no guaranty that the resulting FPS always reaches
+				// exactly the maximum FPS limit.
+				System::GetInstance()->Sleep(m_nTimeToWait);
+			}
+
 			// Redraw & ping
 			Redraw();
 			Ping();
@@ -106,8 +118,11 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
-	// Let the frontend update it's states
-	OnUpdate();
+	// Check if we're allowed to perform an update right now
+	if (Timing::GetInstance()->Update(&m_nTimeToWait)) {
+		// Let the frontend update it's states
+		OnUpdate();
+	}
 }
 
 

@@ -1,4 +1,5 @@
 // PixelLightCtrl.cpp : Implementation of PixelLightCtrl
+#include <PLCore/Tools/Timing.h>
 #include "stdafx.h"
 #include "PixelLightCtrl.h"
 
@@ -51,8 +52,11 @@ void PixelLightCtrl::Redraw()
 
 void PixelLightCtrl::Ping()
 {
-	// Let the frontend update it's states
-	FrontendImpl::OnUpdate();
+	// Check if we're allowed to perform an update right now
+	if (PLCore::Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states
+		FrontendImpl::OnUpdate();
+	}
 }
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)

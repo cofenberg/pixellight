@@ -28,6 +28,7 @@
 	#include <PLCore/PLCoreWindowsIncludes.h>
 	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
 #endif
+#include <PLCore/Tools/Timing.h>
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
@@ -101,8 +102,11 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 		// Ask Qt politly to update (and repaint) the widget
 		update();
 
-		// Let the frontend update it's states
-		m_pFrontendQt->OnUpdate();
+		// Check if we're allowed to perform an update right now
+		if (PLCore::Timing::GetInstance()->Update()) {
+			// Let the frontend update it's states
+			m_pFrontendQt->OnUpdate();
+		}
 	}
 }
 

@@ -29,6 +29,7 @@
 #include <PLCore/File/Directory.h>
 #include <PLCore/File/FileSearch.h>
 #include <PLCore/System/System.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LocalizationGroup.h>
 #include <PLCore/Tools/LoadableType.h>
@@ -168,8 +169,11 @@ void Frontend::Ping()
 		Gui::GetSystemGui()->ProcessMessages();
 	}
 
-	// Let the frontend update it's states
-	OnUpdate();
+	// Check if we're allowed to perform an update right now
+	if (Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states
+		OnUpdate();
+	}
 }
 
 

@@ -2,6 +2,10 @@
 [CO]
 - Updated "PLFrontendQt::QPLRenderWindow". Drawing and updating states are now two distinct things for the frontend & application framework, so, "PLFrontendQt::QPLRenderWindow"
   has now only care about drawing.
+- Moved the "PLCore::Timing"-update from "FrontendApplication::OnUpdate()" into the frontend implementations. "PLCore::Timing" can limit the update rate to a fixed one like
+  60, meaning that the update process doesn't run more than 60 times per second. An application (the slave) shouldn't care about such a topic and the frontend (the master) should
+  have control over this one as well. Please note that it is allowed that the logic update and draw update have different intervalls (but again, the application side doesn't care
+  about this :).
 
 
 

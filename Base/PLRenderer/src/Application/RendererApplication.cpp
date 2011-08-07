@@ -228,8 +228,8 @@ void RendererApplication::OnDraw()
 */
 void RendererApplication::OnUpdate()
 {
-	// Call base implementation
-	FrontendApplication::OnUpdate();
+	// No need to call the empty base implementation
+	// FrontendApplication::OnUpdate();
 
 	// Update renderer context
 	if (m_pRendererContext)

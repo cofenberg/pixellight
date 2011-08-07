@@ -38,6 +38,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <PLCore/Tools/Timing.h>
 #include "plugin.h"
 
 //////////////////////////////////////
@@ -209,8 +210,11 @@ void nsPluginInstance::Redraw()
 
 void nsPluginInstance::Ping()
 {
-	// Let the frontend update it's states
-	FrontendImpl::OnUpdate();
+	// Check if we're allowed to perform an update right now
+	if (PLCore::Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states
+		FrontendImpl::OnUpdate();
+	}
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

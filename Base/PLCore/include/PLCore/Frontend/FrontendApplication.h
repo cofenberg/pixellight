@@ -134,8 +134,8 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*    Don't use this function to perform 'polling'-everything, use events or if required
 		*    for example timers or threads instead.
 		*
-		*    The default implementation does the following tasks:
-		*    - Timing update
+		*  @note
+		*    - The default implementation is empty
 		*/
 		PLCORE_API virtual void OnUpdate() override;
 

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Timing.h>
 #if defined(WIN32)
 	#include "PLFrontendOS/OSWindowWindows.h"
 #elif defined(LINUX)
@@ -122,8 +123,15 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
+	// Ping the OS window
 	if (m_pOSWindow)
 		m_bQuit = m_pOSWindow->Ping();
+
+	// Check if we're allowed to perform an update right now
+	if (!m_bQuit && Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states
+		OnUpdate();
+	}
 }
 
 

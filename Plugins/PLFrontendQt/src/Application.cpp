@@ -164,17 +164,17 @@ void Application::SetContextForUpdate(QPLContext* context)
 void Application::timerEvent(QTimerEvent *pQTimerEvent)
 {
 	if (pQTimerEvent->timerId() == m_TimerId) {
-		// Update timing
-		Timing::GetInstance()->Update();
-
-		if (m_doInputUpdates) {
+		// Check if we're allowed to perform an update right now
+		if (Timing::GetInstance()->Update()) {
 			// Update input handling
-			DoInpuUpdate();
-		}
+			if (m_doInputUpdates)
+				DoInpuUpdate();
 
-		if (!m_suspendRendererContextUpdates && m_doRendererContextUpdates && m_pContext) {
-			m_pContext->Update();
-			emit AfterFrameUpdate();
+			// Update context
+			if (!m_suspendRendererContextUpdates && m_doRendererContextUpdates && m_pContext) {
+				m_pContext->Update();
+				emit AfterFrameUpdate();
+			}
 		}
 	}
 }

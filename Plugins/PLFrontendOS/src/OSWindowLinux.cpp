@@ -171,10 +171,6 @@ bool OSWindowLinux::Ping()
 		}
 	}
 
-	// Let the frontend update it's states
-	if (!bQuit && !g_bSignalSystemQuit)
-		m_pFrontendOS->OnUpdate();
-
 	// Done
 	return (bQuit || g_bSignalSystemQuit);
 }
