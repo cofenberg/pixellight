@@ -126,9 +126,9 @@ bool Surface::SetPainter(SurfacePainter *pPainter, bool bDestroy)
 
 /**
 *  @brief
-*    Updates the surface
+*    Draws the surface
 */
-void Surface::Update()
+void Surface::Draw()
 {
 	// Is this surface active and is there a surface painter?
 	if (m_bActive && m_pPainter) {

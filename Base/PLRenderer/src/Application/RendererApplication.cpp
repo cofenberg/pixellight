@@ -217,8 +217,8 @@ void RendererApplication::OnDraw()
 	// Get the surface
 	Surface *pSurface = GetSurface();
 	if (pSurface) {
-		// Update the surface
-		pSurface->Update();
+		// Draw the surface
+		pSurface->Draw();
 	}
 }
 

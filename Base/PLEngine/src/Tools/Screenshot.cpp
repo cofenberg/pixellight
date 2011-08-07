@@ -174,7 +174,7 @@ bool Screenshot::SaveCustomScreenshot(const String &sFilename, uint16 nWidth, ui
 				pRenderTarget->SetPainter(m_pSurfacePainter);
 
 				// Draw using the set surface painter
-				pRenderTarget->Update();
+				pRenderTarget->Draw();
 
 				// Get screenshot
 				Image cImage;

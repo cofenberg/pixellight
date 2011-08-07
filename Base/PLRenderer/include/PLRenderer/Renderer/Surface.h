@@ -165,13 +165,13 @@ class Surface {
 
 		/**
 		*  @brief
-		*    Updates the surface
+		*    Draws the surface
 		*
 		*  @remarks
 		*    Just calls the OnPaint() function if there's a surface painter and if this surface
 		*    is active.
 		*/
-		PLRENDERER_API void Update();
+		PLRENDERER_API void Draw();
 
 		/**
 		*  @brief

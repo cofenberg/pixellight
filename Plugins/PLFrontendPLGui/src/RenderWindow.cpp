@@ -101,8 +101,8 @@ void RenderWindow::OnDraw(Graphics &cGraphics)
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
 	if (pSurface) {
-		// Update the renderer surface
-		pSurface->Update();
+		// Draw the renderer surface
+		pSurface->Draw();
 	}
 }
 

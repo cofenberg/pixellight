@@ -183,8 +183,8 @@ void QPLRenderWindow::paintEvent(QPaintEvent *)
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
 	if (pSurface) {
-		// Update the renderer surface
-		pSurface->Update();
+		// Draw the renderer surface
+		pSurface->Draw();
 	}
 }
 
