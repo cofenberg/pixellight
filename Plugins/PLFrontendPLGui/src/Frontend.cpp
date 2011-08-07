@@ -23,19 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
-#include <PLCore/Log/Log.h>
-#include <PLCore/File/File.h>
-#include <PLCore/File/Directory.h>
-#include <PLCore/File/FileSearch.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
-#include <PLCore/Tools/Localization.h>
-#include <PLCore/Tools/LocalizationGroup.h>
-#include <PLCore/Tools/LoadableType.h>
-#include <PLCore/Tools/LoadableManager.h>
-#include <PLCore/Frontend/Frontend.h>
 #include <PLGui/Gui/Gui.h>
+#include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Windows/Window.h>
 #include "PLFrontendPLGui/Frontend.h"
 
@@ -64,16 +54,17 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	EventHandlerDestroyMainWindow       (&Frontend::OnDestroyMainWindow,        this),
-	EventHandlerActivateMainWindow      (&Frontend::OnActivateMainWindow,       this),
-	EventHandlerDisplayModeMainWindow   (&Frontend::OnDisplayModeMainWindow,    this),
-	EventHandlerFullscreenModeMainWindow(&Frontend::OnFullscreenModeMainWindow, this),
-	EventHandlerDrawMainWindow          (&Frontend::OnDrawMainWindow,           this),
+	EventHandlerDestroyMainWindow (&Frontend::OnDestroyMainWindow,  this),
+	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
+	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
+	EventHandlerKeyDownMainWindow (&Frontend::OnKeyDownMainWindow,  this),
 	m_cFrontend(*this),
 	m_pMainWindow(nullptr),
+	m_nHotkeyIDAltTab(0),
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
-	m_bIsFullscreen(false)
+	m_bIsFullscreen(false),
+	m_bMainWindowPositionSizeBackup(false)
 {
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	OnCreate();
@@ -110,6 +101,10 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalDestroy .Disconnect(EventHandlerDestroyMainWindow);
 		m_pMainWindow->SignalActivate.Disconnect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Disconnect(EventHandlerDrawMainWindow);
+		m_pMainWindow->SignalKeyDown .Disconnect(EventHandlerKeyDownMainWindow);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
+		if (m_pMainWindow->GetContentWidget() != m_pMainWindow)
+			m_pMainWindow->GetContentWidget()->SignalKeyDown.Disconnect(EventHandlerKeyDownMainWindow);
 	}
 
 	// Set pointer to main window
@@ -120,6 +115,10 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalDestroy .Connect(EventHandlerDestroyMainWindow);
 		m_pMainWindow->SignalActivate.Connect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Connect(EventHandlerDrawMainWindow);
+		m_pMainWindow->SignalKeyDown .Connect(EventHandlerKeyDownMainWindow);
+		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
+		if (m_pMainWindow->GetContentWidget() != m_pMainWindow)
+			m_pMainWindow->GetContentWidget()->SignalKeyDown.Connect(EventHandlerKeyDownMainWindow);
 	}
 }
 
@@ -207,8 +206,14 @@ bool Frontend::GetFullscreenAltTab() const
 
 void Frontend::SetFullscreenAltTab(bool bAllowed)
 {
-	m_bFullscreenAltTab = bAllowed;
-	// [TODO] Implement me
+	// Is there a state change?
+	if (m_bFullscreenAltTab != bAllowed) {
+		// Set the new state
+		m_bFullscreenAltTab = bAllowed;
+
+		// Update the Alt-Tab handling
+		UpdateAltTab();
+	}
 }
 
 bool Frontend::IsFullscreen() const
@@ -218,8 +223,40 @@ bool Frontend::IsFullscreen() const
 
 void Frontend::SetFullscreen(bool bFullscreen)
 {
-	m_bIsFullscreen = bFullscreen;
-	// [TODO] Implement me
+	// Is there a state change?
+	if (m_bIsFullscreen != bFullscreen) {
+		// Set the new state
+		m_bIsFullscreen = bFullscreen;
+
+		// Update the Alt-Tab handling
+		UpdateAltTab();
+
+		// Backup the current window position & size?
+		if (m_pMainWindow && bFullscreen && !m_bMainWindowPositionSizeBackup) {
+			m_vMainWindowPositionBackup		= m_pMainWindow->GetPos();
+			m_vMainWindowSizeBackup			= m_pMainWindow->GetSize();
+			m_bMainWindowPositionSizeBackup	= true;
+		}
+
+		// Inform that the fullscreen mode was changed
+		OnFullscreenMode();
+
+		// Set widget into fullscreen state?
+		if (m_pMainWindow) {
+			if (bFullscreen) {
+				m_pMainWindow->SetWindowState(StateFullscreen);
+			} else {
+				m_pMainWindow->SetWindowState(StateNormal);
+
+				// Restore window position & size
+				if (m_bMainWindowPositionSizeBackup) {
+					m_pMainWindow->SetPos(m_vMainWindowPositionBackup);
+					m_pMainWindow->SetSize(m_vMainWindowSizeBackup);
+					m_bMainWindowPositionSizeBackup = false;
+				}
+			}
+		}
+	}
 }
 
 
@@ -240,11 +277,6 @@ void Frontend::OnCreateMainWindow()
 	// There's no need to have a widget background because we're render into it
 	// (avoids flickering caused by automatic background overdraw)
 	pWindow->GetContentWidget()->SetBackgroundColor(Color4::Transparent);
-
-	// Connect event handler
-	// [TODO]
-//	pWindow->EventDisplayMode   .Connect(EventHandlerDisplayModeMainWindow);
-//	pWindow->EventFullscreenMode.Connect(EventHandlerFullscreenModeMainWindow);
 
 	// [TODO] Add within PLGui something like MessageOnEnterMoveSize&MessageOnLeaveMoveSize?
 	//        Background: When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)...
@@ -267,6 +299,26 @@ void Frontend::OnCreateMainWindow()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Updates the Alt-Tab handling
+*/
+void Frontend::UpdateAltTab()
+{
+	if (m_pMainWindow) {
+		// Register/unregister hotkey
+		if (m_bFullscreenAltTab && m_bIsFullscreen) {
+			// Catch Alt-Tab hotkey so it can't be used during fullscreen
+			if (!m_nHotkeyIDAltTab)
+				m_nHotkeyIDAltTab = m_pMainWindow->RegisterHotkey(PLGUIMOD_ALT, PLGUIKEY_TAB);
+		} else {
+			// Release Alt-Tab hotkey
+			if (m_nHotkeyIDAltTab)
+				m_pMainWindow->UnregisterHotkey(m_nHotkeyIDAltTab);
+		}
+	}
+}
+
 /**
 *  @brief
 *    Called when main window was destroyed
@@ -312,34 +364,25 @@ void Frontend::OnActivateMainWindow(bool bActivate)
 
 /**
 *  @brief
-*    Called when the display mode was changed
-*/
-void Frontend::OnDisplayModeMainWindow()
-{
-	// Inform that the display mode was changed
-	OnDisplayMode();
-}
-
-/**
-*  @brief
-*    Called when the fullscreen mode was changed
-*/
-void Frontend::OnFullscreenModeMainWindow()
-{
-	// Inform that fullscreen mode was changed
-	OnFullscreenMode();
-}
-
-/**
-*  @brief
 *    Called when main window was drawn
 */
 void Frontend::OnDrawMainWindow(Graphics &cGraphics)
 {
-	// [TODO] Redraw, but only if the draw area isn't null - looks like PLGui currently doesn't provide the required information to perform this test
-
 	// Let the frontend draw into it's window
 	OnDraw();
+}
+
+/**
+*  @brief
+*    Called when a key is pressed down
+*/
+void Frontend::OnKeyDownMainWindow(uint32 nKey, uint32 nModifiers)
+{
+	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now?
+	if (m_bToggleFullscreenMode && nKey == PLGUIKEY_RETURN && ((nModifiers & PLGUIMOD_ALT) != 0)) {
+		// Toggle fullscreen mode
+		SetFullscreen(!IsFullscreen());
+	}
 }
 
 

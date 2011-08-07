@@ -31,6 +31,7 @@
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLCore/Frontend/FrontendImpl.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
+#include <PLMath/Vector2i.h>
 #include "PLFrontendPLGui/PLFrontendPLGui.h"
 
 
@@ -152,28 +153,37 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected event handlers                              ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::EventHandler<>					EventHandlerDestroyMainWindow;
-		PLCore::EventHandler<bool>				EventHandlerActivateMainWindow;
-		PLCore::EventHandler<>					EventHandlerDisplayModeMainWindow;
-		PLCore::EventHandler<>					EventHandlerFullscreenModeMainWindow;
-		PLCore::EventHandler<PLGui::Graphics&>	EventHandlerDrawMainWindow;
+		PLCore::EventHandler<>								 EventHandlerDestroyMainWindow;
+		PLCore::EventHandler<bool>							 EventHandlerActivateMainWindow;
+		PLCore::EventHandler<PLGui::Graphics&>				 EventHandlerDrawMainWindow;
+		PLCore::EventHandler<PLCore::uint32, PLCore::uint32> EventHandlerKeyDownMainWindow;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::FrontendPixelLight	m_cFrontend;				/**< The frontend instance */
-		PLGui::Widget			   *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
-		bool						m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
-		bool						m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
-		bool						m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
+		PLCore::FrontendPixelLight	m_cFrontend;						/**< The frontend instance */
+		PLGui::Widget			   *m_pMainWindow;						/**< Main window of the application (can be a null pointer) */
+		PLCore::uint32				m_nHotkeyIDAltTab;					/**< Alt-tab hotkey ID */
+		bool						m_bToggleFullscreenMode;			/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool						m_bFullscreenAltTab;				/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool						m_bIsFullscreen;					/**< 'true' if the window is in fullscreen mode, else 'false' */
+		bool						m_bMainWindowPositionSizeBackup;	/**< Is there a main window position & size backup? */
+		PLMath::Vector2i			m_vMainWindowPositionBackup;		/**< Main window position backup */
+		PLMath::Vector2i			m_vMainWindowSizeBackup;			/**< Main window size backup */
 
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Updates the Alt-Tab handling
+		*/
+		void UpdateAltTab();
+
 		/**
 		*  @brief
 		*    Called when main window was destroyed
@@ -191,30 +201,23 @@ class Frontend : public PLCore::FrontendImpl {
 
 		/**
 		*  @brief
-		*    Called when the display mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		void OnDisplayModeMainWindow();
-
-		/**
-		*  @brief
-		*    Called when the fullscreen mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		void OnFullscreenModeMainWindow();
-
-		/**
-		*  @brief
 		*    Called when main window was drawn
 		*
 		*  @param[in] cGraphics
 		*    Graphics object used for painting
 		*/
 		void OnDrawMainWindow(PLGui::Graphics &cGraphics);
+
+		/**
+		*  @brief
+		*    Called when a key is pressed down
+		*
+		*  @param[in] nKey
+		*    Pressed key
+		*  @param[in] nModifiers
+		*    Modifier keys pressed
+		*/
+		void OnKeyDownMainWindow(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
 
 
 };

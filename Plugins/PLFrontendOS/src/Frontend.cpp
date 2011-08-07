@@ -168,7 +168,10 @@ void Frontend::SetFullscreenAltTab(bool bAllowed)
 {
 	// Is there a state change?
 	if (m_bFullscreenAltTab != bAllowed) {
+		// Set the new state
 		m_bFullscreenAltTab = bAllowed;
+
+		// Let the OS window do the rest
 		if (m_pOSWindow)
 			m_pOSWindow->SetFullscreenAltTab(bAllowed);
 	}
@@ -183,7 +186,10 @@ void Frontend::SetFullscreen(bool bFullscreen)
 {
 	// Is there a state change?
 	if (m_bIsFullscreen != bFullscreen) {
+		// Set the new state
 		m_bIsFullscreen = bFullscreen;
+
+		// Let the OS window do the rest
 		if (m_pOSWindow)
 			m_pOSWindow->SetFullscreen(bFullscreen);
 	}

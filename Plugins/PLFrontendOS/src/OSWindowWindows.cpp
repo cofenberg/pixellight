@@ -391,9 +391,11 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 			::SetWindowPos(m_hWnd, nullptr, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
 		} else {
 			// Restore window position & size
-			::SetWindowPos(m_hWnd, nullptr, m_sWindowRectBackup.left, m_sWindowRectBackup.top, m_sWindowRectBackup.right - m_sWindowRectBackup.left,
-						   m_sWindowRectBackup.bottom - m_sWindowRectBackup.top, SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
-			m_bWindowRectBackup = false;
+			if (m_bWindowRectBackup) {
+				::SetWindowPos(m_hWnd, nullptr, m_sWindowRectBackup.left, m_sWindowRectBackup.top, m_sWindowRectBackup.right - m_sWindowRectBackup.left,
+							   m_sWindowRectBackup.bottom - m_sWindowRectBackup.top, SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
+				m_bWindowRectBackup = false;
+			}
 		}
 	}
 }

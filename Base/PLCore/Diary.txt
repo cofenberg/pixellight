@@ -7,6 +7,7 @@
   have control over this one as well. Please note that it is allowed that the logic update and draw update have different intervalls (but again, the application side doesn't care
   about this :).
 - "Frontend": Added fullscreen mode support and implemented it for "PLFrontendOS::OSWindowWindows" (implementations for the other frontends will follow)
+- "PLFrontendPLGui": Implemented fullscreen mode support
 
 
 
