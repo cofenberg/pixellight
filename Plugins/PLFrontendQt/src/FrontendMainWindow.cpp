@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/qcoreevent.h>
+#include <QtGui/qevent.h>
 #if defined(Q_WS_WIN)
 	#include <PLCore/PLCoreWindowsIncludes.h>
 	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
@@ -124,6 +125,15 @@ QPaintEngine *FrontendMainWindow::paintEngine() const
 //[-------------------------------------------------------]
 //[ Protected virtual QWidget functions                   ]
 //[-------------------------------------------------------]
+void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
+{
+	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
+	if (m_pFrontendQt->GetToggleFullscreenMode() && pQKeyEvent->key() == Qt::Key_Return && (pQKeyEvent->modifiers() & Qt::AltModifier)) {
+		// Toggle fullscreen mode
+		m_pFrontendQt->SetFullscreen(!m_pFrontendQt->IsFullscreen());
+	}
+}
+
 void FrontendMainWindow::focusInEvent(QFocusEvent *)
 {
 	// Do the frontend lifecycle thing - resume

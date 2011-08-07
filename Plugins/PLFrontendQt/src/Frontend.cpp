@@ -198,8 +198,13 @@ bool Frontend::GetFullscreenAltTab() const
 
 void Frontend::SetFullscreenAltTab(bool bAllowed)
 {
-	m_bFullscreenAltTab = bAllowed;
-	// [TODO] Implement me
+	// Is there a state change?
+	if (m_bFullscreenAltTab != bAllowed) {
+		// Set the new state
+		m_bFullscreenAltTab = bAllowed;
+
+		// [TODO] Implement me
+	}
 }
 
 bool Frontend::IsFullscreen() const
@@ -209,8 +214,25 @@ bool Frontend::IsFullscreen() const
 
 void Frontend::SetFullscreen(bool bFullscreen)
 {
-	m_bIsFullscreen = bFullscreen;
-	// [TODO] Implement me
+	// Is there a state change?
+	if (m_bIsFullscreen != bFullscreen) {
+		// Set the new state
+		m_bIsFullscreen = bFullscreen;
+
+		// [TODO] Enable/disable Alt-Tab
+
+		// Inform that the fullscreen mode was changed
+		OnFullscreenMode();
+
+		// Set widget into fullscreen state?
+		if (m_pMainWindow) {
+			// ... just let Qt do the rest for us...
+			if (bFullscreen)
+				m_pMainWindow->showFullScreen();
+			else
+				m_pMainWindow->showNormal();
+		}
+	}
 }
 
 

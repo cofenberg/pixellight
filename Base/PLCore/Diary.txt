@@ -8,6 +8,7 @@
   about this :).
 - "Frontend": Added fullscreen mode support and implemented it for "PLFrontendOS::OSWindowWindows" (implementations for the other frontends will follow)
 - "PLFrontendPLGui": Implemented fullscreen mode support
+- "PLFrontendQt": Implemented fullscreen mode support
 
 
 

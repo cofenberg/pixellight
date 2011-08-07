@@ -110,7 +110,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				return 0;
 
 			case WM_SYSKEYDOWN:
-				// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now?
+				// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
 				if (pOSWindowWindows->m_pFrontendOS->GetToggleFullscreenMode() && (lParam & (1 << 29)) && wParam == VK_RETURN) {	// Bit 29 = the ALT-key
 					// Toggle fullscreen mode
 					pOSWindowWindows->m_pFrontendOS->SetFullscreen(!pOSWindowWindows->m_pFrontendOS->IsFullscreen());

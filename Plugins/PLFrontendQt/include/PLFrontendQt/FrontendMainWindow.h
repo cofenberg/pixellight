@@ -97,6 +97,7 @@ class FrontendMainWindow : public QMainWindow {
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
+		virtual void keyPressEvent(QKeyEvent *) override;
 		virtual void focusInEvent(QFocusEvent *) override;
 		virtual void focusOutEvent(QFocusEvent *) override;
 		virtual void paintEvent(QPaintEvent *) override;
