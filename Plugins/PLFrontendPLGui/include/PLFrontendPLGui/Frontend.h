@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendPixelLight.h>
 #include <PLMath/Vector2i.h>
 #include "PLFrontendPLGui/PLFrontendPLGui.h"
 
@@ -113,7 +112,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -163,15 +162,14 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::FrontendPixelLight	m_cFrontend;						/**< The frontend instance */
-		PLGui::Widget			   *m_pMainWindow;						/**< Main window of the application (can be a null pointer) */
-		PLCore::uint32				m_nHotkeyIDAltTab;					/**< Alt-tab hotkey ID */
-		bool						m_bToggleFullscreenMode;			/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
-		bool						m_bFullscreenAltTab;				/**< Is it allowed to use Alt-Tab within fullscreen mode? */
-		bool						m_bIsFullscreen;					/**< 'true' if the window is in fullscreen mode, else 'false' */
-		bool						m_bMainWindowPositionSizeBackup;	/**< Is there a main window position & size backup? */
-		PLMath::Vector2i			m_vMainWindowPositionBackup;		/**< Main window position backup */
-		PLMath::Vector2i			m_vMainWindowSizeBackup;			/**< Main window size backup */
+		PLGui::Widget	 *m_pMainWindow;					/**< Main window of the application (can be a null pointer) */
+		PLCore::uint32	  m_nHotkeyIDAltTab;				/**< Alt-tab hotkey ID */
+		bool			  m_bToggleFullscreenMode;			/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool			  m_bFullscreenAltTab;				/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool			  m_bIsFullscreen;					/**< 'true' if the window is in fullscreen mode, else 'false' */
+		bool			  m_bMainWindowPositionSizeBackup;	/**< Is there a main window position & size backup? */
+		PLMath::Vector2i  m_vMainWindowPositionBackup;		/**< Main window position backup */
+		PLMath::Vector2i  m_vMainWindowSizeBackup;			/**< Main window size backup */
 
 
 	//[-------------------------------------------------------]

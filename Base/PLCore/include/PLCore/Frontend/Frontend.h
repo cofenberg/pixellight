@@ -102,16 +102,37 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
 		*    List of arguments to the program
-		*  @param[in] sFrontendImplClass
-		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+		*  @param[in] sFrontend
+		*    Name of the frontend RTTI class to use
+		*  @param[in] sFrontendConstructor
+		*    Name of the frontend RTTI class constructor to use
+		*  @param[in] sFrontendConstructorParameters
+		*    Parameters for the frontend RTTI class constructor
+		*  @param[in] sFrontendParameters
+		*    Parameters for the instanced frontend RTTI class
+		*  @param[in] sFrontendImplementation
+		*    Name of the frontend implementation RTTI class to use
+		*  @param[in] sFrontendImplementationConstructor
+		*    Name of the frontend implementation RTTI class constructor to use
+		*  @param[in] sFrontendImplementationConstructorParameters
+		*    Parameters for the frontend implementation RTTI class constructor
+		*  @param[in] sFrontendImplementationParameters
+		*    Parameters for the instanced frontend implementation RTTI class
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendImplClass, const String &sApplicationClass);
+		PLCORE_API static int Run(const String &sExecutableFilename,
+								  const Array<String> &lstArguments,
+								  const String &sFrontend										= "PLCore::FrontendPixelLight",
+								  const String &sFrontendConstructor							= "",
+								  const String &sFrontendConstructorParameters					= "",
+								  const String &sFrontendParameters								= "",
+								  const String &sFrontendImplementation							= "PLFrontendOS::Frontend",
+								  const String &sFrontendImplementationConstructor				= "",
+								  const String &sFrontendImplementationConstructorParameters	= "",
+								  const String &sFrontendImplementationParameters				= "");
 
 		/**
 		*  @brief
@@ -121,17 +142,47 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Number of C-arguments
 		*  @param[in] argv
 		*    C-arguments, must be valid
-		*  @param[in] sFrontendImplClass
-		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+		*  @param[in] sFrontend
+		*    Name of the frontend RTTI class to use
+		*  @param[in] sFrontendConstructor
+		*    Name of the frontend RTTI class constructor to use
+		*  @param[in] sFrontendConstructorParameters
+		*    Parameters for the frontend RTTI class constructor
+		*  @param[in] sFrontendParameters
+		*    Parameters for the instanced frontend RTTI class
+		*  @param[in] sFrontendImplementation
+		*    Name of the frontend implementation RTTI class to use
+		*  @param[in] sFrontendImplementationConstructor
+		*    Name of the frontend implementation RTTI class constructor to use
+		*  @param[in] sFrontendImplementationConstructorParameters
+		*    Parameters for the frontend implementation RTTI class constructor
+		*  @param[in] sFrontendImplementationParameters
+		*    Parameters for the instanced frontend implementation RTTI class
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(int argc, char **argv, const String &sFrontendImplClass, const String &sApplicationClass);
-		PLCORE_API static int Run(int argc, wchar_t **argv, const String &sFrontendImplClass, const String &sApplicationClass);
+		PLCORE_API static int Run(int argc,
+								  char **argv,
+								  const String &sFrontend										= "PLCore::FrontendPixelLight",
+								  const String &sFrontendConstructor							= "",
+								  const String &sFrontendConstructorParameters					= "",
+								  const String &sFrontendParameters								= "",
+								  const String &sFrontendImplementation							= "PLFrontendOS::Frontend",
+								  const String &sFrontendImplementationConstructor				= "",
+								  const String &sFrontendImplementationConstructorParameters	= "",
+								  const String &sFrontendImplementationParameters				= "");
+		PLCORE_API static int Run(int argc,
+								  wchar_t **argv,
+								  const String &sFrontend										= "PLCore::FrontendPixelLight",
+								  const String &sFrontendConstructor							= "",
+								  const String &sFrontendConstructorParameters					= "",
+								  const String &sFrontendParameters								= "",
+								  const String &sFrontendImplementation							= "PLFrontendOS::Frontend",
+								  const String &sFrontendImplementationConstructor				= "",
+								  const String &sFrontendImplementationConstructorParameters	= "",
+								  const String &sFrontendImplementationParameters				= "");
 
 
 	//[-------------------------------------------------------]
@@ -142,10 +193,10 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cImpl
-		*    Implementation object
+		*  @param[in] cFrontendImpl
+		*    Frontend implementation instance
 		*/
-		PLCORE_API Frontend(FrontendImpl &cImpl);
+		PLCORE_API Frontend(FrontendImpl &cFrontendImpl);
 
 		/**
 		*  @brief
@@ -350,7 +401,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		FrontendImpl *m_pImpl;	/**< Pointer to implementation backend, can be a null pointer */
+		FrontendImpl *m_pFrontendImpl;	/**< Pointer to implementation backend, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
@@ -359,15 +410,24 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 	private:
 		/**
 		*  @brief
-		*    Creates a frontend instance
+		*    Creates a frontend implementation instance
 		*
-		*  @param[in] sFrontendImplClass
-		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
+		*  @param[in] sFrontendImplementation
+		*    Name of the frontend implementation RTTI class to use
+		*  @param[in] sFrontendImplementationConstructor
+		*    Name of the frontend implementation RTTI class constructor to use
+		*  @param[in] sFrontendImplementationConstructorParameters
+		*    Parameters for the frontend implementation RTTI class constructor
+		*  @param[in] sFrontendImplementationParameters
+		*    Parameters for the instanced frontend implementation RTTI class
 		*
 		*  @return
-		*    Frontend instance, null pointer on error
+		*    Frontend implementation instance, null pointer on error
 		*/
-		PLCORE_API static FrontendImpl *CreateInstance(const String &sFrontendImplClass);
+		static FrontendImpl *CreateFrontendImplementation(const String &sFrontendImplementation,
+														  const String &sFrontendImplementationConstructor,
+														  const String &sFrontendImplementationConstructorParameters,
+														  const String &sFrontendImplementationParameters);
 
 
 };

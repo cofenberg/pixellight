@@ -49,7 +49,11 @@ pl_implement_class(FrontendPixelLight)
 *  @brief
 *    Constructor
 */
-FrontendPixelLight::FrontendPixelLight(FrontendImpl &cImpl) : Frontend(cImpl),
+FrontendPixelLight::FrontendPixelLight(FrontendImpl &cFrontendImpl) : Frontend(cFrontendImpl),
+	ApplicationClass(this),
+	ApplicationConstructor(this),
+	ApplicationConstructorParameters(this),
+	ApplicationParameters(this),
 	m_pFrontendApplication(nullptr),
 	m_bFrontendApplicationInitialized(false)
 {
@@ -69,7 +73,7 @@ FrontendPixelLight::~FrontendPixelLight()
 //[-------------------------------------------------------]
 bool FrontendPixelLight::IsRunning() const
 {
-	return m_bFrontendApplicationInitialized;
+	return (m_pFrontendApplication && m_bFrontendApplicationInitialized);
 }
 
 
@@ -79,10 +83,12 @@ bool FrontendPixelLight::IsRunning() const
 void FrontendPixelLight::OnRun(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Fill application context
-	ApplicationContext &cApplicationContext = m_pFrontendApplication->m_cApplicationContext;
-	cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());
-	cApplicationContext.SetExecutableFilename(sExecutableFilename);
-	cApplicationContext.SetArguments(lstArguments);
+	if (m_pFrontendApplication) {
+		ApplicationContext &cApplicationContext = m_pFrontendApplication->m_cApplicationContext;
+		cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());
+		cApplicationContext.SetExecutableFilename(sExecutableFilename);
+		cApplicationContext.SetArguments(lstArguments);
+	}
 }
 
 
@@ -91,12 +97,19 @@ void FrontendPixelLight::OnRun(const String &sExecutableFilename, const Array<St
 //[-------------------------------------------------------]
 void FrontendPixelLight::OnCreate()
 {
-	// Get the RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass("Application");	// [TODO] Class name as parameter
+	// Get the frontend application RTTI class
+	const Class *pClass = ClassManager::GetInstance()->GetClass(ApplicationClass.GetString());
 	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendApplication")) {
-		// Create the RTTI class instance
-		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create(Params<Object*, Frontend&>(*this)));
+		// Create the frontend application RTTI class instance
+		if (ApplicationConstructor.GetString().GetLength())
+			m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create(ApplicationConstructor.GetString(), "Frontend=\"" + Type<Frontend&>::ConvertToString(*this) + "\" " + ApplicationConstructorParameters.GetString()));
+		else
+			m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create(Params<Object*, Frontend&>(*this)));
 		if (m_pFrontendApplication) {
+			// Set parameters for the instanced frontend application RTTI class
+			if (ApplicationParameters.GetString().GetLength())
+				m_pFrontendApplication->SetValues(ApplicationParameters.GetString());
+
 			// Do the frontend lifecycle thing - let the world know that we have been created
 			m_pFrontendApplication->OnCreate();
 		}

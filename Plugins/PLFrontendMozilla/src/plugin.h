@@ -43,7 +43,6 @@
 #undef GetNextSibling
 #include <PLCore/Frontend/FrontendImpl.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
-//#include <PLCore/Frontend/FrontendPixelLight.h>	// [TODO] For testing
 
 class nsPluginInstance : public PLCore::FrontendImpl, public nsPluginInstanceBase
 {
@@ -77,7 +76,7 @@ private:
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -91,9 +90,8 @@ private:
 		virtual void SetFullscreen(bool bFullscreen) override;
 
 	private:
-		PLCore::FrontendPixelLight	m_cFrontend;
-//		PLCore::FrontendOpenGL		m_cFrontend;	// [TODO] For testing
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		PLCore::FrontendPixelLight	m_cFrontend;
 
 			
 };

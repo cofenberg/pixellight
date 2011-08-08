@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendPixelLight.h>
 
 
 //[-------------------------------------------------------]
@@ -78,7 +77,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -96,8 +95,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::FrontendPixelLight m_cFrontend;		/**< The frontend instance */
-		PLCore::uint64			   m_nTimeToWait;	/**< Time to wait */
+		PLCore::uint64 m_nTimeToWait;	/**< Time to wait */
 
 
 };

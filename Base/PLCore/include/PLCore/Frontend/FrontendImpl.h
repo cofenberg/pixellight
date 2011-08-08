@@ -93,9 +93,9 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    Returns the frontend instance
 		*
 		*  @return
-		*    The frontend instance
+		*    The frontend instance, can be a null pointer
 		*/
-		PLCORE_API Frontend &GetFrontend() const;
+		PLCORE_API Frontend *GetFrontend() const;
 
 
 	//[-------------------------------------------------------]
@@ -134,8 +134,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
 		*    List of arguments to the program
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
@@ -144,7 +142,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @note
 		*    - The default implementation does nothing at all
 		*/
-		PLCORE_API virtual int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass);
+		PLCORE_API virtual int Run(const String &sExecutableFilename, const Array<String> &lstArguments);
 
 		/**
 		*  @brief
@@ -154,8 +152,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    Number of C-arguments
 		*  @param[in] argv
 		*    C-arguments, must be valid
-		*  @param[in] sApplicationClass
-		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
@@ -164,8 +160,8 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @note
 		*    - The default implementation calls the version of the "Run()"-method using PixelLight strings
 		*/
-		PLCORE_API virtual int Run(int argc, char **argv, const String &sApplicationClass);
-		PLCORE_API virtual int Run(int argc, wchar_t **argv, const String &sApplicationClass);
+		PLCORE_API virtual int Run(int argc, char **argv);
+		PLCORE_API virtual int Run(int argc, wchar_t **argv);
 
 		/**
 		*  @brief
@@ -297,10 +293,39 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 
 
 	//[-------------------------------------------------------]
+	//[ Protected static functions                            ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Creates a frontend instance
+		*
+		*  @param[in] cFrontendImpl
+		*    Frontend implementation instance
+		*  @param[in] sFrontend
+		*    Name of the frontend RTTI class to use
+		*  @param[in] sFrontendConstructor
+		*    Name of the frontend RTTI class constructor to use
+		*  @param[in] sFrontendConstructorParameters
+		*    Parameters for the frontend RTTI class constructor
+		*  @param[in] sFrontendParameters
+		*    Parameters for the instanced frontend RTTI class
+		*
+		*  @return
+		*    Frontend instance, null pointer on error
+		*/
+		PLCORE_API static Frontend *CreateFrontend(FrontendImpl &cFrontendImpl,
+												   const String &sFrontend,
+												   const String &sFrontendConstructor,
+												   const String &sFrontendConstructorParameters,
+												   const String &sFrontendParameters);
+
+
+	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Frontend *m_pFrontend;	/**< Pointer to frontend, always valid */
+		Frontend *m_pFrontend;	/**< Pointer to frontend, can be a null pointer */
 
 
 };

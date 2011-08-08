@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Frontend/Frontend.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Windows/Window.h>
@@ -58,7 +59,6 @@ Frontend::Frontend() :
 	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
 	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
 	EventHandlerKeyDownMainWindow (&Frontend::OnKeyDownMainWindow,  this),
-	m_cFrontend(*this),
 	m_pMainWindow(nullptr),
 	m_nHotkeyIDAltTab(0),
 	m_bToggleFullscreenMode(true),
@@ -66,8 +66,6 @@ Frontend::Frontend() :
 	m_bIsFullscreen(false),
 	m_bMainWindowPositionSizeBackup(false)
 {
-	// Do the frontend lifecycle thing - let the world know that we have been created
-	OnCreate();
 }
 
 /**
@@ -76,8 +74,6 @@ Frontend::Frontend() :
 */
 Frontend::~Frontend()
 {
-	// Do the frontend lifecycle thing - let the world know that we're going to die
-	OnDestroy();
 }
 
 /**
@@ -126,13 +122,13 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Create main window
 	OnCreateMainWindow();
 
 	// The frontend main loop
-	while (Gui::GetSystemGui()->IsActive() && m_pMainWindow && m_pMainWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+	while (Gui::GetSystemGui()->IsActive() && m_pMainWindow && m_pMainWindow->GetNativeWindowHandle() && m_pFrontend && m_pFrontend->IsRunning()) {
 		// Redraw & ping
 		Redraw();
 		Ping();

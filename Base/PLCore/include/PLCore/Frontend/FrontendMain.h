@@ -43,7 +43,7 @@
 *  @param[in] ModuleName
 *    Module name
 *  @param[in] ApplicationClass
-*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
 *
 *  @remarks
 *    Use this when you don't want to care about the program entry point.
@@ -51,7 +51,26 @@
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, "PLFrontendOS::Frontend", ApplicationClass); \
+		return PLCore::Frontend::Run(/* Absolute application executable filename */ \
+									 sExecutableFilename, \
+									 /* List of arguments to the program */ \
+									 lstArguments, \
+									 /* Frontend - Name of the frontend RTTI class to use */ \
+									 "PLCore::FrontendPixelLight", \
+									 /* Frontend - Name of the frontend RTTI class constructor to use */ \
+									 "", \
+									 /* Frontend - Parameters for the frontend RTTI class constructor */ \
+									 "", \
+									 /* Frontend - Parameters for the instanced frontend RTTI class */ \
+									 PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"', \
+									 /* Frontend implementation - Name of the frontend implementation RTTI class to use */ \
+									 "PLFrontendOS::Frontend", \
+									 /* Frontend implementation - Name of the frontend implementation RTTI class constructor to use */ \
+									 "", \
+									 /* Frontend implementation - Parameters for the frontend implementation RTTI class constructor */ \
+									 "", \
+									 /* Frontend implementation - Parameters for the instanced frontend implementation RTTI class */ \
+									 ""); \
 	} \
 	\
 	pl_module_plugin(ModuleName)
@@ -63,7 +82,7 @@
 *  @param[in] ModuleName
 *    Module name
 *  @param[in] ApplicationClass
-*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
+*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication")
 *  @param[in] FrontendClass
 *    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
 *
@@ -73,7 +92,26 @@
 #define pl_module_application_frontend(ModuleName, ApplicationClass, FrontendClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(sExecutableFilename, lstArguments, FrontendClass, ApplicationClass); \
+		return PLCore::Frontend::Run(/* Absolute application executable filename */ \
+									 sExecutableFilename, \
+									 /* List of arguments to the program */ \
+									 lstArguments, \
+									 /* Frontend - Name of the frontend RTTI class to use */ \
+									 "PLCore::FrontendPixelLight", \
+									 /* Frontend - Name of the frontend RTTI class constructor to use */ \
+									 "", \
+									 /* Frontend - Parameters for the frontend RTTI class constructor */ \
+									 "", \
+									 /* Frontend - Parameters for the instanced frontend RTTI class */ \
+									 PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"', \
+									 /* Frontend implementation - Name of the frontend implementation RTTI class to use */ \
+									 FrontendClass, \
+									 /* Frontend implementation - Name of the frontend implementation RTTI class constructor to use */ \
+									 "", \
+									 /* Frontend implementation - Parameters for the frontend implementation RTTI class constructor */ \
+									 "", \
+									 /* Frontend implementation - Parameters for the instanced frontend implementation RTTI class */ \
+									 ""); \
 	} \
 	\
 	pl_module_plugin(ModuleName)

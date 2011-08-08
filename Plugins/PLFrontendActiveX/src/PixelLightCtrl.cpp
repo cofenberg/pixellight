@@ -7,8 +7,8 @@
 // PixelLightCtrl
 
 PixelLightCtrl::PixelLightCtrl() :
-	m_cFrontend(*this),
-	m_bFrontendApplicationInitialized(false)
+	m_bFrontendApplicationInitialized(false),
+	m_cFrontend(*this)
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
@@ -33,7 +33,7 @@ PixelLightCtrl::~PixelLightCtrl()
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::Impl functions                ]
 //[-------------------------------------------------------]
-int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass)
+int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {
 	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
 	return -1;

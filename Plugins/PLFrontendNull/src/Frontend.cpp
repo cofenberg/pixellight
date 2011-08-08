@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/System.h>
+#include <PLCore/Frontend/Frontend.h>
 #include "PLFrontendNull/Frontend.h"
 
 
@@ -49,11 +50,8 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	m_cFrontend(*this),
 	m_nTimeToWait(0)
 {
-	// Do the frontend lifecycle thing - let the world know that we have been created
-	OnCreate();
 }
 
 /**
@@ -62,22 +60,20 @@ Frontend::Frontend() :
 */
 Frontend::~Frontend()
 {
-	// Do the frontend lifecycle thing - let the world know that we're going to die
-	OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Do the frontend lifecycle thing - initialize
 	if (OnStart()) {
 		OnResume();
 
 		// The frontend main loop
-		while (m_cFrontend.IsRunning()) {
+		while (m_pFrontend && m_pFrontend->IsRunning()) {
 			// Time to wait?
 			if (m_nTimeToWait) {
 				// Let the system some time to process other system tasks etc.

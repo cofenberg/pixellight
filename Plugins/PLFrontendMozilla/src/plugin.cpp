@@ -80,8 +80,8 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
   mInitialized(FALSE),
-  m_cFrontend(*this),
-  m_bFrontendApplicationInitialized(false)
+  m_bFrontendApplicationInitialized(false),
+  m_cFrontend(*this)
 {
   mhWnd = nullptr;
 
@@ -183,7 +183,7 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
-int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass)
+int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {
 	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
 	return -1;

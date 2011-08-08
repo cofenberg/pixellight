@@ -66,6 +66,26 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend) : EngineApplication(cF
 *  @brief
 *    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
 */
+ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename) : EngineApplication(cFrontend),
+	OnInitFunction(this),
+	OnUpdateFunction(this),
+	OnDeInitFunction(this),
+	m_sScriptFilename(sScriptFilename),
+	m_pScript(nullptr)
+{
+	// Get the script filename without directory
+	const String sScriptFilenameOnly = Url(sScriptFilename).GetFilename();
+
+	// Set application name and title
+	SetName(sScriptFilenameOnly);
+	SetTitle("PixelLight script application \"" + sScriptFilenameOnly + '\"');
+	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
+}
+
+/**
+*  @brief
+*    Constructor for loading in and executing a scripted stand-alone application using just a single line of C++ code
+*/
 ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename, String sName, String sTitle, String sAppDataSubdir) : EngineApplication(cFrontend),
 	OnInitFunction(this),
 	OnUpdateFunction(this),
@@ -79,7 +99,7 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename
 	// Set application name and title
 	SetName(sName.GetLength() ? sName : sScriptFilenameOnly);
 	SetTitle(sTitle.GetLength() ? sTitle : ("PixelLight script application \"" + sScriptFilenameOnly + '\"'));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
+	SetAppDataSubdir(sAppDataSubdir.GetLength() ? sAppDataSubdir : System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

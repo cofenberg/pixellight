@@ -56,7 +56,16 @@ class FrontendPixelLight : public Frontend {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, FrontendPixelLight, "PLCore", PLCore::Object, "PixelLight frontend")
+	pl_class(PLCORE_RTTI_EXPORT, FrontendPixelLight, "PLCore", PLCore::Frontend, "PixelLight frontend")
+		// Attributes
+		pl_attribute(ApplicationClass,					String,	"",	ReadWrite,	DirectValue,	"Name of the frontend application RTTI class to use",				"")
+		pl_attribute(ApplicationConstructor,			String,	"",	ReadWrite,	DirectValue,	"Name of the frontend application RTTI class constructor to use",	"")
+		pl_attribute(ApplicationConstructorParameters,	String,	"",	ReadWrite,	DirectValue,	"Parameters for the frontend application RTTI class constructor",	"")
+		pl_attribute(ApplicationParameters,				String,	"",	ReadWrite,	DirectValue,	"Parameters for the frontend application RTTI class instance",		"")
+		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
+			// Constructors
+			pl_constructor_1(ParameterConstructor,	FrontendImpl&,	"Parameter constructor. Frontend implementation this frontend is using as first parameter.",	"")
+		#endif
 	pl_class_end
 
 
@@ -68,10 +77,10 @@ class FrontendPixelLight : public Frontend {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cImpl
-		*    Implementation object
+		*  @param[in] cFrontendImpl
+		*    Frontend implementation instance
 		*/
-		PLCORE_API FrontendPixelLight(FrontendImpl &cImpl);
+		PLCORE_API FrontendPixelLight(FrontendImpl &cFrontendImpl);
 
 		/**
 		*  @brief

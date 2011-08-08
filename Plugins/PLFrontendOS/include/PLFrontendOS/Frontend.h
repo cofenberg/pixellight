@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendPixelLight.h>
 
 
 //[-------------------------------------------------------]
@@ -91,7 +90,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -109,12 +108,11 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::FrontendPixelLight  m_cFrontend;				/**< The frontend instance */
-		OSWindow				   *m_pOSWindow;				/**< The OS specific window implementation, can be a null pointer */
-		bool						m_bQuit;					/**< Quit frontend? */
-		bool						m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
-		bool						m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
-		bool						m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
+		OSWindow *m_pOSWindow;				/**< The OS specific window implementation, can be a null pointer */
+		bool	  m_bQuit;					/**< Quit frontend? */
+		bool	  m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool	  m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool	  m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
 
 
 };

@@ -4,7 +4,6 @@
 #include <atlctl.h>
 #include "PLFrontendActiveX_i.h"
 #include <PLCore/Frontend/FrontendImpl.h>
-//#include <PLCore/Frontend/FrontendOpenGL.h>	// [TODO] For testing
 #include <PLCore/Frontend/FrontendPixelLight.h>
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -98,7 +97,7 @@ END_MSG_MAP()
 	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -112,10 +111,9 @@ END_MSG_MAP()
 		virtual void SetFullscreen(bool bFullscreen) override;
 
 	private:
-		HWND						m_hFrontendWnd;	/**< Window handle of the plugin container */
-		PLCore::FrontendPixelLight	m_cFrontend;
-//		PLCore::FrontendOpenGL	m_cFrontend;	// [TODO] For testing
+		HWND						m_hFrontendWnd;						/**< Window handle of the plugin container */
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		PLCore::FrontendPixelLight	m_cFrontend;
 
 // IPixelLightCtrl
 public:

@@ -50,14 +50,11 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	m_cFrontend(*this),
 	m_pMainWindow(nullptr),
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
 	m_bIsFullscreen(false)
 {
-	// Do the frontend lifecycle thing - let the world know that we have been created
-	OnCreate();
 }
 
 /**
@@ -66,8 +63,6 @@ Frontend::Frontend() :
 */
 Frontend::~Frontend()
 {
-	// Do the frontend lifecycle thing - let the world know that we're going to die
-	OnDestroy();
 }
 
 /**
@@ -94,7 +89,7 @@ void Frontend::SetMainWindow(QWidget *pMainWindow)
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::FrontendImpl functions      ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Get traditional C-arguments
 	const int argc = 1 + lstArguments.GetNumOfElements();
@@ -119,7 +114,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	}
 
 	// Run the frontend
-	const int nResult = Run(argc, argv, sApplicationClass);
+	const int nResult = Run(argc, argv);
 
 	// Cleanup traditional C-arguments
 	for (int i=0; i<argc; i++)
@@ -130,7 +125,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	return nResult;
 }
 
-int Frontend::Run(int argc, char **argv, const String &sApplicationClass)
+int Frontend::Run(int argc, char **argv)
 {
 	// Create the Qt application instance on the C runtime stack
 	QApplication cQApplication(argc, argv);

@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Log/Log.h"
+#include "PLCore/Base/Class.h"
 #include "PLCore/System/System.h"
 #include "PLCore/Frontend/Frontend.h"
 #include "PLCore/Frontend/FrontendImpl.h"
@@ -64,9 +66,9 @@ FrontendImpl::~FrontendImpl()
 *  @brief
 *    Returns the frontend instance
 */
-Frontend &FrontendImpl::GetFrontend() const
+Frontend *FrontendImpl::GetFrontend() const
 {
-	return *m_pFrontend;
+	return m_pFrontend;
 }
 
 
@@ -75,9 +77,7 @@ Frontend &FrontendImpl::GetFrontend() const
 //[-------------------------------------------------------]
 void FrontendImpl::OnCreate()
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnCreate();
+	// No implementation required
 }
 
 void FrontendImpl::OnRestart()
@@ -116,9 +116,7 @@ void FrontendImpl::OnStop()
 
 void FrontendImpl::OnDestroy()
 {
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDestroy();
+	// No implementation required
 }
 
 
@@ -168,7 +166,7 @@ void FrontendImpl::OnUpdate()
 *  @brief
 *    Called when the frontend should run
 */
-int FrontendImpl::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+int FrontendImpl::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Nothing to do in here
 	return 0;
@@ -178,22 +176,67 @@ int FrontendImpl::Run(const String &sExecutableFilename, const Array<String> &ls
 *  @brief
 *    Run the frontend using traditional C-arguments
 */
-int FrontendImpl::Run(int argc, char **argv, const String &sApplicationClass)
+int FrontendImpl::Run(int argc, char **argv)
 {
 	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
 	Array<String> lstArguments;
 	for (int i=1; i<argc; i++)
 		lstArguments.Add(argv[i]);
-	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments, sApplicationClass);
+	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments);
 }
 
-int FrontendImpl::Run(int argc, wchar_t **argv, const String &sApplicationClass)
+int FrontendImpl::Run(int argc, wchar_t **argv)
 {
 	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
 	Array<String> lstArguments;
 	for (int i=1; i<argc; i++)
 		lstArguments.Add(argv[i]);
-	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments, sApplicationClass);
+	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments);
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected static functions                            ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates a frontend instance
+*/
+Frontend *FrontendImpl::CreateFrontend(FrontendImpl &cFrontendImpl,
+									   const String &sFrontend,
+									   const String &sFrontendConstructor,
+									   const String &sFrontendConstructorParameters,
+									   const String &sFrontendParameters)
+{
+	// Get the frontend RTTI class
+	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontend);
+	if (pClass && pClass->IsDerivedFrom("PLCore::Frontend")) {
+		// Create the frontend RTTI class instance
+		Object *pObject = sFrontendConstructor.GetLength() ? pClass->Create(sFrontendConstructor, "FrontendImpl=\"" + Type<FrontendImpl&>::ConvertToString(cFrontendImpl) + "\" " + sFrontendConstructorParameters) : pClass->Create(Params<Object*, FrontendImpl&>(cFrontendImpl));
+		if (pObject) {
+			// Cast the pointer to a frontend pointer
+			Frontend *pFrontend = static_cast<Frontend*>(pObject);
+
+			// Write down a log message
+			PL_LOG(Info, "Using frontend '" + pClass->GetClassName() + "': " + pClass->GetDescription())
+
+			// Set parameters for the instanced frontend RTTI class
+			if (sFrontendParameters.GetLength())
+				pObject->SetValues(sFrontendParameters);
+
+			// Done
+			return pFrontend;
+		} else {
+			// Error!
+			PL_LOG(Error, "Failed instancing frontend '" + pClass->GetClassName() + "': " + pClass->GetDescription())
+		}
+	} else {
+		// Error!
+		PL_LOG(Error, "Frontend '" + sFrontend + "' is no valid frontend RTTI class")
+	}
+
+	// Error!
+	return nullptr;
 }
 
 

@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendPixelLight.h>
 #include "PLFrontendQt/PLFrontendQt.h"
 
 
@@ -111,8 +110,8 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments, const PLCore::String &sApplicationClass) override;
-		virtual int Run(int argc, char **argv, const PLCore::String &sApplicationClass) override;
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
+		virtual int Run(int argc, char **argv) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
@@ -130,11 +129,10 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::FrontendPixelLight	m_cFrontend;				/**< The frontend instance */
-		QWidget					   *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
-		bool						m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
-		bool						m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
-		bool						m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
+		QWidget *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
+		bool	 m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool	 m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool	 m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
 
 
 };

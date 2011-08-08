@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Frontend/Frontend.h>
 #if defined(WIN32)
 	#include "PLFrontendOS/OSWindowWindows.h"
 #elif defined(LINUX)
@@ -53,15 +54,12 @@ pl_implement_class(Frontend)
 *    Constructor
 */
 Frontend::Frontend() :
-	m_cFrontend(*this),
 	m_pOSWindow(nullptr),
 	m_bQuit(false),
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
 	m_bIsFullscreen(false)
 {
-	// Do the frontend lifecycle thing - let the world know that we have been created
-	OnCreate();
 }
 
 /**
@@ -70,15 +68,13 @@ Frontend::Frontend() :
 */
 Frontend::~Frontend()
 {
-	// Do the frontend lifecycle thing - let the world know that we're going to die
-	OnDestroy();
 }
 
 
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::FrontendImpl functions        ]
 //[-------------------------------------------------------]
-int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sApplicationClass)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
@@ -95,7 +91,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	// The frontend message loop
 	if (m_pOSWindow->GetNativeWindowHandle()) {
 		m_bQuit = false;
-		while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_cFrontend.IsRunning()) {
+		while (!m_bQuit && m_pOSWindow && m_pOSWindow->GetNativeWindowHandle() && m_pFrontend && m_pFrontend->IsRunning()) {
 			// Redraw & ping
 			Redraw();
 			Ping();
