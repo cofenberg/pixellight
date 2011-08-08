@@ -85,10 +85,10 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XSetWMName(m_pDisplay, m_nNativeWindowHandle, &sXTextProperty);
 
 		// Set icon
-		Atom net_wm_icon = XInternAtom(m_pDisplay, "_NET_WM_ICON", False);
-		Atom cardinal = XInternAtom(m_pDisplay, "CARDINAL", False);
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, net_wm_icon, cardinal, 32,
-						PropModeReplace, (const unsigned char*) pl_icon, pl_icon_length);
+		Atom wmIcon = XInternAtom(m_pDisplay, "_NET_WM_ICON", False);
+		Atom wmCardinal = XInternAtom(m_pDisplay, "CARDINAL", False);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, wmIcon, wmCardinal, 32,
+						PropModeReplace, reinterpret_cast<const unsigned char*>(pl_icon), pl_icon_length);
 
 		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
