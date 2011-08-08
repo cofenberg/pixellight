@@ -69,6 +69,8 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 	#endif
 	#ifdef LINUX
 		m_nNativeWindowHandle(NULL_HANDLE),
+		m_nOldSizeID(-1),
+		m_nOldRotation(-1),
 	#endif
 		m_nSwapInterval(-1),
 		m_bGammaChanged(false)

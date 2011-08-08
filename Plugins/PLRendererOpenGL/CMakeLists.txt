@@ -112,6 +112,7 @@ elseif(LINUX)
 		GL
 		GLU
 		Xxf86vm
+		Xrandr
 	)
 endif()
 

@@ -159,7 +159,8 @@ void ContextLinux::MakeDummyCurrent() const
 bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstDisplayModeList)
 {
 	uint32 nScreen = XDefaultScreen(m_pDisplay);
-	XF86VidModeModeInfo **ppModes = nullptr;
+	XRRScreenConfiguration *sc = nullptr;
+	XRRScreenSize *sizelist = nullptr;
 	int nNumOfModes = 0;
 	String sTemp;
 
@@ -170,14 +171,19 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 
 	// Get list of display modes
 	PL_LOG(Info, "Query available display modes")
-	if (XF86VidModeGetAllModeLines(m_pDisplay, nScreen, &nNumOfModes, &ppModes)) {
+					
+	sc = XRRGetScreenInfo( m_pDisplay, RootWindow( m_pDisplay, nScreen ) );
+	
+	sizelist = XRRConfigSizes( sc, &nNumOfModes );
+	
+	if (nNumOfModes) {
 		for (uint32 i=0; i<nNumOfModes; i++) {
 			// First at all, we're only interested in some of the settings - as a result, we really should check if there's
 			// already a display mode within our list with the interesting settings of the current found display mode
 			bool bNewMode = true;
 			for (uint32 j=0; j<lstDisplayModeList.GetNumOfElements(); j++) {
 				const PLRenderer::DisplayMode *pDisplayMode = lstDisplayModeList[j];
-				if (pDisplayMode->vSize.x == ppModes[i]->hdisplay && pDisplayMode->vSize.y == ppModes[i]->vdisplay) {
+				if (pDisplayMode->vSize.x == sizelist[i].width && pDisplayMode->vSize.y == sizelist[i].height) {
 					// We already have such a display mode within our list!
 					bNewMode = false;
 
@@ -188,8 +194,8 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 			if (bNewMode) {
 				// Get required information
 				PLRenderer::DisplayMode *pDisplayMode = new PLRenderer::DisplayMode;
-				pDisplayMode->vSize.x	  = ppModes[i]->hdisplay;
-				pDisplayMode->vSize.y	  = ppModes[i]->vdisplay;
+				pDisplayMode->vSize.x	  = sizelist[i].width;
+				pDisplayMode->vSize.y	  = sizelist[i].height;
 				pDisplayMode->nColorBits  = XDefaultDepth(m_pDisplay, nScreen);
 
 				// [TODO] under Linux there is currently no real 32Bit visual(RGBA)
@@ -212,7 +218,7 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 				lstDisplayModeList.Add(pDisplayMode);
 			}
 		}
-		XFree(ppModes);
+		XRRFreeScreenConfigInfo( sc );
 
 		// Was at least one display mode found?
 		if (lstDisplayModeList.GetNumOfElements())

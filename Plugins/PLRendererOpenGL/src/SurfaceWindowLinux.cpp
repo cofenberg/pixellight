@@ -106,8 +106,7 @@ bool SurfaceWindow::Init()
 		GetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
 		m_bGammaChanged = false;
 
-		// [TODO] Linux: Mode change currently not working correctly
-/*		// Is fullscreen?
+		// Is fullscreen?
 		if (m_bIsFullscreen) {
 			// Get the renderer instance
 			Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
@@ -125,17 +124,29 @@ bool SurfaceWindow::Init()
 					int nDisplayMode = 0;
 					bool bFound = false;
 					int nNumOfModes = 0;
-					XF86VidModeModeInfo **ppModes = nullptr;
-					if (!XF86VidModeGetAllModeLines(pDisplay, nScreen, &nNumOfModes, &ppModes)) {
+					
+					XRRScreenConfiguration *pScreenConfig = nullptr;
+					XRRScreenSize *pScreenSizeList = nullptr;
+					
+					pScreenConfig = XRRGetScreenInfo( pDisplay,
+                               RootWindow( pDisplay, nScreen ) );
+					
+					pScreenSizeList = XRRConfigSizes( pScreenConfig, &nNumOfModes );
+					
+					if (!nNumOfModes) {
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
+						
+						XRRFreeScreenConfigInfo( pScreenConfig );
 
 						// Error!
 						return false;
 					}
+					
 					int nBestMode = 0;
-					for (int i=0; i<nNumOfModes; i++) {
-						if (m_sDisplayMode.vSize.x	  == ppModes[i]->hdisplay &&
-							m_sDisplayMode.vSize.y	  == ppModes[i]->vdisplay) {
+					for(int i = 0; i < nNumOfModes; i++ )
+					{
+						if (m_sDisplayMode.vSize.x	  == pScreenSizeList[i].width &&
+							m_sDisplayMode.vSize.y	  == pScreenSizeList[i].height) {
 							nBestMode = i;
 							bFound = true;
 							break;
@@ -143,20 +154,32 @@ bool SurfaceWindow::Init()
 					}
 					if (bFound) {
 						// Save desktop-resolution before switching modes
-						m_sDesktopModeBackup = *ppModes[0];
+						m_nOldSizeID = XRRConfigCurrentConfiguration( pScreenConfig, &m_nOldRotation );
 
 						// Change display settings
 						PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Go into fullscreen mode")
-					//	cRenderer.BackupDeviceObjects();	// XF86VidModeSwitchToMode aborts if this is active?!
-						if (!XF86VidModeSwitchToMode(pDisplay, nScreen, ppModes[nBestMode])) {
-							PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't set display mode!")
-							m_bIsFullscreen = false;
+						// [TODO] Renderer::BackupDeviceObjects deletes the Context, which closes unter linux the Display connection
+						// thus all following calls which needs a valid Display connection fails
+						// Either Change ContextLinux that it doesn't open it's own XDisplay connection but uses the connection from the Surface window
+						// Or BackupDeviceObjects doesn't delete the current Context
+						//cRenderer.BackupDeviceObjects();
+						Status status = XRRSetScreenConfig( pDisplay,
+                                pScreenConfig,
+                                RootWindow( pDisplay, nScreen ),
+                                nBestMode,
+                                RR_Rotate_0,
+                                CurrentTime );
 
-							// Error!
-							return false;
-						}
-						XF86VidModeSetViewPort(pDisplay, nScreen, 0, 0);
-//						cRenderer.RestoreDeviceObjects();	// See cRenderer.BackupDeviceObjects();
+						if (status != RRSetConfigSuccess) {
+ 							PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't set display mode!")
+ 							m_bIsFullscreen = false;
+ 							XRRFreeScreenConfigInfo( pScreenConfig );
+ 
+ 							// Error!
+ 							return false;
+ 						}
+						XRRFreeScreenConfigInfo( pScreenConfig );
+						//cRenderer.RestoreDeviceObjects();	// See cRenderer.BackupDeviceObjects();
 					} else {
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: No correct display setting was found, can't change to fullscreen!")
 						m_bIsFullscreen = false;
@@ -164,7 +187,7 @@ bool SurfaceWindow::Init()
 				}
 			}
 		}
-*/
+
 	}
 
 	// Done
@@ -175,6 +198,10 @@ void SurfaceWindow::DeInit()
 {
 	// First check if there's a native window handle
 	if (m_nNativeWindowHandle) {
+		// We're going to perform a cruel act - so give OpenGL a chance to flush and finish it's data...
+		// just so be on the safe side, you never now...
+		glFinish();
+		
 		// Get the renderer instance
 		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
@@ -187,8 +214,7 @@ void SurfaceWindow::DeInit()
 			SetGamma(m_fGammaBackup[0], m_fGammaBackup[1], m_fGammaBackup[2]);
 			m_bGammaChanged = false;
 		}
-/*
-		// [TODO] Linux: Mode change currently not working correctly
+
 		// Is fullscreen?
 		if (m_bIsFullscreen) {
 			// Get the Linux OpenGL render context
@@ -199,15 +225,30 @@ void SurfaceWindow::DeInit()
 				if (pDisplay) {
 					// Reset display settings
 					PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Set display mode to default")
-					cRenderer.BackupDeviceObjects();
 					const int nScreen = XDefaultScreen(pDisplay);
-					XF86VidModeSwitchToMode(pDisplay, nScreen, &m_sDesktopModeBackup);
-					XF86VidModeSetViewPort(pDisplay, nScreen, 0, 0);
-					cRenderer.RestoreDeviceObjects();
+					
+					// [TODO] Renderer::BackupDeviceObjects deletes the Context, which closes unter linux the Display connection
+					// thus all following calls which needs a valid Display connection fails
+					// cRenderer.BackupDeviceObjects();					cRenderer.BackupDeviceObjects();
+					
+					XRRScreenConfiguration *pScreenConfig;
+
+					pScreenConfig = XRRGetScreenInfo( pDisplay, RootWindow( pDisplay, nScreen ) );
+					
+					XRRSetScreenConfig( pDisplay,
+										pScreenConfig,
+										RootWindow( pDisplay, nScreen ),
+										m_nOldSizeID,
+										m_nOldRotation,
+										CurrentTime );
+
+					XRRFreeScreenConfigInfo( pScreenConfig
+ );
+					
+					//cRenderer.RestoreDeviceObjects();	// See cRenderer.BackupDeviceObjects();
 				}
 			}
 		}
-*/
 	}
 }
 

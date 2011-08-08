@@ -34,6 +34,7 @@
 #endif
 #ifdef LINUX
 	#include <X11/Xutil.h>
+	#include <X11/extensions/Xrandr.h>
 	#include <X11/extensions/xf86vmode.h>
 #endif
 
@@ -121,7 +122,8 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	#endif
 	#ifdef LINUX
 		::Window			m_nNativeWindowHandle;
-		XF86VidModeModeInfo	m_sDesktopModeBackup;	/**< Saved desktop-resolution before switching modes */
+		::SizeID 			m_nOldSizeID;
+		::Rotation			m_nOldRotation;
 	#endif
 		int	  m_nSwapInterval;		/**< The swap interval (vertical synchronisation), <0 means not yet set */
 		float m_fGammaBackup[3];	/**< Gamma settings at the time the render window was initialized */
