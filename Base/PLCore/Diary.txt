@@ -8,6 +8,9 @@
 - Implemented frontend arguments... I'am not really happy with the current solution because it just looks complicated. I tried some other approaches but this one was the best one.
   Maybe I find another, better solution later on - but for now it works and is quite flexible. I'am really happy that I introduced the "pl_module_application" & "pl_module_application_frontend"
   macros because they're hiding the complex frontend run call. Within the samples the frontend call is only done once within "45ScriptApplication" without this "standard use case"-macros.
+[SW]
+- "PLFrontendOS": added toggle fullscreen support and and setting window icon to linux X11 part
+- "PLFrontendQt": added support for setting the application/window icon
 
 
 
