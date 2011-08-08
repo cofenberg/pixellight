@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <string.h>
 #include <signal.h>
+#include "../pl_icon.h"
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
 
@@ -66,7 +67,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		const unsigned int  nWidth  = 640;
 		const unsigned int  nHeight = 480;
 		const int           nScreen = DefaultScreen(m_pDisplay);
-			  Visual       *pVisual = DefaultVisual(m_pDisplay, nScreen);
+		Visual              *pVisual = DefaultVisual(m_pDisplay, nScreen);
 		const int           nDepth  = DefaultDepth(m_pDisplay, nScreen);
 	
 		// X events
@@ -82,6 +83,14 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		sXTextProperty.format   = 8;
 		sXTextProperty.nitems   = strlen(reinterpret_cast<const char*>(sXTextProperty.value));
 		XSetWMName(m_pDisplay, m_nNativeWindowHandle, &sXTextProperty);
+		
+		//Set icon
+		Atom net_wm_icon = XInternAtom(m_pDisplay, "_NET_WM_ICON", False);
+		Atom cardinal = XInternAtom(m_pDisplay, "CARDINAL", False);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, net_wm_icon, cardinal, 32,
+						PropModeReplace, (const unsigned char*) pl_icon, pl_icon_length);
+		
+		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
 	}
 
@@ -180,10 +189,9 @@ bool OSWindowLinux::Ping()
 					}
 				}
 				break;
-			}
 		}
 	}
-
+	
 	// Done
 	return (bQuit || g_bSignalSystemQuit);
 }
