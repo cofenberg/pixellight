@@ -135,6 +135,9 @@ int Frontend::Run(int argc, char **argv, const String &sApplicationClass)
 	// Create the Qt application instance on the C runtime stack
 	QApplication cQApplication(argc, argv);
 
+	// set application icon
+	cQApplication.setWindowIcon(QIcon(":/pl_icon.png"));
+	
 	// Create and set the main window
 	new FrontendMainWindow(*this);
 
