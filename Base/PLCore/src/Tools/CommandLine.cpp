@@ -252,7 +252,7 @@ CommandLineOption *CommandLine::GetOption(uint32 nIndex) const
 
 /**
 *  @brief
-*    Get option by nyme
+*    Get option by name
 */
 CommandLineOption *CommandLine::GetOption(const String &sName) const
 {

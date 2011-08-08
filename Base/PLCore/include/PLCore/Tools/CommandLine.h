@@ -130,7 +130,7 @@ class CommandLine {
 
 		/**
 		*  @brief
-		*    Get option by nyme
+		*    Get option by name
 		*
 		*  @param[in] sName
 		*    Name of the option to retrieve (short or long name)
