@@ -68,6 +68,19 @@ bool FrontendPixelLight::IsRunning() const
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual Frontend functions                  ]
+//[-------------------------------------------------------]
+void FrontendPixelLight::OnRun(const String &sExecutableFilename, const Array<String> &lstArguments)
+{
+	// Fill application context
+	ApplicationContext &cApplicationContext = m_pFrontendApplication->m_cApplicationContext;
+	cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());
+	cApplicationContext.SetExecutableFilename(sExecutableFilename);
+	cApplicationContext.SetArguments(lstArguments);
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected virtual AbstractLifecycle functions         ]
 //[-------------------------------------------------------]
 void FrontendPixelLight::OnCreate()
@@ -78,13 +91,6 @@ void FrontendPixelLight::OnCreate()
 		// Create the RTTI class instance
 		m_pFrontendApplication = static_cast<FrontendApplication*>(pClass->Create(Params<Object*, Frontend&>(*this)));
 		if (m_pFrontendApplication) {
-			// Fill application context
-			ApplicationContext &cApplicationContext = const_cast<ApplicationContext&>(m_pFrontendApplication->GetApplicationContext());	// [TODO] Casting away const is not nice
-			cApplicationContext.SetStartupDirectory(System::GetInstance()->GetCurrentDir());
-			cApplicationContext.SetExecutableFilename(System::GetInstance()->GetExecutableFilename());
-			// [TODO]
-//			cApplicationContext.SetArguments(lstArguments);
-
 			// Do the frontend lifecycle thing - let the world know that we have been created
 			m_pFrontendApplication->OnCreate();
 		}

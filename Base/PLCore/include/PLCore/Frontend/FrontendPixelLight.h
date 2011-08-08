@@ -81,6 +81,13 @@ class FrontendPixelLight : public Frontend {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual Frontend functions                  ]
+	//[-------------------------------------------------------]
+	protected:
+		PLCORE_API virtual void OnRun(const String &sExecutableFilename, const Array<String> &lstArguments);
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:

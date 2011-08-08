@@ -303,6 +303,29 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual Frontend functions                  ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Called when the frontend is run
+		*
+		*  @param[in] sExecutableFilename
+		*    Absolute application executable filename
+		*  @param[in] lstArguments
+		*    List of arguments to the program
+		*
+		*  @remarks
+		*    This method is called just before the frontend calls it's run-method in order to
+		*    enter it's main-loop. Use this method for instance to pre-process command line arguments.
+		*
+		*    The default implementation does the following tasks:
+		*    - none (implement in derived classes)
+		*/
+		PLCORE_API virtual void OnRun(const String &sExecutableFilename, const Array<String> &lstArguments);
+
+
+	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:

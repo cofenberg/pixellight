@@ -48,6 +48,9 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	// Create a frontend instance
 	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
 	if (pFrontendImpl) {
+		// Let the world know that this frontend is now going to run
+		pFrontendImpl->GetFrontend().OnRun(sExecutableFilename, lstArguments);
+
 		// Let the frontend run
 		const int nResult = pFrontendImpl->Run(sExecutableFilename, lstArguments, sApplicationClass);
 
@@ -71,6 +74,13 @@ int Frontend::Run(int argc, char **argv, const String &sFrontendClass, const Str
 	// Create a frontend instance
 	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
 	if (pFrontendImpl) {
+		{ // Let the world know that this frontend is now going to run
+			Array<String> lstArguments;
+			for (int i=1; i<argc; i++)
+				lstArguments.Add(argv[i]);
+			pFrontendImpl->GetFrontend().OnRun(lstArguments[0], lstArguments);
+		}
+
 		// Let the frontend run
 		const int nResult = pFrontendImpl->Run(argc, argv, sApplicationClass);
 
@@ -90,6 +100,13 @@ int Frontend::Run(int argc, wchar_t **argv, const String &sFrontendClass, const 
 	// Create a frontend instance
 	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
 	if (pFrontendImpl) {
+		{ // Let the world know that this frontend is now going to run
+			Array<String> lstArguments;
+			for (int i=1; i<argc; i++)
+				lstArguments.Add(argv[i]);
+			pFrontendImpl->GetFrontend().OnRun(lstArguments[0], lstArguments);
+		}
+
 		// Let the frontend run
 		const int nResult = pFrontendImpl->Run(argc, argv, sApplicationClass);
 
@@ -260,6 +277,19 @@ FrontendImpl *Frontend::GetImpl() const
 {
 	// Return implementation
 	return m_pImpl;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual Frontend functions                  ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the frontend is run
+*/
+void Frontend::OnRun(const String &sExecutableFilename, const Array<String> &lstArguments)
+{
+	// No default implementation
 }
 
 

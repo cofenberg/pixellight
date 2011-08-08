@@ -60,6 +60,15 @@ FrontendImpl::~FrontendImpl()
 {
 }
 
+/**
+*  @brief
+*    Returns the frontend instance
+*/
+Frontend &FrontendImpl::GetFrontend() const
+{
+	return *m_pFrontend;
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual AbstractLifecycle functions         ]

@@ -81,12 +81,21 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    Constructor
 		*/
 		PLCORE_API FrontendImpl();
-
+		
 		/**
 		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API virtual ~FrontendImpl();
+
+		/**
+		*  @brief
+		*    Returns the frontend instance
+		*
+		*  @return
+		*    The frontend instance
+		*/
+		PLCORE_API Frontend &GetFrontend() const;
 
 
 	//[-------------------------------------------------------]
@@ -291,7 +300,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Frontend *m_pFrontend;	/**< Pointer to frontend, can be a null pointer */
+		Frontend *m_pFrontend;	/**< Pointer to frontend, always valid */
 
 
 };
