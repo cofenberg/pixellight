@@ -99,9 +99,19 @@ DynFunc *ConstructorDesc::GetConstructor() const
 
 /**
 *  @brief
-*    Create object
+*    Create object by using typed constructor parameters
 */
 Object *ConstructorDesc::Create(const DynParams &cParams)
+{
+	// To be implemented in derived classes
+	return nullptr;
+}
+
+/**
+*  @brief
+*    Create object by using typeless constructor parameters
+*/
+Object *ConstructorDesc::Create(const String &sParams)
 {
 	// To be implemented in derived classes
 	return nullptr;

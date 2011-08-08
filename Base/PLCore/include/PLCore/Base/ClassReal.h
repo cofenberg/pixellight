@@ -79,6 +79,7 @@ class ClassReal : public ClassImpl {
 		PLCORE_API virtual Object *Create() const override;
 		PLCORE_API virtual Object *Create(const DynParams &cParams) const override;
 		PLCORE_API virtual Object *Create(const String &sName, const DynParams &cParams) const override;
+		PLCORE_API virtual Object *Create(const String &sName, const String &sParams) const override;
 
 
 	//[-------------------------------------------------------]

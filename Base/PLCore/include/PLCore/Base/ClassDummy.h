@@ -75,6 +75,7 @@ class ClassDummy : public ClassImpl {
 		virtual Object *Create() const override;
 		virtual Object *Create(const DynParams &cParams) const override;
 		virtual Object *Create(const String &sName, const DynParams &cParams) const override;
+		virtual Object *Create(const String &sName, const String &sParams) const override;
 
 
 	//[-------------------------------------------------------]

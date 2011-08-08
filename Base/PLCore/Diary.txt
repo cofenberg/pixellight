@@ -4,6 +4,7 @@
   to pre-process command line arguments.
 - "FrontendPixelLight" is now using the new "OnRun()"-method in order to fill the application context just like "CoreApplication::Run()" does
 - "Frontend": Exposed the class to the RTTI
+- "Class": Added "Create()"-method creating an object by using a given constructor name and typeless constructor parameters
 
 
 

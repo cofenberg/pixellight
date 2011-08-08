@@ -271,7 +271,7 @@ const ConstructorDesc *Class::GetConstructor(const String &sName) const
 
 /**
 *  @brief
-*    Create object
+*    Create object by using the default constructor
 */
 Object *Class::Create() const
 {
@@ -281,7 +281,7 @@ Object *Class::Create() const
 
 /**
 *  @brief
-*    Create object
+*    Create object by using typed constructor parameters in order to identity the constructor automatically
 */
 Object *Class::Create(const DynParams &cParams) const
 {
@@ -291,12 +291,22 @@ Object *Class::Create(const DynParams &cParams) const
 
 /**
 *  @brief
-*    Create object
+*    Create object by using a given constructor name and typed constructor parameters
 */
 Object *Class::Create(const String &sName, const DynParams &cParams) const
 {
 	// Create object
 	return m_pClassImpl->Create(sName, cParams);
+}
+
+/**
+*  @brief
+*    Create object by using a given constructor name and typeless constructor parameters
+*/
+Object *Class::Create(const String &sName, const String &sParams) const
+{
+	// Create object
+	return m_pClassImpl->Create(sName, sParams);
 }
 
 

@@ -427,7 +427,7 @@ Object *ClassReal::Create(const DynParams &cParams) const
 		// Get constructor
 		ConstructorDesc *pConstructor = m_lstConstructors[i];
 
-		// Check if this constructor is a default constructor
+		// Check if this constructor has a matching signature
 		if (pConstructor->GetSignature() == cParams.GetSignature()) {
 			// Call constructor
 			return pConstructor->Create(cParams);
@@ -449,10 +449,32 @@ Object *ClassReal::Create(const String &sName, const DynParams &cParams) const
 		// Get constructor
 		ConstructorDesc *pConstructor = m_lstConstructors[i];
 
-		// Check if this constructor is a default constructor
+		// Check if this constructor has a matching name and signature
 		if (pConstructor->GetName() == sName && pConstructor->GetSignature() == cParams.GetSignature()) {
 			// Call constructor
 			return pConstructor->Create(cParams);
+		}
+	}
+
+	// Error, no value constructor found
+	return nullptr;
+}
+
+Object *ClassReal::Create(const String &sName, const String &sParams) const
+{
+	// Check if class has been initialized
+	if (!m_bInitialized)
+		InitClass();
+
+	// Loop through constructors
+	for (uint32 i=0; i<m_lstConstructors.GetNumOfElements(); i++) {
+		// Get constructor
+		ConstructorDesc *pConstructor = m_lstConstructors[i];
+
+		// Check if this constructor has a matching name (good luck with the signature)
+		if (pConstructor->GetName() == sName) {
+			// Call constructor
+			return pConstructor->Create(sParams);
 		}
 	}
 

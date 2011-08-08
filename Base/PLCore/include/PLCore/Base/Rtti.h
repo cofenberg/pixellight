@@ -692,6 +692,11 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 						return static_cast<ParamType&>(cParams).Return; \
 					} else return nullptr; \
 				} \
+				virtual PLCore::Object *Create(const PLCore::String &sConstParams) override { \
+					ParamType cParams = ConstParamType::FromString(sConstParams); \
+					m_Constructor.Call(cParams); \
+					return cParams.Return; \
+				} \
 				ConstType m_Constructor; \
 		}; \
 

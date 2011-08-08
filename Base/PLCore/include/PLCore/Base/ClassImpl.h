@@ -401,7 +401,7 @@ class ClassImpl {
 
 		/**
 		*  @brief
-		*    Create object
+		*    Create object by using the default constructor
 		*
 		*  @return
 		*    Pointer to created object (can be a null pointer)
@@ -414,7 +414,7 @@ class ClassImpl {
 
 		/**
 		*  @brief
-		*    Create object
+		*    Create object by using typed constructor parameters in order to identity the constructor automatically
 		*
 		*  @param[in] cParams
 		*    Constructor parameters
@@ -430,7 +430,7 @@ class ClassImpl {
 
 		/**
 		*  @brief
-		*    Create object
+		*    Create object by using a given constructor name and typed constructor parameters
 		*
 		*  @param[in] sName
 		*    Constructor name
@@ -445,6 +445,24 @@ class ClassImpl {
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
 		virtual Object *Create(const String &sName, const DynParams &cParams) const = 0;
+
+		/**
+		*  @brief
+		*    Create object by using a given constructor name and typeless constructor parameters
+		*
+		*  @param[in] sName
+		*    Constructor name
+		*  @param[in] sParams
+		*    Constructor parameters
+		*
+		*  @return
+		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
+		*
+		*  @remarks
+		*    This function will search for a constructor with the specified name. If no such contructor can be found,
+		*    the function will fail and return a null pointer.
+		*/
+		virtual Object *Create(const String &sName, const String &sParams) const = 0;
 
 
 	//[-------------------------------------------------------]

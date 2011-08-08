@@ -241,6 +241,13 @@ Object *ClassDummy::Create(const String &sName, const DynParams &cParams) const
 	return pRealClassImpl ? pRealClassImpl->Create(sName, cParams) : nullptr;
 }
 
+Object *ClassDummy::Create(const String &sName, const String &sParams) const
+{
+	// For this action, we really need the real class: Requests the real class implementation
+	ClassImpl *pRealClassImpl = GetRealClassImpl();
+	return pRealClassImpl ? pRealClassImpl->Create(sName, sParams) : nullptr;
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

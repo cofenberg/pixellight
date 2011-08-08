@@ -126,12 +126,27 @@ class ConstructorDesc : public MemberDesc {
 
 		/**
 		*  @brief
-		*    Create object
+		*    Create object by using typed constructor parameters
+		*
+		*  @param[in] cParams
+		*    Constructor parameters
 		*
 		*  @return
 		*    Pointer to new object (can be a null pointer)
 		*/
 		PLCORE_API virtual Object *Create(const DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Create object by using typeless constructor parameters
+		*
+		*  @param[in] sParams
+		*    Constructor parameters
+		*
+		*  @return
+		*    Pointer to new object (can be a null pointer)
+		*/
+		PLCORE_API virtual Object *Create(const String &sParams);
 
 
 	//[-------------------------------------------------------]
