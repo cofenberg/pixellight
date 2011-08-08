@@ -37,11 +37,19 @@ SET(UI_FILES
 	include/PLFrontendQt/QPLDebugDialog.ui
 )
 
+# Qt .qrc files
+SET(QRC_FILES
+	ressources/ressources.qrc
+)
+
 # Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 
 # Run moc
 QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+
+# Run rcc
+QT4_ADD_RESOURCES(QRC_SRCS ${QRC_FILES})
 
 ##################################################
 ## Source files
@@ -75,6 +83,7 @@ add_sources(
 	src/External/qtcolorbutton.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
+	${QRC_SRCS}	# Add sources produced by rcc
 )
 
 ##################################################

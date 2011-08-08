@@ -114,6 +114,10 @@ class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::Surf
 	//[ Protected virtual QPaintDevice functions              ]
 	//[-------------------------------------------------------]
 	protected:
+		// [TODO]Bad idea to return here a nullptr under linux, with this set qt spams the stdout with a warning on each redraw:
+		// QPainter::begin: Paint device returned engine == 0, type: 1
+		// (the problem seems also only windows related and when aero is active)
+		// see: http://stackoverflow.com/questions/1750011/opengl-window-cleared-with-no-wm-paint-message for possible, and better solution
 		virtual QPaintEngine *paintEngine() const;
 
 
