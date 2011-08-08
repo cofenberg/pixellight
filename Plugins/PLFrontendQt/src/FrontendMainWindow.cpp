@@ -117,12 +117,17 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 //[-------------------------------------------------------]
 QPaintEngine *FrontendMainWindow::paintEngine() const
 {
-	// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
-	// [TODO]Bad idea to return here a nullptr under linux, with this set qt spams the stdout with a warning on each redraw:
-	// QPainter::begin: Paint device returned engine == 0, type: 1
-	// (the problem seems also only windows related and when aero is active)
-	// see: http://stackoverflow.com/questions/1750011/opengl-window-cleared-with-no-wm-paint-message for possible, and better solutions
-	return nullptr;
+	#if defined(Q_WS_WIN)
+		// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
+		return nullptr;
+	#else
+		// On Linux there's no "flickering"-issue and when returning a null pointer in here
+		// "QPainter::begin: Paint device returned engine == 0, type: 1" will be written
+		// into the console - all the time.
+
+		// Call base implementation
+		return QMainWindow::paintEngine();
+	#endif
 }
 
 
