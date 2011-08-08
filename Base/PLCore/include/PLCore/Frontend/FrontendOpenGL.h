@@ -58,6 +58,13 @@ class FrontendOpenGL : public Frontend {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, FrontendOpenGL, "PLCore", PLCore::Object, "Simple test frontend that uses OpenGL")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

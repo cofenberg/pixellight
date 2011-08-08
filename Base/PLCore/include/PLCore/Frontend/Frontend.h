@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCore.h"
+#include "PLCore/Base/Object.h"
 #include "PLCore/Frontend/AbstractFrontend.h"
 #include "PLCore/Application/AbstractLifecycle.h"
 
@@ -60,13 +60,34 @@ template <class ValueType> class Array;
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
 */
-class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
+class Frontend : public Object, protected AbstractLifecycle, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class FrontendImpl;
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, Frontend, "PLCore", PLCore::Object, "Abstract frontend base class")
+		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
+			// Methods
+			pl_method_0(Redraw,						pl_ret_type(void),				"Redraw frontend window.",																																		"")
+			pl_method_0(Ping,						pl_ret_type(void),				"Give the frontend a chance to process OS messages.",																											"")
+			pl_method_0(RedrawAndPing,				pl_ret_type(void),				"Redraw frontend window and give the frontend a chance to process OS messages.",																				"")
+			pl_method_0(GetWidth,					pl_ret_type(uint32),			"Returns the window width.",																																	"")
+			pl_method_0(GetHeight,					pl_ret_type(uint32),			"Returns the window height.",																																	"")
+			pl_method_0(GetToggleFullscreenMode,	pl_ret_type(bool),				"Returns whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'.",	"")
+			pl_method_1(SetToggleFullscreenMode,	pl_ret_type(void),		bool,	"Sets whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' as first parameter to allow it, else 'false'.",									"")
+			pl_method_0(GetFullscreenAltTab,		pl_ret_type(bool),				"Returns whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' if it's possible to use Alt-Tab if fullscreen mode is used, else 'false'.",		"")
+			pl_method_1(SetFullscreenAltTab,		pl_ret_type(void),		bool,	"Sets whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' as first parameter to allow it, else 'false'.",									"")
+			pl_method_0(IsFullscreen,				pl_ret_type(bool),				"Returns whether or not the window is currently fullscreen or not. Returns 'true' if the window is currently fullscreen, else 'false'.",						"")
+			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,	"Sets whether or not the window is currently fullscreen or not. 'true' as first parameter if the window is currently fullscreen, else 'false'.",				"")
+		#endif
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -81,7 +102,7 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*    Absolute application executable filename
 		*  @param[in] lstArguments
 		*    List of arguments to the program
-		*  @param[in] sFrontendClass
+		*  @param[in] sFrontendImplClass
 		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
 		*  @param[in] sApplicationClass
 		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
@@ -90,7 +111,7 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendClass, const String &sApplicationClass);
+		PLCORE_API static int Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendImplClass, const String &sApplicationClass);
 
 		/**
 		*  @brief
@@ -100,7 +121,7 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*    Number of C-arguments
 		*  @param[in] argv
 		*    C-arguments, must be valid
-		*  @param[in] sFrontendClass
+		*  @param[in] sFrontendImplClass
 		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
 		*  @param[in] sApplicationClass
 		*    Name of the application RTTI class to use (must be derived from "PLCore::FrontendApplication") [TODO] Currently ignored
@@ -109,8 +130,8 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(int argc, char **argv, const String &sFrontendClass, const String &sApplicationClass);
-		PLCORE_API static int Run(int argc, wchar_t **argv, const String &sFrontendClass, const String &sApplicationClass);
+		PLCORE_API static int Run(int argc, char **argv, const String &sFrontendImplClass, const String &sApplicationClass);
+		PLCORE_API static int Run(int argc, wchar_t **argv, const String &sFrontendImplClass, const String &sApplicationClass);
 
 
 	//[-------------------------------------------------------]
@@ -340,13 +361,13 @@ class Frontend : protected AbstractLifecycle, protected AbstractFrontend {
 		*  @brief
 		*    Creates a frontend instance
 		*
-		*  @param[in] sFrontendClass
+		*  @param[in] sFrontendImplClass
 		*    Name of the frontend implementation RTTI class to use (e.g. "PLFrontendOS::Frontend")
 		*
 		*  @return
 		*    Frontend instance, null pointer on error
 		*/
-		PLCORE_API static FrontendImpl *CreateInstance(const String &sFrontendClass);
+		PLCORE_API static FrontendImpl *CreateInstance(const String &sFrontendImplClass);
 
 
 };

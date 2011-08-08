@@ -54,6 +54,13 @@ class FrontendPixelLight : public Frontend {
 
 
 	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, FrontendPixelLight, "PLCore", PLCore::Object, "PixelLight frontend")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

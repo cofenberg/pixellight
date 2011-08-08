@@ -37,16 +37,22 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(Frontend)
+
+
+//[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Run the frontend
 */
-int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendClass, const String &sApplicationClass)
+int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments, const String &sFrontendImplClass, const String &sApplicationClass)
 {
-	// Create a frontend instance
-	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	// Create a frontend implementation instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendImplClass);
 	if (pFrontendImpl) {
 		// Let the world know that this frontend is now going to run
 		pFrontendImpl->GetFrontend().OnRun(sExecutableFilename, lstArguments);
@@ -69,10 +75,10 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 *  @brief
 *    Run the frontend using traditional C-arguments
 */
-int Frontend::Run(int argc, char **argv, const String &sFrontendClass, const String &sApplicationClass)
+int Frontend::Run(int argc, char **argv, const String &sFrontendImplClass, const String &sApplicationClass)
 {
-	// Create a frontend instance
-	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	// Create a frontend implementation instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendImplClass);
 	if (pFrontendImpl) {
 		{ // Let the world know that this frontend is now going to run
 			Array<String> lstArguments;
@@ -95,10 +101,10 @@ int Frontend::Run(int argc, char **argv, const String &sFrontendClass, const Str
 	}
 }
 
-int Frontend::Run(int argc, wchar_t **argv, const String &sFrontendClass, const String &sApplicationClass)
+int Frontend::Run(int argc, wchar_t **argv, const String &sFrontendImplClass, const String &sApplicationClass)
 {
-	// Create a frontend instance
-	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendClass);
+	// Create a frontend implementation instance
+	FrontendImpl *pFrontendImpl = CreateInstance(sFrontendImplClass);
 	if (pFrontendImpl) {
 		{ // Let the world know that this frontend is now going to run
 			Array<String> lstArguments;
@@ -300,14 +306,14 @@ void Frontend::OnRun(const String &sExecutableFilename, const Array<String> &lst
 *  @brief
 *    Creates a frontend instance
 */
-FrontendImpl *Frontend::CreateInstance(const String &sFrontendClass)
+FrontendImpl *Frontend::CreateInstance(const String &sFrontendImplClass)
 {
 	// [TODO] Make this optional?
 	// Scan PL-runtime directory for compatible plugins and load them in
 	Core::ScanRuntimeDirectoryPlugins();
 
-	// Get the frontend RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendClass);
+	// Get the frontend implementation RTTI class
+	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendImplClass);
 	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
 		// Create the frontend RTTI class instance
 		Object *pObject = pClass->Create();
@@ -323,7 +329,7 @@ FrontendImpl *Frontend::CreateInstance(const String &sFrontendClass)
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, "Frontend '" + sFrontendClass + "' is no valid frontend RTTI class")
+		PL_LOG(Error, "Frontend '" + sFrontendImplClass + "' is no valid frontend implementation RTTI class")
 	}
 
 	// Error!

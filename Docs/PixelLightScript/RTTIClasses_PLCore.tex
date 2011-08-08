@@ -42,3 +42,44 @@ Write \emph{<RTTI object>:FromString(<string>)} in order to set the object from 
 
 \paragraph{Exit(<integer>)}
 Write \emph{<RTTI object>:Exit(<integer>)} in order to exit the application. Return code for application as first parameter (usually 0 means no error).
+
+
+
+
+\section{PLCore::FrontendApplication Class}
+
+
+\subsection{Methods}
+
+\paragraph{Redraw()}
+Write \emph{<RTTI object>:Redraw()} in order redraw the frontend.
+
+\paragraph{Ping()}
+Write \emph{<RTTI object>:Ping()} in order to give the frontend a chance to process OS messages.
+
+\paragraph{RedrawAndPing()}
+Write \emph{<RTTI object>:RedrawAndPing()} in order to redraw the frontend window and give the frontend a chance to process OS messages.
+
+\paragraph{<integer> GetWidth()}
+Write \emph{<RTTI object>:GetWidth()} in order receive the width of the frontend window.
+
+\paragraph{<integer> GetHeight()}
+Write \emph{<RTTI object>:GetHeight()} in order receive the height of the frontend window.
+
+\paragraph{<bool> GetToggleFullscreenMode()}
+Write \emph{<RTTI object>:GetToggleFullscreenMode()} in order request whether it's allowed to toggle the fullscreen mode using hotkeys. \emph{true} if it's possible to toggle the fullscreen mode using hotkeys, else \emph{false}.
+
+\paragraph{SetToggleFullscreenMode(<bool>)}
+Write \emph{<RTTI object>:SetToggleFullscreenMode(<bool>)} in order set whether it's allowed to toggle the fullscreen mode using hotkeys. \emph{true} as first parameter to allow it, else \emph{false}.
+
+\paragraph{<bool> GetFullscreenAltTab()}
+Write \emph{<RTTI object>:GetFullscreenAltTab()} in order to request whether it's allowed to use Alt-Tab if fullscreen mode is used. \emph{true} if it's possible to use Alt-Tab if fullscreen mode is used, else \emph{false}.
+
+\paragraph{SetFullscreenAltTab(<bool>)}
+Write \emph{<RTTI object>:SetFullscreenAltTab(<bool>)} in order to set whether it's allowed to use Alt-Tab if fullscreen mode is used. \emph{true} as first parameter to allow it, else \emph{false}.
+
+\paragraph{<bool> IsFullscreen()}
+Write \emph{<RTTI object>:IsFullscreen()} in order request whether or not the window is currently fullscreen or not. Returns \emph{true} if the window is currently fullscreen, else \emph{false}.
+
+\paragraph{SetFullscreen(<bool>)}
+Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the window is currently fullscreen or not. \emph{true} as first parameter if the window is currently fullscreen, else \emph{false}.

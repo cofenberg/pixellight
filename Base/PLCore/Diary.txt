@@ -3,6 +3,7 @@
 - "Frontend": Added virtual "OnRun()"-method. This method is called just before the frontend calls it's run-method in order to enter it's main-loop. Use this method for instance
   to pre-process command line arguments.
 - "FrontendPixelLight" is now using the new "OnRun()"-method in order to fill the application context just like "CoreApplication::Run()" does
+- "Frontend": Exposed the class to the RTTI
 
 
 
