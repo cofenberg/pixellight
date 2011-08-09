@@ -81,26 +81,6 @@ class LinuxKeyboardDevice : public UpdateDevice {
 	private:
 		/**
 		*  @brief
-		*    Get currently pressed modifier keys
-		*/
-		int GetKeyModifiers();
-
-		/**
-		*  @brief
-		*    Map key code to X symbolic key
-		*
-		*  @param[in] nKeyCode
-		*    Key code
-		*  @param[in] nModifier
-		*    Currently pressed modifier
-		*
-		*  @return
-		*    Symbolic key
-		*/
-		int MapKeyCodeToSymKey(int nKeyCode, int nModifier);
-
-		/**
-		*  @brief
 		*    Get key for virtual key code
 		*
 		*  @param[in] pKeyboard
@@ -118,9 +98,8 @@ class LinuxKeyboardDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		::Display			*m_pDisplay;		/**< X server display connection */
-		::XModifierKeymap	*m_pModifierMap;	/**< Modifier key map */
-		char	   			 m_nKeys[32];		/**< State of all keys */
+		::Display	*m_pDisplay;	/**< X server display connection */
+		char		 m_nKeys[32];	/**< State of all keys */
 
 
 

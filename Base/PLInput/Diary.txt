@@ -1,3 +1,11 @@
+>> 09.08.2011
+[SW]
+- "PLInput::LinuxKeyboardDevice": Fixed key pressed release detection when additional modifier keys are also pressed.
+	E.g.the user presses the "a" key then the class reports that the "a" key ist pressed
+		when the user additional presses the shift key and releases only the "a" key afterwards than the class would not report that the "a" key is released. Because the detection code incorporated the modifier keys to get the virtual keysym for the physical key.
+
+
+
 >> 30.07.2011
 [CO]
 - Moved "PLScene::SceneContext::EventInputControllerFound" to "PLInput::InputManager::EventInputControllerFound"
