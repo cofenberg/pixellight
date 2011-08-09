@@ -24,8 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Rectangle.h>
-#include <PLGui/Gui/Gui.h>
-#include <PLGui/Widgets/Widget.h>
 #include <PLScene/Scene/SNCamera.h>
 #include "PLEngine/Picking/MousePicking.h"
 
@@ -34,7 +32,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLMath;
-using namespace PLGui;
 using namespace PLScene;
 namespace PLEngine {
 

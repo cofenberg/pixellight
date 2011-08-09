@@ -51,6 +51,9 @@ namespace PLScene {
 namespace PLEngine {
 
 
+// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
+
+
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]

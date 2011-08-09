@@ -10,6 +10,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Feature: Clang (http://clang.llvm.org/) v3.0 (currently in development) is now supported
 - Feature: Connected "PLInput::Control" to the RTTI as well as the derived classes "PLInput::Axis", "PLInput::Button", "PLInput::Effect" and "PLInput::LED" (meaning they can now be used e.g. by scripts)
 - Feature: The scripted stand-alone application "45ScriptApplication.lua" now also shows how to get and process input events by using scripts
+- Feature: Linux: Added fullscreen rendering support
 - Change: Moved the "PLProject"-executable from the runtime directory into the tools directory
 - Change: Merged "Demos" into "Samples" in order to simplify the structure of PixelLight
 - Change: Merged "PLGeneral" into "PLCore" in order to simplify the structure of PixelLight
@@ -26,6 +27,7 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: Updated libpng from "1.4.5" to "1.4.8"
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
 - Bugfix: PLProject: Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case
+- Bugfix: Linux: Fixed keyboard issue regarding to key modifiers (e.g. "a-down"->"shift-down"->"a-up" => "a-up" event came only after releasing the shift key)
 
 
 Changes in PixelLight 0.9.7-R1 (released on June 23, 2011)

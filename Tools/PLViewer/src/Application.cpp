@@ -29,8 +29,6 @@
 #include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
-#include <PLGui/Gui/Gui.h>
-#include <PLGui/Widgets/Widget.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -42,7 +40,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
 using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
@@ -71,9 +68,7 @@ const String Application::DefaultFilename = "";
 *    Constructor
 */
 Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
-	SlotOnControl(this),
-	SlotOnDrop(this),
-	m_pFileDialog(nullptr)
+	SlotOnControl(this)
 {
 	// Set no multiuser if standalone application
 	#ifdef STANDALONE
@@ -99,7 +94,6 @@ Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 */
 Application::~Application()
 {
-	// PLGui will destroy the file dialog automatically...
 }
 
 /**
@@ -167,27 +161,8 @@ void Application::OnControl(Control &cControl)
 		// Make a screenshot from the current render target
 		} else if (cControl.GetName() == "F12") {
 			GetScreenshotTool().SaveScreenshot();
-
-		// Toggle mouse cursor visibility
-		} else if (cControl.GetName() == "M") {
-			// Get the system GUI
-			Gui *pGui = Gui::GetSystemGui();
-			if (pGui) {
-				// Toggle mouse cursor visibility
-				pGui->SetMouseVisible(!pGui->IsMouseVisible());
-			}
 		}
 	}
-}
-
-/**
-*  @brief
-*    Called when something was dropped down
-*/
-void Application::OnDrop(const DataObject &cDataObject)
-{
-	// Load resource (if it's one :)
-	LoadResource(cDataObject.GetFiles()[0]);
 }
 
 
@@ -246,27 +221,6 @@ void Application::OnInit()
 	// Set exit code to error
 	Exit(1);
 }
-
-
-//[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
-//[-------------------------------------------------------]
-// [TODO] Drag'n'Drop
-/*
-void Application::OnCreateMainWindow()
-{
-	// Call base implementation
-	ScriptApplication::OnCreateMainWindow();
-
-	// Connect event handler
-	Widget *pWidget = GetMainWindow();
-	if (pWidget) {
-		pWidget->SignalDrop.Connect(SlotOnDrop);
-		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (pWidget->GetContentWidget() != pWidget)
-			pWidget->GetContentWidget()->SignalDrop.Connect(SlotOnDrop);
-	}
-}*/
 
 
 //[-------------------------------------------------------]

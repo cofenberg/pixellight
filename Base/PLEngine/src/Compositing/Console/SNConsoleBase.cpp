@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Keyboard.h>
 #include <PLScene/Scene/SceneContext.h>
@@ -38,7 +37,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLGui;
 using namespace PLInput;
 namespace PLEngine {
 
@@ -405,13 +403,15 @@ void SNConsoleBase::ProcessKeyMessage()
 					m_nSelStart = m_nSelEnd = -1;
 				}
 
+				/*
+				// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 				// Get text from clipboard
 				String sClipboardText = Gui::GetSystemGui()->GetClipBoard().GetText();
 				if (sClipboardText.GetLength()) {
 					// Add text from clipboard
 					m_sCommand.Insert(sClipboardText, m_nCursor);
 					m_nCursor += sClipboardText.GetLength();
-				}
+				}*/
 
 				// Done
 				return;
@@ -422,11 +422,14 @@ void SNConsoleBase::ProcessKeyMessage()
 				 (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyX.IsHit()) ||
 				 (pKeyboard->KeyShift  .IsPressed() && pKeyboard->KeyDelete.IsHit()) )
 			{
+				/*
+				// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 				// Copy the selected text to clipboard
 				if (m_nSelStart > m_nSelEnd)
 					Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelEnd, m_nSelStart-m_nSelEnd));
 				else
 					Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelStart, m_nSelEnd-m_nSelStart));
+					*/
 
 				// Remove selected text?
 				if ( ( (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyX.IsHit()) ||
