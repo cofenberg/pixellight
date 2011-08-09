@@ -18,7 +18,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLGui/include
 	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include

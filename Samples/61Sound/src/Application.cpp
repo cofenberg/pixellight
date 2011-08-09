@@ -217,7 +217,7 @@ void Application::OnControl(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLGui::GuiApplication functions       ]
+//[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void Application::OnInit()
 {

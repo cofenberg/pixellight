@@ -19,7 +19,7 @@ add_sources(
 	src/Config/RendererConfigGroup.cpp
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
-	src/Picking/MousePicking.cpp
+	# src/Picking/MousePicking.cpp # [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 	src/Controller/PhysicsMouseInteraction.cpp
 	src/Controller/SNPhysicsMouseInteraction.cpp
 	src/Controller/SNMPhysicsCharacter.cpp
@@ -57,7 +57,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLGui/include
 	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
@@ -79,7 +78,6 @@ add_libs(
 	PLCore
 	PLMath
 	PLGraphics
-	PLGui
 	PLInput
 	PLRenderer
 	PLMesh
@@ -166,7 +164,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene PLPhysics)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene PLPhysics)
 add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

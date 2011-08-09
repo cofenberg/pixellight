@@ -50,7 +50,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 	if (nMsg == WM_CREATE) {
 		pOSWindowWindows = static_cast<OSWindowWindows*>(reinterpret_cast<CREATESTRUCT*>(lParam)->lpCreateParams);
 	} else {
-		if (hWnd != nullptr)
+		if (hWnd)
 			pOSWindowWindows = reinterpret_cast<OSWindowWindows*>(::GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	}
 
@@ -66,7 +66,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 	}
 
 	// We need a window now
-	if (pOSWindowWindows != nullptr) {
+	if (pOSWindowWindows) {
 		// Process message
 		switch (nMsg) {
 			// Initialize window
