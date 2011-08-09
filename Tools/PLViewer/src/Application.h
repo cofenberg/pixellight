@@ -34,10 +34,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLGui {
-	class DataObject;
-	class DialogChooseFile;
-}
 namespace PLInput {
 	class Control;
 }
@@ -60,8 +56,7 @@ class Application : public PLEngine::ScriptApplication {
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 		// Slots
-		pl_slot_1(OnControl,	PLInput::Control&,			"Called when a control event has occurred, occurred control as first parameter",	"")
-		pl_slot_1(OnDrop,		const PLGui::DataObject&,	"Called when something was dropped down, dropped data object as first parameter",	"")
+		pl_slot_1(OnControl,	PLInput::Control&,	"Called when a control event has occurred, occurred control as first parameter",	"")
 	pl_class_end
 
 
@@ -117,15 +112,6 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		void OnControl(PLInput::Control &cControl);
 
-		/**
-		*  @brief
-		*    Called when something was dropped down
-		*
-		*  @param[in] cDataObject
-		*    Dropped data object
-		*/
-		void OnDrop(const PLGui::DataObject &cDataObject);
-
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::CoreApplication functions     ]
@@ -147,13 +133,6 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool LoadScene(PLCore::String sFilename);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLGui::DialogChooseFile *m_pFileDialog;	/**< File dialog, can be a null pointer */
 
 
 };

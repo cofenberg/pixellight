@@ -122,7 +122,7 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLGui::GuiApplication functions       ]
+	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnInit() override;

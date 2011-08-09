@@ -24,8 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
-#include <PLGui/Widgets/Widget.h>
-#include <PLGui/Application/GuiApplication.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/SurfaceWindow.h>
@@ -199,6 +197,8 @@ void SNPhysicsMouseInteraction::OnUpdate()
 
 				// On picking start
 				} else if (m_pController->Pickup.IsPressed() && !m_bPicking) {
+					/*
+					// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 					// [TODO] Find a solution that works without using PLCore::CoreApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
@@ -278,9 +278,11 @@ void SNPhysicsMouseInteraction::OnUpdate()
 							}
 						}
 					}
-
+					*/
 				// On picking
 				} else if (m_pController->Pickup.IsPressed() && m_bPicking && m_pPickedPhysicsBody) {
+					/*
+					// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 					// [TODO] Find a solution that works without using PLCore::CoreApplication::GetApplication()
 					// [TODO] PLGui::GuiApplication type check
 					// Get the main window of the application
@@ -436,6 +438,7 @@ void SNPhysicsMouseInteraction::OnUpdate()
 							m_pPickedPhysicsBody->SetTorque(vTorque/10);
 						}
 					}
+					*/
 				}
 
 				// Deactivate the physics force line
