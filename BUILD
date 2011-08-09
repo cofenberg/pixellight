@@ -166,10 +166,11 @@ The following packages are required in order to be able to compile everything (U
 - libdbus-1-dev (required by PLInput)
 - libxxf86vm-dev (required by PLRendererOpenGL)
 - libglu1-mesa-dev (required by PLRendererOpenGL)
+- libxrandr-dev (required by PLRendererOpenGL)
 
 To install all required packages at once, just use:
 
-  apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev
+  apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
 
 When using the maketool flag '--syslibs', you also need the following packages:
 - libpcre3-dev (required by PLCore)
