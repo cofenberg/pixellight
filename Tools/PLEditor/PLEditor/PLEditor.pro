@@ -11,11 +11,17 @@ TEMPLATE = app
 DESTDIR = $$quote(../../../Bin/Tools/PLEditor)
 
 SOURCES += main.cpp\
-		MainWindow.cpp
+		MainWindow.cpp \
+    AboutDialog.cpp \
+    OptionsDialog.cpp
 
 HEADERS  += MainWindow.h\
 	Interfaces/IPlugin.h\
 	Interfaces/IPluginDockWidget.h\
-    Interfaces/IPluginFactory.h
+    Interfaces/IPluginFactory.h \
+    AboutDialog.h \
+    OptionsDialog.h
 
-FORMS    += MainWindow.ui
+FORMS    += MainWindow.ui \
+    AboutDialog.ui \
+    OptionsDialog.ui

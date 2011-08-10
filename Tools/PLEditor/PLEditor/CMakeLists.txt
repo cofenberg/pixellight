@@ -26,6 +26,8 @@ QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 add_sources(
 	main.cpp
 	MainWindow.cpp
+	AboutDialog.cpp
+	OptionsDialog.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
 )
