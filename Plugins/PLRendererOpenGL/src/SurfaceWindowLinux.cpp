@@ -116,7 +116,7 @@ bool SurfaceWindow::Init()
 			if (pContextLinux) {
 
 				// Get the X server display connection
-				Display *pDisplay = pContextLinux->GetDisplay();
+				Display *pDisplay = XOpenDisplay(nullptr);
 				if (pDisplay) {
 					const int nScreen = XDefaultScreen(pDisplay);
 
@@ -137,6 +137,8 @@ bool SurfaceWindow::Init()
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
 						
 						XRRFreeScreenConfigInfo( pScreenConfig );
+						// Close X server display connection
+						XCloseDisplay(pDisplay);
 
 						// Error!
 						return false;
@@ -158,11 +160,9 @@ bool SurfaceWindow::Init()
 
 						// Change display settings
 						PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Go into fullscreen mode")
-						// [TODO] Renderer::BackupDeviceObjects deletes the Context, which closes unter linux the Display connection
-						// thus all following calls which needs a valid Display connection fails
-						// Either Change ContextLinux that it doesn't open it's own XDisplay connection but uses the connection from the Surface window
-						// Or BackupDeviceObjects doesn't delete the current Context
-						//cRenderer.BackupDeviceObjects();
+						
+						cRenderer.BackupDeviceObjects();
+						
 						Status status = XRRSetScreenConfig( pDisplay,
                                 pScreenConfig,
                                 RootWindow( pDisplay, nScreen ),
@@ -174,17 +174,21 @@ bool SurfaceWindow::Init()
  							PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't set display mode!")
  							m_bIsFullscreen = false;
  							XRRFreeScreenConfigInfo( pScreenConfig );
+							// Close X server display connection
+							XCloseDisplay(pDisplay);
  
  							// Error!
  							return false;
  						}
 						XRRFreeScreenConfigInfo( pScreenConfig );
-						//cRenderer.RestoreDeviceObjects();	// See cRenderer.BackupDeviceObjects();
+						cRenderer.RestoreDeviceObjects();
 					} else {
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: No correct display setting was found, can't change to fullscreen!")
 						m_bIsFullscreen = false;
 					}	
 				}
+				// Close X server display connection
+				XCloseDisplay(pDisplay);
 			}
 		}
 
@@ -221,15 +225,13 @@ void SurfaceWindow::DeInit()
 			ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 			if (pContextLinux) {
 				// Get the X server display connection
-				Display *pDisplay = pContextLinux->GetDisplay();
+				Display *pDisplay = XOpenDisplay(nullptr);
 				if (pDisplay) {
 					// Reset display settings
 					PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Set display mode to default")
 					const int nScreen = XDefaultScreen(pDisplay);
 					
-					// [TODO] Renderer::BackupDeviceObjects deletes the Context, which closes unter linux the Display connection
-					// thus all following calls which needs a valid Display connection fails
-					// cRenderer.BackupDeviceObjects();					cRenderer.BackupDeviceObjects();
+					cRenderer.BackupDeviceObjects();
 					
 					XRRScreenConfiguration *pScreenConfig;
 
@@ -242,10 +244,11 @@ void SurfaceWindow::DeInit()
 										m_nOldRotation,
 										CurrentTime );
 
-					XRRFreeScreenConfigInfo( pScreenConfig
- );
+					XRRFreeScreenConfigInfo( pScreenConfig );
 					
-					//cRenderer.RestoreDeviceObjects();	// See cRenderer.BackupDeviceObjects();
+					cRenderer.RestoreDeviceObjects();
+					// Close X server display connection
+					XCloseDisplay(pDisplay);
 				}
 			}
 		}

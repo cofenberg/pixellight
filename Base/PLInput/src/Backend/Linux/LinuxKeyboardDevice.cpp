@@ -29,24 +29,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Global definitions                                    ]
-//[-------------------------------------------------------]
-// Modifiers
-#define MOD_SHIFT_DOWN		1
-#define MOD_LOCK_DOWN		5	// 2 ?
-#define MOD_CONTROL_DOWN	3
-#define MOD_ISO3_DOWN		4
-#define MOD_MODE_DOWN 		5
-
-// Table indices (according to pressed modifiers)
-#define SHIFT_INDEX			1
-#define MODE_INDEX			2
-#define MODESHIFT_INDEX 	3
-#define ISO3_INDEX			4 
-#define ISO3SHIFT_INDEX		4
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
@@ -61,14 +43,10 @@ namespace PLInput {
 *    Constructor
 */
 LinuxKeyboardDevice::LinuxKeyboardDevice(::Display *pDisplay) :
-	m_pDisplay(pDisplay),
-	m_pModifierMap(nullptr)
+	m_pDisplay(pDisplay)
 {
 	// Destroy device implementation automatically
 	m_bDelete = true;
-
-	// Get modifier key map
-	m_pModifierMap = XGetModifierMapping(m_pDisplay);
 
 	// Init keys as 'not pressed'
 	for (int i=0; i<32; i++)
@@ -104,8 +82,11 @@ void LinuxKeyboardDevice::Update()
 			// Get state
 			int nState = (m_nKeys[i/8] >> (i%8)) & 1;
 
-			// Get virtual key code
-			int nKey = MapKeyCodeToSymKey(i, GetKeyModifiers());
+			// Get virtual key code without any modifier set. Otherwise we would get different keysyms values
+			// (e.g the user presses the a key then the method returns XK_a as keysym
+			// when the user additional presses the shift key the method returns XK_A, which is a different keysym.
+			// When then the user releases the a key on the keyboard but holds the shift key pressed then the input system wouldn't see that tha a // key was released because the method returns XK_A and not XK_a what was the return keysym as the user pressed the a key)
+			int nKey = XKeycodeToKeysym(m_pDisplay, i, 0);
 
 			// Get button
 			Button *pButton = GetKeyboardKey(pKeyboard, nKey);
@@ -126,77 +107,6 @@ void LinuxKeyboardDevice::Update()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Get currently pressed modifier keys
-*/
-int LinuxKeyboardDevice::GetKeyModifiers()
-{
-	// Get size of modifier map
-	int nWidth = m_pModifierMap->max_keypermod;
-
-	// Loop through keys
-	KeyCode nKey;
-	for (int i=0; i<nWidth; i++) {
-		// Check for control modifier
-		nKey = m_pModifierMap->modifiermap[ControlMapIndex*nWidth + i];
-		if (nKey && (m_nKeys[nKey/8] >> (nKey%8)) & 1)
-			return MOD_CONTROL_DOWN;
-
-		// Check for shift modifier
-		nKey = m_pModifierMap->modifiermap[ShiftMapIndex*nWidth + i];
-		if (nKey && (m_nKeys[nKey/8] >> (nKey%8)) & 1)
-			return MOD_SHIFT_DOWN;
-
-		// Check for lock modifier
-		nKey = m_pModifierMap->modifiermap[LockMapIndex*nWidth + i];
-		if (nKey && (m_nKeys[nKey/8] >> (nKey%8)) & 1)
-			return MOD_LOCK_DOWN;
-
-		// Check for iso3 modifier
-		nKey = m_pModifierMap->modifiermap[Mod3MapIndex*nWidth + i];
-		if (nKey && (m_nKeys[nKey/8] >> (nKey%8)) & 1)
-			return MOD_ISO3_DOWN;
-
-		// Check for mode modifier
-		nKey = m_pModifierMap->modifiermap[Mod5MapIndex*nWidth + i];
-		if (nKey && (m_nKeys[nKey/8] >> (nKey%8)) & 1)
-			return MOD_MODE_DOWN;
-	}
-
-	// No modifier is pressed
-	return 0;
-}
-
-/**
-*  @brief
-*    Map key code to X symbolic key
-*/
-int LinuxKeyboardDevice::MapKeyCodeToSymKey(int nKeyCode, int nModifier)
-{
-	// Get correct keysym index according to pressed modifiers
-	int nIndex = 0;
-	switch (nModifier) {
-		// Shift is pressed
-		case MOD_SHIFT_DOWN:
-			nIndex = SHIFT_INDEX;
-			break;
-
-		// ISO3 is pressed
-		case MOD_ISO3_DOWN:
-			nIndex = ISO3_INDEX;
-			break;
-
-		// Mode is pressed
-		case MOD_MODE_DOWN:
-			nIndex = MODE_INDEX;
-			break;
-	}
-
-	// Convert key
-	return XKeycodeToKeysym(m_pDisplay, nKeyCode, nIndex);
-}
-
 /**
 *  @brief
 *    Get key for virtual key code
