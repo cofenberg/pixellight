@@ -44,6 +44,9 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
 	${QT_INCLUDE_DIRS}
+	# We need the following to be able to include headers produced by uic in our code
+	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ##################################################
