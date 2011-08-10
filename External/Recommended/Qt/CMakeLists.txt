@@ -27,7 +27,7 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	# Otherwise the variables would be visible for all other projects if wanted or not.
 	# We want this, because this variables are used in other cmake files, which doesn't include this file, so we add the variables to the cache.
  	set(QT_LIBRARIES ${QT_LIBRARIES} CACHE INTERNAL "")
- 	set(QT_INCLUDE_DIRS ${QT_INCLUDE_DIR} CACHE INTERNAL "")
+ 	set(QT_INCLUDE_DIRS ${QT_INCLUDE_DIR} ${QT_INCLUDE_DIR}/QtCore ${QT_INCLUDE_DIR}/QtGui CACHE INTERNAL "")
 else()
 	# Build external
 	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
