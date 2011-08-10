@@ -127,6 +127,7 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_OS 				"1" CACHE BOOL "Build plugin 'PLFrontendOS'?")
 	set (PL_PLUGIN_FRONTEND_PLGUI 			"1" CACHE BOOL "Build plugin 'PLFrontendPLGui'?")
 	set (PL_PLUGIN_FRONTEND_QT 				"1" CACHE BOOL "Build plugin 'PLFrontendQT'?")
+	set (PL_EDITOR							"0" CACHE BOOL "Build 'PLEditor'?")
 else()
 	# Minimal build
 	set (PL_PLUGIN_SCRIPT_NULL 				"1" CACHE BOOL "Build plugin 'PLScriptNull'?")
@@ -178,6 +179,7 @@ else()
 	set (PL_EXPORTER_3DSMAX_2010			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'?")
 	set (PL_EXPORTER_3DSMAX_2011			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'?")
 	set (PL_EXPORTER_3DSMAX_2012			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'?")
+	set (PL_EDITOR							"0" CACHE BOOL "Build 'PLEditor'?")
 endif()
 
 # Project suffix

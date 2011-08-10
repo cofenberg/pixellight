@@ -39,6 +39,9 @@ endif()
 if(PL_EXPORTER_3DSMAX_2012)
 	add_subdirectory(PL3dsMaxSceneExport_2012)
 endif()
+if(PL_EDITOR)
+	add_subdirectory(PLEditor)
+endif()
 
 ##################################################
 ## Dependencies
