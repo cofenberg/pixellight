@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Inspector.h                                    *
+ *  File: Project.cpp                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,25 +20,16 @@
 \*********************************************************/
 
 
-#ifndef INSPECTOR_H
-#define INSPECTOR_H
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QDockWidget>
-#include <PLEditor/Interfaces/IPluginDockWidget.h>
-#include <PLFrontendQt/DataModels/PLIntrospectionModel.h>
-#include <QTreeView>
+#include "IPluginDockWidget/Project.h"
+#include <QDesktopServices>
+#include <QUrl>
 
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore{
-	class Object;
-}
+enum ActionIds {
+	OpenWithSystemEditor,
+};
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -47,56 +38,71 @@ namespace PLEditorPluginBase {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public virtual PLEditor::IPluginDockWidget methods    ]
+//[-------------------------------------------------------]
+QString Project::getName() const
+{
+	return "Project";
+}
+
+Qt::DockWidgetArea Project::InitialArea()
+{
+	return Qt::DockWidgetArea::BottomDockWidgetArea;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public methods                                        ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Editor dock widget plugin interface
+*    Default constructor
 */
-class Inspector : public QDockWidget, public PLEditor::IPluginDockWidget {
+Project::Project()
+{
+	m_cTreeView.setModel(&m_cModel);
+	m_cTreeView.setContextMenuPolicy(Qt::CustomContextMenu);
+	this->setWidget(&m_cTreeView);
+	
+	connect(&m_cTreeView, SIGNAL(customContextMenuRequested( const QPoint& )), SLOT(showContextMenu(const QPoint &)));
+	
+	QAction* pAction = m_cContextMenu.addAction("Open");
+	pAction->setData((int)ActionIds::OpenWithSystemEditor);
+}
 
+/**
+*  @brief
+*    Destructor
+*/
+Project::~Project()
+{
+}
 
-	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT
+void Project::SetProjectDir(const QString strProjectDir)
+{
+	m_cModel.setRootPath(strProjectDir);
+}
 
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLEditor::IPluginDockWidget methods    ]
-	//[-------------------------------------------------------]
-	public:
-		virtual QString getName() const;
-		virtual Qt::DockWidgetArea InitialArea();
-		void SetObject(PLCore::Object *Obj);
-
-
-	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		Inspector();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~Inspector();
+void Project::showContextMenu(const QPoint &point)
+{
+	QModelIndex index (m_cTreeView.indexAt(point));
+	if (index.isValid()) {
 		
-	private:
-		QTreeView m_cTreeView;
-		PLFrontendQt::DataModels::PLIntrospectionModel m_cModel;
-};
+		QAction *pAction = m_cContextMenu.exec(m_cTreeView.mapToGlobal(point));
+		if (pAction)
+		{
+			ActionIds id = (ActionIds)pAction->data().toInt();
+			if (id == ActionIds::OpenWithSystemEditor)
+			{
+				QUrl filePath (m_cModel.filePath(index));
+				QDesktopServices::openUrl(filePath);
+			}
+		}
+	}
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLEditorPluginBase
-
-
-#endif // INSPECTOR_H

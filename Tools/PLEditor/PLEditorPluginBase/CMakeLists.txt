@@ -8,6 +8,8 @@ define_project(PLEditorPluginBase NOSUFFIX)
 ##################################################
 # Include files with Qt relevant information
 SET(INC_FILES
+	IPluginDockWidget/Inspector.h
+	IPluginDockWidget/Project.h
 )
 SET(UI_FILES
 )
@@ -24,6 +26,7 @@ QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 add_sources(
 	PluginFactory.cpp
 	IPluginDockWidget/Inspector.cpp
+	IPluginDockWidget/Project.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
 )
@@ -42,6 +45,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
 	${CMAKE_SOURCE_DIR}/Tools/PLEditor
+	${CMAKE_SOURCE_DIR}/Tools/PLEditor/PLEditorPluginBase
 	${QT_INCLUDE_DIRS}
 )
 
@@ -128,7 +132,7 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
+build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 
 ##################################################
 ## Dependencies
@@ -140,10 +144,19 @@ add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 ## Post-Build
 ##################################################
 
-# Executable
+# Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tools/PLEditor"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Tools/PLEditor"
 )
+
+if(LINUX)
+	# Create relative symbolic links
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Tools/PLEditor"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Tools/PLEditor"
+	)
+endif()
+
 
 ##################################################
 ## Install

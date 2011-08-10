@@ -40,6 +40,11 @@ QString Inspector::getName() const
 	return "Inspector";
 }
 
+Qt::DockWidgetArea Inspector::InitialArea()
+{
+	return Qt::DockWidgetArea::RightDockWidgetArea;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
@@ -50,6 +55,8 @@ QString Inspector::getName() const
 */
 Inspector::Inspector()
 {
+	m_cTreeView.setModel(&m_cModel);
+	this->setWidget(&m_cTreeView);
 }
 
 /**
@@ -58,6 +65,11 @@ Inspector::Inspector()
 */
 Inspector::~Inspector()
 {
+}
+
+void Inspector::SetObject(PLCore::Object *Obj)
+{
+	m_cModel.SetObject(Obj);
 }
 
 

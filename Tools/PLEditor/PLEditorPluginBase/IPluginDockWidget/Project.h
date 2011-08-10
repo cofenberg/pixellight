@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: IPluginDockWidget.h                            *
+ *  File: Project.h                                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,31 @@
 \*********************************************************/
 
 
-#ifndef IPLUGINDOCKWIDGET_H
-#define IPLUGINDOCKWIDGET_H
+#ifndef PROJECT_H
+#define PROJECT_H
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "IPlugin.h"
+#include <QDockWidget>
+#include <PLEditor/Interfaces/IPluginDockWidget.h>
+#include <QFileSystemModel>
+#include <QTreeView>
+#include <QMenu>
 
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore{
+	class Object;
+}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEditor {
+namespace PLEditorPluginBase {
 
 
 //[-------------------------------------------------------]
@@ -44,39 +54,54 @@ namespace PLEditor {
 *  @brief
 *    Editor dock widget plugin interface
 */
-class IPluginDockWidget : public IPlugin {
+class Project : public QDockWidget, public PLEditor::IPluginDockWidget {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual IPluginDockWidget methods              ]
+	//[ Qt definitions (MOC)                                  ]
+	//[-------------------------------------------------------]
+	Q_OBJECT
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLEditor::IPluginDockWidget methods    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual Qt::DockWidgetArea InitialArea() = 0;
-		
+		virtual QString getName() const;
+		virtual Qt::DockWidgetArea InitialArea();
+		void SetProjectDir(const QString strProjectDir);
+
+
 	//[-------------------------------------------------------]
-	//[ Protected methods                                     ]
+	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
-	protected:
+	public:
 		/**
 		*  @brief
 		*    Default constructor
 		*/
-		IPluginDockWidget() {}
+		Project();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~IPluginDockWidget() {}
-
-
+		virtual ~Project();
+		
+	private slots:
+		void showContextMenu(const QPoint &);
+		
+	private:
+		QTreeView m_cTreeView;
+		QFileSystemModel m_cModel;
+		QMenu m_cContextMenu;
 };
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEditor
+} // PLEditorPluginBase
 
 
-#endif // IPLUGINDOCKWIDGET_H
+#endif // PROJECT_H
