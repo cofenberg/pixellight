@@ -1,17 +1,15 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLEditor NOSUFFIX)
+define_project(PLEditorPluginBase NOSUFFIX)
 
 ##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
 SET(INC_FILES
-	MainWindow.h
 )
 SET(UI_FILES
-	MainWindow.ui
 )
 
 # Run moc
@@ -24,8 +22,8 @@ QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 ## Source files
 ##################################################
 add_sources(
-	main.cpp
-	MainWindow.cpp
+	PluginFactory.cpp
+	IPluginDockWidget/Inspector.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
 )
@@ -43,6 +41,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
+	${CMAKE_SOURCE_DIR}/Tools/PLEditor/PLEditor/include
 	${QT_INCLUDE_DIRS}
 )
 
@@ -149,11 +148,6 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 ##################################################
 ## Install
 ##################################################
-
-# "WhereIsTheLog.txt"-file
-install(FILES ${CMAKE_SOURCE_DIR}/Bin/Tools/PLEditor/WhereIsTheLog.txt
-	DESTINATION ${PL_INSTALL_ROOT}/Tools/PLEditor	COMPONENT SDK
-)
 
 # Executable
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}

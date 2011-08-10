@@ -8,11 +8,14 @@ QT       += core gui
 
 TARGET = PLEditor
 TEMPLATE = app
-
+DESTDIR = $$quote(../../../Bin/Tools/PLEditor)
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+		MainWindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += MainWindow.h\
+	Interfaces/IPlugin.h\
+	Interfaces/IPluginDockWidget.h\
+    Interfaces/IPluginFactory.h
 
-FORMS    += mainwindow.ui
+FORMS    += MainWindow.ui
