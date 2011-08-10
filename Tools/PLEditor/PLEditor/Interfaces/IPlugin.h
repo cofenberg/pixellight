@@ -48,7 +48,7 @@ class IPlugin {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual methods                                ]
+	//[ Public virtual IPlugin methods                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**

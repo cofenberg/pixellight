@@ -15,6 +15,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+	void on_actionAbout_PL_Editor_triggered();
+
+	void on_actionAbout_Plugins_triggered();
+
+	void on_actionOptions_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

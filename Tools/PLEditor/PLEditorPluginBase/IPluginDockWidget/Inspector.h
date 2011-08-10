@@ -55,6 +55,13 @@ class Inspector : public QDockWidget, public PLEditor::IPluginDockWidget {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLEditor::IPluginDockWidget methods    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual QString getName() const;
+
+
+	//[-------------------------------------------------------]
 	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:

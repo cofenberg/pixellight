@@ -198,5 +198,21 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionAbout_PL_Editor</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>440</x>
+     <y>287</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -33,6 +33,15 @@ namespace PLEditorPluginBase {
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLEditor::IPluginDockWidget methods    ]
+//[-------------------------------------------------------]
+QString Inspector::getName() const
+{
+	return "Inspector";
+}
+
+
+//[-------------------------------------------------------]
 //[ Public methods                                        ]
 //[-------------------------------------------------------]
 /**

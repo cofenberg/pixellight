@@ -1,6 +1,9 @@
 #include <QPluginLoader>
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "AboutDialog.h"
+#include "AboutPluginsDialog.h"
+#include "OptionsDialog.h"
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -16,4 +19,19 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::on_actionAbout_PL_Editor_triggered()
+{
+	AboutDialog(this).exec();
+}
+
+void MainWindow::on_actionAbout_Plugins_triggered()
+{
+	AboutPluginsDialog(this).exec();
+}
+
+void MainWindow::on_actionOptions_triggered()
+{
+	OptionsDialog(this).exec();
 }
