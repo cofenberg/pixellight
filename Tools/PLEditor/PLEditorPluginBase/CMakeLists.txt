@@ -41,7 +41,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
-	${CMAKE_SOURCE_DIR}/Tools/PLEditor/PLEditor/include
+	${CMAKE_SOURCE_DIR}/Tools/PLEditor
 	${QT_INCLUDE_DIRS}
 )
 
