@@ -32,9 +32,11 @@ QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 add_sources(
 	main.cpp
 	MainWindow.cpp
+	Application.cpp
 	AboutDialog.cpp
 	OptionsDialog.cpp
 	AboutPluginsDialog.cpp
+	PluginManager.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
 )

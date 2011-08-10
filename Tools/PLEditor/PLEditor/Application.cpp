@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PluginFactory.cpp                              *
+ *  File: Application.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,54 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "IPluginDockWidget/Inspector.h"
-#include "PluginFactory.h"
+#include "PluginManager.h"
+#include "Application.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEditorPluginBase {
+namespace PLEditor {
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLEditor::IPluginFactory methods       ]
+//[ Global variables                                      ]
 //[-------------------------------------------------------]
-QString PluginFactory::getName() const
-{
-	return "Base";
-}
-
-QString PluginFactory::getVendor() const
-{
-	return "Copyright (C) 2002-2011 by The PixelLight Team";
-}
-
-QString PluginFactory::getLicense() const
-{
-	return "GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version";
-}
-
-QString PluginFactory::getDescription() const
-{
-	return "PixelLight base plugin";
-}
-
-unsigned int PluginFactory::getNumOfClasses() const
-{
-	return 1;
-}
-
-PLEditor::IPlugin *PluginFactory::createInstance(unsigned int nClass) const
-{
-	switch (nClass) {
-		case 0:
-			return new Inspector();
-
-		default:
-			return nullptr;
-	}
-}
+int NullNumOfProgramArguments = 0;
 
 
 //[-------------------------------------------------------]
@@ -80,26 +46,67 @@ PLEditor::IPlugin *PluginFactory::createInstance(unsigned int nClass) const
 *  @brief
 *    Default constructor
 */
-PluginFactory::PluginFactory()
+Application::Application(int argc, char **argv) : QApplication(argc, argv),
+	m_pPluginManager(new PluginManager())
 {
+	// Load in all plugins
+	m_pPluginManager->loadPlugins();
 }
 
 /**
 *  @brief
 *    Destructor
 */
-PluginFactory::~PluginFactory()
+Application::~Application()
 {
+	// Destroy the plugin manager instance
+	delete m_pPluginManager;
+}
+
+/**
+*  @brief
+*    Returns the instance of the plugin manager
+*/
+PluginManager &Application::getPluginManager()
+{
+	return *m_pPluginManager;
 }
 
 
 //[-------------------------------------------------------]
-//[ Qt definitions                                        ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
-Q_EXPORT_PLUGIN2(BasePlugin, PluginFactory)
+/**
+*  @brief
+*    Default constructor
+*/
+Application::Application() : QApplication(NullNumOfProgramArguments, nullptr),
+	m_pPluginManager(new PluginManager())
+{
+}
+
+/**
+*  @brief
+*    Copy constructor
+*/
+Application::Application(const Application &cSource) : QApplication(NullNumOfProgramArguments, nullptr),
+	m_pPluginManager(nullptr)
+{
+	// No implementation because the copy constructor is never used
+}
+
+/**
+*  @brief
+*    Copy operator
+*/
+Application &Application::operator =(const Application &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEditorPluginBase
+} // PLEditor

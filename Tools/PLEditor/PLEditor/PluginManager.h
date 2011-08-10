@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: IPluginFactory.h                               *
+ *  File: PluginManager.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef IPLUGINFACTORY_H
-#define IPLUGINFACTORY_H
+#ifndef PLUGINMANAGER_H
+#define PLUGINMANAGER_H
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QString>
-#include <QtPlugin>
+#include <QList>
 
 
 //[-------------------------------------------------------]
@@ -49,71 +48,35 @@ class IPlugin;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Editor plugin factory interface
+*    Plugin manager
 */
-class IPluginFactory {
+class PluginManager {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual methods                                ]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class Application;
+
+
+	//[-------------------------------------------------------]
+	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Returns the name of the plugin factory
-		*
-		*  @return
-		*    The name of the plugin
+		*    Loads in all plugins
 		*/
-		virtual QString getName() const = 0;
+		void loadPlugins();
 
 		/**
 		*  @brief
-		*    Returns the name of the plugin vendor factory
+		*    Returns a list of currently loaded plugins
 		*
 		*  @return
-		*    The name of the plugin vendor
+		*    List of currently loaded plugins
 		*/
-		virtual QString getVendor() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the plugin license factory
-		*
-		*  @return
-		*    The plugin license
-		*/
-		virtual QString getLicense() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the plugin description factory
-		*
-		*  @return
-		*    The plugin description
-		*/
-		virtual QString getDescription() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the number of classes
-		*
-		*  @return
-		*    The number of classes
-		*/
-		virtual unsigned int getNumOfClasses() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the number of classes
-		*
-		*  @param[nClass]
-		*    Index of the class to create an instance from
-		*
-		*  @return
-		*    The class instance (destroy the instance if you no longer need it), null pointer on error
-		*/
-		virtual IPlugin *createInstance(unsigned int nClass) const = 0;
+		const QList<IPlugin*> &getPlugins() const;
 
 
 	//[-------------------------------------------------------]
@@ -124,13 +87,13 @@ class IPluginFactory {
 		*  @brief
 		*    Default constructor
 		*/
-		IPluginFactory() {}
+		PluginManager();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~IPluginFactory() {}
+		virtual ~PluginManager();
 
 
 	//[-------------------------------------------------------]
@@ -144,7 +107,7 @@ class IPluginFactory {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		IPluginFactory(const IPluginFactory &cSource) {}
+		PluginManager(const PluginManager &cSource);
 
 		/**
 		*  @brief
@@ -156,7 +119,14 @@ class IPluginFactory {
 		*  @return
 		*    Reference to this instance
 		*/
-		IPluginFactory &operator =(const IPluginFactory &cSource) { return *this; }
+		PluginManager &operator =(const PluginManager &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		QList<IPlugin*> m_lstPlugins;	/**< List of all plugins (= class instances) */
 
 
 };
@@ -168,10 +138,4 @@ class IPluginFactory {
 } // PLEditor
 
 
-//[-------------------------------------------------------]
-//[ Qt definitions                                        ]
-//[-------------------------------------------------------]
-Q_DECLARE_INTERFACE(PLEditor::IPluginFactory, "PLEditor/IPluginFactory/1.0")
-
-
-#endif // IPLUGINFACTORY_H
+#endif // PLUGINMANAGER_H

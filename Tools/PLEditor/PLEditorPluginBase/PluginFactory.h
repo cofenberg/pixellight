@@ -64,7 +64,7 @@ class PLEDITORPLUGINBASESHARED_EXPORT PluginFactory : public QObject, public PLE
 		virtual QString getLicense() const;
 		virtual QString getDescription() const;
 		virtual unsigned int getNumOfClasses() const;
-		virtual QObject *createInstance(unsigned int nClass) const;
+		virtual PLEditor::IPlugin *createInstance(unsigned int nClass) const;
 
 
 	//[-------------------------------------------------------]

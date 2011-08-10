@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: IPluginFactory.h                               *
+ *  File: Application.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef IPLUGINFACTORY_H
-#define IPLUGINFACTORY_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QString>
-#include <QtPlugin>
+#include <QApplication>
 
 
 //[-------------------------------------------------------]
@@ -41,7 +40,7 @@ namespace PLEditor {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class IPlugin;
+class PluginManager;
 
 
 //[-------------------------------------------------------]
@@ -49,88 +48,40 @@ class IPlugin;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Editor plugin factory interface
+*    Application class
 */
-class IPluginFactory {
+class Application : public QApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual methods                                ]
+	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Returns the name of the plugin factory
+		*    Constructor
 		*
-		*  @return
-		*    The name of the plugin
+		*  @param[in] argc
+		*    Number of C-arguments
+		*  @param[in] argv
+		*    C-arguments, must be valid
 		*/
-		virtual QString getName() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the name of the plugin vendor factory
-		*
-		*  @return
-		*    The name of the plugin vendor
-		*/
-		virtual QString getVendor() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the plugin license factory
-		*
-		*  @return
-		*    The plugin license
-		*/
-		virtual QString getLicense() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the plugin description factory
-		*
-		*  @return
-		*    The plugin description
-		*/
-		virtual QString getDescription() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the number of classes
-		*
-		*  @return
-		*    The number of classes
-		*/
-		virtual unsigned int getNumOfClasses() const = 0;
-
-		/**
-		*  @brief
-		*    Returns the number of classes
-		*
-		*  @param[nClass]
-		*    Index of the class to create an instance from
-		*
-		*  @return
-		*    The class instance (destroy the instance if you no longer need it), null pointer on error
-		*/
-		virtual IPlugin *createInstance(unsigned int nClass) const = 0;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected methods                                     ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		IPluginFactory() {}
+		Application(int argc, char **argv);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~IPluginFactory() {}
+		virtual ~Application();
+
+		/**
+		*  @brief
+		*    Returns the instance of the plugin manager
+		*
+		*  @return
+		*    The instance of the plugin manager
+		*/
+		PluginManager &getPluginManager();
 
 
 	//[-------------------------------------------------------]
@@ -139,12 +90,18 @@ class IPluginFactory {
 	private:
 		/**
 		*  @brief
+		*    Default constructor
+		*/
+		Application();
+
+		/**
+		*  @brief
 		*    Copy constructor
 		*
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		IPluginFactory(const IPluginFactory &cSource) {}
+		Application(const Application &cSource);
 
 		/**
 		*  @brief
@@ -156,7 +113,14 @@ class IPluginFactory {
 		*  @return
 		*    Reference to this instance
 		*/
-		IPluginFactory &operator =(const IPluginFactory &cSource) { return *this; }
+		Application &operator =(const Application &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PluginManager *m_pPluginManager;	/**< Instance of the plugin manager, always valid! */
 
 
 };
@@ -168,10 +132,4 @@ class IPluginFactory {
 } // PLEditor
 
 
-//[-------------------------------------------------------]
-//[ Qt definitions                                        ]
-//[-------------------------------------------------------]
-Q_DECLARE_INTERFACE(PLEditor::IPluginFactory, "PLEditor/IPluginFactory/1.0")
-
-
-#endif // IPLUGINFACTORY_H
+#endif // APPLICATION_H

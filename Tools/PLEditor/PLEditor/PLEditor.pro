@@ -14,7 +14,9 @@ SOURCES += main.cpp\
 		MainWindow.cpp \
     AboutDialog.cpp \
     OptionsDialog.cpp \
-    AboutPluginsDialog.cpp
+    AboutPluginsDialog.cpp \
+    PluginManager.cpp \
+    Application.cpp
 
 HEADERS  += MainWindow.h\
 	Interfaces/IPlugin.h\
@@ -22,7 +24,9 @@ HEADERS  += MainWindow.h\
     Interfaces/IPluginFactory.h \
     AboutDialog.h \
     OptionsDialog.h \
-    AboutPluginsDialog.h
+    AboutPluginsDialog.h \
+    PluginManager.h \
+    Application.h
 
 FORMS    += MainWindow.ui \
     AboutDialog.ui \
