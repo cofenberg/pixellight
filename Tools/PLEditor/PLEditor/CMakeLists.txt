@@ -10,11 +10,13 @@ define_project(PLEditor NOSUFFIX)
 SET(INC_FILES
 	MainWindow.h
 	AboutDialog.h
+	AboutPluginsDialog.h
 	OptionsDialog.h
 )
 SET(UI_FILES
 	MainWindow.ui
 	AboutDialog.ui
+	AboutPluginsDialog.ui
 	OptionsDialog.ui
 )
 
@@ -32,6 +34,7 @@ add_sources(
 	MainWindow.cpp
 	AboutDialog.cpp
 	OptionsDialog.cpp
+	AboutPluginsDialog.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
 )

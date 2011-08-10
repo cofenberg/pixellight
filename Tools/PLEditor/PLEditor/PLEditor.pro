@@ -13,15 +13,18 @@ DESTDIR = $$quote(../../../Bin/Tools/PLEditor)
 SOURCES += main.cpp\
 		MainWindow.cpp \
     AboutDialog.cpp \
-    OptionsDialog.cpp
+    OptionsDialog.cpp \
+    AboutPluginsDialog.cpp
 
 HEADERS  += MainWindow.h\
 	Interfaces/IPlugin.h\
 	Interfaces/IPluginDockWidget.h\
     Interfaces/IPluginFactory.h \
     AboutDialog.h \
-    OptionsDialog.h
+    OptionsDialog.h \
+    AboutPluginsDialog.h
 
 FORMS    += MainWindow.ui \
     AboutDialog.ui \
-    OptionsDialog.ui
+    OptionsDialog.ui \
+    AboutPluginsDialog.ui
