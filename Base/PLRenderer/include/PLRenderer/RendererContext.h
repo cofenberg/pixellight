@@ -57,6 +57,9 @@ namespace PLRenderer {
 /**
 *  @brief
 *    Renderer context
+*
+*  @note
+*    - There should be only one renderer context instance per application
 */
 class RendererContext {
 

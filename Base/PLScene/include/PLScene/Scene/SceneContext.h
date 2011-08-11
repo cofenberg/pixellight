@@ -66,6 +66,9 @@ namespace PLScene {
 /**
 *  @brief
 *    Scene context
+*
+*  @note
+*    - There should be only one scene context instance per application
 */
 class SceneContext {
 
@@ -143,7 +146,7 @@ class SceneContext {
 
 		/**
 		*  @brief
-		*    Performs a cleanup-operation
+		*    Performs a cleanup-operation (garbage collection)
 		*
 		*  @remarks
 		*    If SceneNode::Delete() is called, scene nodes are not destroyed immediately,

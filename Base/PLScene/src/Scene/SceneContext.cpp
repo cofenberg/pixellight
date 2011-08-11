@@ -163,7 +163,7 @@ SceneContainer *SceneContext::GetRoot()
 
 /**
 *  @brief
-*    Performs a cleanup-operation
+*    Performs a cleanup-operation (garbage collection)
 */
 void SceneContext::Cleanup()
 {
