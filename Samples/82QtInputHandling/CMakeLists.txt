@@ -4,6 +4,22 @@
 define_project(82QtInputHandling NOSUFFIX)
 
 ##################################################
+## Include directories
+##################################################
+add_include_directories(
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/Base/PLInput/include
+	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
+	${QT_INCLUDE_DIRS}
+)
+
+##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
@@ -22,22 +38,6 @@ add_sources(
 	src/MySceneContext.cpp
 	src/MyRenderWindow.cpp
 	${MOC_SRCS}
-)
-
-##################################################
-## Include directories
-##################################################
-add_include_directories(
-	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLMath/include
-	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLInput/include
-	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
-	${CMAKE_SOURCE_DIR}/Base/PLScene/include
-	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
-	${QT_INCLUDE_DIRS}
 )
 
 ##################################################

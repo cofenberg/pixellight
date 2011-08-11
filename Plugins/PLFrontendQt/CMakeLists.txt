@@ -4,6 +4,27 @@
 define_project(PLFrontendQt)
 
 ##################################################
+## Include directories
+##################################################
+add_include_directories(
+	include
+	include/PLFrontendQt
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/Base/PLInput/include
+	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
+
+	# We need the following to be able to include headers produced by uic in our code
+	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_CURRENT_BINARY_DIR}
+	${QT_INCLUDE_DIRS}
+)
+
+##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
@@ -84,27 +105,6 @@ add_sources(
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc
-)
-
-##################################################
-## Include directories
-##################################################
-add_include_directories(
-	include
-	include/PLFrontendQt
-	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLMath/include
-	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLInput/include
-	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
-	${CMAKE_SOURCE_DIR}/Base/PLScene/include
-	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-
-	# We need the following to be able to include headers produced by uic in our code
-	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-	${CMAKE_CURRENT_BINARY_DIR}
-	${QT_INCLUDE_DIRS}
 )
 
 ##################################################

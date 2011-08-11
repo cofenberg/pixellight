@@ -4,6 +4,26 @@
 define_project(PLEditor NOSUFFIX)
 
 ##################################################
+## Include directories
+##################################################
+add_include_directories(
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/Base/PLInput/include
+	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
+	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
+	${CMAKE_SOURCE_DIR}/Tools/PLEditor
+	${QT_INCLUDE_DIRS}
+	# We need the following to be able to include headers produced by uic in our code
+	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_CURRENT_BINARY_DIR}
+)
+
+##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
@@ -39,26 +59,6 @@ add_sources(
 	PluginManager.cpp
 	${MOC_SRCS}
 	${UI_SRCS}
-)
-
-##################################################
-## Include directories
-##################################################
-add_include_directories(
-	${CMAKE_SOURCE_DIR}/Base/PLCore/include
-	${CMAKE_SOURCE_DIR}/Base/PLMath/include
-	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLInput/include
-	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
-	${CMAKE_SOURCE_DIR}/Base/PLScene/include
-	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
-	${CMAKE_SOURCE_DIR}/Tools/PLEditor
-	${QT_INCLUDE_DIRS}
-	# We need the following to be able to include headers produced by uic in our code
-	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
-	${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ##################################################

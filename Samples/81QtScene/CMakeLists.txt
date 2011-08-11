@@ -4,14 +4,6 @@
 define_project(81QtScene NOSUFFIX)
 
 ##################################################
-## Source files
-##################################################
-add_sources(
-	src/Main.cpp
-	src/MySceneContext.cpp
-)
-
-##################################################
 ## Include directories
 ##################################################
 add_include_directories(
@@ -25,6 +17,14 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
 	${QT_INCLUDE_DIRS}
+)
+
+##################################################
+## Source files
+##################################################
+add_sources(
+	src/Main.cpp
+	src/MySceneContext.cpp
 )
 
 ##################################################
