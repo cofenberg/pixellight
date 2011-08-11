@@ -46,7 +46,7 @@ namespace DataModels {
 *  @brief
 *    PL introspection model
 */
-class PLIntrospectionModel : public TreeModelBase {
+class PLFRONTENDQT_API PLIntrospectionModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
