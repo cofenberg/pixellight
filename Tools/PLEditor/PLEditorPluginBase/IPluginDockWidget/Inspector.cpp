@@ -50,6 +50,10 @@ Qt::DockWidgetArea Inspector::InitialArea()
 	return Qt::DockWidgetArea::RightDockWidgetArea;
 }
 
+PLEditor::IPlugin* Inspector::Clone() const
+{
+	return new Inspector();
+}
 
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
@@ -62,6 +66,8 @@ Inspector::Inspector()
 {
 	m_cTreeView.setModel(&m_cModel);
 	this->setWidget(&m_cTreeView);
+	
+	setWindowTitle(getName());
 }
 
 /**

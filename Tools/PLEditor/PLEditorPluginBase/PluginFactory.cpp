@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include "IPluginDockWidget/Inspector.h"
 #include "PluginFactory.h"
+#include "IPluginDockWidget/Project.h"
 
 
 //[-------------------------------------------------------]
@@ -58,7 +59,7 @@ QString PluginFactory::getDescription() const
 
 unsigned int PluginFactory::getNumOfClasses() const
 {
-	return 1;
+	return 2;
 }
 
 PLEditor::IPlugin *PluginFactory::createInstance(unsigned int nClass) const
@@ -66,6 +67,8 @@ PLEditor::IPlugin *PluginFactory::createInstance(unsigned int nClass) const
 	switch (nClass) {
 		case 0:
 			return new Inspector();
+		case 1:
+			return new Project();
 
 		default:
 			return nullptr;

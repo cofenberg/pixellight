@@ -87,6 +87,18 @@ class IPlugin {
 		*    The name of the plugin
 		*/
 		virtual QString getName() const = 0;
+		
+		/**
+		 *  @brief
+		 *    Creates a clone of this instance.
+		 *
+		 *  @note
+		 *    The caller must destroy the clone after usage
+		 * 
+		 *  @return
+		 *    cloned instance
+		 */
+		virtual IPlugin* Clone() const = 0;
 
 
 	//[-------------------------------------------------------]

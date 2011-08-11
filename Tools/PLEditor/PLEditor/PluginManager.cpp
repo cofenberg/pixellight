@@ -47,10 +47,18 @@ void PluginManager::loadPlugins()
 {
 	// Open the current directory
 	QDir cQDir("");
-
+	QString str;
 	// Iterate through all found filenames
-	foreach (QString sFilename, cQDir.entryList(QDir::Files)) {
+	foreach (QString sFilename, cQDir.entryList(QDir::Filter::NoSymLinks | QDir::Filter::Files)) {
 		// Load the plugin
+		bool debug_lib = sFilename.contains("D.");
+#ifdef _DEBUG
+		if (!debug_lib)
+			continue;
+#else
+		if (debug_lib)
+			continue;
+#endif
 		QPluginLoader cQPluginLoader(cQDir.absoluteFilePath(sFilename));
 		QObject *pQObject = cQPluginLoader.instance();
 		if (pQObject) {
@@ -69,7 +77,7 @@ void PluginManager::loadPlugins()
 *  @brief
 *    Returns a list of currently loaded plugins
 */
-const QList<IPlugin*> &PluginManager::getPlugins() const
+const QList<const IPlugin*> &PluginManager::getPlugins() const
 {
 	return m_lstPlugins;
 }
@@ -92,7 +100,7 @@ PluginManager::PluginManager()
 */
 PluginManager::~PluginManager()
 {
-	foreach (IPlugin *pIPlugin, m_lstPlugins)
+	foreach (const IPlugin *pIPlugin, m_lstPlugins)
 		delete pIPlugin;
 }
 

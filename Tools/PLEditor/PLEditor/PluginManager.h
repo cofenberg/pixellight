@@ -76,7 +76,7 @@ class PluginManager {
 		*  @return
 		*    List of currently loaded plugins
 		*/
-		const QList<IPlugin*> &getPlugins() const;
+		const QList<const IPlugin*> &getPlugins() const;
 
 
 	//[-------------------------------------------------------]
@@ -126,7 +126,7 @@ class PluginManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QList<IPlugin*> m_lstPlugins;	/**< List of all plugins (= class instances) */
+		QList<const IPlugin*> m_lstPlugins;	/**< List of all plugins (= class instances) */
 
 
 };

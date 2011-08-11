@@ -14,6 +14,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+	
+private:
+	void fillWindowMenu();
 
 private slots:
 	void on_actionAbout_PL_Editor_triggered();
@@ -21,6 +24,8 @@ private slots:
 	void on_actionAbout_Plugins_triggered();
 
 	void on_actionOptions_triggered();
+	
+	void onWindowMenuActionTriggerd(QAction*);
 
 private:
     Ui::MainWindow *ui;

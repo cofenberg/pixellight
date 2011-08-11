@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>881</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -76,9 +76,6 @@
     <addaction name="separator"/>
     <addaction name="menuLayouts"/>
     <addaction name="separator"/>
-    <addaction name="actionScene"/>
-    <addaction name="actionInspector"/>
-    <addaction name="actionProject"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -200,13 +197,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>actionAbout_PL_Editor</sender>
-   <signal>triggered()</signal>
+   <sender>menuWindpw</sender>
+   <signal>triggered(QAction*)</signal>
    <receiver>MainWindow</receiver>
+   <slot>onWindowMenuActionTriggerd(QAction*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>85</x>
+     <y>68</y>
     </hint>
     <hint type="destinationlabel">
      <x>440</x>
@@ -215,4 +213,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>onWindowMenuActionTriggerd(QAction*)</slot>
+ </slots>
 </ui>

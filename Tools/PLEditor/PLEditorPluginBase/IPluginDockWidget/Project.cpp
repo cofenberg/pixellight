@@ -55,6 +55,10 @@ Qt::DockWidgetArea Project::InitialArea()
 	return Qt::DockWidgetArea::BottomDockWidgetArea;
 }
 
+PLEditor::IPlugin* Project::Clone() const
+{
+	return new Project();
+}
 
 //[-------------------------------------------------------]
 //[ Public methods                                        ]
@@ -68,6 +72,8 @@ Project::Project()
 	m_cTreeView.setModel(&m_cModel);
 	m_cTreeView.setContextMenuPolicy(Qt::CustomContextMenu);
 	this->setWidget(&m_cTreeView);
+	
+	setWindowTitle(getName());
 	
 	connect(&m_cTreeView, SIGNAL(customContextMenuRequested( const QPoint& )), SLOT(showContextMenu(const QPoint &)));
 	

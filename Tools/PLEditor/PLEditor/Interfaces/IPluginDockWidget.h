@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include "IPlugin.h"
 
+class QDockWidget;
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
@@ -52,6 +53,7 @@ class IPluginDockWidget : public IPlugin {
 	//[-------------------------------------------------------]
 	public:
 		virtual Qt::DockWidgetArea InitialArea() = 0;
+		virtual QDockWidget* GetWidget() = 0;
 		
 	//[-------------------------------------------------------]
 	//[ Protected methods                                     ]
