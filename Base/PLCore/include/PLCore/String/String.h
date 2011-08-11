@@ -209,7 +209,7 @@ class String {
 		PLCORE_API String(int nValue);
 		PLCORE_API String(int64 nValue);
 		PLCORE_API String(uint8 nValue);
-		PLCORE_API String(uint16 nValue);
+	//	PLCORE_API String(uint16 nValue);	// We can't do that because wchar_t may be defined the same way as uint16
 		PLCORE_API String(uint32 nValue);
 		PLCORE_API String(uint64 nValue);
 		PLCORE_API String(float fValue);
@@ -954,7 +954,7 @@ class String {
 		PLCORE_API String &operator =(int      nValue);
 		PLCORE_API String &operator =(int64    nValue);
 		PLCORE_API String &operator =(uint8    nValue);
-		PLCORE_API String &operator =(uint16   nValue);
+	//	PLCORE_API String &operator =(uint16   nValue);	// We can't do that because wchar_t may be defined the same way as uint16
 		PLCORE_API String &operator =(uint32   nValue);
 		PLCORE_API String &operator =(uint64   nValue);
 		PLCORE_API String &operator =(float    fValue);
@@ -967,7 +967,7 @@ class String {
 		PLCORE_API String operator +(int     nValue) const;
 		PLCORE_API String operator +(int64   nValue) const;
 		PLCORE_API String operator +(uint8   nValue) const;
-		PLCORE_API String operator +(uint16  nValue) const;
+	//	PLCORE_API String operator +(uint16  nValue) const;	// We can't do that because wchar_t may be defined the same way as uint16
 		PLCORE_API String operator +(uint32  nValue) const;
 		PLCORE_API String operator +(uint64  nValue) const;
 		PLCORE_API String operator +(float   fValue) const;
@@ -978,7 +978,7 @@ class String {
 		PLCORE_API friend String operator +(int      nValue, const String &sString);
 		PLCORE_API friend String operator +(int64    nValue, const String &sString);
 		PLCORE_API friend String operator +(uint8    nValue, const String &sString);
-		PLCORE_API friend String operator +(uint16   nValue, const String &sString);
+	//	PLCORE_API friend String operator +(uint16   nValue, const String &sString);	// We can't do that because wchar_t may be defined the same way as uint16
 		PLCORE_API friend String operator +(uint32   nValue, const String &sString);
 		PLCORE_API friend String operator +(uint64   nValue, const String &sString);
 		PLCORE_API friend String operator +(float    fValue, const String &sString);
@@ -989,7 +989,7 @@ class String {
 		PLCORE_API String &operator +=(int      nValue);
 		PLCORE_API String &operator +=(int64    nValue);
 		PLCORE_API String &operator +=(uint8    nValue);
-		PLCORE_API String &operator +=(uint16   nValue);
+	//	PLCORE_API String &operator +=(uint16   nValue);	// We can't do that because wchar_t may be defined the same way as uint16
 		PLCORE_API String &operator +=(uint32   nValue);
 		PLCORE_API String &operator +=(uint64   nValue);
 		PLCORE_API String &operator +=(float    fValue);
