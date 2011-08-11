@@ -1,3 +1,10 @@
+>> 11.08.2011
+[CO]
+- String: Sadly, we can't use uint16 in order to let the compiler decide whether to use a whar_t or a uint16 version of a method. For instance, when using PixelLight within the
+  Qt Creator (without changing all used default settings!), whar_t is defined as unsigned short. :/
+
+
+
 >> 08.08.2011
 [CO]
 - "Frontend": Added virtual "OnRun()"-method. This method is called just before the frontend calls it's run-method in order to enter it's main-loop. Use this method for instance
