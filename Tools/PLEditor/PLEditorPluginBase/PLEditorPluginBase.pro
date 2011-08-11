@@ -19,7 +19,7 @@ unix:QMAKE_CFLAGS += -pthread -pipe
 unix:QMAKE_CXXFLAGS += -pthread -fno-rtti -fno-exceptions -pipe -std=c++0x
 
 unix:PIXELLIGHT_BASEPATH=$$quote(/home/stephan/projects/pixellight-src/install/linux-64bit)
-win32:PIXELLIGHT_BASEPATH=$$quote(../../../)
+win32:PIXELLIGHT_BASEPATH=$$quote(../../../Bin)
 
 SOURCES +=\
 		IPluginDockWidget/Inspector.cpp\
@@ -44,14 +44,25 @@ contains (USE_PL_DEBUG, 1) {
              -lPLMesh -lPLScene
 }
 
-win32:LIBS += $$quote($$PIXELLIGHT_BASEPATH\Lib\PLGeneral.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLCore.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMath.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLGraphics.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLRenderer.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMesh.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLEngine.lib) \
-$$quote($$PIXELLIGHT_BASEPATH\Lib\PLScene.lib)
+CONFIG(release) {
+	win32:LIBS += $$quote($$PIXELLIGHT_BASEPATH\Lib\PLCore.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMath.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLGraphics.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLRenderer.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMesh.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLEngine.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLScene.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLFrontendQt.lib)
+} else {
+	win32:LIBS += $$quote($$PIXELLIGHT_BASEPATH\Lib\PLCoreD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMathD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLGraphicsD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLRendererD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLMeshD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLEngineD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLSceneD.lib) \
+	$$quote($$PIXELLIGHT_BASEPATH\Lib\PLFrontendQtD.lib)
+}
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
