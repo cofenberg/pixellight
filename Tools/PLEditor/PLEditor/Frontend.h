@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Application.h                                  *
+ *  File: Frontend.h                                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef APPLICATION_H
-#define APPLICATION_H
-#pragma once
+#ifndef FRONTEND_H
+#define FRONTEND_H
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QApplication>
+#include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendPixelLight.h>
 
 
 //[-------------------------------------------------------]
@@ -38,100 +38,66 @@ namespace PLEditor {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class Frontend;
-class PluginManager;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Application class
+*    Editor frontend implementation class
 */
-class Application : public QApplication {
+class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(pl_rtti_export, Frontend, "PLFrontendNull", PLCore::FrontendImpl, "Editor frontend implementation class")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] argc
-		*    Number of C-arguments
-		*  @param[in] argv
-		*    C-arguments, must be valid
 		*/
-		Application(int &argc, char **argv);
+		Frontend();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~Application();
-
-		/**
-		*  @brief
-		*    Returns the instance of the plugin manager
-		*
-		*  @return
-		*    The instance of the plugin manager
-		*/
-		PluginManager &getPluginManager();
-
-		/**
-		*  @brief
-		*    Returns the PixelLight application frontend instance
-		*
-		*  @return
-		*    The PixelLight application frontend instance
-		*/
-		Frontend &getFrontend() const;
+		virtual ~Frontend();
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private virtual PLCore::FrontendImpl functions        ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		Application();
-
-		/**
-		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*/
-		Application(const Application &cSource);
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		Application &operator =(const Application &cSource);
+		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments);
+		virtual int Run(int argc, wchar_t **argv);
+		virtual PLCore::handle GetNativeWindowHandle() const;
+		virtual void Redraw();
+		virtual void Ping();
+		virtual PLCore::uint32 GetWidth() const;
+		virtual PLCore::uint32 GetHeight() const;
+		virtual bool GetToggleFullscreenMode() const;
+		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode);
+		virtual bool GetFullscreenAltTab() const;
+		virtual void SetFullscreenAltTab(bool bAllowed);
+		virtual bool IsFullscreen() const;
+		virtual void SetFullscreen(bool bFullscreen);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PluginManager *m_pPluginManager;	/**< Instance of the plugin manager, always valid! */
-		Frontend	  *m_pFrontend;			/**< PixelLight application frontend instance, always valid! */
+		bool					   m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		PLCore::FrontendPixelLight m_cFrontend;
 
 
 };
@@ -142,13 +108,5 @@ class Application : public QApplication {
 //[-------------------------------------------------------]
 } // PLEditor
 
-//This redefines qApp, causing it to return an Application pointer instead of a QApplication one.
-//This is useful, for example, to access the logging system. This is done in the same way that
-//Qt does it to get a QApplication rather than a QCoreApplication, so it should be legitimate.
-#if defined(qApp)
-#undef qApp
-#endif
-#define qApp (static_cast<PLEditor::Application *>(QCoreApplication::instance()))
 
-
-#endif // APPLICATION_H
+#endif // FRONTEND_H

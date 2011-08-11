@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PluginManager.h"
+#include "Frontend.h"
 #include "Application.h"
 
 
@@ -47,7 +48,8 @@ int NullNumOfProgramArguments = 0;
 *    Default constructor
 */
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
-	m_pPluginManager(new PluginManager())
+	m_pPluginManager(new PluginManager()),
+	m_pFrontend(new Frontend())
 {
 	// Load in all plugins
 	m_pPluginManager->loadPlugins();
@@ -61,6 +63,9 @@ Application::~Application()
 {
 	// Destroy the plugin manager instance
 	delete m_pPluginManager;
+
+	// Destroy the PixelLight application frontend instance
+	delete m_pFrontend;
 }
 
 /**
@@ -72,6 +77,14 @@ PluginManager &Application::getPluginManager()
 	return *m_pPluginManager;
 }
 
+/**
+*  @brief
+*    Returns the PixelLight application frontend instance
+*/
+Frontend &Application::getFrontend() const
+{
+	return *m_pFrontend;
+}
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -81,7 +94,8 @@ PluginManager &Application::getPluginManager()
 *    Default constructor
 */
 Application::Application() : QApplication(NullNumOfProgramArguments, nullptr),
-	m_pPluginManager(new PluginManager())
+	m_pPluginManager(nullptr),
+	m_pFrontend(nullptr)
 {
 }
 
@@ -90,7 +104,8 @@ Application::Application() : QApplication(NullNumOfProgramArguments, nullptr),
 *    Copy constructor
 */
 Application::Application(const Application &cSource) : QApplication(NullNumOfProgramArguments, nullptr),
-	m_pPluginManager(nullptr)
+	m_pPluginManager(nullptr),
+	m_pFrontend(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }

@@ -28,6 +28,7 @@ add_include_directories(
 ##################################################
 # Include files with Qt relevant information
 SET(INC_FILES
+	Frontend.h
 	MainWindow.h
 	AboutDialog.h
 	AboutPluginsDialog.h
@@ -51,6 +52,7 @@ QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 ##################################################
 add_sources(
 	main.cpp
+	Frontend.cpp
 	MainWindow.cpp
 	Application.cpp
 	AboutDialog.cpp

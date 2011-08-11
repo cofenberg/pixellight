@@ -128,6 +128,21 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 	protected:
 		/**
 		*  @brief
+		*    Called when the frontend is run
+		*
+		*  @param[in] sExecutableFilename
+		*    Absolute application executable filename
+		*  @param[in] lstArguments
+		*    List of arguments to the program
+		*
+		*  @remarks
+		*    This method is called just before the frontend calls it's run-method in order to
+		*    enter it's main-loop. Use this method for instance to pre-process command line arguments.
+		*/
+		PLCORE_API virtual void OnRun(const String &sExecutableFilename, const Array<String> &lstArguments);
+
+		/**
+		*  @brief
 		*    Called when the frontend should run
 		*
 		*  @param[in] sExecutableFilename

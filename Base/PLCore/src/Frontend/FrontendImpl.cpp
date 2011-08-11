@@ -77,7 +77,9 @@ Frontend *FrontendImpl::GetFrontend() const
 //[-------------------------------------------------------]
 void FrontendImpl::OnCreate()
 {
-	// No implementation required
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnCreate();
 }
 
 void FrontendImpl::OnRestart()
@@ -116,7 +118,9 @@ void FrontendImpl::OnStop()
 
 void FrontendImpl::OnDestroy()
 {
-	// No implementation required
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDestroy();
 }
 
 
@@ -162,6 +166,17 @@ void FrontendImpl::OnUpdate()
 //[-------------------------------------------------------]
 //[ Protected virtual FrontendImpl functions              ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the frontend is run
+*/
+void FrontendImpl::OnRun(const String &sExecutableFilename, const Array<String> &lstArguments)
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnRun(sExecutableFilename, lstArguments);
+}
+
 /**
 *  @brief
 *    Called when the frontend should run
