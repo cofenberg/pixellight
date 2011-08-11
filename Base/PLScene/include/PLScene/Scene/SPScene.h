@@ -41,6 +41,7 @@ namespace PLRenderer {
 namespace PLScene {
 	class SQCull;
 	class SNCamera;
+	class SceneContext;
 	class SceneRenderer;
 	class SceneContainer;
 	class SceneNodeHandler;
