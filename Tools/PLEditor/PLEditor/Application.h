@@ -66,7 +66,7 @@ class Application : public QApplication {
 		*  @param[in] argv
 		*    C-arguments, must be valid
 		*/
-		Application(int argc, char **argv);
+		Application(int &argc, char **argv);
 
 		/**
 		*  @brief
@@ -130,6 +130,14 @@ class Application : public QApplication {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLEditor
+
+//This redefines qApp, causing it to return an Application pointer instead of a QApplication one.
+//This is useful, for example, to access the logging system. This is done in the same way that
+//Qt does it to get a QApplication rather than a QCoreApplication, so it should be legitimate.
+#if defined(qApp)
+#undef qApp
+#endif
+#define qApp (static_cast<PLEditor::Application *>(QCoreApplication::instance()))
 
 
 #endif // APPLICATION_H

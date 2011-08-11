@@ -46,7 +46,7 @@ int NullNumOfProgramArguments = 0;
 *  @brief
 *    Default constructor
 */
-Application::Application(int argc, char **argv) : QApplication(argc, argv),
+Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_pPluginManager(new PluginManager())
 {
 	// Load in all plugins
