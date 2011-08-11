@@ -76,6 +76,9 @@ add_libs(
 ##################################################
 ## Preprocessor definitions
 ##################################################
+add_compile_defs(
+	PLEDITORPLUGINBASE_LIBRARY
+)
 if(WIN32)
 	##################################################
 	## Win32
@@ -157,7 +160,6 @@ if(LINUX)
 		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Tools/PLEditor"
 	)
 endif()
-
 
 ##################################################
 ## Install

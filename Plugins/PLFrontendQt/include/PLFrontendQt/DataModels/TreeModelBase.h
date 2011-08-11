@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <QtCore/QAbstractItemModel>
 #include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
+#include "PLFrontendQt/PLFrontendQt.h"
 
 
 //[-------------------------------------------------------]
@@ -55,7 +56,7 @@ class TreeItemBase;
 *  @note
 *    - This class implements an model which is static regarding its elements -> no user interaction to change the model structur
 */
-class TreeModelBase : public QAbstractItemModel {
+class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 
 
 	//[-------------------------------------------------------]
