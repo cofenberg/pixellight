@@ -40,6 +40,11 @@ namespace PLEditorPluginBase {
 //[-------------------------------------------------------]
 //[ Public virtual PLEditor::IPluginDockWidget methods    ]
 //[-------------------------------------------------------]
+Project::EType Project::getType() const
+{
+	return TypeDockWidget;
+}
+
 QString Project::getName() const
 {
 	return "Project";

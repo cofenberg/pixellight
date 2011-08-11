@@ -8,15 +8,18 @@ TARGET = PLEditorPluginBase
 TEMPLATE = lib
 DESTDIR = $$quote(../../../Bin/Tools/PLEditor)
 INCLUDEPATH += "../"
+INCLUDEPATH += "../../../Base/PLCore/include"
+INCLUDEPATH += "../../../Plugins/PLFrontendQt/include"
 
-DEFINES += PLEDITORPLUGINBASE_LIBRARY LINUX
+DEFINES += PLEDITORPLUGINBASE_LIBRARY
+unix:DEFINES += LINUX
 
-QMAKE_LFLAGS += -Wl,--as-needed
-QMAKE_CFLAGS += -pthread -pipe
-QMAKE_CXXFLAGS += -pthread -fno-rtti -fno-exceptions -pipe -std=c++0x
+unix:QMAKE_LFLAGS += -Wl,--as-needed
+unix:QMAKE_CFLAGS += -pthread -pipe
+unix:QMAKE_CXXFLAGS += -pthread -fno-rtti -fno-exceptions -pipe -std=c++0x
 
 unix:PIXELLIGHT_BASEPATH=$$quote(/home/stephan/projects/pixellight-src/install/linux-64bit)
-win32:PIXELLIGHT_BASEPATH=$$quote(C:\Program Files\PixelLight-SDK)
+win32:PIXELLIGHT_BASEPATH=$$quote(../../../)
 
 SOURCES +=\
 		IPluginDockWidget/Inspector.cpp\
@@ -29,7 +32,6 @@ HEADERS +=\
 		IPluginDockWidget/Project.h\
     PluginFactory.h
 
-unix:INCLUDEPATH += $$quote($$PIXELLIGHT_BASEPATH/include)
 unix:LIBS += $$quote(-L$$PIXELLIGHT_BASEPATH/lib)
 unix:LIBS += -lPLFrontendQt
 
@@ -42,7 +44,6 @@ contains (USE_PL_DEBUG, 1) {
              -lPLMesh -lPLScene
 }
 
-win32:INCLUDEPATH +=$$quote($$PIXELLIGHT_BASEPATH\Include)
 win32:LIBS += $$quote($$PIXELLIGHT_BASEPATH\Lib\PLGeneral.lib) \
 $$quote($$PIXELLIGHT_BASEPATH\Lib\PLCore.lib) \
 $$quote($$PIXELLIGHT_BASEPATH\Lib\PLMath.lib) \

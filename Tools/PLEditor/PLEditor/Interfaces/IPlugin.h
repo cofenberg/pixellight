@@ -54,9 +54,31 @@ class IPlugin {
 
 
 	//[-------------------------------------------------------]
+	//[ Definitionsn                                          ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Plugin type
+		*/
+		enum EType {
+			TypeDockWidget = 0,
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual IPlugin methods                        ]
 	//[-------------------------------------------------------]
 	public:
+		/**
+		*  @brief
+		*    Returns the type of the plugin
+		*
+		*  @return
+		*    The type of the plugin
+		*/
+		virtual EType getType() const = 0;
+
 		/**
 		*  @brief
 		*    Returns the name of the plugin

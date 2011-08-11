@@ -98,6 +98,16 @@ SPScene::~SPScene()
 
 /**
 *  @brief
+*    Returns the used scene context
+*/
+SceneContext *SPScene::GetSceneContext() const
+{
+	SceneContainer *pSceneContainer = static_cast<SceneContainer*>(m_pRootContainerHandler->GetElement());
+	return pSceneContainer ? pSceneContainer->GetSceneContext() : nullptr;
+}
+
+/**
+*  @brief
 *    Returns the scene root container
 */
 SceneContainer *SPScene::GetRootContainer() const

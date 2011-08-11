@@ -35,6 +35,11 @@ namespace PLEditorPluginBase {
 //[-------------------------------------------------------]
 //[ Public virtual PLEditor::IPluginDockWidget methods    ]
 //[-------------------------------------------------------]
+Inspector::EType Inspector::getType() const
+{
+	return TypeDockWidget;
+}
+
 QString Inspector::getName() const
 {
 	return "Inspector";

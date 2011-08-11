@@ -67,6 +67,7 @@ class Project : public QDockWidget, public PLEditor::IPluginDockWidget {
 	//[ Public virtual PLEditor::IPluginDockWidget methods    ]
 	//[-------------------------------------------------------]
 	public:
+		virtual EType getType() const;
 		virtual QString getName() const;
 		virtual Qt::DockWidgetArea InitialArea();
 		void SetProjectDir(const QString strProjectDir);

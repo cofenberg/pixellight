@@ -63,9 +63,10 @@ namespace PLScene {
 *    Scene graph surface painter class
 *
 *  @remarks
-*    The scene surface painter is responsible for rendering the scene whereby 'the scene' is
-*    normally subdivided into a 'root container' and a 'scene container' - both normally
-*    instances of SceneContainer. The 'root container' is responsible for clearing
+*    The scene surface painter is responsible for rendering the scene by using a given camera.
+*
+*    'The scene' is normally subdivided into a 'root container' and a 'scene container' - both
+*    normally instances of SceneContainer. The 'root container' is responsible for clearing
 *    the frame buffer, drawing the 'scene container' and finally adding some additional
 *    things like GUI, engine information, console etc. The 'scene container' itself is
 *    the concrete scene - this distinction between 'root' and 'scene' is quite comfortable
@@ -113,6 +114,15 @@ class SPScene : public PLRenderer::SurfacePainter {
 		*    Destructor
 		*/
 		PLS_API virtual ~SPScene();
+
+		/**
+		*  @brief
+		*    Returns the used scene context
+		*
+		*  @return
+		*    The used scene context, can be a null pointer
+		*/
+		PLS_API SceneContext *GetSceneContext() const;
 
 		/**
 		*  @brief
