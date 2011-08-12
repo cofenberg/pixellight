@@ -42,7 +42,7 @@ namespace PLEditor {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Editor frontend implementation class
+*    Editor PixelLight application frontend implementation class
 */
 class Frontend : public PLCore::FrontendImpl {
 
@@ -50,7 +50,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Frontend, "PLFrontendNull", PLCore::FrontendImpl, "Editor frontend implementation class")
+	pl_class(pl_rtti_export, Frontend, "PLFrontendNull", PLCore::FrontendImpl, "Editor PixelLight application frontend implementation class")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
