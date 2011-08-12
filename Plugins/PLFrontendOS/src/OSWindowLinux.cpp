@@ -227,29 +227,28 @@ void OSWindowLinux::SetFullscreenAltTab(bool bAllowed)
 
 void OSWindowLinux::SetFullscreen(bool bFullscreen)
 {
-	// Set/Remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode
+	// Set/remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode.
 	// The window manger is responsible to restore the original position and size of the window when the fullscreen mode should be left.
 	// This works only on window manger which are EWMH (v1.3 or greater) compatible (http://standards.freedesktop.org/wm-spec/wm-spec-1.3.html)
-	Atom wmFullScreen = XInternAtom(m_pDisplay,"_NET_WM_STATE_FULLSCREEN",False);
-	Atom wmState = XInternAtom(m_pDisplay,"_NET_WM_STATE",False);
-	
-	XEvent xev;
-	memset ( &xev, 0, sizeof(xev) );
+	Atom wmFullScreen = XInternAtom(m_pDisplay, "_NET_WM_STATE_FULLSCREEN", False);
+	Atom wmState = XInternAtom(m_pDisplay, "_NET_WM_STATE", False);
 
-	xev.type                 = ClientMessage;
-	xev.xclient.window       = m_nNativeWindowHandle;
-	xev.xclient.message_type = wmState;
-	xev.xclient.format       = 32;
-	xev.xclient.data.l[0]    = bFullscreen ? 1 : 0; // the Atom should be added(1) or removed (0)
-	xev.xclient.data.l[1]    = wmFullScreen;
-	
+	// Setup the X-event
+	XEvent sXEvent;
+	memset(&sXEvent, 0, sizeof(sXEvent));
+	sXEvent.type                 = ClientMessage;
+	sXEvent.xclient.window       = m_nNativeWindowHandle;
+	sXEvent.xclient.message_type = wmState;
+	sXEvent.xclient.format       = 32;
+	sXEvent.xclient.data.l[0]    = bFullscreen ? 1 : 0;	// The atom should be added (= 1) or removed (= 0)
+	sXEvent.xclient.data.l[1]    = wmFullScreen;
+
 	// Send message to the root window to inform the window manager about the change
-	XSendEvent (m_pDisplay,
-		DefaultRootWindow ( m_pDisplay ),
-		False,
-		SubstructureNotifyMask,
-		&xev );
-	
+	XSendEvent(m_pDisplay, DefaultRootWindow(m_pDisplay), False, SubstructureNotifyMask, &sXEvent);
+
+	// Do it!
+	XSync(m_pDisplay, False);
+
 	// Inform that the fullscreen mode was changed
 	m_pFrontendOS->OnFullscreenMode();
 }

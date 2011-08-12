@@ -80,24 +80,25 @@ void LinuxKeyboardDevice::Update()
 		// Find changed keys
 		for (int i=0; i<32*8; i++) {
 			// Get state
-			int nState = (m_nKeys[i/8] >> (i%8)) & 1;
+			const int nState = (m_nKeys[i/8] >> (i%8)) & 1;
 
-			// Get virtual key code without any modifier set. Otherwise we would get different keysyms values
-			// (e.g the user presses the a key then the method returns XK_a as keysym
-			// when the user additional presses the shift key the method returns XK_A, which is a different keysym.
-			// When then the user releases the a key on the keyboard but holds the shift key pressed then the input system wouldn't see that tha a // key was released because the method returns XK_A and not XK_a what was the return keysym as the user pressed the a key)
-			int nKey = XKeycodeToKeysym(m_pDisplay, i, 0);
+			// Get virtual key code without any modifier set (otherwise we would get different virtual key codes for one and the same physical key)
+			//   Example: The user is pressing the "a"-key and the method returns "XK_a" as virtual key code.
+			//            In case the user additionally is pressing the "shift"-key, the method returns "XK_A" (= a different virtual key code!).
+			//            When the user releases the "a"-key on the keyboard, but is still holding the "shift"-key pressed down, then the input
+			//            system wouldn't see that the "a"-key was released. The reason for this is, that the method returns "XK_A" and not "XK_a"
+			//            which was the virtual key code returned when the user pressed the "a"-key in the first place.
+			const KeySym nKeySym = XKeycodeToKeysym(m_pDisplay, i, 0);
 
 			// Get button
-			Button *pButton = GetKeyboardKey(pKeyboard, nKey);
+			Button *pButton = GetKeyboardKey(pKeyboard, nKeySym);
 			if (pButton) {
 				// Get button state
-				bool bPressed = (nState != 0);
+				const bool bPressed = (nState != 0);
 
 				// Propagate changes
-				if (pButton->IsPressed() != bPressed) {
+				if (pButton->IsPressed() != bPressed)
 					pButton->SetPressed(bPressed);
-				}
 			}
 		}
 	}
@@ -111,10 +112,10 @@ void LinuxKeyboardDevice::Update()
 *  @brief
 *    Get key for virtual key code
 */
-Button *LinuxKeyboardDevice::GetKeyboardKey(Keyboard *pKeyboard, int nKey)
+Button *LinuxKeyboardDevice::GetKeyboardKey(Keyboard *pKeyboard, KeySym nKeySym)
 {
 	// Return key that corresponds to the given key code
-	switch (nKey) {
+	switch (nKeySym) {
 		case XK_BackSpace:		return &pKeyboard->KeyBack;
 		case XK_Tab:			return &pKeyboard->KeyTab;
 		case XK_Clear:			return &pKeyboard->KeyClear;

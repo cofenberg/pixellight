@@ -153,7 +153,6 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/wrap_oal.dll "${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
 		)
 	elseif(LINUX)
-
 		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
 		set(COPY_SOURCE ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so
 						${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1

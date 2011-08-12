@@ -57,10 +57,10 @@ ContextLinux::ContextLinux(Renderer &cRenderer) :
 		// Get an appropriate visual
 		int nAttributeList[] = {
 			GLX_RGBA,
-			GLX_DOUBLEBUFFER, 
-			GLX_RED_SIZE,	4, 
-			GLX_GREEN_SIZE,	4, 
-			GLX_BLUE_SIZE,	4, 
+			GLX_DOUBLEBUFFER,
+			GLX_RED_SIZE,	4,
+			GLX_GREEN_SIZE,	4,
+			GLX_BLUE_SIZE,	4,
 			GLX_DEPTH_SIZE,	16,
 			0 };	// = "None"
 
@@ -158,11 +158,7 @@ void ContextLinux::MakeDummyCurrent() const
 
 bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstDisplayModeList)
 {
-	uint32 nScreen = XDefaultScreen(m_pDisplay);
-	XRRScreenConfiguration *sc = nullptr;
-	XRRScreenSize *sizelist = nullptr;
-	int nNumOfModes = 0;
-	String sTemp;
+	bool bResult = false;	// Error by default
 
 	// Clear old list of display modes
 	for (uint32 i=0; i<lstDisplayModeList.GetNumOfElements(); i++)
@@ -171,64 +167,68 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 
 	// Get list of display modes
 	PL_LOG(Info, "Query available display modes")
-					
-	sc = XRRGetScreenInfo( m_pDisplay, RootWindow( m_pDisplay, nScreen ) );
-	
-	sizelist = XRRConfigSizes( sc, &nNumOfModes );
-	
-	if (nNumOfModes) {
-		for (uint32 i=0; i<nNumOfModes; i++) {
-			// First at all, we're only interested in some of the settings - as a result, we really should check if there's
-			// already a display mode within our list with the interesting settings of the current found display mode
-			bool bNewMode = true;
-			for (uint32 j=0; j<lstDisplayModeList.GetNumOfElements(); j++) {
-				const PLRenderer::DisplayMode *pDisplayMode = lstDisplayModeList[j];
-				if (pDisplayMode->vSize.x == sizelist[i].width && pDisplayMode->vSize.y == sizelist[i].height) {
-					// We already have such a display mode within our list!
-					bNewMode = false;
 
-					// Get us out of this loop right now!
-					j = lstDisplayModeList.GetNumOfElements();
-				}
-			}
-			if (bNewMode) {
-				// Get required information
-				PLRenderer::DisplayMode *pDisplayMode = new PLRenderer::DisplayMode;
-				pDisplayMode->vSize.x	  = sizelist[i].width;
-				pDisplayMode->vSize.y	  = sizelist[i].height;
-				pDisplayMode->nColorBits  = XDefaultDepth(m_pDisplay, nScreen);
+	// Get XRR screen configuration (don't forget "XRRFreeScreenConfigInfo()" if you no longer need it)
+	const int nScreen = XDefaultScreen(m_pDisplay);
+	XRRScreenConfiguration *pXRRScreenConfiguration = XRRGetScreenInfo(m_pDisplay, RootWindow(m_pDisplay, nScreen));
 
-				// [TODO] under Linux there is currently no real 32Bit visual(RGBA)
-				// only 24bit(RGB) which is equal to 32Bit in RGB (without alpha value)
-				if (pDisplayMode->nColorBits == 24)
-					pDisplayMode->nColorBits = 32;
-				pDisplayMode->nFrequency  = 0;
+	// Get specific configuration information out of our screen configuration
+	int nNumOfModes = 0;
+	XRRScreenSize *pXRRScreenSize = XRRConfigSizes(pXRRScreenConfiguration, &nNumOfModes);
 
-				// Give out log message
-				if (pDisplayMode->nFrequency) {
-					sTemp = String::Format("Found: %dx%dx%d %d Hz", pDisplayMode->vSize.x, pDisplayMode->vSize.y,
-																	pDisplayMode->nColorBits, pDisplayMode->nFrequency);
-				} else {
-					sTemp = String::Format("Found: %dx%dx%d", pDisplayMode->vSize.x, pDisplayMode->vSize.y,
-															  pDisplayMode->nColorBits);
-				}
+	// Loop through all modes
+	for (int nMode=0; nMode<nNumOfModes; nMode++) {
+		// First at all, we're only interested in some of the settings - as a result, we really should check if there's
+		// already a display mode within our list with the interesting settings of the current found display mode
+		bool bNewMode = true;
+		for (uint32 i=0; i<lstDisplayModeList.GetNumOfElements(); i++) {
+			const PLRenderer::DisplayMode *pDisplayMode = lstDisplayModeList[i];
+			if (pDisplayMode->vSize.x == pXRRScreenSize[nMode].width && pDisplayMode->vSize.y == pXRRScreenSize[nMode].height) {
+				// We already have such a display mode within our list!
+				bNewMode = false;
 
-				// Add found display mode to list
-				PL_LOG(Info, sTemp)
-				lstDisplayModeList.Add(pDisplayMode);
+				// Get us out of this loop right now!
+				i = lstDisplayModeList.GetNumOfElements();
 			}
 		}
-		XRRFreeScreenConfigInfo( sc );
+		if (bNewMode) {
+			// Get required information
+			PLRenderer::DisplayMode *pDisplayMode = new PLRenderer::DisplayMode;
+			pDisplayMode->vSize.x	  = pXRRScreenSize[nMode].width;
+			pDisplayMode->vSize.y	  = pXRRScreenSize[nMode].height;
+			pDisplayMode->nColorBits  = XDefaultDepth(m_pDisplay, nScreen);
 
-		// Was at least one display mode found?
-		if (lstDisplayModeList.GetNumOfElements())
-			return true; // Done
-		else
-			PL_LOG(Error, "No available & supported display modes found!")
+			// [TODO] Under Linux there is currently no real 32 bit visual (RGBA)
+			// only 24 bit (RGB) which is equal to 32 bit in RGB (without alpha value)
+			if (pDisplayMode->nColorBits == 24)
+				pDisplayMode->nColorBits = 32;
+			pDisplayMode->nFrequency = 0;
+
+			// Give out a log message
+			String sTemp;
+			if (pDisplayMode->nFrequency) {
+				sTemp = String::Format("Found: %dx%dx%d %d Hz", pDisplayMode->vSize.x, pDisplayMode->vSize.y, pDisplayMode->nColorBits, pDisplayMode->nFrequency);
+			} else {
+				sTemp = String::Format("Found: %dx%dx%d", pDisplayMode->vSize.x, pDisplayMode->vSize.y, pDisplayMode->nColorBits);
+			}
+
+			// Add found display mode to list
+			PL_LOG(Info, sTemp)
+			lstDisplayModeList.Add(pDisplayMode);
+		}
 	}
 
-	// Error!
-	return false;
+	// Was at least one display mode found?
+	if (lstDisplayModeList.GetNumOfElements())
+		bResult = true; // Success! :D
+	else
+		PL_LOG(Error, "No available & supported display modes found!")
+
+	// Free XRR screen configuration
+	XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
+
+	// Done
+	return bResult;
 }
 
 
