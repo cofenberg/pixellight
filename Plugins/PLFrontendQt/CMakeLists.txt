@@ -241,16 +241,24 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		)
 	endif()
 	if(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so"			"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4"		"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7"		"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3"	"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so"			"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4"			"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7"		"${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy "${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3"		"${PL_BIN_DIR}/Runtime"
-		)
+		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
+		set(COPY_SOURCE ${QT_EXTERNAL_DIR}/lib/libQtCore.so
+						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
+						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7
+						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3)
+
+		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
+		set(COPY_DEST "${PL_BIN_DIR}/Runtime")
+
+		# Create the "copy_to_runtime.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
+		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
+
+		# Add custom command to call the created "copy_to_runtime.cmake"-file after the target was built
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_runtime.cmake")
 	endif()
 endif()
 
@@ -262,6 +270,16 @@ if(WIN32)
 		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmain.lib "${PL_BIN_DIR}/Lib"
 		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmaind.lib "${PL_BIN_DIR}/Lib"
 	)
+endif()
+if(LINUX)
+	# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
+	set(COPY_DEST "${PL_BIN_DIR}/Lib")
+
+	# Create the "copy_to_lib.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
+	configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_lib.cmake)
+
+	# Add custom command to call the created "copy_to_runtime.cmake"-file after target was built
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_lib.cmake")
 endif()
 
 ##################################################
