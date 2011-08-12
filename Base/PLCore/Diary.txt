@@ -1,3 +1,9 @@
+>> 12.08.2011
+[CO]
+- "CoreApplication::Run()" now implements the lifecycle as well
+
+
+
 >> 11.08.2011
 [CO]
 - String: Sadly, we can't use uint16 in order to let the compiler decide whether to use a whar_t or a uint16 version of a method. For instance, when using PixelLight within the

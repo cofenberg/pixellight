@@ -364,12 +364,17 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 	m_cApplicationContext.SetExecutableFilename(sExecutableFilename);
 	m_cApplicationContext.SetArguments(lstArguments);
 
+	// Do the lifecycle thing - let the world know that we have been created (must be done in here instead of within the constructor)
+	OnCreate();
+
 	// The application is now running
 	m_bRunning = true;
 
 	// Initialize application
 	m_nResult  = 0;
 	if (OnStart()) {
+		OnResume();
+
 		// Call application-specific initialization routine
 		OnInit();
 
@@ -379,12 +384,16 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 		// Call application-specific de-initialization routine
 		OnDeInit();
 
-		// De-Initialize application
+		// Do the frontend lifecycle thing - de-initialize
+		OnPause();
 		OnStop();
 	}
 
 	// The application is no longer running
 	m_bRunning = false;
+
+	// Do the lifecycle thing - let the world know that we're going to die (should be done in here instead of within the destructor)
+	OnDestroy();
 
 	// Exit
 	return m_nResult;
