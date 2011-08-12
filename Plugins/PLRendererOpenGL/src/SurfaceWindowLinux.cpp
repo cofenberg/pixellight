@@ -170,13 +170,13 @@ bool SurfaceWindow::Init()
 						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
 						bResult = false;
 					}
+
+					// Free XRR screen configuration
+					XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
+
+					// Close X server display connection
+					XCloseDisplay(pDisplay);
 				}
-
-				// Free XRR screen configuration
-				XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
-
-				// Close X server display connection
-				XCloseDisplay(pDisplay);
 			}
 		}
 	}
@@ -225,10 +225,10 @@ void SurfaceWindow::DeInit()
 					XRRScreenConfiguration *pXRRScreenConfiguration = XRRGetScreenInfo(pDisplay, RootWindow(pDisplay, nScreen));
 
 					// Set XRR screen configuration
-					XRRSetScreenConfig(pDisplay, XRRScreenConfiguration, RootWindow(pDisplay, nScreen), m_nOldSizeID, m_nOldRotation, CurrentTime);
+					XRRSetScreenConfig(pDisplay, pXRRScreenConfiguration, RootWindow(pDisplay, nScreen), m_nOldSizeID, m_nOldRotation, CurrentTime);
 
 					// Free XRR screen configuration
-					XRRFreeScreenConfigInfo(XRRScreenConfiguration);
+					XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
 
 					// Restore renderer device objects
 					cRenderer.RestoreDeviceObjects();
