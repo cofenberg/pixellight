@@ -65,7 +65,7 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
+    <None Include="..\..\Base\PLCore\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="src\PLFrontendActiveX.idl">
