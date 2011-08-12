@@ -109,6 +109,12 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 	// Save window and device context handles
 	m_hFrontendWnd = (HWND)aWindow->window;
 
+	{	// Let the world know that this frontend is now going to run
+		const PLCore::String sExecutableFilename;
+		const PLCore::Array<PLCore::String> lstArguments;
+		FrontendImpl::OnRun(sExecutableFilename, lstArguments);
+	}
+
 	// Do the frontend lifecycle thing - initialize
 	if (FrontendImpl::OnStart()) {
 		FrontendImpl::OnResume();

@@ -123,6 +123,12 @@ LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &
 	// Save window and device context handles
 	m_hFrontendWnd = m_hWnd;
 
+	{	// Let the world know that this frontend is now going to run
+		const PLCore::String sExecutableFilename;
+		const PLCore::Array<PLCore::String> lstArguments;
+		FrontendImpl::OnRun(sExecutableFilename, lstArguments);
+	}
+
 	// Do the frontend lifecycle thing - initialize
 	if (FrontendImpl::OnStart()) {
 		FrontendImpl::OnResume();

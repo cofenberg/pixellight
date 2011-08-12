@@ -102,13 +102,13 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 	//[ Protected virtual AbstractLifecycle functions         ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCORE_API virtual void OnCreate() override;
-		PLCORE_API virtual void OnRestart() override;
-		PLCORE_API virtual bool OnStart() override;
-		PLCORE_API virtual void OnResume() override;
-		PLCORE_API virtual void OnPause() override;
-		PLCORE_API virtual void OnStop() override;
-		PLCORE_API virtual void OnDestroy() override;
+		PLCORE_API virtual void OnCreate() override;	// Automatically called from within "Frontend::Run()"
+		PLCORE_API virtual void OnRestart() override;	// Don't forget to call this within derived frontend implementations
+		PLCORE_API virtual bool OnStart() override;		// Don't forget to call this within derived frontend implementations
+		PLCORE_API virtual void OnResume() override;	// Don't forget to call this within derived frontend implementations
+		PLCORE_API virtual void OnPause() override;		// Don't forget to call this within derived frontend implementations
+		PLCORE_API virtual void OnStop() override;		// Don't forget to call this within derived frontend implementations
+		PLCORE_API virtual void OnDestroy() override;	// Automatically called from within "Frontend::Run()"
 
 
 	//[-------------------------------------------------------]
@@ -136,8 +136,12 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    List of arguments to the program
 		*
 		*  @remarks
-		*    This method is called just before the frontend calls it's run-method in order to
-		*    enter it's main-loop. Use this method for instance to pre-process command line arguments.
+		*    This frontend method is called just before the frontend calls it's run-method in order to
+		*    enter it's main-loop. This means that this method is called between "AbstractLifecycle::OnCreate()"
+		*    and "AbstractLifecycle::OnStart()". Use this method for instance to pre-process command line arguments.
+		*
+		*  @note
+		*    - Automatically called from within "Frontend::Run()"
 		*/
 		PLCORE_API virtual void OnRun(const String &sExecutableFilename, const Array<String> &lstArguments);
 
@@ -156,6 +160,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*
 		*  @note
 		*    - The default implementation does nothing at all
+		*    - Automatically called from within "Frontend::Run()"
 		*/
 		PLCORE_API virtual int Run(const String &sExecutableFilename, const Array<String> &lstArguments);
 
@@ -174,6 +179,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*
 		*  @note
 		*    - The default implementation calls the version of the "Run()"-method using PixelLight strings
+		*    - Automatically called from within "Frontend::Run()"
 		*/
 		PLCORE_API virtual int Run(int argc, char **argv);
 		PLCORE_API virtual int Run(int argc, wchar_t **argv);

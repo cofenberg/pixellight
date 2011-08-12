@@ -388,8 +388,9 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    List of arguments to the program
 		*
 		*  @remarks
-		*    This method is called just before the frontend calls it's run-method in order to
-		*    enter it's main-loop. Use this method for instance to pre-process command line arguments.
+		*    This frontend method is called just before the frontend calls it's run-method in order to
+		*    enter it's main-loop. This means that this method is called between "AbstractLifecycle::OnCreate()"
+		*    and "AbstractLifecycle::OnStart()". Use this method for instance to pre-process command line arguments.
 		*
 		*    The default implementation does the following tasks:
 		*    - none (implement in derived classes)
