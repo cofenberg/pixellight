@@ -170,17 +170,24 @@ endif()
 		)
 	endif()
 	if(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1 "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1 "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1 "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1 "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1 "${PL_BIN_DIR}/Runtime"
-			COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1 "${PL_BIN_DIR}/Runtime"
-		)
+		# Set COPY_SOURCE to files which should be copied. This var is used by the copy.cmake script
+		set(COPY_SOURCE ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1
+					${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1)
+		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied. This var is used by the copy.cmake script
+		set(COPY_DEST "${PL_BIN_DIR}/Runtime")
+		
+		# Create the copy_to_runtime.cmake in the build directory of the current target (configure file replaces the vars references with the value of the vars)
+		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
+		
+		# add custom command to call the created copy_to_runtime.cmake after target was built
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_runtime.cmake")
 	endif()
 #endif()
 
@@ -193,17 +200,14 @@ if(WIN32)
 	)
 endif()
 if(LINUX)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1 "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1 "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1 "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1 "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1 "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1 "${PL_BIN_DIR}/Lib"
-	)
+	# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied. This var is used by the copy.cmake script
+	set(COPY_DEST "${PL_BIN_DIR}/Lib")
+
+	# Create the copy_to_lib.cmake in the build directory of the current target (configure file replaces the vars references with the value of the vars)
+	configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_lib.cmake)
+
+	# add custom command to call the created copy_to_runtime.cmake after target was built
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_lib.cmake")
 endif()
 
 ##################################################
