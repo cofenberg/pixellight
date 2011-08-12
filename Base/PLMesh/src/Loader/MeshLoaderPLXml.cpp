@@ -1302,7 +1302,7 @@ bool MeshLoaderPLXml::WriteIndexBuffer(IndexBuffer &cIndexBuffer, XmlElement &cL
 
 			case IndexBuffer::UShort:
 				for (uint32 i=0; i<cIndexBuffer.GetNumOfElements(); i++)
-					sValue += static_cast<uint16*>(pData)[i];
+					sValue += static_cast<uint32>(static_cast<uint16*>(pData)[i]);
 				break;
 
 			case IndexBuffer::UByte:
