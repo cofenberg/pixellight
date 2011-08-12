@@ -221,6 +221,10 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*  @brief
 		*    Function that is called to create the application's surface painter
 		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Sets the default painter
+		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
 		*/
