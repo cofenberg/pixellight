@@ -260,16 +260,20 @@ macro(build_library name type)
 		set(type "STATIC")
 	endif()
 
-	# Check library type on Windows
-	if(WIN32)
-		# Set build options for DLLs
-		if("${type}" STREQUAL "SHARED")
-			# DLL
-			add_compile_defs(_WINDLL _USRDLL)
+	# Set/unset build options for shared libraries (only required for MS Windows, but we
+	# set at least the definitions to be able to use those definitions within source
+	# codes -> we just use the MS Windows names so that we don't have to invent a
+	# new definition for this purpose)
+	if("${type}" STREQUAL "SHARED")
+		# DLL
+		add_compile_defs(_WINDLL _USRDLL)
+		if(WIN32)
 			add_linker_flags(/DLL)
-		elseif("${type}" STREQUAL "STATIC")
-			# Static library
-			remove_compile_defs(_WINDLL _USRDLL)
+		endif()
+	elseif("${type}" STREQUAL "STATIC")
+		# Static library
+		remove_compile_defs(_WINDLL _USRDLL)
+		if(WIN32)
 			remove_linker_flags(/DLL)
 		endif()
 	endif()
