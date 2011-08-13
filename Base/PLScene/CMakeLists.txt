@@ -131,7 +131,6 @@ add_sources(
 	src/Compositing/SceneRendererPass.cpp
 	src/Application/SceneApplication.cpp
 	src/PLScene.cpp
-	src/Config.cpp
 )
 
 ##################################################

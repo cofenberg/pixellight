@@ -252,6 +252,7 @@ copy build\release64\PLRenderer64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\Config.cpp" />
     <ClCompile Include="src\Application\RendererApplication.cpp" />
     <ClCompile Include="src\PLRenderer.cpp" />
     <ClCompile Include="src\RendererContext.cpp" />
@@ -348,6 +349,7 @@ copy build\release64\PLRenderer64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Renderer\Backend\RendererBackend.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLRenderer\Application\Config.h" />
     <ClInclude Include="include\PLRenderer\Application\RendererApplication.h" />
     <ClInclude Include="include\PLRenderer\PLRenderer.h" />
     <ClInclude Include="include\PLRenderer\PLRendererLinux.h" />

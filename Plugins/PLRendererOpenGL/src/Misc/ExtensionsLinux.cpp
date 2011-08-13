@@ -43,20 +43,18 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Initialize the supported extensions
 */
-bool OpenGLExtensions::Init()
+bool OpenGLExtensions::Init(bool bUseExtensions)
 {
 	// Should the extensions be used?
-	// [TODO] Update this configuration related stuff?
-//	if (!Config::GetInstance()->GetVar("PLScene::RendererConfig", "UseExtensions").GetBool()) {
-	if (false) {
+	if (bUseExtensions) {
+		m_bInitialized = true;
+	} else {
 		ResetExtensions();
 		m_bInitialized = true;
 		PL_LOG(Info, "Use no hardware supported extensions")
 
 		// Done
 		return true;
-	} else {
-		m_bInitialized = true;
 	}
 
 	{ // Print a list af all available extensions into the log

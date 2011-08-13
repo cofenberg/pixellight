@@ -254,7 +254,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\SceneApplication.cpp" />
-    <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\PLScene.cpp" />
     <ClCompile Include="src\Scene\SCCell.cpp" />
     <ClCompile Include="src\Scene\SceneContainer.cpp" />
@@ -374,7 +373,6 @@ copy build\release64\PLScene64.lib ..\..\Bin\Lib\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScene\Application\SceneApplication.h" />
-    <ClInclude Include="include\PLScene\Config.h" />
     <ClInclude Include="include\PLScene\PLScene.h" />
     <ClInclude Include="include\PLScene\PLSceneLinux.h" />
     <ClInclude Include="include\PLScene\PLSceneWindows.h" />
