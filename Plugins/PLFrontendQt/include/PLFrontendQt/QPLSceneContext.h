@@ -96,6 +96,9 @@ class PLFRONTENDQT_API QPLSceneContext : public QPLContext {
 		void SetScene(PLScene::SceneContainer *pScene) {
 			m_pScene = pScene;
 		}
+		
+		// makes an cleanup on the pl scene context
+		void PLSceneContextCleanUp();
 
 
 	private:
