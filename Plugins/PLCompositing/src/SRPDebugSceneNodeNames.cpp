@@ -150,7 +150,7 @@ void SRPDebugSceneNodeNames::DrawName(Font &cFont, const SQCull &cCullQuery, con
 void SRPDebugSceneNodeNames::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
 	// Get the font
-		  Font *pDefaultFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		  Font *pDefaultFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 	const String sFont		 = (FontName.Get().GetLength() || !pDefaultFont) ? FontName.Get() : pDefaultFont->GetFilename();
 	const uint32 nFontSize	 = (FontSize || !pDefaultFont) ? FontSize : pDefaultFont->GetSize();
 		  Font *pFont		 = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));

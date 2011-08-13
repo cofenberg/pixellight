@@ -164,7 +164,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 				}
 
 				// Get the font
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont) {
 					// Setup render states
 					cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -193,7 +193,7 @@ void SNEngineInformation::DrawProfiling(Renderer &cRenderer)
 				}
 
 				// Get the font
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont) {
 					// Setup render states
 					cRenderer.GetRendererContext().GetEffectManager().Use();
@@ -292,7 +292,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 		cDrawHelpers.DrawLine(Color4::Blue,  Vector3::Zero, Vector3::UnitZ, mViewProjection, 1.0f);
 
 		// Draw texts
-		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		if (pFont) {
 			Vector3 vV(1.0f, 0.0f, 0.0f);
 			SNCamera *pCamera = SNCamera::GetCamera();
@@ -396,7 +396,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	// Draw FPS
 	if ((InfoFlags & FPS) && cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowFPS").GetBool()) {
 		// Get the font
-		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		if (pFont) {
 			// Setup render states
 			cRenderer.GetRendererContext().GetEffectManager().Use();

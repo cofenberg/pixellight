@@ -171,7 +171,7 @@ void SNText3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 
 	// Is there any text to draw?
 	if (GetText().GetLength() && pVisNode) {
-		const PLRenderer::Font *pDefaultFont = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		const PLRenderer::Font *pDefaultFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		const String			sFont        = (GetFont().GetLength() || !pDefaultFont) ? GetFont() : pDefaultFont->GetFilename();
 		const uint32			nFontSize    = (GetFontSize() || !pDefaultFont) ? GetFontSize() : pDefaultFont->GetSize();
 			  PLRenderer::Font *pFont        = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));
@@ -237,7 +237,7 @@ void SNText3D::UpdateAABoundingBox()
 {
 	// Get the font
 	Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
-	const PLRenderer::Font *pDefaultFont = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+	const PLRenderer::Font *pDefaultFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 	const String			sFont        = (GetFont().GetLength() || !pDefaultFont) ? GetFont() : pDefaultFont->GetFilename();
 	const uint32			nFontSize    = (GetFontSize() || !pDefaultFont) ? GetFontSize() : pDefaultFont->GetSize();
 		  PLRenderer::Font *pFont        = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));

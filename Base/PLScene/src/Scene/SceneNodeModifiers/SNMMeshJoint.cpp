@@ -452,7 +452,7 @@ void SNMMeshJoint::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			// Draw joint name
 			const Joint *pJoint = pJointHandler->GetElement();
 			if (pJoint) {
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont)
 					cRenderer.GetDrawHelpers().DrawText(*pFont, pJoint->GetName(), Color4::Green, pJointHandler->GetTranslationAbsolute(), pVisNode->GetWorldViewProjectionMatrix(), Font::CenterText);
 			}

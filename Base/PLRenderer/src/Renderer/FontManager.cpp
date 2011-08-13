@@ -54,7 +54,7 @@ Renderer &FontManager::GetRenderer() const
 *  @brief
 *    Returns the default texture font
 */
-FontTexture *FontManager::GetDefaultFontTexture() const
+Font *FontManager::GetDefaultFontTexture() const
 {
 	return reinterpret_cast<FontTexture*>(m_pDefaultFontTextureHandler->GetResource());
 }
@@ -144,6 +144,8 @@ FontManager::FontManager(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
 	m_pDefaultFontTextureHandler(new ResourceHandler())
 {
+	// Set default font texture (internally not initialized until it's first real usage)
+	SetDefaultFontTexture(GetFontTexture("Data/Fonts/LinLibertine_Re-2.7.9.9.otf", 15));
 }
 
 /**

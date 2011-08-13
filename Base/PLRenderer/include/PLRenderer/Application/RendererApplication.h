@@ -136,7 +136,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*    The default implementation does the following tasks:
 		*    - Everything that PLCore::CoreApplication::OnStart() does
 		*    - Call OnCreateRendererContext()
-		*    - Set default font according to config
 		*    - Call OnCreatePainter()
 		*    - Return and go on with OnInit()
 		*/

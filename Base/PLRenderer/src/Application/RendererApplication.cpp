@@ -129,15 +129,6 @@ bool RendererApplication::OnStart()
 
 		// Check if a renderer context has been created
 		if (m_pRendererContext) {
-			// [TODO] Shouldn't this be done rather inside FontManager itself? What happens if we do not set a default
-			//        font here, do we then have no font at all? Or ist the a default-default-font in FontManager?
-
-			// Create default font
-			PLRenderer::FontManager &cFontManager = m_pRendererContext->GetRenderer().GetFontManager();
-			const String sDefaultFontTexture     = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTexture");
-			const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTextureSize").GetInt();
-			cFontManager.SetDefaultFontTexture(cFontManager.GetFontTexture(sDefaultFontTexture, nDefaultFontTextureSize));
-
 			// Create surface painter
 			OnCreatePainter();
 			if (!m_bRunning)
@@ -199,9 +190,6 @@ void RendererApplication::OnStop()
 */
 void RendererApplication::OnDisplayMode()
 {
-	// No need to call the empty base implementation
-	// FrontendApplication::OnDisplayMode();
-
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
 	if (pSurface && m_pDisplayMode) {
@@ -228,9 +216,6 @@ void RendererApplication::OnDisplayMode()
 */
 void RendererApplication::OnFullscreenMode()
 {
-	// No need to call the empty base implementation
-	// FrontendApplication::OnFullscreenMode();
-
 	// Get the renderer surface
 	Surface *pSurface = GetSurface();
 	if (pSurface && m_pDisplayMode) {
@@ -253,9 +238,6 @@ void RendererApplication::OnFullscreenMode()
 
 void RendererApplication::OnDraw()
 {
-	// No need to call the empty base implementation
-	// FrontendApplication::OnDraw();
-
 	// Get the surface
 	Surface *pSurface = GetSurface();
 	if (pSurface) {
@@ -270,9 +252,6 @@ void RendererApplication::OnDraw()
 */
 void RendererApplication::OnUpdate()
 {
-	// No need to call the empty base implementation
-	// FrontendApplication::OnUpdate();
-
 	// Update renderer context
 	if (m_pRendererContext)
 		m_pRendererContext->Update();

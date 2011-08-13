@@ -248,14 +248,6 @@ void Application::CreateRenderContext(const String &sRendererName)
 		// Create an instance of a RendererContext with an renderer given by name
 		m_pRendererContext = PLRenderer::RendererContext::CreateInstance(sRenderer,(PLRenderer::Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage);
 	}
-
-	if (m_pRendererContext) {
-		// Create the default texture font
-		PLRenderer::FontManager &cFontManager = m_pRendererContext->GetRenderer().GetFontManager();
-		const String sDefaultFontTexture     = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTexture");
-		const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTextureSize").GetInt();
-		cFontManager.SetDefaultFontTexture(cFontManager.GetFontTexture(sDefaultFontTexture, nDefaultFontTextureSize));
-	}
 }
 
 /**

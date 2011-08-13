@@ -1,3 +1,10 @@
+>> 13.08.2011
+[CO]
+- Removed default font options within the renderer configuration. The font manager itself has now a build in default texture font. In order to remove the default
+  texture font or to set another default texture font, just set it during the application initialization.
+
+
+
 >> 07.08.2011
 [CO]
 - Renamed "Surface::Update()" into "Surface::Draw()" to make clear that this method is considered to only draw and not e.g. update the complete game logic

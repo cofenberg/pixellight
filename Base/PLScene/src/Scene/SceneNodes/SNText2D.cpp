@@ -81,7 +81,7 @@ void SNText2D::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	// Is there any text to draw?
 	if (((GetFlags() & No3DPosition) || pVisNode) && Text.Get().GetLength()) {
 		// Get the font
-		const PLRenderer::Font *pDefaultFont = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		const PLRenderer::Font *pDefaultFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		const String			sFont        = (GetFont().GetLength() || !pDefaultFont) ? GetFont() : pDefaultFont->GetFilename();
 		const uint32			nFontSize    = (FontSize || !pDefaultFont) ? FontSize : pDefaultFont->GetSize();
 			  PLRenderer::Font *pFont        = reinterpret_cast<PLRenderer::Font*>(cRenderer.GetFontManager().GetFontTexture(sFont, nFontSize));

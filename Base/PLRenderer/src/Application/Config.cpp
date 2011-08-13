@@ -95,8 +95,6 @@ Config::Config() :
 	// General
 	RendererAPI(this),
 	RendererMode(this),
-	DefaultFontTexture(this),
-	DefaultFontTextureSize(this),
 	Fullscreen(this),
 	ZBufferBits(this),
 	StencilBits(this),
@@ -136,8 +134,6 @@ Config::Config(const Config &cSource) :
 	// General
 	RendererAPI(this),
 	RendererMode(this),
-	DefaultFontTexture(this),
-	DefaultFontTextureSize(this),
 	Fullscreen(this),
 	ZBufferBits(this),
 	StencilBits(this),

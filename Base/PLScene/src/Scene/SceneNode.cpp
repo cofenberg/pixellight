@@ -988,7 +988,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 			cRenderer.GetDrawHelpers().DrawLine(Color4::Green, Vector3::Zero, Vector3::UnitY, pVisNode->GetWorldViewProjectionMatrix(), 1.0f);
 
 			// Draw texts
-			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+			Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 			if (pFont) {
 				if (!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), m_cTransform.GetMatrix()*Vector3::UnitZ))
 					cRenderer.GetDrawHelpers().DrawText(*pFont, "z (dir)", Color4::Blue, Vector3::UnitZ, pVisNode->GetWorldViewProjectionMatrix(), Font::CenterText);
@@ -1002,7 +1002,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		// Show the scene node name? (not required if ALL names are shown :)
 		if (pVisNode && !(m_nDebugFlags & DebugNoName) &&
 			(!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), m_cTransform.GetPosition()))) {
-			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+			Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 			if (pFont) {
 				cEffectManager.Use();
 				cRenderer.SetRenderState(RenderState::ZEnable,      false);
@@ -1023,7 +1023,7 @@ void SceneNode::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw debug text?
 		if (m_nDebugFlags & DebugText) {
 			// Get the font
-			Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+			Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 			if (pFont) {
 				// Setup render states
 				cEffectManager.Use();

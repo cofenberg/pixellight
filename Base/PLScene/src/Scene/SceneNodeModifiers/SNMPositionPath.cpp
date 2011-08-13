@@ -213,7 +213,7 @@ void SNMPositionPath::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 		}
 
 		// Show node names
-		Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+		Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		if (pFont) {
 			// Get cull query (if available) which enables us to cull 3D texts
 			const SQCull *pCullQuery = nullptr;

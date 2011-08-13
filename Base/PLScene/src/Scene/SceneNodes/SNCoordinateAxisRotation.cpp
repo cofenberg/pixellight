@@ -120,7 +120,7 @@ void SNCoordinateAxisRotation::DrawPost(Renderer &cRenderer, const VisNode *pVis
 		// Draw texts
 		Font *pFont = nullptr;
 		if (!(GetFlags() & NoXText) || !(GetFlags() & NoYText) || !(GetFlags() & NoZText)) {
-			pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+			pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 			if (GetFlags() & DepthTest) {
 				cRenderer.SetRenderState(RenderState::ZEnable,      true);
 				cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
