@@ -54,7 +54,6 @@ Frontend::Frontend() :
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
 	m_bIsFullscreen(false),
-	m_pQCursorNormal(nullptr),
 	m_pQCursorBlank(nullptr)
 {
 }
@@ -136,7 +135,6 @@ int Frontend::Run(int argc, char **argv)
 	cQApplication.setWindowIcon(QIcon(":/pl_icon.png"));
 
 	// Create the mouse cursors
-	m_pQCursorNormal = new QCursor(Qt::ArrowCursor);
 	m_pQCursorBlank = new QCursor(Qt::BlankCursor);
 
 	// Create and set the main window
@@ -146,8 +144,6 @@ int Frontend::Run(int argc, char **argv)
 	const int nResult = cQApplication.exec();
 
 	// Delete the mouse cursors
-	delete m_pQCursorNormal;
-	m_pQCursorNormal = nullptr;
 	delete m_pQCursorBlank;
 	m_pQCursorBlank = nullptr;
 
@@ -250,11 +246,9 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 bool Frontend::IsMouseVisible() const
 {
-	// Get the QApplication instance
-	QApplication *pQApplication = static_cast<QApplication*>(QApplication::instance());
-	if (pQApplication) {
+	if (m_pQCursorBlank) {
 		// Is our blank mouse cursor currently set?
-		return (pQApplication->overrideCursor() == m_pQCursorBlank);
+		return (QApplication::overrideCursor() != m_pQCursorBlank);
 	} else {
 		// Error! (just say the mouse cursor is currently visible)
 		return true;
@@ -264,12 +258,16 @@ bool Frontend::IsMouseVisible() const
 void Frontend::SetMouseVisible(bool bVisible)
 {
 	// Check whether or not the mouse cursors are there
-	if (m_pQCursorNormal && m_pQCursorBlank) {
-		// Get the QApplication instance
-		QApplication *pQApplication = static_cast<QApplication*>(QApplication::instance());
-		if (pQApplication) {
+	if (m_pQCursorBlank) {
+		if (bVisible) {
+			// This pops the last set cursor from the internal stack and restores the previous one
+			// If no other cursor was on the stack then the default widget cursor is used
+			// (see http://doc.qt.nokia.com/latest/qapplication.html#restoreOverrideCursor) 
+			QApplication::restoreOverrideCursor();
+		} else {
 			// Set the mouse cursor
-			pQApplication->setOverrideCursor(bVisible ? *m_pQCursorNormal : *m_pQCursorBlank);
+			// This pushes the cursor on an internal stack (see http://doc.qt.nokia.com/latest/qapplication.html#setOverrideCursor)
+			QApplication::setOverrideCursor(*m_pQCursorBlank);
 		}
 	}
 }
