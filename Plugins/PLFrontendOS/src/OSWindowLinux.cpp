@@ -183,7 +183,7 @@ bool OSWindowLinux::Ping()
 				if (m_pFrontendOS->GetToggleFullscreenMode()) {
 					// It's allowed, toggle fullscreen right now?
 					const unsigned int nKey = XLookupKeysym(&sXEvent.xkey, 0);
-					if (nKey == XK_Return && (sXEvent.xkey.state & Mod1Mask)) {
+					if (nKey == XK_Return && ((sXEvent.xkey.state & Mod1Mask) || (sXEvent.xkey.state & Mod2Mask))) {
 						// Toggle fullscreen mode
 						m_pFrontendOS->SetFullscreen(!m_pFrontendOS->IsFullscreen());
 					}
