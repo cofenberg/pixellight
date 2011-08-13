@@ -1,3 +1,9 @@
+>> 13.08.2011
+[CO]
+- "PLFrontend::OSWindowWindows" & "PLFrontend::OSWindowLinux" now react on AltGr-Return as well (same behavior across all frontend implementations)
+
+
+
 >> 12.08.2011
 [CO]
 - "CoreApplication::Run()" now implements the lifecycle as well

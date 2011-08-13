@@ -357,7 +357,7 @@ void Frontend::OnDrawMainWindow(Graphics &cGraphics)
 */
 void Frontend::OnKeyDownMainWindow(uint32 nKey, uint32 nModifiers)
 {
-	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
+	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)
 	if (m_bToggleFullscreenMode && nKey == PLGUIKEY_RETURN && ((nModifiers & PLGUIMOD_ALT) != 0)) {
 		// Toggle fullscreen mode
 		SetFullscreen(!IsFullscreen());

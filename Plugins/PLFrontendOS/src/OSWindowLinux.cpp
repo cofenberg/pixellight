@@ -179,7 +179,7 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case KeyPress:
-				// Is it allowed to toggle the fullscreen mode using hotkeys?
+				// Is it allowed to toggle the fullscreen mode using hotkeys? (Alt-Return or AltGr-Return)
 				if (m_pFrontendOS->GetToggleFullscreenMode()) {
 					// It's allowed, toggle fullscreen right now?
 					const unsigned int nKey = XLookupKeysym(&sXEvent.xkey, 0);
