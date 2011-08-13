@@ -148,6 +148,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
+		*    - Save renderer related configuration
 		*    - Destroy renderer context
 		*    - Everything that FrontendApplication::OnStop() does
 		*/
@@ -213,7 +214,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
-		*    - Currently a 'RendererOpenGL' renderer context is created within the default implementation
+		*    - The default implementation is using the "PLRenderer::Config"-configuration to get the settings to use
 		*/
 		PLRENDERER_API virtual void OnCreateRendererContext();
 

@@ -184,10 +184,13 @@ class OpenGLExtensions {
 		*  @brief
 		*    Initialize the supported extensions
 		*
+		*  @param[in] bUseExtensions
+		*    Use extensions?
+		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Init();
+		bool Init(bool bUseExtensions = true);
 
 		/**
 		*  @brief

@@ -245,7 +245,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			bool bActivated = true;
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication) {
-				bActivated = pApplication->GetConfig().GetVar("PLEngine::EngineGeneralConfig", "ConsoleActivated").GetBool();
+				bActivated = pApplication->GetConfig().GetVar("PLEngine::Config", "ConsoleActivated").GetBool();
 			}
 
 			// Console toggle

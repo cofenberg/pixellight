@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLCore/Config/Config.h>	// [TODO] No "Config" usage in here
+#include <PLCore/Config/Config.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Surface.h"
 #include "PLRenderer/Renderer/FontManager.h"
@@ -132,12 +132,10 @@ bool RendererApplication::OnStart()
 			// [TODO] Shouldn't this be done rather inside FontManager itself? What happens if we do not set a default
 			//        font here, do we then have no font at all? Or ist the a default-default-font in FontManager?
 
-			// [TODO] No "Config" usage in here
-
 			// Create default font
 			PLRenderer::FontManager &cFontManager = m_pRendererContext->GetRenderer().GetFontManager();
-			const String sDefaultFontTexture     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTexture");
-			const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTextureSize").GetInt();
+			const String sDefaultFontTexture     = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTexture");
+			const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLRenderer::Config", "DefaultFontTextureSize").GetInt();
 			cFontManager.SetDefaultFontTexture(cFontManager.GetFontTexture(sDefaultFontTexture, nDefaultFontTextureSize));
 
 			// Create surface painter
@@ -160,6 +158,21 @@ bool RendererApplication::OnStart()
 */
 void RendererApplication::OnStop()
 {
+	{ // Save renderer related configuration
+		Config &cConfig = GetConfig();
+
+		// Write fullscreen state back to the configuration
+		cConfig.SetVar("PLRenderer::Config", "Fullscreen", String(GetFrontend().IsFullscreen()));
+
+		// Write down display mode information
+		if (m_pDisplayMode) {
+			cConfig.SetVar("PLRenderer::Config", "DisplayWidth",     String(m_pDisplayMode->vSize.x));
+			cConfig.SetVar("PLRenderer::Config", "DisplayHeight",    String(m_pDisplayMode->vSize.y));
+			cConfig.SetVar("PLRenderer::Config", "DisplayColorBits", String(m_pDisplayMode->nColorBits));
+			cConfig.SetVar("PLRenderer::Config", "DisplayFrequency", String(m_pDisplayMode->nFrequency));
+		}
+	}
+
 	// Destroy display mode information
 	if (m_pDisplayMode) {
 		delete m_pDisplayMode;
@@ -275,23 +288,21 @@ void RendererApplication::OnUpdate()
 */
 void RendererApplication::OnCreateRendererContext()
 {
-	// [TODO] No "Config" usage in here
-
 	// Get the class name of the renderer to use
-	const String sRenderer     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "RendererAPI");
-	const uint32 nRendererMode = GetConfig().GetVarInt("PLScene::EngineGraphicConfig", "RendererMode");
+	const String sRenderer     = GetConfig().GetVar("PLRenderer::Config", "RendererAPI");
+	const uint32 nRendererMode = GetConfig().GetVarInt("PLRenderer::Config", "RendererMode");
 
 	// Get Z buffer bits (for example 24)
-	const uint32 nZBufferBits = GetConfig().GetVarInt("PLEngine::RendererConfig", "ZBufferBits");
+	const uint32 nZBufferBits = GetConfig().GetVarInt("PLRenderer::Config", "ZBufferBits");
 
 	// Stencil buffer bits (for example 8)
-	const uint32 nStencilBits = GetConfig().GetVarInt("PLEngine::RendererConfig", "StencilBits");
+	const uint32 nStencilBits = GetConfig().GetVarInt("PLRenderer::Config", "StencilBits");
 
 	// Get the number of multisample antialiasing samples per pixel
-	const uint32 nMultisampleAntialiasingSamples = GetConfig().GetVarInt("PLEngine::RendererConfig", "MultisampleAntialiasingSamples");
+	const uint32 nMultisampleAntialiasingSamples = GetConfig().GetVarInt("PLRenderer::Config", "MultisampleAntialiasingSamples");
 
 	// Get the name of the default shader language to use
-	const String sDefaultShaderLanguage = GetConfig().GetVar("PLEngine::RendererConfig", "DefaultShaderLanguage");
+	const String sDefaultShaderLanguage = GetConfig().GetVar("PLRenderer::Config", "DefaultShaderLanguage");
 
 	// Create and return renderer context instance
 	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, static_cast<Renderer::EMode>(nRendererMode), nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
@@ -300,13 +311,13 @@ void RendererApplication::OnCreateRendererContext()
 		PL_LOG(Error, "Can't create renderer context instance: " + sRenderer)
 	} else {
 		// Set the swap interval (vertical synchronisation)
-		m_pRendererContext->GetRenderer().SetSwapInterval(GetConfig().GetVar("PLEngine::RendererConfig", "SwapInterval").GetUInt32());
+		m_pRendererContext->GetRenderer().SetSwapInterval(GetConfig().GetVar("PLRenderer::Config", "SwapInterval").GetUInt32());
 
 		// Set texture manager settings
 		TextureManager &cTextureManager = m_pRendererContext->GetTextureManager();
-		cTextureManager.SetTextureQuality			(GetConfig().GetVar("PLEngine::RendererConfig", "TextureQuality").GetFloat());
-		cTextureManager.SetTextureMipmapsAllowed	(GetConfig().GetVar("PLEngine::RendererConfig", "TextureMipmaps").GetBool());
-		cTextureManager.SetTextureCompressionAllowed(GetConfig().GetVar("PLEngine::RendererConfig", "TextureCompression").GetBool());
+		cTextureManager.SetTextureQuality			(GetConfig().GetVar("PLRenderer::Config", "TextureQuality").GetFloat());
+		cTextureManager.SetTextureMipmapsAllowed	(GetConfig().GetVar("PLRenderer::Config", "TextureMipmaps").GetBool());
+		cTextureManager.SetTextureCompressionAllowed(GetConfig().GetVar("PLRenderer::Config", "TextureCompression").GetBool());
 
 		{ // [TODO] Move this somewere else
 			// [TODO] No build in options

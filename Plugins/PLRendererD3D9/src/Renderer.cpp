@@ -136,10 +136,13 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 
 		/*
 			// Enable/disable VSync
-			if (Config::GetInstance()->GetVar("PLScene::RendererConfig", "VSync").GetBool()) {
+			bool bVSync = true;
+			if (bVSync) {
+				// Enablee VSync
 				d3dpp.BackBufferCount      = 2;  // Triple-buffering for VSync
 				d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 			} else {
+				// Disable VSync
 				d3dpp.BackBufferCount      = 1;
 				d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 			}

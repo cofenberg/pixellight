@@ -32,7 +32,6 @@
 #include <PLCore/Tools/Loader.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include <PLCore/Application/CoreApplication.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -517,8 +516,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 				m_pMeshHandler->DrawVertices(Color4::White);
 
 			// Get normal scale value
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			const float fNormalScale = (pApplication ? pApplication->GetConfig().GetVar("PLScene::EngineDebugConfig", "NormalScale").GetFloat() : 1.0f);
+			static const float fNormalScale = 1.0f;
 
 			// Draw tangents? (red = x/u)
 			if (nDebugFlags & DebugShowTangents)
