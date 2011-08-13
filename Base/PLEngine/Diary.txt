@@ -1,3 +1,9 @@
+>> 13.08.2011
+[CO]
+- Moved "ScriptApplication::OnInit()" stuff into "ScriptApplication::OnStart()" and "ScriptApplication::OnDeInit()" stuff into "ScriptApplication::OnStop()"
+
+
+
 >> 12.08.2011
 [CO]
 - "EngineApplication::OnStart()": In here, we skip "SceneApplication::OnStart()" to overwrite the initialization order. Input and tools initialization should come
