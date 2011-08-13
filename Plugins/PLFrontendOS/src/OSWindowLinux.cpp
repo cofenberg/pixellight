@@ -274,6 +274,35 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 	m_pFrontendOS->OnFullscreenMode();
 }
 
+bool OSWindowLinux::IsMouseVisible() const
+{
+	// [TODO] implement me
+	return true;
+}
+
+void OSWindowLinux::SetMouseVisible(bool bVisible)
+{
+	// [TODO] implement me
+}
+
+void OSWindowLinux::SetTrapMouse(bool bTrap)
+{
+	// Check if the window has already been destroyed
+	if (m_nNativeWindowHandle) {
+		// Set or release mouse capture?
+		if (bTrap) {
+			// Grab mouse
+			XGrabPointer(m_pDisplay, m_nNativeWindowHandle, True, 0, GrabModeAsync, GrabModeAsync, m_nNativeWindowHandle, XLib::None, CurrentTime);
+		} else {
+			// Release mouse grab
+			XUngrabPointer(m_pDisplay, CurrentTime);
+		}
+
+		// Do it!
+		XSync(m_pDisplay, False);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private static functions                              ]

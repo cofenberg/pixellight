@@ -82,6 +82,7 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInitialized(FALSE),
   m_bFrontendApplicationInitialized(false),
   m_bMouseVisible(true),
+  m_bTrapMouse(false),
   m_cFrontend(*this)
 {
   mhWnd = nullptr;
@@ -108,7 +109,7 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
   if(mhWnd == nullptr)
     return FALSE;
 	// Save window and device context handles
-	m_hFrontendWnd = (HWND)aWindow->window;
+	m_hWnd = (HWND)aWindow->window;
 
 	{	// Let the world know that this frontend is now going to run
 		const PLCore::String sExecutableFilename;
@@ -166,7 +167,15 @@ const char * nsPluginInstance::getVersion()
 LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg) {
+		case WM_MOVE:
+			// Update trap mouse if required
+			UpdateTrapMouse();
+			return 0;
+
 		case WM_SIZE:
+			// Update trap mouse if required
+			UpdateTrapMouse();
+
 			// Inform that the window size has been changed
 			FrontendImpl::OnSize();
 			return 0;
@@ -198,13 +207,13 @@ int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCor
 
 PLCore::handle nsPluginInstance::GetNativeWindowHandle() const
 {
-	return reinterpret_cast<PLCore::handle>(m_hFrontendWnd);
+	return reinterpret_cast<PLCore::handle>(m_hWnd);
 }
 
 void nsPluginInstance::Redraw()
 {
 	// Redraw frontend window
-	RedrawWindow(m_hFrontendWnd, nullptr, nullptr, 0);
+	RedrawWindow(m_hWnd, nullptr, nullptr, 0);
 }
 
 void nsPluginInstance::Ping()
@@ -219,14 +228,14 @@ void nsPluginInstance::Ping()
 PLCore::uint32 nsPluginInstance::GetWidth() const
 {
 	RECT sRect;
-	::GetClientRect(m_hFrontendWnd, &sRect);
+	::GetClientRect(m_hWnd, &sRect);
 	return sRect.right;
 }
 
 PLCore::uint32 nsPluginInstance::GetHeight() const
 {
 	RECT sRect;
-	::GetClientRect(m_hFrontendWnd, &sRect);
+	::GetClientRect(m_hWnd, &sRect);
 	return sRect.bottom;
 }
 
@@ -284,6 +293,49 @@ void nsPluginInstance::SetMouseVisible(bool bVisible)
 			; // Do nothing
 	}
 }
+
+void nsPluginInstance::SetTrapMouse(bool bTrap)
+{
+	if (m_hWnd) {
+		// Trap mouse?
+		if (bTrap) {
+			// Get window rect (in screen coordinates)
+			RECT sRect;
+			GetWindowRect(m_hWnd, &sRect); 
+
+			// Trap mouse
+			ClipCursor(&sRect); 
+		} else {
+			// Untrap mouse
+			ClipCursor(nullptr);
+		}
+
+		// Backup the state
+		m_bTrapMouse = bTrap;
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Update trap mouse if required
+*/
+void nsPluginInstance::UpdateTrapMouse()
+{
+	// Trap mouse?
+	if (m_bTrapMouse) {
+		// Get window rect (in screen coordinates)
+		RECT sRect;
+		::GetWindowRect(m_hWnd, &sRect); 
+
+		// Trap mouse within up-to-date widget rectangle
+		::ClipCursor(&sRect); 
+	}
+}
+
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

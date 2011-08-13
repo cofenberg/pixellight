@@ -269,6 +269,11 @@ void Frontend::SetMouseVisible(bool bVisible)
 	}
 }
 
+void Frontend::SetTrapMouse(bool bTrap)
+{
+	// [TODO] Implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

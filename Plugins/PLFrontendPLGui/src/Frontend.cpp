@@ -266,6 +266,12 @@ void Frontend::SetMouseVisible(bool bVisible)
 		m_pMainWindow->GetGui()->SetMouseVisible(bVisible);
 }
 
+void Frontend::SetTrapMouse(bool bTrap)
+{
+	if (m_pMainWindow)
+		m_pMainWindow->SetTrapMouse(bTrap);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual Frontend functions                  ]

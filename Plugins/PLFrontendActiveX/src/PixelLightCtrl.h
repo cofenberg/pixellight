@@ -111,11 +111,31 @@ END_MSG_MAP()
 		virtual void SetFullscreen(bool bFullscreen) override;
 		virtual bool IsMouseVisible() const override;
 		virtual void SetMouseVisible(bool bVisible) override;
+		virtual void SetTrapMouse(bool bTrap) override;
 
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Update trap mouse if required
+		*
+		*  @note
+		*    - Should be called after window position or size was changed
+		*/
+		void UpdateTrapMouse();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
 	private:
 		HWND						m_hFrontendWnd;						/**< Window handle of the plugin container */
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
+		bool						m_bTrapMouse;						/**< Trap mouse? */
 		PLCore::FrontendPixelLight	m_cFrontend;
 
 // IPixelLightCtrl

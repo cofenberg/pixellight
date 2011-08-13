@@ -163,6 +163,15 @@ class OSWindow {
 		*/
 		virtual void SetMouseVisible(bool bVisible) = 0;
 
+		/**
+		*  @brief
+		*    Trap mouse inside the frontend window
+		*
+		*  @param[in] bTrap
+		*    'true' if the mouse should be trapped inside the frontend window, else 'false'
+		*/
+		virtual void SetTrapMouse(bool bTrap) = 0;
+
 
 };
 

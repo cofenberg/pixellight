@@ -116,6 +116,15 @@ class OSWindowWindows : public OSWindow {
 		*/
 		void UnregisterHotkey(int nID);
 
+		/**
+		*  @brief
+		*    Update trap mouse if required
+		*
+		*  @note
+		*    - Should be called after window position or size was changed
+		*/
+		void UpdateTrapMouse();
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual OSWindow functions                    ]
@@ -130,6 +139,7 @@ class OSWindowWindows : public OSWindow {
 		virtual void SetFullscreen(bool bFullscreen) override;
 		virtual bool IsMouseVisible() const override;
 		virtual void SetMouseVisible(bool bVisible) override;
+		virtual void SetTrapMouse(bool bTrap) override;
 
 
 	//[-------------------------------------------------------]
@@ -142,11 +152,12 @@ class OSWindowWindows : public OSWindow {
 		WNDCLASS	m_WndClass;				/**< OS window class */
 		HICON		m_hIcon;				/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
 		HWND		m_hWnd;					/**< OS window handle, can be a null pointer */
-		bool		m_bDestroyed;			/**< 'true' if the widget has already been destroyed */
+		bool		m_bDestroyed;			/**< 'true' if the window has already been destroyed */
 		int			m_nHotkeyIDAltTab;		/**< Alt-Tab hotkey */
 		bool		m_bWindowRectBackup;	/**< Is there a window position & size backup? */
 		RECT		m_sWindowRectBackup;	/**< Window position & size backup */
 		bool		m_bMouseVisible;		/**< Is the mouse cursor visible? */
+		bool		m_bTrapMouse;			/**< Trap mouse? */
 
 
 };
