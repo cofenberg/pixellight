@@ -54,7 +54,8 @@ Frontend::Frontend() :
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
 	m_bIsFullscreen(false),
-	m_pQCursorBlank(nullptr)
+	m_pQCursorBlank(nullptr),
+	m_bMouseVisible(true)
 {
 }
 
@@ -246,19 +247,15 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 bool Frontend::IsMouseVisible() const
 {
-	if (m_pQCursorBlank) {
-		// Is our blank mouse cursor currently set?
-		return (QApplication::overrideCursor() != m_pQCursorBlank);
-	} else {
-		// Error! (just say the mouse cursor is currently visible)
-		return true;
-	}
+	return m_bMouseVisible;
 }
 
 void Frontend::SetMouseVisible(bool bVisible)
 {
-	// Check whether or not the mouse cursors are there
+	// Check whether or not the mouse cursor is there
 	if (m_pQCursorBlank) {
+		// Backup the state
+		m_bMouseVisible = bVisible;
 		if (bVisible) {
 			// This pops the last set cursor from the internal stack and restores the previous one
 			// If no other cursor was on the stack then the default widget cursor is used

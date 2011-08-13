@@ -138,6 +138,7 @@ class Frontend : public PLCore::FrontendImpl {
 		bool	 m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
 		bool	 m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
 		QCursor *m_pQCursorBlank;			/**< Blank (invisible) mouse cursor, can be a null pointer */ 
+		bool	 m_bMouseVisible;			/**< Is the mouse cursor visible? */
 
 
 };
