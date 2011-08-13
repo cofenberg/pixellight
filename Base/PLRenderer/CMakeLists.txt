@@ -108,6 +108,7 @@ add_sources(
 	src/Animation/AnimationInfo.cpp
 	src/Animation/AnimationManager.cpp
 	src/Application/RendererApplication.cpp
+	src/Application/Config.cpp
 )
 
 ##################################################
@@ -213,8 +214,8 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLGraphics PLMath)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics)
+add_dependencies(Base							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
