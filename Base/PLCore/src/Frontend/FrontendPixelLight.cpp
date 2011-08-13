@@ -73,7 +73,7 @@ FrontendPixelLight::~FrontendPixelLight()
 //[-------------------------------------------------------]
 bool FrontendPixelLight::IsRunning() const
 {
-	return (m_pFrontendApplication && m_bFrontendApplicationInitialized);
+	return (m_pFrontendApplication && m_bFrontendApplicationInitialized && m_pFrontendApplication && m_pFrontendApplication->IsRunning());
 }
 
 

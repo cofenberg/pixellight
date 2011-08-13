@@ -227,34 +227,26 @@ void Application::CreateRenderContext(const String &sRendererName)
 	DestroyRenderContext();
 
 	if (!m_pRendererContext) {
-		String sRenderer = GetConfig().GetVar("PLScene::EngineGraphicConfig", "RendererAPI");
-		const uint32 nRendererMode = GetConfig().GetVarInt("PLScene::EngineGraphicConfig", "RendererMode");
+		String sRenderer = GetConfig().GetVar("PLRenderer::Config", "RendererAPI");
+		const uint32 nRendererMode = GetConfig().GetVarInt("PLRenderer::Config", "RendererMode");
 
 		// Get Z buffer bits (for example 24)
-		const uint32 nZBufferBits = GetConfig().GetVarInt("PLEngine::RendererConfig", "ZBufferBits");
+		const uint32 nZBufferBits = GetConfig().GetVarInt("PLRenderer::Config", "ZBufferBits");
 
 		// Stencil buffer bits (for example 8)
-		const uint32 nStencilBits = GetConfig().GetVarInt("PLEngine::RendererConfig", "StencilBits");
+		const uint32 nStencilBits = GetConfig().GetVarInt("PLRenderer::Config", "StencilBits");
 
 		// Get the number of multisample antialiasing samples per pixel
-		const uint32 nMultisampleAntialiasingSamples = GetConfig().GetVarInt("PLEngine::RendererConfig", "MultisampleAntialiasingSamples");
+		const uint32 nMultisampleAntialiasingSamples = GetConfig().GetVarInt("PLRenderer::Config", "MultisampleAntialiasingSamples");
 
 		// Get the name of the default shader language to use
-		const String sDefaultShaderLanguage = GetConfig().GetVar("PLEngine::RendererConfig", "DefaultShaderLanguage");
+		const String sDefaultShaderLanguage = GetConfig().GetVar("PLRenderer::Config", "DefaultShaderLanguage");
 
 		if (!sRenderer.GetLength())
 			sRenderer = sRendererName;
 
 		// Create an instance of a RendererContext with an renderer given by name
 		m_pRendererContext = PLRenderer::RendererContext::CreateInstance(sRenderer,(PLRenderer::Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage);
-	}
-
-	if (m_pRendererContext) {
-		// Create the default texture font
-		PLRenderer::FontManager &cFontManager = m_pRendererContext->GetRenderer().GetFontManager();
-		const String sDefaultFontTexture     = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTexture");
-		const uint32 nDefaultFontTextureSize = GetConfig().GetVar("PLScene::EngineGraphicConfig", "DefaultFontTextureSize").GetInt();
-		cFontManager.SetDefaultFontTexture(cFontManager.GetFontTexture(sDefaultFontTexture, nDefaultFontTextureSize));
 	}
 }
 

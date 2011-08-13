@@ -48,7 +48,7 @@ UniformBufferCg::~UniformBufferCg()
 	Clear();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferNum--;
 }
 
 /**
@@ -87,7 +87,7 @@ UniformBufferCg::UniformBufferCg(PLRenderer::Renderer &cRenderer, const String &
 	m_nUsageAPI(CG_BUFFER_USAGE_DYNAMIC_DRAW)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nUniformBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nUniformBufferNum++;
 }
 
 /**
@@ -158,7 +158,7 @@ bool UniformBufferCg::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage,
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;
@@ -236,7 +236,7 @@ bool UniformBufferCg::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage,
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem += m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem += m_nSize;
 
 	// Done
 	return true;
@@ -256,7 +256,7 @@ bool UniformBufferCg::Clear()
 		}
 
 		// Update renderer statistics
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem -= m_nSize;
 
 		// Init
 		m_nElements  = 0;
@@ -296,7 +296,7 @@ void *UniformBufferCg::Lock(uint32 nFlag)
 		}
 
 		// Map the uniform buffer
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferLocks++;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pData)
 			m_pLockedData = m_pData;
@@ -350,7 +350,7 @@ bool UniformBufferCg::Unlock()
 			cgUnmapBuffer(m_pCgBuffer);
 		}
 	}
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 

@@ -40,9 +40,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -396,9 +393,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLScene\Config.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\PLScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>

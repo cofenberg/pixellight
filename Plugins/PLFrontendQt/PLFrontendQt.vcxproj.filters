@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\PLFrontendQt.cpp" />
-    <ClCompile Include="src\QPLContext.cpp" />
-    <ClCompile Include="src\QPLDebugDialog.cpp" />
-    <ClCompile Include="src\QPLInputHandler.cpp" />
-    <ClCompile Include="src\QPLRenderWindow.cpp" />
-    <ClCompile Include="src\QPLSceneContext.cpp" />
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\DataModels\SceneGraphNodeTreeItemBase.cpp">
       <Filter>DataModels</Filter>
     </ClCompile>
@@ -59,12 +52,6 @@
     <ClCompile Include="src\External\qtcolorbutton.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="src\moc_Application.cpp" />
-    <ClCompile Include="src\moc_QPLContext.cpp" />
-    <ClCompile Include="src\moc_QPLDebugDialog.cpp" />
-    <ClCompile Include="src\moc_QPLInputHandler.cpp" />
-    <ClCompile Include="src\moc_QPLRenderWindow.cpp" />
-    <ClCompile Include="src\moc_QPLSceneContext.cpp" />
     <ClCompile Include="src\External\moc_qtcolorbutton.cpp">
       <Filter>External</Filter>
     </ClCompile>
@@ -113,25 +100,84 @@
     <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererDataModel.cpp">
       <Filter>DataModels\SceneRendererDataModel</Filter>
     </ClCompile>
-    <ClCompile Include="src\FrontendMainWindow.cpp" />
-    <ClCompile Include="src\Frontend.cpp" />
+    <ClCompile Include="src\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Frontend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrontendMainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_QPLContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_QPLDebugDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_QPLInputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_QPLRenderWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_QPLSceneContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLFrontendQt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QPLContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QPLDebugDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QPLInputHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QPLRenderWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\QPLSceneContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h" />
-    <ClInclude Include="include\PLFrontendQt\PLFrontendQtLinux.h" />
-    <ClInclude Include="include\PLFrontendQt\PLFrontendQtWindows.h" />
-    <ClInclude Include="include\PLFrontendQt\QtStringAdapter.h" />
-    <ClInclude Include="include\PLFrontendQt\InputHandler.h" />
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
       <Filter>DataModels\PLTreeItems</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h" />
-    <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />
-    <ClInclude Include="include\PLFrontendQt\Frontend.h" />
+    <ClInclude Include="include\PLFrontendQt\Frontend.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\InputHandler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\PLFrontendQtLinux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\PLFrontendQtWindows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\QtStringAdapter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="DataModels">
@@ -146,15 +192,11 @@
     <Filter Include="External">
       <UniqueIdentifier>{b4f47ee3-1e2b-4a1a-915e-cf9468ae208d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{f62d6b9c-aa6e-4c6e-b098-e5fd00575bf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.ui" />
-    <CustomBuild Include="include\PLFrontendQt\Application.h" />
-    <CustomBuild Include="include\PLFrontendQt\QPLInputHandler.h" />
-    <CustomBuild Include="include\PLFrontendQt\QPLContext.h" />
-    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.h" />
-    <CustomBuild Include="include\PLFrontendQt\QPLRenderWindow.h" />
-    <CustomBuild Include="include\PLFrontendQt\QPLSceneContext.h" />
     <CustomBuild Include="include\PLFrontendQt\External\qtcolorbutton.h">
       <Filter>External</Filter>
     </CustomBuild>
@@ -202,6 +244,27 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.h">
       <Filter>DataModels\SceneRendererDataModel</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\Application.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLContext.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.ui">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLInputHandler.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLRenderWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\QPLSceneContext.h">
+      <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: RendererConfigGroup.cpp                        *
+ *  File: ConfigGroup.cpp                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,30 +23,30 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLEngine/Config/RendererConfigGroup.h"
+#include "PLRenderer/Application/Config.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLEngine {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
 //[ Class implementation                                  ]
 //[-------------------------------------------------------]
-pl_implement_class(RendererConfigGroup)
-pl_implement_class(RendererConfig)
+pl_implement_class(ConfigGroup)
+pl_implement_class(Config)
 
 
 //[-------------------------------------------------------]
-//[ Protected RendererConfigGroup functions               ]
+//[ Protected ConfigGroup functions                       ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Default constructor
 */
-RendererConfigGroup::RendererConfigGroup()
+ConfigGroup::ConfigGroup()
 {
 }
 
@@ -54,19 +54,19 @@ RendererConfigGroup::RendererConfigGroup()
 *  @brief
 *    Destructor
 */
-RendererConfigGroup::~RendererConfigGroup()
+ConfigGroup::~ConfigGroup()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Private RendererConfigGroup functions                 ]
+//[ Private ConfigGroup functions                         ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Copy constructor
 */
-RendererConfigGroup::RendererConfigGroup(const RendererConfigGroup &cSource)
+ConfigGroup::ConfigGroup(const ConfigGroup &cSource)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -75,7 +75,7 @@ RendererConfigGroup::RendererConfigGroup(const RendererConfigGroup &cSource)
 *  @brief
 *    Copy operator
 */
-RendererConfigGroup &RendererConfigGroup::operator =(const RendererConfigGroup &cSource)
+ConfigGroup &ConfigGroup::operator =(const ConfigGroup &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
@@ -85,14 +85,16 @@ RendererConfigGroup &RendererConfigGroup::operator =(const RendererConfigGroup &
 
 
 //[-------------------------------------------------------]
-//[ Public RendererConfig functions                       ]
+//[ Public Config functions                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Default constructor
 */
-RendererConfig::RendererConfig() :
+Config::Config() :
 	// General
+	RendererAPI(this),
+	RendererMode(this),
 	Fullscreen(this),
 	ZBufferBits(this),
 	StencilBits(this),
@@ -116,20 +118,22 @@ RendererConfig::RendererConfig() :
 *  @brief
 *    Destructor
 */
-RendererConfig::~RendererConfig()
+Config::~Config()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Private RendererConfig functions                      ]
+//[ Private Config functions                              ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Copy constructor
 */
-RendererConfig::RendererConfig(const RendererConfig &cSource) :
+Config::Config(const Config &cSource) :
 	// General
+	RendererAPI(this),
+	RendererMode(this),
 	Fullscreen(this),
 	ZBufferBits(this),
 	StencilBits(this),
@@ -154,7 +158,7 @@ RendererConfig::RendererConfig(const RendererConfig &cSource) :
 *  @brief
 *    Copy operator
 */
-RendererConfig &RendererConfig::operator =(const RendererConfig &cSource)
+Config &Config::operator =(const Config &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
@@ -164,4 +168,4 @@ RendererConfig &RendererConfig::operator =(const RendererConfig &cSource)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLEngine
+} // PLRenderer

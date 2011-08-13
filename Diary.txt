@@ -4,6 +4,12 @@
 
 
 
+>> 13.08.2011
+[CO]
+- Frontend refactoring related configuration cleanup
+
+
+
 >> 03.08.2011
 [CO]
 - Naming cleanup: "Window" can have many meanings (OS window? PLGui window? etc.) - so made it clear when "Window" is a "system native window handle" to avoid confusion

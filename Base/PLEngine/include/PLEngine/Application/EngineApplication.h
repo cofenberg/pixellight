@@ -324,11 +324,13 @@ class EngineApplication : public PLScene::SceneApplication {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that PLScene::SceneApplication::OnStart() does
+		*    - Everything that PLRenderer::RendererApplication::OnStart() does (we reimplement the PLScene::SceneApplication::OnStart() order)
 		*    - Initialize input system
 		*    - Call OnCreateInputController()
 		*    - Initialize scene renderer tool
 		*    - Initialize screenshot tool
+		*    - Create scene context
+		*    - Call OnCreateRootScene()
 		*    - Return and go on with OnInit()
 		*/
 		PL_API virtual bool OnStart() override;

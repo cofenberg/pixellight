@@ -375,31 +375,49 @@ bool EngineApplication::LoadScene(const String &sFilename)
 */
 bool EngineApplication::OnStart()
 {
-	// Call base implementation
-	if (SceneApplication::OnStart()) {
-		// Initialize input system
-		InputManager::GetInstance()->DetectDevices();
+	// Call base implementation - in here, we skip "SceneApplication::OnStart()" to overwrite the initialization order (input should come before scene)
+	if (RendererApplication::OnStart()) {
+		{ // Input initialization
+			// Initialize input system
+			InputManager::GetInstance()->DetectDevices();
 
-		// Connect the input controller found event handler to the corresponding scene context event
-		InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
+			// Connect the input controller found event handler to the corresponding scene context event
+			InputManager::GetInstance()->EventInputControllerFound.Connect(EventHandlerInputControllerFound);
 
-		// Create virtual input controller
-		OnCreateInputController();
-		if (!m_bRunning)
-			return false;
+			// Create virtual input controller
+			OnCreateInputController();
+			if (!m_bRunning)
+				return false;
+		}
 
-		// Initialize scene renderer tool
-		m_cSceneRendererTool.SetPainter(GetPainter());
+		{ // Tools initialization
+			// Initialize scene renderer tool
+			m_cSceneRendererTool.SetPainter(GetPainter());
 
-		// Initialize screenshot tool
-		m_cScreenshot.SetRendererContext(GetRendererContext());
-		m_cScreenshot.SetPainter(GetPainter());
+			// Initialize screenshot tool
+			m_cScreenshot.SetRendererContext(GetRendererContext());
+			m_cScreenshot.SetPainter(GetPainter());
 
-		// Set screenshot directory
-		if (m_bMultiUser)
-			m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
-		else
-			m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetCurrentDir());
+			// Set screenshot directory
+			if (m_bMultiUser)
+				m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
+			else
+				m_cScreenshot.SetScreenshotDirectory(System::GetInstance()->GetCurrentDir());
+		}
+
+		{ // "SceneApplication::OnStart()"-part
+			// Get renderer context
+			RendererContext *pRendererContext = GetRendererContext();
+			if (pRendererContext) {
+				// Create scene context
+				m_pSceneContext = new SceneContext(*pRendererContext);
+
+				// Create root scene
+				OnCreateRootScene();
+				if (!m_bRunning)
+					return false;
+			}
+		}
 
 		// Done
 		return true;

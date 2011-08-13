@@ -233,9 +233,9 @@ copy build\release64\PLFrontendMozilla64.dll "C:\Programme\Mozilla Firefox\plugi
     <ClCompile Include="src\plugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="PLFrontendMozilla.def" />
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\plugin.h" />

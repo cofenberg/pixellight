@@ -10,9 +10,6 @@
     <Filter Include="Picking">
       <UniqueIdentifier>{43ca270e-c824-4baf-8e78-22c5579a0cd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Config">
-      <UniqueIdentifier>{d7727eb9-0d5c-48be-8c10-747009ceeebe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{05f4bc58-495c-476d-9efb-ca9fdea8f1a3}</UniqueIdentifier>
     </Filter>
@@ -44,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="src\Picking\PickingResult.cpp">
       <Filter>Picking</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Config\RendererConfigGroup.cpp">
-      <Filter>Config</Filter>
     </ClCompile>
     <ClCompile Include="src\Tools\SceneRendererTool.cpp">
       <Filter>Tools</Filter>
@@ -129,6 +123,9 @@
     <ClCompile Include="src\Controller\MoveController.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Config.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -151,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h">
       <Filter>Picking</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h">
-      <Filter>Config</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h">
       <Filter>Tools</Filter>
@@ -235,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Controller\MoveController.h">
       <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Application\Config.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

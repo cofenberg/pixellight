@@ -54,8 +54,13 @@ Renderer &FontManager::GetRenderer() const
 *  @brief
 *    Returns the default texture font
 */
-FontTexture *FontManager::GetDefaultFontTexture() const
+Font *FontManager::GetDefaultFontTexture()
 {
+	// Set default font texture (internally not initialized until it's first real usage)
+	if (!m_bDefaultFontTextureSet)
+		SetDefaultFontTexture(GetFontTexture("Data/Fonts/LinLibertine_Re-2.7.9.9.otf", 15));
+
+	// Return the default front texture
 	return reinterpret_cast<FontTexture*>(m_pDefaultFontTextureHandler->GetResource());
 }
 
@@ -65,6 +70,7 @@ FontTexture *FontManager::GetDefaultFontTexture() const
 */
 void FontManager::SetDefaultFontTexture(FontTexture *pFont)
 {
+	m_bDefaultFontTextureSet = true;
 	m_pDefaultFontTextureHandler->SetResource(pFont);
 }
 
@@ -142,7 +148,8 @@ Font *FontManager::CreateFontTexture(const String &sFilename, uint32 nSize, uint
 */
 FontManager::FontManager(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
-	m_pDefaultFontTextureHandler(new ResourceHandler())
+	m_pDefaultFontTextureHandler(new ResourceHandler()),
+	m_bDefaultFontTextureSet(false)
 {
 }
 
@@ -167,7 +174,8 @@ FontManager::~FontManager()
 */
 FontManager::FontManager(const FontManager &cSource) :
 	m_pRenderer(nullptr),
-	m_pDefaultFontTextureHandler(nullptr)
+	m_pDefaultFontTextureHandler(nullptr),
+	m_bDefaultFontTextureSet(false)
 {
 	// No implementation because the copy constructor is never used
 }

@@ -53,8 +53,8 @@ TextureBufferRectangle::~TextureBufferRectangle()
 		glDeleteTextures(1, &m_nOpenGLTexture);
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -82,7 +82,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 	Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 	// Update renderer statistics
-	cRendererOpenGL.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGL.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Initialize sampler states
 	MemoryManager::Set(m_nSamplerState, PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
@@ -248,7 +248,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 				}
 
 				// Update renderer statistics
-				cRendererOpenGL.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+				cRendererOpenGL.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 			}
 		}
 	}
@@ -266,7 +266,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 	Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 	// Update renderer statistics
-	cRendererOpenGL.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGL.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Initialize sampler states
 	MemoryManager::Set(m_nSamplerState, PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
@@ -330,7 +330,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 		m_nTotalNumOfBytes = GetNumOfBytes();
 
 		// Update renderer statistics
-		cRendererOpenGL.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+		cRendererOpenGL.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 	}
 }
 

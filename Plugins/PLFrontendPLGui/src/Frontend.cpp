@@ -255,6 +255,17 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseVisible() const
+{
+	return (m_pMainWindow && m_pMainWindow->GetGui()) ? m_pMainWindow->GetGui()->IsMouseVisible() : false;
+}
+
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	if (m_pMainWindow && m_pMainWindow->GetGui())
+		m_pMainWindow->GetGui()->SetMouseVisible(bVisible);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual Frontend functions                  ]
@@ -324,23 +335,6 @@ void Frontend::OnDestroyMainWindow()
 	// Do the frontend lifecycle thing - stop
 	OnStop();
 
-	// [TODO]
-	/*
-	// Get the main widget
-	const Widget *pWidget = GetMainWindow();
-	if (pWidget && pWidget->IsInstanceOf("PLEngine::RenderWindow")) {
-		// Write fullscreen state back to the configuration
-		GetConfig().SetVar("PLEngine::RendererConfig", "Fullscreen", String::Format("%d", static_cast<const RenderWindow*>(pWidget)->IsFullscreen()));
-
-		// Write down display mode information
-		const DisplayMode &sDisplayMode = static_cast<const RenderWindow*>(pWidget)->GetDisplayMode();
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayWidth",     String::Format("%d", sDisplayMode.vSize.x));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayHeight",    String::Format("%d", sDisplayMode.vSize.y));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayColorBits", String::Format("%d", sDisplayMode.nColorBits));
-		GetConfig().SetVar("PLEngine::RendererConfig", "DisplayFrequency", String::Format("%d", sDisplayMode.nFrequency));
-	}
-	*/
-
 	// We lost our main window :/
 	m_pMainWindow = nullptr;
 }
@@ -374,7 +368,7 @@ void Frontend::OnDrawMainWindow(Graphics &cGraphics)
 */
 void Frontend::OnKeyDownMainWindow(uint32 nKey, uint32 nModifiers)
 {
-	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
+	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)
 	if (m_bToggleFullscreenMode && nKey == PLGUIKEY_RETURN && ((nModifiers & PLGUIMOD_ALT) != 0)) {
 		// Toggle fullscreen mode
 		SetFullscreen(!IsFullscreen());

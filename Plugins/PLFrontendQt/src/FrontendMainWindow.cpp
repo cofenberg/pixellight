@@ -136,7 +136,7 @@ QPaintEngine *FrontendMainWindow::paintEngine() const
 //[-------------------------------------------------------]
 void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
 {
-	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
+	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)
 	if (m_pFrontendQt->GetToggleFullscreenMode() && pQKeyEvent->key() == Qt::Key_Return && (pQKeyEvent->modifiers() & Qt::AltModifier)) {
 		// Toggle fullscreen mode
 		m_pFrontendQt->SetFullscreen(!m_pFrontendQt->IsFullscreen());

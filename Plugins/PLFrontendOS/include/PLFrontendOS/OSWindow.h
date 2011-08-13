@@ -137,6 +137,32 @@ class OSWindow {
 		*/
 		virtual void SetFullscreen(bool bFullscreen) = 0;
 
+		/**
+		*  @brief
+		*    Check if the mouse cursor is visible
+		*
+		*  @return
+		*    'true' if the mouse cursor is visible, else 'false'
+		*
+		*  @note
+		*    - If the mouse cursor is visible in general, it's still possible that it's
+		*      invisible over some special widgets.
+		*    - If the mouse cursor is invisible in general, it will NEVER be visible!
+		*/
+		virtual bool IsMouseVisible() const = 0;
+
+		/**
+		*  @brief
+		*    Set mouse cursor visibility
+		*
+		*  @param[in] bVisible
+		*    Shall the mouse cursor be visible?
+		*
+		*  @see
+		*    - IsMouseVisible()
+		*/
+		virtual void SetMouseVisible(bool bVisible) = 0;
+
 
 };
 

@@ -187,12 +187,12 @@
     <ClInclude Include="PLFrontendActiveX_i.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="PLFrontendActiveX.def" />
     <None Include="resource\PixelLightCtrl.bmp" />
     <None Include="resource\PixelLightCtrl.rgs" />
     <None Include="resource\PLFrontendActiveX.rgs" />
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="src\PLFrontendActiveX.idl" />

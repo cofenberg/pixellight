@@ -136,7 +136,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*    The default implementation does the following tasks:
 		*    - Everything that PLCore::CoreApplication::OnStart() does
 		*    - Call OnCreateRendererContext()
-		*    - Set default font according to config
 		*    - Call OnCreatePainter()
 		*    - Return and go on with OnInit()
 		*/
@@ -148,6 +147,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
+		*    - Save renderer related configuration
 		*    - Destroy renderer context
 		*    - Everything that FrontendApplication::OnStop() does
 		*/
@@ -213,13 +213,17 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
-		*    - Currently a 'RendererOpenGL' renderer context is created within the default implementation
+		*    - The default implementation is using the "PLRenderer::Config"-configuration to get the settings to use
 		*/
 		PLRENDERER_API virtual void OnCreateRendererContext();
 
 		/**
 		*  @brief
 		*    Function that is called to create the application's surface painter
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Sets the default painter
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"

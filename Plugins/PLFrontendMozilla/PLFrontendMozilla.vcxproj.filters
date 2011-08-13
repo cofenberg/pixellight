@@ -32,7 +32,7 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
+    <None Include="..\..\Base\PLCore\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\plugin.h">

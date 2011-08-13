@@ -285,7 +285,7 @@ void SNPortal::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw vertices?
 			if (GetDebugFlags() & DebugPortalVertices) {
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont) {
 					for (uint32 i=0; i<lstVertices.GetNumOfElements(); i++) {
 						if (!pCullQuery || Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), GetTransform().GetPosition()+lstVertices[i]))

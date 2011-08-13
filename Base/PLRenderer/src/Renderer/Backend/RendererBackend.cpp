@@ -70,9 +70,9 @@ const char *GetBoolString(bool bValue)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the renderer statistics for internal usage
+*    Returns the writable renderer statistics for internal usage
 */
-Statistics &RendererBackend::GetStatisticsT()
+Statistics &RendererBackend::GetWritableStatistics()
 {
 	return m_sStatistics;
 }
@@ -271,16 +271,16 @@ void RendererBackend::ShowRendererCapabilities() const
 	PL_LOG(Info, "Renderer capabilities:")
 	PL_LOG(Info, String("  MaxColorRenderTargets: ")		 + m_sCapabilities.nMaxColorRenderTargets)
 	PL_LOG(Info, String("  MaxTextureUnits: ")				 + m_sCapabilities.nMaxTextureUnits)
-	PL_LOG(Info, String("  MaxAnisotropy: ")				 + m_sCapabilities.nMaxAnisotropy)
+	PL_LOG(Info, String("  MaxAnisotropy: ")				 + static_cast<uint32>(m_sCapabilities.nMaxAnisotropy))
 	PL_LOG(Info, String("  MaxTessellationFactor: ")		 + m_sCapabilities.nMaxTessellationFactor)
-	PL_LOG(Info, String("  MaxTextureBufferSize: ")			 + m_sCapabilities.nMaxTextureBufferSize)
+	PL_LOG(Info, String("  MaxTextureBufferSize: ")			 + static_cast<uint32>(m_sCapabilities.nMaxTextureBufferSize))
 	PL_LOG(Info, String("  TextureBufferNonPowerOfTwo: ")	 + GetBoolString(m_sCapabilities.bTextureBufferNonPowerOfTwo))
 	PL_LOG(Info, String("  TextureBufferRectangle: ")		 + GetBoolString(m_sCapabilities.bTextureBufferRectangle))
-	PL_LOG(Info, String("  MaxRectangleTextureBufferSize: ") + m_sCapabilities.nMaxRectangleTextureBufferSize)
+	PL_LOG(Info, String("  MaxRectangleTextureBufferSize: ") + static_cast<uint32>(m_sCapabilities.nMaxRectangleTextureBufferSize))
 	PL_LOG(Info, String("  TextureBuffer3D: ")				 + GetBoolString(m_sCapabilities.bTextureBuffer3D))
-	PL_LOG(Info, String("  Max3DTextureBufferSize: ")		 + m_sCapabilities.nMax3DTextureBufferSize)
+	PL_LOG(Info, String("  Max3DTextureBufferSize: ")		 + static_cast<uint32>(m_sCapabilities.nMax3DTextureBufferSize))
 	PL_LOG(Info, String("  TextureBufferCube: ")			 + GetBoolString(m_sCapabilities.bTextureBufferCube))
-	PL_LOG(Info, String("  MaxCubeTextureBufferSize: ")		 + m_sCapabilities.nMaxCubeTextureBufferSize)
+	PL_LOG(Info, String("  MaxCubeTextureBufferSize: ")		 + static_cast<uint32>(m_sCapabilities.nMaxCubeTextureBufferSize))
 	PL_LOG(Info, String("  StencilWrap: ")					 + GetBoolString(m_sCapabilities.bStencilWrap))
 	PL_LOG(Info, String("  TwoSidedStencils: ")				 + GetBoolString(m_sCapabilities.bTwoSidedStencils))
 	PL_LOG(Info, String("  DepthBoundsTest: ")				 + GetBoolString(m_sCapabilities.bDepthBoundsTest))
@@ -480,7 +480,7 @@ void RendererBackend::Update()
 		pProfiling->Set(sAPI, "Draw primitive calls",			sS.nDrawPrimitivCalls);
 		pProfiling->Set(sAPI, "Current triangles",				sS.nTriangles);
 		pProfiling->Set(sAPI, "Current vertices",				sS.nVertices);
-		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				sS.nRenderingTime));
+		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				sS.fRenderingTime));
 		// Texture buffers
 		pProfiling->Set(sAPI, "Number of texture buffers",		sS.nTextureBuffersNum);
 		const float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
@@ -509,7 +509,7 @@ void RendererBackend::Update()
 	m_sStatistics.nDrawPrimitivCalls		= 0;
 	m_sStatistics.nVertices					= 0;
 	m_sStatistics.nTriangles				= 0;
-	m_sStatistics.nRenderingTime			= 0;
+	m_sStatistics.fRenderingTime			= 0.0f;
 	m_sStatistics.nTextureBufferBinds		= 0;
 	m_sStatistics.nVertexBuffersSetupTime	= 0;
 	m_sStatistics.nVertexBufferLocks		= 0;

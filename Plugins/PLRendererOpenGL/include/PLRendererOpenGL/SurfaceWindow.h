@@ -116,18 +116,18 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::DisplayMode m_sDisplayMode;	/**< Display mode information */
-	#ifdef WIN32
-		HDC m_hDC;	/**< Private GDI device context */
-	#endif
-	#ifdef LINUX
-		::Window			m_nNativeWindowHandle;
-		::SizeID 			m_nOldSizeID;
-		::Rotation			m_nOldRotation;
-	#endif
-		int	  m_nSwapInterval;		/**< The swap interval (vertical synchronisation), <0 means not yet set */
-		float m_fGammaBackup[3];	/**< Gamma settings at the time the render window was initialized */
-		bool  m_bGammaChanged;		/**< Was the gamma changed by using "SetGamma"? */
+		PLRenderer::DisplayMode	m_sDisplayMode;			/**< Display mode information */
+		#ifdef WIN32
+			HDC					m_hDC;					/**< Private GDI device context */
+		#endif
+		#ifdef LINUX
+			::Window			m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+			::SizeID 			m_nOldSizeID;
+			::Rotation			m_nOldRotation;
+		#endif
+		int						m_nSwapInterval;		/**< The swap interval (vertical synchronisation), <0 means not yet set */
+		float					m_fGammaBackup[3];		/**< Gamma settings at the time the render window was initialized */
+		bool					m_bGammaChanged;		/**< Was the gamma changed by using "SetGamma"? */
 
 
 	//[-------------------------------------------------------]

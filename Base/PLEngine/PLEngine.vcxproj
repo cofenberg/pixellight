@@ -253,6 +253,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\Config.cpp" />
     <ClCompile Include="src\Application\EngineApplication.cpp" />
     <ClCompile Include="src\Application\ScriptApplication.cpp" />
     <ClCompile Include="src\Compositing\Console\ConsoleCommand.cpp" />
@@ -285,7 +286,6 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     </ClCompile>
     <ClCompile Include="src\Picking\Picking.cpp" />
     <ClCompile Include="src\Picking\PickingResult.cpp" />
-    <ClCompile Include="src\Config\RendererConfigGroup.cpp" />
     <ClCompile Include="src\Tools\Camcorder.cpp" />
     <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
     <ClCompile Include="src\Tools\Screenshot.cpp" />
@@ -293,6 +293,7 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Tools\SNMRotationKeyframeRecord.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLEngine\Application\Config.h" />
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h" />
     <ClInclude Include="include\PLEngine\Application\ScriptApplication.h" />
     <ClInclude Include="include\PLEngine\Compositing\Console\ConsoleCommand.h" />
@@ -322,7 +323,6 @@ copy build\release64\PLEngine64.lib ..\..\Bin\Lib\
     <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />
     <ClInclude Include="include\PLEngine\Picking\Picking.h" />
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />
-    <ClInclude Include="include\PLEngine\Config\RendererConfigGroup.h" />
     <ClInclude Include="include\PLEngine\Tools\Camcorder.h" />
     <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
     <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />

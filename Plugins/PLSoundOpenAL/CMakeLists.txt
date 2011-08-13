@@ -153,20 +153,28 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/wrap_oal.dll "${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
 		)
 	elseif(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so				"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1			"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.13.0		"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so					"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0				"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.1			"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so			"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0			"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0.4.5		"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so		"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3		"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.4	"${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-		)
+		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
+		set(COPY_SOURCE ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1
+						${CMAKETOOLS_CURRENT_EXT_DIR}/OpenAL/lib/libopenal.so.1.13.0
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libogg/lib/libogg.so.0.7.1
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbis.so.0.4.5
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3
+						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.4)
+
+		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
+		set(COPY_DEST "${PL_BIN_DIR}/Runtime/Plugins/PLSound")
+
+		# Create the "copy_to_runtime.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
+		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
+
+		# Add custom command to call the created "copy_to_runtime.cmake"-file after the target was built
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_runtime.cmake")
 	endif()
 endif()
 

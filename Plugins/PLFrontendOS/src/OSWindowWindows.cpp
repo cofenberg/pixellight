@@ -111,10 +111,19 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 
 			case WM_SYSKEYDOWN:
 				// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return)
-				if (pOSWindowWindows->m_pFrontendOS->GetToggleFullscreenMode() && (lParam & (1 << 29)) && wParam == VK_RETURN) {	// Bit 29 = the ALT-key
+				if (pOSWindowWindows->m_pFrontendOS->GetToggleFullscreenMode() && wParam == VK_RETURN && (lParam & (1 << 29))) {	// Bit 29 = the ALT-key
 					// Toggle fullscreen mode
 					pOSWindowWindows->m_pFrontendOS->SetFullscreen(!pOSWindowWindows->m_pFrontendOS->IsFullscreen());
 					return 0;
+				}
+				break;
+
+			// Keyboard key down
+			case WM_KEYDOWN:
+				// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (AltGr-Return)
+				if (wParam == VK_RETURN && GetAsyncKeyState(VK_RMENU)) {
+					// Toggle fullscreen mode
+					pOSWindowWindows->m_pFrontendOS->SetFullscreen(!pOSWindowWindows->m_pFrontendOS->IsFullscreen());
 				}
 				break;
 
@@ -161,7 +170,8 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_hWnd(nullptr),
 	m_bDestroyed(false),
 	m_nHotkeyIDAltTab(0),
-	m_bWindowRectBackup(false)
+	m_bWindowRectBackup(false),
+	m_bMouseVisible(true)
 {
 	MemoryManager::Set(&m_sWindowRectBackup, 0, sizeof(RECT));
 
@@ -397,6 +407,28 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 				m_bWindowRectBackup = false;
 			}
 		}
+	}
+}
+
+bool OSWindowWindows::IsMouseVisible() const
+{
+	return m_bMouseVisible;
+}
+
+void OSWindowWindows::SetMouseVisible(bool bVisible)
+{
+	// Backup the state
+	m_bMouseVisible = bVisible;
+
+	// Set mouse cursor visibility
+	if (bVisible) {
+		// Show mouse cursor
+		while (ShowCursor(true) < 0)
+			; // Do nothing
+	} else {
+		// Hide mouse cursor
+		while (ShowCursor(false) >= 0)
+			; // Do nothing
 	}
 }
 

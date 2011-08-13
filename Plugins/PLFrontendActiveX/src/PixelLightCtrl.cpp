@@ -8,6 +8,7 @@
 
 PixelLightCtrl::PixelLightCtrl() :
 	m_bFrontendApplicationInitialized(false),
+	m_bMouseVisible(true),
 	m_cFrontend(*this)
 {
 	// We *must* have a real window for this control
@@ -106,6 +107,28 @@ void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
+bool PixelLightCtrl::IsMouseVisible() const
+{
+	return m_bMouseVisible;
+}
+
+void PixelLightCtrl::SetMouseVisible(bool bVisible)
+{
+	// Backup the state
+	m_bMouseVisible = bVisible;
+
+	// Set mouse cursor visibility
+	if (bVisible) {
+		// Show mouse cursor
+		while (ShowCursor(true) < 0)
+			; // Do nothing
+	} else {
+		// Hide mouse cursor
+		while (ShowCursor(false) >= 0)
+			; // Do nothing
+	}
+}
+
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
 	// Let the frontend draw into it's window
@@ -122,6 +145,12 @@ LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &
 {
 	// Save window and device context handles
 	m_hFrontendWnd = m_hWnd;
+
+	{	// Let the world know that this frontend is now going to run
+		const PLCore::String sExecutableFilename;
+		const PLCore::Array<PLCore::String> lstArguments;
+		FrontendImpl::OnRun(sExecutableFilename, lstArguments);
+	}
 
 	// Do the frontend lifecycle thing - initialize
 	if (FrontendImpl::OnStart()) {

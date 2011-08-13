@@ -166,7 +166,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	cDrawHelpers.End2DMode();
 
 	// Get the font
-	Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+	Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 	if (pFont) {
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();

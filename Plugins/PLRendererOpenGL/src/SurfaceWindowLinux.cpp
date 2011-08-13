@@ -49,16 +49,22 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 		// Get the X server display connection
 		Display *pDisplay = pContextLinux->GetDisplay();
 
-		XF86VidModeGamma gamma;
-		if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &gamma)) {
-			fRed   = gamma.red;
-			fGreen = gamma.green;
-			fBlue  = gamma.blue;
+		// Get gamma information
+		XF86VidModeGamma sXF86VidModeGamma;
+		if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma)) {
+			fRed   = sXF86VidModeGamma.red;
+			fGreen = sXF86VidModeGamma.green;
+			fBlue  = sXF86VidModeGamma.blue;
 
 			// Done
 			return true;
 		}
 	}
+
+	// Set fallback settings so that the reference parameters are never within an undefined state
+	fRed   = 0.0f;
+	fGreen = 0.0f;
+	fBlue  = 0.0f;
 
 	// Error!
 	return false;
@@ -77,11 +83,11 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 			m_bGammaChanged = true;
 
 			// Call the OS gamma ramp function
-			XF86VidModeGamma gamma;
-			gamma.red   = fRed;
-			gamma.green = fGreen;
-			gamma.blue  = fBlue;
-			if (XF86VidModeSetGamma(pDisplay, XDefaultScreen(pDisplay), &gamma))
+			XF86VidModeGamma sXF86VidModeGamma;
+			sXF86VidModeGamma.red   = fRed;
+			sXF86VidModeGamma.green = fGreen;
+			sXF86VidModeGamma.blue  = fBlue;
+			if (XF86VidModeSetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma))
 				return true; // Done
 		}
 	}
@@ -96,6 +102,8 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()
 {
+	bool bResult = true;	// No error by default
+
 	// First check if there's a native window
 	const handle nNativeWindowHandle = GetNativeWindowHandle();
 	if (nNativeWindowHandle) {
@@ -114,88 +122,67 @@ bool SurfaceWindow::Init()
 			// Get the Linux OpenGL render context
 			ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 			if (pContextLinux) {
-
 				// Get the X server display connection
 				Display *pDisplay = XOpenDisplay(nullptr);
 				if (pDisplay) {
 					const int nScreen = XDefaultScreen(pDisplay);
 
-					// Find correct display mode
-					int nDisplayMode = 0;
-					bool bFound = false;
+					// Get XRR screen configuration (don't forget "XRRFreeScreenConfigInfo()" if you no longer need it)
+					XRRScreenConfiguration *pXRRScreenConfiguration = XRRGetScreenInfo(pDisplay, RootWindow(pDisplay, nScreen));
+
+					// Get specific configuration information out of our screen configuration
 					int nNumOfModes = 0;
-					
-					XRRScreenConfiguration *pScreenConfig = nullptr;
-					XRRScreenSize *pScreenSizeList = nullptr;
-					
-					pScreenConfig = XRRGetScreenInfo( pDisplay,
-                               RootWindow( pDisplay, nScreen ) );
-					
-					pScreenSizeList = XRRConfigSizes( pScreenConfig, &nNumOfModes );
-					
-					if (!nNumOfModes) {
-						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
-						
-						XRRFreeScreenConfigInfo( pScreenConfig );
-						// Close X server display connection
-						XCloseDisplay(pDisplay);
-
-						// Error!
-						return false;
-					}
-					
-					int nBestMode = 0;
-					for(int i = 0; i < nNumOfModes; i++ )
-					{
-						if (m_sDisplayMode.vSize.x	  == pScreenSizeList[i].width &&
-							m_sDisplayMode.vSize.y	  == pScreenSizeList[i].height) {
-							nBestMode = i;
-							bFound = true;
-							break;
+					XRRScreenSize *pXRRScreenSize = XRRConfigSizes(pXRRScreenConfiguration, &nNumOfModes);
+					if (nNumOfModes) {
+						// Find correct display mode
+						int nBestMode = 0;
+						bool bFound = false;
+						for (int i=0; i<nNumOfModes; i++) {
+							if (m_sDisplayMode.vSize.x == pXRRScreenSize[i].width &&
+								m_sDisplayMode.vSize.y == pXRRScreenSize[i].height) {
+								nBestMode = i;
+								bFound = true;
+								break;
+							}
 						}
-					}
-					if (bFound) {
-						// Save desktop-resolution before switching modes
-						m_nOldSizeID = XRRConfigCurrentConfiguration( pScreenConfig, &m_nOldRotation );
+						if (bFound) {
+							// Save desktop-resolution before switching modes
+							m_nOldSizeID = XRRConfigCurrentConfiguration(pXRRScreenConfiguration, &m_nOldRotation);
 
-						// Change display settings
-						PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Go into fullscreen mode")
-						
-						cRenderer.BackupDeviceObjects();
-						
-						Status status = XRRSetScreenConfig( pDisplay,
-                                pScreenConfig,
-                                RootWindow( pDisplay, nScreen ),
-                                nBestMode,
-                                RR_Rotate_0,
-                                CurrentTime );
-
-						if (status != RRSetConfigSuccess) {
- 							PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't set display mode!")
- 							m_bIsFullscreen = false;
- 							XRRFreeScreenConfigInfo( pScreenConfig );
-							// Close X server display connection
-							XCloseDisplay(pDisplay);
- 
- 							// Error!
- 							return false;
- 						}
-						XRRFreeScreenConfigInfo( pScreenConfig );
-						cRenderer.RestoreDeviceObjects();
+							// Change display settings
+							PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Go into fullscreen mode")
+							cRenderer.BackupDeviceObjects();
+							if (XRRSetScreenConfig(pDisplay, pXRRScreenConfiguration, RootWindow(pDisplay, nScreen), nBestMode, RR_Rotate_0, CurrentTime) != RRSetConfigSuccess) {
+								// Error!
+								PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't set display mode!")
+								m_bIsFullscreen = false;
+								bResult = false;
+							}
+							cRenderer.RestoreDeviceObjects();
+						} else {
+							// Error!
+							PL_LOG(Error, "PLRendererOpenGL fullscreen mode: No correct display setting was found, can't change to fullscreen!")
+							m_bIsFullscreen = false;
+							bResult = false;
+						}
 					} else {
-						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: No correct display setting was found, can't change to fullscreen!")
-						m_bIsFullscreen = false;
-					}	
+						// Error!
+						PL_LOG(Error, "PLRendererOpenGL fullscreen mode: Couldn't get mode lines")
+						bResult = false;
+					}
+
+					// Free XRR screen configuration
+					XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
+
+					// Close X server display connection
+					XCloseDisplay(pDisplay);
 				}
-				// Close X server display connection
-				XCloseDisplay(pDisplay);
 			}
 		}
-
 	}
 
 	// Done
-	return true;
+	return bResult;
 }
 
 void SurfaceWindow::DeInit()
@@ -205,7 +192,7 @@ void SurfaceWindow::DeInit()
 		// We're going to perform a cruel act - so give OpenGL a chance to flush and finish it's data...
 		// just so be on the safe side, you never now...
 		glFinish();
-		
+
 		// Get the renderer instance
 		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
@@ -229,24 +216,23 @@ void SurfaceWindow::DeInit()
 				if (pDisplay) {
 					// Reset display settings
 					PL_LOG(Info, "PLRendererOpenGL fullscreen mode: Set display mode to default")
-					const int nScreen = XDefaultScreen(pDisplay);
-					
+
+					// Backup renderer device objects
 					cRenderer.BackupDeviceObjects();
-					
-					XRRScreenConfiguration *pScreenConfig;
 
-					pScreenConfig = XRRGetScreenInfo( pDisplay, RootWindow( pDisplay, nScreen ) );
-					
-					XRRSetScreenConfig( pDisplay,
-										pScreenConfig,
-										RootWindow( pDisplay, nScreen ),
-										m_nOldSizeID,
-										m_nOldRotation,
-										CurrentTime );
+					// Get XRR screen configuration (don't forget "XRRFreeScreenConfigInfo()" if you no longer need it)
+					const int nScreen = XDefaultScreen(pDisplay);
+					XRRScreenConfiguration *pXRRScreenConfiguration = XRRGetScreenInfo(pDisplay, RootWindow(pDisplay, nScreen));
 
-					XRRFreeScreenConfigInfo( pScreenConfig );
-					
+					// Set XRR screen configuration
+					XRRSetScreenConfig(pDisplay, pXRRScreenConfiguration, RootWindow(pDisplay, nScreen), m_nOldSizeID, m_nOldRotation, CurrentTime);
+
+					// Free XRR screen configuration
+					XRRFreeScreenConfigInfo(pXRRScreenConfiguration);
+
+					// Restore renderer device objects
 					cRenderer.RestoreDeviceObjects();
+
 					// Close X server display connection
 					XCloseDisplay(pDisplay);
 				}

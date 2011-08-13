@@ -1,3 +1,16 @@
+>> 13.08.2011
+[CO]
+- Moved "ScriptApplication::OnInit()" stuff into "ScriptApplication::OnStart()" and "ScriptApplication::OnDeInit()" stuff into "ScriptApplication::OnStop()"
+
+
+
+>> 12.08.2011
+[CO]
+- "EngineApplication::OnStart()": In here, we skip "SceneApplication::OnStart()" to overwrite the initialization order. Input and tools initialization should come
+  before scene were the mentioned stuff is already usefull in derived applications (but at the same time, input shouldn't be at the very bottom of the application hierarchy).
+
+
+
 >> 04.08.2011
 [CO]
 - Moved "ModTrapMouse", "PreviewWidget", "RenderWidget", "RenderWindow" and "WindowConnection" from "PLEngine" into "PLFrontendPLGui"

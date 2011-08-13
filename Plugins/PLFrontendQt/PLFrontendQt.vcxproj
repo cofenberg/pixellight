@@ -544,8 +544,8 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
     <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
-    <None Include="Diary.txt" />
     <CustomBuild Include="include\PLFrontendQt\QPLDebugDialog.ui">
       <FileType>Document</FileType>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h"</Command>

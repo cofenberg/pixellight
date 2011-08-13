@@ -56,7 +56,7 @@ class DrawHelpersBackend;
 *    Renderer backend with general stuff which all backends will need
 *
 *  @note
-*    - This will also provide and manage the Cg context automatically
+*    - All renderer backends must be derived from this class in order to have a common ground
 */
 class RendererBackend : public Renderer {
 
@@ -74,12 +74,12 @@ class RendererBackend : public Renderer {
 	public:
 		/**
 		*  @brief
-		*    Returns the renderer statistics for internal usage
+		*    Returns the writable renderer statistics for internal usage
 		*
 		*  @return
-		*    The renderer statistics
+		*    The writable renderer statistics
 		*/
-		PLRENDERER_API Statistics &GetStatisticsT();
+		PLRENDERER_API Statistics &GetWritableStatistics();
 
 		/**
 		*  @brief

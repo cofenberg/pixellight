@@ -128,6 +128,8 @@ class OSWindowWindows : public OSWindow {
 		virtual PLCore::uint32 GetHeight() const override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 
 	//[-------------------------------------------------------]
@@ -144,7 +146,7 @@ class OSWindowWindows : public OSWindow {
 		int			m_nHotkeyIDAltTab;		/**< Alt-Tab hotkey */
 		bool		m_bWindowRectBackup;	/**< Is there a window position & size backup? */
 		RECT		m_sWindowRectBackup;	/**< Window position & size backup */
-
+		bool		m_bMouseVisible;		/**< Is the mouse cursor visible? */
 
 
 };

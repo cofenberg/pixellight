@@ -154,33 +154,40 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 
 
 //[-------------------------------------------------------]
-//[ Proteced virtual PLCore::CoreApplication functions    ]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when application should initialize itself
+*    Initialization function that is called prior to OnInit()
 */
-void ScriptApplication::OnInit()
+bool ScriptApplication::OnStart()
 {
 	// Call base implementation
-	EngineApplication::OnInit();
+	if (EngineApplication::OnStart()) {
+		// Is there a script filename?
+		if (m_sScriptFilename.GetLength())
+			LoadScript(m_sScriptFilename);
 
-	// Is there a script filename?
-	if (m_sScriptFilename.GetLength())
-		LoadScript(m_sScriptFilename);
+		// Done
+		return true;
+	}
+
+	// Error
+	return false;
 }
+
 
 /**
 *  @brief
-*    Called when application should de-initialize itself
+*    De-initialization function that is called after OnDeInit()
 */
-void ScriptApplication::OnDeInit()
+void ScriptApplication::OnStop()
 {
 	// Destroy the currently used script
 	DestroyScript();
 
 	// Call base implementation
-	EngineApplication::OnDeInit();
+	EngineApplication::OnStop();
 }
 
 

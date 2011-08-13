@@ -27,6 +27,7 @@
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Renderer/SurfaceHandler.h"
 #include "PLRenderer/Renderer/SurfacePainter.h"
+#include "PLRenderer/Renderer/Backend/RendererBackend.h"
 #include "PLRenderer/Renderer/Surface.h"
 
 
@@ -153,8 +154,8 @@ void Surface::Draw()
 		// Emit paint end event
 		EventPaintEnd();
 
-		// Update statistics
-		const_cast<Statistics&>(m_pRenderer->GetStatistics()).nRenderingTime += cStopwatch.GetMilliseconds();	// [TODO] Casting away the const isn't nice!
+		// Update statistics (all renderer backends must be derived from the renderer backend class in order to have a common ground, so, this cast is assumed to be safe)
+		reinterpret_cast<RendererBackend*>(m_pRenderer)->GetWritableStatistics().fRenderingTime += cStopwatch.GetMilliseconds();
 	}
 }
 

@@ -122,6 +122,8 @@ class OSWindowLinux : public OSWindow {
 		virtual PLCore::uint32 GetHeight() const override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 
 	//[-------------------------------------------------------]
@@ -145,7 +147,7 @@ class OSWindowLinux : public OSWindow {
 		Frontend *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
 		Display	 *m_pDisplay;				/**< System display, considered to be always valid */
 		Atom 	  m_wmDelete;				/**< System atom for delete */
-		Window	  m_nNativeWindowHandle;	/**< Native window handle, can be 0 */
+		Window	  m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
 
 
 };

@@ -191,6 +191,19 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseVisible() const
+{
+	// Let the OS window do the rest
+	return m_pOSWindow ? m_pOSWindow->IsMouseVisible() : true;
+}
+
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	// Let the OS window do the rest
+	if (m_pOSWindow)
+		m_pOSWindow->SetMouseVisible(bVisible);
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

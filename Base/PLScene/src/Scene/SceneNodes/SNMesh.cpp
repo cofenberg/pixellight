@@ -32,7 +32,6 @@
 #include <PLCore/Tools/Loader.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include <PLCore/Application/CoreApplication.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -517,8 +516,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 				m_pMeshHandler->DrawVertices(Color4::White);
 
 			// Get normal scale value
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			const float fNormalScale = (pApplication ? pApplication->GetConfig().GetVar("PLScene::EngineDebugConfig", "NormalScale").GetFloat() : 1.0f);
+			static const float fNormalScale = 1.0f;
 
 			// Draw tangents? (red = x/u)
 			if (nDebugFlags & DebugShowTangents)
@@ -534,7 +532,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw vertex numbers?
 			if (nDebugFlags & DebugShowVertexNumbers) {
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont)
 					m_pMeshHandler->DrawVertexNumbers(*pFont, Color4::White, pVisNode->GetWorldViewProjectionMatrix());
 			}
@@ -551,7 +549,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 						// Draw joint names?
 						if (nDebugFlags & DebugShowJointNames) {
-							Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+							Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 							if (pFont)
 								pSkeletonHandler->DrawJointNames(*pFont, Color4::Green, pVisNode->GetWorldViewProjectionMatrix());
 						}
@@ -565,7 +563,7 @@ void SNMesh::DrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Draw anchor points?
 			if (nDebugFlags & DebugShowAnchorPoints) {
-				Font *pFont = reinterpret_cast<Font*>(cRenderer.GetFontManager().GetDefaultFontTexture());
+				Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 				if (pFont)
 					m_pMeshHandler->DrawAnchorPoints(*pFont, Color4::Green, pVisNode->GetWorldViewProjectionMatrix());
 			}

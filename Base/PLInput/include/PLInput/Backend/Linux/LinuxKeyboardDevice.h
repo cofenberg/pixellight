@@ -85,13 +85,13 @@ class LinuxKeyboardDevice : public UpdateDevice {
 		*
 		*  @param[in] pKeyboard
 		*    Pointer to keyboard device (must be valid!)
-		*  @param[in] nKey
+		*  @param[in] nKeySym
 		*    Virtual key code
 		*
 		*  @return
 		*    Corresponding key, a null pointer if key code is invalid
 		*/
-		Button *GetKeyboardKey(Keyboard *pKeyboard, int nKey);
+		Button *GetKeyboardKey(Keyboard *pKeyboard, KeySym nKeySym);
 
 
 	//[-------------------------------------------------------]
@@ -100,7 +100,6 @@ class LinuxKeyboardDevice : public UpdateDevice {
 	private:
 		::Display	*m_pDisplay;	/**< X server display connection */
 		char		 m_nKeys[32];	/**< State of all keys */
-
 
 
 };

@@ -16,7 +16,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins/PLEngine)
 add_sources(
 	src/Application/EngineApplication.cpp
 	src/Application/ScriptApplication.cpp
-	src/Config/RendererConfigGroup.cpp
+	src/Application/Config.cpp
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
 	# src/Picking/MousePicking.cpp # [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system

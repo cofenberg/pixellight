@@ -167,33 +167,36 @@ class ScriptApplication : public EngineApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::CoreApplication functions   ]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
 		*  @brief
-		*    Called when application should initialize itself
+		*    Initialization function that is called prior to OnInit()
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' which will stop the application
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Everything that EngineApplication::OnInit() does
+		*    - Everything that EngineApplication::OnStart() does
 		*    - Load the script given to the constructor
 		*    - Call optional <OnInitFunction> script function
-		*    - Return and go on with Main()
+		*    - Return and go on with OnInit()
 		*/
-		PL_API virtual void OnInit() override;
+		PL_API virtual bool OnStart() override;
 
 		/**
 		*  @brief
-		*    Called when application should de-initialize itself
+		*    De-initialization function that is called after OnDeInit()
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
 		*    - Call optional <OnDeInitFunction> script function
 		*    - Destroy the script
-		*    - Everything that EngineApplication::OnDeInit() does
+		*    - Everything that EngineApplication::OnStop() does
 		*/
-		PL_API virtual void OnDeInit() override;
+		PL_API virtual void OnStop() override;
 
 
 	//[-------------------------------------------------------]

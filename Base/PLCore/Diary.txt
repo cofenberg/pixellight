@@ -1,3 +1,21 @@
+>> 13.08.2011
+[CO]
+- "PLFrontend::OSWindowWindows" & "PLFrontend::OSWindowLinux" now react on AltGr-Return as well (same behavior across all frontend implementations)
+- "Frontend": Added "IsMouseVisible()" and "SetMouseVisible()" ("PLFrontendOS::OSWindowLinux" part not yet implemented)
+
+
+
+>> 12.08.2011
+[CO]
+- "CoreApplication::Run()" now implements the lifecycle as well
+- "PLFrontendMozilla" & "PLFrontendActiveX" now also call the "OnRun()"-method (for none embedded frontends this is done automatically within "PLCore::Frontend::Run()")
+- The program entry point "PLMain" is now ignored when the definition "_WINDLL" and/or "_USRDLL" is set... this should make it more comfortable to deliver an application as shared
+  library (easier to embedd into other applications) instead of an executable. Those two definitions are MS Windows definitions, as far as I know, Linux has no equivalent...
+  but we need something to test against... so I just defined those two definitions within "CMakeTools_Apps.cmake" for Linux as well (I was just to lazy to invent totally
+  new definition names).
+
+
+
 >> 11.08.2011
 [CO]
 - String: Sadly, we can't use uint16 in order to let the compiler decide whether to use a whar_t or a uint16 version of a method. For instance, when using PixelLight within the

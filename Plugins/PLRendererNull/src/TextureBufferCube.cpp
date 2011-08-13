@@ -47,7 +47,7 @@ namespace PLRendererNull {
 TextureBufferCube::~TextureBufferCube()
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
 }
 
 
@@ -62,7 +62,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 	PLRenderer::TextureBufferCube(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nTextureBuffersNum++;
 
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
@@ -81,7 +81,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 	PLRenderer::TextureBufferCube(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nTextureBuffersNum++;
 
 	// Init data
 	m_nSize   = nSize;

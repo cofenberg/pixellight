@@ -53,8 +53,8 @@ TextureBuffer2D::~TextureBuffer2D()
 	glDeleteTextures(1, &m_nOpenGLESTexture);
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -92,7 +92,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGLES.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Create the OpenGL ES texture object
 	glGenTextures(1, &m_nOpenGLESTexture);
@@ -221,7 +221,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 				}
 
 				// Update renderer statistics
-				cRendererOpenGLES.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+				cRendererOpenGLES.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 			}
 		}
 	}
@@ -239,7 +239,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGLES.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Create the OpenGL ES texture object
 	glGenTextures(1, &m_nOpenGLESTexture);
@@ -278,7 +278,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 		m_nTotalNumOfBytes = GetNumOfBytes();
 
 		// Update renderer statistics
-		cRendererOpenGLES.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+		cRendererOpenGLES.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 	}
 }
 
