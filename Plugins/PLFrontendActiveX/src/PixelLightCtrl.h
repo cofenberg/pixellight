@@ -109,10 +109,13 @@ END_MSG_MAP()
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual bool IsFullscreen() const override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 	private:
 		HWND						m_hFrontendWnd;						/**< Window handle of the plugin container */
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
 		PLCore::FrontendPixelLight	m_cFrontend;
 
 // IPixelLightCtrl

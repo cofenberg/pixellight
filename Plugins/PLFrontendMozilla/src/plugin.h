@@ -88,12 +88,15 @@ private:
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual bool IsFullscreen() const override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 	private:
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
 		PLCore::FrontendPixelLight	m_cFrontend;
 
-			
+
 };
 
 #endif // __PLUGIN_H__

@@ -255,6 +255,17 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseVisible() const
+{
+	return (m_pMainWindow && m_pMainWindow->GetGui()) ? m_pMainWindow->GetGui()->IsMouseVisible() : false;
+}
+
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	if (m_pMainWindow && m_pMainWindow->GetGui())
+		m_pMainWindow->GetGui()->SetMouseVisible(bVisible);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual Frontend functions                  ]

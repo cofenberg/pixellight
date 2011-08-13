@@ -86,6 +86,8 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 			pl_method_1(SetFullscreenAltTab,		pl_ret_type(void),		bool,	"Sets whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' as first parameter to allow it, else 'false'.",									"")
 			pl_method_0(IsFullscreen,				pl_ret_type(bool),				"Returns whether or not the window is currently fullscreen or not. Returns 'true' if the window is currently fullscreen, else 'false'.",						"")
 			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,	"Sets whether or not the window is currently fullscreen or not. 'true' as first parameter if the window is currently fullscreen, else 'false'.",				"")
+			pl_method_0(IsMouseVisible,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently visible. Returns 'true' if the mouse cursor is currently visible, else 'false'.",							"")
+			pl_method_1(SetMouseVisible,			pl_ret_type(void),		bool,	"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",																"")
 		#endif
 	pl_class_end
 
@@ -344,6 +346,35 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    'true' if the window should be in fullscreen mode, else 'false'
 		*/
 		PLCORE_API void SetFullscreen(bool bFullscreen);
+
+		//[-------------------------------------------------------]
+		//[ Mouse                                                 ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Check if the mouse cursor is visible
+		*
+		*  @return
+		*    'true' if the mouse cursor is visible, else 'false'
+		*
+		*  @note
+		*    - If the mouse cursor is visible in general, it's still possible that it's
+		*      invisible over some special widgets.
+		*    - If the mouse cursor is invisible in general, it will NEVER be visible!
+		*/
+		PLCORE_API bool IsMouseVisible() const;
+
+		/**
+		*  @brief
+		*    Set mouse cursor visibility
+		*
+		*  @param[in] bVisible
+		*    Shall the mouse cursor be visible?
+		*
+		*  @see
+		*    - IsMouseVisible()
+		*/
+		PLCORE_API void SetMouseVisible(bool bVisible);
 
 
 	//[-------------------------------------------------------]

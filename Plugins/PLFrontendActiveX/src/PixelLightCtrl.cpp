@@ -8,6 +8,7 @@
 
 PixelLightCtrl::PixelLightCtrl() :
 	m_bFrontendApplicationInitialized(false),
+	m_bMouseVisible(true),
 	m_cFrontend(*this)
 {
 	// We *must* have a real window for this control
@@ -104,6 +105,28 @@ bool PixelLightCtrl::IsFullscreen() const
 void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool PixelLightCtrl::IsMouseVisible() const
+{
+	return m_bMouseVisible;
+}
+
+void PixelLightCtrl::SetMouseVisible(bool bVisible)
+{
+	// Backup the state
+	m_bMouseVisible = bVisible;
+
+	// Set mouse cursor visibility
+	if (bVisible) {
+		// Show mouse cursor
+		while (ShowCursor(true) < 0)
+			; // Do nothing
+	} else {
+		// Hide mouse cursor
+		while (ShowCursor(false) >= 0)
+			; // Do nothing
+	}
 }
 
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)

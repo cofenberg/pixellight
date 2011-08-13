@@ -122,6 +122,8 @@ class OSWindowLinux : public OSWindow {
 		virtual PLCore::uint32 GetHeight() const override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 
 	//[-------------------------------------------------------]

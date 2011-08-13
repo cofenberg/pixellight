@@ -53,7 +53,9 @@ Frontend::Frontend() :
 	m_pMainWindow(nullptr),
 	m_bToggleFullscreenMode(true),
 	m_bFullscreenAltTab(true),
-	m_bIsFullscreen(false)
+	m_bIsFullscreen(false),
+	m_pQCursorNormal(nullptr),
+	m_pQCursorBlank(nullptr)
 {
 }
 
@@ -133,11 +135,24 @@ int Frontend::Run(int argc, char **argv)
 	// Set application icon
 	cQApplication.setWindowIcon(QIcon(":/pl_icon.png"));
 
+	// Create the mouse cursors
+	m_pQCursorNormal = new QCursor(Qt::ArrowCursor);
+	m_pQCursorBlank = new QCursor(Qt::BlankCursor);
+
 	// Create and set the main window
 	new FrontendMainWindow(*this);
 
 	// Run the Qt application
-	return cQApplication.exec();
+	const int nResult = cQApplication.exec();
+
+	// Delete the mouse cursors
+	delete m_pQCursorNormal;
+	m_pQCursorNormal = nullptr;
+	delete m_pQCursorBlank;
+	m_pQCursorBlank = nullptr;
+
+	// Done
+	return nResult;
 }
 
 handle Frontend::GetNativeWindowHandle() const
@@ -229,6 +244,32 @@ void Frontend::SetFullscreen(bool bFullscreen)
 				m_pMainWindow->showFullScreen();
 			else
 				m_pMainWindow->showNormal();
+		}
+	}
+}
+
+bool Frontend::IsMouseVisible() const
+{
+	// Get the QApplication instance
+	QApplication *pQApplication = static_cast<QApplication*>(QApplication::instance());
+	if (pQApplication) {
+		// Is our blank mouse cursor currently set?
+		return (pQApplication->overrideCursor() == m_pQCursorBlank);
+	} else {
+		// Error! (just say the mouse cursor is currently visible)
+		return true;
+	}
+}
+
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	// Check whether or not the mouse cursors are there
+	if (m_pQCursorNormal && m_pQCursorBlank) {
+		// Get the QApplication instance
+		QApplication *pQApplication = static_cast<QApplication*>(QApplication::instance());
+		if (pQApplication) {
+			// Set the mouse cursor
+			pQApplication->setOverrideCursor(bVisible ? *m_pQCursorNormal : *m_pQCursorBlank);
 		}
 	}
 }

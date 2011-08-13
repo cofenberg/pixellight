@@ -161,6 +161,11 @@ void Application::OnControl(Control &cControl)
 		// Make a screenshot from the current render target
 		} else if (cControl.GetName() == "F12") {
 			GetScreenshotTool().SaveScreenshot();
+
+		// Toggle mouse cursor visibility
+		} else if (cControl.GetName() == "M") {
+			// Toggle mouse cursor visibility
+			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
 		}
 	}
 }

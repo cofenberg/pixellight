@@ -1,6 +1,7 @@
 >> 13.08.2011
 [CO]
 - "PLFrontend::OSWindowWindows" & "PLFrontend::OSWindowLinux" now react on AltGr-Return as well (same behavior across all frontend implementations)
+- "Frontend": Added "IsMouseVisible()" and "SetMouseVisible()" ("PLFrontendOS::OSWindowLinux" part not yet implemented)
 
 
 

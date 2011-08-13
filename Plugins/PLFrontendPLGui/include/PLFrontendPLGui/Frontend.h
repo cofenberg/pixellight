@@ -124,6 +124,8 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual bool IsFullscreen() const override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseVisible() const override;
+		virtual void SetMouseVisible(bool bVisible) override;
 
 
 	//[-------------------------------------------------------]

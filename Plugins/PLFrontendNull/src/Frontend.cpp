@@ -166,6 +166,17 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	// No window = nothing to do in here
 }
 
+bool Frontend::IsMouseVisible() const
+{
+	// We're not interested in GUI stuff
+	return false;
+}
+
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	// We're not interested in GUI stuff
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

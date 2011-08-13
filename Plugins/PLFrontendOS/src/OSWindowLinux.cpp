@@ -287,6 +287,17 @@ void OSWindowLinux::SignalHandler(int nSignal)
 	}
 }
 
+bool OSWindowLinux::IsMouseVisible() const
+{
+	// [TODO] implement me
+	return true;
+}
+
+void OSWindowLinux::SetMouseVisible(bool bVisible)
+{
+	// [TODO] implement me
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

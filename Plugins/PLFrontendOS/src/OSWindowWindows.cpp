@@ -170,7 +170,8 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_hWnd(nullptr),
 	m_bDestroyed(false),
 	m_nHotkeyIDAltTab(0),
-	m_bWindowRectBackup(false)
+	m_bWindowRectBackup(false),
+	m_bMouseVisible(true)
 {
 	MemoryManager::Set(&m_sWindowRectBackup, 0, sizeof(RECT));
 
@@ -406,6 +407,28 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 				m_bWindowRectBackup = false;
 			}
 		}
+	}
+}
+
+bool OSWindowWindows::IsMouseVisible() const
+{
+	return m_bMouseVisible;
+}
+
+void OSWindowWindows::SetMouseVisible(bool bVisible)
+{
+	// Backup the state
+	m_bMouseVisible = bVisible;
+
+	// Set mouse cursor visibility
+	if (bVisible) {
+		// Show mouse cursor
+		while (ShowCursor(true) < 0)
+			; // Do nothing
+	} else {
+		// Hide mouse cursor
+		while (ShowCursor(false) >= 0)
+			; // Do nothing
 	}
 }
 

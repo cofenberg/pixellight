@@ -336,6 +336,26 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	m_pFrontendImpl->SetFullscreen(bFullscreen);
 }
 
+/**
+*  @brief
+*    Check if the mouse cursor is visible
+*/
+bool Frontend::IsMouseVisible() const
+{
+	// Call backend
+	return m_pFrontendImpl->IsMouseVisible();
+}
+
+/**
+*  @brief
+*    Set mouse cursor visibility
+*/
+void Frontend::SetMouseVisible(bool bVisible)
+{
+	// Call backend
+	m_pFrontendImpl->SetMouseVisible(bVisible);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

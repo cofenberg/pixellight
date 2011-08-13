@@ -81,6 +81,7 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
   mInitialized(FALSE),
   m_bFrontendApplicationInitialized(false),
+  m_bMouseVisible(true),
   m_cFrontend(*this)
 {
   mhWnd = nullptr;
@@ -260,6 +261,28 @@ bool nsPluginInstance::IsFullscreen() const
 void nsPluginInstance::SetFullscreen(bool bFullscreen)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool nsPluginInstance::IsMouseVisible() const
+{
+	return m_bMouseVisible;
+}
+
+void nsPluginInstance::SetMouseVisible(bool bVisible)
+{
+	// Backup the state
+	m_bMouseVisible = bVisible;
+
+	// Set mouse cursor visibility
+	if (bVisible) {
+		// Show mouse cursor
+		while (ShowCursor(true) < 0)
+			; // Do nothing
+	} else {
+		// Hide mouse cursor
+		while (ShowCursor(false) >= 0)
+			; // Do nothing
+	}
 }
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
