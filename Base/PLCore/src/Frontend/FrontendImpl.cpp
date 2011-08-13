@@ -162,6 +162,13 @@ void FrontendImpl::OnUpdate()
 		m_pFrontend->OnUpdate();
 }
 
+void FrontendImpl::OnDrop(const Container<String> &lstFiles)
+{
+	// Call virtual function from frontend
+	if (m_pFrontend)
+		m_pFrontend->OnDrop(lstFiles);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual FrontendImpl functions              ]

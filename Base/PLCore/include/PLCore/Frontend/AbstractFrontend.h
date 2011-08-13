@@ -26,9 +26,21 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/String/String.h"
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+template <class ValueType> class Container;
 
 
 //[-------------------------------------------------------]
@@ -37,6 +49,11 @@ namespace PLCore {
 /**
 *  @brief
 *    Abstract frontend class
+*
+*  @remarks
+*    Please note that the frontend system is not designed to be a replacement for a decent GUI
+*    system. In here, only primitive and commonly used GUI related feature are offered with a
+*    limited feature set. For more complex stuff one has to use a real GUI system.
 */
 class AbstractFrontend {
 
@@ -80,6 +97,15 @@ class AbstractFrontend {
 		*    for example timers or threads instead.
 		*/
 		virtual void OnUpdate() = 0;
+
+		/**
+		*  @brief
+		*    Called when string data has been dropped onto the frontend window
+		*
+		*  @param[in] lstFiles
+		*    List of file names
+		*/
+		virtual void OnDrop(const Container<String> &lstFiles) = 0;
 
 
 	//[-------------------------------------------------------]

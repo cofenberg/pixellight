@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtCore/qurl.h>
 #include <QtCore/qcoreevent.h>
 #include <QtGui/qevent.h>
 #if defined(Q_WS_WIN)
@@ -31,6 +32,7 @@
 #endif
 #include <PLCore/Tools/Timing.h>
 #include "PLFrontendQt/Frontend.h"
+#include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
 
@@ -68,6 +70,9 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(null
 
 	// Set window size
 	resize(640, 480);
+
+	// Drop events are enabled for this widget
+	setAcceptDrops(true);
 
 	// Show the window, but do not activate it right now
 	show();
@@ -161,6 +166,27 @@ void FrontendMainWindow::paintEvent(QPaintEvent *)
 
 	// Let the frontend draw into it's window
 	m_pFrontendQt->OnDraw();
+}
+
+void FrontendMainWindow::dragEnterEvent(QDragEnterEvent *pQDragEnterEvent)
+{
+	pQDragEnterEvent->acceptProposedAction();
+}
+
+void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
+{
+	const QMimeData *pQMimeData = pQDropEvent->mimeData();
+	if (pQMimeData) {
+		// Loop through the provided list
+		PLCore::Array<PLCore::String> lstFiles;
+		QList<QUrl> lstUrls = pQMimeData->urls();
+		lstFiles.Resize(lstUrls.size());
+		for (int i=0; i<lstUrls.size(); i++)
+			lstFiles[i] = QtStringAdapter::QtToPL(lstUrls.at(i).toString());
+
+		// Inform the frontend
+		m_pFrontendQt->OnDrop(lstFiles);
+	}
 }
 
 #if defined(Q_WS_WIN)

@@ -125,6 +125,7 @@ class FrontendPixelLight : public Frontend {
 		PLCORE_API virtual void OnFullscreenMode() override;
 		PLCORE_API virtual void OnDraw() override;
 		PLCORE_API virtual void OnUpdate() override;
+		PLCORE_API virtual void OnDrop(const Container<String> &lstFiles) override;
 
 
 	//[-------------------------------------------------------]

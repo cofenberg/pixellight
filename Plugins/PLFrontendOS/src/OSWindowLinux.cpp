@@ -189,6 +189,8 @@ bool OSWindowLinux::Ping()
 					}
 				}
 				break;
+
+			// [TODO] Drag and drop of files
 		}
 	}
 

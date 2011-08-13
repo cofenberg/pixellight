@@ -126,6 +126,15 @@ void FrontendApplication::OnUpdate()
 	// No default implementation
 }
 
+/**
+*  @brief
+*    Called when string data has been dropped onto the frontend window
+*/
+void FrontendApplication::OnDrop(const Container<String> &lstFiles)
+{
+	// No default implementation
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

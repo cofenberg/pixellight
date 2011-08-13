@@ -229,6 +229,16 @@ void Application::OnInit()
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
+//[-------------------------------------------------------]
+void Application::OnDrop(const Container<String> &lstFiles)
+{
+	// Load resource (if it's one :)
+	LoadResource(lstFiles[0]);
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
 void Application::OnCreateInputController()
@@ -246,7 +256,7 @@ void Application::OnCreateInputController()
 //[-------------------------------------------------------]
 //[ Public virtual PLEngine::EngineApplication functions  ]
 //[-------------------------------------------------------]
-bool Application::LoadScene(String sFilename)
+bool Application::LoadScene(const String &sFilename)
 {
 	{ // Make the directory of the scene to load in to the application base directory
 		// Validate path

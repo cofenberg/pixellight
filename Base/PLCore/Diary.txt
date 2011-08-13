@@ -3,6 +3,8 @@
 - "PLFrontend::OSWindowWindows" & "PLFrontend::OSWindowLinux" now react on AltGr-Return as well (same behavior across all frontend implementations)
 - "Frontend": Added "IsMouseVisible()" and "SetMouseVisible()" ("PLFrontendOS::OSWindowLinux" part not yet implemented)
 - "Frontend": Added "SetTrapMouse()"
+- "AbstractFrontend": Added "OnDrop()" ("PLFrontendOS::OSWindowLinux" part not yet implemented). I'am not going to reimplement PLGui as frontend, but this feature is another
+  useful one and I reduce it's usage to simple strings (for more complex stuff one has to use a GUI system!).
 
 
 

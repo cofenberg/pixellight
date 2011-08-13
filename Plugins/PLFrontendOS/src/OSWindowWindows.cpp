@@ -154,6 +154,34 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Update trap mouse if required
 				pOSWindowWindows->UpdateTrapMouse();
 				return 0;
+
+			// Drag and drop of files
+			case WM_DROPFILES:
+			{
+				// Get dropped filenames. Because there's no way - without extreme overhead :) - to check whether
+				// we really need to use Unicode or ASCII is quite enough, we always use Unicode just to be sure.
+				const uint32 nNumOfFiles = DragQueryFileW(reinterpret_cast<HDROP>(wParam), 0xFFFFFFFF, static_cast<LPWSTR>(nullptr), 0);
+				if (nNumOfFiles) {
+					// Create the file list
+					Array<String> lstFiles;
+					lstFiles.Resize(nNumOfFiles);
+					for (uint32 i=0; i<nNumOfFiles; i++) {
+						// Get the length of the string (+1 for \0)
+						const UINT nSize = DragQueryFileW(reinterpret_cast<HDROP>(wParam), i, nullptr, 0) + 1;
+
+						// Create the string and fill it
+						wchar_t *pszFile = new wchar_t[nSize];
+						DragQueryFileW(reinterpret_cast<HDROP>(wParam), i, pszFile, nSize);
+
+						// Store the string (the PL string takes over the control)
+						lstFiles[i] = String(pszFile, false, nSize - 1);
+					}
+
+					// Inform the frontend
+					pOSWindowWindows->m_pFrontendOS->OnDrop(lstFiles);
+					return 0;
+				}
+			}
 		}
 	}
 
@@ -225,7 +253,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	if (::RegisterClass(&m_WndClass)) {
 		// Set window style
 		const DWORD dwStyle    = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
-		const DWORD dwExtStyle = 0;
+		const DWORD dwExtStyle = WS_EX_ACCEPTFILES;
 
 		// Create the window
 		m_hWnd = ::CreateWindowExA(dwExtStyle,

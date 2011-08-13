@@ -163,6 +163,18 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*/
 		PLCORE_API virtual void OnUpdate() override;
 
+		/**
+		*  @brief
+		*    Called when string data has been dropped onto the frontend window
+		*
+		*  @param[in] lstFiles
+		*    List of file names
+		*
+		*  @note
+		*    - The default implementation is empty
+		*/
+		PLCORE_API virtual void OnDrop(const Container<String> &lstFiles) override;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

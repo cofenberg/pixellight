@@ -220,6 +220,9 @@ LRESULT PixelLightCtrl::OnEraseBkgnd(UINT nMsg, WPARAM wParam, LPARAM lParam, BO
 //	UpdateTrapMouse();
 
 
+// [TODO] Drag and drop of files
+
+
 LRESULT PixelLightCtrl::OnSize(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 {
 	// Update trap mouse if required

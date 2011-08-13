@@ -59,6 +59,7 @@ Frontend::Frontend() :
 	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
 	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
 	EventHandlerKeyDownMainWindow (&Frontend::OnKeyDownMainWindow,  this),
+	EventHandlerDropMainWindow    (&Frontend::OnDropMainWindow,     this),
 	m_pMainWindow(nullptr),
 	m_nHotkeyIDAltTab(0),
 	m_bToggleFullscreenMode(true),
@@ -98,9 +99,12 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalActivate.Disconnect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Disconnect(EventHandlerDrawMainWindow);
 		m_pMainWindow->SignalKeyDown .Disconnect(EventHandlerKeyDownMainWindow);
+		m_pMainWindow->SignalDrop    .Disconnect(EventHandlerDropMainWindow);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (m_pMainWindow->GetContentWidget() != m_pMainWindow)
+		if (m_pMainWindow->GetContentWidget() != m_pMainWindow) {
 			m_pMainWindow->GetContentWidget()->SignalKeyDown.Disconnect(EventHandlerKeyDownMainWindow);
+			m_pMainWindow->GetContentWidget()->SignalDrop   .Disconnect(EventHandlerDropMainWindow);
+		}
 	}
 
 	// Set pointer to main window
@@ -112,9 +116,12 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalActivate.Connect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Connect(EventHandlerDrawMainWindow);
 		m_pMainWindow->SignalKeyDown .Connect(EventHandlerKeyDownMainWindow);
+		m_pMainWindow->SignalDrop    .Connect(EventHandlerDropMainWindow);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
-		if (m_pMainWindow->GetContentWidget() != m_pMainWindow)
+		if (m_pMainWindow->GetContentWidget() != m_pMainWindow) {
 			m_pMainWindow->GetContentWidget()->SignalKeyDown.Connect(EventHandlerKeyDownMainWindow);
+			m_pMainWindow->GetContentWidget()->SignalDrop   .Connect(EventHandlerDropMainWindow);
+		}
 	}
 }
 
@@ -379,6 +386,15 @@ void Frontend::OnKeyDownMainWindow(uint32 nKey, uint32 nModifiers)
 		// Toggle fullscreen mode
 		SetFullscreen(!IsFullscreen());
 	}
+}
+
+/**
+*  @brief
+*    Called when data has been dropped onto the main window
+*/
+void Frontend::OnDropMainWindow(const DataObject &cData)
+{
+	OnDrop(cData.GetFiles());
 }
 
 

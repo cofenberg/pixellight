@@ -117,8 +117,15 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnInitLog();
-		virtual void OnInit();
+		virtual void OnInitLog() override;
+		virtual void OnInit() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLCore::AbstractFrontend functions  ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void OnDrop(const PLCore::Container<PLCore::String> &lstFiles) override;
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +139,7 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Public virtual PLEngine::EngineApplication functions  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadScene(PLCore::String sFilename);
+		virtual bool LoadScene(const PLCore::String &sFilename) override;
 
 
 };

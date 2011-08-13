@@ -221,6 +221,13 @@ void FrontendPixelLight::OnUpdate()
 		m_pFrontendApplication->OnUpdate();
 }
 
+void FrontendPixelLight::OnDrop(const Container<String> &lstFiles)
+{
+	// Call virtual function from application
+	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+		m_pFrontendApplication->OnDrop(lstFiles);
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -310,6 +310,11 @@ void FrontendOpenGL::OnUpdate()
 		m_fAngle -= 360.0f;
 }
 
+void FrontendOpenGL::OnDrop(const Container<String> &lstFiles)
+{
+	// Nothing to do in here
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

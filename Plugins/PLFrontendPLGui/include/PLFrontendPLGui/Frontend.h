@@ -159,6 +159,7 @@ class Frontend : public PLCore::FrontendImpl {
 		PLCore::EventHandler<bool>							 EventHandlerActivateMainWindow;
 		PLCore::EventHandler<PLGui::Graphics&>				 EventHandlerDrawMainWindow;
 		PLCore::EventHandler<PLCore::uint32, PLCore::uint32> EventHandlerKeyDownMainWindow;
+		PLCore::EventHandler<const PLGui::DataObject&>		 EventHandlerDropMainWindow;
 
 
 	//[-------------------------------------------------------]
@@ -219,6 +220,15 @@ class Frontend : public PLCore::FrontendImpl {
 		*    Modifier keys pressed
 		*/
 		void OnKeyDownMainWindow(PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+
+		/**
+		*  @brief
+		*    Called when data has been dropped onto the main window
+		*
+		*  @param[in] cData
+		*    Data
+		*/
+		void OnDropMainWindow(const PLGui::DataObject &cData);
 
 
 };
