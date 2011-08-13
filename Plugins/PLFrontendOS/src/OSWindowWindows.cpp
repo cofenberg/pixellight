@@ -148,6 +148,12 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				::EndPaint(hWnd, &sPaint);
 				return 0;
 			}
+
+			case WM_MOVE:
+			case WM_SIZE:
+				// Update trap mouse if required
+				pOSWindowWindows->UpdateTrapMouse();
+				return 0;
 		}
 	}
 
@@ -171,7 +177,8 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_bDestroyed(false),
 	m_nHotkeyIDAltTab(0),
 	m_bWindowRectBackup(false),
-	m_bMouseVisible(true)
+	m_bMouseVisible(true),
+	m_bTrapMouse(false)
 {
 	MemoryManager::Set(&m_sWindowRectBackup, 0, sizeof(RECT));
 
@@ -237,7 +244,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 			// Show and activate the window
 			::SetForegroundWindow(m_hWnd);
 		} else {
-			// Could not create widget
+			// Could not create window
 			m_bDestroyed = true;
 		}
 	} else {
@@ -288,6 +295,23 @@ void OSWindowWindows::UnregisterHotkey(int nID)
 	// Unregister hotkey
 	if (m_hWnd)
 		::UnregisterHotKey(m_hWnd, nID);
+}
+
+/**
+*  @brief
+*    Update trap mouse if required
+*/
+void OSWindowWindows::UpdateTrapMouse()
+{
+	// Trap mouse?
+	if (m_bTrapMouse) {
+		// Get window rect (in screen coordinates)
+		RECT sRect;
+		::GetWindowRect(m_hWnd, &sRect); 
+
+		// Trap mouse within up-to-date widget rectangle
+		::ClipCursor(&sRect); 
+	}
 }
 
 
@@ -429,6 +453,27 @@ void OSWindowWindows::SetMouseVisible(bool bVisible)
 		// Hide mouse cursor
 		while (ShowCursor(false) >= 0)
 			; // Do nothing
+	}
+}
+
+void OSWindowWindows::SetTrapMouse(bool bTrap)
+{
+	if (m_hWnd) {
+		// Trap mouse?
+		if (bTrap) {
+			// Get window rect (in screen coordinates)
+			RECT sRect;
+			GetWindowRect(m_hWnd, &sRect); 
+
+			// Trap mouse
+			ClipCursor(&sRect); 
+		} else {
+			// Untrap mouse
+			ClipCursor(nullptr);
+		}
+
+		// Backup the state
+		m_bTrapMouse = bTrap;
 	}
 }
 

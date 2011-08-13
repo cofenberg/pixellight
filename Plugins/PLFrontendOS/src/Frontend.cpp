@@ -204,6 +204,13 @@ void Frontend::SetMouseVisible(bool bVisible)
 		m_pOSWindow->SetMouseVisible(bVisible);
 }
 
+void Frontend::SetTrapMouse(bool bTrap)
+{
+	// Let the OS window do the rest
+	if (m_pOSWindow)
+		m_pOSWindow->SetTrapMouse(bTrap);
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

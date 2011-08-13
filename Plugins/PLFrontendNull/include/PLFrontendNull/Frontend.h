@@ -91,6 +91,7 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual void SetFullscreen(bool bFullscreen) override;
 		virtual bool IsMouseVisible() const override;
 		virtual void SetMouseVisible(bool bVisible) override;
+		virtual void SetTrapMouse(bool bTrap) override;
 
 
 	//[-------------------------------------------------------]

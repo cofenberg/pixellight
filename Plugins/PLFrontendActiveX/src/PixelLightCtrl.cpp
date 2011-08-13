@@ -9,6 +9,7 @@
 PixelLightCtrl::PixelLightCtrl() :
 	m_bFrontendApplicationInitialized(false),
 	m_bMouseVisible(true),
+	m_bTrapMouse(false),
 	m_cFrontend(*this)
 {
 	// We *must* have a real window for this control
@@ -129,6 +130,49 @@ void PixelLightCtrl::SetMouseVisible(bool bVisible)
 	}
 }
 
+void PixelLightCtrl::SetTrapMouse(bool bTrap)
+{
+	if (m_hFrontendWnd) {
+		// Trap mouse?
+		if (bTrap) {
+			// Get window rect (in screen coordinates)
+			RECT sRect;
+			GetWindowRect(&sRect); 
+
+			// Trap mouse
+			ClipCursor(&sRect); 
+		} else {
+			// Untrap mouse
+			ClipCursor(nullptr);
+		}
+
+		// Backup the state
+		m_bTrapMouse = bTrap;
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Update trap mouse if required
+*/
+void PixelLightCtrl::UpdateTrapMouse()
+{
+	// Trap mouse?
+	if (m_bTrapMouse) {
+		// Get window rect (in screen coordinates)
+		RECT sRect;
+		::GetWindowRect(m_hFrontendWnd, &sRect); 
+
+		// Trap mouse within up-to-date widget rectangle
+		::ClipCursor(&sRect); 
+	}
+}
+
+
 HRESULT PixelLightCtrl::OnDrawAdvanced(ATL_DRAWINFO &di)
 {
 	// Let the frontend draw into it's window
@@ -170,8 +214,17 @@ LRESULT PixelLightCtrl::OnEraseBkgnd(UINT nMsg, WPARAM wParam, LPARAM lParam, BO
 	return 0;
 }
 
+
+// [TODO] React on move messages
+	// Update trap mouse if required
+//	UpdateTrapMouse();
+
+
 LRESULT PixelLightCtrl::OnSize(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &bHandled)
 {
+	// Update trap mouse if required
+	UpdateTrapMouse();
+
 	// Inform that the window size has been changed
 	FrontendImpl::OnSize();
 

@@ -177,6 +177,11 @@ void Frontend::SetMouseVisible(bool bVisible)
 	// We're not interested in GUI stuff
 }
 
+void Frontend::SetTrapMouse(bool bTrap)
+{
+	// We're not interested in GUI stuff
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

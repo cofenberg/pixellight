@@ -356,6 +356,16 @@ void Frontend::SetMouseVisible(bool bVisible)
 	m_pFrontendImpl->SetMouseVisible(bVisible);
 }
 
+/**
+*  @brief
+*    Trap mouse inside the frontend window
+*/
+void Frontend::SetTrapMouse(bool bTrap)
+{
+	// Call backend
+	m_pFrontendImpl->SetTrapMouse(bTrap);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

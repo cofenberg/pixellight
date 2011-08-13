@@ -438,10 +438,10 @@ void WidgetLinux::SetTrapMouse(bool bTrap)
 			// Release mouse grab
 			XUngrabPointer(m_pDisplay, CurrentTime);
 		}
-	}
 
-	// Do it!
-	XSync(m_pDisplay, False);
+		// Do it!
+		XSync(m_pDisplay, False);
+	}
 }
 
 void WidgetLinux::SetCaptureMouse(bool bCapture)

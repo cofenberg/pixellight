@@ -59,6 +59,10 @@ template <class ValueType> class Array;
 *    an actual PixelLight frontend class. Concrete wrappers for certain browsers,
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
+*
+*  @note
+*    - Do only interact with the frontend when it really makes sense because it's not guaranteed
+*      that every frontend implementation provides every feature exposed by this interface
 */
 class Frontend : public Object, protected AbstractLifecycle, protected AbstractFrontend {
 
@@ -88,6 +92,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,	"Sets whether or not the window is currently fullscreen or not. 'true' as first parameter if the window is currently fullscreen, else 'false'.",				"")
 			pl_method_0(IsMouseVisible,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently visible. Returns 'true' if the mouse cursor is currently visible, else 'false'.",							"")
 			pl_method_1(SetMouseVisible,			pl_ret_type(void),		bool,	"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",																"")
+			pl_method_1(SetTrapMouse,				pl_ret_type(void),		bool,	"Trap the mouse inside the frontend window. 'true' as first parameter if the mouse should be trapped inside the frontend window, else 'false'.",				"")
 		#endif
 	pl_class_end
 
@@ -361,6 +366,8 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - If the mouse cursor is visible in general, it's still possible that it's
 		*      invisible over some special widgets.
 		*    - If the mouse cursor is invisible in general, it will NEVER be visible!
+		*    - Do only hide the mouse cursor when it really makes sense (e.g. during the period
+		*      the mouse is used to control a "camera look around")
 		*/
 		PLCORE_API bool IsMouseVisible() const;
 
@@ -375,6 +382,19 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - IsMouseVisible()
 		*/
 		PLCORE_API void SetMouseVisible(bool bVisible);
+
+		/**
+		*  @brief
+		*    Trap mouse inside the frontend window
+		*
+		*  @param[in] bTrap
+		*    'true' if the mouse should be trapped inside the frontend window, else 'false'
+		*
+		*  @note
+		*    - Do only trap the mouse cursor when it really makes sense (e.g. during the period
+		*      the mouse is used to control a "camera look around")
+		*/
+		PLCORE_API void SetTrapMouse(bool bTrap);
 
 
 	//[-------------------------------------------------------]
