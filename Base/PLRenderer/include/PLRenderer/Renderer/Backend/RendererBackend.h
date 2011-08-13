@@ -56,7 +56,7 @@ class DrawHelpersBackend;
 *    Renderer backend with general stuff which all backends will need
 *
 *  @note
-*    - This will also provide and manage the Cg context automatically
+*    - All renderer backends must be derived from this class in order to have a common ground
 */
 class RendererBackend : public Renderer {
 

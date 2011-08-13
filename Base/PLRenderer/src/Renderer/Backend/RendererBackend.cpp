@@ -480,7 +480,7 @@ void RendererBackend::Update()
 		pProfiling->Set(sAPI, "Draw primitive calls",			sS.nDrawPrimitivCalls);
 		pProfiling->Set(sAPI, "Current triangles",				sS.nTriangles);
 		pProfiling->Set(sAPI, "Current vertices",				sS.nVertices);
-		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				sS.nRenderingTime));
+		pProfiling->Set(sAPI, "Rendering time",					String::Format("%.3f ms",				sS.fRenderingTime));
 		// Texture buffers
 		pProfiling->Set(sAPI, "Number of texture buffers",		sS.nTextureBuffersNum);
 		const float fTextureBuffersMemKB = static_cast<float>(sS.nTextureBuffersMem)/1024.0f;
@@ -509,7 +509,7 @@ void RendererBackend::Update()
 	m_sStatistics.nDrawPrimitivCalls		= 0;
 	m_sStatistics.nVertices					= 0;
 	m_sStatistics.nTriangles				= 0;
-	m_sStatistics.nRenderingTime			= 0;
+	m_sStatistics.fRenderingTime			= 0.0f;
 	m_sStatistics.nTextureBufferBinds		= 0;
 	m_sStatistics.nVertexBuffersSetupTime	= 0;
 	m_sStatistics.nVertexBufferLocks		= 0;
