@@ -276,13 +276,18 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 
 bool OSWindowLinux::IsMouseVisible() const
 {
-	// [TODO] implement me
-	return true;
+	return m_bMouseVisible;
 }
 
 void OSWindowLinux::SetMouseVisible(bool bVisible)
 {
-	// [TODO] implement me
+	// Backup the state
+	m_bMouseVisible = bVisible;
+	if (!bVisible) {
+		XDefineCursor(m_pDisplay,m_nNativeWindowHandle, m_nInvisibleCursor);
+	} else {
+		XUndefineCursor(m_pDisplay, m_nNativeWindowHandle);
+	}
 }
 
 void OSWindowLinux::SetTrapMouse(bool bTrap)
@@ -354,22 +359,6 @@ void OSWindowLinux::CreateInvisibleCursor()
 	bitmapNoData = XCreateBitmapFromData(m_pDisplay, m_nNativeWindowHandle, noData, 8, 8);
 	m_nInvisibleCursor = XCreatePixmapCursor(m_pDisplay, bitmapNoData, bitmapNoData, 
 										&black, &black, 0, 0);
-}
-
-bool OSWindowLinux::IsMouseVisible() const
-{
-	return m_bMouseVisible;
-}
-
-void OSWindowLinux::SetMouseVisible(bool bVisible)
-{
-	// Backup the state
-	m_bMouseVisible = bVisible;
-	if (!bVisible) {
-		XDefineCursor(m_pDisplay,m_nNativeWindowHandle, m_nInvisibleCursor);
-	} else {
-		XUndefineCursor(m_pDisplay, m_nNativeWindowHandle);
-	}
 }
 
 
