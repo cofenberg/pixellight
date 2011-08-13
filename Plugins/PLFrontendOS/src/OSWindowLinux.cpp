@@ -54,7 +54,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
-	m_nNativeWindowHandle(NULL_HANDLE)
+	m_nNativeWindowHandle(NULL_HANDLE),
+	m_bMouseVisible(true),
+	m_nInvisibleCursor(0)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
@@ -92,6 +94,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 
 		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
+		
+		// Create the invisible cursor instance
+		CreateInvisibleCursor();
 	}
 
 	// Do the frontend lifecycle thing - start
@@ -109,6 +114,14 @@ OSWindowLinux::~OSWindowLinux()
 		// Send destroy message to window
 		XDestroyWindow(m_pDisplay, m_nNativeWindowHandle);
 	}
+	
+	// Destroy the invisible cursor instance
+	if(m_nInvisibleCursor) {
+		XFreeCursor(m_pDisplay, m_nInvisibleCursor);
+	}
+	
+	// Close the X11 display connection
+	XCloseDisplay(m_pDisplay);
 }
 
 
@@ -175,7 +188,15 @@ bool OSWindowLinux::Ping()
 
 			case ClientMessage:
 				if (sXEvent.xclient.data.l[0] == m_wmDelete)
+				{
+					// When the wmDelete client message is send no DestroyNotify is generated because the application itself
+					// should destroy/close the window to which the wmDelete cleint message was sent
+					// In this case we will leave the event loop after this message was processed and no other messages are in the queue
+					// -> No DestroyNotify message can be received
+					// --> Do the frontend lifecycle thing - stop
+					m_pFrontendOS->OnStop();
 					bQuit = true;
+				}
 				break;
 
 			case KeyPress:
@@ -287,15 +308,39 @@ void OSWindowLinux::SignalHandler(int nSignal)
 	}
 }
 
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates an invisible cursor
+*/
+void OSWindowLinux::CreateInvisibleCursor()
+{
+	Pixmap bitmapNoData;
+	XColor black;
+	static char noData[] = { 0,0,0,0,0,0,0,0 };
+	black.red = black.green = black.blue = 0;
+
+	bitmapNoData = XCreateBitmapFromData(m_pDisplay, m_nNativeWindowHandle, noData, 8, 8);
+	m_nInvisibleCursor = XCreatePixmapCursor(m_pDisplay, bitmapNoData, bitmapNoData, 
+										&black, &black, 0, 0);
+}
+
 bool OSWindowLinux::IsMouseVisible() const
 {
-	// [TODO] implement me
-	return true;
+	return m_bMouseVisible;
 }
 
 void OSWindowLinux::SetMouseVisible(bool bVisible)
 {
-	// [TODO] implement me
+	// Backup the state
+	m_bMouseVisible = bVisible;
+	if (!bVisible) {
+		XDefineCursor(m_pDisplay,m_nNativeWindowHandle, m_nInvisibleCursor);
+	} else {
+		XUndefineCursor(m_pDisplay, m_nNativeWindowHandle);
+	}
 }
 
 

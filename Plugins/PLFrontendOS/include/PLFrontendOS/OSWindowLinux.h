@@ -141,13 +141,26 @@ class OSWindowLinux : public OSWindow {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Creates an invisible cursor
+		*/
+		void CreateInvisibleCursor();
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
-		Display	 *m_pDisplay;				/**< System display, considered to be always valid */
-		Atom 	  m_wmDelete;				/**< System atom for delete */
-		Window	  m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		Frontend	*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
+		Display		*m_pDisplay;			/**< System display, considered to be always valid */
+		Atom		 m_wmDelete;			/**< System atom for delete */
+		Window		 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		bool		 m_bMouseVisible;		/**< Is the mouse cursor visible? */
+		Cursor		 m_nInvisibleCursor;	/**< The invisible cursor */
 
 
 };
