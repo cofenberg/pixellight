@@ -262,8 +262,8 @@ void FontTexture::CreateGlyphTextureAtlas()
 			}
 
 			// Update renderer statistics
-			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum++;
-			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetWritableStatistics().nTextureBuffersNum++;
+			static_cast<Renderer&>(GetFontManager().GetRenderer()).GetWritableStatistics().nTextureBuffersMem += GetGlyphTextureAtlasNumOfBytes(true);
 		}
 	}
 }
@@ -316,8 +316,8 @@ void FontTexture::DestroyGlyphTextureAtlas()
 		glDeleteTextures(1, &m_nOpenGLGlyphTextureAtlas);
 
 		// Update renderer statistics
-		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+		static_cast<Renderer&>(GetFontManager().GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetGlyphTextureAtlasNumOfBytes(true);
 
 		// Reset glyph texture atlas information
 		m_nOpenGLGlyphTextureAtlas = 0;

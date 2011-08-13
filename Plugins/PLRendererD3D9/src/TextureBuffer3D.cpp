@@ -54,8 +54,8 @@ TextureBuffer3D::~TextureBuffer3D()
 		m_pD3D9Texture->Release();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -83,7 +83,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	Renderer &cRendererD3D9 = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererD3D9.GetStatisticsT().nTextureBuffersNum++;
+	cRendererD3D9.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Choose the texture buffer pixel formats which should be used
 	EPixelFormat nImageFormat;
@@ -292,7 +292,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 					}
 
 					// Update renderer statistics
-					cRendererD3D9.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+					cRendererD3D9.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 				}
 			}
 		}

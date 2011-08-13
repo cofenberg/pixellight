@@ -47,7 +47,7 @@ IndexBuffer::~IndexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferNum--;
 }
 
 
@@ -63,7 +63,7 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 	m_pLockedData(nullptr)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nIndexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nIndexBufferNum++;
 }
 
 /**
@@ -103,7 +103,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 		return true; // Done
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;
@@ -155,7 +155,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem += m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem += m_nSize;
 
 	// Done
 	return true;
@@ -177,7 +177,7 @@ bool IndexBuffer::Clear()
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements = 0;
@@ -200,7 +200,7 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		return m_pLockedData; // Return the locked data
 
 	// Lock the index buffer
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBufferLocks++;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 	m_pLockedData = m_pData;
 
@@ -226,7 +226,7 @@ bool IndexBuffer::Unlock()
 
 	// Unlock the index buffer
 	m_pLockedData = nullptr;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 
 	// Done
 	return true;

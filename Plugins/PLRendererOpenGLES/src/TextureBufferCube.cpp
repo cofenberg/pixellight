@@ -55,8 +55,8 @@ TextureBufferCube::~TextureBufferCube()
 	glDeleteTextures(1, &m_nOpenGLESTexture);
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -84,7 +84,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 	Renderer &cRendererOpenGLES = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGLES.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Choose the texture buffer pixel formats which should be used
 	EPixelFormat nImageFormat;
@@ -222,7 +222,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				}
 
 				// Update renderer statistics
-				cRendererOpenGLES.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+				cRendererOpenGLES.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 			}
 		}
 	}
@@ -240,7 +240,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 	Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
 
 	// Update renderer statistics
-	cRendererOpenGLES.GetStatisticsT().nTextureBuffersNum++;
+	cRendererOpenGLES.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Get pixel format
 	m_nFormat = nInternalFormat;
@@ -279,7 +279,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 		m_nTotalNumOfBytes = GetNumOfBytes();
 
 		// Update renderer statistics
-		cRendererOpenGLES.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+		cRendererOpenGLES.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 	}
 }
 

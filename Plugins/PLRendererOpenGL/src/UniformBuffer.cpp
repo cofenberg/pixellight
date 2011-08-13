@@ -47,7 +47,7 @@ UniformBuffer::~UniformBuffer()
 	Clear();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferNum--;
 }
 
 /**
@@ -86,7 +86,7 @@ UniformBuffer::UniformBuffer(PLRenderer::Renderer &cRenderer, const String &sSha
 	m_nUsageAPI(0)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nUniformBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nUniformBufferNum++;
 }
 
 /**
@@ -166,7 +166,7 @@ bool UniformBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, b
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;
@@ -251,7 +251,7 @@ bool UniformBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, b
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem += m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem += m_nSize;
 
 	// Done
 	return true;
@@ -271,7 +271,7 @@ bool UniformBuffer::Clear()
 		}
 
 		// Update renderer statistics
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferMem -= m_nSize;
 
 		// Init
 		m_nElements  = 0;
@@ -311,7 +311,7 @@ void *UniformBuffer::Lock(uint32 nFlag)
 		}
 
 		// Map the uniform buffer
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBufferLocks++;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pData)
 			m_pLockedData = m_pData;
@@ -365,7 +365,7 @@ bool UniformBuffer::Unlock()
 			glUnmapBufferARB(GL_UNIFORM_BUFFER);
 		}
 	}
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nUniformBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nUniformBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	m_pLockedData   = nullptr;
 	m_bLockReadOnly = false;
 

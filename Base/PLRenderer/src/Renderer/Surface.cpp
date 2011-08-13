@@ -155,7 +155,7 @@ void Surface::Draw()
 		EventPaintEnd();
 
 		// Update statistics (all renderer backends must be derived from the renderer backend class in order to have a common ground, so, this cast is assumed to be safe)
-		reinterpret_cast<RendererBackend*>(m_pRenderer)->GetStatisticsT().fRenderingTime += cStopwatch.GetMilliseconds();
+		reinterpret_cast<RendererBackend*>(m_pRenderer)->GetWritableStatistics().fRenderingTime += cStopwatch.GetMilliseconds();
 	}
 }
 

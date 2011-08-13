@@ -48,7 +48,7 @@ VertexBuffer::~VertexBuffer()
 	Clear();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferNum--;
 }
 
 
@@ -70,7 +70,7 @@ VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::Vertex
 	MemoryManager::Set(m_nOffset, -1, sizeof(int)*NumOfSemantics*MaxPipelineChannels);
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nVertexBufferNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nVertexBufferNum++;
 }
 
 /**
@@ -406,7 +406,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		ForceUnlock();
 
 		// Update renderer statistics
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferMem -= m_nSize;
 
 		// Setup data
 		m_nElements = nElements;
@@ -447,7 +447,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		}
 
 		// Update renderer statistics
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem += m_nSize;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferMem += m_nSize;
 	}
 
 	// Get data attribute offsets
@@ -477,7 +477,7 @@ bool VertexBuffer::Clear()
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferMem -= m_nSize;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferMem -= m_nSize;
 
 	// Init
 	m_nElements	= 0;
@@ -511,7 +511,7 @@ void *VertexBuffer::Lock(uint32 nFlag)
 			return nullptr; // Error!
 
 		// Lock the vertex buffer
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBufferLocks++;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferLocks++;
 		m_nLockStartTime = System::GetInstance()->GetMicroseconds();
 		if (m_pVertexBuffer && m_pVertexBuffer->Lock(0, 0, &m_pLockedData, nFlagAPI) != D3D_OK)
 			return nullptr; // Error!
@@ -545,7 +545,7 @@ bool VertexBuffer::Unlock()
 		m_pLockedData = nullptr;
 		if (m_pVertexBuffer && m_pVertexBuffer->Unlock() != D3D_OK)
 			return false; // Error!
-		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
+		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 	}
 
 	// Done

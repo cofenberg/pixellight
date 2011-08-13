@@ -54,8 +54,8 @@ TextureBufferCube::~TextureBufferCube()
 		m_pD3D9Texture->Release();
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersMem -= GetTotalNumOfBytes();
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersMem -= GetTotalNumOfBytes();
 }
 
 /**
@@ -83,7 +83,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 	Renderer &cRendererD3D9 = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererD3D9.GetStatisticsT().nTextureBuffersNum++;
+	cRendererD3D9.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Choose the texture buffer pixel formats which should be used
 	EPixelFormat nImageFormat;
@@ -298,7 +298,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 					}
 
 					// Update renderer statistics
-					cRendererD3D9.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+					cRendererD3D9.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 				}
 			}
 		}
@@ -318,7 +318,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 	Renderer &cRendererD3D9 = static_cast<Renderer&>(cRenderer);
 
 	// Update renderer statistics
-	cRendererD3D9.GetStatisticsT().nTextureBuffersNum++;
+	cRendererD3D9.GetWritableStatistics().nTextureBuffersNum++;
 
 	// Check if there are renderer information
 	LPDIRECT3DDEVICE9 pDevice = static_cast<Renderer&>(cRenderer).GetDevice();
@@ -361,7 +361,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 				m_nTotalNumOfBytes += GetNumOfBytes(nLevel);
 
 			// Update renderer statistics
-			cRendererD3D9.GetStatisticsT().nTextureBuffersMem += GetTotalNumOfBytes();
+			cRendererD3D9.GetWritableStatistics().nTextureBuffersMem += GetTotalNumOfBytes();
 		}
 	}
 }

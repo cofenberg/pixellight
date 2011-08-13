@@ -47,7 +47,7 @@ namespace PLRendererOpenGLES {
 TextureBuffer3D::~TextureBuffer3D()
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetStatisticsT().nTextureBuffersNum--;
+	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nTextureBuffersNum--;
 }
 
 
@@ -62,7 +62,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 	PLRenderer::TextureBuffer3D(cRenderer, nFlags)
 {
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetStatisticsT().nTextureBuffersNum++;
+	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nTextureBuffersNum++;
 
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();

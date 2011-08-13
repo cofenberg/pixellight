@@ -70,9 +70,9 @@ const char *GetBoolString(bool bValue)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the renderer statistics for internal usage
+*    Returns the writable renderer statistics for internal usage
 */
-Statistics &RendererBackend::GetStatisticsT()
+Statistics &RendererBackend::GetWritableStatistics()
 {
 	return m_sStatistics;
 }

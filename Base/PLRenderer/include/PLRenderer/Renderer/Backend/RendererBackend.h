@@ -74,12 +74,12 @@ class RendererBackend : public Renderer {
 	public:
 		/**
 		*  @brief
-		*    Returns the renderer statistics for internal usage
+		*    Returns the writable renderer statistics for internal usage
 		*
 		*  @return
-		*    The renderer statistics
+		*    The writable renderer statistics
 		*/
-		PLRENDERER_API Statistics &GetStatisticsT();
+		PLRENDERER_API Statistics &GetWritableStatistics();
 
 		/**
 		*  @brief
