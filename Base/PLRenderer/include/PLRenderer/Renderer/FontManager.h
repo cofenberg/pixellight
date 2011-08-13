@@ -93,7 +93,7 @@ class FontManager {
 		*    The default texture font, a null pointer on error
 		*
 		*  @remarks
-		*    The default texture font setting is build in within the "FontManager"-constructor and is set to
+		*    The default texture font setting is build in and is set to
 		*    - Filename   = "Data/Fonts/LinLibertine_Re-2.7.9.9.otf"
 		*    - Size       = 15
 		*      Resolution = 96
@@ -102,7 +102,7 @@ class FontManager {
 		*   until it's first real usage, so, this approach doesn't introduce overhead if you never use
 		*   the build in default font.
 		*/
-		PLRENDERER_API Font *GetDefaultFontTexture() const;
+		PLRENDERER_API Font *GetDefaultFontTexture();
 
 		/**
 		*  @brief
@@ -202,6 +202,7 @@ class FontManager {
 	protected:
 		Renderer					*m_pRenderer;					/**< Owner renderer, always valid! */
 		ResourceHandler				*m_pDefaultFontTextureHandler;	/**< Default texture font, always valid! */
+		bool						 m_bDefaultFontTextureSet;		/**< Default font texture already set? */
 		PLCore::Array<FontTexture*>  m_lstFontTexture;				/**< Texture fonts */
 
 
