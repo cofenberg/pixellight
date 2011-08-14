@@ -2,6 +2,7 @@
 [CO]
 - "PCRE 8.10"->"PCRE 8.12", compiled it for Windows x86 & x64
 - "zlib 1.2.3"->"zlib 1.2.5", compiled it for Windows x86 & x64
+- "libpng 1.4.8"->"libpng 1.5.4", compiled it for Windows x86 & x64
 
 
 
