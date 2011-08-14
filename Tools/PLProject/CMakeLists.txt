@@ -26,7 +26,7 @@ add_include_directories(
 ## Library directories
 ##################################################
 add_link_directories(
-	${PL_BIN_DIR}/Lib
+	${PL_BIN_DIR}/Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}
 )
 
 ##################################################
@@ -113,8 +113,8 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCoreStat)
-add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCoreStat)
+add_dependencies(Tools							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -122,7 +122,7 @@ add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
 
 # Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tools"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}"
 )
 
 ##################################################
@@ -131,5 +131,5 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 
 # Executable
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	DESTINATION ${PL_INSTALL_ROOT}/Tools	COMPONENT SDK
+	DESTINATION ${PL_INSTALL_ROOT}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}	COMPONENT SDK
 )
