@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNullD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsNullD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,8 +116,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsNullD.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug\PLPhysicsNullD.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLSoundD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLPhysicsD64.lib;PLSceneD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNullD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsNullD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -154,8 +154,8 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug64\PLPhysicsNullD64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -189,7 +189,7 @@
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNull.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -201,8 +201,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsNull.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release\PLPhysicsNull.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -234,7 +234,7 @@
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLSound64.lib;PLRenderer64.lib;PLMesh64.lib;PLPhysics64.lib;PLScene64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNull64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -245,8 +245,8 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLPhysicsNull64.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release64\PLPhysicsNull64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

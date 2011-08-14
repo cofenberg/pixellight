@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLSceneD.lib;PLEngineD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptBindingsD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLScriptBindingsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLScriptBindingsD.dll ..\..\Bin\Runtime\Plugins\PLScript\
-copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScript --write-plugin
+      <Command>copy build\debug\PLScriptBindingsD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@ copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;PLSceneD64.lib;PLEngineD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptBindingsD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLScriptBindingsD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -155,9 +155,9 @@ copy build\debug\PLScriptBindingsD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLScriptBindingsD64.dll ..\..\Bin\Runtime\Plugins\PLScript\
-copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScript --write-plugin
+      <Command>copy build\debug64\PLScriptBindingsD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -191,7 +191,7 @@ copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLScene.lib;PLEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptBindings.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,9 +203,9 @@ copy build\debug64\PLScriptBindingsD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLScriptBindings.dll ..\..\Bin\Runtime\Plugins\PLScript\
-copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScript --write-plugin
+      <Command>copy build\release\PLScriptBindings.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -237,7 +237,7 @@ copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLScene64.lib;PLEngine64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLScriptBindings64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -248,9 +248,9 @@ copy build\release\PLScriptBindings.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLScriptBindings64.dll ..\..\Bin\Runtime\Plugins\PLScript\
-copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScript --write-plugin
+      <Command>copy build\release64\PLScriptBindings64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLScriptBindings64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

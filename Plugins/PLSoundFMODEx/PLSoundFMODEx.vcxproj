@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODExD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLSoundFMODEx.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLSoundFMODExD.dll ..\..\Bin\Runtime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\debug\PLSoundFMODExD.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLSoundD64.lib;fmodex64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODExD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLSoundFMODEx64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -155,8 +155,8 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\debug64\PLSoundFMODExD64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -190,7 +190,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODEx.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -202,9 +202,9 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLSoundFMODEx.dll ..\..\Bin\Runtime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\release\PLSoundFMODEx.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -236,7 +236,7 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLSound64.lib;fmodex64_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODEx64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/FMODEx/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -247,8 +247,8 @@ copy ..\..\External\_Windows_x86_32\FMODEx\bin\fmodex.dll ..\..\Bin\Runtime\Plug
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLSoundFMODEx64.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\release64\PLSoundFMODEx64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

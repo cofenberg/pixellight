@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLParticleGroupsD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLParticleGroupsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLParticleGroupsD.dll ..\..\Bin\Runtime\Plugins\PLScene\
-copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+      <Command>copy build\debug\PLParticleGroupsD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@ copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLPhysicsD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLParticleGroupsD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLParticleGroupsD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -155,9 +155,9 @@ copy build\debug\PLParticleGroupsD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLParticleGroupsD64.dll ..\..\Bin\Runtime\Plugins\PLScene\
-copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+      <Command>copy build\debug64\PLParticleGroupsD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -191,7 +191,7 @@ copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLParticleGroups.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,9 +203,9 @@ copy build\debug64\PLParticleGroupsD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLParticleGroups.dll ..\..\Bin\Runtime\Plugins\PLScene\
-copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+      <Command>copy build\release\PLParticleGroups.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -237,7 +237,7 @@ copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLPhysics64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLParticleGroups64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -248,9 +248,9 @@ copy build\release\PLParticleGroups.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLParticleGroups64.dll ..\..\Bin\Runtime\Plugins\PLScene\
-copy build\release64\PLParticleGroups64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLScene --write-plugin
+      <Command>copy build\release64\PLParticleGroups64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLParticleGroups64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

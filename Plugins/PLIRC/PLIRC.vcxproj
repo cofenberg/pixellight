@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLIRCD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLIRCD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -118,8 +118,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLIRCD.dll ..\..\Bin\Runtime\
-copy build\debug\PLIRCD.lib ..\..\Bin\Lib\
+      <Command>copy build\debug\PLIRCD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLIRCD.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -153,7 +153,7 @@ copy build\debug\PLIRCD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLIRC.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -165,8 +165,8 @@ copy build\debug\PLIRCD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLIRC.dll ..\..\Bin\Runtime\
-copy build\release\PLIRC.lib ..\..\Bin\Lib\
+      <Command>copy build\release\PLIRC.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLIRC.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -193,7 +193,7 @@ copy build\release\PLIRC.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLIRCD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLIRCD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -205,8 +205,8 @@ copy build\release\PLIRC.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLIRCD64.dll ..\..\Bin\Runtime\
-copy build\debug64\PLIRCD64.lib ..\..\Bin\Lib\
+      <Command>copy build\debug64\PLIRCD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLIRCD64.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -238,7 +238,7 @@ copy build\debug64\PLIRCD64.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLIRC64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -249,8 +249,8 @@ copy build\debug64\PLIRCD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLIRC64.dll ..\..\Bin\Runtime\
-copy build\release64\PLIRC64.lib ..\..\Bin\Lib\
+      <Command>copy build\release64\PLIRC64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLIRC64.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

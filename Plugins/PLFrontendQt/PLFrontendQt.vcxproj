@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQtD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLFrontendQtD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,11 +116,11 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLFrontendQtD.dll ..\..\Bin\Runtime\
-copy build\debug\PLFrontendQtD.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
+      <Command>copy build\debug\PLFrontendQtD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLFrontendQtD.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -147,7 +147,7 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;PLEngineD64.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQtD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLFrontendQtD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -157,11 +157,11 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLFrontendQtD64.dll ..\..\Bin\Runtime\
-copy build\debug64\PLFrontendQtD64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
+      <Command>copy build\debug64\PLFrontendQtD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLFrontendQtD64.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -195,7 +195,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQt.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -207,11 +207,11 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLFrontendQt.dll ..\..\Bin\Runtime\
-copy build\release\PLFrontendQt.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
+      <Command>copy build\release\PLFrontendQt.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLFrontendQt.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -243,7 +243,7 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendQt64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -254,11 +254,11 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLFrontendQt64.dll ..\..\Bin\Runtime\
-copy build\release64\PLFrontendQt64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime --write-plugin
+      <Command>copy build\release64\PLFrontendQt64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLFrontendQt64.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

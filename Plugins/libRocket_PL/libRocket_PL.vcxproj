@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;PLInputD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)libRocket_PLD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)libRocket_PLD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,11 +116,11 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\libRocket_PLD.dll ..\..\Bin\Runtime\
-copy build\debug\libRocket_PLD.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\
+      <Command>copy build\debug\libRocket_PLD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\libRocket_PLD.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -147,7 +147,7 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLGuiD64.lib;PLInputD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)libRocket_PLD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)libRocket_PLD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -157,11 +157,11 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\libRocket_PLD64.dll ..\..\Bin\Runtime\
-copy build\debug64\libRocket_PLD64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\</Command>
+      <Command>copy build\debug64\libRocket_PLD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\libRocket_PLD64.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x64\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -194,7 +194,7 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)libRocket_PL.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -206,11 +206,11 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\libRocket_PL.dll ..\..\Bin\Runtime\
-copy build\release\libRocket_PL.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\</Command>
+      <Command>copy build\release\libRocket_PL.dll ..\..\Bin\Runtime\x86\
+copy build\release\libRocket_PL.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -241,7 +241,7 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLGui64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)libRocket_PL64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -252,11 +252,11 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\libRocket_PL64.dll ..\..\Bin\Runtime\
-copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\
-copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\</Command>
+      <Command>copy build\release64\libRocket_PL64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x64\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -68,14 +68,14 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLGuiD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLGuiXmlTextD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLGuiXmlTextD.dll ..\..\Bin\Runtime\
-copy build\debug\PLGuiXmlTextD.lib ..\..\Bin\Lib\
+      <Command>copy build\debug\PLGuiXmlTextD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLGuiXmlTextD.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -106,7 +106,7 @@ copy build\debug\PLGuiXmlTextD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLGuiXmlText.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -115,8 +115,8 @@ copy build\debug\PLGuiXmlTextD.lib ..\..\Bin\Lib\
       <DataExecutionPrevention>true</DataExecutionPrevention>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLGuiXmlText.dll ..\..\Bin\Runtime\
-copy build\release\PLGuiXmlText.lib ..\..\Bin\Lib\
+      <Command>copy build\release\PLGuiXmlText.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLGuiXmlText.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

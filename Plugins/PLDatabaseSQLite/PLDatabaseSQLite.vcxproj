@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLDatabaseD.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLDatabaseSQLiteD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLDatabaseSQLiteD.pdb</ProgramDatabaseFile>
@@ -119,9 +119,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLDatabaseSQLiteD.dll ..\..\Bin\Runtime\Plugins\PLDatabase\
-copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLDatabase --write-plugin
+      <Command>copy build\debug\PLDatabaseSQLiteD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@ copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLDatabaseD64.lib;SQLite64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLDatabaseSQLiteD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLDatabaseSQLiteD64.pdb</ProgramDatabaseFile>
@@ -161,9 +161,9 @@ copy build\debug\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLDatabaseSQLiteD64.dll ..\..\Bin\Runtime\Plugins\PLDatabase\
-copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLDatabase --write-plugin
+      <Command>copy build\debug64\PLDatabaseSQLiteD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -197,7 +197,7 @@ copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLDatabase.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLDatabaseSQLite.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -210,9 +210,9 @@ copy build\debug64\PLDatabaseSQLiteD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLDatabaseSQLite.dll ..\..\Bin\Runtime\Plugins\PLDatabase\
-copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLDatabase --write-plugin
+      <Command>copy build\release\PLDatabaseSQLite.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -244,7 +244,7 @@ copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLDatabase64.lib;SQLite64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLDatabaseSQLite64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -256,9 +256,9 @@ copy build\release\PLDatabaseSQLite.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLDatabaseSQLite64.dll ..\..\Bin\Runtime\Plugins\PLDatabase\
-copy build\release64\PLDatabaseSQLite64.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLDatabase --write-plugin
+      <Command>copy build\release64\PLDatabaseSQLite64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLDatabaseSQLite64.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

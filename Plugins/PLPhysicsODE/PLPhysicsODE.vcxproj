@@ -107,7 +107,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsODED.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -117,10 +117,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PL
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsODED.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -158,9 +158,9 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug\PLPhysicsODED.dll ..\..\Bin\Runtime\x64\
+copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -195,7 +195,7 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -207,10 +207,10 @@ copy build\debug\PLPhysicsODED.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -243,7 +243,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PL
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -254,9 +254,9 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release\PLPhysicsODE.dll ..\..\Bin\Runtime\x64\
+copy build\release\PLPhysicsODE.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

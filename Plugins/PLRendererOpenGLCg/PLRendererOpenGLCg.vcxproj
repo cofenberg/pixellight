@@ -107,7 +107,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLRendererOpenGLD.lib;cg.lib;cgGL.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererOpenGLCgD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLRendererOpenGLCgD.pdb</ProgramDatabaseFile>
@@ -118,10 +118,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLRendererOpenGLCgD.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLRenderer --write-plugin
+      <Command>copy build\debug\PLRendererOpenGLCgD.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -148,7 +148,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;PLRendererOpenGLD64.lib;cg64.lib;cgGL64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererOpenGLCgD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLRendererOpenGLCgD64.pdb</ProgramDatabaseFile>
@@ -159,8 +159,8 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLRendererOpenGLCgD64.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLRenderer --write-plugin
+      <Command>copy build\debug64\PLRendererOpenGLCgD64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -194,7 +194,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLRendererOpenGL.lib;cg.lib;cgGL.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererOpenGLCg.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -208,10 +208,10 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLRendererOpenGLCg.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLRenderer --write-plugin
+      <Command>copy build\release\PLRendererOpenGLCg.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Cg\bin\cg.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -243,7 +243,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLRendererOpenGL64.lib;cg64.lib;cgGL64.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLRendererOpenGLCg64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/Cg/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -256,8 +256,8 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\Plugins\PL
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\Runtime\Plugins\PLRenderer\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLRenderer --write-plugin
+      <Command>copy build\release64\PLRendererOpenGLCg64.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

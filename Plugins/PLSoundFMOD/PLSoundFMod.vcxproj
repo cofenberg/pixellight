@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLSoundFMOD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,9 +116,9 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\Runtime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -145,7 +145,7 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLSoundD64.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMODD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLSoundFMOD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -155,8 +155,8 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\debug\PLSoundFMODD.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -190,7 +190,7 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMOD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -202,9 +202,9 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\Runtime\Plugins\PLSound\
-copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -236,7 +236,7 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLSound64.lib;fmodvc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLSoundFMOD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/FMOD/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -247,8 +247,8 @@ copy ..\..\External\_Windows_x86_32\FMOD\bin\fmod.dll ..\..\Bin\Runtime\Plugins\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\Runtime\Plugins\PLSound\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLSound --write-plugin
+      <Command>copy build\release\PLSoundFMOD.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -106,7 +106,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsPhysXD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsPhysXD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,10 +116,10 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -146,7 +146,7 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsPhysXD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLPhysicsPhysXD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -156,9 +156,9 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\debug\PLPhysicsPhysXD.dll ..\..\Bin\Runtime\x64\
+copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -192,7 +192,7 @@ copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsPhysX.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -204,10 +204,10 @@ copy build\debug\PLPhysicsPhysXD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
-copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\Runtime\x86
+copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\x86\
+copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -239,7 +239,7 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsPhysX.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/PhysX/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -250,9 +250,9 @@ copy ..\..\External\_Windows_x86_32\PhysX\bin\PhysXLoader.dll ..\..\Bin\Runtime\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\Runtime\Plugins\PLPhysics\
-copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLPhysics --write-plugin
+      <Command>copy build\release\PLPhysicsPhysX.dll ..\..\Bin\Runtime\x64\
+copy build\release\PLPhysicsPhysX.lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
