@@ -94,7 +94,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 
 		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
-		
+
 		// Create the invisible cursor instance
 		CreateInvisibleCursor();
 	}
@@ -114,14 +114,35 @@ OSWindowLinux::~OSWindowLinux()
 		// Send destroy message to window
 		XDestroyWindow(m_pDisplay, m_nNativeWindowHandle);
 	}
-	
+
 	// Destroy the invisible cursor instance
-	if(m_nInvisibleCursor) {
+	if (m_nInvisibleCursor)
 		XFreeCursor(m_pDisplay, m_nInvisibleCursor);
-	}
-	
+
 	// Close the X11 display connection
 	XCloseDisplay(m_pDisplay);
+}
+
+/**
+*  @brief
+*    Creates an invisible cursor
+*/
+void OSWindowLinux::CreateInvisibleCursor()
+{
+	// Data of the "invisible" cursor
+	XColor sXColorBlack;
+	sXColorBlack.red = sXColorBlack.green = sXColorBlack.blue = 0;
+	static char nNoData[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+
+	// Create the bitmap (it's our responsibility to free the bitmap using "XFreePixmap()" when finished)
+	Pixmap sPixmapNoData = XCreateBitmapFromData(m_pDisplay, m_nNativeWindowHandle, nNoData, 8, 8);
+
+	// Create the pixmap cursor
+	m_nInvisibleCursor = XCreatePixmapCursor(m_pDisplay, sPixmapNoData, sPixmapNoData, &sXColorBlack, &sXColorBlack, 0, 0);
+
+	// The "XCreatePixmapCursor"-documentation (http://tronche.com/gui/x/xlib/pixmap-and-cursor/XCreatePixmapCursor.html) states:
+	// "The pixmaps can be freed immediately if no further explicit references to them are to be made"
+	XFreePixmap(m_pDisplay, sPixmapNoData);
 }
 
 
@@ -150,7 +171,7 @@ void OSWindowLinux::Redraw()
 
 bool OSWindowLinux::Ping()
 {
-	bool bQuit = false;
+	bool bQuit = g_bSignalSystemQuit ? true : false;
 
 	// Look if messages are waiting (non-blocking)
 	while (XPending(m_pDisplay) > 0) {
@@ -168,9 +189,6 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case DestroyNotify:
-				// Do the frontend lifecycle thing - stop
-				m_pFrontendOS->OnStop();
-
 				// Mark window destroyed
 				m_nNativeWindowHandle = NULL_HANDLE;
 				bQuit = true;
@@ -187,16 +205,12 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case ClientMessage:
+				// When the "m_wmDelete" client message is send, no "DestroyNotify"-message is generated because the
+				// application itself should destroy/close the window to which the "m_wmDelete" client message was send to.
+				// In this case, we will leave the event loop after this message was processed and no other messages are in the queue.
+				// -> No "DestroyNotify"-message can be received
 				if (sXEvent.xclient.data.l[0] == m_wmDelete)
-				{
-					// When the wmDelete client message is send no DestroyNotify is generated because the application itself
-					// should destroy/close the window to which the wmDelete cleint message was sent
-					// In this case we will leave the event loop after this message was processed and no other messages are in the queue
-					// -> No DestroyNotify message can be received
-					// --> Do the frontend lifecycle thing - stop
-					m_pFrontendOS->OnStop();
 					bQuit = true;
-				}
 				break;
 
 			case KeyPress:
@@ -215,8 +229,14 @@ bool OSWindowLinux::Ping()
 		}
 	}
 
+	// Quit?
+	if (bQuit) {
+		// Do the frontend lifecycle thing - stop
+		m_pFrontendOS->OnStop();
+	}
+
 	// Done
-	return (bQuit || g_bSignalSystemQuit);
+	return bQuit;
 }
 
 uint32 OSWindowLinux::GetWidth() const
@@ -285,11 +305,12 @@ void OSWindowLinux::SetMouseVisible(bool bVisible)
 {
 	// Backup the state
 	m_bMouseVisible = bVisible;
-	if (!bVisible) {
-		XDefineCursor(m_pDisplay,m_nNativeWindowHandle, m_nInvisibleCursor);
-	} else {
+
+	// Set the mouse cursor state
+	if (bVisible)
 		XUndefineCursor(m_pDisplay, m_nNativeWindowHandle);
-	}
+	else
+		XDefineCursor(m_pDisplay, m_nNativeWindowHandle, m_nInvisibleCursor);
 }
 
 void OSWindowLinux::SetTrapMouse(bool bTrap)
@@ -342,25 +363,6 @@ void OSWindowLinux::SignalHandler(int nSignal)
 			raise(nSignal);
 			break;
 	}
-}
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Creates an invisible cursor
-*/
-void OSWindowLinux::CreateInvisibleCursor()
-{
-	Pixmap bitmapNoData;
-	XColor black;
-	static char noData[] = { 0,0,0,0,0,0,0,0 };
-	black.red = black.green = black.blue = 0;
-
-	bitmapNoData = XCreateBitmapFromData(m_pDisplay, m_nNativeWindowHandle, noData, 8, 8);
-	m_nInvisibleCursor = XCreatePixmapCursor(m_pDisplay, bitmapNoData, bitmapNoData, 
-										&black, &black, 0, 0);
 }
 
 

@@ -110,6 +110,12 @@ class OSWindowLinux : public OSWindow {
 		*/
 		virtual ~OSWindowLinux();
 
+		/**
+		*  @brief
+		*    Creates an invisible cursor
+		*/
+		void CreateInvisibleCursor();
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual OSWindow functions                    ]
@@ -142,17 +148,6 @@ class OSWindowLinux : public OSWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Creates an invisible cursor
-		*/
-		void CreateInvisibleCursor();
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
@@ -161,7 +156,7 @@ class OSWindowLinux : public OSWindow {
 		Atom		 m_wmDelete;			/**< System atom for delete */
 		Window		 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
 		bool		 m_bMouseVisible;		/**< Is the mouse cursor visible? */
-		Cursor		 m_nInvisibleCursor;	/**< The invisible cursor */
+		Cursor		 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
 
 
 };

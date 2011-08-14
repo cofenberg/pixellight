@@ -257,12 +257,12 @@ void Frontend::SetMouseVisible(bool bVisible)
 		// Backup the state
 		m_bMouseVisible = bVisible;
 		if (bVisible) {
-			// This pops the last set cursor from the internal stack and restores the previous one
+			// [TODO](from CO) Doesn't work for me (Windows 7), after this, the mouse cursor stays invisible
+			// This pops the last set cursor from the internal stack and restores the previous one.
 			// If no other cursor was on the stack then the default widget cursor is used
-			// (see http://doc.qt.nokia.com/latest/qapplication.html#restoreOverrideCursor) 
+			// (see http://doc.qt.nokia.com/latest/qapplication.html#restoreOverrideCursor)
 			QApplication::restoreOverrideCursor();
 		} else {
-			// Set the mouse cursor
 			// This pushes the cursor on an internal stack (see http://doc.qt.nokia.com/latest/qapplication.html#setOverrideCursor)
 			QApplication::setOverrideCursor(*m_pQCursorBlank);
 		}
