@@ -21,6 +21,7 @@
 
 
 #include <windows.h>
+#include <stdio.h>
 #include <PixelLight.h>
 
 
@@ -112,7 +113,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 				delete [] pszPath;
 			RegCloseKey(hKey);
 		} else {
-			Message(L"Konnte \"HKEY_CURRENT_USER\\Environment\" nicht öffnen");
+			Message(L"Failed to open \"HKEY_CURRENT_USER\\Environment\"");
 		}
 
 		// Get PixelLight suffix and compose registry key from it
@@ -126,7 +127,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 		}
 
 		// Add directory to registry key "SOFTWARE\\PixelLight\\PixelLight-SDK"
-		if (RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, nullptr, 0, KEY_READ | KEY_WRITE, nullptr, &hKey, nullptr) == ERROR_SUCCESS) {
+		const LONG nErrorCode = RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, nullptr, 0, KEY_READ | KEY_WRITE, nullptr, &hKey, nullptr);
+		if (nErrorCode == ERROR_SUCCESS) {
 			// Set value
 			RegSetValueEx(hKey, L"Runtime", 0, REG_SZ, (BYTE*)szDir, (DWORD)sizeof(wchar_t)*wcslen(szDir));
 			RegFlushKey(hKey);
@@ -134,18 +136,27 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 			// Clean up
 			RegCloseKey(hKey);
 		} else {
-			Message(L"Konnte \"HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK\" nicht öffnen oder erstellen");
+			// Converts a given Windows error code received by 'GetLastError()' into a human readable string
+			LPTSTR pszError;
+			if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, nullptr, nErrorCode, 0, reinterpret_cast<LPTSTR>(&pszError), 0, nullptr)) {
+				wchar_t szMessage[256];
+				swprintf(szMessage, 256, L"Failed to open or create \"HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK\" (%s)", pszError);
+				Message(szMessage);
+				LocalFree(pszError);
+			} else {
+				Message(L"Failed to open or create \"HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK\"");
+			}
 		}
 
 		// We need to send a broadcast so other processes will be informed about the change. If this is not done,
 		// 'dlls' still will not be found although the "PATH" environment variable was updated!
-		DWORD nResult;
+		ULONG_PTR nResult;
 		SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment", SMTO_NORMAL, 4000, &nResult);
 
 		// Output message
-		Message(L"Die PixelLight DLLs wurden installiert. Bitte starten Sie das System neu, damit die Änderungen wirksam werden");
+		Message(L"PixelLight DLLs installed. You may need to restart your system.");
 	} else {
-		Message(L"Der Installer benötigt Windows 2000/NT/XP");
+		Message(L"The installer requires Windows 2000/NT/XP");
 	}
 
 	// Done

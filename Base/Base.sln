@@ -44,11 +44,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScene", "PLScene\PLScene.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSound", "PLSound\PLSound.vcxproj", "{4F984DDD-300E-4E5C-83A6-F075E3D61709}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLFrontend", "PLFrontend\PLFrontend.vcxproj", "{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -153,14 +148,6 @@ Global
 		{4F984DDD-300E-4E5C-83A6-F075E3D61709}.Release|Win32.Build.0 = Release|Win32
 		{4F984DDD-300E-4E5C-83A6-F075E3D61709}.Release|x64.ActiveCfg = Release|x64
 		{4F984DDD-300E-4E5C-83A6-F075E3D61709}.Release|x64.Build.0 = Release|x64
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Debug|Win32.Build.0 = Debug|Win32
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Debug|x64.ActiveCfg = Debug|x64
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Debug|x64.Build.0 = Debug|x64
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Release|Win32.ActiveCfg = Release|Win32
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Release|Win32.Build.0 = Release|Win32
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Release|x64.ActiveCfg = Release|x64
-		{B85E725F-0E1D-4EEA-B9B6-05D5D139F6F9}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

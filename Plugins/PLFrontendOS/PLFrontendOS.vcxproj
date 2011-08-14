@@ -59,17 +59,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -91,8 +91,7 @@
       <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <ExceptionHandling>
-      </ExceptionHandling>
+      <ExceptionHandling>false</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
@@ -106,7 +105,7 @@
     <Link>
       <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendOSD.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)PLFrontendOSD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -116,8 +115,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLFrontendOSD.dll ..\..\Bin\Runtime\Plugins\PLFrontend\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLFrontend --write-plugin
+      <Command>copy build\debug_x86\PLFrontendOSD.dll ..\..\Bin\Runtime\x86
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -129,9 +128,8 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>
-      </ExceptionHandling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>false</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
@@ -140,22 +138,23 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLFrontendOSD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLFrontendOSD.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLFrontendOSD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLFrontendOSD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLFrontendOSD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLFrontendOSD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLFrontendOSD64.dll ..\..\Bin\Runtime\Plugins\PLFrontend\
-..\..\Bin\Tools\PLProjectD.exe . --output-path ..\..\Bin\Runtime\Plugins\PLFrontend --write-plugin
+      <Command>copy build\debug_x64\PLFrontendOSD.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -189,7 +188,7 @@
     <Link>
       <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLFrontendOS.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -201,8 +200,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLFrontendOS.dll ..\..\Bin\Runtime\Plugins\PLFrontend\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLFrontend --write-plugin
+      <Command>copy build\release_x86\PLFrontendOS.dll ..\..\Bin\Runtime\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -211,17 +210,16 @@
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
     <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <MinimalRebuild>true</MinimalRebuild>
-      <ExceptionHandling>
-      </ExceptionHandling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
@@ -230,23 +228,29 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLFrontendOS64.dll</OutputFile>
-      <AdditionalLibraryDirectories>../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLFrontendOS.dll</OutputFile>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLFrontendOS64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLFrontendOS.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLFrontendOS64.dll ..\..\Bin\Runtime\Plugins\PLFrontend\
-..\..\Bin\Tools\PLProject.exe . --output-path ..\..\Bin\Runtime\Plugins\PLFrontend --write-plugin
+      <Command>copy build\release_x64\PLFrontendOS.dll ..\..\Bin\Runtime\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -53,11 +53,11 @@ PLPluginPlatformInfo::PLPluginPlatformInfo()
 	
 	m_mapLibraryPostfix.Add("LinuxRelease", ".so");
 	m_mapLibraryPostfix.Add("Win32Release", ".dll");
-	m_mapLibraryPostfix.Add("Win64Release", "64.dll");
+	m_mapLibraryPostfix.Add("Win64Release", ".dll");
 	
 	m_mapLibraryPostfix.Add("LinuxDebug", "D.so");
 	m_mapLibraryPostfix.Add("Win32Debug", "D.dll");
-	m_mapLibraryPostfix.Add("Win64Debug", "D64.dll");
+	m_mapLibraryPostfix.Add("Win64Debug", "D.dll");
 	
 	m_mapLibraryPrefix.Add("Linux", "lib");
 }
