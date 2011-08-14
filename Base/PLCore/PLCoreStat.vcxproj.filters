@@ -547,9 +547,6 @@
     <ClCompile Include="src\Xml\XmlBase.cpp">
       <Filter>Xml</Filter>
     </ClCompile>
-    <ClCompile Include="src\PCoreLinux.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Frontend\FrontendImpl.cpp">
       <Filter>Frontend</Filter>
     </ClCompile>
@@ -567,6 +564,9 @@
     </ClCompile>
     <ClCompile Include="src\Application\AbstractLifecycle.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCoreLinux.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

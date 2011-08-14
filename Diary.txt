@@ -4,6 +4,14 @@
 
 
 
+>> 14.08.2011
+[CO]
+- Started support for MS Windows x64. To be able to continue the development of PixelLight with x86 & x64 at the same time without any effort, all binaries will now be
+  within x86/x64 subdirectories. The plugin subdirectories within the runtime directory are going to be removed, this approach is just causing to many issues across
+  multiple platforms. Everything runtime related will now be within the runtime root directory (in x86 & x64 subdirectories).
+
+
+
 >> 13.08.2011
 [CO]
 - Frontend refactoring related configuration cleanup

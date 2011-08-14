@@ -60,17 +60,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -114,8 +114,8 @@
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLCoreD.dll ..\..\Bin\Runtime\
-copy build\debug\PLCoreD.lib ..\..\Bin\Lib\
+      <Command>copy build\debug_x86\PLCoreD.dll ..\..\Bin\Runtime\x86\
+copy build\debug_x86\PLCoreD.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -157,8 +157,8 @@ copy build\debug\PLCoreD.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLCore.dll ..\..\Bin\Runtime\
-copy build\release\PLCore.lib ..\..\Bin\Lib\
+      <Command>copy build\release_x86\PLCore.dll ..\..\Bin\Runtime\x86\
+copy build\release_x86\PLCore.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -177,10 +177,11 @@ copy build\release\PLCore.lib ..\..\Bin\Lib\
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlibstat64.lib;pcre64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)D64.dll</OutputFile>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlib.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -188,12 +189,12 @@ copy build\release\PLCore.lib ..\..\Bin\Lib\
       <FixedBaseAddress>
       </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <ImportLibrary>$(TargetDir)$(TargetName)D.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLCoreD64.dll ..\..\Bin\Runtime\
-copy build\debug64\PLCoreD64.lib ..\..\Bin\Lib\
+      <Command>copy build\debug_x64\PLCoreD.dll ..\..\Bin\Runtime\x64\
+copy build\debug_x64\PLCoreD.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -209,10 +210,24 @@ copy build\debug64\PLCoreD64.lib ..\..\Bin\Lib\
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Full</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlibstat64.lib;pcre64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)64.dll</OutputFile>
+      <AdditionalDependencies>Userenv.lib;wsock32.lib;zlib.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/zlib/lib/;../../External/_Windows_x86_64/libpcre/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -224,8 +239,8 @@ copy build\debug64\PLCoreD64.lib ..\..\Bin\Lib\
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLCore64.dll ..\..\Bin\Runtime\
-copy build\release64\PLCore64.lib ..\..\Bin\Lib\
+      <Command>copy build\release_x64\PLCore.dll ..\..\Bin\Runtime\x64\
+copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -254,6 +269,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\File\FileLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\File\FileObject.cpp" />
     <ClCompile Include="src\File\FileSearch.cpp" />
@@ -262,6 +279,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\File\FileSearchLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\File\FileSearchWindows.cpp" />
     <ClCompile Include="src\File\FileSearchZip.cpp" />
@@ -305,10 +324,6 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Network\Server.cpp" />
     <ClCompile Include="src\Network\Socket.cpp" />
     <ClCompile Include="src\Network\SocketAddress.cpp" />
-    <ClCompile Include="src\PCoreLinux.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\PLCore.cpp" />
     <ClCompile Include="src\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\Application\CoreApplication.cpp" />
@@ -328,6 +343,12 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\Base\Var\DynVar.cpp" />
     <ClCompile Include="src\Base\Var\VarDesc.cpp" />
     <ClCompile Include="src\Base\TypeInfo\DynTypeInfo.cpp" />
+    <ClCompile Include="src\PLCoreLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Registry\Registry.cpp" />
     <ClCompile Include="src\Registry\RegistryImpl.cpp" />
     <ClCompile Include="src\Registry\RegistryWindows.cpp" />
@@ -350,6 +371,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\ConsoleLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\ConsoleWindows.cpp" />
     <ClCompile Include="src\System\DynLib.cpp" />
@@ -357,6 +380,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\DynLibLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\DynLibWindows.cpp" />
     <ClCompile Include="src\System\Mutex.cpp" />
@@ -364,6 +389,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\MutexLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\MutexWindows.cpp" />
     <ClCompile Include="src\System\Pipe.cpp" />
@@ -373,6 +400,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\SemaphoreLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\SemaphoreWindows.cpp" />
     <ClCompile Include="src\System\System.cpp" />
@@ -380,6 +409,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\SystemLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\SystemWindows.cpp" />
     <ClCompile Include="src\System\Thread.cpp" />
@@ -388,6 +419,8 @@ copy build\release64\PLCore64.lib ..\..\Bin\Lib\
     <ClCompile Include="src\System\ThreadLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\System\ThreadWindows.cpp" />
     <ClCompile Include="src\Tools\Checksum.cpp" />
