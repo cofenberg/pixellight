@@ -109,7 +109,7 @@
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLGui.lib;PLFrontendPLGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)53RendererMultiView.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -119,7 +119,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\53RendererMultiView.exe ..\Bin\</Command>
+      <Command>copy build\release\53RendererMultiView.exe ..\Bin\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +150,7 @@
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLMesh64.lib;PLGui64.lib;PLFrontendPLGui64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)53RendererMultiView64.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -160,7 +160,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\53RendererMultiView64.exe ..\Bin\</Command>
+      <Command>copy build\release64\53RendererMultiView64.exe ..\Bin\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -183,7 +183,7 @@
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLGui.lib;PLFrontendPLGui.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)53RendererMultiViewD.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)53RendererMultiViewD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -192,7 +192,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\53RendererMultiViewD.exe ..\Bin\</Command>
+      <Command>copy build\debug\53RendererMultiViewD.exe ..\Bin\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -218,7 +218,7 @@
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLMesh64.lib;PLGui64.lib;PLFrontendPLGui64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)53RendererMultiViewD64.exe</OutputFile>
-      <AdditionalLibraryDirectories>../../Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)53RendererMultiViewD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -227,7 +227,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\53RendererMultiViewD64.exe ..\Bin\</Command>
+      <Command>copy build\debug64\53RendererMultiViewD64.exe ..\Bin\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

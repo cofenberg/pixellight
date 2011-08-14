@@ -9,6 +9,7 @@ project(Samples)
 
 # Create Samples directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples)
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE})
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/Data)
 
 # Copy runtime data

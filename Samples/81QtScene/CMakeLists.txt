@@ -31,7 +31,7 @@ add_sources(
 ## Library directories
 ##################################################
 add_link_directories(
-	${PL_BIN_DIR}/Lib
+	${PL_BIN_DIR}/Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}
 )
 
 ##################################################
@@ -115,8 +115,8 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} External-Qt PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene PLEngine PLFrontendQt)
-add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Qt PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene PLEngine PLFrontendQt)
+add_dependencies(Samples						${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -124,7 +124,7 @@ add_dependencies(Samples ${CMAKETOOLS_CURRENT_TARGET})
 
 # Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Samples"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE}"
 )
 
 ##################################################
