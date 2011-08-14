@@ -4,6 +4,7 @@
 - "zlib 1.2.3"->"zlib 1.2.5", compiled it for Windows x86 & x64
 - "libpng 1.4.8"->"libpng 1.5.4", compiled it for Windows x86 & x64
 - "libjpeg 8b"->"libjpeg 8c", compiled it for Windows x86 & x64
+- "FreeType 2.3.12"->"FreeType 2.4.6", compiled it for Windows x86 & x64
 
 
 

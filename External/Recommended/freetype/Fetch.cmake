@@ -11,8 +11,8 @@ include(${CMAKETOOLS_DIR}/External/Fetch.cmake)
 if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	# Download libjpeg
 	external_fetch_http(
-		"http://cdnetworks-kr-2.dl.sourceforge.net/project/freetype/freetype2/2.3.12/freetype-2.3.12.tar.gz"
-		"6fc690d9b34154b51a919ff466cea90c"
+		"http://freefr.dl.sourceforge.net/project/freetype/freetype2/2.4.6/freetype-2.4.6.tar.gz"
+		"1dc4af24a86e2f78a49ac6b520a81ec5"
 		${CMAKETOOLS_CURRENT_DOWNLOAD_DIR}/
 	)
 endif()
