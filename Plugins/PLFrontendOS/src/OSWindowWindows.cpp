@@ -132,6 +132,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// We catched the hotkey
 				return 0;
 
+			// Window paint request
 			case WM_PAINT:
 			{
 				// Begin paint
@@ -149,10 +150,19 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				return 0;
 			}
 
+			// Window was moved
 			case WM_MOVE:
+				// Update trap mouse if required
+				pOSWindowWindows->UpdateTrapMouse();
+				return 0;
+
+			// The size of the window has been changed
 			case WM_SIZE:
 				// Update trap mouse if required
 				pOSWindowWindows->UpdateTrapMouse();
+
+				// Inform that the window size has been changed
+				pOSWindowWindows->m_pFrontendOS->OnSize();
 				return 0;
 
 			// Drag and drop of files

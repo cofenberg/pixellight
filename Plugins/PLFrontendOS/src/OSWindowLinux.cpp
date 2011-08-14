@@ -194,6 +194,12 @@ bool OSWindowLinux::Ping()
 				bQuit = true;
 				break;
 
+			// Window configuration changed
+			case ConfigureNotify:
+				// Inform that the window size has been changed
+				m_pFrontendOS->OnSize();
+				break;
+
 			case UnmapNotify:
 			case FocusOut:
 				m_pFrontendOS->OnPause();

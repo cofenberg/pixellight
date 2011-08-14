@@ -1,3 +1,9 @@
+>> 14.08.2011
+[CO]
+- "PLFrontendOS::OSWindowWindows" & "PLFrontendOS::OSWindowLinux" & "PLFrontendPLGui::Frontend" & "PLFrontendQt::FrontendMainWindow" are now calling "AbstractFrontend::OnSize()"
+
+
+
 >> 13.08.2011
 [CO]
 - "PLFrontend::OSWindowWindows" & "PLFrontend::OSWindowLinux" now react on AltGr-Return as well (same behavior across all frontend implementations)

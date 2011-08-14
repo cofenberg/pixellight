@@ -168,8 +168,15 @@ void FrontendMainWindow::paintEvent(QPaintEvent *)
 	m_pFrontendQt->OnDraw();
 }
 
+void FrontendMainWindow::resizeEvent(QResizeEvent *)
+{
+	// Inform that the window size has been changed
+	m_pFrontendQt->OnSize();
+}
+
 void FrontendMainWindow::dragEnterEvent(QDragEnterEvent *pQDragEnterEvent)
 {
+	// We're open minded for everything
 	pQDragEnterEvent->acceptProposedAction();
 }
 

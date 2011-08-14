@@ -58,6 +58,7 @@ Frontend::Frontend() :
 	EventHandlerDestroyMainWindow (&Frontend::OnDestroyMainWindow,  this),
 	EventHandlerActivateMainWindow(&Frontend::OnActivateMainWindow, this),
 	EventHandlerDrawMainWindow    (&Frontend::OnDrawMainWindow,     this),
+	EventHandlerSizeMainWindow    (&Frontend::OnSizeMainWindow,     this),
 	EventHandlerKeyDownMainWindow (&Frontend::OnKeyDownMainWindow,  this),
 	EventHandlerDropMainWindow    (&Frontend::OnDropMainWindow,     this),
 	m_pMainWindow(nullptr),
@@ -98,6 +99,7 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalDestroy .Disconnect(EventHandlerDestroyMainWindow);
 		m_pMainWindow->SignalActivate.Disconnect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Disconnect(EventHandlerDrawMainWindow);
+		m_pMainWindow->SignalSize    .Disconnect(EventHandlerSizeMainWindow);
 		m_pMainWindow->SignalKeyDown .Disconnect(EventHandlerKeyDownMainWindow);
 		m_pMainWindow->SignalDrop    .Disconnect(EventHandlerDropMainWindow);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
@@ -115,6 +117,7 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 		m_pMainWindow->SignalDestroy .Connect(EventHandlerDestroyMainWindow);
 		m_pMainWindow->SignalActivate.Connect(EventHandlerActivateMainWindow);
 		m_pMainWindow->SignalDraw    .Connect(EventHandlerDrawMainWindow);
+		m_pMainWindow->SignalSize    .Connect(EventHandlerSizeMainWindow);
 		m_pMainWindow->SignalKeyDown .Connect(EventHandlerKeyDownMainWindow);
 		m_pMainWindow->SignalDrop    .Connect(EventHandlerDropMainWindow);
 		// [TODO] Linux: Currently we need to listen to the content widget key signals as well ("focus follows mouse"-topic)
@@ -373,6 +376,16 @@ void Frontend::OnDrawMainWindow(Graphics &cGraphics)
 {
 	// Let the frontend draw into it's window
 	OnDraw();
+}
+
+/**
+*  @brief
+*    Called when the main window gets resized
+*/
+void Frontend::OnSizeMainWindow(const Vector2i &vSize)
+{
+	// Inform that the window size has been changed
+	OnSize();
 }
 
 /**

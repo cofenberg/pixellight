@@ -101,6 +101,7 @@ class FrontendMainWindow : public QMainWindow {
 		virtual void focusInEvent(QFocusEvent *) override;
 		virtual void focusOutEvent(QFocusEvent *) override;
 		virtual void paintEvent(QPaintEvent *) override;
+		virtual void resizeEvent(QResizeEvent *) override;
 		virtual void dragEnterEvent(QDragEnterEvent *) override;
 		virtual void dropEvent(QDropEvent *) override;
 		#if defined(Q_WS_WIN)

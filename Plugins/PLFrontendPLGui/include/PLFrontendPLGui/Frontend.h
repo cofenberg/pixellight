@@ -158,6 +158,7 @@ class Frontend : public PLCore::FrontendImpl {
 		PLCore::EventHandler<>								 EventHandlerDestroyMainWindow;
 		PLCore::EventHandler<bool>							 EventHandlerActivateMainWindow;
 		PLCore::EventHandler<PLGui::Graphics&>				 EventHandlerDrawMainWindow;
+		PLCore::EventHandler<const PLMath::Vector2i&>		 EventHandlerSizeMainWindow;
 		PLCore::EventHandler<PLCore::uint32, PLCore::uint32> EventHandlerKeyDownMainWindow;
 		PLCore::EventHandler<const PLGui::DataObject&>		 EventHandlerDropMainWindow;
 
@@ -209,6 +210,15 @@ class Frontend : public PLCore::FrontendImpl {
 		*    Graphics object used for painting
 		*/
 		void OnDrawMainWindow(PLGui::Graphics &cGraphics);
+
+		/**
+		*  @brief
+		*    Called when the main window gets resized
+		*
+		*  @param[in] vSize
+		*    Size
+		*/
+		void OnSizeMainWindow(const PLMath::Vector2i &vSize);
 
 		/**
 		*  @brief
