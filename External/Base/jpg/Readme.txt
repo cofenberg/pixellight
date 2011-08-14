@@ -1,4 +1,4 @@
-libjpeg Version 8b of 16-May-2010
+libjpeg Version 8c
 - License: "jpg", see "license.txt"
 - JPG image loading library
 - Used by image loaders in PLGraphics
