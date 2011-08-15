@@ -1,3 +1,16 @@
+>> 15.08.2011
+[CO]
+- "ApplicationContext::SetExecutableFilename()": The default (meaning you can choose another way if you want to) application directory layout now looks as follows:
+  - "Application Directory"
+    - "Data" (put all data you need in here)
+    - "x86" (put all x86 executables and binaries in here)
+    - "x64" (put all x64 executables and binaries in here)
+  ... I worked with such a layout for years within other projects and never had real problems to use x86 & x64 together during development. With this layout it should
+  also be absolutly clear that the executables and binares are decoupled from the data. In PixelLight release 0.9.8 there are several structual changes, so, it's probably
+  better do to this "64 bit support"-related one in this release as well so that the next released don't have so many structural changes.
+
+
+
 >> 14.08.2011
 [CO]
 - "PLFrontendOS::OSWindowWindows" & "PLFrontendOS::OSWindowLinux" & "PLFrontendPLGui::Frontend" & "PLFrontendQt::FrontendMainWindow" are now calling "AbstractFrontend::OnSize()"

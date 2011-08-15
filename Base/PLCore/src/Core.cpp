@@ -157,11 +157,14 @@ void Core::ScanRuntimeDirectoryData()
 	// Get PixelLight runtime directory
 	const String sPLDirectory = GetRuntimeDirectory();
 	if (sPLDirectory.GetLength()) {
+		// Get the runtime data directory
+		const String sDataDirectory = Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+
 		// Add runtime directory
-		LoadableManager::GetInstance()->AddBaseDir(sPLDirectory + "/Data/");
+		LoadableManager::GetInstance()->AddBaseDir(sDataDirectory);
 
 		// Add packages from PixelLight runtime directory
-		LoadableManager::GetInstance()->ScanPackages(sPLDirectory + "/Data/");
+		LoadableManager::GetInstance()->ScanPackages(sDataDirectory);
 	}
 }
 

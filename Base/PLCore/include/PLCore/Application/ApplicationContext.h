@@ -101,7 +101,7 @@ class ApplicationContext {
 		*
 		*  @remarks
 		*    This is just a convenience function and is the same as using
-		*      Url(GetExecutableFile()).CutFilename()
+		*      Url(Url(GetExecutableFile()).CutFilename() + "../").Collapse().GetUrl()
 		*/
 		PLCORE_API String GetAppDirectory() const;
 

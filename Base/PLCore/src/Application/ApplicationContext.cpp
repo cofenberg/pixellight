@@ -77,7 +77,7 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 	m_sExecutableFilename = sExecutableFilename;
 
 	// Save application directory
-	m_sAppDirectory = Url(m_sExecutableFilename).CutFilename();
+	m_sAppDirectory = Url(Url(m_sExecutableFilename).CutFilename() + "../").Collapse().GetUrl();
 
 	// Remove the '/' at the end (due usage of the Url-class, we know there's a '/' at the end!)
 	m_sAppDirectory.Delete(m_sAppDirectory.GetLength() - 1);
