@@ -103,7 +103,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLDatabase)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -117,13 +117,13 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
 	)
 endif()
 
@@ -139,18 +139,18 @@ endif()
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/comerr32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/gssapi32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/k5sprt32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/krb5_32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libeay32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libiconv2.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libintl3.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libpq.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/ssleay32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/msvcr71.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/msvcr80.dll "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/Microsoft.VC80.CRT.manifest "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/comerr32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/gssapi32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/k5sprt32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/krb5_32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libeay32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libiconv2.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libintl3.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/libpq.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/ssleay32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/msvcr71.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/msvcr80.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLDatabase/Microsoft.VC80.CRT.manifest ${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 #endif()
@@ -174,7 +174,7 @@ endif()
 #)
 
 # Plugin file
-#install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/${CMAKETOOLS_CURRENT_PLUGIN}
+#install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 #	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLDatabase			COMPONENT Runtime
 #)
 
@@ -182,18 +182,18 @@ endif()
 # [TODO] Uncomment this as soon as there's support for system-libs
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 #	if(WIN32)
-#		install(FILES	${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/comerr32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/gssapi32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/k5sprt32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/krb5_32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/libeay32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/libiconv2.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/libintl3.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/libpq.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/ssleay32.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/msvcr71.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/msvcr80.dll
-#						${PL_BIN_DIR}/Runtime/Plugins/PLDatabase/Microsoft.VC80.CRT.manifest
+#		install(FILES	${PL_RUNTIME_BIN_DIR}/comerr32.dll
+#						${PL_RUNTIME_BIN_DIR}/gssapi32.dll
+#						${PL_RUNTIME_BIN_DIR}/k5sprt32.dll
+#						${PL_RUNTIME_BIN_DIR}/krb5_32.dll
+#						${PL_RUNTIME_BIN_DIR}/libeay32.dll
+#						${PL_RUNTIME_BIN_DIR}/libiconv2.dll
+#						${PL_RUNTIME_BIN_DIR}/libintl3.dll
+#						${PL_RUNTIME_BIN_DIR}/libpq.dll
+#						${PL_RUNTIME_BIN_DIR}/ssleay32.dll
+#						${PL_RUNTIME_BIN_DIR}/msvcr71.dll
+#						${PL_RUNTIME_BIN_DIR}/msvcr80.dll
+#						${PL_RUNTIME_BIN_DIR}/Microsoft.VC80.CRT.manifest
 #			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLDatabase	COMPONENT Runtime
 #		)
 #	endif()

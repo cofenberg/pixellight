@@ -114,7 +114,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLSound)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -128,13 +128,13 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Runtime/Plugins/PLSound"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLSound"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLSound"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
 	)
 endif()
 
@@ -149,8 +149,8 @@ endif()
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/OpenAL32.dll "${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/wrap_oal.dll "${PL_BIN_DIR}/Runtime/Plugins/PLSound/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/OpenAL32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/wrap_oal.dll ${PL_RUNTIME_BIN_DIR}
 		)
 	elseif(LINUX)
 		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
@@ -168,7 +168,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 						${CMAKETOOLS_CURRENT_EXT_DIR}/libvorbis/lib/libvorbisfile.so.3.3.4)
 
 		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
-		set(COPY_DEST "${PL_BIN_DIR}/Runtime/Plugins/PLSound")
+		set(COPY_DEST ${PL_RUNTIME_BIN_DIR})
 
 		# Create the "copy_to_runtime.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
 		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
@@ -184,42 +184,42 @@ endif()
 
 # Library
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound		COMPONENT Runtime
-	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound		COMPONENT Runtime
-	ARCHIVE DESTINATION ${PL_INSTALL_LIB}							COMPONENT SDK
+	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound	COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound	COMPONENT Runtime
+	ARCHIVE DESTINATION ${PL_INSTALL_LIB}						COMPONENT SDK
 )
 
 # Include files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
-	DESTINATION ${PL_INSTALL_INCLUDE} 								COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+	DESTINATION ${PL_INSTALL_INCLUDE} 							COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 )
 
 # Plugin file
-install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLSound/${CMAKETOOLS_CURRENT_PLUGIN}
-	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound				COMPONENT Runtime
+install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound			COMPONENT Runtime
 )
 
 # External dependencies, but only when not using system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
-		install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLSound/OpenAL32.dll
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/wrap_oal.dll
-			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound		COMPONENT Runtime
+		install(FILES ${PL_RUNTIME_BIN_DIR}/OpenAL32.dll
+					  ${PL_RUNTIME_BIN_DIR}/wrap_oal.dll
+			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLSound	COMPONENT Runtime
 		)
 	elseif(LINUX)
-		install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libopenal.so
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libopenal.so.1
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libopenal.so.1.13.0
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libogg.so
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libogg.so.0
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libogg.so.0.7.1
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbis.so
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbis.so.0
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbis.so.0.4.5
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbisfile.so
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbisfile.so.3
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLSound/libvorbisfile.so.3.3.4
-			DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
+		install(FILES ${PL_RUNTIME_BIN_DIR}/libopenal.so
+					  ${PL_RUNTIME_BIN_DIR}/libopenal.so.1
+					  ${PL_RUNTIME_BIN_DIR}/libopenal.so.1.13.0
+					  ${PL_RUNTIME_BIN_DIR}/libogg.so
+					  ${PL_RUNTIME_BIN_DIR}/libogg.so.0
+					  ${PL_RUNTIME_BIN_DIR}/libogg.so.0.7.1
+					  ${PL_RUNTIME_BIN_DIR}/libvorbis.so
+					  ${PL_RUNTIME_BIN_DIR}/libvorbis.so.0
+					  ${PL_RUNTIME_BIN_DIR}/libvorbis.so.0.4.5
+					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so
+					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so.3
+					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so.3.3.4
+			DESTINATION ${PL_INSTALL_SHARED}					COMPONENT Runtime
 		)
 	endif()
 endif()

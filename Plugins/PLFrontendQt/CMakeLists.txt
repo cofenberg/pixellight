@@ -193,7 +193,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -207,21 +207,21 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Runtime"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
 if(WIN32)
 	# Copy the Qt dlls so that the user can use everything "out of the box"
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtCore4.dll "${PL_BIN_DIR}/Runtime"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtGui4.dll "${PL_BIN_DIR}/Runtime"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtCore4.dll ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/bin/QtGui4.dll ${PL_RUNTIME_BIN_DIR}
 	)
 endif()
 
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
 	)
 endif()
 
@@ -236,8 +236,8 @@ endif()
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/QtCore4.dll "${PL_BIN_DIR}/Runtime/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/QtGui4.dll "${PL_BIN_DIR}/Runtime/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/QtCore4.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/QtGui4.dll ${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 	if(LINUX)
@@ -252,7 +252,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3)
 
 		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
-		set(COPY_DEST "${PL_BIN_DIR}/Runtime")
+		set(COPY_DEST ${PL_RUNTIME_BIN_DIR})
 
 		# Create the "copy_to_runtime.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
 		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
@@ -299,7 +299,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 )
 
 # Plugin file
-install(FILES ${PL_BIN_DIR}/Runtime/${CMAKETOOLS_CURRENT_PLUGIN}
+install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLFrontend			COMPONENT Runtime
 )
 
@@ -318,8 +318,8 @@ endif(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 
 if(WIN32)
 	# Copy shared libraries
-	install(FILES	${PL_BIN_DIR}/Runtime/QtCore4.dll
-					${PL_BIN_DIR}/Runtime/QtGui4.dll
+	install(FILES	${PL_RUNTIME_BIN_DIR}/QtCore4.dll
+					${PL_RUNTIME_BIN_DIR}/QtGui4.dll
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
 

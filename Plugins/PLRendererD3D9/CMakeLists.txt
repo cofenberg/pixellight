@@ -83,7 +83,7 @@ add_linker_flags(
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -97,7 +97,7 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
 
 # Import library
@@ -112,7 +112,7 @@ endif()
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cgD3D9.dll "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cgD3D9.dll ${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 #endif()
@@ -136,7 +136,7 @@ endif()
 #)
 
 # Plugin file
-#install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/${CMAKETOOLS_CURRENT_PLUGIN}
+#install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 #	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer			COMPONENT Runtime
 #)
 
@@ -144,7 +144,7 @@ endif()
 # [TODO] Uncomment this as soon as there's support for system-libs
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 #	if(WIN32)
-#		install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/cgD3D9.dll
+#		install(FILES ${PL_RUNTIME_BIN_DIR}/cgD3D9.dll
 #			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer	COMPONENT Runtime
 #		)
 #	endif()

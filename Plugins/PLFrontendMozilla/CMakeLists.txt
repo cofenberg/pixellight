@@ -107,7 +107,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLFrontend)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -142,6 +142,6 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 )
 
 # Plugin file
-install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLFrontend/${CMAKETOOLS_CURRENT_PLUGIN}
+install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLFrontend	COMPONENT Runtime
 )

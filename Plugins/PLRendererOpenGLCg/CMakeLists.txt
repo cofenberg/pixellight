@@ -129,7 +129,7 @@ endif()
 ## Build
 ##################################################
 build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
-pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
@@ -143,13 +143,13 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 # Dynamic library
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
 if(LINUX)
 	# Create relative symbolic links
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer"
-		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer"
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
 	)
 endif()
 
@@ -164,13 +164,13 @@ endif()
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cg.dll "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cgGL.dll "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cg.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLRenderer/cgGL.dll ${PL_RUNTIME_BIN_DIR}
 		)
 	elseif(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCg.so   "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/"
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCgGL.so "${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/"
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCg.so   ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/Cg/lib/libCgGL.so ${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 endif()
@@ -192,20 +192,20 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 )
 
 # Plugin file
-install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/${CMAKETOOLS_CURRENT_PLUGIN}
+install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer			COMPONENT Runtime
 )
 
 # External dependencies, but only when not using system-libs
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
-		install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/cg.dll
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/cgGL.dll
+		install(FILES ${PL_RUNTIME_BIN_DIR}/cg.dll
+					  ${PL_RUNTIME_BIN_DIR}/cgGL.dll
 			DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLRenderer	COMPONENT Runtime
 		)
 	elseif(LINUX)
-		install(FILES ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/libCg.so
-					  ${PL_BIN_DIR}/Runtime/Plugins/PLRenderer/libCgGL.so
+		install(FILES ${PL_RUNTIME_BIN_DIR}/libCg.so
+					  ${PL_RUNTIME_BIN_DIR}/libCgGL.so
 			DESTINATION ${PL_INSTALL_SHARED}						COMPONENT Runtime
 		)
 	endif()
