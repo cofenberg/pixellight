@@ -215,35 +215,36 @@ message(STATUS "Upload destination is '${CMAKETOOLS_UPLOAD_LOCATION}'")
 
 # Install locations
 if(WIN32)
-	set(PL_INSTALL_ROOT				".")											# C:\Programme\PixelLight
-	set(PL_INSTALL_BIN				".")											# C:\Programme\PixelLight
-	set(PL_INSTALL_SHARED			"Runtime")										# C:\Programme\PixelLight\Runtime
-	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# C:\Programme\PixelLight\Lib\x86
-	set(PL_INSTALL_INCLUDE			"Include")										# C:\Programme\PixelLight\Include
-	set(PL_INSTALL_DOCS				"Docs")											# C:\Programme\PixelLight\Docs
-	set(PL_INSTALL_RUNTIME			"Runtime")										# C:\Programme\PixelLight\Runtime
-	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Runtime\x86
-	set(PL_INSTALL_SAMPLES			"Samples")										# C:\Programme\PixelLight\Samples
-	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# C:\Programme\PixelLight\Samples\Bin\x86
-	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")								# C:\Programme\PixelLight\Samples\Bin\Data
-	set(PL_INSTALL_TOOLS			"Tools")										# C:\Programme\PixelLight\Tools
-	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Tools\x86
-	set(PL_INSTALL_BROWSER			"BrowserPlugins")								# C:\Programme\PixelLight\BrowserPlugins
+	set(PL_INSTALL_ROOT				".")															# C:\Programme\PixelLight
+	set(PL_INSTALL_BIN				".")															# C:\Programme\PixelLight
+	set(PL_INSTALL_SHARED			"Runtime")														# C:\Programme\PixelLight\Runtime
+	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")							# C:\Programme\PixelLight\Lib\x86
+	set(PL_INSTALL_INCLUDE			"Include")														# C:\Programme\PixelLight\Include
+	set(PL_INSTALL_DOCS				"Docs")															# C:\Programme\PixelLight\Docs
+	set(PL_INSTALL_RUNTIME			"Runtime")														# C:\Programme\PixelLight\Runtime
+	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Runtime\x86
+	set(PL_INSTALL_SAMPLES			"Samples")														# C:\Programme\PixelLight\Samples
+	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")					# C:\Programme\PixelLight\Samples\Bin\x86
+	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")												# C:\Programme\PixelLight\Samples\Bin\Data
+	set(PL_INSTALL_TOOLS			"Tools")														# C:\Programme\PixelLight\Tools
+	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Tools\x86
+	set(PL_INSTALL_BROWSER			"BrowserPlugins")												# C:\Programme\PixelLight\BrowserPlugins
 elseif(LINUX)
-	set(PL_INSTALL_ROOT				"share/pixellight")								# /usr/share/pixellight
-	set(PL_INSTALL_BIN				"bin")											# /usr/bin
-	set(PL_INSTALL_SHARED			"lib")											# /usr/lib
-	set(PL_INSTALL_LIB				"lib")											# /usr/lib
-	set(PL_INSTALL_INCLUDE			"include")										# /usr/include
-	set(PL_INSTALL_DOCS				"share/docs/pixellight")						# /usr/share/docs/pixellight
-	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")						# /usr/share/pixellight/Runtime
-	set(PL_INSTALL_RUNTIME_BIN		"bin")											# /usr/bin
-	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")						# /usr/share/pixellight/Samples
-	set(PL_INSTALL_SAMPLES_BIN		"share/pixellight/Samples/Bin")					# /usr/share/pixellight/Samples/Bin
-	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")			# /usr/share/pixellight/Samples/Bin/Data
-	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")						# /usr/share/pixellight/Tools
-	set(PL_INSTALL_TOOLS_BIN		"bin")											# /usr/bin
-	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")				# /usr/share/pixellight/BrowserPlugins
+	set(PL_INSTALL_ROOT				"share/pixellight")												# /usr/share/pixellight
+	set(PL_INSTALL_BIN				"bin")															# /usr/bin
+	set(PL_INSTALL_LIB				"lib")															# /usr/lib
+	set(PL_INSTALL_INCLUDE			"include/pixellight")											# /usr/include/pixellight
+	set(PL_INSTALL_DOCS				"share/docs/pixellight")										# /usr/share/docs/pixellight
+	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")										# /usr/share/pixellight/Runtime
+	set(PL_INSTALL_RUNTIME_BIN		"${PL_INSTALL_RUNTIME}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# /usr/share/pixellight/Runtime/x86
+	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")										# /usr/share/pixellight/Samples
+	set(PL_INSTALL_SAMPLES_BIN		"${PL_INSTALL_SAMPLES}/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# /usr/share/pixellight/Samples/Bin/x86
+	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")							# /usr/share/pixellight/Samples/Bin/Data
+	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")										# /usr/share/pixellight/Tools
+	set(PL_INSTALL_TOOLS_BIN		"${PL_INSTALL_TOOLS}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# /usr/share/pixellight/Tools/x86
+	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")								# /usr/share/pixellight/BrowserPlugins
+	# [TODO] replace the usage of this var with ${PL_INSTALL_RUNTIME_BIN}
+	set(PL_INSTALL_SHARED			"${PL_INSTALL_RUNTIME_BIN}")									# /usr/share/pixellight/Runtime/x86
 endif()
 
 # Extensions of files to exclude when e.g. copying a directory

@@ -255,15 +255,4 @@ if(LINUX)
 					${PL_RUNTIME_BIN_DIR}/libRocketDebugger.so.1.2.1
 		DESTINATION ${PL_INSTALL_SHARED}		COMPONENT SDK
 	)
-	install(FILES	${PL_RUNTIME_BIN_DIR}/libRocketCore.so
-					${PL_RUNTIME_BIN_DIR}/libRocketCore.so.1
-					${PL_RUNTIME_BIN_DIR}/libRocketCore.so.1.2.1
-					${PL_RUNTIME_BIN_DIR}/libRocketControls.so
-					${PL_RUNTIME_BIN_DIR}/libRocketControls.so.1
-					${PL_RUNTIME_BIN_DIR}/libRocketControls.so.1.2.1
-					${PL_RUNTIME_BIN_DIR}/libRocketDebugger.so
-					${PL_RUNTIME_BIN_DIR}/libRocketDebugger.so.1
-					${PL_RUNTIME_BIN_DIR}/libRocketDebugger.so.1.2.1
-		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
-	)
 endif()
