@@ -336,7 +336,7 @@ if(WIN32)
 					"${QT_EXTERNAL_DIR}/bin/uic.exe"
 					"${QT_EXTERNAL_DIR}/Readme.txt"
 					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
-		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt		COMPONENT SDK
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/../Qt	COMPONENT SDK	# Those x86 Qt tools can also be used for x64 as well
 	)
 endif()
 if(LINUX AND NOT CMAKETOOLS_USE_SYSTEM_LIBS)
@@ -353,6 +353,6 @@ if(LINUX AND NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 					"${QT_EXTERNAL_DIR}/bin/uic"
 					"${QT_EXTERNAL_DIR}/Readme.txt"
 					"${QT_EXTERNAL_DIR}/LICENSE.LGPL"
-		DESTINATION ${PL_INSTALL_TOOLS_BIN}/Qt		COMPONENT SDK
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/../Qt	COMPONENT SDK	# Those x86 Qt tools can also be used for x64 as well
 	)
 endif()
