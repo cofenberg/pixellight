@@ -24,15 +24,19 @@ include(PixelLight/PixelLight.cmake)
 # Create PixelLight header file
 configure_file("PixelLight/PixelLight.h.in" "${CMAKE_BINARY_DIR}/PixelLight.h")
 
-# Create 'Bin' directory
+# Create 'Bin'-directory
 set(PL_BIN_DIR "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_CONFIG_NAME}")
 file(MAKE_DIRECTORY ${PL_BIN_DIR})
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/Lib)
+
+# Create 'Runtime'-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime)
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE})
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins)
 
-# Create 'Lib' directory
+# Create 'Lib'-directory
+file(MAKE_DIRECTORY ${PL_BIN_DIR}/Lib)
 set(PL_LIB_DIR "${PL_BIN_DIR}/Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
+file(MAKE_DIRECTORY PL_LIB_DIR)
 
 # Copy copyright and notes
 copy_file(${CMAKE_SOURCE_DIR}/AUTHORS			${PL_BIN_DIR})

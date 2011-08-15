@@ -7,9 +7,10 @@ project(Samples)
 ## Prerequisites
 ##################################################
 
-# Create Samples directory
+# Create "Samples"-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples)
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE})
+set(PL_SAMPLES_BIN "${PL_BIN_DIR}/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
+file(MAKE_DIRECTORY PL_SAMPLES_BIN)
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/Data)
 
 # Copy runtime data
