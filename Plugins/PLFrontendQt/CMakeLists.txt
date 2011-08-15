@@ -228,7 +228,7 @@ endif()
 # Import library
 if(WIN32)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} ${PL_LIB_DIR}
 	)
 endif()
 
@@ -265,15 +265,15 @@ endif()
 # Copy the QT libraries so that the user can use everything "out of the box"
 if(WIN32)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtCore4.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtGui4.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmain.lib "${PL_BIN_DIR}/Lib"
-		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmaind.lib "${PL_BIN_DIR}/Lib"
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtCore4.lib ${PL_LIB_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/QtGui4.lib ${PL_LIB_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmain.lib ${PL_LIB_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${QT_EXTERNAL_DIR}/lib/qtmaind.lib ${PL_LIB_DIR}
 	)
 endif()
 if(LINUX)
 	# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
-	set(COPY_DEST "${PL_BIN_DIR}/Lib")
+	set(COPY_DEST ${PL_LIB_DIR})
 
 	# Create the "copy_to_lib.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
 	configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_lib.cmake)
@@ -324,10 +324,10 @@ if(WIN32)
 	)
 
 	# Copy libraries
-	install(FILES	${PL_BIN_DIR}/Lib/QtCore4.lib
-					${PL_BIN_DIR}/Lib/QtGui4.lib
-					${PL_BIN_DIR}/Lib/qtmain.lib
-					${PL_BIN_DIR}/Lib/qtmaind.lib
+	install(FILES	${PL_LIB_DIR}/QtCore4.lib
+					${PL_LIB_DIR}/QtGui4.lib
+					${PL_LIB_DIR}/qtmain.lib
+					${PL_LIB_DIR}/qtmaind.lib
 		DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
 	)
 
