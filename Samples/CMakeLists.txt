@@ -79,8 +79,8 @@ add_dependencies(PixelLight Samples)
 ##################################################
 
 # "WhereIsTheLog.txt"-file
-install(FILES ${CMAKE_SOURCE_DIR}/Bin/Samples/WhereIsTheLog.txt
-	DESTINATION ${PL_INSTALL_SAMPLES}/Bin	COMPONENT SDK
+install(FILES ${CMAKE_SOURCE_DIR}/Bin/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE}/WhereIsTheLog.txt
+	DESTINATION ${PL_INSTALL_SAMPLES}/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}	COMPONENT SDK
 )
 
 # Data
