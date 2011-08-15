@@ -32,6 +32,7 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR})
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime)
 set(PL_RUNTIME_BIN_DIR "${PL_BIN_DIR}/Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
 file(MAKE_DIRECTORY ${PL_RUNTIME_BIN_DIR})
+set(PL_RUNTIME_BIN_GITDIR "${CMAKE_SOURCE_DIR}/Bin/Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# Points to the directory directly within the Git repository
 
 # Create 'Lib'-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Lib)
@@ -48,8 +49,8 @@ copy_file(${CMAKE_SOURCE_DIR}/ReleaseNotes.txt	${PL_BIN_DIR})
 
 # Copy Microsoft Visual C++ Redistributables
 if(WIN32)
-	file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/VC2010_Redistributable)
-	copy_files("${CMAKE_SOURCE_DIR}/Bin/Runtime/VC2010_Redistributable/*.*" "${PL_BIN_DIR}/Runtime/VC2010_Redistributable")
+	file(MAKE_DIRECTORY ${PL_RUNTIME_BIN_DIR}/VC2010_Redistributable)
+	copy_files("${PL_RUNTIME_BIN_GITDIR}/VC2010_Redistributable/*.*" "${PL_RUNTIME_BIN_DIR}/VC2010_Redistributable")
 endif()
 
 ##################################################

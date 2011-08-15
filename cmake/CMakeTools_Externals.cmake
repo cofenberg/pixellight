@@ -93,6 +93,7 @@ macro(external_command target comment script depends)
 	external_command_add_definition(command PL_EXTERNAL_PASS)
 	external_command_add_definition(command PL_BIN_DIR)
 	external_command_add_definition(command PL_RUNTIME_BIN_DIR)
+	external_command_add_definition(command PL_RUNTIME_BIN_GITDIR)
 	set(command ${command} "-P" ${CMAKE_CURRENT_SOURCE_DIR}/${script})
 
 	# Get dependency
