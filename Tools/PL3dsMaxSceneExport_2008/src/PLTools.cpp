@@ -321,7 +321,7 @@ std::string PLTools::GetPLViewerFilename()
 
 			{ // Maybe this is your internal developer version?
 				// Construct the absolute filename
-				sViewer = std::string(pszBuffer) + "Tools\\PLViewer\\PLViewer.exe";
+				sViewer = std::string(pszBuffer) + "Tools\\x86\\PLViewer.exe";
 
 				// Valid filename?
 				FILE *pFile = fopen(sViewer.c_str(), "r");
@@ -334,7 +334,7 @@ std::string PLTools::GetPLViewerFilename()
 			// Installed PL SDK?
 			if (!sViewer.length()) {
 				// Construct the absolute filename
-				sViewer = std::string(pszBuffer) + "Tools\\Bin\\PLViewer\\PLViewer.exe";
+				sViewer = std::string(pszBuffer) + "Tools\\Bin\\x86\\PLViewer.exe";
 
 				// Valid filename?
 				FILE *pFile = fopen(sViewer.c_str(), "r");

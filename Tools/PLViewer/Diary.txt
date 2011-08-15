@@ -1,3 +1,11 @@
+>> 15.08.2011
+[CO]
+- The PLViewer application is now directly within the tools executable directory. The purpose of PLViewer is to have a minimalistic and generic
+  viewer application - but this application shouldn't e.g. require any own data in order to be able to run. For more than just viewing something,
+  the planned PixelLight editor should do the job (one bigger decent tool instead of many small programs).
+
+
+
 >> 31.07.2011
 [CO]
 - The PLViewer application is now using PLInput instead of PLGui to get and process input events

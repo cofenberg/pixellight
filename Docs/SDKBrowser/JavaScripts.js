@@ -55,7 +55,7 @@ function text_shortcut(shortcut_id, shortcut_path) {
 }
 
 function scene_exe_shortcut(shortcut_id, shortcut_path) {
-	var exe = chmfile.path+"Tools\\PLViewer\\PLViewer.exe";
+	var exe = chmfile.path+"Tools\\x86\\PLViewer.exe";
 	var scene = '&quot;'+chmfile.path+shortcut_path+'&quot;';
 	document.write('<OBJECT id='+shortcut_id+' type="application/x-oleobject"');
 	document.write(' classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11"');
@@ -86,14 +86,13 @@ shortcut("Doc_PixelLight3dsMaxSceneExport",	"Docs\\PixelLight3dsMaxSceneExport.p
 
 // Directory shortcuts
 // Misc
-shortcut("Dir_Docs",			"Docs\\");
-shortcut("Dir_Lib",				"Lib\\");
-shortcut("Dir_Runtime",			"Runtime\\");
-shortcut("Dir_BrowserPlugins",	"BrowserPlugins\\");
+shortcut("Dir_Docs",				"Docs\\");
+shortcut("Dir_Lib",					"Lib\\");
+shortcut("Dir_Runtime",				"Runtime\\");
+shortcut("Dir_BrowserPlugins",		"BrowserPlugins\\");
 // Tools
-shortcut("Dir_Tools",			"Tools\\");
-shortcut("Dir_Tools_PLViewer",	"Tools\\PLViewer\\");
-shortcut("Dir_3dsMax",			"Tools\\3dsMax\\");
+shortcut("Dir_Tools",				"Tools\\");
+shortcut("Dir_3dsMax",				"Tools\\3dsMax\\");
 // include
 shortcut("Dir_Include",				"Include\\");
 shortcut("Dir_PLCore",				"include\\PLCore\\");
@@ -158,7 +157,7 @@ shortcut("Exe_67Game2D",			"Samples\\Bin\\67Game2D.exe");
 shortcut("Exe_70SPARK",				"Samples\\Bin\\70SPARK.exe");
 shortcut("Exe_71libRocket",			"Samples\\Bin\\71libRocket.exe");
 // Tools
-shortcut("Exe_PLViewer",			"Tools\\Bin\\PLViewer\PLViewer.exe");
+shortcut("Exe_PLViewer",			"Tools\\Bin\\x86\PLViewer.exe");
 
 
 // Scene text shortcuts

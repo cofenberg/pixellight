@@ -358,8 +358,8 @@ Function PixelLightFinish
 
     WriteRegStr HKCR ".scene" "" "PixelLight.Scene"
     WriteRegStr HKCR "PixelLight.Scene" "" "PixelLight Scene"
-;   WriteRegStr HKCR "PixelLight.Scene\DefaultIcon" ""  "$INSTDIR\Tools\Bin\PLViewer\PLViewer.exe,1"
-    WriteRegStr HKCR "PixelLight.Scene\shell\open\command" "" '"$INSTDIR\Tools\Bin\PLViewer\PLViewer.exe" "%1"'
+;   WriteRegStr HKCR "PixelLight.Scene\DefaultIcon" ""  "$INSTDIR\Tools\Bin\x86\PLViewer.exe,1"
+    WriteRegStr HKCR "PixelLight.Scene\shell\open\command" "" '"$INSTDIR\Tools\Bin\x86\PLViewer.exe" "%1"'
     DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.scene" "Application"
 
     goto endExtensions
