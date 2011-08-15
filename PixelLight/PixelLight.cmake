@@ -224,7 +224,7 @@ if(WIN32)
 	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Runtime\x86
 	set(PL_INSTALL_SAMPLES			"Samples")														# C:\Programme\PixelLight\Samples
 	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")					# C:\Programme\PixelLight\Samples\Bin\x86
-	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")												# C:\Programme\PixelLight\Samples\Bin\Data
+	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin")													# C:\Programme\PixelLight\Samples\Bin
 	set(PL_INSTALL_TOOLS			"Tools")														# C:\Programme\PixelLight\Tools
 	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Tools\x86
 	set(PL_INSTALL_BROWSER			"BrowserPlugins")												# C:\Programme\PixelLight\BrowserPlugins
@@ -238,7 +238,7 @@ elseif(LINUX)
 	set(PL_INSTALL_RUNTIME_BIN		"${PL_INSTALL_RUNTIME}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# /usr/share/pixellight/Runtime/x86
 	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")										# /usr/share/pixellight/Samples
 	set(PL_INSTALL_SAMPLES_BIN		"${PL_INSTALL_SAMPLES}/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# /usr/share/pixellight/Samples/Bin/x86
-	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")							# /usr/share/pixellight/Samples/Bin/Data
+	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin")									# /usr/share/pixellight/Samples/Bin
 	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")										# /usr/share/pixellight/Tools
 	set(PL_INSTALL_TOOLS_BIN		"${PL_INSTALL_TOOLS}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# /usr/share/pixellight/Tools/x86
 	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")								# /usr/share/pixellight/BrowserPlugins
