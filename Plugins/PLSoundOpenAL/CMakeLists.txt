@@ -219,7 +219,7 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so
 					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so.3
 					  ${PL_RUNTIME_BIN_DIR}/libvorbisfile.so.3.3.4
-			DESTINATION ${PL_INSTALL_SHARED}					COMPONENT Runtime
+			DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
 		)
 	endif()
 endif()

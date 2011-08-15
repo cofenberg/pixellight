@@ -225,7 +225,7 @@ endif()
 #	elseif(LINUX)
 #		install(FILES ${PL_RUNTIME_BIN_DIR}/libEGL.so
 #					  ${PL_RUNTIME_BIN_DIR}/libGLESv2.so
-#			DESTINATION ${PL_INSTALL_SHARED}			COMPONENT Runtime
+#			DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 #		)
 #	endif()
 #endif()

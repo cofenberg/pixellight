@@ -217,7 +217,6 @@ message(STATUS "Upload destination is '${CMAKETOOLS_UPLOAD_LOCATION}'")
 if(WIN32)
 	set(PL_INSTALL_ROOT				".")															# C:\Programme\PixelLight
 	set(PL_INSTALL_BIN				".")															# C:\Programme\PixelLight
-	set(PL_INSTALL_SHARED			"Runtime")														# C:\Programme\PixelLight\Runtime
 	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")							# C:\Programme\PixelLight\Lib\x86
 	set(PL_INSTALL_INCLUDE			"Include")														# C:\Programme\PixelLight\Include
 	set(PL_INSTALL_DOCS				"Docs")															# C:\Programme\PixelLight\Docs
@@ -243,8 +242,6 @@ elseif(LINUX)
 	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")										# /usr/share/pixellight/Tools
 	set(PL_INSTALL_TOOLS_BIN		"${PL_INSTALL_TOOLS}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# /usr/share/pixellight/Tools/x86
 	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")								# /usr/share/pixellight/BrowserPlugins
-	# [TODO] replace the usage of this var with ${PL_INSTALL_RUNTIME_BIN}
-	set(PL_INSTALL_SHARED			"${PL_INSTALL_RUNTIME_BIN}")									# /usr/share/pixellight/Runtime/x86
 endif()
 
 # Extensions of files to exclude when e.g. copying a directory
