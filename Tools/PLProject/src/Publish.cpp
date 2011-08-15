@@ -173,55 +173,47 @@ bool Publish(const String &sTargetDirectory)
 	String sRuntimeSharedLibrariesDirectory = Core::GetRuntimeDirectory();
 	if (sRuntimeSharedLibrariesDirectory.GetLength()) {
 		// Get the PixelLight runtime data directory
-		String sRuntimeDataDirectory = Core::GetRuntimeDirectory() + "/Data";
+		String sRuntimeDataDirectory = Core::GetRuntimeDirectory() + "/../Data";
 		if (sRuntimeDataDirectory.GetLength()) {
-			// Get the PixelLight plugins directory
-			String sPluginsDirectory = Core::GetRuntimeDirectory() + "/Plugins";
-			if (sPluginsDirectory.GetLength()) {
-				// Show some information
-				Message(MESSAGE, "Publishing '" + sTargetDirectory + '\'');
-				Message(MESSAGE, "PixelLight runtime shared libraries directory '" + sRuntimeSharedLibrariesDirectory + '\'');
-				Message(MESSAGE, "PixelLight runtime data directory '" + sRuntimeDataDirectory + '\'');
-				Message(MESSAGE, "PixelLight plugins directory '" + sPluginsDirectory + '\'');
+			// Show some information
+			Message(MESSAGE, "Publishing '" + sTargetDirectory + '\'');
+			Message(MESSAGE, "PixelLight runtime shared libraries directory '" + sRuntimeSharedLibrariesDirectory + '\'');
+			Message(MESSAGE, "PixelLight runtime data directory '" + sRuntimeDataDirectory + '\'');
 
-				// Copy PixelLight runtime shared libraries
-				Message(MESSAGE, "Copy PixelLight runtime shared libraries...");
-				if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory, sRuntimeSharedLibraries)) {
-					// Copy PixelLight runtime data files
-					Message(MESSAGE, "Copy PixelLight runtime data files...");
-					if (CopyFiles(sRuntimeDataDirectory, sTargetDirectory + "/Data", sRuntimeDataFiles)) {
-						// Copy PLRenderer plugins
-						Message(MESSAGE, "Copy PLRenderer plugins...");
-						if (CopyFiles(sPluginsDirectory + "/PLRenderer", sTargetDirectory, sPLRendererPlugins)) {
-							// Copy PLScene plugins
-							Message(MESSAGE, "Copy PLScene plugins...");
-							if (CopyFiles(sPluginsDirectory + "/PLScene", sTargetDirectory, sPLScenePlugins)) {
-								// Copy PLPhysics plugins
-								Message(MESSAGE, "Copy PLPhysics plugins...");
-								if (CopyFiles(sPluginsDirectory + "/PLPhysics", sTargetDirectory, sPLPhysicsPlugins)) {
-									// Copy PLSound plugins
-									Message(MESSAGE, "Copy PLSound plugins...");
-									if (CopyFiles(sPluginsDirectory + "/PLSound", sTargetDirectory, sPLSoundPlugins)) {
-										#ifdef WIN32
-											// Copy VC2010 redistributable
-											Message(MESSAGE, "Copy VC2010 redistributable...");
-											if (CopyFiles(sRuntimeSharedLibrariesDirectory + "/../Runtime/VC2010_Redistributable", sTargetDirectory, sVC2010Redistributable))
-												Message(MESSAGE, "Copy process successfully finished");
-										#else
+			// Copy PixelLight runtime shared libraries
+			Message(MESSAGE, "Copy PixelLight runtime shared libraries...");
+			if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory + "/x86", sRuntimeSharedLibraries)) {
+				// Copy PixelLight runtime data files
+				Message(MESSAGE, "Copy PixelLight runtime data files...");
+				if (CopyFiles(sRuntimeDataDirectory, sTargetDirectory + "/Data", sRuntimeDataFiles)) {
+					// Copy PLRenderer plugins
+					Message(MESSAGE, "Copy PLRenderer plugins...");
+					if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory + "/x86", sPLRendererPlugins)) {
+						// Copy PLScene plugins
+						Message(MESSAGE, "Copy PLScene plugins...");
+						if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory + "/x86", sPLScenePlugins)) {
+							// Copy PLPhysics plugins
+							Message(MESSAGE, "Copy PLPhysics plugins...");
+							if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory + "/x86", sPLPhysicsPlugins)) {
+								// Copy PLSound plugins
+								Message(MESSAGE, "Copy PLSound plugins...");
+								if (CopyFiles(sRuntimeSharedLibrariesDirectory, sTargetDirectory + "/x86", sPLSoundPlugins)) {
+									#ifdef WIN32
+										// Copy VC2010 redistributable
+										Message(MESSAGE, "Copy VC2010 redistributable...");
+										if (CopyFiles(sRuntimeSharedLibrariesDirectory + "/../Runtime/x86/VC2010_Redistributable", sTargetDirectory + "/x86", sVC2010Redistributable))
 											Message(MESSAGE, "Copy process successfully finished");
-										#endif
+									#else
+										Message(MESSAGE, "Copy process successfully finished");
+									#endif
 
-										// Done
-										return true;
-									}
+									// Done
+									return true;
 								}
 							}
 						}
 					}
 				}
-			} else {
-				// Error!
-				Message(ERR, "et the PixelLight plugins directory not found");
 			}
 		} else {
 			// Error!

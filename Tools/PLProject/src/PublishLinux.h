@@ -33,15 +33,25 @@ static const PLCore::String sRuntimeSharedLibraries[] =
 {
 	"libPLCore.so",
 	"libPLMath.so",
+	"PLMath.plugin",
 	"libPLGraphics.so",
-	"libPLGui.so",
+	"PLGraphics.plugin",
 	"libPLInput.so",
+	"PLInput.plugin",
 	"libPLRenderer.so",
+	"PLRenderer.plugin",
 	"libPLMesh.so",
+	"PLMesh.plugin",
 	"libPLScene.so",
+	"PLScene.plugin",
 	"libPLEngine.so",
+	"PLEngine.plugin",
 	"libPLPhysics.so",
+	"PLPhysics.plugin",
 	"libPLSound.so",
+	"PLSound.plugin",
+	"libPLFrontendOS.so",
+	"PLFrontendOS.plugin",
 	""
 };
 static const PLCore::String sRuntimeDataFiles[] =
@@ -53,6 +63,8 @@ static const PLCore::String sPLRendererPlugins[] =
 {
 	"libPLRendererOpenGL.so",
 	"PLRendererOpenGL.plugin",
+	"libPLRendererOpenGLCg.dll",
+	"PLRendererOpenGLCg.plugin",
 	"libCg.so",
 	"libCgGL.so",
 	""
