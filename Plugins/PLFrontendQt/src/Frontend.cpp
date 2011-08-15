@@ -252,15 +252,13 @@ bool Frontend::IsMouseVisible() const
 
 void Frontend::SetMouseVisible(bool bVisible)
 {
-	// Check whether or not the mouse cursor is there
-	// And only do something if the state should be changed
+	// Check whether or not the mouse cursor is there - and only do something if the state should be changed
 	if (m_pQCursorBlank && bVisible != m_bMouseVisible) {
 		// Backup the state
 		m_bMouseVisible = bVisible;
 		if (bVisible) {
-			// [TODO](from CO) Doesn't work for me (Windows 7), after this, the mouse cursor stays invisible
 			// This pops the last set cursor from the internal stack and restores the previous one.
-			// If no other cursor was on the stack then the default widget cursor is used
+			// If no other cursor was on the stack then the default widget cursor is used.
 			// (see http://doc.qt.nokia.com/latest/qapplication.html#restoreOverrideCursor)
 			QApplication::restoreOverrideCursor();
 		} else {

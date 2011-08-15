@@ -7,8 +7,10 @@ project(Tests)
 ## Prerequisites
 ##################################################
 
-# Create Tests directory
+# Create "Tests"-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tests)
+set(PL_TESTS_BIN_DIR "${PL_BIN_DIR}/Tests/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
+file(MAKE_DIRECTORY ${PL_TESTS_BIN_DIR})
 
 # Copy runtime data
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/Tests/Data")

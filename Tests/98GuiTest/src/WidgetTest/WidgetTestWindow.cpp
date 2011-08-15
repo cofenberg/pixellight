@@ -128,7 +128,7 @@ WidgetTestWindow::WidgetTestWindow(Widget *pParent) : Window(pParent)
 
 	// Add bitmap
 	Bitmap *pBitmap = new Bitmap(pScrollWidget->GetContentWidget());
-	pBitmap->SetImage(Image(*GetGui(), "PLGui/background.jpg"));
+	pBitmap->SetImage(Image(*GetGui(), "../Data/background.jpg"));
 	pBitmap->SetVisible(true);
 
 	// Set size
