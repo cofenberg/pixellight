@@ -15,7 +15,7 @@ add_custom_target(Tools)
 # Create "Tools"-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tools)
 set(PL_TOOLS_BIN_DIR "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
-file(MAKE_DIRECTORY PL_TOOLS_BIN_DIR)
+file(MAKE_DIRECTORY ${PL_TOOLS_BIN_DIR})
 
 ##################################################
 ## Projects
