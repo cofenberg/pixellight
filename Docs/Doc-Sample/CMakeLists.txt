@@ -24,7 +24,7 @@ add_dependencies(Docs Docs-DocSample)
 
 # PDF
 #ADD_CUSTOM_COMMAND(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_PDF} "${PL_BIN_DIR}/Docs"
+#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_PDF} ${PL_DOCS_DIR}
 #)
 
 ##################################################

@@ -7,15 +7,16 @@ project(Docs)
 ## Prerequisites
 ##################################################
 
-# Create 'Docs' directory
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/Docs)
+# Create 'Docs'-directory
+set(PL_DOCS_DIR "${PL_BIN_DIR}/Docs")
+file(MAKE_DIRECTORY ${PL_DOCS_DIR})
 
 # Create temp dir
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Common)
 
 # Copy file format samples
-file(MAKE_DIRECTORY "${PL_BIN_DIR}/Docs/FileFormats")
-copy_files("${CMAKE_SOURCE_DIR}/Docs/FileFormats/*.*" "${PL_BIN_DIR}/Docs/FileFormats")
+file(MAKE_DIRECTORY "${PL_DOCS_DIR}/FileFormats")
+copy_files("${CMAKE_SOURCE_DIR}/Docs/FileFormats/*.*" "${PL_DOCS_DIR}/FileFormats")
 
 # Create title file used within the PixelLight documentations
 configure_file("${CMAKE_SOURCE_DIR}/Docs/Common/Title.tex.in" "${CMAKE_SOURCE_DIR}/Docs/Common/Title.tex")
