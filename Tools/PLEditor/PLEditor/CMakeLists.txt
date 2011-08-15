@@ -67,7 +67,7 @@ add_sources(
 ## Library directories
 ##################################################
 add_link_directories(
-	${PL_BIN_DIR}/Lib
+	${PL_LIB_DIR}
 )
 
 ##################################################

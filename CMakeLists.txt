@@ -31,6 +31,9 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Lib)
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime)
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Runtime/Plugins)
 
+# Create 'Lib' directory
+set(PL_LIB_DIR "${PL_BIN_DIR}/Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
+
 # Copy copyright and notes
 copy_file(${CMAKE_SOURCE_DIR}/AUTHORS			${PL_BIN_DIR})
 copy_file(${CMAKE_SOURCE_DIR}/COPYING			${PL_BIN_DIR})
