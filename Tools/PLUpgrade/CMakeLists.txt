@@ -108,8 +108,8 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCoreStat)
-add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCoreStat)
+add_dependencies(Tools							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
