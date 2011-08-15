@@ -226,7 +226,6 @@ if(WIN32)
 	set(PL_INSTALL_SAMPLES			"Samples")										# C:\Programme\PixelLight\Samples
 	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# C:\Programme\PixelLight\Samples\Bin\x86
 	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")								# C:\Programme\PixelLight\Samples\Bin\Data
-	set(PL_INSTALL_SAMPLES_PLUGINS	"Samples/Bin/Plugins")							# C:\Programme\PixelLight\Samples\Bin\Plugins
 	set(PL_INSTALL_TOOLS			"Tools")										# C:\Programme\PixelLight\Tools
 	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Tools\x86
 	set(PL_INSTALL_TOOLS_PLUGINS	"Tools/Plugins")								# C:\Programme\PixelLight\Tools\Plugins
@@ -243,7 +242,6 @@ elseif(LINUX)
 	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")						# /usr/share/pixellight/Samples
 	set(PL_INSTALL_SAMPLES_BIN		"share/pixellight/Samples/Bin")					# /usr/share/pixellight/Samples/Bin
 	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")			# /usr/share/pixellight/Samples/Bin/Data
-	set(PL_INSTALL_SAMPLES_PLUGINS	"share/pixellight/Samples/Bin/Plugins")			# /usr/share/pixellight/Samples/Bin/Plugins
 	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")						# /usr/share/pixellight/Tools
 	set(PL_INSTALL_TOOLS_BIN		"bin")											# /usr/bin
 	set(PL_INSTALL_TOOLS_PLUGINS	"share/pixellight/Tools/Plugins")				# /usr/share/pixellight/Tools/Plugins
