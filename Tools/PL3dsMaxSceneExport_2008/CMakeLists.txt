@@ -87,8 +87,8 @@ add_compile_defs(
 	_SECURE_SCL=0
 )
 remove_compile_defs(
-	UNICODE													# Use unicode
-	_UNICODE												# Use unicode
+	UNICODE										# Use unicode
+	_UNICODE									# Use unicode
 )
 
 ##################################################

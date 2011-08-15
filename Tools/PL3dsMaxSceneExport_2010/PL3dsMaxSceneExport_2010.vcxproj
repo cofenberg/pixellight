@@ -149,7 +149,7 @@
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/debug_2010/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>./build/debug_2010\PL3dsMaxSceneExport_2010.dle.pdb</ProgramDatabaseFile>
@@ -189,10 +189,10 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/debug_2010_64/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2010/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>./build/debug_2010_64\PL3dsMaxSceneExport_2010.dle.pdb</ProgramDatabaseFile>
@@ -242,7 +242,7 @@
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/release_2010/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
@@ -293,10 +293,10 @@ copy "build\release_2010\PL3dsMaxSceneExport_2010.dle" ..\..\Bin\Tools\3dsMax\x8
     </ClCompile>
     <Link>
       <AdditionalOptions>/opt:lbr  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/release_2010_64/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2010/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ProgramDatabaseFile>./build/release_2010_64\PL3dsMaxSceneExport_2010_64.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -344,7 +344,7 @@ copy "build\release_2010_64\PL3dsMaxSceneExport_2010.dle" ..\..\Bin\Tools\3dsMax
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/hybrid_2010/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>./build/hybrid_2010\PL3dsMaxSceneExport_2010.dle.pdb</ProgramDatabaseFile>
@@ -386,10 +386,10 @@ copy "build\release_2010_64\PL3dsMaxSceneExport_2010.dle" ..\..\Bin\Tools\3dsMax
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>./build/hybrid_2010_64/PL3dsMaxSceneExport_2010.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2010/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>./build/hybrid_2010_64\PL3dsMaxSceneExport_2010.dle.pdb</ProgramDatabaseFile>
