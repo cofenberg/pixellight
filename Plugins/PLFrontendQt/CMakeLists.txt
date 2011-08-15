@@ -300,7 +300,7 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJE
 
 # Plugin file
 install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
-	DESTINATION ${PL_INSTALL_RUNTIME_PLUGINS}/PLFrontend			COMPONENT Runtime
+	DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 )
 
 # Copy the QT stuff into the SDK so that the user can use everything "out of the box", but only when not using system-libs

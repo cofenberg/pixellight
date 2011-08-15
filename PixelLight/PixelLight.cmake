@@ -223,7 +223,6 @@ if(WIN32)
 	set(PL_INSTALL_DOCS				"Docs")											# C:\Programme\PixelLight\Docs
 	set(PL_INSTALL_RUNTIME			"Runtime")										# C:\Programme\PixelLight\Runtime
 	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Runtime\x86
-	set(PL_INSTALL_RUNTIME_PLUGINS	"Runtime/Plugins")								# C:\Programme\PixelLight\Runtime\Plugins
 	set(PL_INSTALL_SAMPLES			"Samples")										# C:\Programme\PixelLight\Samples
 	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# C:\Programme\PixelLight\Samples\Bin\x86
 	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")								# C:\Programme\PixelLight\Samples\Bin\Data
@@ -241,7 +240,6 @@ elseif(LINUX)
 	set(PL_INSTALL_DOCS				"share/docs/pixellight")						# /usr/share/docs/pixellight
 	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")						# /usr/share/pixellight/Runtime
 	set(PL_INSTALL_RUNTIME_BIN		"bin")											# /usr/bin
-	set(PL_INSTALL_RUNTIME_PLUGINS	"share/pixellight/Runtime/Plugins")				# /usr/share/pixellight/Runtime/Plugins
 	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")						# /usr/share/pixellight/Samples
 	set(PL_INSTALL_SAMPLES_BIN		"share/pixellight/Samples/Bin")					# /usr/share/pixellight/Samples/Bin
 	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")			# /usr/share/pixellight/Samples/Bin/Data
