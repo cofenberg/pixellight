@@ -228,7 +228,6 @@ if(WIN32)
 	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")								# C:\Programme\PixelLight\Samples\Bin\Data
 	set(PL_INSTALL_TOOLS			"Tools")										# C:\Programme\PixelLight\Tools
 	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Tools\x86
-	set(PL_INSTALL_TOOLS_PLUGINS	"Tools/Plugins")								# C:\Programme\PixelLight\Tools\Plugins
 	set(PL_INSTALL_BROWSER			"BrowserPlugins")								# C:\Programme\PixelLight\BrowserPlugins
 elseif(LINUX)
 	set(PL_INSTALL_ROOT				"share/pixellight")								# /usr/share/pixellight
@@ -244,7 +243,6 @@ elseif(LINUX)
 	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin/Data")			# /usr/share/pixellight/Samples/Bin/Data
 	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")						# /usr/share/pixellight/Tools
 	set(PL_INSTALL_TOOLS_BIN		"bin")											# /usr/bin
-	set(PL_INSTALL_TOOLS_PLUGINS	"share/pixellight/Tools/Plugins")				# /usr/share/pixellight/Tools/Plugins
 	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")				# /usr/share/pixellight/BrowserPlugins
 endif()
 
