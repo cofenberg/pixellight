@@ -4,14 +4,6 @@
 define_project(PLViewer NOSUFFIX)
 
 ##################################################
-## Prerequisites
-##################################################
-
-# Create Config directory
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tools)
-file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE})
-
-##################################################
 ## Source files
 ##################################################
 add_sources(
@@ -138,7 +130,7 @@ add_dependencies(Tools                        ${CMAKETOOLS_CURRENT_TARGET})
 
 # Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
 )
 
 ##################################################
@@ -168,19 +160,14 @@ add_dependencies(Base										${CMAKETOOLS_CURRENT_TARGET})
 
 # Standalone executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
 )
 
 ##################################################
 ## Install
 ##################################################
 
-# "WhereIsTheLog.txt"-file
-install(FILES ${CMAKE_SOURCE_DIR}/Bin/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/WhereIsTheLog.txt
-	DESTINATION ${PL_INSTALL_ROOT}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}	COMPONENT SDK
-)
-
 # Executable
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	DESTINATION ${PL_INSTALL_ROOT}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}	COMPONENT SDK
+	DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
 )

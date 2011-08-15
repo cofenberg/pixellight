@@ -229,7 +229,7 @@ if(WIN32)
 	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin/Data")								# C:\Programme\PixelLight\Samples\Bin\Data
 	set(PL_INSTALL_SAMPLES_PLUGINS	"Samples/Bin/Plugins")							# C:\Programme\PixelLight\Samples\Bin\Plugins
 	set(PL_INSTALL_TOOLS			"Tools")										# C:\Programme\PixelLight\Tools
-	set(PL_INSTALL_TOOLS_BIN		"Tools")										# C:\Programme\PixelLight\Tools
+	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# C:\Programme\PixelLight\Tools\x86
 	set(PL_INSTALL_TOOLS_PLUGINS	"Tools/Plugins")								# C:\Programme\PixelLight\Tools\Plugins
 	set(PL_INSTALL_BROWSER			"BrowserPlugins")								# C:\Programme\PixelLight\BrowserPlugins
 elseif(LINUX)

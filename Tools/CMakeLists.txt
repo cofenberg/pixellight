@@ -12,8 +12,10 @@ add_custom_target(Tools)
 ## Prerequisites
 ##################################################
 
-# Create Tools directory
+# Create "Tools"-directory
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tools)
+set(PL_TOOLS_BIN_DIR "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
+file(MAKE_DIRECTORY PL_TOOLS_BIN_DIR)
 
 ##################################################
 ## Projects
@@ -54,4 +56,9 @@ add_dependencies(PixelLight Tools)
 
 install(FILES	${CMAKE_SOURCE_DIR}/Tools/FindPixelLight.cmake
 	DESTINATION ${PL_INSTALL_ROOT}/Tools		COMPONENT SDK
+)
+
+# "WhereIsTheLog.txt"-file
+install(FILES ${CMAKE_SOURCE_DIR}/Bin/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/WhereIsTheLog.txt
+	DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
 )
