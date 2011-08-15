@@ -139,23 +139,23 @@ shortcut("Dir_Samples", "Samples\\");
 
 // Executable shortcuts
 // Samples
-shortcut("Exe_05NetworkChat",		"Samples\\Bin\\05NetworkChat.exe");
-shortcut("Exe_45ScriptApplication",	"Samples\\Bin\\45ScriptApplication.exe");
-shortcut("Exe_50RendererTriangle",	"Samples\\Bin\\50RendererTriangle.exe");
-shortcut("Exe_51RendererTexturing",	"Samples\\Bin\\51RendererTexturing.exe");
-shortcut("Exe_52RendererMesh",		"Samples\\Bin\\52RendererMesh.exe");
-shortcut("Exe_54RendererRTT",		"Samples\\Bin\\54RendererRTT.exe");
-shortcut("Exe_53RendererMultiView",	"Samples\\Bin\\53RendererMultiView.exe");
-shortcut("Exe_60Scene",				"Samples\\Bin\\60Scene.exe");
-shortcut("Exe_61Sound",				"Samples\\Bin\\61Sound.exe");
-shortcut("Exe_62Physics",			"Samples\\Bin\\62Physics.exe");
-shortcut("Exe_63PhysicsRagdoll",	"Samples\\Bin\\63PhysicsRagdoll.exe");
-shortcut("Exe_64Picking",			"Samples\\Bin\\64Picking.exe");
-shortcut("Exe_65PostProcess",		"Samples\\Bin\\65PostProcess.exe");
-shortcut("Exe_66IngameGUI",			"Samples\\Bin\\66IngameGUI.exe");
-shortcut("Exe_67Game2D",			"Samples\\Bin\\67Game2D.exe");
-shortcut("Exe_70SPARK",				"Samples\\Bin\\70SPARK.exe");
-shortcut("Exe_71libRocket",			"Samples\\Bin\\71libRocket.exe");
+shortcut("Exe_05NetworkChat",		"Samples\\Bin\\x86\\05NetworkChat.exe");
+shortcut("Exe_45ScriptApplication",	"Samples\\Bin\\x86\\45ScriptApplication.exe");
+shortcut("Exe_50RendererTriangle",	"Samples\\Bin\\x86\\50RendererTriangle.exe");
+shortcut("Exe_51RendererTexturing",	"Samples\\Bin\\x86\\51RendererTexturing.exe");
+shortcut("Exe_52RendererMesh",		"Samples\\Bin\\x86\\52RendererMesh.exe");
+shortcut("Exe_54RendererRTT",		"Samples\\Bin\\x86\\54RendererRTT.exe");
+shortcut("Exe_53RendererMultiView",	"Samples\\Bin\\x86\\53RendererMultiView.exe");
+shortcut("Exe_60Scene",				"Samples\\Bin\\x86\\60Scene.exe");
+shortcut("Exe_61Sound",				"Samples\\Bin\\x86\\61Sound.exe");
+shortcut("Exe_62Physics",			"Samples\\Bin\\x86\\62Physics.exe");
+shortcut("Exe_63PhysicsRagdoll",	"Samples\\Bin\\x86\\63PhysicsRagdoll.exe");
+shortcut("Exe_64Picking",			"Samples\\Bin\\x86\\64Picking.exe");
+shortcut("Exe_65PostProcess",		"Samples\\Bin\\x86\\65PostProcess.exe");
+shortcut("Exe_66IngameGUI",			"Samples\\Bin\\x86\\66IngameGUI.exe");
+shortcut("Exe_67Game2D",			"Samples\\Bin\\x86\\67Game2D.exe");
+shortcut("Exe_70SPARK",				"Samples\\Bin\\x86\\70SPARK.exe");
+shortcut("Exe_71libRocket",			"Samples\\Bin\\x86\\71libRocket.exe");
 // Tools
 shortcut("Exe_PLViewer",			"Tools\\Bin\\x86\PLViewer.exe");
 
