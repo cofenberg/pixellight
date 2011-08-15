@@ -218,7 +218,7 @@ if(WIN32)
 	set(PL_INSTALL_ROOT				".")											# C:\Programme\PixelLight
 	set(PL_INSTALL_BIN				".")											# C:\Programme\PixelLight
 	set(PL_INSTALL_SHARED			"Runtime")										# C:\Programme\PixelLight\Runtime
-	set(PL_INSTALL_LIB				"Lib")											# C:\Programme\PixelLight\Lib
+	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# C:\Programme\PixelLight\Lib\x86
 	set(PL_INSTALL_INCLUDE			"Include")										# C:\Programme\PixelLight\Include
 	set(PL_INSTALL_DOCS				"Docs")											# C:\Programme\PixelLight\Docs
 	set(PL_INSTALL_RUNTIME			"Runtime")										# C:\Programme\PixelLight\Runtime
