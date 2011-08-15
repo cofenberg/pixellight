@@ -85,8 +85,8 @@ install(FILES	${CMAKE_SOURCE_DIR}/AUTHORS
 
 # Microsoft Visual C++ Redistributables
 if(WIN32)
-	install(DIRECTORY ${CMAKE_SOURCE_DIR}/Bin/Runtime/VC2010_Redistributable
-		DESTINATION ${PL_INSTALL_ROOT}/Runtime	COMPONENT SDK
+	install(DIRECTORY ${PL_RUNTIME_BIN_GITDIR}/VC2010_Redistributable
+		DESTINATION ${PL_RUNTIME_BIN_DIR}	COMPONENT SDK
 	)
 endif()
 

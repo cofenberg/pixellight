@@ -169,7 +169,7 @@ endif()
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLPhysics/newton.dll   ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/newton.dll   ${PL_RUNTIME_BIN_DIR}
 		)
 	elseif(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}

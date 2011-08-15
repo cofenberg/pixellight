@@ -142,7 +142,7 @@ endif()
 #if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLScript/lua51.dll   ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/lua51.dll   ${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 #endif()

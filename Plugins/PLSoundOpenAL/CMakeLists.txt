@@ -149,8 +149,8 @@ endif()
 if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(WIN32)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/OpenAL32.dll ${PL_RUNTIME_BIN_DIR}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/Bin/Runtime/Plugins/PLSound/wrap_oal.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/OpenAL32.dll ${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/wrap_oal.dll ${PL_RUNTIME_BIN_DIR}
 		)
 	elseif(LINUX)
 		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
