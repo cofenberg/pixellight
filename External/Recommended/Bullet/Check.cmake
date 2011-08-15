@@ -19,7 +19,7 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	# [TODO]
 	if(WIN32)
 		#external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/newton.dll" "${PL_BIN_DIR}/../Bin/Runtime/Plugins/PLPhysics")	# Bin
-		#external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/newton.dll" "${PL_BIN_DIR}/Runtime/Plugins/PLPhysics")			# Bin-Windows
+		#external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/newton.dll" ${PL_RUNTIME_BIN_DIR})								# Bin-Windows
 	endif()
 endif()
 

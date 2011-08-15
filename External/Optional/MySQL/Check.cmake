@@ -18,7 +18,7 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	# For Windows, copy the required dlls into the runtime directory
 	if(WIN32)
 		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/libmysql.dll" "${PL_BIN_DIR}/../Bin/Runtime/Plugins/PLDatabase")	# Bin
-		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/libmysql.dll" "${PL_BIN_DIR}/Runtime/Plugins/PLDatabase")			# Bin-Windows
+		external_copy("${CMAKETOOLS_CURRENT_DEST_DIR}/bin/libmysql.dll" ${PL_RUNTIME_BIN_DIR})								# Bin-Windows
 	endif()
 endif()
 
