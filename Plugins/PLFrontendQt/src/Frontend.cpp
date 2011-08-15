@@ -253,7 +253,8 @@ bool Frontend::IsMouseVisible() const
 void Frontend::SetMouseVisible(bool bVisible)
 {
 	// Check whether or not the mouse cursor is there
-	if (m_pQCursorBlank) {
+	// And only do something if the state should be changed
+	if (m_pQCursorBlank && bVisible != m_bMouseVisible) {
 		// Backup the state
 		m_bMouseVisible = bVisible;
 		if (bVisible) {
