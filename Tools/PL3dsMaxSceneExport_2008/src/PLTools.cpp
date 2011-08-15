@@ -312,36 +312,44 @@ std::string PLTools::GetPLViewerFilename()
 			nLength--;
 		}
 
-		// There MUST be a 'Runtime' at the end (first, we check for the public SDK structure)
-		size_t nRuntimeLength = strlen("Runtime");
-		if (nLength > nRuntimeLength && !_stricmp(&pszBuffer[nLength-nRuntimeLength], "Runtime")) {
-			// Remove the 'Runtime'
-			nLength -= nRuntimeLength;
+		// There MUST be a 'x86' at the end (first, we check for the public SDK structure)
+		size_t nx86Length = strlen("x86");
+		if (nLength > nx86Length && !_stricmp(&pszBuffer[nLength-nx86Length], "x86")) {
+			// Remove the 'x86' and the slash
+			nLength -= nx86Length+1;
 			pszBuffer[nLength] = '\0';
 
-			{ // Maybe this is your internal developer version?
-				// Construct the absolute filename
-				sViewer = std::string(pszBuffer) + "Tools\\x86\\PLViewer.exe";
+			// There MUST be a 'Runtime' at the end (first, we check for the public SDK structure)
+			size_t nRuntimeLength = strlen("Runtime");
+			if (nLength > nRuntimeLength && !_stricmp(&pszBuffer[nLength-nRuntimeLength], "Runtime")) {
+				// Remove the 'Runtime'
+				nLength -= nRuntimeLength;
+				pszBuffer[nLength] = '\0';
 
-				// Valid filename?
-				FILE *pFile = fopen(sViewer.c_str(), "r");
-				if (pFile)
-					fclose(pFile);
-				else
-					sViewer = ""; // IGHH!
-			}
+				{ // Maybe this is your internal developer version?
+					// Construct the absolute filename
+					sViewer = std::string(pszBuffer) + "Tools\\x86\\PLViewer.exe";
 
-			// Installed PL SDK?
-			if (!sViewer.length()) {
-				// Construct the absolute filename
-				sViewer = std::string(pszBuffer) + "Tools\\Bin\\x86\\PLViewer.exe";
+					// Valid filename?
+					FILE *pFile = fopen(sViewer.c_str(), "r");
+					if (pFile)
+						fclose(pFile);
+					else
+						sViewer = ""; // IGHH!
+				}
 
-				// Valid filename?
-				FILE *pFile = fopen(sViewer.c_str(), "r");
-				if (pFile)
-					fclose(pFile);
-				else
-					sViewer = ""; // IGHH!
+				// Installed PL SDK?
+				if (!sViewer.length()) {
+					// Construct the absolute filename
+					sViewer = std::string(pszBuffer) + "Tools\\Bin\\x86\\PLViewer.exe";
+
+					// Valid filename?
+					FILE *pFile = fopen(sViewer.c_str(), "r");
+					if (pFile)
+						fclose(pFile);
+					else
+						sViewer = ""; // IGHH!
+				}
 			}
 		}
 

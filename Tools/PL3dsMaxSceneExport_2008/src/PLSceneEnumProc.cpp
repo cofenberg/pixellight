@@ -245,7 +245,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 
 			// Publish?
 			if (g_SEOptions.bPublish)
-				Publish(std::string(szApplicationDrive) + szApplicationDir);
+				Publish(std::string(szApplicationDrive) + szApplicationDir + std::string("x86"));
 
 			// Close the log
 			std::string sLogFilename = g_pLog->GetFilename();
@@ -401,44 +401,54 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 		const std::string &sSourceDirectory = pszBuffer;
 		delete [] pszBuffer;
 
+		// Create the executable (x86) directory
+		CreateDirectory(sTargetDirectory.c_str(), nullptr);
+
 		// Physics support?
 		bool bPhysics = !strcmp(g_SEOptions.sSceneContainer.c_str(), "PLPhysics::SCPhysicsWorld");
 
 		{ // Copy runtime and data files
-			const int NumOfFiles = bPhysics ? 11 : 10;
+			const int NumOfFiles = 20;
 			static const std::string sFiles[] =
 			{
 				"PLCore.dll",
 				"PLMath.dll",
+				"PLMath.plugin",
 				"PLGraphics.dll",
-				"PLGui.dll",
+				"PLGraphics.plugin",
 				"PLInput.dll",
+				"PLInput.plugin",
 				"PLRenderer.dll",
+				"PLRenderer.plugin",
 				"PLMesh.dll",
+				"PLMesh.plugin",
 				"PLScene.dll",
+				"PLScene.plugin",
+				"PLPhysics.dll",
+				"PLPhysics.plugin",
 				"PLEngine.dll",
-				"Data\\Standard.zip",
-				"PLPhysics.dll"
+				"PLEngine.plugin",
+				"PLFrontendOS.dll",
+				"PLFrontendOS.plugin",
+				"..\\Data\\Standard.zip"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
 				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
+				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}
 		}
 
 		{ // Copy PLRenderer files
-			static const int NumOfFiles = 4;
+			static const int NumOfFiles = 2;
 			static const std::string sFiles[] =
 			{
 				"PLRendererOpenGL.dll",
-				"PLRendererOpenGL.plugin",
-				"cg.dll",
-				"cgGL.dll"
+				"PLRendererOpenGL.plugin"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\Plugins\\PLRenderer\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
+				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}
 		}
@@ -451,8 +461,8 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				"PLCompositing.plugin"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\Plugins\\PLScene\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
+				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}
 		}
@@ -467,8 +477,8 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				"newton.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\Plugins\\PLPhysics\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
+				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}
 		}
@@ -481,25 +491,25 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			sViewer.append("PLViewerStandalone.exe");
 
 			// Copy
-			CopyFile(sViewer.c_str(), (sTargetDirectory+"PLViewerStandalone.exe").c_str(), false);
+			CopyFile(sViewer.c_str(), (sTargetDirectory+"\\"+"PLViewerStandalone.exe").c_str(), false);
 		}
 
 		{ // Copy VC2010 redistributable files
 			const int NumOfFiles = 2;
 			static const std::string sFiles[] =
 			{
-				"msvcr90.dll",
-				"msvcp90.dll"
+				"msvcr100.dll",
+				"msvcp100.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\..\\Runtime\\VC2010_Redistributable\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+sFiles[i];
+				const std::string sAbsSourceFilename = sSourceDirectory+"\\VC2010_Redistributable\\"+sFiles[i];
+				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
 				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
 			}
 		}
 
 		{ // Create the 'PLViewerStandalone.cfg' file
-			const std::string sAbsFilename = sTargetDirectory + "PLViewerStandalone.cfg";
+			const std::string sAbsFilename = sTargetDirectory + "\\..\\" + "PLViewerStandalone.cfg";
 
 			// Create XML document
 			XmlDocument cDocument;
