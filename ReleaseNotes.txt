@@ -24,7 +24,11 @@ Changes in PixelLight 0.9.8-R1 (not yet released)
 - Change: Renamed "PLPluginMozilla" into "PLFrontendMozilla"
 - Change: Updated experimental frontends for Mozilla and ActiveX so you can run your PixelLight applications also for example within a browser window
 - Change: Renamed "PLXmlText" into "PLGuiXmlText" to make clear that this project is PLGui related and not for instance a generic XML parser library
-- Change: Updated libpng from "1.4.5" to "1.4.8"
+- Change: Updated zlib from "1.2.3" to "1.2.5"
+- Change: Updated PCRE from "8.10" to "8.12"
+- Change: Updated libpng from "1.4.5" to "1.5.4"
+- Change: Updated libjpeg from "8b" to "8c"
+- Change: Updated FreeType from "2.3.12" to "2.4.6"
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
 - Bugfix: PLProject: Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case
 - Bugfix: Linux: Fixed keyboard issue regarding to key modifiers (e.g. "a-down"->"shift-down"->"a-up" => "a-up" event came only after releasing the shift key)
