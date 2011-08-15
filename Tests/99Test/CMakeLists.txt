@@ -105,8 +105,8 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLCore)
-add_dependencies(Tests ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore)
+add_dependencies(Tests							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
@@ -114,5 +114,5 @@ add_dependencies(Tests ${CMAKETOOLS_CURRENT_TARGET})
 
 # Executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} "${PL_BIN_DIR}/Tests"
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TESTS_BIN_DIR}
 )

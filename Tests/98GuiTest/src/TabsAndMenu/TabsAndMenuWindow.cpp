@@ -150,7 +150,7 @@ TabsAndMenuWindow::TabsAndMenuWindow(Widget *pParent) : Window(pParent),
 		// Add a bitmap
 		Bitmap *pBitmap = new Bitmap(pScrollWidget->GetContentWidget());
 		Image cImage(*GetGui());
-		cImage.Load("PLGui/background.jpg");
+		cImage.Load("../Data/background.jpg");
 		pBitmap->SetImage(cImage);
 		pBitmap->SetVisible(true);
 	*/
