@@ -210,7 +210,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application\AbstractLifecycle.cpp" />
     <ClCompile Include="src\Base\ClassDummy.cpp" />
     <ClCompile Include="src\Base\ClassImpl.cpp" />
     <ClCompile Include="src\Base\ClassReal.cpp" />
@@ -225,6 +224,8 @@
     <ClCompile Include="src\Container\BitsetIterator.cpp" />
     <ClCompile Include="src\Container\Functions.cpp" />
     <ClCompile Include="src\Core.cpp" />
+    <ClCompile Include="src\Core\AbstractContext.cpp" />
+    <ClCompile Include="src\Core\AbstractLifecycle.cpp" />
     <ClCompile Include="src\Core\MemoryManager.cpp" />
     <ClCompile Include="src\File\Directory.cpp" />
     <ClCompile Include="src\File\File.cpp" />
@@ -427,7 +428,6 @@
     <ClCompile Include="src\Xml\XmlUnknown.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLCore\Application\AbstractLifecycle.h" />
     <ClInclude Include="include\PLCore\Base\ClassDummy.h" />
     <ClInclude Include="include\PLCore\Base\ClassImpl.h" />
     <ClInclude Include="include\PLCore\Base\ClassReal.h" />
@@ -492,6 +492,8 @@
     <ClInclude Include="include\PLCore\Container\SimpleMapKeyIterator.h" />
     <ClInclude Include="include\PLCore\Container\Stack.h" />
     <ClInclude Include="include\PLCore\Core.h" />
+    <ClInclude Include="include\PLCore\Core\AbstractContext.h" />
+    <ClInclude Include="include\PLCore\Core\AbstractLifecycle.h" />
     <ClInclude Include="include\PLCore\Core\MemoryManager.h" />
     <ClInclude Include="include\PLCore\Core\RefCount.h" />
     <ClInclude Include="include\PLCore\Core\RefCountPtr.h" />

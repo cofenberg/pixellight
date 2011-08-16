@@ -125,6 +125,32 @@ class AbstractLifecycle {
 		virtual ~AbstractLifecycle();
 
 
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		AbstractLifecycle(const AbstractLifecycle &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		AbstractLifecycle &operator =(const AbstractLifecycle &cSource);
+
+
 };
 
 

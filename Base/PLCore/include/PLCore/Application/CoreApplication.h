@@ -31,7 +31,7 @@
 #include "PLCore/Base/Object.h"
 #include "PLCore/Tools/Version.h"
 #include "PLCore/Tools/CommandLine.h"
-#include "PLCore/Application/AbstractLifecycle.h"
+#include "PLCore/Core/AbstractLifecycle.h"
 #include "PLCore/Application/ApplicationContext.h"
 #include "PLCore/Config/Config.h"
 

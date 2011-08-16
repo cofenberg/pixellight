@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/Base/Object.h"
 #include "PLCore/Frontend/AbstractFrontend.h"
-#include "PLCore/Application/AbstractLifecycle.h"
+#include "PLCore/Core/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]

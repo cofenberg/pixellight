@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/QObject>
-#include <PLCore/PLCore.h> // Only needed for compilers which doesn't have nullptr as a builtin type
+#include <PLCore/Core/AbstractContext.h>
 #include "PLFrontendQt/PLFrontendQt.h"
 
 
@@ -60,7 +60,7 @@ namespace PLFrontendQt {
 *    - The Name of the to be used surface painter. A surface painter is used to draw something onto a surface (eg. a window) for more information see the documentation of the SurfacePainter class
 *    - The renderer context. A renderer context holds an instance of an renderer (eg. OpengGL, DirectX) which is used by an surface painter to draw something.
 */
-class PLFRONTENDQT_API QPLContext : public QObject {
+class PLFRONTENDQT_API QPLContext : public QObject, public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]

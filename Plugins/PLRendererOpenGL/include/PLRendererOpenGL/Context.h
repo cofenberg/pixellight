@@ -26,6 +26,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/Core/AbstractContext.h>
+
+
+//[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -49,7 +55,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Abstract OpenGL context base class
 */
-class Context {
+class Context : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]

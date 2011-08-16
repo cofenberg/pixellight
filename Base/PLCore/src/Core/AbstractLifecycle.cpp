@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PythonContext.h                                *
+ *  File: AbstractLifecycle.cpp                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,70 +20,62 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTPYTHON_PYTHONCONTEXT_H__
-#define __PLSCRIPTPYTHON_PYTHONCONTEXT_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core/AbstractContext.h>
+#include "PLCore/Core/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScriptPython {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Static Python context
+*    Default constructor
 */
-class PythonContext : public PLCore::AbstractContext {
+AbstractLifecycle::AbstractLifecycle()
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+AbstractLifecycle::~AbstractLifecycle()
+{
+}
 
 
-	//[-------------------------------------------------------]
-	//[ Public static methods                                 ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Adds a context reference
-		*
-		*  @note
-		*    - If this is the first reference, the internal Python context is created automatically
-		*/
-		static void AddContextReference();
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Copy constructor
+*/
+AbstractLifecycle::AbstractLifecycle(const AbstractLifecycle &cSource)
+{
+	// No implementation because the copy constructor is never used
+}
 
-		/**
-		*  @brief
-		*    Releases a context reference
-		*
-		*  @note
-		*    - If this is the last reference, the internal Python context is destroyed automatically
-		*/
-		static void ReleaseContextReference();
-
-
-	//[-------------------------------------------------------]
-	//[ Private static data                                   ]
-	//[-------------------------------------------------------]
-	private:
-		static PLCore::uint32 m_nContexCounter;	/**< Python context counter */
-
-
-};
+/**
+*  @brief
+*    Copy operator
+*/
+AbstractLifecycle &AbstractLifecycle::operator =(const AbstractLifecycle &cSource)
+{
+	// No implementation because the copy operator is never used
+	return *this;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScriptPython
-
-
-#endif // __PLSCRIPTPYTHON_PYTHONCONTEXT_H__
+} // PLCore

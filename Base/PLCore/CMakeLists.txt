@@ -13,6 +13,8 @@ add_sources(
 	src/Container/Bitset.cpp
 	src/Container/BitsetIterator.cpp
 	src/Core/MemoryManager.cpp
+	src/Core/AbstractContext.cpp
+	src/Core/AbstractLifecycle.cpp
 	src/File/Directory.cpp
 	src/File/File.cpp
 	src/File/FileAccess.cpp
@@ -144,7 +146,6 @@ add_sources(
 	src/Tools/LocalizationLoader.cpp
 	src/Tools/LocalizationLoaderPL.cpp
 	src/Application/ApplicationContext.cpp
-	src/Application/AbstractLifecycle.cpp
 	src/Application/CoreApplication.cpp
 	src/Script/Script.cpp
 	src/Script/ScriptManager.cpp

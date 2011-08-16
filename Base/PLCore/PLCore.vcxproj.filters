@@ -562,14 +562,17 @@
     <ClCompile Include="src\Frontend\FrontendPixelLight.cpp">
       <Filter>Frontend</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\AbstractLifecycle.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="src\Frontend\AbstractFrontend.cpp">
       <Filter>Frontend</Filter>
     </ClCompile>
     <ClCompile Include="src\PLCoreLinux.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\AbstractLifecycle.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\AbstractContext.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1305,11 +1308,14 @@
     <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h">
       <Filter>Frontend</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\Application\AbstractLifecycle.h">
-      <Filter>Application</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLCore\Frontend\AbstractFrontend.h">
       <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Core\AbstractLifecycle.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Core\AbstractContext.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
