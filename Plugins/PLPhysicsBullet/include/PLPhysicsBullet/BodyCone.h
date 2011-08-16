@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: BodySphere.h                                   *
+ *  File: BodyEllipsoid.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICSBULLET_BODYSPHERE_H__
-#define __PLPHYSICSBULLET_BODYSPHERE_H__
+#ifndef __PLPHYSICSBULLET_BODYELLIPSOID_H__
+#define __PLPHYSICSBULLET_BODYELLIPSOID_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLPhysics/BodySphere.h>
+#include <PLPhysics/BodyCone.h>
 #include "PLPhysicsBullet/PLPhysicsBullet.h"
 
 
@@ -43,9 +43,9 @@ namespace PLPhysicsBullet {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Bullet physics sphere body implementation
+*    Bullet physics cone body implementation
 */
-class BodySphere : public PLPhysics::BodySphere {
+class BodyCone : public PLPhysics::BodyCone {
 
 
 	//[-------------------------------------------------------]
@@ -62,7 +62,7 @@ class BodySphere : public PLPhysics::BodySphere {
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICSBULLET_API virtual ~BodySphere();
+		PLPHYSICSBULLET_API virtual ~BodyCone();
 
 
 	//[-------------------------------------------------------]
@@ -76,9 +76,13 @@ class BodySphere : public PLPhysics::BodySphere {
 		*  @param[in] cWorld
 		*    World this body is in
 		*  @param[in] fRadius
-		*    Sphere radius
+		*    Cone radius at the base
+		*  @param[in] fHeight
+		*    Cone height along the x local axis from base to top
+		*  @param[in] bStatic
+		*    is body static or dynamic
 		*/
-		BodySphere(PLPhysics::World &cWorld, float fRadius, bool bStatic);
+		BodyCone(PLPhysics::World &cWorld, float fRadius, float fHeight, bool bStatic);
 
 
 };
@@ -90,4 +94,4 @@ class BodySphere : public PLPhysics::BodySphere {
 } // PLPhysicsBullet
 
 
-#endif // __PLPHYSICSBULLET_BODYSPHERE_H__
+#endif // __PLPHYSICSBULLET_BODYELLIPSOID_H__

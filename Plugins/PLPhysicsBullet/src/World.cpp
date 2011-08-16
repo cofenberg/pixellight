@@ -29,6 +29,7 @@
 #include "PLPhysicsBullet/BodyImpl.h"
 #include "PLPhysicsBullet/BodyBox.h"
 #include "PLPhysicsBullet/BodySphere.h"
+#include "PLPhysicsBullet/BodyCone.h"
 
 
 //[-------------------------------------------------------]
@@ -189,8 +190,7 @@ PLPhysics::Body *World::CreateBodyCylinder(float fRadius, float fHeight, bool bS
 
 PLPhysics::Body *World::CreateBodyCone(float fRadius, float fHeight, bool bStatic)
 {
-	// [TODO] implement
-	return nullptr;
+	return new BodyCone(*this, fRadius, fHeight, bStatic);
 }
 
 PLPhysics::Body *World::CreateBodyCapsule(float fRadius, float fHeight, bool bStatic)

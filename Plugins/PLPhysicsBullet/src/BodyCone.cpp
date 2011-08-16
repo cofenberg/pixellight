@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: BodySphere.h                                   *
+ *  File: BodyCone.cpp                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,74 +20,65 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICSBULLET_BODYSPHERE_H__
-#define __PLPHYSICSBULLET_BODYSPHERE_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLPhysics/BodySphere.h>
-#include "PLPhysicsBullet/PLPhysicsBullet.h"
+#include "PLPhysicsBullet/BodyImpl.h"
+#include "PLPhysicsBullet/World.h"
+#include "PLPhysicsBullet/BodyCone.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLMath;
 namespace PLPhysicsBullet {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Bullet physics sphere body implementation
+*    Destructor
 */
-class BodySphere : public PLPhysics::BodySphere {
+BodyCone::~BodyCone()
+{
+}
 
 
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class World;
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+BodyCone::BodyCone(PLPhysics::World &cWorld, float fRadius, float fHeight, bool bStatic) :
+	PLPhysics::BodyCone(cWorld, static_cast<World&>(cWorld).CreateBodyImpl(), fRadius, fHeight)
+{
+	// Deactivate the physics simulation if required
+	const bool bSimulationActive = cWorld.IsSimulationActive();
+	if (bSimulationActive)
+		cWorld.SetSimulationActive(false);
 
+	// Get the Bullet physics world
+	btDynamicsWorld *pBulletWorld = ((World&)cWorld).GetBulletWorld();
+	if (pBulletWorld) {
+		
+		btCollisionShape* collisionShape = new btConeShape(fRadius, fHeight);
+		
+		// Initialize the Bullet physics body
+		((BodyImpl&)GetBodyImpl()).InitializeBulletBody(*this, *collisionShape, bStatic);
+	}
 
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLPHYSICSBULLET_API virtual ~BodySphere();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cWorld
-		*    World this body is in
-		*  @param[in] fRadius
-		*    Sphere radius
-		*/
-		BodySphere(PLPhysics::World &cWorld, float fRadius, bool bStatic);
-
-
-};
+	// Reactivate the physics simulation if required
+	if (bSimulationActive)
+		cWorld.SetSimulationActive(bSimulationActive);
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLPhysicsBullet
-
-
-#endif // __PLPHYSICSBULLET_BODYSPHERE_H__

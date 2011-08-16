@@ -11,7 +11,7 @@ add_sources(
 # 	src/SensorAABoundingBox.cpp
 # 	src/JointHinge.cpp
 	src/BodySphere.cpp
-# 	src/BodyCone.cpp
+	src/BodyCone.cpp
 # 	src/BodyChamferCylinder.cpp
 # 	src/BodyEllipsoid.cpp
 # 	src/BodyConvexHull.cpp
