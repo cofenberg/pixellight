@@ -58,9 +58,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-namespace Bullet {
-	#include <Bullet/btBulletDynamicsCommon.h>
-}
+// Cannot put this in a namespace because bullet defines it own new delete operators (placement new)
+#include <Bullet/btBulletDynamicsCommon.h>
 
 
 #endif // __PLPHYSICSBULLET_PLPHYSICSBULLET_H__

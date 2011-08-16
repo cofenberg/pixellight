@@ -10,27 +10,29 @@ add_sources(
 # 	src/SensorRaycast.cpp
 # 	src/SensorAABoundingBox.cpp
 # 	src/JointHinge.cpp
-# 	src/BodySphere.cpp
+	src/BodySphere.cpp
 # 	src/BodyCone.cpp
 # 	src/BodyChamferCylinder.cpp
 # 	src/BodyEllipsoid.cpp
 # 	src/BodyConvexHull.cpp
 # 	src/JointImpl.cpp
 # 	src/JointCorkscrew.cpp
-# 	src/BodyBox.cpp
+	src/BodyBox.cpp
 	src/PLPhysicsBullet.cpp
 # 	src/BodyMesh.cpp
 # 	src/BodyCapsule.cpp
 # 	src/JointUpVector.cpp
 # 	src/JointUniversal.cpp
 # 	src/JointBall.cpp
-# 	src/BodyImpl.cpp
+	src/BodyImpl.cpp
 # 	src/WorldThread.cpp
 # 	src/BodyTerrain.cpp
-# 	src/World.cpp
+	src/World.cpp
 # 	src/JointSlider.cpp
 # 	src/BodyCylinder.cpp
 # 	src/WorldUpdate.cpp
+	src/Helper.cpp
+	src/BodyMotionState.cpp
 )
 
 ##################################################
