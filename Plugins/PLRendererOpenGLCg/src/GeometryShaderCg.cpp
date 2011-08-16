@@ -26,7 +26,7 @@
 #include <PLCore/Tools/Wrapper.h>
 #include <PLCore/Core/MemoryManager.h>
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 
 
@@ -51,7 +51,7 @@ GeometryShaderCg::~GeometryShaderCg()
 		cgDestroyProgram(m_pCgGeometryProgram);
 
 	// Release a Cg context reference
-	ShaderToolsCg::ReleaseCgContextReference();
+	CgContext::ReleaseCgContextReference();
 }
 
 /**
@@ -88,7 +88,7 @@ GeometryShaderCg::GeometryShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer
 	m_pCgGeometryProgram(nullptr)
 {
 	// Add a Cg context reference
-	ShaderToolsCg::AddCgContextReference();
+	CgContext::AddCgContextReference();
 }
 
 
@@ -206,7 +206,7 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveT
 		}
 
 		// Create the Cg geometry program
-		m_pCgGeometryProgram = ShaderToolsCg::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry, sArguments);
+		m_pCgGeometryProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry, sArguments);
 	}
 
 	// Was the Cg program created successfully?

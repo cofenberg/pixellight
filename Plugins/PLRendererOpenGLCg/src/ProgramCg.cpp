@@ -28,7 +28,7 @@
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/ProgramAttributeCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformBlockCg.h"

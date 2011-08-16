@@ -26,7 +26,7 @@
 #include <PLCore/Tools/Wrapper.h>
 #include <PLCore/Core/MemoryManager.h>
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
 
 
@@ -51,7 +51,7 @@ FragmentShaderCg::~FragmentShaderCg()
 		cgDestroyProgram(m_pCgFragmentProgram);
 
 	// Release a Cg context reference
-	ShaderToolsCg::ReleaseCgContextReference();
+	CgContext::ReleaseCgContextReference();
 }
 
 /**
@@ -85,7 +85,7 @@ FragmentShaderCg::FragmentShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer
 	m_pCgFragmentProgram(nullptr)
 {
 	// Add a Cg context reference
-	ShaderToolsCg::AddCgContextReference();
+	CgContext::AddCgContextReference();
 }
 
 
@@ -132,7 +132,7 @@ bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 
 	// Create the Cg fragment program
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN)
-		m_pCgFragmentProgram = ShaderToolsCg::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
+		m_pCgFragmentProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
 
 	// Was the Cg program created successfully?
 	if (m_pCgFragmentProgram) {

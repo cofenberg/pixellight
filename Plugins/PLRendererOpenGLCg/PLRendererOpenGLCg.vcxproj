@@ -262,6 +262,7 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x86\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CgContext.cpp" />
     <ClCompile Include="src\FragmentShaderCg.cpp" />
     <ClCompile Include="src\GeometryShaderCg.cpp" />
     <ClCompile Include="src\PLRendererOpenGLCg.cpp" />
@@ -270,11 +271,11 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x86\
     <ClCompile Include="src\ProgramUniformBlockCg.cpp" />
     <ClCompile Include="src\ProgramUniformCg.cpp" />
     <ClCompile Include="src\ShaderLanguageCg.cpp" />
-    <ClCompile Include="src\ShaderToolsCg.cpp" />
     <ClCompile Include="src\UniformBufferCg.cpp" />
     <ClCompile Include="src\VertexShaderCg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLRendererOpenGLCg\CgContext.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\FragmentShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\GeometryShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramAttributeCg.h" />
@@ -282,7 +283,6 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x86\
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformBlockCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ShaderLanguageCg.h" />
-    <ClInclude Include="include\PLRendererOpenGLCg\ShaderToolsCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\UniformBufferCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\VertexShaderCg.h" />
   </ItemGroup>

@@ -8,6 +8,7 @@ define_project(PLRendererOpenGLCg)
 ##################################################
 add_sources(
 	src/PLRendererOpenGLCg.cpp
+	src/CgContext.cpp
 	src/ShaderLanguageCg.cpp
 	src/VertexShaderCg.cpp
 	src/GeometryShaderCg.cpp
@@ -16,7 +17,6 @@ add_sources(
 	src/ProgramAttributeCg.cpp
 	src/ProgramUniformCg.cpp
 	src/ProgramUniformBlockCg.cpp
-	src/ShaderToolsCg.cpp
 	src/UniformBufferCg.cpp
 )
 

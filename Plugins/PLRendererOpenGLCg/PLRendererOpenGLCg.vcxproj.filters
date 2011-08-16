@@ -28,9 +28,6 @@
     <ClCompile Include="src\ShaderLanguageCg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ShaderToolsCg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\VertexShaderCg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,6 +35,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UniformBufferCg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CgContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,9 +60,6 @@
     <ClInclude Include="include\PLRendererOpenGLCg\ShaderLanguageCg.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLCg\ShaderToolsCg.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLCg\VertexShaderCg.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -70,6 +67,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLCg\UniformBufferCg.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLCg\CgContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

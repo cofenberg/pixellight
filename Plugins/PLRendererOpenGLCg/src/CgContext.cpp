@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderToolsCg.cpp                              *
+ *  File: CgContext.cpp                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 
 
 //[-------------------------------------------------------]
@@ -37,8 +37,8 @@ namespace PLRendererOpenGLCg {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-CGcontext ShaderToolsCg::m_pCgContext       = nullptr;
-uint32    ShaderToolsCg::m_nCgContexCounter = 0;
+CGcontext CgContext::m_pCgContext       = nullptr;
+uint32    CgContext::m_nCgContexCounter = 0;
 
 
 //[-------------------------------------------------------]
@@ -48,7 +48,7 @@ uint32    ShaderToolsCg::m_nCgContexCounter = 0;
 *  @brief
 *    Adds a Cg context reference
 */
-void ShaderToolsCg::AddCgContextReference()
+void CgContext::AddCgContextReference()
 {
 	// Check Cg context
 	if (!m_nCgContexCounter && !m_pCgContext) {
@@ -69,7 +69,7 @@ void ShaderToolsCg::AddCgContextReference()
 *  @brief
 *    Releases a Cg context reference
 */
-void ShaderToolsCg::ReleaseCgContextReference()
+void CgContext::ReleaseCgContextReference()
 {
 	// Check Cg context
 	m_nCgContexCounter--;
@@ -85,7 +85,7 @@ void ShaderToolsCg::ReleaseCgContextReference()
 *  @brief
 *    Returns the Cg context
 */
-CGcontext ShaderToolsCg::GetCgContext()
+CGcontext CgContext::GetCgContext()
 {
 	return m_pCgContext;
 }
@@ -94,7 +94,7 @@ CGcontext ShaderToolsCg::GetCgContext()
 *  @brief
 *    Creates a Cg program
 */
-CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sEntry, const String &sArguments)
+CGprogram CgContext::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sEntry, const String &sArguments)
 {
 	// Set optimal profile options - this will set implicit compiler arguments chosen based on the the available compiler arguments, GPU, and driver
 	cgGLSetOptimalOptions(pCgProfile);
@@ -119,7 +119,7 @@ CGprogram ShaderToolsCg::CreateCgProgram(CGprofile pCgProfile, const String &sSo
 *  @brief
 *    Internal Cg error callback function
 */
-void ShaderToolsCg::CgErrorCallback()
+void CgContext::CgErrorCallback()
 {
 	CGerror nLastError = cgGetError();
 	if (nLastError) {

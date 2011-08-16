@@ -1,6 +1,7 @@
 >> 16.08.2011
 [CO]
 - "RendererContext" destructor was virtual, but it shouldn't be
+- Renamed "PLRendererOpenGLCg::ShaderToolsCg" into "PLRendererOpenGLCg::CgContext"
 
 
 
