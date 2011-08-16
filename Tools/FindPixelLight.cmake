@@ -31,18 +31,18 @@ endif()
 set(pl_runtime_env $ENV{PL_RUNTIME})
 if(pl_runtime_env)
 	set(pl_runtime_env_bin  "${pl_runtime_env}")
-	set(pl_runtime_env_lib  "${pl_runtime_env}/../Lib")
-	set(pl_runtime_env_inc  "${pl_runtime_env}/../Include")
-	set(pl_runtime_env_base "${pl_runtime_env}/../..")
+	set(pl_runtime_env_lib  "${pl_runtime_env}/../../Lib")
+	set(pl_runtime_env_inc  "${pl_runtime_env}/../../Include")
+	set(pl_runtime_env_base "${pl_runtime_env}/../../..")
 endif()
 
 # Read registry key
 get_filename_component(pl_runtime_reg [HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime] ABSOLUTE)
 if(pl_runtime_reg)
 	set(pl_runtime_reg_bin  "${pl_runtime_reg}")
-	set(pl_runtime_reg_lib  "${pl_runtime_reg}/../Lib")
-	set(pl_runtime_reg_inc  "${pl_runtime_reg}/../Include")
-	set(pl_runtime_reg_base "${pl_runtime_reg}/../..")
+	set(pl_runtime_reg_lib  "${pl_runtime_reg}/../../Lib")
+	set(pl_runtime_reg_inc  "${pl_runtime_reg}/../../Include")
+	set(pl_runtime_reg_base "${pl_runtime_reg}/../../..")
 endif()
 
 
@@ -104,7 +104,7 @@ _pixellight_find_lib(PL_PLGRAPHICS PLGraphics/PLGraphics.h PLGraphics Base/PLGra
 #message("PLGraphics library: ${PL_PLGRAPHICS_LIBRARY}")
 
 # PLGui
-_pixellight_find_lib(PL_PLGUI PLGui/PLGui.h PLGui PLGui/PLGui/include)
+_pixellight_find_lib(PL_PLGUI PLGui/PLGui.h PLGui Base/PLGui/include)
 #message("PLGui include: ${PL_PLGUI_INCLUDE_DIR}")
 #message("PLGui library: ${PL_PLGUI_LIBRARY}")
 
@@ -167,7 +167,7 @@ _pixellight_find_lib(PL_PLGUIXMLTEXT PLGuiXmlText/PLGuiXmlText.h PLGuiXmlText Pl
 #message("PLGuiXmlText library: ${PL_PLGUIXMLTEXT_LIBRARY}")
 
 # PLFrontendPLGui
-_pixellight_find_lib(PL_PLFRONTENDPLGUI PLFrontendPLGui/PLFrontendPLGui.h PLFrontendPLGui PLFrontendPLGui/PLFrontendPLGui/include)
+_pixellight_find_lib(PL_PLFRONTENDPLGUI PLFrontendPLGui/PLFrontendPLGui.h PLFrontendPLGui Plugins/PLFrontendPLGui/include)
 #message("PLFrontendPLGui include: ${PL_PLFRONTENDPLGUI_INCLUDE_DIR}")
 #message("PLFrontendPLGui library: ${PL_PLFRONTENDPLGUI_LIBRARY}")
 
