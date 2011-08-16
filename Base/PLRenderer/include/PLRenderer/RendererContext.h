@@ -114,7 +114,7 @@ class RendererContext : public PLCore::AbstractContext {
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDERER_API virtual ~RendererContext();
+		PLRENDERER_API ~RendererContext();
 
 		/**
 		*  @brief
