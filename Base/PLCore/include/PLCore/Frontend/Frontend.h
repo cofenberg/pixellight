@@ -59,6 +59,16 @@ template <class ValueType> class Array;
 *    an actual PixelLight frontend class. Concrete wrappers for certain browsers,
 *    such as MS Internet Explorer or Mozilla Firefox are used to map the browser
 *    specific frontend API to this general base class.
+*
+*    The focus of this class is on applications with just one window (if there's a window
+*    at all, this depends on the used frontend implementation). This focus makes application development
+*    somewhat easier because you only have to concentrate our realizing your project and not how it
+*    will be presented (in a window with border, without border, just rendering into an image etc.) to
+*    the user.
+*
+*    The PixelLight technology is designed to be as flexible as possible and so, although this
+*    class has a clear focus, it can also be used to develop multi-window applications as well.
+*
 *    Please note that the frontend system is not designed to be a replacement for a decent GUI
 *    system. In here, only primitive and commonly used GUI related feature are offered with a
 *    limited feature set. For more complex stuff one has to use a real GUI system.

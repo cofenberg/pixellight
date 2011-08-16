@@ -39,6 +39,7 @@ namespace PLCore {
 *    Abstract lifecycle class
 *
 *  @remarks
+*  @verbatim
 *    The "Lifecycle" is:
 *      "OnCreate()"         - Called directly after the object has been created
 *        ("OnRestart()")    - Called directly before a stopped object is going to start again (always followed by "OnStart()")
@@ -52,6 +53,7 @@ namespace PLCore {
 *    because this interface looks just the right way to go for this purpose... also there
 *    are nice diagrams and documentations explaining the interface so it shouldn't be to
 *    hard to understand it.
+*  @endverbatim
 */
 class AbstractLifecycle {
 

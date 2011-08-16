@@ -47,13 +47,15 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Application class
+*    Application base class
 *
 *  @remarks
 *    An application class is a template for all kind of applications.
 *    It controls the main loop of the program and provides all typical data that
 *    is needed for an application. Derived classes are provided for specific tasks,
-*    e.g. GUI or server applications.
+*    e.g. GUI or server applications. Please note that derived application classes
+*    are allowed to hand over the main loop as well as other logic to e.g. a host
+*    in order to become passive.
 *
 *    This class provides a most basic framework for console applications.
 *    It keeps the filename and startup directory of the executable for later use and

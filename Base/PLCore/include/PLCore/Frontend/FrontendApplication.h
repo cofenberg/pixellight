@@ -51,8 +51,15 @@ class Frontend;
 *  @brief
 *    Frontend application class
 *
-*  @note
-*    - A frontend application is always running within a frontend
+*  @remarks
+*    As the name of this class indicates, this is the base class for applications running
+*    within a frontend (the application host). The main loop as well as other logic is handed
+*    over to a host in order to become passive. Although a frontend application is always
+*    running within a frontend, it shouldn't care about the frontend. Just write our application
+*    as if there wouldn't be any "outer world". By following this philosophy as close as possible
+*    and only accessing frontend features when really neccessary, you enhance the chance that your
+*    application can be embedded within other applications like browsers such as MS Internet Explorer
+*    or Mozilla Firefox without problems.
 */
 class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
@@ -84,6 +91,9 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*
 		*  @return
 		*    Frontend this application instance is running in
+		*
+		*  @note
+		*    - Try to avoid to access the frontend whenever possible (Hollywood Principle: "Don't call us, we'll call you")
 		*/
 		PLCORE_API Frontend &GetFrontend() const;
 
