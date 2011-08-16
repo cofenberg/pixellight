@@ -62,7 +62,7 @@ class Camcorder : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, Camcorder, "PLEngine", PLCore::Object, "Camcorder interaction component")
 		// Attributes
-		pl_attribute(CamcorderDirectory,	PLCore::String,	"Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
+		pl_attribute(CamcorderDirectory,	PLCore::String,	"../Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Methods
 			pl_method_1(StartRecord,	pl_ret_type(void),	const PLCore::String&,	"Starts the record, record name as first parameter (if empty string, no recording can be started). The currently used application camera will be recorded. If playback is currently enabled, the playback will be stopped at once.",	"")
