@@ -83,7 +83,7 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	- NSIS (Nullsoft Scriptable Install System) (http://nsis.sourceforge.net/)
 	- Used to create the Windows installer
 
-- doxygen-1.7.4-setup.exe
+- doxygen-1.7.5-setup.exe
 	- Doxygen (http://www.doxygen.org)
 	- Used to create the code documentations.
 
