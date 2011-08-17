@@ -58,8 +58,6 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend) : EngineApplication(cF
 	OnDeInitFunction(this),
 	m_pScript(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight script application");
 }
 
 /**

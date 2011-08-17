@@ -348,5 +348,5 @@ and the samples e.g. in /usr/local/share/pixellight/Samples.
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
 
-  cd Bin-Linux/Samples
+  cd Bin-Linux/Samples/x86
   ./50RendererTriangle

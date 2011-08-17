@@ -43,6 +43,7 @@ namespace PLCore {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Frontend;
+class FrontendContext;
 
 
 //[-------------------------------------------------------]
@@ -166,26 +167,6 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    - Automatically called from within "Frontend::Run()"
 		*/
 		PLCORE_API virtual int Run(const String &sExecutableFilename, const Array<String> &lstArguments);
-
-		/**
-		*  @brief
-		*    Run the frontend using traditional C-arguments
-		*
-		*  @param[in] argc
-		*    Number of C-arguments
-		*  @param[in] argv
-		*    C-arguments, must be valid
-		*
-		*  @return
-		*    Exit code (usually 0 means no error), usually <0 when there was an error
-		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
-		*
-		*  @note
-		*    - The default implementation calls the version of the "Run()"-method using PixelLight strings
-		*    - Automatically called from within "Frontend::Run()"
-		*/
-		PLCORE_API virtual int Run(int argc, char **argv);
-		PLCORE_API virtual int Run(int argc, wchar_t **argv);
 
 		/**
 		*  @brief
@@ -362,25 +343,15 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @brief
 		*    Creates a frontend instance
 		*
+		*  @param[in] cFrontendContext
+		*    Frontend context to use
 		*  @param[in] cFrontendImpl
 		*    Frontend implementation instance
-		*  @param[in] sFrontend
-		*    Name of the frontend RTTI class to use
-		*  @param[in] sFrontendConstructor
-		*    Name of the frontend RTTI class constructor to use
-		*  @param[in] sFrontendConstructorParameters
-		*    Parameters for the frontend RTTI class constructor
-		*  @param[in] sFrontendParameters
-		*    Parameters for the instanced frontend RTTI class
 		*
 		*  @return
 		*    Frontend instance, null pointer on error
 		*/
-		PLCORE_API static Frontend *CreateFrontend(FrontendImpl &cFrontendImpl,
-												   const String &sFrontend,
-												   const String &sFrontendConstructor,
-												   const String &sFrontendConstructorParameters,
-												   const String &sFrontendParameters);
+		PLCORE_API static Frontend *CreateFrontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
 
 
 	//[-------------------------------------------------------]

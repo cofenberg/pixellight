@@ -59,8 +59,6 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : RendererApplication(cFrontend)
 {
 	// Set application name and title
-	SetName("53RendererMultiView");
-	SetTitle(PLT("PL multi view sample main frame"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

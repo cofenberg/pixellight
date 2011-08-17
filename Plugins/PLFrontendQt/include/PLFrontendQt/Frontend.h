@@ -112,7 +112,6 @@ class Frontend : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	protected:
 		virtual int Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) override;
-		virtual int Run(int argc, char **argv) override;
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;

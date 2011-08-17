@@ -571,6 +571,9 @@
     <ClCompile Include="src\Core\AbstractLifecycle.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Frontend\FrontendContext.cpp">
+      <Filter>Frontend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\Core.h">
@@ -1310,6 +1313,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Core\AbstractContext.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Frontend\FrontendContext.h">
+      <Filter>Frontend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/FrontendApplication.h"
 
 
@@ -62,8 +63,9 @@ Frontend &FrontendApplication::GetFrontend() const
 FrontendApplication::FrontendApplication(Frontend &cFrontend) : CoreApplication(),
 	m_pFrontend(&cFrontend)
 {
-	// Set application title
-	SetTitle("PixelLight frontend application");
+	// Set application name and title
+	SetName(m_pFrontend->GetContext().GetName());
+	SetTitle(m_pFrontend->GetContext().GetName());
 
 	// Set running state
 	m_bRunning = true;

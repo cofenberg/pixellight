@@ -27,6 +27,7 @@
 #include "PLCore/Base/Class.h"
 #include "PLCore/System/System.h"
 #include "PLCore/Frontend/Frontend.h"
+#include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/FrontendImpl.h"
 
 
@@ -194,28 +195,6 @@ int FrontendImpl::Run(const String &sExecutableFilename, const Array<String> &ls
 	return 0;
 }
 
-/**
-*  @brief
-*    Run the frontend using traditional C-arguments
-*/
-int FrontendImpl::Run(int argc, char **argv)
-{
-	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
-	Array<String> lstArguments;
-	for (int i=1; i<argc; i++)
-		lstArguments.Add(argv[i]);
-	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments);
-}
-
-int FrontendImpl::Run(int argc, wchar_t **argv)
-{
-	// By default, call the version of the "Run()"-method using PixelLight strings by using the same approach used in "PLMain()"
-	Array<String> lstArguments;
-	for (int i=1; i<argc; i++)
-		lstArguments.Add(argv[i]);
-	return Run(System::GetInstance()->GetExecutableFilename(), lstArguments);
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected static functions                            ]
@@ -224,17 +203,19 @@ int FrontendImpl::Run(int argc, wchar_t **argv)
 *  @brief
 *    Creates a frontend instance
 */
-Frontend *FrontendImpl::CreateFrontend(FrontendImpl &cFrontendImpl,
-									   const String &sFrontend,
-									   const String &sFrontendConstructor,
-									   const String &sFrontendConstructorParameters,
-									   const String &sFrontendParameters)
+Frontend *FrontendImpl::CreateFrontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl)
 {
 	// Get the frontend RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontend);
+	const Class *pClass = ClassManager::GetInstance()->GetClass(cFrontendContext.GetFrontend());
 	if (pClass && pClass->IsDerivedFrom("PLCore::Frontend")) {
 		// Create the frontend RTTI class instance
-		Object *pObject = sFrontendConstructor.GetLength() ? pClass->Create(sFrontendConstructor, "FrontendImpl=\"" + Type<FrontendImpl&>::ConvertToString(cFrontendImpl) + "\" " + sFrontendConstructorParameters) : pClass->Create(Params<Object*, FrontendImpl&>(cFrontendImpl));
+		Object *pObject = nullptr;
+		if (cFrontendContext.GetFrontendConstructor().GetLength())
+			pObject = pClass->Create(cFrontendContext.GetFrontendConstructor(), "FrontendContext=\"" + Type<const FrontendContext&>::ConvertToString(cFrontendContext) + "\" FrontendImpl=\"" + Type<FrontendImpl&>::ConvertToString(cFrontendImpl) + "\" " + cFrontendContext.GetFrontendConstructorParameters());
+		else
+			pObject = pClass->Create(Params<Object*, const FrontendContext&, FrontendImpl&>(cFrontendContext, cFrontendImpl));
+
+		// Do we now have an instance?
 		if (pObject) {
 			// Cast the pointer to a frontend pointer
 			Frontend *pFrontend = static_cast<Frontend*>(pObject);
@@ -243,8 +224,8 @@ Frontend *FrontendImpl::CreateFrontend(FrontendImpl &cFrontendImpl,
 			PL_LOG(Info, "Using frontend '" + pClass->GetClassName() + "': " + pClass->GetDescription())
 
 			// Set parameters for the instanced frontend RTTI class
-			if (sFrontendParameters.GetLength())
-				pObject->SetValues(sFrontendParameters);
+			if (cFrontendContext.GetFrontendParameters().GetLength())
+				pObject->SetValues(cFrontendContext.GetFrontendParameters());
 
 			// Done
 			return pFrontend;
@@ -254,7 +235,7 @@ Frontend *FrontendImpl::CreateFrontend(FrontendImpl &cFrontendImpl,
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, "Frontend '" + sFrontend + "' is no valid frontend RTTI class")
+		PL_LOG(Error, "Frontend '" + cFrontendContext.GetFrontend() + "' is no valid frontend RTTI class")
 	}
 
 	// Error!

@@ -24,6 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "../resource.h"
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowWindows.h"
 #include <Shellapi.h>	// For "ExtractIcon()"
@@ -268,7 +270,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		// Create the window
 		m_hWnd = ::CreateWindowExA(dwExtStyle,
 								  "PLFrontendOS_OSWindowWindows",
-								   "",
+								   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "",
 								   dwStyle,
 								   CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 								   HWND_DESKTOP,

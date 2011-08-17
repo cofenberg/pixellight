@@ -76,6 +76,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XSetWindowAttributes sXSetWindowAttributes;
 		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask;
 
+		// [TODO] Set window title by using
+		//   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : ""
+
 		// Create the native OS window instance
 		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
 		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &m_wmDelete, 1);

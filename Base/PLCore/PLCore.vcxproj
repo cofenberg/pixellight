@@ -297,6 +297,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Frontend\AbstractFrontend.cpp" />
     <ClCompile Include="src\Frontend\Frontend.cpp" />
     <ClCompile Include="src\Frontend\FrontendApplication.cpp" />
+    <ClCompile Include="src\Frontend\FrontendContext.cpp" />
     <ClCompile Include="src\Frontend\FrontendImpl.cpp" />
     <ClCompile Include="src\Frontend\FrontendOpenGL.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -561,6 +562,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCore\Frontend\AbstractFrontend.h" />
     <ClInclude Include="include\PLCore\Frontend\Frontend.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendApplication.h" />
+    <ClInclude Include="include\PLCore\Frontend\FrontendContext.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendImpl.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendMain.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendOpenGL.h" />

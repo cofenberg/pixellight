@@ -51,7 +51,7 @@ pl_implement_class(FrontendOpenGL)
 *  @brief
 *    Constructor
 */
-FrontendOpenGL::FrontendOpenGL(FrontendImpl &cFrontendImpl) : Frontend(cFrontendImpl),
+FrontendOpenGL::FrontendOpenGL(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl) : Frontend(cFrontendContext, cFrontendImpl),
 	#ifdef WIN32
 		m_hDC(nullptr),
 		m_hRC(nullptr),

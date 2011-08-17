@@ -71,9 +71,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	m_bApplyForce(false),
 	m_bTorqueForce(false)
 {
-	// Set application name and title
-	SetName("62Physics");
-	SetTitle(PLT("PL physics sample"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Add command line argument for choosing the physics API

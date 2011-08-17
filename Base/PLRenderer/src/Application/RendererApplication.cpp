@@ -58,8 +58,6 @@ RendererApplication::RendererApplication(Frontend &cFrontend, const String &sSur
 	m_pRendererContext(nullptr),
 	m_pDisplayMode(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight render application");
 }
 
 /**

@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include "Application.h"
 
 
@@ -49,9 +48,6 @@ pl_implement_class(Application)
 */
 Application::Application()
 {
-	// Set application name and title
-	SetName("20Gui");
-	SetTitle(PLT("PLSample 20 - Gui"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

@@ -31,6 +31,8 @@
 	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
 #endif
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
@@ -68,7 +70,8 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(null
 
 	// ... at this point, we should be finally flicker-free...
 
-	// Set window size
+	// Set window title and size
+	setWindowTitle(m_pFrontendQt->GetFrontend() ? QtStringAdapter::PLToQt(m_pFrontendQt->GetFrontend()->GetContext().GetName()) : "");
 	resize(640, 480);
 
 	// Drop events are enabled for this widget

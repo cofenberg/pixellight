@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Windows/Window.h>
@@ -296,6 +297,7 @@ void Frontend::OnCreateMainWindow()
 	Window *pWindow = new Window();
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=1");
 	pWindow->SetSize(Vector2i(640, 480));
+	pWindow->SetTitle(GetFrontend() ? GetFrontend()->GetContext().GetName() : "");
 
 	// There's no need to have a widget background because we're render into it
 	// (avoids flickering caused by automatic background overdraw)

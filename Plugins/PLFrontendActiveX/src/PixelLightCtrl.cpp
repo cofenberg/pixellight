@@ -10,7 +10,7 @@ PixelLightCtrl::PixelLightCtrl() :
 	m_bFrontendApplicationInitialized(false),
 	m_bMouseVisible(true),
 	m_bTrapMouse(false),
-	m_cFrontend(*this)
+	m_cFrontend(m_cFrontendContext, *this)
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;

@@ -85,6 +85,26 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 
 /**
 *  @brief
+*    Get command line arguments
+*/
+const Array<String> &ApplicationContext::GetArguments() const
+{
+	// Return argument list
+	return m_lstArguments;
+}
+
+/**
+*  @brief
+*    Set command line arguments
+*/
+void ApplicationContext::SetArguments(const Array<String> &lstArguments)
+{
+	// Set argument list
+	m_lstArguments = lstArguments;
+}
+
+/**
+*  @brief
 *    Get directory of application executable
 */
 String ApplicationContext::GetAppDirectory() const
@@ -151,26 +171,6 @@ void ApplicationContext::SetConfigFilename(const String &sConfig)
 {
 	// Set config filename
 	m_sConfig = sConfig;
-}
-
-/**
-*  @brief
-*    Get command line arguments
-*/
-const Array<String> &ApplicationContext::GetArguments() const
-{
-	// Return argument list
-	return m_lstArguments;
-}
-
-/**
-*  @brief
-*    Set command line arguments
-*/
-void ApplicationContext::SetArguments(const Array<String> &lstArguments)
-{
-	// Set argument list
-	m_lstArguments = lstArguments;
 }
 
 

@@ -31,6 +31,7 @@
 #include "PLCore/Main.h"
 #include "PLCore/ModuleMain.h"
 #include "PLCore/Frontend/Frontend.h"
+#include "PLCore/Frontend/FrontendContext.h"
 
 
 //[-------------------------------------------------------]
@@ -51,26 +52,15 @@
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(/* Absolute application executable filename */ \
-									 sExecutableFilename, \
-									 /* List of arguments to the program */ \
-									 lstArguments, \
-									 /* Frontend - Name of the frontend RTTI class to use */ \
-									 "PLCore::FrontendPixelLight", \
-									 /* Frontend - Name of the frontend RTTI class constructor to use */ \
-									 "", \
-									 /* Frontend - Parameters for the frontend RTTI class constructor */ \
-									 "", \
-									 /* Frontend - Parameters for the instanced frontend RTTI class */ \
-									 PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"', \
-									 /* Frontend implementation - Name of the frontend implementation RTTI class to use */ \
-									 "PLFrontendOS::Frontend", \
-									 /* Frontend implementation - Name of the frontend implementation RTTI class constructor to use */ \
-									 "", \
-									 /* Frontend implementation - Parameters for the frontend implementation RTTI class constructor */ \
-									 "", \
-									 /* Frontend implementation - Parameters for the instanced frontend implementation RTTI class */ \
-									 ""); \
+		/* Setup the frontend context */ \
+		PLCore::FrontendContext cFrontendContext; \
+		cFrontendContext.SetExecutableFilename(sExecutableFilename); \
+		cFrontendContext.SetArguments(lstArguments); \
+		cFrontendContext.SetName(ModuleName); \
+		cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
+\
+		/* Run the frontend */ \
+		return PLCore::Frontend::Run(cFrontendContext); \
 	} \
 	\
 	pl_module_plugin(ModuleName)
@@ -92,26 +82,16 @@
 #define pl_module_application_frontend(ModuleName, ApplicationClass, FrontendClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
-		return PLCore::Frontend::Run(/* Absolute application executable filename */ \
-									 sExecutableFilename, \
-									 /* List of arguments to the program */ \
-									 lstArguments, \
-									 /* Frontend - Name of the frontend RTTI class to use */ \
-									 "PLCore::FrontendPixelLight", \
-									 /* Frontend - Name of the frontend RTTI class constructor to use */ \
-									 "", \
-									 /* Frontend - Parameters for the frontend RTTI class constructor */ \
-									 "", \
-									 /* Frontend - Parameters for the instanced frontend RTTI class */ \
-									 PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"', \
-									 /* Frontend implementation - Name of the frontend implementation RTTI class to use */ \
-									 FrontendClass, \
-									 /* Frontend implementation - Name of the frontend implementation RTTI class constructor to use */ \
-									 "", \
-									 /* Frontend implementation - Parameters for the frontend implementation RTTI class constructor */ \
-									 "", \
-									 /* Frontend implementation - Parameters for the instanced frontend implementation RTTI class */ \
-									 ""); \
+		/* Setup the frontend context */ \
+		PLCore::FrontendContext cFrontendContext; \
+		cFrontendContext.SetExecutableFilename(sExecutableFilename); \
+		cFrontendContext.SetArguments(lstArguments); \
+		cFrontendContext.SetName(ModuleName); \
+		cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
+		cFrontendContext.SetFrontendImplementation(FrontendClass); \
+\
+		/* Run the frontend */ \
+		return PLCore::Frontend::Run(cFrontendContext); \
 	} \
 	\
 	pl_module_plugin(ModuleName)

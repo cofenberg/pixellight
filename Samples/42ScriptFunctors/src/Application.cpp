@@ -27,7 +27,6 @@
 #include <PLCore/File/Url.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
@@ -56,9 +55,6 @@ pl_implement_class(Application)
 */
 Application::Application() : CoreApplication()
 {
-	// Set application name and title
-	SetName("42ScriptFunctors");
-	SetTitle(PLT("PLSample 42 - Script functors"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Bring the log into the verbose mode so that the log also writes log entries

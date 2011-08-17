@@ -55,8 +55,9 @@ pl_implement_class(Frontend)
 */
 Frontend::Frontend() :
 	m_bFrontendApplicationInitialized(false),
-	m_cFrontend(*this)
+	m_cFrontend(m_cFrontendContext, *this)
 {
+	// [TODO] Make this optional?
 	// Scan PL-runtime directory for compatible plugins and load them in
 	Core::ScanRuntimeDirectoryPlugins();
 

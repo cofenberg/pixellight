@@ -4,6 +4,7 @@
 #include <atlctl.h>
 #include "PLFrontendActiveX_i.h"
 #include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
 
 #if defined(_WIN32_WCE) && !defined(_CE_DCOM) && !defined(_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA)
@@ -136,6 +137,7 @@ END_MSG_MAP()
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
 		bool						m_bTrapMouse;						/**< Trap mouse? */
+		PLCore::FrontendContext		m_cFrontendContext;
 		PLCore::FrontendPixelLight	m_cFrontend;
 
 // IPixelLightCtrl

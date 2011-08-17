@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLRenderer/RendererContext.h>
 #include "Application.h"
 
@@ -51,9 +50,6 @@ pl_implement_class(Application)
 */
 Application::Application(Frontend &cFrontend) : RendererApplication(cFrontend)
 {
-	// Set application name and title
-	SetName("51RendererTexturing");
-	SetTitle(PLT("PL texturing sample"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

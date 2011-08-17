@@ -60,9 +60,6 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
-	// Set application name and title
-	SetName("61Sound");
-	SetTitle(PLT("PL basic sound sample"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// Add command line argument for choosing the sound API

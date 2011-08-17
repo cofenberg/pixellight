@@ -153,6 +153,7 @@ add_sources(
 	src/Frontend/AbstractFrontend.cpp
 	src/Frontend/Frontend.cpp
 	src/Frontend/FrontendImpl.cpp
+	src/Frontend/FrontendContext.cpp
 	src/Frontend/FrontendPixelLight.cpp
 	# src/Frontend/FrontendOpenGL.cpp # Just a test, not added in here
 	src/Frontend/FrontendApplication.cpp

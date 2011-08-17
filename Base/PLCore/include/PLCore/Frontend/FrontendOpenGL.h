@@ -63,7 +63,7 @@ class FrontendOpenGL : public Frontend {
 	pl_class(PLCORE_RTTI_EXPORT, FrontendOpenGL, "PLCore", PLCore::Frontend, "Simple test frontend that uses OpenGL")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Constructors
-			pl_constructor_1(ParameterConstructor,	FrontendImpl&,	"Parameter constructor. Frontend implementation this frontend is using as first parameter.",	"")
+			pl_constructor_2(ParameterConstructor,	const FrontendContext&, FrontendImpl&,	"Parameter constructor. Frontend context this frontend is using as first parameter, frontend implementation this frontend is using as second parameter.",	"")
 		#endif
 	pl_class_end
 
@@ -76,10 +76,12 @@ class FrontendOpenGL : public Frontend {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontendContext
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes)
 		*  @param[in] cFrontendImpl
 		*    Frontend implementation instance
 		*/
-		PLCORE_API FrontendOpenGL(FrontendImpl &cFrontendImpl);
+		PLCORE_API FrontendOpenGL(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
 
 		/**
 		*  @brief

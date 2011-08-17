@@ -26,7 +26,6 @@
 #include <Rocket/Core.h>
 #include <libRocket_PL/libRocketAdapter.h>
 #include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLScene/Scene/SPScene.h>
@@ -63,9 +62,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pRocketAdapter(nullptr)
 {
-	// Set application name and title
-	SetName("71libRocket");
-	SetTitle(PLT("PL libRocket sample"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

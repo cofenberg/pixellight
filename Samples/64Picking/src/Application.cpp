@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLRenderer/RendererContext.h>
@@ -62,9 +61,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pMyPicking(nullptr)
 {
-	// Set application name and title
-	SetName("64Picking");
-	SetTitle(PLT("PL picking sample"));
 	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 

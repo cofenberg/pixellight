@@ -70,7 +70,7 @@ class FrontendPixelLight : public Frontend {
 		pl_attribute(ApplicationParameters,				String,	"",	ReadWrite,	DirectValue,	"Parameters for the frontend application RTTI class instance",		"")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Constructors
-			pl_constructor_1(ParameterConstructor,	FrontendImpl&,	"Parameter constructor. Frontend implementation this frontend is using as first parameter.",	"")
+			pl_constructor_2(ParameterConstructor,	const FrontendContext&, FrontendImpl&,	"Parameter constructor. Frontend context this frontend is using as first parameter, frontend implementation this frontend is using as second parameter.",	"")
 		#endif
 	pl_class_end
 
@@ -83,10 +83,12 @@ class FrontendPixelLight : public Frontend {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontendContext
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes)
 		*  @param[in] cFrontendImpl
 		*    Frontend implementation instance
 		*/
-		PLCORE_API FrontendPixelLight(FrontendImpl &cFrontendImpl);
+		PLCORE_API FrontendPixelLight(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
 
 		/**
 		*  @brief

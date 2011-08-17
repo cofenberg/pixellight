@@ -108,6 +108,9 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*
 		*  @param[in] cFrontend
 		*    Frontend this application instance is running in
+		*
+		*  @note
+		*    - This constructor sets the default application name and title by using the name of the frontend executable ("GetFrontend().GetContext().GetName()")
 		*/
 		PLCORE_API FrontendApplication(Frontend &cFrontend);
 

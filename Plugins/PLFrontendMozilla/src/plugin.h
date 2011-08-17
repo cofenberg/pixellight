@@ -42,6 +42,7 @@
 #undef GetFirstChild
 #undef GetNextSibling
 #include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
 
 class nsPluginInstance : public PLCore::FrontendImpl, public nsPluginInstanceBase
@@ -114,6 +115,7 @@ private:
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
 		bool						m_bTrapMouse;						/**< Trap mouse? */
+		PLCore::FrontendContext		m_cFrontendContext;
 		PLCore::FrontendPixelLight	m_cFrontend;
 
 

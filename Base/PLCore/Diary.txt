@@ -1,3 +1,36 @@
+>> 17.08.2011
+[CO]
+- The frontend stuff is working quite well and solves some prior design issues. This approach also answers the question how to use the application framework within e.g. the Qt based
+  editor in order to manage the PixelLight part while the Qt editor does all the rest like main loop and window handling. The PixelLight editor kickoff was on 10.08.2011, primarily
+  to see what's required for the tool. It will certainly take some time until this tool is usable, so, the goal wasn't to have a ready-to-use-editor in PL 0.9.8. Until now, e.g.
+  PLFrontendQt had to reimplement a lot of application framework features because the application framework was heavily tied to PLGui and also did stuff like the main loop internally.
+  (this is still possible, but derived application classes like the renderer application now follow another approach)
+  As seen within the PixelLight editor project, it's now possible to just write a thin layered frontend implementation working as a kind of gate between the Qt framework primarily used
+  within the editor, and the PixelLight framework, primarily used in PixelLight *g*. Each side shouldn't concern too much about the other one - in fact, Qt doesn't know anything about
+  PixelLight and verce versa.
+  Now that it's clear that the frontend design is the way to go, time to complete the system.
+- Added "FrontendContext"-class. This class is derived from "ApplicationContext" and adds frontend related stuff. The parameters of the "Frontend::Run()"-method were just an overkill
+  and there was another issue as well: To be flexible, the frontend system already is using the RTTI and when e.g. PLFrontendPLGui open it's window, the standard data packages must
+  already be registered. Also, a frontend may want to set a windows position and size to the one used during the previous seasson, meaning it needs to be able to use a configuration.
+  During the frontend initialization, errors may occur, so, log is required as well. Sadly, all those stuff is handled within "PLCore::CoreApplication" which is still ok for applications
+  not using the frontend stuff at all... but "PLCore::FrontendApplication" has to hand over the control over this important infrastructure features to the frontend. The frontend itself
+  hands over this stuff to the "FrontendContext"-class which is instanced and filled outside the frontend system and is just passed into the system.
+  Of course, some information is now stored within two distinct systems (frontend and application), but I in my humble opinion that's ok for this system. Take "PLCore::FrontendApplication"
+  for example, as the name of this class indicates, this is the base class for applications running within a frontend (the application host). The main loop as well as other logic is handed
+  over to a host in order to become passive. Although a frontend application is always running within a frontend, it shouldn't care about the frontend. Just write our application as if there
+  wouldn't be any "outer world". By following this philosophy as close as possible and only accessing frontend features when really neccessary, you enhance the chance that your application
+  can be embedded within other applications like browsers such as MS Internet Explorer or Mozilla Firefox without problems. So, in order to get e.g. the executable filename, one just asks
+  the application framework for it, not the frontend system feeding this information into the embedded application.
+- "FrontendContext::Run()" now has just a frontend context as parameter
+- Removed "FrontendContext::Run()" versions with traditional C-arguments. It has shown that those version are not required. For e.g. QApplication of Qt using this traditional C-arguments,
+  one can reconstruct them out of the universal form... no, it's not a performance problem nor intricate. It's intricate to have 3 method versions to be implemented all over the place and
+  in case of e.g. the Qt base editor, one doesn't use the "FrontendContext::Run()"-method at all.
+- "FrontendContext" has a name which is used as default whenever a name is required (log, configuration, window title and so on). When using the macro "pl_module_application" or
+  "pl_module_application_frontend" this name is automatically set to the module name of the executable. "FrontendApplication" is using this name to set the default application name ("SetName()")
+  and default application title ("SetTitle()"). This name is often sufficient - removed "SetName()" & "SetTitle()" usage within e.g. the sample applications.
+
+
+
 >> 16.08.2011
 [CO]
 - Added abstract context class "AbstractContext". All over PixelLight, "context"-classes are used in order to group important information or components. This abstract context
