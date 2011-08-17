@@ -30,6 +30,7 @@
 #include "PLPhysicsBullet/BodyBox.h"
 #include "PLPhysicsBullet/BodySphere.h"
 #include "PLPhysicsBullet/BodyEllipsoid.h"
+#include "PLPhysicsBullet/BodyCylinder.h"
 #include "PLPhysicsBullet/BodyCone.h"
 #include "PLPhysicsBullet/JointImpl.h"
 #include "PLPhysicsBullet/JointUpVector.h"
@@ -195,8 +196,7 @@ PLPhysics::Body *World::CreateBodyTerrain(uint32 nWidth, uint32 nHeight, const f
 
 PLPhysics::Body *World::CreateBodyCylinder(float fRadius, float fHeight, bool bStatic)
 {
-	// [TODO] implement
-	return nullptr;
+	return new BodyCylinder(*this, fRadius, fHeight, bStatic);
 }
 
 PLPhysics::Body *World::CreateBodyCone(float fRadius, float fHeight, bool bStatic)

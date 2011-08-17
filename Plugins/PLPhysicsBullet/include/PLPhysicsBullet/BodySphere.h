@@ -77,6 +77,8 @@ class BodySphere : public PLPhysics::BodySphere {
 		*    World this body is in
 		*  @param[in] fRadius
 		*    Sphere radius
+		*  @param[in] bStatic
+		*    body is static or dynamic
 		*/
 		BodySphere(PLPhysics::World &cWorld, float fRadius, bool bStatic);
 

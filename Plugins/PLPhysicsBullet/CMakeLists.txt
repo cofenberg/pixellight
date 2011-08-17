@@ -29,8 +29,7 @@ add_sources(
 # 	src/BodyTerrain.cpp
 	src/World.cpp
 # 	src/JointSlider.cpp
-# 	src/BodyCylinder.cpp
-# 	src/WorldUpdate.cpp
+	src/BodyCylinder.cpp
 	src/Helper.cpp
 	src/BodyMotionState.cpp
 )
