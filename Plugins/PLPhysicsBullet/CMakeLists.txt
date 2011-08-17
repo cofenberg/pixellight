@@ -20,7 +20,7 @@ add_sources(
 	src/BodyBox.cpp
 	src/PLPhysicsBullet.cpp
 # 	src/BodyMesh.cpp
-# 	src/BodyCapsule.cpp
+	src/BodyCapsule.cpp
 	src/JointUpVector.cpp
 # 	src/JointUniversal.cpp
 # 	src/JointBall.cpp
