@@ -26,7 +26,7 @@ add_sources(
 # 	src/JointBall.cpp
 	src/BodyImpl.cpp
 # 	src/WorldThread.cpp
-# 	src/BodyTerrain.cpp
+	src/BodyTerrain.cpp
 	src/World.cpp
 # 	src/JointSlider.cpp
 	src/BodyCylinder.cpp

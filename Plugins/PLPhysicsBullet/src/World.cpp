@@ -35,6 +35,7 @@
 #include "PLPhysicsBullet/BodyCapsule.h"
 #include "PLPhysicsBullet/JointImpl.h"
 #include "PLPhysicsBullet/JointUpVector.h"
+#include <PLPhysicsBullet/BodyTerrain.h>
 
 
 //[-------------------------------------------------------]
@@ -191,8 +192,7 @@ PLPhysics::Body *World::CreateBodyMesh(PLMesh::MeshManager &cMeshManager, const 
 PLPhysics::Body *World::CreateBodyTerrain(uint32 nWidth, uint32 nHeight, const float fTerrain[],
 										  const Vector3 &vBoxMin, const Vector3 &vBoxMax, const Vector3 &vScale)
 {
-	// [TODO] implement
-	return nullptr;
+	return new BodyTerrain(*this, nWidth, nHeight, fTerrain, vBoxMax, vBoxMax, vScale);
 }
 
 PLPhysics::Body *World::CreateBodyCylinder(float fRadius, float fHeight, bool bStatic)
