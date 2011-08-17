@@ -13,15 +13,15 @@ add_sources(
 	src/BodySphere.cpp
 	src/BodyCone.cpp
 # 	src/BodyChamferCylinder.cpp
-# 	src/BodyEllipsoid.cpp
+	src/BodyEllipsoid.cpp
 # 	src/BodyConvexHull.cpp
-# 	src/JointImpl.cpp
+	src/JointImpl.cpp
 # 	src/JointCorkscrew.cpp
 	src/BodyBox.cpp
 	src/PLPhysicsBullet.cpp
 # 	src/BodyMesh.cpp
 # 	src/BodyCapsule.cpp
-# 	src/JointUpVector.cpp
+	src/JointUpVector.cpp
 # 	src/JointUniversal.cpp
 # 	src/JointBall.cpp
 	src/BodyImpl.cpp

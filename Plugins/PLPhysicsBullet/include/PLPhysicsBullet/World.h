@@ -62,6 +62,7 @@ class World : public PLPhysics::World {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class BodyImpl;
+	friend class JointImpl;
 
 
 	//[-------------------------------------------------------]
@@ -138,6 +139,8 @@ class World : public PLPhysics::World {
 		PLCore::uint32				 m_nGroupCollision[32];	/**< Group collision active states */
 		bool						 m_bBuoyancyActive;
 		float						 m_fBuoyancyPlaneY;
+		
+		PLCore::Pool<PLPhysics::Body*> m_lstChangedByUser;
 
 
 	//[-------------------------------------------------------]

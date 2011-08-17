@@ -268,15 +268,22 @@ void BodyImpl::AddForce(const Vector3 &vForce)
 {
 	m_vForce += vForce;
 	
-	btVector3 force(Helper::PLVector3TobtVector3(m_vForce));
-	m_pBulletBody->applyCentralForce(force);
+	PLPhysics::Body *pBody = GetBody();
+	if (pBody && !m_bChangedByUser) {
+		((World&)pBody->GetWorld()).m_lstChangedByUser.Add(pBody);
+		m_bChangedByUser = true;
+	}
 }
 
 void BodyImpl::SetForce(const Vector3 &vForce)
 {
 	m_vForce = vForce;
- 	btVector3 force(Helper::PLVector3TobtVector3(m_vForce));
- 	m_pBulletBody->applyCentralForce(force);
+	
+	PLPhysics::Body *pBody = GetBody();
+	if (pBody && !m_bChangedByUser) {
+		((World&)pBody->GetWorld()).m_lstChangedByUser.Add(pBody);
+		m_bChangedByUser = true;
+	}
 }
 
 void BodyImpl::GetTorque(Vector3 &vTorque) const
@@ -287,15 +294,26 @@ void BodyImpl::GetTorque(Vector3 &vTorque) const
 void BodyImpl::AddTorque(const Vector3 &vTorque)
 {
 	m_vTorque += vTorque;
-	btVector3 torque(Helper::PLVector3TobtVector3(m_vTorque));
-	m_pBulletBody->applyTorque(torque);
+	
+	m_pBulletBody->applyTorque(Helper::PLVector3TobtVector3(vTorque));
+	PLPhysics::Body *pBody = GetBody();
+	if (pBody && !m_bChangedByUser) {
+		((World&)pBody->GetWorld()).m_lstChangedByUser.Add(pBody);
+		m_bChangedByUser = true;
+	}
 }
 
 void BodyImpl::SetTorque(const Vector3 &vTorque)
 {
 	m_vTorque = vTorque;
-	btVector3 torque(Helper::PLVector3TobtVector3(m_vTorque));
-	m_pBulletBody->applyTorque(torque);
+	
+	m_pBulletBody->applyTorque(Helper::PLVector3TobtVector3(vTorque));
+	
+	PLPhysics::Body *pBody = GetBody();
+	if (pBody && !m_bChangedByUser) {
+		((World&)pBody->GetWorld()).m_lstChangedByUser.Add(pBody);
+		m_bChangedByUser = true;
+	}
 }
 
 bool BodyImpl::IsAutoFreeze() const
@@ -407,7 +425,8 @@ BodyImpl::BodyImpl() :
 	m_bUseGravity(true),
 	m_nCollisionGroup(0),
 	m_nChangedByUserFlags(0),
-	m_nChangedByPhysicsFlags(0)
+	m_nChangedByPhysicsFlags(0),
+	m_bChangedByUser(false)
 {
 }
 

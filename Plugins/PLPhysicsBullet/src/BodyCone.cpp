@@ -67,7 +67,7 @@ BodyCone::BodyCone(PLPhysics::World &cWorld, float fRadius, float fHeight, bool 
 	if (pBulletWorld) {
 		
 		btCollisionShape* collisionShape = new btConeShape(fRadius, fHeight);
-		
+
 		// Initialize the Bullet physics body
 		((BodyImpl&)GetBodyImpl()).InitializeBulletBody(*this, *collisionShape, bStatic);
 	}

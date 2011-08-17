@@ -29,7 +29,10 @@
 #include "PLPhysicsBullet/BodyImpl.h"
 #include "PLPhysicsBullet/BodyBox.h"
 #include "PLPhysicsBullet/BodySphere.h"
+#include "PLPhysicsBullet/BodyEllipsoid.h"
 #include "PLPhysicsBullet/BodyCone.h"
+#include "PLPhysicsBullet/JointImpl.h"
+#include "PLPhysicsBullet/JointUpVector.h"
 
 
 //[-------------------------------------------------------]
@@ -140,6 +143,15 @@ PLPhysics::BodyImpl &World::CreateBodyImpl() const
 	return *(new BodyImpl());
 }
 
+/**
+*  @brief
+*    Creates a physics joint implementation
+*/
+PLPhysics::JointImpl &World::CreateJointImpl() const
+{
+	return *(new JointImpl());
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLPhysics::World functions             ]
@@ -159,8 +171,7 @@ PLPhysics::Body *World::CreateBodySphere(float fRadius, bool bStatic)
 
 PLPhysics::Body *World::CreateBodyEllipsoid(const Vector3 &vRadius, bool bStatic)
 {
-	// [TODO] implement
-	return nullptr;
+	return new BodyEllipsoid(*this, vRadius, bStatic);
 }
 
 PLPhysics::Body *World::CreateBodyConvexHull(PLMesh::MeshManager &cMeshManager, const String &sMesh, const Vector3 &vMeshScale, bool bStatic)
@@ -268,8 +279,7 @@ PLPhysics::Joint *World::CreateJointCorkscrew(PLPhysics::Body *pParentBody, PLPh
 PLPhysics::Joint *World::CreateJointUpVector(PLPhysics::Body &cParentBody, const Vector3 &vPinDir)
 {
 	// Create the physics joint
-	// [TODO] implement
-	return nullptr;
+	return new JointUpVector(*this, cParentBody, vPinDir);
 }
 
 
@@ -479,6 +489,35 @@ void World::UpdateSimulation()
 {
 	if (m_pBulletWorld && m_bSimulationActive)
 	{
+		// Loop through the list of physics bodies changed by the user
+		if (!m_lstChangedByUser.IsEmpty()) {
+			{
+				Iterator<PLPhysics::Body*> cIterator = m_lstChangedByUser.GetIterator();
+				while (cIterator.HasNext()) {
+					PLPhysics::Body *pBody = cIterator.Next();
+					BodyImpl &cBodyImpl = (BodyImpl&)pBody->GetBodyImpl();
+					cBodyImpl.m_bChangedByUser = false;
+					Vector3 &vForce  = cBodyImpl.m_vForce;
+					Vector3 &vTorque = cBodyImpl.m_vTorque;
+
+					// Add force and torque to the PhysX physics body
+					btVector3 vV(vForce.x, vForce.y, vForce.z);
+					cBodyImpl.GetBulletBody()->applyCentralForce(vV);
+					
+					if (vTorque != Vector3::Zero)
+					{
+						btVector3 vV1(vTorque.x, vTorque.y, vTorque.z);
+						cBodyImpl.GetBulletBody()->applyTorque(vV1);
+					}
+
+					// Reset the force and torque of the PL physics body
+					vForce  = Vector3::Zero;
+					vTorque = Vector3::Zero;
+				}
+			}
+			m_lstChangedByUser.FreeElements();
+		}
+		
 		m_pBulletWorld->stepSimulation(Timing::GetInstance()->GetTimeDifference()*m_fSimulationSpeed);
 	}
 }

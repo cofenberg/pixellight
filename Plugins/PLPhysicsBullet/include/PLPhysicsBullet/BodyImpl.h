@@ -208,6 +208,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		PLCore::uint8		m_nCollisionGroup;			/**< Collision group the body is in */
 		PLCore::uint16		m_nChangedByUserFlags;		/**< Changed by user flags */
 		PLCore::uint8		m_nChangedByPhysicsFlags;	/**< Changed by physics flags */
+		bool			 m_bChangedByUser;		/**< Was this body changed by the used since the last physics update? */
 
 		/** List of partner bodies */
 		PLCore::Array<PLPhysics::Body*> m_lstPartnerBodies;

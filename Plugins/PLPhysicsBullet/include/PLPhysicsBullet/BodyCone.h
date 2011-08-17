@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICSBULLET_BODYELLIPSOID_H__
-#define __PLPHYSICSBULLET_BODYELLIPSOID_H__
+#ifndef __PLPHYSICSBULLET_BODYCONE_H__
+#define __PLPHYSICSBULLET_BODYCONE_H__
 #pragma once
 
 
@@ -94,4 +94,4 @@ class BodyCone : public PLPhysics::BodyCone {
 } // PLPhysicsBullet
 
 
-#endif // __PLPHYSICSBULLET_BODYELLIPSOID_H__
+#endif // __PLPHYSICSBULLET_BODYCONE_H__
