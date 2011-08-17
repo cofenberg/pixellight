@@ -65,16 +65,16 @@ int Frontend::Run(const FrontendContext &cFrontendContext)
 		Frontend *pFrontend = FrontendImpl::CreateFrontend(cFrontendContext, *pFrontendImpl);
 		if (pFrontend) {
 			// Do the frontend lifecycle thing - let the world know that we have been created
-			pFrontend->OnCreate();
+			pFrontendImpl->OnCreate();
 
 			// Let the world know that this frontend is now going to run
-			pFrontend->OnRun(cFrontendContext.GetExecutableFilename(), cFrontendContext.GetArguments());
+			pFrontendImpl->OnRun(cFrontendContext.GetExecutableFilename(), cFrontendContext.GetArguments());
 
 			// Let the frontend implementation run
 			nResult = pFrontendImpl->Run(cFrontendContext.GetExecutableFilename(), cFrontendContext.GetArguments());
 
 			// Do the frontend lifecycle thing - let the world know that we're going to die
-			pFrontend->OnDestroy();
+			pFrontendImpl->OnDestroy();
 
 			// Destroy the frontend
 			delete pFrontend;

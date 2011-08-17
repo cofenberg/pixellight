@@ -106,6 +106,23 @@ String Core::GetRuntimeDirectory()
 
 /**
 *  @brief
+*    Try to find the PL-runtime data directory by reading the registry
+*/
+String Core::GetRuntimeDataDirectory()
+{
+	// Get PixelLight runtime directory
+	const String sPLDirectory = GetRuntimeDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Return the runtime data directory
+		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+	} else {
+		// Error!
+		return "";
+	}
+}
+
+/**
+*  @brief
 *    Get PixelLight version
 */
 Version Core::GetVersion()
@@ -154,17 +171,14 @@ void Core::ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading)
 */
 void Core::ScanRuntimeDirectoryData()
 {
-	// Get PixelLight runtime directory
-	const String sPLDirectory = GetRuntimeDirectory();
-	if (sPLDirectory.GetLength()) {
-		// Get the runtime data directory
-		const String sDataDirectory = Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
-
+	// Get PixelLight runtime data directory
+	const String sPLDataDirectory = GetRuntimeDataDirectory();
+	if (sPLDataDirectory.GetLength()) {
 		// Add runtime directory
-		LoadableManager::GetInstance()->AddBaseDir(sDataDirectory);
+		LoadableManager::GetInstance()->AddBaseDir(sPLDataDirectory);
 
 		// Add packages from PixelLight runtime directory
-		LoadableManager::GetInstance()->ScanPackages(sDataDirectory);
+		LoadableManager::GetInstance()->ScanPackages(sPLDataDirectory);
 	}
 }
 

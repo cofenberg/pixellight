@@ -56,12 +56,24 @@ class Core {
 		*    Try to find the PL-runtime directory by reading the registry
 		*
 		*  @return
-		*    Path to the PL-runtime directory (e.g. "C:\PixelLight\Runtime"), or ""
+		*    Path to the PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
 		*
 		*  @see
 		*    - 'Registry' class documentation
 		*/
 		PLCORE_API static String GetRuntimeDirectory();
+
+		/**
+		*  @brief
+		*    Try to find the PL-runtime data directory by reading the registry
+		*
+		*  @return
+		*    Path to the PL-runtime data directory (e.g. "C:\PixelLight\Runtime\Data"), or ""
+		*
+		*  @see
+		*    - 'Registry' class documentation
+		*/
+		PLCORE_API static String GetRuntimeDataDirectory();
 
 		/**
 		*  @brief

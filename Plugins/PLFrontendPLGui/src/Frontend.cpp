@@ -23,7 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Core.h>
+#include <PLCore/File/File.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include <PLGui/Gui/Gui.h>
@@ -127,6 +131,44 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 			m_pMainWindow->GetContentWidget()->SignalDrop   .Connect(EventHandlerDropMainWindow);
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
+//[-------------------------------------------------------]
+void Frontend::OnCreate()
+{
+	{ // PLGui requires some images stored within "Standard.zip", it's the responsibility of this frontend to ensure it has all it needs
+		LoadableManager *pLoadableManager = LoadableManager::GetInstance();
+
+		// Scan for packages in current "Data" directory
+		String sFilename = System::GetInstance()->GetCurrentDir() + "/Data/Standard.zip";
+		if (File(sFilename).IsFile()) {
+			pLoadableManager->AddBaseDir(sFilename);
+		} else {
+			if (GetFrontend()) {
+				// Scan for packages in application's "Data" directory
+				sFilename = GetFrontend()->GetContext().GetAppDirectory() + "/Data/Standard.zip";
+				if (File(sFilename).IsFile()) {
+					pLoadableManager->AddBaseDir(sFilename);
+				} else {
+					// Scan PL-runtime directory for compatible data and register it?
+					// [TODO] Only when runtime should be used
+					// Get PixelLight runtime data directory
+					const String sPLDataDirectory = Core::GetRuntimeDataDirectory();
+					if (sPLDataDirectory.GetLength()) {
+						sFilename = sPLDataDirectory + "/Standard.zip";
+						if (File(sFilename).IsFile())
+							pLoadableManager->AddBaseDir(sFilename);
+					}
+				}
+			}
+		}
+	}
+
+	// Call the base implementation
+	FrontendImpl::OnCreate();
 }
 
 

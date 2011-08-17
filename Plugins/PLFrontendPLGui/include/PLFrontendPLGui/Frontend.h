@@ -109,6 +109,13 @@ class Frontend : public PLCore::FrontendImpl {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual PLCore::AbstractLifecycle functions ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void OnCreate() override;	// Automatically called from within "Frontend::Run()"
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::FrontendImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:

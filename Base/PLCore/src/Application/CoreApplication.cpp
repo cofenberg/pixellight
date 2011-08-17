@@ -722,12 +722,12 @@ void CoreApplication::OnInitData()
 	if (!pLoadableManager->IsBaseDir('.'))
 		pLoadableManager->AddBaseDir('.');
 
-	// Scan for packages in current "Data" directory
-	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
-
 	// Is the application directory already a base directory? If not, add it right now...
 	if (!pLoadableManager->IsBaseDir(m_cApplicationContext.GetAppDirectory()))
 		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
+
+	// Scan for packages in current "Data" directory
+	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
 
 	// Scan for packages in application's "Data" directory
 	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");

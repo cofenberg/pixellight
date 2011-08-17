@@ -28,6 +28,7 @@
 - "FrontendContext" has a name which is used as default whenever a name is required (log, configuration, window title and so on). When using the macro "pl_module_application" or
   "pl_module_application_frontend" this name is automatically set to the module name of the executable. "FrontendApplication" is using this name to set the default application name ("SetName()")
   and default application title ("SetTitle()"). This name is often sufficient - removed "SetName()" & "SetTitle()" usage within e.g. the sample applications.
+- PLFrontendPLGui: PLGui requires some images stored within "Standard.zip", it's the responsibility of this frontend to ensure it has all it needs
 
 
 
