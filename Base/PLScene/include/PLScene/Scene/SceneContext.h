@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Container/Array.h>
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Core/AbstractContext.h>
 #include "PLScene/PLScene.h"
 
 
@@ -70,7 +71,7 @@ namespace PLScene {
 *  @note
 *    - There should be only one scene context instance per application
 */
-class SceneContext {
+class SceneContext : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]

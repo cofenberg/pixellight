@@ -26,7 +26,7 @@
 #include <PLCore/Tools/Wrapper.h>
 #include <PLCore/Core/MemoryManager.h>
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/VertexShaderCg.h"
 
 
@@ -51,7 +51,7 @@ VertexShaderCg::~VertexShaderCg()
 		cgDestroyProgram(m_pCgVertexProgram);
 
 	// Release a Cg context reference
-	ShaderToolsCg::ReleaseCgContextReference();
+	CgContext::ReleaseCgContextReference();
 }
 
 /**
@@ -85,7 +85,7 @@ VertexShaderCg::VertexShaderCg(PLRenderer::Renderer &cRenderer) : PLRenderer::Ve
 	m_pCgVertexProgram(nullptr)
 {
 	// Add a Cg context reference
-	ShaderToolsCg::AddCgContextReference();
+	CgContext::AddCgContextReference();
 }
 
 
@@ -132,7 +132,7 @@ bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sPro
 
 	// Create the Cg vertex program
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN)
-		m_pCgVertexProgram = ShaderToolsCg::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
+		m_pCgVertexProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
 
 	// Was the Cg program created successfully?
 	if (m_pCgVertexProgram) {

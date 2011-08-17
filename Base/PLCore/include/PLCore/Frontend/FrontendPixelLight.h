@@ -49,6 +49,12 @@ class FrontendApplication;
 /**
 *  @brief
 *    PixelLight frontend
+*
+*  @remarks
+*    This frontend controls an embedded PixelLight frontend application, meaning application classes
+*    derived from "FrontendApplication". Just think of this frontend class as a puppet master
+*    (puppet = application class) controlled by another puppet master (the frontend implementation,
+*    e.g. a simple native OS window or a browser such as MS Internet Explorer or Mozilla Firefox).
 */
 class FrontendPixelLight : public Frontend {
 

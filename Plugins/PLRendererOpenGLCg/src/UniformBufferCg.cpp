@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
-#include "PLRendererOpenGLCg/ShaderToolsCg.h"
+#include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/UniformBufferCg.h"
 
 
@@ -198,7 +198,7 @@ bool UniformBufferCg::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage,
 		// Use UBO
 		bUBO = true;
 		if (!m_pCgBuffer)
-			m_pCgBuffer = cgCreateBuffer(ShaderToolsCg::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
+			m_pCgBuffer = cgCreateBuffer(CgContext::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
 
 		// Error checking
 		if (cgGetBufferSize(m_pCgBuffer) <= 0) {
@@ -383,7 +383,7 @@ void UniformBufferCg::BackupDeviceData(uint8 **ppBackup)
 void UniformBufferCg::RestoreDeviceData(uint8 **ppBackup)
 {
 	if (*ppBackup) {
-		m_pCgBuffer = cgCreateBuffer(ShaderToolsCg::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
+		m_pCgBuffer = cgCreateBuffer(CgContext::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
 		if (Lock(PLRenderer::Lock::WriteOnly)) {
 			MemoryManager::Copy(GetData(), *ppBackup, m_nSize);
 			Unlock();
@@ -393,7 +393,7 @@ void UniformBufferCg::RestoreDeviceData(uint8 **ppBackup)
 		delete [] *ppBackup;
 	} else {
 		if (m_bManaged) {
-			m_pCgBuffer = cgCreateBuffer(ShaderToolsCg::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
+			m_pCgBuffer = cgCreateBuffer(CgContext::GetCgContext(), m_nSize, nullptr, m_nUsageAPI);
 			m_bUpdateUBO = true;
 		}
 	}

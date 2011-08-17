@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ShaderToolsCg.h                                *
+ *  File: CgContext.h                                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__
-#define __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__
+#ifndef __PLRENDEREROPENGLCG_CGCONTEXT_H__
+#define __PLRENDEREROPENGLCG_CGCONTEXT_H__
 #pragma once
 
 
@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <Cg/cgGL.h>
 #include <PLCore/String/String.h>
+#include <PLCore/Core/AbstractContext.h>
 
 
 //[-------------------------------------------------------]
@@ -43,9 +44,9 @@ namespace PLRendererOpenGLCg {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Static class with some useful OpenGL Cg shader tool methods
+*    Cg context - Static class with some useful OpenGL Cg shader tool methods
 */
-class ShaderToolsCg {
+class CgContext : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]
@@ -131,4 +132,4 @@ class ShaderToolsCg {
 } // PLRendererOpenGLCg
 
 
-#endif // __PLRENDEREROPENGLCG_SHADERTOOLSCG_H__
+#endif // __PLRENDEREROPENGLCG_CGCONTEXT_H__

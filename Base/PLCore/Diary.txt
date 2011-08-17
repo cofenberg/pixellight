@@ -1,3 +1,10 @@
+>> 16.08.2011
+[CO]
+- Added abstract context class "AbstractContext". All over PixelLight, "context"-classes are used in order to group important information or components. This abstract context
+  class was introduced to make it easier to identify such context classes.
+
+
+
 >> 15.08.2011
 [CO]
 - "ApplicationContext::SetExecutableFilename()": The default (meaning you can choose another way if you want to) application directory layout now looks as follows:

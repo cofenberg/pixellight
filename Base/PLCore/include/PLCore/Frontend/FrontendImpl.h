@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/Base/Object.h"
 #include "PLCore/Frontend/AbstractFrontend.h"
-#include "PLCore/Application/AbstractLifecycle.h"
+#include "PLCore/Core/AbstractLifecycle.h"
 
 
 //[-------------------------------------------------------]
@@ -53,8 +53,10 @@ class Frontend;
 *    Abstract frontend implementation base class
 *
 *  @remarks
-*    This base class provides the backend interface for concrete implementations
-*    (e.g. for Internet Explorer or Mozilla Firefox frontends).
+*    This base class provides the backend interface for concrete implementations.
+*    Just think of the frontend implementation as a puppet master, while the puppet
+*    is the "Frontend"-class. The frontend implementation is e.g. a simple native OS
+*    window or a browser such as MS Internet Explorer or Mozilla Firefox.
 */
 class FrontendImpl : public Object, protected AbstractLifecycle, protected AbstractFrontend {
 

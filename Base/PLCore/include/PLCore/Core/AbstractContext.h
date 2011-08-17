@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AbstractLifecycle.cpp                          *
+ *  File: AbstractContext.h                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,10 +20,15 @@
 \*********************************************************/
 
 
+#ifndef __PLCORE_ABSTRACTCONTEXT_H__
+#define __PLCORE_ABSTRACTCONTEXT_H__
+#pragma once
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Application/AbstractLifecycle.h"
+#include "PLCore/PLCore.h"
 
 
 //[-------------------------------------------------------]
@@ -33,26 +38,73 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Abstract context class
+*
+*  @remarks
+*    All over PixelLight, "context"-classes are used in order to group important information
+*    or components. This abstract context class was introduced to make it easier to identify
+*    such context classes.
 */
-AbstractLifecycle::AbstractLifecycle()
-{
-}
+class AbstractContext {
 
-/**
-*  @brief
-*    Destructor
-*/
-AbstractLifecycle::~AbstractLifecycle()
-{
-}
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLCORE_API AbstractContext();
+
+		/**
+		*  @brief
+		*    Destructor
+		*
+		*  @note
+		*    - Intentionally not virtual (this is just a structure class without any real function)
+		*/
+		PLCORE_API ~AbstractContext();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		AbstractContext(const AbstractContext &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		AbstractContext &operator =(const AbstractContext &cSource);
+
+
+};
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+#endif // __PLCORE_ABSTRACTCONTEXT_H__

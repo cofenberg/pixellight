@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/Event.h>
+#include <PLCore/Core/AbstractContext.h>
 #include "PLRenderer/Renderer/Renderer.h"
 
 
@@ -61,7 +62,7 @@ namespace PLRenderer {
 *  @note
 *    - There should be only one renderer context instance per application
 */
-class RendererContext {
+class RendererContext : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]
@@ -113,7 +114,7 @@ class RendererContext {
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDERER_API virtual ~RendererContext();
+		PLRENDERER_API ~RendererContext();
 
 		/**
 		*  @brief

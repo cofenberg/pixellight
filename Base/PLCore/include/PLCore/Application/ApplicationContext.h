@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/String/String.h"
 #include "PLCore/Container/Array.h"
-#include "PLCore/PLCore.h"
+#include "PLCore/Core/AbstractContext.h"
 
 
 //[-------------------------------------------------------]
@@ -51,7 +51,7 @@ namespace PLCore {
 *    such as startup information (what was the current directory when the
 *    application started) or paths to needed resources.
 */
-class ApplicationContext {
+class ApplicationContext : public AbstractContext {
 
 
 	//[-------------------------------------------------------]

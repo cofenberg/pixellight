@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
+#include <PLCore/Core/AbstractContext.h>
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,7 @@ namespace PLScriptLua {
 *  @brief
 *    Static Lua context
 */
-class LuaContext {
+class LuaContext : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]
