@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Main.h"
+#include "PLCore/Runtime.h"
 #include "PLCore/ModuleMain.h"
 #include "PLCore/Frontend/Frontend.h"
 #include "PLCore/Frontend/FrontendContext.h"
@@ -52,6 +53,9 @@
 #define pl_module_application(ModuleName, ApplicationClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
+		/* Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it */ \
+		PLCore::Runtime::ScanDirectoryPluginsAndData(); \
+\
 		/* Setup the frontend context */ \
 		PLCore::FrontendContext cFrontendContext; \
 		cFrontendContext.SetExecutableFilename(sExecutableFilename); \
@@ -82,6 +86,9 @@
 #define pl_module_application_frontend(ModuleName, ApplicationClass, FrontendClass) \
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
+		/* Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it */ \
+		PLCore::Runtime::ScanDirectoryPluginsAndData(); \
+\
 		/* Setup the frontend context */ \
 		PLCore::FrontendContext cFrontendContext; \
 		cFrontendContext.SetExecutableFilename(sExecutableFilename); \

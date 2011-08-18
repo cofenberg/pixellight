@@ -48,6 +48,9 @@ pl_module_end
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	Runtime::ScanDirectoryPluginsAndData();
+
 	// Setup the frontend context
 	FrontendContext cFrontendContext;
 	cFrontendContext.SetExecutableFilename(sExecutableFilename);

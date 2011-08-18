@@ -227,7 +227,7 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Scan system PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+		*    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 		*
 		*  @remarks
 		*    In case you don't care about technical details and just want the stuff runnable, then just call this method

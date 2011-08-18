@@ -15,6 +15,23 @@
   or "GetSystemDirectory()". If an empty string is provided, the result of "GetDirectory()" will be used, resulting in an "autodetection".
 - "Runtime"-class: Added comfort method "ScanDirectoryPluginsAndData()". In case you don't care about technical details and just want the stuff runnable, then just call this method and be happy.
   The PixelLight runtime to use is detected automatically, all available compatible plugins are registered as well as compatible data.
+- "Frontend::Run()": This was a complex one... answering the question who's responsible to initialize the important PixelLight runtime related stuff. Until now, this was only done
+  within "CoreApplication::OnInitPlugins()" and "CoreApplication::OnInitData()" - but the frontend stuff is above this application process and is also already using PixelLight runtime
+  features like dynamically loaded frontend implementation plugins. Yesterday I experimented with several possible solutions, but one was more complex as the next one. Until now, there
+  was also the configuration setting "CoreGeneralConfig::UsePixelLightRuntime", but the configuration system is already using the RTTI (and I still think that this solution is really cool
+  and unique compared to other, definitely more complex configuration systems) to let the user decide from the outside whether or not to use the PixelLight runtime. I don't know why, but
+  until a few hours ago I didn't really realize that this option is somewhat pointless - because the configuration system is already using this information in order to load in this
+  information. Also, this approach, having this option, was quite error prone because when deploying an application it's "really" easy to forget to set this option to 0 to avoid conflicts
+  with an installed PixelLight SDK. On the other hand, when starting an application, the OS is in fact deciding for us which PixelLight runtime to use. When the PLCore shared library etc.
+  are in the same directory as the executable, those shared libraries are used instead of the ones of an installed PixelLight SDK (I know that there are variations over different OS, but
+  even under Linux we have configured the binares this way so one can "just" extract a package and start it at once without configuring the whole system). The only problem was the dynamic
+  loading of plugins... which wasn't a problem after all because the OS decides for us whether to use a "local PixelLight runtime" or an installed "system PixelLight runtime". We just have
+  to detect which type of PixelLight runtime was chosen by the OS and then load plugins from this PixelLight runtime. Only from this one. So, by creating a package and putting everything
+  into it one needs in order to execute the application without any installed PixelLight SDK, one already sayed that a "local" runtime has to be used. No need to confirm this decision again
+  by manipulation the "CoreGeneralConfig::UsePixelLightRuntime"-option. Mixing different PixelLight runtimes would be evil anyway. Long story, minor changes:
+  -> Removed "Runtime::ScanDirectoryPlugins()" within "Frontend::Run()" (had a [TODO])
+  -> "pl_module_application"- and "pl_module_application_frontend"-macros: Added "Runtime::ScanDirectoryPluginsAndData()" right after "PLMain", before anything else is done
+  -> Added "Runtime::ScanDirectoryPluginsAndData()" at some other places as well ("Runtime::ScanDirectoryPlugins()" was already used several times, so this change isn't something new)
 
 
 

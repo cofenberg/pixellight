@@ -224,15 +224,6 @@ class PLFRONTENDQT_API Application : public QApplication {
 
 		/**
 		*  @brief
-		*    Initializes the core of PL
-		*
-		*  @param[in] useRuntimeDir
-		*    indicates if the runtime dir should be used (e.g. given by the PL_RUNTIME env var)
-		*/
-		void InitCore(bool useRuntimeDir);
-
-		/**
-		*  @brief
 		*    Destroys the renderer context
 		*/
 		void DestroyRenderContext();

@@ -1,4 +1,5 @@
 // PixelLightCtrl.cpp : Implementation of PixelLightCtrl
+#include <PLCore/Runtime.h>
 #include <PLCore/Tools/Timing.h>
 #include "stdafx.h"
 #include "PixelLightCtrl.h"
@@ -14,6 +15,9 @@ PixelLightCtrl::PixelLightCtrl() :
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
+
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();

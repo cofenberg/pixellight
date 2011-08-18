@@ -38,6 +38,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/Tools/Timing.h>
 #include "plugin.h"
 
@@ -86,6 +87,9 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   m_cFrontend(m_cFrontendContext, *this)
 {
   mhWnd = nullptr;
+
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();

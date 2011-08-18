@@ -326,7 +326,7 @@ void Runtime::ScanDirectoryData(const String &sDirectory)
 
 /**
 *  @brief
-*    Scan system PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+*    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 */
 void Runtime::ScanDirectoryPluginsAndData()
 {

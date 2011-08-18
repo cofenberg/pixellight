@@ -197,8 +197,8 @@ void Application::Init()
 	Log::GetInstance()->Open(str);
 	Log::GetInstance()->SetLogLevel(Log::Debug);
 
-	bool useRuntimeDir = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
-	InitCore(useRuntimeDir);
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	Runtime::ScanDirectoryPluginsAndData();
 
 	SetUpdateInterval(10);
 }
@@ -247,22 +247,6 @@ void Application::CreateRenderContext(const String &sRendererName)
 
 		// Create an instance of a RendererContext with an renderer given by name
 		m_pRendererContext = PLRenderer::RendererContext::CreateInstance(sRenderer,(PLRenderer::Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage);
-	}
-}
-
-/**
-*  @brief
-*    Initializes the core of PL
-*/
-void Application::InitCore(bool useRuntimeDir)
-{
-	// Use PixelLight runtime?
-	if (useRuntimeDir) {
-		// Scan PL-runtime directory for compatible plugins and load them in
-		Runtime::ScanDirectoryPlugins();
-
-		// Scan PL-runtime directory for compatible data and register it
-		Runtime::ScanDirectoryData();
 	}
 }
 

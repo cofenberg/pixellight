@@ -54,10 +54,6 @@ int Frontend::Run(const FrontendContext &cFrontendContext)
 {
 	int nResult = -1;	// Error by default
 
-	// [TODO] Make this optional?
-	// Scan PL-runtime directory for compatible plugins and load them in
-	Runtime::ScanDirectoryPlugins();
-
 	// Create a frontend implementation instance
 	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(cFrontendContext);
 	if (pFrontendImpl) {
