@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Resources/Font.h>
 #include <PLInput/Input/Controller.h>
@@ -71,7 +70,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pIngameGui(nullptr)
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

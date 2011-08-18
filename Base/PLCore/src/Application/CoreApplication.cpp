@@ -94,8 +94,12 @@ CoreApplication::CoreApplication() :
 	m_sConfigName = m_sName + ".cfg";
 	m_sLogName = m_sName + ".log";
 
-	// Set default application data subdir
-	m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);
+	// Set default application data subdir to "PixelLight" (Windows) respectively ".pixellight" (Linux)
+	// -> Why this setting? At first, this was "m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);" resulting in e.g.
+	//    "C:\Users\COfenberg\AppData\Roaming\50RendererTriangleD", "C:\Users\COfenberg\AppData\Roaming\50RendererTriangle", "C:\Users\COfenberg\AppData\Roaming\XTest42"
+	//    and so on. Worst case is, that in the end, "Roaming" is full of spam files and it's hard to figure out what's trash and what's important. So, by default, everything
+	//    PixelLight based will be thrown into a common "PixelLight"-directory. More experienced users may then, explicitly, change this into an individual directory.
+	m_sAppDataSubdir = System::GetInstance()->GetDataDirName("PixelLight");
 
 	// Add standard command line options
 	m_cCommandLine.AddFlag(		"Help",			"-h", "--help",			"Display help");

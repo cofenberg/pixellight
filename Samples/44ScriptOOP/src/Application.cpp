@@ -58,8 +58,6 @@ Application::Application() : CoreApplication(),
 	SlotOnMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Connect event handler
 	m_pMyRTTIClass->MySignal.Connect(SlotOnMySignal);
 

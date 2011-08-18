@@ -38,6 +38,19 @@
 - Bugfix: "ClassManager::LoadModuleDelayed()" was setting no "Name", "Vendor", "License" and "Description" information
 - Bugfix: "ClassManager::RegisterClass()": When a dummy class of a dummy module is replaced by a real class, the (previously) dummy class has to be removed from the dummy module because
   a class can only be within one module at the same time
+- "CoreApplication"-constructor: In here, the default application data subdir was set to
+    m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);
+  While this looks logically at first, it becomes somewhat annoying (otherwise I wouldn't have had noticed and touched it!) after working with it for some time and e.g. doing several experiments.
+  Let me explain it in detail: Take the "50RendererTriangle"-sample for instance, by default the application data subdir for my debug version is "C:\Users\COfenberg\AppData\Roaming\50RendererTriangleD"
+  and for the release version it's "C:\Users\COfenberg\AppData\Roaming\50RendererTriangle". Now create some more experimental applications to play around with PixelLight by using
+  as few instructions as possible in order to figure out how everything works... after a while, one may find the "AppDataSubdir"-option and when looking into the "Roaming"-directory
+  one may notice that it's full spam like "50RendererTriangle", "50RendererTriangleD", "XTest", "123Test" and so on... and it is now probably a little bit hard to figure out what's trash and
+  what's from an important none PixelLight application. Also, each and every PixelLight sample application had "SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"))" in
+  it and such stuff may be confusing when just starting to get into PixelLight based development.
+  -> For those reasons, I decided to make "SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"))" to the default setting. This way, the samples are even more compact
+     (yes, just one row and x nested method calls, but as mentioned, those may be confusing for beginners) but more important, if one "forgets" to set this to an individual setting, everything
+     will be thrown into the "PixelLight"-directory. Later on, it's probably easier to remember that something was "PixelLight"-based and easier to find and remove spam-files... by e.g.
+     just removing the one single "PixelLight"-directory completely.
 
 
 

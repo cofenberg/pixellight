@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
@@ -60,8 +59,6 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Add command line argument for choosing the sound API
 	m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenAL::SoundManager", false);
 }

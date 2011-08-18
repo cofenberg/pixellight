@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
 #include <libRocket_PL/libRocketAdapter.h>
-#include <PLCore/System/System.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLScene/Scene/SPScene.h>
@@ -62,7 +61,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pRocketAdapter(nullptr)
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

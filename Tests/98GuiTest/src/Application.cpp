@@ -67,7 +67,6 @@ Application::Application()
 	// Set application name and title
 	SetName("98GuiTest");
 	SetTitle(PLT("PLSample 98 - GuiTest"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

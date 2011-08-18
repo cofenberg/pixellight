@@ -55,8 +55,6 @@ pl_implement_class(Application)
 */
 Application::Application() : CoreApplication()
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Bring the log into the verbose mode so that the log also writes log entries
 	// directly into the console. This way, we can e.g. see script errors at once.
 	Log::GetInstance()->SetVerbose(true);

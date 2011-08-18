@@ -283,9 +283,10 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    Subdirectory (relative path)
 		*
 		*  @remarks
-		*    Default is "<appname>" (Windows) resp. ".<appname>" (Linux).
+		*    Default is "PixelLight" (Windows) respectively ".pixellight" (Linux).
 		*    If you change this, you should use System::GetDataDirName(), to convert your name
-		*    into the typical style for the used OS.
+		*    into the typical style for the used OS. Example:
+		*      SetAppDataSubdir(System::GetInstance()->GetDataDirName("MyApplication"))
 		*/
 		PLCORE_API void SetAppDataSubdir(const String &sSubdir);
 

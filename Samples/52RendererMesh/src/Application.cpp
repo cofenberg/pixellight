@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
 #include <PLRenderer/RendererContext.h>
 #include "Application.h"
 
@@ -50,8 +49,6 @@ pl_implement_class(Application)
 */
 Application::Application(Frontend &cFrontend) : RendererApplication(cFrontend)
 {
-	// Set application name and title
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

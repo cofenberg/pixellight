@@ -56,7 +56,6 @@ pl_implement_class(Application)
 */
 Application::Application()
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

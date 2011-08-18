@@ -49,8 +49,6 @@ pl_implement_class(Application)
 */
 Application::Application() : CoreApplication()
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Register commandline options:
 	//   02CommandLine [-u/--uppercase] [-p/--prefix <prefix>] <text> [postfix]
 	m_cCommandLine.AddParameter	("Prefix",    "-p", "--prefix",		"Text prefix",						"",	false);

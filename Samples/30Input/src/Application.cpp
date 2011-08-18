@@ -63,7 +63,6 @@ Application::Application() :
 	EventHandlerOnControlExit(&Application::OnControlExit, this),
 	m_bExit(false)
 {
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
