@@ -493,9 +493,30 @@ void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const Str
 			// Create the module
 			Module *pModule = CreateModule(nModuleID);
 			if (pModule) {
-				// Set plugin information
-				pModule->m_bPlugin   = true;
-				pModule->m_sFilename = sAbsFilename;
+				{ // Set plugin information
+					pModule->m_bPlugin   = true;
+					pModule->m_sFilename = sAbsFilename;
+
+					// Name of module
+					const XmlElement *pElement = cPluginElement.GetFirstChildElement("Name");
+					if (pElement)
+						pModule->m_sName = pElement->GetText();
+
+					// Vendor of module
+					pElement = cPluginElement.GetFirstChildElement("Vendor");
+					if (pElement)
+						pModule->m_sVendor = pElement->GetText();
+
+					// License of module
+					pElement = cPluginElement.GetFirstChildElement("License");
+					if (pElement)
+						pModule->m_sLicense = pElement->GetText();
+
+					// Description of module
+					pElement = cPluginElement.GetFirstChildElement("Description");
+					if (pElement)
+						pModule->m_sDescription = pElement->GetText();
+				}
 
 				// Iterate through all children and collect RTTI class meta information
 				const XmlElement *pClassElement = pClassesElement->GetFirstChildElement("Class");
