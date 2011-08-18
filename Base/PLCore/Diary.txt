@@ -35,7 +35,9 @@
 - Removed "CoreGeneralConfig::DelayedPluginLoading"-option (by default, this feature is always active)
 - Removed "CoreGeneralConfig::UsePixelLightRuntime"-option (now done automatically and due to delayed plugin loading the required time is no longer worth talking about)
 - "FrontendApplication": This application class reimplements "OnInitPlugins()" & "OnInitData()" because in here, the PixelLight runtime initialization is the job of a higher being
-- "ClassManager::LoadModuleDelayed()" was setting no "Name", "Vendor", "License" and "Description" information
+- Bugfix: "ClassManager::LoadModuleDelayed()" was setting no "Name", "Vendor", "License" and "Description" information
+- Bugfix: "ClassManager::RegisterClass()": When a dummy class of a dummy module is replaced by a real class, the (previously) dummy class has to be removed from the dummy module because
+  a class can only be within one module at the same time
 
 
 
