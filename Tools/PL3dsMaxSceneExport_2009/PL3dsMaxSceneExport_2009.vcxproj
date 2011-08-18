@@ -163,7 +163,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\debug_2009\PL3dsMaxSceneExport_2009.dle"  "C:\Program Files (x86)\Autodesk\3ds Max 2009\plugins\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -206,7 +207,8 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\debug_2009_64\PL3dsMaxSceneExport_2009.dle"  "H:\Programme\Autodesk\3ds Max 2009\\plugins\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -259,8 +261,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\release_2009\PL3dsMaxSceneExport_2009.dle"   "C:\Program Files (x86)\Autodesk\3ds Max 2009\plugins\"
-copy "build\release_2009\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax\x86\
+      <Command>copy "build\release_2009\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -312,8 +313,7 @@ copy "build\release_2009\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax\x8
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\release_2009_64\PL3dsMaxSceneExport_2009.dle"  "C:\Program Files\Autodesk\3ds Max 2009\plugins"
-copy "build\release_2009_64\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax\x64\
+      <Command>copy "build\release_2009_64\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -358,7 +358,8 @@ copy "build\release_2009_64\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\hybrid_2009\PL3dsMaxSceneExport_2009.dle"  "H:\Programme\Autodesk\3ds Max 2009\plugins\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Hybrid|x64'">
@@ -403,7 +404,8 @@ copy "build\release_2009_64\PL3dsMaxSceneExport_2009.dle" ..\..\Bin\Tools\3dsMax
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\hybrid_2009_64\PL3dsMaxSceneExport_2009.dle"  "I:\Program Files\Autodesk\3ds Max 2009\plugins\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
