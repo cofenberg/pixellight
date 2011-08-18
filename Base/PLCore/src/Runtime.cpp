@@ -24,7 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PixelLight.h>
+#include "PLCore/System/DynLib.h"
 #include "PLCore/System/System.h"
+#include "PLCore/File/Url.h"
 #include "PLCore/File/Directory.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Registry/Registry.h"
@@ -41,6 +43,83 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Get used PixelLight installation type
+*/
+Runtime::EType Runtime::GetType()
+{
+	#ifdef PLCORE_STATIC
+		// No doubt, the executable is using the static linked version of PLCore
+		return StaticInstallation;
+	#else
+		// Get the name of the PLCore shared library
+		static const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+
+		// Load the shared library (should never ever fail because this executable is already using this shared library...)
+		DynLib cPLCoreDynLib;
+		if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
+			// Get the absolute path the PLCore shared library is in
+			const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+
+			// Get the absolute filename of the running process
+			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
+
+			// Is the PLCore shared library within the same directory as the running process?
+			if (sAbsPLCorePath == sAbsProcessPath) {
+				// The PixelLight runtime is in the same directory as the running process, making this to a local installation
+				return LocalInstallation;
+			} else {
+				// The PixelLight runtime is registered within the system, making this to a system installation
+				return SystemInstallation;
+			}
+		}
+
+		// Error!
+		return UnknownInstallation;
+	#endif
+}
+
+/**
+*  @brief
+*    Get PixelLight version
+*/
+Version Runtime::GetVersion()
+{
+	return Version(
+		PIXELLIGHT_NAME,
+		"",
+		PIXELLIGHT_VERSION_MAJOR,
+		PIXELLIGHT_VERSION_MINOR,
+		PIXELLIGHT_VERSION_PATCH,
+		PIXELLIGHT_VERSION_RELEASE
+	);
+}
+
+/**
+*  @brief
+*    Return whether or not this is a debug version of PixelLight
+*/
+bool Runtime::IsDebugVersion()
+{
+	#ifdef _DEBUG
+		// The executable is using a debug version of PixelLight
+		return true;
+	#else
+		// The executable is using a release version of PixelLight
+		return false;
+	#endif
+}
+
+/**
+*  @brief
+*    Get PixelLight suffix
+*/
+String Runtime::GetSuffix()
+{
+	return PIXELLIGHT_SUFFIX;
+}
+
 /**
 *  @brief
 *    Try to find the PL-runtime directory by reading the registry
@@ -123,31 +202,6 @@ String Runtime::GetDataDirectory()
 
 /**
 *  @brief
-*    Get PixelLight version
-*/
-Version Runtime::GetVersion()
-{
-	return Version(
-		PIXELLIGHT_NAME,
-		"",
-		PIXELLIGHT_VERSION_MAJOR,
-		PIXELLIGHT_VERSION_MINOR,
-		PIXELLIGHT_VERSION_PATCH,
-		PIXELLIGHT_VERSION_RELEASE
-	);
-}
-
-/**
-*  @brief
-*    Get PixelLight suffix
-*/
-String Runtime::GetSuffix()
-{
-	return PIXELLIGHT_SUFFIX;
-}
-
-/**
-*  @brief
 *    Scan PL-runtime directory for compatible plugins and load them in
 */
 void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
@@ -180,6 +234,33 @@ void Runtime::ScanDirectoryData()
 		// Add packages from PixelLight runtime directory
 		LoadableManager::GetInstance()->ScanPackages(sPLDataDirectory);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private static functions                              ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the name of the PLCore shared library
+*/
+String Runtime::GetPLCoreSharedLibraryName()
+{
+	#ifdef _DEBUG
+		// The executable is using a debug version of PixelLight
+		#ifdef LINUX
+			return "libPLCoreD.so";
+		#elif defined(WIN32)
+			return "PLCoreD.dll";
+		#endif
+	#else
+		// The executable is using a release version of PixelLight
+		#ifdef LINUX
+			return "libPLCore.so";
+		#elif defined(WIN32)
+			return "PLCore.dll";
+		#endif
+	#endif
 }
 
 

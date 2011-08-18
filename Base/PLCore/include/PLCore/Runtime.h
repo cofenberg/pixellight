@@ -48,9 +48,64 @@ class Runtime {
 
 
 	//[-------------------------------------------------------]
+	//[ Definitions                                           ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Runtime installation type
+		*/
+		enum EType {
+			StaticInstallation,	/**< The running process is using the static linked version of PLCore */
+			LocalInstallation,	/**< The PixelLight runtime is in the same directory as the running process, making this to a local installation */
+			SystemInstallation,	/**< The PixelLight runtime is registered within the system, making this to a system installation */
+			UnknownInstallation	/**< Unkown PixelLight runtime installation type */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
+		//[-------------------------------------------------------]
+		//[ Passive information                                   ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Get used PixelLight installation type
+		*
+		*  @return
+		*    Used PixelLight installation type the running process is using
+		*/
+		PLCORE_API static EType GetType();
+
+		/**
+		*  @brief
+		*    Get PixelLight version
+		*
+		*  @return
+		*    Version of this PixelLight installation the running process is using
+		*/
+		PLCORE_API static Version GetVersion();
+
+		/**
+		*  @brief
+		*    Return whether or not this is a debug version of PixelLight
+		*
+		*  @return
+		*    'true' if the running process is using a debug version of PixelLight, else 'false'
+		*/
+		PLCORE_API static bool IsDebugVersion();
+
+		/**
+		*  @brief
+		*    Get PixelLight suffix
+		*
+		*  @return
+		*    Suffix of this PixelLight installation the running process is using
+		*/
+		PLCORE_API static String GetSuffix();
+
 		/**
 		*  @brief
 		*    Try to find the PL-runtime directory by reading the registry
@@ -75,24 +130,10 @@ class Runtime {
 		*/
 		PLCORE_API static String GetDataDirectory();
 
-		/**
-		*  @brief
-		*    Get PixelLight version
-		*
-		*  @return
-		*    Version of this PixelLight installation
-		*/
-		PLCORE_API static Version GetVersion();
 
-		/**
-		*  @brief
-		*    Get PixelLight suffix
-		*
-		*  @return
-		*    Suffix of this PixelLight installation
-		*/
-		PLCORE_API static String GetSuffix();
-
+		//[-------------------------------------------------------]
+		//[ Active actions                                        ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Scan PL-runtime directory for compatible plugins and load them in
@@ -125,6 +166,20 @@ class Runtime {
 		*    - LoadableManager::ScanPackages()
 		*/
 		PLCORE_API static void ScanDirectoryData();
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Returns the name of the PLCore shared library
+		*
+		*  @return
+		*    The name of the PLCore shared library (e.g. "libPLCore.so" or "PLCoreD.dll")
+		*/
+		static String GetPLCoreSharedLibraryName();
 
 
 };

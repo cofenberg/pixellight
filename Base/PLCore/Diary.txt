@@ -1,6 +1,10 @@
 >> 18.08.2011
 [CO]
 - Renamed the "Core"-class into "Runtime" because it's all about the runtime (even the version information)
+- "Runtime"-class: Added "IsDebugVersion()" returning whether or not a debug version of PixelLight is used
+- "Runtime"-class: Added "GetType()" detecting automatically the type of the currently used PixelLight runtime installation. Every PixelLight based project using the PixelLight
+  runtime needs at least the dynamic "PLCore"-library (the static library is not really within the runtime, it's for developers only). So, in order to automatically detect whether it's a local
+  or a system-installed runtime, I just load in the PLCore module and check whether or not it's within the same directory as the running process ("System::GetExecutableFilename()" :).
 
 
 

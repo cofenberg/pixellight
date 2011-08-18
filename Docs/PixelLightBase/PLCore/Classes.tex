@@ -207,7 +207,7 @@ Multiple classes within different modules, but with the same class name - don't 
 
 
 \paragraph{Accessing the Current Module}
-To access the current executed module you can use the macro \emph{pl\_current\_module\_id} ( just a short cut for \emph{PLCore::ModuleID<int>::GetModuleID} to request the ID of this module. This module ID can then be used to request a pointer to this module by using \emph{PLCore::ClassManager::GetModule}. The following source~code~\ref{Code:CurrentDirectoryToCurrentModuleDirectory} shows how this can be used to set the current directory to the one the current module is in.
+To access the current executed module you can use the macro \emph{pl\_current\_module\_id}, which is just a short cut for \emph{PLCore::ModuleID<int>::GetModuleID}, to request the ID of this module. This module ID can then be used to request a pointer to this module by using \emph{PLCore::ClassManager::GetModule}. For instance, if this request is made from source code within \emph{PLCore}, the \emph{PLCore}-module will be returned. The following source~code~\ref{Code:CurrentDirectoryToCurrentModuleDirectory} shows how this can be used to set the current directory to the one the current module is in.
 \begin{lstlisting}[label=Code:CurrentDirectoryToCurrentModuleDirectory,caption={Setting the current directory to the one the current module is in}]
 // Includes
 #include <PLCore/File/Url.h>

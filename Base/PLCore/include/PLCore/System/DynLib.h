@@ -48,7 +48,7 @@ class DynLibImpl;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Dynamic library class
+*    Dynamic library (aka "shared library") class
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the abstraction
