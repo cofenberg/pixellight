@@ -93,6 +93,9 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Mark window destroyed
 				pOSWindowWindows->m_bDestroyed = true;
 				pOSWindowWindows->m_hWnd	   = nullptr;
+
+				// Request application shut down
+				PostQuitMessage(0);
 				return 0;
 
 			// Got focus
