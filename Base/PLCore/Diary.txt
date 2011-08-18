@@ -13,6 +13,8 @@
   directory of the local or system PixelLight runtime, it's hightly recommended to only use the automatic PixelLight runtime detection to avoid using possibly incompatible binaries.
 - "Runtime"-class: Added a directory parameter to "ScanDirectoryPlugins()" and "ScanDirectoryData" to make it possible to use for example the result of "GetDirectory()", "GetLocalDirectory()"
   or "GetSystemDirectory()". If an empty string is provided, the result of "GetDirectory()" will be used, resulting in an "autodetection".
+- "Runtime"-class: Added comfort method "ScanDirectoryPluginsAndData()". In case you don't care about technical details and just want the stuff runnable, then just call this method and be happy.
+  The PixelLight runtime to use is detected automatically, all available compatible plugins are registered as well as compatible data.
 
 
 

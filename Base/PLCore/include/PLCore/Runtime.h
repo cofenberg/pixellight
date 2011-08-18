@@ -225,6 +225,21 @@ class Runtime {
 		*/
 		PLCORE_API static void ScanDirectoryData(const String &sDirectory = "");
 
+		/**
+		*  @brief
+		*    Scan system PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+		*
+		*  @remarks
+		*    In case you don't care about technical details and just want the stuff runnable, then just call this method
+		*    and be happy. The PixelLight runtime to use is detected automatically, all available compatible plugins are
+		*    registered as well as compatible data.
+		*
+		*  @see
+		*    - ScanDirectoryPlugins()
+		*    - ScanDirectoryData()
+		*/
+		PLCORE_API static void ScanDirectoryPluginsAndData();
+
 
 	//[-------------------------------------------------------]
 	//[ Private static functions                              ]
