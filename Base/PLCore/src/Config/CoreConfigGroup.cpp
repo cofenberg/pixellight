@@ -71,7 +71,6 @@ CoreConfigGroup::~CoreConfigGroup()
 *    Default constructor
 */
 CoreGeneralConfig::CoreGeneralConfig() :
-	UsePixelLightRuntime(this),
 	FirstRun(this),
 	Language(this)
 {

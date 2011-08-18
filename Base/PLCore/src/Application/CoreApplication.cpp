@@ -81,7 +81,6 @@ CoreApplication *CoreApplication::GetApplication()
 */
 CoreApplication::CoreApplication() :
 	m_bMultiUser(true),
-	m_bUseRuntime(true),
 	m_bRunning(false),
 	m_nResult(0)
 {
@@ -211,26 +210,6 @@ void CoreApplication::SetMultiUser(bool bMultiUser)
 {
 	// Set multi-user flag
 	m_bMultiUser = bMultiUser;
-}
-
-/**
-*  @brief
-*    Check if application uses the PixelLight runtime
-*/
-bool CoreApplication::GetUseRuntime() const
-{
-	// Return runtime flag
-	return m_bUseRuntime;
-}
-
-/**
-*  @brief
-*    Set if application uses the PixelLight runtime
-*/
-void CoreApplication::SetUseRuntime(bool bUseRuntime)
-{
-	// Set runtime flag
-	m_bUseRuntime = bUseRuntime;
 }
 
 /**
@@ -656,9 +635,6 @@ void CoreApplication::OnInitConfig()
 			// Reset flag
 			m_cConfig.SetVar("PLCore::CoreGeneralConfig", "FirstRun", "0");
 		}
-
-		// Use PixelLight runtime?
-		m_bUseRuntime = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
 	}
 }
 
@@ -671,6 +647,9 @@ void CoreApplication::OnInitPlugins()
 	// Start the stopwatch
 	Stopwatch cStopwatch(true);
 
+	// Scan PL-runtime directory for compatible plugins and load them in
+	Runtime::ScanDirectoryPlugins();
+
 	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
 	// for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
@@ -678,10 +657,6 @@ void CoreApplication::OnInitPlugins()
 
 	// Scan for plugins in "Plugins" directory (recursively)
 	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
-
-	// Scan PL-runtime directory for compatible plugins and load them in?
-	if (m_bUseRuntime)
-		Runtime::ScanDirectoryPlugins();
 
 	// Write message into log
 	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")
@@ -693,6 +668,9 @@ void CoreApplication::OnInitPlugins()
 */
 void CoreApplication::OnInitData()
 {
+	// Scan PL-runtime directory for compatible data and register it
+	Runtime::ScanDirectoryData();
+
 	// Is '.' (= the current directory) already a base directory? If not, add it right now...
 	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
 	if (!pLoadableManager->IsBaseDir('.'))
@@ -707,10 +685,6 @@ void CoreApplication::OnInitData()
 
 	// Scan for packages in application's "Data" directory
 	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
-
-	// Scan PL-runtime directory for compatible data and register it?
-	if (m_bUseRuntime)
-		Runtime::ScanDirectoryData();
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");

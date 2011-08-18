@@ -522,16 +522,6 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			XmlElement *pConfigElement = new XmlElement("Config");
 			pConfigElement->SetAttribute("Version", "1");
 
-			{ // PLCore::CoreGeneralConfig
-				// Add the 'Group' element
-				XmlElement *pGroupElement = new XmlElement("Group");
-				pGroupElement->SetAttribute("Class", "PLCore::CoreGeneralConfig");
-				pGroupElement->SetAttribute("UsePixelLightRuntime", "false");
-
-				// Link 'Group' element
-				pConfigElement->LinkEndChild(*pGroupElement);
-			}
-
 			{ // PLViewerConfig
 				// Add the 'Group' element
 				XmlElement *pGroupElement = new XmlElement("Group");
