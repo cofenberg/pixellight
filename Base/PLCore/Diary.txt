@@ -11,6 +11,8 @@
 - "Runtime"-class: Added "GetDirectory()" and "GetDataDirectory()", et voila, there are those two methods, again. But unlike the previous implementation, those two guys return the
   PixelLight runtime used by the running process. This means, those methods "automatically" detect the "correct" PixelLight runtime. While it's still possible to explicitly request the
   directory of the local or system PixelLight runtime, it's hightly recommended to only use the automatic PixelLight runtime detection to avoid using possibly incompatible binaries.
+- "Runtime"-class: Added a directory parameter to "ScanDirectoryPlugins()" and "ScanDirectoryData" to make it possible to use for example the result of "GetDirectory()", "GetLocalDirectory()"
+  or "GetSystemDirectory()". If an empty string is provided, the result of "GetDirectory()" will be used, resulting in an "autodetection".
 
 
 

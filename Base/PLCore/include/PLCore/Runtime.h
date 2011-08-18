@@ -191,6 +191,8 @@ class Runtime {
 		*  @brief
 		*    Scan system PL-runtime directory for compatible plugins and load them in
 		*
+		*  @param[in] sDirectory
+		*    Directory to use (for example the result of "GetDirectory()", "GetLocalDirectory()" or "GetSystemDirectory()"), if empty string the result of "GetDirectory()" will be used
 		*  @param[in] bDelayedPluginLoading
 		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
 		*
@@ -203,11 +205,14 @@ class Runtime {
 		*    - Runtime::GetDirectory()
 		*    - ClassManager::ScanPlugins()
 		*/
-		PLCORE_API static void ScanDirectoryPlugins(bool bDelayedPluginLoading = true);
+		PLCORE_API static void ScanDirectoryPlugins(const String &sDirectory = "", bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
 		*    Scan system PL-runtime directory for compatible data and register it
+		*
+		*  @param[in] sDirectory
+		*    Directory to use (for example the result of "GetDataDirectory()", "GetLocalDataDirectory()" or "GetSystemDataDirectory()"), if empty string the result of "GetDataDirectory()" will be used
 		*
 		*  @remarks
 		*    The implementation does the following tasks:
@@ -218,7 +223,7 @@ class Runtime {
 		*    - LoadableManager::AddBaseDir()
 		*    - LoadableManager::ScanPackages()
 		*/
-		PLCORE_API static void ScanDirectoryData();
+		PLCORE_API static void ScanDirectoryData(const String &sDirectory = "");
 
 
 	//[-------------------------------------------------------]

@@ -290,12 +290,12 @@ String Runtime::GetDataDirectory()
 
 /**
 *  @brief
-*    Scan system PL-runtime directory for compatible plugins and load them in
+*    Scan PL-runtime directory for compatible plugins and load them in
 */
-void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
+void Runtime::ScanDirectoryPlugins(const String &sDirectory, bool bDelayedPluginLoading)
 {
-	// Get PixelLight system runtime directory
-	const String sPLDirectory = GetSystemDirectory();
+	// Get PixelLight runtime directory
+	const String sPLDirectory = (sDirectory.GetLength()) ? sDirectory : GetDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
 		// for projects which can be used completely dynamically, but can also be used in other C++ projects
@@ -309,12 +309,12 @@ void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
 
 /**
 *  @brief
-*    Scan system PL-runtime directory for compatible data and register it
+*    Scan PL-runtime directory for compatible data and register it
 */
-void Runtime::ScanDirectoryData()
+void Runtime::ScanDirectoryData(const String &sDirectory)
 {
-	// Get PixelLight system runtime data directory
-	const String sPLDataDirectory = GetSystemDataDirectory();
+	// Get PixelLight runtime data directory
+	const String sPLDataDirectory = (sDirectory.GetLength()) ? sDirectory : GetDataDirectory();
 	if (sPLDataDirectory.GetLength()) {
 		// Add runtime directory
 		LoadableManager::GetInstance()->AddBaseDir(sPLDataDirectory);
