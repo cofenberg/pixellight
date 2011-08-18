@@ -258,7 +258,6 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Container\Bitset.cpp" />
     <ClCompile Include="src\Container\BitsetIterator.cpp" />
     <ClCompile Include="src\Container\Functions.cpp" />
-    <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\Core\AbstractContext.cpp" />
     <ClCompile Include="src\Core\AbstractLifecycle.cpp" />
     <ClCompile Include="src\Core\MemoryManager.cpp" />
@@ -354,6 +353,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Registry\Registry.cpp" />
     <ClCompile Include="src\Registry\RegistryImpl.cpp" />
     <ClCompile Include="src\Registry\RegistryWindows.cpp" />
+    <ClCompile Include="src\Runtime.cpp" />
     <ClCompile Include="src\Script\Script.cpp" />
     <ClCompile Include="src\Script\ScriptBinding.cpp" />
     <ClCompile Include="src\Script\ScriptManager.cpp" />
@@ -528,7 +528,6 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCore\Container\SimpleMapIterator.h" />
     <ClInclude Include="include\PLCore\Container\SimpleMapKeyIterator.h" />
     <ClInclude Include="include\PLCore\Container\Stack.h" />
-    <ClInclude Include="include\PLCore\Core.h" />
     <ClInclude Include="include\PLCore\Core\AbstractContext.h" />
     <ClInclude Include="include\PLCore\Core\AbstractLifecycle.h" />
     <ClInclude Include="include\PLCore\Core\MemoryManager.h" />
@@ -629,6 +628,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCore\Registry\Registry.h" />
     <ClInclude Include="include\PLCore\Registry\RegistryImpl.h" />
     <ClInclude Include="include\PLCore\Registry\RegistryWindows.h" />
+    <ClInclude Include="include\PLCore\Runtime.h" />
     <ClInclude Include="include\PLCore\Script\FuncScriptPtr.h" />
     <ClInclude Include="include\PLCore\Script\Script.h" />
     <ClInclude Include="include\PLCore\Script\ScriptBinding.h" />

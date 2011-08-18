@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Core.h                                         *
+ *  File: Runtime.h                                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_CORE_H__
-#define __PLCORE_CORE_H__
+#ifndef __PLCORE_RUNTIME_H__
+#define __PLCORE_RUNTIME_H__
 #pragma once
 
 
@@ -42,9 +42,9 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    PixelLight framework core class
+*    PixelLight framework runtime class
 */
-class Core {
+class Runtime {
 
 
 	//[-------------------------------------------------------]
@@ -61,7 +61,7 @@ class Core {
 		*  @see
 		*    - 'Registry' class documentation
 		*/
-		PLCORE_API static String GetRuntimeDirectory();
+		PLCORE_API static String GetDirectory();
 
 		/**
 		*  @brief
@@ -73,7 +73,7 @@ class Core {
 		*  @see
 		*    - 'Registry' class documentation
 		*/
-		PLCORE_API static String GetRuntimeDataDirectory();
+		PLCORE_API static String GetDataDirectory();
 
 		/**
 		*  @brief
@@ -106,10 +106,10 @@ class Core {
 		*    - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*
 		*  @see
-		*    - Core::GetRuntimeDirectory()
+		*    - Runtime::GetDirectory()
 		*    - ClassManager::ScanPlugins()
 		*/
-		PLCORE_API static void ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading = true);
+		PLCORE_API static void ScanDirectoryPlugins(bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class Core {
 		*    - LoadableManager::AddBaseDir()
 		*    - LoadableManager::ScanPackages()
 		*/
-		PLCORE_API static void ScanRuntimeDirectoryData();
+		PLCORE_API static void ScanDirectoryData();
 
 
 };
@@ -136,4 +136,4 @@ class Core {
 } // PLCore
 
 
-#endif // __PLCORE_CORE_H__
+#endif // __PLCORE_RUNTIME_H__

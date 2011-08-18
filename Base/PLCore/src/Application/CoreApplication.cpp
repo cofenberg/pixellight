@@ -26,7 +26,7 @@
 #ifdef LINUX
 	#include <signal.h>
 #endif
-#include "PLCore/Core.h"
+#include "PLCore/Runtime.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/File/Url.h"
 #include "PLCore/File/Directory.h"
@@ -564,7 +564,7 @@ void CoreApplication::OnInitLog()
 		// Create the log header:
 		PL_LOG(Info, "Log-system started")
 		PL_LOG(Quiet, '\n')
-		PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
+		PL_LOG(Info, "< " + Runtime::GetVersion().ToString() + " >")
 		PL_LOG(Info, "PLCore build: "__DATE__" "__TIME__"")
 		PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
 		PL_LOG(Info, "\nPLCore infomation:\n" + System::GetInstance()->GetInfo() + '\n')
@@ -581,7 +581,7 @@ void CoreApplication::OnInitLog()
 
 			// PixelLight directories
 			PL_LOG(Info, "PixelLight directories:")
-			PL_LOG(Info, "- Runtime:    " + PLCore::Core::GetRuntimeDirectory())
+			PL_LOG(Info, "- Runtime:    " + Runtime::GetDirectory())
 			PL_LOG(Quiet, '\n')
 
 			// Application context
@@ -705,7 +705,7 @@ void CoreApplication::OnInitPlugins()
 
 	// Scan PL-runtime directory for compatible plugins and load them in?
 	if (m_bUseRuntime)
-		Core::ScanRuntimeDirectoryPlugins(m_bDelayedPluginLoading);
+		Runtime::ScanDirectoryPlugins(m_bDelayedPluginLoading);
 
 	// Write message into log
 	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")
@@ -734,7 +734,7 @@ void CoreApplication::OnInitData()
 
 	// Scan PL-runtime directory for compatible data and register it?
 	if (m_bUseRuntime)
-		Core::ScanRuntimeDirectoryData();
+		Runtime::ScanDirectoryData();
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");

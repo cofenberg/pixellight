@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Core.cpp                                       *
+ *  File: Runtime.cpp                                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -29,7 +29,7 @@
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Registry/Registry.h"
 #include "PLCore/Tools/LoadableManager.h"
-#include "PLCore/Core.h"
+#include "PLCore/Runtime.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +45,7 @@ namespace PLCore {
 *  @brief
 *    Try to find the PL-runtime directory by reading the registry
 */
-String Core::GetRuntimeDirectory()
+String Runtime::GetDirectory()
 {
 	// Windows
 	#ifdef WIN32
@@ -53,7 +53,7 @@ String Core::GetRuntimeDirectory()
 		Registry cRegistry;
 		if (cRegistry.GetRegistryType() == Registry::Windows) {
 			// Get suffix
-			String sSuffix = Core::GetSuffix();
+			String sSuffix = GetSuffix();
 			if (sSuffix.GetLength() > 0)
 				sSuffix = '-' + sSuffix;
 
@@ -62,7 +62,7 @@ String Core::GetRuntimeDirectory()
 			// Read registry key "PixelLight-SDK" ("SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-SDK" on a 64 bit version and 32 bit application)
 			String sSubkey = "SOFTWARE\\PixelLight\\PixelLight-SDK" + sSuffix;
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
-				String sRuntime = cRegistry.GetValueString("Runtime");
+				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength())
 					return sRuntime; // Done
 			}
@@ -70,7 +70,7 @@ String Core::GetRuntimeDirectory()
 			// Read registry key "PixelLight-Runtime" ("SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-Runtime" on a 64 bit version and 32 bit application)
 			sSubkey = "SOFTWARE\\PixelLight\\PixelLight-Runtime" + sSuffix;
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
-				String sRuntime = cRegistry.GetValueString("Runtime");
+				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength())
 					return sRuntime; // Done
 			}
@@ -86,7 +86,7 @@ String Core::GetRuntimeDirectory()
 		//        (e.g. based on current version or library name)
 
 		// Check if a local pixellight runtime is specified in the environment variable PL_RUNTIME
-		String sRuntime = System::GetInstance()->GetEnvironmentVariable("PL_RUNTIME");
+		const String sRuntime = System::GetInstance()->GetEnvironmentVariable("PL_RUNTIME");
 		if (sRuntime.GetLength() > 0) {
 			// Use local runtime
 			return sRuntime;
@@ -108,10 +108,10 @@ String Core::GetRuntimeDirectory()
 *  @brief
 *    Try to find the PL-runtime data directory by reading the registry
 */
-String Core::GetRuntimeDataDirectory()
+String Runtime::GetDataDirectory()
 {
 	// Get PixelLight runtime directory
-	const String sPLDirectory = GetRuntimeDirectory();
+	const String sPLDirectory = GetDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Return the runtime data directory
 		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
@@ -125,7 +125,7 @@ String Core::GetRuntimeDataDirectory()
 *  @brief
 *    Get PixelLight version
 */
-Version Core::GetVersion()
+Version Runtime::GetVersion()
 {
 	return Version(
 		PIXELLIGHT_NAME,
@@ -141,7 +141,7 @@ Version Core::GetVersion()
 *  @brief
 *    Get PixelLight suffix
 */
-String Core::GetSuffix()
+String Runtime::GetSuffix()
 {
 	return PIXELLIGHT_SUFFIX;
 }
@@ -150,10 +150,10 @@ String Core::GetSuffix()
 *  @brief
 *    Scan PL-runtime directory for compatible plugins and load them in
 */
-void Core::ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading)
+void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
 {
 	// Get PixelLight runtime directory
-	const String sPLDirectory = GetRuntimeDirectory();
+	const String sPLDirectory = GetDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
 		// for projects which can be used completely dynamically, but can also be used in other C++ projects
@@ -169,10 +169,10 @@ void Core::ScanRuntimeDirectoryPlugins(bool bDelayedPluginLoading)
 *  @brief
 *    Scan PL-runtime directory for compatible data and register it
 */
-void Core::ScanRuntimeDirectoryData()
+void Runtime::ScanDirectoryData()
 {
 	// Get PixelLight runtime data directory
-	const String sPLDataDirectory = GetRuntimeDataDirectory();
+	const String sPLDataDirectory = GetDataDirectory();
 	if (sPLDataDirectory.GetLength()) {
 		// Add runtime directory
 		LoadableManager::GetInstance()->AddBaseDir(sPLDataDirectory);

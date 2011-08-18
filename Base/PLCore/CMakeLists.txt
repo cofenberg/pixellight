@@ -8,7 +8,7 @@ define_project(PLCore)
 ##################################################
 add_sources(
 	src/PLCore.cpp
-	src/Core.cpp
+	src/Runtime.cpp
 	src/Container/Functions.cpp
 	src/Container/Bitset.cpp
 	src/Container/BitsetIterator.cpp

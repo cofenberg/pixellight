@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Core.h"
+#include "PLCore/Runtime.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Frontend/FrontendImpl.h"
@@ -56,7 +56,7 @@ int Frontend::Run(const FrontendContext &cFrontendContext)
 
 	// [TODO] Make this optional?
 	// Scan PL-runtime directory for compatible plugins and load them in
-	Core::ScanRuntimeDirectoryPlugins();
+	Runtime::ScanDirectoryPlugins();
 
 	// Create a frontend implementation instance
 	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(cFrontendContext);

@@ -1,3 +1,9 @@
+>> 18.08.2011
+[CO]
+- Renamed the "Core"-class into "Runtime" because it's all about the runtime (even the version information)
+
+
+
 >> 17.08.2011
 [CO]
 - The frontend stuff is working quite well and solves some prior design issues. This approach also answers the question how to use the application framework within e.g. the Qt based

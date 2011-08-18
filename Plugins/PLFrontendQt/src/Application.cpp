@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/Url.h>
 #include <PLCore/File/File.h>
@@ -259,10 +259,10 @@ void Application::InitCore(bool useRuntimeDir)
 	// Use PixelLight runtime?
 	if (useRuntimeDir) {
 		// Scan PL-runtime directory for compatible plugins and load them in
-		Core::ScanRuntimeDirectoryPlugins();
+		Runtime::ScanDirectoryPlugins();
 
 		// Scan PL-runtime directory for compatible data and register it
-		Core::ScanRuntimeDirectoryData();
+		Runtime::ScanDirectoryData();
 	}
 }
 

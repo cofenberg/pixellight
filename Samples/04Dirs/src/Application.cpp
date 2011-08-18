@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
 #include "Application.h"
@@ -75,7 +75,7 @@ void Application::Main()
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("PixelLight directories:\n");
-	System::GetInstance()->GetConsole().Print("- Runtime:    " + PLCore::Core::GetRuntimeDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Runtime:    " + Runtime::GetDirectory() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("Application context:\n");

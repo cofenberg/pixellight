@@ -73,9 +73,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -577,11 +574,11 @@
     <ClCompile Include="src\Frontend\FrontendContext.cpp">
       <Filter>Frontend</Filter>
     </ClCompile>
+    <ClCompile Include="src\Runtime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLCore\Core.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLCore\ModuleMain.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -1322,6 +1319,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Frontend\FrontendContext.h">
       <Filter>Frontend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Runtime.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
 #include <PLCore/File/Directory.h>

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Profiling.h>
@@ -96,7 +96,7 @@ void PLConsoleCommandClear(ConsoleCommand &cCommand)
 void PLConsoleCommandAbout(ConsoleCommand &cCommand)
 {
 	PL_LOG(Info, "")
-	PL_LOG(Info, Core::GetVersion().ToString())
+	PL_LOG(Info, Runtime::GetVersion().ToString())
 	PL_LOG(Info, "Copyright (C) 2002-2011 by The PixelLight Team")
 	PL_LOG(Info, "")
 	Log::GetInstance()->Flush();
@@ -109,7 +109,7 @@ void PLConsoleCommandAbout(ConsoleCommand &cCommand)
 void PLConsoleCommandVersion(ConsoleCommand &cCommand)
 {
 	PL_LOG(Info, "")
-	PL_LOG(Info, Core::GetVersion().ToString() + String::Format(" compiled at %s / %s", __DATE__, __TIME__))
+	PL_LOG(Info, Runtime::GetVersion().ToString() + String::Format(" compiled at %s / %s", __DATE__, __TIME__))
 	if (cCommand.GetConsole())
 		PL_LOG(Info, cCommand.GetConsole()->GetDescription())
 	PL_LOG(Info, "")

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/File/File.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
@@ -156,7 +156,7 @@ void Frontend::OnCreate()
 					// Scan PL-runtime directory for compatible data and register it?
 					// [TODO] Only when runtime should be used
 					// Get PixelLight runtime data directory
-					const String sPLDataDirectory = Core::GetRuntimeDataDirectory();
+					const String sPLDataDirectory = Runtime::GetDataDirectory();
 					if (sPLDataDirectory.GetLength()) {
 						sFilename = sPLDataDirectory + "/Standard.zip";
 						if (File(sFilename).IsFile())
