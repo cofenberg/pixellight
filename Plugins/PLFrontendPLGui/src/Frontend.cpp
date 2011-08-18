@@ -156,7 +156,7 @@ void Frontend::OnCreate()
 					// Scan PL-runtime directory for compatible data and register it?
 					// [TODO] Only when runtime should be used
 					// Get PixelLight runtime data directory
-					const String sPLDataDirectory = Runtime::GetDataDirectory();
+					const String sPLDataDirectory = Runtime::GetSystemDataDirectory();
 					if (sPLDataDirectory.GetLength()) {
 						sFilename = sPLDataDirectory + "/Standard.zip";
 						if (File(sFilename).IsFile())

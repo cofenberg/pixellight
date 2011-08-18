@@ -75,7 +75,7 @@ void Application::Main()
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("PixelLight directories:\n");
-	System::GetInstance()->GetConsole().Print("- Runtime:    " + Runtime::GetDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Runtime:    " + Runtime::GetSystemDirectory() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("Application context:\n");

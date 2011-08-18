@@ -122,9 +122,9 @@ String Runtime::GetSuffix()
 
 /**
 *  @brief
-*    Try to find the PL-runtime directory by reading the registry
+*    Try to find the system PL-runtime directory by reading the registry
 */
-String Runtime::GetDirectory()
+String Runtime::GetSystemDirectory()
 {
 	// Windows
 	#ifdef WIN32
@@ -185,14 +185,14 @@ String Runtime::GetDirectory()
 
 /**
 *  @brief
-*    Try to find the PL-runtime data directory by reading the registry
+*    Try to find the system PL-runtime data directory by reading the registry
 */
-String Runtime::GetDataDirectory()
+String Runtime::GetSystemDataDirectory()
 {
-	// Get PixelLight runtime directory
-	const String sPLDirectory = GetDirectory();
+	// Get PixelLight system runtime directory
+	const String sPLDirectory = GetSystemDirectory();
 	if (sPLDirectory.GetLength()) {
-		// Return the runtime data directory
+		// Return the system runtime data directory
 		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
 	} else {
 		// Error!
@@ -202,12 +202,12 @@ String Runtime::GetDataDirectory()
 
 /**
 *  @brief
-*    Scan PL-runtime directory for compatible plugins and load them in
+*    Scan system PL-runtime directory for compatible plugins and load them in
 */
 void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
 {
-	// Get PixelLight runtime directory
-	const String sPLDirectory = GetDirectory();
+	// Get PixelLight system runtime directory
+	const String sPLDirectory = GetSystemDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Scan for plugins in the PixelLight runtime directory, but not recursively, please. This is quite useful
 		// for projects which can be used completely dynamically, but can also be used in other C++ projects
@@ -221,12 +221,12 @@ void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
 
 /**
 *  @brief
-*    Scan PL-runtime directory for compatible data and register it
+*    Scan system PL-runtime directory for compatible data and register it
 */
 void Runtime::ScanDirectoryData()
 {
-	// Get PixelLight runtime data directory
-	const String sPLDataDirectory = GetDataDirectory();
+	// Get PixelLight system runtime data directory
+	const String sPLDataDirectory = GetSystemDataDirectory();
 	if (sPLDataDirectory.GetLength()) {
 		// Add runtime directory
 		LoadableManager::GetInstance()->AddBaseDir(sPLDataDirectory);

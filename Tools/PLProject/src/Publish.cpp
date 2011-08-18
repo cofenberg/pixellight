@@ -169,11 +169,12 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 */
 bool Publish(const String &sTargetDirectory)
 {
-	// Get the PixelLight runtime shared libraries directory
-	String sRuntimeSharedLibrariesDirectory = Runtime::GetDirectory();
+	// Get the PixelLight system runtime shared libraries directory (using the local runtime isn't really possible
+	// because PLProject is using the static version of PLCore and so, the local runtime is invisible to PLProject)
+	String sRuntimeSharedLibrariesDirectory = Runtime::GetSystemDirectory();
 	if (sRuntimeSharedLibrariesDirectory.GetLength()) {
-		// Get the PixelLight runtime data directory
-		String sRuntimeDataDirectory = Runtime::GetDirectory() + "/../Data";
+		// Get the PixelLight system runtime data directory
+		String sRuntimeDataDirectory = Runtime::GetSystemDataDirectory();
 		if (sRuntimeDataDirectory.GetLength()) {
 			// Show some information
 			Message(MESSAGE, "Publishing '" + sTargetDirectory + '\'');

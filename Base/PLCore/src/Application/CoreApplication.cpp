@@ -581,7 +581,7 @@ void CoreApplication::OnInitLog()
 
 			// PixelLight directories
 			PL_LOG(Info, "PixelLight directories:")
-			PL_LOG(Info, "- Runtime:    " + Runtime::GetDirectory())
+			PL_LOG(Info, "- Runtime:    " + Runtime::GetSystemDirectory())
 			PL_LOG(Quiet, '\n')
 
 			// Application context
