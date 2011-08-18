@@ -33,7 +33,8 @@
   -> "pl_module_application"- and "pl_module_application_frontend"-macros: Added "Runtime::ScanDirectoryPluginsAndData()" right after "PLMain", before anything else is done
   -> Added "Runtime::ScanDirectoryPluginsAndData()" at some other places as well ("Runtime::ScanDirectoryPlugins()" was already used several times, so this change isn't something new)
 - Removed "CoreGeneralConfig::DelayedPluginLoading"-option (by default, this feature is always active)
-- Removed "CoreGeneralConfig::UsePixelLightRuntime"-option (now done automatically)
+- Removed "CoreGeneralConfig::UsePixelLightRuntime"-option (now done automatically and due to delayed plugin loading the required time is no longer worth talking about)
+- "FrontendApplication": This application class reimplements "OnInitPlugins()" & "OnInitData()" because in here, the PixelLight runtime initialization is the job of a higher being
 
 
 

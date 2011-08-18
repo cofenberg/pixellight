@@ -23,6 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/System/System.h"
+#include "PLCore/Tools/Localization.h"
+#include "PLCore/Tools/LoadableManager.h"
+#include "PLCore/Tools/LocalizationGroup.h"
 #include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/FrontendApplication.h"
 
@@ -135,6 +139,66 @@ void FrontendApplication::OnUpdate()
 void FrontendApplication::OnDrop(const Container<String> &lstFiles)
 {
 	// No default implementation
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual CoreApplication functions           ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when application should load it's plugins
+*/
+void FrontendApplication::OnInitPlugins()
+{
+	// The "Scan PL-runtime directory for compatible plugins and load them in"-part is job of a higher being
+
+	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
+	// for shipping applications and putting all plugins inside the application root directory
+	// (which is necessary due to VC manifest policy)
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
+
+	// Scan for plugins in "Plugins" directory (recursively)
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
+}
+
+/**
+*  @brief
+*    Called when application should set it's data paths
+*/
+void FrontendApplication::OnInitData()
+{
+	// The "Scan PL-runtime directory for compatible data and register it"-part is job of a higher being
+
+	// Is '.' (= the current directory) already a base directory? If not, add it right now...
+	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
+	if (!pLoadableManager->IsBaseDir('.'))
+		pLoadableManager->AddBaseDir('.');
+
+	// Is the application directory already a base directory? If not, add it right now...
+	if (!pLoadableManager->IsBaseDir(m_cApplicationContext.GetAppDirectory()))
+		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
+
+	// Scan for packages in current "Data" directory
+	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
+
+	// Scan for packages in application's "Data" directory
+	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
+
+	// Get localization language (from config or from default)
+	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");
+	if (!sLanguage.GetLength()) {
+		// Use always English instead of the current program locale language so that we have a known default behaviour
+		sLanguage = "English";
+	}
+
+	// Setup localization system
+	Localization::GetInstance()->SetLanguage(sLanguage);
+	if (sLanguage.GetLength()) {
+		LocalizationGroup *pLocalizationGroup = Localization::GetInstance()->AddGroup(Localization::PixelLight);
+		if (pLocalizationGroup)
+			pLocalizationGroup->Load("Data/Misc/" + Localization::PixelLight + '_' + sLanguage + ".loc");
+	}
 }
 
 

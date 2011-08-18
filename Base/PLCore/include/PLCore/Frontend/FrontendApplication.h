@@ -190,6 +190,42 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual CoreApplication functions           ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Called when application should load it's plugins
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Scan for plugins in application directory non-recursively
+		*    - Scan for plugins in application directory "Plugins/" recursively
+		*
+		*  @note
+		*    - Part of the application framework initialization function "OnStart()"
+		*/
+		PLCORE_API virtual void OnInitPlugins();
+
+		/**
+		*  @brief
+		*    Called when application should set it's data paths
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Set '.' as base path in LoadableManager
+		*    - Scan for packages in "Data/" directory
+		*    - Set application directory as base path in LoadableManager
+		*    - Scan for packages in application directory "Data/" directory
+		*    - Get current language and load PixelLight localization file, if no language is defined, English is used as default
+		*
+		*  @note
+		*    - Part of the application framework initialization function "OnStart()"
+		*/
+		PLCORE_API virtual void OnInitData();
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:

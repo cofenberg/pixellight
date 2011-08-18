@@ -33,7 +33,6 @@
 #include "PLCore/System/System.h"
 #include "PLCore/System/Console.h"
 #include "PLCore/Tools/Timing.h"
-#include "PLCore/Tools/Stopwatch.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Tools/Localization.h"
 #include "PLCore/Tools/LocalizationGroup.h"
@@ -644,9 +643,6 @@ void CoreApplication::OnInitConfig()
 */
 void CoreApplication::OnInitPlugins()
 {
-	// Start the stopwatch
-	Stopwatch cStopwatch(true);
-
 	// Scan PL-runtime directory for compatible plugins and load them in
 	Runtime::ScanDirectoryPlugins();
 
@@ -657,9 +653,6 @@ void CoreApplication::OnInitPlugins()
 
 	// Scan for plugins in "Plugins" directory (recursively)
 	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
-
-	// Write message into log
-	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")
 }
 
 /**
