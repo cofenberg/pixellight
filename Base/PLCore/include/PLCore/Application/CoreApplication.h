@@ -251,24 +251,6 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 
 		/**
 		*  @brief
-		*    Check if application allows delayed shared library loading to speed up the program start
-		*
-		*  @return
-		*    'true' if application allows delayed shared library loading to speed up the program start, else 'false'
-		*/
-		PLCORE_API bool GetDelayedPluginLoading() const;
-
-		/**
-		*  @brief
-		*    Set if application allows delayed shared library loading to speed up the program start
-		*
-		*  @param[in] bDelayedPluginLoading
-		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
-		*/
-		PLCORE_API void SetDelayedPluginLoading(bool bDelayedPluginLoading);
-
-		/**
-		*  @brief
 		*    Get name of config file
 		*
 		*  @return
@@ -663,20 +645,19 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ApplicationContext	m_cApplicationContext;		/**< Application context */
-		String				m_sName;					/**< Name of application */
-		String				m_sTitle;					/**< Title of application */
-		Version				m_cVersion;					/**< Version of application */
-		bool				m_bMultiUser;				/**< Use multi-user environment? */
-		bool				m_bUseRuntime;				/**< Use PixelLight runtime? */
-		bool				m_bDelayedPluginLoading;	/**< 'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false' */
-		String				m_sConfigName;				/**< File name (not path) of config */
-		String				m_sLogName;					/**< File name (not path) of log */
-		String				m_sAppDataSubdir;			/**< Subdirectory for application data */
-		Config				m_cConfig;					/**< Configuration instance */
-		CommandLine			m_cCommandLine;				/**< Command line arguments */
-		bool				m_bRunning;					/**< Is the application currently running? */
-		int					m_nResult;					/**< Return code */
+		ApplicationContext	m_cApplicationContext;	/**< Application context */
+		String				m_sName;				/**< Name of application */
+		String				m_sTitle;				/**< Title of application */
+		Version				m_cVersion;				/**< Version of application */
+		bool				m_bMultiUser;			/**< Use multi-user environment? */
+		bool				m_bUseRuntime;			/**< Use PixelLight runtime? */
+		String				m_sConfigName;			/**< File name (not path) of config */
+		String				m_sLogName;				/**< File name (not path) of log */
+		String				m_sAppDataSubdir;		/**< Subdirectory for application data */
+		Config				m_cConfig;				/**< Configuration instance */
+		CommandLine			m_cCommandLine;			/**< Command line arguments */
+		bool				m_bRunning;				/**< Is the application currently running? */
+		int					m_nResult;				/**< Return code */
 
 
 };

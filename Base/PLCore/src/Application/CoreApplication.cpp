@@ -82,7 +82,6 @@ CoreApplication *CoreApplication::GetApplication()
 CoreApplication::CoreApplication() :
 	m_bMultiUser(true),
 	m_bUseRuntime(true),
-	m_bDelayedPluginLoading(true),
 	m_bRunning(false),
 	m_nResult(0)
 {
@@ -232,26 +231,6 @@ void CoreApplication::SetUseRuntime(bool bUseRuntime)
 {
 	// Set runtime flag
 	m_bUseRuntime = bUseRuntime;
-}
-
-/**
-*  @brief
-*    Check if application allows delayed shared library loading to speed up the program start
-*/
-bool CoreApplication::GetDelayedPluginLoading() const
-{
-	// Return the current value
-	return m_bDelayedPluginLoading;
-}
-
-/**
-*  @brief
-*    Set if application allows delayed shared library loading to speed up the program start
-*/
-void CoreApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
-{
-	// Set new value
-	m_bDelayedPluginLoading = bDelayedPluginLoading;
 }
 
 /**
@@ -680,9 +659,6 @@ void CoreApplication::OnInitConfig()
 
 		// Use PixelLight runtime?
 		m_bUseRuntime = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
-
-		// Allow delayed shared library loading to speed up the program start?
-		m_bDelayedPluginLoading = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "DelayedPluginLoading").GetBool();
 	}
 }
 
@@ -698,14 +674,14 @@ void CoreApplication::OnInitPlugins()
 	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
 	// for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive, m_bDelayedPluginLoading);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
 
 	// Scan for plugins in "Plugins" directory (recursively)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive, m_bDelayedPluginLoading);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
 
 	// Scan PL-runtime directory for compatible plugins and load them in?
 	if (m_bUseRuntime)
-		Runtime::ScanDirectoryPlugins(m_bDelayedPluginLoading);
+		Runtime::ScanDirectoryPlugins();
 
 	// Write message into log
 	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")

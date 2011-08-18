@@ -72,7 +72,6 @@ CoreConfigGroup::~CoreConfigGroup()
 */
 CoreGeneralConfig::CoreGeneralConfig() :
 	UsePixelLightRuntime(this),
-	DelayedPluginLoading(this),
 	FirstRun(this),
 	Language(this)
 {
