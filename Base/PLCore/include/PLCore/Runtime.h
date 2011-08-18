@@ -111,6 +111,24 @@ class Runtime {
 
 		/**
 		*  @brief
+		*    Try to find the local PL-runtime directory
+		*
+		*  @return
+		*    Path to the local PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
+		*/
+		PLCORE_API static String GetLocalDirectory();
+
+		/**
+		*  @brief
+		*    Try to find the local PL-runtime data directory
+		*
+		*  @return
+		*    Path to the local PL-runtime data directory (e.g. "C:\MyApplication\Data"), or ""
+		*/
+		PLCORE_API static String GetLocalDataDirectory();
+
+		/**
+		*  @brief
 		*    Try to find the system PL-runtime directory by reading the registry
 		*
 		*  @return

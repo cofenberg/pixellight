@@ -54,7 +54,7 @@ Runtime::EType Runtime::GetType()
 		return StaticInstallation;
 	#else
 		// Get the name of the PLCore shared library
-		static const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+		const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
 
 		// Load the shared library (should never ever fail because this executable is already using this shared library...)
 		DynLib cPLCoreDynLib;
@@ -118,6 +118,58 @@ bool Runtime::IsDebugVersion()
 String Runtime::GetSuffix()
 {
 	return PIXELLIGHT_SUFFIX;
+}
+
+/**
+*  @brief
+*    Try to find the local PL-runtime directory
+*/
+String Runtime::GetLocalDirectory()
+{
+	#ifdef PLCORE_STATIC
+		// No doubt, the executable is using the static linked version of PLCore... We don't know any so called "runtime"...
+	#else
+		// Get the name of the PLCore shared library
+		const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+
+		// Load the shared library (should never ever fail because this executable is already using this shared library...)
+		DynLib cPLCoreDynLib;
+		if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
+			// Get the absolute path the PLCore shared library is in
+			const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+
+			// Get the absolute filename of the running process
+			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
+
+			// Is the PLCore shared library within the same directory as the running process?
+			if (sAbsPLCorePath == sAbsProcessPath) {
+				// The PixelLight runtime is in the same directory as the running process, making this to a local installation
+				return sAbsPLCorePath;	// Done
+			} else {
+				// The PixelLight runtime is registered within the system, making this to a system installation
+			}
+		}
+	#endif
+
+	// Error!
+	return "";
+}
+
+/**
+*  @brief
+*    Try to find the local PL-runtime data directory
+*/
+String Runtime::GetLocalDataDirectory()
+{
+	// Get PixelLight local runtime directory
+	const String sPLDirectory = GetLocalDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Return the local runtime data directory
+		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+	} else {
+		// Error!
+		return "";
+	}
 }
 
 /**

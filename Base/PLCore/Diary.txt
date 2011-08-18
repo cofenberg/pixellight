@@ -7,6 +7,7 @@
   or a system-installed runtime, I just load in the PLCore module and check whether or not it's within the same directory as the running process ("System::GetExecutableFilename()" :).
 - Renamed "Runtime::GetDirectory()" into "Runtime::GetSystemDirectory()" and renamed "Runtime::GetDataDirectory()" into "Runtime::GetSystemDataDirectory()" to make clear that this is the
   system installed runtime (there can be a local and system runtime at the same time, although this is not recommended)
+- "Runtime"-class: Added "GetLocalDirectory()" and "GetLocalDataDirectory()", the counterparts to "GetSystemDirectory()" and "GetSystemDataDirectory()"
 
 
 
