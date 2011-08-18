@@ -151,6 +151,38 @@ class Runtime {
 		*/
 		PLCORE_API static String GetSystemDataDirectory();
 
+		/**
+		*  @brief
+		*    Try to find the PL-runtime directory used by the running process
+		*
+		*  @return
+		*    Path to the PL-runtime directory used by the running process (e.g. "C:\MyApplication\x86" or "C:\PixelLight\Runtime\x86" etc.), or ""
+		*
+		*  @remarks
+		*    As soon as an application executable is started and therfore has become a running process, it's bound to a
+		*    certain PixelLight runtime. Usually, an OS will first search for required shared libraries within the same
+		*    directory the application executable is in. If the PLCore shared library was found within the application
+		*    executable directory, this means that a local PixelLight runtime is used. Of course, there can be a local
+		*    and system PixelLight runtime at the same time (although this is not recommended), but this still means, that
+		*    in the described situation, the local PLCore shared library is used and therefore the local PixelLight runtime.
+		*    The "GetDirectory()"-method returns the PixelLight runtime used by the running process. This means that internally
+		*    "GetLocalDirectory()" is called at first and if this method returns an empty string, a "GetSystemDirectory()"
+		*    call follows in exactly this order.
+		*/
+		PLCORE_API static String GetDirectory();
+
+		/**
+		*  @brief
+		*    Try to find the PL-runtime data directory used by the running process
+		*
+		*  @return
+		*    Path to the PL-runtime data directory used by the running process (e.g. "C:\MyApplication\Data" or "C:\PixelLight\Runtime\Data" etc.), or ""
+		*
+		*  @see
+		*    - GetDirectory()
+		*/
+		PLCORE_API static String GetDataDirectory();
+
 
 		//[-------------------------------------------------------]
 		//[ Active actions                                        ]

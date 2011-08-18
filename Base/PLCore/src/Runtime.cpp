@@ -254,6 +254,42 @@ String Runtime::GetSystemDataDirectory()
 
 /**
 *  @brief
+*    Try to find the PL-runtime directory used by the running process
+*/
+String Runtime::GetDirectory()
+{
+	// First: Try to find the local PL-runtime directory
+	String sPLDirectory = GetLocalDirectory();
+	if (!sPLDirectory.GetLength()) {
+		// No local PL-runtime directory found
+
+		// Second: Try to find the system PL-runtime directory by reading the registry
+		sPLDirectory = GetSystemDirectory();
+	}
+
+	// Done
+	return sPLDirectory;
+}
+
+/**
+*  @brief
+*    Try to find the PL-runtime data directory used by the running process
+*/
+String Runtime::GetDataDirectory()
+{
+	// Get PixelLight runtime directory used by the running process
+	const String sPLDirectory = GetDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Return the runtime data directory used by the running process
+		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+	} else {
+		// Error!
+		return "";
+	}
+}
+
+/**
+*  @brief
 *    Scan system PL-runtime directory for compatible plugins and load them in
 */
 void Runtime::ScanDirectoryPlugins(bool bDelayedPluginLoading)
