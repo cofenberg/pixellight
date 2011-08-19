@@ -55,6 +55,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
 	m_nNativeWindowHandle(NULL_HANDLE),
+	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
 	m_nInvisibleCursor(0)
 {
@@ -75,6 +76,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		// X events
 		XSetWindowAttributes sXSetWindowAttributes;
 		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask;
+
+		// [TODO] Set window title by using
+		//   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : ""
 
 		// Create the native OS window instance
 		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
@@ -231,6 +235,16 @@ bool OSWindowLinux::Ping()
 				}
 				break;
 
+			// Mouse entered the window area
+			case EnterNotify:
+				m_bIsMouseOver = true;
+				break;
+
+			// Mouse left the window area
+			case LeaveNotify:
+				m_bIsMouseOver = false;
+				break;
+
 			// [TODO] Drag and drop of files
 		}
 	}
@@ -300,6 +314,43 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 
 	// Inform that the fullscreen mode was changed
 	m_pFrontendOS->OnFullscreenMode();
+}
+
+bool OSWindowLinux::IsMouseOver() const
+{
+	return m_bIsMouseOver;
+}
+
+int OSWindowLinux::GetMousePositionX() const
+{
+	// Get the absolute mouse cursor position on the screen
+	XEvent sXEvent;
+
+	// Get the window directly below the current mouse cursor position - do only continue if this is our window
+	if (XQueryPointer(m_pDisplay, m_nNativeWindowHandle, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
+		&sXEvent.xbutton.x_root, &sXEvent.xbutton.y_root, &sXEvent.xbutton.x, &sXEvent.xbutton.y, &sXEvent.xbutton.state) == True) {
+		// Done
+		return sXEvent.xbutton.x;
+	} else {
+		// Error, the mouse cursor is currently not over this window
+		return -1;
+	}
+}
+
+int OSWindowLinux::GetMousePositionY() const
+{
+	// Get the absolute mouse cursor position on the screen
+	XEvent sXEvent;
+
+	// Get the window directly below the current mouse cursor position - do only continue if this is our window
+	if (XQueryPointer(m_pDisplay, m_nNativeWindowHandle, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
+		&sXEvent.xbutton.x_root, &sXEvent.xbutton.y_root, &sXEvent.xbutton.x, &sXEvent.xbutton.y, &sXEvent.xbutton.state) == True) {
+		// Done
+		return sXEvent.xbutton.y;
+	} else {
+		// Error, the mouse cursor is currently not over this window
+		return -1;
+	}
 }
 
 bool OSWindowLinux::IsMouseVisible() const

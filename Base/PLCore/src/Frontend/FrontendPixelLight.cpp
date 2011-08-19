@@ -49,7 +49,7 @@ pl_implement_class(FrontendPixelLight)
 *  @brief
 *    Constructor
 */
-FrontendPixelLight::FrontendPixelLight(FrontendImpl &cFrontendImpl) : Frontend(cFrontendImpl),
+FrontendPixelLight::FrontendPixelLight(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl) : Frontend(cFrontendContext, cFrontendImpl),
 	ApplicationClass(this),
 	ApplicationConstructor(this),
 	ApplicationConstructorParameters(this),

@@ -26,7 +26,7 @@
 #include <max.h>
 #include <IPathConfigMgr.h>
 #include "../resource.h"
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
 #include "PL3dsMaxSceneExport/PL3dsMaxSceneExport.h"
@@ -41,7 +41,7 @@ static INT_PTR CALLBACK AboutBoxDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 {
 	switch (msg)  {
 		case WM_INITDIALOG:
-			SetDlgItemText(hWnd, IDC_VERSION, PLCore::Core::GetVersion().ToString() + "\nPixelLight scene exporter\nCopyright (C) 2002-2011 by The PixelLight Team");
+			SetDlgItemText(hWnd, IDC_VERSION, PLCore::Runtime::GetVersion().ToString() + "\nPixelLight scene exporter\nCopyright (C) 2002-2011 by The PixelLight Team");
 			SetDlgItemText(hWnd, IDC_BUILD, "Build:  Date: " __DATE__ "  Time: " __TIME__);
 			break;
 

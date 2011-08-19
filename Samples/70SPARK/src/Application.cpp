@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLRenderer/RendererContext.h>
@@ -59,10 +57,6 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
-	// Set application name and title
-	SetName("70SPARK");
-	SetTitle(PLT("PL SPARK sample"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

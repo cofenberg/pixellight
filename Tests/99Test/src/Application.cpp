@@ -116,7 +116,6 @@ Application::Application() : PLCore::CoreApplication()
 	// Set application name and title
 	SetName("99Test");
 	SetTitle(PLT("PLSample 99 - Test"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

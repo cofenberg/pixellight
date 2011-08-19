@@ -47,7 +47,7 @@ namespace PLCore {
 *    Application context
 *
 *  @remarks
-*    The application context store data and information for an application,
+*    The application context stores data and information for an application,
 *    such as startup information (what was the current directory when the
 *    application started) or paths to needed resources.
 */
@@ -91,6 +91,24 @@ class ApplicationContext : public AbstractContext {
 		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
 		PLCORE_API void SetExecutableFilename(const String &sExecutableFilename);
+
+		/**
+		*  @brief
+		*    Get command line arguments
+		*
+		*  @return
+		*    List of command line arguments that were passed to the program
+		*/
+		PLCORE_API const Array<String> &GetArguments() const;
+
+		/**
+		*  @brief
+		*    Set command line arguments
+		*
+		*  @param[in] lstArguments
+		*    List of command line arguments that were passed to the program
+		*/
+		PLCORE_API void SetArguments(const Array<String> &lstArguments);
 
 		/**
 		*  @brief
@@ -159,24 +177,6 @@ class ApplicationContext : public AbstractContext {
 		*/
 		PLCORE_API void SetConfigFilename(const String &sConfig);
 
-		/**
-		*  @brief
-		*    Get command line arguments
-		*
-		*  @return
-		*    List of command line arguments that were passed to the program
-		*/
-		PLCORE_API const Array<String> &GetArguments() const;
-
-		/**
-		*  @brief
-		*    Set command line arguments
-		*
-		*  @param[in] lstArguments
-		*    List of command line arguments that were passed to the program
-		*/
-		PLCORE_API void SetArguments(const Array<String> &lstArguments);
-
 
 		//[-------------------------------------------------------]
 		//[ Tool functions                                        ]
@@ -198,11 +198,11 @@ class ApplicationContext : public AbstractContext {
 	//[-------------------------------------------------------]
 	protected:
 		String			m_sExecutableFilename;	/**< Absolute executable filename of the application */
+		Array<String>	m_lstArguments;			/**< Argument list */
 		String			m_sAppDirectory;		/**< Application directory */
 		String			m_sStartupDirectory;	/**< The current directory when the application constructor was called */
 		String			m_sLog;					/**< Absolute path to log file, empty if log has not been opened */
 		String			m_sConfig;				/**< Absolute path to config file, empty if no config is used */
-		Array<String>	m_lstArguments;			/**< Argument list */
 
 
 };

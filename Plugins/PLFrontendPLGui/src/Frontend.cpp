@@ -23,8 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Runtime.h>
+#include <PLCore/File/File.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Windows/Window.h>
@@ -126,6 +131,24 @@ void Frontend::SetMainWindow(Widget *pMainWindow)
 			m_pMainWindow->GetContentWidget()->SignalDrop   .Connect(EventHandlerDropMainWindow);
 		}
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLCore::AbstractLifecycle functions ]
+//[-------------------------------------------------------]
+void Frontend::OnCreate()
+{
+	// PLGui requires some images stored within "Standard.zip", it's the responsibility of this frontend to ensure it has all it needs
+	const String sPLDataDirectory = Runtime::GetDataDirectory();
+	if (sPLDataDirectory.GetLength()) {
+		const String sFilename = sPLDataDirectory + "/Standard.zip";
+		if (File(sFilename).IsFile())
+			LoadableManager::GetInstance()->AddBaseDir(sFilename);
+	}
+
+	// Call the base implementation
+	FrontendImpl::OnCreate();
 }
 
 
@@ -265,6 +288,35 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseOver() const
+{
+	return m_pMainWindow ? m_pMainWindow->IsMouseOver() : false;
+}
+
+int Frontend::GetMousePositionX() const
+{
+	if (m_pMainWindow) {
+		Vector2i vPos;
+		if (m_pMainWindow->GetMousePos(vPos))
+			return vPos.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	if (m_pMainWindow) {
+		Vector2i vPos;
+		if (m_pMainWindow->GetMousePos(vPos))
+			return vPos.y;
+	}
+
+	// Error!
+	return -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	return (m_pMainWindow && m_pMainWindow->GetGui()) ? m_pMainWindow->GetGui()->IsMouseVisible() : false;
@@ -296,6 +348,7 @@ void Frontend::OnCreateMainWindow()
 	Window *pWindow = new Window();
 	pWindow->AddModifier("PLGui::ModClose", "ExitApplication=1");
 	pWindow->SetSize(Vector2i(640, 480));
+	pWindow->SetTitle(GetFrontend() ? GetFrontend()->GetContext().GetName() : "");
 
 	// There's no need to have a widget background because we're render into it
 	// (avoids flickering caused by automatic background overdraw)

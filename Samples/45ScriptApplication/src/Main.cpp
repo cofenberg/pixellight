@@ -48,25 +48,16 @@ pl_module_end
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	Runtime::ScanDirectoryPluginsAndData();
+
+	// Setup the frontend context
+	FrontendContext cFrontendContext;
+	cFrontendContext.SetExecutableFilename(sExecutableFilename);
+	cFrontendContext.SetArguments(lstArguments);
+	cFrontendContext.SetName("45ScriptApplication");
+	cFrontendContext.SetFrontendParameters("ApplicationClass=\"PLEngine::ScriptApplication\" ApplicationConstructor=\"ParameterConstructor2\" ApplicationConstructorParameters=\"ScriptFilename='Data/Scripts/45ScriptApplication.lua'\"");
+
 	// ... hm, what would be an appropriate comment for this line of code? Maybe "Run script"...? *g*
-	return Frontend::Run(// Absolute application executable filename
-						 sExecutableFilename,
-						 // List of arguments to the program
-						 lstArguments,
-						 // Frontend - Name of the frontend RTTI class to use
-						 "PLCore::FrontendPixelLight",
-						 // Frontend - Name of the frontend RTTI class constructor to use
-						 "",
-						 // Frontend - Parameters for the frontend RTTI class constructor
-						 "",
-						 // Frontend - Parameters for the instanced frontend RTTI class
-						 "ApplicationClass=\"PLEngine::ScriptApplication\" ApplicationConstructor=\"ParameterConstructor2\" ApplicationConstructorParameters=\"ScriptFilename='Data/Scripts/45ScriptApplication.lua'\"",
-						 // Frontend implementation - Name of the frontend implementation RTTI class to use
-						 "PLFrontendOS::Frontend",
-						 // Frontend implementation - Name of the frontend implementation RTTI class constructor to use
-						 "",
-						 // Frontend implementation - Parameters for the frontend implementation RTTI class constructor
-						 "",
-						 // Frontend implementation - Parameters for the instanced frontend implementation RTTI class
-						 "");
+	return Frontend::Run(cFrontendContext);
 }

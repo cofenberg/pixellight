@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/File/Url.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
@@ -58,8 +57,6 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend) : EngineApplication(cF
 	OnDeInitFunction(this),
 	m_pScript(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight script application");
 }
 
 /**
@@ -79,7 +76,6 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename
 	// Set application name and title
 	SetName(sScriptFilenameOnly);
 	SetTitle("PixelLight script application \"" + sScriptFilenameOnly + '\"');
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
@@ -99,7 +95,6 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename
 	// Set application name and title
 	SetName(sName.GetLength() ? sName : sScriptFilenameOnly);
 	SetTitle(sTitle.GetLength() ? sTitle : ("PixelLight script application \"" + sScriptFilenameOnly + '\"'));
-	SetAppDataSubdir(sAppDataSubdir.GetLength() ? sAppDataSubdir : System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

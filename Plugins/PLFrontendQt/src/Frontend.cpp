@@ -94,7 +94,7 @@ void Frontend::SetMainWindow(QWidget *pMainWindow)
 int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Get traditional C-arguments
-	const int argc = 1 + lstArguments.GetNumOfElements();
+	int argc = 1 + lstArguments.GetNumOfElements();
 	char **argv = new char *[argc];
 	{ // Fill C-arguments
 		{ // First one is the executable filename
@@ -115,20 +115,6 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 		}
 	}
 
-	// Run the frontend
-	const int nResult = Run(argc, argv);
-
-	// Cleanup traditional C-arguments
-	for (int i=0; i<argc; i++)
-		delete argv[i];
-	delete [] argv;
-
-	// Done
-	return nResult;
-}
-
-int Frontend::Run(int argc, char **argv)
-{
 	// Create the Qt application instance on the C runtime stack
 	QApplication cQApplication(argc, argv);
 
@@ -147,6 +133,11 @@ int Frontend::Run(int argc, char **argv)
 	// Delete the mouse cursors
 	delete m_pQCursorBlank;
 	m_pQCursorBlank = nullptr;
+
+	// Cleanup traditional C-arguments
+	for (int i=0; i<argc; i++)
+		delete argv[i];
+	delete [] argv;
 
 	// Done
 	return nResult;
@@ -243,6 +234,21 @@ void Frontend::SetFullscreen(bool bFullscreen)
 				m_pMainWindow->showNormal();
 		}
 	}
+}
+
+bool Frontend::IsMouseOver() const
+{
+	return m_pMainWindow ? m_pMainWindow->underMouse() : false;
+}
+
+int Frontend::GetMousePositionX() const
+{
+	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).x() : -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).y() : -1;
 }
 
 bool Frontend::IsMouseVisible() const

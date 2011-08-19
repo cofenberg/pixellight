@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
 #include <PLInput/Input/Virtual/VirtualController.h>
@@ -61,10 +59,6 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
-	// Set application name and title
-	SetName("67Game2D");
-	SetTitle(PLT("PL 2D game sample"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

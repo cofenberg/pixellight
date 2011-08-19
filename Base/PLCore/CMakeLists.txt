@@ -8,7 +8,7 @@ define_project(PLCore)
 ##################################################
 add_sources(
 	src/PLCore.cpp
-	src/Core.cpp
+	src/Runtime.cpp
 	src/Container/Functions.cpp
 	src/Container/Bitset.cpp
 	src/Container/BitsetIterator.cpp
@@ -153,6 +153,7 @@ add_sources(
 	src/Frontend/AbstractFrontend.cpp
 	src/Frontend/Frontend.cpp
 	src/Frontend/FrontendImpl.cpp
+	src/Frontend/FrontendContext.cpp
 	src/Frontend/FrontendPixelLight.cpp
 	# src/Frontend/FrontendOpenGL.cpp # Just a test, not added in here
 	src/Frontend/FrontendApplication.cpp

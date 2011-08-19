@@ -24,8 +24,8 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
-	${CMAKE_SOURCE_DIR}/Plugins/libRocket_PL/include
-	${CMAKE_SOURCE_DIR}/Plugins/libRocket_PL/include/libRocket_PL
+	${CMAKE_SOURCE_DIR}/Plugins/PLlibRocket/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLlibRocket/include/PLlibRocket
 	${LIBROCKET_INCLUDE_DIRS}
 )
 
@@ -49,7 +49,7 @@ add_libs(
 	PLScene
 	PLEngine
 	${LIBROCKET_LIBRARIES}
-	libRocket_PL
+	PLlibRocket
 )
 
 ##################################################
@@ -117,7 +117,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGui PLInput PLRenderer PLMesh PLScene PLEngine External-libRocket libRocket_PL)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGui PLInput PLRenderer PLMesh PLScene PLEngine External-libRocket PLlibRocket)
 add_dependencies(Samples						${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

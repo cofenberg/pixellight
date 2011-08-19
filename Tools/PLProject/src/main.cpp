@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
 #include <PLCore/Main.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
 #include <PLCore/File/Directory.h>
@@ -457,7 +457,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 	LocalizationLoaderPL cHack;
 
 	// Output startup info
-	Message(MESSAGE, "PLProject " + Core::GetVersion().ToString());
+	Message(MESSAGE, "PLProject " + Runtime::GetVersion().ToString());
 	Message(MESSAGE, "Current dir is '" + System::GetInstance()->GetCurrentDir() + '\'');
 
 	// Parse command line
@@ -524,7 +524,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		cProject.cPLPluginInfo.SetActive(true); // By default, projects are active
 		cProject.cPLPluginInfo.SetDelayed(true); // By default, projects are delayed
 		cProject.cPLPluginInfo.SetPluginFileVersion("1");
-		cProject.cPLPluginInfo.SetPLVersion(Core::GetVersion().ToString());
+		cProject.cPLPluginInfo.SetPLVersion(Runtime::GetVersion().ToString());
 
 		if (ParseProject(cProject)) {
 			// Write plugin file

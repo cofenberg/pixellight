@@ -42,6 +42,7 @@
 #undef GetFirstChild
 #undef GetNextSibling
 #include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
 
 class nsPluginInstance : public PLCore::FrontendImpl, public nsPluginInstanceBase
@@ -88,6 +89,9 @@ private:
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual bool IsFullscreen() const override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseOver() const override;
+		virtual int GetMousePositionX() const override;
+		virtual int GetMousePositionY() const override;
 		virtual bool IsMouseVisible() const override;
 		virtual void SetMouseVisible(bool bVisible) override;
 		virtual void SetTrapMouse(bool bTrap) override;
@@ -114,6 +118,7 @@ private:
 		bool						m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
 		bool						m_bMouseVisible;					/**< Is the mouse cursor visible? */
 		bool						m_bTrapMouse;						/**< Trap mouse? */
+		PLCore::FrontendContext		m_cFrontendContext;
 		PLCore::FrontendPixelLight	m_cFrontend;
 
 

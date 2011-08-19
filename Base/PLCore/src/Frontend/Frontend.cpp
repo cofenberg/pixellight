@@ -23,10 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Core.h"
+#include "PLCore/Runtime.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Frontend/FrontendImpl.h"
+#include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/Frontend.h"
 
 
@@ -49,136 +50,27 @@ pl_implement_class(Frontend)
 *  @brief
 *    Run the frontend
 */
-int Frontend::Run(const String &sExecutableFilename,
-				  const Array<String> &lstArguments,
-				  const String &sFrontend,
-				  const String &sFrontendConstructor,
-				  const String &sFrontendConstructorParameters,
-				  const String &sFrontendParameters,
-				  const String &sFrontendImplementation,
-				  const String &sFrontendImplementationConstructor,
-				  const String &sFrontendImplementationConstructorParameters,
-				  const String &sFrontendImplementationParameters)
+int Frontend::Run(const FrontendContext &cFrontendContext)
 {
 	int nResult = -1;	// Error by default
 
 	// Create a frontend implementation instance
-	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(sFrontendImplementation, sFrontendImplementationConstructor, sFrontendImplementationConstructorParameters, sFrontendImplementationParameters);
+	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(cFrontendContext);
 	if (pFrontendImpl) {
 		// Create a frontend instance
-		Frontend *pFrontend = FrontendImpl::CreateFrontend(*pFrontendImpl, sFrontend, sFrontendConstructor, sFrontendConstructorParameters, sFrontendParameters);
+		Frontend *pFrontend = FrontendImpl::CreateFrontend(cFrontendContext, *pFrontendImpl);
 		if (pFrontend) {
 			// Do the frontend lifecycle thing - let the world know that we have been created
-			pFrontend->OnCreate();
+			pFrontendImpl->OnCreate();
 
 			// Let the world know that this frontend is now going to run
-			pFrontend->OnRun(sExecutableFilename, lstArguments);
+			pFrontendImpl->OnRun(cFrontendContext.GetExecutableFilename(), cFrontendContext.GetArguments());
 
 			// Let the frontend implementation run
-			nResult = pFrontendImpl->Run(sExecutableFilename, lstArguments);
+			nResult = pFrontendImpl->Run(cFrontendContext.GetExecutableFilename(), cFrontendContext.GetArguments());
 
 			// Do the frontend lifecycle thing - let the world know that we're going to die
-			pFrontend->OnDestroy();
-
-			// Destroy the frontend
-			delete pFrontend;
-		}
-
-		// Destroy the frontend implementation
-		delete pFrontendImpl;
-	}
-
-	// Done
-	return nResult;
-}
-
-/**
-*  @brief
-*    Run the frontend using traditional C-arguments
-*/
-int Frontend::Run(int argc,
-				  char **argv,
-				  const String &sFrontend,
-				  const String &sFrontendConstructor,
-				  const String &sFrontendConstructorParameters,
-				  const String &sFrontendParameters,
-				  const String &sFrontendImplementation,
-				  const String &sFrontendImplementationConstructor,
-				  const String &sFrontendImplementationConstructorParameters,
-				  const String &sFrontendImplementationParameters)
-{
-	int nResult = -1;	// Error by default
-
-	// Get uniform arguments
-	Array<String> lstArguments;
-	for (int i=1; i<argc; i++)
-		lstArguments.Add(argv[i]);
-
-	// Create a frontend implementation instance
-	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(sFrontendImplementation, sFrontendImplementationConstructor, sFrontendImplementationConstructorParameters, sFrontendImplementationParameters);
-	if (pFrontendImpl) {
-		// Create a frontend instance
-		Frontend *pFrontend = FrontendImpl::CreateFrontend(*pFrontendImpl, sFrontend, sFrontendConstructor, sFrontendConstructorParameters, sFrontendParameters);
-		if (pFrontend) {
-			// Do the frontend lifecycle thing - let the world know that we have been created
-			pFrontend->OnCreate();
-
-			// Let the world know that this frontend is now going to run
-			pFrontend->OnRun(lstArguments[0], lstArguments);
-
-			// Let the frontend implementation run
-			nResult = pFrontendImpl->Run(argc, argv);
-
-			// Do the frontend lifecycle thing - let the world know that we're going to die
-			pFrontend->OnDestroy();
-
-			// Destroy the frontend
-			delete pFrontend;
-		}
-
-		// Destroy the frontend implementation
-		delete pFrontendImpl;
-	}
-
-	// Done
-	return nResult;
-}
-
-int Frontend::Run(int argc,
-				  wchar_t **argv,
-				  const String &sFrontend,
-				  const String &sFrontendConstructor,
-				  const String &sFrontendConstructorParameters,
-				  const String &sFrontendParameters,
-				  const String &sFrontendImplementation,
-				  const String &sFrontendImplementationConstructor,
-				  const String &sFrontendImplementationConstructorParameters,
-				  const String &sFrontendImplementationParameters)
-{
-	int nResult = -1;	// Error by default
-
-	// Get uniform arguments
-	Array<String> lstArguments;
-	for (int i=1; i<argc; i++)
-		lstArguments.Add(argv[i]);
-
-	// Create a frontend implementation instance
-	FrontendImpl *pFrontendImpl = CreateFrontendImplementation(sFrontendImplementation, sFrontendImplementationConstructor, sFrontendImplementationConstructorParameters, sFrontendImplementationParameters);
-	if (pFrontendImpl) {
-		// Create a frontend instance
-		Frontend *pFrontend = FrontendImpl::CreateFrontend(*pFrontendImpl, sFrontend, sFrontendConstructor, sFrontendConstructorParameters, sFrontendParameters);
-		if (pFrontend) {
-			// Do the frontend lifecycle thing - let the world know that we have been created
-			pFrontend->OnCreate();
-
-			// Let the world know that this frontend is now going to run
-			pFrontend->OnRun(lstArguments[0], lstArguments);
-
-			// Let the frontend implementation run
-			nResult = pFrontendImpl->Run(argc, argv);
-
-			// Do the frontend lifecycle thing - let the world know that we're going to die
-			pFrontend->OnDestroy();
+			pFrontendImpl->OnDestroy();
 
 			// Destroy the frontend
 			delete pFrontend;
@@ -200,7 +92,8 @@ int Frontend::Run(int argc,
 *  @brief
 *    Constructor
 */
-Frontend::Frontend(FrontendImpl &cFrontendImpl) :
+Frontend::Frontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl) :
+	m_cFrontendContext(cFrontendContext),
 	m_pFrontendImpl(&cFrontendImpl)
 {
 	// Set frontend
@@ -213,6 +106,15 @@ Frontend::Frontend(FrontendImpl &cFrontendImpl) :
 */
 Frontend::~Frontend()
 {
+}
+
+/**
+*  @brief
+*    Get frontend context
+*/
+const FrontendContext &Frontend::GetContext() const
+{
+	return m_cFrontendContext;
 }
 
 /**
@@ -338,6 +240,36 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 /**
 *  @brief
+*    Check if the mouse is currently over the frontend
+*/
+bool Frontend::IsMouseOver() const
+{
+	// Call backend
+	return m_pFrontendImpl->IsMouseOver();
+}
+
+/**
+*  @brief
+*    Get current mouse cursor X position inside the frontend
+*/
+int Frontend::GetMousePositionX() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetMousePositionX();
+}
+
+/**
+*  @brief
+*    Get current mouse cursor Y position inside the frontend
+*/
+int Frontend::GetMousePositionY() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetMousePositionY();
+}
+
+/**
+*  @brief
 *    Check if the mouse cursor is visible
 */
 bool Frontend::IsMouseVisible() const
@@ -401,27 +333,20 @@ void Frontend::OnRun(const String &sExecutableFilename, const Array<String> &lst
 *  @brief
 *    Creates a implementation frontend instance
 */
-FrontendImpl *Frontend::CreateFrontendImplementation(const String &sFrontendImplementation,
-													 const String &sFrontendImplementationConstructor,
-													 const String &sFrontendImplementationConstructorParameters,
-													 const String &sFrontendImplementationParameters)
+FrontendImpl *Frontend::CreateFrontendImplementation(const FrontendContext &cFrontendContext)
 {
-	// [TODO] Make this optional?
-	// Scan PL-runtime directory for compatible plugins and load them in
-	Core::ScanRuntimeDirectoryPlugins();
-
 	// Get the frontend implementation RTTI class
-	const Class *pClass = ClassManager::GetInstance()->GetClass(sFrontendImplementation);
+	const Class *pClass = ClassManager::GetInstance()->GetClass(cFrontendContext.GetFrontendImplementation());
 	if (pClass && pClass->IsDerivedFrom("PLCore::FrontendImpl")) {
 		// Create the frontend RTTI class instance
-		Object *pObject = sFrontendImplementationConstructor.GetLength() ? pClass->Create(sFrontendImplementationConstructor, sFrontendImplementationConstructorParameters) : pClass->Create();
+		Object *pObject = cFrontendContext.GetFrontendImplementationConstructor().GetLength() ? pClass->Create(cFrontendContext.GetFrontendImplementationConstructor(), cFrontendContext.GetFrontendImplementationConstructorParameters()) : pClass->Create();
 		if (pObject) {
 			// Write down a log message
 			PL_LOG(Info, "Using frontend implementation '" + pClass->GetClassName() + "': " + pClass->GetDescription())
 
 			// Set parameters for the instanced frontend implementation RTTI class
-			if (sFrontendImplementationParameters.GetLength())
-				pObject->SetValues(sFrontendImplementationParameters);
+			if (cFrontendContext.GetFrontendImplementationParameters().GetLength())
+				pObject->SetValues(cFrontendContext.GetFrontendImplementationParameters());
 
 			// Done
 			return static_cast<FrontendImpl*>(pObject);
@@ -431,7 +356,7 @@ FrontendImpl *Frontend::CreateFrontendImplementation(const String &sFrontendImpl
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, "Frontend '" + sFrontendImplementation + "' is no valid frontend implementation RTTI class")
+		PL_LOG(Error, "Frontend '" + cFrontendContext.GetFrontendImplementation() + "' is no valid frontend implementation RTTI class")
 	}
 
 	// Error!

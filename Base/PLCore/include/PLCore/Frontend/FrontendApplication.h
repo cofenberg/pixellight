@@ -108,6 +108,9 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*
 		*  @param[in] cFrontend
 		*    Frontend this application instance is running in
+		*
+		*  @note
+		*    - This constructor sets the default application name and title by using the name of the frontend executable ("GetFrontend().GetContext().GetName()")
 		*/
 		PLCORE_API FrontendApplication(Frontend &cFrontend);
 
@@ -184,6 +187,42 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*    - The default implementation is empty
 		*/
 		PLCORE_API virtual void OnDrop(const Container<String> &lstFiles) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual CoreApplication functions           ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Called when application should load it's plugins
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Scan for plugins in application directory non-recursively
+		*    - Scan for plugins in application directory "Plugins/" recursively
+		*
+		*  @note
+		*    - Part of the application framework initialization function "OnStart()"
+		*/
+		PLCORE_API virtual void OnInitPlugins();
+
+		/**
+		*  @brief
+		*    Called when application should set it's data paths
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Set '.' as base path in LoadableManager
+		*    - Scan for packages in "Data/" directory
+		*    - Set application directory as base path in LoadableManager
+		*    - Scan for packages in application directory "Data/" directory
+		*    - Get current language and load PixelLight localization file, if no language is defined, English is used as default
+		*
+		*  @note
+		*    - Part of the application framework initialization function "OnStart()"
+		*/
+		PLCORE_API virtual void OnInitData();
 
 
 	//[-------------------------------------------------------]

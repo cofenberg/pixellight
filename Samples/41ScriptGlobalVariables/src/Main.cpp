@@ -26,7 +26,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Main.h>
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/ModuleMain.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/System.h>
@@ -139,7 +139,7 @@ void RunScript(const String &sScriptFilename)
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Scan PL-runtime directory for compatible plugins and load them in
-	Core::ScanRuntimeDirectoryPlugins();
+	Runtime::ScanDirectoryPlugins();
 
 	// Bring the log into the verbose mode so that the log also writes log entries
 	// directly into the console. This way, we can e.g. see script errors at once.

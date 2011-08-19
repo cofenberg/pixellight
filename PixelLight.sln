@@ -135,7 +135,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2011", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPARK_PL", "Plugins\SPARK_PL\SPARK_PL.vcxproj", "{C2CB2665-591E-4D26-A145-0DB8298CBDB6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRocket_PL", "Plugins\libRocket_PL\libRocket_PL.vcxproj", "{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLlibRocket", "Plugins\PLlibRocket\PLlibRocket.vcxproj", "{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2012", "Tools\PL3dsMaxSceneExport_2012\PL3dsMaxSceneExport_2012.vcxproj", "{80B9A7E3-F548-4A1B-A419-5A2A40EADD87}"
 	ProjectSection(ProjectDependencies) = postProject

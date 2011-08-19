@@ -34,11 +34,11 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLCore {
+	class Frontend;
+}
 namespace PLMath {
 	class Vector2i;
-}
-namespace PLGui {
-	class Widget;
 }
 namespace PLScene {
 	class SNCamera;
@@ -49,9 +49,6 @@ namespace PLScene {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLEngine {
-
-
-// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
 
 
 //[-------------------------------------------------------]
@@ -72,12 +69,12 @@ class MousePicking : public Picking {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] pWidget
-		*    Widget to perform the picking in, if a null pointer no picking is possible
+		*  @param[in] cFrontend
+		*    Frontend instance used to determine the mouse position
 		*  @param[in] pCamera
 		*    Camera to perform the picking with, if a null pointer no picking is possible
 		*/
-		PL_API MousePicking(PLGui::Widget *pWidget = nullptr, PLScene::SNCamera *pCamera = nullptr);
+		PL_API MousePicking(PLCore::Frontend &cFrontend, PLScene::SNCamera *pCamera = nullptr);
 
 		/**
 		*  @brief
@@ -87,21 +84,12 @@ class MousePicking : public Picking {
 
 		/**
 		*  @brief
-		*    Returns the widget to perform the picking in
+		*    Returns the frontend instance used to determine the mouse position
 		*
 		*  @return
-		*    The widget to perform the picking in, a null pointer if there's no widget (= no picking is possible)
+		*    The frontend instance used to determine the mouse position
 		*/
-		PL_API PLGui::Widget *GetWidget() const;
-
-		/**
-		*  @brief
-		*    Sets the widget to perform the picking in
-		*
-		*  @param[in] pWidget
-		*    The widget to perform the picking in, a null pointer if there's no widget (= no picking is possible)
-		*/
-		PL_API void SetWidget(PLGui::Widget *pWidget);
+		PL_API PLCore::Frontend &GetFrontend() const;
 
 		/**
 		*  @brief
@@ -166,12 +154,6 @@ class MousePicking : public Picking {
 	private:
 		/**
 		*  @brief
-		*    Called when a widget was destroyed
-		*/
-		void OnWidgetDestroy();
-
-		/**
-		*  @brief
 		*    Called when a camera was destroyed
 		*/
 		void OnCameraDestroy();
@@ -181,7 +163,6 @@ class MousePicking : public Picking {
 	//[ Private event handlers                                ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<> EventHandlerWidgetDestroy;
 		PLCore::EventHandler<> EventHandlerCameraDestroy;
 
 
@@ -189,7 +170,7 @@ class MousePicking : public Picking {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLGui::Widget	  *m_pWidget;	/**< Widget to perform the picking in, can be a null pointer */
+		PLCore::Frontend  *m_pFrontend;	/**< Frontend instance used to determine the mouse position, always valid! */
 		PLScene::SNCamera *m_pCamera;	/**< Camera to perform the picking with, can be a null pointer */
 
 

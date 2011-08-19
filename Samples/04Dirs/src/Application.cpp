@@ -23,10 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
-#include <PLCore/Tools/Localization.h>
 #include "Application.h"
 
 
@@ -51,10 +50,6 @@ pl_implement_class(Application)
 */
 Application::Application() : CoreApplication()
 {
-	// Set application name and title
-	SetName("04Dirs");
-	SetTitle(PLT("PLSample 04 - Directories"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
@@ -79,7 +74,7 @@ void Application::Main()
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("PixelLight directories:\n");
-	System::GetInstance()->GetConsole().Print("- Runtime:    " + PLCore::Core::GetRuntimeDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Runtime:    " + Runtime::GetDirectory() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 
 	System::GetInstance()->GetConsole().Print("Application context:\n");

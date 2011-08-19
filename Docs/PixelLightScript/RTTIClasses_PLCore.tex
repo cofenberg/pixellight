@@ -95,6 +95,15 @@ Write \emph{<RTTI object>:IsFullscreen()} in order to request whether or not the
 \paragraph{SetFullscreen(<bool>)}
 Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the window is currently fullscreen or not. \emph{true} as first parameter if the window is currently fullscreen, else \emph{false}.
 
+\paragraph{<bool> IsMouseOver()}
+Write \emph{<RTTI object>:IsMouseOver()} in order to request whether or not the mouse cursor is currently over the frontend. Returns \emph{true} if the mouse cursor is currently over the frontend, else \emph{false}.
+
+\paragraph{<integer> GetMousePositionX()}
+Write \emph{<RTTI object>:GetMousePositionX()} in order to request the current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend.
+
+\paragraph{<integer> GetMousePositionY()}
+Write \emph{<RTTI object>:GetMousePositionY()} in order to request the current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend.
+
 \paragraph{<bool> IsMouseVisible()}
 Write \emph{<RTTI object>:IsMouseVisible()} in order to request whether or not the mouse cursor is currently visible. Returns \emph{true} if the mouse cursor is currently visible, else \emph{false}.
 

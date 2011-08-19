@@ -166,6 +166,24 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	// No window = nothing to do in here
 }
 
+bool Frontend::IsMouseOver() const
+{
+	// We're not interested in GUI stuff
+	return false;
+}
+
+int Frontend::GetMousePositionX() const
+{
+	// We're not interested in GUI stuff
+	return -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	// We're not interested in GUI stuff
+	return -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	// We're not interested in GUI stuff

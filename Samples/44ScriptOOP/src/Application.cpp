@@ -27,7 +27,6 @@
 #include <PLCore/File/Url.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
@@ -59,11 +58,6 @@ Application::Application() : CoreApplication(),
 	SlotOnMySignal(this),
 	m_pMyRTTIClass(new MyRTTIClass())
 {
-	// Set application name and title
-	SetName("44ScriptOOP");
-	SetTitle(PLT("PLSample 44 - Script OOP"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Connect event handler
 	m_pMyRTTIClass->MySignal.Connect(SlotOnMySignal);
 

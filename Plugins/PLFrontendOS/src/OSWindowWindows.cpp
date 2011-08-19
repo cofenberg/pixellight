@@ -24,6 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "../resource.h"
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowWindows.h"
 #include <Shellapi.h>	// For "ExtractIcon()"
@@ -91,6 +93,9 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Mark window destroyed
 				pOSWindowWindows->m_bDestroyed = true;
 				pOSWindowWindows->m_hWnd	   = nullptr;
+
+				// Request application shut down
+				PostQuitMessage(0);
 				return 0;
 
 			// Got focus
@@ -268,7 +273,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		// Create the window
 		m_hWnd = ::CreateWindowExA(dwExtStyle,
 								  "PLFrontendOS_OSWindowWindows",
-								   "",
+								   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "",
 								   dwStyle,
 								   CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 								   HWND_DESKTOP,
@@ -343,9 +348,9 @@ void OSWindowWindows::UpdateTrapMouse()
 {
 	// Trap mouse?
 	if (m_bTrapMouse) {
-		// Get window rect (in screen coordinates)
+		// Get window rectangle (in screen coordinates)
 		RECT sRect;
-		::GetWindowRect(m_hWnd, &sRect); 
+		::GetWindowRect(m_hWnd, &sRect);
 
 		// Trap mouse within up-to-date widget rectangle
 		::ClipCursor(&sRect); 
@@ -472,6 +477,57 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool OSWindowWindows::IsMouseOver() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPOINT;
+		if (::GetCursorPos(&sPOINT)) {
+			// Get window rectangle (in screen coordinates)
+			RECT sRect;
+			if (::GetWindowRect(m_hWnd, &sRect)) {
+				// Is the mouse cursor within the window rectangle?
+				return ::PtInRect(&sRect, sPOINT);
+			}
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+int OSWindowWindows::GetMousePositionX() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int OSWindowWindows::GetMousePositionY() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.y;
+	}
+
+	// Error!
+	return -1;
+}
+
 bool OSWindowWindows::IsMouseVisible() const
 {
 	return m_bMouseVisible;
@@ -499,7 +555,7 @@ void OSWindowWindows::SetTrapMouse(bool bTrap)
 	if (m_hWnd) {
 		// Trap mouse?
 		if (bTrap) {
-			// Get window rect (in screen coordinates)
+			// Get window rectangle (in screen coordinates)
 			RECT sRect;
 			GetWindowRect(m_hWnd, &sRect); 
 

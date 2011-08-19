@@ -12,7 +12,7 @@ add_sources(
 	src/Application/Config.cpp
 	src/Picking/Picking.cpp
 	src/Picking/PickingResult.cpp
-	# src/Picking/MousePicking.cpp # [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
+	src/Picking/MousePicking.cpp
 	src/Controller/PhysicsMouseInteraction.cpp
 	src/Controller/SNPhysicsMouseInteraction.cpp
 	src/Controller/SNMPhysicsCharacter.cpp

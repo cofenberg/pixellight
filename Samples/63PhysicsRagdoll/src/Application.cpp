@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
@@ -69,11 +68,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	m_bApplyForce(false),
 	m_bTorqueForce(false)
 {
-	// Set application name and title
-	SetName("63PhysicsRagdoll");
-	SetTitle(PLT("PL ragdoll physics sample"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
-
 	// Add command line argument for choosing the physics API
 	m_cCommandLine.AddArgument("PhysicsAPI", "Physics API", "PLPhysicsNewton::World", false);
 }

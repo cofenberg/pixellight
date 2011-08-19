@@ -1,4 +1,5 @@
 // PixelLightCtrl.cpp : Implementation of PixelLightCtrl
+#include <PLCore/Runtime.h>
 #include <PLCore/Tools/Timing.h>
 #include "stdafx.h"
 #include "PixelLightCtrl.h"
@@ -10,10 +11,13 @@ PixelLightCtrl::PixelLightCtrl() :
 	m_bFrontendApplicationInitialized(false),
 	m_bMouseVisible(true),
 	m_bTrapMouse(false),
-	m_cFrontend(*this)
+	m_cFrontend(m_cFrontendContext, *this)
 {
 	// We *must* have a real window for this control
 	m_bWindowOnly = true;
+
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();
@@ -106,6 +110,55 @@ bool PixelLightCtrl::IsFullscreen() const
 void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool PixelLightCtrl::IsMouseOver() const
+{
+	// Get the mouse cursor's position (in screen coordinates)
+	POINT sPOINT;
+	if (GetCursorPos(&sPOINT)) {
+		// Get window rectangle (in screen coordinates)
+		RECT sRect;
+		if (GetWindowRect(&sRect)) {
+			// Is the mouse cursor within the window rectangle?
+			return PtInRect(&sRect, sPOINT);
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+int PixelLightCtrl::GetMousePositionX() const
+{
+	if (m_hFrontendWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hFrontendWnd, &sPoint))
+			return sPoint.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int PixelLightCtrl::GetMousePositionY() const
+{
+	if (m_hFrontendWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hFrontendWnd, &sPoint))
+			return sPoint.y;
+	}
+
+	// Error!
+	return -1;
 }
 
 bool PixelLightCtrl::IsMouseVisible() const

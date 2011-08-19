@@ -65,7 +65,7 @@ endif()
 if(PL_PLUGIN_ENGINE_SPARK)
 	add_subdirectory(70SPARK)
 endif()
-# libRocket_PL
+# PLlibRocket
 if(PL_PLUGIN_ENGINE_LIBROCKET)
 	add_subdirectory(71libRocket)
 endif()

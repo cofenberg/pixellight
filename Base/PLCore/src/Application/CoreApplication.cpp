@@ -26,14 +26,13 @@
 #ifdef LINUX
 	#include <signal.h>
 #endif
-#include "PLCore/Core.h"
+#include "PLCore/Runtime.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/File/Url.h"
 #include "PLCore/File/Directory.h"
 #include "PLCore/System/System.h"
 #include "PLCore/System/Console.h"
 #include "PLCore/Tools/Timing.h"
-#include "PLCore/Tools/Stopwatch.h"
 #include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/Tools/Localization.h"
 #include "PLCore/Tools/LocalizationGroup.h"
@@ -81,8 +80,6 @@ CoreApplication *CoreApplication::GetApplication()
 */
 CoreApplication::CoreApplication() :
 	m_bMultiUser(true),
-	m_bUseRuntime(true),
-	m_bDelayedPluginLoading(true),
 	m_bRunning(false),
 	m_nResult(0)
 {
@@ -97,8 +94,12 @@ CoreApplication::CoreApplication() :
 	m_sConfigName = m_sName + ".cfg";
 	m_sLogName = m_sName + ".log";
 
-	// Set default application data subdir
-	m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);
+	// Set default application data subdir to "PixelLight" (Windows) respectively ".pixellight" (Linux)
+	// -> Why this setting? At first, this was "m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);" resulting in e.g.
+	//    "C:\Users\COfenberg\AppData\Roaming\50RendererTriangleD", "C:\Users\COfenberg\AppData\Roaming\50RendererTriangle", "C:\Users\COfenberg\AppData\Roaming\XTest42"
+	//    and so on. Worst case is, that in the end, "Roaming" is full of spam files and it's hard to figure out what's trash and what's important. So, by default, everything
+	//    PixelLight based will be thrown into a common "PixelLight"-directory. More experienced users may then, explicitly, change this into an individual directory.
+	m_sAppDataSubdir = System::GetInstance()->GetDataDirName("PixelLight");
 
 	// Add standard command line options
 	m_cCommandLine.AddFlag(		"Help",			"-h", "--help",			"Display help");
@@ -212,46 +213,6 @@ void CoreApplication::SetMultiUser(bool bMultiUser)
 {
 	// Set multi-user flag
 	m_bMultiUser = bMultiUser;
-}
-
-/**
-*  @brief
-*    Check if application uses the PixelLight runtime
-*/
-bool CoreApplication::GetUseRuntime() const
-{
-	// Return runtime flag
-	return m_bUseRuntime;
-}
-
-/**
-*  @brief
-*    Set if application uses the PixelLight runtime
-*/
-void CoreApplication::SetUseRuntime(bool bUseRuntime)
-{
-	// Set runtime flag
-	m_bUseRuntime = bUseRuntime;
-}
-
-/**
-*  @brief
-*    Check if application allows delayed shared library loading to speed up the program start
-*/
-bool CoreApplication::GetDelayedPluginLoading() const
-{
-	// Return the current value
-	return m_bDelayedPluginLoading;
-}
-
-/**
-*  @brief
-*    Set if application allows delayed shared library loading to speed up the program start
-*/
-void CoreApplication::SetDelayedPluginLoading(bool bDelayedPluginLoading)
-{
-	// Set new value
-	m_bDelayedPluginLoading = bDelayedPluginLoading;
 }
 
 /**
@@ -564,7 +525,7 @@ void CoreApplication::OnInitLog()
 		// Create the log header:
 		PL_LOG(Info, "Log-system started")
 		PL_LOG(Quiet, '\n')
-		PL_LOG(Info, "< " + Core::GetVersion().ToString() + " >")
+		PL_LOG(Info, "< " + Runtime::GetVersion().ToString() + " >")
 		PL_LOG(Info, "PLCore build: "__DATE__" "__TIME__"")
 		PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
 		PL_LOG(Info, "\nPLCore infomation:\n" + System::GetInstance()->GetInfo() + '\n')
@@ -581,7 +542,7 @@ void CoreApplication::OnInitLog()
 
 			// PixelLight directories
 			PL_LOG(Info, "PixelLight directories:")
-			PL_LOG(Info, "- Runtime:    " + PLCore::Core::GetRuntimeDirectory())
+			PL_LOG(Info, "- Runtime:    " + Runtime::GetDirectory())
 			PL_LOG(Quiet, '\n')
 
 			// Application context
@@ -677,12 +638,6 @@ void CoreApplication::OnInitConfig()
 			// Reset flag
 			m_cConfig.SetVar("PLCore::CoreGeneralConfig", "FirstRun", "0");
 		}
-
-		// Use PixelLight runtime?
-		m_bUseRuntime = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "UsePixelLightRuntime").GetBool();
-
-		// Allow delayed shared library loading to speed up the program start?
-		m_bDelayedPluginLoading = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "DelayedPluginLoading").GetBool();
 	}
 }
 
@@ -692,23 +647,16 @@ void CoreApplication::OnInitConfig()
 */
 void CoreApplication::OnInitPlugins()
 {
-	// Start the stopwatch
-	Stopwatch cStopwatch(true);
+	// Scan PL-runtime directory for compatible plugins and load them in
+	Runtime::ScanDirectoryPlugins();
 
 	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
 	// for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive, m_bDelayedPluginLoading);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
 
 	// Scan for plugins in "Plugins" directory (recursively)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive, m_bDelayedPluginLoading);
-
-	// Scan PL-runtime directory for compatible plugins and load them in?
-	if (m_bUseRuntime)
-		Core::ScanRuntimeDirectoryPlugins(m_bDelayedPluginLoading);
-
-	// Write message into log
-	PL_LOG(Info, String("Plugins loaded (required time: ") + cStopwatch.GetSeconds() + " sec)")
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
 }
 
 /**
@@ -717,24 +665,23 @@ void CoreApplication::OnInitPlugins()
 */
 void CoreApplication::OnInitData()
 {
+	// Scan PL-runtime directory for compatible data and register it
+	Runtime::ScanDirectoryData();
+
 	// Is '.' (= the current directory) already a base directory? If not, add it right now...
 	LoadableManager *pLoadableManager = LoadableManager::GetInstance();
 	if (!pLoadableManager->IsBaseDir('.'))
 		pLoadableManager->AddBaseDir('.');
 
-	// Scan for packages in current "Data" directory
-	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
-
 	// Is the application directory already a base directory? If not, add it right now...
 	if (!pLoadableManager->IsBaseDir(m_cApplicationContext.GetAppDirectory()))
 		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
 
+	// Scan for packages in current "Data" directory
+	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
+
 	// Scan for packages in application's "Data" directory
 	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
-
-	// Scan PL-runtime directory for compatible data and register it?
-	if (m_bUseRuntime)
-		Core::ScanRuntimeDirectoryData();
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");

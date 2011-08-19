@@ -38,6 +38,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/Tools/Timing.h>
 #include "plugin.h"
 
@@ -83,9 +84,12 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   m_bFrontendApplicationInitialized(false),
   m_bMouseVisible(true),
   m_bTrapMouse(false),
-  m_cFrontend(*this)
+  m_cFrontend(m_cFrontendContext, *this)
 {
   mhWnd = nullptr;
+
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
 	// Do the frontend lifecycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();
@@ -298,6 +302,57 @@ bool nsPluginInstance::IsFullscreen() const
 void nsPluginInstance::SetFullscreen(bool bFullscreen)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
+bool nsPluginInstance::IsMouseOver() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPOINT;
+		if (::GetCursorPos(&sPOINT)) {
+			// Get window rectangle (in screen coordinates)
+			RECT sRect;
+			if (::GetWindowRect(m_hWnd, &sRect)) {
+				// Is the mouse cursor within the window rectangle?
+				return ::PtInRect(&sRect, sPOINT);
+			}
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+int nsPluginInstance::GetMousePositionX() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int nsPluginInstance::GetMousePositionY() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.y;
+	}
+
+	// Error!
+	return -1;
 }
 
 bool nsPluginInstance::IsMouseVisible() const

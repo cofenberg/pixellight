@@ -25,8 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/Url.h>
-#include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
 #include <PLInput/Input/Controller.h>
@@ -77,10 +75,6 @@ Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 	#else
 		SetName("PLViewer");
 	#endif
-
-	// Set application name and title
-	SetTitle(PLT("PixelLight viewer"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 
 	// This application accepts all the standard parameters that are defined in the application
 	// base class (such as --help etc.). The last parameter however is the filename to load, so add that.

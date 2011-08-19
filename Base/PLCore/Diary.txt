@@ -1,3 +1,100 @@
+>> 19.08.2011
+[CO]
+- "Frontend": Added "IsMouseOver()"
+- "Frontend": Added "GetMousePositionX()" & "GetMousePositionY()"
+
+
+
+>> 18.08.2011
+[CO]
+- Renamed the "Core"-class into "Runtime" because it's all about the runtime (even the version information)
+- "Runtime"-class: Added "IsDebugVersion()" returning whether or not a debug version of PixelLight is used
+- "Runtime"-class: Added "GetType()" detecting automatically the type of the currently used PixelLight runtime installation. Every PixelLight based project using the PixelLight
+  runtime needs at least the dynamic "PLCore"-library (the static library is not really within the runtime, it's for developers only). So, in order to automatically detect whether it's a local
+  or a system-installed runtime, I just load in the PLCore module and check whether or not it's within the same directory as the running process ("System::GetExecutableFilename()" :).
+- Renamed "Runtime::GetDirectory()" into "Runtime::GetSystemDirectory()" and renamed "Runtime::GetDataDirectory()" into "Runtime::GetSystemDataDirectory()" to make clear that this is the
+  system installed runtime (there can be a local and system runtime at the same time, although this is not recommended)
+- "Runtime"-class: Added "GetLocalDirectory()" and "GetLocalDataDirectory()", the counterparts to "GetSystemDirectory()" and "GetSystemDataDirectory()"
+- "Runtime"-class: Added "GetDirectory()" and "GetDataDirectory()", et voila, there are those two methods, again. But unlike the previous implementation, those two guys return the
+  PixelLight runtime used by the running process. This means, those methods "automatically" detect the "correct" PixelLight runtime. While it's still possible to explicitly request the
+  directory of the local or system PixelLight runtime, it's hightly recommended to only use the automatic PixelLight runtime detection to avoid using possibly incompatible binaries.
+- "Runtime"-class: Added a directory parameter to "ScanDirectoryPlugins()" and "ScanDirectoryData" to make it possible to use for example the result of "GetDirectory()", "GetLocalDirectory()"
+  or "GetSystemDirectory()". If an empty string is provided, the result of "GetDirectory()" will be used, resulting in an "autodetection".
+- "Runtime"-class: Added comfort method "ScanDirectoryPluginsAndData()". In case you don't care about technical details and just want the stuff runnable, then just call this method and be happy.
+  The PixelLight runtime to use is detected automatically, all available compatible plugins are registered as well as compatible data.
+- "Frontend::Run()": This was a complex one... answering the question who's responsible to initialize the important PixelLight runtime related stuff. Until now, this was only done
+  within "CoreApplication::OnInitPlugins()" and "CoreApplication::OnInitData()" - but the frontend stuff is above this application process and is also already using PixelLight runtime
+  features like dynamically loaded frontend implementation plugins. Yesterday I experimented with several possible solutions, but one was more complex as the next one. Until now, there
+  was also the configuration setting "CoreGeneralConfig::UsePixelLightRuntime", but the configuration system is already using the RTTI (and I still think that this solution is really cool
+  and unique compared to other, definitely more complex configuration systems) to let the user decide from the outside whether or not to use the PixelLight runtime. I don't know why, but
+  until a few hours ago I didn't really realize that this option is somewhat pointless - because the configuration system is already using this information in order to load in this
+  information. Also, this approach, having this option, was quite error prone because when deploying an application it's "really" easy to forget to set this option to 0 to avoid conflicts
+  with an installed PixelLight SDK. On the other hand, when starting an application, the OS is in fact deciding for us which PixelLight runtime to use. When the PLCore shared library etc.
+  are in the same directory as the executable, those shared libraries are used instead of the ones of an installed PixelLight SDK (I know that there are variations over different OS, but
+  even under Linux we have configured the binares this way so one can "just" extract a package and start it at once without configuring the whole system). The only problem was the dynamic
+  loading of plugins... which wasn't a problem after all because the OS decides for us whether to use a "local PixelLight runtime" or an installed "system PixelLight runtime". We just have
+  to detect which type of PixelLight runtime was chosen by the OS and then load plugins from this PixelLight runtime. Only from this one. So, by creating a package and putting everything
+  into it one needs in order to execute the application without any installed PixelLight SDK, one already sayed that a "local" runtime has to be used. No need to confirm this decision again
+  by manipulation the "CoreGeneralConfig::UsePixelLightRuntime"-option. Mixing different PixelLight runtimes would be evil anyway. Long story, minor changes:
+  -> Removed "Runtime::ScanDirectoryPlugins()" within "Frontend::Run()" (had a [TODO])
+  -> "pl_module_application"- and "pl_module_application_frontend"-macros: Added "Runtime::ScanDirectoryPluginsAndData()" right after "PLMain", before anything else is done
+  -> Added "Runtime::ScanDirectoryPluginsAndData()" at some other places as well ("Runtime::ScanDirectoryPlugins()" was already used several times, so this change isn't something new)
+- Removed "CoreGeneralConfig::DelayedPluginLoading"-option (by default, this feature is always active)
+- Removed "CoreGeneralConfig::UsePixelLightRuntime"-option (now done automatically and due to delayed plugin loading the required time is no longer worth talking about)
+- "FrontendApplication": This application class reimplements "OnInitPlugins()" & "OnInitData()" because in here, the PixelLight runtime initialization is the job of a higher being
+- Bugfix: "ClassManager::LoadModuleDelayed()" was setting no "Name", "Vendor", "License" and "Description" information
+- Bugfix: "ClassManager::RegisterClass()": When a dummy class of a dummy module is replaced by a real class, the (previously) dummy class has to be removed from the dummy module because
+  a class can only be within one module at the same time
+- "CoreApplication"-constructor: In here, the default application data subdir was set to
+    m_sAppDataSubdir = System::GetInstance()->GetDataDirName(m_sName);
+  While this looks logically at first, it becomes somewhat annoying (otherwise I wouldn't have had noticed and touched it!) after working with it for some time and e.g. doing several experiments.
+  Let me explain it in detail: Take the "50RendererTriangle"-sample for instance, by default the application data subdir for my debug version is "C:\Users\COfenberg\AppData\Roaming\50RendererTriangleD"
+  and for the release version it's "C:\Users\COfenberg\AppData\Roaming\50RendererTriangle". Now create some more experimental applications to play around with PixelLight by using
+  as few instructions as possible in order to figure out how everything works... after a while, one may find the "AppDataSubdir"-option and when looking into the "Roaming"-directory
+  one may notice that it's full spam like "50RendererTriangle", "50RendererTriangleD", "XTest", "123Test" and so on... and it is now probably a little bit hard to figure out what's trash and
+  what's from an important none PixelLight application. Also, each and every PixelLight sample application had "SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"))" in
+  it and such stuff may be confusing when just starting to get into PixelLight based development.
+  -> For those reasons, I decided to make "SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"))" to the default setting. This way, the samples are even more compact
+     (yes, just one row and x nested method calls, but as mentioned, those may be confusing for beginners) but more important, if one "forgets" to set this to an individual setting, everything
+     will be thrown into the "PixelLight"-directory. Later on, it's probably easier to remember that something was "PixelLight"-based and easier to find and remove spam-files... by e.g.
+     just removing the one single "PixelLight"-directory completely.
+
+
+
+>> 17.08.2011
+[CO]
+- The frontend stuff is working quite well and solves some prior design issues. This approach also answers the question how to use the application framework within e.g. the Qt based
+  editor in order to manage the PixelLight part while the Qt editor does all the rest like main loop and window handling. The PixelLight editor kickoff was on 10.08.2011, primarily
+  to see what's required for the tool. It will certainly take some time until this tool is usable, so, the goal wasn't to have a ready-to-use-editor in PL 0.9.8. Until now, e.g.
+  PLFrontendQt had to reimplement a lot of application framework features because the application framework was heavily tied to PLGui and also did stuff like the main loop internally.
+  (this is still possible, but derived application classes like the renderer application now follow another approach)
+  As seen within the PixelLight editor project, it's now possible to just write a thin layered frontend implementation working as a kind of gate between the Qt framework primarily used
+  within the editor, and the PixelLight framework, primarily used in PixelLight *g*. Each side shouldn't concern too much about the other one - in fact, Qt doesn't know anything about
+  PixelLight and verce versa.
+  Now that it's clear that the frontend design is the way to go, time to complete the system.
+- Added "FrontendContext"-class. This class is derived from "ApplicationContext" and adds frontend related stuff. The parameters of the "Frontend::Run()"-method were just an overkill
+  and there was another issue as well: To be flexible, the frontend system already is using the RTTI and when e.g. PLFrontendPLGui open it's window, the standard data packages must
+  already be registered. Also, a frontend may want to set a windows position and size to the one used during the previous seasson, meaning it needs to be able to use a configuration.
+  During the frontend initialization, errors may occur, so, log is required as well. Sadly, all those stuff is handled within "PLCore::CoreApplication" which is still ok for applications
+  not using the frontend stuff at all... but "PLCore::FrontendApplication" has to hand over the control over this important infrastructure features to the frontend. The frontend itself
+  hands over this stuff to the "FrontendContext"-class which is instanced and filled outside the frontend system and is just passed into the system.
+  Of course, some information is now stored within two distinct systems (frontend and application), but I in my humble opinion that's ok for this system. Take "PLCore::FrontendApplication"
+  for example, as the name of this class indicates, this is the base class for applications running within a frontend (the application host). The main loop as well as other logic is handed
+  over to a host in order to become passive. Although a frontend application is always running within a frontend, it shouldn't care about the frontend. Just write our application as if there
+  wouldn't be any "outer world". By following this philosophy as close as possible and only accessing frontend features when really neccessary, you enhance the chance that your application
+  can be embedded within other applications like browsers such as MS Internet Explorer or Mozilla Firefox without problems. So, in order to get e.g. the executable filename, one just asks
+  the application framework for it, not the frontend system feeding this information into the embedded application.
+- "FrontendContext::Run()" now has just a frontend context as parameter
+- Removed "FrontendContext::Run()" versions with traditional C-arguments. It has shown that those version are not required. For e.g. QApplication of Qt using this traditional C-arguments,
+  one can reconstruct them out of the universal form... no, it's not a performance problem nor intricate. It's intricate to have 3 method versions to be implemented all over the place and
+  in case of e.g. the Qt base editor, one doesn't use the "FrontendContext::Run()"-method at all.
+- "FrontendContext" has a name which is used as default whenever a name is required (log, configuration, window title and so on). When using the macro "pl_module_application" or
+  "pl_module_application_frontend" this name is automatically set to the module name of the executable. "FrontendApplication" is using this name to set the default application name ("SetName()")
+  and default application title ("SetTitle()"). This name is often sufficient - removed "SetName()" & "SetTitle()" usage within e.g. the sample applications.
+- PLFrontendPLGui: PLGui requires some images stored within "Standard.zip", it's the responsibility of this frontend to ensure it has all it needs
+
+
+
 >> 16.08.2011
 [CO]
 - Added abstract context class "AbstractContext". All over PixelLight, "context"-classes are used in order to group important information or components. This abstract context

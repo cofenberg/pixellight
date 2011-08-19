@@ -28,7 +28,8 @@
 *
 *  @section intro_sec Introduction
 *
-*  This is the PLJabber API reference.
+*  This is the PLJabber API reference. Please note that is no 100%
+*  loose dynamic plugin and that one has to use the provided API.
 */
 
 

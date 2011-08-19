@@ -28,6 +28,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Frontend/FrontendImpl.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
 
 
@@ -97,6 +98,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	private:
 		bool					   m_bFrontendApplicationInitialized;	/**< Frontend application successfully initialized? */
+		PLCore::FrontendContext    m_cFrontendContext;					/**< PixelLight application frontend context instance */
 		PLCore::FrontendPixelLight m_cFrontend;
 
 

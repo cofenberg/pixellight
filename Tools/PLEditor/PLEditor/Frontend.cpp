@@ -55,10 +55,10 @@ pl_implement_class(Frontend)
 */
 Frontend::Frontend() :
 	m_bFrontendApplicationInitialized(false),
-	m_cFrontend(*this)
+	m_cFrontend(m_cFrontendContext, *this)
 {
-	// Scan PL-runtime directory for compatible plugins and load them in
-	Core::ScanRuntimeDirectoryPlugins();
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	Runtime::ScanDirectoryPluginsAndData();
 
 	// Set the name of the application class to use
 	m_cFrontend.ApplicationClass = "PLEngine::EngineApplication";

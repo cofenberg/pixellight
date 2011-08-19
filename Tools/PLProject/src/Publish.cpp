@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/File/File.h>
 #include <PLCore/String/RegEx.h>
 #include <PLCore/System/System.h>
@@ -169,11 +169,12 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 */
 bool Publish(const String &sTargetDirectory)
 {
-	// Get the PixelLight runtime shared libraries directory
-	String sRuntimeSharedLibrariesDirectory = Core::GetRuntimeDirectory();
+	// Get the PixelLight system runtime shared libraries directory (using the local runtime isn't really possible
+	// because PLProject is using the static version of PLCore and so, the local runtime is invisible to PLProject)
+	String sRuntimeSharedLibrariesDirectory = Runtime::GetSystemDirectory();
 	if (sRuntimeSharedLibrariesDirectory.GetLength()) {
-		// Get the PixelLight runtime data directory
-		String sRuntimeDataDirectory = Core::GetRuntimeDirectory() + "/../Data";
+		// Get the PixelLight system runtime data directory
+		String sRuntimeDataDirectory = Runtime::GetSystemDataDirectory();
 		if (sRuntimeDataDirectory.GetLength()) {
 			// Show some information
 			Message(MESSAGE, "Publishing '" + sTargetDirectory + '\'');

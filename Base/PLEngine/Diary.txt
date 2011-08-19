@@ -1,3 +1,11 @@
+>> 19.08.2011
+[CO]
+- "MousePicking" is now using the frontend instead of PLGui directly. Of course, this means that this helper class just works with one single
+  window via the frontend - but this way, it's generic and simple... and adding specialized custom solutions working with multiple windows or
+  accessing features of a certain GUI directly shouldn't be a problem.
+
+
+
 >> 13.08.2011
 [CO]
 - Moved "ScriptApplication::OnInit()" stuff into "ScriptApplication::OnStart()" and "ScriptApplication::OnDeInit()" stuff into "ScriptApplication::OnStop()"

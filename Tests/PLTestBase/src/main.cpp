@@ -26,7 +26,7 @@
 //[-------------------------------------------------------]
 #include <stdio.h>
 #include <PLCore/Main.h>
-#include <PLCore/Core.h>
+#include <PLCore/Runtime.h>
 #include <PLCore/ModuleMain.h>
 #include "PLTestBase/General/General.h"
 #include "PLTestBase/Core/Core.h"
@@ -61,7 +61,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		ClassManager::GetInstance()->ScanPlugins("Plugins/");
 
 		// Scan PL-runtime directory for compatible plugins and load them in
-		Core::ScanRuntimeDirectoryPlugins();
+		Runtime::ScanDirectoryPlugins();
 	}
 
 	// Perform general tests

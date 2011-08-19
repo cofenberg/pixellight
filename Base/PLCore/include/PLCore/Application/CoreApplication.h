@@ -226,49 +226,6 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 
 		/**
 		*  @brief
-		*    Check if application uses the PixelLight runtime
-		*
-		*  @return
-		*    'true' if PixelLight runtime is used, else 'false'
-		*/
-		PLCORE_API bool GetUseRuntime() const;
-
-		/**
-		*  @brief
-		*    Set if application uses the PixelLight runtime
-		*
-		*  @param[in] bUseRuntime
-		*    'true' if PixelLight runtime is used, else 'false'
-		*
-		*  @remarks
-		*    By default, the PixelLight runtime is used. If so, the plugins contained in the
-		*    installed runtime directory will be loaded and data packages will be added to the
-		*    loadable manager. If you don't want to scan for and use an installed PixelLight
-		*    runtime version, set this to false. Note also that a default configuration option
-		*    exists for this, if it is found it will set the value of this flag.
-		*/
-		PLCORE_API void SetUseRuntime(bool bUseRuntime);
-
-		/**
-		*  @brief
-		*    Check if application allows delayed shared library loading to speed up the program start
-		*
-		*  @return
-		*    'true' if application allows delayed shared library loading to speed up the program start, else 'false'
-		*/
-		PLCORE_API bool GetDelayedPluginLoading() const;
-
-		/**
-		*  @brief
-		*    Set if application allows delayed shared library loading to speed up the program start
-		*
-		*  @param[in] bDelayedPluginLoading
-		*    'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false'
-		*/
-		PLCORE_API void SetDelayedPluginLoading(bool bDelayedPluginLoading);
-
-		/**
-		*  @brief
 		*    Get name of config file
 		*
 		*  @return
@@ -326,9 +283,10 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    Subdirectory (relative path)
 		*
 		*  @remarks
-		*    Default is "<appname>" (Windows) resp. ".<appname>" (Linux).
+		*    Default is "PixelLight" (Windows) respectively ".pixellight" (Linux).
 		*    If you change this, you should use System::GetDataDirName(), to convert your name
-		*    into the typical style for the used OS.
+		*    into the typical style for the used OS. Example:
+		*      SetAppDataSubdir(System::GetInstance()->GetDataDirName("MyApplication"))
 		*/
 		PLCORE_API void SetAppDataSubdir(const String &sSubdir);
 
@@ -528,7 +486,6 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    - Save config file name to ApplicationContext
 		*    - If a config has been loaded or created:
 		*      - Read 'FirstRun' and call OnFirstRun() if set
-		*      - Read 'UsePixelLightRuntime' and update m_bUseRuntime accordingly
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
@@ -541,11 +498,10 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
+		*    - Scan for plugins in PixelLight runtime directory non-recursively
+		*    - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*    - Scan for plugins in application directory non-recursively
 		*    - Scan for plugins in application directory "Plugins/" recursively
-		*    - If UseRuntime is set to 'true':
-		*      - Scan for plugins in PixelLight runtime directory non-recursively
-		*      - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
@@ -558,13 +514,12 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
+		*    - Set PixelLight runtime directory as base path in LoadableManager
+		*    - Scan for data packages in PixelLight runtime directory
 		*    - Set '.' as base path in LoadableManager
 		*    - Scan for packages in "Data/" directory
 		*    - Set application directory as base path in LoadableManager
 		*    - Scan for packages in application directory "Data/" directory
-		*    - If UseRuntime is set to 'true':
-		*      - Set PixelLight runtime directory as base path in LoadableManager
-		*      - Scan for data packages in PixelLight runtime directory
 		*    - Get current language and load PixelLight localization file, if no language is defined, English is used as default
 		*
 		*  @note
@@ -663,20 +618,18 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		ApplicationContext	m_cApplicationContext;		/**< Application context */
-		String				m_sName;					/**< Name of application */
-		String				m_sTitle;					/**< Title of application */
-		Version				m_cVersion;					/**< Version of application */
-		bool				m_bMultiUser;				/**< Use multi-user environment? */
-		bool				m_bUseRuntime;				/**< Use PixelLight runtime? */
-		bool				m_bDelayedPluginLoading;	/**< 'true' if it's allowed to perform delayed shared library loading to speed up the program start, else 'false' */
-		String				m_sConfigName;				/**< File name (not path) of config */
-		String				m_sLogName;					/**< File name (not path) of log */
-		String				m_sAppDataSubdir;			/**< Subdirectory for application data */
-		Config				m_cConfig;					/**< Configuration instance */
-		CommandLine			m_cCommandLine;				/**< Command line arguments */
-		bool				m_bRunning;					/**< Is the application currently running? */
-		int					m_nResult;					/**< Return code */
+		ApplicationContext	m_cApplicationContext;	/**< Application context */
+		String				m_sName;				/**< Name of application */
+		String				m_sTitle;				/**< Title of application */
+		Version				m_cVersion;				/**< Version of application */
+		bool				m_bMultiUser;			/**< Use multi-user environment? */
+		String				m_sConfigName;			/**< File name (not path) of config */
+		String				m_sLogName;				/**< File name (not path) of log */
+		String				m_sAppDataSubdir;		/**< Subdirectory for application data */
+		Config				m_cConfig;				/**< Configuration instance */
+		CommandLine			m_cCommandLine;			/**< Command line arguments */
+		bool				m_bRunning;				/**< Is the application currently running? */
+		int					m_nResult;				/**< Return code */
 
 
 };

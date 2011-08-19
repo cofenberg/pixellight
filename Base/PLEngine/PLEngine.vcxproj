@@ -284,12 +284,7 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Controller\SNMPhysicsCharacterController.cpp" />
     <ClCompile Include="src\Controller\SNPhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\PLEngine.cpp" />
-    <ClCompile Include="src\Picking\MousePicking.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="src\Picking\MousePicking.cpp" />
     <ClCompile Include="src\Picking\Picking.cpp" />
     <ClCompile Include="src\Picking\PickingResult.cpp" />
     <ClCompile Include="src\Tools\Camcorder.cpp" />

@@ -206,6 +206,9 @@ class System : public Singleton<System> {
 		*
 		*  @return
 		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
+		*
+		*  @note
+		*    - Application executable = currently running process
 		*/
 		PLCORE_API String GetExecutableFilename() const;
 

@@ -53,8 +53,6 @@ SceneApplication::SceneApplication(Frontend &cFrontend, const String &sSceneFile
 	m_pSceneContext(nullptr),
 	m_pRootScene(nullptr)
 {
-	// Set application title
-	SetTitle("PixelLight scene application");
 }
 
 /**

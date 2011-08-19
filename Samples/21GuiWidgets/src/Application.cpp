@@ -26,7 +26,6 @@
 #include <PLCore/File/Url.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
@@ -57,10 +56,6 @@ pl_implement_class(Application)
 */
 Application::Application()
 {
-	// Set application name and title
-	SetName("21GuiWidgets");
-	SetTitle(PLT("PLSample 21 - GuiWidgets"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

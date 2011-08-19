@@ -24,9 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
-#include <libRocket_PL/libRocketAdapter.h>
-#include <PLCore/System/System.h>
-#include <PLCore/Tools/Localization.h>
+#include <PLlibRocket/libRocketAdapter.h>
+#include <PLlibRocket/PLGuiMessageFilterRocket.h>
+#include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLScene/Scene/SPScene.h>
@@ -61,12 +61,9 @@ pl_implement_class(Application)
 */
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
-	m_pRocketAdapter(nullptr)
+	m_pRocketAdapter(nullptr),
+	m_pPLGuiMessageFilterRocket(nullptr)
 {
-	// Set application name and title
-	SetName("71libRocket");
-	SetTitle(PLT("PL libRocket sample"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
@@ -98,6 +95,13 @@ void Application::OnControl(Control &cControl)
 //[-------------------------------------------------------]
 void Application::OnDeInit()
 {
+	// Remove message filter that feeds PLGui messages into libRocket
+	if (m_pPLGuiMessageFilterRocket) {
+		// PLGui destroys automatically the "m_pPLGuiMessageFilterRocket"-instance
+		PLGui::Gui::GetSystemGui()->RemoveMessageFilter(m_pPLGuiMessageFilterRocket);
+		m_pPLGuiMessageFilterRocket = nullptr;
+	}
+
 	// Destroy the libRocket adapter instance
 	if (m_pRocketAdapter) {
 		delete m_pRocketAdapter;
@@ -119,12 +123,17 @@ void Application::OnInit()
 	// Get the scene context
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		// [TODO] Frontend update
-		/*
 		// Create the libRocket adapter instance
-		m_pRocketAdapter = new libRocket_PL::libRocketAdapter(pSceneContext->GetRendererContext(), GetMainWindow());
+		m_pRocketAdapter = new PLlibRocket::libRocketAdapter(pSceneContext->GetRendererContext());
 		Rocket::Core::Context *pRocketContext = m_pRocketAdapter->GetRocketContext();
 		if (pRocketContext) {
+			// Set new libRocket context dimension
+			OnSize();
+
+			// Add message filter that feeds PLGui messages from the content widget of the main window into libRocket
+			m_pPLGuiMessageFilterRocket = new PLlibRocket::PLGuiMessageFilterRocket(*pRocketContext);
+			PLGui::Gui::GetSystemGui()->AddMessageFilter(m_pPLGuiMessageFilterRocket);
+
 			// Get the application directory - look out! We can't just assume that the current work directory
 			// is the same as were the executable is in. If we do so, for example starting the application by using
 			// a MS Windows menu shortcut will not work... and just changing the current work directory by using
@@ -154,11 +163,25 @@ void Application::OnInit()
 			// Add libRocket scene renderer pass instance
 			SceneRenderer *pSceneRenderer = GetSceneRendererTool().GetSceneRenderer();
 			if (pSceneRenderer) {
-				libRocket_PL::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
+				PLlibRocket::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
 				if (pSRPlibRocket)
 					pSceneRenderer->Add(*reinterpret_cast<SceneRendererPass*>(pSRPlibRocket));
 			}
-		}*/
+		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLCore::AbstractFrontend functions    ]
+//[-------------------------------------------------------]
+void Application::OnSize()
+{
+	// Get the libRocket context
+	Rocket::Core::Context *pRocketContext = m_pRocketAdapter ? m_pRocketAdapter->GetRocketContext() : nullptr;
+	if (m_pRocketAdapter) {
+		// Set new libRocket context dimension
+		pRocketContext->SetDimensions(Rocket::Core::Vector2i(GetFrontend().GetWidth(), GetFrontend().GetHeight()));
 	}
 }
 

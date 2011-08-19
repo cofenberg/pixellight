@@ -30,7 +30,8 @@
 *
 *  @section intro_sec Introduction
 *
-*  This is the PLGuiXmlText API reference.
+*  This is the PLGuiXmlText API reference. Please note that is no 100%
+*  loose dynamic plugin and that one has to use the provided API.
 */
 
 

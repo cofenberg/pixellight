@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Devices/Device.h>
@@ -64,10 +63,6 @@ Application::Application() :
 	EventHandlerOnControlExit(&Application::OnControlExit, this),
 	m_bExit(false)
 {
-	// Set application name and title
-	SetName("30Input");
-	SetTitle(PLT("PLSample 30 - Input"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**

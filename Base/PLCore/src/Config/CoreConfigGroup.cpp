@@ -71,8 +71,6 @@ CoreConfigGroup::~CoreConfigGroup()
 *    Default constructor
 */
 CoreGeneralConfig::CoreGeneralConfig() :
-	UsePixelLightRuntime(this),
-	DelayedPluginLoading(this),
 	FirstRun(this),
 	Language(this)
 {

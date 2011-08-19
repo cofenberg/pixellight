@@ -80,9 +80,6 @@ EngineApplication::EngineApplication(Frontend &cFrontend, const String &sSceneFi
 	EventHandlerLoadProgress		(&EngineApplication::OnLoadProgress,         this),
 	EventHandlerInputControllerFound(&EngineApplication::OnInputControllerFound, this)
 {
-	// Set application title
-	SetTitle("PixelLight basic scene application");
-
 	// By default, edit mode is enabled
 	SetEditModeEnabled(true);
 }

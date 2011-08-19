@@ -157,7 +157,8 @@ bool Config::SetVar(const String &sClass, const String &sVariable, const String 
 bool Config::SetDefault(const String &sClass, const String &sVariable)
 {
 	// Set all classes to default settings?
-	if (sClass.GetLength()) return SetClassDefault(sClass, sVariable);
+	if (sClass.GetLength())
+		return SetClassDefault(sClass, sVariable);
 	else {
 		// Set a class to default settings
 		bool bResult = true; // No error by default

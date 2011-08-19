@@ -23,15 +23,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
-#include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
-//#include "MyPicking.h"
+#include "MyPicking.h"
 #include "Application.h"
 
 
@@ -62,10 +60,6 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this),
 	m_pMyPicking(nullptr)
 {
-	// Set application name and title
-	SetName("64Picking");
-	SetTitle(PLT("PL picking sample"));
-	SetAppDataSubdir(System::GetInstance()->GetDataDirName("PixelLight"));
 }
 
 /**
@@ -75,9 +69,8 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 Application::~Application()
 {
 	// Destroy the picking component
-	// [TODO] Frontend update
-//	if (m_pMyPicking)
-//		delete m_pMyPicking;
+	if (m_pMyPicking)
+		delete m_pMyPicking;
 }
 
 
@@ -90,9 +83,8 @@ void Application::SetCamera(SNCamera *pCamera)
 	EngineApplication::SetCamera(pCamera);
 
 	// Do also set the camera to use within the picking component
-	// [TODO] Frontend update
-//	if (m_pMyPicking)
-//		m_pMyPicking->SetCamera(pCamera);
+	if (m_pMyPicking)
+		m_pMyPicking->SetCamera(pCamera);
 }
 
 
@@ -120,9 +112,8 @@ void Application::OnUpdate()
 	EngineApplication::OnUpdate();
 
 	// Perform the picking
-	// [TODO] Frontend update
-//	if (m_pMyPicking)
-//		m_pMyPicking->PerformPicking();
+	if (m_pMyPicking)
+		m_pMyPicking->PerformPicking();
 }
 
 
@@ -166,8 +157,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	SetScene(&cContainer);
 
 	// Create the picking component
-	// [TODO] Frontend update
-	//m_pMyPicking = new MyPicking(*this);
+	m_pMyPicking = new MyPicking(*this);
 }
 
 void Application::OnCreateInputController()
