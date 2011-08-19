@@ -14,7 +14,6 @@ add_sources(
 	src/SystemInterfacePL.cpp
 	src/FileInterfacePL.cpp
 	src/SRPlibRocket.cpp
-	src/MessageFilterRocket.cpp
 )
 
 ##################################################
@@ -26,8 +25,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
-	${CMAKE_SOURCE_DIR}/Base/PLGui/include
-	${CMAKE_SOURCE_DIR}/Base/PLInput/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
@@ -48,8 +45,6 @@ add_libs(
 	PLCore
 	PLMath
 	PLGraphics
-	PLGui
-	PLInput
 	PLRenderer
 	PLMesh
 	PLScene
@@ -124,7 +119,7 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-libRocket PLCore PLMath PLGraphics PLGui PLInput PLRenderer PLMesh PLScene)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-libRocket PLCore PLMath PLGraphics PLRenderer PLMesh PLScene)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################

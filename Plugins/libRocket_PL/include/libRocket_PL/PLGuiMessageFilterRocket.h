@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MessageFilterRocket.h                          *
+ *  File: PLGuiMessageFilterRocket.h                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_MESSAGEFILTER_H__
-#define __LIBROCKET_PL_MESSAGEFILTER_H__
+#ifndef __LIBROCKET_PL_PLGUIMESSAGEFILTER_H__
+#define __LIBROCKET_PL_PLGUIMESSAGEFILTER_H__
 #pragma once
 
 
@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Container/HashMap.h>
 #include <PLGui/Gui/Base/MessageFilter.h>
-#include "libRocket_PL/libRocket_PL.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +58,7 @@ namespace libRocket_PL {
 *  @brief
 *    Message filter that feeds PLGui messages into libRocket
 */
-class MessageFilterRocket : public PLGui::MessageFilter {
+class PLGuiMessageFilterRocket : public PLGui::MessageFilter {
 
 
 	//[-------------------------------------------------------]
@@ -75,13 +74,13 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 		*  @param[in] pTargetWidget
 		*    Message target widget, if null pointer, messages from all widgets are send to libRocket
 		*/
-		LIBROCKET_PL_API MessageFilterRocket(Rocket::Core::Context &cRocketContext, PLGui::Widget *pTargetWidget = nullptr);
+		PLGuiMessageFilterRocket(Rocket::Core::Context &cRocketContext, PLGui::Widget *pTargetWidget = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~MessageFilterRocket();
+		virtual ~PLGuiMessageFilterRocket();
 
 		/**
 		*  @brief
@@ -90,7 +89,7 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 		*  @return
 		*    The used libRocket context
 		*/
-		LIBROCKET_PL_API Rocket::Core::Context &GetRocketContext() const;
+		Rocket::Core::Context &GetRocketContext() const;
 
 		/**
 		*  @brief
@@ -99,14 +98,14 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 		*  @return
 		*    Message target widget, if null pointer, messages from all widgets are send to libRocket
 		*/
-		LIBROCKET_PL_API PLGui::Widget *GetTargetWidget() const;
+		PLGui::Widget *GetTargetWidget() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLGui::MessageFilter functions      ]
 	//[-------------------------------------------------------]
 	protected:
-		LIBROCKET_PL_API virtual void OnGuiMessage(const PLGui::GuiMessage &cMessage) override;
+		virtual void OnGuiMessage(const PLGui::GuiMessage &cMessage) override;
 
 
 	//[-------------------------------------------------------]
@@ -147,4 +146,10 @@ class MessageFilterRocket : public PLGui::MessageFilter {
 } // libRocket_PL
 
 
-#endif // __LIBROCKET_PL_MESSAGEFILTER_H__
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "libRocket_PL/PLGuiMessageFilterRocket.inl"
+
+
+#endif // __LIBROCKET_PL_PLGUIMESSAGEFILTER_H__

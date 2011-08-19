@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MessageFilterRocket.cpp                        *
+ *  File: PLGuiMessageFilterRocket.inl                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -28,14 +28,11 @@
 #include <PLGui/Gui/Base/GuiMessage.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Keyboard.h>
-#include "libRocket_PL/MessageFilterRocket.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLGui;
-using namespace PLInput;
 namespace libRocket_PL {
 
 
@@ -46,7 +43,7 @@ namespace libRocket_PL {
 *  @brief
 *    Constructor
 */
-MessageFilterRocket::MessageFilterRocket(Rocket::Core::Context &cRocketContext, Widget *pTargetWidget) :
+PLGuiMessageFilterRocket::PLGuiMessageFilterRocket(Rocket::Core::Context &cRocketContext, PLGui::Widget *pTargetWidget) :
 	m_pRocketContext(&cRocketContext),
 	m_pTargetWidget(pTargetWidget)
 {
@@ -58,7 +55,7 @@ MessageFilterRocket::MessageFilterRocket(Rocket::Core::Context &cRocketContext, 
 *  @brief
 *    Destructor
 */
-MessageFilterRocket::~MessageFilterRocket()
+PLGuiMessageFilterRocket::~PLGuiMessageFilterRocket()
 {
 }
 
@@ -66,7 +63,7 @@ MessageFilterRocket::~MessageFilterRocket()
 *  @brief
 *    Returns the used libRocket context
 */
-Rocket::Core::Context &MessageFilterRocket::GetRocketContext() const
+Rocket::Core::Context &PLGuiMessageFilterRocket::GetRocketContext() const
 {
 	return *m_pRocketContext;
 }
@@ -75,7 +72,7 @@ Rocket::Core::Context &MessageFilterRocket::GetRocketContext() const
 *  @brief
 *    Get message target widget
 */
-Widget *MessageFilterRocket::GetTargetWidget() const
+PLGui::Widget *PLGuiMessageFilterRocket::GetTargetWidget() const
 {
 	return m_pTargetWidget;
 }
@@ -88,7 +85,7 @@ Widget *MessageFilterRocket::GetTargetWidget() const
 *  @brief
 *    Builds the key maps
 */
-void MessageFilterRocket::BuildKeyMaps()
+void PLGuiMessageFilterRocket::BuildKeyMaps()
 {
 	// [TODO] Map circumflex
 //	#define 	 PLGUIKEY_CIRCUMFLEX		0xDC		// ^ circumflex */
@@ -276,12 +273,12 @@ void MessageFilterRocket::BuildKeyMaps()
 *  @brief
 *    Gets the libRocket key modifier state
 */
-int MessageFilterRocket::GetRocketKeyModifierState() const
+int PLGuiMessageFilterRocket::GetRocketKeyModifierState() const
 {
 	int nRocketModifierState = 0;
 
 	// Get keyboard input device
-	Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+	PLInput::Keyboard *pKeyboard = PLInput::InputManager::GetInstance()->GetKeyboard();
 	if (pKeyboard) {
 		if (pKeyboard->KeyControl.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_CTRL;
@@ -305,31 +302,31 @@ int MessageFilterRocket::GetRocketKeyModifierState() const
 //[-------------------------------------------------------]
 //[ Protected virtual PLGui::MessageFilter functions      ]
 //[-------------------------------------------------------]
-void MessageFilterRocket::OnGuiMessage(const GuiMessage &cMessage)
+void PLGuiMessageFilterRocket::OnGuiMessage(const PLGui::GuiMessage &cMessage)
 {
 	// Send messages from all widgets to libRocket or just messages from a certain widget?
 	if (!m_pTargetWidget || m_pTargetWidget == cMessage.GetWidget()) {
 		// Check message type
 		switch (cMessage.GetType()) {
-			case MessageOnMouseMove:
+			case PLGui::MessageOnMouseMove:
 				m_pRocketContext->ProcessMouseMove(cMessage.GetPosSize().x, cMessage.GetPosSize().y, GetRocketKeyModifierState());
 				break;
 
-			case MessageOnMouseButtonDown:
+			case PLGui::MessageOnMouseButtonDown:
 				// First "ProcessMouseButtonDown()"-parameter: 0 for the left button, 1 for right, and any others from 2 onwards... so we able to directly map this value to "PLGui::EMouseButton"
 				m_pRocketContext->ProcessMouseButtonDown(cMessage.GetMouseButton(), GetRocketKeyModifierState());
 				break;
 
-			case MessageOnMouseButtonUp:
+			case PLGui::MessageOnMouseButtonUp:
 				// First "ProcessMouseButtonDown()"-parameter: 0 for the left button, 1 for right, and any others from 2 onwards... so we able to directly map this value to "PLGui::EMouseButton"
 				m_pRocketContext->ProcessMouseButtonUp(cMessage.GetMouseButton(), GetRocketKeyModifierState());
 				break;
 
-			case MessageOnMouseWheel:
+			case PLGui::MessageOnMouseWheel:
 				m_pRocketContext->ProcessMouseWheel(cMessage.GetDelta(), GetRocketKeyModifierState());
 				break;
 
-			case MessageOnKeyDown:
+			case PLGui::MessageOnKeyDown:
 			{
 				Rocket::Core::Input::KeyIdentifier nKeyIdentifier = m_mapKeyIdentifier.Get(cMessage.GetKey());
 
@@ -344,7 +341,7 @@ void MessageFilterRocket::OnGuiMessage(const GuiMessage &cMessage)
 				break;
 			}
 
-			case MessageOnKeyUp:
+			case PLGui::MessageOnKeyUp:
 			{
 				Rocket::Core::Input::KeyIdentifier nKeyIdentifier = m_mapKeyIdentifier.Get(cMessage.GetKey());
 				if (nKeyIdentifier != Rocket::Core::Input::KI_UNKNOWN)

@@ -1,4 +1,11 @@
-﻿>> 13.04.2011
+﻿>> 19.08.2011
+[CO]
+- Renamed "MessageFilterRocket" into "PLGuiMessageFilterRocket" and made the implementation inline so that the project itself doesn't depend on PLGui. One can
+  use this offer in order to let PLGui easily interact with libRocket, but one can also use another GUI or general message system to feed libRocket.
+
+
+
+>> 13.04.2011
 [CO]
 - Added "libRocketAdapter"
 

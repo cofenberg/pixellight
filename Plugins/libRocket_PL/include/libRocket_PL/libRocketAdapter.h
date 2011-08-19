@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
 #include "libRocket_PL/libRocket_PL.h"
 
 
@@ -42,12 +41,6 @@ namespace Rocket {
 		class RenderInterface;
 		class SystemInterface;
 	}
-}
-namespace PLMath {
-	class Vector2i;
-}
-namespace PLGui {
-	class Widget;
 }
 namespace PLRenderer {
 	class RendererContext;
@@ -84,10 +77,8 @@ class libRocketAdapter {
 		*
 		*  @param[in] cRendererContext
 		*    The used renderer context
-		*  @param[in] pWidget
-		*    PLGui widget we render in, can be a null pointer
 		*/
-		LIBROCKET_PL_API libRocketAdapter(PLRenderer::RendererContext &cRendererContext, PLGui::Widget *pWidget);
+		LIBROCKET_PL_API libRocketAdapter(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief
@@ -133,15 +124,6 @@ class libRocketAdapter {
 
 		/**
 		*  @brief
-		*    Returns the message filter that feeds PLGui messages into libRocket
-		*
-		*  @return
-		*    Message filter that feeds PLGui messages into libRocket, can be a null pointer
-		*/
-		LIBROCKET_PL_API MessageFilterRocket *GetMessageFilterRocket() const;
-
-		/**
-		*  @brief
 		*    Creates a libRocket scene renderer pass instance
 		*
 		*  @return
@@ -175,22 +157,6 @@ class libRocketAdapter {
 		*/
 		libRocketAdapter &operator =(const libRocketAdapter &cSource);
 
-		/**
-		*  @brief
-		*    Called when the size was changed
-		*
-		*  @param[in] vSize
-		*    New size
-		*/
-		void OnSize(const PLMath::Vector2i &vSize);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
-	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<const PLMath::Vector2i&> EventHandlerSize;
-
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -200,7 +166,6 @@ class libRocketAdapter {
 		Rocket::Core::RenderInterface	*m_pRocketRenderInterface;	/**< libRocket render interface, can be a null pointer */
 		Rocket::Core::SystemInterface	*m_pRocketSystemInterface;	/**< libRocket system interface, can be a null pointer */
 		Rocket::Core::FileInterface		*m_pRocketFileInterface;	/**< libRocket file interface, can be a null pointer */
-		MessageFilterRocket				*m_pMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
 
 
 };
