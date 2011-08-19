@@ -188,15 +188,15 @@ void FrontendPixelLight::OnDestroy()
 //[-------------------------------------------------------]
 void FrontendPixelLight::OnSize()
 {
-	// Call virtual function from application
-	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+	// Call virtual function from application (don't check "m_bFrontendApplicationInitialized" in here because it's valid that this method is called during the initialization process)
+	if (m_pFrontendApplication)
 		m_pFrontendApplication->OnSize();
 }
 
 void FrontendPixelLight::OnFullscreenMode()
 {
-	// Call virtual function from application
-	if (m_pFrontendApplication && m_bFrontendApplicationInitialized)
+	// Call virtual function from application (don't check "m_bFrontendApplicationInitialized" in here because it's valid that this method is called during the initialization process)
+	if (m_pFrontendApplication)
 		m_pFrontendApplication->OnFullscreenMode();
 }
 

@@ -469,13 +469,19 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 			SetWindowLong(m_hWnd, GWL_STYLE, nStyle);
 		}
 
+		// Switch to fullscreen?
+		if (bFullscreen) {
+			// For fullscreen, place the window left/top and set new size - looks better if we do this "warm up" in here
+			::SetWindowPos(m_hWnd, nullptr, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
+		}
+
 		// Inform that the fullscreen mode was changed
 		m_pFrontendOS->OnFullscreenMode();
 
 		// Switch to fullscreen?
 		if (bFullscreen) {
-			// For fullscreen, place the window left/top and set new size
-			::SetWindowPos(m_hWnd, nullptr, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
+			// For fullscreen, place the window left/top and set new size - now the real size (we're a fullscreen window, we're important, bring us at the top of the Z order and ensure that we're in the focus)
+			::SetWindowPos(m_hWnd, HWND_TOP, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 		} else {
 			// Restore window position & size
 			if (m_bWindowRectBackup) {
@@ -494,8 +500,8 @@ void OSWindowWindows::RefreshFullscreen()
 		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
 		m_pFrontendOS->OnFullscreenMode();
 
-		// Update the OS window, place the window left/top and set new size
-		::SetWindowPos(m_hWnd, nullptr, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
+		// Update the OS window, place the window left/top and set new size (we're a fullscreen window, we're important, bring us at the top of the Z order and ensure that we're in the focus)
+		::SetWindowPos(m_hWnd, HWND_TOP, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED);
 	}
 }
 

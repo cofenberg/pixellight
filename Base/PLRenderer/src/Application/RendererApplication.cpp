@@ -56,7 +56,7 @@ pl_implement_class(RendererApplication)
 RendererApplication::RendererApplication(Frontend &cFrontend, const String &sSurfacePainter) : FrontendApplication(cFrontend),
 	m_sSurfacePainter(sSurfacePainter),
 	m_pRendererContext(nullptr),
-	m_pDisplayMode(nullptr)
+	m_pDisplayMode(new DisplayMode)
 {
 }
 
@@ -66,6 +66,8 @@ RendererApplication::RendererApplication(Frontend &cFrontend, const String &sSur
 */
 RendererApplication::~RendererApplication()
 {
+	// Destroy display mode information
+	delete m_pDisplayMode;
 }
 
 /**
@@ -127,6 +129,18 @@ bool RendererApplication::OnStart()
 
 		// Check if a renderer context has been created
 		if (m_pRendererContext) {
+			// Start in fullscreen mode?
+			if (GetConfig().GetVar("PLRenderer::Config", "Fullscreen").GetBool()) {
+				// Fullscreen mode (the current display mode is automatically read from the configuration)
+				GetFrontend().SetFullscreen(true);
+			} else {
+				// Read the current display mode from the configuration
+				ReadDisplayModeFromConfig();
+
+				// Window mode
+				SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode);
+			}
+
 			// Create surface painter
 			OnCreatePainter();
 			if (!m_bRunning)
@@ -154,18 +168,10 @@ void RendererApplication::OnStop()
 		cConfig.SetVar("PLRenderer::Config", "Fullscreen", String(GetFrontend().IsFullscreen()));
 
 		// Write down display mode information
-		if (m_pDisplayMode) {
-			cConfig.SetVar("PLRenderer::Config", "DisplayWidth",     String(m_pDisplayMode->vSize.x));
-			cConfig.SetVar("PLRenderer::Config", "DisplayHeight",    String(m_pDisplayMode->vSize.y));
-			cConfig.SetVar("PLRenderer::Config", "DisplayColorBits", String(m_pDisplayMode->nColorBits));
-			cConfig.SetVar("PLRenderer::Config", "DisplayFrequency", String(m_pDisplayMode->nFrequency));
-		}
-	}
-
-	// Destroy display mode information
-	if (m_pDisplayMode) {
-		delete m_pDisplayMode;
-		m_pDisplayMode = nullptr;
+		cConfig.SetVar("PLRenderer::Config", "DisplayWidth",     String(m_pDisplayMode->vSize.x));
+		cConfig.SetVar("PLRenderer::Config", "DisplayHeight",    String(m_pDisplayMode->vSize.y));
+		cConfig.SetVar("PLRenderer::Config", "DisplayColorBits", String(m_pDisplayMode->nColorBits));
+		cConfig.SetVar("PLRenderer::Config", "DisplayFrequency", String(m_pDisplayMode->nFrequency));
 	}
 
 	// Destroy renderer context
@@ -188,23 +194,31 @@ void RendererApplication::OnStop()
 */
 void RendererApplication::OnFullscreenMode()
 {
-	// Get the renderer surface
-	Surface *pSurface = GetSurface();
-	if (pSurface && m_pDisplayMode) {
-		// Backup information from renderer surface
-		SurfacePainter *pPainter = pSurface->GetPainter();
-		pSurface->SetPainter(nullptr, false);
+	if (m_pRendererContext) {
+		// Read the current display mode from the configuration
+		ReadDisplayModeFromConfig();
 
-		// De-init renderer surface
-		DeInit();
+		// Get the renderer surface
+		Surface *pSurface = GetSurface();
+		if (pSurface) {
+			// Backup information from renderer surface
+			SurfacePainter *pPainter = pSurface->GetPainter();
+			pSurface->SetPainter(nullptr, false);
 
-		// Initialize renderer surface
-		Init(*m_pRenderer, GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
+			// De-init previous renderer surface
+			DeInit();
 
-		// Set previous renderer surface painter
-		pSurface = GetSurface();
-		if (pSurface)
-			pSurface->SetPainter(pPainter, false);
+			// Initialize new renderer surface
+			Init(m_pRendererContext->GetRenderer(), GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
+
+			// Set previous renderer surface painter
+			pSurface = GetSurface();
+			if (pSurface)
+				pSurface->SetPainter(pPainter, false);
+		} else {
+			// Initialize new renderer surface
+			Init(m_pRendererContext->GetRenderer(), GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
+		}
 	}
 }
 
@@ -269,18 +283,6 @@ void RendererApplication::OnCreateRendererContext()
 		cTextureManager.SetTextureQuality			(GetConfig().GetVar("PLRenderer::Config", "TextureQuality").GetFloat());
 		cTextureManager.SetTextureMipmapsAllowed	(GetConfig().GetVar("PLRenderer::Config", "TextureMipmaps").GetBool());
 		cTextureManager.SetTextureCompressionAllowed(GetConfig().GetVar("PLRenderer::Config", "TextureCompression").GetBool());
-
-		{ // [TODO] Move this somewere else
-			// [TODO] No build in options
-			m_pDisplayMode = new DisplayMode;
-			m_pDisplayMode->vSize.x = 1024;
-			m_pDisplayMode->vSize.y = 768;
-//			m_pDisplayMode->vSize.x = GetFrontend().GetWidth();
-//			m_pDisplayMode->vSize.y = GetFrontend().GetHeight();
-			m_pDisplayMode->nColorBits = 32;
-			m_pDisplayMode->nFrequency = 60;
-			SurfaceWindowHandler::Init(m_pRendererContext->GetRenderer(), GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode);
-		}
 	}
 }
 
@@ -295,6 +297,25 @@ void RendererApplication::OnCreatePainter()
 		// Create and set the surface painter
 		SetPainter(m_pRendererContext->GetRenderer().CreateSurfacePainter(m_sSurfacePainter));
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Reads the current display mode from the configuration
+*/
+void RendererApplication::ReadDisplayModeFromConfig()
+{
+	Config &cConfig = GetConfig();
+
+	// Read the current display mode from the configuration
+	m_pDisplayMode->vSize.x    = cConfig.GetVarInt("PLRenderer::Config", "DisplayWidth");
+	m_pDisplayMode->vSize.y    = cConfig.GetVarInt("PLRenderer::Config", "DisplayHeight");
+	m_pDisplayMode->nColorBits = cConfig.GetVarInt("PLRenderer::Config", "DisplayColorBits");
+	m_pDisplayMode->nFrequency = cConfig.GetVarInt("PLRenderer::Config", "DisplayFrequency");
 }
 
 

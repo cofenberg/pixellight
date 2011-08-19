@@ -1,3 +1,9 @@
+>> 19.08.2011
+[CO]
+- "RendererApplication" is using the display mode settings from the configuration again
+
+
+
 >> 16.08.2011
 [CO]
 - "RendererContext" destructor was virtual, but it shouldn't be

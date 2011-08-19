@@ -226,7 +226,18 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	protected:
 		PLCore::String				 m_sSurfacePainter;		/**< Surface painter class to use */
 		PLRenderer::RendererContext	*m_pRendererContext;	/**< The renderer context, can be a null pointer */
-		PLRenderer::DisplayMode		*m_pDisplayMode;		/**< Display mode, can be a null pointer */
+		PLRenderer::DisplayMode		*m_pDisplayMode;		/**< Display mode, always valid! */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Reads the current display mode from the configuration
+		*/
+		void ReadDisplayModeFromConfig();
 
 
 };
