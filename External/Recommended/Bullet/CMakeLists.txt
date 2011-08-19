@@ -23,7 +23,7 @@ define_external_project(Bullet)
 	##################################################
 	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
-	set(BULLET_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} CACHE INTERNAL "")
+	set(BULLET_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Bullet CACHE INTERNAL "")
 	if(WIN32)
 		# [TODO]
 		#set(BULLET_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/newton.lib CACHE INTERNAL "")

@@ -75,7 +75,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 
 		// X events
 		XSetWindowAttributes sXSetWindowAttributes;
-		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask;
+		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
 
 		// [TODO] Set window title by using
 		//   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : ""
