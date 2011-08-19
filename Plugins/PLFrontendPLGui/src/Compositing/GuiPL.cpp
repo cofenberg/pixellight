@@ -25,6 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/MutexGuard.h>
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Rectangle.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Screen.h>
@@ -519,85 +521,83 @@ void GuiPL::UpdateKeyboard()
 */
 void GuiPL::UpdateMouse()
 {
-	// [TODO] Find a solution that works without using PLCore::CoreApplication::GetApplication()
-	// [TODO] PLGui::GuiApplication type check
-	// Get the main window of the application
-	if (PLCore::CoreApplication::GetApplication()) {
-		Widget *pWidget = static_cast<PLGui::GuiApplication*>(PLCore::CoreApplication::GetApplication())->GetMainWindow()->GetContentWidget();
-		if (pWidget) {
-			// Check if the mouse is currently over either the widget or one of it's child widgets
-			if (pWidget->IsMouseOver()) {
-				// Get current mouse cursor position inside the widget
-				Vector2i vMousePos;
-				if (pWidget->GetMousePos(vMousePos) && m_vSystemMousePos != vMousePos) {
-					// The system mouse cursor has been moved
-					m_vSystemMousePos = vMousePos;
+	// Check whether or not there's an application instance
+	if (CoreApplication::GetApplication() && CoreApplication::GetApplication()->IsInstanceOf("PLCore::FrontendApplication")) {
+		// Get the frontend instance
+		Frontend &cFrontend = static_cast<FrontendApplication*>(CoreApplication::GetApplication())->GetFrontend();
 
-					{ // Calculate the absolute ingame GUI mouse cursor position
-						// Calculate normalized mouse position
-						const float fNormalizedX = static_cast<float>(m_vSystemMousePos.x)/static_cast<float>(pWidget->GetSize().x);
-						const float fNormalizedY = static_cast<float>(m_vSystemMousePos.y)/static_cast<float>(pWidget->GetSize().y);
+		// Check if the mouse is currently over the frontend
+		if (cFrontend.IsMouseOver()) {
+			// Get current mouse cursor position inside the frontend
+			const Vector2i vMousePos(cFrontend.GetMousePositionX(), cFrontend.GetMousePositionY());
+			if (vMousePos && m_vSystemMousePos != vMousePos) {
+				// The system mouse cursor has been moved
+				m_vSystemMousePos = vMousePos;
 
-						// Calculate the mouse position within the virtual GUI space
-						m_vMousePos.x = static_cast<int>(fNormalizedX*m_vScreenSize.x);
-						m_vMousePos.y = static_cast<int>(fNormalizedY*m_vScreenSize.y);
-					}
+				{ // Calculate the absolute ingame GUI mouse cursor position
+					// Calculate normalized mouse position
+					const float fNormalizedX = static_cast<float>(m_vSystemMousePos.x)/static_cast<float>(cFrontend.GetWidth());
+					const float fNormalizedY = static_cast<float>(m_vSystemMousePos.y)/static_cast<float>(cFrontend.GetHeight());
 
-					// Get the widget implementation
-					const WidgetPL *pMouseOverPL = m_pMouseOver ? static_cast<WidgetPL*>(m_pMouseOver->GetImpl()) : nullptr;
+					// Calculate the mouse position within the virtual GUI space
+					m_vMousePos.x = static_cast<int>(fNormalizedX*m_vScreenSize.x);
+					m_vMousePos.y = static_cast<int>(fNormalizedY*m_vScreenSize.y);
+				}
 
-					// Currently over a widget that captures the mouse?
-					if (pMouseOverPL && pMouseOverPL->m_bCaptureMouse) {
+				// Get the widget implementation
+				const WidgetPL *pMouseOverPL = m_pMouseOver ? static_cast<WidgetPL*>(m_pMouseOver->GetImpl()) : nullptr;
+
+				// Currently over a widget that captures the mouse?
+				if (pMouseOverPL && pMouseOverPL->m_bCaptureMouse) {
+					// Calculate the relative mouse position within the mouse over widget
+					const Vector2i vRelativeMousePos = m_vMousePos - m_pMouseOver->GetAbsPos();
+
+					// Send OnMouseMove message
+					m_pGui->SendMessage(GuiMessage::OnMouseMove(m_pMouseOver, vRelativeMousePos));
+				} else {
+					// Find the widget at the current absolute ingame GUI mouse cursor position
+					Widget *pWidgetAtPos = FindWidgetAtPos(m_vMousePos);
+					if (pWidgetAtPos) {
+						// Check if mouse-enter widget has changed
+						if (m_pMouseOver != pWidgetAtPos) {
+							// Was there a previous mouse-enter widget?
+							if (m_pMouseOver) {
+								// Send OnMouseLeave message
+								m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
+							}
+
+							// Save mouse-enter widget
+							m_pMouseOver = pWidgetAtPos;
+
+							// Send OnMouseEnter message
+							m_pGui->SendMessage(GuiMessage::OnMouseEnter(pWidgetAtPos));
+						}
+
 						// Calculate the relative mouse position within the mouse over widget
 						const Vector2i vRelativeMousePos = m_vMousePos - m_pMouseOver->GetAbsPos();
 
 						// Send OnMouseMove message
-						m_pGui->SendMessage(GuiMessage::OnMouseMove(m_pMouseOver, vRelativeMousePos));
+						m_pGui->SendMessage(GuiMessage::OnMouseMove(pWidgetAtPos, vRelativeMousePos));
 					} else {
-						// Find the widget at the current absolute ingame GUI mouse cursor position
-						Widget *pWidgetAtPos = FindWidgetAtPos(m_vMousePos);
-						if (pWidgetAtPos) {
-							// Check if mouse-enter widget has changed
-							if (m_pMouseOver != pWidgetAtPos) {
-								// Was there a previous mouse-enter widget?
-								if (m_pMouseOver) {
-									// Send OnMouseLeave message
-									m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
-								}
+						// Is there a mouse-enter widget?
+						if (m_pMouseOver) {
+							// Send OnMouseLeave message
+							m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
 
-								// Save mouse-enter widget
-								m_pMouseOver = pWidgetAtPos;
-
-								// Send OnMouseEnter message
-								m_pGui->SendMessage(GuiMessage::OnMouseEnter(pWidgetAtPos));
-							}
-
-							// Calculate the relative mouse position within the mouse over widget
-							const Vector2i vRelativeMousePos = m_vMousePos - m_pMouseOver->GetAbsPos();
-
-							// Send OnMouseMove message
-							m_pGui->SendMessage(GuiMessage::OnMouseMove(pWidgetAtPos, vRelativeMousePos));
-						} else {
-							// Is there a mouse-enter widget?
-							if (m_pMouseOver) {
-								// Send OnMouseLeave message
-								m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
-
-								// Reset mouse-enter widget
-								m_pMouseOver = nullptr;
-							}
+							// Reset mouse-enter widget
+							m_pMouseOver = nullptr;
 						}
 					}
 				}
-			} else {
-				// Is there a mouse-enter widget?
-				if (m_pMouseOver) {
-					// Send OnMouseLeave message
-					m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
+			}
+		} else {
+			// Is there a mouse-enter widget?
+			if (m_pMouseOver) {
+				// Send OnMouseLeave message
+				m_pGui->SendMessage(GuiMessage::OnMouseLeave(m_pMouseOver));
 
-					// Reset mouse-enter widget
-					m_pMouseOver = nullptr;
-				}
+				// Reset mouse-enter widget
+				m_pMouseOver = nullptr;
 			}
 		}
 	}
