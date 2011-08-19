@@ -1,6 +1,5 @@
 /*********************************************************\
- *  File: libRocket_PLWindows.h                          *
- *      Windows definitions for libRocket_PL
+ *  File: PLlibRocket.cpp                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,27 +20,17 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_WINDOWS_H__
-#define __LIBROCKET_PL_WINDOWS_H__
-#pragma once
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/ModuleMain.h>
 
 
 //[-------------------------------------------------------]
-//[ Import/Export                                         ]
+//[ Module definition                                     ]
 //[-------------------------------------------------------]
-#ifdef LIBROCKET_PL_EXPORTS
-	// To export classes, methods and variables
-	#define LIBROCKET_PL_API __declspec(dllexport)
-
-	// To export RTTI elements
-	#define LIBROCKET_PL_RTTI_EXPORT 1
-#else
-	// To import classes, methods and variables
-	#define LIBROCKET_PL_API __declspec(dllimport)
-
-	// To import RTTI elements
-	#define LIBROCKET_PL_RTTI_EXPORT 0
-#endif
-
-
-#endif // __LIBROCKET_PL_WINDOWS_H__
+pl_module_plugin("PLlibRocket")
+	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_description("Integrates the free open source HTML/CSS game interface middleware \"libRocket\" 1.2.1 (http://librocket.com/) into PixelLight")
+pl_module_end

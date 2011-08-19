@@ -26,11 +26,11 @@
 #include <Rocket/Core.h>
 #include <Rocket/Controls.h>
 #include <Rocket/Debugger.h>
-#include "libRocket_PL/SRPlibRocket.h"
-#include "libRocket_PL/FileInterfacePL.h"
-#include "libRocket_PL/SystemInterfacePL.h"
-#include "libRocket_PL/RenderInterfacePLShaders.h"
-#include "libRocket_PL/libRocketAdapter.h"
+#include "PLlibRocket/SRPlibRocket.h"
+#include "PLlibRocket/FileInterfacePL.h"
+#include "PLlibRocket/SystemInterfacePL.h"
+#include "PLlibRocket/RenderInterfacePLShaders.h"
+#include "PLlibRocket/libRocketAdapter.h"
 
 
 //[-------------------------------------------------------]
@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 using namespace PLMath;
 using namespace PLRenderer;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -173,4 +173,4 @@ libRocketAdapter &libRocketAdapter::operator =(const libRocketAdapter &cSource)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

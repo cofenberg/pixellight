@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_ADAPTER_H__
-#define __LIBROCKET_PL_ADAPTER_H__
+#ifndef __PLLIBROCKET_ADAPTER_H__
+#define __PLLIBROCKET_ADAPTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "libRocket_PL/libRocket_PL.h"
+#include "PLlibRocket/PLlibRocket.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +45,7 @@ namespace Rocket {
 namespace PLRenderer {
 	class RendererContext;
 }
-namespace libRocket_PL {
+namespace PLlibRocket {
 	class SRPlibRocket;
 	class MessageFilterRocket;
 }
@@ -54,7 +54,7 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -78,13 +78,13 @@ class libRocketAdapter {
 		*  @param[in] cRendererContext
 		*    The used renderer context
 		*/
-		LIBROCKET_PL_API libRocketAdapter(PLRenderer::RendererContext &cRendererContext);
+		PLLIBROCKET_API libRocketAdapter(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API ~libRocketAdapter();
+		PLLIBROCKET_API ~libRocketAdapter();
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class libRocketAdapter {
 		*  @return
 		*    libRocket context, can be a null pointer
 		*/
-		LIBROCKET_PL_API Rocket::Core::Context *GetRocketContext() const;
+		PLLIBROCKET_API Rocket::Core::Context *GetRocketContext() const;
 
 		/**
 		*  @brief
@@ -102,7 +102,7 @@ class libRocketAdapter {
 		*  @return
 		*    libRocket render interface, can be a null pointer
 		*/
-		LIBROCKET_PL_API Rocket::Core::RenderInterface *GetRocketRenderInterface() const;
+		PLLIBROCKET_API Rocket::Core::RenderInterface *GetRocketRenderInterface() const;
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class libRocketAdapter {
 		*  @return
 		*    libRocket system interface, can be a null pointer
 		*/
-		LIBROCKET_PL_API Rocket::Core::SystemInterface *GetRocketSystemInterface() const;
+		PLLIBROCKET_API Rocket::Core::SystemInterface *GetRocketSystemInterface() const;
 
 		/**
 		*  @brief
@@ -120,7 +120,7 @@ class libRocketAdapter {
 		*  @return
 		*    libRocket file interface, can be a null pointer
 		*/
-		LIBROCKET_PL_API Rocket::Core::FileInterface *GetFileInterface() const;
+		PLLIBROCKET_API Rocket::Core::FileInterface *GetFileInterface() const;
 
 		/**
 		*  @brief
@@ -129,7 +129,7 @@ class libRocketAdapter {
 		*  @return
 		*    libRocket scene renderer pass instance, can be a null pointer
 		*/
-		LIBROCKET_PL_API SRPlibRocket *CreateSRPlibRocketInstance() const;
+		PLLIBROCKET_API SRPlibRocket *CreateSRPlibRocketInstance() const;
 
 
 	//[-------------------------------------------------------]
@@ -174,7 +174,7 @@ class libRocketAdapter {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket
 
 
-#endif // __LIBROCKET_PL_ADAPTER_H__
+#endif // __PLLIBROCKET_ADAPTER_H__

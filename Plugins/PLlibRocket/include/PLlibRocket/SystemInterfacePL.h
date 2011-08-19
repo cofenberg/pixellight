@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FileInterfacePL.h                              *
+ *  File: SystemInterfacePL.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_FILEINTERFACE_H__
-#define __LIBROCKET_PL_FILEINTERFACE_H__
+#ifndef __PLLIBROCKET_SYSTEMINTERFACE_H__
+#define __PLLIBROCKET_SYSTEMINTERFACE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <Rocket/Core/FileInterface.h>
-#include "libRocket_PL/libRocket_PL.h"
+#include <Rocket/Core/SystemInterface.h>
+#include <PLCore/String/String.h>
+#include "PLlibRocket/PLlibRocket.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -43,9 +44,9 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A file interface for Rocket into PixelLight
+*    A system interface for Rocket into PixelLight
 */
-class FileInterfacePL : public Rocket::Core::FileInterface {
+class SystemInterfacePL : public Rocket::Core::SystemInterface {
 
 
 	//[-------------------------------------------------------]
@@ -54,26 +55,27 @@ class FileInterfacePL : public Rocket::Core::FileInterface {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] sLocalizationGroup
+		*    Localization group the texts to translate are in
 		*/
-		LIBROCKET_PL_API FileInterfacePL();
+		PLLIBROCKET_API SystemInterfacePL(const PLCore::String &sLocalizationGroup = "PixelLight");
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~FileInterfacePL();
+		PLLIBROCKET_API virtual ~SystemInterfacePL();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Rocket::Core::FileInterface functions  ]
+	//[ Public virtual Rocket::Core::SystemInterface functions ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual Rocket::Core::FileHandle Open(const Rocket::Core::String& path) override;
-		LIBROCKET_PL_API virtual void Close(Rocket::Core::FileHandle file) override;
-		LIBROCKET_PL_API virtual size_t Read(void* buffer, size_t size, Rocket::Core::FileHandle file) override;
-		LIBROCKET_PL_API virtual bool Seek(Rocket::Core::FileHandle file, long offset, int origin) override;
-		LIBROCKET_PL_API virtual size_t Tell(Rocket::Core::FileHandle file) override;
+		PLLIBROCKET_API virtual float GetElapsedTime() override;
+		PLLIBROCKET_API virtual int TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input) override;
+		PLLIBROCKET_API virtual bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message) override;
 
 
 	//[-------------------------------------------------------]
@@ -87,7 +89,7 @@ class FileInterfacePL : public Rocket::Core::FileInterface {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		FileInterfacePL(const FileInterfacePL &cSource);
+		SystemInterfacePL(const SystemInterfacePL &cSource);
 
 		/**
 		*  @brief
@@ -99,7 +101,14 @@ class FileInterfacePL : public Rocket::Core::FileInterface {
 		*  @return
 		*    Reference to this instance
 		*/
-		FileInterfacePL &operator =(const FileInterfacePL &cSource);
+		SystemInterfacePL &operator =(const SystemInterfacePL &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::String m_sLocalizationGroup;	/**< Localization group the texts to translate are in */
 
 
 };
@@ -108,7 +117,7 @@ class FileInterfacePL : public Rocket::Core::FileInterface {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket
 
 
-#endif // __LIBROCKET_PL_FILEINTERFACE_H__
+#endif // __PLLIBROCKET_SYSTEMINTERFACE_H__

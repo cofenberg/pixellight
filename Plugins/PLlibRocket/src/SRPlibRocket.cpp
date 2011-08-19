@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
-#include "libRocket_PL/RenderInterfacePL.h"
-#include "libRocket_PL/SRPlibRocket.h"
+#include "PLlibRocket/RenderInterfacePL.h"
+#include "PLlibRocket/SRPlibRocket.h"
 
 
 //[-------------------------------------------------------]
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 using namespace PLRenderer;
 using namespace PLScene;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -83,4 +83,4 @@ void SRPlibRocket::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

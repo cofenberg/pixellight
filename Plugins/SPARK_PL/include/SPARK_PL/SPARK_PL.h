@@ -26,7 +26,8 @@
 *
 *  @section intro_sec Introduction
 *
-*  This is the SPARK_PL reference.
+*  This is the SPARK_PL reference. Please note that is no 100% loose dynamic plugin
+*  and that one has to use the SPARK-API instead of an abstract PixelLight wrapper.
 */
 
 

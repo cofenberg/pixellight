@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SRPlibRocket.h                                 *
+ *  File: RenderInterfacePLShaders.h                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,35 +20,31 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_SCENERENDERERPASS_H__
-#define __LIBROCKET_PL_SCENERENDERERPASS_H__
+#ifndef __PLLIBROCKET_RENDERINTERFACE_SHADERS_H__
+#define __PLLIBROCKET_RENDERINTERFACE_SHADERS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/SceneRendererPass.h>
-#include "libRocket_PL/libRocket_PL.h"
+#include "PLlibRocket/RenderInterfacePL.h"
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
+//[ Forward declaration                                   ]
 //[-------------------------------------------------------]
-namespace Rocket {
-	namespace Core {
-		class Context;
-	}
-}
-namespace libRocket_PL {
-	class RenderInterfacePL;
+namespace PLRenderer {
+	class Program;
+	class VertexShader;
+	class FragmentShader;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -56,18 +52,9 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    libRocket scene renderer pass
+*    A render interface for Rocket into PixelLight using shaders
 */
-class SRPlibRocket : public PLScene::SceneRendererPass {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(LIBROCKET_PL_RTTI_EXPORT, SRPlibRocket, "libRocket_PL", PLScene::SceneRendererPass, "libRocket scene renderer pass")
-		// Constructors
-		pl_constructor_2(ParameterConstructor,	Rocket::Core::Context&,	RenderInterfacePL&,	"Parameter constructor",	"")
-	pl_class_end
+class RenderInterfacePLShaders : public RenderInterfacePL {
 
 
 	//[-------------------------------------------------------]
@@ -78,33 +65,65 @@ class SRPlibRocket : public PLScene::SceneRendererPass {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cRocketContext
-		*    libRocket context to use, just shared, must stay valid as long as this scene renderer pass lives
-		*  @param[in] cRenderInterfacePL
-		*    Render interface for Rocket into PixelLight, just shared, must stay valid as long as this scene renderer pass lives
+		*  @param[in] cRendererContext
+		*    The used renderer context
 		*/
-		LIBROCKET_PL_API SRPlibRocket(Rocket::Core::Context &cRocketContext, RenderInterfacePL &cRenderInterfacePL);
+		PLLIBROCKET_API RenderInterfacePLShaders(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~SRPlibRocket();
+		PLLIBROCKET_API virtual ~RenderInterfacePLShaders();
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneRendererPass functions  ]
+	//[ Public virtual RenderInterfacePL functions            ]
+	//[-------------------------------------------------------]
+	public:
+		PLLIBROCKET_API virtual bool ConfigureRenderSystem() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Rocket::Core::RenderInterface functions ]
+	//[-------------------------------------------------------]
+	public:
+		PLLIBROCKET_API virtual void RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		RenderInterfacePLShaders(const RenderInterfacePLShaders &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		RenderInterfacePLShaders &operator =(const RenderInterfacePLShaders &cSource);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Rocket::Core::Context *m_pRocketContext;		/**< libRocket context, always valid! */
-		RenderInterfacePL	  *m_pRenderInterfacePL;	/**< Render interface for Rocket into PixelLight, always valid! */
+		PLRenderer::VertexShader	*m_pVertexShader;	/**< Vertex shader, can be a null pointer */
+		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be a null pointer */
+		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be a null pointer */
 
 
 };
@@ -113,7 +132,7 @@ class SRPlibRocket : public PLScene::SceneRendererPass {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket
 
 
-#endif // __LIBROCKET_PL_SCENERENDERERPASS_H__
+#endif // __PLLIBROCKET_RENDERINTERFACE_SHADERS_H__

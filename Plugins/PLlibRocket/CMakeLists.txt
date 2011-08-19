@@ -1,13 +1,13 @@
 ##################################################
 ## Project
 ##################################################
-define_project(libRocket_PL)
+define_project(PLlibRocket)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/libRocket_PL.cpp
+	src/PLlibRocket.cpp
 	src/libRocketAdapter.cpp
 	src/RenderInterfacePL.cpp
 	src/RenderInterfacePLShaders.cpp
@@ -21,7 +21,7 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
-	include/libRocket_PL
+	include/PLlibRocket
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
@@ -55,7 +55,7 @@ add_libs(
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	LIBROCKET_PL_EXPORTS
+	PLLIBROCKET_EXPORTS
 )
 if(WIN32)
 	##################################################

@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Rocket/Core.h>
-#include <libRocket_PL/libRocketAdapter.h>
-#include <libRocket_PL/PLGuiMessageFilterRocket.h>
+#include <PLlibRocket/libRocketAdapter.h>
+#include <PLlibRocket/PLGuiMessageFilterRocket.h>
 #include <PLGui/Gui/Gui.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Control.h>
@@ -124,14 +124,14 @@ void Application::OnInit()
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
 		// Create the libRocket adapter instance
-		m_pRocketAdapter = new libRocket_PL::libRocketAdapter(pSceneContext->GetRendererContext());
+		m_pRocketAdapter = new PLlibRocket::libRocketAdapter(pSceneContext->GetRendererContext());
 		Rocket::Core::Context *pRocketContext = m_pRocketAdapter->GetRocketContext();
 		if (pRocketContext) {
 			// Set new libRocket context dimension
 			OnSize();
 
 			// Add message filter that feeds PLGui messages from the content widget of the main window into libRocket
-			m_pPLGuiMessageFilterRocket = new libRocket_PL::PLGuiMessageFilterRocket(*pRocketContext);
+			m_pPLGuiMessageFilterRocket = new PLlibRocket::PLGuiMessageFilterRocket(*pRocketContext);
 			PLGui::Gui::GetSystemGui()->AddMessageFilter(m_pPLGuiMessageFilterRocket);
 
 			// Get the application directory - look out! We can't just assume that the current work directory
@@ -163,7 +163,7 @@ void Application::OnInit()
 			// Add libRocket scene renderer pass instance
 			SceneRenderer *pSceneRenderer = GetSceneRendererTool().GetSceneRenderer();
 			if (pSceneRenderer) {
-				libRocket_PL::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
+				PLlibRocket::SRPlibRocket *pSRPlibRocket = m_pRocketAdapter->CreateSRPlibRocketInstance();
 				if (pSRPlibRocket)
 					pSceneRenderer->Add(*reinterpret_cast<SceneRendererPass*>(pSRPlibRocket));
 			}

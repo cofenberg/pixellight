@@ -88,8 +88,8 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLlibRocket/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLLIBROCKET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -105,19 +105,19 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)libRocket_PLD.dll</OutputFile>
+      <OutputFile>$(OutDir)PLlibRocketD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)libRocket_PLD.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLlibRocketD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)libRocket_PLD.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLlibRocketD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\libRocket_PLD.dll ..\..\Bin\Runtime\x86\
-copy build\debug\libRocket_PLD.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\debug\PLlibRocketD.dll ..\..\Bin\Runtime\x86\
+copy build\debug\PLlibRocketD.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x86\
@@ -130,8 +130,8 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLlibRocket/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLLIBROCKET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -146,19 +146,19 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD64.lib;PLMathD64.lib;PLGraphicsD64.lib;PLRendererD64.lib;PLMeshD64.lib;PLSceneD64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)libRocket_PLD64.dll</OutputFile>
+      <OutputFile>$(OutDir)PLlibRocketD64.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)libRocket_PLD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLlibRocketD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)libRocket_PLD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLlibRocketD64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\libRocket_PLD64.dll ..\..\Bin\Runtime\x64\
-copy build\debug64\libRocket_PLD64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\debug64\PLlibRocketD64.dll ..\..\Bin\Runtime\x64\
+copy build\debug64\PLlibRocketD64.lib ..\..\Bin\Lib\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x64\</Command>
@@ -172,8 +172,8 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLlibRocket/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_32/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLLIBROCKET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -193,7 +193,7 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)libRocket_PL.dll</OutputFile>
+      <OutputFile>$(OutDir)PLlibRocket.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -202,12 +202,12 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)libRocket_PL.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLlibRocket.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\libRocket_PL.dll ..\..\Bin\Runtime\x86\
-copy build\release\libRocket_PL.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\release\PLlibRocket.dll ..\..\Bin\Runtime\x86\
+copy build\release\PLlibRocket.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x86\
 copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x86\</Command>
@@ -223,8 +223,8 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;include/libRocket_PL/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;LIBROCKET_PL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include/;include/PLlibRocket/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../External/_Windows_x86_64/libRocket/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLLIBROCKET_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>
@@ -240,7 +240,7 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLGraphics64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;RocketCore.lib;RocketControls.lib;RocketDebugger.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)libRocket_PL64.dll</OutputFile>
+      <OutputFile>$(OutDir)PLlibRocket64.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/libRocket/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -248,12 +248,12 @@ copy ..\..\External\_Windows_x86_32\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)libRocket_PL64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLlibRocket64.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\libRocket_PL64.dll ..\..\Bin\Runtime\x64\
-copy build\release64\libRocket_PL64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\release64\PLlibRocket64.dll ..\..\Bin\Runtime\x64\
+copy build\release64\PLlibRocket64.lib ..\..\Bin\Lib\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketCore.dll ..\..\Bin\Runtime\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketControls.dll ..\..\Bin\Runtime\x64\
 copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\Runtime\x64\</Command>
@@ -262,30 +262,30 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
   <ItemGroup>
     <ClCompile Include="src\FileInterfacePL.cpp" />
     <ClCompile Include="src\libRocketAdapter.cpp" />
-    <ClCompile Include="src\libRocket_PL.cpp" />
+    <ClCompile Include="src\PLlibRocket.cpp" />
     <ClCompile Include="src\RenderInterfacePL.cpp" />
     <ClCompile Include="src\RenderInterfacePLShaders.cpp" />
     <ClCompile Include="src\SRPlibRocket.cpp" />
     <ClCompile Include="src\SystemInterfacePL.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\libRocket_PL\FileInterfacePL.h" />
-    <ClInclude Include="include\libRocket_PL\libRocketAdapter.h" />
-    <ClInclude Include="include\libRocket_PL\libRocket_PL.h" />
-    <ClInclude Include="include\libRocket_PL\libRocket_PLLinux.h" />
-    <ClInclude Include="include\libRocket_PL\libRocket_PLWindows.h" />
-    <ClInclude Include="include\libRocket_PL\PLGuiMessageFilterRocket.h" />
-    <ClInclude Include="include\libRocket_PL\RenderInterfacePL.h" />
-    <ClInclude Include="include\libRocket_PL\RenderInterfacePLShaders.h" />
-    <ClInclude Include="include\libRocket_PL\SRPlibRocket.h" />
-    <ClInclude Include="include\libRocket_PL\SystemInterfacePL.h" />
+    <ClInclude Include="include\PLlibRocket\FileInterfacePL.h" />
+    <ClInclude Include="include\PLlibRocket\libRocketAdapter.h" />
+    <ClInclude Include="include\PLlibRocket\PLlibRocket.h" />
+    <ClInclude Include="include\PLlibRocket\PLlibRocketLinux.h" />
+    <ClInclude Include="include\PLlibRocket\PLlibRocketWindows.h" />
+    <ClInclude Include="include\PLlibRocket\PLGuiMessageFilterRocket.h" />
+    <ClInclude Include="include\PLlibRocket\RenderInterfacePL.h" />
+    <ClInclude Include="include\PLlibRocket\RenderInterfacePLShaders.h" />
+    <ClInclude Include="include\PLlibRocket\SRPlibRocket.h" />
+    <ClInclude Include="include\PLlibRocket\SystemInterfacePL.h" />
     <ClInclude Include="src\RenderInterfacePLShaders_Cg.h" />
     <ClInclude Include="src\RenderInterfacePLShaders_GLSL.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
-    <None Include="include\libRocket_PL\PLGuiMessageFilterRocket.inl" />
+    <None Include="include\PLlibRocket\PLGuiMessageFilterRocket.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Base\PLCore\PLCore.vcxproj">

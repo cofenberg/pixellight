@@ -26,14 +26,14 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
-#include "libRocket_PL/SystemInterfacePL.h"
+#include "PLlibRocket/SystemInterfacePL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -164,4 +164,4 @@ SystemInterfacePL &SystemInterfacePL::operator =(const SystemInterfacePL &cSourc
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

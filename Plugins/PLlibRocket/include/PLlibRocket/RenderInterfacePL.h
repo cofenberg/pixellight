@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_RENDERINTERFACE_H__
-#define __LIBROCKET_PL_RENDERINTERFACE_H__
+#ifndef __PLLIBROCKET_RENDERINTERFACE_H__
+#define __PLLIBROCKET_RENDERINTERFACE_H__
 #pragma once
 
 
@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <Rocket/Core/RenderInterface.h>
 #include <PLMath/Rectangle.h>
-#include "libRocket_PL/libRocket_PL.h"
+#include "PLlibRocket/PLlibRocket.h"
 
 
 //[-------------------------------------------------------]
@@ -47,7 +47,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -68,7 +68,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~RenderInterfacePL();
+		PLLIBROCKET_API virtual ~RenderInterfacePL();
 
 		/**
 		*  @brief
@@ -77,7 +77,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @return
 		*    The used renderer context
 		*/
-		LIBROCKET_PL_API PLRenderer::RendererContext &GetRendererContext() const;
+		PLLIBROCKET_API PLRenderer::RendererContext &GetRendererContext() const;
 
 
 	//[-------------------------------------------------------]
@@ -91,23 +91,23 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		LIBROCKET_PL_API virtual bool ConfigureRenderSystem();
+		PLLIBROCKET_API virtual bool ConfigureRenderSystem();
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Rocket::Core::RenderInterface functions ]
 	//[-------------------------------------------------------]
 	public:
-		LIBROCKET_PL_API virtual void RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture, const Rocket::Core::Vector2f& translation) override;
-		LIBROCKET_PL_API virtual Rocket::Core::CompiledGeometryHandle CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture) override;
-		LIBROCKET_PL_API virtual void ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry) override;
-		LIBROCKET_PL_API virtual void EnableScissorRegion(bool enable) override;
-		LIBROCKET_PL_API virtual void SetScissorRegion(int x, int y, int width, int height) override;
-		LIBROCKET_PL_API virtual bool LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source) override;
-		LIBROCKET_PL_API virtual bool GenerateTexture(Rocket::Core::TextureHandle& texture_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions) override;
-		LIBROCKET_PL_API virtual void ReleaseTexture(Rocket::Core::TextureHandle texture) override;
-		LIBROCKET_PL_API virtual float GetHorizontalTexelOffset() override;
-		LIBROCKET_PL_API virtual float GetVerticalTexelOffset() override;
+		PLLIBROCKET_API virtual void RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture, const Rocket::Core::Vector2f& translation) override;
+		PLLIBROCKET_API virtual Rocket::Core::CompiledGeometryHandle CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, Rocket::Core::TextureHandle texture) override;
+		PLLIBROCKET_API virtual void ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry) override;
+		PLLIBROCKET_API virtual void EnableScissorRegion(bool enable) override;
+		PLLIBROCKET_API virtual void SetScissorRegion(int x, int y, int width, int height) override;
+		PLLIBROCKET_API virtual bool LoadTexture(Rocket::Core::TextureHandle& texture_handle, Rocket::Core::Vector2i& texture_dimensions, const Rocket::Core::String& source) override;
+		PLLIBROCKET_API virtual bool GenerateTexture(Rocket::Core::TextureHandle& texture_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions) override;
+		PLLIBROCKET_API virtual void ReleaseTexture(Rocket::Core::TextureHandle texture) override;
+		PLLIBROCKET_API virtual float GetHorizontalTexelOffset() override;
+		PLLIBROCKET_API virtual float GetVerticalTexelOffset() override;
 
 
 	//[-------------------------------------------------------]
@@ -137,7 +137,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @brief
 		*    Default constructor
 		*/
-		LIBROCKET_PL_API RenderInterfacePL();
+		PLLIBROCKET_API RenderInterfacePL();
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		LIBROCKET_PL_API RenderInterfacePL(const RenderInterfacePL &cSource);
+		PLLIBROCKET_API RenderInterfacePL(const RenderInterfacePL &cSource);
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @param[in] cRendererContext
 		*    The used renderer context
 		*/
-		LIBROCKET_PL_API RenderInterfacePL(PLRenderer::RendererContext &cRendererContext);
+		PLLIBROCKET_API RenderInterfacePL(PLRenderer::RendererContext &cRendererContext);
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 		*  @return
 		*    Reference to this instance
 		*/
-		LIBROCKET_PL_API RenderInterfacePL &operator =(const RenderInterfacePL &cSource);
+		PLLIBROCKET_API RenderInterfacePL &operator =(const RenderInterfacePL &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -186,7 +186,7 @@ class RenderInterfacePL : public Rocket::Core::RenderInterface {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket
 
 
-#endif // __LIBROCKET_PL_RENDERINTERFACE_H__
+#endif // __PLLIBROCKET_RENDERINTERFACE_H__

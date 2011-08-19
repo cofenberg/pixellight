@@ -25,14 +25,14 @@
 //[-------------------------------------------------------]
 #include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
-#include "libRocket_PL/FileInterfacePL.h"
+#include "PLlibRocket/FileInterfacePL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -140,4 +140,4 @@ FileInterfacePL &FileInterfacePL::operator =(const FileInterfacePL &cSource)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

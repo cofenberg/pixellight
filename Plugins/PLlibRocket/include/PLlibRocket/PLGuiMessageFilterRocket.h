@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SystemInterfacePL.h                            *
+ *  File: PLGuiMessageFilterRocket.h                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,23 +20,35 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_SYSTEMINTERFACE_H__
-#define __LIBROCKET_PL_SYSTEMINTERFACE_H__
+#ifndef __PLLIBROCKET_PLGUIMESSAGEFILTER_H__
+#define __PLLIBROCKET_PLGUIMESSAGEFILTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <Rocket/Core/SystemInterface.h>
-#include <PLCore/String/String.h>
-#include "libRocket_PL/libRocket_PL.h"
+#include <PLCore/Container/HashMap.h>
+#include <PLGui/Gui/Base/MessageFilter.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGui {
+	class Widget;
+}
+namespace Rocket {
+	namespace Core {
+		class Context;
+	}
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -44,9 +56,9 @@ namespace libRocket_PL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A system interface for Rocket into PixelLight
+*    Message filter that feeds PLGui messages into libRocket
 */
-class SystemInterfacePL : public Rocket::Core::SystemInterface {
+class PLGuiMessageFilterRocket : public PLGui::MessageFilter {
 
 
 	//[-------------------------------------------------------]
@@ -57,25 +69,43 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] sLocalizationGroup
-		*    Localization group the texts to translate are in
+		*  @param[in] cRocketContext
+		*    libRocket context to use, just shared, must stay valid as long as this message filter lives
+		*  @param[in] pTargetWidget
+		*    Message target widget, if null pointer, messages from all widgets are send to libRocket
 		*/
-		LIBROCKET_PL_API SystemInterfacePL(const PLCore::String &sLocalizationGroup = "PixelLight");
+		PLGuiMessageFilterRocket(Rocket::Core::Context &cRocketContext, PLGui::Widget *pTargetWidget = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		LIBROCKET_PL_API virtual ~SystemInterfacePL();
+		virtual ~PLGuiMessageFilterRocket();
+
+		/**
+		*  @brief
+		*    Returns the used libRocket context
+		*
+		*  @return
+		*    The used libRocket context
+		*/
+		Rocket::Core::Context &GetRocketContext() const;
+
+		/**
+		*  @brief
+		*    Get message target widget
+		*
+		*  @return
+		*    Message target widget, if null pointer, messages from all widgets are send to libRocket
+		*/
+		PLGui::Widget *GetTargetWidget() const;
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Rocket::Core::SystemInterface functions ]
+	//[ Protected virtual PLGui::MessageFilter functions      ]
 	//[-------------------------------------------------------]
-	public:
-		LIBROCKET_PL_API virtual float GetElapsedTime() override;
-		LIBROCKET_PL_API virtual int TranslateString(Rocket::Core::String& translated, const Rocket::Core::String& input) override;
-		LIBROCKET_PL_API virtual bool LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message) override;
+	protected:
+		virtual void OnGuiMessage(const PLGui::GuiMessage &cMessage) override;
 
 
 	//[-------------------------------------------------------]
@@ -84,31 +114,27 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 	private:
 		/**
 		*  @brief
-		*    Copy constructor
-		*
-		*  @param[in] cSource
-		*    Source to copy from
+		*    Builds the key maps
 		*/
-		SystemInterfacePL(const SystemInterfacePL &cSource);
+		void BuildKeyMaps();
 
 		/**
 		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
+		*    Gets the libRocket key modifier state
 		*
 		*  @return
-		*    Reference to this instance
+		*    The libRocket key modifier state
 		*/
-		SystemInterfacePL &operator =(const SystemInterfacePL &cSource);
+		int GetRocketKeyModifierState() const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::String m_sLocalizationGroup;	/**< Localization group the texts to translate are in */
+		Rocket::Core::Context												*m_pRocketContext;		/**< libRocket context, always valid! */
+		PLGui::Widget													  	*m_pTargetWidget;		/**< Message target widget, if null pointer, messages from all widgets are send to libRocket */
+		PLCore::HashMap<PLCore::uint32, Rocket::Core::Input::KeyIdentifier>  m_mapKeyIdentifier;	/**< Key identifier map from PLGui-key to libRocket-key */
 
 
 };
@@ -117,7 +143,13 @@ class SystemInterfacePL : public Rocket::Core::SystemInterface {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket
 
 
-#endif // __LIBROCKET_PL_SYSTEMINTERFACE_H__
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLlibRocket/PLGuiMessageFilterRocket.inl"
+
+
+#endif // __PLLIBROCKET_PLGUIMESSAGEFILTER_H__

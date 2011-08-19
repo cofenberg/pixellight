@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
-pl_module_application_frontend("71libRocket", "Application", "PLFrontendPLGui::Frontend")	// Use PLGui as frontend so we can use "libRocket_PL::PLGuiMessageFilterRocket" to feed libRocket easily
+pl_module_application_frontend("71libRocket", "Application", "PLFrontendPLGui::Frontend")	// Use PLGui as frontend so we can use "PLlibRocket::PLGuiMessageFilterRocket" to feed libRocket easily
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight libRocket sample")

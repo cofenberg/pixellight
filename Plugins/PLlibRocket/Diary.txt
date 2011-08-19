@@ -2,6 +2,9 @@
 [CO]
 - Renamed "MessageFilterRocket" into "PLGuiMessageFilterRocket" and made the implementation inline so that the project itself doesn't depend on PLGui. One can
   use this offer in order to let PLGui easily interact with libRocket, but one can also use another GUI or general message system to feed libRocket.
+- Renamed the project from "libRocket_PL" into "PLlibRocket" because there were questions why this plugin project has another naming convention. My original intention
+  was to show that this is no 100% loose plugin and that one has to use the libRocket-API instead of an absteact PixelLight wrapper. Looks like this thought was to
+  complex.
 
 
 

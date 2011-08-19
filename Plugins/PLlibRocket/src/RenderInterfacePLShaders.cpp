@@ -34,7 +34,7 @@
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Texture/TextureHandler.h>
-#include "libRocket_PL/RenderInterfacePLShaders.h"
+#include "PLlibRocket/RenderInterfacePLShaders.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -237,4 +237,4 @@ RenderInterfacePLShaders &RenderInterfacePLShaders::operator =(const RenderInter
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

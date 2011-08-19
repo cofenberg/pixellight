@@ -1,6 +1,6 @@
 /*********************************************************\
- *  File: libRocket_PL.h                                 *
- *      Main header file of this project
+ *  File: PLlibRocketWindows.h                           *
+ *      Windows definitions for PLlibRocket
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,32 +21,27 @@
 \*********************************************************/
 
 
-/**
-*  @mainpage libRocket_PL
-*
-*  @section intro_sec Introduction
-*
-*  This is the libRocket_PL reference.
-*/
-
-
-#ifndef __LIBROCKET_PL_H__
-#define __LIBROCKET_PL_H__
+#ifndef __PLLIBROCKET_WINDOWS_H__
+#define __PLLIBROCKET_WINDOWS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Import/Export                                         ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "libRocket_PL/libRocket_PLWindows.h"
+#ifdef PLLIBROCKET_EXPORTS
+	// To export classes, methods and variables
+	#define PLLIBROCKET_API __declspec(dllexport)
+
+	// To export RTTI elements
+	#define PLLIBROCKET_RTTI_EXPORT 1
+#else
+	// To import classes, methods and variables
+	#define PLLIBROCKET_API __declspec(dllimport)
+
+	// To import RTTI elements
+	#define PLLIBROCKET_RTTI_EXPORT 0
 #endif
 
-// Linux platform
-#ifdef LINUX
-	#include "libRocket_PL/libRocket_PLLinux.h"
-#endif
 
-
-#endif // __LIBROCKET_PL_H__
+#endif // __PLLIBROCKET_WINDOWS_H__

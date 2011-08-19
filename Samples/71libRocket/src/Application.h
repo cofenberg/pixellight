@@ -37,7 +37,7 @@
 namespace PLInput {
 	class Control;
 }
-namespace libRocket_PL {
+namespace PLlibRocket {
 	class libRocketAdapter;
 	class PLGuiMessageFilterRocket;
 }
@@ -125,8 +125,8 @@ class Application : public PLEngine::EngineApplication {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		libRocket_PL::libRocketAdapter			*m_pRocketAdapter;				/**< libRocket adapter instance, can be a null pointer */
-		libRocket_PL::PLGuiMessageFilterRocket	*m_pPLGuiMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
+		PLlibRocket::libRocketAdapter			*m_pRocketAdapter;				/**< libRocket adapter instance, can be a null pointer */
+		PLlibRocket::PLGuiMessageFilterRocket	*m_pPLGuiMessageFilterRocket;	/**< Message filter that feeds PLGui messages into libRocket, can be a null pointer */
 
 
 };

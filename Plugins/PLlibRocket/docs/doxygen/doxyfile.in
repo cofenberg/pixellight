@@ -25,7 +25,7 @@ DOXYFILE_ENCODING      = UTF-8
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded 
 # by quotes) that should identify the project.
 
-PROJECT_NAME           = libRocket_PL
+PROJECT_NAME           = PLlibRocket
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
@@ -636,8 +636,8 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = ../../include/libRocket_PL/libRocket_PLWindows.h \
-                         ../../include/libRocket_PL/libRocket_PLLinux.h
+EXCLUDE                = ../../include/PLlibRocket/PLlibRocketWindows.h \
+                         ../../include/PLlibRocket/PLlibRocketLinux.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 
@@ -884,7 +884,7 @@ GENERATE_HTMLHELP      = YES
 # can add a path in front of the file if the result should not be 
 # written to the html output directory.
 
-CHM_FILE               = ../../../../../Bin/Doc/libRocket_PL.chm
+CHM_FILE               = ../../../../../Bin/Doc/PLlibRocket.chm
 
 # If the GENERATE_HTMLHELP tag is set to YES, the HHC_LOCATION tag can 
 # be used to specify the location (absolute path including file name) of 

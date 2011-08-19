@@ -31,7 +31,7 @@
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Effect/EffectManager.h>
 #include <PLRenderer/Texture/TextureManager.h>
-#include "libRocket_PL/RenderInterfacePL.h"
+#include "PLlibRocket/RenderInterfacePL.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +41,7 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-namespace libRocket_PL {
+namespace PLlibRocket {
 
 
 //[-------------------------------------------------------]
@@ -228,7 +228,7 @@ bool RenderInterfacePL::GenerateTexture(Rocket::Core::TextureHandle& texture_han
 {
 	// Generate an (hopefully) unique texture name
 	static uint32 nUniqueTextureID = 0;
-	static const String sTextureID = "libRocket_PL::RenderInterfacePL::GenerateTexture_";
+	static const String sTextureID = "PLlibRocket::RenderInterfacePL::GenerateTexture_";
 	const String sTextureName = sTextureID + (nUniqueTextureID++);
 
 	// Get the texture manager instance
@@ -338,4 +338,4 @@ RenderInterfacePL &RenderInterfacePL::operator =(const RenderInterfacePL &cSourc
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // libRocket_PL
+} // PLlibRocket

@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: libRocket_PL.cpp                               *
+ *  File: PLlibRocketLinux.h                             *
+ *      Linux definitions for PLlibRocket
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +21,32 @@
 \*********************************************************/
 
 
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include <PLCore/ModuleMain.h>
+#ifndef __PLLIBROCKET_LINUX_H__
+#define __PLLIBROCKET_LINUX_H__
+#pragma once
 
 
 //[-------------------------------------------------------]
-//[ Module definition                                     ]
+//[ Import/Export                                         ]
 //[-------------------------------------------------------]
-pl_module_plugin("libRocket_PL")
-	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("Integrates the free open source HTML/CSS game interface middleware \"libRocket\" 1.2.1 (http://librocket.com/) into PixelLight")
-pl_module_end
+#ifdef PLLIBROCKET_EXPORTS
+	#ifdef HAVE_VISIBILITY_ATTR
+		// To export classes, methods and variables
+		#define PLLIBROCKET_API __attribute__ ((visibility("default")))
+	#else
+		// To export classes, methods and variables
+		#define PLLIBROCKET_API
+	#endif
+
+	// To export RTTI elements
+	#define PLLIBROCKET_RTTI_EXPORT 1
+#else
+	// To import classes, methods and variables
+	#define PLLIBROCKET_API
+
+	// To import RTTI elements
+	#define PLLIBROCKET_RTTI_EXPORT 0
+#endif
+
+
+#endif // __PLLIBROCKET_LINUX_H__

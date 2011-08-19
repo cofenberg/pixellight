@@ -1,6 +1,6 @@
 /*********************************************************\
- *  File: libRocket_PLLinux.h                            *
- *      Linux definitions for libRocket_PL
+ *  File: PLlibRocket.h                                  *
+ *      Main header file of this project
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,32 +21,33 @@
 \*********************************************************/
 
 
-#ifndef __LIBROCKET_PL_LINUX_H__
-#define __LIBROCKET_PL_LINUX_H__
+/**
+*  @mainpage PLlibRocket
+*
+*  @section intro_sec Introduction
+*
+*  This is the PLlibRocket reference. Please note that is no 100% loose dynamic plugin
+*  and that one has to use the libRocket-API instead of an abstract PixelLight wrapper.
+*/
+
+
+#ifndef __PLLIBROCKET_H__
+#define __PLLIBROCKET_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
-//[ Import/Export                                         ]
+//[ OS definitions                                        ]
 //[-------------------------------------------------------]
-#ifdef LIBROCKET_PL_EXPORTS
-	#ifdef HAVE_VISIBILITY_ATTR
-		// To export classes, methods and variables
-		#define LIBROCKET_PL_API __attribute__ ((visibility("default")))
-	#else
-		// To export classes, methods and variables
-		#define LIBROCKET_PL_API
-	#endif
+// Windows platform
+#ifdef WIN32
+	#include "PLlibRocket/PLlibRocketWindows.h"
+#endif
 
-	// To export RTTI elements
-	#define LIBROCKET_PL_RTTI_EXPORT 1
-#else
-	// To import classes, methods and variables
-	#define LIBROCKET_PL_API
-
-	// To import RTTI elements
-	#define LIBROCKET_PL_RTTI_EXPORT 0
+// Linux platform
+#ifdef LINUX
+	#include "PLlibRocket/PLlibRocketLinux.h"
 #endif
 
 
-#endif // __LIBROCKET_PL_LINUX_H__
+#endif // __PLLIBROCKET_H__
