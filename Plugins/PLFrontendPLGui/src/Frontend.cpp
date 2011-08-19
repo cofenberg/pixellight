@@ -293,6 +293,30 @@ bool Frontend::IsMouseOver() const
 	return m_pMainWindow ? m_pMainWindow->IsMouseOver() : false;
 }
 
+int Frontend::GetMousePositionX() const
+{
+	if (m_pMainWindow) {
+		Vector2i vPos;
+		if (m_pMainWindow->GetMousePos(vPos))
+			return vPos.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	if (m_pMainWindow) {
+		Vector2i vPos;
+		if (m_pMainWindow->GetMousePos(vPos))
+			return vPos.y;
+	}
+
+	// Error!
+	return -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	return (m_pMainWindow && m_pMainWindow->GetGui()) ? m_pMainWindow->GetGui()->IsMouseVisible() : false;

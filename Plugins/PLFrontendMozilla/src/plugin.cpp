@@ -309,18 +309,50 @@ bool nsPluginInstance::IsMouseOver() const
 	if (m_hWnd) {
 		// Get the mouse cursor's position (in screen coordinates)
 		POINT sPOINT;
-		if (GetCursorPos(&sPOINT)) {
+		if (::GetCursorPos(&sPOINT)) {
 			// Get window rectangle (in screen coordinates)
 			RECT sRect;
-			if (GetWindowRect(m_hWnd, &sRect)) {
+			if (::GetWindowRect(m_hWnd, &sRect)) {
 				// Is the mouse cursor within the window rectangle?
-				return PtInRect(&sRect, sPOINT);
+				return ::PtInRect(&sRect, sPOINT);
 			}
 		}
 	}
 
 	// Error!
 	return false;
+}
+
+int nsPluginInstance::GetMousePositionX() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int nsPluginInstance::GetMousePositionY() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hWnd, &sPoint))
+			return sPoint.y;
+	}
+
+	// Error!
+	return -1;
 }
 
 bool nsPluginInstance::IsMouseVisible() const

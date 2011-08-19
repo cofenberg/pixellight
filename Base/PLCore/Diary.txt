@@ -1,6 +1,7 @@
 >> 19.08.2011
 [CO]
 - "Frontend": Added "IsMouseOver()"
+- "Frontend": Added "GetMousePositionX()" & "GetMousePositionY()"
 
 
 

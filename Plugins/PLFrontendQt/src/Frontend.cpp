@@ -241,6 +241,16 @@ bool Frontend::IsMouseOver() const
 	return m_pMainWindow ? m_pMainWindow->underMouse() : false;
 }
 
+int Frontend::GetMousePositionX() const
+{
+	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).x() : -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).y() : -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	return m_bMouseVisible;

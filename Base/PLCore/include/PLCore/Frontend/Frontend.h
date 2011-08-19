@@ -105,6 +105,8 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 			pl_method_0(IsFullscreen,				pl_ret_type(bool),				"Returns whether or not the window is currently fullscreen or not. Returns 'true' if the window is currently fullscreen, else 'false'.",						"")
 			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,	"Sets whether or not the window is currently fullscreen or not. 'true' as first parameter if the window is currently fullscreen, else 'false'.",				"")
 			pl_method_0(IsMouseOver,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently over the frontend. Returns 'true' if the mouse cursor is currently over the frontend, else 'false'.",		"")
+			pl_method_0(GetMousePositionX,			pl_ret_type(int),				"Returns the current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",						"")
+			pl_method_0(GetMousePositionY,			pl_ret_type(int),				"Returns the current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",						"")
 			pl_method_0(IsMouseVisible,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently visible. Returns 'true' if the mouse cursor is currently visible, else 'false'.",							"")
 			pl_method_1(SetMouseVisible,			pl_ret_type(void),		bool,	"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",																"")
 			pl_method_1(SetTrapMouse,				pl_ret_type(void),		bool,	"Trap the mouse inside the frontend window. 'true' as first parameter if the mouse should be trapped inside the frontend window, else 'false'.",				"")
@@ -312,6 +314,24 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    'true' if mouse-over, else 'false'
 		*/
 		PLCORE_API bool IsMouseOver() const;
+
+		/**
+		*  @brief
+		*    Get current mouse cursor X position inside the frontend
+		*
+		*  @return
+		*    Current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		PLCORE_API int GetMousePositionX() const;
+
+		/**
+		*  @brief
+		*    Get current mouse cursor Y position inside the frontend
+		*
+		*  @return
+		*    Current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		PLCORE_API int GetMousePositionY() const;
 
 		/**
 		*  @brief

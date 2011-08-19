@@ -148,6 +148,24 @@ class OSWindow {
 
 		/**
 		*  @brief
+		*    Get current mouse cursor X position inside the window
+		*
+		*  @return
+		*    Current mouse cursor X position inside the window, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		virtual int GetMousePositionX() const = 0;
+
+		/**
+		*  @brief
+		*    Get current mouse cursor Y position inside the window
+		*
+		*  @return
+		*    Current mouse cursor Y position inside the window, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		virtual int GetMousePositionY() const = 0;
+
+		/**
+		*  @brief
 		*    Check if the mouse cursor is visible
 		*
 		*  @return

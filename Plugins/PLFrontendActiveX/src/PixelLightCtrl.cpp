@@ -129,6 +129,38 @@ bool PixelLightCtrl::IsMouseOver() const
 	return false;
 }
 
+int PixelLightCtrl::GetMousePositionX() const
+{
+	if (m_hFrontendWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hFrontendWnd, &sPoint))
+			return sPoint.x;
+	}
+
+	// Error!
+	return -1;
+}
+
+int PixelLightCtrl::GetMousePositionY() const
+{
+	if (m_hFrontendWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPoint;
+		::GetCursorPos(&sPoint);
+
+		// Get the mouse cursor position inside this window
+		if (::ScreenToClient(m_hFrontendWnd, &sPoint))
+			return sPoint.y;
+	}
+
+	// Error!
+	return -1;
+}
+
 bool PixelLightCtrl::IsMouseVisible() const
 {
 	return m_bMouseVisible;

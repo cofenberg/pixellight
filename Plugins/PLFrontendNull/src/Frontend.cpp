@@ -172,6 +172,18 @@ bool Frontend::IsMouseOver() const
 	return false;
 }
 
+int Frontend::GetMousePositionX() const
+{
+	// We're not interested in GUI stuff
+	return -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	// We're not interested in GUI stuff
+	return -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	// We're not interested in GUI stuff

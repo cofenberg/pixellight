@@ -321,6 +321,38 @@ bool OSWindowLinux::IsMouseOver() const
 	return m_bIsMouseOver;
 }
 
+int OSWindowLinux::GetMousePositionX() const
+{
+	// Get the absolute mouse cursor position on the screen
+	XEvent sXEvent;
+
+	// Get the window directly below the current mouse cursor position - do only continue if this is our window
+	if (XQueryPointer(m_pDisplay, m_nNativeWindowHandle, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
+		&sXEvent.xbutton.x_root, &sXEvent.xbutton.y_root, &sXEvent.xbutton.x, &sXEvent.xbutton.y, &sXEvent.xbutton.state) == True) {
+		// Done
+		return sXEvent.xbutton.x;
+	} else {
+		// Error, the mouse cursor is currently not over this window
+		return -1;
+	}
+}
+
+int OSWindowLinux::GetMousePositionY() const
+{
+	// Get the absolute mouse cursor position on the screen
+	XEvent sXEvent;
+
+	// Get the window directly below the current mouse cursor position - do only continue if this is our window
+	if (XQueryPointer(m_pDisplay, m_nNativeWindowHandle, &sXEvent.xbutton.root, &sXEvent.xbutton.window,
+		&sXEvent.xbutton.x_root, &sXEvent.xbutton.y_root, &sXEvent.xbutton.x, &sXEvent.xbutton.y, &sXEvent.xbutton.state) == True) {
+		// Done
+		return sXEvent.xbutton.y;
+	} else {
+		// Error, the mouse cursor is currently not over this window
+		return -1;
+	}
+}
+
 bool OSWindowLinux::IsMouseVisible() const
 {
 	return m_bMouseVisible;

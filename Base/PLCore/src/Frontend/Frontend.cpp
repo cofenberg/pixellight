@@ -250,6 +250,26 @@ bool Frontend::IsMouseOver() const
 
 /**
 *  @brief
+*    Get current mouse cursor X position inside the frontend
+*/
+int Frontend::GetMousePositionX() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetMousePositionX();
+}
+
+/**
+*  @brief
+*    Get current mouse cursor Y position inside the frontend
+*/
+int Frontend::GetMousePositionY() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetMousePositionY();
+}
+
+/**
+*  @brief
 *    Check if the mouse cursor is visible
 */
 bool Frontend::IsMouseVisible() const

@@ -310,6 +310,24 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 
 		/**
 		*  @brief
+		*    Get current mouse cursor X position inside the frontend
+		*
+		*  @return
+		*    Current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		virtual int GetMousePositionX() const = 0;
+
+		/**
+		*  @brief
+		*    Get current mouse cursor Y position inside the frontend
+		*
+		*  @return
+		*    Current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
+		*/
+		virtual int GetMousePositionY() const = 0;
+
+		/**
+		*  @brief
 		*    Check if the mouse cursor is visible
 		*
 		*  @return

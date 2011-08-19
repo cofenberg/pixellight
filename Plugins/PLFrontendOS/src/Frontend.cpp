@@ -197,6 +197,18 @@ bool Frontend::IsMouseOver() const
 	return m_pOSWindow ? m_pOSWindow->IsMouseOver() : false;
 }
 
+int Frontend::GetMousePositionX() const
+{
+	// Let the OS window do the rest
+	return m_pOSWindow ? m_pOSWindow->GetMousePositionX() : -1;
+}
+
+int Frontend::GetMousePositionY() const
+{
+	// Let the OS window do the rest
+	return m_pOSWindow ? m_pOSWindow->GetMousePositionY() : -1;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	// Let the OS window do the rest
