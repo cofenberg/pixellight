@@ -267,7 +267,7 @@ void Frontend::SetFullscreen(bool bFullscreen)
 			m_bMainWindowPositionSizeBackup	= true;
 		}
 
-		// Inform that the fullscreen mode was changed
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
 		OnFullscreenMode();
 
 		// Set widget into fullscreen state?
@@ -285,6 +285,21 @@ void Frontend::SetFullscreen(bool bFullscreen)
 				}
 			}
 		}
+	}
+}
+
+void Frontend::RefreshFullscreen()
+{
+	// This information is only interesting if we're currently in fullscreen mode, if not, just ignore this method call
+	if (m_bIsFullscreen) {
+		// Leave fullscreen
+		m_pMainWindow->SetWindowState(StateNormal);
+
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+		OnFullscreenMode();
+
+		// Reenter fullscreen
+		m_pMainWindow->SetWindowState(StateFullscreen);
 	}
 }
 

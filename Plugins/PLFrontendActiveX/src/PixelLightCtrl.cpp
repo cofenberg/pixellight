@@ -112,6 +112,11 @@ void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
+void PixelLightCtrl::RefreshFullscreen()
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 bool PixelLightCtrl::IsMouseOver() const
 {
 	// Get the mouse cursor's position (in screen coordinates)

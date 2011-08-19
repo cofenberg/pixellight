@@ -139,6 +139,12 @@ class OSWindow {
 
 		/**
 		*  @brief
+		*    Something related to fullscreen mode has been changed (e.g. the display resolution)
+		*/
+		virtual void RefreshFullscreen() = 0;
+
+		/**
+		*  @brief
 		*    Check if the mouse is currently over the window
 		*
 		*  @return

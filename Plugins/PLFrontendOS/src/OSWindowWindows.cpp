@@ -487,6 +487,18 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 	}
 }
 
+void OSWindowWindows::RefreshFullscreen()
+{
+	// This information is only interesting if we're currently in fullscreen mode, if not, just ignore this method call
+	if (m_pFrontendOS->IsFullscreen()) {
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+		m_pFrontendOS->OnFullscreenMode();
+
+		// Update the OS window, place the window left/top and set new size
+		::SetWindowPos(m_hWnd, nullptr, 0, 0, ::GetSystemMetrics(SM_CXSCREEN), ::GetSystemMetrics(SM_CYSCREEN), SWP_NOACTIVATE | SWP_NOZORDER | SWP_FRAMECHANGED);
+	}
+}
+
 bool OSWindowWindows::IsMouseOver() const
 {
 	if (m_hWnd) {

@@ -89,6 +89,7 @@ private:
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual bool IsFullscreen() const override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual void RefreshFullscreen() override;
 		virtual bool IsMouseOver() const override;
 		virtual int GetMousePositionX() const override;
 		virtual int GetMousePositionY() const override;

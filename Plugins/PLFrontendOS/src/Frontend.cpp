@@ -191,6 +191,13 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+void Frontend::RefreshFullscreen()
+{
+	// Let the OS window do the rest
+	if (m_pOSWindow)
+		m_pOSWindow->RefreshFullscreen();
+}
+
 bool Frontend::IsMouseOver() const
 {
 	// Let the OS window do the rest

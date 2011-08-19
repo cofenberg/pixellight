@@ -240,6 +240,16 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 /**
 *  @brief
+*    Something related to fullscreen mode has been changed (e.g. the display resolution)
+*/
+void Frontend::RefreshFullscreen()
+{
+	// Call backend
+	m_pFrontendImpl->RefreshFullscreen();
+}
+
+/**
+*  @brief
 *    Check if the mouse is currently over the frontend
 */
 bool Frontend::IsMouseOver() const

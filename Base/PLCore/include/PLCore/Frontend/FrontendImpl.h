@@ -295,6 +295,12 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		virtual void SetFullscreen(bool bFullscreen) = 0;
 
+		/**
+		*  @brief
+		*    Something related to fullscreen mode has been changed (e.g. the display resolution)
+		*/
+		virtual void RefreshFullscreen() = 0;
+
 		//[-------------------------------------------------------]
 		//[ Mouse                                                 ]
 		//[-------------------------------------------------------]

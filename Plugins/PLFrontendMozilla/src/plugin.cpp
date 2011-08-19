@@ -304,6 +304,11 @@ void nsPluginInstance::SetFullscreen(bool bFullscreen)
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
+void nsPluginInstance::RefreshFullscreen()
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 bool nsPluginInstance::IsMouseOver() const
 {
 	if (m_hWnd) {

@@ -222,7 +222,7 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 		// [TODO] Enable/disable Alt-Tab
 
-		// Inform that the fullscreen mode was changed
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
 		OnFullscreenMode();
 
 		// Set widget into fullscreen state?
@@ -233,6 +233,21 @@ void Frontend::SetFullscreen(bool bFullscreen)
 			else
 				m_pMainWindow->showNormal();
 		}
+	}
+}
+
+void Frontend::RefreshFullscreen()
+{
+	// This information is only interesting if we're currently in fullscreen mode, if not, just ignore this method call
+	if (m_bIsFullscreen && m_pMainWindow) {
+		// Leave fullscreen
+		m_pMainWindow->showNormal();
+
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+		OnFullscreenMode();
+
+		// Reenter fullscreen
+		m_pMainWindow->showFullScreen();
 	}
 }
 

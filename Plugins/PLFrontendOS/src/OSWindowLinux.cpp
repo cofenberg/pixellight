@@ -290,6 +290,9 @@ void OSWindowLinux::SetFullscreenAltTab(bool bAllowed)
 
 void OSWindowLinux::SetFullscreen(bool bFullscreen)
 {
+	// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+	m_pFrontendOS->OnFullscreenMode();
+
 	// Set/remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode.
 	// The window manger is responsible to restore the original position and size of the window when the fullscreen mode should be left.
 	// This works only on window manger which are EWMH (v1.3 or greater) compatible (http://standards.freedesktop.org/wm-spec/wm-spec-1.3.html)
@@ -311,9 +314,40 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 
 	// Do it!
 	XSync(m_pDisplay, False);
+}
 
-	// Inform that the fullscreen mode was changed
-	m_pFrontendOS->OnFullscreenMode();
+void OSWindowLinux::RefreshFullscreen()
+{
+	// This information is only interesting if we're currently in fullscreen mode, if not, just ignore this method call
+	if (m_pFrontendOS->IsFullscreen()) {
+		// Set/remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode.
+		// The window manger is responsible to restore the original position and size of the window when the fullscreen mode should be left.
+		// This works only on window manger which are EWMH (v1.3 or greater) compatible (http://standards.freedesktop.org/wm-spec/wm-spec-1.3.html)
+		Atom wmFullScreen = XInternAtom(m_pDisplay, "_NET_WM_STATE_FULLSCREEN", False);
+		Atom wmState = XInternAtom(m_pDisplay, "_NET_WM_STATE", False);
+
+		// Setup the X-event
+		XEvent sXEvent;
+		memset(&sXEvent, 0, sizeof(sXEvent));
+		sXEvent.type                 = ClientMessage;
+		sXEvent.xclient.window       = m_nNativeWindowHandle;
+		sXEvent.xclient.message_type = wmState;
+		sXEvent.xclient.format       = 32;
+		sXEvent.xclient.data.l[1]    = wmFullScreen;
+
+		// Leave fullscreen - Send message to the root window to inform the window manager about the change
+		sXEvent.xclient.data.l[0] = 0;	// The atom should be added (= 1) or removed (= 0)
+		XSendEvent(m_pDisplay, DefaultRootWindow(m_pDisplay), False, SubstructureNotifyMask, &sXEvent);
+		XSync(m_pDisplay, False); // Do it!
+
+		// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+		m_pFrontendOS->OnFullscreenMode();
+
+		// Reenter fullscreen - Send message to the root window to inform the window manager about the change
+		sXEvent.xclient.data.l[0] = 1;	// The atom should be added (= 1) or removed (= 0)
+		XSendEvent(m_pDisplay, DefaultRootWindow(m_pDisplay), False, SubstructureNotifyMask, &sXEvent);
+		XSync(m_pDisplay, False); // Do it!
+	}
 }
 
 bool OSWindowLinux::IsMouseOver() const

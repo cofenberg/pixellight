@@ -303,6 +303,12 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*/
 		PLCORE_API void SetFullscreen(bool bFullscreen);
 
+		/**
+		*  @brief
+		*    Something related to fullscreen mode has been changed (e.g. the display resolution)
+		*/
+		PLCORE_API void RefreshFullscreen();
+
 		//[-------------------------------------------------------]
 		//[ Mouse                                                 ]
 		//[-------------------------------------------------------]

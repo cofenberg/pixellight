@@ -166,6 +166,11 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	// No window = nothing to do in here
 }
 
+void Frontend::RefreshFullscreen()
+{
+	// No window = nothing to do in here
+}
+
 bool Frontend::IsMouseOver() const
 {
 	// We're not interested in GUI stuff
