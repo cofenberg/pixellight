@@ -59,6 +59,11 @@ namespace PLRenderer {
 *  @brief
 *    Renderer context
 *
+*  @remarks
+*    The renderer context stores and manages all data related to the renderer like e.g. the used PLRenderer implementation,
+*    textures and so on. Please note that the renderer context is in fact window independent, it doesn't even now anything
+*    about one or multiple windows (renderer targets).
+*
 *  @note
 *    - There should be only one renderer context instance per application
 */
