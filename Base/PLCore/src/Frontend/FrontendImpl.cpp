@@ -135,13 +135,6 @@ void FrontendImpl::OnSize()
 		m_pFrontend->OnSize();
 }
 
-void FrontendImpl::OnDisplayMode()
-{
-	// Call virtual function from frontend
-	if (m_pFrontend)
-		m_pFrontend->OnDisplayMode();
-}
-
 void FrontendImpl::OnFullscreenMode()
 {
 	// Call virtual function from frontend

@@ -129,7 +129,6 @@ class FrontendPixelLight : public Frontend {
 	//[-------------------------------------------------------]
 	protected:
 		PLCORE_API virtual void OnSize() override;
-		PLCORE_API virtual void OnDisplayMode() override;
 		PLCORE_API virtual void OnFullscreenMode() override;
 		PLCORE_API virtual void OnDraw() override;
 		PLCORE_API virtual void OnUpdate() override;

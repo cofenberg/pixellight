@@ -8,6 +8,8 @@
   just give the window class a black brush and then after the window was made visible within WM_CREATE just catch the WM_ERASEBKGND in order to avoid overdraw (= flickering). Another
   solution might have been to just delay the window show until the render loop starts... but this would mean that, after the user started the application, he would see no reaction at
   all... even if it's just for a few milliseconds, but even then one might start the application again because it feld like the application didn't started at all.
+- Removed "AbstractFrontend::OnDisplayMode()". For e.g. "PLRenderer::RendererApplication" it's the same as "OnFullscreenMode()" and I can't think of a real difference - this method just
+  says "something related to fullscreen mode has been changed".
 
 
 

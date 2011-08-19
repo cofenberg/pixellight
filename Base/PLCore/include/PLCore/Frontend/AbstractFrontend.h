@@ -70,13 +70,12 @@ class AbstractFrontend {
 
 		/**
 		*  @brief
-		*    Called when the display mode was changed
-		*/
-		virtual void OnDisplayMode() = 0;
-
-		/**
-		*  @brief
 		*    Called when the fullscreen mode was changed
+		*
+		*  @remarks
+		*    This method just says "something related to fullscreen mode has been changed". Whether we
+		*    changed from window mode into fullscreen mode or changed e.g. the resolution used in
+		*    fullscreen mode is not really interesting in here.
 		*/
 		virtual void OnFullscreenMode() = 0;
 

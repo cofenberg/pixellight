@@ -98,15 +98,6 @@ void FrontendApplication::OnSize()
 
 /**
 *  @brief
-*    Called when the display mode was changed
-*/
-void FrontendApplication::OnDisplayMode()
-{
-	// No default implementation
-}
-
-/**
-*  @brief
 *    Called when the fullscreen mode was changed
 */
 void FrontendApplication::OnFullscreenMode()

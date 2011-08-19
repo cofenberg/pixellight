@@ -136,16 +136,12 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 		/**
 		*  @brief
-		*    Called when the display mode was changed
-		*
-		*  @note
-		*    - The default implementation is empty
-		*/
-		PLCORE_API virtual void OnDisplayMode() override;
-
-		/**
-		*  @brief
 		*    Called when the fullscreen mode was changed
+		*
+		*  @remarks
+		*    This method just says "something related to fullscreen mode has been changed". Whether we
+		*    changed from window mode into fullscreen mode or changed e.g. the resolution used in
+		*    fullscreen mode is not really interesting in here.
 		*
 		*  @note
 		*    - The default implementation is empty

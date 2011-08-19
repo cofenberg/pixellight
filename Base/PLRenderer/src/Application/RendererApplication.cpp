@@ -184,32 +184,6 @@ void RendererApplication::OnStop()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when the display mode was changed
-*/
-void RendererApplication::OnDisplayMode()
-{
-	// Get the renderer surface
-	Surface *pSurface = GetSurface();
-	if (pSurface && m_pDisplayMode) {
-		// Backup information from renderer surface
-		SurfacePainter *pPainter = pSurface->GetPainter();
-		pSurface->SetPainter(nullptr, false);
-
-		// De-init renderer surface
-		DeInit();
-
-		// Initialize renderer surface
-		Init(*m_pRenderer, GetFrontend().GetNativeWindowHandle(), *m_pDisplayMode, GetFrontend().IsFullscreen());
-
-		// Set previous renderer surface painter
-		pSurface = GetSurface();
-		if (pSurface)
-			pSurface->SetPainter(pPainter, false);
-	}
-}
-
-/**
-*  @brief
 *    Called when the fullscreen mode was changed
 */
 void RendererApplication::OnFullscreenMode()

@@ -160,17 +160,6 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 	protected:
 		/**
 		*  @brief
-		*    Called when the display mode was changed
-		*
-		*  @remarks
-		*    The default implementation does the following tasks:
-		*    - Everything that PLCore::FrontendApplication::OnDisplayMode() does
-		*    - Update renderer surface
-		*/
-		PLRENDERER_API virtual void OnDisplayMode() override;
-
-		/**
-		*  @brief
 		*    Called when the fullscreen mode was changed
 		*
 		*  @remarks
