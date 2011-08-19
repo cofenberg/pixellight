@@ -194,16 +194,16 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
+	// Check if we're allowed to perform an update right now
+	if (Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
+		OnUpdate();
+	}
+
 	// Check if there are system messages waiting (non-blocking)
 	if (Gui::GetSystemGui()->HasPendingMessages()) {
 		// Process all waiting messages
 		Gui::GetSystemGui()->ProcessMessages();
-	}
-
-	// Check if we're allowed to perform an update right now
-	if (Timing::GetInstance()->Update()) {
-		// Let the frontend update it's states
-		OnUpdate();
 	}
 }
 

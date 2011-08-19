@@ -108,14 +108,14 @@ FrontendMainWindow::~FrontendMainWindow()
 void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 {
 	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
-		// Ask Qt politly to update (and repaint) the widget
-		update();
-
 		// Check if we're allowed to perform an update right now
 		if (PLCore::Timing::GetInstance()->Update()) {
-			// Let the frontend update it's states
+			// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
 			m_pFrontendQt->OnUpdate();
 		}
+
+		// Ask Qt politly to update (and repaint) the widget
+		update();
 	}
 }
 
