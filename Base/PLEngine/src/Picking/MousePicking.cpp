@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Frontend/Frontend.h>
+#include <PLMath/Vector2i.h>
 #include <PLMath/Rectangle.h>
 #include <PLScene/Scene/SNCamera.h>
 #include "PLEngine/Picking/MousePicking.h"
@@ -31,6 +33,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLMath;
 using namespace PLScene;
 namespace PLEngine {
@@ -43,10 +46,9 @@ namespace PLEngine {
 *  @brief
 *    Constructor
 */
-MousePicking::MousePicking(PLGui::Widget *pWidget, SNCamera *pCamera) :
-	EventHandlerWidgetDestroy(&MousePicking::OnWidgetDestroy, this),
+MousePicking::MousePicking(Frontend &cFrontend, SNCamera *pCamera) :
 	EventHandlerCameraDestroy(&MousePicking::OnCameraDestroy, this),
-	m_pWidget(pWidget),
+	m_pFrontend(&cFrontend),
 	m_pCamera(pCamera)
 {
 }
@@ -61,29 +63,11 @@ MousePicking::~MousePicking()
 
 /**
 *  @brief
-*    Returns the widget to perform the picking in
+*    Returns the frontend instance used to determine the mouse position
 */
-Widget *MousePicking::GetWidget() const
+Frontend &MousePicking::GetFrontend() const
 {
-	return m_pWidget;
-}
-
-/**
-*  @brief
-*    Sets the widget to perform the picking in
-*/
-void MousePicking::SetWidget(Widget *pWidget)
-{
-	// Disconnect event handler
-	if (m_pWidget)
-		m_pWidget->SignalDestroy.Disconnect(EventHandlerWidgetDestroy);
-
-	// Set new widget
-	m_pWidget = pWidget;
-
-	// Connect event handler
-	if (m_pWidget)
-		m_pWidget->SignalDestroy.Connect(EventHandlerWidgetDestroy);
+	return *m_pFrontend;
 }
 
 /**
@@ -119,14 +103,13 @@ void MousePicking::SetCamera(SNCamera *pCamera)
 */
 bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMaxDistance)
 {
-	// Is there a widget and a camera?
-	if (m_pWidget && m_pCamera) {
-		// Get current mouse cursor position inside the widget
-		Vector2i vMousePos;
-		if (m_pWidget->GetMousePos(vMousePos)) {
-			// Return the picked scene node
-			return PerformMousePicking(cPickingResult, vMousePos, fMaxDistance);
-		}
+	// Is there a camera?
+	if (m_pCamera) {
+		// Get current mouse cursor position inside the frontend
+		const Vector2i vMousePos(m_pFrontend->GetMousePositionX(), m_pFrontend->GetMousePositionY());
+
+		// Return the picked scene node
+		return PerformMousePicking(cPickingResult, vMousePos, fMaxDistance);
 	}
 
 	// Error!
@@ -139,14 +122,14 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMax
 */
 bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vector2i &vMousePos, float fMaxDistance)
 {
-	// Don't do picking if mouse is outside the widget - or there's no widget and/or camera at all
-	if (m_pWidget && m_pCamera && m_pCamera->GetContainer() &&
-		vMousePos.x >= 0 && vMousePos.x < static_cast<int>(m_pWidget->GetSize().x) &&
-		vMousePos.y >= 0 && vMousePos.y < static_cast<int>(m_pWidget->GetSize().y)) {
+	// Don't do picking if mouse is outside the frontend - or there's no widget and/or camera at all
+	if (m_pCamera && m_pCamera->GetContainer() &&
+		vMousePos.x >= 0 && vMousePos.x < static_cast<int>(m_pFrontend->GetWidth()) &&
+		vMousePos.y >= 0 && vMousePos.y < static_cast<int>(m_pFrontend->GetHeight())) {
 		// Trace line from the camera position to the mouse world position
 
 		// Get the viewport rectangle
-		Rectangle cViewport(0.0f, 0.0f, static_cast<float>(m_pWidget->GetSize().x), static_cast<float>(m_pWidget->GetSize().y));
+		Rectangle cViewport(0.0f, 0.0f, static_cast<float>(m_pFrontend->GetWidth()), static_cast<float>(m_pFrontend->GetHeight()));
 
 		// Get picking line start and end
 		Vector3 v2DPos(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 0.0f);
@@ -170,15 +153,6 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Called when a widget was destroyed
-*/
-void MousePicking::OnWidgetDestroy()
-{
-	m_pWidget = nullptr;
 }
 
 /**
