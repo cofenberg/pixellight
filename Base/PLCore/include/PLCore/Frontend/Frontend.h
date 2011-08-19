@@ -77,6 +77,9 @@ template <class ValueType> class Array;
 *  @note
 *    - Do only interact with the frontend when it really makes sense because it's not guaranteed
 *      that every frontend implementation provides every feature exposed by this interface
+*    - Stuff like window border, window title bar etc. isn't interesting for the frontend, therefore
+*      methods like "GetNativeWindowHandle()" or "GetWidth()" return only information relevant for e.g.
+*      rendering into the frontend
 */
 class Frontend : public Object, protected AbstractLifecycle, protected AbstractFrontend {
 
