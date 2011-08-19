@@ -8,7 +8,7 @@ define_project(64Picking NOSUFFIX)
 ##################################################
 add_sources(
 	src/Application.cpp
-#	src/MyPicking.cpp # [TODO] Frontend update
+	src/MyPicking.cpp
 	src/Main.cpp
 )
 
