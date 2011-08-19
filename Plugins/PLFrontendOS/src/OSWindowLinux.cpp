@@ -55,6 +55,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
 	m_nNativeWindowHandle(NULL_HANDLE),
+	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
 	m_nInvisibleCursor(0)
 {
@@ -234,6 +235,16 @@ bool OSWindowLinux::Ping()
 				}
 				break;
 
+			// Mouse entered the window area
+			case EnterNotify:
+				m_bIsMouseOver = true;
+				break;
+
+			// Mouse left the window area
+			case LeaveNotify:
+				m_bIsMouseOver = false;
+				break;
+
 			// [TODO] Drag and drop of files
 		}
 	}
@@ -303,6 +314,11 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 
 	// Inform that the fullscreen mode was changed
 	m_pFrontendOS->OnFullscreenMode();
+}
+
+bool OSWindowLinux::IsMouseOver() const
+{
+	return m_bIsMouseOver;
 }
 
 bool OSWindowLinux::IsMouseVisible() const

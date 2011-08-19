@@ -112,6 +112,23 @@ void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
+bool PixelLightCtrl::IsMouseOver() const
+{
+	// Get the mouse cursor's position (in screen coordinates)
+	POINT sPOINT;
+	if (GetCursorPos(&sPOINT)) {
+		// Get window rectangle (in screen coordinates)
+		RECT sRect;
+		if (GetWindowRect(&sRect)) {
+			// Is the mouse cursor within the window rectangle?
+			return PtInRect(&sRect, sPOINT);
+		}
+	}
+
+	// Error!
+	return false;
+}
+
 bool PixelLightCtrl::IsMouseVisible() const
 {
 	return m_bMouseVisible;

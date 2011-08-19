@@ -301,6 +301,15 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
+		*    Check if the mouse is currently over the frontend
+		*
+		*  @return
+		*    'true' if mouse-over, else 'false'
+		*/
+		virtual bool IsMouseOver() const = 0;
+
+		/**
+		*  @brief
 		*    Check if the mouse cursor is visible
 		*
 		*  @return

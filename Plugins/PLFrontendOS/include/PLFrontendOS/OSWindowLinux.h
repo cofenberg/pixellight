@@ -128,6 +128,7 @@ class OSWindowLinux : public OSWindow {
 		virtual PLCore::uint32 GetHeight() const override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual void SetFullscreen(bool bFullscreen) override;
+		virtual bool IsMouseOver() const override;
 		virtual bool IsMouseVisible() const override;
 		virtual void SetMouseVisible(bool bVisible) override;
 		virtual void SetTrapMouse(bool bTrap) override;
@@ -155,6 +156,7 @@ class OSWindowLinux : public OSWindow {
 		Display		*m_pDisplay;			/**< System display, considered to be always valid */
 		Atom		 m_wmDelete;			/**< System atom for delete */
 		Window		 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		bool		 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
 		bool		 m_bMouseVisible;		/**< Is the mouse cursor visible? */
 		Cursor		 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
 

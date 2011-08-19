@@ -348,9 +348,9 @@ void OSWindowWindows::UpdateTrapMouse()
 {
 	// Trap mouse?
 	if (m_bTrapMouse) {
-		// Get window rect (in screen coordinates)
+		// Get window rectangle (in screen coordinates)
 		RECT sRect;
-		::GetWindowRect(m_hWnd, &sRect); 
+		::GetWindowRect(m_hWnd, &sRect);
 
 		// Trap mouse within up-to-date widget rectangle
 		::ClipCursor(&sRect); 
@@ -477,6 +477,25 @@ void OSWindowWindows::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool OSWindowWindows::IsMouseOver() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPOINT;
+		if (GetCursorPos(&sPOINT)) {
+			// Get window rectangle (in screen coordinates)
+			RECT sRect;
+			if (GetWindowRect(m_hWnd, &sRect)) {
+				// Is the mouse cursor within the window rectangle?
+				return PtInRect(&sRect, sPOINT);
+			}
+		}
+	}
+
+	// Error!
+	return false;
+}
+
 bool OSWindowWindows::IsMouseVisible() const
 {
 	return m_bMouseVisible;
@@ -504,7 +523,7 @@ void OSWindowWindows::SetTrapMouse(bool bTrap)
 	if (m_hWnd) {
 		// Trap mouse?
 		if (bTrap) {
-			// Get window rect (in screen coordinates)
+			// Get window rectangle (in screen coordinates)
 			RECT sRect;
 			GetWindowRect(m_hWnd, &sRect); 
 

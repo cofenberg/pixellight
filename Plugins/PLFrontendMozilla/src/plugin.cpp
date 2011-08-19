@@ -304,6 +304,25 @@ void nsPluginInstance::SetFullscreen(bool bFullscreen)
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
 }
 
+bool nsPluginInstance::IsMouseOver() const
+{
+	if (m_hWnd) {
+		// Get the mouse cursor's position (in screen coordinates)
+		POINT sPOINT;
+		if (GetCursorPos(&sPOINT)) {
+			// Get window rectangle (in screen coordinates)
+			RECT sRect;
+			if (GetWindowRect(m_hWnd, &sRect)) {
+				// Is the mouse cursor within the window rectangle?
+				return PtInRect(&sRect, sPOINT);
+			}
+		}
+	}
+
+	// Error!
+	return false;
+}
+
 bool nsPluginInstance::IsMouseVisible() const
 {
 	return m_bMouseVisible;

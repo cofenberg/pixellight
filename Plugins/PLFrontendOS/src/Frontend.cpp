@@ -191,6 +191,12 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseOver() const
+{
+	// Let the OS window do the rest
+	return m_pOSWindow ? m_pOSWindow->IsMouseOver() : false;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	// Let the OS window do the rest

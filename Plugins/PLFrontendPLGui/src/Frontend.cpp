@@ -288,6 +288,11 @@ void Frontend::SetFullscreen(bool bFullscreen)
 	}
 }
 
+bool Frontend::IsMouseOver() const
+{
+	return m_pMainWindow ? m_pMainWindow->IsMouseOver() : false;
+}
+
 bool Frontend::IsMouseVisible() const
 {
 	return (m_pMainWindow && m_pMainWindow->GetGui()) ? m_pMainWindow->GetGui()->IsMouseVisible() : false;

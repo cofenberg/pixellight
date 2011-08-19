@@ -240,6 +240,16 @@ void Frontend::SetFullscreen(bool bFullscreen)
 
 /**
 *  @brief
+*    Check if the mouse is currently over the frontend
+*/
+bool Frontend::IsMouseOver() const
+{
+	// Call backend
+	return m_pFrontendImpl->IsMouseOver();
+}
+
+/**
+*  @brief
 *    Check if the mouse cursor is visible
 */
 bool Frontend::IsMouseVisible() const

@@ -1,3 +1,9 @@
+>> 19.08.2011
+[CO]
+- "Frontend": Added "IsMouseOver()"
+
+
+
 >> 18.08.2011
 [CO]
 - Renamed the "Core"-class into "Runtime" because it's all about the runtime (even the version information)
