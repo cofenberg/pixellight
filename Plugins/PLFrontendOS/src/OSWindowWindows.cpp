@@ -75,10 +75,12 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 			case WM_CREATE:
 				// Set window pointer and handle (SetWindowLongPtr is the 64bit equivalent to SetWindowLong)
 				::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pOSWindowWindows));
-				pOSWindowWindows->m_hWnd = hWnd;
 
-				// Show the window, but do not activate it right now
+				// Show the window, but do not activate it right now - this also sends WM_ERASEBKGND which now clears the content to black
 				::ShowWindow(hWnd, SW_SHOWNOACTIVATE);
+
+				// Backup the native window handle - WM_ERASEBKGND will now be catched (no black flickering)
+				pOSWindowWindows->m_hWnd = hWnd;
 
 				// Doing the following frontend lifecycle thing in here would be nice, but when done this way, the window border
 				// will be potentially invisible until OnStart() returns... but this may take some seconds... not nice to look at...
@@ -136,6 +138,14 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 			case WM_HOTKEY:
 				// We catched the hotkey
 				return 0;
+
+			case WM_ERASEBKGND:
+				// Catch WM_ERASEBKGND in order to avoid black flickering?
+				if (pOSWindowWindows->m_hWnd)
+					return 0;	// Gotcha!
+
+				// ... no catching, the system will now "erase" the background...
+				break;
 
 			// Window paint request
 			case WM_PAINT:
@@ -236,7 +246,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_WndClass.hInstance		= m_hInstance;
 	m_WndClass.hIcon			= nullptr;	// ... set below...
 	m_WndClass.hCursor			= ::LoadCursor(nullptr, IDC_ARROW);
-	m_WndClass.hbrBackground	= nullptr;
+	m_WndClass.hbrBackground	= CreateSolidBrush(RGB(0, 0, 0));	// By using a brush, the system will emit WM_ERASEBKGND (nullptr would result in a nasty white window as soon as it's shown)
 	m_WndClass.lpszMenuName		= nullptr;
 	m_WndClass.lpszClassName	= TEXT("PLFrontendOS_OSWindowWindows");
 
@@ -487,7 +497,7 @@ bool OSWindowWindows::IsMouseOver() const
 			RECT sRect;
 			if (::GetWindowRect(m_hWnd, &sRect)) {
 				// Is the mouse cursor within the window rectangle?
-				return ::PtInRect(&sRect, sPOINT);
+				return (::PtInRect(&sRect, sPOINT) == TRUE);
 			}
 		}
 	}

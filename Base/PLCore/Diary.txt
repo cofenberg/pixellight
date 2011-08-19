@@ -2,6 +2,12 @@
 [CO]
 - "Frontend": Added "IsMouseOver()"
 - "Frontend": Added "GetMousePositionX()" & "GetMousePositionY()"
+- "PLFrontendOS::OSWindowWindows" fine-tuning: As soon as the MS Windows function "ShowWindow()" is called, the window gets visible at once... with a nasty white content which is
+  somewhat blending when you're working in a dark room. It's like a flash. I did some research but didn't found an answer how to avoid drawing at all... I can remember that previous
+  Windows versions just did draw nothing when provinding a null-brush in the window class resulting in the untouchen window background. The only solution that worked for me is to
+  just give the window class a black brush and then after the window was made visible within WM_CREATE just catch the WM_ERASEBKGND in order to avoid overdraw (= flickering). Another
+  solution might have been to just delay the window show until the render loop starts... but this would mean that, after the user started the application, he would see no reaction at
+  all... even if it's just for a few milliseconds, but even then one might start the application again because it feld like the application didn't started at all.
 
 
 
