@@ -125,7 +125,12 @@ class FontManager {
 		*    The horizontal and vertical resolution in DPI, for example 96
 		*
 		*  @return
-		*    The texture font, a null pointer on error
+		*    The texture font, a null pointer on error (do not destroy this instance, it's owned by this manager)
+		*
+		*  @remarks
+		*    Unlike the "CreateFontTexture()"-methods, this method checks whether or not the requested font
+		*    is already registered within this manager, if so, this instance will be returned instead of a
+		*    new one.
 		*/
 		PLRENDERER_API FontTexture *GetFontTexture(const PLCore::String &sFilename, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96);
 

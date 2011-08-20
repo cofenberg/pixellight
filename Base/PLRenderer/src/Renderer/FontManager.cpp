@@ -82,24 +82,34 @@ FontTexture *FontManager::GetFontTexture(const String &sFilename, uint32 nSize, 
 {
 	// Check the parameters
 	if (sFilename.GetLength() && nSize) {
-		Iterator<FontTexture*> cIterator = m_lstFontTexture.GetIterator();
-		while (cIterator.HasNext()) {
-			FontTexture *pFont = cIterator.Next();
-			if (pFont->GetFilename() == sFilename && pFont->GetSize() == nSize && pFont->GetResolution() == nResolution)
-				return pFont; // Return the found font
+		// Try to open the file
+		File cFile;
+		if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, false)) {
+			// Get the absolute font filename
+			const String sAbsFilename = cFile.GetUrl().GetUrl();
+
+			// Is this font already registered?
+			Iterator<FontTexture*> cIterator = m_lstFontTexture.GetIterator();
+			while (cIterator.HasNext()) {
+				FontTexture *pFont = cIterator.Next();
+				if (pFont->GetFilename() == sAbsFilename && pFont->GetSize() == nSize && pFont->GetResolution() == nResolution)
+					return pFont; // Return the found font
+			}
+
+			// Create the font
+			FontTexture *pFont = reinterpret_cast<FontTexture*>(CreateFontTexture(cFile, nSize, nResolution));
+			if (pFont)
+				m_lstFontTexture.Add(pFont);
+
+			// Return the created font
+			return pFont;
+		} else {
+			PL_LOG(Error, "Failed to open font file '" + sFilename + '\'')
 		}
-
-		// Create a new font
-		FontTexture *pFont = reinterpret_cast<FontTexture*>(CreateFontTexture(sFilename, nSize, nResolution));
-		if (pFont)
-			m_lstFontTexture.Add(pFont);
-
-		// Return the new font
-		return pFont;
-	} else {
-		// Error!
-		return nullptr;
 	}
+
+	// Error!
+	return nullptr;
 }
 
 /**
