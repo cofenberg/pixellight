@@ -1,3 +1,11 @@
+>> 20.08.2011
+[CO]
+- "ParseProject()"-function: When no Visual Studio projects can be found (we can directly use their filename!), a second pass now looks for CMake files
+  ("CMakeLists.txt"). If CMake files are found, they are opened and parsed. E.g. "define_project(PLRenderer)" will result in the project name "PLRenderer"...
+  because this process is more expensive, the lightweight Visual Studio project check is done first.
+
+
+
 >> 04.08.2011
 [CO]
 - Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case

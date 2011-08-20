@@ -322,32 +322,77 @@ bool ParseProject(Project &cProject)
 	String sPath = cProject.sPath;
 	Message(STATUS, "Parsing project at '" + sPath + '\'');
 
-	// Find VC projects
-	Message(STATUS, "Looking for project files");
-	Array<String> lstProjects;
-	Find(lstProjects, sPath, "*.vcxproj", false);
-	PrintList(DEBUG, "found ", lstProjects);
-
 	// Find out name of project
 	String sName;
-	Iterator<String> cIterator = lstProjects.GetIterator();
-	while (cIterator.HasNext()) {
-		String sFilename = Url(cIterator.Next()).GetFilename();
-		Message(DEBUG, String("Project ") + '\'' + sFilename + '\'');
-		if (sFilename.IndexOf("Stat") > -1) {
-			Message(DEBUG, "This is a static lib version, ignoring ...");
-		} else if (sFilename.IndexOf("Internal") > -1) {
-			Message(DEBUG, "This is an internal project file, ignoring ...");
+	{
+		// Find projects
+		Message(STATUS, "Looking for project files");
+
+		// First: Try to find Visual Studio projects (we can directly use their filename!)
+		Array<String> lstProjects;
+		Find(lstProjects, sPath, "*.vcxproj", false);
+		if (lstProjects.GetNumOfElements()) {
+			PrintList(DEBUG, "found Visual Studio project ", lstProjects);
+
+			// Loop through all found projects
+			Iterator<String> cIterator = lstProjects.GetIterator();
+			while (cIterator.HasNext() && !sName.GetLength()) {
+				// Find out name of project
+				const String sFilename = Url(cIterator.Next()).GetFilename();
+				Message(DEBUG, String("Project ") + '\'' + sFilename + '\'');
+				if (sFilename.IndexOf("Stat") > -1) {
+					Message(DEBUG, "This is a static lib version, ignoring ...");
+				} else if (sFilename.IndexOf("Internal") > -1) {
+					Message(DEBUG, "This is an internal project file, ignoring ...");
+				} else {
+					sName = Url(sFilename).CutExtension();
+					Message(DEBUG, "Taking '" + sName + "' as project name");
+				}
+			}
 		} else {
-			sName = Url(sFilename).CutExtension();
-			Message(DEBUG, "Taking '" + sName + "' as project name");
+			// Second: Try to find CMake projects (we need to open and parse them!)
+			Find(lstProjects, sPath, "CMakeLists.txt", false);
+			if (lstProjects.GetNumOfElements()) {
+				// PrintList(DEBUG, "found CMake project ", lstProjects);	// Doesn't really make sense :D
+
+				// Setup regular expressions
+				RegEx cRegExDefineProject("^\\s*define_project\\(\\s*(?<name>\\w*)\\s*\\)\\s*$");
+
+				// Loop through all found projects
+				Iterator<String> cIterator = lstProjects.GetIterator();
+				while (cIterator.HasNext() && !sName.GetLength()) {
+					// Open the CMake file
+					File cFile(cIterator.Next());
+					if (cFile.Open(File::FileRead | File::FileText)) {
+						// Setup tokenizer
+						Tokenizer cTokenizer;
+						cTokenizer.SetDelimiters("\r\n");
+						cTokenizer.SetSingleChars("");
+						cTokenizer.SetQuotes("");
+						cTokenizer.SetCommentStartTag("");
+						cTokenizer.SetCommentEndTag("");
+						cTokenizer.SetSingleLineComment("");
+						cTokenizer.Start(cFile);
+
+						// Iterate through all lines
+						String sLine = cTokenizer.GetNextToken();
+						while (sLine.GetLength() && !sName.GetLength()) {
+							// Check for define_project
+							if (cRegExDefineProject.Match(sLine))
+								sName = cRegExDefineProject.GetNameResult("name");
+
+							// Next, please
+							sLine = cTokenizer.GetNextToken();
+						}
+					}
+				}
+			}
 		}
 	}
 
 	// Recognize suffix
-	if (cProject.sSuffix.GetLength() > 0) {
+	if (cProject.sSuffix.GetLength() > 0)
 		Message(STATUS, "Using project suffix '" + cProject.sSuffix + '\'');
-	}
 
 	// Check if a project name has been found
 	if (sName.GetLength() > 0) {
