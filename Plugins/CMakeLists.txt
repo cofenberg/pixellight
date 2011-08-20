@@ -117,7 +117,7 @@ if(PL_PLUGIN_PHYSICS_PHYSX)
 	add_subdirectory(PLPhysicsPhysX)
 endif()
 if(PL_PLUGIN_PHYSICS_BULLET)
-	#add_subdirectory(PLPhysicsBullet)
+	add_subdirectory(PLPhysicsBullet)
 endif()
 # PLSound backends
 if(PL_PLUGIN_SOUND_NULL)
