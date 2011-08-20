@@ -25,8 +25,9 @@ define_external_project(Bullet)
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
 	set(BULLET_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Bullet CACHE INTERNAL "")
 	if(WIN32)
-		# [TODO]
-		#set(BULLET_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/newton.lib CACHE INTERNAL "")
+		set(BULLET_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/BulletDynamics.lib
+							 ${CMAKETOOLS_CURRENT_LIB_DIR}/BulletCollision.lib
+							 ${CMAKETOOLS_CURRENT_LIB_DIR}/LinearMath.lib CACHE INTERNAL "")
 	elseif(LINUX)
 		set(BULLET_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libBulletDynamics.a
 							 ${CMAKETOOLS_CURRENT_LIB_DIR}/libBulletCollision.a

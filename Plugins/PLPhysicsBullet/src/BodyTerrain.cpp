@@ -27,7 +27,7 @@
 #include "PLPhysicsBullet/BodyImpl.h"
 #include "PLPhysicsBullet/World.h"
 #include "PLPhysicsBullet/BodyTerrain.h"
-#include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#include <Bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
 
 
 //[-------------------------------------------------------]

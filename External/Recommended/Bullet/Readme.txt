@@ -1,4 +1,4 @@
 Bullet 2.78
-- License: ZLib
+- License: zlib, See "License.txt"
 - Used by the physic backend "PLPhysicsBullet"
 - Downloaded from: http://bulletphysics.org/

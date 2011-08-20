@@ -1,3 +1,11 @@
+>> 20.08.2011
+[CO]
+- After Stephan Wezel started the "PLPhysicsBullet" project for a Bullet (http://bulletphysics.org/) physics plugin on 2011-08-12
+ (Revision: 6d80036b6a936903f693d96fd894f02fc293af27), I added the Visual Studio project files today (I also uploaded the precompiled
+  packages for Windows 32 & 64 bit)
+
+
+
 >> 29.07.2011
 [CO]
 - Moved "SNPhysicsMouseInteraction" from PLPhysics into PLEngine (another refactoring on this problematic "scene node" will follow)

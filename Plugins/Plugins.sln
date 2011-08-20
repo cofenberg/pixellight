@@ -83,6 +83,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLGuiXmlText", "PLGuiXmlTex
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLlibRocket", "PLlibRocket\PLlibRocket.vcxproj", "{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPhysicsBullet", "PLPhysicsBullet\PLPhysicsBullet.vcxproj", "{A4A41B03-8288-41F9-8360-5EFA31CF550D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -407,6 +409,14 @@ Global
 		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|Win32.Build.0 = Release|Win32
 		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|x64.ActiveCfg = Release|x64
 		{B9695D67-45A2-47BF-8A6B-E4B1794AC1FB}.Release|x64.Build.0 = Release|x64
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Debug|Win32.Build.0 = Debug|Win32
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Debug|x64.ActiveCfg = Debug|x64
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Debug|x64.Build.0 = Debug|x64
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Release|Win32.ActiveCfg = Release|Win32
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Release|Win32.Build.0 = Release|Win32
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Release|x64.ActiveCfg = Release|x64
+		{A4A41B03-8288-41F9-8360-5EFA31CF550D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
