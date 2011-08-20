@@ -290,9 +290,6 @@ void OSWindowLinux::SetFullscreenAltTab(bool bAllowed)
 
 void OSWindowLinux::SetFullscreen(bool bFullscreen)
 {
-	// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
-	m_pFrontendOS->OnFullscreenMode();
-
 	// Set/remove _NET_WM_STATE_FULLSCREEN to toggle fullscreen mode.
 	// The window manger is responsible to restore the original position and size of the window when the fullscreen mode should be left.
 	// This works only on window manger which are EWMH (v1.3 or greater) compatible (http://standards.freedesktop.org/wm-spec/wm-spec-1.3.html)
@@ -314,6 +311,11 @@ void OSWindowLinux::SetFullscreen(bool bFullscreen)
 
 	// Do it!
 	XSync(m_pDisplay, False);
+
+	// Inform that the fullscreen mode was changed (in here, usually e.g. the display resolution is updated and so on)
+	// -> This has really be done "after" the OS window has been set to fullscreen, else we don't see the window content
+	// (looks like the OS takes care of situations like changing the display resolution and updating the window dimension automatically)
+	m_pFrontendOS->OnFullscreenMode();
 }
 
 void OSWindowLinux::RefreshFullscreen()
