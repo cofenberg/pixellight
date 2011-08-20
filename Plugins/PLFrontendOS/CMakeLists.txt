@@ -25,6 +25,7 @@ elseif(LINUX)
 	##################################################
 	add_sources(
 		src/OSWindowLinux.cpp
+		src/XDnDFileDropHelper.cpp
 	)
 endif()
 
