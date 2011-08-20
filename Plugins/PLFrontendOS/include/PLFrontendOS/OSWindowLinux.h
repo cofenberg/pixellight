@@ -156,12 +156,17 @@ class OSWindowLinux : public OSWindow {
 	//[-------------------------------------------------------]
 	private:
 		Frontend	*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
-		Display		*m_pDisplay;			/**< System display, considered to be always valid */
-		Atom		 m_wmDelete;			/**< System atom for delete */
-		Window		 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		::Display	*m_pDisplay;			/**< System display, considered to be always valid */
+		::Window	 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
 		bool		 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
 		bool		 m_bMouseVisible;		/**< Is the mouse cursor visible? */
-		Cursor		 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
+		::Cursor	 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
+		// Atoms
+		::Atom		 WM_DELETE_WINDOW;		/**< System atom for delete */
+		::Atom		 UTF8_STRING;			/**< Atom for the type of a window title */
+		::Atom 		 WM_NAME;				/**< Window title (old?) */
+		::Atom 		 _NET_WM_NAME;			/**< Window title */
+		::Atom 		 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
 
 
 };

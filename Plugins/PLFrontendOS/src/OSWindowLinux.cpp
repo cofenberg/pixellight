@@ -26,6 +26,8 @@
 #include <string.h>
 #include <signal.h>
 #include "../pl_icon.h"
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
 
@@ -53,11 +55,16 @@ bool g_bSignalSystemQuit = false;	/**< Does the OS asks us to shut down? */
 OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pDisplay(XOpenDisplay(nullptr)),
-	m_wmDelete(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW", True)),
 	m_nNativeWindowHandle(NULL_HANDLE),
 	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
-	m_nInvisibleCursor(0)
+	m_nInvisibleCursor(0),
+	// Atoms
+	WM_DELETE_WINDOW	(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW",	 True)),
+	UTF8_STRING			(XInternAtom(m_pDisplay, "UTF8_STRING",			 False)),
+	WM_NAME				(XInternAtom(m_pDisplay, "WM_NAME",				 False)),
+	_NET_WM_NAME		(XInternAtom(m_pDisplay, "_NET_WM_NAME",		 False)),
+	_NET_WM_VISIBLE_NAME(XInternAtom(m_pDisplay, "_NET_WM_VISIBLE_NAME", False))
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
@@ -77,12 +84,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XSetWindowAttributes sXSetWindowAttributes;
 		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
 
-		// [TODO] Set window title by using
-		//   m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : ""
-
 		// Create the native OS window instance
 		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
-		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &m_wmDelete, 1);
+		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &WM_DELETE_WINDOW, 1);
 		XTextProperty sXTextProperty;
 		sXTextProperty.value    = const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>("PLFrontendOS_OSWindowLinuxX11"));
 		sXTextProperty.encoding = XA_STRING;
@@ -96,8 +100,18 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, wmIcon, wmCardinal, 32,
 						PropModeReplace, reinterpret_cast<const unsigned char*>(pl_icon), pl_icon_length);
 
+		{ // Set window title
+			const String sTitle = m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "";
+			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		}
+
 		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
+
+		// Do it!
+		XSync(m_pDisplay, False);
 
 		// Create the invisible cursor instance
 		CreateInvisibleCursor();
@@ -215,11 +229,11 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case ClientMessage:
-				// When the "m_wmDelete" client message is send, no "DestroyNotify"-message is generated because the
-				// application itself should destroy/close the window to which the "m_wmDelete" client message was send to.
+				// When the "WM_DELETE_WINDOW" client message is send, no "DestroyNotify"-message is generated because the
+				// application itself should destroy/close the window to which the "WM_DELETE_WINDOW" client message was send to.
 				// In this case, we will leave the event loop after this message was processed and no other messages are in the queue.
 				// -> No "DestroyNotify"-message can be received
-				if (sXEvent.xclient.data.l[0] == m_wmDelete)
+				if (sXEvent.xclient.data.l[0] == WM_DELETE_WINDOW)
 					bQuit = true;
 				break;
 
