@@ -58,6 +58,7 @@
 		// ... now that the namespace is name conflict free, go on with includes...
 	#endif
 #include "PLFrontendOS/OSWindow.h"
+#include "PLFrontendOS/XDnDFileDropHelper.h"
 
 
 //[-------------------------------------------------------]
@@ -89,6 +90,7 @@ class OSWindowLinux : public OSWindow {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Frontend;
+	friend class XDnDFileDropHelper;
 
 
 	//[-------------------------------------------------------]
@@ -115,7 +117,12 @@ class OSWindowLinux : public OSWindow {
 		*    Creates an invisible cursor
 		*/
 		void CreateInvisibleCursor();
-
+		
+		/**
+		 * @brief
+		 *    Gets called from the XDnDFileDropHelper when a drop occured
+		 */
+		void OnDrop(const PLCore::Container<PLCore::String> &lstFiles);
 
 	//[-------------------------------------------------------]
 	//[ Private virtual OSWindow functions                    ]
@@ -155,18 +162,19 @@ class OSWindowLinux : public OSWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend	*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
-		::Display	*m_pDisplay;			/**< System display, considered to be always valid */
-		::Window	 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
-		bool		 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
-		bool		 m_bMouseVisible;		/**< Is the mouse cursor visible? */
-		::Cursor	 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
+		Frontend			*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
+		::Display			*m_pDisplay;			/**< System display, considered to be always valid */
+		::Window			 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		bool				 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
+		bool				 m_bMouseVisible;		/**< Is the mouse cursor visible? */
+		::Cursor			 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
 		// Atoms
-		::Atom		 WM_DELETE_WINDOW;		/**< System atom for delete */
-		::Atom		 UTF8_STRING;			/**< Atom for the type of a window title */
-		::Atom 		 WM_NAME;				/**< Window title (old?) */
-		::Atom 		 _NET_WM_NAME;			/**< Window title */
-		::Atom 		 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
+		::Atom				 WM_DELETE_WINDOW;		/**< System atom for delete */
+		::Atom				 UTF8_STRING;			/**< Atom for the type of a window title */
+		::Atom 				 WM_NAME;				/**< Window title (old?) */
+		::Atom 				 _NET_WM_NAME;			/**< Window title */
+		::Atom 				 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
+		XDnDFileDropHelper	 m_cDropHelper;			/**< XDnD Drop helper instance */
 
 
 };

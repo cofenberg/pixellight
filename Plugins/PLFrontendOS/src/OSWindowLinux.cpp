@@ -30,6 +30,8 @@
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowLinux.h"
+#include <PLCore/String/Tokenizer.h>
+#include <iostream>
 
 
 //[-------------------------------------------------------]
@@ -64,7 +66,8 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	UTF8_STRING			(XInternAtom(m_pDisplay, "UTF8_STRING",			 False)),
 	WM_NAME				(XInternAtom(m_pDisplay, "WM_NAME",				 False)),
 	_NET_WM_NAME		(XInternAtom(m_pDisplay, "_NET_WM_NAME",		 False)),
-	_NET_WM_VISIBLE_NAME(XInternAtom(m_pDisplay, "_NET_WM_VISIBLE_NAME", False))
+	_NET_WM_VISIBLE_NAME(XInternAtom(m_pDisplay, "_NET_WM_VISIBLE_NAME", False)),
+	m_cDropHelper(this)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
@@ -106,6 +109,8 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 		}
+		
+		m_cDropHelper.EnableDropForWindow();
 
 		// Show window
 		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
@@ -163,6 +168,285 @@ void OSWindowLinux::CreateInvisibleCursor()
 	XFreePixmap(m_pDisplay, sPixmapNoData);
 }
 
+void OSWindowLinux::OnDrop(const Container<String> &lstFiles)
+{
+	m_pFrontendOS->OnDrop(lstFiles);
+}
+
+// //Atoms for Xdnd
+// Atom XdndEnter;
+// Atom XdndPosition;
+// Atom XdndStatus;
+// Atom XdndTypeList;
+// Atom XdndActionCopy;
+// Atom XdndDrop;
+// Atom XdndFinished;
+// Atom XdndSelection;
+// 
+// Window xdnd_source_window = XLib::None;
+// Atom to_be_requested = XLib::None;
+// bool sent_request = 0;
+// int xdnd_version=0;
+// 
+// struct Property
+// {
+// 	unsigned char *data;
+// 	unsigned long format, nitems;
+// 	Atom type;
+// };
+// 
+// //This fetches all the data from a property
+// Property read_property(Display* disp, Window w, Atom property)
+// {
+// 	Atom actual_type;
+// 	int actual_format;
+// 	unsigned long nitems;
+// 	unsigned long bytes_after;
+// 	unsigned char *ret=0;
+// 	
+// 	int read_bytes = 1024;	
+// 
+// 	//Keep trying to read the property until there are no
+// 	//bytes unread.
+// 	do
+// 	{
+// 		if(ret != 0)
+// 			XFree(ret);
+// 		XGetWindowProperty(disp, w, property, 0, read_bytes, False, AnyPropertyType,
+// 							&actual_type, &actual_format, &nitems, &bytes_after, 
+// 							&ret);
+// 
+// 		read_bytes *= 2;
+// 	}while(bytes_after != 0);
+// 	
+// 	Property p = {ret, actual_format, nitems, actual_type};
+// 
+// 	return p;
+// }
+// 
+// //Convert an atom name in to a String
+// String GetAtomName(Display* disp, Atom a)
+// {
+// 	if(a == XLib::None)
+// 		return "None";
+// 	else
+// 		return XGetAtomName(disp, a);
+// }
+// 
+// // This function takes a list of targets which can be converted to (atom_list, nitems)
+// // and a list of acceptable targets with prioritees (datatypes). It returns the highest
+// // entry in datatypes which is also in atom_list: ie it finds the best match.
+// Atom pick_target_from_list(Display* disp, Atom* atom_list, int nitems)
+// {
+// 	Atom to_be_requested = XLib::None;
+// 	for(int i=0; i < nitems; i++)
+// 	{
+// 		String atom_name = GetAtomName(disp, atom_list[i]);
+// 
+// 		if (atom_name == "text/uri-list")
+// 			to_be_requested = atom_list[i];
+// 	}
+// 
+// 	return to_be_requested;
+// }
+// 
+// // Finds the best target given up to three atoms provided (any can be None).
+// // Useful for part of the Xdnd protocol.
+// Atom pick_target_from_atoms(Display* disp, Atom t1, Atom t2, Atom t3)
+// {
+// 	Atom atoms[3];
+// 	int  n=0;
+// 
+// 	if(t1 != XLib::None)
+// 		atoms[n++] = t1;
+// 
+// 	if(t2 != XLib::None)
+// 		atoms[n++] = t2;
+// 
+// 	if(t3 != XLib::None)
+// 		atoms[n++] = t3;
+// 
+// 	return pick_target_from_list(disp, atoms, n);
+// }
+// 
+// //This atom isn't provided by default
+// Atom XA_TARGETS;
+// 
+// // Finds the best target given a local copy of a property.
+// Atom pick_target_from_targets(Display* disp, Property p)
+// {
+// 	//The list of targets is a list of atoms, so it should have type XA_ATOM
+// 	//but it may have the type TARGETS instead.
+// 
+// 	if((p.type != XA_ATOM && p.type != XA_TARGETS) || p.format != 32)
+// 	{ 
+// 		//This would be really broken. Targets have to be an atom list
+// 		//and applications should support this. Nevertheless, some
+// 		//seem broken (MATLAB 7, for instance), so ask for STRING
+// 		//next instead as the lowest common denominator
+// 
+// 		return XA_STRING;
+// 	}
+// 	else
+// 	{
+// 		Atom *atom_list = (Atom*)p.data;
+// 		
+// 		return pick_target_from_list(disp, atom_list, p.nitems);
+// 	}
+// }
+// 
+// void OSWindowLinux::SetupXDnDSupport()
+// {
+// 	//Atoms for Xdnd
+// 	XdndEnter = XInternAtom(m_pDisplay, "XdndEnter", False);
+// 	XdndPosition = XInternAtom(m_pDisplay, "XdndPosition", False);
+// 	XdndStatus = XInternAtom(m_pDisplay, "XdndStatus", False);
+// 	XdndTypeList = XInternAtom(m_pDisplay, "XdndTypeList", False);
+// 	XdndActionCopy = XInternAtom(m_pDisplay, "XdndActionCopy", False);
+// 	XdndDrop = XInternAtom(m_pDisplay, "XdndDrop", False);
+// 	XdndFinished = XInternAtom(m_pDisplay, "XdndFinished", False);
+// 	XdndSelection = XInternAtom(m_pDisplay, "XdndSelection", False);
+// 	
+// 	//This is a meta-format for data to be "pasted" in to.
+// 	//Requesting this format acquires a list of possible
+// 	//formats from the application which copied the data.
+// 	XA_TARGETS = XInternAtom(m_pDisplay, "TARGETS", False);
+// 	
+// 	//Announce XDND support
+// 	Atom XdndAware = XInternAtom(m_pDisplay, "XdndAware", False);
+// 	Atom version=5;
+// 	XChangeProperty(m_pDisplay, m_nNativeWindowHandle, XdndAware, XA_ATOM, 32, PropModeReplace, (unsigned char*)&version, 1);
+// }
+// 
+// void OSWindowLinux::HandleXDnDEnter(const XClientMessageEvent &clientMessage)
+// {
+// 	bool more_than_3 = clientMessage.data.l[1] & 1;
+// 	Window source = clientMessage.data.l[0];
+// 
+// 	xdnd_version = ( clientMessage.data.l[1] >> 24);
+// 
+// 	//Query which conversions are available and pick the best
+// 
+// 	if(more_than_3)
+// 	{
+// 		//Fetch the list of possible conversions
+// 		Property p = read_property(m_pDisplay, source , XdndTypeList);
+// 		to_be_requested = pick_target_from_targets(m_pDisplay, p);
+// 		XFree(p.data);
+// 	}
+// 	else
+// 	{
+// 		//Use the available list
+// 		to_be_requested = pick_target_from_atoms(m_pDisplay, clientMessage.data.l[2], clientMessage.data.l[3], clientMessage.data.l[4]);
+// 	}
+// }
+// 
+// void OSWindowLinux::HandleXdndPosition(const XClientMessageEvent &clientMessage)
+// {
+// 	
+// 	Atom action = XdndActionCopy;
+// 	if(xdnd_version >= 2)
+// 		action = clientMessage.data.l[4];
+// 	
+// 	//Xdnd: reply with an XDND status message
+// 	XClientMessageEvent m;
+// 	memset(&m, 0, sizeof(m));
+// 	m.type = ClientMessage;
+// 	m.display = clientMessage.display;
+// 	m.window = clientMessage.data.l[0];
+// 	m.message_type = XdndStatus;
+// 	m.format=32;
+// 	m.data.l[0] = m_nNativeWindowHandle;
+// 	m.data.l[1] = (to_be_requested != XLib::None);
+// 	m.data.l[2] = GetWidth();
+// 	m.data.l[3] = GetHeight();
+// 	m.data.l[4] = XdndActionCopy; //We only accept copying anyway.
+// 
+// 	XSendEvent(m_pDisplay,clientMessage.data.l[0], False, NoEventMask, (XEvent*)&m);
+// 	XFlush(m_pDisplay);
+// }
+// 
+// void OSWindowLinux::HandleXdndDrop(const XClientMessageEvent &clientMessage)
+// {
+// 	if(to_be_requested == XLib::None)
+// 	{
+// 		//It's sending anyway, despite instructions to the contrary.
+// 		//So reply that we're not interested.
+// 		XClientMessageEvent m;
+// 		memset(&m, 0, sizeof(m));
+// 		m.type = ClientMessage;
+// 		m.display = clientMessage.display;
+// 		m.window = clientMessage.data.l[0];
+// 		m.message_type = XdndFinished;
+// 		m.format=32;
+// 		m.data.l[0] = m_nNativeWindowHandle;
+// 		m.data.l[1] = 0;
+// 		m.data.l[2] = XLib::None; //Failed.
+// 		XSendEvent(m_pDisplay, clientMessage.data.l[0], False, NoEventMask, (XEvent*)&m);
+// 	}
+// 	else
+// 	{
+// 		xdnd_source_window = clientMessage.data.l[0];
+// 		if(xdnd_version >= 1)
+// 			XConvertSelection(m_pDisplay, XdndSelection, to_be_requested, XdndSelection, m_nNativeWindowHandle, clientMessage.data.l[2]);
+// 		else
+// 			XConvertSelection(m_pDisplay, XdndSelection, to_be_requested, XdndSelection, m_nNativeWindowHandle, CurrentTime);
+// 	}
+// }
+// 
+// void OSWindowLinux::HandleXdndSelection(const XSelectionEvent &selectionMessage)
+// {
+// 	Atom target = selectionMessage.target;
+// 
+// 	if(selectionMessage.property == XLib::None || selectionMessage.selection != XdndSelection)
+// 	{
+// 		// The selection can not be converted or isn't in the XdndSelection buffer -> ignore.
+// 		return;
+// 	}
+// 	else 
+// 	{
+// 		// check if target is the requested one
+// 		if(target == to_be_requested)
+// 		{
+// 			Property prop = read_property(m_pDisplay, m_nNativeWindowHandle, XdndSelection);
+// 			
+// 			//Reply OK.
+// 			XClientMessageEvent m;
+// 			memset(&m, 0, sizeof(m));
+// 			m.type = ClientMessage;
+// 			m.display = m_pDisplay;
+// 			m.window = xdnd_source_window;
+// 			m.message_type = XdndFinished;
+// 			m.format=32;
+// 			m.data.l[0] = m_nNativeWindowHandle;
+// 			m.data.l[1] = 1;
+// 			m.data.l[2] = XdndActionCopy; //We only ever copy.
+// 
+// 			//Reply that all is well.
+// 			XSendEvent(m_pDisplay, xdnd_source_window, False, NoEventMask, (XEvent*)&m);
+// 
+// 			XSync(m_pDisplay, False);
+// 			
+// 			String path (String::FromUTF8((char*)prop.data));
+// 			
+// 			XFree(prop.data);
+// 			
+// 			Tokenizer token;
+// 			token.SetDelimiters("\n\r");
+// 			token.SetSingleLineComment("");
+// 			token.SetQuotes("");
+// 			token.SetSingleChars("");
+// 			
+// 			token.Start(path);
+// 			
+// 			// Create the file list
+// 			Array<String> lstFiles = token.GetTokens();
+// 			
+// 			// Inform the frontend
+// 			m_pFrontendOS->OnDrop(lstFiles);
+// 		}
+// 	}
+// }
 
 //[-------------------------------------------------------]
 //[ Private virtual OSWindow functions                    ]
@@ -229,12 +513,21 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case ClientMessage:
-				// When the "WM_DELETE_WINDOW" client message is send, no "DestroyNotify"-message is generated because the
-				// application itself should destroy/close the window to which the "WM_DELETE_WINDOW" client message was send to.
-				// In this case, we will leave the event loop after this message was processed and no other messages are in the queue.
-				// -> No "DestroyNotify"-message can be received
-				if (sXEvent.xclient.data.l[0] == WM_DELETE_WINDOW)
-					bQuit = true;
+				
+				// Check if the client message is a XDnD message otherwise check for WM_DELETE_WINDOW
+				if(!m_cDropHelper.HandleClientMessage(sXEvent.xclient))
+				{
+					// When the "WM_DELETE_WINDOW" client message is send, no "DestroyNotify"-message is generated because the
+					// application itself should destroy/close the window to which the "WM_DELETE_WINDOW" client message was send to.
+					// In this case, we will leave the event loop after this message was processed and no other messages are in the queue.
+					// -> No "DestroyNotify"-message can be received
+					if (sXEvent.xclient.data.l[0] == WM_DELETE_WINDOW)
+						bQuit = true;
+				}
+				break;
+
+			case SelectionNotify:
+				m_cDropHelper.HandleXdndSelection(sXEvent.xselection);
 				break;
 
 			case KeyPress:
@@ -258,9 +551,6 @@ bool OSWindowLinux::Ping()
 			case LeaveNotify:
 				m_bIsMouseOver = false;
 				break;
-
-			// [TODO] "Simple" drag and drop of files (only URLs) using XDND protocol
-			// "Drag-and-Drop Protocol for the X Window System" http://www.newplanetsoftware.com/xdnd/
 		}
 	}
 
