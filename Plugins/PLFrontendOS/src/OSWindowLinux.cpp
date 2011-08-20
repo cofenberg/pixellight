@@ -259,7 +259,8 @@ bool OSWindowLinux::Ping()
 				m_bIsMouseOver = false;
 				break;
 
-			// [TODO] Drag and drop of files
+			// [TODO] "Simple" drag and drop of files (only URLs) using XDND protocol
+			// "Drag-and-Drop Protocol for the X Window System" http://www.newplanetsoftware.com/xdnd/
 		}
 	}
 
