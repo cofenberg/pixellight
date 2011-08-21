@@ -360,16 +360,26 @@ uint32 OSWindowLinux::GetHeight() const
 void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_nNativeWindowHandle) {
-		// Set position and size
-		XWindowChanges sChanges;
-		sChanges.x		= nX;
-		sChanges.y		= nY;
-		sChanges.width	= nWidth;
-		sChanges.height	= nHeight;
-		XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, CWX | CWY | CWWidth | CWHeight, &sChanges);
+		{ // Correct frontend position and size settings
+			// Get screen info (the documentation doesn't state whether or not we need to free this screen when we're done, so we don't free it)
+			Screen *pScreenInfo = XScreenOfDisplay(m_pDisplay, 0);
 
-		// Do it!
-		XSync(m_pDisplay, False);
+			// Correct frontend position and size settings
+			Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, XWidthOfScreen(pScreenInfo), XHeightOfScreen(pScreenInfo));
+		}
+
+		{ // Set OS window position and size
+			// Set position and size
+			XWindowChanges sChanges;
+			sChanges.x		= nX;
+			sChanges.y		= nY;
+			sChanges.width	= nWidth;
+			sChanges.height	= nHeight;
+			XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, CWX | CWY | CWWidth | CWHeight, &sChanges);
+
+			// Do it!
+			XSync(m_pDisplay, False);
+		}
 	}
 }
 

@@ -31,6 +31,7 @@
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include <PLGui/Gui/Gui.h>
+#include <PLGui/Gui/Screen.h>
 #include <PLGui/Gui/Base/Keys.h>
 #include <PLGui/Widgets/Windows/Window.h>
 #include "PLFrontendPLGui/Frontend.h"
@@ -233,6 +234,13 @@ uint32 Frontend::GetHeight() const
 void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow) {
+		// Get the default screen (never a null pointer)
+		Screen *pScreen = Gui::GetSystemGui()->GetDefaultScreen();
+
+		// Correct frontend position and size settings
+		CorrectPositionSize(nX, nY, nWidth, nHeight, pScreen->GetSize().x, pScreen->GetSize().y);
+
+		// Set position and size settings
 		m_pMainWindow->SetPos(Vector2i(nX, nY));
 		m_pMainWindow->SetSize(Vector2i(nWidth, nHeight));
 	}

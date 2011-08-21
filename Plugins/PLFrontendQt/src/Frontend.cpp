@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qapplication.h>
+#include <QtGui/qdesktopwidget.h>
 #include <PLCore/String/UTF8Tools.h>
 #include "PLFrontendQt/FrontendMainWindow.h"
 #include "PLFrontendQt/Frontend.h"
@@ -197,6 +198,11 @@ uint32 Frontend::GetHeight() const
 void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow) {
+		// Correct frontend position and size settings
+		if (QApplication::desktop())
+			CorrectPositionSize(nX, nY, nWidth, nHeight, QApplication::desktop()->width(), QApplication::desktop()->height());
+
+		// Set position and size settings
 		m_pMainWindow->move(QPoint(nX, nY));
 		m_pMainWindow->resize(QSize(nWidth, nHeight));
 	}

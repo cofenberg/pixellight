@@ -457,8 +457,13 @@ uint32 OSWindowWindows::GetHeight() const
 
 void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
-	if (m_hWnd)
+	if (m_hWnd) {
+		// Correct frontend position and size settings
+		Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+
+		// Set OS window position and size
 		::MoveWindow(m_hWnd, nX, nY, nWidth, nHeight, TRUE);
+	}
 }
 
 void OSWindowWindows::SetFullscreenAltTab(bool bAllowed)

@@ -235,6 +235,35 @@ Frontend *FrontendImpl::CreateFrontend(const FrontendContext &cFrontendContext, 
 	return nullptr;
 }
 
+/**
+*  @brief
+*    Correct frontend position and size settings
+*/
+void FrontendImpl::CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, uint32 nScreenWidth, uint32 nScreenHeight, uint32 nMinWidth, uint32 nMinHeight)
+{
+	// The frontend position shouldn't be negative
+	if (nX < 0)
+		nX = 0;
+	if (nY < 0)
+		nY = 0;
+
+	// The frontend position shouldn't be outside the visible screen
+	if (nX > nScreenWidth-nMinHeight)
+		nX = nScreenWidth-nMinHeight;
+	if (nY > nScreenHeight-nMinHeight)
+		nY = nScreenHeight-nMinHeight;
+
+	// The width of the frontend shouldn't leave the visible screen
+	int nDelta = (nX + nWidth) - nScreenWidth;
+	if (nDelta > 0)
+		nWidth = (nWidth-nDelta > 0) ? (nWidth-nDelta) : nMinHeight;
+
+	// The height of the frontend shouldn't leave the visible screen
+	nDelta = (nY + nHeight) - nScreenHeight;
+	if (nDelta > 0)
+		nHeight = (nHeight-nDelta > 0) ? (nHeight-nDelta) : nMinHeight;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

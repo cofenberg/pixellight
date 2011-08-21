@@ -429,6 +429,34 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		PLCORE_API static Frontend *CreateFrontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
 
+		/**
+		*  @brief
+		*    Correct frontend position and size settings
+		*
+		*  @param[in, out] nX
+		*    X position of the frontend (in screen coordinates)
+		*  @param[in, out] nY
+		*    Y position of the frontend (in screen coordinates)
+		*  @param[in, out] nWidth
+		*    Width of the frontend
+		*  @param[in, out] nHeight
+		*    Height of the frontend
+		*  @param[in]     nScreenWidth
+		*    Screen width
+		*  @param[in]     nScreenHeight
+		*    Screen height
+		*  @param[in]     nMinWidth
+		*    Minimum allowed frontend width
+		*  @param[in]     nMinHeight
+		*    Minimum allowed frontend height
+		*
+		*  @note
+		*    - Corrects: The frontend position shouldn't be negative
+		*    - Corrects: The frontend position shouldn't be outside the visible screen
+		*    - Corrects: The size of the frontend shouldn't leave the visible screen
+		*/
+		PLCORE_API static void CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, uint32 nScreenWidth, uint32 nScreenHeight, uint32 nMinWidth = 200, uint32 nMinHeight = 200);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
