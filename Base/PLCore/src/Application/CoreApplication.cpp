@@ -631,12 +631,12 @@ void CoreApplication::OnInitConfig()
 	// Analize config
 	if (m_sConfigName.GetLength()) {
 		// Is this the first program start?
-		if (m_cConfig.GetVar("PLCore::CoreGeneralConfig", "FirstRun").GetBool()) {
+		if (m_cConfig.GetVar("PLCore::CoreConfig", "FirstRun").GetBool()) {
 			// Call virtual function
 			OnFirstProgramStart();
 
 			// Reset flag
-			m_cConfig.SetVar("PLCore::CoreGeneralConfig", "FirstRun", "0");
+			m_cConfig.SetVar("PLCore::CoreConfig", "FirstRun", "0");
 		}
 	}
 }
@@ -684,7 +684,7 @@ void CoreApplication::OnInitData()
 	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
 
 	// Get localization language (from config or from default)
-	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");
+	String sLanguage = m_cConfig.GetVar("PLCore::CoreConfig", "Language");
 	if (!sLanguage.GetLength()) {
 		// Use always English instead of the current program locale language so that we have a known default behaviour
 		sLanguage = "English";

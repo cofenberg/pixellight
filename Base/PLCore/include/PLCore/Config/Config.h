@@ -62,8 +62,8 @@ namespace PLCore {
 *     pl_class_end
 *   };
 *
-*   class CoreGeneralConfig : public CoreConfigGroup {
-*     pl_class(CoreGeneralConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
+*   class CoreConfig : public CoreConfigGroup {
+*     pl_class(CoreConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
 *       pl_constructor_0(DefaultConstructor, "Default constructor", "")
 *       pl_attribute(Blabla, bool, true, ReadWrite, DirectValue, "Blabla setting", "")
 *     pl_class_end

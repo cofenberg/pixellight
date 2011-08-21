@@ -177,7 +177,7 @@ void FrontendApplication::OnInitData()
 	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
 
 	// Get localization language (from config or from default)
-	String sLanguage = m_cConfig.GetVar("PLCore::CoreGeneralConfig", "Language");
+	String sLanguage = m_cConfig.GetVar("PLCore::CoreConfig", "Language");
 	if (!sLanguage.GetLength()) {
 		// Use always English instead of the current program locale language so that we have a known default behaviour
 		sLanguage = "English";

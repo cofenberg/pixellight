@@ -36,7 +36,7 @@ namespace PLCore {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(CoreConfigGroup)
-pl_implement_class(CoreGeneralConfig)
+pl_implement_class(CoreConfig)
 
 
 // CoreConfigGroup
@@ -62,7 +62,7 @@ CoreConfigGroup::~CoreConfigGroup()
 
 
 
-// CoreGeneralConfig
+// CoreConfig
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
@@ -70,7 +70,7 @@ CoreConfigGroup::~CoreConfigGroup()
 *  @brief
 *    Default constructor
 */
-CoreGeneralConfig::CoreGeneralConfig() :
+CoreConfig::CoreConfig() :
 	FirstRun(this),
 	Language(this)
 {
@@ -80,7 +80,7 @@ CoreGeneralConfig::CoreGeneralConfig() :
 *  @brief
 *    Destructor
 */
-CoreGeneralConfig::~CoreGeneralConfig()
+CoreConfig::~CoreConfig()
 {
 }
 

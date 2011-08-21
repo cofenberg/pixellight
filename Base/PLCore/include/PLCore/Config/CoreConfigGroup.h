@@ -75,15 +75,15 @@ class CoreConfigGroup : public ConfigGroup {
 
 /**
 *  @brief
-*    PLCore general configuration classes
+*    PLCore configuration classes
 */
-class CoreGeneralConfig : public CoreConfigGroup {
+class CoreConfig : public CoreConfigGroup {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, CoreGeneralConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
+	pl_class(PLCORE_RTTI_EXPORT, CoreConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
 		// Attributes
 		pl_attribute(FirstRun,	bool,	true,	ReadWrite,	DirectValue,	"Is this the first application start?",																	"")
 		pl_attribute(Language,	String,	"",		ReadWrite,	DirectValue,	"Current used language, if empty the current set OS locale language is used (for instance 'German'",	"")
@@ -100,13 +100,13 @@ class CoreGeneralConfig : public CoreConfigGroup {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API CoreGeneralConfig();
+		PLCORE_API CoreConfig();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~CoreGeneralConfig();
+		PLCORE_API virtual ~CoreConfig();
 
 
 };
