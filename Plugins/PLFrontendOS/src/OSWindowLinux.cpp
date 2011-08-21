@@ -90,13 +90,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		// Create the native OS window instance
 		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
 		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &WM_DELETE_WINDOW, 1);
-		XTextProperty sXTextProperty;
-		sXTextProperty.value    = const_cast<unsigned char*>(reinterpret_cast<const unsigned char*>("PLFrontendOS_OSWindowLinuxX11"));
-		sXTextProperty.encoding = XA_STRING;
-		sXTextProperty.format   = 8;
-		sXTextProperty.nitems   = strlen(reinterpret_cast<const char*>(sXTextProperty.value));
-		XSetWMName(m_pDisplay, m_nNativeWindowHandle, &sXTextProperty);
-
+		
 		// Set icon
 		Atom wmIcon = XInternAtom(m_pDisplay, "_NET_WM_ICON", False);
 		Atom wmCardinal = XInternAtom(m_pDisplay, "CARDINAL", False);
@@ -321,9 +315,9 @@ String OSWindowLinux::GetTitle() const
 		unsigned long  nNumberOfUnits;
 		unsigned char *pszName;
 		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
-							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == Success) {
+							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
-			return String::FromUTF8(pszName);
+			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
 		}
 	}
 
@@ -334,9 +328,13 @@ String OSWindowLinux::GetTitle() const
 void OSWindowLinux::SetTitle(const String &sTitle)
 {
 	if (m_nNativeWindowHandle) {
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		const unsigned char* pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
+		// We need here the numer of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
+		// [TODO] Does String::GetNumOfBytes work here?
+		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
 	}
 }
 
