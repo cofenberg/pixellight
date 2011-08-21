@@ -162,16 +162,14 @@ bool RendererApplication::OnStart()
 void RendererApplication::OnStop()
 {
 	{ // Save renderer related configuration
-		Config &cConfig = GetConfig();
-
 		// Write fullscreen state back to the configuration
-		cConfig.SetVar("PLRenderer::Config", "Fullscreen", String(GetFrontend().IsFullscreen()));
+		GetConfig().SetVar("PLRenderer::Config", "Fullscreen", String(GetFrontend().IsFullscreen()));
 
 		// Write down display mode information
-		cConfig.SetVar("PLRenderer::Config", "DisplayWidth",     String(m_pDisplayMode->vSize.x));
-		cConfig.SetVar("PLRenderer::Config", "DisplayHeight",    String(m_pDisplayMode->vSize.y));
-		cConfig.SetVar("PLRenderer::Config", "DisplayColorBits", String(m_pDisplayMode->nColorBits));
-		cConfig.SetVar("PLRenderer::Config", "DisplayFrequency", String(m_pDisplayMode->nFrequency));
+		GetConfig().SetVar("PLRenderer::Config", "DisplayWidth",     String(m_pDisplayMode->vSize.x));
+		GetConfig().SetVar("PLRenderer::Config", "DisplayHeight",    String(m_pDisplayMode->vSize.y));
+		GetConfig().SetVar("PLRenderer::Config", "DisplayColorBits", String(m_pDisplayMode->nColorBits));
+		GetConfig().SetVar("PLRenderer::Config", "DisplayFrequency", String(m_pDisplayMode->nFrequency));
 	}
 
 	// Destroy renderer context
@@ -309,13 +307,11 @@ void RendererApplication::OnCreatePainter()
 */
 void RendererApplication::ReadDisplayModeFromConfig()
 {
-	Config &cConfig = GetConfig();
-
 	// Read the current display mode from the configuration
-	m_pDisplayMode->vSize.x    = cConfig.GetVarInt("PLRenderer::Config", "DisplayWidth");
-	m_pDisplayMode->vSize.y    = cConfig.GetVarInt("PLRenderer::Config", "DisplayHeight");
-	m_pDisplayMode->nColorBits = cConfig.GetVarInt("PLRenderer::Config", "DisplayColorBits");
-	m_pDisplayMode->nFrequency = cConfig.GetVarInt("PLRenderer::Config", "DisplayFrequency");
+	m_pDisplayMode->vSize.x    = GetConfig().GetVarInt("PLRenderer::Config", "DisplayWidth");
+	m_pDisplayMode->vSize.y    = GetConfig().GetVarInt("PLRenderer::Config", "DisplayHeight");
+	m_pDisplayMode->nColorBits = GetConfig().GetVarInt("PLRenderer::Config", "DisplayColorBits");
+	m_pDisplayMode->nFrequency = GetConfig().GetVarInt("PLRenderer::Config", "DisplayFrequency");
 }
 
 

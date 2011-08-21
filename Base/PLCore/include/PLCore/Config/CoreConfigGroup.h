@@ -83,7 +83,7 @@ class CoreConfig : public CoreConfigGroup {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCORE_RTTI_EXPORT, CoreConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore general configuration classes")
+	pl_class(PLCORE_RTTI_EXPORT, CoreConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore configuration classes")
 		// Attributes
 		pl_attribute(FirstRun,	bool,	true,	ReadWrite,	DirectValue,	"Is this the first application start?",																	"")
 		pl_attribute(Language,	String,	"",		ReadWrite,	DirectValue,	"Current used language, if empty the current set OS locale language is used (for instance 'German'",	"")
@@ -107,6 +107,46 @@ class CoreConfig : public CoreConfigGroup {
 		*    Destructor
 		*/
 		PLCORE_API virtual ~CoreConfig();
+
+
+};
+
+/**
+*  @brief
+*    PLCore frontend configuration classes
+*/
+class FrontendConfig : public CoreConfigGroup {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, FrontendConfig, "PLCore", PLCore::CoreConfigGroup, "PLCore frontend configuration classes")
+		// Attributes
+		pl_attribute(X,			int,	0,		ReadWrite,	DirectValue,	"X position of the frontend (in screen coordinates)",	"")
+		pl_attribute(Y,			int,	0,		ReadWrite,	DirectValue,	"Y position of the frontend (in screen coordinates)",	"")
+		pl_attribute(Width,		uint32,	1024,	ReadWrite,	DirectValue,	"Width of the frontend",								"")
+		pl_attribute(Height,	uint32,	768,	ReadWrite,	DirectValue,	"Height of the frontend",								"")
+		// Constructors
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Default constructor
+		*/
+		PLCORE_API FrontendConfig();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		PLCORE_API virtual ~FrontendConfig();
 
 
 };

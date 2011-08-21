@@ -85,6 +85,25 @@ FrontendApplication::~FrontendApplication()
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual AbstractLifecycle functions         ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    De-initialization function that is called after OnDeInit()
+*/
+void FrontendApplication::OnStop()
+{
+	// Write down display mode information
+	GetConfig().SetVar("PLCore::FrontendConfig", "X",      String(GetFrontend().GetX()));
+	GetConfig().SetVar("PLCore::FrontendConfig", "Y",      String(GetFrontend().GetY()));
+	GetConfig().SetVar("PLCore::FrontendConfig", "Width",  String(GetFrontend().GetWidth()));
+	GetConfig().SetVar("PLCore::FrontendConfig", "Height", String(GetFrontend().GetHeight()));
+
+	// Call base implementation
+	CoreApplication::OnStop();
+}
+
+//[-------------------------------------------------------]
 //[ Protected virtual AbstractFrontend functions          ]
 //[-------------------------------------------------------]
 /**
@@ -136,6 +155,22 @@ void FrontendApplication::OnDrop(const Container<String> &lstFiles)
 //[-------------------------------------------------------]
 //[ Protected virtual CoreApplication functions           ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when application should initialize it's configuration
+*/
+void FrontendApplication::OnInitConfig()
+{
+	// Call base implementation
+	CoreApplication::OnInitConfig();
+
+	// Read frontend configuration and set frontend position and size of the previous session
+	GetFrontend().SetPositionSize(GetConfig().GetVarInt("PLCore::FrontendConfig", "X"),
+								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Y"),
+								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Width"),
+								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Height"));
+}
+
 /**
 *  @brief
 *    Called when application should load it's plugins

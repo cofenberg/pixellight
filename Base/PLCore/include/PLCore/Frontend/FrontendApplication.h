@@ -122,6 +122,22 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected virtual AbstractLifecycle functions         ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    De-initialization function that is called after OnDeInit()
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Get frontend position and size of the current session and write frontend configuration
+		*    - Everything that CoreApplication::OnStop() does
+		*/
+		PLCORE_API virtual void OnStop() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual AbstractFrontend functions          ]
 	//[-------------------------------------------------------]
 	protected:
@@ -191,6 +207,20 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 	protected:
 		/**
 		*  @brief
+		*    Called when application should initialize it's configuration
+		*
+		*  @remarks
+		*    The default implementation does the following tasks:
+		*    - Everything that CoreApplication::OnInitConfig() does
+		*    - Read frontend configuration and set frontend position and size of the previous session
+		*
+		*  @note
+		*    - Part of the application framework initialization function "OnStart()"
+		*/
+		PLCORE_API virtual void OnInitConfig() override;
+
+		/**
+		*  @brief
 		*    Called when application should load it's plugins
 		*
 		*  @remarks
@@ -201,7 +231,7 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
 		*/
-		PLCORE_API virtual void OnInitPlugins();
+		PLCORE_API virtual void OnInitPlugins() override;
 
 		/**
 		*  @brief
@@ -218,7 +248,7 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"
 		*/
-		PLCORE_API virtual void OnInitData();
+		PLCORE_API virtual void OnInitData() override;
 
 
 	//[-------------------------------------------------------]

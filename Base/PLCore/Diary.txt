@@ -2,7 +2,12 @@
 [CO]
 - Renamed "PLCore::CoreGeneralConfig" into "PLCore::CoreConfig"
 - "Frontend": Added "GetX()" & "GetY()"
-- "Frontend": Added "SetPositionSize()"
+- "Frontend": Added "SetPositionSize()". "Frontend::SetPositionSize()" will do the rest of the job like checking for minimal size, ensuring that the frontend is always within
+  the screen when using this method and so on.
+- "FrontendApplication": By default, this application implementation will automatically restore the frontend position and size of the previous session. Although an application
+  shouldn't care about the frontend, from the usability point of view, it's handy when the applications window is at the same position and size of the previous program
+  execution. Because the frontend layer itself should be slim and shouldn't come with it's own configuration file, the only option I was able to think of was to make this to a
+  task of an application.
 
 
 

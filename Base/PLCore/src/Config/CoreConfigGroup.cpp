@@ -37,6 +37,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 pl_implement_class(CoreConfigGroup)
 pl_implement_class(CoreConfig)
+pl_implement_class(FrontendConfig)
 
 
 // CoreConfigGroup
@@ -81,6 +82,33 @@ CoreConfig::CoreConfig() :
 *    Destructor
 */
 CoreConfig::~CoreConfig()
+{
+}
+
+
+
+
+// FrontendConfig
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Default constructor
+*/
+FrontendConfig::FrontendConfig() :
+	X(this),
+	Y(this),
+	Width(this),
+	Height(this)
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+FrontendConfig::~FrontendConfig()
 {
 }
 
