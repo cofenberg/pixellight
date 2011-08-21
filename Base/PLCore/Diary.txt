@@ -14,6 +14,7 @@
   for this and therefore decided to have a look into it when the rest is up and running. This doesn't look&feel good, but at the point the frontend window is created there's no
   information available were to e.g. place the window. On the other hand, the frontend window should become visible as soon as possible after the program started so that the
   user can see that the application is now really running. So, in my humble opinion this solution is ok because the frontend implementation has to decide how to deal with this.
+- "Frontend": Added "GetTitle()" & "SetTitle()"
 
 
 

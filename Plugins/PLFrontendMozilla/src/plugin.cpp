@@ -257,6 +257,17 @@ void nsPluginInstance::Ping()
 	}
 }
 
+PLCore::String nsPluginInstance::GetTitle() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return "";
+}
+
+void nsPluginInstance::SetTitle(const PLCore::String &sTitle)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 int nsPluginInstance::GetX() const
 {
 	// Get window rect (in screen coordinates)

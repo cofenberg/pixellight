@@ -427,6 +427,31 @@ bool OSWindowWindows::Ping()
 	return bQuit;
 }
 
+String OSWindowWindows::GetTitle() const
+{
+	// First of all, get the length of the title (excluding the terminating zero, so we need to add +1)
+	const int nLength = ::GetWindowTextLengthW(m_hWnd) + 1;
+	if (nLength) {
+		// Get title
+		wchar_t *pszTitle = new wchar_t[nLength];
+		if (::GetWindowTextW(m_hWnd, pszTitle, nLength)) {
+			return String(pszTitle, false, nLength-1); // Do not copy, please
+		} else {
+			// We no longer need the data, so free it
+			delete [] pszTitle;
+		}
+	}
+
+	// Error!
+	return "";
+}
+
+void OSWindowWindows::SetTitle(const String &sTitle)
+{
+	if (m_hWnd)
+		::SetWindowTextW(m_hWnd, sTitle);
+}
+
 int OSWindowWindows::GetX() const
 {
 	if (m_hWnd) {

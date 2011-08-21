@@ -123,6 +123,8 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual void Ping() override;
+		virtual PLCore::String GetTitle() const override;
+		virtual void SetTitle(const PLCore::String &sTitle) override;
 		virtual int GetX() const override;
 		virtual int GetY() const override;
 		virtual PLCore::uint32 GetWidth() const override;

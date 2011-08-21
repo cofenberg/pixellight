@@ -65,6 +65,17 @@ void PixelLightCtrl::Ping()
 	}
 }
 
+PLCore::String PixelLightCtrl::GetTitle() const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	return "";
+}
+
+void PixelLightCtrl::SetTitle(const PLCore::String &sTitle)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 int PixelLightCtrl::GetX() const
 {
 	// Get window rect (in screen coordinates)

@@ -103,12 +103,8 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, wmIcon, wmCardinal, 32,
 						PropModeReplace, reinterpret_cast<const unsigned char*>(pl_icon), pl_icon_length);
 
-		{ // Set window title
-			const String sTitle = m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "";
-			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
-		}
+		// Set window title
+		SetTitle(m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "");
 
 		// Create the drag'n'drop helper instance
 		m_pDropHelper = new XDnDFileDropHelper(*this);
@@ -313,6 +309,35 @@ bool OSWindowLinux::Ping()
 
 	// Done
 	return bQuit;
+}
+
+String OSWindowLinux::GetTitle() const
+{
+	if (m_nNativeWindowHandle) {
+		// Request the window title from the OS
+		Atom		   sPropertyType;
+		int			   nDataUnit;
+		unsigned long  nBytesLeft;
+		unsigned long  nNumberOfUnits;
+		unsigned char *pszName;
+		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
+							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == Success) {
+			// Return the window title
+			return String::FromUTF8(pszName);
+		}
+	}
+
+	// Error!
+	return "";
+}
+
+void OSWindowLinux::SetTitle(const String &sTitle)
+{
+	if (m_nNativeWindowHandle) {
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
+	}
 }
 
 int OSWindowLinux::GetX() const

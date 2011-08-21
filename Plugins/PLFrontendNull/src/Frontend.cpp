@@ -121,6 +121,17 @@ void Frontend::Ping()
 	}
 }
 
+String Frontend::GetTitle() const
+{
+	// There's no window
+	return "";
+}
+
+void Frontend::SetTitle(const String &sTitle)
+{
+	// There's no window
+}
+
 int Frontend::GetX() const
 {
 	// There's no window

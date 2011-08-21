@@ -208,6 +208,35 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		virtual void Ping() = 0;
 
+		/**
+		*  @brief
+		*    Get frontend title
+		*
+		*  @return
+		*    Frontend title
+		*
+		*  @remarks
+		*    When the frontend has a window, this title can be seen within the window
+		*    titel bar. Please note that there's no guarantee that there's a window
+		*    title bar or even a window. By default, the title is set to the frontend
+		*    context name ("GetContext().GetName()") which is usually sufficient. So,
+		*    unless you have a good reason to explicitly set an individual frontend
+		*    title, just use the default setting and don't touch the frontend.
+		*/
+		virtual String GetTitle() const = 0;
+
+		/**
+		*  @brief
+		*    Set frontend title
+		*
+		*  @param[in] sTitle
+		*    Frontend title
+		*
+		*  @see
+		*    - GetTitle()
+		*/
+		virtual void SetTitle(const String &sTitle) = 0;
+
 		//[-------------------------------------------------------]
 		//[ Position and size                                     ]
 		//[-------------------------------------------------------]

@@ -99,6 +99,8 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 			pl_method_0(Redraw,						pl_ret_type(void),										"Redraw frontend.",																																											"")
 			pl_method_0(Ping,						pl_ret_type(void),										"Give the frontend a chance to process OS messages.",																																		"")
 			pl_method_0(RedrawAndPing,				pl_ret_type(void),										"Redraw frontend and give the frontend a chance to process OS messages.",																													"")
+			pl_method_0(GetTitle,					pl_ret_type(String),									"Returns the frontend title.",																																								"")
+			pl_method_1(SetTitle,					pl_ret_type(void),		const String&,					"Sets the frontend title.",																																									"")
 			// Position and size methods
 			pl_method_0(GetX,						pl_ret_type(int),										"Returns the x position of the frontend (in screen coordinates).",																															"")
 			pl_method_0(GetY,						pl_ret_type(int),										"Returns the y position of the frontend (in screen coordinates).",																															"")
@@ -224,6 +226,35 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
 		*/
 		PLCORE_API void RedrawAndPing();
+
+		/**
+		*  @brief
+		*    Get frontend title
+		*
+		*  @return
+		*    Frontend title
+		*
+		*  @remarks
+		*    When the frontend has a window, this title can be seen within the window
+		*    titel bar. Please note that there's no guarantee that there's a window
+		*    title bar or even a window. By default, the title is set to the frontend
+		*    context name ("GetContext().GetName()") which is usually sufficient. So,
+		*    unless you have a good reason to explicitly set an individual frontend
+		*    title, just use the default setting and don't touch the frontend.
+		*/
+		PLCORE_API String GetTitle() const;
+
+		/**
+		*  @brief
+		*    Set frontend title
+		*
+		*  @param[in] sTitle
+		*    Frontend title
+		*
+		*  @see
+		*    - GetTitle()
+		*/
+		PLCORE_API void SetTitle(const String &sTitle);
 
 		//[-------------------------------------------------------]
 		//[ Position and size                                     ]

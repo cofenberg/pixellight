@@ -160,6 +160,26 @@ void Frontend::RedrawAndPing()
 
 /**
 *  @brief
+*    Get frontend title
+*/
+String Frontend::GetTitle() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetTitle();
+}
+
+/**
+*  @brief
+*    Set frontend title
+*/
+void Frontend::SetTitle(const String &sTitle)
+{
+	// Call backend
+	return m_pFrontendImpl->SetTitle(sTitle);
+}
+
+/**
+*  @brief
 *    Get the x position of the frontend (in screen coordinates)
 */
 int Frontend::GetX() const

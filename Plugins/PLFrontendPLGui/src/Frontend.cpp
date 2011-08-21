@@ -208,6 +208,19 @@ void Frontend::Ping()
 	}
 }
 
+String Frontend::GetTitle() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->GetTitle() : "";
+}
+
+void Frontend::SetTitle(const String &sTitle)
+{
+	// Query the main window
+	if (m_pMainWindow)
+		m_pMainWindow->SetTitle(sTitle);
+}
+
 int Frontend::GetX() const
 {
 	// Query the main window

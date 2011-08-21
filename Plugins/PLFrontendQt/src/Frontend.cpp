@@ -27,6 +27,7 @@
 #include <QtGui/qdesktopwidget.h>
 #include <PLCore/String/UTF8Tools.h>
 #include "PLFrontendQt/FrontendMainWindow.h"
+#include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/Frontend.h"
 
 
@@ -177,6 +178,19 @@ void Frontend::Ping()
 		// Process all waiting messages
 		QApplication::instance()->processEvents();
 	}
+}
+
+String Frontend::GetTitle() const
+{
+	// Query the main window
+	return m_pMainWindow ? QtStringAdapter::QtToPL(m_pMainWindow->windowTitle()) : "";
+}
+
+void Frontend::SetTitle(const String &sTitle)
+{
+	// Query the main window
+	if (m_pMainWindow)
+		m_pMainWindow->setWindowTitle(QtStringAdapter::PLToQt(sTitle));
 }
 
 int Frontend::GetX() const

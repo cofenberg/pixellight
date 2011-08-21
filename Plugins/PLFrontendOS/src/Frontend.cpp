@@ -133,6 +133,19 @@ void Frontend::Ping()
 		m_bQuit = m_pOSWindow->Ping();
 }
 
+String Frontend::GetTitle() const
+{
+	// Query the OS window implementation
+	return m_pOSWindow ? m_pOSWindow->GetTitle() : "";
+}
+
+void Frontend::SetTitle(const String &sTitle)
+{
+	// Query the OS window implementation
+	if (m_pOSWindow)
+		m_pOSWindow->SetTitle(sTitle);
+}
+
 int Frontend::GetX() const
 {
 	// Query the OS window implementation
