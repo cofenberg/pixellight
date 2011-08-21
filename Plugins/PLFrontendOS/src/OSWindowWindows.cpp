@@ -76,10 +76,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Set window pointer and handle (SetWindowLongPtr is the 64bit equivalent to SetWindowLong)
 				::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pOSWindowWindows));
 
-				// Show the window, but do not activate it right now - this also sends WM_ERASEBKGND which now clears the content to black
-				::ShowWindow(hWnd, SW_SHOWNOACTIVATE);
-
-				// Backup the native window handle - WM_ERASEBKGND will now be catched (no black flickering)
+				// Backup the native window handle
 				pOSWindowWindows->m_hWnd = hWnd;
 
 				// Doing the following frontend lifecycle thing in here would be nice, but when done this way, the window border
@@ -141,7 +138,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 
 			case WM_ERASEBKGND:
 				// Catch WM_ERASEBKGND in order to avoid black flickering?
-				if (pOSWindowWindows->m_hWnd)
+				if (pOSWindowWindows->m_bInitialized)
 					return 0;	// Gotcha!
 
 				// ... no catching, the system will now "erase" the background...
@@ -227,6 +224,8 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_hInstance(::GetModuleHandle(nullptr)),
 	m_nThreadID(::GetCurrentThreadId()),
 	m_hWnd(nullptr),
+	m_bInitialized(false),
+	m_bVisible(false),
 	m_bDestroyed(false),
 	m_nHotkeyIDAltTab(0),
 	m_bWindowRectBackup(false),
@@ -293,6 +292,12 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		if (m_hWnd) {
 			// Do the frontend lifecycle thing - start
 			m_pFrontendOS->OnStart();
+
+			// Initialization is done
+			m_bInitialized = true;
+
+			// If the window is not visible yet, make it visible right now
+			MakeVisible();
 
 			// Show and activate the window
 			::SetForegroundWindow(m_hWnd);
@@ -367,6 +372,21 @@ void OSWindowWindows::UpdateTrapMouse()
 	}
 }
 
+/**
+*  @brief
+*    If the window is not visible yet, make it visible right now
+*/
+void OSWindowWindows::MakeVisible()
+{
+	if (!m_bVisible && m_hWnd) {
+		// The window is now considered to be visible
+		m_bVisible = true;
+
+		// Show the window, but do not activate it right now - this also sends WM_ERASEBKGND which now clears the content to black
+		::ShowWindow(m_hWnd, SW_SHOWNOACTIVATE);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private virtual OSWindow functions                    ]
@@ -378,6 +398,10 @@ handle OSWindowWindows::GetNativeWindowHandle() const
 
 void OSWindowWindows::Redraw()
 {
+	// If the window is not visible yet, make it visible right now
+	MakeVisible();
+
+	// Redraw
 	if (m_hWnd)
 		::RedrawWindow(m_hWnd, nullptr, nullptr, RDW_INVALIDATE);
 }
@@ -463,6 +487,9 @@ void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHei
 
 		// Set OS window position and size
 		::MoveWindow(m_hWnd, nX, nY, nWidth, nHeight, TRUE);
+
+		// If the window is not visible yet, make it visible right now
+		MakeVisible();
 	}
 }
 

@@ -78,6 +78,12 @@ class FrontendMainWindow : public QMainWindow {
 		*/
 		virtual ~FrontendMainWindow();
 
+		/**
+		*  @brief
+		*    If the widget is not visible yet, make it visible right now
+		*/
+		void MakeVisible();
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual QObject functions                   ]
@@ -114,6 +120,7 @@ class FrontendMainWindow : public QMainWindow {
 	//[-------------------------------------------------------]
 	private:
 		Frontend *m_pFrontendQt;			/**< Owner frontend implementation, always valid! */
+		bool	  m_bVisible;				/**< Was the widget made visible? (independent of the real Qt widget visibility state) */
 		int		  m_nWindowRedrawTimerID;	/**< Window redraw timer */
 
 

@@ -72,7 +72,7 @@ Frontend::~Frontend()
 *  @brief
 *    Get main window
 */
-QWidget *Frontend::GetMainWindow() const
+FrontendMainWindow *Frontend::GetMainWindow() const
 {
 	// Return pointer to main window
 	return m_pMainWindow;
@@ -82,7 +82,7 @@ QWidget *Frontend::GetMainWindow() const
 *  @brief
 *    Set main window
 */
-void Frontend::SetMainWindow(QWidget *pMainWindow)
+void Frontend::SetMainWindow(FrontendMainWindow *pMainWindow)
 {
 	// Set pointer to main window
 	m_pMainWindow = pMainWindow;
@@ -126,10 +126,13 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	m_pQCursorBlank = new QCursor(Qt::BlankCursor);
 
 	// Create and set the main window
-	new FrontendMainWindow(*this);
+	FrontendMainWindow *pFrontendMainWindow = new FrontendMainWindow(*this);
 
 	// Run the Qt application
 	const int nResult = cQApplication.exec();
+
+	// Destroy the main window
+	delete pFrontendMainWindow;
 
 	// Delete the mouse cursors
 	delete m_pQCursorBlank;
@@ -158,8 +161,13 @@ handle Frontend::GetNativeWindowHandle() const
 void Frontend::Redraw()
 {
 	// Ask Qt politly to update (and repaint) the widget
-	if (m_pMainWindow)
+	if (m_pMainWindow) {
+		// If the widget is not visible yet, make it visible right now
+		m_pMainWindow->MakeVisible();
+
+		// Update
 		m_pMainWindow->update();
+	}
 }
 
 void Frontend::Ping()
@@ -205,6 +213,9 @@ void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 		// Set position and size settings
 		m_pMainWindow->move(QPoint(nX, nY));
 		m_pMainWindow->resize(QSize(nWidth, nHeight));
+
+		// If the widget is not visible yet, make it visible right now
+		m_pMainWindow->MakeVisible();
 	}
 }
 

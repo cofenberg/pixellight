@@ -53,6 +53,7 @@ namespace PLFrontendQt {
 */
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(nullptr, Qt::MSWindowsOwnDC),	// Same settings as used in Qt's QGLWidget
 	m_pFrontendQt(&cFrontendQt),
+	m_bVisible(false),
 	m_nWindowRedrawTimerID(startTimer(10))	// An interval of 10 milliseconds should be enough
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
@@ -77,11 +78,11 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(null
 	// Drop events are enabled for this widget
 	setAcceptDrops(true);
 
-	// Show the window, but do not activate it right now
-	show();
-
 	// Do the frontend lifecycle thing - start
 	m_pFrontendQt->OnStart();
+
+	// If the widget is not visible yet, make it visible right now
+	MakeVisible();
 
 	// Activate the window by giving it the focus
 	setFocus(Qt::ActiveWindowFocusReason);
@@ -99,6 +100,21 @@ FrontendMainWindow::~FrontendMainWindow()
 	// Stop window redraw timer
 	if (m_nWindowRedrawTimerID)
 		killTimer(m_nWindowRedrawTimerID);
+}
+
+/**
+*  @brief
+*    If the widget is not visible yet, make it visible right now
+*/
+void FrontendMainWindow::MakeVisible()
+{
+	if (!m_bVisible) {
+		// The widget is now considered to be visible
+		m_bVisible = true;
+
+		// Show the widget, but do not activate it right now
+		show();
+	}
 }
 
 

@@ -58,6 +58,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_nNativeWindowHandle(NULL_HANDLE),
+	m_bVisible(false),
 	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
 	m_nInvisibleCursor(0),
@@ -112,9 +113,6 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		
 		m_cDropHelper.EnableDropForWindow();
 
-		// Show window
-		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
-
 		// Do it!
 		XSync(m_pDisplay, False);
 
@@ -124,6 +122,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 
 	// Do the frontend lifecycle thing - start
 	m_pFrontendOS->OnStart();
+
+	// If the window is not visible yet, make it visible right now
+	MakeVisible();
 }
 
 /**
@@ -144,6 +145,24 @@ OSWindowLinux::~OSWindowLinux()
 
 	// Close the X11 display connection
 	XCloseDisplay(m_pDisplay);
+}
+
+/**
+*  @brief
+*    If the window is not visible yet, make it visible right now
+*/
+void OSWindowLinux::MakeVisible()
+{
+	if (!m_bVisible && m_nNativeWindowHandle) {
+		// The window is now considered to be visible
+		m_bVisible = true;
+
+		// Show window
+		XMapRaised(m_pDisplay, m_nNativeWindowHandle);
+
+		// Do it!
+		XSync(m_pDisplay, False);
+	}
 }
 
 /**
@@ -173,6 +192,7 @@ void OSWindowLinux::OnDrop(const Container<String> &lstFiles)
 	m_pFrontendOS->OnDrop(lstFiles);
 }
 
+
 //[-------------------------------------------------------]
 //[ Private virtual OSWindow functions                    ]
 //[-------------------------------------------------------]
@@ -184,6 +204,9 @@ handle OSWindowLinux::GetNativeWindowHandle() const
 void OSWindowLinux::Redraw()
 {
 	if (m_nNativeWindowHandle) {
+		// If the window is not visible yet, make it visible right now
+		MakeVisible();
+
 		// Send expose event
 		XEvent sEvent;
 		sEvent.type			 = Expose;
@@ -380,6 +403,9 @@ void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeigh
 			// Do it!
 			XSync(m_pDisplay, False);
 		}
+
+		// If the window is not visible yet, make it visible right now
+		MakeVisible();
 	}
 }
 

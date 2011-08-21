@@ -114,15 +114,22 @@ class OSWindowLinux : public OSWindow {
 
 		/**
 		*  @brief
+		*    If the window is not visible yet, make it visible right now
+		*/
+		void MakeVisible();
+
+		/**
+		*  @brief
 		*    Creates an invisible cursor
 		*/
 		void CreateInvisibleCursor();
 		
 		/**
-		 * @brief
-		 *    Gets called from the XDnDFileDropHelper when a drop occured
-		 */
+		*  @brief
+		*    Gets called from the XDnDFileDropHelper when a drop occured
+		*/
 		void OnDrop(const PLCore::Container<PLCore::String> &lstFiles);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual OSWindow functions                    ]
@@ -168,6 +175,7 @@ class OSWindowLinux : public OSWindow {
 		Frontend			*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
 		::Display			*m_pDisplay;			/**< System display, considered to be always valid */
 		::Window			 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		bool				 m_bVisible;			/**< Was the window made visible? (independent of the real OS window visibility state) */
 		bool				 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
 		bool				 m_bMouseVisible;		/**< Is the mouse cursor visible? */
 		::Cursor			 m_nInvisibleCursor;	/**< The invisible cursor, can be null */

@@ -8,6 +8,12 @@
   shouldn't care about the frontend, from the usability point of view, it's handy when the applications window is at the same position and size of the previous program
   execution. Because the frontend layer itself should be slim and shouldn't come with it's own configuration file, the only option I was able to think of was to make this to a
   task of an application.
+- The frontend implementations now delay making the window visible until "Redraw()" or "SetPositionSize()" was called or the initialization was completed. This gives e.g.
+  "FrontendApplication" an opportunity to set the frontend position and size before the window gets visible. If this is not done, the frontend window will be shown at first at a
+  default position and then jumps to the position and size of the previous session. I was of course aware of this issue when designing the system, but didn't found a compact solution
+  for this and therefore decided to have a look into it when the rest is up and running. This doesn't look&feel good, but at the point the frontend window is created there's no
+  information available were to e.g. place the window. On the other hand, the frontend window should become visible as soon as possible after the program started so that the
+  user can see that the application is now really running. So, in my humble opinion this solution is ok because the frontend implementation has to decide how to deal with this.
 
 
 

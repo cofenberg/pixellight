@@ -39,6 +39,9 @@ QT_BEGIN_NAMESPACE
 	class QWidget;
 	class QCursor;
 QT_END_NAMESPACE
+namespace PLFrontendQt {
+	class FrontendMainWindow;
+}
 
 
 //[-------------------------------------------------------]
@@ -95,7 +98,7 @@ class Frontend : public PLCore::FrontendImpl {
 		*  @return
 		*    Main window, can be a null pointer
 		*/
-		PLFRONTENDQT_API QWidget *GetMainWindow() const;
+		PLFRONTENDQT_API FrontendMainWindow *GetMainWindow() const;
 
 		/**
 		*  @brief
@@ -104,7 +107,7 @@ class Frontend : public PLCore::FrontendImpl {
 		*  @param[in] pMainWindow
 		*    Pointer to the main window of the application (a null pointer is also valid)
 		*/
-		PLFRONTENDQT_API void SetMainWindow(QWidget *pMainWindow);
+		PLFRONTENDQT_API void SetMainWindow(FrontendMainWindow *pMainWindow);
 
 
 	//[-------------------------------------------------------]
@@ -139,12 +142,12 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QWidget *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
-		bool	 m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
-		bool	 m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
-		bool	 m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
-		QCursor *m_pQCursorBlank;			/**< Blank (invisible) mouse cursor, can be a null pointer */ 
-		bool	 m_bMouseVisible;			/**< Is the mouse cursor visible? */
+		FrontendMainWindow *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
+		bool				m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
+		bool				m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */
+		bool				m_bIsFullscreen;			/**< 'true' if the window is in fullscreen mode, else 'false' */
+		QCursor			   *m_pQCursorBlank;			/**< Blank (invisible) mouse cursor, can be a null pointer */ 
+		bool				m_bMouseVisible;			/**< Is the mouse cursor visible? */
 
 
 };
