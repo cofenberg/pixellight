@@ -133,6 +133,8 @@ class OSWindowWindows : public OSWindow {
 		virtual PLCore::handle GetNativeWindowHandle() const override;
 		virtual void Redraw() override;
 		virtual bool Ping() override;
+		virtual int GetX() const override;
+		virtual int GetY() const override;
 		virtual PLCore::uint32 GetWidth() const override;
 		virtual PLCore::uint32 GetHeight() const override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;

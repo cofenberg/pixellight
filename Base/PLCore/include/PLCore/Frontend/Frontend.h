@@ -219,21 +219,42 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*/
 		PLCORE_API void RedrawAndPing();
 
+		//[-------------------------------------------------------]
+		//[ Position and size                                     ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Get window width
+		*    Get the x position of the frontend (in screen coordinates)
 		*
 		*  @return
-		*    Width
+		*    X position of the frontend
+		*/
+		PLCORE_API int GetX() const;
+
+		/**
+		*  @brief
+		*    Get the y position of the frontend (in screen coordinates)
+		*
+		*  @return
+		*    Y position of the frontend
+		*/
+		PLCORE_API int GetY() const;
+
+		/**
+		*  @brief
+		*    Get frontend width
+		*
+		*  @return
+		*    Width of the frontend
 		*/
 		PLCORE_API uint32 GetWidth() const;
 
 		/**
 		*  @brief
-		*    Get window height
+		*    Get frontend height
 		*
 		*  @return
-		*    Height
+		*    Height of the frontend
 		*/
 		PLCORE_API uint32 GetHeight() const;
 

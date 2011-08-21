@@ -170,6 +170,18 @@ void Frontend::Ping()
 	}
 }
 
+int Frontend::GetX() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->pos().x() : 0;
+}
+
+int Frontend::GetY() const
+{
+	// Query the main window
+	return m_pMainWindow ? m_pMainWindow->pos().y() : 0;
+}
+
 uint32 Frontend::GetWidth() const
 {
 	// Query the main window

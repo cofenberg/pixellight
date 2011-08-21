@@ -101,6 +101,27 @@ class OSWindow {
 		*/
 		virtual bool Ping() = 0;
 
+		//[-------------------------------------------------------]
+		//[ Position and size                                     ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Get the x position of the frontend (in screen coordinates)
+		*
+		*  @return
+		*    X position of the frontend
+		*/
+		virtual int GetX() const = 0;
+
+		/**
+		*  @brief
+		*    Get the y position of the frontend (in screen coordinates)
+		*
+		*  @return
+		*    Y position of the frontend
+		*/
+		virtual int GetY() const = 0;
+
 		/**
 		*  @brief
 		*    Get window width
@@ -119,6 +140,9 @@ class OSWindow {
 		*/
 		virtual PLCore::uint32 GetHeight() const = 0;
 
+		//[-------------------------------------------------------]
+		//[ Fullscreen                                            ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Sets whether it's allowed to use Alt-Tab if fullscreen mode is used
@@ -143,6 +167,9 @@ class OSWindow {
 		*/
 		virtual void RefreshFullscreen() = 0;
 
+		//[-------------------------------------------------------]
+		//[ Mouse                                                 ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Check if the mouse is currently over the window

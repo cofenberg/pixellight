@@ -208,21 +208,42 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*/
 		virtual void Ping() = 0;
 
+		//[-------------------------------------------------------]
+		//[ Position and size                                     ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Get window width
+		*    Get the x position of the frontend (in screen coordinates)
 		*
 		*  @return
-		*    Width
+		*    X position of the frontend
+		*/
+		virtual int GetX() const = 0;
+
+		/**
+		*  @brief
+		*    Get the y position of the frontend (in screen coordinates)
+		*
+		*  @return
+		*    Y position of the frontend
+		*/
+		virtual int GetY() const = 0;
+
+		/**
+		*  @brief
+		*    Get frontend width
+		*
+		*  @return
+		*    Width of the frontend
 		*/
 		virtual uint32 GetWidth() const = 0;
 
 		/**
 		*  @brief
-		*    Get window height
+		*    Get frontend height
 		*
 		*  @return
-		*    Height
+		*    Height of the frontend
 		*/
 		virtual uint32 GetHeight() const = 0;
 

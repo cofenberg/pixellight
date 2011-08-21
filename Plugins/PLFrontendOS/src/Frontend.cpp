@@ -133,6 +133,18 @@ void Frontend::Ping()
 		m_bQuit = m_pOSWindow->Ping();
 }
 
+int Frontend::GetX() const
+{
+	// Query the OS window implementation
+	return m_pOSWindow ? m_pOSWindow->GetX() : 0;
+}
+
+int Frontend::GetY() const
+{
+	// Query the OS window implementation
+	return m_pOSWindow ? m_pOSWindow->GetY() : 0;
+}
+
 uint32 Frontend::GetWidth() const
 {
 	// Query the OS window implementation

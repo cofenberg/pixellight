@@ -65,17 +65,35 @@ void PixelLightCtrl::Ping()
 	}
 }
 
+int PixelLightCtrl::GetX() const
+{
+	// Get window rect (in screen coordinates)
+	RECT sRect;
+	GetWindowRect(&sRect);
+	return sRect.left;
+}
+
+int PixelLightCtrl::GetY() const
+{
+	// Get window rect (in screen coordinates)
+	RECT sRect;
+	GetWindowRect(&sRect);
+	return sRect.top;
+}
+
 PLCore::uint32 PixelLightCtrl::GetWidth() const
 {
+	// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 	RECT sRect;
-	::GetClientRect(m_hFrontendWnd, &sRect);
+	GetClientRect(&sRect);
 	return sRect.right;
 }
 
 PLCore::uint32 PixelLightCtrl::GetHeight() const
 {
+	// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 	RECT sRect;
-	::GetClientRect(m_hFrontendWnd, &sRect);
+	GetClientRect(&sRect);
 	return sRect.bottom;
 }
 
@@ -195,7 +213,7 @@ void PixelLightCtrl::SetTrapMouse(bool bTrap)
 		if (bTrap) {
 			// Get window rect (in screen coordinates)
 			RECT sRect;
-			GetWindowRect(&sRect); 
+			GetWindowRect(&sRect);
 
 			// Trap mouse
 			ClipCursor(&sRect); 
@@ -223,7 +241,7 @@ void PixelLightCtrl::UpdateTrapMouse()
 	if (m_bTrapMouse) {
 		// Get window rect (in screen coordinates)
 		RECT sRect;
-		::GetWindowRect(m_hFrontendWnd, &sRect); 
+		::GetWindowRect(m_hFrontendWnd, &sRect);
 
 		// Trap mouse within up-to-date widget rectangle
 		::ClipCursor(&sRect); 

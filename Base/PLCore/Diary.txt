@@ -1,6 +1,7 @@
 >> 21.08.2011
 [CO]
 - Renamed "PLCore::CoreGeneralConfig" into "PLCore::CoreConfig"
+- "Frontend": Added "GetX()" & "GetY()"
 
 
 

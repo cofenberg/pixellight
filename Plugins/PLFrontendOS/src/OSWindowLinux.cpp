@@ -289,6 +289,30 @@ bool OSWindowLinux::Ping()
 	return bQuit;
 }
 
+int OSWindowLinux::GetX() const
+{
+	// Get X window geometry information
+	::Window nRootWindow = 0;
+	int nPositionX = 0, nPositionY = 0;
+	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+	// Return the window x position (in screen coordinates)
+	return nPositionX;
+}
+
+int OSWindowLinux::GetY() const
+{
+	// Get X window geometry information
+	::Window nRootWindow = 0;
+	int nPositionX = 0, nPositionY = 0;
+	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+	// Return the window y position (in screen coordinates)
+	return nPositionY;
+}
+
 uint32 OSWindowLinux::GetWidth() const
 {
 	// Get X window geometry information

@@ -246,7 +246,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_WndClass.hInstance		= m_hInstance;
 	m_WndClass.hIcon			= nullptr;	// ... set below...
 	m_WndClass.hCursor			= ::LoadCursor(nullptr, IDC_ARROW);
-	m_WndClass.hbrBackground	= CreateSolidBrush(RGB(0, 0, 0));	// By using a brush, the system will emit WM_ERASEBKGND (nullptr would result in a nasty white window as soon as it's shown)
+	m_WndClass.hbrBackground	= ::CreateSolidBrush(RGB(0, 0, 0));	// By using a brush, the system will emit WM_ERASEBKGND (nullptr would result in a nasty white window as soon as it's shown)
 	m_WndClass.lpszMenuName		= nullptr;
 	m_WndClass.lpszClassName	= TEXT("PLFrontendOS_OSWindowWindows");
 
@@ -255,13 +255,13 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		wchar_t szModule[MAX_PATH];
 		::GetModuleFileName(m_hInstance, szModule, sizeof(szModule));
 
-		// Extract the icon (don't forget to call "DestroyIcon()" on it)
+		// Extract the icon (don't forget to call "::DestroyIcon()" on it)
 		m_WndClass.hIcon = m_hIcon = ::ExtractIcon(m_hInstance, szModule, 0);
 	}
 
 	// If there's no default process icon, we're using the standard PixelLight icon
 	if (!m_WndClass.hIcon) {
-		// "GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
+		// "::GetModuleHandle(nullptr)" returns the instance of the calling process, but for the icon we need the one of this shared library
 
 		// Get the filename of this shared library
 		MEMORY_BASIC_INFORMATION sMemoryBasicInformation;
@@ -403,9 +403,34 @@ bool OSWindowWindows::Ping()
 	return bQuit;
 }
 
+int OSWindowWindows::GetX() const
+{
+	if (m_hWnd) {
+		// Get window rect (in screen coordinates)
+		RECT sRect;
+		::GetWindowRect(m_hWnd, &sRect);
+		return sRect.left;
+	} else {
+		return 0;
+	}
+}
+
+int OSWindowWindows::GetY() const
+{
+	if (m_hWnd) {
+		// Get window rect (in screen coordinates)
+		RECT sRect;
+		::GetWindowRect(m_hWnd, &sRect);
+		return sRect.top;
+	} else {
+		return 0;
+	}
+}
+
 uint32 OSWindowWindows::GetWidth() const
 {
 	if (m_hWnd) {
+		// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 		RECT sRect;
 		::GetClientRect(m_hWnd, &sRect);
 		return sRect.right;
@@ -417,6 +442,7 @@ uint32 OSWindowWindows::GetWidth() const
 uint32 OSWindowWindows::GetHeight() const
 {
 	if (m_hWnd) {
+		// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 		RECT sRect;
 		::GetClientRect(m_hWnd, &sRect);
 		return sRect.bottom;
@@ -569,11 +595,11 @@ void OSWindowWindows::SetMouseVisible(bool bVisible)
 	// Set mouse cursor visibility
 	if (bVisible) {
 		// Show mouse cursor
-		while (ShowCursor(true) < 0)
+		while (::ShowCursor(true) < 0)
 			; // Do nothing
 	} else {
 		// Hide mouse cursor
-		while (ShowCursor(false) >= 0)
+		while (::ShowCursor(false) >= 0)
 			; // Do nothing
 	}
 }
@@ -585,13 +611,13 @@ void OSWindowWindows::SetTrapMouse(bool bTrap)
 		if (bTrap) {
 			// Get window rectangle (in screen coordinates)
 			RECT sRect;
-			GetWindowRect(m_hWnd, &sRect); 
+			::GetWindowRect(m_hWnd, &sRect);
 
 			// Trap mouse
-			ClipCursor(&sRect); 
+			::ClipCursor(&sRect); 
 		} else {
 			// Untrap mouse
-			ClipCursor(nullptr);
+			::ClipCursor(nullptr);
 		}
 
 		// Backup the state

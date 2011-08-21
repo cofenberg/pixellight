@@ -121,6 +121,18 @@ void Frontend::Ping()
 	}
 }
 
+int Frontend::GetX() const
+{
+	// There's no window
+	return 0;
+}
+
+int Frontend::GetY() const
+{
+	// There's no window
+	return 0;
+}
+
 uint32 Frontend::GetWidth() const
 {
 	// There's no window

@@ -160,7 +160,27 @@ void Frontend::RedrawAndPing()
 
 /**
 *  @brief
-*    Get window width
+*    Get the x position of the frontend (in screen coordinates)
+*/
+int Frontend::GetX() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetX();
+}
+
+/**
+*  @brief
+*    Get the y position of the frontend (in screen coordinates)
+*/
+int Frontend::GetY() const
+{
+	// Call backend
+	return m_pFrontendImpl->GetY();
+}
+
+/**
+*  @brief
+*    Get frontend width
 */
 uint32 Frontend::GetWidth() const
 {
@@ -170,7 +190,7 @@ uint32 Frontend::GetWidth() const
 
 /**
 *  @brief
-*    Get window height
+*    Get frontend height
 */
 uint32 Frontend::GetHeight() const
 {

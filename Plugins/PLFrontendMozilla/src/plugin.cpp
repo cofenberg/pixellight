@@ -257,8 +257,25 @@ void nsPluginInstance::Ping()
 	}
 }
 
+int nsPluginInstance::GetX() const
+{
+	// Get window rect (in screen coordinates)
+	RECT sRect;
+	::GetWindowRect(m_hWnd, &sRect);
+	return sRect.left;
+}
+
+int nsPluginInstance::GetY() const
+{
+	// Get window rect (in screen coordinates)
+	RECT sRect;
+	::GetWindowRect(m_hWnd, &sRect);
+	return sRect.top;
+}
+
 PLCore::uint32 nsPluginInstance::GetWidth() const
 {
+	// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 	RECT sRect;
 	::GetClientRect(m_hWnd, &sRect);
 	return sRect.right;
@@ -266,6 +283,7 @@ PLCore::uint32 nsPluginInstance::GetWidth() const
 
 PLCore::uint32 nsPluginInstance::GetHeight() const
 {
+	// Request a relative window position (always (0, 0)) and size (equal to (width, height))
 	RECT sRect;
 	::GetClientRect(m_hWnd, &sRect);
 	return sRect.bottom;
@@ -373,11 +391,11 @@ void nsPluginInstance::SetMouseVisible(bool bVisible)
 	// Set mouse cursor visibility
 	if (bVisible) {
 		// Show mouse cursor
-		while (ShowCursor(true) < 0)
+		while (::ShowCursor(true) < 0)
 			; // Do nothing
 	} else {
 		// Hide mouse cursor
-		while (ShowCursor(false) >= 0)
+		while (::ShowCursor(false) >= 0)
 			; // Do nothing
 	}
 }
@@ -389,13 +407,13 @@ void nsPluginInstance::SetTrapMouse(bool bTrap)
 		if (bTrap) {
 			// Get window rect (in screen coordinates)
 			RECT sRect;
-			GetWindowRect(m_hWnd, &sRect); 
+			::GetWindowRect(m_hWnd, &sRect);
 
 			// Trap mouse
-			ClipCursor(&sRect); 
+			::ClipCursor(&sRect); 
 		} else {
 			// Untrap mouse
-			ClipCursor(nullptr);
+			::ClipCursor(nullptr);
 		}
 
 		// Backup the state
@@ -417,7 +435,7 @@ void nsPluginInstance::UpdateTrapMouse()
 	if (m_bTrapMouse) {
 		// Get window rect (in screen coordinates)
 		RECT sRect;
-		::GetWindowRect(m_hWnd, &sRect); 
+		::GetWindowRect(m_hWnd, &sRect);
 
 		// Trap mouse within up-to-date widget rectangle
 		::ClipCursor(&sRect); 
