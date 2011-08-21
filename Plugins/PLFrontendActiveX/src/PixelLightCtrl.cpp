@@ -160,7 +160,7 @@ bool PixelLightCtrl::IsMouseOver() const
 		RECT sRect;
 		if (GetWindowRect(&sRect)) {
 			// Is the mouse cursor within the window rectangle?
-			return PtInRect(&sRect, sPOINT);
+			return (PtInRect(&sRect, sPOINT) == TRUE);
 		}
 	}
 

@@ -416,7 +416,7 @@ void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeigh
 			Screen *pScreenInfo = XScreenOfDisplay(m_pDisplay, 0);
 
 			// Correct frontend position and size settings
-			Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, XWidthOfScreen(pScreenInfo), XHeightOfScreen(pScreenInfo));
+			Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, 0, 0, XWidthOfScreen(pScreenInfo), XHeightOfScreen(pScreenInfo));
 		}
 
 		{ // Set OS window position and size

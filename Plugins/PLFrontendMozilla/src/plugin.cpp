@@ -353,7 +353,7 @@ bool nsPluginInstance::IsMouseOver() const
 			RECT sRect;
 			if (::GetWindowRect(m_hWnd, &sRect)) {
 				// Is the mouse cursor within the window rectangle?
-				return ::PtInRect(&sRect, sPOINT);
+				return (::PtInRect(&sRect, sPOINT) == TRUE);
 			}
 		}
 	}

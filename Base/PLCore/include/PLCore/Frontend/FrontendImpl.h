@@ -470,6 +470,10 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    Width of the frontend
 		*  @param[in, out] nHeight
 		*    Height of the frontend
+		*  @param[in]     nScreenLeft
+		*    Screen left side
+		*  @param[in]     nScreenTop
+		*    Screen top side
 		*  @param[in]     nScreenWidth
 		*    Screen width
 		*  @param[in]     nScreenHeight
@@ -484,7 +488,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    - Corrects: The frontend position shouldn't be outside the visible screen
 		*    - Corrects: The size of the frontend shouldn't leave the visible screen
 		*/
-		PLCORE_API static void CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, uint32 nScreenWidth, uint32 nScreenHeight, uint32 nMinWidth = 200, uint32 nMinHeight = 200);
+		PLCORE_API static void CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, int nScreenLeft, int nScreenTop, int nScreenWidth, int nScreenHeight, uint32 nMinWidth = 200, uint32 nMinHeight = 200);
 
 
 	//[-------------------------------------------------------]

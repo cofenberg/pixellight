@@ -251,7 +251,7 @@ void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 		Screen *pScreen = Gui::GetSystemGui()->GetDefaultScreen();
 
 		// Correct frontend position and size settings
-		CorrectPositionSize(nX, nY, nWidth, nHeight, pScreen->GetSize().x, pScreen->GetSize().y);
+		CorrectPositionSize(nX, nY, nWidth, nHeight, pScreen->GetPos().x, pScreen->GetPos().y, pScreen->GetSize().x, pScreen->GetSize().y);
 
 		// Set position and size settings
 		m_pMainWindow->SetPos(Vector2i(nX, nY));
