@@ -96,6 +96,8 @@ Application::~Application()
 */
 bool Application::LoadResource(const String &sFilename)
 {
+	bool bResult = false;	// Error by default
+
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();
 	if (sExtension.GetLength()) {
@@ -104,7 +106,7 @@ bool Application::LoadResource(const String &sFilename)
 			// Is the given resource a scene?
 			if (LoadScene(sFilename)) {
 				// Done, get us out of here right now!
-				return true;
+				bResult = true;
 			} else {
 				// Write an error message into the log
 				PL_LOG(Error, "Failed to load the scene \"" + sFilename + '\"')
@@ -115,7 +117,7 @@ bool Application::LoadResource(const String &sFilename)
 			// Load the script
 			if (LoadScript(sFilename)) {
 				// Done, get us out of here right now!
-				return true;
+				bResult = true;
 			} else {
 				// Write an error message into the log
 				PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
@@ -131,8 +133,11 @@ bool Application::LoadResource(const String &sFilename)
 		PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file has no extension")
 	}
 
-	// Error!
-	return false;
+	// Set the state text
+	SetStateText(bResult ? sFilename : ("Failed to load \"" + sFilename + "\" (see log for details)"));
+
+	// Done
+	return bResult;
 }
 
 
@@ -162,6 +167,16 @@ void Application::OnControl(Control &cControl)
 			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
 		}
 	}
+}
+
+/**
+*  @brief
+*    Sets the state text
+*/
+void Application::SetStateText(const String &sText)
+{
+	// Just misuse the frontend title to communicate with the user
+	GetFrontend().SetTitle("PixelLight viewer - Use drag'n'drop to load in a scene/script - " + sText);
 }
 
 
@@ -208,17 +223,14 @@ void Application::OnInit()
 	// Call base implementation
 	ScriptApplication::OnInit();
 
-	// Is there a name given?
+	// Load resource (if it's one :)
 	if (sFilename.GetLength()) {
-		// Load resource (if it's one :)
-		if (LoadResource(sFilename))
-			return; // Done, get us out of here right now!
+		// Load the resource
+		LoadResource(sFilename);
 	} else {
-		// Error, no scene given
+		// Set the state text
+		SetStateText("Nothing loaded");
 	}
-
-	// Set exit code to error
-	Exit(1);
 }
 
 

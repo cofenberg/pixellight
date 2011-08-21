@@ -112,6 +112,15 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		void OnControl(PLInput::Control &cControl);
 
+		/**
+		*  @brief
+		*    Sets the state text
+		*
+		*  @param[in] sText
+		*    State text
+		*/
+		void SetStateText(const PLCore::String &sText);
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::CoreApplication functions     ]

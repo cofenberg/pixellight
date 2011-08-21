@@ -1,3 +1,10 @@
+>> 21.08.2011
+[CO]
+- PLViewer is no longer closing at once when not provided with the filename of the scene/script to load in, or the loading failed
+- PLViewer is now misusing the frontend title to communicate with the user *scrooge approach*
+
+
+
 >> 15.08.2011
 [CO]
 - The PLViewer application is now directly within the tools executable directory. The purpose of PLViewer is to have a minimalistic and generic
