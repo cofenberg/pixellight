@@ -98,7 +98,7 @@ void XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &sSelectionMe
 		// Check if target is the requested one
 		if (sSelectionMessage.target == m_ToBeRequestedType) {
 			PropertyData sPropertyData = ReadProperty(m_nDropWindow, XdndSelection);
-			
+
 			// Reply OK
 			XClientMessageEvent sXClientMessageEvent;
 			memset(&sXClientMessageEvent, 0, sizeof(sXClientMessageEvent));
@@ -184,7 +184,7 @@ String XDnDFileDropHelper::GetAtomName(Atom sAtom)
 Atom XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList, int nNumOfItems)
 {
 	Atom sToBeRequested = XLib::None;
-	
+
 	for (int i=0; i<nNumOfItems; i++) {
 		if (GetAtomName(pAtomList[i]) == "text/uri-list")
 			sToBeRequested = pAtomList[i];
@@ -249,7 +249,7 @@ XDnDFileDropHelper::XDnDFileDropHelper(const XDnDFileDropHelper &cOther)
 */
 XDnDFileDropHelper &XDnDFileDropHelper::operator =(const XDnDFileDropHelper &cOther)
 {
-    return *this;
+	return *this;
 }
 
 /**

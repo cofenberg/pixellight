@@ -22,6 +22,9 @@
     <ClCompile Include="src\Frontend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\XDnDFileDropHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendOS\PLFrontendOS.h">
@@ -40,6 +43,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="include\PLFrontendOS\XDnDFileDropHelper.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
