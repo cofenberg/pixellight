@@ -97,6 +97,11 @@ PLCore::uint32 PixelLightCtrl::GetHeight() const
 	return sRect.bottom;
 }
 
+void PixelLightCtrl::SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+}
+
 bool PixelLightCtrl::GetToggleFullscreenMode() const
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into

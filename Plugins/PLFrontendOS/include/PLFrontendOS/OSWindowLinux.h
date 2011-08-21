@@ -135,6 +135,7 @@ class OSWindowLinux : public OSWindow {
 		virtual int GetY() const override;
 		virtual PLCore::uint32 GetWidth() const override;
 		virtual PLCore::uint32 GetHeight() const override;
+		virtual void SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight) override;
 		virtual void SetFullscreenAltTab(bool bAllowed) override;
 		virtual void SetFullscreen(bool bFullscreen) override;
 		virtual void RefreshFullscreen() override;

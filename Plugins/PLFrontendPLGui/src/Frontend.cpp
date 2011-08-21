@@ -230,6 +230,14 @@ uint32 Frontend::GetHeight() const
 	return m_pMainWindow ? m_pMainWindow->GetSize().y : 0;
 }
 
+void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+{
+	if (m_pMainWindow) {
+		m_pMainWindow->SetPos(Vector2i(nX, nY));
+		m_pMainWindow->SetSize(Vector2i(nWidth, nHeight));
+	}
+}
+
 bool Frontend::GetToggleFullscreenMode() const
 {
 	return m_bToggleFullscreenMode;

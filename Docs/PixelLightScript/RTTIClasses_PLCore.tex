@@ -69,13 +69,22 @@ Write \emph{<RTTI object>:Redraw()} in order redraw the frontend.
 Write \emph{<RTTI object>:Ping()} in order to give the frontend a chance to process OS messages.
 
 \paragraph{RedrawAndPing()}
-Write \emph{<RTTI object>:RedrawAndPing()} in order to redraw the frontend window and give the frontend a chance to process OS messages.
+Write \emph{<RTTI object>:RedrawAndPing()} in order to redraw the frontend and give the frontend a chance to process OS messages.
+
+\paragraph{<integer> GetX()}
+Write \emph{<RTTI object>:GetX()} in order receive the x position of the frontend (in screen coordinates).
+
+\paragraph{<integer> GetY()}
+Write \emph{<RTTI object>:GetY()} in order receive the y position of the frontend (in screen coordinates).
 
 \paragraph{<integer> GetWidth()}
-Write \emph{<RTTI object>:GetWidth()} in order receive the width of the frontend window.
+Write \emph{<RTTI object>:GetWidth()} in order receive the width of the frontend.
 
 \paragraph{<integer> GetHeight()}
-Write \emph{<RTTI object>:GetHeight()} in order receive the height of the frontend window.
+Write \emph{<RTTI object>:GetHeight()} in order receive the height of the frontend.
+
+\paragraph{SetPositionSize(<integer>, <integer>, <integer>, <integer>)}
+Write \emph{<RTTI object>:SetPositionSize(<integer>, <integer>, <integer>, <integer>)} in order to set the frontend position and size. X and y position of the frontend (in screen coordinates) as the first two parameters, width and height of the frontend as third and fouth parameters.
 
 \paragraph{<bool> GetToggleFullscreenMode()}
 Write \emph{<RTTI object>:GetToggleFullscreenMode()} in order to request whether it's allowed to toggle the fullscreen mode using hotkeys. \emph{true} if it's possible to toggle the fullscreen mode using hotkeys, else \emph{false}.
@@ -90,10 +99,10 @@ Write \emph{<RTTI object>:GetFullscreenAltTab()} in order to request whether it'
 Write \emph{<RTTI object>:SetFullscreenAltTab(<bool>)} in order to set whether it's allowed to use Alt-Tab if fullscreen mode is used. \emph{true} as first parameter to allow it, else \emph{false}.
 
 \paragraph{<bool> IsFullscreen()}
-Write \emph{<RTTI object>:IsFullscreen()} in order to request whether or not the window is currently fullscreen or not. Returns \emph{true} if the window is currently fullscreen, else \emph{false}.
+Write \emph{<RTTI object>:IsFullscreen()} in order to request whether or not the frontend is currently fullscreen or not. Returns \emph{true} if the frontend is currently fullscreen, else \emph{false}.
 
 \paragraph{SetFullscreen(<bool>)}
-Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the window is currently fullscreen or not. \emph{true} as first parameter if the window is currently fullscreen, else \emph{false}.
+Write \emph{<RTTI object>:SetFullscreen(<bool>)} in order to set whether or not the frontend is currently fullscreen or not. \emph{true} as first parameter if the frontend is currently fullscreen, else \emph{false}.
 
 \paragraph{<bool> IsMouseOver()}
 Write \emph{<RTTI object>:IsMouseOver()} in order to request whether or not the mouse cursor is currently over the frontend. Returns \emph{true} if the mouse cursor is currently over the frontend, else \emph{false}.
@@ -111,4 +120,4 @@ Write \emph{<RTTI object>:IsMouseVisible()} in order to request whether or not t
 Write \emph{<RTTI object>:SetMouseVisible(<bool>)} in order to set the mouse cursor visibility. \emph{true} as first parameter if the mouse cursor shall be visible.
 
 \paragraph{SetTrapMouse(<bool>)}
-Write \emph{<RTTI object>:SetTrapMouse(<bool>)} in order to trap the mouse inside the frontend window. \emph{true} as first parameter if the mouse should be trapped inside the frontend window, else \emph{false}.
+Write \emph{<RTTI object>:SetTrapMouse(<bool>)} in order to trap the mouse inside the frontend. \emph{true} as first parameter if the mouse should be trapped inside the frontend, else \emph{false}.

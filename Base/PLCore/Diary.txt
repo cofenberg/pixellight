@@ -2,6 +2,7 @@
 [CO]
 - Renamed "PLCore::CoreGeneralConfig" into "PLCore::CoreConfig"
 - "Frontend": Added "GetX()" & "GetY()"
+- "Frontend": Added "SetPositionSize()"
 
 
 

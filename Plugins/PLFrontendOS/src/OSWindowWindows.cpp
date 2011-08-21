@@ -411,6 +411,7 @@ int OSWindowWindows::GetX() const
 		::GetWindowRect(m_hWnd, &sRect);
 		return sRect.left;
 	} else {
+		// Error!
 		return 0;
 	}
 }
@@ -423,6 +424,7 @@ int OSWindowWindows::GetY() const
 		::GetWindowRect(m_hWnd, &sRect);
 		return sRect.top;
 	} else {
+		// Error!
 		return 0;
 	}
 }
@@ -435,6 +437,7 @@ uint32 OSWindowWindows::GetWidth() const
 		::GetClientRect(m_hWnd, &sRect);
 		return sRect.right;
 	} else {
+		// Error!
 		return 0;
 	}
 }
@@ -447,8 +450,15 @@ uint32 OSWindowWindows::GetHeight() const
 		::GetClientRect(m_hWnd, &sRect);
 		return sRect.bottom;
 	} else {
+		// Error!
 		return 0;
 	}
+}
+
+void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+{
+	if (m_hWnd)
+		::MoveWindow(m_hWnd, nX, nY, nWidth, nHeight, TRUE);
 }
 
 void OSWindowWindows::SetFullscreenAltTab(bool bAllowed)

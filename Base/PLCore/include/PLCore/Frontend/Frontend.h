@@ -96,23 +96,29 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 	pl_class(PLCORE_RTTI_EXPORT, Frontend, "PLCore", PLCore::Object, "Abstract frontend base class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
-			pl_method_0(Redraw,						pl_ret_type(void),				"Redraw frontend window.",																																		"")
-			pl_method_0(Ping,						pl_ret_type(void),				"Give the frontend a chance to process OS messages.",																											"")
-			pl_method_0(RedrawAndPing,				pl_ret_type(void),				"Redraw frontend window and give the frontend a chance to process OS messages.",																				"")
-			pl_method_0(GetWidth,					pl_ret_type(uint32),			"Returns the window width.",																																	"")
-			pl_method_0(GetHeight,					pl_ret_type(uint32),			"Returns the window height.",																																	"")
-			pl_method_0(GetToggleFullscreenMode,	pl_ret_type(bool),				"Returns whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'.",	"")
-			pl_method_1(SetToggleFullscreenMode,	pl_ret_type(void),		bool,	"Sets whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' as first parameter to allow it, else 'false'.",									"")
-			pl_method_0(GetFullscreenAltTab,		pl_ret_type(bool),				"Returns whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' if it's possible to use Alt-Tab if fullscreen mode is used, else 'false'.",		"")
-			pl_method_1(SetFullscreenAltTab,		pl_ret_type(void),		bool,	"Sets whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' as first parameter to allow it, else 'false'.",									"")
-			pl_method_0(IsFullscreen,				pl_ret_type(bool),				"Returns whether or not the window is currently fullscreen or not. Returns 'true' if the window is currently fullscreen, else 'false'.",						"")
-			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,	"Sets whether or not the window is currently fullscreen or not. 'true' as first parameter if the window is currently fullscreen, else 'false'.",				"")
-			pl_method_0(IsMouseOver,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently over the frontend. Returns 'true' if the mouse cursor is currently over the frontend, else 'false'.",		"")
-			pl_method_0(GetMousePositionX,			pl_ret_type(int),				"Returns the current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",						"")
-			pl_method_0(GetMousePositionY,			pl_ret_type(int),				"Returns the current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",						"")
-			pl_method_0(IsMouseVisible,				pl_ret_type(bool),				"Returns whether or not the mouse cursor is currently visible. Returns 'true' if the mouse cursor is currently visible, else 'false'.",							"")
-			pl_method_1(SetMouseVisible,			pl_ret_type(void),		bool,	"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",																"")
-			pl_method_1(SetTrapMouse,				pl_ret_type(void),		bool,	"Trap the mouse inside the frontend window. 'true' as first parameter if the mouse should be trapped inside the frontend window, else 'false'.",				"")
+			pl_method_0(Redraw,						pl_ret_type(void),										"Redraw frontend.",																																											"")
+			pl_method_0(Ping,						pl_ret_type(void),										"Give the frontend a chance to process OS messages.",																																		"")
+			pl_method_0(RedrawAndPing,				pl_ret_type(void),										"Redraw frontend and give the frontend a chance to process OS messages.",																													"")
+			// Position and size methods
+			pl_method_0(GetX,						pl_ret_type(int),										"Returns the x position of the frontend (in screen coordinates).",																															"")
+			pl_method_0(GetY,						pl_ret_type(int),										"Returns the y position of the frontend (in screen coordinates).",																															"")
+			pl_method_0(GetWidth,					pl_ret_type(uint32),									"Returns the frontend width.",																																								"")
+			pl_method_0(GetHeight,					pl_ret_type(uint32),									"Returns the frontend height.",																																								"")
+			pl_method_4(SetPositionSize,			pl_ret_type(void),		int,	int,	uint32,	uint32,	"Set frontend position and size. X and y position of the frontend (in screen coordinates) as the first two parameters, width and height of the frontend as third and fouth parameters.",	"")
+			// Fullscreen methods
+			pl_method_0(GetToggleFullscreenMode,	pl_ret_type(bool),										"Returns whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'.",								"")
+			pl_method_1(SetToggleFullscreenMode,	pl_ret_type(void),		bool,							"Sets whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' as first parameter to allow it, else 'false'.",																"")
+			pl_method_0(GetFullscreenAltTab,		pl_ret_type(bool),										"Returns whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' if it's possible to use Alt-Tab if fullscreen mode is used, else 'false'.",									"")
+			pl_method_1(SetFullscreenAltTab,		pl_ret_type(void),		bool,							"Sets whether it's allowed to use Alt-Tab if fullscreen mode is used. 'true' as first parameter to allow it, else 'false'.",																"")
+			pl_method_0(IsFullscreen,				pl_ret_type(bool),										"Returns whether or not the frontend is currently fullscreen or not. Returns 'true' if the frontend is currently fullscreen, else 'false'.",												"")
+			pl_method_1(SetFullscreen,				pl_ret_type(void),		bool,							"Sets whether or not the frontend is currently fullscreen or not. 'true' as first parameter if the frontend is currently fullscreen, else 'false'.",										"")
+			// Mouse methods
+			pl_method_0(IsMouseOver,				pl_ret_type(bool),										"Returns whether or not the mouse cursor is currently over the frontend. Returns 'true' if the mouse cursor is currently over the frontend, else 'false'.",									"")
+			pl_method_0(GetMousePositionX,			pl_ret_type(int),										"Returns the current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",													"")
+			pl_method_0(GetMousePositionY,			pl_ret_type(int),										"Returns the current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend",													"")
+			pl_method_0(IsMouseVisible,				pl_ret_type(bool),										"Returns whether or not the mouse cursor is currently visible. Returns 'true' if the mouse cursor is currently visible, else 'false'.",														"")
+			pl_method_1(SetMouseVisible,			pl_ret_type(void),		bool,							"Set the mouse cursor visibility. 'true' as first parameter if the mouse cursor shall be visible.",																							"")
+			pl_method_1(SetTrapMouse,				pl_ret_type(void),		bool,							"Trap the mouse inside the frontend. 'true' as first parameter if the mouse should be trapped inside the frontend, else 'false'.",															"")
 		#endif
 	pl_class_end
 
@@ -176,7 +182,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 
 		/**
 		*  @brief
-		*    Redraw frontend window
+		*    Redraw frontend
 		*
 		*  @remarks
 		*    There are situations were an application may do some heavy work without letting
@@ -209,7 +215,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 
 		/**
 		*  @brief
-		*    Redraw frontend window and give the frontend a chance to process OS messages
+		*    Redraw frontend and give the frontend a chance to process OS messages
 		*
 		*  @remarks
 		*    Calls "Redraw()", then "Ping()".
@@ -257,6 +263,29 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Height of the frontend
 		*/
 		PLCORE_API uint32 GetHeight() const;
+
+		/**
+		*  @brief
+		*    Set frontend position and size
+		*
+		*  @param[in] nX
+		*    X position of the frontend (in screen coordinates)
+		*  @param[in] nY
+		*    Y position of the frontend (in screen coordinates)
+		*  @param[in] nWidth
+		*    Width of the frontend
+		*  @param[in] nHeight
+		*    Height of the frontend
+		*
+		*  @remarks
+		*    The primary argument to allow the user to request a frontend position and size change is,
+		*    that it should be possible to restore the frontend position and size of a previous session
+		*    (may be important for the usuability). Do not misuse this method to frequently manipulate
+		*    the frontend appearence. Please note that, as for all other frontend methods, this is only
+		*    considered to be a request. A frontend implementation may deny the request in general or
+		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
+		*/
+		PLCORE_API void SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight);
 
 		//[-------------------------------------------------------]
 		//[ Fullscreen                                            ]
@@ -311,19 +340,19 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 
 		/**
 		*  @brief
-		*    Returns whether the window is in fullscreen mode or not
+		*    Returns whether the frontend is in fullscreen mode or not
 		*
 		*  @return
-		*    'true' if the window is in fullscreen mode, else 'false'
+		*    'true' if the frontend is in fullscreen mode, else 'false'
 		*/
 		PLCORE_API bool IsFullscreen() const;
 
 		/**
 		*  @brief
-		*    Sets the window's fullscreen mode
+		*    Sets the frontend's fullscreen mode
 		*
 		*  @param[in] bFullscreen
-		*    'true' if the window should be in fullscreen mode, else 'false'
+		*    'true' if the frontend should be in fullscreen mode, else 'false'
 		*/
 		PLCORE_API void SetFullscreen(bool bFullscreen);
 
@@ -393,10 +422,10 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 
 		/**
 		*  @brief
-		*    Trap mouse inside the frontend window
+		*    Trap mouse inside the frontend
 		*
 		*  @param[in] bTrap
-		*    'true' if the mouse should be trapped inside the frontend window, else 'false'
+		*    'true' if the mouse should be trapped inside the frontend, else 'false'
 		*
 		*  @note
 		*    - Do only trap the mouse cursor when it really makes sense (e.g. during the period

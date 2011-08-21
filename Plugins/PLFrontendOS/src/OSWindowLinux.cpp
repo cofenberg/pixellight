@@ -291,50 +291,86 @@ bool OSWindowLinux::Ping()
 
 int OSWindowLinux::GetX() const
 {
-	// Get X window geometry information
-	::Window nRootWindow = 0;
-	int nPositionX = 0, nPositionY = 0;
-	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+	if (m_nNativeWindowHandle) {
+		// Get X window geometry information
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
-	// Return the window x position (in screen coordinates)
-	return nPositionX;
+		// Return the window x position (in screen coordinates)
+		return nPositionX;
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 int OSWindowLinux::GetY() const
 {
-	// Get X window geometry information
-	::Window nRootWindow = 0;
-	int nPositionX = 0, nPositionY = 0;
-	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+	if (m_nNativeWindowHandle) {
+		// Get X window geometry information
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
-	// Return the window y position (in screen coordinates)
-	return nPositionY;
+		// Return the window y position (in screen coordinates)
+		return nPositionY;
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 uint32 OSWindowLinux::GetWidth() const
 {
-	// Get X window geometry information
-	::Window nRootWindow = 0;
-	int nPositionX = 0, nPositionY = 0;
-	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+	if (m_nNativeWindowHandle) {
+		// Get X window geometry information
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
-	// Return the window width
-	return nWidth;
+		// Return the window width
+		return nWidth;
+	} else {
+		// Error!
+		return 0;
+	}
 }
 
 uint32 OSWindowLinux::GetHeight() const
 {
-	// Get X window geometry information
-	::Window nRootWindow = 0;
-	int nPositionX = 0, nPositionY = 0;
-	unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-	XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+	if (m_nNativeWindowHandle) {
+		// Get X window geometry information
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
-	// Return the window height
-	return nHeight;
+		// Return the window height
+		return nHeight;
+	} else {
+		// Error!
+		return 0;
+	}
+}
+
+void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+{
+	if (m_nNativeWindowHandle) {
+		// Set position and size
+		XWindowChanges sChanges;
+		sChanges.x		= nX;
+		sChanges.y		= nY;
+		sChanges.width	= nWidth;
+		sChanges.height	= nHeight;
+		XConfigureWindow(m_pDisplay, m_nNativeWindowHandle, CWX | CWY | CWWidth | CWHeight, &sChanges);
+
+		// Do it!
+		XSync(m_pDisplay, False);
+	}
 }
 
 void OSWindowLinux::SetFullscreenAltTab(bool bAllowed)

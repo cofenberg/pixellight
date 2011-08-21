@@ -129,7 +129,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 /**
 *  @brief
-*    Redraw frontend window
+*    Redraw frontend
 */
 void Frontend::Redraw()
 {
@@ -149,7 +149,7 @@ void Frontend::Ping() const
 
 /**
 *  @brief
-*    Redraw frontend window and give the frontend a chance to process OS messages
+*    Redraw frontend and give the frontend a chance to process OS messages
 */
 void Frontend::RedrawAndPing()
 {
@@ -200,6 +200,16 @@ uint32 Frontend::GetHeight() const
 
 /**
 *  @brief
+*    Set frontend position and size
+*/
+void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+{
+	// Call backend
+	m_pFrontendImpl->SetPositionSize(nX, nY, nWidth, nHeight);
+}
+
+/**
+*  @brief
 *    Gets whether it's allowed to toggle the fullscreen mode using hotkeys
 */
 bool Frontend::GetToggleFullscreenMode() const
@@ -240,7 +250,7 @@ void Frontend::SetFullscreenAltTab(bool bAllowed)
 
 /**
 *  @brief
-*    Returns whether the window is in fullscreen mode or not
+*    Returns whether the frontend is in fullscreen mode or not
 */
 bool Frontend::IsFullscreen() const
 {
@@ -250,7 +260,7 @@ bool Frontend::IsFullscreen() const
 
 /**
 *  @brief
-*    Sets the window's fullscreen mode
+*    Sets the frontend's fullscreen mode
 */
 void Frontend::SetFullscreen(bool bFullscreen)
 {
@@ -320,7 +330,7 @@ void Frontend::SetMouseVisible(bool bVisible)
 
 /**
 *  @brief
-*    Trap mouse inside the frontend window
+*    Trap mouse inside the frontend
 */
 void Frontend::SetTrapMouse(bool bTrap)
 {
