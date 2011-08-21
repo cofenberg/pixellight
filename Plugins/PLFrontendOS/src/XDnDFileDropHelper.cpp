@@ -23,12 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendOS/XDnDFileDropHelper.h"
-#include <PLCore/String/Tokenizer.h>
-#include <PLCore/String/String.h>
-#include <PLCore/Container/Array.h>
-#include "PLFrontendOS/OSWindowLinux.h"
 #include <string.h>
+#include <PLCore/String/Tokenizer.h>
+#include "PLFrontendOS/OSWindowLinux.h"
+#include "PLFrontendOS/XDnDFileDropHelper.h"
 
 
 //[-------------------------------------------------------]
@@ -38,303 +36,301 @@ using namespace PLCore;
 namespace PLFrontendOS {
 
 
-XDnDFileDropHelper::XDnDFileDropHelper(OSWindowLinux *pOSWindowLinux)
-	:	m_pOSWindowLinux(pOSWindowLinux),
-		m_pDisplay(pOSWindowLinux->m_pDisplay),
-		m_dropWindow(XLib::None),
-		XdndEnter(XInternAtom(m_pDisplay, "XdndEnter", False)),
-		XdndPosition(XInternAtom(m_pDisplay, "XdndPosition", False)),
-		XdndStatus(XInternAtom(m_pDisplay, "XdndStatus", False)),
-		XdndTypeList(XInternAtom(m_pDisplay, "XdndTypeList", False)),
-		XdndActionCopy(XInternAtom(m_pDisplay, "XdndActionCopy", False)),
-		XdndDrop(XInternAtom(m_pDisplay, "XdndDrop", False)),
-		XdndFinished(XInternAtom(m_pDisplay, "XdndFinished", False)),
-		XdndSelection(XInternAtom(m_pDisplay, "XdndSelection", False)),
-		//This is a meta-format for data to be "pasted" in to.
-		//Requesting this format acquires a list of possible
-		//formats from the application which copied the data.
-		XA_TARGETS(XInternAtom(m_pDisplay, "TARGETS", False)),
-		m_XdndSourceWindow(XLib::None),
-		m_ToBeRequestedType(XLib::None),
-		m_XdndVersion(0)
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+XDnDFileDropHelper::XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux) :
+	m_pOSWindowLinux(&cOSWindowLinux),
+	m_pDisplay(cOSWindowLinux.m_pDisplay),
+	m_nDropWindow(cOSWindowLinux.m_nNativeWindowHandle),
+	XdndEnter     (XInternAtom(m_pDisplay, "XdndEnter",      False)),
+	XdndPosition  (XInternAtom(m_pDisplay, "XdndPosition",   False)),
+	XdndStatus    (XInternAtom(m_pDisplay, "XdndStatus",     False)),
+	XdndTypeList  (XInternAtom(m_pDisplay, "XdndTypeList",   False)),
+	XdndActionCopy(XInternAtom(m_pDisplay, "XdndActionCopy", False)),
+	XdndDrop      (XInternAtom(m_pDisplay, "XdndDrop",       False)),
+	XdndFinished  (XInternAtom(m_pDisplay, "XdndFinished",   False)),
+	XdndSelection (XInternAtom(m_pDisplay, "XdndSelection",  False)),
+	// This is a meta-format for data to be "pasted" in to.
+	// Requesting this format acquires a list of possible
+	// formats from the application which copied the data.
+	XA_TARGETS(XInternAtom(m_pDisplay, "TARGETS", False)),
+	m_XdndSourceWindow(XLib::None),
+	m_ToBeRequestedType(XLib::None),
+	m_XdndVersion(0)
 {
-
-}
-
-void XDnDFileDropHelper::EnableDropForWindow()
-{
-	if (m_dropWindow != XLib::None)
-		return;
-
-	m_dropWindow = m_pOSWindowLinux->m_nNativeWindowHandle;
-	//Announce XDND support
+	// Announce XDND support
 	Atom XdndAware = XInternAtom(m_pDisplay, "XdndAware", False);
-	Atom version=5;
-	XChangeProperty(m_pDisplay, m_dropWindow, XdndAware, XA_ATOM, 32, PropModeReplace, (unsigned char*)&version, 1);
+	Atom version = 5;
+	XChangeProperty(m_pDisplay, m_nDropWindow, XdndAware, XA_ATOM, 32, PropModeReplace, reinterpret_cast<unsigned char*>(&version), 1);
 }
 
-bool XDnDFileDropHelper::HandleClientMessage(const XClientMessageEvent &clientMessage)
+/**
+*  @brief
+*    Handler for client messages
+*/
+bool XDnDFileDropHelper::HandleClientMessage(const XClientMessageEvent &sClientMessage)
 {
-	if(clientMessage.message_type == XdndEnter)
-	{
-		HandleXdndEnter(clientMessage);
-	}
-	else if (clientMessage.message_type == XdndPosition)
-	{
-		HandleXdndPosition(clientMessage);
-	}
-	else if (clientMessage.message_type == XdndDrop)
-	{
-		HandleXdndDrop(clientMessage);
-	}
+	if (sClientMessage.message_type == XdndEnter)
+		HandleXdndEnter(sClientMessage);
+	else if (sClientMessage.message_type == XdndPosition)
+		HandleXdndPosition(sClientMessage);
+	else if (sClientMessage.message_type == XdndDrop)
+		HandleXdndDrop(sClientMessage);
 	else
-	{
-		return false;
-	}
-	
+		return false;	// Message was not handled
+
+	// Message was handled
 	return true;
 }
 
-void XDnDFileDropHelper::HandleXdndEnter(const XClientMessageEvent &clientMessage)
+/**
+*  @brief
+*    Handler for the SelectionNotify message
+*/
+void XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &sSelectionMessage)
 {
-	bool more_than_3 = clientMessage.data.l[1] & 1;
-	Window source = clientMessage.data.l[0];
-
-	m_XdndVersion = ( clientMessage.data.l[1] >> 24);
-
-	//Query which conversions are available and pick the best
-
-	if(more_than_3)
-	{
-		//Fetch the list of possible conversions
-		PropertyData propertyData = ReadProperty(source , XdndTypeList);
-		m_ToBeRequestedType = CheckForSupportedTargetTypFromProperty(propertyData);
-		XFree(propertyData.data);
-	}
-	else
-	{
-		//Use the available list
-		m_ToBeRequestedType = CheckForSupportedTargetTypFromAtoms(clientMessage.data.l[2], clientMessage.data.l[3], clientMessage.data.l[4]);
-	}
-}
-
-void XDnDFileDropHelper::HandleXdndPosition(const XClientMessageEvent &clientMessage)
-{
-	
-	Atom action = XdndActionCopy;
-	if(m_XdndVersion >= 2)
-		action = clientMessage.data.l[4];
-	
-	//Xdnd: reply with an XDND status message
-	XClientMessageEvent m;
-	memset(&m, 0, sizeof(m));
-	m.type = ClientMessage;
-	m.display = clientMessage.display;
-	m.window = clientMessage.data.l[0];
-	m.message_type = XdndStatus;
-	m.format=32;
-	m.data.l[0] = m_dropWindow;
-	m.data.l[1] = (m_ToBeRequestedType != XLib::None);
-	m.data.l[2] = m_pOSWindowLinux->GetWidth();
-	m.data.l[3] = m_pOSWindowLinux->GetHeight();
-	m.data.l[4] = XdndActionCopy; //We only accept copying anyway.
-
-	XSendEvent(m_pDisplay,clientMessage.data.l[0], False, NoEventMask, (XEvent*)&m);
-	XFlush(m_pDisplay);
-}
-
-void XDnDFileDropHelper::HandleXdndDrop(const XClientMessageEvent &clientMessage)
-{
-	if(m_ToBeRequestedType == XLib::None)
-	{
-		//It's sending anyway, despite instructions to the contrary.
-		//So reply that we're not interested.
-		XClientMessageEvent m;
-		memset(&m, 0, sizeof(m));
-		m.type = ClientMessage;
-		m.display = clientMessage.display;
-		m.window = clientMessage.data.l[0];
-		m.message_type = XdndFinished;
-		m.format=32;
-		m.data.l[0] = m_dropWindow;
-		m.data.l[1] = 0;
-		m.data.l[2] = XLib::None; //Failed.
-		XSendEvent(m_pDisplay, clientMessage.data.l[0], False, NoEventMask, (XEvent*)&m);
-	}
-	else
-	{
-		m_XdndSourceWindow = clientMessage.data.l[0];
-		if(m_XdndVersion >= 1)
-			XConvertSelection(m_pDisplay, XdndSelection, m_ToBeRequestedType, XdndSelection, m_dropWindow, clientMessage.data.l[2]);
-		else
-			XConvertSelection(m_pDisplay, XdndSelection, m_ToBeRequestedType, XdndSelection, m_dropWindow, CurrentTime);
-	}
-}
-
-void XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &selectionMessage)
-{
-	Atom target = selectionMessage.target;
-
-	if(selectionMessage.property == XLib::None || selectionMessage.selection != XdndSelection)
-	{
-		// The selection can not be converted or isn't in the XdndSelection buffer -> ignore.
-		return;
-	}
-	else 
-	{
-		// check if target is the requested one
-		if(target == m_ToBeRequestedType)
-		{
-			PropertyData propertyData = ReadProperty(m_dropWindow, XdndSelection);
+	if (sSelectionMessage.property != XLib::None && sSelectionMessage.selection == XdndSelection) {
+		// Check if target is the requested one
+		if (sSelectionMessage.target == m_ToBeRequestedType) {
+			PropertyData sPropertyData = ReadProperty(m_nDropWindow, XdndSelection);
 			
-			//Reply OK.
-			XClientMessageEvent m;
-			memset(&m, 0, sizeof(m));
-			m.type = ClientMessage;
-			m.display = m_pDisplay;
-			m.window = m_XdndSourceWindow;
-			m.message_type = XdndFinished;
-			m.format=32;
-			m.data.l[0] = m_dropWindow;
-			m.data.l[1] = 1;
-			m.data.l[2] = XdndActionCopy; //We only ever copy.
+			// Reply OK
+			XClientMessageEvent sXClientMessageEvent;
+			memset(&sXClientMessageEvent, 0, sizeof(sXClientMessageEvent));
+			sXClientMessageEvent.type			= ClientMessage;
+			sXClientMessageEvent.display		= m_pDisplay;
+			sXClientMessageEvent.window			= m_XdndSourceWindow;
+			sXClientMessageEvent.message_type	= XdndFinished;
+			sXClientMessageEvent.format			= 32;
+			sXClientMessageEvent.data.l[0]		= m_nDropWindow;
+			sXClientMessageEvent.data.l[1]		= 1;
+			sXClientMessageEvent.data.l[2]		= XdndActionCopy;	// We only ever copy
 
-			//Reply that all is well.
-			XSendEvent(m_pDisplay, m_XdndSourceWindow, False, NoEventMask, (XEvent*)&m);
+			// Reply that all is well
+			XSendEvent(m_pDisplay, m_XdndSourceWindow, False, NoEventMask, reinterpret_cast<XEvent*>(&sXClientMessageEvent));
 
 			XSync(m_pDisplay, False);
-			
-			String path (String::FromUTF8((char*)propertyData.data));
-			
-			XFree(propertyData.data);
-			
-			Tokenizer token;
-			token.SetDelimiters("\n\r");
-			token.SetSingleLineComment("");
-			token.SetQuotes("");
-			token.SetSingleChars("");
-			
-			token.Start(path);
-			
+
+			const String sPath(String::FromUTF8(reinterpret_cast<char*>(sPropertyData.data)));
+
+			XFree(sPropertyData.data);
+
 			// Create the file list
-			Array<String> lstFiles = token.GetTokens();
-			
+			Tokenizer cTokenizer;
+			cTokenizer.SetDelimiters("\n\r");
+			cTokenizer.SetSingleLineComment("");
+			cTokenizer.SetQuotes("");
+			cTokenizer.SetSingleChars("");
+			cTokenizer.Start(sPath);
+			Array<String> lstFiles = cTokenizer.GetTokens();
+
 			// Inform the frontend
 			m_pOSWindowLinux->OnDrop(lstFiles);
 		}
+	} else {
+		// The selection can not be converted or isn't in the XdndSelection buffer -> ignore
 	}
 }
+
 
 //[-------------------------------------------------------]
 //[ Private helper functions                              ]
 //[-------------------------------------------------------]
-//This fetches all the data from a property
-XDnDFileDropHelper::PropertyData XDnDFileDropHelper::ReadProperty(Window window, Atom property)
+/**
+*  @brief
+*    Fetches all data from a property (Atom)
+*/
+XDnDFileDropHelper::PropertyData XDnDFileDropHelper::ReadProperty(Window nNativeWindowHandle, Atom sProperty)
 {
-	Atom actual_type;
-	int actual_format;
-	unsigned long nitems;
-	unsigned long bytes_after;
-	unsigned char *ret=0;
-	
-	int read_bytes = 1024;	
+	Atom 		   sActualType;
+	int			   nActualFormat;
+	unsigned long  nNumOfItems;
+	unsigned long  nBytesAfter;
+	unsigned char *pnReturn = nullptr;
+	int 		   nReadBytes = 1024;
 
-	//Keep trying to read the property until there are no
-	//bytes unread.
-	do
-	{
-		if(ret != 0)
-			XFree(ret);
-		XGetWindowProperty(m_pDisplay, window, property, 0, read_bytes, False, AnyPropertyType,
-							&actual_type, &actual_format, &nitems, &bytes_after, 
-							&ret);
+	// Keep trying to read the property until there are no bytes unread
+	do {
+		if (pnReturn)
+			XFree(pnReturn);
+		XGetWindowProperty(m_pDisplay, nNativeWindowHandle, sProperty, 0, nReadBytes, False, AnyPropertyType,
+						   &sActualType, &nActualFormat, &nNumOfItems, &nBytesAfter, &pnReturn);
+		nReadBytes *= 2;
+	} while (nBytesAfter != 0);
 
-		read_bytes *= 2;
-	}while(bytes_after != 0);
-	
-	PropertyData propertyData = {ret, actual_format, nitems, actual_type};
-
-	return propertyData;
+	// Done
+	PropertyData sPropertyData = {pnReturn, nActualFormat, nNumOfItems, sActualType};
+	return sPropertyData;
 }
 
-//Convert an atom name in to a String
-String XDnDFileDropHelper::GetAtomName(Atom atom)
+/**
+*  @brief
+*    Convert an atom name in to a String
+*/
+String XDnDFileDropHelper::GetAtomName(Atom sAtom)
 {
-	if(atom == XLib::None)
-		return "None";
-	else
-		return XGetAtomName(m_pDisplay, atom);
+	return (sAtom == XLib::None) ? "None" : XGetAtomName(m_pDisplay, sAtom);
 }
 
-// This function takes a list of targets which can be converted to (atom_list, nitems)
-// It returns the target which matches "text/uri-list" otherwise None
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom* atom_list, int nitems)
+/**
+*  @brief
+*    Checks if the drop source supports the "text/uri-list" drop target type
+*/
+Atom XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList, int nNumOfItems)
 {
-	Atom to_be_requested = XLib::None;
-	for(int i=0; i < nitems; i++)
-	{
-		String atom_name = GetAtomName(atom_list[i]);
-
-		if (atom_name == "text/uri-list")
-			to_be_requested = atom_list[i];
+	Atom sToBeRequested = XLib::None;
+	
+	for (int i=0; i<nNumOfItems; i++) {
+		if (GetAtomName(pAtomList[i]) == "text/uri-list")
+			sToBeRequested = pAtomList[i];
 	}
 
-	return to_be_requested;
+	return sToBeRequested;
 }
 
-// Finds the best target given up to three atoms provided (any can be None).
-// Useful for part of the Xdnd protocol.
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromAtoms(Atom atom1, Atom atom2, Atom atom3)
+/**
+*  @brief
+*    Checks if the drop source supports the "text/uri-list" drop target type (from three Atoms)
+*/
+Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromAtoms(Atom sAtom1, Atom sAtom2, Atom sAtom3)
 {
-	Atom atoms[3];
-	int  count = 0;
+	Atom sAtoms[3];
+	int nNumOfAtoms = 0;
 
-	if(atom1 != XLib::None)
-		atoms[count++] = atom1;
+	if (sAtom1 != XLib::None)
+		sAtoms[nNumOfAtoms++] = sAtom1;
+	if (sAtom2 != XLib::None)
+		sAtoms[nNumOfAtoms++] = sAtom2;
+	if (sAtom3 != XLib::None)
+		sAtoms[nNumOfAtoms++] = sAtom3;
 
-	if(atom2 != XLib::None)
-		atoms[count++] = atom2;
-
-	if(atom3 != XLib::None)
-		atoms[count++] = atom3;
-
-	return CheckForSupportedTargetTypeFromAtomList(atoms, count);
+	return CheckForSupportedTargetTypeFromAtomList(sAtoms, nNumOfAtoms);
 }
 
-// Finds the best target given a local copy of a property.
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromProperty(PropertyData propertyData)
+/**
+*  @brief
+*    Checks if the drop source supports the "text/uri-list" drop target type (from an Property)
+*/
+Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromProperty(PropertyData sPropertyData)
 {
-	//The list of targets is a list of atoms, so it should have type XA_ATOM
-	//but it may have the type TARGETS instead.
-
-	if((propertyData.type != XA_ATOM && propertyData.type != XA_TARGETS) || propertyData.format != 32)
-	{ 
-		//This would be really broken. Targets have to be an atom list
-		//and applications should support this. Nevertheless, some
-		//seem broken (MATLAB 7, for instance), so ask for STRING
-		//next instead as the lowest common denominator
-
+	// The list of targets is a list of atoms, so it should have type XA_ATOM
+	// but it may have the type TARGETS instead
+	if ((sPropertyData.type != XA_ATOM && sPropertyData.type != XA_TARGETS) || sPropertyData.format != 32) {
+		// This would be really broken. Targets have to be an atom list
+		// and applications should support this. Nevertheless, some
+		// seem broken (MATLAB 7, for instance), so ask for STRING
+		// next instead as the lowest common denominator
 		return XA_STRING;
-	}
-	else
-	{
-		Atom *atom_list = (Atom*)propertyData.data;
-		
-		return CheckForSupportedTargetTypeFromAtomList(atom_list, propertyData.nitems);
+	} else {
+		return CheckForSupportedTargetTypeFromAtomList(reinterpret_cast<Atom*>(sPropertyData.data), sPropertyData.nNumOfItems);
 	}
 }
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-XDnDFileDropHelper::XDnDFileDropHelper(const XDnDFileDropHelper& other)
+/**
+*  @brief
+*    Copy constructor
+*/
+XDnDFileDropHelper::XDnDFileDropHelper(const XDnDFileDropHelper &cOther)
 {
-
 }
 
-XDnDFileDropHelper& XDnDFileDropHelper::operator=(const XDnDFileDropHelper& other)
+/**
+*  @brief
+*    Assignment operator
+*/
+XDnDFileDropHelper &XDnDFileDropHelper::operator =(const XDnDFileDropHelper &cOther)
 {
     return *this;
+}
+
+/**
+*  @brief
+*    Handler for the XDnDEnter client message
+*/
+void XDnDFileDropHelper::HandleXdndEnter(const XClientMessageEvent &sClientMessage)
+{
+	const bool bMoreThan3 = (sClientMessage.data.l[1] & 1);
+	const Window nSource = sClientMessage.data.l[0];
+
+	m_XdndVersion = (sClientMessage.data.l[1] >> 24);
+
+	// Query which conversions are available and pick the best
+	if (bMoreThan3) {
+		// Fetch the list of possible conversions
+		PropertyData sPropertyData = ReadProperty(nSource, XdndTypeList);
+		m_ToBeRequestedType = CheckForSupportedTargetTypFromProperty(sPropertyData);
+		XFree(sPropertyData.data);
+	} else {
+		// Use the available list
+		m_ToBeRequestedType = CheckForSupportedTargetTypFromAtoms(sClientMessage.data.l[2], sClientMessage.data.l[3], sClientMessage.data.l[4]);
+	}
+}
+
+/**
+*  @brief
+*    Handler for the XDnDPosition client message
+*/
+void XDnDFileDropHelper::HandleXdndPosition(const XClientMessageEvent &sClientMessage)
+{
+	Atom sAction = XdndActionCopy;
+	if (m_XdndVersion >= 2)
+		sAction = sClientMessage.data.l[4];
+
+	// Xdnd: Reply with an XDND status message
+	XClientMessageEvent sXClientMessageEvent;
+	memset(&sXClientMessageEvent, 0, sizeof(sXClientMessageEvent));
+	sXClientMessageEvent.type			= ClientMessage;
+	sXClientMessageEvent.display		= sClientMessage.display;
+	sXClientMessageEvent.window			= sClientMessage.data.l[0];
+	sXClientMessageEvent.message_type	= XdndStatus;
+	sXClientMessageEvent.format			= 32;
+	sXClientMessageEvent.data.l[0]		= m_nDropWindow;
+	sXClientMessageEvent.data.l[1]		= (m_ToBeRequestedType != XLib::None);
+	sXClientMessageEvent.data.l[2]		= m_pOSWindowLinux->GetWidth();
+	sXClientMessageEvent.data.l[3]		= m_pOSWindowLinux->GetHeight();
+	sXClientMessageEvent.data.l[4]		= XdndActionCopy;	// We only accept copying anyway
+
+	// Send the X-event
+	XSendEvent(m_pDisplay, sClientMessage.data.l[0], False, NoEventMask, reinterpret_cast<XEvent*>(&sXClientMessageEvent));
+	XFlush(m_pDisplay);
+}
+
+/**
+*  @brief
+*    Handler for the XDnDDrop client message
+*/
+void XDnDFileDropHelper::HandleXdndDrop(const XClientMessageEvent &sClientMessage)
+{
+	if (m_ToBeRequestedType == XLib::None) {
+		// It's sending anyway, despite instructions to the contrary.
+		// So reply that we're not interested.
+		XClientMessageEvent sXClientMessageEvent;
+		memset(&sXClientMessageEvent, 0, sizeof(sXClientMessageEvent));
+		sXClientMessageEvent.type			= ClientMessage;
+		sXClientMessageEvent.display		= sClientMessage.display;
+		sXClientMessageEvent.window			= sClientMessage.data.l[0];
+		sXClientMessageEvent.message_type	= XdndFinished;
+		sXClientMessageEvent.format			= 32;
+		sXClientMessageEvent.data.l[0]		= m_nDropWindow;
+		sXClientMessageEvent.data.l[1]		= 0;
+		sXClientMessageEvent.data.l[2]		= XLib::None;	// Failed
+		XSendEvent(m_pDisplay, sClientMessage.data.l[0], False, NoEventMask, reinterpret_cast<XEvent*>(&sXClientMessageEvent));
+	} else {
+		m_XdndSourceWindow = sClientMessage.data.l[0];
+		if (m_XdndVersion >= 1)
+			XConvertSelection(m_pDisplay, XdndSelection, m_ToBeRequestedType, XdndSelection, m_nDropWindow, sClientMessage.data.l[2]);
+		else
+			XConvertSelection(m_pDisplay, XdndSelection, m_ToBeRequestedType, XdndSelection, m_nDropWindow, CurrentTime);
+	}
 }
 
 

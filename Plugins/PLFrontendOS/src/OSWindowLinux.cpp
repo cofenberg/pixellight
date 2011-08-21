@@ -29,9 +29,8 @@
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
+#include "PLFrontendOS/XDnDFileDropHelper.h"
 #include "PLFrontendOS/OSWindowLinux.h"
-#include <PLCore/String/Tokenizer.h>
-#include <iostream>
 
 
 //[-------------------------------------------------------]
@@ -68,7 +67,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	WM_NAME				(XInternAtom(m_pDisplay, "WM_NAME",				 False)),
 	_NET_WM_NAME		(XInternAtom(m_pDisplay, "_NET_WM_NAME",		 False)),
 	_NET_WM_VISIBLE_NAME(XInternAtom(m_pDisplay, "_NET_WM_VISIBLE_NAME", False)),
-	m_cDropHelper(this)
+	m_pDropHelper(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
@@ -110,8 +109,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 			XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, reinterpret_cast<const unsigned char*>(sTitle.GetUTF8()), sTitle.GetLength());
 		}
-		
-		m_cDropHelper.EnableDropForWindow();
+
+		// Create the drag'n'drop helper instance
+		m_pDropHelper = new XDnDFileDropHelper(*this);
 
 		// Do it!
 		XSync(m_pDisplay, False);
@@ -133,6 +133,10 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 */
 OSWindowLinux::~OSWindowLinux()
 {
+	// Destroy the drag'n'drop helper instance
+	if (m_pDropHelper)
+		delete m_pDropHelper;
+
 	// Check if the window has already been destroyed
 	if (m_nNativeWindowHandle) {
 		// Send destroy message to window
@@ -187,7 +191,7 @@ void OSWindowLinux::CreateInvisibleCursor()
 	XFreePixmap(m_pDisplay, sPixmapNoData);
 }
 
-void OSWindowLinux::OnDrop(const Container<String> &lstFiles)
+void OSWindowLinux::OnDrop(const Container<String> &lstFiles) const
 {
 	m_pFrontendOS->OnDrop(lstFiles);
 }
@@ -261,10 +265,8 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case ClientMessage:
-				
-				// Check if the client message is a XDnD message otherwise check for WM_DELETE_WINDOW
-				if(!m_cDropHelper.HandleClientMessage(sXEvent.xclient))
-				{
+				// Check if the client message is a XDnD message, otherwise check for WM_DELETE_WINDOW
+				if (!m_pDropHelper || !m_pDropHelper->HandleClientMessage(sXEvent.xclient)) {
 					// When the "WM_DELETE_WINDOW" client message is send, no "DestroyNotify"-message is generated because the
 					// application itself should destroy/close the window to which the "WM_DELETE_WINDOW" client message was send to.
 					// In this case, we will leave the event loop after this message was processed and no other messages are in the queue.
@@ -275,7 +277,8 @@ bool OSWindowLinux::Ping()
 				break;
 
 			case SelectionNotify:
-				m_cDropHelper.HandleXdndSelection(sXEvent.xselection);
+				if (m_pDropHelper)
+					m_pDropHelper->HandleXdndSelection(sXEvent.xselection);
 				break;
 
 			case KeyPress:

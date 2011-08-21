@@ -24,6 +24,7 @@
 #define __XDNDFILEDROPHELPER_H__
 #pragma once
 
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
@@ -64,6 +65,7 @@
 //[-------------------------------------------------------]
 namespace PLFrontendOS {
 
+
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
@@ -75,15 +77,14 @@ class OSWindowLinux;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OS Linux XDnD Helper class
+*    OS Linux XDnD helper class
 *
 *  @note
-*    - Implements a subset of the XDnD Protocol (http://www.newplanetsoftware.com/xdnd/)
-*    - It can only receive dop events and only URIs can be dropped
+*    - Implements a subset of the XDnD protocol (http://www.newplanetsoftware.com/xdnd/)
+*    - It can only receive drop events and only URIs can be dropped
 *    - This code is based on the paste.cc code from http://www.edwardrosten.com/code/x11.html
 */
-class XDnDFileDropHelper
-{
+class XDnDFileDropHelper {
 
 
 	//[-------------------------------------------------------]
@@ -91,61 +92,56 @@ class XDnDFileDropHelper
 	//[-------------------------------------------------------]
 	private:
 		/**
-		 *  @brief
-		 *    Holds the data of an property (Atom)
-		 */
-		struct PropertyData
-		{
-			unsigned char *data;
-			unsigned long format, nitems;
-			Atom type;
+		*  @brief
+		*    Holds the data of a property (Atom)
+		*/
+		struct PropertyData {
+			unsigned char  *data;
+			unsigned long	format;
+			unsigned long	nNumOfItems;
+			Atom			type;
 		};
 
+
 	//[-------------------------------------------------------]
-	//[ public functions                                      ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] pOSWindowLinux
-		*    The OSWindowLinux instance which should support Drop
+		*  @param[in] cOSWindowLinux
+		*    The OSWindowLinux instance which should support drop
 		*/
-		XDnDFileDropHelper(OSWindowLinux *pOSWindowLinux);
-		
-		/**
-		 * @brief
-		 *    Enables XDnD for an window
-		 * @param[in] window
-		 *    The window for which the XDnD support should be enabled
-		 * @remarks
-		 *    If an window is already set then this method does nothing
-		 *    The give window is internaly used for sending messages to the drop source window
-		 */
-		void EnableDropForWindow();
+		XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux);
 
 		/**
-		 * @brief
-		 *    Handler for client messages
-		 * @param[in] cClientMessage
-		 *    The XClientMessageEvent structure which holds the information about the client message
-		 * @return
-		 *    true if the message was handled otherwise false
-		 */
-		bool HandleClientMessage(const XClientMessageEvent &clientMessage);
+		*  @brief
+		*    Handler for client messages
+		*
+		*  @param[in] sClientMessage
+		*    The XClientMessageEvent structure which holds the information about the client message
+		*
+		*  @return
+		*    'true', if the message was handled otherwise 'false'
+		*/
+		bool HandleClientMessage(const XClientMessageEvent &sClientMessage);
 
 		/**
-		 * @brief
-		 *    Handler for the SelectionNotify message
-		 * @param[in] cClientMessage
-		 *    The XSelectionEvent structure which holds the information about the XSelectionEvent message
-		 * @remarks
-		 *    This handler reads the drop data from teh XdndSelection buffer (the data was converted into this buffer from the HandleXdndDrop handler)
-		 *    It sends an XdndFinished event to the drop source to indicate if the drop was successfull or not
-		 *    If the drop was successfull the Frontend is informed about the dropped file list
-		 */
-		void HandleXdndSelection(const XSelectionEvent &selectionMessage);
+		*  @brief
+		*    Handler for the SelectionNotify message
+		*
+		*  @param[in] sSelectionMessage
+		*    The XSelectionEvent structure which holds the information about the XSelectionEvent message
+		*
+		*  @remarks
+		*    This handler reads the drop data from the XdndSelection buffer (the data was converted into this buffer
+		*    from the HandleXdndDrop handler). It sends an XdndFinished event to the drop source to indicate if the
+		*    drop was successfull or not. If the drop was successfull the frontend is informed about the dropped file
+		*    list
+		*/
+		void HandleXdndSelection(const XSelectionEvent &sSelectionMessage);
 
 
 	//[-------------------------------------------------------]
@@ -153,130 +149,155 @@ class XDnDFileDropHelper
 	//[-------------------------------------------------------]
 	private:
 		/**
-		 *  @brief
-		 *    Fetches all data from a property (Atom)
-		 *  @param[in] window
-		 *    The window from which the property data schould be fetched
-		 *  @param[in] property
-		 *    The property from which the data should be fetched
-		 *  @return
-		 *    The PropertyData struct with the data of the property (Atom)
-		 */
-		PropertyData ReadProperty(Window window, Atom property);
+		*  @brief
+		*    Fetches all data from a property (Atom)
+		*
+		*  @param[in] nNativeWindowHandle
+		*    The window from which the property data should be fetched
+		*  @param[in] sProperty
+		*    The property from which the data should be fetched
+		*
+		*  @return
+		*    The PropertyData structure with the data of the property (Atom)
+		*/
+		PropertyData ReadProperty(Window nNativeWindowHandle, Atom sProperty);
 
 		/**
-		 *  @brief
-		 *    Convert an atom name in to a String
-		 *  @param[in] atom
-		 *    The atom for which the name should be returnd
-		 */
-		PLCore::String GetAtomName(Atom atom);
+		*  @brief
+		*    Convert an atom name in to a string
+		*
+		*  @param[in] sAtom
+		*    The atom for which the name should be returnd
+		*/
+		PLCore::String GetAtomName(Atom sAtom);
 
 		/**
-		 *  @brief
-		 *    Checks if the drop source supports the "text/uri-list" drop target type
-		 *  @param[in] atom_list
-		 *    the list of supported targets from the drop source
-		 *  @param[in] nitems
-		 *    the numer of items in the atom_list
-		 *  @return
-		 *    The corresponding Atom when the drop source supports the "text/uri-list" otherwise None
-		 */
-		Atom CheckForSupportedTargetTypeFromAtomList(Atom* atom_list, int nitems);
+		*  @brief
+		*    Checks if the drop source supports the "text/uri-list" drop target type
+		*
+		*  @param[in] pAtomList
+		*    The list of supported targets from the drop source, must be valid
+		*  @param[in] nNumOfItems
+		*    The numer of items in pAtomList
+		*
+		*  @return
+		*    The corresponding atom when the drop source supports the "text/uri-list", otherwise "None"
+		*/
+		Atom CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList, int nNumOfItems);
 
 		/**
-		 *  @brief
-		 *    Checks if the drop source supports the "text/uri-list" drop target type (from three Atoms)
-		 *  @param[in] atom1
-		 *    the first atom (can be None)
-		 *  @param[in] atom2
-		 *    the first atom (can be None)
-		 *  @param[in] atom3
-		 *    the first atom (can be None)
-		 *  @return
-		 *    The corresponding Atom when the drop source supports the "text/uri-list" otherwise None
-		 * 
-		 *  @remarks
-		 *    The ClientMessage structure used by the XDndEnterEvent can deliver max three Atoms, this method is used to generate a atom list from this three Atoms
-		 *    This method internal calls CheckForSupportedTargetTypeFromAtomList
-		 */
-		Atom CheckForSupportedTargetTypFromAtoms(Atom atom1, Atom atom2, Atom atom3);
+		*  @brief
+		*    Checks if the drop source supports the "text/uri-list" drop target type (from three Atoms)
+		*
+		*  @param[in] sAtom1
+		*    The first atom (can be None)
+		*  @param[in] sAtom2
+		*    The first atom (can be None)
+		*  @param[in] sAtom3
+		*    The first atom (can be None)
+		*
+		*  @return
+		*    The corresponding atom when the drop source supports the "text/uri-list", otherwise "None"
+		* 
+		*  @remarks
+		*    The ClientMessage structure used by the XDndEnterEvent can deliver a maximum of three Atoms. This method
+		*    is used to generate a atom list from these three atoms. This method internal calls CheckForSupportedTargetTypeFromAtomList.
+		*/
+		Atom CheckForSupportedTargetTypFromAtoms(Atom sAtom1, Atom sAtom2, Atom sAtom3);
 
 		/**
-		 *  @brief
-		 *    Checks if the drop source supports the "text/uri-list" drop target type (from an Property)
-		 *  @param[in] propertyData
-		 *    the data of an property
-		 *  @return
-		 *    The corresponding Atom when the drop source supports the "text/uri-list" otherwise None
-		 * 
-		 *  @remarks
-		 *    The ClientMessage structure used by the XDndEnterEvent can deliver max three Atoms.
-		 *    When the drop source supports more than 3 drop targets than the complete list can be read from the XdndTypeList Atom
-		 *    This method internal calls CheckForSupportedTargetTypeFromAtomList
-		 */
-		Atom CheckForSupportedTargetTypFromProperty(PropertyData propertyData);
+		*  @brief
+		*    Checks if the drop source supports the "text/uri-list" drop target type (from an Property)
+		*
+		*  @param[in] sPropertyData
+		*    The data of an property
+		*
+		*  @return
+		*    The corresponding atom when the drop source supports the "text/uri-list", otherwise "None"
+		* 
+		*  @remarks
+		*    The ClientMessage structure used by the XDndEnterEvent can deliver a maximum of three atoms.
+		*    When the drop source supports more than 3 drop targets, the complete list can be read from the XdndTypeList Atom.
+		*    This method internal calls CheckForSupportedTargetTypeFromAtomList.
+		*/
+		Atom CheckForSupportedTargetTypFromProperty(PropertyData sPropertyData);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
 		/**
-		 * @brief
-		 *    copy constructor
-		 */
-		XDnDFileDropHelper(const XDnDFileDropHelper& other);
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cOther
+		*    Source to copy from
+		*/
+		XDnDFileDropHelper(const XDnDFileDropHelper &cOther);
 
 		/**
-		 * @brief
-		 *    assignment operator
-		 */
-		XDnDFileDropHelper& operator=(const XDnDFileDropHelper& other);
+		*  @brief
+		*    Assignment operator
+		*
+		*  @param[in] cOther
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		XDnDFileDropHelper &operator =(const XDnDFileDropHelper &cOther);
 
 		/**
-		 * @brief
-		 *    Handler for the XDnDEnter client message
-		 * @param[in] cClientMessage
-		 *    The XClientMessageEvent structure which holds the information about the XDndEnter message
-		 * @remarks
-		 *    This handler retreives the supported XDnD protocol version and if the drop source supports the "text/uri-list" target type. 
-		 */
-		void HandleXdndEnter(const XClientMessageEvent &clientMessage);
+		*  @brief
+		*    Handler for the XDnDEnter client message
+		*
+		*  @param[in] sClientMessage
+		*    The XClientMessageEvent structure which holds the information about the XDndEnter message
+		*
+		*  @remarks
+		*    This handler retrieves the supported XDnD protocol version and if the drop source supports the "text/uri-list" target type.
+		*/
+		void HandleXdndEnter(const XClientMessageEvent &sClientMessage);
 
 		/**
-		 * @brief
-		 *    Handler for the XDnDPosition client message
-		 * @param[in] cClientMessage
-		 *    The XClientMessageEvent structure which holds the information about the XDnDPosition message
-		 * @remarks
-		 *    This handler checks if the drop source supports the "text/uri-list" target type and sends a corresponding XdndStatus message to the drop source
-		 */
-		void HandleXdndPosition(const XClientMessageEvent &clientMessage);
+		*  @brief
+		*    Handler for the XDnDPosition client message
+		*
+		*  @param[in] sClientMessage
+		*    The XClientMessageEvent structure which holds the information about the XDnDPosition message
+		*
+		*  @remarks
+		*    This handler checks if the drop source supports the "text/uri-list" target type and sends a corresponding XdndStatus message to the drop source.
+		*/
+		void HandleXdndPosition(const XClientMessageEvent &sClientMessage);
 
 		/**
-		 * @brief
-		 *    Handler for the XDnDDrop client message
-		 * @param[in] cClientMessage
-		 *    The XClientMessageEvent structure which holds the information about the XDnDDrop message
-		 * @remarks
-		 *    This handler reads the drop data from the drop source window via an XConvertSelection call (the actual read is done in the HandleXDndSelection handler)
-		 *    If this message was sent from the drop source but the drop source doesn't support the "test/uri-list" target type then this handler sends an XdndFinished which indicates that the drop has failed
-		 */
-		void HandleXdndDrop(const XClientMessageEvent &clientMessage);
+		*  @brief
+		*    Handler for the XDnDDrop client message
+		*
+		*  @param[in] sClientMessage
+		*    The XClientMessageEvent structure which holds the information about the XDnDDrop message
+		*
+		*  @remarks
+		*    This handler reads the drop data from the drop source window via an XConvertSelection call (the actual read is done in the HandleXDndSelection handler).
+		*    If this message was sent from the drop source but the drop source doesn't support the "test/uri-list" target type then this handler sends an XdndFinished which indicates that the drop has failed.
+		*/
+		void HandleXdndDrop(const XClientMessageEvent &sClientMessage);
 
 
 	//[-------------------------------------------------------]
 	//[ Private Data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		OSWindowLinux	*m_pOSWindowLinux;		/**< Pointer tp an OSWindowLinux instance should be always valid */
+		OSWindowLinux	*m_pOSWindowLinux;		/**< Pointer to an OSWindowLinux instance, always valid */
 		Display			*m_pDisplay;			/**< System display, considered to be always valid */
-		Window 			 m_dropWindow;			/**< The window which has drop support */
+		Window 			 m_nDropWindow;			/**< The window which has drop support */
 		//Atoms for Xdnd
 		Atom			 XdndEnter;				/**< The atom for the XDnD Enter client message */
 		Atom			 XdndPosition;			/**< The atom for the XDnD Position client message */
 		Atom			 XdndStatus;			/**< The atom for the XDnD Status client message */
-		Atom			 XdndTypeList;			/**< The atom to receive the supported drop target types when the source supports mor the 3 types (limit of the XCLientMessageEvent structure) */
+		Atom			 XdndTypeList;			/**< The atom to receive the supported drop target types when the source supports more then 3 types (limit of the XCLientMessageEvent structure) */
 		Atom			 XdndActionCopy;		/**< The atom for the XDnD Action type used for XDnD version 0 or 1 */
 		Atom			 XdndDrop;				/**< The atom for the XDnD Drop client message */
 		Atom			 XdndFinished;			/**< The atom for the XDnD Finished client message */
@@ -285,8 +306,10 @@ class XDnDFileDropHelper
 													 Requesting this format acquires a list of possible formats from the application which copied the data. */
 		// Data about the source
 		Window 			 m_XdndSourceWindow;	/**< The source window */
-		Atom 			 m_ToBeRequestedType;	/**< The requested drop target type can be None when the check in XDndEnter failed*/
+		Atom 			 m_ToBeRequestedType;	/**< The requested drop target type can be None when the check in XDndEnter failed */
 		int				 m_XdndVersion;			/**< The support XDnD protocol version of the drop source */
+
+
 };
 
 

@@ -58,7 +58,6 @@
 		// ... now that the namespace is name conflict free, go on with includes...
 	#endif
 #include "PLFrontendOS/OSWindow.h"
-#include "PLFrontendOS/XDnDFileDropHelper.h"
 
 
 //[-------------------------------------------------------]
@@ -71,6 +70,7 @@ namespace PLFrontendOS {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Frontend;
+class XDnDFileDropHelper;
 
 
 //[-------------------------------------------------------]
@@ -123,12 +123,15 @@ class OSWindowLinux : public OSWindow {
 		*    Creates an invisible cursor
 		*/
 		void CreateInvisibleCursor();
-		
+
 		/**
 		*  @brief
 		*    Gets called from the XDnDFileDropHelper when a drop occured
+		*
+		*  @param[in] lstFiles
+		*    List of file names
 		*/
-		void OnDrop(const PLCore::Container<PLCore::String> &lstFiles);
+		void OnDrop(const PLCore::Container<PLCore::String> &lstFiles) const;
 
 
 	//[-------------------------------------------------------]
@@ -185,7 +188,7 @@ class OSWindowLinux : public OSWindow {
 		::Atom 				 WM_NAME;				/**< Window title (old?) */
 		::Atom 				 _NET_WM_NAME;			/**< Window title */
 		::Atom 				 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
-		XDnDFileDropHelper	 m_cDropHelper;			/**< XDnD Drop helper instance */
+		XDnDFileDropHelper	*m_pDropHelper;			/**< XDnD drop helper instance, can be a null pointer */
 
 
 };
