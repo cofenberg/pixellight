@@ -314,7 +314,17 @@ String OSWindowLinux::GetTitle() const
 		unsigned long  nBytesLeft;
 		unsigned long  nNumberOfUnits;
 		unsigned char *pszName;
-		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
+		
+		Atom utf8_string = XInternAtom (m_pDisplay, "UTF8_STRING", False);
+		
+		// Try first getting as utf-8 string
+		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, utf8_string,
+							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
+			// Return the window title
+			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
+		}
+		// Try getting as plain text
+		else if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
 							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
