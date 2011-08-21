@@ -35,12 +35,12 @@ else()
 	set(QT_EXTERNAL_DIR ${QT_EXTERNAL_ABS} CACHE INTERNAL "")
 
 	# Directory for Qt stuff directly within PL's Git repository
-	set(LOCAL_QT_DIR "${CMAKE_SOURCE_DIR}/External/Recommended/Qt/${CMAKETOOLS_CONFIG_NAME}_${CMAKETOOLS_TARGET_ARCH}" CACHE INTERNAL "")
+	set(LOCAL_QT_DIR "${CMAKE_SOURCE_DIR}/External/Optional/Qt/${CMAKETOOLS_CONFIG_NAME}_${CMAKETOOLS_TARGET_ARCH}" CACHE INTERNAL "")
 
 	##################################################
 	## Build external
 	##################################################
-	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
+	add_dependencies(External-Optional ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
 	set(QT_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/QtCore ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt/QtGui ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Qt CACHE INTERNAL "")
 	if(WIN32)

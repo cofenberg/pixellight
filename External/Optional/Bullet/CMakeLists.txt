@@ -21,7 +21,7 @@ define_external_project(Bullet)
 	##################################################
 	## Build external
 	##################################################
-	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
+	add_dependencies(External-Optional ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
 	set(BULLET_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/Bullet CACHE INTERNAL "")
 	if(WIN32)

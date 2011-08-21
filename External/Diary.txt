@@ -1,3 +1,14 @@
+>> 21.08.2011
+[CO]
+- Moved "Bullet" from "Recommended" into "Optional", there should be only one backend per system recommended (at the moment this is Newton instead of Bullet
+  because the Newton plugin development started years ago and is currently usable, if the point comes when the Bullet plugin is more usable as the Newton one
+  we may switch :)
+- Moved "Qt" from "Recommended" into "Optional". Although through the in development Qt based PixelLight editor Qt is quite important for the PixelLight project,
+  it's nothing "you may need at least this one in order to write a working application"-stuff. I try to keep the "Base" & "Recommended" content as compact as
+  possible to make it as easy as possible to compile PixelLight the first time or to port it to other platforms.
+
+
+
 >> 14.08.2011
 [CO]
 - "PCRE 8.10"->"PCRE 8.12", compiled it for Windows x86 & x64
