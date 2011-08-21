@@ -222,7 +222,7 @@ void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 	if (m_pMainWindow) {
 		// Correct frontend position and size settings
 		if (QApplication::desktop())
-			CorrectPositionSize(nX, nY, nWidth, nHeight, QApplication::desktop()->width(), QApplication::desktop()->height());
+			CorrectPositionSize(nX, nY, nWidth, nHeight, QApplication::desktop()->pos().x(), QApplication::desktop()->pos().y(), QApplication::desktop()->width(), QApplication::desktop()->height());
 
 		// Set position and size settings
 		m_pMainWindow->move(QPoint(nX, nY));

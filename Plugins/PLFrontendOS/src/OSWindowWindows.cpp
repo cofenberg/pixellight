@@ -508,7 +508,7 @@ void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHei
 {
 	if (m_hWnd) {
 		// Correct frontend position and size settings
-		Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN));
+		Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, GetSystemMetrics(SM_XVIRTUALSCREEN), GetSystemMetrics(SM_YVIRTUALSCREEN), GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));
 
 		// Set OS window position and size
 		::MoveWindow(m_hWnd, nX, nY, nWidth, nHeight, TRUE);

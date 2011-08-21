@@ -239,18 +239,18 @@ Frontend *FrontendImpl::CreateFrontend(const FrontendContext &cFrontendContext, 
 *  @brief
 *    Correct frontend position and size settings
 */
-void FrontendImpl::CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, uint32 nScreenWidth, uint32 nScreenHeight, uint32 nMinWidth, uint32 nMinHeight)
+void FrontendImpl::CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, int nScreenLeft, int nScreenTop, int nScreenWidth, int nScreenHeight, uint32 nMinWidth, uint32 nMinHeight)
 {
-	// The frontend position shouldn't be negative
-	if (nX < 0)
-		nX = 0;
-	if (nY < 0)
-		nY = 0;
+	// The frontend position shouldn't leave the visible screen
+	if (nX < nScreenLeft)
+		nX = nScreenLeft;
+	if (nY < nScreenTop)
+		nY = nScreenTop;
 
 	// The frontend position shouldn't be outside the visible screen
-	if (nX > nScreenWidth-nMinHeight)
+	if (nX > nScreenWidth-static_cast<int>(nMinHeight))
 		nX = nScreenWidth-nMinHeight;
-	if (nY > nScreenHeight-nMinHeight)
+	if (nY > static_cast<int>(nScreenHeight-nMinHeight))
 		nY = nScreenHeight-nMinHeight;
 
 	// The width of the frontend shouldn't leave the visible screen
