@@ -90,9 +90,12 @@ bool Application::OnStart()
 		// Set the surface painter to use depending on whether or not there's a default shader language within the used renderer
 		const bool bShaders = (cRenderer.GetDefaultShaderLanguage().GetLength() != 0);
 
+		// X position for the other two windows
+		const int nX = GetFrontend().GetX() + GetFrontend().GetWidth();
+
 		// Create the triangle sample window
 		RenderWindow *pFrame = new RenderWindow(cRenderer, nullptr, &cDisplayMode);
-		pFrame->SetPos(Vector2i(600, 0));
+		pFrame->SetPos(Vector2i(nX, 0));
 		pFrame->SetSize(Vector2i(300, 300));
 		pFrame->SetTitle(PLT("PL triangle sample window"));
 		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTriangleShaders" : "SPTriangleFixedFunctions"));
@@ -101,7 +104,7 @@ bool Application::OnStart()
 
 		// Create the texturing sample window
 		pFrame = new RenderWindow(cRenderer, nullptr, &cDisplayMode);
-		pFrame->SetPos(Vector2i(600, 300));
+		pFrame->SetPos(Vector2i(nX, 300));
 		pFrame->SetSize(Vector2i(300, 300));
 		pFrame->SetTitle(PLT("PL texturing sample window"));
 		pFrame->GetSurface()->SetPainter(cRenderer.CreateSurfacePainter(bShaders ? "SPTexturingShaders" : "SPTexturingFixedFunctions"));
@@ -120,6 +123,9 @@ void Application::OnStop()
 {
 	// Shut down system GUI, this also automatically closes all windows
 	Gui::GetSystemGui()->Shutdown();
+
+	// Call base implementation
+	RendererApplication::OnStop();
 }
 
 
