@@ -103,8 +103,8 @@ bool Application::ChoosePhysicsAPI()
 	bool bResult = false; // Error by default
 
 	// Are there multiple physics API's available?
-	List<const PLCore::Class*> lstClasses;
-	PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLPhysics::World", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, "PLPhysics::World", Recursive, NoBase, NoAbstract);
 	if (lstClasses.GetNumOfElements()) {
 		if (lstClasses.GetNumOfElements() == 1) {
 			// Get the class name of the physics API
@@ -238,7 +238,7 @@ void Application::OnInit()
 	// Valid default physics API given?
 	String sClassName = m_cCommandLine.GetValue("PhysicsAPI");
 	if (sClassName.GetLength()) {
-		const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass(sClassName);
+		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
 		if (pClass && pClass->IsDerivedFrom("PLPhysics::World")) {
 			m_sPhysicsAPI = sClassName;
 

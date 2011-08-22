@@ -56,7 +56,7 @@ pl_implement_class(Application)
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-PLGui::Font *Application::GuiFont = nullptr;
+Font *Application::GuiFont = nullptr;
 
 
 //[-------------------------------------------------------]
@@ -139,7 +139,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			if (pGui) {
 				// Create the GUI font
 				if (!GuiFont) {
-					GuiFont = new PLGui::Font(*pGui);
+					GuiFont = new Font(*pGui);
 					GuiFont->LoadFromFile("Data/Fonts/LinLibertine_Re-2.7.9.9.otf", 18);
 				}
 

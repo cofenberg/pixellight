@@ -26,7 +26,6 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
-#include <PLScene/Scene/SceneContext.h>
 #include <PLEngine/Picking/PickingResult.h>
 #include "Application.h"
 #include "MyPicking.h"

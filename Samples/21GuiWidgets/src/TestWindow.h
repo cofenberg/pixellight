@@ -79,7 +79,7 @@ class TestWindow : public PLGui::Window {
 		*  @brief
 		*    Destructor
 		*/
-		~TestWindow();
+		virtual ~TestWindow();
 
 
 	//[-------------------------------------------------------]

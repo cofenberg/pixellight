@@ -186,13 +186,13 @@ void SPTexturingShaders::OnPaint(Surface &cSurface)
 		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 		ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
 		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, PLRenderer::VertexBuffer::Position);
+			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::Position);
 		pProgramAttribute = m_pProgram->GetAttribute("VertexTexCoord");
 		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
+			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::TexCoord);
 
 		// Now draw the primitives of our cool quad.
 		// The primitive type is 'triangle strip', we start at vertex 0 and draw '4' vertices.
-		cRenderer.DrawPrimitives(PLRenderer::Primitive::TriangleStrip, 0, 4);
+		cRenderer.DrawPrimitives(Primitive::TriangleStrip, 0, 4);
 	}
 }

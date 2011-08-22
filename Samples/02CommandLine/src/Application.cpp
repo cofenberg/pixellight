@@ -49,7 +49,7 @@ pl_implement_class(Application)
 */
 Application::Application() : CoreApplication()
 {
-	// Register commandline options:
+	// Register command line options:
 	//   02CommandLine [-u/--uppercase] [-p/--prefix <prefix>] <text> [postfix]
 	m_cCommandLine.AddParameter	("Prefix",    "-p", "--prefix",		"Text prefix",						"",	false);
 	m_cCommandLine.AddFlag		("Uppercase", "-u", "--uppercase",	"Convert the text to upper case",		false);
@@ -75,20 +75,22 @@ void Application::Main()
 	String sText    = m_cCommandLine.GetValue("Text");
 	String sPrefix  = m_cCommandLine.GetValue("Prefix");
 	String sPostfix = m_cCommandLine.GetValue("Postfix");
-	if (sPrefix .GetLength() > 0) sText = sPrefix + ' ' + sText;
-	if (sPostfix.GetLength() > 0) sText = sText   + ' ' + sPostfix;
+	if (sPrefix .GetLength() > 0)
+		sText = sPrefix + ' ' + sText;
+	if (sPostfix.GetLength() > 0)
+		sText = sText   + ' ' + sPostfix;
 
-	// Get uppercase option
-	if (m_cCommandLine.IsValueSet("-u")) sText.ToUpper();
+	// Get upper case option
+	if (m_cCommandLine.IsValueSet("-u"))
+		sText.ToUpper();
 
 	// Print text
 	System::GetInstance()->GetConsole().Print("Text: '" + sText + "'\n");
 
 	// Print additional arguments
-	for (uint32 i=0; i<m_cCommandLine.GetNumOfAdditionalArguments(); i++) {
-		if (i == 0) {
+	if (m_cCommandLine.GetNumOfAdditionalArguments()) {
 		System::GetInstance()->GetConsole().Print("\nAddition arguments:\n");
-		}
-		System::GetInstance()->GetConsole().Print("- '" + m_cCommandLine.GetAdditionalArgument(i) + "'\n");
+		for (uint32 i=0; i<m_cCommandLine.GetNumOfAdditionalArguments(); i++)
+			System::GetInstance()->GetConsole().Print("- '" + m_cCommandLine.GetAdditionalArgument(i) + "'\n");
 	}
 }

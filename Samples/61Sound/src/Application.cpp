@@ -116,8 +116,8 @@ bool Application::ChooseSoundAPI()
 	bool bResult = false; // Error by default
 
 	// Are there multiple sound API's available?
-	List<const PLCore::Class*> lstClasses;
-	PLCore::ClassManager::GetInstance()->GetClasses(lstClasses, "PLSound::SoundManager", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, "PLSound::SoundManager", Recursive, NoBase, NoAbstract);
 	if (lstClasses.GetNumOfElements()) {
 		if (lstClasses.GetNumOfElements() == 1) {
 			// Get the class name of the sound API
@@ -221,7 +221,7 @@ void Application::OnInit()
 	// Valid default sound API given?
 	String sClassName = m_cCommandLine.GetValue("SoundAPI");
 	if (sClassName.GetLength()) {
-		const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass(sClassName);
+		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
 		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager")) {
 			m_sSoundAPI = sClassName;
 

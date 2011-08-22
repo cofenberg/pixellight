@@ -36,9 +36,9 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLGui;
-using namespace PLMath;
 
 
 //[-------------------------------------------------------]
@@ -90,7 +90,7 @@ void GuiButton::SetText(const String &sText)
 *  @brief
 *    Get font
 */
-PLGui::Font *GuiButton::GetFont() const
+Font *GuiButton::GetFont() const
 {
 	// Return font
 	return m_pFont;
@@ -100,7 +100,7 @@ PLGui::Font *GuiButton::GetFont() const
 *  @brief
 *    Set font
 */
-void GuiButton::SetFont(PLGui::Font *pFont)
+void GuiButton::SetFont(Font *pFont)
 {
 	// Set font
 	m_pFont = pFont;;
@@ -264,7 +264,7 @@ void GuiButton::OnDraw(Graphics &cGraphics)
 	}
 }
 
-void GuiButton::OnMouseMove(const PLMath::Vector2i &vPos)
+void GuiButton::OnMouseMove(const Vector2i &vPos)
 {
 	// Call base implementation
 	Widget::OnMouseMove(vPos);

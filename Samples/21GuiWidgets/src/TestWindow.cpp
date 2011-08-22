@@ -142,10 +142,10 @@ TestWindow::TestWindow(Widget *pParent) : Window(pParent),
 		m_pBitmapButton->SetVisible(true);
 	m_pBitmapToggleButton = new BitmapToggleButton(GetContentWidget());
 		m_pBitmapToggleButton->SetImageDisabled  (Image(*Gui::GetSystemGui(), "PLGui/button-inactive.png"));
-		m_pBitmapToggleButton->SetImageUnselected(NotChecked,			Image(*Gui::GetSystemGui(), "PLGui/button-off.png"));
+		m_pBitmapToggleButton->SetImageUnselected(NotChecked,		Image(*Gui::GetSystemGui(), "PLGui/button-off.png"));
 		m_pBitmapToggleButton->SetImageUnselected(PartiallyChecked,	Image(*Gui::GetSystemGui(), "PLGui/button-on.png"));
 		m_pBitmapToggleButton->SetImageUnselected(Checked,			Image(*Gui::GetSystemGui(), "PLGui/button-on.png"));
-		m_pBitmapToggleButton->SetImageSelected  (NotChecked,			Image(*Gui::GetSystemGui(), "PLGui/button-over-off.png"));
+		m_pBitmapToggleButton->SetImageSelected  (NotChecked,		Image(*Gui::GetSystemGui(), "PLGui/button-over-off.png"));
 		m_pBitmapToggleButton->SetImageSelected  (PartiallyChecked,	Image(*Gui::GetSystemGui(), "PLGui/button-over-on.png"));
 		m_pBitmapToggleButton->SetImageSelected  (Checked,			Image(*Gui::GetSystemGui(), "PLGui/button-over-on.png"));
 		m_pBitmapToggleButton->SetPos(Vector2i(10, 300));
@@ -244,8 +244,7 @@ TestWindow::~TestWindow()
 void TestWindow::ButtonClicked()
 {
 	m_bClicked = !m_bClicked;
-	if (m_bClicked)	m_pClickTest->SetBackgroundColor(Color4::Green);
-	else			m_pClickTest->SetBackgroundColor(Color4::Red);
+	m_pClickTest->SetBackgroundColor(m_bClicked ? Color4::Green : Color4::Red);
 	m_pClickTest->Redraw();
 }
 
@@ -264,9 +263,12 @@ void TestWindow::ButtonReleased()
 void TestWindow::MenuClicked(uint32 nID)
 {
 	System::GetInstance()->GetConsole().Print(String::Format("Menu item '%d' clicked\n", nID));
-	if (nID ==  3) GetGui()->Exit();
-	if (nID == 20) m_cTrayIcon.SetVisible(true);
-	if (nID == 21) m_cTrayIcon.SetVisible(false);
+	if (nID ==  3)
+		GetGui()->Exit();
+	if (nID == 20)
+		m_cTrayIcon.SetVisible(true);
+	if (nID == 21)
+		m_cTrayIcon.SetVisible(false);
 }
 
 void TestWindow::TrayClicked(uint32 nButton, const Vector2i &vPos)

@@ -117,11 +117,10 @@ void Application::TestController()
 	for (uint32 i=0; i<lstControls.GetNumOfElements(); i++) {
 		// Get control
 		Control *pControl = lstControls[i];
-		if (pControl->GetType() == ControlButton) {
+		if (pControl->GetType() == ControlButton)
 			System::GetInstance()->GetConsole().Print("- Button '" + pControl->GetName() + "' [" + pControl->GetDescription() + "]\n");
-		} else if (pControl->GetType() == ControlAxis) {
+		else if (pControl->GetType() == ControlAxis)
 			System::GetInstance()->GetConsole().Print("- Axis   '" + pControl->GetName() + "' [" + pControl->GetDescription() + "]\n");
-		}
 	}
 	System::GetInstance()->GetConsole().Print('\n');
 
@@ -173,7 +172,7 @@ void Application::TestInput(const String &sDevice)
 		m_bExit = false;
 		while (!m_bExit) {
 			// Update devices
-			PLInput::InputManager::GetInstance()->Update();
+			InputManager::GetInstance()->Update();
 
 			// Get messages
 			#ifdef WIN32
@@ -222,7 +221,7 @@ void Application::TestGetChar(const String &sDevice)
 			#endif
 
 			// Update devices
-			PLInput::InputManager::GetInstance()->Update();
+			InputManager::GetInstance()->Update();
 
 			// Get character
 			char nChar = pDevice->GetChar();
@@ -231,30 +230,26 @@ void Application::TestGetChar(const String &sDevice)
 				if (nChar == 0x1B) {
 					// Exit
 					m_bExit = true;
-				}
 
 				// Enter
-				else if (nChar == 0x0D) {
+				} else if (nChar == 0x0D) {
 					// Next word
 					System::GetInstance()->GetConsole().Print('\n');
 					sInput = "";
-				}
 
 				// Backspace
-				else if (nChar == 0x08) {
+				} else if (nChar == 0x08) {
 					// Delete last character
 					sInput = sInput.GetSubstring(0, sInput.GetLength()-1);
 
 					// Print on next line
 					System::GetInstance()->GetConsole().Print('\n');
 					System::GetInstance()->GetConsole().Print(sInput);
-				}
 
 				// Character
-				else if ((nChar >= '0' && nChar <= '9') || (nChar >= 'a' && nChar <= 'z') ||
-						  nChar == '+' || nChar == '-' || nChar == '*' || nChar == '/' || nChar == ',' || nChar == '.' ||
-						  nChar == 0x20)
-				{
+				} else if ((nChar >= '0' && nChar <= '9') || (nChar >= 'a' && nChar <= 'z') ||
+							nChar == '+' || nChar == '-' || nChar == '*' || nChar == '/' || nChar == ',' || nChar == '.' ||
+							nChar == 0x20) {
 					// Add char to string
 					sInput += nChar;
 
@@ -302,7 +297,7 @@ void Application::TestConnections()
 		m_bExit = false;
 		while (!m_bExit) {
 			// Update devices
-			PLInput::InputManager::GetInstance()->Update();
+			InputManager::GetInstance()->Update();
 
 			// Get messages
 			#ifdef WIN32
@@ -338,11 +333,10 @@ void Application::OnControl(Control &cControl)
 
 	// Display control value
 	String sValue;
-	if (cControl.GetType() == ControlButton) {
+	if (cControl.GetType() == ControlButton)
 		sValue = static_cast<Button&>(cControl).IsPressed() ? "<pressed>" : "<released>";
-	} else if (cControl.GetType() == ControlAxis) {
+	else if (cControl.GetType() == ControlAxis)
 		sValue = String::Format("%5.2f", static_cast<Axis&>(cControl).GetValue());
-	}
 	System::GetInstance()->GetConsole().Print("- '" + sControl + "': " + sValue + '\n');
 
 	// LED test
@@ -352,9 +346,12 @@ void Application::OnControl(Control &cControl)
 		if (pLED) {
 			// Change LED value
 			uint32 nLED = pLED->GetLEDs();
-			if (cControl.GetName() == "Plus")	nLED++;
-			else								nLED--;
-			if (nLED > 15) nLED = 0;
+			if (cControl.GetName() == "Plus")
+				nLED++;
+			else
+				nLED--;
+			if (nLED > 15)
+				nLED = 0;
 			pLED->SetLEDs(nLED);
 		}
 	}
@@ -363,7 +360,8 @@ void Application::OnControl(Control &cControl)
 	if (cControl.GetName() == "Button1" || cControl.GetName() == "Button2") {
 		// Get rumble control (try "Rumble3" first for joystick, then "Rumble1" for WiiMote)
 		Effect *pRumble = static_cast<Effect*>(cControl.GetController()->GetControl("Rumble3"));
-		if (!pRumble) pRumble = static_cast<Effect*>(cControl.GetController()->GetControl("Rumble1"));
+		if (!pRumble)
+			pRumble = static_cast<Effect*>(cControl.GetController()->GetControl("Rumble1"));
 		if (pRumble) {
 			// Enable or disable rumble?
 			if (cControl.GetName() == "Button1")
@@ -381,9 +379,8 @@ void Application::OnControl(Control &cControl)
 void Application::OnControlExit(Control &cControl)
 {
 	// Exit?
-	if (cControl.GetName() == "Escape" || cControl.GetName() == "Q") {
+	if (cControl.GetName() == "Escape" || cControl.GetName() == "Q")
 		m_bExit = true;
-	}
 }
 
 

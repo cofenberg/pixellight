@@ -246,7 +246,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 
 		// Get class list of all available post process scene node modifiers
 		m_lstModifierClasses.Clear();
-		PLCore::ClassManager::GetInstance()->GetClasses(m_lstModifierClasses, "PLCompositing::SNMPostProcess", PLCore::Recursive, PLCore::NoBase, PLCore::NoAbstract);
+		ClassManager::GetInstance()->GetClasses(m_lstModifierClasses, "PLCompositing::SNMPostProcess", Recursive, NoBase, NoAbstract);
 
 		// 'Activate' the first effect
 		if (m_lstModifierClasses.GetNumOfElements())

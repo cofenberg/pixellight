@@ -87,7 +87,7 @@ void GuiLabel::SetText(const String &sText)
 *  @brief
 *    Get font
 */
-PLGui::Font *GuiLabel::GetFont() const
+Font *GuiLabel::GetFont() const
 {
 	// Return font
 	return m_pFont;
@@ -97,7 +97,7 @@ PLGui::Font *GuiLabel::GetFont() const
 *  @brief
 *    Set font
 */
-void GuiLabel::SetFont(PLGui::Font *pFont)
+void GuiLabel::SetFont(Font *pFont)
 {
 	// Set font
 	m_pFont = pFont;;

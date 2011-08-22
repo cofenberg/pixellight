@@ -301,10 +301,10 @@ void SPRTTShaders::DrawScene(Renderer &cRenderer)
 					// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 					ProgramAttribute *pProgramAttribute = m_pSceneProgram->GetAttribute("VertexPosition");
 					if (pProgramAttribute)
-						pProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
+						pProgramAttribute->Set(pVertexBuffer, VertexBuffer::Position);
 					pProgramAttribute = m_pSceneProgram->GetAttribute("VertexNormal");
 					if (pProgramAttribute)
-						pProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Normal);
+						pProgramAttribute->Set(pVertexBuffer, VertexBuffer::Normal);
 
 					// Loop through all geometries of the mesh
 					const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
@@ -367,13 +367,13 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 		ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
 		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pPositionVertexBuffer, PLRenderer::VertexBuffer::Position);
+			pProgramAttribute->Set(m_pPositionVertexBuffer, VertexBuffer::Position);
 		pProgramAttribute = m_pProgram->GetAttribute("VertexTextureCoordinate");
 		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pPositionVertexBuffer, PLRenderer::VertexBuffer::TexCoord);
+			pProgramAttribute->Set(m_pPositionVertexBuffer, VertexBuffer::TexCoord);
 		pProgramAttribute = m_pProgram->GetAttribute("VertexColor");
 		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pColorVertexBuffer, PLRenderer::VertexBuffer::Color);
+			pProgramAttribute->Set(m_pColorVertexBuffer, VertexBuffer::Color);
 
 		// Set color factor
 		ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ColorFactor");
