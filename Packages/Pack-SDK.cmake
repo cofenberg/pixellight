@@ -159,12 +159,12 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	# Install
 	set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
 		; Install registry key to the PixelLight SDK
-		WriteRegStr HKLM ${regkey} \\\"Runtime\\\" \\\"$INSTDIR\\\\Runtime\\\"
+		WriteRegStr HKLM ${regkey} \\\"Runtime\\\" \\\"$INSTDIR\\\\Runtime\\\\x86\\\"
 		; Install PATH environment variable to the PixelLight SDK
 		Push \\\"PATH\\\"
 		Push \\\"A\\\"
 		Push \\\"HKCU\\\"
-		Push \\\"$INSTDIR\\\\Runtime\\\"
+		Push \\\"$INSTDIR\\\\Runtime\\\\x86\\\"
 		Call EnvVarUpdate
 	")
 
@@ -176,7 +176,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		Push \\\"PATH\\\"
 		Push \\\"R\\\"
 		Push \\\"HKCU\\\"
-		Push \\\"$INSTDIR\\\\Runtime\\\"
+		Push \\\"$INSTDIR\\\\Runtime\\\\x86\\\"
 		Call un.EnvVarUpdate
 	")
 
