@@ -155,7 +155,7 @@ shortcut("Exe_67Game2D",			"Samples\\Bin\\x86\\67Game2D.exe");
 shortcut("Exe_70SPARK",				"Samples\\Bin\\x86\\70SPARK.exe");
 shortcut("Exe_71libRocket",			"Samples\\Bin\\x86\\71libRocket.exe");
 // Tools
-shortcut("Exe_PLViewer",			"Tools\\Bin\\x86\PLViewer.exe");
+shortcut("Exe_PLViewer",			"Tools\\x86\\PLViewer.exe");
 
 
 // Scene text shortcuts
