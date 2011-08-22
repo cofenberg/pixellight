@@ -95,17 +95,17 @@ class BoundingBox {
 		*    Returns the size of the bounding box
 		*
 		*  @param[out] fX1
-		*    Recieves the x position of corner 1
+		*    Receives the x position of corner 1
 		*  @param[out] fY1
-		*    Recieves the y position of corner 1
+		*    Receives the y position of corner 1
 		*  @param[out] fZ1
-		*    Recieves the z position of corner 1
+		*    Receives the z position of corner 1
 		*  @param[out] fX2
-		*    Recieves the x position of corner 2
+		*    Receives the x position of corner 2
 		*  @param[out] fY2
-		*    Recieves the y position of corner 2
+		*    Receives the y position of corner 2
 		*  @param[out] fZ2
-		*    Recieves the z position of corner 2
+		*    Receives the z position of corner 2
 		*/
 		PLMATH_API void GetSize(float &fX1, float &fY1, float &fZ1, float &fX2, float &fY2, float &fZ2) const;
 

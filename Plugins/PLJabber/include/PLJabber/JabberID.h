@@ -123,19 +123,19 @@ class JabberID {
 
 		/**
 		*  @brief
-		*    Get ressource
+		*    Get resource
 		*
 		*  @returns
-		*    Ressource
+		*    Resource
 		*/
 		PLJABBER_API PLCore::String GetRessource() const;
 
 		/**
 		*  @brief
-		*    Set ressource
+		*    Set resource
 		*
 		*  @param[in] sRessource
-		*    Ressource
+		*    Resource
 		*/
 		PLJABBER_API void SetRessource(const PLCore::String &sRessource);
 
@@ -146,13 +146,13 @@ class JabberID {
 	private:
 		/**
 		*  @brief
-		*    Parses the jabber ID to determine it's components (user name, host name and ressource)
+		*    Parses the jabber ID to determine it's components (user name, host name and resource)
 		*/
 		void ParseJabberID();
 
 		/**
 		*  @brief
-		*    Composes the jabber ID from it's components (user name, host name and ressource)
+		*    Composes the jabber ID from it's components (user name, host name and resource)
 		*/
 		void ComposeJabberID();
 
@@ -164,7 +164,7 @@ class JabberID {
 		PLCore::String m_sJabberID;		/**< Complete Jabber ID */
 		PLCore::String m_sUserName;		/**< User name */
 		PLCore::String m_sHostName;		/**< Host name */
-		PLCore::String m_sRessource;	/**< Ressource */
+		PLCore::String m_sRessource;	/**< Resource */
 
 
 };

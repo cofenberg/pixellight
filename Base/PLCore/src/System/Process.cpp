@@ -165,7 +165,7 @@ void Process::ExecuteRedirectIO(const String &sCommand, const String &sArguments
 		m_cPipeError .GetWriteHandle()
 	);
 
-	// Close pipe handles that are unly used by the new process now
+	// Close pipe handles that are only used by the new process now
 	m_cPipeInput .CloseRead();
 	m_cPipeOutput.CloseWrite();
 }
@@ -193,7 +193,7 @@ void Process::ExecuteRedirectIO(const String &sCommand, const String &sArguments
 		m_cPipeError .GetWriteHandle()
 	);
 
-	// Close pipe handles that are unly used by the new process now
+	// Close pipe handles that are only used by the new process now
 	m_cPipeInput .CloseRead();
 	m_cPipeOutput.CloseWrite();
 	if (cPipeErr != cPipeOut)

@@ -52,7 +52,7 @@ class Renderer;
 *
 *  @note
 *    - You must check if the extension is supported by the current hardware before
-*      you use it. If the extension isn't available you should offer an alternativ
+*      you use it. If the extension isn't available you should offer an alternative
 *      technique
 *    - If you add a new extension, don't forget to add it to RendererOpenGLExtensionConfig, too
 *

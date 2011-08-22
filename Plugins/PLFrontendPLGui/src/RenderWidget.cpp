@@ -174,7 +174,7 @@ RenderWidget &RenderWidget::operator =(const RenderWidget &cSource)
 */
 void RenderWidget::OnTimer()
 {
-	// Ask PLGui politly to update (and repaint) the widget
+	// Ask PLGui politely to update (and repaint) the widget
 	Redraw();
 }
 

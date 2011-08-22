@@ -66,7 +66,7 @@ Rocket::Core::FileHandle FileInterfacePL::Open(const Rocket::Core::String& path)
 
 		// Try to open the file
 		if (LoadableManager::GetInstance()->OpenFile(*pFile, String::FromUTF8(path.CString()), false))
-			return reinterpret_cast<Rocket::Core::FileHandle>(pFile); // Return opend file object
+			return reinterpret_cast<Rocket::Core::FileHandle>(pFile); // Return opened file object
 
 		// Cleanup on error
 		delete pFile;

@@ -241,7 +241,7 @@ void SNPhysicsMouseInteraction::OnUpdate()
 							const Vector3 vNormal = (vV1 - vV0).Normalize();
 							vV1 = vV0 + vNormal*fDistance;
 
-							// Perform physics raycast
+							// Perform physics ray cast
 							Sensor *pSensor = pPhysicsWorld->CreateSensorRaycast(vV0, vV1, Sensor::ClosestBody);
 							if (pSensor) {
 								// Perform an immediate check

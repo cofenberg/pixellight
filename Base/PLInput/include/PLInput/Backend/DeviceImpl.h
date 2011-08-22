@@ -53,7 +53,7 @@ class Device;
 *
 *  @remarks
 *    A device implementation class represents a concrete device interface implementation, such as a HID device
-*    or a Windows RawInput device. A logical device will use an implementation class to interface with the unterlying
+*    or a Windows RawInput device. A logical device will use an implementation class to interface with the underlying
 *    system device, and concrete backend implementation will implement those interface for their specific systems.
 */
 class DeviceImpl {

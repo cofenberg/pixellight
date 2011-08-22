@@ -136,7 +136,7 @@ bool FileWindows::MoveTo(const String &sDest)
 		// over to MoveFile and we can only hope that the OS does nothing bad and returns a failure.
 		// The only other option would be to check beforehand, whether the destination URL is a valid
 		// local filename and return false otherwise without calling MoveFile. But this would mean
-		// that an expansive check would have to be done everytime this function is called, even if
+		// that an expansive check would have to be done every time this function is called, even if
 		// in 90% of all cases both the URLs are on the local file system anyway.
 
 		// Move file (if the old absolute filename was Unicode, the new absolute one is also Unicode)
@@ -436,7 +436,7 @@ uint32 FileWindows::GetSize() const
 {
 	// Check file pointer
 	if (m_pFile) {
-		/* // Without using special Windows API functions the implementaton of this method would be:
+		/* // Without using special Windows API functions the implementation of this method would be:
 		// Get file size
 		const int32 nPos = ftell(m_pFile);
 		fseek(m_pFile, 0, SEEK_END);

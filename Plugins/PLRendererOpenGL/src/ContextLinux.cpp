@@ -152,7 +152,7 @@ bool ContextLinux::IsValid() const
 
 void ContextLinux::MakeDummyCurrent() const
 {
-	// [TODO] What the... - usually we need to make a OpenGL context to the current one in order to call OpenGL commands, but if we uncommend the following, it doesn't work?!
+	// [TODO] What the... - usually we need to make a OpenGL context to the current one in order to call OpenGL commands, but if we uncomment the following, it doesn't work?!
 	glXMakeCurrent(m_pDisplay, m_hDummyNativeWindow, m_hDummyWindowRenderContext);
 }
 

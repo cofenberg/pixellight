@@ -266,7 +266,7 @@ void Source::Set2D(bool b2D)
 	// Set relative to listener state (because we place 2D sounds at the center of the listener)
 	alSourcei(m_nSource, AL_SOURCE_RELATIVE, m_b2D ? AL_TRUE : AL_FALSE);
 
-	// ... and refresh the rolloff factor, position and velocity!
+	// ... and refresh the roll off factor, position and velocity!
 	SetRolloffFactor(GetRolloffFactor());
 	SetAttribute(Position, GetAttribute(Position));
 	SetAttribute(Velocity, GetAttribute(Velocity));

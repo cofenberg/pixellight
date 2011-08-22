@@ -60,7 +60,7 @@ bool SceneLoaderPL::Load(SceneContainer &cContainer, File &cFile)
 			// Get the format version
 			const int nVersion = pSceneElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 
@@ -342,7 +342,7 @@ SceneNode *SceneLoaderPL::LoadNode(SInstance &sInstance, SceneContainer &cContai
 			// Write an error into the log
 			PL_LOG(Error, cNode.GetValue() + " at row " + cNode.GetRow() + " column " + cNode.GetColumn() + " has an unknown class name! ('" + sClass + "')")
 
-			// We're unable to create the scene node, so let's create an 'unkown'-dummy
+			// We're unable to create the scene node, so let's create an 'unknown'-dummy
 			pSceneNode = cContainer.Create(bContainer ? "PLScene::SCUnknown" : "PLScene::SNUnknown", sName);
 		}
 
@@ -389,7 +389,7 @@ SceneNodeModifier *SceneLoaderPL::LoadModifier(SInstance &sInstance, const XmlEl
 			// Write an error into the log
 			PL_LOG(Error, cNode.GetValue() + " at row " + cNode.GetRow() + ", column " + cNode.GetColumn()+ " has an unknown class name! ('" + sClass + "')")
 
-			// We're unable to add the scene node modifier, so let's create an 'unkown'-dummy
+			// We're unable to add the scene node modifier, so let's create an 'unknown'-dummy
 			pSceneNodeModifier = cSceneNode.AddModifier("PLScene::SNMUnknown");
 		}
 

@@ -111,7 +111,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 					if (PLCORE_IS_DEBUGMODE != pIsPluginDebugBuild()) {
 						// Error!
 						bUseLibrary = false;
-						PL_LOG(Error, "Module '" + sAbsFilename + "': Release/debug missmatch")
+						PL_LOG(Error, "Module '" + sAbsFilename + "': Release/debug mismatch")
 					}
 				} else {
 					// Error!
@@ -144,7 +144,7 @@ const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBu
 						}
 					} else {
 						// Error!
-						PL_LOG(Error, "Module '" + sLibraryFilename + "': release/debug missmatch")
+						PL_LOG(Error, "Module '" + sLibraryFilename + "': release/debug mismatch")
 					}
 				} else {
 					// Error!
@@ -240,7 +240,7 @@ bool ClassManager::LoadPlugin(const String &sFilename, bool bDelayedPluginLoadin
 				// Get format version
 				const int nVersion = pPluginElement->GetAttribute("Version").GetInt();
 
-				// Unkown
+				// Unknown
 				if (nVersion > 1) {
 					PL_LOG(Error, cDocument.GetValue() + ": " + LoaderImpl::UnknownFormatVersion)
 
@@ -645,7 +645,7 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 				// We only need one dummy, destroy the given one because we're now responsible for the given object
 				delete pClassImpl;
 			} else {
-				// The current class implementation is a worthless dummy, replace it through the real thingy right now!
+				// The current class implementation is a worthless dummy, replace it through the real thing right now!
 
 				// The dummy and the real class are in different modules (this is just a security check)
 				if (pOldClass->m_pClassImpl->m_nModuleID != nModuleID) {
@@ -674,7 +674,7 @@ void ClassManager::RegisterClass(uint32 nModuleID, ClassImpl *pClassImpl)
 		} else {
 			// It's no dummy, is the new class to register a dummy?
 			if (pClassImpl->IsDummy()) {
-				// Ok, the new class to register is a worthless dummy because we already have the real thingy, so just ignore it!
+				// Ok, the new class to register is a worthless dummy because we already have the real thing, so just ignore it!
 
 				// Destroy the given dummy because we're now responsible for the given object
 				delete pClassImpl;

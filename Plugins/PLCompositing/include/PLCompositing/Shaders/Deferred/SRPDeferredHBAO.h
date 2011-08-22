@@ -86,7 +86,7 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 		// Attributes
 		pl_attribute(NumberOfSteps,			PLCore::uint32,			8,								ReadWrite,	DirectValue,	"The maximum number samples per direction",																																														"Min='1'")
 		pl_attribute(NumberOfDirections,	PLCore::uint32,			8,								ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",												"Min='1'")
-		pl_attribute(AORadius,				float,					0.25f,							ReadWrite,	DirectValue,	"AO radius in scene metrics. The radius is the distance outside which occluders are ignored.",																																	"Min='0.0'")
+		pl_attribute(AORadius,				float,					0.25f,							ReadWrite,	DirectValue,	"AO radius in scene metrics. The radius is the distance outside which occludes are ignored.",																																	"Min='0.0'")
 		pl_attribute(AngleBias,				float,					30.0f,							ReadWrite,	DirectValue,	"For low-tessellated geometry, occlusion variations tend to appear at creases and ridges, which betray the underlying tessellation. To remove these artifacts, we use an angle bias parameter which restricts the hemisphere.",	"Min='0.0'")
 		pl_attribute(Attenuation,			float,					1.0f,							ReadWrite,	DirectValue,	"This scale factor W0 is applied to the per-sample attenuation function. The occlusion contribution of a given sample is attenuated by W0 * W(r/ R) where W(x) = 1 – x2.",														"Min='0.0'")
 		pl_attribute(RandomUVScale,			PLMath::Vector2,		PLMath::Vector2(20.0f, 20.f),	ReadWrite,	DirectValue,	"UV scale for the random normals texture",																																														"")
@@ -117,7 +117,7 @@ class SRPDeferredHBAO : public SRPDeferredSSAO {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredHBAO();
 

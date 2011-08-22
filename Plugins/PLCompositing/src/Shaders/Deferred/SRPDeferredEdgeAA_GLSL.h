@@ -50,7 +50,7 @@ static const PLCore::String sDeferredEdgeAA_GLSL_FS = "\
 varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 \n\
 // Uniforms\n\
-uniform float	MinGradient;			// Minumum gradient\n\
+uniform float	MinGradient;			// Minimum gradient\n\
 uniform float	WeightScale;			// Weight scale\n\
 #ifdef FS_SHOW_EDGES\n\
 	uniform vec3 EdgeColor;				// Edge color\n\

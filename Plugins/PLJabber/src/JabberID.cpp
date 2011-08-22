@@ -126,21 +126,21 @@ void JabberID::SetHostName(const String &sHostName)
 
 /**
 *  @brief
-*    Get ressource
+*    Get resource
 */
 String JabberID::GetRessource() const
 {
-	// Return ressource
+	// Return resource
 	return m_sRessource;
 }
 
 /**
 *  @brief
-*    Set ressource
+*    Set resource
 */
 void JabberID::SetRessource(const String &sRessource)
 {
-	// Set ressource
+	// Set resource
 	m_sRessource = sRessource;
 
 	// Update Jabber ID
@@ -153,7 +153,7 @@ void JabberID::SetRessource(const String &sRessource)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Parses the jabber ID to determine it's components (user name, host name and ressource)
+*    Parses the jabber ID to determine it's components (user name, host name and resource)
 */
 void JabberID::ParseJabberID()
 {
@@ -175,7 +175,7 @@ void JabberID::ParseJabberID()
 
 /**
 *  @brief
-*    Composes the jabber ID from it's components (user name, host name and ressource)
+*    Composes the jabber ID from it's components (user name, host name and resource)
 */
 void JabberID::ComposeJabberID()
 {

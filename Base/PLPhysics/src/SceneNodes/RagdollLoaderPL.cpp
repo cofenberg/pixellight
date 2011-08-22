@@ -64,7 +64,7 @@ bool RagdollLoaderPL::LoadParams(SNRagdoll &cSNRagdoll, File &cFile, bool bAllow
 			// Get the format version
 			int nVersion = pRagdollElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

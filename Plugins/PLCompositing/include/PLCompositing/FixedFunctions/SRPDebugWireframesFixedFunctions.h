@@ -76,7 +76,7 @@ class SRPDebugWireframesFixedFunctions : public SRPDebugWireframes {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugWireframesFixedFunctions();
 

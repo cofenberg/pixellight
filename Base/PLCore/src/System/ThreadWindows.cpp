@@ -50,7 +50,7 @@ ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, uint32 nThreadID) 
 	m_hThread(nullptr),
 	m_nThreadID(0)
 {
-	// Open exisiting thread?
+	// Open existing thread?
 	if (bThreadID) {
 		// Given thread ID or current thread?
 		if (nThreadID == 0) {

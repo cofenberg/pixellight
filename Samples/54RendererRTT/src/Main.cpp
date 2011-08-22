@@ -4,7 +4,7 @@
  *      The teapot from the mesh sample is rendered to a texture which is
  *      used by some colorful quadrangles similar to the triangle sample.
  *      Also multi render targets (MRT) are shown. Using MRT you can render to
- *      multiple textures at the same time using a fragmet shader.
+ *      multiple textures at the same time using a fragment shader.
  *      Further vertex streaming is shown. Vertex position and texture coordinate data is stored
  *      in another vertex buffer as the color data.
  *

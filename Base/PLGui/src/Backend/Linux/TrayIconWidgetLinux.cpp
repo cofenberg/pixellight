@@ -289,7 +289,7 @@ void TrayIconWidgetLinux::OnXEmbedModalityOff()
 
 /**
 *  @brief
-*    An acellerator has been activated
+*    An accelerator has been activated
 */
 void TrayIconWidgetLinux::OnXEmbedActivateAccelerator(long nID, long nFlags)
 {

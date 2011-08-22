@@ -27,7 +27,7 @@
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4244) // "'conversion' conversion from 'type1' to 'type2', possible loss of data"
 	PL_WARNING_DISABLE(4530) // "C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
-	PL_WARNING_DISABLE(4541) // "'identifier' used on polymorphic type 'type' with /GR-; unpredictable behavior may result"
+	PL_WARNING_DISABLE(4541) // "'identifier' used on polymorphic type 'type' with /GR-; unpredictable behaviour may result"
 	#include <ImfRgbaFile.h>
 	#include <ImfStringAttribute.h>
 	#include <ImfMatrixAttribute.h>

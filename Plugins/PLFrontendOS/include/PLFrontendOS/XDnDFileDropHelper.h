@@ -138,7 +138,7 @@ class XDnDFileDropHelper {
 		*  @remarks
 		*    This handler reads the drop data from the XdndSelection buffer (the data was converted into this buffer
 		*    from the HandleXdndDrop handler). It sends an XdndFinished event to the drop source to indicate if the
-		*    drop was successfull or not. If the drop was successfull the frontend is informed about the dropped file
+		*    drop was successful or not. If the drop was successful the frontend is informed about the dropped file
 		*    list
 		*/
 		void HandleXdndSelection(const XSelectionEvent &sSelectionMessage);
@@ -167,7 +167,7 @@ class XDnDFileDropHelper {
 		*    Convert an atom name in to a string
 		*
 		*  @param[in] sAtom
-		*    The atom for which the name should be returnd
+		*    The atom for which the name should be returned
 		*/
 		PLCore::String GetAtomName(Atom sAtom);
 
@@ -178,7 +178,7 @@ class XDnDFileDropHelper {
 		*  @param[in] pAtomList
 		*    The list of supported targets from the drop source, must be valid
 		*  @param[in] nNumOfItems
-		*    The numer of items in pAtomList
+		*    The number of items in pAtomList
 		*
 		*  @return
 		*    The corresponding atom when the drop source supports the "text/uri-list", otherwise "None"

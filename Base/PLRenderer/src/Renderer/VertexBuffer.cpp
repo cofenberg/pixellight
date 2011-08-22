@@ -274,7 +274,7 @@ void VertexBuffer::CalculateBoundingBox(Vector3 &vMinPos, Vector3 &vMaxPos, PLRe
 		if (Lock(Lock::ReadOnly)) {
 			// Lock the given index buffer
 			if (pIndexBuffer->Lock(Lock::ReadOnly)) {
-				// We have to take the indices typ into account...
+				// We have to take the indices type into account...
 				switch (pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
@@ -426,7 +426,7 @@ void VertexBuffer::CalculateBoundingSphere(Vector3 &vPos, float &fRadius, PLRend
 		if (Lock(Lock::ReadOnly)) {
 			// Lock the given index buffer
 			if (pIndexBuffer->Lock(Lock::ReadOnly)) {
-				// We have to take the indices typ into account...
+				// We have to take the indices type into account...
 				switch (pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{

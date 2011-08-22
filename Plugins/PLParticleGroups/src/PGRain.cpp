@@ -191,7 +191,7 @@ void PGRain::OnUpdate()
 				float dLength = cParticle.fCustom1/vMove.GetLength()*5;
 				cParticle.vDistortion = vMove*dLength;
 
-				// Update energie, size and lifetime
+				// Update energy, size and lifetime
 				cParticle.fEnergy -= fTimeDiff*EnergyPerSec;
 				cParticle.fSize   -= fTimeDiff/2;
 				if (cParticle.fEnergy <= 0 || cParticle.fSize <= 0)

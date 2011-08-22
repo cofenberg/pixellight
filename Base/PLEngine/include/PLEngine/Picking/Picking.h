@@ -167,7 +167,7 @@ class Picking {
 		*    Scene node candidate
 		*
 		*  @return
-		*    'true' to take this candidate into account, else 'false' to throw it away (no futher processing of the scene node)
+		*    'true' to take this candidate into account, else 'false' to throw it away (no further processing of the scene node)
 		*
 		*  @note
 		*    - The default implementation is empty

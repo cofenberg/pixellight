@@ -128,7 +128,7 @@ void SPRTTFixedFunctions::DrawScene(Renderer &cRenderer)
 	}
 
 	{ // Set the world matrix
-		// Build a rotation matrix by using a given euler angle around the y-axis
+		// Build a rotation matrix by using a given Euler angle around the y-axis
 		Matrix4x4 mWorld;
 		mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);
@@ -210,7 +210,7 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 			// Set the texture buffer we rendered our teapot in as the current texture buffer
 			cRenderer.SetTextureBuffer(0, m_pRenderTarget->GetTextureBuffer());
 
-			// Disable mip mapping - this is required because we created/filled no mipmaps
+			// Disable mipmapping mapping - this is required because we created/filled no mipmaps
 			// for your texture buffer
 			cRenderer.SetSamplerState(0, Sampler::MagFilter, TextureFiltering::Linear);
 			cRenderer.SetSamplerState(0, Sampler::MinFilter, TextureFiltering::Linear);

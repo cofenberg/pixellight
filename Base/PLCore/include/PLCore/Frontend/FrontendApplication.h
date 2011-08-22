@@ -57,7 +57,7 @@ class Frontend;
 *    over to a host in order to become passive. Although a frontend application is always
 *    running within a frontend, it shouldn't care about the frontend. Just write our application
 *    as if there wouldn't be any "outer world". By following this philosophy as close as possible
-*    and only accessing frontend features when really neccessary, you enhance the chance that your
+*    and only accessing frontend features when really necessary, you enhance the chance that your
 *    application can be embedded within other applications like browsers such as MS Internet Explorer
 *    or Mozilla Firefox without problems.
 */

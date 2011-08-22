@@ -128,7 +128,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 		SetCamera(reinterpret_cast<SNCamera*>(pCamera));
 	}
 
-	// Create a scene node with the soldier mesh - in debug mode, show some fancy technical visualisations
+	// Create a scene node with the soldier mesh - in debug mode, show some fancy technical visualizations
 	SceneNode *pSceneNode = cContainer.Create("PLScene::SNMesh", "Soldier", "Position=\"0.0 0.1 -5.0\" Scale=\"0.008 0.008 0.008\" Mesh=\"Data/Meshes/Soldier.mesh\" DebugFlags=\"DebugShowWireframe|DebugShowJoints|DebugShowJointNames|DebugShowSkeleton\"");
 	if (pSceneNode) {
 		// Rotate the soldier

@@ -121,9 +121,9 @@ class SQCull : public SceneQuery {
 		*    Several statistics of the culling process
 		*/
 		struct Statistics {
-			PLCore::uint64 nCullTime;							/**< Culling time of the specified algorihtm (in ms) */
+			PLCore::uint64 nCullTime;							/**< Culling time of the specified algorithm (in ms) */
 			PLCore::uint32 nNumOfTraversedNodes;				/**< Number of traversed nodes */
-			PLCore::uint32 nNumOfOccluders;						/**< Number of used occluders */
+			PLCore::uint32 nNumOfOccluders;						/**< Number of used occludes */
 			PLCore::uint32 nNumOfQueryCulledNodes;				/**< Number of hierarchy nodes culled by the occlusion query */
 			PLCore::uint32 nNumOfSkippedFrustumTests;			/**< Number of skipped frustum tests because for instance the parent node was
 																	 already complete within the frustum. (hierarchy node & scene node tests) */
@@ -180,7 +180,7 @@ class SQCull : public SceneQuery {
 		*  @remarks
 		*    The visibility threshold is dependent of the render target dimension. If
 		*    you set the visibility threshold to 100 and your render target dimension
-		*    is 100x100 scene nodes may ugly disapear and at a render target dimension
+		*    is 100x100 scene nodes may ugly disappear and at a render target dimension
 		*    of 1000x1000 you can't see such disappearances.
 		*
 		*  @note

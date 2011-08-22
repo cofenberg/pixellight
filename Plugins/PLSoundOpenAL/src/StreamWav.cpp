@@ -277,7 +277,7 @@ bool StreamWav::Update()
 					}
 				}
 
-				// Deinitialize the stream right now?
+				// De-initialize the stream right now?
 				if (!bKeepPlaying)
 					DeInit();
 			} else {

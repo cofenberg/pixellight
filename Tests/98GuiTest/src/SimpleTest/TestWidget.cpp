@@ -60,7 +60,7 @@ TestWidget::TestWidget(Widget *pParent) : Widget(pParent),
 	m_bExit(false),
 	m_cColor(0.7f, 0.7f, 0.7f, 1.0f)
 {
-	// Set default color to grey
+	// Set default color to gray
 	SetBackgroundColor(m_cColor);
 }
 

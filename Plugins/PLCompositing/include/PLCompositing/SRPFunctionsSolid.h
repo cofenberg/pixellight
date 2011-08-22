@@ -71,7 +71,7 @@ class SRPFunctionsSolid : public SRPFunctions {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPFunctionsSolid();
 

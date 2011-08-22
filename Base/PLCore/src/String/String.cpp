@@ -277,7 +277,7 @@ String::String(const char *pszString, bool bCopy, int nLength)
 		m_pStringBuffer = nullptr;
 
 		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
-		// and now we really have to fullfill the duties described within the method documentation!
+		// and now we really have to fulfill the duties described within the method documentation!
 		if (pszString && !bCopy)
 			delete [] pszString;
 	}
@@ -317,7 +317,7 @@ String::String(const wchar_t *pszString, bool bCopy, int nLength)
 		m_pStringBuffer = nullptr;
 
 		// Lookout, the length may be 0, but it's still possible that the pszString pointer is valid -
-		// and now we really have to fullfill the duties described within the method documentation!
+		// and now we really have to fulfill the duties described within the method documentation!
 		if (pszString && !bCopy)
 			delete [] pszString;
 	}
@@ -1340,7 +1340,7 @@ bool String::IsSubstring(const char *pszString) const
 		// Get the length of the given string (excluding the terminating zero)
 		const uint32 nLength = static_cast<uint32>(strlen(pszString));
 		if (nLength) {
-			// Is this string emtpy?
+			// Is this string empty?
 			if (m_pStringBuffer)
 				return m_pStringBuffer->IsSubstring(pszString, nLength);
 			else
@@ -1359,7 +1359,7 @@ bool String::IsSubstring(const wchar_t *pszString) const
 		// Get the length of the given string (excluding the terminating zero)
 		const uint32 nLength = static_cast<uint32>(wcslen(pszString));
 		if (nLength) {
-			// Is this string emtpy?
+			// Is this string empty?
 			if (m_pStringBuffer)
 				return m_pStringBuffer->IsSubstring(pszString, nLength);
 			else
@@ -1866,7 +1866,7 @@ String &String::Copy(const wchar_t *pszString, int nCount)
 
 /**
 *  @brief
-*    Replaces all occurences of a character by another character
+*    Replaces all occurrences of a character by another character
 */
 uint32 String::Replace(char nOld, char nNew)
 {
@@ -1898,7 +1898,7 @@ uint32 String::Replace(wchar_t nOld, wchar_t nNew)
 
 /**
 *  @brief
-*    Replaces all occurences of a substring by another string
+*    Replaces all occurrences of a substring by another string
 */
 uint32 String::Replace(const String &sOld, const String &sNew)
 {
@@ -1921,7 +1921,7 @@ uint32 String::Replace(const String &sOld, const String &sNew)
 
 /**
 *  @brief
-*    Replaces all occurences of a substring by another string
+*    Replaces all occurrences of a substring by another string
 */
 uint32 String::Replace(const char *pszOld, const char *pszNew)
 {
@@ -2687,7 +2687,7 @@ String String::operator +(char nValue) const
 {
 	// Terminating zero?
 	if (nValue == '\0')
-		return *this; // Ingore this, please!
+		return *this; // Ignore this, please!
 
 	// Check if the string is empty
 	if (m_pStringBuffer) {
@@ -2705,7 +2705,7 @@ String String::operator +(wchar_t nValue) const
 {
 	// Terminating zero?
 	if (nValue == L'\0')
-		return *this; // Ingore this, please!
+		return *this; // Ignore this, please!
 
 	// Check if the string is empty
 	if (m_pStringBuffer) {
@@ -2803,7 +2803,7 @@ String operator +(char nValue, const String &sString)
 {
 	// Terminating zero?
 	if (nValue == '\0')
-		return sString; // Ingore this, please!
+		return sString; // Ignore this, please!
 
 	// Check if the string is empty
 	if (sString.m_pStringBuffer)
@@ -2816,7 +2816,7 @@ String operator +(wchar_t nValue, const String &sString)
 {
 	// Terminating zero?
 	if (nValue == L'\0')
-		return sString; // Ingore this, please!
+		return sString; // Ignore this, please!
 
 	// Check if the string is empty
 	if (sString.m_pStringBuffer)
@@ -2916,7 +2916,7 @@ String &String::operator +=(bool bValue)
 
 String &String::operator +=(char nValue)
 {
-	// Terminating zero? (if so, ingore this, please!)
+	// Terminating zero? (if so, ignore this, please!)
 	if (nValue != '\0') {
 		// Check if the string is empty
 		if (m_pStringBuffer) {
@@ -2940,7 +2940,7 @@ String &String::operator +=(char nValue)
 
 String &String::operator +=(wchar_t nValue)
 {
-	// Terminating zero? (if so, ingore this, please!)
+	// Terminating zero? (if so, ignore this, please!)
 	if (nValue != L'\0') {
 		// Check if the string is empty
 		if (m_pStringBuffer) {

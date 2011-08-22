@@ -87,7 +87,7 @@ class Process {
 		*  @remarks
 		*    This function creates unnamed pipes to redirect input and output. To access
 		*    theses pipes, use the appropriate functions like GetInput(), GetOutput() a.s.o.
-		*    If you want to specifiy the pipes by yourself, see the other two variations of
+		*    If you want to specify the pipes by yourself, see the other two variations of
 		*    ExecuteRedirectIO().
 		*/
 		PLCORE_API void ExecuteRedirectIO(const String &sCommand, const String &sArguments);

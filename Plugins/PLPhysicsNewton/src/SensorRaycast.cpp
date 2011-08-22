@@ -58,7 +58,7 @@ SensorRaycast::~SensorRaycast()
 float SensorRaycast::RayFilterCallback(const Newton::NewtonBody *pPhysicsBody, const float *pfNormal,
 									   int nCollisionID, void *pUserData, float fIntersectParam)
 {
-	// Get the pointer to the raycast sensor
+	// Get the pointer to the ray cast sensor
 	SensorRaycast *pSensor = static_cast<SensorRaycast*>(pUserData);
 	if (pSensor) {
 		// Get the pointer to the PL physics body

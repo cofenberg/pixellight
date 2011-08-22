@@ -91,13 +91,13 @@ nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
-	// Do the frontend lifecycle thing - let the world know that we have been created
+	// Do the frontend life cycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();
 }
 
 nsPluginInstance::~nsPluginInstance()
 {
-	// Do the frontend lifecycle thing - let the world know that we're going to die
+	// Do the frontend life cycle thing - let the world know that we're going to die
 	FrontendImpl::OnDestroy();
 }
 
@@ -121,7 +121,7 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 		FrontendImpl::OnRun(sExecutableFilename, lstArguments);
 	}
 
-	// Do the frontend lifecycle thing - initialize
+	// Do the frontend life cycle thing - initialize
 	if (FrontendImpl::OnStart()) {
 		FrontendImpl::OnResume();
 
@@ -146,7 +146,7 @@ NPBool nsPluginInstance::init(NPWindow* aWindow)
 
 void nsPluginInstance::shut()
 {
-	// Do the frontend lifecycle thing - de-initialize
+	// Do the frontend life cycle thing - de-initialize
 	if (m_bFrontendApplicationInitialized) {
 		FrontendImpl::OnPause();
 		FrontendImpl::OnStop();
@@ -233,7 +233,7 @@ LRESULT nsPluginInstance::ProcessMessage(HWND hWnd, UINT msg, WPARAM wParam, LPA
 //[-------------------------------------------------------]
 int nsPluginInstance::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {
-	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
+	// Error, this frontend implementation is run and controlled by another application this frontend is embedded into
 	return -1;
 }
 
@@ -259,13 +259,13 @@ void nsPluginInstance::Ping()
 
 PLCore::String nsPluginInstance::GetTitle() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return "";
 }
 
 void nsPluginInstance::SetTitle(const PLCore::String &sTitle)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 int nsPluginInstance::GetX() const
@@ -302,45 +302,45 @@ PLCore::uint32 nsPluginInstance::GetHeight() const
 
 void nsPluginInstance::SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool nsPluginInstance::GetToggleFullscreenMode() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void nsPluginInstance::SetToggleFullscreenMode(bool bToggleFullscreenMode)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool nsPluginInstance::GetFullscreenAltTab() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void nsPluginInstance::SetFullscreenAltTab(bool bAllowed)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool nsPluginInstance::IsFullscreen() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void nsPluginInstance::SetFullscreen(bool bFullscreen)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 void nsPluginInstance::RefreshFullscreen()
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool nsPluginInstance::IsMouseOver() const

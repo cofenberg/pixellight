@@ -128,7 +128,7 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 	uint8 *pnReadBuffer = new uint8[nReadBufferSize];
 	cFile.Read(pnReadBuffer, nReadBufferSize, 1);
 
-	// Decode if rle compressed. Bit 3 of 'nImageType' tells if the file is compressed.
+	// Decode if RLE compressed. Bit 3 of 'nImageType' tells if the file is compressed.
 	uint8 *pnSourceBuffer;
 	if (sHeader.nImageType & 0x08) {
 		// Get the number of bytes per pixel

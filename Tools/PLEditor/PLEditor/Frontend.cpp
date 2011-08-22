@@ -63,7 +63,7 @@ Frontend::Frontend() :
 	// Set the name of the application class to use
 	m_cFrontend.ApplicationClass = "PLEngine::EngineApplication";
 
-	// Do the frontend lifecycle thing - let the world know that we have been created
+	// Do the frontend life cycle thing - let the world know that we have been created
 	OnCreate();
 
 	// Let the world know that this frontend is now going to run
@@ -71,7 +71,7 @@ Frontend::Frontend() :
 	const Array<String> lstArguments;
 	OnRun(sExecutableFilename, lstArguments);
 
-	// Do the frontend lifecycle thing - initialize
+	// Do the frontend life cycle thing - initialize
 	if (OnStart()) {
 		OnResume();
 
@@ -86,13 +86,13 @@ Frontend::Frontend() :
 */
 Frontend::~Frontend()
 {
-	// Do the frontend lifecycle thing - de-initialize
+	// Do the frontend life cycle thing - de-initialize
 	if (m_bFrontendApplicationInitialized) {
 		OnPause();
 		OnStop();
 	}
 
-	// Do the frontend lifecycle thing - let the world know that we're going to die
+	// Do the frontend life cycle thing - let the world know that we're going to die
 	OnDestroy();
 }
 
@@ -102,13 +102,13 @@ Frontend::~Frontend()
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Error, this frontend implementation is run and controlled by the Qt application this frontend is embeded into
+	// Error, this frontend implementation is run and controlled by the Qt application this frontend is embedded into
 	return -1;
 }
 
 int Frontend::Run(int argc, wchar_t **argv)
 {
-	// Error, this frontend implementation is run and controlled by the Qt application this frontend is embeded into
+	// Error, this frontend implementation is run and controlled by the Qt application this frontend is embedded into
 	return -1;
 }
 

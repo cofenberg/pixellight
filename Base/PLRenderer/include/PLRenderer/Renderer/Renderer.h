@@ -222,7 +222,7 @@ class Renderer : public PLCore::Object {
 		*    Backups the device objects
 		*
 		*  @note
-		*    - Used for instance if the diplay mode is changed to backup/restore
+		*    - Used for instance if the display mode is changed to backup/restore
 		*      all device objects (like texture buffers, renderer buffers etc.)
 		*    - Normally only used inside the renderer backend!
 		*/
@@ -239,27 +239,27 @@ class Renderer : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Returns the number of all available diplay modes
+		*    Returns the number of all available display modes
 		*
 		*  @return
 		*    Number of all available display modes
 		*
 		*  @remarks
-		*    Be careful when using one of the 'all available diplay modes' directly... because it can
-		*    happen that even if a dipsplay mode received by the system is listed, it may not work properly
+		*    Be careful when using one of the 'all available display modes' directly... because it can
+		*    happen that even if a display mode received by the system is listed, it may not work properly
 		*    within fullscreen mode and you get for example just a black window.
 		*/
 		virtual PLCore::uint32 GetNumOfDisplayModes() const = 0;
 
 		/**
 		*  @brief
-		*    Returns a diplay mode
+		*    Returns a display mode
 		*
 		*  @param[in] nIndex
 		*    Index of the display mode to return (0..'GetNumOfDisplayModes()')
 		*
 		*  @return
-		*    The requested diplay mode, (do NOT delete the display mode!) a null pointer on error
+		*    The requested display mode, (do NOT delete the display mode!) a null pointer on error
 		*
 		*  @see
 		*    - GetNumOfDisplayModes()
@@ -936,7 +936,7 @@ class Renderer : public PLCore::Object {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Returns the swap interval (vertical synchronisation)
+		*    Returns the swap interval (vertical synchronization)
 		*
 		*  @return
 		*    The swap interval
@@ -948,7 +948,7 @@ class Renderer : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Sets the swap interval (vertical synchronisation)
+		*    Sets the swap interval (vertical synchronization)
 		*
 		*  @param[in] nSwapInterval
 		*    The swap interval, default value is 1
@@ -1132,7 +1132,7 @@ class Renderer : public PLCore::Object {
 		*    Will receive whether the alpha component is written
 		*
 		*  @note
-		*    - With the color mask you can deside which color components are drawn,
+		*    - With the color mask you can decide which color components are drawn,
 		*      if you e.g. only want to fill the depth buffer you can set all components
 		*      to false
 		*    - If no color components are written, some GPU's are optimized to use for instance the
@@ -1185,7 +1185,7 @@ class Renderer : public PLCore::Object {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - If scissor is disabled or set to the full viewport size some GPU's may be able to clear more efficent
+		*    - If scissor is disabled or set to the full viewport size some GPU's may be able to clear more efficient
 		*    - The color mask has no effect on the clear operation
 		*/
 		virtual bool Clear(PLCore::uint32 nFlags = Clear::Color | Clear::ZBuffer,

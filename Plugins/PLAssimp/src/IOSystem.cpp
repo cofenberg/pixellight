@@ -175,8 +175,8 @@ String IOSystem::GetRealFilename(const char *pszAssimpFile) const
 	// Is the filename using the basename of the default?
 	if (!strncmp(pszAssimpFile, MagicDefaultFilename, MagicDefaultFilenameLength)) {
 		// Ok... we need to construct the real filename
-		String sFilename = String::FromUTF8(pszAssimpFile);	// Get given filenname
-		sFilename.Delete(0, MagicDefaultFilenameLength);	// Cut of the magic thingy
+		String sFilename = String::FromUTF8(pszAssimpFile);	// Get given filename
+		sFilename.Delete(0, MagicDefaultFilenameLength);	// Cut of the magic thing
 		sFilename.Insert(m_pFile->GetUrl().GetTitle(), 0);	// Insert the title of the complete filename
 
 		// Return the real filename

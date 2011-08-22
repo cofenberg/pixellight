@@ -84,7 +84,7 @@ class HDRLightAdaptation {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API ~HDRLightAdaptation();
 

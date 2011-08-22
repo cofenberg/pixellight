@@ -56,7 +56,7 @@ bool LocalizationLoaderPL::Load(LocalizationGroup &cLocalizationGroup, File &cFi
 			// Get the format version
 			int nVersion = pLocalizationElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

@@ -53,7 +53,7 @@ ShadowMappingLiSPSM::ShadowMappingLiSPSM()
 
 /**
 *  @brief
-*    Destructur
+*    Destructor
 */
 ShadowMappingLiSPSM::~ShadowMappingLiSPSM()
 {

@@ -464,7 +464,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 */
 bool TextureHandler::Unload()
 {
-	// Destroy texture animationm state
+	// Destroy texture animation state
 	if (m_pAnimationState) {
 		delete m_pAnimationState;
 		m_pAnimationState = nullptr;

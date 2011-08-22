@@ -145,7 +145,7 @@ template <class AType> class PLCORE_TMPL Singleton {
 		};
 
 		// Static data
-		static __Destruction_Guard __Guard;	/**< Destroyes the object on shutdown */
+		static __Destruction_Guard __Guard;	/**< Destroys the object on shutdown */
 		static AType *__Instance;			/**< Pointer to the singleton instance, can be a null pointer */
 		static bool __Destroyed;			/**< Destruction flag - set only on shutdown */
 

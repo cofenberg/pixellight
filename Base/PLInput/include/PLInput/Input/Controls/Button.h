@@ -155,7 +155,7 @@ class Button : public Control {
 		*    'true', if the button has been hit since the last call of this function, else 'false'
 		*
 		*  @remarks
-		*    This will return the hit-state of the button and also reset it immediatly (so the next call
+		*    This will return the hit-state of the button and also reset it immediately (so the next call
 		*    to IsHit() will return false). If you only want to check, but not reset the hit-state of
 		*    a button, you should call CheckHit().
 		*/

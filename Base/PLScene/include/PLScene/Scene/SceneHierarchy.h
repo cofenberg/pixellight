@@ -255,7 +255,7 @@ class SceneHierarchy : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Refreshs a scene node
+		*    Refreshes a scene node
 		*
 		*  @param[in] cSceneNode
 		*    Scene node to refresh

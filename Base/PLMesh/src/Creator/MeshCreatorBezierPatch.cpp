@@ -138,7 +138,7 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 			pIndexBuffer->SetElementTypeByMaximumIndex(pVertexBuffer->GetNumOfElements()-1);
 			pIndexBuffer->Allocate(pVertexBuffer->GetNumOfElements(), bStatic ? Usage::Static : Usage::Dynamic);
 
-			// Array of points to mark the first line of polys
+			// Array of points to mark the first line of polygons
 			Vector3 *pvLast = new Vector3[Divisions+1];
 
 			// The first derived curve (along x axis)
@@ -153,7 +153,7 @@ Mesh *MeshCreatorBezierPatch::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic
 				pvLast[v] = Bernstein(fPY, vTemp);
 			}
 
-			// Create and setup the geometies
+			// Create and setup the geometries
 			Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
 			if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 				if (pIndexBuffer->Lock(Lock::WriteOnly)) {

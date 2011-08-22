@@ -115,7 +115,7 @@ class XmlBase {
 		*/
 		enum EQueryResult {
 			Success,		/**< All went fine */
-			NoAttribute,	/**< Attribut does not exist */
+			NoAttribute,	/**< Attribute does not exist */
 			WrongType		/**< Invalid attribute type */
 		};
 
@@ -385,7 +385,7 @@ class XmlBase {
 		static int ToLower(int nValue, EEncoding nEncoding);
 		static void ConvertUTF32ToUTF8(unsigned long nInput, char *pszOutput, int &nLength);
 
-		// Expands entities in a string. Note this should not contian the tag's '<', '>', etc, 
+		// Expands entities in a string. Note this should not contain the tag's '<', '>', etc, 
 		// or they will be transformed into entities!
 		static void EncodeString(const String &sInString, String &sOutString);
 

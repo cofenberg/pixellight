@@ -217,7 +217,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						}
 					}
 
-					// Set the current render target back to the orignal one?
+					// Set the current render target back to the original one?
 					if (GetFlags() & WriteToOriginalSurface)
 						cRenderer.SetRenderTarget(pSRPBegin->GetOriginalRenderTarget());
 					else

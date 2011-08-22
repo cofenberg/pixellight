@@ -35,7 +35,7 @@
 
 
 //[-------------------------------------------------------]
-//[ Makro definitions                                     ]
+//[ Macro definitions                                     ]
 //[-------------------------------------------------------]
 #define PLT(Text) PLCore::Localization::GetInstance()->Get(Text)
 #define PL_TEXT(Text, Group) PLCore::Localization::GetInstance()->Get(Text, Group)

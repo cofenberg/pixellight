@@ -146,7 +146,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 						Mtl *pMaxMeshSubMaterial = pMaxMeshMaterial->GetSubMtl(nSubMaterial);
 						Mtl *pMaxNodeSubMaterial = pMaxNodeMaterial->GetSubMtl(nSubMaterial);
 						if (pMaxMeshSubMaterial && pMaxNodeSubMaterial) {
-							// Get PixelLight material coresponding to the mesh material
+							// Get PixelLight material corresponding to the mesh material
 							PLSceneMaterial *pMeshSubMaterial = GetScene().GetMaterial(*pMaxMeshSubMaterial);
 							if (pMeshSubMaterial) {
 								// Get the IGameMaterial material encapsulating the current 3ds Max node material

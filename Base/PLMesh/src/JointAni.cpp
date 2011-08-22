@@ -250,7 +250,7 @@ bool JointAni::ApplyJointStates(Array<JointHandler> &lstJointHandlers, uint32 nF
 //[-------------------------------------------------------]
 JointAni &JointAni::operator =(const JointAni &cSource)
 {
-	// Call base functiona
+	// Call base function
 	*static_cast<AnimationBase*>(this) = *static_cast<const AnimationBase*>(&cSource);
 
 	// Copy data

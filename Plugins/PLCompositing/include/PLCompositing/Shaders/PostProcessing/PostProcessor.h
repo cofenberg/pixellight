@@ -59,7 +59,7 @@ namespace PLCompositing {
 *
 *  @remarks
 *    Using post processing you can create all the amazing post process
-*    effets like blur, bloom, color manipulation - and even some fun effects like
+*    effects like blur, bloom, color manipulation - and even some fun effects like
 *    ASCII character rendering. :)
 *    The process takes some input textures like color, position, normal etc.
 *    and applies different post processes on it. Then the final result is

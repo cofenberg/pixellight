@@ -49,7 +49,7 @@ varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex sh
 // Uniforms\n\
 uniform float			SampleRadius;		// The sampling radius\n\
 uniform float			Intensity;			// The ambient occlusion intensity\n\
-uniform float			Scale;				// Scales distance between occluders and occludee\n\
+uniform float			Scale;				// Scales distance between occludes and occludee\n\
 uniform float			Bias;				// Controls the width of the occlusion cone considered by the occludee\n\
 uniform vec2			InvFocalLen;		// 1/FocalLen (for example: 0.57771897 x 0.4142136)\n\
 uniform int				RandomSize;			// Resolution of the input random data (for example 64)\n\

@@ -152,7 +152,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 				unsigned char nComponents = 0;
 				switch (nColorType) {
 					case PNG_COLOR_TYPE_GRAY:			// (Bit depths 1, 2, 4, 8, 16)
-						// Grayscale image
+						// Gray scale image
 						nColorFormat = ColorGrayscale;
 						nComponents  = 1;
 
@@ -161,7 +161,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 						break;
 
 					case PNG_COLOR_TYPE_GRAY_ALPHA:		// (Bit depths 8, 16)
-						// Grayscale image with additional alpha channel
+						// Gray scale image with additional alpha channel
 						nColorFormat = ColorGrayscaleA;
 						nComponents  = 2;
 						break;

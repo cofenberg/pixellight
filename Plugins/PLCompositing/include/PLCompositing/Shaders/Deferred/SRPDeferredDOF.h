@@ -120,7 +120,7 @@ class SRPDeferredDOF : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredDOF();
 

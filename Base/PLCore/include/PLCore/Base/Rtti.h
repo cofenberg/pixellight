@@ -70,7 +70,7 @@ namespace PLCore {
 *    This is implemented as a template to ensure, that the compiler will create a *unique* class
 *    in each module (e.g. library or application) that is using that class. So, e.g. calling
 *    ModuleID<int> from project A will result in another class being used than calling it
-*    from project B, which allowes the class to request a unique identifier in each module.
+*    from project B, which allows the class to request a unique identifier in each module.
 *    The class is accessed using ModuleID<int>.
 */
 template <typename T> class ModuleID
@@ -817,7 +817,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 *  @remarks
 *    Use pl_rtti_export to mark a class as being exported to other libraries/applications. Usually, you should
 *    define this in a global header file for your project to either pl_rtti_export(1) or pl_rtti_import(0),
-*    depending on whether the project is currently built itself or imported into antoher project (just as the
+*    depending on whether the project is currently built itself or imported into another project (just as the
 *    dllimport/dllexport macros). However, if your project is an application that is not included anywhere else, you can
 *    directly pass pl_rtti_export to pl_class, as your classes are only exported and never imported.
 */
@@ -1200,7 +1200,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 *    Return type
 *
 *  @remarks
-*    This makro is there to provide a better readability of the RTTI declaration macros by marking the first type
+*    This macro is there to provide a better readability of the RTTI declaration macros by marking the first type
 *    explicitly as a return type. Actually you don't need to use it, but it is recommended to do so :-)
 */
 #define pl_ret_type(RET) RET

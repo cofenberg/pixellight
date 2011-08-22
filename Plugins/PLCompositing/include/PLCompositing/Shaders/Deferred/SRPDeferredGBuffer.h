@@ -95,7 +95,7 @@ namespace PLCompositing {
 *    - DisplacementMap:            Displacement map (2D, grayscale)
 *      - DisplacementScale:        Displacement scale, default: 0.1
 *      - DisplacementBias:         Displacement bias, default: 0.0
-*    - AmbientOcclusionMap:        'Static global ambient occlusion', not influenced by any light but influcences the lighting (2D, grayscale)
+*    - AmbientOcclusionMap:        'Static global ambient occlusion', not influenced by any light but influences the lighting (2D, grayscale)
 *      - AmbientOcclusionFactor:   If there's a 'AmbientOcclusionMap', use this floating point value to set the ambient occlusion factor, default: 1.0
 *    - LightMap:                   'Static lighting/shadowing', not influenced by any light (2D, RGB)
 *      - LightMapColor:            If there's a 'LightMap', use this 3 floating point values to set the light map color, default: 1.0 1.0 1.0
@@ -103,7 +103,7 @@ namespace PLCompositing {
 *      - EmissiveMapColor:         If there's a 'EmissiveMap', use this 3 floating point values to set the emissive map color, default: 1.0 1.0 1.0
 *      - Glow:                     Glow factor, values 0.0...1.0=no glow...full glow, default: 0.0 - glowing materials also need a EmissiveMap
 *        - GlowMap:                If 'Glow' is not 0, per fragment 'glow' control (2D, grayscale)
-*    - IndexOfRefraction:          Index of refraction (IOR), used for Fresnel reflection, <= 0.0 means no Fresnel reflection, default: 0.0 (List of refractive indices: http://en.wikipedia.org/wiki/List_of_refractive_indices, the index of refaction of the "from" material is set to air=1.0)
+*    - IndexOfRefraction:          Index of refraction (IOR), used for Fresnel reflection, <= 0.0 means no Fresnel reflection, default: 0.0 (List of refractive indices: http://en.wikipedia.org/wiki/List_of_refractive_indices, the index of refraction of the "from" material is set to air=1.0)
 *      - FresnelReflectionPower:   If 'IndexOfRefraction' is > 0.0, this is the Fresnel reflection power, default: 5.0
 *    - ReflectionColor:            If 'IndexOfRefraction' is > 0.0 or if there's a 'ReflectionMap', use this 3 floating point values to set the reflection color, default: 1.0 1.0 1.0
 *    - Reflectivity:               If 'IndexOfRefraction' is > 0.0 or if there's a 'ReflectionMap', reflectivity factor can be used, 0.0...1.0=no reflection...full reflection, default: 1.0
@@ -193,7 +193,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 			pl_enum_value(NoSpecular,				"No specular")
 			pl_enum_value(NoSpecularMap,			"Ignore specular maps")
 			pl_enum_value(NoNormalMap,				"Ignore normal maps")
-			pl_enum_value(NoDetailNormalMap,		"Inore detail normal maps")
+			pl_enum_value(NoDetailNormalMap,		"Ignore detail normal maps")
 			pl_enum_value(NoParallaxMapping,		"No parallax mapping (also called 'Photonic Mapping', 'Offset Mapping' or 'Virtual Displacement Mapping')")
 			pl_enum_value(NoDisplacementMapping,	"No displacement mapping")
 			pl_enum_value(NoAmbientOcclusionMap,	"Ignore ambient occlusion maps")
@@ -235,7 +235,7 @@ class SRPDeferredGBuffer : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredGBuffer();
 

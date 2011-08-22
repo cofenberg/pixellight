@@ -479,7 +479,7 @@ uint32 Tokenizer::GetPosition() const
 
 /**
 *  @brief
-*    Returns the current line (counted by '\n' occurences)
+*    Returns the current line (counted by '\n' occurrences)
 */
 uint32 Tokenizer::GetLine() const
 {

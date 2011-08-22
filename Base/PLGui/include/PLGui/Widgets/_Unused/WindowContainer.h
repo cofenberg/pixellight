@@ -93,7 +93,7 @@ class WindowContainer : public Widget {
 		*
 		*  @remarks
 		*    If a widget is a container for other widgets, a container widget is often used as the parent for all of
-		*    the child widgets. This is e.g. necessary to seperate the "outside" from the "inside", e.g. there may be
+		*    the child widgets. This is e.g. necessary to separate the "outside" from the "inside", e.g. there may be
 		*    other (internal) child widgets, that are also children of the same parent (e.g. buttons in the title bar or
 		*    frame widgets). So if you want to insert widgets inside other widgets, you should use the widget returned
 		*    by GetContentWidget() as the parent widget, not the widget itself. If a widget don't have a content widget,

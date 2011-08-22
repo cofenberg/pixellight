@@ -97,7 +97,7 @@ class VisNode {
 		*
 		*  @return
 		*    The scene node this visibility node links to, a null pointer if there's no scene node
-		*    linked to this visibility node (maybe the scene node this visibilty node was
+		*    linked to this visibility node (maybe the scene node this visibility node was
 		*    linked to was killed?)
 		*/
 		PLS_API SceneNode *GetSceneNode() const;

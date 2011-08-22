@@ -79,14 +79,14 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 				// Backup the native window handle
 				pOSWindowWindows->m_hWnd = hWnd;
 
-				// Doing the following frontend lifecycle thing in here would be nice, but when done this way, the window border
+				// Doing the following frontend life cycle thing in here would be nice, but when done this way, the window border
 				// will be potentially invisible until OnStart() returns... but this may take some seconds... not nice to look at...
 				// pOSWindowWindows->m_pFrontendOS->OnStart();
 				return 0;
 
 			// Destroy window
 			case WM_DESTROY:
-				// Do the frontend lifecycle thing - stop
+				// Do the frontend life cycle thing - stop
 				pOSWindowWindows->m_pFrontendOS->OnStop();
 
 				// Mark window destroyed
@@ -101,7 +101,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 			case WM_SETFOCUS:
 			case WM_EXITSIZEMOVE:	// Beside focus, do the same for moving/sizing a window - it just feels right this way
 									// (e.g. no spinning around controlled camera while sizing a window)
-				// Do the frontend lifecycle thing - resume
+				// Do the frontend life cycle thing - resume
 				pOSWindowWindows->m_pFrontendOS->OnResume();
 				return 0;
 
@@ -109,7 +109,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 			case WM_KILLFOCUS:
 			case WM_ENTERSIZEMOVE:	// Beside focus, do the same for moving/sizing a window - it just feels right this way
 									// (e.g. no spinning around controlled camera while sizing a window)
-				// Do the frontend lifecycle thing - pause
+				// Do the frontend life cycle thing - pause
 				pOSWindowWindows->m_pFrontendOS->OnPause();
 				return 0;
 
@@ -133,7 +133,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 
 			// Process hotkey
 			case WM_HOTKEY:
-				// We catched the hotkey
+				// We caught the hotkey
 				return 0;
 
 			case WM_ERASEBKGND:
@@ -234,7 +234,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 {
 	MemoryManager::Set(&m_sWindowRectBackup, 0, sizeof(RECT));
 
-	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
+	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
 
 	// Create window class
@@ -290,7 +290,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 								   ::GetModuleHandle(nullptr),
 								   this);
 		if (m_hWnd) {
-			// Do the frontend lifecycle thing - start
+			// Do the frontend life cycle thing - start
 			m_pFrontendOS->OnStart();
 
 			// Initialization is done

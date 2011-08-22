@@ -1,6 +1,6 @@
 /*********************************************************\
  *  File: PerlinNoise.h                                  *
- *      Perline noise tool functions
+ *      Perlin noise tool functions
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *

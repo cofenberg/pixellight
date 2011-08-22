@@ -91,7 +91,7 @@ void ThemeTestWidget::OnDraw(Graphics &cGraphics)
 	vSize = vSize - Vector2i(64, 64);
 	m_pTheme->DrawPanel(cGraphics, vPos, vPos + vSize - Vector2i(1, 1), SunkenBorder);
 
-	// Draw some rects
+	// Draw some rectangles
 	/*
 	m_pTheme->DrawRect(cGraphics, Vector2i(100, 100), Vector2i(150, 150), DashedLine, Color4::Red,   1);
 	m_pTheme->DrawRect(cGraphics, Vector2i(200, 100), Vector2i(250, 150), DottedLine, Color4::Green, 1);

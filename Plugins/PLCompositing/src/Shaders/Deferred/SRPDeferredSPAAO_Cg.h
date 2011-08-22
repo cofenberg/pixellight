@@ -116,7 +116,7 @@ static const float2 vec[4] =\n\
 FS_OUTPUT main(VS_OUTPUT	IN					// Interpolated output from the vertex stage\n\
 	 , uniform float		SampleRadius		// The sampling radius\n\
 	 , uniform float		Intensity			// The ambient occlusion intensity\n\
-	 , uniform float		Scale				// Scales distance between occluders and occludee\n\
+	 , uniform float		Scale				// Scales distance between occludes and occludee\n\
 	 , uniform float		Bias				// Controls the width of the occlusion cone considered by the occludee\n\
 	 , uniform float2		InvFocalLen			// 1/FocalLen (for example: 0.57771897 x 0.4142136)\n\
 	 , uniform int			RandomSize			// Resolution of the input random data (for example 64)\n\

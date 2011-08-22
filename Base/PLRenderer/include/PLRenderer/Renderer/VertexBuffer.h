@@ -85,9 +85,9 @@ class VertexBuffer : public Buffer {
 			BlendIndices =  6,	/**< Blend indices data (1 channel) */
 			TexCoord     =  7,	/**< Texture coordinate data (n channels) */
 			Tangent      =  8,	/**< Tangent data (1 channel, only Float3 allowed!) */
-			Binormal     =  9	/**< Binormal (also refered to as bitangent) data (1 channel, only Float3 allowed!) */
+			Binormal     =  9	/**< Binormal (also referred to as bitangent) data (1 channel, only Float3 allowed!) */
 		};
-		static const PLCore::uint8 NumOfSemantics      = 10;	/**< Numer of vertex attribute semantics */
+		static const PLCore::uint8 NumOfSemantics      = 10;	/**< Number of vertex attribute semantics */
 		static const PLCore::uint8 MaxPipelineChannels = 16;	/**< Maximum possible number of channels */
 
 		/**

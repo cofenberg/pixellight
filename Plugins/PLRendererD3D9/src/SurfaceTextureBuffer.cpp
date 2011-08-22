@@ -136,7 +136,7 @@ bool SurfaceTextureBuffer::IsAPISwapY() const
 
 bool SurfaceTextureBuffer::Init()
 {
-	// First deinitialize the old stuff
+	// First de-initialize the old stuff
 	DeInit();
 
 	// Get renderer

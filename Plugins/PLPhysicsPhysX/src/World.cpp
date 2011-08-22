@@ -177,7 +177,7 @@ World::~World()
 	// Decrease the PhysX instance counter
 	m_nPhysXInstanceCounter--;
 
-	// De-intialize PhysX if there are no further PhysX instances
+	// De-initialize PhysX if there are no further PhysX instances
 	if (!m_nPhysXInstanceCounter && m_pPhysXPhysicsSDK) {
 		m_pPhysXPhysicsSDK->release();
 		m_pPhysXPhysicsSDK = nullptr;

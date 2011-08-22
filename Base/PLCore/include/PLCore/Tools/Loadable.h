@@ -53,7 +53,7 @@ class Parameters;
 *    Abstract loadable (serialization) base class, derive your loadable classes from this class
 *
 *  @note
-*    - If your loadable has special parameters for loading/saving don't forgett to document it within your class!
+*    - If your loadable has special parameters for loading/saving don't forget to document it within your class!
 */
 class Loadable {
 

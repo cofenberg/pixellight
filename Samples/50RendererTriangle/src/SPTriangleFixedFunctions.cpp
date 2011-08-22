@@ -80,7 +80,7 @@ void SPTriangleFixedFunctions::OnPaint(Surface &cSurface)
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
 		{ // Set the world matrix
-			// Build a rotation matrix by using a given euler angle around the y-axis
+			// Build a rotation matrix by using a given Euler angle around the y-axis
 			Matrix4x4 mWorld;
 			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorld);

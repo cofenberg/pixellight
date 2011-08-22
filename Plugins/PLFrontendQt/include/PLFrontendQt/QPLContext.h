@@ -103,7 +103,7 @@ class PLFRONTENDQT_API QPLContext : public QObject, public PLCore::AbstractConte
 
 		/**
 		*  @brief
-		*    Creates an an instance of an SurfacePainter. Which SurfacePainter class should be used is determind via the PainterName given when the Context was constructed
+		*    Creates an an instance of an SurfacePainter. Which SurfacePainter class should be used is determined via the PainterName given when the Context was constructed
 		*
 		*  @return
 		*    An SurfacePainter instance, an nullptr on error (e.g. the SurfacePainter with the given name isn't known by the PixelLight RTTI system)

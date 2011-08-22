@@ -115,7 +115,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 void Frontend::Redraw()
 {
-	// Ask the OS politly to update (and repaint) the widget
+	// Ask the OS politely to update (and repaint) the widget
 	if (m_pOSWindow)
 		m_pOSWindow->Redraw();
 }

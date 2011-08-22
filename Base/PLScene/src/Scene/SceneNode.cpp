@@ -115,7 +115,7 @@ Vector3 SceneNode::GetRotation() const
 	float fAngleZ = 0.0f;
 	EulerAngles::FromQuaternion(m_cTransform.GetRotation(), fAngleX, fAngleY, fAngleZ);
 
-	// Something like "-0" just looks stupied within for instance a GUI, so make it to "0"
+	// Something like "-0" just looks stupid within for instance a GUI, so make it to "0"
 	if (fAngleX == -0.0f)
 		fAngleX = 0.0f;
 	if (fAngleY == -0.0f)
@@ -701,7 +701,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 	// Check parameter
 	if (sClass.GetLength()) {
 		// To keep things as fast as possible we store a pointer to the base class
-		// (no hash map operation + quite efficent internal string comparison)
+		// (no hash map operation + quite efficient internal string comparison)
 		static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLScene::SceneNodeModifier");
 
 		// Get class and check it

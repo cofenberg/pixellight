@@ -167,7 +167,7 @@ void PLConsoleCommandPreviousProfile(ConsoleCommand &cCommand)
 
 /**
 *  @brief
-*    Toggle coordinate axis visualisation
+*    Toggle coordinate axis visualization
 */
 void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand)
 {
@@ -180,7 +180,7 @@ void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand)
 
 /**
 *  @brief
-*    Toggle xz-plane visualisation
+*    Toggle xz-plane visualization
 */
 void PLConsoleCommandXZPlane(ConsoleCommand &cCommand)
 {
@@ -193,7 +193,7 @@ void PLConsoleCommandXZPlane(ConsoleCommand &cCommand)
 
 /**
 *  @brief
-*    Toggle xy-plane visualisation
+*    Toggle xy-plane visualization
 */
 void PLConsoleCommandXYPlane(ConsoleCommand &cCommand)
 {
@@ -206,7 +206,7 @@ void PLConsoleCommandXYPlane(ConsoleCommand &cCommand)
 
 /**
 *  @brief
-*    Toggle yz-plane visualisation
+*    Toggle yz-plane visualization
 */
 void PLConsoleCommandYZPlane(ConsoleCommand &cCommand)
 {

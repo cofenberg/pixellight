@@ -155,7 +155,7 @@ uint32 BinaryHeap<KeyType, ValueType, Comparer>::GetRight(uint32 nIndex) const
 
 /**
 *  @brief
-*    Shif up
+*    Shift up
 */
 template <class KeyType, class ValueType, class Comparer>
 uint32 BinaryHeap<KeyType, ValueType, Comparer>::UpHeap(uint32 nIndex)
@@ -181,7 +181,7 @@ uint32 BinaryHeap<KeyType, ValueType, Comparer>::UpHeap(uint32 nIndex)
 
 /**
 *  @brief
-*    Shif down
+*    Shift down
 */
 template <class KeyType, class ValueType, class Comparer>
 void BinaryHeap<KeyType, ValueType, Comparer>::DownHeap(uint32 nIndex)

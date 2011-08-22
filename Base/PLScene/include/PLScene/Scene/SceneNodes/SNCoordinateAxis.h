@@ -43,7 +43,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract base scene node for coordinate axis visualisation
+*    Abstract base scene node for coordinate axis visualization
 */
 class SNCoordinateAxis : public SceneNode {
 
@@ -74,7 +74,7 @@ class SNCoordinateAxis : public SceneNode {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNCoordinateAxis, "PLScene", PLScene::SceneNode, "Abstract base scene node for coordinate axis visualisation")
+	pl_class(PLS_RTTI_EXPORT, SNCoordinateAxis, "PLScene", PLScene::SceneNode, "Abstract base scene node for coordinate axis visualization")
 		// Attributes
 		pl_attribute(Width,		float,					1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
 		pl_attribute(XColor,	PLGraphics::Color4,		PLGraphics::Color4(1.0f, 0.0f, 0.0f, 1.0f),	ReadWrite,	DirectValue,	"Color of the x-axis",										"")

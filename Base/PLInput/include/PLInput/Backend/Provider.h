@@ -135,7 +135,7 @@ class Provider : public PLCore::Object {
 		*  @remarks
 		*    If the device is already present, it's "confirmed"-flag is set to 'true', so
 		*    it will not get deleted by DetectDevices(). Therefore, an input provider must
-		*    call this function everytime in it's QueryDevices()-function.
+		*    call this function every time in it's QueryDevices()-function.
 		*/
 		PLINPUT_API bool CheckDevice(const PLCore::String &sName);
 
@@ -146,7 +146,7 @@ class Provider : public PLCore::Object {
 		*  @param[in] sName
 		*    Name of the input device (e.g. "Mouse0")
 		*  @param[in] pDevice
-		*    Pointer to the device (derived from Device), shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Pointer to the device (derived from Device), shouldn't be a null pointer (but a null pointer is caught internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

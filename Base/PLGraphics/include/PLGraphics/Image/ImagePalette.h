@@ -168,7 +168,7 @@ class ImagePalette {
 		*    Rebuild color index
 		*
 		*  @remarks
-		*    Use this function to invalidate the color index hashmap (see GetColorIndex).
+		*    Use this function to invalidate the color index hash map (see GetColorIndex).
 		*    This only needs to be done if you changed the image data by yourself, e.g.
 		*    by calling GetData() and manipulation the palette directly. If you use
 		*    SetColor() or AddColor() instead, this will be done for you automatically.

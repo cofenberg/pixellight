@@ -68,7 +68,7 @@ class SRPDebugFunctions : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugFunctions();
 

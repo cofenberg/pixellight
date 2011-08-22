@@ -97,10 +97,10 @@ class VisContainer : public VisNode {
 
 		/**
 		*  @brief
-		*    Returns the list of visibililty nodes
+		*    Returns the list of visibility nodes
 		*
 		*  @return
-		*    List of visibililty nodes
+		*    List of visibility nodes
 		*/
 		PLS_API const PLCore::Pool<VisNode*> &GetVisNodes() const;
 
@@ -155,7 +155,7 @@ class VisContainer : public VisNode {
 
 		/**
 		*  @brief
-		*    Called when the scene node assigned with this visibililty container was destroyed
+		*    Called when the scene node assigned with this visibility container was destroyed
 		*/
 		void OnDestroy();
 
@@ -181,9 +181,9 @@ class VisContainer : public VisNode {
 	//[-------------------------------------------------------]
 	private:
 		SceneQueryHandler							   *m_pQueryHandler;	/**< The cull scene query of this visibility container (always valid!) */
-		PLCore::Pool<VisNode*>							m_lstNodes;			/**< List of currently used visibililty nodes */
-		PLCore::HashMap<PLCore::String, VisContainer*>  m_mapContainers;	/**< Map with all child visibilty containers of this container */
-		PLCore::HashMap<PLCore::String, VisPortal*>	    m_mapPortals;		/**< Map with all visibilty portals of this container */
+		PLCore::Pool<VisNode*>							m_lstNodes;			/**< List of currently used visibility nodes */
+		PLCore::HashMap<PLCore::String, VisContainer*>  m_mapContainers;	/**< Map with all child visibility containers of this container */
+		PLCore::HashMap<PLCore::String, VisPortal*>	    m_mapPortals;		/**< Map with all visibility portals of this container */
 		Projection										m_sProjection;		/**< Projection information */
 
 

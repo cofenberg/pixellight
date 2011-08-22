@@ -160,7 +160,7 @@ dFloat BodyTerrain::RayCastTriangle(const Vector3 &p0, const Vector3 &dp, const 
 
 /**
 *  @brief
-*    Calculate the intersection point of a line segment and the two triangles making a the cell of a heigh map terrain
+*    Calculate the intersection point of a line segment and the two triangles making a the cell of a height map terrain
 */
 dFloat BodyTerrain::RayCastCell(int xIndex0, int zIndex0, const Vector3 &p0, const Vector3 &dp, Vector3 &normalOut)
 {
@@ -442,7 +442,7 @@ void BodyTerrain::MeshCollisionCollideCallback(NewtonUserMeshCollisionCollideDes
 		}
 	}
 
-	// Build a vertex list index list mesh from the vetices intersected by the extend
+	// Build a vertex list index list mesh from the vertices intersected by the extend
 	index = 0;
 	faceCount = 0;
 	vertexIndex = 0;
@@ -545,7 +545,7 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 	Vector3 p0 = q0 - padding;
 	Vector3 p1 = q1 + padding;
 
-	// Clip the line againt the bounding box
+	// Clip the line against the bounding box
 	if (map->ClipRay2d(p0, p1, boxP0, boxP1)) {
 		Vector3 dp = p1 - p0;
 
@@ -556,7 +556,7 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 		ix0		  = Math::Floor(p0.x * invScaleX);
 		iz0		  = Math::Floor(p0.z * invScaleZ);
 
-		// Implement a 3ddda line agorithm 
+		// Implement a 3ddda line algorithm 
 		if (dp.x > 0.0f) {
 			xInc = 1;
 			val = 1.0f / dp.x;

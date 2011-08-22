@@ -126,7 +126,7 @@ class OSWindowLinux : public OSWindow {
 
 		/**
 		*  @brief
-		*    Gets called from the XDnDFileDropHelper when a drop occured
+		*    Gets called from the XDnDFileDropHelper when a drop occurred
 		*
 		*  @param[in] lstFiles
 		*    List of file names

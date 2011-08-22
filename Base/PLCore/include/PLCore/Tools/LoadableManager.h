@@ -61,7 +61,7 @@ class LoadableManager;
 *  @remarks
 *    A loadable class is for instance an image that can be loaded & saved in multiple ways/formats.
 *    Such a loadable is registered within this manager as a 'loadable type'. Each loadable type can
-*    have multiple loaders which load/save the loadable within a concreate way/format.
+*    have multiple loaders which load/save the loadable within a concrete way/format.
 *
 *    Example:
 *      - Image
@@ -331,7 +331,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*    Gets the relative version of an absolute filename
 		*
 		*  @param[in] sFilename
-		*    Absolute filename to get the realtive version from
+		*    Absolute filename to get the relative version from
 		*
 		*  @return
 		*    Relative filename, empty string on error (maybe unknown loadable type?)

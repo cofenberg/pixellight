@@ -74,7 +74,7 @@ SceneContext::~SceneContext()
 	// Get the root scene container (if there's one)
 	SceneContainer *pRootContainer = static_cast<SceneContainer*>(m_pRoot->GetElement());
 	if (pRootContainer) {
-		// Destoy the root scene container in a safe way
+		// Destroy the root scene container in a safe way
 		pRootContainer->Clear();
 		Cleanup();
 		delete pRootContainer;
@@ -98,7 +98,7 @@ SceneContext::~SceneContext()
 	if (m_pGraphPathManager)
 		delete m_pGraphPathManager;
 
-	// We don't destory 'm_pRendererContext' because we don't own it!
+	// We don't destroy 'm_pRendererContext' because we don't own it!
 }
 
 /**

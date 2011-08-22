@@ -53,7 +53,7 @@ namespace PLCore {
 *    global functions. So, this has nothing to do with using OOP within scripts. It's just adding global
 *    functions to scripts.
 *
-*    Each script binding should have the followig property:
+*    Each script binding should have the following property:
 *    - "Namespace": Namespace to use inside scripts (for example: "PL.Log")
 */
 class ScriptBinding : public Object {

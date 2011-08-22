@@ -77,7 +77,7 @@ VisPortal::~VisPortal()
 
 /**
 *  @brief
-*    Called when the scene node assigned with this visibililty container was destroyed
+*    Called when the scene node assigned with this visibility container was destroyed
 */
 void VisPortal::OnDestroy()
 {

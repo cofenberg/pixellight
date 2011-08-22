@@ -86,7 +86,7 @@ class WorldThread : public WorldUpdate, public PLCore::Thread {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::Mutex  *m_pMutex;				/**< Synchronisation object (always valid!) */
+		PLCore::Mutex  *m_pMutex;				/**< Synchronization object (always valid!) */
 		volatile bool	m_bShutDown;			/**< Shut down this thread? */
 		volatile float	m_fTimeScaleFactor;		/**< Cached time scale factor */
 		volatile float	m_fMaxTimeDifference;	/**< Cached maximum time difference */

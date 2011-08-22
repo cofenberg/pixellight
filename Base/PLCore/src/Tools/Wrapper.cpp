@@ -39,7 +39,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the number of characters of a c-string excluding the teminating zero
+*    Returns the number of characters of a c-string excluding the terminating zero
 */
 uint32 Wrapper::GetStringLength(const char szString[])
 {

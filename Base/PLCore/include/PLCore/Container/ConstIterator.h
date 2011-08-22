@@ -47,7 +47,7 @@ template <class ValueType> class IteratorImpl;
 *  @remarks
 *    If an iterator is used, the iterable (for instance 'Map', 'Container' or 'Heap') the iterator
 *    is operating on should not be manipulated by adding/removing new elements because this may
-*    produce undefined behaviour! Is highly recommended to keep the iterator in the smallest possible
+*    produce undefined behavior! Is highly recommended to keep the iterator in the smallest possible
 *    local scope and to never keep an iterator as for instance pointer over a long time.
 *
 *  @note

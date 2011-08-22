@@ -170,7 +170,7 @@ class World : public PLPhysics::World {
 
 		/**
 		*  @brief
-		*    Deserialization callback function
+		*    De-serialization callback function
 		*
 		*  @param[in] pSerializeHandle
 		*    Pointer to a PixelLight File-object (always valid!)
@@ -211,7 +211,7 @@ class World : public PLPhysics::World {
 
 		/**
 		*  @brief
-		*    Set the tranformation of a rigid body callback function
+		*    Set the transformation of a rigid body callback function
 		*
 		*  @param[in] pPhysicsBody
 		*    Newton body (always valid!)

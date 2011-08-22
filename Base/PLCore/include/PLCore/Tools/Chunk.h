@@ -281,7 +281,7 @@ class Chunk : public Loadable {
 	//[-------------------------------------------------------]
 	private:
 		ESemantic	  m_nSemantic;					/**< Semantic */
-		EElementType  m_nElementType;				/**< Element typ */
+		EElementType  m_nElementType;				/**< Element type */
 		uint32		  m_nNumOfComponentsPerElement;	/**< Number of components per element */
 		uint32		  m_nNumOfElements;				/**< Number of elements */
 		uint8		 *m_pData;						/**< The data, can be a null pointer */

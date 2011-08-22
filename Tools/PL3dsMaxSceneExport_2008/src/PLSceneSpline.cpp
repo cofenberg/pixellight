@@ -124,7 +124,7 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 								// Transform to world space
 								cPoint = cPoint*mTransform;
 
-								// If there's a parent container, make the position of this scene node relativ to it
+								// If there's a parent container, make the position of this scene node relative to it
 								PLSceneContainer *pContainer = GetContainer();
 								if (pContainer)
 									cPoint -= pContainer->GetWorldSpaceCenter();

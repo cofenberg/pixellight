@@ -647,7 +647,7 @@ bool SNRagdoll::RemoveBodyAndJoint(uint32 nIndex)
 	// First, get the body
 	RagdollBody *pBody = m_lstBodies[nIndex];
 	if (pBody) {
-		// Remove and destroy ths attached joint
+		// Remove and destroy this attached joint
 		RagdollJoint *pJoint = m_mapJoints.Get(pBody->sJoint);
 		if (pJoint) {
 			m_lstJoints.Remove(pJoint);

@@ -70,7 +70,7 @@ JointUpVector::JointUpVector(PLPhysics::World &cWorld, PLPhysics::Body &cParentB
 	// Flush assigned body (MUST be done before creating the joint!)
 	static_cast<BodyImpl&>(cParentBody.GetBodyImpl()).Flush();
 
-	// Get the Newton physics parent bodiy
+	// Get the Newton physics parent body
 	const Newton::NewtonBody *pNewtonParentBody = static_cast<BodyImpl&>(cParentBody.GetBodyImpl()).GetNewtonBody();
 
 	// Create the Newton physics joint

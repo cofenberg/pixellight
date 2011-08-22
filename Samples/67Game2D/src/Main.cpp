@@ -1,6 +1,6 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
- *      This visual and gameplay milestone will show you that it's also possible to
+ *      This visual and game play milestone will show you that it's also possible to
  *      create funny old school 2D games with PixelLight.
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)

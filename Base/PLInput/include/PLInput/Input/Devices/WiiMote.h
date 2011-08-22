@@ -209,7 +209,7 @@ class WiiMote : public Device {
 		*  @param[in] nReportMode
 		*    Report mode
 		*  @param[in] bContinuous
-		*    Continous updates?
+		*    Continuous updates?
 		*/
 		PLINPUT_API void SetReportMode(EReport nReportMode, bool bContinuous = false);
 

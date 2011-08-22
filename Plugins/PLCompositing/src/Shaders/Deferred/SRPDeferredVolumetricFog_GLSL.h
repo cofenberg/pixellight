@@ -100,12 +100,12 @@ void main()\n\
 	viewSpacePos = -viewSpacePos*FogInvRadius;\n\
 	float value = dot(viewSpacePos, viewSpacePos);\n\
 	if (value == 0.0)\n\
-		value = 0.000001;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+		value = 0.000001;	// Do never ever divide through zero, this may lead to ugly blocks!\n\
 	float k  = clamp(dot(fogPosition, viewSpacePos)/value, 0.0, 1.0);\n\
 	vec4  pl = vec4(k*viewSpacePos - fogPosition, 1.0);\n\
 	value = dot(pl, pl);\n\
 	if (value == 0.0)\n\
-		value = 0.000001;	// Do never ever divide through zero, this may lead to uggly blocks!\n\
+		value = 0.000001;	// Do never ever divide through zero, this may lead to ugly blocks!\n\
 	gl_FragColor.rgb = clamp(FogColor0/value - FogColor1, 0.0, 1.0);\n\
 	gl_FragColor.a = 1.0;\n\
 }";

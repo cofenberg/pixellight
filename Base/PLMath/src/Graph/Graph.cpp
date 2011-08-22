@@ -105,7 +105,7 @@ GraphPath *Graph::FindShortestPath(uint32 nStartNode, uint32 nEndNode)
 						if (m_lstTouched.IsSet(nNeighbourID)) {
 							// Maybe we are in luck and the old distance is shorter as the current...
 							if (fNewDistance < m_lstNodeDistance[nNeighbourID]) {
-								// Damn, we have to update this node information :(
+								// D'OH!, we have to update this node information :(
 								m_lstNodeDistance[nNeighbourID] = fNewDistance;
 								m_lstPreviousNode[nNeighbourID] = pNode;
 

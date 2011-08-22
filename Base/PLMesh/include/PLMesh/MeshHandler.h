@@ -434,7 +434,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*  @param[in] nLogMessage
 		*    Should a warning message be written into the log if the requested
 		*    animation information wasn't found? If < 0, write no log message,
-		*    else the integer indicades the debug mode where the message should be written.
+		*    else the integer indicates the debug mode where the message should be written.
 		*
 		*  @return
 		*    Pointer to the requested animation information, a null pointer if there was an error
@@ -445,7 +445,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    m_pStandAnimation = GetMeshHandler()->GetAnimationInfo("Stand");
 		*
 		*  @note
-		*    - This function will seach for the requested animation information within the skeleton
+		*    - This function will search for the requested animation information within the skeleton
 		*      manager and the morph targets of the mesh the mesh handler is using.
 		*/
 		PLMESH_API PLRenderer::AnimationInfo *GetAnimationInfo(const PLCore::String &sName, int nLogMessage = 1) const;
@@ -476,7 +476,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    The requested base joint handler, a null pointer on error
 		*
 		*  @note
-		*    - Using this base joint handler you can for instance change the ininitial joint
+		*    - Using this base joint handler you can for instance change the initial joint
 		*      settings
 		*    - Call "MeshUpdateRequired()" to set a "dirty"-flag if you manipulated the skeleton
 		*/
@@ -496,7 +496,7 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*
 		*  @note
 		*    - Current LOD level is used (see Update())
-		*    - Use GetGeometryVisibility() to get the visiblity of each mesh geometry
+		*    - Use GetGeometryVisibility() to get the visibility of each mesh geometry
 		*/
 		PLMESH_API void UpdateVisibility(const PLMath::PlaneSet &cPlaneSet, bool bFirst = true);
 

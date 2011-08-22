@@ -156,7 +156,7 @@ The following packages are required in order to be able to compile everything (U
 - doxygen (required to compile the automatic code documentation)
 - graphviz (required to create the diagrams of the automatic code documentation)
 - texlive (LaTeX system for compiling the documentation)
-	-> Ensure that "dvipdfmx" is installed which is included within the "texlive-base"-package (e.g. "dvipdf" will propably fail)
+	-> Ensure that "dvipdfmx" is installed which is included within the "texlive-base"-package (e.g. "dvipdf" will probably fail)
 - texlive-science (LaTeX package for compiling the documentation)
 - texlive-latex-extra (LaTeX package for compiling the documentation)
 - libncurses5-dev (required by PLCore)

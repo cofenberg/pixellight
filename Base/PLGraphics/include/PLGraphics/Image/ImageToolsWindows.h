@@ -150,7 +150,7 @@ class ImageToolsWindows {
 		*  @remarks
 		*    Windows-specific function that loads a resource as the given image.
 		*    This feature allows you to have images directly in your .exe and not worry
-		*    whether a particular file is present on the user's harddrive.
+		*    whether a particular file is present on the user's hard drive.
 		*/
 		PLGRAPHICS_API static bool LoadResource(Image &cImage, HINSTANCE hInst, int nID, const PLCore::String &sResourceType, const PLCore::String &sFileType);
 

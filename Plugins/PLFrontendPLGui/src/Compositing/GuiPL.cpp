@@ -364,7 +364,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 	// Scissor rectangle in virtual GUI screen space dimension
 	Rectangle cRectangle(static_cast<float>(vAbsPos.x), static_cast<float>(vAbsPos.y), static_cast<float>(vAbsPos.x + cWidget.GetSize().x), static_cast<float>(vAbsPos.y + cWidget.GetSize().y));
 
-	// Transform the scissor rectancle into real viewport coordinates
+	// Transform the scissor rectangle into real viewport coordinates
 	const Vector2 vScale(m_pRenderer->GetViewport().GetWidth()/m_vScreenSize.x, m_pRenderer->GetViewport().GetHeight()/m_vScreenSize.y);
 	cRectangle.vMin *= vScale;
 	cRectangle.vMax *= vScale;
@@ -413,7 +413,7 @@ void GuiPL::RenderWidget(Widget &cWidget, const Rectangle &cParentRectangle, ETr
 	}
 
 	{ // Topmost recursion part
-		// [TODO] Draw topmost widgets in a complete seperate draw step, or is the current solution ok?
+		// [TODO] Draw topmost widgets in a complete separate draw step, or is the current solution ok?
 		// Get list of widget children
 		const List<Widget*> &cChildren = static_cast<WidgetPL*>(cWidget.GetImpl())->m_lstTopmostChildren;
 

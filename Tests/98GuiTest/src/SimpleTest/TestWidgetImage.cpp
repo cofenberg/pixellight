@@ -61,7 +61,7 @@ pl_implement_class(TestWidgetImage)
 TestWidgetImage::TestWidgetImage(Widget *pParent) : Widget(pParent),
 	m_cImage(*GetGui(), "PLGui/test.png")
 {
-	// Set default color to grey
+	// Set default color to gray
 	SetBackgroundColor(Color4(0.7f, 0.7f, 0.7f, 1.0f));
 }
 

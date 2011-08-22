@@ -85,7 +85,7 @@ void SRPEnd::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// Get the back render target of SRPBegin, this holds the current content
 				SurfaceTextureBuffer *pSurfaceTextureBuffer = pSRPBegin->GetBackRenderTarget();
 				if (pSurfaceTextureBuffer) {
-					// Set the current render target back to the orignal one
+					// Set the current render target back to the original one
 					cRenderer.SetRenderTarget(pSurface);
 
 					// Setup renderer

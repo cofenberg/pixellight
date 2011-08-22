@@ -37,7 +37,7 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Destructur
+*    Destructor
 */
 ShadowMapping::~ShadowMapping()
 {

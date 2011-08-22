@@ -43,7 +43,7 @@ namespace PLInput {
 /**
 *  @brief
 *    An update device is a device backend that has an Update()-method which is called
-*    continously. The backend is supposed to get the device state in this method
+*    continuously. The backend is supposed to get the device state in this method
 *    and update the device accordingly.
 */
 class UpdateDevice : public DeviceImpl {

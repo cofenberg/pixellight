@@ -98,7 +98,7 @@ class GuiImpl : public PLCore::Object {
 		*  @remarks
 		*    To create a GUI implementation using the RTTI, it is necessary to have
 		*    a default constructor, so the GUI pointer will be a null pointer. Whenever this
-		*    is used, the GUI rederence must be set immediatly after creating the instance!
+		*    is used, the GUI reference must be set immediately after creating the instance!
 		*/
 		PLGUI_API GuiImpl(Gui *pGui);
 

@@ -45,8 +45,8 @@ namespace PLScene {
 *    Abstract scene node modifier (other name: controller) class
 *
 *  @remarks
-*    A scene node modifier modifies the behaviour of a scene node. For instance it adds
-*    a physical behaviour, make a light source flickering etc. The 'SceneNodeClass' property
+*    A scene node modifier modifies the behavior of a scene node. For instance it adds
+*    a physical behavior, make a light source flickering etc. The 'SceneNodeClass' property
 *    is the information on which class this modifier operates on. For instance, it's not
 *    possible to assign a light flickering modifier to a a scene node which is a noise.
 *

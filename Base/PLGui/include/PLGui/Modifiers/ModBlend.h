@@ -85,7 +85,7 @@ class ModBlend : public Modifier {
 		*    Get blend animation time
 		*
 		*  @return
-		*    Time in millisenconds for the blend animation
+		*    Time in milliseconds for the blend animation
 		*/
 		PLGUI_API PLCore::uint64 GetBlendTime() const;
 
@@ -94,7 +94,7 @@ class ModBlend : public Modifier {
 		*    Set blend animation time
 		*
 		*  @param[in] nBlendTime
-		*    Time in millisenconds for the blend animation
+		*    Time in milliseconds for the blend animation
 		*/
 		PLGUI_API void SetBlendTime(PLCore::uint64 nBlendTime);
 

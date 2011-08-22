@@ -44,7 +44,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Omnidirectional projective point light scene node
+*    Omni directional projective point light scene node
 */
 class SNProjectivePointLight : public SNPointLight {
 
@@ -69,7 +69,7 @@ class SNProjectivePointLight : public SNPointLight {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNProjectivePointLight, "PLScene", PLScene::SNPointLight, "Omnidirectional projective point light scene node")
+	pl_class(PLS_RTTI_EXPORT, SNProjectivePointLight, "PLScene", PLScene::SNPointLight, "Omni directional projective point light scene node")
 		// Attributes
 		pl_attribute(ProjectedMaterial,	PLCore::String,			"Data/Textures/DefaultCubeMap.dds",	ReadWrite,	GetSet,	"Projected material",	"Type='Material Effect Image TextureAni'")
 			// Overwritten SceneNode attributes

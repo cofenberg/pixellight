@@ -164,10 +164,10 @@ class BitmapButton : public AbstractButton {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Image m_cImageEnabled;	/**< Image that is displayed when the butten is enabled */
-		Image m_cImageDisabled;	/**< Image that is displayed when the butten is disabled */
-		Image m_cImageSelected;	/**< Image that is displayed when the butten is selected by the mouse */
-		Image m_cImagePressed;	/**< Image that is displayed when the butten is pressed */
+		Image m_cImageEnabled;	/**< Image that is displayed when the button is enabled */
+		Image m_cImageDisabled;	/**< Image that is displayed when the button is disabled */
+		Image m_cImageSelected;	/**< Image that is displayed when the button is selected by the mouse */
+		Image m_cImagePressed;	/**< Image that is displayed when the button is pressed */
 
 
 };

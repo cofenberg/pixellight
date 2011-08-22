@@ -218,7 +218,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*    The chosen EGL config, a null pointer on error
 		*
 		*  @note
-		*    - Automatically tries to find fallback configs
+		*    - Automatically tries to find fallback configurations
 		*/
 		EGLConfig ChooseConfig(PLCore::uint32 nMultisampleAntialiasingSamples) const;
 

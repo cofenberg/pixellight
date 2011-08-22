@@ -241,7 +241,7 @@ bool SceneHierarchy::RemoveSceneNode(SceneNode &cSceneNode)
 
 /**
 *  @brief
-*    Refreshs a scene node
+*    Refreshes a scene node
 */
 bool SceneHierarchy::RefreshSceneNode(SceneNode &cSceneNode)
 {

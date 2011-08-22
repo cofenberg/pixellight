@@ -56,7 +56,7 @@ class ParameterManager;
 *    Effect resource class
 *
 *  @remarks
-*    A effect is a powerfull rendering description. It will manage the different render
+*    A effect is a powerful rendering description. It will manage the different render
 *    techniques.
 *    Each effect can have parameters to interact with the vertex/shader programs some technique
 *    passes may use.

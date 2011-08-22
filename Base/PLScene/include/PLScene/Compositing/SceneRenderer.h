@@ -53,7 +53,7 @@ class SceneRendererManager;
 *
 *  @remarks
 *    A scene renderer 'just' renders the scene visibility tree provided by the scene cull query. (SQCull)
-*    Quite primive scene renderers can be implemented completely within one scene renderer class.
+*    Quite primitive scene renderers can be implemented completely within one scene renderer class.
 *    If a lot of special effects and so one are required, we strongly recommend to split up the rendering into
 *    multiple self-containing rendering passes. Have a look into the 'SceneRendererPass' class documentation
 *    for more information about this topic.

@@ -96,7 +96,7 @@
 #endif
 #endif
 
-// The following fix for static initializers (which fixes a preious
+// The following fix for static initializers (which fixes a previous
 // incompatibility with some parts of PowerPlant, was submitted by 
 // Jan Ulbrich.
 #ifdef __MWERKS__

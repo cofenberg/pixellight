@@ -48,7 +48,7 @@ class ScrollBar;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Container that allowes it's content to be scrolled
+*    Container that allows it's content to be scrolled
 */
 class ScrollWidget : public ContainerWidget {
 
@@ -56,7 +56,7 @@ class ScrollWidget : public ContainerWidget {
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLGUI_RTTI_EXPORT, ScrollWidget, "PLGui", PLGui::ContainerWidget, "Container that allowes it's content to be scrolled")
+	pl_class(PLGUI_RTTI_EXPORT, ScrollWidget, "PLGui", PLGui::ContainerWidget, "Container that allows it's content to be scrolled")
 		// Attributes
 		pl_attribute(ScrollBarStyleX,	pl_enum_type(EScrollBarStyle),	ScrollBarStyleDynamic,	ReadWrite,	GetSet,	"Style of horizontal scrollbar",	"")
 		pl_attribute(ScrollBarStyleY,	pl_enum_type(EScrollBarStyle),	ScrollBarStyleDynamic,	ReadWrite,	GetSet,	"Style of horizontal scrollbar",	"")

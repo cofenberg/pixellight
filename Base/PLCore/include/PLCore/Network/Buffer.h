@@ -182,7 +182,7 @@ class Buffer {
 	private:
 		char	*m_pBuffer;				/**< Data buffer, can be a null pointer */
 		uint32   m_nSize;				/**< Size of buffer */
-		uint32   m_nUsed;				/**< Currenty used size */
+		uint32   m_nUsed;				/**< Currently used size */
 		bool	 m_bRemoveDelimiters;	/**< Remove line delimiters (CR/LF)? */
 
 

@@ -547,7 +547,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    - Within the default implementation, the bounding sphere is calculated
 		*      by using the the bounding box
 		*    - Note that it's not guaranteed that this sphere totally includes the axis align bounding box
-		*      in any space. A derived class may deside that another radius fit's the needs
+		*      in any space. A derived class may decide that another radius fit's the needs
 		*      better - for instance a light is using it's radius.
 		*
 		*  @see

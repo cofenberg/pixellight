@@ -69,7 +69,7 @@ class PGSmoke : public SNParticleGroup {
 		// Attributes
 		pl_attribute(Size,						float,				2.0f,										ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
 		pl_attribute(SizeTimeScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Size time scale",									"")
-		pl_attribute(Energie,					float,				1.0f,										ReadWrite,	DirectValue,	"Energie",											"")
+		pl_attribute(Energie,					float,				1.0f,										ReadWrite,	DirectValue,	"Energy",											"")
 		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color",											"")
 		pl_attribute(PositionScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Position scale",									"")
 			// Overwritten SNParticleGroup attributes

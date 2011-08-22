@@ -54,7 +54,7 @@ ShadowMappingUSM::ShadowMappingUSM()
 
 /**
 *  @brief
-*    Destructur
+*    Destructor
 */
 ShadowMappingUSM::~ShadowMappingUSM()
 {
@@ -72,7 +72,7 @@ void ShadowMappingUSM::CalculateLightMatrices(SNLight &cLight, Matrix4x4 &mLight
 		SNSpotLight &cSpotLight = static_cast<SNSpotLight&>(cLight);
 
 		// We "could" just reuse the view matrix of the light, but when for example constantly rotating the light around the z-axis,
-		// the shadow mapping artefacts would also constantly move resulting in an annoying noisy shadow...
+		// the shadow mapping artifacts would also constantly move resulting in an annoying noisy shadow...
 		// mLightView = cSpotLight.GetViewMatrix();
 		// ... therefore we calculate a new view matrix for the shadow mapping with a fixed up-vector
 		const Transform3 &cTransform = cLight.GetTransform();

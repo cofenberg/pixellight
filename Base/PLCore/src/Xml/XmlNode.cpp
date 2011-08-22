@@ -701,8 +701,8 @@ XmlNode *XmlNode::Identify(const char *pszData, EEncoding nEncoding)
 	// What is this thing?
 	// - Elements start with a letter or underscore, but XML is reserved
 	// - Comments: <!--
-	// - Decleration: <?xml
-	// - Everthing else is unknown to the XML parser
+	// - Declaration: <?xml
+	// - Everything else is unknown to the XML parser
 	static const char *pszXmlHeader		= "<?xml";
 	static const char *pszCommentHeader	= "<!--";
 	static const char *pszDtdHeader		= "<!";

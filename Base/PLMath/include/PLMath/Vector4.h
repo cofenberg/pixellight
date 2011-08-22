@@ -640,7 +640,7 @@ class Vector4 {
 
 		/**
 		*  @brief
-		*    Calculates the angle between two vectos
+		*    Calculates the angle between two vectors
 		*
 		*  @param[in] vV
 		*    Second vector
@@ -688,7 +688,7 @@ class Vector4 {
 		*    Reference to the vector itself which is now the resulting projection vector
 		*
 		*  @note
-		*    - vV1 and vV2 MUST be perpindicular to eachother
+		*    - vV1 and vV2 MUST be perpendicular to each other
 		*/
 		PLMATH_API Vector4 &ProjectPlane(const Vector4 &vV1, const Vector4 &vV2);
 

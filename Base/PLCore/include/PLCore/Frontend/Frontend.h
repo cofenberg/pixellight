@@ -106,7 +106,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 			pl_method_0(GetY,						pl_ret_type(int),										"Returns the y position of the frontend (in screen coordinates).",																															"")
 			pl_method_0(GetWidth,					pl_ret_type(uint32),									"Returns the frontend width.",																																								"")
 			pl_method_0(GetHeight,					pl_ret_type(uint32),									"Returns the frontend height.",																																								"")
-			pl_method_4(SetPositionSize,			pl_ret_type(void),		int,	int,	uint32,	uint32,	"Set frontend position and size. X and y position of the frontend (in screen coordinates) as the first two parameters, width and height of the frontend as third and fouth parameters.",	"")
+			pl_method_4(SetPositionSize,			pl_ret_type(void),		int,	int,	uint32,	uint32,	"Set frontend position and size. X and y position of the frontend (in screen coordinates) as the first two parameters, width and height of the frontend as third and fourth parameters.",	"")
 			// Fullscreen methods
 			pl_method_0(GetToggleFullscreenMode,	pl_ret_type(bool),										"Returns whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'.",								"")
 			pl_method_1(SetToggleFullscreenMode,	pl_ret_type(void),		bool,							"Sets whether it's allowed to toggle the fullscreen mode using hotkeys. 'true' as first parameter to allow it, else 'false'.",																"")
@@ -134,11 +134,11 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Run the frontend
 		*
 		*  @param[in] cFrontendContext
-		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes)
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives)
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
-		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*    (e.g. an embedded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
 		PLCORE_API static int Run(const FrontendContext &cFrontendContext);
 
@@ -152,7 +152,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Constructor
 		*
 		*  @param[in] cFrontendContext
-		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes)
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives)
 		*  @param[in] cFrontendImpl
 		*    Frontend implementation instance
 		*/
@@ -236,7 +236,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*
 		*  @remarks
 		*    When the frontend has a window, this title can be seen within the window
-		*    titel bar. Please note that there's no guarantee that there's a window
+		*    title bar. Please note that there's no guarantee that there's a window
 		*    title bar or even a window. By default, the title is set to the frontend
 		*    context name ("GetContext().GetName()") which is usually sufficient. So,
 		*    unless you have a good reason to explicitly set an individual frontend
@@ -311,8 +311,8 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @remarks
 		*    The primary argument to allow the user to request a frontend position and size change is,
 		*    that it should be possible to restore the frontend position and size of a previous session
-		*    (may be important for the usuability). Do not misuse this method to frequently manipulate
-		*    the frontend appearence. Please note that, as for all other frontend methods, this is only
+		*    (may be important for the usability). Do not misuse this method to frequently manipulate
+		*    the frontend appearance. Please note that, as for all other frontend methods, this is only
 		*    considered to be a request. A frontend implementation may deny the request in general or
 		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
 		*/
@@ -521,7 +521,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		const FrontendContext &m_cFrontendContext;	/**< Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes) */
+		const FrontendContext &m_cFrontendContext;	/**< Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives) */
 		FrontendImpl		  *m_pFrontendImpl;		/**< Pointer to implementation backend, can be a null pointer */
 
 

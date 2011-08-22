@@ -111,7 +111,7 @@ class BitsetIterator : public IteratorImpl<bool> {
 
 
 	//[-------------------------------------------------------]
-	//[ Privat virtual IteratorImpl functions                 ]
+	//[ Private virtual IteratorImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
 		virtual IteratorImpl<bool> *Clone() const override;

@@ -125,7 +125,7 @@ void SRPDebugHierarchies::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 		}
 	}
 
-	// Draw the hierachie of the scene container
+	// Draw the hierarchy of the scene container
 	cCullQuery.GetSceneContainer().GetHierarchyInstance()->Draw(cRenderer, LineColor.Get(), cVisContainer.GetWorldViewProjectionMatrix(), LineWidth.Get());
 }
 

@@ -141,7 +141,7 @@ class LogFormater {
 
 		/**
 		*  @brief
-		*    Writes an Formated string to the Logfile
+		*    Writes an Formated string to the log file
 		*
 		*  @param[in] nLogLevel
 		*    The log level to which the log message belongs

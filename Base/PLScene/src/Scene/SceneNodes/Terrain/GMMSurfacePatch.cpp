@@ -58,7 +58,7 @@ void GMMSurfacePatch::SetActive(bool bActive)
 
 /**
 *  @brief
-*    Computes the variance of each mip map level
+*    Computes the variance of each mipmap map level
 */
 void GMMSurfacePatch::ComputeVariance(uint32 &nOffset)
 {

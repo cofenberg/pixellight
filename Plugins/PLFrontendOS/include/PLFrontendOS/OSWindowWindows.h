@@ -167,7 +167,7 @@ class OSWindowWindows : public OSWindow {
 		WNDCLASS	m_WndClass;				/**< OS window class */
 		HICON		m_hIcon;				/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
 		HWND		m_hWnd;					/**< OS window handle, can be a null pointer */
-		bool		m_bInitialized;			/**< Initialization done? (if false, WM_ERASEBKGND won't be catched) */
+		bool		m_bInitialized;			/**< Initialization done? (if false, WM_ERASEBKGND won't be caught) */
 		bool		m_bVisible;				/**< Was the window made visible? (independent of the real OS window visibility state) */
 		bool		m_bDestroyed;			/**< 'true' if the window has already been destroyed */
 		int			m_nHotkeyIDAltTab;		/**< Alt-Tab hotkey */

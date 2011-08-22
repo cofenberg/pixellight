@@ -49,7 +49,7 @@ namespace PLPhysicsBullet {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Motionstate class for bullet physic
+*    Motion state class for bullet physic
 *    Bullet calls setWorldTransform when the simulation transforms a physic object
 *    This class dispatches the call to the corresponding PLPhysic::Body to inform pixellight about the transform change
 */

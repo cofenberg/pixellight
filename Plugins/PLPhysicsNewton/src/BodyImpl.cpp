@@ -53,7 +53,7 @@ Newton::NewtonBody *BodyImpl::GetNewtonBody() const
 
 /**
 *  @brief
-*    Flushs the body
+*    Flushes the body
 */
 void BodyImpl::Flush()
 {
@@ -170,7 +170,7 @@ void BodyImpl::InitializeNewtonBody(PLPhysics::Body &cBody, Newton::NewtonBody &
 		// Save the pointer to this PL physics body
 		NewtonBodySetUserData(m_pNewtonBody, &cBody);
 
-		// Set a destrutor for this rigid body
+		// Set a destructor for this rigid body
 		NewtonBodySetDestructorCallback(m_pNewtonBody, World::PhysicsBodyDestructor);
 
 		// Set the force and torque callback function
@@ -235,7 +235,7 @@ void BodyImpl::SetMass(float fMass)
 	if (m_pNewtonBody) {
 		// Is the mass not null? (null = static body)
 		if (fMass) {
-			// Now we calculate and set the moment of intertia for this body. Note that a correct
+			// Now we calculate and set the moment of inertia for this body. Note that a correct
 			// moment of inertia is CRUCIAL for the CORRECT PHYSICAL BEHAVIOUR of a body, so we
 			// use an special equation for calculating it.
 			float fInertia[3], fCentre[3];

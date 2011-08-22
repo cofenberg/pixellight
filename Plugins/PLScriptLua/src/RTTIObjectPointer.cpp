@@ -102,7 +102,7 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 		// Get the indexed name
 		const String sName = lua_tostring(pLuaState, 2);
 
-		// [TODO] Currently we can use within Lua the dot operator to access RTTI attributes and properties, but there may occure name conflicts...
+		// [TODO] Currently we can use within Lua the dot operator to access RTTI attributes and properties, but there may occur name conflicts...
 
 		// Is it an attribute or a property?
 		DynVar *pDynVar = m_pRTTIObject->GetAttribute(sName);

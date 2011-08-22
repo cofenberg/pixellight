@@ -133,7 +133,7 @@ void Screen::SetSize(const Vector2i &vSize)
 
 /**
 *  @brief
-*    Check if this is the primay screen
+*    Check if this is the primary screen
 */
 bool Screen::IsDefault() const
 {

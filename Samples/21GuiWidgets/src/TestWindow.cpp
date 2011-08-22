@@ -273,6 +273,6 @@ void TestWindow::MenuClicked(uint32 nID)
 
 void TestWindow::TrayClicked(uint32 nButton, const Vector2i &vPos)
 {
-	// Toggle window visiblity
+	// Toggle window visibility
 	SetVisible(!IsVisible());
 }

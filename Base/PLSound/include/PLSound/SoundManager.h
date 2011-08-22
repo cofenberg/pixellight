@@ -209,7 +209,7 @@ class SoundManager : public PLCore::Object, public PLCore::ResourceManager<Buffe
 		*    Gets a list of all known sound formats
 		*
 		*  @param[out] lstList
-		*    List to recieve the known sound formats (see Format)
+		*    List to receive the known sound formats (see Format)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

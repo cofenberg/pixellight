@@ -815,12 +815,12 @@ class String {
 
 		/**
 		*  @brief
-		*    Replaces all occurences of a character by another character
+		*    Replaces all occurrences of a character by another character
 		*
 		*  @param[in] nOld
 		*    Character to be replaced
 		*  @param[in] nNew
-		*    Character to replace whith
+		*    Character to replace with
 		*
 		*  @return
 		*    Number of replaced characters (0 if new = old)
@@ -830,7 +830,7 @@ class String {
 
 		/**
 		*  @brief
-		*    Replaces all occurences of a substring by another string
+		*    Replaces all occurrences of a substring by another string
 		*
 		*  @param[in] sOld
 		*    Substring to be replaced
@@ -844,7 +844,7 @@ class String {
 
 		/**
 		*  @brief
-		*    Replaces all occurences of a substring by another string
+		*    Replaces all occurrences of a substring by another string
 		*
 		*  @param[in] pszOld
 		*    Substring to be replaced, can be a null pointer

@@ -81,7 +81,7 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPLightEffectsFixedFunctions();
 
@@ -185,8 +185,8 @@ class SRPLightEffectsFixedFunctions : public SRPLightEffects {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::VertexBuffer   *m_pBillboardVB;			/**< Billbord vertex buffer, can be a null pointer */
-		PLRenderer::VertexBuffer   *m_pBillboardColorVB;	/**< Billbord vertex buffer with color support, can be a null pointer */
+		PLRenderer::VertexBuffer   *m_pBillboardVB;			/**< Billboard vertex buffer, can be a null pointer */
+		PLRenderer::VertexBuffer   *m_pBillboardColorVB;	/**< Billboard vertex buffer with color support, can be a null pointer */
 		PLCore::Pool<LightEffect*>  m_lstLightEffects;		/**< List of used light effects */
 		PLCore::Pool<LightEffect*>  m_lstFreeLightEffects;	/**< List of free light effects */
 

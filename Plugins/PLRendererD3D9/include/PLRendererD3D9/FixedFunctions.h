@@ -97,7 +97,7 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		*  @brief
 		*    Updates the current D3D 9 texture matrix of the given stage
 		*
-		*  @param[im] nStage
+		*  @param[in] nStage
 		*    Texture stage where to update the current D3D9 matrix
 		*
 		*  @return

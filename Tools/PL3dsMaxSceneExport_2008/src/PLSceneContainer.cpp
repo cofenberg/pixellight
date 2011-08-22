@@ -803,12 +803,12 @@ void PLSceneContainer::OutputStatistics()
 		if (nOutgoingCellPortals != nIncomingCellPortals) {
 			// Take care of spelling ;-)
 			if (nOutgoingCellPortals == 1) {
-				g_pLog->LogFLine(PLLog::Warning, "1 cell-portal is going out, but %d cell-portals are coming in - is this intented? (maybe there are any undesired spaces/tabs within your names?)", nIncomingCellPortals);
+				g_pLog->LogFLine(PLLog::Warning, "1 cell-portal is going out, but %d cell-portals are coming in - is this indented? (maybe there are any undesired spaces/tabs within your names?)", nIncomingCellPortals);
 			} else {
 				if (nIncomingCellPortals == 1)
-					g_pLog->LogFLine(PLLog::Warning, "%d cell-portals are going out, but 1 cell-portal is coming in - is this intented? (maybe there are any undesired spaces/tabs within your names?)", nOutgoingCellPortals, nIncomingCellPortals);
+					g_pLog->LogFLine(PLLog::Warning, "%d cell-portals are going out, but 1 cell-portal is coming in - is this indented? (maybe there are any undesired spaces/tabs within your names?)", nOutgoingCellPortals, nIncomingCellPortals);
 				else
-					g_pLog->LogFLine(PLLog::Warning, "%d cell-portals are going out, but %d cell-portals are coming in - is this intented? (maybe there are any undesired spaces/tabs within your names?)", nOutgoingCellPortals, nIncomingCellPortals);
+					g_pLog->LogFLine(PLLog::Warning, "%d cell-portals are going out, but %d cell-portals are coming in - is this indented? (maybe there are any undesired spaces/tabs within your names?)", nOutgoingCellPortals, nIncomingCellPortals);
 			}
 		}
 	}

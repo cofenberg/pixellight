@@ -68,8 +68,8 @@ namespace PLPhysics {
 *    Because it's possible that the physics runs in an own thread, it's recommended to deactivate the simulation
 *    by using SetSimulationActive(false) during scene creation.
 *    Note that the behavior of the functions may differ a bit between the different physics implementations. For
-*    instance, some physics implementations will ignore completly the linear velocity if the body is static. In general
-*    you can't espect the same values as the ones set by yourself. For instance Body::GetLinearVelocity()
+*    instance, some physics implementations will ignore completely the linear velocity if the body is static. In general
+*    you can't expect the same values as the ones set by yourself. For instance Body::GetLinearVelocity()
 *    must not be vMyVelocity you set using Body::SetLinearVelocity(vMyVelocity)!
 */
 class World : public PLCore::Object, public PLCore::ElementManager<Element> {
@@ -426,7 +426,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Creates a physics raycast sensor
+		*    Creates a physics ray cast sensor
 		*
 		*  @param[in] vStart
 		*    Beginning of the ray in global space
@@ -499,7 +499,7 @@ class World : public PLCore::Object, public PLCore::ElementManager<Element> {
 		*  @remarks
 		*    If the physics simulation should be 'frozen', it's no good idea to skip just the
 		*    UpdateSimulation() function because it's possible that the main physics processing is
-		*    performed in another thread and this update function only performes state synchronisation.
+		*    performed in another thread and this update function only performs state synchronization.
 		*    So, in the case of just skipping this update function, the states visible to the user are not
 		*    updated, but the physics itself is still running...
 		*/

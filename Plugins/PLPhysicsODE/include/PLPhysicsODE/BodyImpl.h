@@ -180,7 +180,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		float			 m_fCollisionVolume;	/**< Collision volume */
 		float			 m_fMass;				/**< Mass of the physics body */
 		dMass			 m_sMass;				/**< Mass of the physics body */
-		PLMath::Vector3	 m_vCenterOfMass;		/**< Relativ center of the mass */
+		PLMath::Vector3	 m_vCenterOfMass;		/**< Relative center of the mass */
 		bool			 m_bAutoFreeze;			/**< Automatically freeze the body? */
 		bool			 m_bFrozen;				/**< Currently frozen? */
 		bool			 m_bCollisionActive;	/**< Can the body collide? */

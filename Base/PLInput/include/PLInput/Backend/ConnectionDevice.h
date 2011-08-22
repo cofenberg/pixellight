@@ -55,7 +55,7 @@ namespace PLInput {
 *    Device connection class
 *
 *  @remarks
-*    A connection device is a device backend that uses e.g. a HID or bluetooth connection to communicate
+*    A connection device is a device backend that uses e.g. a HID or Bluetooth connection to communicate
 *    directly with the input device (no use of HID features, only read/write commands) and expose an
 *    interface that can be used by the device class to use that connection.
 */

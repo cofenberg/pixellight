@@ -45,7 +45,7 @@ namespace PLScene {
 *    Scene renderer loader implementation for the PixelLight scene renderer XML file format
 *
 *  @note
-*    - If the save function recives a boolean 'NoDefault'-parameter with 'true', (default setting)
+*    - If the save function receives a boolean 'NoDefault'-parameter with 'true', (default setting)
 *      variables with default values are not saved
 */
 class SceneRendererLoaderPL : public SceneRendererLoader {
@@ -107,7 +107,7 @@ class SceneRendererLoaderPL : public SceneRendererLoader {
 		*  @param[in] cSceneRenderer
 		*    Scene renderer to load into
 		*  @param[in] cSceneRendererElement
-		*    Scene senderer XML element to read the data from
+		*    Scene renderer XML element to read the data from
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

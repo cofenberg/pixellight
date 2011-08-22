@@ -79,7 +79,7 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	// Create the texture
 	pTexture = CreateTexture(cTextureManager, pTexture);
 
-	// Initialize perlin noise
+	// Initialize Perlin noise
 	PLInitPerlin();
 
 	// Get scale

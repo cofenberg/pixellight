@@ -71,7 +71,7 @@ bool Vector2i::FromString(const String &sString)
 			nParsePos = cRegEx.GetPosition();
 		}
 
-		// Set unused componts to 0
+		// Set unused components to 0
 		while (nComponent < 2)
 			nV[nComponent++] = 0;
 

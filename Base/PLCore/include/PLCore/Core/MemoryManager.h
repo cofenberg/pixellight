@@ -62,7 +62,7 @@ namespace PLCore {
 *      get some conflicts with the overloaded new-operators of 'Microsoft's memory tracker'
 *    - There are some simple wrapper functions you can use to avoid for instance nasty
 *      standard header includes when they are undesired
-*    - We intentionally do NOT offer memory makros (like an overwritten 'malloc') because experience
+*    - We intentionally do NOT offer memory macros (like an overwritten 'malloc') because experience
 *      shows that they are making more troubles than adding advantages!
 *    - Try to avoid the allocation/deallocation legacy types (Malloc, Calloc, Realloc, Free) to avoid
 *      possible memory problems!

@@ -56,7 +56,7 @@ bool ChunkLoaderPLXml::Load(Chunk &cChunk, File &cFile)
 			// Get the format version
 			int nVersion = pChunkElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

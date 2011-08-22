@@ -198,10 +198,10 @@ template <class AType> class ElementManager {
 		*    Get the standard element
 		*
 		*  @return
-		*    The standart element, a null pointer if there's no such element
+		*    The standard element, a null pointer if there's no such element
 		*
 		*  @note
-		*    - There should always be a standart element!
+		*    - There should always be a standard element!
 		*    - It is recommended that you protect your standard element
 		*/
 		AType *GetStandard() const;
@@ -211,7 +211,7 @@ template <class AType> class ElementManager {
 		*    Set the standard element
 		*
 		*  @param[in] pElement
-		*    Element which should be the standart element, a null pointer to set no such element
+		*    Element which should be the standard element, a null pointer to set no such element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe invalid element)
@@ -297,7 +297,7 @@ template <class AType> class ElementManager {
 		*    The corresponding element, a null pointer if there's no match
 		*
 		*  @note
-		*    - You can overload this function to specialize the behaviour. This is done
+		*    - You can overload this function to specialize the behavior. This is done
 		*      for instance within SceneContainer to be able to use 'absolute names'
 		*      like 'Root.MyScene.MyNode', too.
 		*/
@@ -369,7 +369,7 @@ template <class AType> class ElementManager {
 	protected:
 		String					 m_sManagerName;		/**< Manager name */
 		AType					*m_pStandardElement;	/**< Standard element, can be a null pointer */
-		bool					 m_bUnloadUnused;		/**< Unload unused resoures? */
+		bool					 m_bUnloadUnused;		/**< Unload unused resources? */
 		Array<AType*>			 m_lstElements;			/**< Element list */
 		HashMap<String, AType*>	 m_mapElements;			/**< Element map */
 

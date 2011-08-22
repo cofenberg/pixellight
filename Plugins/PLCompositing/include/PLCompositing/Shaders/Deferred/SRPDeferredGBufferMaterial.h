@@ -159,7 +159,7 @@ class SRPDeferredGBufferMaterial {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		~SRPDeferredGBufferMaterial();
 

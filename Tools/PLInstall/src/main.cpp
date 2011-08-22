@@ -34,7 +34,7 @@ bool CheckWindowsVersion()
 {
 	OSVERSIONINFOEX ver;
 
-	// Initialize structur
+	// Initialize structure
 	ZeroMemory(&ver, sizeof(OSVERSIONINFOEX));
 	ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 

@@ -166,7 +166,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	// Clear the content of the current used render target (color to black and depth to 1.0 by default)
 	cRenderer.Clear();
 
-	// CPU side of the unform buffer
+	// CPU side of the uniform buffer
 	struct {
 		Matrix4x4 mObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
 		Color4    cColor;							// Object color
@@ -176,7 +176,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 		// Calculate the world matrix
 		Matrix4x4 mWorld;
 		{
-			// Build a rotation matrix by using a given euler angle around the y-axis
+			// Build a rotation matrix by using a given Euler angle around the y-axis
 			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 
 			// Increase the rotation by the current time difference (time past since the last frame)
@@ -210,7 +210,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	// (please note that the data remains on the GPU side, so there's no need to
 	//  upload this data to the GPU each time when there's no change within the data)
 	if (m_pUniformBuffer) {
-		// Cg fails on my system when updating the uniform buffer data while a program using this uniform buffer is currently in use (no problemes with GLSL)
+		// Cg fails on my system when updating the uniform buffer data while a program using this uniform buffer is currently in use (no problems with GLSL)
 		cRenderer.SetProgram(nullptr);
 
 		// Lock the uniform buffer

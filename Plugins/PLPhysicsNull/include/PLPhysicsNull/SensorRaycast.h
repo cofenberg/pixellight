@@ -43,7 +43,7 @@ namespace PLPhysicsNull {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Null physics raycast sensor
+*    Null physics ray cast sensor
 */
 class SensorRaycast : public PLPhysics::SensorRaycast {
 

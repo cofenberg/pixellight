@@ -177,7 +177,7 @@ class Camcorder : public PLCore::Object {
 	private:
 		/**
 		*  @brief
-		*    Activates/deactivates certain scene node modifers of the given scene node
+		*    Activates/deactivates certain scene node modifiers of the given scene node
 		*
 		*  @param[in] cSceneNode
 		*    Scene node

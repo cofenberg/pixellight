@@ -215,7 +215,7 @@ uint32 MeshLODLevel::GetNumOfTriangles() const
 	if (!m_plstGeometries)
 		return 0;
 
-	// Get number of LOD leveltriangles
+	// Get number of LOD level triangles
 	uint32 nNumOfTriangles = 0;
 	for (uint32 i=0; i<m_plstGeometries->GetNumOfElements(); i++)
 		nNumOfTriangles += m_plstGeometries->Get(i).GetNumOfTriangles();
@@ -1226,7 +1226,7 @@ bool MeshLODLevel::CalculateBoundingBox(const Array<const Geometry*> &lstGeometr
 		if (cVertexBuffer.Lock(Lock::ReadOnly)) {
 			// Lock the index buffer
 			if (m_pIndexBuffer->Lock(Lock::ReadOnly)) {
-				// We have to take the indices typ into account...
+				// We have to take the indices type into account...
 				switch (m_pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{
@@ -1384,7 +1384,7 @@ bool MeshLODLevel::CalculateBoundingSphere(const Array<const Geometry*> &lstGeom
 		if (cVertexBuffer.Lock(Lock::ReadOnly)) {
 			// Lock the given index buffer
 			if (m_pIndexBuffer->Lock(Lock::ReadOnly)) {
-				// We have to take the indices typ into account...
+				// We have to take the indices type into account...
 				switch (m_pIndexBuffer->GetElementType()) {
 					case IndexBuffer::UInt:
 					{

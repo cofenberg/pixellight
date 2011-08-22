@@ -79,7 +79,7 @@ class Font {
 		*  @param[in] cGui
 		*    Owner GUI
 		*  @param[in] sFamily
-		*    Font famliy name
+		*    Font family name
 		*  @param[in] nHeight
 		*    Font height
 		*  @param[in] nWeight

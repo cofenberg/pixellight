@@ -175,7 +175,7 @@ bool QPLSceneContext::LoadSceneFromFile(const QString &sSceneFile)
 
 	// Cleanup the scene context right now to ensure that all 'delete this'-marked scene nodes are really gone!
 	// If this is not done, we may get problems with for example the names of dynamic textures because there may
-	// occure name conflicts if multiple render-to-texture scene containers want to render into a same named texture...
+	// occur name conflicts if multiple render-to-texture scene containers want to render into a same named texture...
 	// Topics like 'the new scene is using resources that are already loaded in' must be handled on another level, e.g.
 	// by delaying the unloading of currently unreferenced resources.
 	if (m_pSceneContext)

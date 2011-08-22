@@ -52,7 +52,7 @@ namespace PLScene {
 *    comfortable within the scene graph because this 'look along negative z' doesn't go along with universal
 *    features like 'look at this point'. So, we decided to 'break' the right-handed coordinate system convention
 *    within the spot light scene node when it's coming to 'look along negative z'. Instead we 'look along positive z'
-*    and we profit from an universal behaviour and don't need to care about flipping axis.
+*    and we profit from an universal behavior and don't need to care about flipping axis.
 *
 *  @note
 *    - By default, the 'NoCone' flag is not set meaning that the given outer and inner angles are

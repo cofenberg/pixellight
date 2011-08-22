@@ -59,7 +59,7 @@ bool MaterialLoaderPL::Load(Material &cMaterial, File &cFile)
 			// Get the format version
 			const int nVersion = pMaterialElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

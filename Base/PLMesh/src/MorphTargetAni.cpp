@@ -174,7 +174,7 @@ bool MorphTargetAni::ApplyMorphTargetWeight(Array<float> &lstMorphTargetWeights,
 //[-------------------------------------------------------]
 MorphTargetAni &MorphTargetAni::operator =(const MorphTargetAni &cSource)
 {
-	// Call base functiona
+	// Call base function
 	*static_cast<Element<MorphTargetAni>*>(this) = cSource;
 	*static_cast<AnimationBase*>(this) = *static_cast<const AnimationBase*>(&cSource);
 

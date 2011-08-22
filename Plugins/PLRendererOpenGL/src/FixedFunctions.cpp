@@ -1385,7 +1385,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							1,								// Weights are vertex attribute 1
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(1);
@@ -1415,7 +1415,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							5,								// Fog coordinates are vertex attribute 5
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(5);
@@ -1433,7 +1433,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							6,								// Point sprite size are vertex attribute 6
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(6);
@@ -1446,7 +1446,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							7,								// Matrix indices are vertex attribute 7
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(7);
@@ -1482,7 +1482,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							14,								// Tangent are vertex attribute 14
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(14);
@@ -1495,7 +1495,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 							15,								// Binormal are vertex attribute 15
 							cAttribute.nComponentsAPI,
 							cAttribute.nTypeAPI,
-							GL_FALSE,						// Normalisation disabled
+							GL_FALSE,						// Normalization disabled
 							nVertexSize,
 							BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableVertexAttribArrayARB(15);

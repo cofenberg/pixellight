@@ -167,7 +167,7 @@ class CommandLine {
 		*    'true' if option could be added, 'false' on error
 		*
 		*  @remarks
-		*    A parameter is an option that can recieve a value.
+		*    A parameter is an option that can receive a value.
 		*    Example: command --name <name>
 		*/
 		PLCORE_API bool AddParameter(const String &sName, const String &sShort, const String &sLong, const String &sDescription, const String &sDefault, bool bRequired = false);

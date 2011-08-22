@@ -195,7 +195,7 @@ class MeshMorphTarget {
 		*      it will be used for faster triangle plane calculation, else the slower
 		*      GetTriangle() is used instead.
 		*      If there are vertex ID's, we CAN'T build triangle planes because only a few vertices are
-		*      influcenced by this morph target!
+		*      influenced by this morph target!
 		*/
 		PLMESH_API void BuildTrianglePlaneList();
 
@@ -222,7 +222,7 @@ class MeshMorphTarget {
 		*    - This function will add normals to the vertex buffer if there are no one
 		*      allocated yet
 		*    - If there are vertex ID's, we CAN'T calculate normals because only a few vertices are
-		*      influcenced by this morph target!
+		*      influenced by this morph target!
 		*/
 		PLMESH_API bool CalculateNormals();
 
@@ -246,7 +246,7 @@ class MeshMorphTarget {
 		*      instance within a vertex shader using a cross product of the normal and
 		*      tangent vector
 		*    - If there are vertex ID's, we CAN'T calculate normals because only a few vertices are
-		*      influcenced by this morph target!
+		*      influenced by this morph target!
 		*/
 		PLMESH_API bool CalculateTangentSpaceVectors(bool bTangent = true, bool bBinormal = true);
 

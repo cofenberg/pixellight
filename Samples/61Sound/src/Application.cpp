@@ -112,7 +112,7 @@ void Application::UpdateTimeScaleTextNode()
 */
 bool Application::ChooseSoundAPI()
 {
-	// Because I'am pessimistic I espect by default that the user has canceled the choice *sigh*
+	// Because I'am pessimistic I expect by default that the user has canceled the choice *sigh*
 	bool bResult = false; // Error by default
 
 	// Are there multiple sound API's available?

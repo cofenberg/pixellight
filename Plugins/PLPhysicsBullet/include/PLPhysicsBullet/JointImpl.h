@@ -64,7 +64,7 @@ class JointImpl : public PLPhysics::JointImpl {
 		*    Returns the Bullet physics constraint
 		*
 		*  @return
-		*    The Bullet physics constraint, a null pointer when no contraint is used (e.g. for the JointUpVector, there is no constraint needed)
+		*    The Bullet physics constraint, a null pointer when no constraint is used (e.g. for the JointUpVector, there is no constraint needed)
 		*/
 		PLPHYSICSBULLET_API btTypedConstraint *GetBulletConstraint() const;
 
@@ -118,7 +118,7 @@ class JointImpl : public PLPhysics::JointImpl {
 		bool				 m_bBreakable;		/**< Is this joint breakable? */
 		PLMath::Vector3		 m_vBreakForce;		/**< Break force */
 		PLMath::Vector3		 m_vBreakTorque;	/**< Break torque */
-		PLPhysics::Joint	*m_pJoint;			/**< The assoziated PLPhysics::Joint instance*/
+		PLPhysics::Joint	*m_pJoint;			/**< The associated PLPhysics::Joint instance*/
 
 
 };

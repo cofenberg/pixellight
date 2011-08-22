@@ -185,14 +185,14 @@ void RTTIObjectSignalMethodPointer::EventCallback(DynParams &cDynParams, void *p
 						RTTIObjectPointer::LuaStackPush(*pScript, *static_cast<Object**>(cDynParams.GetPointerToParameterValue(i)));
 						break;
 
-					default:			lua_pushnil(pLuaState);																			break;	// Unkown type
+					default:			lua_pushnil(pLuaState);																			break;	// Unknown type
 				}
 			}
 
 			// Do the call ('nNumOfParameters' arguments, 0 results -> By definition, events don't have any return value)
 			const int nResult = lua_pcall(pLuaState, nNumOfParameters, 0, 0);
 			if (nResult) {
-				// Write a log mesage
+				// Write a log message
 				String sErrorDescription;
 				switch (nResult) {
 					case LUA_ERRRUN:

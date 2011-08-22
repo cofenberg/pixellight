@@ -117,7 +117,7 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 	//[-------------------------------------------------------]
 	private:
 		EGLSurface m_hSurface;		/**< EGL surface handle, can be a null pointer */
-		int		   m_nSwapInterval;	/**< The swap interval (vertical synchronisation) */
+		int		   m_nSwapInterval;	/**< The swap interval (vertical synchronization) */
 
 
 };

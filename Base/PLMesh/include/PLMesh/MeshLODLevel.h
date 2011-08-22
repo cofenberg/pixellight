@@ -59,7 +59,7 @@ namespace PLMesh {
 *    Mesh LOD level
 *
 *  @remark
-*    A LOD level for a mesh can redifine one or more of the mesh's base data
+*    A LOD level for a mesh can redefine one or more of the mesh's base data
 *    Index data (indices into the vertex data)
 *    Geometries (that structure the index data in different parts)
 */

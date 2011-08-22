@@ -344,7 +344,7 @@ class WidgetFunctions {
 		*    Mouse position within the widget
 		*
 		*  @remarks
-		*    This function is called, when the mouse position inside the widget has changed whithout
+		*    This function is called, when the mouse position inside the widget has changed without
 		*    the user moving the mouse. This is the case e.g. when the widget has been moved while the
 		*    mouse was inside. Usually, you should only need OnMouseMove() to react on mouse movements,
 		*    but when implementing widget movement, you must also react on OnMousePosUpdate() to update

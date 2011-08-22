@@ -62,7 +62,7 @@ class Runtime {
 			StaticInstallation,	/**< The running process is using the static linked version of PLCore */
 			LocalInstallation,	/**< The PixelLight runtime is in the same directory as the running process, making this to a local installation */
 			SystemInstallation,	/**< The PixelLight runtime is registered within the system, making this to a system installation */
-			UnknownInstallation	/**< Unkown PixelLight runtime installation type */
+			UnknownInstallation	/**< Unknown PixelLight runtime installation type */
 		};
 
 
@@ -159,7 +159,7 @@ class Runtime {
 		*    Path to the PL-runtime directory used by the running process (e.g. "C:\MyApplication\x86" or "C:\PixelLight\Runtime\x86" etc.), or ""
 		*
 		*  @remarks
-		*    As soon as an application executable is started and therfore has become a running process, it's bound to a
+		*    As soon as an application executable is started and therefore has become a running process, it's bound to a
 		*    certain PixelLight runtime. Usually, an OS will first search for required shared libraries within the same
 		*    directory the application executable is in. If the PLCore shared library was found within the application
 		*    executable directory, this means that a local PixelLight runtime is used. Of course, there can be a local

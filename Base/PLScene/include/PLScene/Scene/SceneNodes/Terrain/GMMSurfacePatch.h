@@ -129,9 +129,9 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*    Creates the GMM surface patch
 		*
 		*  @param[in] nXOffset
-		*    X offset of this patch in the heigth map
+		*    X offset of this patch in the height map
 		*  @param[in] nYOffset
-		*    Y offset of this patch in the heigth map
+		*    Y offset of this patch in the height map
 		*  @param[in] nOffset
 		*    Current offset (is increased inside the function)
 		*

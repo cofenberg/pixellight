@@ -248,7 +248,7 @@ void SNConsole::OnUpdate()
 		// Update log information
 		File cFile(Log::GetInstance()->GetFilename());
 		if (cFile.Open(File::FileRead)) {
-			// Find current offset by skipping the desired number of rows from downwards
+			// Find current offset by skipping the desired number of rows from down wards
 			int nRow = 0;
 			uint32 nOffset = 0;
 			do {

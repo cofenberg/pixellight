@@ -56,7 +56,7 @@ class SCPhysicsWorld;
 *  @note
 *    - During runtime, do NOT change the scale of the body scene node itself!
 *    - This scene container MUST be within a SCPhysicsWorld scene container - else
-*      this physics body will have no physics behaviour at all
+*      this physics body will have no physics behavior at all
 *    - If there's no mass, the body is static
 */
 class SNMPhysicsBody : public SNMPhysics {

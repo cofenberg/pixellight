@@ -205,7 +205,7 @@ MeshMorphTarget &MeshMorphTarget::operator =(const MeshMorphTarget &cSource)
 void MeshMorphTarget::BuildTrianglePlaneList()
 {
 	// If there are vertex ID's, we CAN'T build triangle planes because only a few vertices are
-	// influcenced by this morph target!
+	// influenced by this morph target!
 	if (m_pMesh && m_pVertexBuffer && !m_lstVertexIDs.GetNumOfElements()) {
 		// Get data and lock vertex buffer if required
 		MeshLODLevel *pLODLevel = m_pMesh->GetLODLevel(0);
@@ -306,7 +306,7 @@ Array<Plane> &MeshMorphTarget::GetTrianglePlaneList()
 bool MeshMorphTarget::CalculateNormals()
 {
 	// If there are vertex ID's, we CAN'T calculate normals because only a few vertices are
-	// influcenced by this morph target!
+	// influenced by this morph target!
 	if (!m_pMesh || !m_pVertexBuffer || m_lstVertexIDs.GetNumOfElements())
 		return false; // Error!
 
@@ -419,7 +419,7 @@ bool MeshMorphTarget::CalculateNormals()
 bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal)
 {
 	// If there are vertex ID's, we CAN'T calculate normals because only a few vertices are
-	// influcenced by this morph target!
+	// influenced by this morph target!
 	if (!m_pMesh || !m_pVertexBuffer || m_lstVertexIDs.GetNumOfElements())
 		return false; // Error!
 
@@ -447,7 +447,7 @@ bool MeshMorphTarget::CalculateTangentSpaceVectors(bool bTangent, bool bBinormal
 		// Unlock the vertex buffer
 		pVertexBuffer->Unlock();
 
-		// Calculate tangent space vectors, algorithmus from Eric Lengyel: http://www.terathon.com/code/tangent.html
+		// Calculate tangent space vectors, algorithm from Eric Lengyel: http://www.terathon.com/code/tangent.html
 		if (!bTangent && !bBinormal)
 			return true; // Done - no tangent space vectors...
 		if (bTangent)

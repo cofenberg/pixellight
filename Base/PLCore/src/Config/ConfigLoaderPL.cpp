@@ -56,7 +56,7 @@ bool ConfigLoaderPL::Load(Config &cConfig, File &cFile)
 			// Get the format version
 			int nVersion = pConfigElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 
@@ -213,7 +213,7 @@ bool ConfigLoaderPL::SaveGroup(XmlElement &cConfigElement, const ConfigGroup &cG
 	if (pGroupElement->GetFirstAttribute())
 		cConfigElement.LinkEndChild(*pGroupElement);
 	else
-		delete pGroupElement; // Ok, the group is empty - say goodby useless group :)
+		delete pGroupElement; // Ok, the group is empty - say goodbye useless group :)
 
 	// Done
 	return true;

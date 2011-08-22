@@ -51,7 +51,7 @@ namespace PLCore {
 SystemLinux::SystemLinux() :
 	m_bSysInfoInit(!uname(&m_sName))
 {
-	// Initalize the random generator
+	// Initialize the random generator
 	srand(GetMicroseconds());
 }
 
@@ -195,7 +195,7 @@ String SystemLinux::GetExecutableFilename() const
 	const pid_t nPID = getpid();
 	char szLinkName[512];
 	if (snprintf(szLinkName, 512, "/proc/%d/exe", nPID) >= 0) {
-		// Read symbolice link
+		// Read symbolic link
 		char szProgram[512];
 		const int nRet = readlink(szLinkName, szProgram, 512);
 		if (nRet < 512) {

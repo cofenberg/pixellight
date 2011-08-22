@@ -96,7 +96,7 @@ void BodyImpl::SetBulletBodyFreezeState(bool bFreeze)
 	float mass = bFreeze ? 0.0f : m_fMass;
 	// Is the mass not null? (null = static body)
 	if (mass) {
-		// Now we calculate and set the moment of intertia for this body. Note that a correct
+		// Now we calculate and set the moment of inertia for this body. Note that a correct
 		// moment of inertia is CRUCIAL for the CORRECT PHYSICAL BEHAVIOUR of a body, so we
 		// use an special equation for calculating it.			
 		btCollisionShape *pCollistionShape = m_pBulletBody->getCollisionShape();
@@ -153,7 +153,7 @@ void BodyImpl::SetMass(float fMass)
 		btVector3 localInertia(0,0,0);
 		// Is the mass not null? (null = static body)
 		if (fMass) {
-			// Now we calculate and set the moment of intertia for this body. Note that a correct
+			// Now we calculate and set the moment of inertia for this body. Note that a correct
 			// moment of inertia is CRUCIAL for the CORRECT PHYSICAL BEHAVIOUR of a body, so we
 			// use an special equation for calculating it.			
 			btCollisionShape *pCollistionShape = m_pBulletBody->getCollisionShape();

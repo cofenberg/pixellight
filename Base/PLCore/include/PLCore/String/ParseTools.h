@@ -106,7 +106,7 @@ class ParseTools {
 		*    Parse an array of double values
 		*
 		*  @param[in]  sString
-		*    String containg double precision floating point numbers
+		*    String containing double precision floating point numbers
 		*  @param[out] pdValues
 		*    Pointer to C-array which will receive the double values, if a null pointer nothing happens
 		*  @param[in]  nMaxNumOfElements

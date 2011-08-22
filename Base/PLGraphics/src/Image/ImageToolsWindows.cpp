@@ -207,7 +207,7 @@ HBITMAP ImageToolsWindows::PLConvertToHBitmap(Image &cImage, HDC hDC)
 		pPixel += nComponents;
 	}
 
-	// Create gdi bitmap
+	// Create GDI bitmap
 	BITMAPINFO sBitmap;
 	ZeroMemory(&sBitmap, sizeof(BITMAPINFO));
 	sBitmap.bmiHeader.biSize		= sizeof(BITMAPINFOHEADER);

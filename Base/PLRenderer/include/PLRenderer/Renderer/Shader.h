@@ -68,7 +68,7 @@ class Shader : public Resource {
 		*         same syntax as in OpenGL ES, as described below, but they have no semantic meaning, which includes no
 		*         effect on the precision used to store or operate on variables."
 		*    Although the precision qualifiers "should" have no effect when not using OpenGL ES, we noticed that some NVIDIA GPU
-		*    drivers produced compiler errors when using precision qualifiers. Due this buggy behaviour, it's recommended to
+		*    drivers produced compiler errors when using precision qualifiers. Due this buggy behavior, it's recommended to
 		*    remove the precision qualifiers before passing on the shader source code to OpenGL.
 		*/
 		static PLRENDERER_API PLCore::String RemovePrecisionQualifiersFromGLSL(const PLCore::String &sSourceCode);

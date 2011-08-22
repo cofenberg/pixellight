@@ -156,13 +156,13 @@ class BitmapToggleButton : public AbstractToggleButton {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Image m_cImageDisabled;					/**< Image that is displayed when the butten is disabled */
-		Image m_cImageNotChecked;				/**< Image that is displayed when the butten is not checked */
-		Image m_cImageChecked;					/**< Image that is displayed when the butten is checked */
-		Image m_cImagePartiallyChecked;			/**< Image that is displayed when the butten is partially checked */
-		Image m_cImageSelectedNotChecked;		/**< Image that is displayed when the butten is selected and not checked */
-		Image m_cImageSelectedChecked;			/**< Image that is displayed when the butten is selected and checked */
-		Image m_cImageSelectedPartiallyChecked;	/**< Image that is displayed when the butten is selected and partially checked */
+		Image m_cImageDisabled;					/**< Image that is displayed when the button is disabled */
+		Image m_cImageNotChecked;				/**< Image that is displayed when the button is not checked */
+		Image m_cImageChecked;					/**< Image that is displayed when the button is checked */
+		Image m_cImagePartiallyChecked;			/**< Image that is displayed when the button is partially checked */
+		Image m_cImageSelectedNotChecked;		/**< Image that is displayed when the button is selected and not checked */
+		Image m_cImageSelectedChecked;			/**< Image that is displayed when the button is selected and checked */
+		Image m_cImageSelectedPartiallyChecked;	/**< Image that is displayed when the button is selected and partially checked */
 
 
 };

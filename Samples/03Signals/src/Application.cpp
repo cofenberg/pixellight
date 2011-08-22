@@ -81,7 +81,7 @@ bool Application::OnSignal(ESignal nSignal)
 	// Termination
 	if (nSignal == SignalTerm) {
 		// Start counter
-		System::GetInstance()->GetConsole().Print("<Exit>: Catched TERM signal, will continue counting to 10 and then exit.\n");
+		System::GetInstance()->GetConsole().Print("<Exit>: Caught TERM signal, will continue counting to 10 and then exit.\n");
 		m_bExit = true;
 
 		// Cancel signal

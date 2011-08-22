@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Main.cpp                                       *
  *      This sample demonstrates how to use physics plugins within a PixelLight application.
- *      Because this sample is quite simple it is in fact physics API independant. We espect
+ *      Because this sample is quite simple it is in fact physics API independent. We expect
  *      that every physics plugin is using the name convention
  *      <Name of the physics API><World>
  *      Using such names, this sample application can create a list of all supported physics

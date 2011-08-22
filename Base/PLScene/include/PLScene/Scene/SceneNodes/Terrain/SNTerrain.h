@@ -135,7 +135,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[-------------------------------------------------------]
 	private:
 		PLCore::String  m_sFilename;	/**< Terrain filename */
-		float		   *m_pfHeightMap;	/**< Heightmap, can be a null pointer */
+		float		   *m_pfHeightMap;	/**< Height map, can be a null pointer */
 		GMMSurface	   *m_pGMMSurface;	/**< Terrain GMM surface, can be a null pointer */
 
 

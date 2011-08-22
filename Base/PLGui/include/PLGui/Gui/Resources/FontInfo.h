@@ -65,7 +65,7 @@ class FontInfo {
 		*  @param[in] sFilename
 		*    Font file name
 		*  @param[in] sFamily
-		*    Font famliy name
+		*    Font family name
 		*  @param[in] nHeight
 		*    Font height
 		*  @param[in] nWeight

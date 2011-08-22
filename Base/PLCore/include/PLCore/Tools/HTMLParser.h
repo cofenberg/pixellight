@@ -103,7 +103,7 @@ class HTMLParser {
 
 		/**
 		*  @brief
-		*    Get number of errors occuring while parsing the HTML file
+		*    Get number of errors occurred while parsing the HTML file
 		*
 		*  @return
 		*    Number of errors

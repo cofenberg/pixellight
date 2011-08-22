@@ -58,7 +58,7 @@ namespace PLPhysics {
 *
 *  @note
 *    - Keeps track of position changes and updates the linear velocity of the static physics bodies
-*    - Keeps track of rotationn changes and updates the angular velocity of the static physics bodies
+*    - Keeps track of rotation changes and updates the angular velocity of the static physics bodies
 *    - Scene container ownership changes are not tracked
 */
 class SNMPhysicsUpdateVelocity : public SNMPhysics {

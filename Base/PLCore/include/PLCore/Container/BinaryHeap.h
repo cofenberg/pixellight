@@ -183,7 +183,7 @@ class BinaryHeap : public Heap<KeyType, ValueType> {
 
 		/**
 		*  @brief
-		*    Shif up
+		*    Shift up
 		*
 		*  @param[in] nIndex
 		*    Current index
@@ -195,7 +195,7 @@ class BinaryHeap : public Heap<KeyType, ValueType> {
 
 		/**
 		*  @brief
-		*    Shif down
+		*    Shift down
 		*
 		*  @param[in] nIndex
 		*    Current index

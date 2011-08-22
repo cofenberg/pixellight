@@ -303,7 +303,7 @@ GMMSurfacePatch *GMMSurface::GetPatch(uint32 nID) const
 
 /**
 *  @brief
-*    Returns the number of geometrically mip maps
+*    Returns the number of geometrically mipmaps maps
 */
 uint32 GMMSurface::GetGeoMipMaps() const
 {
@@ -389,7 +389,7 @@ void GMMSurface::Update()
 {
 	PlaneSet &cSourcePlaneSet = SNCamera::GetCamera()->GetFrustum(m_pRenderer->GetViewport()), cPlaneSet;
 
-	// Fixed functions suppord required
+	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
 	if (pFixedFunctions) {
 		// Transform frustum to object space

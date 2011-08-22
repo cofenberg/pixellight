@@ -355,7 +355,7 @@ void SNMMeshJoint::OnUpdate()
 						// Transform target rotation from absolute to relative
 						qTargetRotation *= qAbsoluteToRelative;
 
-						// Get target rotation as euler angles in radians
+						// Get target rotation as Euler angles in radians
 						float fTargetAngles[3];
 						EulerAngles::FromQuaternion(qTargetRotation, fTargetAngles[0], fTargetAngles[1], fTargetAngles[2]);
 

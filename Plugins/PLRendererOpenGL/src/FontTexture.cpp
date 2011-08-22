@@ -184,11 +184,11 @@ void FontTexture::CalculateGlyphTextureAtlasSize(Vector2i &vSize)
 		// Get the font height in pixels
 		const uint32 nFontHeight = GetHeightInPixels();
 		if (nFontHeight) {
-			// We've got 256 glyphs, this means there are 16 glyphs per row within the glphy texture atlas
+			// We've got 256 glyphs, this means there are 16 glyphs per row within the glyph texture atlas
 			vSize.x = Math::GetNearestPowerOfTwo(m_nGlyphTextureAtlasPadding + 16*(nFontHeight + m_nGlyphTextureAtlasPadding), false);
 			vSize.y = Math::GetNearestPowerOfTwo(m_nGlyphTextureAtlasPadding + 16*(nFontHeight + m_nGlyphTextureAtlasPadding), false);
 
-			// Check texture size - we just "cut off" everything that doesn't fitt into the texture (... normally, this is not happening... so, keep it simple!)
+			// Check texture size - we just "cut off" everything that doesn't fit into the texture (... normally, this is not happening... so, keep it simple!)
 			vSize.x = vSize.x > nOpenGLMaxTextureSize ? nOpenGLMaxTextureSize : vSize.x;
 			vSize.y = vSize.y > nOpenGLMaxTextureSize ? nOpenGLMaxTextureSize : vSize.y;
 		} else {
@@ -248,7 +248,7 @@ void FontTexture::CreateGlyphTextureAtlas()
 			// Get the font height in pixels (if we're here, we already now that it's valid!)
 			const uint32 nFontHeight = GetHeightInPixels();
 
-			// Fill the glyph texture atlas - We've got 256 glyphs, this means there are 16 glyphs per row within the glphy texture atlas
+			// Fill the glyph texture atlas - We've got 256 glyphs, this means there are 16 glyphs per row within the glyph texture atlas
 			const uint32 nNumOfGlyphs  = 256;
 			const uint32 nGlyphsPerRow = 16;
 			const uint32 nXDistanceToNextGlyph = nFontHeight + m_nGlyphTextureAtlasPadding;
@@ -285,8 +285,8 @@ uint32 FontTexture::GetGlyphTextureAtlasNumOfBytes(bool bIncludeMipmaps) const
 			nTotalNumOfBytes += vSize.x*vSize.y; // Alpha, one byte
 
 			// Next mipmap level, please
-			vSize.x >>= 1;	// /=2 using faster bitshifts
-			vSize.y >>= 1;	// /=2 using faster bitshifts
+			vSize.x >>= 1;	// /=2 using faster bit shifts
+			vSize.y >>= 1;	// /=2 using faster bit shifts
 			if (vSize.x < 1)
 				vSize.x = 1;
 			if (vSize.y < 1)

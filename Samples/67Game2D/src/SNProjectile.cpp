@@ -62,7 +62,7 @@ SNProjectile::SNProjectile() :
 
 /**
 *  @brief
-*    Destructorja
+*    Destructor
 */
 SNProjectile::~SNProjectile()
 {

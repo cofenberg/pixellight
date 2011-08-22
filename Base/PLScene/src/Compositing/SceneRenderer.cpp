@@ -59,7 +59,7 @@ SceneRendererPass *SceneRenderer::Create(const String &sClass, const String &sNa
 	// Check parameter
 	if (sClass.GetLength()) {
 		// To keep things as fast as possible we store a pointer to the base class
-		// (no hash map operation + quite efficent internal string comparison)
+		// (no hash map operation + quite efficient internal string comparison)
 		static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLScene::SceneRendererPass");
 
 		// Get scene node plugin

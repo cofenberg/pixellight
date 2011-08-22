@@ -143,7 +143,7 @@ class SRPDirectionalLighting : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDirectionalLighting();
 

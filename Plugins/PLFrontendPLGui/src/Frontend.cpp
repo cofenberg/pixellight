@@ -188,7 +188,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 void Frontend::Redraw()
 {
-	// Ask PLGui politly to update (and repaint) the widget
+	// Ask PLGui politely to update (and repaint) the widget
 	if (m_pMainWindow)
 		m_pMainWindow->Redraw();
 }
@@ -412,7 +412,7 @@ void Frontend::OnCreateMainWindow()
 
 	// [TODO] Add within PLGui something like MessageOnEnterMoveSize&MessageOnLeaveMoveSize?
 	//        Background: When moving/sizing the window, the application will also be paused during this period (WM_EXITSIZEMOVE/WM_ENTERSIZEMOVE MS Windows events)...
-	//                    it's just annyoing when you move or size a window and the controlled scene camera is spinning around while you do so...
+	//                    it's just annoying when you move or size a window and the controlled scene camera is spinning around while you do so...
 
 	// Set main window
 	SetMainWindow(pWindow);
@@ -420,7 +420,7 @@ void Frontend::OnCreateMainWindow()
 	// Show the window, but do not activate it right now
 	pWindow->SetVisible(true);
 
-	// Do the frontend lifecycle thing - start
+	// Do the frontend life cycle thing - start
 	OnStart();
 
 	// Show and activate the window
@@ -457,7 +457,7 @@ void Frontend::UpdateAltTab()
 */
 void Frontend::OnDestroyMainWindow()
 {
-	// Do the frontend lifecycle thing - stop
+	// Do the frontend life cycle thing - stop
 	OnStop();
 
 	// We lost our main window :/
@@ -470,7 +470,7 @@ void Frontend::OnDestroyMainWindow()
 */
 void Frontend::OnActivateMainWindow(bool bActivate)
 {
-	// Do the frontend lifecycle thing - resume/pause
+	// Do the frontend life cycle thing - resume/pause
 	if (bActivate)
 		OnResume();
 	else

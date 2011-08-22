@@ -42,7 +42,7 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract PL physics raycast sensor
+*    Abstract PL physics ray cast sensor
 */
 class SensorRaycast : public Sensor {
 

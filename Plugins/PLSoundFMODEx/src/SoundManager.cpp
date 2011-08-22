@@ -59,7 +59,7 @@ FMOD_RESULT F_CALLBACK FSOpen(const char *pszName, int nUnicode, unsigned int *p
 
 		// Try to open the file
 		if (LoadableManager::GetInstance()->OpenFile(*pFile, pszName, false)) {
-			// Return opend file object
+			// Return opened file object
 			*pFileSize	= pFile->GetSize();
 			*ppHandle	= pFile;
 			*ppUserData	= reinterpret_cast<void*>(0x12345678);
@@ -253,10 +253,10 @@ bool SoundManager::GetFormatList(List<Format> &lstList) const
 		"MP3",			"MPEG I/II Layer 3, including VBR support",
 		"OGG",			"Ogg Vorbis format",
 		"PLS",			"playlist format - contains links to other audio files. To access contents, the FMOD Ex tag API is used",
-		"RAW",			"Raw file format support. The user can specify the number of channels, bitdepth, format etc",
+		"RAW",			"Raw file format support. The user can specify the number of channels, bit depth, format etc",
 		"S3M",			"ScreamTracker 3 sequenced mod format",
 		"VAG",			"PS2 / PSP format, supported on all platforms!",
-		"WAV",			"Microsoft Wave files, inlcluding compressed wavs. PCM, MP3 and IMA ADPCM compressed wav files are supported across all platforms in FMOD Ex, and other compression formats are supported via windows codecs on that platform",
+		"WAV",			"Microsoft Wave files, including compressed wavs. PCM, MP3 and IMA ADPCM compressed wav files are supported across all platforms in FMOD Ex, and other compression formats are supported via windows codecs on that platform",
 		"WAX",			"playlist format - contains links to other audio files. To access contents, the FMOD Ex tag API is used",
 		"WMA",			"Windows Media Audio format",
 		"XM",			"(FastTracker 2 sequenced format",

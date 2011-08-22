@@ -51,7 +51,7 @@ namespace PLRenderer {
 *
 *    OcclusionQuery *pOcclusionQuery = cRenderer.CreateOcclusionQuery();
 *    // In the rendering loop:
-*    // Draw all occluders
+*    // Draw all occludes
 *    pOcclusionQuery->BeginOcclusionQuery();
 *    // Draw the polygons to be tested
 *    pOcclusionQuery->EndOcclusionQuery();
@@ -119,7 +119,7 @@ class OcclusionQuery : public Resource {
 		*      is also the case when using for instance only a bounding box for a complex mesh.
 		*    - After BeginOcclusionQuery()/EndOcclusionQuery() you should do some other stuff before
 		*      asking for the result using this function to give the GPU some time to process the
-		*      the stuff. If this function returnes 'true' then you still have to wait for the result!
+		*      the stuff. If this function returns 'true' then you still have to wait for the result!
 		*
 		*  @see
 		*    - GetMinFragments()
@@ -144,8 +144,8 @@ class OcclusionQuery : public Resource {
 		*
 		*  @remarks
 		*    This function allows you to set how often the hardware occlusion really are sent to the driver
-		*    if you set it to 0 every hw occlusion test is acctually made. If you set it to 1 only the half
-		*    of your queries are sent for all visible objects. 2 will result in 25% of all queries to acctualy be sent
+		*    if you set it to 0 every hw occlusion test is actually made. If you set it to 1 only the half
+		*    of your queries are sent for all visible objects. 2 will result in 25% of all queries to actually be sent
 		*    which will result in a better performance. New and none visible objects will be tested all the time.
 		*    This class can keep track on visible and none visible objects for you.
 		*/

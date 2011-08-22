@@ -124,7 +124,7 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveT
 	}
 
 	// Get the profile from a user given string
-	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslg"); // We're using a GLSL profile as default so ATI users have resonable shader support when using Cg
+	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslg"); // We're using a GLSL profile as default so ATI users have reasonable shader support when using Cg
 
 	// On unknown or invalid profile, choose a fallback profile
 	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_GEOMETRY_PROFILE) && m_pCgProfile != CG_PROFILE_GLSLG)) {
@@ -143,7 +143,7 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveT
 			case CG_PROFILE_GLSLG:
 				// Can't be handled in here, have a look at "ProgramCg::GetCgCombinedProgram()"
 				// (... at least the Cg documentation doesn't list any GLSL geometry shader attributes, wasn't
-				// able to find any information on this topic in the internet either, so, I just "assume" that
+				// able to find any information on this topic in the Internet either, so, I just "assume" that
 				// one has to use "glProgramParameteriEXT" ...)
 				break;
 

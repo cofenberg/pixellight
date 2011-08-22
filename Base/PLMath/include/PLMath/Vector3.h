@@ -696,7 +696,7 @@ class Vector3 {
 
 		/**
 		*  @brief
-		*    Calculates the angle between two vectos
+		*    Calculates the angle between two vectors
 		*
 		*  @param[in] vV
 		*    Second vector
@@ -747,7 +747,7 @@ class Vector3 {
 		*    - The cross product is also known as the 'vector product' or 'outer product'
 		*    - Unlike the dot product, the cross product is only defined for 3-dimensional
 		*      vectors (and not for 2-dimensional, 4-dimensional and so on)
-		*    - The cross product is anticommutative (a x b = -(b x a) ... means that the order is important)
+		*    - The cross product is anti commutative (a x b = -(b x a) ... means that the order is important)
 		*/
 		inline Vector3 CrossProduct(const Vector3 &vV) const;
 
@@ -850,7 +850,7 @@ class Vector3 {
 		*    Reference to the vector itself which is now the resulting projection vector
 		*
 		*  @note
-		*    - vV1 and vV2 MUST be perpindicular to eachother
+		*    - vV1 and vV2 MUST be perpendicular to each other
 		*/
 		PLMATH_API Vector3 &ProjectPlane(const Vector3 &vV1, const Vector3 &vV2);
 

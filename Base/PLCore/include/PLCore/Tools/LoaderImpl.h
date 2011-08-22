@@ -56,7 +56,7 @@ namespace PLCore {
 *    when loading a loadable, this method name can be used explicitly. The first method parameter has to
 *    be a reference to the loadable, the second parameter has to be a reference to the file to operate on.
 *
-*    Each loader should have the followig properties:
+*    Each loader should have the following properties:
 *    - "Type":    Loader type, usually only defined once within the abstract loader base class
 *    - "Formats": File format extensions this loader can load in (for example: "bmp" or "jpg,jpeg")
 *    - "Load":    "1" if loading is implemented, else "0"

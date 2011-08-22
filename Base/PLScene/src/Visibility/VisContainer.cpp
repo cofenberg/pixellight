@@ -55,7 +55,7 @@ const SQCull *VisContainer::GetCullQuery() const
 
 /**
 *  @brief
-*    Returns the list of visibililty nodes
+*    Returns the list of visibility nodes
 */
 const Pool<VisNode*> &VisContainer::GetVisNodes() const
 {
@@ -234,7 +234,7 @@ void VisContainer::FreeNodes()
 
 /**
 *  @brief
-*    Called when the scene node assigned with this visibililty container was destroyed
+*    Called when the scene node assigned with this visibility container was destroyed
 */
 void VisContainer::OnDestroy()
 {

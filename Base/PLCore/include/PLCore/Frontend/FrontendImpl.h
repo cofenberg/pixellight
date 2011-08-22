@@ -159,7 +159,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
-		*    (e.g. an embeded frontend implementation is run and controlled by another application and can't be run by using this method)
+		*    (e.g. an embedded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*
 		*  @note
 		*    - The default implementation does nothing at all
@@ -217,7 +217,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*
 		*  @remarks
 		*    When the frontend has a window, this title can be seen within the window
-		*    titel bar. Please note that there's no guarantee that there's a window
+		*    title bar. Please note that there's no guarantee that there's a window
 		*    title bar or even a window. By default, the title is set to the frontend
 		*    context name ("GetContext().GetName()") which is usually sufficient. So,
 		*    unless you have a good reason to explicitly set an individual frontend
@@ -292,8 +292,8 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @remarks
 		*    The primary argument to allow the user to request a frontend position and size change is,
 		*    that it should be possible to restore the frontend position and size of a previous session
-		*    (may be important for the usuability). Do not misuse this method to frequently manipulate
-		*    the frontend appearence. Please note that, as for all other frontend methods, this is only
+		*    (may be important for the usability). Do not misuse this method to frequently manipulate
+		*    the frontend appearance. Please note that, as for all other frontend methods, this is only
 		*    considered to be a request. A frontend implementation may deny the request in general or
 		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
 		*/

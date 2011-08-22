@@ -256,7 +256,7 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						Surface *pSurfaceBackup = cRenderer.GetRenderTarget();
 						cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
-						// Set polygon offset to avoid nasty shadow artefacts
+						// Set polygon offset to avoid nasty shadow artifacts
 						cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(2.0f));
 						cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(10.0f));
 

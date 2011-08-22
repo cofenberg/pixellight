@@ -90,7 +90,7 @@ class FontImpl : public PLCore::RefCount<FontImpl> {
 		*    Load font
 		*
 		*  @param[in] sFamily
-		*    Font famliy name
+		*    Font family name
 		*  @param[in] nHeight
 		*    Font height
 		*  @param[in] nWeight

@@ -43,7 +43,7 @@ namespace PLRendererOpenGLCg {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL Cg renderer program attriute
+*    OpenGL Cg renderer program attribute
 */
 class ProgramAttributeCg : public PLRenderer::ProgramAttribute {
 

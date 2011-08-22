@@ -94,14 +94,14 @@ SystemWindows::SystemWindows()
 	// Force the main thread to always run on CPU 0.
 	// This is done because on some systems QueryPerformanceCounter returns a bit different counter values
 	// on the different CPUs (contrary to what it's supposed to do), which can cause negative frame times
-	// if the thread is scheduled on the other CPU in the next frame. This can cause very jerky behavior and
+	// if the thread is scheduled on the other CPU in the next frame. This can cause very jerky behaviour and
 	// appear as if frames return out of order.
 	SetThreadAffinityMask(GetCurrentThread(), 1);
 
 	// Initialize performance timer
 	QueryPerformanceFrequency(&m_nPerformanceFrequency);
 
-	// Initalize the random generator
+	// Initialize the random generator
 	srand(static_cast<unsigned int>(GetMicroseconds()));
 
 	// Allocate a global TLS index

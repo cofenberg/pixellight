@@ -119,10 +119,10 @@ static const PLCore::String sDeferredGBuffer_GLSL_FS = "\
 #else\n\
 	varying vec2 TexCoordVS;	// Vertex texture coordinate from vertex shader\n\
 #endif\n\
-varying vec4 NormalDepthVS;		// View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane] from vertex shader\n\
+varying vec4 NormalDepthVS;		// View space vertex normal (normalize it to avoid interpolation artifacts!) and view space linear depth [0...far plane] from vertex shader\n\
 #ifdef FS_NORMALMAP\n\
-	varying vec3 TangentVS;		// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
-	varying vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artefacts!)\n\
+	varying vec3 TangentVS;		// View space vertex tangent from vertex shader (normalize it to avoid interpolation artifacts!)\n\
+	varying vec3 BinormalVS;	// View space vertex tangent from vertex shader (normalize it to avoid interpolation artifacts!)\n\
 #endif\n\
 varying vec3 EyeVecVS;			// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
 #ifdef FS_REFLECTION\n\
@@ -216,9 +216,9 @@ void main()\n\
 	// Get the texel coordinate (textureCoordinate) to use\n\
 #ifdef FS_PARALLAXMAPPING\n\
 	// Plain parallax mapping works by offsetting the texture coordinate by approximating\n\
-	// where the ray would hit the surface. The heightmap indicates how far to offset.\n\
+	// where the ray would hit the surface. The height map indicates how far to offset.\n\
 	// The approximation assumes that all heights in the height-map is equal, which of\n\
-	// course won't be the case, but if the bumpmap is fairly smooth it works well enough.\n\
+	// course won't be the case, but if the bump map is fairly smooth it works well enough.\n\
 	vec3  eyeVec = normalize(EyeVecVS);\n\
 	float scale  = ParallaxScaleBias.x;\n\
 	float bias   = ParallaxScaleBias.y;\n\

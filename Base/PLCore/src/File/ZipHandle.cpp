@@ -606,7 +606,7 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 				m_nEncheadLeft		-= uDoEncHead;
 				if (!m_nEncheadLeft) {
 					if (nBufCRC != m_nCRCEncTest)
-						return 0; // Invalid passwort
+						return 0; // Invalid password
 				}
 			}
 

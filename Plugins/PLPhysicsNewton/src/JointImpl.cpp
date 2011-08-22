@@ -59,7 +59,7 @@ void JointImpl::InitializeNewtonJoint(PLPhysics::Joint &cJoint, Newton::NewtonJo
 	// Save the pointer to the PL physics joint
 	NewtonJointSetUserData(m_pNewtonJoint, &cJoint);
 
-	// Set a destrutor for this joint
+	// Set a destructor for this joint
 	NewtonJointSetDestructor(m_pNewtonJoint, World::PhysicsJointDestructor);
 }
 

@@ -143,7 +143,7 @@ class PlaneSet {
 		*    Is the projection matrix part infinite? In this case, there's no far plane.
 		*
 		*  @note
-		*    - If there are not enought planes this function will create it. There are
+		*    - If there are not enough planes this function will create it. There are
 		*      6 view planes of the projection matrix is not infinite, else there are
 		*      5 planes. (no far plane)
 		*    - See EViewPlaneOrder for plane order
@@ -166,7 +166,7 @@ class PlaneSet {
 		*    You can for example use this function to create a 'frustum of a portal'.
 		*
 		*  @note
-		*    - If there are not enought planes this function will create it. There are 5 planes. (no far plane)
+		*    - If there are not enough planes this function will create it. There are 5 planes. (no far plane)
 		*/
 		PLMATH_API bool CreateViewPlanes(const PLCore::Array<Vector3> &lstVertices, const Vector3 &vViewPosition);
 
@@ -197,7 +197,7 @@ class PlaneSet {
 		*    - Use this function for instance when dragging a selection rectangle via
 		*      mouse to receive the scene nodes within it. The start and end positions
 		*      are within the given viewport.
-		*    - If there are not enought planes this function will create it. There are
+		*    - If there are not enough planes this function will create it. There are
 		*      6 selection planes.
 		*    - See EViewPlaneOrder for plane order
 		*/

@@ -695,7 +695,7 @@ Vector2i Widget::GetRelativePos(Widget &cWidget) const
 	// Get common parent
 	Widget *pRoot = GetCommonParent(cWidget);
 	if (!pRoot) {
-		// Error, must be widgets of two different Guis!
+		// Error, must be widgets of two different Gui's!
 		return Vector2i::Zero;
 	}
 
@@ -935,7 +935,7 @@ bool Widget::IsVisible() const
 */
 void Widget::SetVisible(bool bVisible)
 {
-	// Set visiblity
+	// Set visibility
 	m_pWidgetImpl->SetVisible(bVisible);
 }
 
@@ -1115,7 +1115,7 @@ bool Widget::NextTabStop(bool bForward)
 		}
 	} while (pWidget);
 
-	// No more siblings, find next tabstop from parent
+	// No more siblings, find next tab stop from parent
 	Widget *pParent = GetParent();
 	if (pParent) {
 		return pParent->NextTabStop(bForward);
@@ -1966,7 +1966,7 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 		// Key gets pressed, pressed key and modifier keys pressed as parameters
 		case MessageOnKeyDown:
 		{
-			// Activate next/previous tabstop
+			// Activate next/previous tab stop
 			bool bShift = ((cMessage.GetModifiers() & PLGUIMOD_SHIFT) != 0);
 			if (cMessage.GetKey() == PLGUIKEY_TAB) {
 				NextTabStop(!bShift);

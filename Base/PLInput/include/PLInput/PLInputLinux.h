@@ -34,20 +34,20 @@
 		// To export classes, methods and variables
 		#define PLINPUT_API __attribute__ ((visibility("default")))
 
-		// To export explicit template instanciations
+		// To export explicit template instantiations
 		#define PLINPUT_TEMPLATE
 	#else
 		// To export classes, methods and variables
 		#define PLINPUT_API
 
-		// To export explicit template instanciations
+		// To export explicit template instantiations
 		#define PLINPUT_TEMPLATE
 	#endif
 #else
 	// To import classes, methods and variables
 	#define PLINPUT_API
 
-	// To import explicit template instanciations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	// To import explicit template instantiations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLINPUT_TEMPLATE extern
 #endif
 

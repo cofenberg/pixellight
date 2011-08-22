@@ -36,11 +36,11 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract lifecycle class
+*    Abstract life cycle class
 *
 *  @remarks
 *  @verbatim
-*    The "Lifecycle" is:
+*    The "Life cycle" is:
 *      "OnCreate()"         - Called directly after the object has been created
 *        ("OnRestart()")    - Called directly before a stopped object is going to start again (always followed by "OnStart()")
 *        "OnStart()"        - Called when the object becoming visible to the user
@@ -48,7 +48,7 @@ namespace PLCore {
 *          "OnPause()"      - Called when the object has no longer the focus (keep the implementation lightweight)
 *        "OnStop()"         - Called when the object is no longer visible to the user
 *      "OnDestroy()"        - Called before the object is going to be finally destroyed
-*    This lifecycle has the same interface as the "Android Activity Lifecycle"
+*    This life cycle has the same interface as the "Android Activity Life cycle"
 *    (http://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle)
 *    because this interface looks just the right way to go for this purpose... also there
 *    are nice diagrams and documentations explaining the interface so it shouldn't be to

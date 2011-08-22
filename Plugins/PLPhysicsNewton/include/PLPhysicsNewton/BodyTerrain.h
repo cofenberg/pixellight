@@ -46,7 +46,7 @@ namespace PLPhysicsNewton {
 *    Newton physics terrain body implementation
 *
 *  @note
-*    - The implementation is basing on the Newton SDK heigh field collision sample
+*    - The implementation is basing on the Newton SDK height field collision sample
 */
 class BodyTerrain : public PLPhysics::BodyTerrain {
 
@@ -103,7 +103,7 @@ class BodyTerrain : public PLPhysics::BodyTerrain {
 
 		/**
 		*  @brief
-		*    Calculate the intersection point of a line segment and the two triangles making a the cell of a heigh map terrain
+		*    Calculate the intersection point of a line segment and the two triangles making a the cell of a height map terrain
 		*/
 		dFloat RayCastCell(int xIndex0, int zIndex0, const PLMath::Vector3 &p0, const PLMath::Vector3 &dp, PLMath::Vector3 &normalOut);
 

@@ -57,7 +57,7 @@ namespace PLSoundOpenAL {
 *  @param[in]  pFile
 *    Sound file, must be valid
 *  @param[out] lstBuffer
-*    Will recive the read buffer data
+*    Will receive the read buffer data
 *  @param[out] nFormat
 *    Will receive the format
 *  @param[out] nFrequency
@@ -78,7 +78,7 @@ extern bool LoadOGG(PLCore::File *pFile, PLCore::Array<PLCore::uint8> &lstBuffer
 *  @param[in]  nSize
 *    Data size in bytes
 *  @param[out] lstBuffer
-*    Will recive the read buffer data
+*    Will receive the read buffer data
 *  @param[out] nFormat
 *    Will receive the format
 *  @param[out] nFrequency

@@ -166,7 +166,7 @@ void TrayIconWindows::Update()
 
 void TrayIconWindows::ShowNotification(const String &sTitle, const String &sText)
 {
-	// Set ballon tooltip options
+	// Set balloon tooltip options
 	m_sNotifyIcon.uFlags = NIF_INFO;
 	wcsncpy_s(m_sNotifyIcon.szInfo, sText.GetUnicode(), sText.GetLength()+1);
 	wcsncpy_s(m_sNotifyIcon.szInfoTitle, sTitle.GetUnicode(), sTitle.GetLength()+1);

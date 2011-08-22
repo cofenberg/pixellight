@@ -105,7 +105,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    Texture quality, 1.0 best, 0.0 worst, default is 1.0
 		*
 		*  @note
-		*    - Only has an influcence on newly loaded textures, not already loaded ones
+		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*    - If the given texture quality is outside the specified range, it's clamped automatically to the nearest borders
 		*/
 		PLRENDERER_API void SetTextureQuality(float fQuality);
@@ -139,7 +139,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    - GetTextureFit()
 		*
 		*  @note
-		*    - Only has an influcence on newly loaded textures, not already loaded ones
+		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
 		PLRENDERER_API void SetTextureFit(bool bLower = true);
 
@@ -163,7 +163,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    'true' if the usage of texture mipmaps is allowed, else 'false', default is 'true'
 		*
 		*  @note
-		*    - Only has an influcence on newly loaded textures, not already loaded ones
+		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
 		PLRENDERER_API void SetTextureMipmapsAllowed(bool bAllowed);
 
@@ -187,7 +187,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    'true' if the usage of texture compression is allowed, else 'false', default is 'true'
 		*
 		*  @note
-		*    - Only has an influcence on newly loaded textures, not already loaded ones
+		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
 		PLRENDERER_API void SetTextureCompressionAllowed(bool bAllowed);
 

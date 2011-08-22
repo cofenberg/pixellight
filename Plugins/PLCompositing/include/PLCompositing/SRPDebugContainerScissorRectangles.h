@@ -72,7 +72,7 @@ class SRPDebugContainerScissorRectangles : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugContainerScissorRectangles();
 

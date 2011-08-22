@@ -449,12 +449,12 @@ class StringBuffer {
 
 		/**
 		*  @brief
-		*    Replaces all occurences of a character by another character
+		*    Replaces all occurrences of a character by another character
 		*
 		*  @param[in]  nOld
 		*    Character to be replaced
 		*  @param[in]  nNew
-		*    Character to replace whith (nNew != nOld!!)
+		*    Character to replace with (nNew != nOld!!)
 		*  @param[out] nReplaced
 		*    Receives the number of replaced characters (0 if new = old, MUST be set!)
 		*
@@ -466,7 +466,7 @@ class StringBuffer {
 
 		/**
 		*  @brief
-		*    Replaces all occurences of a substring by another string
+		*    Replaces all occurrences of a substring by another string
 		*
 		*  @param[in]  szOld
 		*    Substring to be replaced (NEVER empty!)

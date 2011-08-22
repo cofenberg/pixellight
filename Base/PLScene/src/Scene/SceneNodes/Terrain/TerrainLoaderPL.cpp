@@ -66,7 +66,7 @@ bool TerrainLoaderPL::Load(SNTerrain &cSNTerrain, File &cFile)
 			// Get the format version
 			int nVersion = pTerrainElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 
@@ -161,7 +161,7 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 	// Load the height map and create the terrain
 	Image cHeightMap;
 	if (cSNTerrain.LoadHeightMap(sHeightMap, cHeightMap)) {
-		// Destroy the old heigh field
+		// Destroy the old height field
 		if (cSNTerrain.m_pfHeightMap) {
 			delete [] cSNTerrain.m_pfHeightMap;
 			cSNTerrain.m_pfHeightMap = nullptr;
@@ -170,7 +170,7 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 		// Get the image buffer
 		ImageBuffer *pImageBuffer = cHeightMap.GetBuffer();
 		if (pImageBuffer) {
-			// Create the heigh field using the read image
+			// Create the height field using the read image
 			uint32 nWidth  = pImageBuffer->GetSize().x;
 			uint32 nHeight = pImageBuffer->GetSize().y;
 			uint32 nSize   = nWidth*nHeight;
@@ -188,7 +188,7 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 
 			// Loop through the data
 			for (uint32 i=1; i<nSize; i++) {
-				// Set heigh field data
+				// Set height field data
 				*pHeighField = static_cast<float>((*pData))*fYScale;
 
 				// Check min/max

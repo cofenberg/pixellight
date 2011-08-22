@@ -174,7 +174,7 @@ void SRPDeferredLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery,
 */
 void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQuery, SRPDeferredGBuffer &cSRPDeferredGBuffer, SNLight &cLight, const VisNode &cLightVisNode)
 {
-	// Skip black lights, they have no visible incluence!
+	// Skip black lights, they have no visible influence!
 	if (cLight.Color.Get() == Color3::Black)
 		return;	// Get us out of here right now
 
@@ -188,7 +188,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 	// Get the light range
 	const float fRange = bPoint ? static_cast<SNPointLight&>(cLight).GetRange() : 0.0f;
 
-	// Skip none directional lights with a radius of <= 0, they have no visible incluence!
+	// Skip none directional lights with a radius of <= 0, they have no visible influence!
 	if (!bDirectional && fRange <= 0.0f)
 		return;	// Get us out of here right now
 
@@ -540,7 +540,7 @@ void SRPDeferredLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQu
 					if (pShadowMap) {
 						const int nTextureUnit = pGeneratedProgramUserData->pShadowMap->Set(pShadowMap);
 						if (nTextureUnit >= 0) {
-							// Clamp, if this is not done, we may see some artefacts
+							// Clamp, if this is not done, we may see some artifacts
 							cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
 							cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
 							cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressW,  TextureAddressing::Clamp);

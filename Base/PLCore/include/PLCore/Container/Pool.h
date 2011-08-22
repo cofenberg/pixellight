@@ -52,7 +52,7 @@ template <class ValueType> class PoolIterator;
 *
 *  @remarks
 *    This pool container is very similar to the list container. Within the double linked
-*    list each node knows it's previous and next element. If you want to recive element x,
+*    list each node knows it's previous and next element. If you want to receive element x,
 *    internally the process begins with the first element and goes to the next until
 *    element x was found. As you see the following example isn't that performant:\n
 *  @verbatim

@@ -108,7 +108,7 @@ class SRPDeferredHDAO : public SRPDeferredSSAO {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredHDAO();
 

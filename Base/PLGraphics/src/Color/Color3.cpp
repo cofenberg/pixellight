@@ -779,7 +779,7 @@ bool Color3::FromString(const String &sString)
 			nParsePos = cRegEx.GetPosition();
 		}
 
-		// Set unused componts to 0
+		// Set unused components to 0
 		while (nComponent < 3)
 			fColor[nComponent++] = 0.0f;
 

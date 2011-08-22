@@ -113,7 +113,7 @@ class SRPDeferredGodRays : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredGodRays();
 

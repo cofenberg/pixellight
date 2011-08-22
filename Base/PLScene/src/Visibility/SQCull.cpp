@@ -547,7 +547,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 		static const String sSNAntiPortal = "PLScene::SNAntiPortal";
 		static const String sSNCellPortal = "PLScene::SNCellPortal";
 
-		// [TODO] This is currently just a first anti-portal test, anti-portals should be passed down container hierachies as well...
+		// [TODO] This is currently just a first anti-portal test, anti-portals should be passed down container hierarchies as well...
 		Array<PlaneSet*> lstAntiPortals;
 		{
 			const SceneHierarchyNodeItem *pItem = cHierarchyNode.GetFirstItem();
@@ -656,7 +656,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					}
 
 					// Check scene node against the plane set. Because lights normally have a heavy impact on the performance,
-					// we use more aggresive culling tests.
+					// we use more aggressive culling tests.
 					bool bVisible = bTotalVisible;
 					if (!bTotalVisible) {
 						if (pSceneNode->GetFlags() & SceneNode::NoCulling) {
@@ -752,7 +752,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 					// [TODO] No fixed functions in here
 					FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 					if (pFixedFunctions) {
-						// Draw the occuller?
+						// Draw the occlude?
 						if (pSceneNode->GetFlags() & SceneNode::CanOcclude && (m_nMode == StopAndWait || m_nMode == Coherent)) {
 							const MeshHandler *pMeshHandler = pSceneNode->GetMeshHandler();
 							if (pMeshHandler) {
@@ -851,7 +851,7 @@ bool SQCull::TraverseNode(const SceneHierarchyNode &cHierarchyNode)
 
 								// Is the cell-portal scissor rectangle visible?
 								if (sNewProjection.cRectangle.GetWidth() && sNewProjection.cRectangle.GetHeight()) {
-									// Increase the cell portal scissor rectangle a bit to reduce visible artefacts
+									// Increase the cell portal scissor rectangle a bit to reduce visible artifacts
 									sNewProjection.cRectangle.vMin -= 1.0f;
 									sNewProjection.cRectangle.vMax += 1.0f;
 
@@ -1221,7 +1221,7 @@ bool SQCull::PerformQuery()
 				cRenderer.SetRenderState(RenderState::DepthBias,		   Tools::FloatToUInt32(fDepthBias));
 
 				// Set solid fill mode, if we use occlusion culling, for instance point rendering
-				// isn't THAT efficent! ;-)
+				// isn't THAT efficient! ;-)
 				const uint32 nFixedFillModeT = cRenderer.GetRenderState(RenderState::FixedFillMode);
 				cRenderer.SetRenderState(RenderState::FixedFillMode, Fill::Solid);
 

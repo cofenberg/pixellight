@@ -79,7 +79,7 @@ BodyCapsule::BodyCapsule(PLPhysics::World &cWorld, float fRadius, float fHeight)
 	NewtonReleaseCollision(pNewtonWorld, pCollision);
 
 	// Calculate the collision volume
-	// [TODO] Find the correct formular...
+	// [TODO] Find the correct formula...
 	const float fCollisionVolume = static_cast<float>(Math::Pi*m_fRadius*m_fRadius*m_fHeight);
 
 	// Initialize the Newton physics body

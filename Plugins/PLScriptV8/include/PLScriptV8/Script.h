@@ -238,7 +238,7 @@ class Script : public PLCore::Script {
 		*    log level is greater or equal to the specified value.
 		*    This method is an extension of "PLCore::Log::Output()"
 		*    which also adds the name of the script to the given
-		*    text and the "v8::TryCatch" line and expection.
+		*    text and the "v8::TryCatch" line and exception.
 		*/
 		bool LogOutputTryCatch(PLCore::uint8 nLogLevel, const PLCore::String &sText, const v8::TryCatch &cTryCatch);
 

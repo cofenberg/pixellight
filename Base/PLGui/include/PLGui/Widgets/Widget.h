@@ -397,7 +397,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*
 		*  @remarks
 		*    If a widget is a container for other widgets, a content widget is often used as the parent for all of
-		*    the child widgets. This is e.g. necessary to seperate the "outside" from the "inside", e.g. there may be
+		*    the child widgets. This is e.g. necessary to separate the "outside" from the "inside", e.g. there may be
 		*    other (internal) child widgets, that are also children of the same parent (e.g. buttons in the title bar or
 		*    frame widgets). So if you want to insert widgets inside other widgets, you should use the widget return by
 		*    GetContentWidget() as the parent widget, not the widget itself. If a widget don't have a content widget,
@@ -722,8 +722,8 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @remarks
 		*    "Closing a widget" means sending it a message, that it shall close. This message is sent
 		*    automatically if you press the 'X'-Button or e.g. with "ALT+F4" on Windows. The default
-		*    behaviour of widgets is: nothing. The default behaviour of windows is: destroying the window.
-		*    You can control the behaviour by overriding OnClose() or hooking into SignalClose.
+		*    behavior of widgets is: nothing. The default behavior of windows is: destroying the window.
+		*    You can control the behavior by overriding OnClose() or hooking into SignalClose.
 		*/
 		PLGUI_API void Close();
 
@@ -927,7 +927,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*  @remarks
 		*    This returns the current states of the widget together as a single flags-variable
 		*    containing a combination of the values defined by EWidgetState. Not that this virtual
-		*    function can be overwritten in derived classes to modify it's behaviour according to
+		*    function can be overwritten in derived classes to modify it's behavior according to
 		*    the widget or add new states (e.g. WidgetPressed for buttons)
 		*/
 		PLGUI_API virtual PLCore::uint32 GetWidgetState() const;
@@ -1167,7 +1167,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 		*    For widgets that are positioned by a layout manager, additional hints can be set for the layout
 		*    manager on how to layout the specific widget. These options include e.g. the minimum and maximum
 		*    size, hints on when and how to resize the widget etc. Note that it depends on the layout manager,
-		*    which (if any) of the layout hints it uses to modify the layout behaviour.
+		*    which (if any) of the layout hints it uses to modify the layout behavior.
 		*/
 		PLGUI_API LayoutHints &GetLayoutHints();
 
@@ -1282,7 +1282,7 @@ class Widget : public PLCore::Object, public WidgetFunctions {
 	//[-------------------------------------------------------]
 	protected:
 		Gui											 *m_pGui;				/**< Pointer to GUI instance */
-		bool										  m_bManaged;			/**< If a widget is managed, it will not be listed in the list of toplevel widgets and not be deleted automatically! */
+		bool										  m_bManaged;			/**< If a widget is managed, it will not be listed in the list of top level widgets and not be deleted automatically! */
 		bool										  m_bRootWidget;		/**< If 'true', the widget is a dummy object for the 'root' of a GUI implementation (no real widget at all!) */
 		PLCore::uint32								  m_nID;				/**< Widget ID */
 		PLCore::String								  m_sName;				/**< Widget name */

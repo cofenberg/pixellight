@@ -65,7 +65,7 @@ void ScaleDownHalfData(const ImageBuffer &cOldImageBuffer, ImageBuffer &cImageBu
 		for (uint32 nX=0; nX<nNewWidth; nX++) {
 			// Loop through y
 			for (uint32 nY=0; nY<nNewHeight; nY++) {
-				// Get the orignal byte
+				// Get the original byte
 				const uint32 nOriginalX = static_cast<uint32>(nX*fToOriginalWidthFactor);
 				const uint32 nOriginalY = static_cast<uint32>(nY*fToOriginalHeightFactor);
 
@@ -145,7 +145,7 @@ class ScaleDownData {
 				for (uint32 nX=0; nX<nNewWidth; nX++) {
 					// Loop through y
 					for (uint32 nY=0; nY<nNewHeight; nY++) {
-						// Get the orignal byte
+						// Get the original byte
 						const uint32 nOriginalX = static_cast<uint32>(nX*fToOriginalWidthFactor);
 						const uint32 nOriginalY = static_cast<uint32>(nY*fToOriginalHeightFactor);
 

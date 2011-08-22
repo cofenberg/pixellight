@@ -32,11 +32,11 @@
 
 
 //[-------------------------------------------------------]
-//[ Makros                                                ]
+//[ Macros                                                ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    ODE matrix access helper makro
+*    ODE matrix access helper macro
 *
 *  @param[in] i
 *    Row (0-2)

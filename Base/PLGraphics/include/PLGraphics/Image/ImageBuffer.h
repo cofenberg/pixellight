@@ -213,7 +213,7 @@ class ImageBuffer {
 		*    Compression type (for example "CompressionNone")
 		*
 		*  @remarks
-		*    Please note that a call to CreateImage() will not immediatly create the image buffer itself.
+		*    Please note that a call to CreateImage() will not immediately create the image buffer itself.
 		*    The image buffer is created on the first call to GetData() or GetCompressedData() respectively.
 		*/
 		PLGRAPHICS_API void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);

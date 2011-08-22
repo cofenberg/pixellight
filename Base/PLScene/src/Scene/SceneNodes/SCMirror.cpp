@@ -246,7 +246,7 @@ void SCMirror::SetDynamicTexture()
 //[-------------------------------------------------------]
 MeshHandler *SCMirror::GetMeshHandler()
 {
-	// [TODO] Checkme
+	// [TODO] Check me
 //	return m_pMeshHandler;
 	return nullptr;
 }

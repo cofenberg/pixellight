@@ -115,7 +115,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    Compression type
 		*
 		*  @remarks
-		*    Please note that a call to Create() will not immediatly create the image buffer itself.
+		*    Please note that a call to Create() will not immediately create the image buffer itself.
 		*    The image buffer is created on the first call to GetData() or GetCompressedData() respectively.
 		*/
 		void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);

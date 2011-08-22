@@ -157,7 +157,7 @@ class Half {
 
 		/**
 		*  @brief
-		*    Convertes a given half value into a float value
+		*    Converts a given half value into a float value
 		*
 		*  @param[in] nHalf
 		*    Half value to convert
@@ -172,7 +172,7 @@ class Half {
 
 		/**
 		*  @brief
-		*    Convertes a given float value into a half value
+		*    Converts a given float value into a half value
 		*
 		*  @param[in] fFloat
 		*    Float value to convert

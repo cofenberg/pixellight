@@ -90,7 +90,7 @@ class SRPDebugWireframes : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugWireframes();
 

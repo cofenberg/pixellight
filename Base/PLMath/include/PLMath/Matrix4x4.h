@@ -140,7 +140,7 @@ class Matrix4x4 {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Default constuctor setting an identity matrix
+		*    Default constructor setting an identity matrix
 		*/
 		inline Matrix4x4();
 
@@ -220,14 +220,14 @@ class Matrix4x4 {
 
 		/**
 		*  @brief
-		*    Returns whether or not this matrix is truely the zero matrix
+		*    Returns whether or not this matrix is truly the zero matrix
 		*
 		*  @remarks
 		*    All components MUST be exactly 0. Floating point inaccuracy
 		*    is not taken into account.
 		*
 		*  @return
-		*    'true' if this matrix is truely the zero matrix, else 'false'
+		*    'true' if this matrix is truly the zero matrix, else 'false'
 		*/
 		inline bool IsTrueZero() const;
 
@@ -256,14 +256,14 @@ class Matrix4x4 {
 
 		/**
 		*  @brief
-		*    Returns whether or not this matrix is truely the identity matrix
+		*    Returns whether or not this matrix is truly the identity matrix
 		*
 		*  @remarks
 		*    All components MUST be exactly either 0 or 1. Floating point inaccuracy
 		*    is not taken into account.
 		*
 		*  @return
-		*    'true' if this matrix is truely the identity matrix, else 'false'
+		*    'true' if this matrix is truly the identity matrix, else 'false'
 		*/
 		inline bool IsTrueIdentity() const;
 

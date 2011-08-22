@@ -34,11 +34,11 @@
 
 
 //[-------------------------------------------------------]
-//[ Makro definitions                                     ]
+//[ Macro definitions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Log makro
+*    Log macro
 *
 *  @param[in] Level
 *    Log level
@@ -80,7 +80,7 @@ class LogFormater;
 *    - When the queue is full a flush is done
 *    - A flush is also done if a specified log level is used in the output function (configurable)
 *    - A specified log level includes also all log levels with lower values
-*      e.g.: if the overalll log level is set to info, log messages marked as
+*      e.g.: if the overall log level is set to info, log messages marked as
 *      warning, error or critical are written to the log, too
 *    - You can define as many debug log levels as you want
 *    - Implementation of the strategy design pattern, this class is the context
@@ -109,8 +109,8 @@ class Log : public Singleton<Log> {
 		enum LogLevel {
 			Quiet = 1,	/**< No log outputs */
 			Always,		/**< Should be used if the message should be logged always */
-			Critical,	/**< Should be used if an critical error occures */
-			Error,		/**< Should be used if an error occures */
+			Critical,	/**< Should be used if an critical error occurs */
+			Error,		/**< Should be used if an error occurs */
 			Warning,	/**< Should be used for warning texts */
 			Info,		/**< Should be used for info texts */
 			Debug		/**< Should be used for debug level texts */

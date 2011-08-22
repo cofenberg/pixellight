@@ -53,7 +53,7 @@ ShadowMappingPSM::ShadowMappingPSM()
 
 /**
 *  @brief
-*    Destructur
+*    Destructor
 */
 ShadowMappingPSM::~ShadowMappingPSM()
 {

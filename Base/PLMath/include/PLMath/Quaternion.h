@@ -108,7 +108,7 @@ class Quaternion {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Default constuctor setting an identity quaternion
+		*    Default constructor setting an identity quaternion
 		*/
 		inline Quaternion();
 

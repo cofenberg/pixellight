@@ -56,10 +56,10 @@ extern void PLConsoleCommandPreviousProfile(ConsoleCommand &cCommand);	/**< Sele
 // Debug commands
 extern void PLConsoleCommandWireframes(ConsoleCommand &cCommand);		/**< Toggle render wireframe mode */
 extern void PLConsoleCommandPoints(ConsoleCommand &cCommand);			/**< Toggle render point mode */
-extern void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand);	/**< Toggle coordinate axis visualisation */
-extern void PLConsoleCommandXZPlane(ConsoleCommand &cCommand);			/**< Toggle xz-plane visualisation */
-extern void PLConsoleCommandXYPlane(ConsoleCommand &cCommand);			/**< Toggle xy-plane visualisation */
-extern void PLConsoleCommandYZPlane(ConsoleCommand &cCommand);			/**< Toggle yz-plane visualisation */
+extern void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand);	/**< Toggle coordinate axis visualization */
+extern void PLConsoleCommandXZPlane(ConsoleCommand &cCommand);			/**< Toggle xz-plane visualization */
+extern void PLConsoleCommandXYPlane(ConsoleCommand &cCommand);			/**< Toggle xy-plane visualization */
+extern void PLConsoleCommandYZPlane(ConsoleCommand &cCommand);			/**< Toggle yz-plane visualization */
 extern void PLConsoleCommandSetLogLevel(ConsoleCommand &cCommand);		/**< Set log level */
 extern void PLConsoleCommandPause(ConsoleCommand &cCommand);			/**< Toggle pause modus */
 extern void PLConsoleCommandTimeScale(ConsoleCommand &cCommand);		/**< Time scale */

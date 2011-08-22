@@ -301,7 +301,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If the expected token has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*    - The comparison of strings is done according to the settings given in SetCaseSensitive()
 		*
 		*  @see
@@ -370,7 +370,7 @@ class Tokenizer {
 
 		/**
 		*  @brief
-		*    Returns the current line (counted by '\n' occurences)
+		*    Returns the current line (counted by '\n' occurrences)
 		*
 		*  @return
 		*    Line in the file
@@ -407,7 +407,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseNumber(int &nNumber);
 
@@ -423,7 +423,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseNumber(float &fNumber);
 
@@ -439,7 +439,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseNumber(double &dNumber);
 
@@ -464,7 +464,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseVector(Array<String> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
@@ -489,7 +489,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseVector(Array<int> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
@@ -514,7 +514,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseVector(Array<float> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
@@ -539,7 +539,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If a vector has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseVector(Array<double> &cVector, const String &sStart = "[", const String &sEnd = "]", const String &sSeparator = ",");
 
@@ -552,7 +552,7 @@ class Tokenizer {
 		*  @param[out] sValue
 		*    Value as a string
 		*  @param[in]  sEquation
-		*    Euqation sign (e.g. "=")
+		*    Equation sign (e.g. "=")
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -562,7 +562,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseEquation(String &sName, String &sValue, const String &sEquation = "");
 
@@ -575,7 +575,7 @@ class Tokenizer {
 		*  @param[out] nValue
 		*    Value as an int
 		*  @param[in]  sEquation
-		*    Euqation sign (e.g. "=")
+		*    Equation sign (e.g. "=")
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -585,7 +585,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseEquation(String &sName, int &nValue, const String &sEquation = "");
 
@@ -598,7 +598,7 @@ class Tokenizer {
 		*  @param[out] fValue
 		*    Value as a float
 		*  @param[in]  sEquation
-		*    Euqation sign (e.g. "=")
+		*    Equation sign (e.g. "=")
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -608,7 +608,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseEquation(String &sName, float &fValue, const String &sEquation = "");
 
@@ -621,7 +621,7 @@ class Tokenizer {
 		*  @param[out] dValue
 		*    Value as a double
 		*  @param[in]  sEquation
-		*    Euqation sign (e.g. "=")
+		*    Equation sign (e.g. "=")
 		*
 		*  @return
 		*    'true' on success, else 'false'
@@ -631,7 +631,7 @@ class Tokenizer {
 		*
 		*  @note
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
-		*      otherwise it stayes at the current token
+		*      otherwise it stays at the current token
 		*/
 		PLCORE_API bool ParseEquation(String &sName, double &dValue, const String &sEquation = "");
 
@@ -745,9 +745,9 @@ class Tokenizer {
 		String m_sDelimiters;						/**< List of delimiters (white space) */
 		String m_sSingleChars;						/**< List of characters that count as words (e.g. : or ,) */
 		String m_sQuotes;							/**< List of characters that start quotes (e.g. " or ') */
-		String m_sCommentStartTag;					/**< Start tag for multiline comments (e.g. "(*") */
-		String m_sCommentEndTag;					/**< End tag for multiline comments (e.g. "*)") */
-		String m_sSingleLineComment;				/**< Tag for singleline comments (e.g. "//") */
+		String m_sCommentStartTag;					/**< Start tag for multi line comments (e.g. "(*") */
+		String m_sCommentEndTag;					/**< End tag for multi line comments (e.g. "*)") */
+		String m_sSingleLineComment;				/**< Tag for single line comments (e.g. "//") */
 		bool   m_bCaseSensitive;					/**< Are comparisons case sensitive? */
 
 		// Tokenizer status

@@ -61,10 +61,10 @@ class IndexBuffer : public Buffer {
 			UByte  = 2	/**< Unsigned byte (may not be supported by each API) */
 		};
 
-		/** Maxmimum vertex index which can be used if UShort is used as index buffer type */
+		/** Maximum vertex index which can be used if UShort is used as index buffer type */
 		static const PLCore::uint32 MaxVertexIndexUShort = 65535;
 
-		/** Maxmimum vertex index which can be used if UByte is used as index buffer type */
+		/** Maximum vertex index which can be used if UByte is used as index buffer type */
 		static const PLCore::uint32 MaxVertexIndexUByte = 255;
 
 
@@ -181,7 +181,7 @@ class IndexBuffer : public Buffer {
 	protected:
 		/**
 		*  @brief
-		*    Contructor
+		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer

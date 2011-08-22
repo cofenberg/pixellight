@@ -517,7 +517,7 @@ void GuiLinux::ListFonts(List<FontInfo> &lstFonts) const
 
 WidgetImpl *GuiLinux::CreateWidgetImpl(Widget &cWidget) const
 {
-	// Create a Linux windget
+	// Create a Linux widget
 	return new WidgetLinux(cWidget);
 }
 
@@ -648,7 +648,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 					// Window has been released from a modal dialog
 					pTrayIcon->OnXEmbedModalityOff();
 				} else if (pEvent->xclient.data.l[1] == XEMBED_ACTIVATE_ACCELERATOR) {
-					// An acellerator has been activated
+					// An accelerator has been activated
 					pTrayIcon->OnXEmbedActivateAccelerator(pEvent->xclient.data.l[2], pEvent->xclient.data.l[3]);
 				}
 			}

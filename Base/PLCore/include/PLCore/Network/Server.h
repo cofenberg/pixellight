@@ -46,7 +46,7 @@ namespace PLCore {
 *
 *  @remarks
 *    A server is a specialized host that waits for incoming connections and processes them.
-*    A server does however not create new connections by itself, therfore the functions
+*    A server does however not create new connections by itself, therefore the functions
 *    for that purpose are left empty in this class.
 */
 class Server : public Host {

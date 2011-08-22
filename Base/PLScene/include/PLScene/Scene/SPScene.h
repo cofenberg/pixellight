@@ -72,7 +72,7 @@ namespace PLScene {
 *    things like GUI, engine information, console etc. The 'scene container' itself is
 *    the concrete scene - this distinction between 'root' and 'scene' is quite comfortable
 *    when it comes to things like rendering 'reflection/refraction' where only the 'scene'
-*    should be rendererd without clearing the frame buffer or adding additional information
+*    should be rendered without clearing the frame buffer or adding additional information
 *    like FPS display. Here's an example how such a root container may look like:
 *      SceneContainer  (Root container)
 *        SceneContainer  (Scene container with the 'real scene')

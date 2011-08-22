@@ -110,7 +110,7 @@ bool FileLinux::CopyTo(const String &sDest, bool bOverwrite) const
 		// over to MoveFile and we can only hope that the OS does nothing bad and returns a failure.
 		// The only other option would be to check beforehand, whether the destination URL is a valid
 		// local filename and return false otherwise without calling MoveFile. But this would mean
-		// that an expansive check would have to be done everytime this function is called, even if
+		// that an expansive check would have to be done every time this function is called, even if
 		// in 90% of all cases both the URLs are on the local file system anyway.
 
 		// Copy file (-d same as --no-dereference --preserve=links)
@@ -139,7 +139,7 @@ bool FileLinux::MoveTo(const String &sDest)
 		// over to MoveFile and we can only hope that the OS does nothing bad and returns a failure.
 		// The only other option would be to check beforehand, whether the destination URL is a valid
 		// local filename and return false otherwise without calling MoveFile. But this would mean
-		// that an expansive check would have to be done everytime this function is called, even if
+		// that an expansive check would have to be done every time this function is called, even if
 		// in 90% of all cases both the URLs are on the local file system anyway.
 
 		// Move file

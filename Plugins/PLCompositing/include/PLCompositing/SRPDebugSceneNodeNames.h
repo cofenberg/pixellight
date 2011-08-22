@@ -106,7 +106,7 @@ class SRPDebugSceneNodeNames : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugSceneNodeNames();
 

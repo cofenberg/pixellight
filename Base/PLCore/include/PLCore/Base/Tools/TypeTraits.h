@@ -367,7 +367,7 @@ struct TypeClassification {
 
 /**
 *  @brief
-*    Get representive type for non-default types
+*    Get representative type for non-default types
 *
 *  @param[in] T
 *    Type

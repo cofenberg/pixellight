@@ -61,7 +61,7 @@ bool ChunkLoaderPL::Load(Chunk &cChunk, File &cFile)
 		uint32 nVersion;
 		cFile.Read(&nVersion, sizeof(uint32), 1);
 
-		// Unkown
+		// Unknown
 		if (nVersion > 0) {
 			PL_LOG(Error, UnknownFormatVersion)
 

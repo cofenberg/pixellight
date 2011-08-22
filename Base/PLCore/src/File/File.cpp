@@ -420,7 +420,7 @@ uint32 File::Write(const void *pBuffer, uint32 nSize, uint32 nCount)
 
 /**
 *  @brief
-*    Flushs the file buffer
+*    Flushes the file buffer
 */
 bool File::Flush()
 {

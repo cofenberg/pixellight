@@ -138,7 +138,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 			// Enable/disable VSync
 			bool bVSync = true;
 			if (bVSync) {
-				// Enablee VSync
+				// Enable VSync
 				d3dpp.BackBufferCount      = 2;  // Triple-buffering for VSync
 				d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
 			} else {
@@ -351,7 +351,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(Image &cImage, P
 		// If the given image is pre compressed, but the hardware does not support the used compression format
 		// we have to use the uncompressed image instead.
 		bUsePreCompressedData = true; // Use the pre compressed data
-		// [TODO] Check whether or not the harware supports texture buffer compression...
+		// [TODO] Check whether or not the hardware supports texture buffer compression...
 //		if (!IsGL_ARB_texture_compression() ||
 //			(nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
 //			(nImageFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
@@ -366,7 +366,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(Image &cImage, P
 	// Get internal pixel format
 	if (nInternalFormat != PLRenderer::TextureBuffer::Unknown) {
 		nChosenInternalFormat = nInternalFormat;
-		// [TODO] Check whether or not the harware supports texture buffer compression...
+		// [TODO] Check whether or not the hardware supports texture buffer compression...
 /*		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
 			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
 			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
@@ -411,25 +411,25 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(Image &cImage, P
 			if (pImageBuffer) {
 				switch (pImageBuffer->GetComponentsPerPixel()) {
 					case 1:
-						// [TODO] Check whether or not the harware supports texture buffer compression...
+						// [TODO] Check whether or not the hardware supports texture buffer compression...
 	//					if (IsGL_EXT_texture_compression_latc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC1;
 						break;
 
 					case 2:
-						// [TODO] Check whether or not the harware supports texture buffer compression...
+						// [TODO] Check whether or not the hardware supports texture buffer compression...
 	//					if (IsGL_EXT_texture_compression_latc() || IsGL_ATI_texture_compression_3dc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC2;
 						break;
 
 					case 3:
-						// [TODO] Check whether or not the harware supports texture buffer compression...
+						// [TODO] Check whether or not the hardware supports texture buffer compression...
 	//					if (IsGL_EXT_texture_compression_s3tc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT1;
 						break;
 
 					case 4:
-						// [TODO] Check whether or not the harware supports texture buffer compression...
+						// [TODO] Check whether or not the hardware supports texture buffer compression...
 	//					if (IsGL_EXT_texture_compression_s3tc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT5;
 						break;

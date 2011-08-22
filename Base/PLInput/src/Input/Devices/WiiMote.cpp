@@ -82,7 +82,7 @@ enum ERegister {
 	RegIRSensitivity1		= 0x04b00000,	/**< IR sensitivity (1) */
 	RegIRSensitivity2		= 0x04b0001a,	/**< IR sensitivity (2) */
 	RegIRMode				= 0x04b00033,	/**< IR mode */
-	RegExtensionInit		= 0x04a40040,	/**< Extension initialisation */
+	RegExtensionInit		= 0x04a40040,	/**< Extension initialization */
 	RegExtensionType		= 0x04a400fe,	/**< Extension type */
 	RegExtensionCalibration	= 0x04a40020	/**< Extension calibration */
 };
@@ -984,7 +984,7 @@ void WiiMote::OnReadClassic(uint32 nOffset)
 	//  the deadzone calculations)
 	xl *= 2; yl *= 2; xr *= 2; yr *= 2;
 
-	// apply the deazones (if any) and write the final values to the state
+	// apply the deadzones (if any) and write the final values to the state
 	ApplyJoystickDeadZonesAndWrite(joyL, xl, yl);
 	ApplyJoystickDeadZonesAndWrite(joyR, xr, yr);
 

@@ -88,7 +88,7 @@ void SNBitmap2D::DrawBitmap(Renderer &cRenderer, const VisNode *pVisNode)
 	// Get the material
 	PLRenderer::Material *pMaterial = GetMaterialHandler().GetResource();
 	if (pMaterial) {
-		// Fixed functions suppord required
+		// Fixed functions support required
 		FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 		if (pFixedFunctions) {
 			// Get the position

@@ -131,7 +131,7 @@ class Config : public ConfigGroup {
 		pl_attribute(DisplayColorBits,					PLCore::uint32,					32,								ReadWrite,	DirectValue,	"Color bits",																																																"")
 		pl_attribute(DisplayFrequency,					PLCore::uint32,					0,								ReadWrite,	DirectValue,	"Display frequency",																																														"")
 			// Misc
-		pl_attribute(SwapInterval,						PLCore::uint32,					1,								ReadWrite,	DirectValue,	"The swap interval (vertical synchronisation)",																																								"")
+		pl_attribute(SwapInterval,						PLCore::uint32,					1,								ReadWrite,	DirectValue,	"The swap interval (vertical synchronization)",																																								"")
 		pl_attribute(UseExtensions,						bool,							true,							ReadWrite,	DirectValue,	"Use extensions?",																																															"")
 		pl_attribute(TextureQuality,					float,							1.0f,							ReadWrite,	DirectValue,	"Texture quality",																																															"Min='0.0' Max='1.0'")
 		pl_attribute(TextureMipmaps,					bool,							true,							ReadWrite,	DirectValue,	"Use texture mipmaps by default?",																																											"")

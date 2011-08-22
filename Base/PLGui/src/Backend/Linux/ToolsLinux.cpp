@@ -38,7 +38,7 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Color convertion
+*    Color conversion
 */
 // Convert color to 24bit RGB value (8, 8, 8)
 #define RGB24(red, green, blue)			( (red<<16) | (green<<8) | (blue) )

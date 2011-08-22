@@ -61,14 +61,14 @@ ThemeDesktop::ThemeDesktop(Gui &cGui) : Theme(cGui, "PixelLight Desktop Theme"),
 	m_nControlRound(2),
 	m_cColorPanelRaised				(1.0f,  1.0f,  1.0f,  1.0f),	// White
 	m_cColorPanelSunken				(0.5f,  0.5f,  0.5f,  1.0f),	// Grey
-	m_cColorBorder					(0.25f, 0.25f, 0.25f, 1.0f),	// Dark grey
+	m_cColorBorder					(0.25f, 0.25f, 0.25f, 1.0f),	// Dark gray
 	m_cColorTitleBar				(0.04f, 0.14f, 0.42f, 1.0f),	// Dark blue
-	m_cColorTitleBarInactive		(0.31f, 0.31f, 0.31f, 1.0f),	// Dark grey
-	m_cColorControlBack				(0.96f, 0.96f, 0.96f, 1.0f),	// Light  grey (nearly white)
-	m_cColorControlBackDisabled		(0.58f, 0.58f, 0.58f, 1.0f),	// Middle grey
+	m_cColorTitleBarInactive		(0.31f, 0.31f, 0.31f, 1.0f),	// Dark gray
+	m_cColorControlBack				(0.96f, 0.96f, 0.96f, 1.0f),	// Light  gray (nearly white)
+	m_cColorControlBackDisabled		(0.58f, 0.58f, 0.58f, 1.0f),	// Middle gray
 	m_cColorControlBackSelect		(0.90f, 0.92f, 0.99f, 1.0f),	// Light  blue
 	m_cColorControlBackPressed		(0.3f,  0.5f,  0.8f,  1.0f),	// Middle blue
-	m_cColorControlBorder			(0.25f, 0.25f, 0.25f, 1.0f),	// Dark grey
+	m_cColorControlBorder			(0.25f, 0.25f, 0.25f, 1.0f),	// Dark gray
 	m_cColorControlBorderSelect		(0.08f, 0.08f, 0.47f, 1.0f),	// Middle blue
 	m_cImageArrowLeft	(cGui),
 	m_cImageArrowRight	(cGui),

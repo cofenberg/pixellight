@@ -304,7 +304,7 @@ void AbstractMenu::OnMouseMove(const PLMath::Vector2i &vPos)
 	//        However this means that the currently selected item is constantly changed back to mouse selection,
 	//        so we use this silly hack to ignore those mouse messages.
 	if (m_nIgnoreMouse == 0) {
-		// Get currrently selected mouse item
+		// Get currently selected mouse item
 		m_nMouseOver = GetItemFromMousePos(vPos);
 		if (m_nSelection != m_nMouseOver) {
 			// Change selection

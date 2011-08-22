@@ -131,7 +131,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 	// Check parameter
 	if (sClass.GetLength()) {
 		// To keep things as fast as possible we store a pointer to the base class
-		// (no hash map operation + quite efficent internal string comparison)
+		// (no hash map operation + quite efficient internal string comparison)
 		static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLScene::SceneNode");
 
 		// Get scene node plugin
@@ -142,7 +142,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 				SceneNode *pNode = static_cast<SceneNode*>(pClass->Create());
 				if (pNode) {
 
-					// [TODO] Check/refactor the initialization/de-initialzation process
+					// [TODO] Check/refactor the initialization/de-initialization process
 					// Remove InitFunction()/DeInitFunction() if possible
 					pNode->m_pManager = this;
 
@@ -239,7 +239,7 @@ SceneHierarchy *SceneContainer::CreateHierarchy(const String &sClass)
 	// Is this hierarchy type already used and is the given parameter valid?
 	if ((!m_pHierarchy || m_sHierarchy != sClass) && sClass.GetLength()) {
 		// To keep things as fast as possible we store a pointer to the base class
-		// (no hash map operation + quite efficent internal string comparison)
+		// (no hash map operation + quite efficient internal string comparison)
 		static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLScene::SceneHierarchy");
 
 		// Get class and check it
@@ -313,7 +313,7 @@ SceneQuery *SceneContainer::CreateQuery(const String &sClass)
 	// Check parameter
 	if (sClass.GetLength()) {
 		// To keep things as fast as possible we store a pointer to the base class
-		// (no hash map operation + quite efficent internal string comparison)
+		// (no hash map operation + quite efficient internal string comparison)
 		static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLScene::SceneQuery");
 
 		// Get class and check it

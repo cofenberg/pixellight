@@ -302,7 +302,7 @@ void World::PhysicsSerialize(void *pSerializeHandle, const void *pBuffer, int nS
 
 /**
 *  @brief
-*    Deserialization callback function
+*    De-serialization callback function
 */
 void World::PhysicsDeserialize(void *pSerializeHandle, void *pBuffer, int nSize)
 {
@@ -396,7 +396,7 @@ void World::PhysicsApplyGravityForce(const NewtonBody *pPhysicsBody, dFloat fTim
 
 /**
 *  @brief
-*    Set the tranformation of a rigid body callback function
+*    Set the transformation of a rigid body callback function
 */
 void World::PhysicsSetTransform(const NewtonBody *pPhysicsBody, const dFloat *pfMatrix, int nThreadIndex)
 {
@@ -502,7 +502,7 @@ int World::OnAABBOverlap(const NewtonMaterial *pMaterial, const NewtonBody *pNew
 						// Emit signal
 						cWorld.SignalContact(cContactInformation);
 
-						// Return one the tell Newton the application wants to proccess this contact? (0=ignore, 1=use it)
+						// Return one the tell Newton the application wants to process this contact? (0=ignore, 1=use it)
 						return cContactInformation.IsContactIgnored() ? 0 : 1;
 					}
 				}
@@ -510,7 +510,7 @@ int World::OnAABBOverlap(const NewtonMaterial *pMaterial, const NewtonBody *pNew
 		}
 	}
 
-	// Return 0 the tell Newton the application does NOT want to proccess this contact
+	// Return 0 the tell Newton the application does NOT want to process this contact
 	return 0;
 }
 
@@ -557,7 +557,7 @@ int World::IslandUpdate(const NewtonWorld *pNewtonWorld, const void *pIslandHand
 		}
 	}
 
-	// Return 1 the tell Newton the application want to proccess this island
+	// Return 1 the tell Newton the application want to process this island
 	return 1;
 }
 
@@ -923,7 +923,7 @@ void World::UpdateSimulation()
 		if (m_pWorldUpdate)
 			m_pWorldUpdate->Lock();
 
-		// Physics update synchronisation
+		// Physics update synchronization
 		float fMatrix[16];
 		Matrix3x3 mRot;
 
@@ -1013,7 +1013,7 @@ void World::UpdateSimulation()
 						// Reset by changed by physics state, user settings have a higher priority :)
 						nPhysicsFlags &= ~BodyImpl::AngularVelocity;
 					}
-					// Wake up all physics bodies within this physics bodys AABB? (mass of 0 = static body)
+					// Wake up all physics bodies within this physics body's AABB? (mass of 0 = static body)
 					if (bWakeUpNeighbours && cBodyImpl.GetMass() == 0.0f) {
 						// Get the AABB of the physics body
 						dFloat fP0[3];
@@ -1021,7 +1021,7 @@ void World::UpdateSimulation()
 						NewtonBodyGetMatrix(pNewtonBody, fMatrix);
 						NewtonCollisionCalculateAABB(NewtonBodyGetCollision(pNewtonBody), fMatrix, fP0, fP1);
 
-						// Wake up all physics bodies within this physics bodys AABB
+						// Wake up all physics bodies within this physics body's AABB
 						NewtonWorldForEachBodyInAABBDo(m_pNewtonWorld, fP0, fP1, WakeUp, nullptr);
 
 						// Now other physics bodies will wake up if they come into contact with a moving,

@@ -149,7 +149,7 @@ class SRPVolumetricFog : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPVolumetricFog();
 

@@ -202,7 +202,7 @@ void PGFume::OnUpdate()
 				nActive++;
 
 				cParticle.fSize			+= 0.8f*fTimeDiff*SizeTimeScale;
-				cParticle.vVelocity.x	-= fTimeDiff;								// Liftime
+				cParticle.vVelocity.x	-= fTimeDiff;								// Lifetime
 				cParticle.vVelocity.z	-= fTimeDiff*20.0f*Math::GetRandFloat();	// Intensity
 				cParticle.vPos.x		+= cParticle.vDistortion.x*fTimeDiff;		// Velocity
 				cParticle.vPos.y		+= cParticle.vDistortion.y*fTimeDiff;

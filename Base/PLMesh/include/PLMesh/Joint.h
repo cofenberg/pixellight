@@ -80,7 +80,7 @@ class Joint : public PLCore::Element<Joint>, public JointState {
 		*    Get the ID of this joint
 		*
 		*  @return
-		*    ID of this joint, < 0 normally means this is an unsed ID
+		*    ID of this joint, < 0 normally means this is an unused ID
 		*/
 		PLMESH_API int GetID() const;
 

@@ -317,10 +317,10 @@ class Source : public Resource {
 
 		/**
 		*  @brief
-		*    Returns the rolloff factor
+		*    Returns the roll off factor
 		*
 		*  @return
-		*    Rolloff factor
+		*    Roll off factor
 		*
 		*  @remarks
 		*    This will scale the distance attenuation over the applicable range.
@@ -329,10 +329,10 @@ class Source : public Resource {
 
 		/**
 		*  @brief
-		*    Sets the rolloff factor
+		*    Sets the roll off factor
 		*
 		*  @param[in] fRolloffFactor
-		*    Rolloff factor
+		*    Roll off factor
 		*
 		*  @see
 		*    - GetRolloffFactor()

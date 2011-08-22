@@ -185,19 +185,19 @@ class Polygon {
 
 		/**
 		*  @brief
-		*    Checks whether the polygon is completly in front of the given plane
+		*    Checks whether the polygon is completely in front of the given plane
 		*
 		*  @return
-		*    'true' if the polygon is completly in front of the given plane, else 'false'
+		*    'true' if the polygon is completely in front of the given plane, else 'false'
 		*/
 		PLMATH_API bool IsInFront(const Plane &cPlane) const;
 
 		/**
 		*  @brief
-		*    Checks whether the polygon is completly behind the given plane
+		*    Checks whether the polygon is completely behind the given plane
 		*
 		*  @return
-		*    'true' if the polygon is completly behind the given plane, else 'false'
+		*    'true' if the polygon is completely behind the given plane, else 'false'
 		*/
 		PLMATH_API bool IsBehind(const Plane &cPlane) const;
 
@@ -251,7 +251,7 @@ class Polygon {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - Is called by Split() to get an custom split behaviour... a
+		*    - Is called by Split() to get an custom split behavior... a
 		*      derived polygon could e.g. also have texture coordinates to be split or added!
 		*/
 		PLMATH_API virtual bool CustomAdd(Polygon &cPolygon, PLCore::uint32 nID);

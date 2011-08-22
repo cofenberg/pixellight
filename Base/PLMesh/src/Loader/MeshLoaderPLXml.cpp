@@ -80,7 +80,7 @@ bool MeshLoaderPLXml::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 			// Get the format version
 			int nVersion = pMeshElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

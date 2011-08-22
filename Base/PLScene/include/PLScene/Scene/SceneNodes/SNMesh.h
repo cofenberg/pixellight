@@ -178,7 +178,7 @@ class SNMesh : public SceneNode {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - If this entitiy is initialized the mesh defined in the entiy variable
+		*    - If this entity is initialized the mesh defined in the entity variable
 		*      m_sMesh is loaded automatically
 		*/
 		PLS_API bool LoadMesh(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "");

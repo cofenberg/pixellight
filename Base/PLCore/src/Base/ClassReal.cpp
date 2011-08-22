@@ -72,7 +72,7 @@ ClassReal::~ClassReal()
 //[-------------------------------------------------------]
 bool ClassReal::IsDummy() const
 {
-	// This is the real thingy!
+	// This is the real thing!
 	return false;
 }
 

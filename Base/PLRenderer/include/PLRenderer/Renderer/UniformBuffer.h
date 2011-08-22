@@ -83,7 +83,7 @@ class UniformBuffer : public Buffer {
 		*
 		*  @remarks
 		*    In theory, the uniform buffer is independent of the used shader language because it's just a buffer.
-		*    In pratice, e.g. the Cg shader language comes with it's own way how to create and use uniform buffers,
+		*    In practice, e.g. the Cg shader language comes with it's own way how to create and use uniform buffers,
 		*    that's the only reason PixelLight connects an uniform buffer with a shader language.
 		*/
 		virtual PLCore::String GetShaderLanguage() const = 0;
@@ -95,7 +95,7 @@ class UniformBuffer : public Buffer {
 	protected:
 		/**
 		*  @brief
-		*    Contructor
+		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer

@@ -56,7 +56,7 @@ template <class ValueType> class SimpleListIterator;
 *    or "Iterable", but get a most memory compact list. We recommend to use this list only
 *    in memory-critical implementations were each byte counts.
 *    Within the single linked list each node knows it's next element. If you
-*    want to recive element x, internally the process begins with the first element and
+*    want to receive element x, internally the process begins with the first element and
 *    goes to the next until element x was found. As you see the following example isn't
 *    that performant:\n
 *  @verbatim

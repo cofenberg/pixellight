@@ -131,7 +131,7 @@ float PickingResult::GetNearestSquaredDistance() const
 
 /**
 *  @brief
-*    Returns the currently picked texture coordinate (can also be outside the 0..1 intervall)
+*    Returns the currently picked texture coordinate (can also be outside the 0..1 interval)
 */
 bool PickingResult::GetTextureCoordinate(Vector2 &vTexCoord, uint32 nTexCoordChannel) const
 {
@@ -224,7 +224,7 @@ bool PickingResult::GetWrappedTextureCoordinate(Vector2 &vTexCoord, uint32 nTexC
 {
 	// Get the currently picked texture coordinate
 	if (GetTextureCoordinate(vTexCoord, nTexCoordChannel)) {
-		// Perform wrapping to get into the 0..1 intervall
+		// Perform wrapping to get into the 0..1 interval
 		vTexCoord.x = vTexCoord.x - static_cast<int>(vTexCoord.x);
 		if (vTexCoord.x < 0.0f)
 			vTexCoord.x = vTexCoord.x + 1.0f;

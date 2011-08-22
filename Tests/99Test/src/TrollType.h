@@ -36,7 +36,7 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Troll type which is able to remeber a complete number, as long as it's 0, 1 or 2 - in short: a completely useless example data type
+*    Troll type which is able to remember a complete number, as long as it's 0, 1 or 2 - in short: a completely useless example data type
 */
 class TrollType {
 

@@ -161,7 +161,7 @@ handle Frontend::GetNativeWindowHandle() const
 
 void Frontend::Redraw()
 {
-	// Ask Qt politly to update (and repaint) the widget
+	// Ask Qt politely to update (and repaint) the widget
 	if (m_pMainWindow) {
 		// If the widget is not visible yet, make it visible right now
 		m_pMainWindow->MakeVisible();

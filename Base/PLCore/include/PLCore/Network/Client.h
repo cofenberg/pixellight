@@ -46,7 +46,7 @@ namespace PLCore {
 *
 *  @remarks
 *    A client is a specialized host that connects to other servers and communicates with them.
-*    A client does however not accept any new connections from outside, therfore the functions
+*    A client does however not accept any new connections from outside, therefore the functions
 *    for that purpose are left empty in this class.
 */
 class Client : public Host {

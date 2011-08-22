@@ -354,7 +354,7 @@ void Splitter::ChangeSize(int nDelta)
 	bool bStaticLeft  = (m_cSizeLeft .GetPolicy() == SizeHint::Pixel || m_cSizeLeft. GetPolicy() == SizeHint::Percent);
 	bool bStaticRight = (m_cSizeRight.GetPolicy() == SizeHint::Pixel || m_cSizeRight.GetPolicy() == SizeHint::Percent);
 	if (bStaticLeft && bStaticRight) {
-		// If both sides are set to a static size, we prefere the left/top side and make the other floating
+		// If both sides are set to a static size, we prefer the left/top side and make the other floating
 		m_cSizeRight.Set(SizeHint::Floating, 0);
 		bStaticRight = false;
 	} else if (!bStaticLeft && !bStaticRight) {

@@ -69,8 +69,8 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 		pl_attribute(NumberOfDirections,	PLCore::uint32,			8,		ReadWrite,	DirectValue,	"The number of randomly-rotated 2D directions in image space distributed around the current pixel. The higher this parameter, the lower is the noise in the ambient occlusion.",	"Min='1'")
 		pl_attribute(SampleRadius,			float,					0.1f,	ReadWrite,	DirectValue,	"The sampling radius",																																								"Min='0.0'")
 		pl_attribute(Intensity,				float,					4.0f,	ReadWrite,	DirectValue,	"The ambient occlusion intensity",																																					"Min='0.0'")
-		pl_attribute(Scale,					float,					10.0f,	ReadWrite,	DirectValue,	"Scales distance between occluders and occludee",																																	"Min='0.0'")
-		pl_attribute(Bias,					float,					0.2f,	ReadWrite,	DirectValue,	"Controls the width of the occlusion cone considered by the occludee",																												"Min='0.0'")
+		pl_attribute(Scale,					float,					10.0f,	ReadWrite,	DirectValue,	"Scales distance between occluders and occlude",																																	"Min='0.0'")
+		pl_attribute(Bias,					float,					0.2f,	ReadWrite,	DirectValue,	"Controls the width of the occlusion cone considered by the occlude",																												"Min='0.0'")
 			// Overwritten PLScene::SceneRendererPass attributes
 		pl_attribute(Flags,					pl_flag_type(EFlags),	0,		ReadWrite,	GetSet,			"Flags",																																											"")
 		// Constructors
@@ -98,7 +98,7 @@ class SRPDeferredSPAAO : public SRPDeferredSSAO {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredSPAAO();
 

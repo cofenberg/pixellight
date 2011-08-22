@@ -111,7 +111,7 @@ bool TextureManager::AreTextureMipmapsAllowed() const
 
 /**
 *  @brief
-*    Sets whether or not the usage of Ttxture mipmaps is allowed
+*    Sets whether or not the usage of texture mipmaps is allowed
 */
 void TextureManager::SetTextureMipmapsAllowed(bool bAllowed)
 {
@@ -179,7 +179,7 @@ Texture *TextureManager::CreateTexture(const String &sName, TextureBuffer &cText
 Texture *TextureManager::CreateTexture(const String &sName, const String &sParameters)
 {
 	// To keep things as fast as possible we store a pointer to the base class
-	// (no hash map operation + quite efficent internal string comparison)
+	// (no hash map operation + quite efficient internal string comparison)
 	static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLRenderer::TextureCreator");
 
 	// Create the texture creator

@@ -71,7 +71,7 @@ class ShadowMappingUSM : public ShadowMapping {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~ShadowMappingUSM();
 

@@ -776,7 +776,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 					pNodeElement->SetAttribute("ZFar", String::Format("%f", fRange));
 
 				// Detect "orbiting"/"walk through" mode... I do this by checking the current 'Command Mode ID'
-				// agains '65585'... the 'walk through' viewport nagivation (I found no documentation, so I had
+				// against '65585'... the 'walk through' viewport navigation (I found no documentation, so I had
 				// to figure out this by myself...)
 				bool bOrbiting = true;
 				CommandMode *pCommandMode = m_pMaxInterface->GetCommandMode();
@@ -835,13 +835,13 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 
 				// [TODO] We can add this 'always' - but often it's not desired... add
 				// something like 'debug export'?
-/*				{ // Add a camera rotation visualisation scene node
+/*				{ // Add a camera rotation visualization scene node
 					XmlElement *pNodeElement = new XmlElement("Node");
 					pNodeElement->SetAttribute("Class", "PLScene::SNCoordinateAxisRotation");
 					cSceneElement.LinkEndChild(*pNodeElement);
 				}
 */
-				// [TODO] Add a grid visualisation scene node
+				// [TODO] Add a grid visualization scene node
 /*				if (pViewport->IsGridVisible()) {
 					XmlElement *pNodeElement = new XmlElement("Node");
 					pNodeElement->SetAttribute("Class", "PLScene::SNLineGrid");

@@ -157,7 +157,7 @@ void QPLRenderWindow::OnContextChanged()
 void QPLRenderWindow::timerEvent(QTimerEvent *pQTimerEvent)
 {
 	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
-		// Ask Qt politly to update (and repaint) the widget
+		// Ask Qt politely to update (and repaint) the widget
 		update();
 	}
 }

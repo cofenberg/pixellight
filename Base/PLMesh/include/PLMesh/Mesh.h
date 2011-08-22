@@ -99,7 +99,7 @@ class MeshEdge {
 *    Anchor points (anchor points are in fact a kind of index to a vertex)\n
 *    Morph targets (that contains the vertex data for every frame)\n
 *    LOD levels    (each of which can define the geometries and/or index data)\n
-*    Skeleton      (that defines a hierachical structure on the mesh)\n
+*    Skeleton      (that defines a hierarchical structure on the mesh)\n
 *    Materials     (list of materials used by the mesh)
 */
 class Mesh : public PLCore::Resource<Mesh> {
@@ -407,7 +407,7 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    'true' if all went fine else 'false'
 		*
 		*  @note
-		*    - If the deleted material was used by a geomety the geometry
+		*    - If the deleted material was used by a geometry the geometry
 		*      material index will be set to 0
 		*    - The material index of the geometries will automatically corrected
 		*      if the material index has changed

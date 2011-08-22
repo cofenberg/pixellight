@@ -79,10 +79,10 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld,  PLCore::uint32 nWidth, PLCor
 		//        and is the up axis always the y-axis?
 		btCollisionShape* collisionShape = new btHeightfieldTerrainShape(m_nWidth, m_nHeight, const_cast<float*>(m_pfTerrain),
 																		 0 /* scaling factor, ignored when using float values */,
-																		 0/* <min heigth, float>*/,
-																		 0/* <max heigth, float>*/,
+																		 0/* <min height, float>*/,
+																		 0/* <max height, float>*/,
 																		 1 /* y-axis is up */,
-																		 PHY_FLOAT /* heigtfield values are float*/,
+																		 PHY_FLOAT /* Heightfield values are float*/,
 																		 false /*flip quatEdges*/
 																		);
 		

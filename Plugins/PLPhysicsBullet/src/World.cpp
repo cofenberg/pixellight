@@ -82,7 +82,7 @@ World::World() :
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
 	m_pCollisionConfiguration = new btDefaultCollisionConfiguration();
 
-	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+	///use the default collision dispatcher. For parallel processing you can use a different dispatcher (see Extras/BulletMultiThreaded)
 	m_pDispatcher = new	btCollisionDispatcher(m_pCollisionConfiguration);
 
 	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
@@ -127,7 +127,7 @@ World::~World()
 	if(m_pDispatcher)
 		delete m_pDispatcher;
 
-	//delete collistion configuration
+	//delete collision configuration
 	if(m_pCollisionConfiguration)
 		delete m_pCollisionConfiguration;
 }

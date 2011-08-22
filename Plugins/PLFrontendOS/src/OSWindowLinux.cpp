@@ -69,7 +69,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	_NET_WM_VISIBLE_NAME(XInternAtom(m_pDisplay, "_NET_WM_VISIBLE_NAME", False)),
 	m_pDropHelper(nullptr)
 {
-	// Tell the frontend about this instance at once because it may already be required during frontend lifecycle initialization
+	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
 
 	// Connect Linux signals
@@ -110,7 +110,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		CreateInvisibleCursor();
 	}
 
-	// Do the frontend lifecycle thing - start
+	// Do the frontend life cycle thing - start
 	m_pFrontendOS->OnStart();
 
 	// If the window is not visible yet, make it visible right now
@@ -297,7 +297,7 @@ bool OSWindowLinux::Ping()
 
 	// Quit?
 	if (bQuit) {
-		// Do the frontend lifecycle thing - stop
+		// Do the frontend life cycle thing - stop
 		m_pFrontendOS->OnStop();
 	}
 
@@ -339,7 +339,7 @@ void OSWindowLinux::SetTitle(const String &sTitle)
 {
 	if (m_nNativeWindowHandle) {
 		const unsigned char* pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
-		// We need here the numer of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
+		// We need here the number of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
 		// [TODO] Does String::GetNumOfBytes work here?
 		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);

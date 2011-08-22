@@ -162,7 +162,7 @@ Skeleton &Skeleton::operator =(const Skeleton &cSource)
 	*static_cast<Resource<Skeleton>*>(this)    = cSource;
 	*static_cast<ElementManager<Joint>*>(this) = cSource;
 
-	// Call base functiona
+	// Call base function
 	*static_cast<JointAni*>(this) = *static_cast<const JointAni*>(&cSource);
 
 /* [TODO]

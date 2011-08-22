@@ -190,7 +190,7 @@ bool Vector4::FromString(const String &sString)
 			nParsePos = cRegEx.GetPosition();
 		}
 
-		// Set unused componts to 0
+		// Set unused components to 0
 		while (nComponent < 4)
 			fV[nComponent++] = 0.0f;
 

@@ -85,7 +85,7 @@ bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 
 bool TextureBuffer3D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
 {
-	// Error, texture readback is not supported by OpenGL ES 2.0
+	// Error, texture read back is not supported by OpenGL ES 2.0
 	return false;
 }
 

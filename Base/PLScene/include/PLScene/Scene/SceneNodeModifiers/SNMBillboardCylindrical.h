@@ -112,7 +112,7 @@ class SNMBillboardCylindrical : public SNMBillboard {
 		*  @param[in]  mWorld
 		*    World matrix
 		*  @param[out] mTransform
-		*    Recives the new world transform matrix
+		*    Receives the new world transform matrix
 		*/
 		void BuildTransformMatrix(const PLMath::Matrix4x4 &mView, const PLMath::Matrix4x4 &mWorld, PLMath::Matrix3x4 &mTransform);
 

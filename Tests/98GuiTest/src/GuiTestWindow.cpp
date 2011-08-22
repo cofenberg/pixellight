@@ -204,7 +204,7 @@ void GuiTestWindow::OnShow()
 //[-------------------------------------------------------]
 void GuiTestWindow::OnTrayIcon(uint32, const Vector2i&)
 {
-	// Toggle main window visiblity
+	// Toggle main window visibility
 	bool bVisible = !IsVisible();
 	SetVisible(bVisible);
 	if (bVisible) {

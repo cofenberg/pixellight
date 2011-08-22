@@ -81,7 +81,7 @@ bool ProgramUniformBlockGLSL::SetUniformBuffer(PLRenderer::UniformBuffer *pUnifo
 		glBindBufferBaseEXT(GL_UNIFORM_BUFFER, nBindingPoint, 0);
 	}
 
-	// Is the uniform block already asociated with this binding point? (this test safes some graphics API calls)
+	// Is the uniform block already associated with this binding point? (this test safes some graphics API calls)
 	if (m_nBindingPoint != static_cast<int>(nBindingPoint)) {
 		// Associate the uniform block with the given binding point
 		m_nBindingPoint = nBindingPoint;

@@ -48,7 +48,7 @@ namespace PLCore {
 *  @remarks
 *    This is the base class ALL configuration group are derived from. Derive your configuration
 *    groups from this new configuration group 'collection'. By doing it in this way, you are able
-*    to save this own configuration group into seperate configuration files.
+*    to save this own configuration group into separate configuration files.
 *
 *  @verbatim
 *   Example:

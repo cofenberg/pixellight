@@ -107,7 +107,7 @@ class SRPDeferredAmbient : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredAmbient();
 

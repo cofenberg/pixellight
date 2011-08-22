@@ -94,7 +94,7 @@ template <class AType> class ResourceHandler {
 		*    Sets the handlers resource
 		*
 		*  @param[in] pResource
-		*    Resouce to set, a null pointer to set no element
+		*    Resource to set, a null pointer to set no element
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

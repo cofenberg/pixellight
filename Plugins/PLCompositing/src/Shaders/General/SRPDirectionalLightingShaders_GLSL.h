@@ -311,9 +311,9 @@ void main()\n\
 \n\
 	#ifdef FS_PARALLAXMAPPING\n\
 		// Plain parallax mapping works by offsetting the texture coordinate by approximating\n\
-		// where the ray would hit the surface. The heightmap indicates how far to offset.\n\
+		// where the ray would hit the surface. The height map indicates how far to offset.\n\
 		// The approximation assumes that all heights in the height-map is equal, which of\n\
-		// course won't be the case, but if the bumpmap is fairly smooth it works well enough.\n\
+		// course won't be the case, but if the bump map is fairly smooth it works well enough.\n\
 		highp vec3  eyeVec = normalize(EyeVecVS);\n\
 		lowp  float scale  = ParallaxScaleBias.x;\n\
 		lowp  float bias   = ParallaxScaleBias.y;\n\

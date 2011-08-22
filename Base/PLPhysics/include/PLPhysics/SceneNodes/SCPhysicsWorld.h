@@ -70,7 +70,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		pl_attribute(SimulationActive,		bool,				true,									ReadWrite,	GetSet,			"Is the physics simulation currently active?",																			"")
 		pl_attribute(SimulationSpeed,		float,				1.0f,									ReadWrite,	GetSet,			"Physics simulation speed. A speed of <= 0 is NOT allowed! Do NOT make the factor 'too' (for example > 4) extreme.",	"Min='0.0001'")
 		pl_attribute(SimulationQuality,		float,				1.0f,									ReadWrite,	GetSet,			"Physics simulation quality. 1 means best realistic behavior, 0 for the fastest possible configuration.",				"Min='0.0' Max='1.0'")
-		pl_attribute(FrameRate,				float,				60.0f,									ReadWrite,	GetSet,			"Frame frate the simulation runs on: smaller=more performance, larger=more accurate simulation",						"Min='60.0' Max='1000.0'")
+		pl_attribute(FrameRate,				float,				60.0f,									ReadWrite,	GetSet,			"Frame rate the simulation runs on: smaller=more performance, larger=more accurate simulation",							"Min='60.0' Max='1000.0'")
 		pl_attribute(CacheDirectory,		PLCore::String,		"",										ReadWrite,	DirectValue,	"Physics cache directory, if empty, no caching is used (best to avoid cache problems during development)",				"")
 
 		// [TODO] New RTTI usage
@@ -165,7 +165,7 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 		bool			   m_bSimulationActive;		/**< Is the physics simulation currently active? */
 		float			   m_fSimulationSpeed;		/**< Physics simulation speed. A speed of <= 0 is NOT allowed! Do NOT make the factor 'too' (for example > 4) extreme. */
 		float			   m_fSimulationQuality;	/**< Physics simulation quality. 1 means best realistic behavior, 0 for the fastest possible configuration. */
-		float			   m_fFrameRate;			/**< Frame frate the simulation runs on: smaller=more performance, larger=more accurate simulation */
+		float			   m_fFrameRate;			/**< Frame rate the simulation runs on: smaller=more performance, larger=more accurate simulation */
 		PLCore::uint32	   m_nThreadPriorityClass;	/**< Physics thread priority class (use realtime priority class ONLY if you REALLY need it, 'None' = do not use a thread) */
 		PLCore::uint32	   m_nThreadPriority;		/**< Physics thread priority within the priority class it is in */
 		PLMath::Vector3    m_vGravity;				/**< Gravity vector */

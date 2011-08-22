@@ -150,7 +150,7 @@ class MorphTargetAni : public PLRenderer::AnimationBase, public PLCore::Element<
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - If pMesh is not a null pointer lstMorphTargetWeights is a list of ALL morph target influcences
+		*    - If pMesh is not a null pointer lstMorphTargetWeights is a list of ALL morph target influences
 		*      of the given mesh, else lstMorphTargetWeights is only a list of the morph target
 		*      weights of THIS animation!
 		*/

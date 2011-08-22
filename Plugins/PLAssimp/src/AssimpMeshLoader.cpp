@@ -399,7 +399,7 @@ void AssimpMeshLoader::GetNumOfVerticesAndIndicesRec(const aiNode &cAssimpNode, 
 void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVertexBuffer, IndexBuffer &cIndexBuffer, Array<Geometry> &lstGeometries, const aiMatrix4x4 &mAssimpTransformation, uint32 &nNumOfVertices, uint32 &nNumOfIndices)
 {
 	// We're using aiProcessPreset_TargetRealtime_Quality which also sets the flag aiProcess_SortByPType
-	// resulting in 'clean' meshes which consist of a single typ of primitives. So, one Assimp mesh will
+	// resulting in 'clean' meshes which consist of a single type of primitives. So, one Assimp mesh will
 	// result within one PixelLight mesh geometry.
 
 	// Get the absolute transformation matrix of this Assimp node

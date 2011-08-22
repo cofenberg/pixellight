@@ -80,7 +80,7 @@ class SRPPostProcessing : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPPostProcessing();
 

@@ -505,7 +505,7 @@ void SRPLightEffectsFixedFunctions::Draw(Renderer &cRenderer, const SQCull &cCul
 								v2DPos.x = v2DPos.x/fWidth*2.0f - 1.0f;
 								v2DPos.y = v2DPos.y/fHeight*2.0f - 1.0f;
 
-								// Adjust the factor so it is brighter at the centre of the screen
+								// Adjust the factor so it is brighter at the center of the screen
 								pLightEffect->fFlareBlendFactor *= 1.0f - Math::Min(Math::Sqrt(v2DPos.x*v2DPos.x + v2DPos.y*v2DPos.y), 1.0f);
 								if (pLightEffect->fFlareBlendFactor < 0.1f)
 									pLightEffect->fFlareBlendFactor = 0.0f;

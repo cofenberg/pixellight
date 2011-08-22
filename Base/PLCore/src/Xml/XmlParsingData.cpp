@@ -37,7 +37,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 void XmlParsingData::Stamp(const char *pszNow, XmlBase::EEncoding nEncoding)
 {
-	// Do nothing if the tabsize is 0
+	// Do nothing if the tab size is 0
 	if (m_nTabSize < 1)
 		return;
 

@@ -402,7 +402,7 @@ void SNSky::DrawPre(Renderer &cRenderer, const VisNode *pVisNode)
 	// Call base implementation
 	SceneNode::DrawPre(cRenderer, pVisNode);
 
-	// Fixed functions suppord required
+	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
 		// Get view matrix

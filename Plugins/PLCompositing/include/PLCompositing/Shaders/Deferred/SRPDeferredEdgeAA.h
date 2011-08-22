@@ -107,7 +107,7 @@ class SRPDeferredEdgeAA : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredEdgeAA();
 

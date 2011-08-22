@@ -91,12 +91,12 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 			const int nTypeID = cDynSignature.GetParameterTypeID(nParameterIndex);
 			switch (nTypeID) {
 				case TypeRef:
-					// Give the RTTI method a reference to the temporaty string and add the Lua argument to the parameter string
+					// Give the RTTI method a reference to the temporary string and add the Lua argument to the parameter string
 					sParams += sPrefix + '=' + Type<String&>::ConvertToString(lstTempStrings.Add(lua_tolstring(pLuaState, i, nullptr))) + ' ';
 					break;
 
 				case TypePtr:
-					// Give the RTTI method a pointer to the temporaty string and add the Lua argument to the parameter string
+					// Give the RTTI method a pointer to the temporary string and add the Lua argument to the parameter string
 					sParams += sPrefix + '=' + Type<String*>::ConvertToString(&lstTempStrings.Add(lua_tolstring(pLuaState, i, nullptr))) + ' ';
 					break;
 
@@ -139,7 +139,7 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 			// Strings are somewhat of a special case... see method documentation for details
 			// In here, TypePtr is not interesting because it automatically results in a null pointer
 			if (cDynSignature.GetParameterTypeID(nParameterIndex) == TypeRef) {
-				// Give the RTTI method a reference to the temporaty string
+				// Give the RTTI method a reference to the temporary string
 				sValue = Type<String&>::ConvertToString(lstTempStrings.Add(sValue));
 			}
 
@@ -192,7 +192,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 				RTTIObjectPointer::LuaStackPush(cScript, Type<Object*>::ConvertFromString(sReturn));
 				break;
 
-			default:			lua_pushstring (pLuaState, sReturn);													break;	// Unkown type
+			default:			lua_pushstring (pLuaState, sReturn);													break;	// Unknown type
 		}
 
 		// The function returns one argument

@@ -72,7 +72,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 		// Get the device context of the OpenGL dummy window
 		m_hDummyWindowDeviceContext = GetDC(m_hDummyWindow);
 		if (m_hDummyWindowDeviceContext != nullptr) {
-			// Get the color depth of the deskop
+			// Get the color depth of the desktop
 			int nBits = 0;
 			{
 				HDC hDeskTopDC = GetDC(nullptr);
@@ -114,7 +114,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 
 					// Looks like the following is only required for multisample antialiasing
 					if (nMultisampleAntialiasingSamples) {
-						// This is somewhat stupied, but I don't see another solution... wglChoosePixelFormatARB etc. can only be received if
+						// This is somewhat stupid, but I don't see another solution... wglChoosePixelFormatARB etc. can only be received if
 						// a OpenGL context was already loaded (probably delayed dll loading?)
 						wglGetPixelFormatAttribivARB = reinterpret_cast<PFNWGLGETPIXELFORMATATTRIBIVARBPROC>(wglGetProcAddress("wglGetPixelFormatAttribivARB"));
 						wglChoosePixelFormatARB		 = reinterpret_cast<PFNWGLCHOOSEPIXELFORMATARBPROC>	    (wglGetProcAddress("wglChoosePixelFormatARB"));

@@ -90,7 +90,7 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 			// Setup tree collision
 			static const float fTolerance = 0.01f; // (setting from Newton SDK samples)
 			if (pVertexBuffer->Lock(Lock::ReadOnly)) {
-				if (m_vMeshScale == Vector3::One) { // We can take the orginal vertex data
+				if (m_vMeshScale == Vector3::One) { // We can take the original vertex data
 					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
 														static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position)),
 														pVertexBuffer->GetVertexSize(), fTolerance, 0, nullptr);

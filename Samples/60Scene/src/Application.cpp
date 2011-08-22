@@ -135,8 +135,8 @@ void Application::OnUpdate()
 
 			// We set the current light position using the RTTI class interface. This is quite comfortable
 			// and universal because you haven't to care about the concrete class type - just set the
-			// variable values. For performance critical situations it's recommened to avoid using this RTTI
-			// functions to set your variables and use the conrete provided class interfaces instead.
+			// variable values. For performance critical situations it's recommend to avoid using this RTTI
+			// functions to set your variables and use the concrete provided class interfaces instead.
 			pLightSceneNode->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
 				Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
 

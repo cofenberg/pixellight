@@ -54,13 +54,13 @@ class Wrapper {
 	public:
 		/**
 		*  @brief
-		*    Returns the number of characters of a c-string excluding the teminating zero
+		*    Returns the number of characters of a c-string excluding the terminating zero
 		*
 		*  @param[in] szString
 		*    C-string to check
 		*
 		*  @return
-		*    The number of characters of the given c-string excluding the teminating zero
+		*    The number of characters of the given c-string excluding the terminating zero
 		*
 		*  @note
 		*    - 'strlen'-wrapper

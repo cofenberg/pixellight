@@ -189,7 +189,7 @@ void Application::OnControl(Control &cControl)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm");
 			}
 
-		// Custom post process effect: "Scatch"
+		// Custom post process effect: "Scratch"
 		} else if (cControl.GetName() == "5") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
@@ -199,7 +199,7 @@ void Application::OnControl(Control &cControl)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessEdgeDetect", "LuminanceConvert=\"-0.2125 -0.7154 -0.0721\"");
 			}
 
-		// Custom post process effect: "Animated old scatch"
+		// Custom post process effect: "Animated old scratch"
 		} else if (cControl.GetName() == "6") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
@@ -210,7 +210,7 @@ void Application::OnControl(Control &cControl)
 				pCamera->AddModifier("PLPostProcessEffects::SNMPostProcessOldFilm");
 			}
 
-		// Custom post process effect: "Edeg glow"
+		// Custom post process effect: "Edge glow"
 		} else if (cControl.GetName() == "7") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());

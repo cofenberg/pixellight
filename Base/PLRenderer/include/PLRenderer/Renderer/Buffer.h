@@ -168,7 +168,7 @@ class Buffer : public Resource {
 		*    Locks the buffer
 		*
 		*  @param[in] nFlag
-		*    Access flag which descripes the operations which should be
+		*    Access flag which describes the operations which should be
 		*    performed on the locked buffer. This can be any member of the
 		*    lock enumeration type.
 		*

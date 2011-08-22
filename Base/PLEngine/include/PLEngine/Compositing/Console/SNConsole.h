@@ -51,7 +51,7 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Standart console implementation
+*    Standard console implementation
 */
 class SNConsole : public SNConsoleBase {
 
@@ -66,7 +66,7 @@ class SNConsole : public SNConsoleBase {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SNConsole, "PLEngine", PLEngine::SNConsoleBase, "Standart console implementation")
+	pl_class(PL_RTTI_EXPORT, SNConsole, "PLEngine", PLEngine::SNConsoleBase, "Standard console implementation")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -98,7 +98,7 @@ class SNConsole : public SNConsoleBase {
 		PL_API void SetMaxPos(float fMax);
 		PL_API void SetAlpha(float fNewAlpha);
 
-		// Overrided virtuals
+		// Overridden virtual
 		PL_API PLCore::String GetDescription() const;
 
 

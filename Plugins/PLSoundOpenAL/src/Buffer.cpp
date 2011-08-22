@@ -124,7 +124,7 @@ File *Buffer::OpenFile() const
 
 		// Try to open the file
 		if (LoadableManager::GetInstance()->OpenFile(*pFile, m_sFilename, false))
-			return pFile; // Return opend file object
+			return pFile; // Return opened file object
 
 		// Cleanup on error
 		delete pFile;

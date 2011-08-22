@@ -42,7 +42,7 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL GLSL renderer program attriute
+*    OpenGL GLSL renderer program attribute
 */
 class ProgramAttributeGLSL : public PLRenderer::ProgramAttribute {
 

@@ -54,7 +54,7 @@ class Widget;
 *
 *  @remarks
 *    An application class for a typical GUI application. Runs a
-*    main loop that does the necessary message procressing and
+*    main loop that does the necessary message processing and
 *    provides methods to manage a main application window.
 */
 class GuiApplication : public PLCore::CoreApplication {

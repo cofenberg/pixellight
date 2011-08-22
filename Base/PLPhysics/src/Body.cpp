@@ -95,7 +95,7 @@ float Body::GetMass() const
 
 /**
 *  @brief
-*    Gets the relativ center of the mass
+*    Gets the relative center of the mass
 */
 void Body::GetCenterOfMass(Vector3 &vPosition) const
 {
@@ -104,7 +104,7 @@ void Body::GetCenterOfMass(Vector3 &vPosition) const
 
 /**
 *  @brief
-*    Sets the relativ center of the mass
+*    Sets the relative center of the mass
 */
 void Body::SetCenterOfMass(const Vector3 &vPosition)
 {

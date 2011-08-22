@@ -114,7 +114,7 @@ class VisManager {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::Pool<VisNode*> m_lstFreeNodes;	/**< List of currently free visibililty nodes */
+		PLCore::Pool<VisNode*> m_lstFreeNodes;	/**< List of currently free visibility nodes */
 
 
 };

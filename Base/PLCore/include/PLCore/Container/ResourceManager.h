@@ -177,10 +177,10 @@ template <class AType> class ResourceManager {
 		*    Get the standard resource
 		*
 		*  @return
-		*    The standart resource, a null pointer if there's no such resource
+		*    The standard resource, a null pointer if there's no such resource
 		*
 		*  @note
-		*    - There should always be a standart resource!
+		*    - There should always be a standard resource!
 		*    - It is recommended that you protect your standard resource
 		*/
 		AType *GetStandard() const;
@@ -190,7 +190,7 @@ template <class AType> class ResourceManager {
 		*    Set the standard resource
 		*
 		*  @param[in] pResource
-		*    Resource which should be the standart resource, a null pointer to set no such resource
+		*    Resource which should be the standard resource, a null pointer to set no such resource
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe invalid resource)
@@ -226,7 +226,7 @@ template <class AType> class ResourceManager {
 		*
 		*  @remarks
 		*    The resource name is set to the given filename. If there's already a resource with this
-		*    (file)name, this resource is returned instead creating a new one. This function is vitual to
+		*    (file)name, this resource is returned instead creating a new one. This function is virtual to
 		*    enable derived managers to add some more features like automatic resource creation instead of
 		*    loading a resource. In this case, 'filenames' normally begin with 'Create ' to indicate automatic
 		*    resource creation.
@@ -295,7 +295,7 @@ template <class AType> class ResourceManager {
 		*    The corresponding resource, a null pointer if there's no match
 		*
 		*  @note
-		*    - You can overload this function to specialize the behaviour. This is done
+		*    - You can overload this function to specialize the behavior. This is done
 		*      for instance within SceneContainer to be able to use 'absolute names'
 		*      like 'Root.MyScene.MyNode', too.
 		*/
@@ -367,7 +367,7 @@ template <class AType> class ResourceManager {
 	protected:
 		String					 m_sManagerName;		/**< Manager name */
 		AType					*m_pStandardResource;	/**< Standard resource, can be a null pointer */
-		bool					 m_bUnloadUnused;		/**< Unload unused resoures? */
+		bool					 m_bUnloadUnused;		/**< Unload unused resources? */
 		Array<AType*>			 m_lstResources;		/**< Resource list */
 		HashMap<String, AType*>	 m_mapResources;		/**< Resource map */
 

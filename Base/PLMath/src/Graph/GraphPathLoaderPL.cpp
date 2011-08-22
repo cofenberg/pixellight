@@ -58,7 +58,7 @@ bool GraphPathLoaderPL::Load(GraphPath &cGraphPath, File &cFile)
 			// Get the format version
 			int nVersion = pPathElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

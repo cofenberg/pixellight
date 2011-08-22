@@ -149,7 +149,7 @@ class SRPLightEffects : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPLightEffects();
 

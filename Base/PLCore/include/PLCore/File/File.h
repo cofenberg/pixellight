@@ -352,7 +352,7 @@ class File : public FileObject {
 
 		/**
 		*  @brief
-		*    Flushs the file buffer
+		*    Flushes the file buffer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

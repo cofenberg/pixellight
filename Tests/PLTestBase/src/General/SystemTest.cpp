@@ -65,11 +65,11 @@ void SystemTest::Test()
 	Print("\n");
 
 	// Print computer name
-	Print("Computername: %s\n", pSystem->GetComputerName().GetASCII());
+	Print("Computer name: %s\n", pSystem->GetComputerName().GetASCII());
 	Print("\n");
 
 	// Print user name
-	Print("Username: %s\n", pSystem->GetUserName().GetASCII());
+	Print("User name: %s\n", pSystem->GetUserName().GetASCII());
 	Print("\n");
 
 	// Print time

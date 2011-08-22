@@ -75,7 +75,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 
 		/**
 		*  @brief
-		*    Flushs the body
+		*    Flushes the body
 		*
 		*  @remarks
 		*    Sets for instance the current transform matrix of the Newton physics body.

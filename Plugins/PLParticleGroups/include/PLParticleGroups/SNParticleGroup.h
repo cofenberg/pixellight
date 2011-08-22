@@ -165,7 +165,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 
 				// Advanced features (more performance cost)
 				// Own orientation
-				PLMath::Quaternion *pRot;	/**< Rotation quaternion for individual particle rotation (no billbording!)
+				PLMath::Quaternion *pRot;	/**< Rotation quaternion for individual particle rotation (no billboarding!)
 												 If you want to use it you have to use pRot = new PLMath::Quaternion() when
 												 deactivating it delete pRot (Particle group will delete it on destruction
 												 automatically) a null pointer if not used. */
@@ -209,7 +209,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 		*  @note
 		*    - Overwrite this function to be able to define your own particle group initialization
 		*      which isn't required that often
-		*    - Normally, this function calls InitParticles() which further calles
+		*    - Normally, this function calls InitParticles() which further calls
 		*      the scene nodes InitFunction() in which you can initialize the individual particles
 		*/
 		PLPG_API virtual bool InitParticleGroup(PLCore::uint32 nMaxNumOfParticles, const PLCore::String &sMaterial = "", const void *pData = nullptr);
@@ -446,7 +446,7 @@ class SNParticleGroup : public PLScene::SceneNode {
 
 
 	//[-------------------------------------------------------]
-	//[ Proteced virtual SceneNode functions                  ]
+	//[ Protected virtual SceneNode functions                  ]
 	//[-------------------------------------------------------]
 	protected:
 		PLPG_API virtual void InitFunction();

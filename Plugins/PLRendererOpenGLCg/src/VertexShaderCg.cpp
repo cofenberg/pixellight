@@ -121,7 +121,7 @@ bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sPro
 	}
 
 	// Get the profile from a user given string
-	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslv"); // We're using a GLSL profile as default so ATI users have resonable shader support when using Cg
+	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "glslv"); // We're using a GLSL profile as default so ATI users have reasonable shader support when using Cg
 
 	// On unknown or invalid profile, choose a fallback profile
 	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_VERTEX_PROFILE) && m_pCgProfile != CG_PROFILE_GLSLV)) {

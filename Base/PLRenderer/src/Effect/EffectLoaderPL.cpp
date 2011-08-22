@@ -64,7 +64,7 @@ bool EffectLoaderPL::Load(Effect &Effect, File &cFile)
 			// Get the format version
 			const int nVersion = pFXElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

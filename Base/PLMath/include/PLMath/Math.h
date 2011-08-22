@@ -343,7 +343,7 @@ class Math {
 		*    Returns the absolute value of the given value
 		*
 		*  @param[in] x
-		*    Value to return the absolut value from
+		*    Value to return the absolute value from
 		*
 		*  @return
 		*    Absolute value of the given value
@@ -355,7 +355,7 @@ class Math {
 		*    Returns the absolute value of the given value
 		*
 		*  @param[in] x
-		*    Value to return the absolut value from
+		*    Value to return the absolute value from
 		*
 		*  @return
 		*    Absolute value of the given value
@@ -367,7 +367,7 @@ class Math {
 		*    Returns the absolute value of the given value
 		*
 		*  @param[in] x
-		*    Value to return the absolut value from
+		*    Value to return the absolute value from
 		*
 		*  @return
 		*    Absolute value of the given value

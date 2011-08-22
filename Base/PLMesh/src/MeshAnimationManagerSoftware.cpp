@@ -93,11 +93,11 @@ bool MeshAnimationManagerSoftware::Apply(MeshHandler &cMeshHandler) const
 	if (!pVBT)
 		return false; // Error!
 	if (pVB == pVBT)
-		return false; // Can't manipulate orginal mesh vertex buffer!
+		return false; // Can't manipulate original mesh vertex buffer!
 	if (!pVB->Lock(Lock::ReadOnly))
 		return false; // Error!
 	if (!pVBT->Lock(Lock::ReadWrite)) {
-		// Unlock the orginal vertex buffer
+		// Unlock the original vertex buffer
 		pVB->Unlock();
 
 		// Error!

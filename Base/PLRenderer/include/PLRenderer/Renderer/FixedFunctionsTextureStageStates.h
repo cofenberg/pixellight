@@ -120,7 +120,7 @@ class FixedFunctionsTextureStageStates : public PLCore::Object {
 		*    New value for the texture stage state to be set. The meaning of
 		*    this parameter is dependent on the value specified for nState.
 		*    For example, if nState is FixedFunctions::TextureStage::ColorTexEnv, the second parameter
-		*    must be one member of the texture envionment enumerated type. (e.g. FixedFunctions::TextureEnvironment::Modulate)
+		*    must be one member of the texture environment enumerated type. (e.g. FixedFunctions::TextureEnvironment::Modulate)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

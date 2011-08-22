@@ -76,7 +76,7 @@ class TextureBuffer : public Resource {
 		*/
 		enum EFlags {
 			Mipmaps      = 1<<0,	/**< Use mipmaps (see GetNumOfMipmaps() for more information) */
-			Compression  = 1<<1,	/**< Use texture buffer compression if possible (is ignored if a certan internal format is forced) */
+			Compression  = 1<<1,	/**< Use texture buffer compression if possible (is ignored if a certain internal format is forced) */
 			RenderTarget = 1<<2		/**< This texture buffer can be used as render target */
 		};
 
@@ -115,7 +115,7 @@ class TextureBuffer : public Resource {
 			// End
 			Unknown       = 25	/**< Unknown texture buffer pixel format */
 		};
-		static const PLCore::uint32 NumOfPixelFormats = 25;	/**< Numer of pixel formats */
+		static const PLCore::uint32 NumOfPixelFormats = 25;	/**< Number of pixel formats */
 
 
 	//[-------------------------------------------------------]
@@ -326,7 +326,7 @@ class TextureBuffer : public Resource {
 		*    log2(max(width, height)). For a 32x16 texture buffer, this will result in the following additional
 		*    mipmaps: 16x8, 8x4, 4x2, 2x1, 1x1
 		*
-		*    Note that mimaps are only created/used from a given image if the flag 'Mipmaps' is set.
+		*    Note that mipmaps are only created/used from a given image if the flag 'Mipmaps' is set.
 		*/
 		PLRENDERER_API PLCore::uint32 GetNumOfMipmaps() const;
 

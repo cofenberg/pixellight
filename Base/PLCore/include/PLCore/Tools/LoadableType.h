@@ -93,7 +93,7 @@ class LoadableType {
 		*    Gets the relative version of an absolute file path
 		*
 		*  @param[in] sPath
-		*    Absolute file path to get the realtive version from
+		*    Absolute file path to get the relative version from
 		*
 		*  @return
 		*    Relative file path, empty string on error

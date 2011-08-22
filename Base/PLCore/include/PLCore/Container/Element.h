@@ -125,7 +125,7 @@ template <class AType> class Element {
 
 		/**
 		*  @brief
-		*    Returns the ID of the element within the resouce manager
+		*    Returns the ID of the element within the resource manager
 		*
 		*  @return
 		*    ID of the element within the element manager, -1 if there was an error
@@ -181,7 +181,7 @@ template <class AType> class Element {
 		*
 		*  @note
 		*    - Whether the element is destroyed within this function or just added for
-		*      instance to a kind of 'destruction list' is implementation dependand.
+		*      instance to a kind of 'destruction list' is implementation dependent.
 		*/
 		virtual bool Delete(bool bProtectedToo = false);
 
@@ -246,7 +246,7 @@ template <class AType> class Element {
 	//[-------------------------------------------------------]
 	protected:
 		ElementManager<AType>			*m_pManager;	/**< Element manager, can be a null pointer */
-		String							 m_sName;		/**< Resouce name */
+		String							 m_sName;		/**< Resource name */
 		bool							 m_bProtected;	/**< Is the element protected? */
 		Array<ElementHandler<AType>*>	 m_lstHandlers;	/**< Element handler list */
 

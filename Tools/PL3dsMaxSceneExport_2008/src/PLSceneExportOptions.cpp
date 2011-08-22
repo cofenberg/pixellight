@@ -186,7 +186,7 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		if (GetPrivateProfileString("Version", "Version", nullptr, szTemp, 256, pszAbsFilename))
 			nVersion = atoi(szTemp);
 
-		// Unkown
+		// Unknown
 		if (nVersion > 2) {
 			// Show an error message box
 			std::string sError = std::string(pszAbsFilename) + ":\nFormat version is unknown (too new), you may need to update your PixelLight 3ds Max scene exporter version\n... default settings are used...";
@@ -334,7 +334,7 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns an absolut configuration filename
+*    Returns an absolute configuration filename
 */
 void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std::string &sAbsFilename) const
 {
@@ -342,7 +342,7 @@ void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std
 	char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
 	_splitpath(sFilename.c_str(), szApplicationDrive, szApplicationDir, nullptr, nullptr);
 	if (!strlen(szApplicationDrive)) {
-		// Must be a relativ filename
+		// Must be a relative filename
 		const TCHAR *pDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
 		if (!pDir || !strlen(pDir))
 			return; // Error!

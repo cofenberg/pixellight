@@ -102,7 +102,7 @@ class Attribute : public Var<T, ACCESS, STORAGE> {
 		*    New value
 		*
 		*  @remarks
-		*    Unfortunatly, it is necessary to define assignment operators in the 'leaf'-classes,
+		*    Unfortunately, it is necessary to define assignment operators in the 'leaf'-classes,
 		*    as they are not inherited from base classes. So we have to define it here and then
 		*    call the implementation in the base class, which makes everything a bit more complicated
 		*/

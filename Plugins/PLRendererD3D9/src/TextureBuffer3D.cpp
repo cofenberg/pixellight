@@ -287,7 +287,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							// We have to define all mipmap levels down to 1x1x1 otherwise the texture buffer is invalid when we try to use any min
 							// filter that uses mipmaps. Direct3D 9 normally uses white color when invalid/incomplete texture buffer is enabled.
 							if (bMipmaps && (vSize.x != 1 || vSize.y != 1 || vSize.z != 1))
-								PL_LOG(Warning, String::Format("Lowest mipmap is %dx%dx%d, but should be 1x1! As result, the texture buffer is propably NOT rendered correctly!", vSize.x, vSize.y, vSize.z))
+								PL_LOG(Warning, String::Format("Lowest mipmap is %dx%dx%d, but should be 1x1! As result, the texture buffer is probably NOT rendered correctly!", vSize.x, vSize.y, vSize.z))
 						}
 					}
 

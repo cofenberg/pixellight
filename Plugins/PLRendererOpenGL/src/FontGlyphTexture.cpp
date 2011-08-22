@@ -60,7 +60,7 @@ FontGlyphTexture::FontGlyphTexture(FontTexture &cFontTexture, unsigned long nCha
 				FT_Glyph_To_Bitmap(&sFTGlyph, ft_render_mode_normal, 0, 1);
 				FT_BitmapGlyph sFTBitmapGlyph = reinterpret_cast<FT_BitmapGlyph>(sFTGlyph);
 
-				// Get a reference to the glypth bitmap
+				// Get a reference to the glyph bitmap
 				FT_Bitmap &sFTBitmap = sFTBitmapGlyph->bitmap;
 
 				// Get the size (in pixel) of the glyph

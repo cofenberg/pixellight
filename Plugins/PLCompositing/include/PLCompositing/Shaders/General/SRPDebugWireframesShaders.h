@@ -85,7 +85,7 @@ class SRPDebugWireframesShaders : public SRPDebugWireframes {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugWireframesShaders();
 

@@ -183,7 +183,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 								// Write a warning into the log
 								PL_LOG(Warning, String::Format("Lowest mipmap is %dx%d, but should be 1x1! Missing mipmap levels will be white!", nSize, nSize))
 
-								// If we don't define all mipmap levels down to 1x1 'mysterious' graphics bugs may occure were it is not
+								// If we don't define all mipmap levels down to 1x1 'mysterious' graphics bugs may occur were it is not
 								// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 								// we just create the missing mipmap levels down to 1x1 with a white color - so it's possible to 'see' which texture
 								// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)
@@ -335,7 +335,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 
 bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
 {
-	// Error, texture readback is not supported by OpenGL ES 2.0
+	// Error, texture read back is not supported by OpenGL ES 2.0
 	return false;
 }
 

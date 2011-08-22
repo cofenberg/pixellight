@@ -220,7 +220,7 @@ bool HIDDeviceWindows::Read(uint8 *pBuffer, uint32 nSize)
 		m_sOverlapped.sOverlapped.hEvent	 = nullptr;
 		m_sOverlapped.pDevice				 = this;
 
-		// Read from device and give back immediatly. EventOnRead will be emitted, when data has been read
+		// Read from device and give back immediately. EventOnRead will be emitted, when data has been read
 		if (ReadFileEx(m_hDevice, pBuffer, nSize, reinterpret_cast<OVERLAPPED*>(&m_sOverlapped), &HIDDeviceWindows::OnReadComplete)) {
 			// Wait for read operation to complete
 			SleepEx(1000, TRUE);

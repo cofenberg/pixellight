@@ -564,11 +564,11 @@ bool Script::EndCall()
 				const int nExceptionFunctionID = m_pAngelScriptContext->GetExceptionFunction();
 				asIScriptFunction *pAngelScriptFunction = m_pAngelScriptEngine->GetFunctionDescriptorById(nExceptionFunctionID);
 				String sErrorDescription;
-				sErrorDescription += String("Function: ")	+ pAngelScriptFunction->GetDeclaration()			+ '\n';
-				sErrorDescription += String("Module: ")		+ pAngelScriptFunction->GetModuleName()				+ '\n';
-				sErrorDescription += String("Section: ")	+ pAngelScriptFunction->GetScriptSectionName()		+ '\n';
-				sErrorDescription += String("Line: ")		+ m_pAngelScriptContext->GetExceptionLineNumber()	+ '\n';
-				sErrorDescription += String("Desciption: ")	+ m_pAngelScriptContext->GetExceptionString()		+ '\n';
+				sErrorDescription += String("Function: ")		+ pAngelScriptFunction->GetDeclaration()			+ '\n';
+				sErrorDescription += String("Module: ")			+ pAngelScriptFunction->GetModuleName()				+ '\n';
+				sErrorDescription += String("Section: ")		+ pAngelScriptFunction->GetScriptSectionName()		+ '\n';
+				sErrorDescription += String("Line: ")			+ m_pAngelScriptContext->GetExceptionLineNumber()	+ '\n';
+				sErrorDescription += String("Description: ")	+ m_pAngelScriptContext->GetExceptionString()		+ '\n';
 				LogOutput(Log::Error, sErrorDescription);
 			} else {
 				LogOutput(Log::Error, String("The script ended for some unforeseen reason (")  + nResult + ")");

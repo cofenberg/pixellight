@@ -198,7 +198,7 @@ class FileImpl {
 
 		/**
 		*  @brief
-		*    Close the file or firectory
+		*    Close the file or directory
 		*/
 		virtual void Close() = 0;
 
@@ -326,7 +326,7 @@ class FileImpl {
 
 		/**
 		*  @brief
-		*    Flushs the file buffer
+		*    Flushes the file buffer
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

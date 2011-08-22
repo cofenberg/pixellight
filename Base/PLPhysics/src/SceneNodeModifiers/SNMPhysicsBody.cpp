@@ -437,7 +437,7 @@ void SNMPhysicsBody::OnTransform()
 				cSceneNode.GetTransform().SetRotation(qRotation);
 			}
 
-		// Else... hurai, the easy situation! :)
+		// Else... hurray, the easy situation! :)
 		} else {
 			// Set position
 			if (GetFlags() & NoRotation)

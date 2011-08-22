@@ -226,7 +226,7 @@ void SNMPositionPath::OnDrawDebug(Renderer &cRenderer, const VisNode *pVisNode)
 
 			// Cull 3D text?
 			if (pCullQuery) {
-				// Make a visibily check to avoid text where no text should be...
+				// Make a visibility check to avoid text where no text should be...
 				for (uint32 i=0; i<pPath->GetNumOfNodes(); i++) {
 					const GraphNode *pNode = pPath->GetNode(i);
 					if (Intersect::PlaneSetPoint(pCullQuery->GetViewFrustum(), pNode->GetPos()))

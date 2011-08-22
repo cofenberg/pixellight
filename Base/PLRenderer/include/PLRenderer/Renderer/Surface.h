@@ -213,7 +213,7 @@ class Surface {
 		*    'true' if the surface is flipped along the y axis, else 'false'
 		*
 		*  @note
-		*    - By overwriting this function, the renderer backend can deside by itself how
+		*    - By overwriting this function, the renderer backend can decide by itself how
 		*      to flip the surface
 		*/
 		PLRENDERER_API virtual bool IsAPISwapY() const;
@@ -290,7 +290,7 @@ class Surface {
 		*    Backups the surface device data
 		*
 		*  @note
-		*    - Used for instance if the diplay mode is changed to backup/restore
+		*    - Used for instance if the display mode is changed to backup/restore
 		*      all surface device data
 		*    - Normally only used inside Renderer::BackupDeviceObjects()/Renderer::RestoreDeviceObjects()
 		*/

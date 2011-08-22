@@ -62,10 +62,10 @@ class ResourceHandler;
 *
 *    The texture class has own special texture compression information standing 'above' the real
 *    renderer texture compression. A good example for the usage of this is 'normal map compression'.
-*    Because normal maps don't look good when using classig compression, it's better do don't
+*    Because normal maps don't look good when using classic compression, it's better do don't
 *    compress them - or to use some tricks so we don't loose to much quality. So, the compression
 *    information just indicates for instance the usage like 'DXT5_xGxR' were a texture is compressed
-*    as 'DXT5', but the dats is stored in a slighly other way. A scene renderer implementation can
+*    as 'DXT5', but the data is stored in a slightly other way. A scene renderer implementation can
 *    use this proved information to tell the shader programs about the special usage of the data.
 *    When loading a texture, by default the texture data is used as provided. If a 'tga' image is
 *    used, no GPU compression is used. If a 'dds' image provides 'fitting' compressed data, this
@@ -80,7 +80,7 @@ class ResourceHandler;
 *            <General Compression="DXT5_xGxR" />
 *        </Texture>
 *    We can automatically detect whether or not a texture is compressed, but we CAN'T find out automatically
-*    HOW the data is organised internally. In the sample above 'DXT5_xGxR' tells us that 'swizzled DXT5' is
+*    HOW the data is organized internally. In the sample above 'DXT5_xGxR' tells us that 'swizzled DXT5' is
 *    used. It's the job of a scene renderer or of YOU as programmer to take this information into account.
 */
 class Texture : public PLCore::Resource<Texture> {

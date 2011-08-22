@@ -741,7 +741,7 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2)
 	if (fR > fR0 + cBox2.m_fExtZ)
 		return false;
 
-	// If a pair of axis is parallel and none of the local axis seperates the boxes,
+	// If a pair of axis is parallel and none of the local axis separates the boxes,
 	// we don't need to check the cross product axis, it's already sure that a
 	// collision has occurred
 	if (bParallelAxis)
@@ -810,7 +810,7 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2)
 	if (fR > fR0 + fR1)
 		return false;
 
-	// None of the axis seperated the boxes, so there's a collision
+	// None of the axis separated the boxes, so there's a collision
 	return true;
 }
 
@@ -1098,7 +1098,7 @@ bool Intersect::BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const
 	if (fR > fR0 + fR1)
 		return false;
 
-	// None of the axis seperated the boxes, so there's a collision
+	// None of the axis separated the boxes, so there's a collision
 	return true;
 }
 

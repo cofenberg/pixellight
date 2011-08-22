@@ -245,7 +245,7 @@ void ChecksumMD5::Transform(const uint8 nBlock[64])
 	static const uint32 MD5_T63 = 0x2ad7d2bb;
 	static const uint32 MD5_T64 = 0xeb86d391;
 
-	// Initialise local data with current checksum
+	// Initialize local data with current checksum
 	uint32 a = m_nMD5[0];
 	uint32 b = m_nMD5[1];
 	uint32 c = m_nMD5[2];
@@ -365,7 +365,7 @@ void ChecksumMD5::Update(const uint8 nInput[], uint32 nInputLen)
 
 String ChecksumMD5::Final()
 {
-	// Null data (except for first uint8) used to finalise the checksum calculation
+	// Null data (except for first uint8) used to finalize the checksum calculation
 	static uint8 PADDING[64] = {
 		0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

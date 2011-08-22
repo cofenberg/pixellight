@@ -280,7 +280,7 @@ bool Script::SetSourceCode(const String &sSourceCode)
 			} else {
 				// Error!
 
-				// Write a log mesage
+				// Write a log message
 				String sErrorDescription;
 				switch (nResult) {
 					case LUA_ERRSYNTAX:
@@ -458,7 +458,7 @@ void Script::SetGlobalVariable(const String &sName, const DynVar &cValue, const 
 				case TypePtr:
 				case TypeObjectPtr:	RTTIObjectPointer::LuaStackPush(*this, reinterpret_cast<Object*>(cValue.GetUIntPtr()));	break;
 
-				default:			lua_pushstring (m_pLuaState, cValue.GetString());										break;	// Unkown type
+				default:			lua_pushstring (m_pLuaState, cValue.GetString());										break;	// Unknown type
 			}
 
 			// This function pops both the key and the value from the stack - this sets the variable
@@ -639,7 +639,7 @@ bool Script::EndCall()
 		// Do the call ('m_nCurrentArgument' arguments, 1 result)
 		const int nResult = lua_pcall(m_pLuaState, m_nCurrentArgument, m_bFunctionResult, 0);
 		if (nResult) {
-			// Write a log mesage
+			// Write a log message
 			String sErrorDescription;
 			switch (nResult) {
 				case LUA_ERRRUN:

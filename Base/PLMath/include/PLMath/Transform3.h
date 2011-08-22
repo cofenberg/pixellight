@@ -48,7 +48,7 @@ namespace PLMath {
 *
 *  @remarks
 *    The design goal of this class was not to be as memory compact as possible - for such a use case, one can use
-*    for example directly Matrix3x4. The design goal was wo provide a class that is able to convert between different
+*    for example directly Matrix3x4. The design goal was to provide a class that is able to convert between different
 *    representations of a 3D transform in an efficient way. To achieve this, the "Lazy Evaluation"-scheme is used. This
 *    means that, for example, the inverse transform is only recalculated if it's really required. To allow a practical
 *    usage of this transform class within more advanced systems, events are provided to inform when transform data has

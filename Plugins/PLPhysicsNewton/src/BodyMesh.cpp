@@ -260,7 +260,7 @@ File *BodyMesh::OpenFile(PLPhysics::World &cWorld, const String &sFilename, bool
 	// Get the Newton physics cache directory
 	String sCacheDirectory = cWorld.GetAttribute("CacheDirectory")->GetString();
 	if (sCacheDirectory.GetLength()) {
-		// Replace any dots or slashs within the given filename through '#'
+		// Replace any dots or slashes within the given filename through '#'
 		String sCacheFilename = sFilename;
 		sCacheFilename.Replace('.',  '#');
 		sCacheFilename.Replace('/',  '#');

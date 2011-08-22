@@ -257,7 +257,7 @@ bool HttpHandle::IsEof() const
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Connects to the webserver
+*    Connects to the web server
 */
 bool HttpHandle::Connect()
 {

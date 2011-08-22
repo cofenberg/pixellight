@@ -581,12 +581,12 @@ IGameMaterial *PLSceneMesh::GetIGameMaterial(IGameMesh &cIGameMesh, int nFace) c
 		// Is this a shell material used for 'backed texture'?
 		if (pIGameMaterial->GetMaxMaterial() &&
 			pIGameMaterial->GetMaxMaterial()->ClassID() == Class_ID(BAKE_SHELL_CLASS_ID, 0)) {
-			// Ingore the material index...
+			// Ignore the material index...
 			return pIGameMaterial;
 		} else {
 			// Let IGame do the job of getting the correct material... if we do this "by hand"
 			// using 'IGameMaterial::GetSubMaterialCount()' and 'IGameMaterial::GetSubMaterial()'
-			// there may occure problems when there's a multi-material with an empty slot 'between'
+			// there may occur problems when there's a multi-material with an empty slot 'between'
 			// the maps - IGame ignores this slot, but inside the face material ID it's not ignored...
 			return cIGameMesh.GetMaterialFromFace(nFace);
 		}
@@ -784,7 +784,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 				// Get the IGameNode equivalent of the bone effecting the vertex
 				IGameNode *pIGameBone = pIGameSkin->GetIGameBone(nVertexId, nBone);
 				if (pIGameBone) {
-					// Loop through ALL bones and find the propper bone ID
+					// Loop through ALL bones and find the proper bone ID
 					for (uint32 nBoneID=0; nBoneID<m_lstBones.GetNumOfElements(); nBoneID++) {
 						// Is this the parent node?
 						if (m_lstBones[nBoneID] == pIGameBone) {
@@ -812,7 +812,7 @@ PLSceneMesh::Vertex *PLSceneMesh::GetVertex(IGameMesh &cIGameMesh, IGameSkin *pI
 		}
 	}
 
-	// Add vertex to list if not already in. This optimized algorithmus is
+	// Add vertex to list if not already in. This optimized algorithm is
 	// using a hash table to keep the required time as short as possible :)
 	return m_pScene->m_pVHTable->Add(*pVertexCandidate);
 }

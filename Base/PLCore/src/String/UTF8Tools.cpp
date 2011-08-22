@@ -635,8 +635,8 @@ uint32 UTF8Tools::EscapeWideCharacter(char *pszDestination, uint32 nNumOfBytes, 
 		else if (nWideCharacter == L'\v')							 return 2;
 		else if (nWideCharacter == L'\a')							 return 2;
 		else if (nWideCharacter == L'\\')							 return 2;
-		else if (nWideCharacter < 32 || nWideCharacter == 0x7f)		 return 4; // [TODO] Checkme!
-		else if (nWideCharacter > 0xFFFF)							 return 10; // [TODO] Checkme!
+		else if (nWideCharacter < 32 || nWideCharacter == 0x7f)		 return 4; // [TODO] Check me!
+		else if (nWideCharacter > 0xFFFF)							 return 10; // [TODO] Check me!
 		else if (nWideCharacter >= 0x80 && nWideCharacter <= 0xFFFF) return 6;
 		else														 return 1;
 	}

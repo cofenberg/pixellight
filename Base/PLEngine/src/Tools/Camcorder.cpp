@@ -250,7 +250,7 @@ void Camcorder::StartPlayback(const String &sName)
 						// Keep a reference to this camera scene node
 						m_cCameraSceneNodeHandler.SetElement(pCameraSceneNode);
 
-						// Disable certain scene node modifers of the given scene node
+						// Disable certain scene node modifiers of the given scene node
 						SetupSceneNodeModifiers(*pCameraSceneNode, false);
 
 						// Backup the record name
@@ -357,7 +357,7 @@ void Camcorder::StopPlayback()
 			pCameraSceneNode->RemoveModifier("PLScene::SNMPositionKeyframeAnimation");
 			pCameraSceneNode->RemoveModifier("PLScene::SNMRotationKeyframeAnimation");
 
-			// Enable certain scene node modifers of the given scene node
+			// Enable certain scene node modifiers of the given scene node
 			SetupSceneNodeModifiers(*pCameraSceneNode, true);
 		}
 	}
@@ -385,7 +385,7 @@ void Camcorder::Update()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Activates/deactivates certain scene node modifers of the given scene node
+*    Activates/deactivates certain scene node modifiers of the given scene node
 */
 void Camcorder::SetupSceneNodeModifiers(SceneNode &cSceneNode, bool bActive)
 {

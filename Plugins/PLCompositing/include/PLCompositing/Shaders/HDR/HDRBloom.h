@@ -85,7 +85,7 @@ class HDRBloom {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API ~HDRBloom();
 

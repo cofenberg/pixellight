@@ -65,7 +65,7 @@ JointUpVector::JointUpVector(PLPhysics::World &cWorld, PLPhysics::Body &cParentB
 	if (bSimulationActive)
 		cWorld.SetSimulationActive(false);
 
-	// Get the Bullet physics parent bodiy
+	// Get the Bullet physics parent body
 	btRigidBody *pBulletParentBody = static_cast<BodyImpl&>(cParentBody.GetBodyImpl()).GetBulletBody();
 
 	pBulletParentBody->setAngularFactor(Helper::PLVector3TobtVector3(vPinDir));

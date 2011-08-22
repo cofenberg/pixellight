@@ -127,7 +127,7 @@ XmlDocument *HTMLParser::GetXML() const
 
 /**
 *  @brief
-*    Get number of errors occuring while parsing the HTML file
+*    Get number of errors occurring while parsing the HTML file
 */
 uint32 HTMLParser::GetNumOfErrors() const
 {
@@ -168,12 +168,12 @@ bool HTMLParser::Parse()
 
 		// <!-- comment -->
 		if (cRegExComment.Match(sToken)) {
-			// Ingore comment
+			// Ignore comment
 		}
 
 		// <!DOCTYPE >
 		else if (cRegExDoctype.Match(sToken)) {
-			// Ingore doctype
+			// Ignore doctype
 		}
 
 		// <Tag>
@@ -185,7 +185,7 @@ bool HTMLParser::Parse()
 			const String sName = cRegExTag.GetNameResult("name");
 			const bool bSingleTag = (cRegExTag.GetNameResult("end") == '/');
 			if (sName == "script") {
-				// Ingore <script> tags
+				// Ignore <script> tags
 				const int nIndex = m_sTextLower.IndexOf("</script>", m_nPos);
 				if (nIndex > -1)
 					m_nPos = nIndex + 9;

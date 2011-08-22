@@ -177,7 +177,7 @@ void SRPDirectionalLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQue
 */
 const VisNode *SRPDirectionalLighting::GetFirstDirectionalLight(const SQCull &cCullQuery) const
 {
-	// Seach recursive from front to back
+	// Search recursive from front to back
 	return GetFirstDirectionalLightRec(cCullQuery);
 }
 

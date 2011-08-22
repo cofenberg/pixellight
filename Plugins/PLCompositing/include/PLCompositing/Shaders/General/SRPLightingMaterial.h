@@ -182,7 +182,7 @@ class SRPLightingMaterial {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		~SRPLightingMaterial();
 

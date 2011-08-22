@@ -190,7 +190,7 @@ class SNConsoleBase : public PLScene::SceneNode {
 		*    Unregisters a command
 		*
 		*  @param[in] sCommand
-		*    Commmand to remove
+		*    Command to remove
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'

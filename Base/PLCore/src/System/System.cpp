@@ -106,7 +106,7 @@ char System::GetSeparator() const
 
 /**
 *  @brief
-*    Get the CPU mhz
+*    Get the CPU MHz
 */
 uint32 System::GetCPUMhz() const
 {
@@ -267,7 +267,7 @@ Thread *System::GetCurrentThread() const
 
 /**
 *  @brief
-*    Exit the application immediatly
+*    Exit the application immediately
 */
 void System::Exit(int nReturn)
 {

@@ -117,7 +117,7 @@ class BlendFunc {
 		// Destination
 		DstColor    = 7,	/**< Destination color */
 		InvDstColor = 8,	/**< Inverted destination color */
-		DstAlpha    = 9,	/**< Destination alhpa */
+		DstAlpha    = 9,	/**< Destination alpha */
 		InvDstAlpha = 10,	/**< Inverted destination alpha */
 		// End
 		Number      = 11,	/**< Number of blend functions */
@@ -136,7 +136,7 @@ class BlendFunc {
 		// Destination
 		pl_enum_value(DstColor,		"Destination color")
 		pl_enum_value(InvDstColor,	"Inverted destination color")
-		pl_enum_value(DstAlpha,		"Destination alhpa")
+		pl_enum_value(DstAlpha,		"Destination alpha")
 		pl_enum_value(InvDstAlpha,	"Inverted destination alpha")
 	pl_enum_end
 };
@@ -258,7 +258,7 @@ class RenderState {
 		StencilPass         = 17,	/**< Operation to perform if both stencil and Z tests pass (StencilOp, default: StencilOp::Keep) */
 		TwoSidedStencilMode = 18,	/**< Enable/disable 2 sided stenciling (false/true, default: false, requires Capabilities::bTwoSidedStencils)
 										 If the triangle winding order is clockwise, the Stencil* operations will be used. If the winding
-										 order is counterclocwise, the CCWStencil* operations will be used. */
+										 order is counterclockwise, the CCWStencil* operations will be used. */
 		CCWStencilFunc      = 19,	/**< Stencil test passes if ((ref & mask) stencilfn (stencil & mask)) is true (see Compare, default: Compare::Always, requires Capabilities::bTwoSidedStencils) */
 		CCWStencilFail      = 20,	/**< Operation to perform if ccw stencil test fails (StencilOp, default: StencilOp::Keep, requires Capabilities::bTwoSidedStencils) */
 		CCWStencilZFail     = 21,	/**< Operation to perform if ccw stencil test passes and Z test fails (StencilOp, default: StencilOp::Keep, requires Capabilities::bTwoSidedStencils) */
@@ -483,7 +483,7 @@ struct Capabilities {
 struct Statistics {
 	PLCore::uint32 nRenderStateChanges;			/**< Number of render (internal API) state changes */
 	PLCore::uint32 nSamplerStateChanges;		/**< Number of sampler (internal API) state changes */
-	PLCore::uint32 nDrawPrimitivCalls;			/**< Number of draw primitiv calls */
+	PLCore::uint32 nDrawPrimitivCalls;			/**< Number of draw primitive calls */
 	PLCore::uint32 nVertices;					/**< Number of rendered vertices */
 	PLCore::uint32 nTriangles;					/**< Number of rendered triangles */
 	float		   fRenderingTime;				/**< Total rendering time in milliseconds */
@@ -494,7 +494,7 @@ struct Statistics {
 	// Vertex buffers
 	PLCore::uint32 nVertexBufferNum;			/**< Number of vertex buffers */
 	PLCore::uint64 nVertexBufferMem;			/**< Memory in bytes the vertex buffers require */
-	PLCore::uint64 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (mircoseconds) */
+	PLCore::uint64 nVertexBuffersSetupTime;		/**< Vertex buffers setup time (microseconds) */
 	PLCore::uint32 nVertexBufferLocks;			/**< Number of vertex buffer locks */
 	// Index buffers
 	PLCore::uint32 nIndexBufferNum;				/**< Number of index buffers */

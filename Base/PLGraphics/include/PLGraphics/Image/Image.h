@@ -374,7 +374,7 @@ class Image : public PLCore::Loadable {
 		*  @remarks
 		*    If GetBuffer() is called with default parameters, it will return the image buffer
 		*    of the first subimage and first mipmap. So, for most images that contain of only one
-		*    image part, it is sufficent to just call GetBuffer() in order to get the image buffer.
+		*    image part, it is sufficient to just call GetBuffer() in order to get the image buffer.
 		*/
 		PLGRAPHICS_API ImageBuffer *GetBuffer(PLCore::uint32 nPart = 0, PLCore::uint32 nMipmap = 0) const;
 

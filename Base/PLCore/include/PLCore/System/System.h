@@ -128,10 +128,10 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
-		*    Get the CPU mhz
+		*    Get the CPU MHz
 		*
 		*  @return
-		*    CPU mhz
+		*    CPU MHz
 		*/
 		PLCORE_API uint32 GetCPUMhz() const;
 
@@ -269,7 +269,7 @@ class System : public Singleton<System> {
 		*
 		*  @remarks
 		*    Internally 'setlocale' is used to collect the current program locale information - but
-		*    only the 'language' information is retured as string. For instance, if the current locale
+		*    only the 'language' information is returned as string. For instance, if the current locale
 		*    is 'English_USA.1252', 'English' is returned, if the locale is 'French_France.1252', just
 		*    'French' is returned and so on.
 		*    This information can for instance be used to set a correct default language within the
@@ -324,7 +324,7 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
-		*    Exit the application immediatly
+		*    Exit the application immediately
 		*
 		*  @param[in] nReturn
 		*    Return value
@@ -375,7 +375,7 @@ class System : public Singleton<System> {
 		*    Suspend the current thread for a specified time period
 		*
 		*  @param[in] nMilliseconds
-		*    Number of milliseconds to sleep, should not be 0 because the behaviour is implementation dependent (use 'Yield()' instead)
+		*    Number of milliseconds to sleep, should not be 0 because the behavior is implementation dependent (use 'Yield()' instead)
 		*/
 		PLCORE_API void Sleep(uint64 nMilliseconds) const;
 
@@ -385,7 +385,7 @@ class System : public Singleton<System> {
 		*
 		*  @remarks
 		*    Yields the rest of the threads time slice so another active thread of equal or higher priority
-		*    waiting for processor time can run. Note that this function may return immediately and the behaviour
+		*    waiting for processor time can run. Note that this function may return immediately and the behavior
 		*    is in general not exactly predictable. So, use this function to give the processor just a hint
 		*    that you are willed to give processor time away.
 		*/

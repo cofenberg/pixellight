@@ -202,7 +202,7 @@ class Quadtree {
 		*    Patches to be updated, can be a null pointer (in that case this function is quite useless...)
 		*
 		*  @note
-		*    - The quadtree bounding boxes must being inititialized with this patches!
+		*    - The quadtree bounding boxes must being initialized with this patches!
 		*
 		*  @see
 		*    - UpdateBoundingBoxes()

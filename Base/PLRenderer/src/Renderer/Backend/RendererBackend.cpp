@@ -233,7 +233,7 @@ RendererBackend::RendererBackend(EMode nMode) :
 	m_ppCurrentTextureBuffer	= nullptr;
 	m_pCurrentIndexBuffer		= nullptr;
 
-	// The rest ist done by the API backends!
+	// The rest is done by the API backends!
 }
 
 /**

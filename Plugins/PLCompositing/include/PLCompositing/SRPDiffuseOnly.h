@@ -139,7 +139,7 @@ class SRPDiffuseOnly : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDiffuseOnly();
 

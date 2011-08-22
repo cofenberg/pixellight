@@ -137,7 +137,7 @@ class TrayIconWidgetLinux : public Widget {
 		*    Register a key accelerator
 		*
 		*  @param[in] nID
-		*    Acellerator ID
+		*    Accelerator ID
 		*  @param[in] nKey
 		*    Key code
 		*  @param[in] nModifiers
@@ -150,7 +150,7 @@ class TrayIconWidgetLinux : public Widget {
 		*    Unregister a key accelerator
 		*
 		*  @param[in] nID
-		*    Acellerator ID
+		*    Accelerator ID
 		*/
 		PLGUI_API void XEmbedUnregisterAccelerator(long nID);
 
@@ -211,10 +211,10 @@ class TrayIconWidgetLinux : public Widget {
 
 		/**
 		*  @brief
-		*    An acellerator has been activated
+		*    An accelerator has been activated
 		*
 		*  @param[in] nID
-		*    Acellerator ID
+		*    Accelerator ID
 		*  @param[in] nFlags
 		*    Flags
 		*/

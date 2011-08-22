@@ -55,7 +55,7 @@ class SNMBillboard : public SNMDraw {
 
 
 	//[-------------------------------------------------------]
-	//[ Proteted functions                                    ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
 	protected:
 		/**

@@ -125,7 +125,7 @@ template <class AType> class Resource : public Loadable {
 
 		/**
 		*  @brief
-		*    Returns the ID of the resource within the resouce manager
+		*    Returns the ID of the resource within the resource manager
 		*
 		*  @return
 		*    ID of the resource within the resource manager, -1 if there was an error
@@ -181,7 +181,7 @@ template <class AType> class Resource : public Loadable {
 		*
 		*  @note
 		*    - Whether the resource is destroyed within this function or just added for
-		*      instance to a kind of 'destruction list' is implementation dependand.
+		*      instance to a kind of 'destruction list' is implementation dependent.
 		*/
 		virtual bool Delete(bool bProtectedToo = false);
 
@@ -246,7 +246,7 @@ template <class AType> class Resource : public Loadable {
 	//[-------------------------------------------------------]
 	protected:
 		ResourceManager<AType>			*m_pManager;		/**< Resource manager, can be a null pointer */
-		String							 m_sName;			/**< Resouce name */
+		String							 m_sName;			/**< Resource name */
 		bool							 m_bProtected;		/**< Is the resource protected? */
 		Array<ResourceHandler<AType>*>	 m_lstHandlers;		/**< Resource handler list */
 

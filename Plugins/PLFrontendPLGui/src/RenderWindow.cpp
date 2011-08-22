@@ -151,7 +151,7 @@ RenderWindow &RenderWindow::operator =(const RenderWindow &cSource)
 */
 void RenderWindow::OnTimer()
 {
-	// Ask PLGui politly to update (and repaint) the widget
+	// Ask PLGui politely to update (and repaint) the widget
 	Redraw();
 }
 

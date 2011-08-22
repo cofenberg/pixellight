@@ -289,7 +289,7 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 	// Get the vertex buffer of the fullscreen quad
 	VertexBuffer *pVertexBuffer = m_pFullscreenQuad->GetVertexBuffer();
 	if (pVertexBuffer) {
-		// First step: Downsample 2x2, calculate pixel luminance and log - I don't use a "bilinear filter" because this would mess up the incomming texel data "before" the log calculation was performed!
+		// First step: Downsample 2x2, calculate pixel luminance and log - I don't use a "bilinear filter" because this would mess up the incoming texel data "before" the log calculation was performed!
 		if (m_pRenderer->SetProgram(m_pDownsampleLogProgram)) {
 			// Get the size of the original HDR texture
 			const Vector2i vRTSize = cOriginalTexture.GetSize()/2;

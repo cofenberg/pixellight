@@ -112,7 +112,7 @@ class SRPDeferredSSAO : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredSSAO();
 

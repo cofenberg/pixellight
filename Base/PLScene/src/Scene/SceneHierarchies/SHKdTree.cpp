@@ -108,7 +108,7 @@ SHKdTreeNode::~SHKdTreeNode()
 */
 void SHKdTreeNode::Merge()
 {
-	// If this is a leaf or the child nodes are no leafes or this node can't hold old items of the child nodes,
+	// If this is a leaf or the child nodes are no leafs or this node can't hold old items of the child nodes,
 	// we can't perform merge!
 	if (m_nSplitAxis != Leaf && m_pLeftNode->m_nSplitAxis == Leaf && m_pRightNode->m_nSplitAxis == Leaf &&
 		m_pLeftNode->m_nNumOfItems+m_pRightNode->m_nNumOfItems < m_pHierarchy->GetMaxNumOfNodeItems()) {

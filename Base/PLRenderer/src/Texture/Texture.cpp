@@ -295,7 +295,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 						// Get the format version
 						const int nVersion = pTextureElement->GetAttribute("Version").GetInt();
 
-						// Unkown
+						// Unknown
 						if (nVersion > 1) {
 							PL_LOG(Error, cDocument.GetValue() + ": " + LoaderImpl::UnknownFormatVersion)
 

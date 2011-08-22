@@ -93,7 +93,7 @@ TrayIconImpl *TrayIcon::GetImpl() const
 */
 bool TrayIcon::IsVisible() const
 {
-	// Return visiblity-state
+	// Return visibility-state
 	return m_bVisible;
 }
 
@@ -103,7 +103,7 @@ bool TrayIcon::IsVisible() const
 */
 void TrayIcon::SetVisible(bool bVisible)
 {
-	// Set visiblity-state
+	// Set visibility-state
 	m_bVisible = bVisible;
 
 	// Create implementation?

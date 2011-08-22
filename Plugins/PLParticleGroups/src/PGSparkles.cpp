@@ -179,7 +179,7 @@ void PGSparkles::OnUpdate()
 				cParticle.vVelocity += GetGravity()*fTimeDiff*(200-cParticle.fEnergy)/10;
 				cParticle.vVelocity -= cParticle.vVelocity*fTimeDiff;
 
-				// Self induction to make the spakles a bit more interesting ;-)
+				// Self induction to make the sparkles a bit more interesting ;-)
 				if (!(System::GetInstance()->GetMicroseconds() % 500) && !(Math::GetRand() % 5)) {
 					cParticle.fEnergy += 100;
 					cParticle.fSize   += 0.2f;
@@ -194,7 +194,7 @@ void PGSparkles::OnUpdate()
 				float dLength = cParticle.fCustom1/vMove.GetLength()*5;
 				cParticle.vDistortion = vMove*dLength;
 
-				// Update energie, size and lifetime
+				// Update energy, size and lifetime
 				cParticle.fEnergy -= fTimeDiff*EnergyPerSec;
 				cParticle.fSize   -= fTimeDiff;
 				if (cParticle.fEnergy <= 0 || cParticle.fSize <= 0)

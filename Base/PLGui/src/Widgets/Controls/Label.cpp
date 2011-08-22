@@ -280,7 +280,7 @@ PLMath::Vector2i Label::OnPreferredSize(const Vector2i &vRefSize) const
 
 	// Try to calculate the size in Y direction. If X is already known, we can use the actual line width
 	// to calculate the height, otherwise we use a virtually endless line and therefore calculate only
-	// hard-coded linefeeds.
+	// hard-coded line feeds.
 
 	// Create an offscreen graphics object
 	Graphics cGraphics(*GetGui());

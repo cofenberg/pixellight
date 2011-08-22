@@ -60,7 +60,7 @@ void *F_CALLBACKAPI FSOpen(const char *pszName)
 
 		// Try to open the file
 		if (LoadableManager::GetInstance()->OpenFile(*pFile, pszName, false))
-			return static_cast<void*>(pFile); // Return opend file object
+			return static_cast<void*>(pFile); // Return opened file object
 
 		// Cleanup on error
 		delete pFile;
@@ -201,7 +201,7 @@ bool SoundManager::GetFormatList(List<Format> &lstList) const
 	static const char *szSupportedFormats[] = {
 		// Extension	Description
 		"MP3",			"MPEG I/II Layer 3, including VBR support",
-		"WAV",			"Microsoft Wave files, inlcluding compressed wavs. PCM, MP3 and IMA ADPCM compressed wav files are supported across all platforms in FMOD Ex, and other compression formats are supported via windows codecs on that platform",
+		"WAV",			"Microsoft Wave files, including compressed wavs. PCM, MP3 and IMA ADPCM compressed wav files are supported across all platforms in FMOD Ex, and other compression formats are supported via windows codecs on that platform",
 		"MID",			"MIDI using operating system or custom DLS patches",
 		"IT",			"Impulse tracker sequenced mod format. FMOD Ex also fully supports resonant filters in .IT files, and the per channel or per instrument echo effect send, that can be enabled in ModPlug Tracker. This is cross platform effect support and does not require DirectX like other libraries do",
 		"MOD",			"Protracker / Fasttracker and others sequenced mod format",
@@ -347,7 +347,7 @@ bool SoundManager::Init()
 
 	// Check FMOD version
 	if (FSOUND_GetVersion() >= FMOD_VERSION) {
-		// Millisecond value for FMOD buffersize
+		// Millisecond value for FMOD buffer size
 		FSOUND_SetBufferSize(BufferSize);
 
 		// Initialize FSOUND

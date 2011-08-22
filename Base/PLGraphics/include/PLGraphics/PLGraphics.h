@@ -131,8 +131,8 @@ enum EColorFormat {
 	ColorRGBA,				/**< RGBA */
 	ColorBGR,				/**< BGR */
 	ColorBGRA,				/**< BGRA */
-	ColorGrayscale,			/**< Grayscale image */
-	ColorGrayscaleA,		/**< Grayscale image with alpha */
+	ColorGrayscale,			/**< Gray scale image */
+	ColorGrayscaleA,		/**< Gray scale image with alpha */
 	ColorPalette			/**< Color palette */
 };
 

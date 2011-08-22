@@ -292,7 +292,7 @@ class SceneHierarchyNode {
 		*    Free scene hierarchy node
 		*
 		*  @remarks
-		*    This function will return a free scene hierarchy node. If there are no free nodes avaiable,
+		*    This function will return a free scene hierarchy node. If there are no free nodes available,
 		*    a new one is created. After a node is no longer required it is put into the list of free nodes
 		*    by using FreeNode() instead of destroying it. This way, frequently creation and destruction of
 		*    nodes is avoided and the management of the unique node ID's becomes quite simple.

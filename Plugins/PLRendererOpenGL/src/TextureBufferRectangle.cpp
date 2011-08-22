@@ -122,7 +122,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 					// Enable shadow comparison
 					glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
 
-					// Shadow comparison should be true (ie not in shadow) if r<=texture buffer
+					// Shadow comparison should be true (e.g. not in shadow) if r<=texture buffer
 					glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
 
 					// THIS is really important, if we choose other filtering there may be a crash...
@@ -209,7 +209,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 						// Write a warning into the log
 						PL_LOG(Warning, String::Format("Lowest mipmap is %dx%d, but should be 1x1! Missing mipmap levels will be white!", vSize.x, vSize.y))
 
-						// If we don't define all mipmap levels down to 1x1 'mysterious' graphics bugs may occure were it is not
+						// If we don't define all mipmap levels down to 1x1 'mysterious' graphics bugs may occur were it is not
 						// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 						// we just create the missing mipmap levels down to 1x1 with a white color - so it's possible to 'see' which texture
 						// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)
@@ -293,7 +293,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 			// Enable shadow comparison
 			glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
 
-			// Shadow comparison should be true (ie not in shadow) if r<=texture buffer
+			// Shadow comparison should be true (e.g. not in shadow) if r<=texture buffer
 			glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
 
 			// THIS is really important, if we choose other filtering there may be a crash...

@@ -369,7 +369,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 
 bool SurfaceWindow::Present()
 {
-	// Swap interval (vertical synchronisation) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
+	// Swap interval (vertical synchronization) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (m_nSwapInterval != static_cast<int>(cRenderer.GetSwapInterval())) {
 		m_nSwapInterval = cRenderer.GetSwapInterval();

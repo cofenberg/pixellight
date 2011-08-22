@@ -9,7 +9,7 @@
 #  include "../../../../../External/Recommended/OpenGL/wglext.h"
 #  pragma warning (disable : 4786)
 #elif defined(LINUX)
-#  define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitily NOT ok (one reason is that "glext.h" is frequently extended)
+#  define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitely NOT ok (one reason is that "glext.h" is frequently extended)
 #  include <GL/glx.h>
 #  include "../../../../../External/Recommended/OpenGL/glxext.h"
 #elif defined(MACOS)

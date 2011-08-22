@@ -214,7 +214,7 @@ class HttpHandle {
 	private:
 		/**
 		*  @brief
-		*    Connects to the webserver
+		*    Connects to the web server
 		*
 		*  @return
 		*    'true', if all went fine, else 'false'

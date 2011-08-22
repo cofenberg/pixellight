@@ -143,7 +143,7 @@ class WidgetLinux : public WidgetImpl {
 		bool		 m_bVisible;			/**< 'true' if the window is visible */
 		bool		 m_bEnabled;			/**< 'true' if the window is enabled */
 		bool		 m_bTopmost;			/**< 'true' if the window is on top of all other windows */
-		bool		 m_bShowInTaskbar;		/**< 'true' if a toplevel window is to be shown in the taskbar */
+		bool		 m_bShowInTaskbar;		/**< 'true' if a top level window is to be shown in the taskbar */
 		int			 m_nX;					/**< X position */
 		int			 m_nY;					/**< Y position */
 		int			 m_nWidth;				/**< Width */

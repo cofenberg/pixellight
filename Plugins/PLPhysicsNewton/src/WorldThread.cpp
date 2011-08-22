@@ -79,7 +79,7 @@ WorldThread::~WorldThread()
 	m_pMutex->Unlock();
 	Join(100); // Use timeout, else this may block forever...
 
-	// Destroy the synchronisation object
+	// Destroy the synchronization object
 	delete m_pMutex;
 }
 
@@ -94,7 +94,7 @@ bool WorldThread::IsThread()
 
 bool WorldThread::Lock()
 {
-	// Lock the synchronisation object
+	// Lock the synchronization object
 	return m_pMutex->Lock();
 }
 
@@ -112,7 +112,7 @@ bool WorldThread::Update(float fTimeScaleFactor, float fMaxTimeDifference, float
 
 bool WorldThread::Unlock()
 {
-	// Unlock the synchronisation object
+	// Unlock the synchronization object
 	return m_pMutex->Unlock();
 }
 
@@ -128,7 +128,7 @@ int WorldThread::Run()
 		if (Timing::GetInstance()->IsPaused()) {
 			m_nLastTime = System::GetInstance()->GetMilliseconds();
 		} else {
-			// Lock the synchronisation object
+			// Lock the synchronization object
 			const MutexGuard cMutexGuard(*m_pMutex);
 
 			// Update the physics

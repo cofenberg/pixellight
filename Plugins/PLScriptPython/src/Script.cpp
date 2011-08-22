@@ -753,7 +753,7 @@ String Script::GetPythonErrorDescription() const
 			// Get a string representation of the Python object (results in new reference, use Py_DECREF on the result)
 			PyObject *pPythonString = PyObject_Str(pPythonErrorValue);
 
-			// Get the line number Python object from the trackback Python object
+			// Get the line number Python object from the track back Python object
 			if (pPythonTraceback) {
 				PyObject *pPythonLineNumber = PyObject_GetAttrString(pPythonTraceback, "tb_lineno");
 				if (pPythonLineNumber)
@@ -836,7 +836,7 @@ void Script::IncreaseNumOfArguments()
 	// Increase the number of arguments
 	m_nCurrentArgument++;
 
-	// Create/resize the Python tuble (results in new reference, use Py_DECREF on the result)
+	// Create/resize the Python tuple (results in new reference, use Py_DECREF on the result)
 	if (m_pPythonTuple)
 		_PyTuple_Resize(&m_pPythonTuple, m_nCurrentArgument);
 	else

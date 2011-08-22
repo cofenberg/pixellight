@@ -143,7 +143,7 @@ Vector3 &Vector3::operator *=(const Quaternion &qQ)
 {
 	/*
 	// [TODO] At the moment, Quaternion*Vector3 and Vector3*=Quaternion will return different results
-	// ... *= returns for the skinnined correct results, I still work on this :)
+	// ... *= returns for the skinned correct results, I still work on this :)
 	Quaternion qTemp(qQ.w, -qQ.x, -qQ.y, -qQ.z);
 	float qx = qTemp.x;
 	float qy = qTemp.y;
@@ -586,7 +586,7 @@ bool Vector3::FromString(const String &sString)
 			nParsePos = cRegEx.GetPosition();
 		}
 
-		// Set unused componts to 0
+		// Set unused components to 0
 		while (nComponent < 3)
 			fV[nComponent++] = 0.0f;
 

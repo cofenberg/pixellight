@@ -92,7 +92,7 @@ class GraphicsImpl {
 		*  @remarks
 		*    Create a graphics implementation without a reference to the owner GUI.
 		*    This is necessary to create graphics implementations directly, the GUI
-		*    reference should be set immediatly after creating the instance!
+		*    reference should be set immediately after creating the instance!
 		*/
 		PLGUI_API GraphicsImpl();
 

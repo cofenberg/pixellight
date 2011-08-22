@@ -775,7 +775,7 @@ void SNConsoleBase::CompleteCommand()
 			if (nLength > sCommand.GetLength())
 				nLength = sCommand.GetLength();
 
-			// Get the number of equal characers
+			// Get the number of equal characters
 			uint32 nCharacers = 0;
 			for (; nCharacers<nLength; nCharacers++) {
 				if (m_sCommand.GetSubstring(nCharacers, 1) != sCommand.GetSubstring(nCharacers, 1))

@@ -343,7 +343,7 @@ class Class {
 		*
 		*  @remarks
 		*    This function will search for a constructor that matches the signature of the given parameters.
-		*    If no such contructor can be found, the function will fail and return a null pointer.
+		*    If no such constructor can be found, the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create(const DynParams &cParams) const;
 
@@ -360,7 +360,7 @@ class Class {
 		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
-		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
+		*    This function will search for a constructor with the specified name. If no such constructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create(const String &sName, const DynParams &cParams) const;
@@ -378,7 +378,7 @@ class Class {
 		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
-		*    This function will search for a constructor with the specified name. If no such contructor can be found,
+		*    This function will search for a constructor with the specified name. If no such constructor can be found,
 		*    the function will fail and return a null pointer.
 		*/
 		PLCORE_API Object *Create(const String &sName, const String &sParams) const;

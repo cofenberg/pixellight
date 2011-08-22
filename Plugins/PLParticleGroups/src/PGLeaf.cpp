@@ -173,7 +173,7 @@ void PGLeaf::OnUpdate()
 				vRot.z *= static_cast<float>(Math::RadToDeg);
 				cParticle.vVelocity += Wind.Get()*fTimeDiff*Math::Abs(vRot.DotProduct(Wind.Get()));
 
-				// Four collision (just check wether leaf would end up on wrong side)
+				// Four collision (just check whether leaf would end up on wrong side)
 				if (cParticle.vPos.y + cParticle.vVelocity.y*fTimeDiff < FloorHeight) {
 					// Random bouncy and some friction
 					cParticle.vVelocity.y *= -1.0;
@@ -182,7 +182,7 @@ void PGLeaf::OnUpdate()
 					cParticle.nCustom1     = ((static_cast<int>(Math::GetRandNegFloat()*255.0f*8.0f))<<8) | (cParticle.nCustom1&0xff);
 				}
 
-				// Five check wether particle has left area and can die... if it is outside, let it die
+				// Five check whether particle has left area and can die... if it is outside, let it die
 				float  fDistx		 = GetTransform().GetPosition().x - cParticle.vPos.x;
 				float  fDisty		 = GetTransform().GetPosition().z - cParticle.vPos.z;
 				float  fDistToCenter = fDistx*fDistx + fDisty*fDisty;

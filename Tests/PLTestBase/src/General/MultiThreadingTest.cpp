@@ -98,7 +98,7 @@ void MultiThreadingTest::Test()
 	Print("\n");
 	System::GetInstance()->Sleep(500);
 
-	// Create synchronisation object
+	// Create synchronization object
 	g_pMutex = new Mutex();
 
 	// Create tasks
@@ -127,6 +127,6 @@ void MultiThreadingTest::Test()
 		Print("Thread %d had the pot %d times.\n", i+1, pChildren[i]->m_nRounds);
 	}
 
-	// Destroy the synchronisation object
+	// Destroy the synchronization object
 	delete g_pMutex;
 }

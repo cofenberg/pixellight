@@ -165,15 +165,15 @@ class RagdollJoint {
 		PLCore::String sAttached;	/**< Name of the attached ragdoll body */
 		PLCore::String sParent;		/**< Name of the attached parent ragdoll body */
 
-		PLCore::String sThisJointName; /**< Name of the orginal skeleton joint */
-		PLCore::String sNextJointName; /**< Name of the next orginal skeleton joint which 'created' this joint */
+		PLCore::String sThisJointName; /**< Name of the original skeleton joint */
+		PLCore::String sNextJointName; /**< Name of the next original skeleton joint which 'created' this joint */
 
 		// Specifies whether attachedBody is connected to the world instead of another body part
 		bool bAttachToWorld;
 
 		EType nJointType;
 
-		// Joint range of motion contraints for each axis (hinge joint only defined one range)
+		// Joint range of motion constraints for each axis (hinge joint only defined one range)
 		float fLowJointRange1, fHighJointRange1;
 		float fLowJointRange2, fHighJointRange2;
 

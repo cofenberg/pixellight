@@ -198,7 +198,7 @@ bool SurfaceTextureBuffer::CreateFBO()
 					// Jipi, all went fine and we are still here! :)
 					return true;
 				} else {
-					// DAMN!
+					// D'OH!!
 					delete m_pFrameBufferObject;
 					m_pFrameBufferObject = nullptr;
 				}
@@ -248,7 +248,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 				}
 			}
 			if (vSize.x > 0 && vSize.y > 0) {
-				// Get the required color components aas string
+				// Get the required color components as string
 				String sColor;
 				switch (pTextureBuffer->GetFormat()) {
 					case PLRenderer::TextureBuffer::D16:

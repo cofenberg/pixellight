@@ -660,7 +660,7 @@ class Vector2 {
 
 		/**
 		*  @brief
-		*    Calculates the angle between two vectos
+		*    Calculates the angle between two vectors
 		*
 		*  @param[in] vV
 		*    Second vector

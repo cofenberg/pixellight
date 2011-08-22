@@ -66,7 +66,7 @@ class SRPBackgroundColorGradient : public SRPBackground {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPBackgroundColorGradient();
 

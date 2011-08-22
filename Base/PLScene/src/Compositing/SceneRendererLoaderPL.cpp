@@ -57,7 +57,7 @@ bool SceneRendererLoaderPL::Load(SceneRenderer &cSceneRenderer, File &cFile)
 			// Get the format version
 			const int nVersion = pSceneRendererElement->GetAttribute("Version").GetInt();
 
-			// Unkown
+			// Unknown
 			if (nVersion > 1) {
 				PL_LOG(Error, cDocument.GetValue() + ": " + UnknownFormatVersion)
 

@@ -45,7 +45,7 @@ namespace PLCompositing {
 *    Light Space Perspective Shadow Mapping (LiSPSM) class
 *
 *  @remarks
-*    Light Space Perspective Shadow Mapping (LiSPSM) implementation as descripted within "Light Space Perspective Shadow Maps"
+*    Light Space Perspective Shadow Mapping (LiSPSM) implementation as described within "Light Space Perspective Shadow Maps"
 *    by Michael Wimmer, Daniel Scherzer and Werner Purgathofer (http://www.cg.tuwien.ac.at/research/vr/lispsm/shadows_egsr2004_revised.pdf).
 */
 class ShadowMappingLiSPSM : public ShadowMapping {
@@ -72,7 +72,7 @@ class ShadowMappingLiSPSM : public ShadowMapping {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~ShadowMappingLiSPSM();
 

@@ -221,7 +221,7 @@ struct FS_OUTPUT {\n\
 };\n\
 \n\
 #define NUM_TAPS 8				   // Number of taps the shader will use\n\
-const float2 poisson[NUM_TAPS] = { // Containts poisson-distributed positions on the unit circle\n\
+const float2 poisson[NUM_TAPS] = { // Constant poisson-distributed positions on the unit circle\n\
 	{ 0.7f, -0.2f},\n\
 	{ 0.1f, -0.9f},\n\
 	{ 0.3f,  0.8f},\n\

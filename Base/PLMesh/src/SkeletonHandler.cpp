@@ -205,7 +205,7 @@ bool SkeletonHandler::ResetJointStates(bool bForceAll)
 
 		// Is this joint user controlled?
 		if (bForceAll || !cJH.GetElement() || !cJH.IsUserControlled()) {
-			// Reset absolut states
+			// Reset absolute states
 			cJH.SetTranslationAbsolute(pJoint->GetTranslationAbsolute());
 			cJH.SetRotationAbsolute(pJoint->GetRotationAbsolute());
 

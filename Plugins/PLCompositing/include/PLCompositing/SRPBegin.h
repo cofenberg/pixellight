@@ -60,7 +60,7 @@ namespace PLCompositing {
 *    - This scene renderer pass should be at the very top of the scene render pipeline
 *    - Sets initial render states - sets all render states to known default settings
 *    - Manages render to texture with double buffering support
-*    - When render to texture is used, a seperate depth buffer is used which is independent of the one of the surface we're render into
+*    - When render to texture is used, a separate depth buffer is used which is independent of the one of the surface we're render into
 *    - Doesn't use shaders or fixed functions features, therefore there's usually no need to derive from this class
 */
 class SRPBegin : public PLScene::SceneRendererPass {
@@ -168,7 +168,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPBegin();
 

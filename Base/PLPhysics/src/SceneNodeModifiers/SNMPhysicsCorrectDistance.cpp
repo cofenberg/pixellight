@@ -153,7 +153,7 @@ void SNMPhysicsCorrectDistance::OnUpdate()
 		if (pContainer) {
 			World *pPhysicsWorld = static_cast<const SCPhysicsWorld*>(pContainer)->GetWorld();
 			if (pPhysicsWorld) {
-				// Perform physics raycast from target to the owner scene node
+				// Perform physics ray cast from target to the owner scene node
 				const Vector3 &vPos    = cSceneNode.GetTransform().GetPosition();
 				Sensor		  *pSensor = pPhysicsWorld->CreateSensorRaycast(vTargetPos, vPos, Sensor::ClosestBody);
 				if (pSensor) {

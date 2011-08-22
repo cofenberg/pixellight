@@ -71,7 +71,7 @@ class SRPFunctionsTransparent : public SRPFunctions {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPFunctionsTransparent();
 

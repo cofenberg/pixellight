@@ -61,9 +61,9 @@ namespace SPARK_PL {
 *    The trail coordinates are computed in a procedural manner over time.<br>
 *    A trail i defined by a duration. The faster the particle, the longer the trail. It is defined by a numbers of samples.<br>
 *    The sampling frequency of the trail is therefore computed by m_nNumOfSamples/duration and defines its resolution.<br>
-*    The higher the sampling frequency, the smoother the trail but the bigger the compution time and the memory consumption.<br>
+*    The higher the sampling frequency, the smoother the trail but the bigger the computation time and the memory consumption.<br>
 *    <br>
-*    All the particles of a Group are renderered in a single batch of GL_LINE_STRIP,
+*    All the particles of a Group are rendered in a single batch of GL_LINE_STRIP,
 *    which means every trails belong to the same object to reduce overhead on GPU side.<br>
 *    To allow that, invisible lines link trails together. They are defined as degenerated lines.<br>
 *    This imposes the alpha value is taken into account and the blending is therefore forced with SPK_PLLineTrailRenderer.<br>
@@ -112,7 +112,7 @@ class SPK_PLLineTrailRenderer : public SPK_PLRenderer {
 		*
 		*  @remarks
 		*    The number of samples defines the number of points used to construct the trail.<br>
-		*    The bigger the number of samples, the smoother the trail but the bigger the compution time and the memory consumption.
+		*    The bigger the number of samples, the smoother the trail but the bigger the computation time and the memory consumption.
 		*/
 		SPARK_PL_API void SetNumOfSamples(PLCore::uint32 nNumOfSamples);
 

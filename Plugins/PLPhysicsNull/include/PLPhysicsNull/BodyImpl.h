@@ -140,7 +140,7 @@ class BodyImpl : public PLPhysics::BodyImpl {
 		bool			   m_bActive;					/**< Currently active? */
 		float			   m_fCollisionVolume;			/**< Collision volume */
 		float			   m_fMass;						/**< Mass of the physics body */
-		PLMath::Vector3	   m_vCenterOfMass;				/**< Relativ center of the mass */
+		PLMath::Vector3	   m_vCenterOfMass;				/**< Relative center of the mass */
 		PLMath::Vector3	   m_vPosition;					/**< Body position */
 		PLMath::Quaternion m_qRotation;					/**< Body rotation */
 		PLMath::Vector3	   m_vLinearVelocity;			/**< Linear body velocity */

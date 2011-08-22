@@ -1370,14 +1370,14 @@ bool PLScenePLMesh::WriteMorphTargetAnimation(FILE &cFile, ChunkStack &cChunkSta
 			float fValue;
 			pControl->GetValue(nTime, &fValue, cInterval, CTRL_ABSOLUTE);
 			if (fValue != fInitialValue) {
-				// Ok, this morph target is influcenced by the animation, that's all we currently want to now
+				// Ok, this morph target is influenced by the animation, that's all we currently want to now
 				lstMorphChannels.Add(lChannel);
 				break;
 			}
 		}
 	}
 
-	// Is any morph target influcenced by the animation?
+	// Is any morph target influenced by the animation?
 	if (lstMorphChannels.GetNumOfElements()) {
 		// Make a animation containing ALL frames
 		Animation *pAnimation = new Animation;

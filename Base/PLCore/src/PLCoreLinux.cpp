@@ -91,7 +91,7 @@ char *strlwr(char *s)
       // register char *dd; register const int cc=(int)(c); \
       // for (dd=(d); nn>0; nn--) *dd++ = cc; } }
 /*****************************************************************************************/
-/**start of the own vsnwprintf function whith support to act like the vscwprintf from M$**/
+/**start of the own vsnwprintf function with support to act like the vscwprintf from M$**/
 #define _T(x) L ## x
 
 int _vsnwprintf(wchar_t *buf, size_t lenMax,

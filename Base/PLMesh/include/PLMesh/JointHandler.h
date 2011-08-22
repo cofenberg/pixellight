@@ -74,12 +74,12 @@ class JointHandler : public PLCore::ElementHandler<Joint>, public JointState {
 		*  @remarks
 		*    By default, joints are NOT user controlled which means their absolute translation
 		*    and rotation is calculated automatically by the animation system by using their relative
-		*    states. Whis way, multiple 'offline' (predefined :) animations can be mixed togeter to get
+		*    states. This way, multiple 'offline' (predefined :) animations can be mixed together to get
 		*    a final animation where animations can only influence some parts of the skeleton. If a
 		*    joint is marked as 'used controlled', the animations system does not calculate the
 		*    absolute values by itself. In this case, this joints can be fully 'online' (dynamic) animated
 		*    by using for instance physics objects in the case of ragdoll animations. Normally only a
-		*    few joints are user controlled while others are still updated automatically realtive to
+		*    few joints are user controlled while others are still updated automatically relative to
 		*    their parents.
 		*/
 		PLMESH_API bool IsUserControlled() const;

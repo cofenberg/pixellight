@@ -268,7 +268,7 @@ class ClassImpl {
 		*    De-Initialize class and class members
 		*
 		*  @remarks
-		*    This function destroyes all data about the class and it's members. See
+		*    This function destroys all data about the class and it's members. See
 		*    InitClass() for more information about why this is necessary and when.
 		*/
 		virtual void DeInitClass() const = 0;
@@ -424,7 +424,7 @@ class ClassImpl {
 		*
 		*  @remarks
 		*    This function will search for a constructor that matches the signature of the given parameters.
-		*    If no such contructor can be found, the function will fail and return a null pointer.
+		*    If no such constructor can be found, the function will fail and return a null pointer.
 		*/
 		virtual Object *Create(const DynParams &cParams) const = 0;
 
@@ -441,7 +441,7 @@ class ClassImpl {
 		*    Pointer to created object (can be a null pointer)
 		*
 		*  @remarks
-		*    This function will search for a constructor with the specified name. If no such contructor can be found, or
+		*    This function will search for a constructor with the specified name. If no such constructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
 		virtual Object *Create(const String &sName, const DynParams &cParams) const = 0;
@@ -459,7 +459,7 @@ class ClassImpl {
 		*    Pointer to created object (can be a null pointer, destroy the returned instance when you no longer need it)
 		*
 		*  @remarks
-		*    This function will search for a constructor with the specified name. If no such contructor can be found,
+		*    This function will search for a constructor with the specified name. If no such constructor can be found,
 		*    the function will fail and return a null pointer.
 		*/
 		virtual Object *Create(const String &sName, const String &sParams) const = 0;

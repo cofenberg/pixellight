@@ -198,13 +198,13 @@ class RendererContext : public PLCore::AbstractContext {
 
 
 	//[-------------------------------------------------------]
-	//[ Privat data                                           ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		Renderer		*m_pRenderer;			/**< Used renderer, always valid! */
-		TextureManager  *m_pTextureManager;		/**< The texture manager of this renderer context, a null pointer if not yet initialised */
-		EffectManager   *m_pEffectManager;		/**< The effect manager of this renderer context, a null pointer if not yet initialised */
-		MaterialManager *m_pMaterialManager;	/**< The material manager of this renderer context, a null pointer if not yet initialised */
+		TextureManager  *m_pTextureManager;		/**< The texture manager of this renderer context, a null pointer if not yet initialized */
+		EffectManager   *m_pEffectManager;		/**< The effect manager of this renderer context, a null pointer if not yet initialized */
+		MaterialManager *m_pMaterialManager;	/**< The material manager of this renderer context, a null pointer if not yet initialized */
 
 
 };

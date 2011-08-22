@@ -246,7 +246,7 @@ class Controller : public PLCore::Object {
 		*  @param[in] sControl
 		*    Name of control of this controller (output control)
 		*  @param[in] pControl
-		*    Pointer to control (input control), shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Pointer to control (input control), shouldn't be a null pointer (but a null pointer is caught internally)
 		*  @param[in] fScale
 		*    Scale factor
 		*/

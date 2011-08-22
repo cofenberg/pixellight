@@ -459,7 +459,7 @@ int HttpClient::Read(char *pBuffer, uint32 nSize)
 //[-------------------------------------------------------]
 Connection *HttpClient::CreateOutgoingConnection()
 {
-	// Create webserver connection
+	// Create web server connection
 	HttpClientConnection *pConnection = new HttpClientConnection(*this);
 
 	// We want to read manually, please (content could be huge, so read step by step)

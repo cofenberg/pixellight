@@ -76,7 +76,7 @@ AbstractButton::AbstractButton(Widget *pParent) : Widget(pParent),
 	// Connect timer event
 	m_cTimer.EventFire.Connect(SlotOnTimer);
 
-	// We accept focus and tabstop
+	// We accept focus and tab stop
 	SetFocusStyle(AcceptFocus);
 	SetTabStop(true);
 }
@@ -243,7 +243,7 @@ uint64 AbstractButton::GetRepeatInterval() const
 */
 void AbstractButton::SetRepeatInterval(uint64 nInterval)
 {
-	// Set eturn repeat interval
+	// Set return repeat interval
 	m_nRepeatInterval = nInterval;
 }
 

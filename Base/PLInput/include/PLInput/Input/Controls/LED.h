@@ -56,8 +56,8 @@ class LED : public Control {
 	pl_class(PLINPUT_RTTI_EXPORT, LED, "PLInput", PLInput::Control, "LED control")
 		#ifdef PLINPUT_EXPORTS	// The following is only required when compiling PLInput
 			// Methods
-			pl_method_0(GetLEDs,	pl_ret_type(PLCore::uint32),							"Returns the state of all LEDs as a bitfield.",																			"")
-			pl_method_1(SetLEDs,	pl_ret_type(void),				PLCore::uint32,			"Set state of all LEDs as a bitfield. LED states as first parameter.",													"")
+			pl_method_0(GetLEDs,	pl_ret_type(PLCore::uint32),							"Returns the state of all LEDs as a bit field.",																		"")
+			pl_method_1(SetLEDs,	pl_ret_type(void),				PLCore::uint32,			"Set state of all LEDs as a bit field. LED states as first parameter.",													"")
 			pl_method_1(IsOn,		pl_ret_type(bool),				int,					"Get LED status. Index of LED (0..31) as first parameter. Returns 'true' if the LED is currently on, else 'false'.",	"")
 			pl_method_2(SetOn,		pl_ret_type(void),				int,			bool,	"Set LED status. Index of LED (0..31) as first parameter. 'true' as second parameter, if the LED is on, else 'false'.",	"")
 		#endif
@@ -122,7 +122,7 @@ class LED : public Control {
 
 		/**
 		*  @brief
-		*    Get state of all LEDs as a bitfield
+		*    Get state of all LEDs as a bit field
 		*
 		*  @return
 		*    LED states
@@ -131,7 +131,7 @@ class LED : public Control {
 
 		/**
 		*  @brief
-		*    Set state of all LEDs as a bitfield
+		*    Set state of all LEDs as a bit field
 		*
 		*  @param[in] nLEDs
 		*    LED states

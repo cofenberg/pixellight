@@ -57,7 +57,7 @@ namespace PLCompositing {
 *    This scene renderer pass can deal with the following material parameters:
 *    - Opacity:          Transparency, 0.0 is full transparent, 1.0 is solid, default: 1.0
 *    - OpacityOcclusion: Only used if the 'ZWriteOnly' flag is set, for transparency zbuffer writes, 0.0 for not writing into the zbuffer, 1.0 for writing into the zbuffer, default: 0.0
-*                        The purpose of this parameter is to allow transparent materials to write into the zbuffer in a seperate z write only render pass before drawing all transparent
+*                        The purpose of this parameter is to allow transparent materials to write into the zbuffer in a separate z write only render pass before drawing all transparent
 *                        objects - this way, a transparent material can block everything other transparent behind it to avoid for example "transparent color summation".
 *    - SrcBlendFunc:     If 'Opacity' is less '1', source blend function, default: 'SrcAlpha' (see 'PLRenderer::BlendFunc::Enum')
 *    - DstBlendFunc:     If 'Opacity' is less '1', destination blend function, default: 'InvSrcAlpha' (see 'PLRenderer::BlendFunc::Enum')
@@ -105,7 +105,7 @@ class SRPDiffuseOnlyFixedFunctions : public SRPDiffuseOnly {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDiffuseOnlyFixedFunctions();
 

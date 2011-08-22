@@ -128,7 +128,7 @@ class ToolsLinux {
 		*  @param[in]  cImage
 		*    Image to use
 		*  @param[in]  vHotspot
-		*    Position of hotstop
+		*    Position of hotspot
 		*  @param[out] pCursor
 		*    Will receive the cursor
 		*

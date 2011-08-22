@@ -317,7 +317,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*
 		*  @remarks
 		*    This will set the application return code and set m_bRunning to 'false', so that the application
-		*    should exit as soon as possible. To immediatly terminate the execution, use System::Exit()
+		*    should exit as soon as possible. To immediately terminate the execution, use System::Exit()
 		*/
 		PLCORE_API void Exit(int nResult);
 

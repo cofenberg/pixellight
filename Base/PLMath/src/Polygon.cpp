@@ -250,7 +250,7 @@ Polygon::ESide Polygon::GetSide(const Plane &cPlane) const
 
 /**
 *  @brief
-*    Checks whether the polygon is completly in front of the given plane
+*    Checks whether the polygon is completely in front of the given plane
 */
 bool Polygon::IsInFront(const Plane &cPlane) const
 {
@@ -265,7 +265,7 @@ bool Polygon::IsInFront(const Plane &cPlane) const
 
 /**
 *  @brief
-*    Checks whether the polygon is completly behind the given plane
+*    Checks whether the polygon is completely behind the given plane
 */
 bool Polygon::IsBehind(const Plane &cPlane) const
 {

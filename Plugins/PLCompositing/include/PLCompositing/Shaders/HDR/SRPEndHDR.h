@@ -66,7 +66,7 @@ namespace PLCompositing {
 *    - This scene renderer pass should be at the very bottom of the HDR scene render pipeline,
 *      but it's not required that it's at the very bottom of the whole scene render pipeline
 *    - Shader based
-*    - Using Reinhard tone mapping as descriped within http://www.cs.ucf.edu/~reinhard/cdrom/
+*    - Using Reinhard tone mapping as described within http://www.cs.ucf.edu/~reinhard/cdrom/
 *    - HDR logarithmic average luminance calculation
 *    - HDR light adaptation
 *    - HDR bloom effect
@@ -141,7 +141,7 @@ class SRPEndHDR : public SRPEnd {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPEndHDR();
 

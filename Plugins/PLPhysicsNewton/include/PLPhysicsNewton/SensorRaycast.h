@@ -43,7 +43,7 @@ namespace PLPhysicsNewton {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Newton physics raycast sensor
+*    Newton physics ray cast sensor
 */
 class SensorRaycast : public PLPhysics::SensorRaycast {
 
@@ -85,7 +85,7 @@ class SensorRaycast : public PLPhysics::SensorRaycast {
 		*    Intersection parameter
 		*
 		*  @return
-		*    Intersection parameter: If 0 is retured the ray cast will terminate immediately!
+		*    Intersection parameter: If 0 is returned the ray cast will terminate immediately!
 		*/
 		PLPHYSICSNEWTON_API static float RayFilterCallback(const Newton::NewtonBody *pPhysicsBody, const float *pfNormal,
 														   int nCollisionID, void *pUserData, float fIntersectParam);

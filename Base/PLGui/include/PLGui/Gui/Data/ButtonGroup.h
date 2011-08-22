@@ -82,7 +82,7 @@ class ButtonGroup {
 		*    Check if the button activation is exclusive
 		*
 		*  @return
-		*    'true', if the button activition is exclusive, else 'false'
+		*    'true', if the button activation is exclusive, else 'false'
 		*
 		*  @remarks
 		*    If the button activation is exclusive, only one button can be active at the same time
@@ -94,7 +94,7 @@ class ButtonGroup {
 		*    Set if the button activation is exclusive
 		*
 		*  @param[in] bExclusive
-		*    'true', if the button activition is exclusive, else 'false'
+		*    'true', if the button activation is exclusive, else 'false'
 		*/
 		PLGUI_API void SetExclusive(bool bExclusive);
 

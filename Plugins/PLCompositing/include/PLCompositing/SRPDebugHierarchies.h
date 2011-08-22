@@ -43,7 +43,7 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene renderer pass drawing scene container hierachies for 'debugging'
+*    Scene renderer pass drawing scene container hierarchies for 'debugging'
 */
 class SRPDebugHierarchies : public SRPDebug {
 
@@ -51,7 +51,7 @@ class SRPDebugHierarchies : public SRPDebug {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchies, "PLCompositing", PLCompositing::SRPDebug, "Scene renderer pass drawing scene container hierachies for 'debugging'")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugHierarchies, "PLCompositing", PLCompositing::SRPDebug, "Scene renderer pass drawing scene container hierarchies for 'debugging'")
 		// Attributes
 		pl_attribute(LineWidth,	float,				1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
 		pl_attribute(LineColor,	PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Line color",												"")
@@ -72,7 +72,7 @@ class SRPDebugHierarchies : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugHierarchies();
 

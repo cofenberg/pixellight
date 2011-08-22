@@ -100,7 +100,7 @@ uniform highp vec3 LightDirection;	// World space light direction\n\
 // Programs\n\
 void main()\n\
 {\n\
-	// Set fragment color by using primitiv directional lighting\n\
+	// Set fragment color by using primitive directional lighting\n\
 	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);\n\
 	gl_FragData[0] = vec4(intensity, intensity, intensity, intensity);\n\
 \n\

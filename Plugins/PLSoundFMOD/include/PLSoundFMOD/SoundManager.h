@@ -53,7 +53,7 @@ class SoundManager : public PLSound::SoundManager {
 	public:
 		/**
 		*  @brief
-		*    Soundcard driver
+		*    Sound card driver
 		*/
 		enum ESoundcardDriver {
 			AUTODETECT,
@@ -117,10 +117,10 @@ class SoundManager : public PLSound::SoundManager {
 		// Attributes
 		pl_attribute(BufferSize,	PLCore::uint32,					200,				ReadWrite,	DirectValue,	"FMOD internal mixing buffer size (in milliseconds)",																							"")
 		pl_attribute(Output,		pl_enum_type(ESoundcardDriver),	AUTODETECT,			ReadWrite,	DirectValue,	"The output system to be used",																													"")
-		pl_attribute(Driver,		PLCore::uint32,					0,					ReadWrite,	DirectValue,	"Selects a soundcard driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",	"")
+		pl_attribute(Driver,		PLCore::uint32,					0,					ReadWrite,	DirectValue,	"Selects a sound card driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",	"")
 		pl_attribute(Mixer,			pl_enum_type(EQuality),			QUALITY_AUTODETECT,	ReadWrite,	DirectValue,	"Digital mixer type",																															"")
-		pl_attribute(OutputRate,	PLCore::uint32,					44100,				ReadWrite,	DirectValue,	"Output rate in hz between 4000 and 65535",																										"")
-		pl_attribute(Channels,		PLCore::uint32,					32,					ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are autodetected)",															"")
+		pl_attribute(OutputRate,	PLCore::uint32,					44100,				ReadWrite,	DirectValue,	"Output rate in Hz between 4000 and 65535",																										"")
+		pl_attribute(Channels,		PLCore::uint32,					32,					ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are auto detected)",															"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

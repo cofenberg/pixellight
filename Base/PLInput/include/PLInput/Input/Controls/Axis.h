@@ -127,7 +127,7 @@ class Axis : public Control {
 		*    Please note that a value can be absolute (for instance the x-axis of a joystick) or
 		*    relative (for instance the x-axis of a mouse). While an absolute axis is usually timing
 		*    independent, a relative axis just tells you about a state change since the last update.
-		*    Therfore, we strongly recommend to always use "IsValueRelative()" to check for the value
+		*    Therefore, we strongly recommend to always use "IsValueRelative()" to check for the value
 		*    type in order to, for instance, multiply a absolute value with the current time difference
 		*    since the last frame/update to get correctly timed movement.
 		*/

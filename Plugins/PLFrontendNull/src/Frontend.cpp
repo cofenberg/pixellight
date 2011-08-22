@@ -68,7 +68,7 @@ Frontend::~Frontend()
 //[-------------------------------------------------------]
 int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Do the frontend lifecycle thing - initialize
+	// Do the frontend life cycle thing - initialize
 	if (OnStart()) {
 		OnResume();
 
@@ -88,7 +88,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 			Ping();
 		}
 
-		// Do the frontend lifecycle thing - de-initialize
+		// Do the frontend life cycle thing - de-initialize
 		OnPause();
 		OnStop();
 

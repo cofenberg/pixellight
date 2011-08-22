@@ -87,7 +87,7 @@ class SRPlibRocket : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLLIBROCKET_API virtual ~SRPlibRocket();
 

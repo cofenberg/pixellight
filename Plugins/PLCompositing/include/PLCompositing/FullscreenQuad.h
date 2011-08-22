@@ -89,7 +89,7 @@ class FullscreenQuad {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API ~FullscreenQuad();
 

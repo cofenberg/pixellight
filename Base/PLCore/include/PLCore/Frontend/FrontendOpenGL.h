@@ -77,7 +77,7 @@ class FrontendOpenGL : public Frontend {
 		*    Constructor
 		*
 		*  @param[in] cFrontendContext
-		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lifes)
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives)
 		*  @param[in] cFrontendImpl
 		*    Frontend implementation instance
 		*/

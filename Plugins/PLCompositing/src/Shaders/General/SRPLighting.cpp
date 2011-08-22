@@ -203,7 +203,7 @@ void SRPLighting::DrawRec(Renderer &cRenderer, const SQCull &cCullQuery)
 				if (pSceneNode != m_pIgnoredLight && static_cast<SNLight*>(pSceneNode)->IsRenderLight()) {
 					SNLight &cLight = *static_cast<SNLight*>(pSceneNode);
 
-					// Skip black lights, they have no visible incluence!
+					// Skip black lights, they have no visible influence!
 					if (cLight.Color.Get() != Color3::Black)
 						RenderLight(cRenderer, cCullQuery, cLight, *pVisNode);
 				}
@@ -373,7 +373,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 	// Get the light range
 	const float fRange = bPoint ? static_cast<SNPointLight&>(cLight).GetRange() : 0.0f;
 
-	// Skip none directional lights with a radius of <= 0, they have no visible incluence!
+	// Skip none directional lights with a radius of <= 0, they have no visible influence!
 	if (!bDirectional && fRange <= 0.0f)
 		return;	// Get us out of here right now
 
@@ -638,7 +638,7 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 								if (pGeneratedProgramUserData->pShadowMap) {
 									const int nTextureUnit = pGeneratedProgramUserData->pShadowMap->Set(pShadowMap);
 									if (nTextureUnit >= 0) {
-										// Clamp, if this is not done, we may see some artefacts
+										// Clamp, if this is not done, we may see some artifacts
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU,  TextureAddressing::Clamp);
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV,  TextureAddressing::Clamp);
 										cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressW,  TextureAddressing::Clamp);

@@ -113,10 +113,10 @@ class SystemImpl {
 
 		/**
 		*  @brief
-		*    Get the CPU mhz
+		*    Get the CPU MHz
 		*
 		*  @return
-		*    CPU mhz
+		*    CPU MHz
 		*/
 		virtual uint32 GetCPUMhz() const = 0;
 
@@ -269,7 +269,7 @@ class SystemImpl {
 
 		/**
 		*  @brief
-		*    Exit the application immediatly
+		*    Exit the application immediately
 		*
 		*  @param[in] nReturn
 		*    Return value

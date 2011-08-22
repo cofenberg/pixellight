@@ -918,7 +918,7 @@ String Renderer::GetAPI(uint32 *pnVersion) const
 		// Set version to 0 as default
 		*pnVersion = 0;
 
-		// Get version (for example '2.1.3' -> we are only interessted in '2.1' because
+		// Get version (for example '2.1.3' -> we are only interested in '2.1' because
 		// the third number is not really normed)
 		String sVersion = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 		if (sVersion.GetLength()) {

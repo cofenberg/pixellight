@@ -86,10 +86,10 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 	dbus_error_init(&sError);
 
 	// Get DBUS connection
-	PL_LOG(Info, "BTLinux: Discovering bluetooth devices")
+	PL_LOG(Info, "BTLinux: Discovering Bluetooth devices")
 	DBusConnection *pConnection = dbus_bus_get(DBUS_BUS_SYSTEM, &sError);
 	if (pConnection) {
-		// Get default bluetooth adapter
+		// Get default Bluetooth adapter
 		DBusMessage *pMessage = dbus_message_new_method_call("org.bluez", "/", "org.bluez.Manager", "DefaultAdapter");
 		DBusMessage *pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
 		dbus_message_unref(pMessage);
@@ -251,7 +251,7 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 									// Get value
 									dbus_message_iter_next(&sIter);
 									if (dbus_message_iter_get_arg_type(&sIter) == DBUS_TYPE_VARIANT) {
-										// Get variante
+										// Get variant
 										DBusMessageIter sVariantIter;
 										dbus_message_iter_recurse(&sIter, &sVariantIter);
 										if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_BOOLEAN) {

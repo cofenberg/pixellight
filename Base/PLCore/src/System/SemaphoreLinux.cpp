@@ -63,7 +63,7 @@ SemaphoreLinux::SemaphoreLinux(uint32 nValue, uint32 nMaxValue) :
 	// [DEBUG]
 #ifdef DEBUG
 	if (m_hSemaphore < 0)
-		fprintf(stderr, "Could not create semaphore\n errorcode: %d(%s)", errno, strerror(errno));
+		fprintf(stderr, "Could not create semaphore\n error code: %d(%s)", errno, strerror(errno));
 #endif
 }
 

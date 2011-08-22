@@ -224,7 +224,7 @@ class RegEx {
 
 		/**
 		*  @brief
-		*    Analyse the regular expression and store additional internal information
+		*    Analyze the regular expression and store additional internal information
 		*
 		*  @remarks
 		*    This function analyses and stores additional internal information about the

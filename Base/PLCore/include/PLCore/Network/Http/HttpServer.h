@@ -84,7 +84,7 @@ class HttpServer : public Server {
 	protected:
 		/**
 		*  @brief
-		*    A webserver request has come in
+		*    A web server request has come in
 		*
 		*  @param[in] pConnection
 		*    Connection

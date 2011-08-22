@@ -103,7 +103,7 @@ bool Host::IsListening() const
 
 /**
 *  @brief
-*    Start listenting for new connections
+*    Start listening for new connections
 */
 void Host::Listen(uint32 nPort)
 {

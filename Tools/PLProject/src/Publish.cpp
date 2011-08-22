@@ -75,7 +75,7 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 				// Is this a shared library? If yes, we may also need to copy some symlinks and not just one file...
 				static RegEx cRegExg(".*\\.so", RegEx::MatchCaseSensitive);
 				if (cRegExg.Match(sFile)) {
-					// Get the real source directory - please note that on Linux systems, the seached shared library may
+					// Get the real source directory - please note that on Linux systems, the searched shared library may
 					// in fact be at another place as the given expected one.
 					// 1. Look within "/usr/lib"
 					// 2. Look within "/usr/local/lib"

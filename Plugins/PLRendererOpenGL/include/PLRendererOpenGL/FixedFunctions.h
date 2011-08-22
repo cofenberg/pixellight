@@ -107,7 +107,7 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		*  @brief
 		*    Updates the current OpenGL texture matrix of the given stage
 		*
-		*  @param[im] nStage
+		*  @param[in] nStage
 		*    Texture stage where to update the current OpenGL matrix
 		*
 		*  @note
@@ -119,7 +119,7 @@ class FixedFunctions : public PLRenderer::FixedFunctions {
 		*  @brief
 		*    Updates the current OpenGL texture matrix of the given stage
 		*
-		*  @param[im] nStage
+		*  @param[in] nStage
 		*    Texture stage where to update the current OpenGL matrix
 		*
 		*  @note

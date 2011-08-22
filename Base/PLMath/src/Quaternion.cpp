@@ -445,7 +445,7 @@ bool Quaternion::FromString(const String &sString)
 			nParsePos = cRegEx.GetPosition();
 		}
 
-		// Set unused componts to 0
+		// Set unused components to 0
 		while (nComponent < 4)
 			fQ[nComponent++] = 0.0f;
 

@@ -58,7 +58,7 @@ namespace PLFrontendQt {
 *   This is the entry point for an Qt application which uses PixelLight for Rendering
 *   This class initializes the core part of PixelLight and creates an RendererContext which is used for rendering
 *
-*   A timer is used to update some components of PixelLight which needs continouse updates to work correctly.
+*   A timer is used to update some components of PixelLight which needs continuous updates to work correctly.
 *   At least the Timing component will be updated. Optional the input handling and the renderer context will be updated
 */
 class PLFRONTENDQT_API Application : public QApplication {
@@ -177,13 +177,13 @@ class PLFRONTENDQT_API Application : public QApplication {
 
 		/**
 		*  @brief
-		*    Sets the update inverval in which the Timing and optional the input handling and renderer context components of PixelLight gets Updated
+		*    Sets the update interval in which the Timing and optional the input handling and renderer context components of PixelLight gets Updated
 		*
 		* @param[in] msec
-		*   update interval in miliseconds.
-		*   A value of 0 will create an update timer which will fire everytime when no nore system events needs to be processed.
+		*   update interval in milliseconds.
+		*   A value of 0 will create an update timer which will fire every time when no none system events needs to be processed.
 		*   Note:
-		*           If the interval is set to zero then the cpu usage (one core) of the application will go virtually to nearly 100%. Because this is similar to an endless loop.
+		*           If the interval is set to zero then the CPU usage (one core) of the application will go virtually to nearly 100%. Because this is similar to an endless loop.
 		*/
 		void SetUpdateInterval(int msec);
 
@@ -192,7 +192,7 @@ class PLFRONTENDQT_API Application : public QApplication {
 		*    Returns the current used update interval
 		*
 		*  @return
-		*    Update interval in miliseconds
+		*    Update interval in milliseconds
 		*/
 		int GetUpdateInterval()
 		{

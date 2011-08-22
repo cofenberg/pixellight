@@ -151,7 +151,7 @@ class SRPDeferredLighting : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredLighting();
 

@@ -68,7 +68,7 @@ class JointAni : public PLRenderer::AnimationBase {
 		*/
 		enum EAttribute {
 			AX     = 1<<0,	/**< The x component of the position is modified */
-			AY     = 1<<1,	/**< The xycomponent of the position is modified */
+			AY     = 1<<1,	/**< The y component of the position is modified */
 			AZ     = 1<<2,	/**< The z component of the position is modified */
 			AYaw   = 1<<3,	/**< The yaw component of the rotation is modified */
 			APitch = 1<<4,	/**< The pitch component of the rotation is modified */

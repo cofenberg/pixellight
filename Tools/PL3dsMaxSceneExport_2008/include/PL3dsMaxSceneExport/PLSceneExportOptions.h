@@ -116,7 +116,7 @@ class PLSceneExportOptions {
 	private:
 		/**
 		*  @brief
-		*    Returns an absolut configuration filename
+		*    Returns an absolute configuration filename
 		*
 		*  @param[in]  sFilename
 		*    Filename to return the absolute version from

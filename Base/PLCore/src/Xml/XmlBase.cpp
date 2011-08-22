@@ -63,7 +63,7 @@ const int XmlBase::utf8ByteTable[256] =
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-// Note tha "PutString" hardcodes the same list. This
+// Note that "PutString" hard codes the same list. This
 // is less flexible than it appears. Changing the entries
 // or order will break putstring.
 XmlBase::Entity XmlBase::sEntity[NumOfEntities] =
@@ -212,7 +212,7 @@ const char *XmlBase::ReadName(const char *pszData, String &sName, EEncoding nEnc
 	// Of course, in unicode, the parser has no idea what a letter *is*. The algorithm is generous.
 	//
 	// After that, they can be letters, underscores, numbers,
-	// hyphens, or colons. (Colons are valid ony for namespaces,
+	// hyphens, or colons. (Colons are valid only for namespaces,
 	// but the parser can't tell namespaces from names.)
 	if (pszData && *pszData && (IsAlpha(*pszData) || *pszData == '_')) {
 		const char *pszStart = pszData;
@@ -408,7 +408,7 @@ int XmlBase::IsAlpha(unsigned char nByte)
 {
 	// This will only work for low-ascii, everything else is assumed to be a valid
 	// letter. I'm not sure this is the best approach, but it is quite tricky trying
-	// to figure out alhabetical vs. not across encoding. So take a very conservative approach.
+	// to figure out alphabetical vs. not across encoding. So take a very conservative approach.
 	return (nByte < 127) ? isalpha(nByte) : 1;	// What else to do? The unicode set is huge... get the english ones right.
 }
 
@@ -416,7 +416,7 @@ int XmlBase::IsAlphaNum(unsigned char nByte)
 {
 	// This will only work for low-ascii, everything else is assumed to be a valid
 	// letter. I'm not sure this is the best approach, but it is quite tricky trying
-	// to figure out alhabetical vs. not across nEncoding. So take a very conservative approach.
+	// to figure out alphabetical vs. not across nEncoding. So take a very conservative approach.
 	return (nByte < 127) ? isalnum(nByte) : 1;	// What else to do? The unicode set is huge... get the english ones right.
 }
 
@@ -450,7 +450,7 @@ void XmlBase::ConvertUTF32ToUTF8(unsigned long nInput, char *pszOutput, int &nLe
 
 	pszOutput += nLength;
 
-	// Scary scary fall throughs
+	// Scary scary fall thoughts
 	switch (nLength) {
 		case 4:
 			--pszOutput;

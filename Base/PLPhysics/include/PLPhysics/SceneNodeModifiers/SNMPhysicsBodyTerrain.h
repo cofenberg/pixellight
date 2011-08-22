@@ -56,7 +56,7 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 			pl_property("SceneNodeClass",	"PLScene::SNTerrain")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Heigh field scale",	"")
+		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Height field scale",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
@@ -94,7 +94,7 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLMath::Vector3 m_vScale;	/**< Heigh field scale */
+		PLMath::Vector3 m_vScale;	/**< Height field scale */
 
 
 	//[-------------------------------------------------------]

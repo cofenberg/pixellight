@@ -181,7 +181,7 @@ class SRPDirectionalLightingShadersMaterial {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		~SRPDirectionalLightingShadersMaterial();
 

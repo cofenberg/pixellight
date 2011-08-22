@@ -160,7 +160,7 @@ class Animation : public PLCore::Element<Animation> {
 		*    Animation flags (see EFlags)
 		*
 		*  @note
-		*    - Use the start function below wich accepts a AnimationInfo
+		*    - Use the start function below which accepts a AnimationInfo
 		*      as parameter for more complex animations
 		*/
 		PLRENDERER_API void Start(PLCore::uint32 nStart, PLCore::uint32 nEnd, float fSpeed = 24.0f, PLCore::uint32 nFlags = 0);

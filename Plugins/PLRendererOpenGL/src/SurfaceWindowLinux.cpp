@@ -265,7 +265,7 @@ bool SurfaceWindow::Present()
 		Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 		ContextLinux *pContextLinux = static_cast<ContextLinux*>(cRenderer.GetContext());
 		if (pContextLinux) {
-			// Swap interval (vertical synchronisation) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
+			// Swap interval (vertical synchronization) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
 			if (m_nSwapInterval != static_cast<int>(cRenderer.GetSwapInterval())) {
 				m_nSwapInterval = cRenderer.GetSwapInterval();
 				if (cRenderer.IsGLX_SGI_swap_control())

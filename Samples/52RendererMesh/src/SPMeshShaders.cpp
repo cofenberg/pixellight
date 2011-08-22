@@ -148,7 +148,7 @@ void SPMeshShaders::OnPaint(Surface &cSurface)
 		// Calculate the world matrix
 		Matrix4x4 mWorld;
 		{
-			// Build a rotation matrix by using a given euler angle around the y-axis
+			// Build a rotation matrix by using a given Euler angle around the y-axis
 			mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 
 			// Increase the rotation by the current time difference (time past since the last frame)

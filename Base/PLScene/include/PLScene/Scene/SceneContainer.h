@@ -247,7 +247,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    idea to create & destroy it every time you perform this query. For instance
 		*    queries for rendering the scene will store different current rendering information,
 		*    in this case it would be terrible to create & destroy the query every frame!
-		*    Maybe the rendering algorihms doesn't work correctly if this is done because
+		*    Maybe the rendering algorithm doesn't work correctly if this is done because
 		*    sometimes they will need information from the previous frame!
 		*    Such queries should be created once and then be used all the time. Use
 		*    SceneQueryHandler to hold your pointer to the query. If the container is destroyed

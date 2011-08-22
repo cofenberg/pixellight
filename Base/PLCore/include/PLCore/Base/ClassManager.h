@@ -193,7 +193,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Get classes based on their base class and/or module (search for classes)
 		*
 		*  @param[out] lstClasses
-		*    List that recieves the found classes
+		*    List that receives the found classes
 		*  @param[in] sClass
 		*    Name of base class (with namespace)
 		*  @param[in] nRecursive
@@ -201,7 +201,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @param[in] nIncludeBase
 		*    'IncludeBase' to include the base class itself, 'NoBase' to exclude it
 		*  @param[in] nIncludeAbstract
-		*    'IncludeAbstract' to include classes without a constructor, 'NoAbstract' to exlude them
+		*    'IncludeAbstract' to include classes without a constructor, 'NoAbstract' to exclude them
 		*  @param[in] nModuleID
 		*    ID of module, or 0 to include the classes from all modules
 		*

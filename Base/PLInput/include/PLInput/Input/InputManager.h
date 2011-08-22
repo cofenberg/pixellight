@@ -240,7 +240,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 		*    Add a new input device
 		*
 		*  @param[in] pDevice
-		*    Input device, shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Input device, shouldn't be a null pointer (but a null pointer is caught internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -252,7 +252,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 		*    Remove device
 		*
 		*  @param[in] pDevice
-		*    Input device, shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Input device, shouldn't be a null pointer (but a null pointer is caught internally)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -264,7 +264,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 		*    Remove control
 		*
 		*  @param[in] pControl
-		*    Input control to remove, shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Input control to remove, shouldn't be a null pointer (but a null pointer is caught internally)
 		*/
 		void RemoveControl(Control *pControl);
 
@@ -273,7 +273,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 		*    Update control
 		*
 		*  @param[in] pControl
-		*    Input control, shouldn't be a null pointer (but a null pointer is catched internally)
+		*    Input control, shouldn't be a null pointer (but a null pointer is caught internally)
 		*
 		*  @remarks
 		*    This marks the control as being updated recently, which will fire a message

@@ -313,7 +313,7 @@ void FrameBufferObject::TakeDepthBufferFromFBO(FrameBufferObject &cFBO)
 		GLint nFrameBufferT;
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT, &nFrameBufferT);
 
-		// [TODO] Test this/clean this up: May flacker on NVIDIA systems if we just attach to GL_DEPTH_ATTACHMENT
+		// [TODO] Test this/clean this up: May flicker on NVIDIA systems if we just attach to GL_DEPTH_ATTACHMENT
 		GLuint nDepthBufferAttachment = GL_DEPTH_STENCIL_ATTACHMENT;
 
 		// If we have a depth buffer, we destroy it because the depth buffer of the other FBO is much better *g*

@@ -448,7 +448,7 @@ void MeshOctree::Draw(const Color4 &cColor, const Matrix4x4 &mWorldViewProjectio
 //[-------------------------------------------------------]
 void MeshOctree::CustomVisible(Bitset *pBitset)
 {
-	// Check if the octree was build and if theres a bitset which can be filled
+	// Check if the octree was build and if theres a bit set which can be filled
 	if (m_bBuild && pBitset) {
 		// Mark all geometries assigned to this octree as visible
 		for (uint32 i=0; i<m_nNumOfGeometries; i++)

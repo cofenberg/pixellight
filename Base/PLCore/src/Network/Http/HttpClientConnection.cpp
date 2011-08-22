@@ -94,7 +94,7 @@ void HttpClientConnection::OnDisconnect()
 
 void HttpClientConnection::OnReceive(const char *pBuffer, uint32 nSize)
 {
-	// Data recieved?
+	// Data received?
 	if (pBuffer && !m_cHttpHeader.IsComplete()) {
 		// Add data to buffer
 		m_cBuffer.Add(pBuffer, nSize);

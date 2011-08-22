@@ -223,7 +223,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// Write a warning into the log
 						PL_LOG(Warning, String::Format("Lowest mipmap is %d, but should be 1! Missing mipmap levels will be white!", nSize))
 
-						// If we don't define all mipmap levels down to 1 'mysterious' graphics bugs may occure were it is not
+						// If we don't define all mipmap levels down to 1 'mysterious' graphics bugs may occur were it is not
 						// always easy to pinpoint the problem directly to the mipmaps. So, to avoid frustration during bug finding,
 						// we just create the missing mipmap levels down to 1 with a white color - so it's possible to 'see' which texture
 						// isn't correct without reading the log message from above. (for some people it appears to be hard to read logs *g*)

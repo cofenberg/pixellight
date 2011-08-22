@@ -48,7 +48,7 @@ namespace PLInput {
 *    A virtual input controller is a controller that is used to map real input devices to virtual controls.
 *    Usually, you have one virtual input controller for your application, or in rare occasions more than one,
 *    e.g. one for every window or player. The virtual controller connects itself to the physical input devices,
-*    a virtual function can be used to alter this behaviour in derived classes. The virtual controller should
+*    a virtual function can be used to alter this behavior in derived classes. The virtual controller should
 *    then be connected to the controllers of input-enabled objects, such as scene nodes or modifiers.
 */
 class VirtualController : public Controller {
@@ -94,7 +94,7 @@ class VirtualController : public Controller {
 		*  @remarks
 		*    This function shall enumerate the available devices and connect
 		*    itself to the proper controls of those input devices. Override
-		*    this function in derived classes to alter it's behaviour or to
+		*    this function in derived classes to alter it's behavior or to
 		*    support your own type of virtual controllers
 		*/
 		PLINPUT_API virtual void ConnectToDevices();

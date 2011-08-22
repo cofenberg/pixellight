@@ -56,7 +56,7 @@ class Connection;
 *    Base class for a 'network partner'. That is any node in a network, which can open or accept connection
 *    to one or more other nodes. In a classic client/server architecture, one host is the client
 *    and another is the server to which all clients connect. In other network architectures, such
-*    as peer-to-peer, the network consists of several nodes of the same type, that connect to oneanother.
+*    as peer-to-peer, the network consists of several nodes of the same type, that connect to one another.
 */
 class Host {
 
@@ -109,7 +109,7 @@ class Host {
 
 		/**
 		*  @brief
-		*    Start listenting for new connections
+		*    Start listening for new connections
 		*
 		*  @param[in] nPort
 		*    Port at which the host is listening
@@ -127,7 +127,7 @@ class Host {
 		*    Stop listening for new connections
 		*
 		*  @remarks
-		*    This function will stop the host listenting for new connection, but all current connections
+		*    This function will stop the host listening for new connection, but all current connections
 		*    will still remain open. See CloseConnection() and Close() for closing the host completely.
 		*/
 		PLCORE_API void ClosePort();
@@ -137,7 +137,7 @@ class Host {
 		*    Close all connections
 		*
 		*  @remarks
-		*    This function closes all active connections, but does not stop listenting for new
+		*    This function closes all active connections, but does not stop listening for new
 		*    connections. See StopListen() and Close() for closing the host completely.
 		*/
 		PLCORE_API void CloseConnections();

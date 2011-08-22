@@ -325,7 +325,7 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 	m_cApplicationContext.SetExecutableFilename(sExecutableFilename);
 	m_cApplicationContext.SetArguments(lstArguments);
 
-	// Do the lifecycle thing - let the world know that we have been created (must be done in here instead of within the constructor)
+	// Do the life cycle thing - let the world know that we have been created (must be done in here instead of within the constructor)
 	OnCreate();
 
 	// The application is now running
@@ -345,7 +345,7 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 		// Call application-specific de-initialization routine
 		OnDeInit();
 
-		// Do the frontend lifecycle thing - de-initialize
+		// Do the frontend life cycle thing - de-initialize
 		OnPause();
 		OnStop();
 	}
@@ -353,7 +353,7 @@ int CoreApplication::Run(const String &sExecutableFilename, const Array<String> 
 	// The application is no longer running
 	m_bRunning = false;
 
-	// Do the lifecycle thing - let the world know that we're going to die (should be done in here instead of within the destructor)
+	// Do the life cycle thing - let the world know that we're going to die (should be done in here instead of within the destructor)
 	OnDestroy();
 
 	// Exit
@@ -484,7 +484,7 @@ void CoreApplication::OnInitLog()
 	// Create log
 	Log *pLog = Log::GetInstance();
 	if (pLog) {
-		// Check if a log file has been given on the commandline
+		// Check if a log file has been given on the command line
 		String sLog = m_cCommandLine.GetValue("--logfile");
 		if (sLog.GetLength()) {
 			// Try to open log, do nothing if that fails - command line is command line ;-)
@@ -500,7 +500,7 @@ void CoreApplication::OnInitLog()
 				// Try user directory first, then use current directory
 				sLog = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sLogName;
 				if (!(m_bMultiUser && pLog->Open(sLog))) {
-					// Not successfull, so try current directory instead
+					// Not successful, so try current directory instead
 					sLog = System::GetInstance()->GetCurrentDir() + '/' + m_sLogName;
 					if (!pLog->Open(sLog)) {
 						// Error: Could not open log
@@ -528,7 +528,7 @@ void CoreApplication::OnInitLog()
 		PL_LOG(Info, "< " + Runtime::GetVersion().ToString() + " >")
 		PL_LOG(Info, "PLCore build: "__DATE__" "__TIME__"")
 		PL_LOG(Info, "Application start time: " + System::GetInstance()->GetTime().ToString())
-		PL_LOG(Info, "\nPLCore infomation:\n" + System::GetInstance()->GetInfo() + '\n')
+		PL_LOG(Info, "\nPLCore information:\n" + System::GetInstance()->GetInfo() + '\n')
 		PL_LOG(Quiet, '\n')
 
 		{ // Print out directory information:
@@ -554,7 +554,7 @@ void CoreApplication::OnInitLog()
 		}
 
 		// Print out the general system info:
-		PL_LOG(Info, String::Format("CPU: %d Mhz", System::GetInstance()->GetCPUMhz()))
+		PL_LOG(Info, String::Format("CPU: %d MHz", System::GetInstance()->GetCPUMhz()))
 
 		// Start enumerate messages
 		PL_LOG(Quiet, "\n\n")
@@ -586,7 +586,7 @@ void CoreApplication::OnInitCmdLine()
 */
 void CoreApplication::OnInitConfig()
 {
-	// Check if a config file has been given on the commandline
+	// Check if a config file has been given on the command line
 	String sConfig = m_cCommandLine.GetValue("--configfile");
 	if (sConfig.GetLength()) {
 		// Try to load, do nothing if that fails - command line is command line ;-)
@@ -602,7 +602,7 @@ void CoreApplication::OnInitConfig()
 			// Try user directory first, then use application (!) directory
 			sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
 			if (!(m_bMultiUser && m_cConfig.Load(sConfig))) {
-				// Not successfull, so try application directory instead
+				// Not successful, so try application directory instead
 				sConfig = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
 				if (!m_cConfig.Load(sConfig)) {
 					// Error: Could not open config file
@@ -628,7 +628,7 @@ void CoreApplication::OnInitConfig()
 	// Save config filename in application context
 	m_cApplicationContext.SetConfigFilename(sConfig);
 
-	// Analize config
+	// Analyze configuration
 	if (m_sConfigName.GetLength()) {
 		// Is this the first program start?
 		if (m_cConfig.GetVar("PLCore::CoreConfig", "FirstRun").GetBool()) {

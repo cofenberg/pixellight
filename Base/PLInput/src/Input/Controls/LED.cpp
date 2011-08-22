@@ -97,7 +97,7 @@ LED &LED::operator =(const LED &cOther)
 
 /**
 *  @brief
-*    Get state of all LEDs as a bitfield
+*    Get state of all LEDs as a bit field
 */
 uint32 LED::GetLEDs() const
 {
@@ -107,7 +107,7 @@ uint32 LED::GetLEDs() const
 
 /**
 *  @brief
-*    Set state of all LEDs as a bitfield
+*    Set state of all LEDs as a bit field
 */
 void LED::SetLEDs(uint32 nLEDs)
 {

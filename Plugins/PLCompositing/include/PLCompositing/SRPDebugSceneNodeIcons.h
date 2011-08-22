@@ -80,7 +80,7 @@ class SRPDebugSceneNodeIcons : public SRPDebug {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDebugSceneNodeIcons();
 

@@ -43,7 +43,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Omnidirectional point light scene node were light is emitted from a single point in space
+*    Omni directional point light scene node were light is emitted from a single point in space
 */
 class SNPointLight : public SNLight {
 
@@ -70,7 +70,7 @@ class SNPointLight : public SNLight {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNPointLight, "PLScene", PLScene::SNLight, "Omnidirectional point light scene node were light is emitted from a single point in space")
+	pl_class(PLS_RTTI_EXPORT, SNPointLight, "PLScene", PLScene::SNLight, "Omni directional point light scene node were light is emitted from a single point in space")
 		// Attributes
 		pl_attribute(Range,			float,						1.0f,	ReadWrite,	GetSet,	"Light range",	"Min='0.0001'")
 			// Overwritten SceneNode attributes

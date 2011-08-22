@@ -140,7 +140,7 @@ Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic)
 Mesh *MeshManager::CreateMesh(const String &sName, bool bStatic, const String &sParameters)
 {
 	// To keep things as fast as possible we store a pointer to the base class
-	// (no hash map operation + quite efficent internal string comparison)
+	// (no hash map operation + quite efficient internal string comparison)
 	static const PLCore::Class *pBaseClass = PLCore::ClassManager::GetInstance()->GetClass("PLMesh::MeshCreator");
 
 	// Create the mesh creator

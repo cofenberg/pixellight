@@ -139,7 +139,7 @@ bool MeshLoaderPL::ReadMeshFile(Mesh &cMesh, File &cFile, MeshFile::Chunk &cChun
 		bool bResult = true; // No error by default
 		MeshFile::Chunk sChunk = ReadChunk(cFile);
 		while (bResult && sChunk.nType && sChunk.nSize) {
-			// Interprete chunk
+			// Interpret chunk
 			switch (sChunk.nType) {
 				case MeshFile::CHUNK_MATERIALS:
 					bResult = ReadMaterials(cMesh, cFile);

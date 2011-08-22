@@ -47,7 +47,7 @@ namespace PLCompositing {
 *
 *  @remarks
 *    The used scene renderer MUST support this effect by writing DOF data into the alpha
-*    channel of the frame buffer this effect is using to combine the blured and original
+*    channel of the frame buffer this effect is using to combine the blurred and original
 *    images.
 *
 *  @note

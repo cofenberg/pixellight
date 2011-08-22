@@ -57,7 +57,7 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 		return true;
 	}
 
-	{ // Print a list af all available extensions into the log
+	{ // Print a list of all available extensions into the log
 		PL_LOG(Info, "Extensions info:")
 		PL_LOG(Info, reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)))
 

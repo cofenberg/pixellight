@@ -49,7 +49,7 @@ namespace PLCore {
 *      if this parameter is not empty, only configuration class instances are saved which are within the
 *      provided configuration class group, else ALL configuration class instances are saved.
 *    - Normally all save functions accept a boolean 'NoDefault'-parameter, (default setting: 'false')
-*      if this parameter is 'true', all variables with default valures are not saved
+*      if this parameter is 'true', all variables with default values are not saved
 */
 class ConfigLoader : public LoaderImpl {
 

@@ -55,7 +55,7 @@ class Quaternion;
 *
 *  @remarks
 *    The implementation of this class is basing on the 'Euler Angle Conversion' gem from Ken Shoemake (1993)
-*    published in the 'Graphics Gems IV' book. The original code is avaliable here:
+*    published in the 'Graphics Gems IV' book. The original code is available here:
 *    http://www.graphicsgems.org/gemsiv/euler_angle/
 *
 *  @note

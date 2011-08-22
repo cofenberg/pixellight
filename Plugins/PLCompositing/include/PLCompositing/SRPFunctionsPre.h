@@ -71,7 +71,7 @@ class SRPFunctionsPre : public SRPFunctions {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPFunctionsPre();
 

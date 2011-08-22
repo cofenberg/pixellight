@@ -84,7 +84,7 @@ class SRPDeferredVolumetricFog : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredVolumetricFog();
 

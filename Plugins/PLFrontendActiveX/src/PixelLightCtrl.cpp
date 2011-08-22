@@ -19,19 +19,19 @@ PixelLightCtrl::PixelLightCtrl() :
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
-	// Do the frontend lifecycle thing - let the world know that we have been created
+	// Do the frontend life cycle thing - let the world know that we have been created
 	FrontendImpl::OnCreate();
 }
 
 PixelLightCtrl::~PixelLightCtrl()
 {
-	// Do the frontend lifecycle thing - de-initialize
+	// Do the frontend life cycle thing - de-initialize
 	if (m_bFrontendApplicationInitialized) {
 		FrontendImpl::OnPause();
 		FrontendImpl::OnStop();
 	}
 
-	// Do the frontend lifecycle thing - let the world know that we're going to die
+	// Do the frontend life cycle thing - let the world know that we're going to die
 	FrontendImpl::OnDestroy();
 }
 
@@ -41,7 +41,7 @@ PixelLightCtrl::~PixelLightCtrl()
 //[-------------------------------------------------------]
 int PixelLightCtrl::Run(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments)
 {
-	// Error, this frontend implementation is run and controlled by another application this frontend is embeded into
+	// Error, this frontend implementation is run and controlled by another application this frontend is embedded into
 	return -1;
 }
 
@@ -67,13 +67,13 @@ void PixelLightCtrl::Ping()
 
 PLCore::String PixelLightCtrl::GetTitle() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return "";
 }
 
 void PixelLightCtrl::SetTitle(const PLCore::String &sTitle)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 int PixelLightCtrl::GetX() const
@@ -110,45 +110,45 @@ PLCore::uint32 PixelLightCtrl::GetHeight() const
 
 void PixelLightCtrl::SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool PixelLightCtrl::GetToggleFullscreenMode() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void PixelLightCtrl::SetToggleFullscreenMode(bool bToggleFullscreenMode)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool PixelLightCtrl::GetFullscreenAltTab() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void PixelLightCtrl::SetFullscreenAltTab(bool bAllowed)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool PixelLightCtrl::IsFullscreen() const
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 	return false;
 }
 
 void PixelLightCtrl::SetFullscreen(bool bFullscreen)
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 void PixelLightCtrl::RefreshFullscreen()
 {
-	// Ignore - This frontend implementation is run and controlled by another application this frontend is embeded into
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }
 
 bool PixelLightCtrl::IsMouseOver() const
@@ -288,7 +288,7 @@ LRESULT PixelLightCtrl::OnCreate(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL &
 		FrontendImpl::OnRun(sExecutableFilename, lstArguments);
 	}
 
-	// Do the frontend lifecycle thing - initialize
+	// Do the frontend life cycle thing - initialize
 	if (FrontendImpl::OnStart()) {
 		FrontendImpl::OnResume();
 

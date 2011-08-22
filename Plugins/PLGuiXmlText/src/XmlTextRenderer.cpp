@@ -398,7 +398,7 @@ void XmlTextRenderer::DrawBullet()
 */
 void XmlTextRenderer::AddLineBreak(bool bForce, bool bJustify)
 {
-	// Insert linebreak if forced or if position is not at the beginning of a line
+	// Insert line break if forced or if position is not at the beginning of a line
 	if (bForce || m_nLineWidth > 0) {
 		// Save line height
 		int nLineHeight = (m_nLineHeight > 0 || !m_pFont ? m_nLineHeight : m_pFont->GetHeight());

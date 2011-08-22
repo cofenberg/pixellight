@@ -281,7 +281,7 @@ bool RegEx::IsUTF8() const
 
 /**
 *  @brief
-*    Analyse the regular expression and store additional internal information
+*    Analyze the regular expression and store additional internal information
 */
 void RegEx::Study()
 {

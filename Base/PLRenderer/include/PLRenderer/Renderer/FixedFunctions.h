@@ -178,10 +178,10 @@ class FixedFunctions {
 			enum Enum {
 				None          = 0,	/**< No texture coordinate generation (passthru) */
 				ObjectLinear  = 1,	/**< Object linear */
-				EyeLinear     = 2,	/**< Eye liniear */
+				EyeLinear     = 2,	/**< Eye linear */
 				ReflectionMap = 3,	/**< Reflection map. Internally the texture matrix is multiplied with the inversed view matrix
 										 automatically for correct reflections before the matrix is send to the API. If you request
-										 the current texture matrix, the orginal matrix set by SetTransformState() is returned. */
+										 the current texture matrix, the original matrix set by SetTransformState() is returned. */
 				NormalMap     = 4,	/**< Normal map */
 				SphereMap     = 5,	/**< Sphere map */
 				// End
@@ -191,7 +191,7 @@ class FixedFunctions {
 			pl_enum(Enum)
 				pl_enum_value(None,				"No texture coordinate generation (passthru)")
 				pl_enum_value(ObjectLinear,		"Object linear")
-				pl_enum_value(EyeLinear,		"Eye liniear")
+				pl_enum_value(EyeLinear,		"Eye linear")
 				pl_enum_value(ReflectionMap,	"Reflection map")
 				pl_enum_value(NormalMap,		"Normal map")
 				pl_enum_value(SphereMap,		"Sphere map")
@@ -436,9 +436,9 @@ class FixedFunctions {
 		*  @param[in] bOriginal
 		*    Return the original set state? The returned transform state may differ from the given
 		*    original state. OpenGL backend example: If a rectangle texture buffer is used the used
-		*    transform matrix is skaled because in this case OpenGL requires not normalized texture
+		*    transform matrix is scaled because in this case OpenGL requires not normalized texture
 		*    coordinates. If you give this matrix to a shader program, don't use the original matrix! This has
-		*    only an influcence on the texture matrices, view etc. matrices are always original.
+		*    only an influence on the texture matrices, view etc. matrices are always original.
 		*
 		*  @return
 		*    The requested matrix, on error the projection matrix is returned
@@ -602,7 +602,7 @@ class FixedFunctions {
 		*    Gets the default light settings
 		*
 		*  @param[out] sLight
-		*    Light structure wich will receive the default settings
+		*    Light structure which will receive the default settings
 		*/
 		virtual void GetDefaultLightSettings(Light &sLight) const = 0;
 

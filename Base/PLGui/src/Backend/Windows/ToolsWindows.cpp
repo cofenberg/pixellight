@@ -60,7 +60,7 @@ void ToolsWindows::GetMaskBitmaps(HBITMAP hBitmap, COLORREF sColorTransparent, H
 	HBITMAP hOldAndMaskBitmap = static_cast<HBITMAP>(::SelectObject(hAndMaskDC, hMaskAnd));
 	HBITMAP hOldXorMaskBitmap = static_cast<HBITMAP>(::SelectObject(hXorMaskDC, hMaskXor));
 
-	// Scan each pixel of the souce bitmap and create the masks
+	// Scan each pixel of the source bitmap and create the masks
 	COLORREF MainBitPixel;
 	for (int x=0; x<sBitmap.bmWidth; x++) {
 		for (int y=0; y<sBitmap.bmHeight; y++) {

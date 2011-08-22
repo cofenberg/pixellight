@@ -61,7 +61,7 @@ HttpServer::~HttpServer()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A webserver request has come in
+*    A web server request has come in
 */
 void HttpServer::OnRequest(HttpServerConnection *pConnection, const HttpHeader *pHeader)
 {
@@ -97,7 +97,7 @@ void HttpServer::OnGet(HttpServerConnection *pConnection, const HttpHeader *pHea
 	// Send page
 	if (sUrl == '/') {
 		// Create a default page
-		const String sPage = "<html><head><title>PixelLight Webserver</title></head><body><h1>Welcome</h1>Welcome to PixelLight webserver</body></html>";
+		const String sPage = "<html><head><title>PixelLight Web server</title></head><body><h1>Welcome</h1>Welcome to PixelLight web server</body></html>";
 
 		// Send default page
 		pConnection->SendData(Http_200_OK, "text/html", sPage);
@@ -129,7 +129,7 @@ void HttpServer::OnError(HttpServerConnection *pConnection, EHttpStatus nStatus)
 //[-------------------------------------------------------]
 Connection *HttpServer::CreateIncomingConnection()
 {
-	// Create webserver connection
+	// Create web server connection
 	return new HttpServerConnection(*this);
 }
 

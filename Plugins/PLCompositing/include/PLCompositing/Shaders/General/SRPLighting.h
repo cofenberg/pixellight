@@ -79,7 +79,7 @@ namespace PLCompositing {
 *    - DiffuseMap:                 Diffuse map (2D, RGB, other usual name: 'decal map')
 *      - AlphaReference:           Alpha reference 0.0-1.0, only used if the diffuse map has an alpha channel, if 0 no alpha test is performed at all
 *    - DiffuseRampMap:             Can be used for 'cell shading' (1D, grayscale)
-*    - IndexOfRefraction:          Index of refraction (IOR), used for Fresnel reflection, <= 0.0 means no Fresnel reflection, default: 0.0 (List of refractive indices: http://en.wikipedia.org/wiki/List_of_refractive_indices, the index of refaction of the "from" material is set to air=1.0)
+*    - IndexOfRefraction:          Index of refraction (IOR), used for Fresnel reflection, <= 0.0 means no Fresnel reflection, default: 0.0 (List of refractive indices: http://en.wikipedia.org/wiki/List_of_refractive_indices, the index of refraction of the "from" material is set to air=1.0)
 *      - FresnelReflectionPower:   If 'IndexOfRefraction' is > 0.0, this is the Fresnel reflection power, default: 5.0
 *    - ReflectionColor:            If 'IndexOfRefraction' is > 0.0 or if there's a 'ReflectionMap', use this 3 floating point values to set the reflection color, default: 1.0 1.0 1.0
 *    - Reflectivity:               If 'IndexOfRefraction' is > 0.0 or if there's a 'ReflectionMap', reflectivity factor can be used, 0.0...1.0=no reflection...full reflection, default: 1.0
@@ -133,7 +133,7 @@ namespace PLCompositing {
 *    - Normal map compression using swizzled DXT5 (xGxR), LATC2 and alternate XY swizzle LATC2 is supported
 *    - If there's an SRPDirectionalLightingShaders instance, "SRPDirectionalLightingShaders::GetUsedLight()" will be called to ask for
 *      an already drawn directional light source (*the primary light source*)... if such a light exists, this scene renderer
-*      pass automatically skipts the light rendering so that this light source is not rendered twice!
+*      pass automatically skips the light rendering so that this light source is not rendered twice!
 */
 class SRPLighting : public PLScene::SceneRendererPass {
 
@@ -195,7 +195,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 			pl_enum_value(NoReflectivityMap,		"Ignore reflectivity map")
 			pl_enum_value(NoReflectionMap,			"Ignore reflection map")
 			pl_enum_value(NoNormalMap,				"Ignore normal maps")
-			pl_enum_value(NoDetailNormalMap,		"Inore detail normal maps")
+			pl_enum_value(NoDetailNormalMap,		"Ignore detail normal maps")
 			pl_enum_value(NoParallaxMapping,		"No parallax mapping (also called 'Photonic Mapping', 'Offset Mapping' or 'Virtual Displacement Mapping')")
 			pl_enum_value(NoSpecular,				"No specular")
 			pl_enum_value(NoSpecularMap,			"Ignore specular maps")
@@ -237,7 +237,7 @@ class SRPLighting : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPLighting();
 

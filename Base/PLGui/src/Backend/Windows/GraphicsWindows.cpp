@@ -128,7 +128,7 @@ void GraphicsWindows::DrawRect(const Color4 &cColor, const Vector2i &vPos1, cons
 
 		// Draw box
 		if (vPos1 == vPos2) {
-			// Unfortunatly, I was not able to draw a single pixel with Rectangle or RoundRect. So using this instead..
+			// Unfortunately, I was not able to draw a single pixel with Rectangle or RoundRect. So using this instead..
 			POINT sPoints[2];
 			sPoints[0].x = vPos1.x; sPoints[0].y = vPos1.y;
 			sPoints[1].x = vPos1.x+1; sPoints[1].y = vPos1.y;

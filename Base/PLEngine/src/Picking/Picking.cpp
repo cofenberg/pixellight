@@ -164,7 +164,7 @@ void Picking::MeshIntersection(SceneNode &cSceneNode, const Vector3 &vLineStartP
 	if (Intersect::AABoxLine(cAABoundngBox.vMin, cAABoundngBox.vMax, vLineStartPos, vLineEndPos, &fIntersection) &&
 		fIntersection >= 0.0f) {
 		// Before we perform the expensive triangle intersection test we check the found axis aligned bounding box
-		// intersection distance agains the current nearest intersection distance... maybe we're in luck and can
+		// intersection distance against the current nearest intersection distance... maybe we're in luck and can
 		// skip further tests if we detect that no triangle inside the box can be nearer than the current nearest
 		// distance...
 

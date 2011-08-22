@@ -136,7 +136,7 @@ bool BTDeviceLinux::ReadHandshake()
 		// Error: Did not receive handshake
 		return false;
 	} else if ((nHandshake & 0x0F) != ResultSuccess) {
-		// Error: Handshake non-successul
+		// Error: Handshake non-successful
 		switch (nHandshake & 0x0F) {
 			case ResultNotReady:
 			case ResultErrInvalidReportID:

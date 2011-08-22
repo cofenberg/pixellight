@@ -72,7 +72,7 @@ class ShadowMapping : public PLCore::Object {
 	public:
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~ShadowMapping();
 

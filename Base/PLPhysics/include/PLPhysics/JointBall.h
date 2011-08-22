@@ -49,7 +49,7 @@ namespace PLPhysics {
 *    DOFs removed: 3 DOFs remaining: 3
 *
 *  @note
-*    - All non-zero value for 'MaxConeAngle' are clamped between 5 degree and 175 degres
+*    - All non-zero value for 'MaxConeAngle' are clamped between 5 degree and 175 degrees
 */
 class JointBall : public Joint {
 

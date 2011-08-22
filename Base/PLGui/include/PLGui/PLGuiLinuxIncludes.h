@@ -44,7 +44,7 @@
 #define XEMBED_MODALITY_OFF 					11	/**< Window has been released from a modal dialog */
 #define XEMBED_REGISTER_ACCELERATOR				12	/**< Register a key accelerator */
 #define XEMBED_UNREGISTER_ACCELERATOR			13	/**< Unregister a key accelerator */
-#define XEMBED_ACTIVATE_ACCELERATOR				14	/**< An acellerator has been activated */
+#define XEMBED_ACTIVATE_ACCELERATOR				14	/**< An accelerator has been activated */
 
 /**
 *  @brief

@@ -87,7 +87,7 @@ class HDRAverageLuminance {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API ~HDRAverageLuminance();
 

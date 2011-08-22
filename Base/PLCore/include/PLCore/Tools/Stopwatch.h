@@ -101,7 +101,7 @@ class Stopwatch {
 		*    Stops the stopwatch
 		*
 		*  @return
-		*    The ellapsed time in microseconds since Start()
+		*    The elapsed time in microseconds since Start()
 		*
 		*  @note
 		*    - Often it's adequate to just request the past time using

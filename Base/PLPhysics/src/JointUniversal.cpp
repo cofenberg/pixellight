@@ -136,7 +136,7 @@ float JointUniversal::GetHighRange2() const
 
 /**
 *  @brief
-*    Sets the high range of the secondaxis
+*    Sets the high range of the second axis
 */
 void JointUniversal::SetHighRange2(float fHighRange)
 {

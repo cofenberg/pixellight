@@ -256,7 +256,7 @@ class Octree {
 		*  @param[in]  cPlaneSet
 		*    Plane set to check
 		*  @param[out] pBitset
-		*    Optional (can be a null pointer) bitset which can for instance be filled in CustomVisible() and
+		*    Optional (can be a null pointer) bit set which can for instance be filled in CustomVisible() and
 		*    CustomInvisible() with current visibility information
 		*
 		*  @remarks
@@ -306,11 +306,11 @@ class Octree {
 		Octree		   **m_ppChild;			/**< The children, can be a null pointer */
 		BoundingBox		 m_cBoundingBox;	/**< Octree bounding box */
 		Vector3			 m_vPos;			/**< World position (m_vPos+m_vBBCenter = real world position) */
-		Vector3			 m_vBBCenter;		/**< Orginal bounding box center */
+		Vector3			 m_vBBCenter;		/**< Original bounding box center */
 		bool			 m_bVisible;		/**< Is the octree visible? */
 		bool			 m_bBuild;			/**< is the octree build? */
 		int				 m_nSubdivide;		/**< Subdivide */
-		PLCore::uint32   m_nMinGeometries;	/**< Minimum nuber of geometries per octree */
+		PLCore::uint32   m_nMinGeometries;	/**< Minimum number of geometries per octree */
 
 
 	//[-------------------------------------------------------]
@@ -348,7 +348,7 @@ class Octree {
 		*    Custom visible function
 		*
 		*  @param[out] pBitset
-		*    Optional bitset, can be a null pointer
+		*    Optional bit set, can be a null pointer
 		*
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is visible
@@ -360,7 +360,7 @@ class Octree {
 		*    Destructor
 		*
 		*  @param[out] pBitset
-		*    Optional bitset, can be a null pointer
+		*    Optional bit set, can be a null pointer
 		*
 		*  @note
 		*    - Is called during UpdateVisibility() if the octree is invisible

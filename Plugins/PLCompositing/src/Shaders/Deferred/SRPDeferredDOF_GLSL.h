@@ -208,7 +208,7 @@ uniform sampler2DRect	BlurTexture;	// Blur texture\n\
 uniform sampler2DRect	Texture;		// Texture\n\
 \n\
 #define NUM_TAPS 8	// Number of taps the shader will use\n\
-const vec2 poisson[NUM_TAPS] = vec2[NUM_TAPS]( // Containts poisson-distributed positions on the unit circle\n\
+const vec2 poisson[NUM_TAPS] = vec2[NUM_TAPS]( // Constant poisson-distributed positions on the unit circle\n\
 	vec2( 0.7, -0.2),\n\
 	vec2( 0.1, -0.9),\n\
 	vec2( 0.3,  0.8),\n\

@@ -127,10 +127,10 @@ struct VS_OUTPUT {\n\
 #else\n\
 	float2 TexCoord	   : TEXCOORD0;	// Vertex texture coordinate\n\
 #endif\n\
-	float4 NormalDepth : TEXCOORD1; // View space vertex normal (normalize it to avoid interpolation artefacts!) and view space linear depth [0...far plane]\n\
+	float4 NormalDepth : TEXCOORD1; // View space vertex normal (normalize it to avoid interpolation artifacts!) and view space linear depth [0...far plane]\n\
 #ifdef FS_NORMALMAP\n\
-	float3 Tangent     : TEXCOORD2;	// View space vertex tangent (normalize it to avoid interpolation artefacts!)\n\
-	float3 Binormal    : TEXCOORD3;	// View space vertex tangent (normalize it to avoid interpolation artefacts!)\n\
+	float3 Tangent     : TEXCOORD2;	// View space vertex tangent (normalize it to avoid interpolation artifacts!)\n\
+	float3 Binormal    : TEXCOORD3;	// View space vertex tangent (normalize it to avoid interpolation artifacts!)\n\
 #endif\n\
 	float3 EyeVec      : TEXCOORD4;	// Tangent space vector pointing from the pixel to the eye point\n\
 #ifdef FS_REFLECTION\n\
@@ -233,9 +233,9 @@ FS_OUTPUT main(VS_OUTPUT IN				// Interpolated output from the vertex stage\n\
 	// Get the texel coordinate (textureCoordinate) to use\n\
 #ifdef FS_PARALLAXMAPPING\n\
 	// Plain parallax mapping works by offsetting the texture coordinate by approximating\n\
-	// where the ray would hit the surface. The heightmap indicates how far to offset.\n\
+	// where the ray would hit the surface. The height map indicates how far to offset.\n\
 	// The approximation assumes that all heights in the height-map is equal, which of\n\
-	// course won't be the case, but if the bumpmap is fairly smooth it works well enough.\n\
+	// course won't be the case, but if the bump map is fairly smooth it works well enough.\n\
 	float3 eyeVec = normalize(IN.EyeVec);\n\
 	float  scale  = ParallaxScaleBias.x;\n\
 	float  bias   = ParallaxScaleBias.y;\n\

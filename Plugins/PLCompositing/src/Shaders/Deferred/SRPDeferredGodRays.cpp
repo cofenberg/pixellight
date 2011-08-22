@@ -88,7 +88,7 @@ SRPDeferredGodRays::~SRPDeferredGodRays()
 //[-------------------------------------------------------]
 void SRPDeferredGodRays::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
-	// Skip black god rays, they have no visible incluence!
+	// Skip black god rays, they have no visible influence!
 	if (Color.Get() != Color3::Black && NumberOfSamples != 0) {
 		// Get the instance of the "PLCompositing::SRPDeferredGBuffer" scene renderer pass and check whether or not color target 3 has real information in it
 		SRPDeferredGBuffer *pSRPDeferredGBuffer = GetGBuffer();

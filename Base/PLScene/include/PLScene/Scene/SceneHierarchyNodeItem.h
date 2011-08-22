@@ -112,7 +112,7 @@ class SceneHierarchyNodeItem {
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	// [TODO] How to make this proceted but available for classes like SHKdTreeNode??
+	// [TODO] How to make this protected but available for classes like SHKdTreeNode??
 	public:
 //	private:
 		/**

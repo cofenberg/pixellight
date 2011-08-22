@@ -62,14 +62,14 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		enum EFlags {
 			Multiply = 1<<2,	/**< Multiply the color to the fix color, if not set, the color is added to the fix color */
 			NR       = 1<<3,	/**< Do NOT manipulate the red color component */
-			NG       = 1<<4,	/**< Do NOT manipulate the green color componen */
+			NG       = 1<<4,	/**< Do NOT manipulate the green color component */
 			NB       = 1<<5		/**< Do NOT manipulate the blue color component */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneNodeModifier::EFlags)
 			pl_enum_value(Multiply,	"Multiply the color to the fix color, if not set, the color is added to the fix color")
 			pl_enum_value(NR,		"Do NOT manipulate the red color component")
-			pl_enum_value(NG,		"Do NOT manipulate the green color componen")
+			pl_enum_value(NG,		"Do NOT manipulate the green color component")
 			pl_enum_value(NB,		"Do NOT manipulate the blue color component")
 		pl_enum_end
 

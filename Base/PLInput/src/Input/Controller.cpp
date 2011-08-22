@@ -275,7 +275,7 @@ void Controller::Disconnect(Connection *pConnection)
 {
 	// Check connection
 	if (pConnection && m_lstConnections.IsElement(pConnection)) {
-		// Get other contoller
+		// Get other controller
 		Controller *pController = pConnection->GetInputControl()->GetController();
 		if (pController == this) pController = pConnection->GetOutputControl()->GetController();
 

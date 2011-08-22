@@ -161,7 +161,7 @@ class PickingResult {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Returns the currently picked texture coordinate (can also be outside the 0..1 intervall)
+		*    Returns the currently picked texture coordinate (can also be outside the 0..1 interval)
 		*
 		*  @param[out] vTexCoord
 		*    Receives the picked texture coordinate if all went fine

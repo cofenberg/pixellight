@@ -475,7 +475,7 @@ void ProgramCg::BuildUniformBlockInformation()
 				CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, CG_PROGRAM);
 				while (pCgParameter) {
 					// Is this an uniform block? ... please note that I wasn't able to figure how how one can enumerate all uniform blocks within Cg, I wasn't
-					// able to find helpful information about this topic within the Cg documentation or the internet... so this is the result of try and error...
+					// able to find helpful information about this topic within the Cg documentation or the Internet... so this is the result of try and error...
 					if (cgGetParameterVariability(pCgParameter) == CG_UNIFORM && cgGetParameterType(pCgParameter) == CG_STRUCT && String(cgGetParameterSemantic(pCgParameter)).IsSubstring("BUFFER[")) {
 						// Get the name of the uniform block
 						const String sUniformBlockName = cgGetParameterName(pCgParameter);

@@ -186,7 +186,7 @@ void GraphPath::SetClosed(bool bClosed)
 */
 Vector3 GraphPath::GetPosByNodeIndex(float fNodeIndex, bool bLinear) const
 {
-	// [TODO] Refactor the implemenation
+	// [TODO] Refactor the implementation
 
 	// Check bounding
 	if (!m_lstNodes.GetNumOfElements())

@@ -662,7 +662,7 @@ void Gui::SetMouseVisible(bool bVisible)
 */
 Widget *Gui::GetMouseOverWidget() const
 {
-	// Return mouseover widget
+	// Return mouse over widget
 	return m_pMouseOverWidget;
 }
 

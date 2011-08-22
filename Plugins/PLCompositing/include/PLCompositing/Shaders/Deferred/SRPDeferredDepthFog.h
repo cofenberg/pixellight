@@ -124,7 +124,7 @@ class SRPDeferredDepthFog : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredDepthFog();
 

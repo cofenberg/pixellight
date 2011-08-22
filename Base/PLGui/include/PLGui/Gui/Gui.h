@@ -234,7 +234,7 @@ class Gui : public PLCore::Object {
 		*    Wakeup message loop
 		*
 		*  @remarks
-		*    This function posts a wakeup-mesage to the message loop, so that it wakes up
+		*    This function posts a wakeup-message to the message loop, so that it wakes up
 		*/
 		PLGUI_API void WakeUp();
 
@@ -480,7 +480,7 @@ class Gui : public PLCore::Object {
 		*
 		*  @remarks
 		*    Widgets, that are destroyed, will receive an OnDestroy-Event an have their system window destroyed
-		*    immediatly, while their actual Widget object remains intact for a while. This function actually
+		*    immediately, while their actual Widget object remains intact for a while. This function actually
 		*    deletes those Widgets. Usually, this is called occasionally by the GUI itself, therefor it should
 		*    not be needed to call this directly.
 		*/
@@ -651,7 +651,7 @@ class Gui : public PLCore::Object {
 		Widget						 *m_pMouseOverWidget;		/**< Widget that is currently selected by the mouse */
 		Widget						 *m_pMouseOverWidgetNew;	/**< New mouse-over widget */
 		Timer						 *m_pHoverTimer;			/**< Timer for hover messages */
-		Widget						 *m_pFocusWidget;			/**< Widget that currenty has the keyboard focus */
+		Widget						 *m_pFocusWidget;			/**< Widget that currently has the keyboard focus */
 		Widget						 *m_pFocusWidgetNew;		/**< New focus widget */
 		Tooltip						 *m_pTooltip;				/**< Tooltip widget */
 

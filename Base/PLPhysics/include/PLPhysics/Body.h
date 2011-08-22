@@ -141,22 +141,22 @@ class Body : public Element {
 
 		/**
 		*  @brief
-		*    Gets the relativ center of the mass
+		*    Gets the relative center of the mass
 		*
 		*  @param[out] vPosition
-		*    Will receive the relativ center of the mass
+		*    Will receive the relative center of the mass
 		*
 		*  @note
-		*    - The relativ center of the mass does't 'move' the body, it just has an influcence on it's behaviour
+		*    - The relative center of the mass does't 'move' the body, it just has an influence on it's behavior
 		*/
 		PLPHYSICS_API void GetCenterOfMass(PLMath::Vector3 &vPosition) const;
 
 		/**
 		*  @brief
-		*    Sets the relativ center of the mass
+		*    Sets the relative center of the mass
 		*
 		*  @param[in] vPosition
-		*    New relativ center of the mass (PLMath::Vector3::Zero by default)
+		*    New relative center of the mass (PLMath::Vector3::Zero by default)
 		*
 		*  @see
 		*    - GetCenterOfMass()

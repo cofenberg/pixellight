@@ -182,7 +182,7 @@ class SPK_PLQuadRenderer : public SPK_PLRenderer, public SPK::QuadRendererInterf
 		SPK_PLBuffer				*m_pSPK_PLBuffer;	/**< Used SPK_PLBuffer instance, can be a null pointer */
 		PLRenderer::TextureHandler	*m_pTextureHandler;	/**< Texture handler, always valid! */
 
-		// Curent vertex buffer data - not nice, but more performant as passing them around all over the place
+		// Current vertex buffer data - not nice, but more performant as passing them around all over the place
 		PLCore::uint32		  	  m_nCurrentVertexSize;
 		float					 *m_pfCurrentPosition;
 		float					 *m_pfCurrentTexCoord;

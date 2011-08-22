@@ -282,7 +282,7 @@ ClassImpl *ClassDummy::GetRealClassImpl() const
 	// Get the module instance this dummy implementation is in
 	const Module *pModule = GetModule();
 	if (pModule) {
-		// Backup some pointers on the runtime stack - this class implementation dummy will propably die in the next step...
+		// Backup some pointers on the runtime stack - this class implementation dummy will probably die in the next step...
 		const ClassImpl *pThisClassImpl = this;
 		Class *pClass = m_pClass;
 

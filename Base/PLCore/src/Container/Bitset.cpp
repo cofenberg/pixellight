@@ -141,7 +141,7 @@ bool Bitset::Resize(uint32 nMaxNumOfElements, bool bAdded, bool bInit)
 						MemoryManager::Set(&m_pnIntegers[nOldSize], 0, sizeof(uint32)*(m_nNumOfIntegers-nOldSize));
 
 					// Initialize remaining bits
-					nOldSize = nOldSize*sizeof(uint32)*8; // Get number of old maxium bits
+					nOldSize = nOldSize*sizeof(uint32)*8; // Get number of old maximum bits
 					for (uint32 i=m_nNumOfElements; i<nOldSize; i++) {
 						// Transparent...
 						// Clear(i);

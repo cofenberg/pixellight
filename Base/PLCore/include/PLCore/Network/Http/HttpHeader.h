@@ -335,7 +335,7 @@ class HttpHeader {
 		*    Check if data is transfered "chunked"
 		*
 		*  @return
-		*    'true' if rransfer encoding is "chunked", else 'false'
+		*    'true' if transfer encoding is "chunked", else 'false'
 		*
 		*  @remarks
 		*    To access this information, Parse() has to be called first
@@ -464,9 +464,9 @@ class HttpHeader {
 		String				m_sContentType;			/**< Content type (MIME type) */
 		String				m_sETag;				/**< ETag (identifier for content) */
 		bool				m_bPartial;				/**< Partial download? */
-		uint32				m_nRangeMin;			/**< Start of range (for partical content) */
-		uint32				m_nRangeMax;			/**< End of range   (for partical content) */
-		uint32				m_nRangeTotal;			/**< Total size     (for partical content) */
+		uint32				m_nRangeMin;			/**< Start of range (for partial content) */
+		uint32				m_nRangeMax;			/**< End of range   (for partial content) */
+		uint32				m_nRangeTotal;			/**< Total size     (for partial content) */
 	
 
 };

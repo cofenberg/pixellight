@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #ifdef WIN32
 	#include <winsock.h>
-	#undef SetPort // We need to undefine this else a linker error occures... if not in this project then in another one
+	#undef SetPort // We need to undefine this else a linker error occurs... if not in this project then in another one
 #endif
 #ifdef LINUX
 	#include <netdb.h>

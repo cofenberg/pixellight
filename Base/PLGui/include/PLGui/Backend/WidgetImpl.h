@@ -236,7 +236,7 @@ class WidgetImpl {
 		*    Get window state
 		*
 		*  @return
-		*    Windowstate (see EWindowState)
+		*    Window state (see EWindowState)
 		*/
 		virtual EWindowState GetWindowState() const = 0;
 

@@ -219,7 +219,7 @@ void main()\n\
 \n\
 	// If the position is outside of area of effect, discard position\n\
 	if (distance > LightRadius) {\n\
-		// Early escape: Not influcenced by the light\n\
+		// Early escape: Not influenced by the light\n\
 		#ifdef FS_DISCARD\n\
 			discard;\n\
 		#else\n\
@@ -268,7 +268,7 @@ void main()\n\
 \n\
 		// Is the position completely shadowed?\n\
 		if (shadow <= 0.0) {\n\
-			// Early escape: Not influcenced by the light\n\
+			// Early escape: Not influenced by the light\n\
 			#ifdef FS_DISCARD\n\
 				discard;\n\
 			#else\n\
@@ -307,7 +307,7 @@ void main()\n\
 \n\
 				// No back projection, please!\n\
 				if (projectiveSpotMapUV.z < 0.0) {\n\
-					// Early escape: Not influcenced by the light\n\
+					// Early escape: Not influenced by the light\n\
 					#ifdef FS_DISCARD\n\
 						discard;\n\
 					#else\n\
@@ -336,9 +336,9 @@ void main()\n\
 					// Get the current smooth spot cone attenuation\n\
 					float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
 \n\
-					// Is the position completly outside the spot cone?\n\
+					// Is the position completely outside the spot cone?\n\
 					if (currentSpotConeCosAttenuation <= 0.0) {\n\
-						// Early escape: The position is outside the light cone and therefore not influcenced by the light\n\
+						// Early escape: The position is outside the light cone and therefore not influenced by the light\n\
 						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\
@@ -352,7 +352,7 @@ void main()\n\
 				#else\n\
 					// A position is inside or outside the spot cone, there is no 'in between'\n\
 					if (SpotConeCos > currentSpotConeCos) {\n\
-						// Early escape: The position is outside the light cone and therefore not influcenced by the light\n\
+						// Early escape: The position is outside the light cone and therefore not influenced by the light\n\
 						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\

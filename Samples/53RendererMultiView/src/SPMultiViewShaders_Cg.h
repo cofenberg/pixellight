@@ -66,7 +66,7 @@ FS_OUTPUT main(VS_OUTPUT In,				// Vertex shader output as fragment shader input
 {\n\
 	FS_OUTPUT Out;\n\
 \n\
-	// Set fragment color by using primitiv directional lighting\n\
+	// Set fragment color by using primitive directional lighting\n\
 	Out.Color0 = clamp(dot(LightDirection, In.VertexNormal), 0, 1);\n\
 \n\
 	// Done\n\

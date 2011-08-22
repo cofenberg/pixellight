@@ -132,7 +132,7 @@ void Application::UpdateMassTextNode()
 */
 bool Application::ChoosePhysicsAPI()
 {
-	// Because I'am pessimistic I espect by default that the user has canceled the choice *sigh*
+	// Because I'am pessimistic I expect by default that the user has canceled the choice *sigh*
 	bool bResult = false; // Error by default
 
 	// Are there multiple physics API's available?

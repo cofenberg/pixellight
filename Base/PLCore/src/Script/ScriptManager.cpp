@@ -211,7 +211,7 @@ ScriptManager::~ScriptManager()
 void ScriptManager::OnClassLoaded(const Class *pClass)
 {
 	// Just put the new class on the queue - because we can't assume that this class is or can be initialized
-	// already, we can't even excpect "IsDerivedFrom" to work, so, just REALLY note this class in here!
+	// already, we can't even expect "IsDerivedFrom" to work, so, just REALLY note this class in here!
 	m_lstNewClasses.Add(pClass);
 }
 

@@ -234,7 +234,7 @@ void PGFountain::InitFunction()
 					// Angle you see when you look down on the fountain
 					float fRayAngle = static_cast<float>(j)/static_cast<float>(m_nRaysPerStep)*360.0f + 12.0f;	// +12.0 causes a rotation (12°)
 
-					// For the next computations "vNewSpeed.x" is the radius. Care! Dont swap the two
+					// For the next computations "vNewSpeed.x" is the radius. Care! Don't swap the two
 					// lines, because the second one changes vNewSpeed.x!
 					vNewSpeed.z = vNewSpeed.x*Math::Sin(static_cast<float>(fRayAngle*Math::DegToRad));
 					vNewSpeed.x = vNewSpeed.x*Math::Cos(static_cast<float>(fRayAngle*Math::DegToRad));

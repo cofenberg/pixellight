@@ -45,7 +45,7 @@ namespace PLCore {
 *    Abstract script base class
 *
 *  @remarks
-*    Each script should have the followig properties:
+*    Each script should have the following properties:
 *    - "Language": Script language (for example: "JavaScript" or "Lua")
 *    - "Formats":  File format extensions this script can load in (for example: "js" or "lua")
 *
@@ -248,7 +248,7 @@ class Script : public Object {
 
 		/**
 		*  @brief
-		*    Returns the type ID a gobal variable
+		*    Returns the type ID a global variable
 		*
 		*  @param[in] sName
 		*    Name of the global variable
@@ -262,7 +262,7 @@ class Script : public Object {
 
 		/**
 		*  @brief
-		*    Returns the current value of a gobal variable
+		*    Returns the current value of a global variable
 		*
 		*  @param[in] sName
 		*    Name of the global variable
@@ -276,7 +276,7 @@ class Script : public Object {
 
 		/**
 		*  @brief
-		*    Sets the current value of a gobal variable
+		*    Sets the current value of a global variable
 		*
 		*  @param[in] sName
 		*    Name of the global variable

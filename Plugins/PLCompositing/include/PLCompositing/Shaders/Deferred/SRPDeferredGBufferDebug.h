@@ -68,25 +68,25 @@ class SRPDeferredGBufferDebug : public SRPDeferred {
 		*/
 		enum EMode {
 			ShowAlbedo           = 0,	/**< Show albedo data (RGB) */
-			ShowAmbientOcclusion = 1,	/**< Show ambient occlusion data (Grayscale) */
+			ShowAmbientOcclusion = 1,	/**< Show ambient occlusion data (Gray scale) */
 			ShowNormals          = 2,	/**< Show normal data (RGB, view space) */
-			ShowDepth            = 3,	/**< Show depth data (Grayscale, view space linear depth, dark=near, brigh=far -> may look just black if the distance between far and near plane is to high) */
+			ShowDepth            = 3,	/**< Show depth data (Gray scale, view space linear depth, dark=near, bright=far -> may look just black if the distance between far and near plane is to high) */
 			ShowSpecularColor    = 4,	/**< Show specular color data (RGB) */
-			ShowSpecularExponent = 5,	/**< Show specular exponent data (Grayscale) */
+			ShowSpecularExponent = 5,	/**< Show specular exponent data (Gray scale) */
 			ShowSelfIllumination = 6,	/**< Show self illumination (RGB, emissive maps, light maps) */
-			ShowGlow             = 7,	/**< Show glow (Grayscale) */
+			ShowGlow             = 7,	/**< Show glow (Gray scale) */
 			UnknownMode          = 8,	/**< Unknown debug mode (just black result) */
 			NumOfModes           = 9	/**< Number of debug modes */
 		};
 		pl_enum(EMode)
 			pl_enum_value(ShowAlbedo,			"Show albedo data (RGB)")
-			pl_enum_value(ShowAmbientOcclusion,	"Show ambient occlusion data (Grayscale)")
+			pl_enum_value(ShowAmbientOcclusion,	"Show ambient occlusion data (Gray scale)")
 			pl_enum_value(ShowNormals,			"Show normal data (RGB, view space)")
-			pl_enum_value(ShowDepth,			"Show depth data (Grayscale, view space linear depth, dark=near, brigh=far -> may look just black if the distance between far and near plane is to high)")
+			pl_enum_value(ShowDepth,			"Show depth data (Gray scale, view space linear depth, dark=near, bright=far -> may look just black if the distance between far and near plane is to high)")
 			pl_enum_value(ShowSpecularColor,	"Show specular color data (RGB)")
-			pl_enum_value(ShowSpecularExponent,	"Show specular exponent data (Grayscale)")
+			pl_enum_value(ShowSpecularExponent,	"Show specular exponent data (Gray scale)")
 			pl_enum_value(ShowSelfIllumination,	"Show self illumination (RGB, emissive maps, light maps)")
-			pl_enum_value(ShowGlow,				"Show glow (Grayscale)")
+			pl_enum_value(ShowGlow,				"Show glow (Gray scale)")
 		pl_enum_end
 
 
@@ -114,7 +114,7 @@ class SRPDeferredGBufferDebug : public SRPDeferred {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPDeferredGBufferDebug();
 

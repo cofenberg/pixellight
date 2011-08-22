@@ -85,7 +85,7 @@ class SNMMeshJoint : public SNMMesh {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMMeshJoint, "PLScene", PLScene::SNMMesh, "Mesh scene node joint modifier class")
 		// Attributes
-		pl_attribute(Name,				PLCore::String,			"",									ReadWrite,	GetSet,			"Name of the joint to modifiy",															"")
+		pl_attribute(Name,				PLCore::String,			"",									ReadWrite,	GetSet,			"Name of the joint to modify",															"")
 		pl_attribute(Rotation,			PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Joint rotation in degree (joint space)",												"")
 		pl_attribute(RotationFrom,		PLCore::String,			"",									ReadWrite,	DirectValue,	"Name of the scene node to take the rotation from (transformed into joint space)",		"")
 		pl_attribute(Min,				PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum joint rotation in in degree, if min = max -> no limitation, per component",	"")
@@ -188,7 +188,7 @@ class SNMMeshJoint : public SNMMesh {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::String  m_sName;		/**< Name of the joint to modifiy */
+		PLCore::String  m_sName;		/**< Name of the joint to modify */
 		PLMath::Vector3 m_vRotation;	/**< Joint rotation in degree (joint space) */
 		PLMath::Vector3 m_vMin;			/**< Minimum joint rotation in in degree, if min = max -> no limitation, per component */
 		PLMath::Vector3 m_vMax;			/**< Maximum joint rotation in in degree, if min = max -> no limitation, per component */

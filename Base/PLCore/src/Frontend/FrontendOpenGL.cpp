@@ -300,7 +300,7 @@ void FrontendOpenGL::OnDraw()
 void FrontendOpenGL::OnUpdate()
 {
 	// Rotate our rectangle
-	m_fAngle += 0.1f;	// To keep things simple in here, no framerate independent timing
+	m_fAngle += 0.1f;	// To keep things simple in here, no frame rate independent timing
 	if (m_fAngle >= 360.0f)
 		m_fAngle -= 360.0f;
 }

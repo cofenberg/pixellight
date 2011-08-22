@@ -99,7 +99,7 @@ PLDatabase::DatabaseQueryResult *DatabaseQuery::Execute(const String &sSQL)
 		if (nStatus == PGRES_FATAL_ERROR || nStatus == PGRES_NONFATAL_ERROR)
 			sMessage = PQresultErrorMessage(pResult);
 
-		// Cleapup
+		// Cleanup
 		PQclear(pResult);
 
 		// Print the error message

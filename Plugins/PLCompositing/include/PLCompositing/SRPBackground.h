@@ -74,7 +74,7 @@ class SRPBackground : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLCOM_API virtual ~SRPBackground();
 

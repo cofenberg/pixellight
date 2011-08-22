@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 // Linux platform
 #ifdef LINUX
-	// The 'standard libraries' are not really 'standardized' over all plattforms :(
+	// The 'standard libraries' are not really 'standardized' over all platforms :(
 	#define _isnan isnan
 	#define _finite finite
 #endif

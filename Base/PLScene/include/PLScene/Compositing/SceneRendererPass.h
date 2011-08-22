@@ -67,7 +67,7 @@ namespace PLScene {
 *    'draw over' the result for each light in the scene while special steps may only draw some
 *    debug information like icons, wireframes and so on. By solve the rendering in such passes,
 *    implementing new features, combining existing ones etc. is much easier as if your scene renderer
-*    only constists of one bit piece of code - and scene renderers can get REALLY extensive!
+*    only consists of one bit piece of code - and scene renderers can get REALLY extensive!
 *    In short, you can imagine 'scene renderer passes' as 'subsystems' of a scene renderer.
 *
 *  @note
@@ -184,7 +184,7 @@ class SceneRendererPass : public PLCore::Object, public PLCore::Element<SceneRen
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLS_API virtual ~SceneRendererPass();
 

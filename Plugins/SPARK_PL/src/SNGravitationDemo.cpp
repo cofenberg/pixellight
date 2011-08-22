@@ -156,7 +156,7 @@ void SNGravitationDemo::InitFunction()
 	m_pMassGroup->setRenderer(nullptr);
 	m_pMassGroup->enableAABBComputing(true);
 
-	// Creates the point masses that will atract the particles
+	// Creates the point masses that will attract the particles
 	for (uint32 i=0; i<NumOfPointMasses; i++) {
 		m_pPointMasses[i] = SPK::PointMass::create();
 		m_pPointMasses[i]->setMass(3.0f);

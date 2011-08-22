@@ -46,7 +46,7 @@ namespace PLPhysics {
 *    Physics ball and socket joint scene node modifier
 *
 *  @note
-*    - All non-zero value for 'MaxConeAngle' are clamped between 5 degree and 175 degres 
+*    - All non-zero value for 'MaxConeAngle' are clamped between 5 degree and 175 degrees 
 *    - Don't use 'NewtonBallSetConeLimits()' directly within your code, instead use the RTTI to set the variables
 *      (... else this RTTI variables may have wrong values...)
 */

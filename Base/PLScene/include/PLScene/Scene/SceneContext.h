@@ -151,7 +151,7 @@ class SceneContext : public PLCore::AbstractContext {
 		*
 		*  @remarks
 		*    If SceneNode::Delete() is called, scene nodes are not destroyed immediately,
-		*    instead they register themself into a 'to delete' list of the scene graph. As
+		*    instead they register them self into a 'to delete' list of the scene graph. As
 		*    soon this function is called, the scene nodes are destroyed. Normally this function
 		*    is called once per frame automatically.
 		*/
@@ -196,12 +196,12 @@ class SceneContext : public PLCore::AbstractContext {
 		*    Starts a scene process
 		*
 		*  @remarks
-		*    During scene traversal using for instance the hierarchie of a scene container, a scene node can
+		*    During scene traversal using for instance the hierarchy of a scene container, a scene node can
 		*    be processed multiple times. If this is NOT desired, a scene node must be 'marked' as already
 		*    processed so it isn't touched multiple times. The scene graph class offers 3 functions for this
 		*    purpose: StartProcess(), TouchNode() and EndProcess(). If a scene process starts, StartProcess()
 		*    is called with internally increases a counter. If a node should be processes TouchNode() is called,
-		*    if 'true' is retured the node was already processed. After the whole scene process is finished, call
+		*    if 'true' is returned the node was already processed. After the whole scene process is finished, call
 		*    EndProcess(). This is NOT 'multi threading save' and only ONE scene process can be performed at the
 		*    same time, but this technique is incredible fast because internally only counters are compared!
 		*

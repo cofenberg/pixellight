@@ -44,7 +44,7 @@
 
 // here the plugin creates a plugin instance object which 
 // will be associated with this newly created NPP instance and 
-// will do all the neccessary job
+// will do all the necessary job
 NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16 mode, int16 argc, char* argn[], char* argv[], NPSavedData* saved)
 {   
   if(instance == nullptr)
@@ -90,7 +90,7 @@ NPError NPP_Destroy (NPP instance, NPSavedData** save)
 }
 
 // during this call we know when the plugin window is ready or
-// is about to be destroyed so we can do some gui specific
+// is about to be destroyed so we can do some GUI specific
 // initialization and shutdown
 NPError NPP_SetWindow (NPP instance, NPWindow* pNPWindow)
 {    

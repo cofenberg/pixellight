@@ -602,7 +602,7 @@ MeshAnimationManager *MeshHandler::CreateMeshAnimationManager(const String &sNam
 	}
 
 	// To keep things as fast as possible we store a pointer to the base class
-	// (no hash map operation + quite efficent internal string comparison)
+	// (no hash map operation + quite efficient internal string comparison)
 	static const Class *pBaseClass = ClassManager::GetInstance()->GetClass("PLMesh::MeshAnimationManager");
 
 	// Create new manager

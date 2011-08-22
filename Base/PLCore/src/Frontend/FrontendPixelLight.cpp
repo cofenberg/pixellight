@@ -110,7 +110,7 @@ void FrontendPixelLight::OnCreate()
 			if (ApplicationParameters.GetString().GetLength())
 				m_pFrontendApplication->SetValues(ApplicationParameters.GetString());
 
-			// Do the frontend lifecycle thing - let the world know that we have been created
+			// Do the frontend life cycle thing - let the world know that we have been created
 			m_pFrontendApplication->OnCreate();
 		}
 	}
@@ -118,14 +118,14 @@ void FrontendPixelLight::OnCreate()
 
 void FrontendPixelLight::OnRestart()
 {
-	// Do the frontend lifecycle thing
+	// Do the frontend life cycle thing
 	if (m_pFrontendApplication)
 		m_pFrontendApplication->OnRestart();
 }
 
 bool FrontendPixelLight::OnStart()
 {
-	// Do the frontend lifecycle thing
+	// Do the frontend life cycle thing
 	if (m_pFrontendApplication && m_pFrontendApplication->OnStart()) {
 		// Frontend application successfully initialized (the following "OnInit()" is just application-specific, not framework specific)
 		m_bFrontendApplicationInitialized = true;
@@ -143,14 +143,14 @@ bool FrontendPixelLight::OnStart()
 
 void FrontendPixelLight::OnResume()
 {
-	// Do the frontend lifecycle thing
+	// Do the frontend life cycle thing
 	if (m_pFrontendApplication)
 		m_pFrontendApplication->OnResume();
 }
 
 void FrontendPixelLight::OnPause()
 {
-	// Do the frontend lifecycle thing
+	// Do the frontend life cycle thing
 	if (m_pFrontendApplication)
 		m_pFrontendApplication->OnPause();
 }
@@ -161,7 +161,7 @@ void FrontendPixelLight::OnStop()
 		// Call application-specific de-initialization routine
 		m_pFrontendApplication->OnDeInit();
 
-		// Do the frontend lifecycle thing
+		// Do the frontend life cycle thing
 		m_pFrontendApplication->OnStop();
 
 		// Frontend application is no longer initialized
@@ -173,7 +173,7 @@ void FrontendPixelLight::OnDestroy()
 {
 	// Destroy the frontend application instance
 	if (m_pFrontendApplication) {
-		// Do the frontend lifecycle thing - let the world know that we're going to die
+		// Do the frontend life cycle thing - let the world know that we're going to die
 		m_pFrontendApplication->OnDestroy();
 
 		// Destroy the frontend application instance

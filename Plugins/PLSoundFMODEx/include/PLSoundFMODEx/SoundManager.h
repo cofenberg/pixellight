@@ -111,9 +111,9 @@ class SoundManager : public PLSound::SoundManager {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SoundManager, "PLSoundFMODEx", PLSound::SoundManager, "FMOD Ex sound backend")
 		// Attributes
-		pl_attribute(Driver,		PLCore::int32,			-1,			ReadWrite,	DirectValue,	"Selects a soundcard driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",		"")
+		pl_attribute(Driver,		PLCore::int32,			-1,			ReadWrite,	DirectValue,	"Selects a sound card driver. It is used when an output mode has enumerated more than one output device, and you need to select between them.",		"")
 		pl_attribute(Output,		pl_enum_type(EOutput),	AUTODETECT,	ReadWrite,	DirectValue,	"This function selects the output mode for the platform. This is for selecting different OS specific API's which might have different features.",	"")
-		pl_attribute(Channels,		PLCore::uint32,			32,			ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are autodetected)",																"")
+		pl_attribute(Channels,		PLCore::uint32,			32,			ReadWrite,	DirectValue,	"Maximum number of SOFTWARE channels available (HARDWARE channels are auto detected)",																"")
 		pl_attribute(BufferLength,	PLCore::uint32,			1024,		ReadWrite,	DirectValue,	"The mixer engine block size in samples. Use this to adjust mixer update granularity.",																"")
 		pl_attribute(NumOfBuffers,	PLCore::uint32,			4,			ReadWrite,	DirectValue,	"The mixer engine number of buffers used. Use this to adjust mixer latency.",																		"")
 		// Constructors

@@ -36,7 +36,7 @@
 
 
 //[-------------------------------------------------------]
-//[ Makro definitions                                     ]
+//[ Macro definitions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -103,7 +103,7 @@ class ProgramGenerator {
 		*    In order to tell the program generator the requested program features, an instance of this class is used.
 		*    This is done by using program flags, which internally will be added in front of the shader source code
 		*    as #define preprocessor directives. The goal of the class design was to to make the implementation as
-		*    performant as possible due the heavy usage of this class during rendering. Therfore definition strings are just
+		*    performant as possible due the heavy usage of this class during rendering. Therefore definition strings are just
 		*    stored as pointer to "char" instead of "PLCore::String" to avoid any overhead produced by strings. As a result,
 		*    this definitions strings must stay valid until "ProgramGenerator::GetProgram()" was called with the program flags.
 		*    To reduce dynamic memory allocations during rendering, it's recommended to just use one program flags instance during
@@ -211,7 +211,7 @@ class ProgramGenerator {
 
 		/**
 		*  @brief
-		*    Destructur
+		*    Destructor
 		*/
 		PLRENDERER_API ~ProgramGenerator();
 

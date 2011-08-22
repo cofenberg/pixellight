@@ -54,7 +54,7 @@ class TreeItemBase;
 *    Base class for a tree model
 *
 *  @note
-*    - This class implements an model which is static regarding its elements -> no user interaction to change the model structur
+*    - This class implements an model which is static regarding its elements -> no user interaction to change the model structure
 */
 class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 
@@ -80,7 +80,7 @@ class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 		*    -> if the model gets destroyed the root item will also be destroyed (if not someone else has taken the ownership after the model was constructed)
 		*  @param[in] parent
 		*    Optional parent item to which the model instance belongs
-		*   (this instance gets autimatically deleted if parent gets destroyed)
+		*   (this instance gets automatically deleted if parent gets destroyed)
 		*/
 		explicit TreeModelBase(TreeItemBase *rootItem, QObject *parent = nullptr);
 
@@ -107,7 +107,7 @@ class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 		*    Returns the number of rows under the given parent. When the parent is valid it means that rowCount is returning the number of children of parent.
 		*
 		*  @note
-		*    - Only the first column can have childrens in this model so if parent has column >0 then 0 is returned
+		*    - Only the first column can have children in this model so if parent has column >0 then 0 is returned
 		*/
 		int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
