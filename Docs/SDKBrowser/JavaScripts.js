@@ -133,8 +133,6 @@ shortcut("Dir_66IngameGUI",			"Samples\\66IngameGUI\\");
 shortcut("Dir_67Game2D",			"Samples\\67Game2D\\");
 shortcut("Dir_70SPARK",				"Samples\\70SPARK\\");
 shortcut("Dir_71libRocket",			"Samples\\71libRocket\\");
-// Samples
-shortcut("Dir_Samples", "Samples\\");
 
 
 // Executable shortcuts
