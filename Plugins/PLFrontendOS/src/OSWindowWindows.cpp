@@ -398,8 +398,16 @@ handle OSWindowWindows::GetNativeWindowHandle() const
 
 void OSWindowWindows::Redraw()
 {
-	// If the window is not visible yet, make it visible right now
-	MakeVisible();
+	// Initialization done?
+	if (!m_bInitialized) {
+		// If the window is not visible yet, make it visible right now
+		MakeVisible();
+
+		// Ok, someone asked us to redraw, so we just assume that for this person
+		// the initialization is done and everything is usable for drawing.
+		// WM_ERASEBKGND will now be caught.
+		m_bInitialized = true;
+	}
 
 	// Redraw
 	if (m_hWnd)
