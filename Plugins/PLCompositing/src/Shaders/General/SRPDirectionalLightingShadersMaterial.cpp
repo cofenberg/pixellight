@@ -565,7 +565,7 @@ void SRPDirectionalLightingShadersMaterial::Synchronize(uint32 nRendererFlags, u
 	}
 
 	{ // Opacity
-		const Parameter *pParameter = m_pMaterial->GetParameter(Opacity);
+		pParameter = m_pMaterial->GetParameter(Opacity);
 		m_fOpacity      = pParameter ? pParameter->GetValue1f() : 1.0f;
 		m_nSrcBlendFunc = BlendFunc::SrcAlpha;
 		m_nDstBlendFunc = BlendFunc::InvSrcAlpha;

@@ -99,7 +99,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
 		if (pImageBuffer) {
 			// Get API pixel format
-			uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+			const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
 				// Is this a compressed texture buffer pixel format?
 				const bool bCompressedFormat = IsCompressedFormat();
@@ -154,9 +154,9 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 						if (!nCompressed) {
 							// There was an error, use no compression
 							m_nFormat = nImageFormat;
-							pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-							if (pAPIPixelFormat)
-								gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+							const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+							if (pAPIPixelFormatFallback)
+								gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_EXT, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 						}
 					}
 
@@ -192,9 +192,9 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 								if (!nCompressed) {
 									// There was an error, use no compression as fallback
 									m_nFormat = nImageFormat;
-									pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-									if (pAPIPixelFormat)
-										glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+									if (pAPIPixelFormatFallback)
+										glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 						}
@@ -320,9 +320,9 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 			if (!nCompressed) {
 				// There was an error, use no compression
 				m_nFormat = R8G8B8A8;
-				pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-				if (pAPIPixelFormat)
-					glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, *pAPIPixelFormat,	m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
+				const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+				if (pAPIPixelFormatFallback)
+					glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, *pAPIPixelFormatFallback,	m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
 			}
 		}
 
@@ -346,7 +346,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
 
 		// Get API pixel format
-		uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+		const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 		if (pAPIPixelFormat) {
 			// [TODO] At the moment, rectangle texture buffers don't support mipmaps, so m_nNumOfMipmaps is always 0 :)
 			// Get the size of this mipmap level

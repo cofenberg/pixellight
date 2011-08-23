@@ -252,7 +252,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	{ // Use the default process icon... if there's one...
 		// Get the filename of this process
 		wchar_t szModule[MAX_PATH];
-		::GetModuleFileName(m_hInstance, szModule, sizeof(szModule));
+		::GetModuleFileName(m_hInstance, szModule, MAX_PATH);
 
 		// Extract the icon (don't forget to call "::DestroyIcon()" on it)
 		m_WndClass.hIcon = m_hIcon = ::ExtractIcon(m_hInstance, szModule, 0);
@@ -267,7 +267,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 		static const int nDummy = 0;
 		::VirtualQuery(&nDummy, &sMemoryBasicInformation, sizeof(MEMORY_BASIC_INFORMATION));
 		wchar_t szModule[MAX_PATH];
-		::GetModuleFileName(static_cast<HMODULE>(sMemoryBasicInformation.AllocationBase), szModule, sizeof(szModule));
+		::GetModuleFileName(static_cast<HMODULE>(sMemoryBasicInformation.AllocationBase), szModule, MAX_PATH);
 
 		// Finally, load the icon with the instance of this shared library
 		m_WndClass.hIcon = ::LoadIcon(::GetModuleHandle(szModule), MAKEINTRESOURCE(IDI_PL));

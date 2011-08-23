@@ -238,7 +238,6 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 			// Extract all rows in reversed order
 			const uint32  nSourceRowSize = (sHeader.nBitsPerPixel/8)*sHeader.nWidth;
 			const uint8  *pSourceData    = pnSourceBuffer + nSourceRowSize*sHeader.nHeight - nSourceRowSize; // Start of last row
-			const uint32  nRowSize       = pImageBuffer->GetRowSize();
 				  uint8  *pnData         = pImageBuffer->GetData();
 			for (const uint8 *pnDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pnData<pnDataEnd; pSourceData-=nSourceRowSize*2) {
 				// Go through the current row
@@ -247,10 +246,10 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 					const uint16 nTempPixel = *reinterpret_cast<const uint16*>(pSourceData);
 
 					// Expand to 32 bit pixel and swap BGRA to RGBA
-					pnData[2] = (nTempPixel & 0x001F) << 3;			// Blue
-					pnData[1] = (nTempPixel & 0x03E0) >> 2;			// Green
-					pnData[0] = (nTempPixel & 0x7C00) >> 7;			// Red
-					pnData[3] = (nTempPixel & 0xfc00) ? 0xFF : 0;	// Alpha
+					pnData[2] = (nTempPixel & 0x001F) << 3;						// Blue
+					pnData[1] = static_cast<uint8>((nTempPixel & 0x03E0) >> 2);	// Green
+					pnData[0] = static_cast<uint8>((nTempPixel & 0x7C00) >> 7);	// Red
+					pnData[3] = (nTempPixel & 0xfc00) ? 0xFF : 0;				// Alpha
 
 					// Next, please
 					pnData      += 4;
@@ -312,9 +311,9 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 			sHeader.nColorMapBits		= bPalette ? 24  : 0;
 			sHeader.nXOffset			= 0;
 			sHeader.nYOffset			= 0;
-			sHeader.nWidth				= pImageBuffer->GetSize().x;
-			sHeader.nHeight				= pImageBuffer->GetSize().y;
-			sHeader.nBitsPerPixel		= pImageBuffer->GetBytesPerPixel()*8;
+			sHeader.nWidth				= static_cast<uint16>(pImageBuffer->GetSize().x);
+			sHeader.nHeight				= static_cast<uint16>(pImageBuffer->GetSize().y);
+			sHeader.nBitsPerPixel		= static_cast<uint8>(pImageBuffer->GetBytesPerPixel()*8);
 			sHeader.nImageDescriptor	= 0;
 			cFile.Write(&sHeader, 1, sizeof(TGAHeader));
 
@@ -398,9 +397,9 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 					// Write palette
 					uint8 nPalette[768];
 					for (uint32 i=0, p=0; i<256; i++){
-						nPalette[p++] = i;
-						nPalette[p++] = i;
-						nPalette[p++] = i;
+						nPalette[p++] = static_cast<uint8>(i);
+						nPalette[p++] = static_cast<uint8>(i);
+						nPalette[p++] = static_cast<uint8>(i);
 					}
 					cFile.Write(nPalette, sizeof(nPalette), 1);
 

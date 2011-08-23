@@ -233,9 +233,9 @@ void ImageData::CreateTestImage(ETestImage nTestImage)
 			// Write data
 			for (int y=0; y<256; y++) {
 				for (int x=0; x<256; x++) {
-					m_pData[y*256*4+x*3+0] = x;
+					m_pData[y*256*4+x*3+0] = static_cast<uint8>(x);
 					m_pData[y*256*4+x*3+1] = 0;
-					m_pData[y*256*4+x*3+2] = y;
+					m_pData[y*256*4+x*3+2] = static_cast<uint8>(y);
 				}
 			}
 			break;
@@ -858,11 +858,11 @@ void ImageData::DecodeDXT5AlphaBlock(uint8 *pnDestination, const uint8 *pnSource
 			} else if (k == 1){
 				*pnCurrentDestination = a1;
 			} else if (a0 > a1){
-				*pnCurrentDestination = ((8 - k)*a0 + (k - 1)*a1)/7;
+				*pnCurrentDestination = static_cast<uint8>(((8 - k)*a0 + (k - 1)*a1)/7);
 			} else if (k >= 6){
 				*pnCurrentDestination = (k == 6) ? 0 : 255;
 			} else {
-				*pnCurrentDestination = ((6 - k)*a0 + (k - 1)*a1)/5;
+				*pnCurrentDestination = static_cast<uint8>(((6 - k)*a0 + (k - 1)*a1)/5);
 			}
 			nAlpha >>= 3;
 

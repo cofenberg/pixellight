@@ -154,7 +154,6 @@ bool ImageLoaderBMP::Load(Image &cImage, File &cFile)
 						// Do we need to take care of padd bytes?
 						if (nPaddBytes) {
 							// Read row for row y-flipped and ignore padd bytes
-							const uint32  nHeight  = pImageBuffer->GetSize().y;
 							const uint32  nRowSize = pImageBuffer->GetRowSize();
 								  uint8  *pData    = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
 								  uint32  nPadd    = 0;
@@ -236,7 +235,7 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 			sInfo.nWidth			= pImageBuffer->GetSize().x;
 			sInfo.nHeight			= -static_cast<int32>(pImageBuffer->GetSize().y); // negative="top-down"... the way we store our image
 			sInfo.nPlanes			= 1;
-			sInfo.nBitCount			= pImageBuffer->GetBytesPerPixel()*8;
+			sInfo.nBitCount			= static_cast<uint8>(pImageBuffer->GetBytesPerPixel()*8);
 			sInfo.nCompression		= 0;
 			sInfo.nSizeImage		= pImageBuffer->GetDataSize();
 			sInfo.nXPelsPerMeter	= 0;
@@ -257,7 +256,6 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Do we need to take care of padd bytes?
 					if (nPaddBytes) {
 						// Write row for row and add padd bytes
-						const uint32  nWidth   = pImageBuffer->GetSize().x;
 						const uint32  nHeight  = pImageBuffer->GetSize().y;
 						const uint32  nRowSize = pImageBuffer->GetRowSize();
 						const uint8  *pData    = pImageBuffer->GetData();
@@ -308,7 +306,6 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Do we need to take care of padd bytes?
 					if (nPaddBytes) {
 						// Write row for row and add padd bytes
-						const uint32  nWidth   = pImageBuffer->GetSize().x;
 						const uint32  nHeight  = pImageBuffer->GetSize().y;
 						const uint32  nRowSize = pImageBuffer->GetRowSize();
 						const uint8  *pData    = pImageBuffer->GetData();
@@ -392,7 +389,7 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Write palette
 					uint8 nPalette[1024];
 					for (uint32 i=0; i<1024; i++)
-						nPalette[i] = i >> 2;
+						nPalette[i] = static_cast<uint8>(i >> 2);
 					cFile.Write(nPalette, sizeof(nPalette), 1);
 
 					// Write the data

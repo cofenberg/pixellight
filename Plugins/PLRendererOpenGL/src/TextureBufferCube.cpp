@@ -99,7 +99,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
 		if (pImageBuffer) {
 			// Get API pixel format
-			uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+			const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
 				// Is this a compressed texture buffer pixel format?
 				const bool bCompressedFormat = IsCompressedFormat();
@@ -159,9 +159,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 										if (!nCompressed) {
 											// There was an error, use no compression
 											m_nFormat = nImageFormat;
-											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-											if (pAPIPixelFormat)
-												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
+											const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+											if (pAPIPixelFormatFallback)
+												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormatFallback, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 										}
 									}
 								} else {
@@ -175,9 +175,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 										if (!nCompressed) {
 											// There was an error, use no compression
 											m_nFormat = nImageFormat;
-											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-											if (pAPIPixelFormat)
-												gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormat, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
+											const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+											if (pAPIPixelFormatFallback)
+												gluBuild2DMipmaps(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, *pAPIPixelFormatFallback, m_nSize, m_nSize, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
 										}
 									}
 								}
@@ -209,9 +209,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 										if (!nCompressed) {
 											// There was an error, use no compression as fallback
 											m_nFormat = nImageFormat;
-											pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-											if (pAPIPixelFormat)
-												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+											const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+											if (pAPIPixelFormatFallback)
+												glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, nLevel, *pAPIPixelFormatFallback, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 										}
 									}
 								}
@@ -325,9 +325,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 				if (!nCompressed) {
 					// There was an error, use no compression
 					m_nFormat = R8G8B8A8;
-					pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-					if (pAPIPixelFormat)
-						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, nullptr);
+					const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+					if (pAPIPixelFormatFallback)
+						glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormatFallback, m_nSize, m_nSize, 0, nPixelFormat, nDataFormat, nullptr);
 				}
 			}
 		}

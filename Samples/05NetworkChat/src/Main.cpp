@@ -111,14 +111,14 @@ void RunClient()
 				// Check keys
 				if (System::GetInstance()->GetConsole().IsKeyHit()) {
 					// Get key
-					char c = System::GetInstance()->GetConsole().GetCharacter();
+					const int nCharacter = System::GetInstance()->GetConsole().GetCharacter();
 
 					// Quit
-					if (c == 27)
+					if (nCharacter == 27)
 						bActive = false;
 
 					// Message
-					else if (c == 13) {
+					else if (nCharacter == 13) {
 						// New line on the console, please
 						System::GetInstance()->GetConsole().Print('\n');
 
@@ -131,10 +131,10 @@ void RunClient()
 					// Character
 					} else {
 						// Add character to the message
-						sMessage += c;
+						sMessage += nCharacter;
 
 						// Output the character on the console
-						System::GetInstance()->GetConsole().Print(c);
+						System::GetInstance()->GetConsole().Print(nCharacter);
 					}
 				}
 			} else {

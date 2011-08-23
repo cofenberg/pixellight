@@ -2126,7 +2126,7 @@ bool String::IsValidInteger() const
 			// Check length
 			if (nLength) {
 				// Digits
-				while (nLength > 0 && isdigit(*pszASCII)) {
+				while (nLength > 0 && isdigit(static_cast<unsigned char>(*pszASCII))) {
 					// Next character
 					pszASCII++;
 					nLength--;
@@ -2178,7 +2178,7 @@ bool String::IsValidFloat() const
 			if (nLength) {
 				// Digits
 				bool bGotDot = false;
-				while (nLength > 0 && (isdigit(*pszASCII) || (!bGotDot && *pszASCII == '.'))) {
+				while (nLength > 0 && (isdigit(static_cast<unsigned char>(*pszASCII)) || (!bGotDot && *pszASCII == '.'))) {
 					if (*pszASCII == '.')
 						bGotDot = true;
 
@@ -2209,7 +2209,7 @@ bool String::IsValidFloat() const
 					// Check length
 					if (nLength) {
 						// Digits
-						while (nLength > 0 && isdigit(*pszASCII)) {
+						while (nLength > 0 && isdigit(static_cast<unsigned char>(*pszASCII))) {
 							// Next character
 							pszASCII++;
 							nLength--;

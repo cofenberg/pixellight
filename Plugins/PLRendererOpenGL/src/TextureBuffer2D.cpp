@@ -99,7 +99,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
 		if (pImageBuffer) {
 			// Get API pixel format
-			uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+			const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
 				// Is this a compressed texture buffer pixel format?
 				const bool bCompressedFormat = IsCompressedFormat();
@@ -140,9 +140,9 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							if (!nCompressed) {
 								// There was an error, use no compression
 								m_nFormat = nImageFormat;
-								pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-								if (pAPIPixelFormat)
-									glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+								if (pAPIPixelFormatFallback)
+									glTexImage2D(GL_TEXTURE_2D, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					} else {
@@ -156,9 +156,9 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							if (!nCompressed) {
 								// There was an error, use no compression
 								m_nFormat = nImageFormat;
-								pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-								if (pAPIPixelFormat)
-									gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+								if (pAPIPixelFormatFallback)
+									gluBuild2DMipmaps(GL_TEXTURE_2D, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					}
@@ -195,9 +195,9 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								if (!nCompressed) {
 									// There was an error, use no compression as fallback
 									m_nFormat = nImageFormat;
-									pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-									if (pAPIPixelFormat)
-										glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+									if (pAPIPixelFormatFallback)
+										glTexImage2D(GL_TEXTURE_2D, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 						}

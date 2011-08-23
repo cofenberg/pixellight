@@ -562,14 +562,14 @@ void ImageLoaderDDS::DecompressRGBA(const DDSHeader &sHeader, ImageBuffer &cImag
 		}
 		pnCompressedData += nBpp;
 
-		pDestinationData[i] = ((nReadI & sHeader.ddpfPixelFormat.nRBitMask) >> nRedR) << nRedL;
+		pDestinationData[i] = static_cast<uint8>(((nReadI & sHeader.ddpfPixelFormat.nRBitMask) >> nRedR) << nRedL);
 
 		if (nBytesPerPixel >= 3) {
-			pDestinationData[i+1] = ((nReadI & sHeader.ddpfPixelFormat.nGBitMask) >> nGreenR) << nGreenL;
-			pDestinationData[i+2] = ((nReadI & sHeader.ddpfPixelFormat.nBBitMask) >> nBlueR) << nBlueL;
+			pDestinationData[i+1] = static_cast<uint8>(((nReadI & sHeader.ddpfPixelFormat.nGBitMask) >> nGreenR) << nGreenL);
+			pDestinationData[i+2] = static_cast<uint8>(((nReadI & sHeader.ddpfPixelFormat.nBBitMask) >> nBlueR) << nBlueL);
 
 			if (nBytesPerPixel == 4) {
-				pDestinationData[i+3] = ((nReadI & sHeader.ddpfPixelFormat.nRGBAlphaBitMask) >> nAlphaR) << nAlphaL;
+				pDestinationData[i+3] = static_cast<uint8>(((nReadI & sHeader.ddpfPixelFormat.nRGBAlphaBitMask) >> nAlphaR) << nAlphaL);
 				if (nAlphaL >= 7) {
 					pDestinationData[i+3] = pDestinationData[i+3] ? 0xFF : 0x00;
 				} else if (nAlphaL >= 4) {
@@ -577,7 +577,7 @@ void ImageLoaderDDS::DecompressRGBA(const DDSHeader &sHeader, ImageBuffer &cImag
 				}
 			}
 		} else if (nBytesPerPixel == 2) {
-			pDestinationData[i+1] = ((nReadI & sHeader.ddpfPixelFormat.nRGBAlphaBitMask) >> nAlphaR) << nAlphaL;
+			pDestinationData[i+1] = static_cast<uint8>(((nReadI & sHeader.ddpfPixelFormat.nRGBAlphaBitMask) >> nAlphaR) << nAlphaL);
 			if (nAlphaL >= 7) {
 				pDestinationData[i+1] = pDestinationData[i+1] ? 0xFF : 0x00;
 			} else if (nAlphaL >= 4) {

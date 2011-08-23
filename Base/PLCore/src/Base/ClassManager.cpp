@@ -397,10 +397,10 @@ ClassManager::ClassManager(const ClassManager &cSource) :
 ClassManager::~ClassManager()
 {
 	// Iterate through all modules and destroy them
-	Iterator<const Module*> cIterator = m_lstModules.GetIterator();
-	while (cIterator.HasNext()) {
+	Iterator<const Module*> cModuleIterator = m_lstModules.GetIterator();
+	while (cModuleIterator.HasNext()) {
 		// Get module
-		const Module *pModule = cIterator.Next();
+		const Module *pModule = cModuleIterator.Next();
 
 		// At this point, all real class instances should already have been destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
 		// ... so, technically only the dummy classes should be left...
@@ -410,10 +410,10 @@ ClassManager::~ClassManager()
 			List<const Class*> lstClasses = pModule->GetClasses();
 
 			// Remove all classes from that module
-			Iterator<const Class*> cIterator = lstClasses.GetIterator();
-			while (cIterator.HasNext()) {
+			Iterator<const Class*> cClassIterator = lstClasses.GetIterator();
+			while (cClassIterator.HasNext()) {
 				// Get the class implementation
-				ClassImpl *pClassImpl = const_cast<Class*>(cIterator.Next())->m_pClassImpl;
+				ClassImpl *pClassImpl = const_cast<Class*>(cClassIterator.Next())->m_pClassImpl;
 
 				// Is it a real class implementation?
 				if (!pClassImpl->IsDummy()) {
@@ -778,7 +778,7 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 	bool bForceBuildTypeMatch = false;
 	{
 		// Get the "ForceBuildTypeMatch" element
-		const XmlNode *pNode = cPluginElement.GetFirstChild("ForceBuildTypeMatch");
+		pNode = cPluginElement.GetFirstChild("ForceBuildTypeMatch");
 		if (pNode) {
 			// Get the value of the node
 			const XmlNode *pValue = pNode->GetFirstChild();
@@ -794,7 +794,7 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 	bool bDelayed = bDelayedPluginLoading;
 	if (bDelayed) {
 		// Get the "DelayedLoading" element
-		const XmlNode *pNode = cPluginElement.GetFirstChild("Delayed");
+		pNode = cPluginElement.GetFirstChild("Delayed");
 		if (pNode) {
 			// Get the value of the node
 			const XmlNode *pValue = pNode->GetFirstChild();

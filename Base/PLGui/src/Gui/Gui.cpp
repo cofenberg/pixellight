@@ -213,6 +213,9 @@ Gui::Gui(const String &sGui) :
 			m_pGuiImpl = new GuiWindows(this);
 		#elif defined(LINUX)
 			m_pGuiImpl = new GuiLinux(this);
+		#else
+			// Unknown system
+			#error "Unsupported platform"
 		#endif
 	}
 

@@ -875,7 +875,7 @@ bool Script::AddPythonFunction(PyObject *pPythonDictionary, const String &sFunct
 			}
 		} else {
 			// Create the Python dictionary object (results in new reference, use Py_DECREF on the result)
-			PyObject *pNestedPythonDictionary = PyDict_New();
+			pNestedPythonDictionary = PyDict_New();
 
 			// Add the new Python dictionary object to the current one
 			if (PyDict_SetItemString(pPythonDictionary, sSubsNamespaceName, pNestedPythonDictionary) == -1) {

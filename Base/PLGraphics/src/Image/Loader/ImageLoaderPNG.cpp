@@ -120,7 +120,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 			png_uint_32 nHeight		= png_get_image_height(pPng, pPngInfo);
 
 			// Get data format
-			EDataFormat nDataFormat;
+			EDataFormat nDataFormat = DataByte;
 			unsigned char nBytes = 0;
 			switch (nBitDepth) {
 				case 1:
@@ -148,7 +148,7 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 			}
 			if (nBytes != 0) {
 				// Get color format
-				EColorFormat nColorFormat;
+				EColorFormat nColorFormat = ColorRGB;
 				unsigned char nComponents = 0;
 				switch (nColorType) {
 					case PNG_COLOR_TYPE_GRAY:			// (Bit depths 1, 2, 4, 8, 16)
@@ -202,7 +202,6 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 					uint8 *pBuffer = pImageBuffer->GetData();
 
 					// Make array with pointers to each individual row inside the image buffer
-					uint32 nRowBytes = png_get_rowbytes(pPng, pPngInfo);
 					uint32		nRowSize		= nBytes * nComponents * nWidth;
 					png_bytepp	ppRowPointers	= new png_bytep[nHeight];
 					for (uint32 i=0; i<nHeight; i++)

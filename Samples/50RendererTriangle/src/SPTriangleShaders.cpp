@@ -126,10 +126,12 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 			m_pProgram->SetFragmentShader(m_pFragmentShader);
 
 			// Setup the uniform buffer (if there's one)
-			ProgramUniformBlock *pProgramUniformBlock = m_pProgram->GetUniformBlock("UniformBlock");
-			if (pProgramUniformBlock) {
-				// Allocate the uniform buffer
-				m_pUniformBuffer->Allocate(pProgramUniformBlock->GetSize(), Usage::WriteOnly);
+			if (m_pUniformBuffer) {
+				ProgramUniformBlock *pProgramUniformBlock = m_pProgram->GetUniformBlock("UniformBlock");
+				if (pProgramUniformBlock) {
+					// Allocate the uniform buffer
+					m_pUniformBuffer->Allocate(pProgramUniformBlock->GetSize(), Usage::WriteOnly);
+				}
 			}
 		}
 	}

@@ -99,7 +99,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
 		if (pImageBuffer) {
 			// Get API pixel format
-			uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+			const uint32 *pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
 				// Is this a compressed texture buffer pixel format?
 				const bool bCompressedFormat = IsCompressedFormat();
@@ -140,9 +140,9 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							if (!nCompressed) {
 								// There was an error, use no compression
 								m_nFormat = nImageFormat;
-								pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-								if (pAPIPixelFormat)
-									glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+								if (pAPIPixelFormatFallback)
+									glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					} else {
@@ -160,9 +160,9 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// 	glGetTexLevelParameteriv(GL_TEXTURE_3D_EXT, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
 						// 	if (!nCompressed) { // There was an error, use no compression
 						// 		m_nFormat = nImageFormat;
-						// 		pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-						// 		if (pAPIPixelFormat) {
-						// 			gluBuild3DMipmaps(GL_TEXTURE_3D_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z,
+						// 		const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+						// 		if (pAPIPixelFormatFallback) {
+						// 			gluBuild3DMipmaps(GL_TEXTURE_3D_EXT, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z,
 						// 							  nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
 						// 		}
 						// 	}
@@ -200,9 +200,9 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								if (!nCompressed) {
 									// There was an error, use no compression as fallback
 									m_nFormat = nImageFormat;
-									pAPIPixelFormat = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-									if (pAPIPixelFormat)
-										glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
+									if (pAPIPixelFormatFallback)
+										glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 

@@ -385,7 +385,7 @@ bool StringBufferASCII::IsAlphabetic() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isalpha(*pszString))
+		if (!isalpha(static_cast<unsigned char>(*pszString)))
 			return false; // The string is not alphabetic
 	}
 
@@ -398,7 +398,7 @@ bool StringBufferASCII::IsAlphaNumeric() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isalpha(*pszString) && !isdigit(*pszString))
+		if (!isalpha(static_cast<unsigned char>(*pszString)) && !isdigit(static_cast<unsigned char>(*pszString)))
 			return false; // The string is not alpha-numeric
 	}
 
@@ -411,7 +411,7 @@ bool StringBufferASCII::IsNumeric() const
 	const char *pszString    = m_pszString;
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
-		if (!isdigit(*pszString))
+		if (!isdigit(static_cast<unsigned char>(*pszString)))
 			return false; // The string is not numeric
 	}
 
@@ -505,7 +505,7 @@ StringBuffer *StringBufferASCII::ToLower()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a lower character?
-		if (!islower(*pszString)) {
+		if (!islower(static_cast<unsigned char>(*pszString))) {
 			// Nope, now we have to clone the string buffer :(
 			StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 
@@ -528,7 +528,7 @@ StringBuffer *StringBufferASCII::ToUpper()
 	const char *pszStringEnd = pszString + m_nLength;
 	for (; pszString<pszStringEnd; pszString++) {
 		// Is this already a upper character?
-		if (!isupper(*pszString)) {
+		if (!isupper(static_cast<unsigned char>(*pszString))) {
 			// Nope, now we have to clone the string buffer :(
 			StringBufferASCII *pStringBufferASCIIClone = static_cast<StringBufferASCII*>(Duplicate());
 

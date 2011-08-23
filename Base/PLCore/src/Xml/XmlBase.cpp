@@ -192,7 +192,7 @@ const char *XmlBase::SkipWhiteSpace(const char *pszData, EEncoding nEncoding)
 
 bool XmlBase::IsWhiteSpace(char c)
 {
-	return (isspace(c) || c == '\n' || c == '\r');
+	return (isspace(static_cast<unsigned char>(c)) || c == '\n' || c == '\r');
 }
 
 bool XmlBase::IsWhiteSpace(int c)
