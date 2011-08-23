@@ -111,7 +111,7 @@
     <ClInclude Include="src\MyRTTIClass.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\44ScriptOOP.lua" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\44ScriptOOP.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -243,6 +243,10 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Bin\Samples\Data\Scripts\45ScriptApplication.as" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\45ScriptApplication.js" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\45ScriptApplication.lua" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\45ScriptApplication.py" />
     <None Include="CMakeLists.txt" />
     <None Include="..\Diary.txt" />
   </ItemGroup>

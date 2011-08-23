@@ -16,16 +16,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.as">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.js">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.lua">
       <Filter>Scripts</Filter>
     </None>
     <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.py">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.as">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.js">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

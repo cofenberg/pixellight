@@ -24,16 +24,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.py">
-      <Filter>Scripts</Filter>
-    </None>
-    <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.as">
-      <Filter>Scripts</Filter>
-    </None>
     <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.js">
       <Filter>Scripts</Filter>
     </None>
     <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.lua">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.py">
+      <Filter>Scripts</Filter>
+    </None>
+    <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.as">
       <Filter>Scripts</Filter>
     </None>
   </ItemGroup>

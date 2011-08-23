@@ -120,10 +120,10 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\40ScriptHelloWorld.as" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\40ScriptHelloWorld.js" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\40ScriptHelloWorld.lua" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\40ScriptHelloWorld.py" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\40ScriptHelloWorld.as" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\40ScriptHelloWorld.js" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\40ScriptHelloWorld.lua" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\40ScriptHelloWorld.py" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -120,10 +120,10 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\41ScriptGlobalVariables.as" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\41ScriptGlobalVariables.js" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\41ScriptGlobalVariables.lua" />
-    <None Include="..\..\Bin\Samples\x86\Data\Scripts\41ScriptGlobalVariables.py" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.as" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.js" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.lua" />
+    <None Include="..\..\Bin\Samples\Data\Scripts\41ScriptGlobalVariables.py" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
