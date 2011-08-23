@@ -323,16 +323,16 @@ const Console &SystemLinux::GetConsole() const
 
 void SystemLinux::UrgentMessage(const String &sMessage) const
 {
+	// Do also feed the console, safe is safe
+	fputs((sMessage.GetFormat() == String::ASCII) ? sMessage.GetASCII() : sMessage.GetUTF8(), stdout);
+	fputs("\n", stdout);
+	fflush(stdout);
+
 	// There's no such thing as "MessageBox()" from MS Windows and using a GUI system
 	// like Qt would be a total overkill in here, so, go the easiest possible way...
 	char szCommand[1024];
 	sprintf(szCommand, "xmessage -center \"%s\"", sMessage.GetASCII());
-	if (fork() == 0) {
-		close(1);
-		close(2);
-		system(szCommand);
-		exit(0);
-	}
+	system(szCommand);
 }
 
 Time SystemLinux::GetTime() const
