@@ -505,10 +505,6 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 //	return 1.2f;
 
 
-	int xInc;
-	int zInc;
-	int xIndex0;
-	int zIndex0;
 	dFloat t;
 	dFloat tx;
 	dFloat tz;
@@ -547,6 +543,10 @@ dFloat BodyTerrain::UserMeshCollisionRayHitCallback(NewtonUserMeshCollisionRayHi
 
 	// Clip the line against the bounding box
 	if (map->ClipRay2d(p0, p1, boxP0, boxP1)) {
+		int xInc;
+		int zInc;
+		int xIndex0;
+		int zIndex0;
 		Vector3 dp = p1 - p0;
 
 		scaleX    = map->m_vScale.x;

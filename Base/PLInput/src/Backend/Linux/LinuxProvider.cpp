@@ -93,9 +93,10 @@ void LinuxProvider::QueryDevices()
 	}
 
 	// List devices in "/dev/input/event*"
-	int nDevice = 0;
 	DIR *pDir = opendir("/dev/input");
 	if (pDir) {
+		int nDevice = 0;
+
 		// Read first entry
 		dirent *pEntry = readdir(pDir);
 		while (pEntry) {

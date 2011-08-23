@@ -100,9 +100,6 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 			// Get API pixel format
 			uint32 *pAPIPixelFormat = cRendererOpenGLES.GetAPIPixelFormat(m_nFormat);
 			if (pAPIPixelFormat) {
-				// Is this a compressed texture buffer pixel format?
-				const bool bCompressedFormat = IsCompressedFormat();
-
 				// Get uncompressed image format information
 				EPixelFormat nImageFormatUncompressed     = GetFormatFromImage(cImage, true);
 				uint32		 nAPIImageFormatUncompressed  = cRendererOpenGLES.GetOpenGLESPixelFormat(nImageFormatUncompressed);

@@ -152,9 +152,9 @@ void SceneNodeInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
 		const QColor color = qVariantValue<QColor>(dataVal);
 		painter->save();
 		painter->setBrushOrigin(option.rect.x(), option.rect.y());
-		int xOffset = 8;
 
 		// [TODO]
+		// int xOffset = 8;
 		//painter->fillRect(QRect(option.rect.left()+xOffset, option.rect.top()+4, option.rect.width()-xOffset*2, option.rect.height()-8), color);
 
 		painter->fillRect(option.rect.adjusted(8, 4, -8, -4), color);

@@ -52,11 +52,6 @@ QVariant PLDynVarColorTreeItem::data(const int column, const int role)
 			PLGraphics::Color3 col;
 			QString qstr(QtStringAdapter::PLToQt(m_dynVar->GetString()));
 			col.FromString(m_dynVar->GetString());
-
-			float f = col.GetR();
-			f = col.GetG();
-			f = col.GetB();
-
 			QColor color(QColor::fromRgbF(col.GetR(), col.GetG(), col.GetB()));
 			return color;
 		}

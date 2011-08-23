@@ -266,7 +266,6 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 				int    n			= nPatchSize+1;
 				uint32 nOffset		= 0;
 				bool   nSwitchOrder = false;
-				int    f			= 1;
 
 				m_pLinkers[nLowLevel].pnIndexBuffer[nSide] = new uint32[nBuffSize];
 				m_pLinkers[nLowLevel].pIndexBuffer[nSide] = nullptr;
@@ -274,6 +273,7 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 
 				// Horizontal piece
 				if (1 == nSide || 3 == nSide) {
+					int f = 1;
 					if (3 == nSide) {
 						nOffset = nPatchSize;
 						f = -f;

@@ -228,10 +228,10 @@ void HttpHeader::Parse()
 			// Get string parts
 			const int nSpace1 = sLine.IndexOf(' ');
 			const int nSpace2 = sLine.IndexOf(' ', nSpace1+1);
-			if (nSpace1 > 0 || nSpace2 > nSpace2) {
+			if (nSpace1 > 0 || nSpace2 > nSpace1) {
 				// Get request arguments
 				const String sRequest  = sLine.GetSubstring(0, nSpace1);
-				const String sUrl		 = sLine.GetSubstring(nSpace1+1, nSpace2-nSpace1-1);
+				const String sUrl	   = sLine.GetSubstring(nSpace1+1, nSpace2-nSpace1-1);
 				const String sProtocol = sLine.GetSubstring(nSpace2+1);
 
 				// Request

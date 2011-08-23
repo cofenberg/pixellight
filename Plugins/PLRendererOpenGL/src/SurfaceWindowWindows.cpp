@@ -224,12 +224,13 @@ bool SurfaceWindow::Init()
 		};
 		int nPixelFormats[256];
 		uint32 nPFormats = 0;
-		int nBestFormat  = 0;
-		int nBestSamples = 0;
 
 		// Get window device context
 		m_hDC = ::GetDC(reinterpret_cast<HWND>(nNativeWindowHandle));
 		if (m_hDC) { // Did we get a device context?
+			int nBestFormat  = 0;
+			int nBestSamples = 0;
+
 			// Choose pixel format
 			PL_LOG(Info, "Search for a suitable pixel format")
 			if (wglChoosePixelFormatARB) {

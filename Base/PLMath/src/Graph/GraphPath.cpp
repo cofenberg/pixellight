@@ -268,56 +268,56 @@ Vector3 GraphPath::GetPosByPercentageAlongPath(float fPercentageAlongPath, bool 
 		float fLengthOnPath    = fPercentageAlongPath*fTotalPathLength;
 
 		// We need to find the to nodes we are currently between
+
+		// Get path length
 		float fLength = 0.0f;
 		float fPreviousLength = 0.0f;
 		float fDistanceBetweenNodes = 0.0f;
-		{ // Get path length
-			const GraphNode *pLastNode = nullptr;
-			Iterator<GraphNode*> cIterator = m_lstNodes.GetIterator();
-			while (cIterator.HasNext() && fLength < fLengthOnPath) {
-				// Backup the current length on path
-				fPreviousLength = fLength;
+		const GraphNode *pLastNode = nullptr;
+		Iterator<GraphNode*> cIterator = m_lstNodes.GetIterator();
+		while (cIterator.HasNext() && fLength < fLengthOnPath) {
+			// Backup the current length on path
+			fPreviousLength = fLength;
 
-				const GraphNode *pNode = cIterator.Next();
-				if (pLastNode) {
-					fDistanceBetweenNodes = pNode->GetDistance(*pLastNode);
-					fLength += fDistanceBetweenNodes;
+			const GraphNode *pNode = cIterator.Next();
+			if (pLastNode) {
+				fDistanceBetweenNodes = pNode->GetDistance(*pLastNode);
+				fLength += fDistanceBetweenNodes;
 
-					if (fLength >= fLengthOnPath) {
-						// Get current and next node
-						const GraphNode *pCurrentNode = pLastNode;
-						const GraphNode *pNextNode    = pNode;
+				if (fLength >= fLengthOnPath) {
+					// Get current and next node
+					const GraphNode *pCurrentNode = pLastNode;
+					const GraphNode *pNextNode    = pNode;
 
-						float fDistance = fLengthOnPath-fPreviousLength;
-						float fPercentageBetweenNodes = fDistanceBetweenNodes ? fDistance/fDistanceBetweenNodes : 0.0f;
+					float fDistance = fLengthOnPath-fPreviousLength;
+					float fPercentageBetweenNodes = fDistanceBetweenNodes ? fDistance/fDistanceBetweenNodes : 0.0f;
 
-						// Interpolate
-						return pCurrentNode->GetPos()+(pNextNode->GetPos()-pCurrentNode->GetPos())*fPercentageBetweenNodes;
-					}
+					// Interpolate
+					return pCurrentNode->GetPos()+(pNextNode->GetPos()-pCurrentNode->GetPos())*fPercentageBetweenNodes;
 				}
-
-				// Backup the current node
-				pLastNode = pNode;
 			}
 
-			// Handle the case of closed path
-			if (m_bClosed) {
-				const GraphNode *pNode = m_lstNodes[0];
-				if (pLastNode) {
-					fDistanceBetweenNodes = pNode->GetDistance(*pLastNode);
-					fLength += fDistanceBetweenNodes;
+			// Backup the current node
+			pLastNode = pNode;
+		}
 
-					if (fLength >= fLengthOnPath) {
-						// Get current and next node
-						const GraphNode *pCurrentNode = pLastNode;
-						const GraphNode *pNextNode    = pNode;
+		// Handle the case of closed path
+		if (m_bClosed) {
+			const GraphNode *pNode = m_lstNodes[0];
+			if (pLastNode) {
+				fDistanceBetweenNodes = pNode->GetDistance(*pLastNode);
+				fLength += fDistanceBetweenNodes;
 
-						float fDistance = fLengthOnPath-fPreviousLength;
-						float fPercentageBetweenNodes = (fDistanceBetweenNodes ? fDistance/fDistanceBetweenNodes : 0.0f)-1;
+				if (fLength >= fLengthOnPath) {
+					// Get current and next node
+					const GraphNode *pCurrentNode = pLastNode;
+					const GraphNode *pNextNode    = pNode;
 
-						// Interpolate
-						return pCurrentNode->GetPos()+(pNextNode->GetPos()-pCurrentNode->GetPos())*fPercentageBetweenNodes;
-					}
+					float fDistance = fLengthOnPath-fPreviousLength;
+					float fPercentageBetweenNodes = (fDistanceBetweenNodes ? fDistance/fDistanceBetweenNodes : 0.0f)-1;
+
+					// Interpolate
+					return pCurrentNode->GetPos()+(pNextNode->GetPos()-pCurrentNode->GetPos())*fPercentageBetweenNodes;
 				}
 			}
 		}

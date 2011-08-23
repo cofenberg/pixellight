@@ -779,7 +779,6 @@ bool MeshLODLevel::JoinGeometries(uint32 *pJoin, uint32 nJoinNumber)
 
 	// Create the new geometries
 	Array<Geometry> *plstGeometries = new Array<Geometry>;
-	uint32 nStartIndex = 0;
 
 	// Create new index buffer - index buffer size is the same as before because only
 	// triangles can be joined!
@@ -790,6 +789,7 @@ bool MeshLODLevel::JoinGeometries(uint32 *pJoin, uint32 nJoinNumber)
 	// Setup the new geometries and index buffer
 	if (pIndexBuffer->Lock(Lock::WriteOnly)) {
 		uint32 nIndex = 0;
+		uint32 nStartIndex = 0;
 		Bitset cUsed(m_plstGeometries->GetNumOfElements(), true, true);
 
 		// Loop through all geometries

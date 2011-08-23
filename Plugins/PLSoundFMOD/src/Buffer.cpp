@@ -172,14 +172,14 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 			if (FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_MOD || FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_S3M)
 				FMUSIC_SetPanSeperation(m_pMod, 0.85f); // 15% crossover
 		} else {
-			// [TODO] 3D sound
-			int nFlag = 0;
-//			int nFlag = FSOUND_HW3D;
 			if (bStream) {
 				m_pStream = FSOUND_Stream_Open(sFilename, FSOUND_NORMAL | FSOUND_MPEGACCURATE | FSOUND_LOOP_OFF, 0, 0);
 				if (!m_pStream)
 					bError = true;
 			} else {
+				// [TODO] 3D sound
+				int nFlag = 0;
+	//			int nFlag = FSOUND_HW3D;
 				m_pSample = FSOUND_Sample_Load(FSOUND_FREE, sFilename, FSOUND_NORMAL | nFlag, 0, 0);
 				if (m_pSample)
 					FSOUND_Sample_SetMode(m_pSample, FSOUND_LOOP_OFF);
@@ -212,14 +212,14 @@ bool Buffer::LoadBuffer(const uint8 nData[], uint32 nSize, bool bStream)
 			if (FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_MOD || FMUSIC_GetType(m_pMod) == FMUSIC_TYPE_S3M)
 				FMUSIC_SetPanSeperation(m_pMod, 0.85f); // 15% crossover
 		} else {
-			// [TODO] 3D sound
-			int nFlag = 0;
-//			int nFlag = FSOUND_HW3D;
 			if (bStream) {
 				m_pStream = FSOUND_Stream_Open(reinterpret_cast<const char*>(&nData), FSOUND_NORMAL | FSOUND_MPEGACCURATE | FSOUND_LOADMEMORY | FSOUND_LOOP_OFF, 0, nSize);
 				if (!m_pStream)
 					bError = true;
 			} else {
+				// [TODO] 3D sound
+				int nFlag = 0;
+	//			int nFlag = FSOUND_HW3D;
 				m_pSample = FSOUND_Sample_Load(FSOUND_FREE, reinterpret_cast<const char*>(&nData), FSOUND_NORMAL | FSOUND_LOADMEMORY | nFlag, 0, nSize);
 				if (m_pSample)
 					FSOUND_Sample_SetMode(m_pSample, FSOUND_LOOP_OFF);

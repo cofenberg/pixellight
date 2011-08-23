@@ -59,6 +59,8 @@ SNGravitationSample::SNGravitationSample() :
 	m_pParticleModel(nullptr),
 	m_fStep(0.0f)
 {
+	for (uint32 i=0; i<NumOfPointMasses; i++)
+		m_pPointMasses[i] = nullptr;
 }
 
 /**
