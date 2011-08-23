@@ -287,6 +287,16 @@ const Console &System::GetConsole() const
 
 /**
 *  @brief
+*    Primitive way (e.g. by using a message box) to be able to tell the user that something went terrible wrong
+*/
+void System::UrgentMessage(const String &sMessage) const
+{
+	// Call system function
+	m_pSystemImpl->UrgentMessage(sMessage);
+}
+
+/**
+*  @brief
 *    Returns the current date and time
 */
 Time System::GetTime() const

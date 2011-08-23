@@ -124,6 +124,7 @@ class SystemLinux : public SystemImpl {
 		virtual Thread *GetCurrentThread() const override;
 		virtual void Exit(int nReturn) override;
 		virtual const Console &GetConsole() const override;
+		virtual void UrgentMessage(const String &sMessage) const override;
 		virtual Time GetTime() const override;
 		virtual uint64 GetMilliseconds() const override;
 		virtual uint64 GetMicroseconds() const override;

@@ -645,6 +645,11 @@ const Console &SystemWindows::GetConsole() const
 	return m_cConsole;
 }
 
+void SystemWindows::UrgentMessage(const String &sMessage) const
+{
+	MessageBoxW(nullptr, sMessage, L"Urgent message", MB_OK | MB_ICONERROR);
+}
+
 Time SystemWindows::GetTime() const
 {
 	SYSTEMTIME sTime;
