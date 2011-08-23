@@ -9,7 +9,7 @@ Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the
 - Feature: Added a lightweight native OS frontend
 - Feature: Added a frontend for PixelLight's own GUI system (uniform for OS & ingame) perfectly integrated into the complete system
 - Feature: Added a frontend and adapter for Qt (Qt is a cross-platform application and UI framework, http://qt.nokia.com/) to bring PixelLight and Qt together
-- Feature: Added plugin "PLAssimp" using "ASSIMP - Open Asset Import Library" in order to provide loader implementations for 3ds, obj, Blender, Collada...
+- Feature: Added plugin "PLAssimp" using "ASSIMP - Open Asset Import Library" in order to provide loader implementations for 3ds, obj, Blender, Collada etc.
 - Feature: Now using the new language keyword "override" from C++0x in order to give the compiler a chance to detect and blame more errors related to overwriting methods
 - Feature: Clang (http://clang.llvm.org/) v3.0 (currently in development) is now supported
 - Feature: Connected "PLInput::Control" to the RTTI as well as the derived classes "PLInput::Axis", "PLInput::Button", "PLInput::Effect" and "PLInput::LED" (meaning they can now be used e.g. by scripts)
@@ -35,6 +35,7 @@ Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the
 - Change: Updated libjpeg from "8b" to "8c"
 - Change: Updated FreeType from "2.3.12" to "2.4.6"
 - Removed: Outdated "PLDefaultFileFormats" (use "PLAssimp" instead)
+- Removed: Currently experimental browser plugins from the public SDK because they are not yet ready to be used and therefore may cause confusion
 - Bugfix: PLProject: Although not recommended, it's possible that there are multiple RTTI classes defined within a single file, PLProject can now also deal with this case
 - Bugfix: Linux: Fixed keyboard issue regarding to key modifiers (e.g. "a-down"->"shift-down"->"a-up" => "a-up" event came only after releasing the shift key)
 

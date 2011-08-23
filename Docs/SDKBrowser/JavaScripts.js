@@ -89,7 +89,6 @@ shortcut("Doc_PixelLight3dsMaxSceneExport",	"Docs\\PixelLight3dsMaxSceneExport.p
 shortcut("Dir_Docs",				"Docs\\");
 shortcut("Dir_Lib",					"Lib\\");
 shortcut("Dir_Runtime",				"Runtime\\");
-shortcut("Dir_BrowserPlugins",		"BrowserPlugins\\");
 // Tools
 shortcut("Dir_Tools",				"Tools\\");
 shortcut("Dir_3dsMax",				"Tools\\3dsMax\\");
