@@ -506,7 +506,7 @@ void GuiPL::UpdateKeyboard()
 						// Get state of modifier keys
 						const uint32 nModifiers = GetKeyModifiers(*pKeyboard);
 
-						// Send OnKeyUo message
+						// Send OnKeyUp message
 						m_pGui->SendMessage(GuiMessage::OnKeyUp(pFocusWidget, i, nModifiers));
 					}
 				}

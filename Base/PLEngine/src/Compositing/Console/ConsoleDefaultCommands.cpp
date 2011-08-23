@@ -124,8 +124,8 @@ void PLConsoleCommandFPS(ConsoleCommand &cCommand)
 {
 	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
-		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowFPS").GetBool();
-		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowFPS", String::Format("%d", !bValue));
+		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::DebugConfig", "ShowFPS").GetBool();
+		pApplication->GetConfig().SetVar("PLEngine::DebugConfig", "ShowFPS", String::Format("%d", !bValue));
 	}
 }
 
@@ -173,8 +173,8 @@ void PLConsoleCommandCoordinateAxis(ConsoleCommand &cCommand)
 {
 	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
-		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowCoordinateAxis").GetBool();
-		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowCoordinateAxis", String::Format("%d", !bValue));
+		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::DebugConfig", "ShowCoordinateAxis").GetBool();
+		pApplication->GetConfig().SetVar("PLEngine::DebugConfig", "ShowCoordinateAxis", String::Format("%d", !bValue));
 	}
 }
 
@@ -186,8 +186,8 @@ void PLConsoleCommandXZPlane(ConsoleCommand &cCommand)
 {
 	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
-		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowXZPlane").GetBool();
-		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowXZPlane", String::Format("%d", !bValue));
+		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::DebugConfig", "ShowXZPlane").GetBool();
+		pApplication->GetConfig().SetVar("PLEngine::DebugConfig", "ShowXZPlane", String::Format("%d", !bValue));
 	}
 }
 
@@ -199,8 +199,8 @@ void PLConsoleCommandXYPlane(ConsoleCommand &cCommand)
 {
 	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
-		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowXYPlane").GetBool();
-		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowXYPlane", String::Format("%d", !bValue));
+		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::DebugConfig", "ShowXYPlane").GetBool();
+		pApplication->GetConfig().SetVar("PLEngine::DebugConfig", "ShowXYPlane", String::Format("%d", !bValue));
 	}
 }
 
@@ -212,8 +212,8 @@ void PLConsoleCommandYZPlane(ConsoleCommand &cCommand)
 {
 	CoreApplication *pApplication = CoreApplication::GetApplication();
 	if (pApplication) {
-		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::EngineDebugConfig", "ShowYZPlane").GetBool();
-		pApplication->GetConfig().SetVar("PLEngine::EngineDebugConfig", "ShowYZPlane", String::Format("%d", !bValue));
+		const bool bValue = pApplication->GetConfig().GetVar("PLEngine::DebugConfig", "ShowYZPlane").GetBool();
+		pApplication->GetConfig().SetVar("PLEngine::DebugConfig", "ShowYZPlane", String::Format("%d", !bValue));
 	}
 }
 

@@ -268,7 +268,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 
 	// Draw coordinate axis
 	if ((InfoFlags & CoordinateAxis) &&
-		cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowCoordinateAxis").GetBool()) {
+		cConfig.GetVar("PLEngine::DebugConfig", "ShowCoordinateAxis").GetBool()) {
 
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		cRenderer.SetRenderState(RenderState::ZEnable,      false);
@@ -345,9 +345,9 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	// Show planes
 	if (InfoFlags & Planes) {
 		// Check whether or not any plane visualization is enabled
-		const bool bShowXZPlane = cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowXZPlane").GetBool();
-		const bool bShowXYPlane = cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowXYPlane").GetBool();
-		const bool bShowYZPlane = cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowYZPlane").GetBool();
+		const bool bShowXZPlane = cConfig.GetVar("PLEngine::DebugConfig", "ShowXZPlane").GetBool();
+		const bool bShowXYPlane = cConfig.GetVar("PLEngine::DebugConfig", "ShowXYPlane").GetBool();
+		const bool bShowYZPlane = cConfig.GetVar("PLEngine::DebugConfig", "ShowYZPlane").GetBool();
 		if (bShowXZPlane || bShowXYPlane || bShowYZPlane) {
 			// Get the projection matrix and the current view matrix
 			Matrix4x4 mProjection;
@@ -394,7 +394,7 @@ void SNEngineInformation::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 	}
 
 	// Draw FPS
-	if ((InfoFlags & FPS) && cConfig.GetVar("PLEngine::EngineDebugConfig", "ShowFPS").GetBool()) {
+	if ((InfoFlags & FPS) && cConfig.GetVar("PLEngine::DebugConfig", "ShowFPS").GetBool()) {
 		// Get the font
 		Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 		if (pFont) {
