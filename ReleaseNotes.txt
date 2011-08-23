@@ -1,4 +1,4 @@
-Changes in PixelLight 0.9.8-R1 (not yet released)
+Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the first public PixelLight release and nearly 9 years after development start on September 16, 2002)
   Please note that this release comes with several breaking changes with the goal to simplify the overall structure of PixelLight, have a look into the diaries (Git repository) for details
 - Feature: Applications, including their lifecyle, are now controlled by frontends in order to make the PixelLight technology usable for more use cases
 - Feature: Added a null frontend without any GUI involved, useful for example when only rendering into background buffers
