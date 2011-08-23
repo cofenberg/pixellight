@@ -308,9 +308,21 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	install(DIRECTORY "${QT_EXTERNAL_DIR}/include/Qt"
 		DESTINATION "${PL_INSTALL_INCLUDE}/Qt" 		COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
 	)
-	install(DIRECTORY "${QT_EXTERNAL_DIR}/include/src"
-		DESTINATION "${PL_INSTALL_INCLUDE}/Qt"	 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
-	)
+
+	# [TODO] It appears that there's going something funny on in here...
+	# The PixelLight Linux external packages of Qt Stephan Wezel created, don't need the "src" because the includes are real includes and not just references.
+	# When downloading the Qt sources and looking into e.g. "Qt\4.7.1\include\QtCore\qvector.h" I see "#include "../../src/corelib/tools/qvector.h".
+	# When now building Qt on MS Windows using the options
+	# "configure -platform win32-msvc2010 -release -opensource -fast -sse -sse2 -no-qt3support -no-scripttools -no-stl -nomake examples -nomake demos -no-openssl -no-webkit -no-phonon -no-style-motif -no-style-cde -no-style-cleanlooks -no-style-plastique -no-sql-sqlite -qt-style-windowsvista -D NOMINMAX -D VC_EXTRA_LEAN -D WIN32 -D _WINDOWS -D _CRT_NONSTDC_NO_WARNINGS -D _CRT_SECURE_NO_WARNINGS -D _CRT_SECURE_NO_DEPRECATE -D _CRT_NONSTDC_NO_DEPRECATE -D _ATL_SECURE_NO_DEPRECATE -D _CRT_NON_CONFORMING_SWPRINTFS -D STRSAFE_NO_DEPRECATE -D _UNICODE -D UNICODE"
+	# I still see the same within the include files, and no new, modified includes appeared. I can copy out the files from "Qt\4.7.1\src\" - but this
+	# seems odd. If this would be the preferred way to use Qt, why is there an include directory in the first place? Did I messed up with the Qt compile configuration?
+	# Does the Qt build system handles things in another way under Linux? Maybe the includes are handled during "install" on Linux? So, until it's clear what's going on, we
+	# need to use this OS dependent handling. :/
+	if(WIN32)
+		install(DIRECTORY "${QT_EXTERNAL_DIR}/include/src"
+			DESTINATION "${PL_INSTALL_INCLUDE}/Qt"	 	COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+		)
+	endif()
 
 	# Copy the copyright information into the include directory
 	install(FILES	"${QT_EXTERNAL_DIR}/Readme.txt"
