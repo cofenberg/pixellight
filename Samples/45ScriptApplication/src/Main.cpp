@@ -49,15 +49,18 @@ pl_module_end
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
-	Runtime::ScanDirectoryPluginsAndData();
+	if (Runtime::ScanDirectoryPluginsAndData()) {
+		// Setup the frontend context
+		FrontendContext cFrontendContext;
+		cFrontendContext.SetExecutableFilename(sExecutableFilename);
+		cFrontendContext.SetArguments(lstArguments);
+		cFrontendContext.SetName("45ScriptApplication");
+		cFrontendContext.SetFrontendParameters("ApplicationClass=\"PLEngine::ScriptApplication\" ApplicationConstructor=\"ParameterConstructor2\" ApplicationConstructorParameters=\"ScriptFilename='Data/Scripts/45ScriptApplication.lua'\"");
 
-	// Setup the frontend context
-	FrontendContext cFrontendContext;
-	cFrontendContext.SetExecutableFilename(sExecutableFilename);
-	cFrontendContext.SetArguments(lstArguments);
-	cFrontendContext.SetName("45ScriptApplication");
-	cFrontendContext.SetFrontendParameters("ApplicationClass=\"PLEngine::ScriptApplication\" ApplicationConstructor=\"ParameterConstructor2\" ApplicationConstructorParameters=\"ScriptFilename='Data/Scripts/45ScriptApplication.lua'\"");
-
-	// ... hm, what would be an appropriate comment for this line of code? Maybe "Run script"...? *g*
-	return Frontend::Run(cFrontendContext);
+		// ... hm, what would be an appropriate comment for this line of code? Maybe "Run script"...? *g*
+		return Frontend::Run(cFrontendContext);
+	} else {
+		// Error!
+		return -1;
+	}
 }

@@ -229,6 +229,12 @@ class Runtime {
 		*  @brief
 		*    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 		*
+		*  @param[in] bUrgentMessageAllowed
+		*    Is this method allowed to show an urgent message to the user in case of a failure?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
 		*  @remarks
 		*    In case you don't care about technical details and just want the stuff runnable, then just call this method
 		*    and be happy. The PixelLight runtime to use is detected automatically, all available compatible plugins are
@@ -238,7 +244,7 @@ class Runtime {
 		*    - ScanDirectoryPlugins()
 		*    - ScanDirectoryData()
 		*/
-		PLCORE_API static void ScanDirectoryPluginsAndData();
+		PLCORE_API static bool ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed = true);
 
 
 	//[-------------------------------------------------------]

@@ -9,6 +9,7 @@
   way under Linux? Maybe the includes are handled during "install" on Linux? So, until it's clear what's going on, we need to use OS dependent handling. :/
   (no time right now to spend hours with this issue)
 - "System": Added "UrgentMessage()"-method for a primitive way (e.g. by using a message box) to be able to tell the user that something went terrible wrong
+- "Runtime::ScanDirectoryPluginsAndData()": By default, this method shows an urgent message to the user in case of a failure
 
 
 

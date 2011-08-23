@@ -328,11 +328,23 @@ void Runtime::ScanDirectoryData(const String &sDirectory)
 *  @brief
 *    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 */
-void Runtime::ScanDirectoryPluginsAndData()
+bool Runtime::ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed)
 {
-	// Wow, just have a look at this ueber-complex implementation
-	ScanDirectoryPlugins();
-	ScanDirectoryData();
+	// Check PixelLight runtime directory
+	const String sPLDirectory = GetDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Wow, just have a look at this ueber-complex implementation
+		ScanDirectoryPlugins(sPLDirectory);
+		ScanDirectoryData();
+
+		// Done
+		return true;
+	} else {
+		// Error!
+		if (bUrgentMessageAllowed)
+			System::GetInstance()->UrgentMessage("Failed to locate the PixelLight runtime");
+		return false;
+	}
 }
 
 

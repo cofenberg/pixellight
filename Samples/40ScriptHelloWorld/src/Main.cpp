@@ -81,39 +81,42 @@ void RunScript(const String &sScriptFilename)
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Scan PL-runtime directory for compatible plugins and load them in
-	Runtime::ScanDirectoryPlugins();
+	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+	if (Runtime::ScanDirectoryPluginsAndData()) {
+		// Bring the log into the verbose mode so that the log also writes log entries
+		// directly into the console. This way, we can e.g. see script errors at once.
+		Log::GetInstance()->SetVerbose(true);
 
-	// Bring the log into the verbose mode so that the log also writes log entries
-	// directly into the console. This way, we can e.g. see script errors at once.
-	Log::GetInstance()->SetVerbose(true);
+		// Do only show us error messages within the log
+		Log::GetInstance()->SetLogLevel(Log::Error);
 
-	// Do only show us error messages within the log
-	Log::GetInstance()->SetLogLevel(Log::Error);
+		// Get a list of supported script languages
+		const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+		for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+			// Get the name of the found script language
+			const String sScriptLanguage = lstScriptLanguages[i];
 
-	// Get a list of supported script languages
-	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
-	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
-		// Get the name of the found script language
-		const String sScriptLanguage = lstScriptLanguages[i];
+			// Write the name of the found script language into the console
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
 
-		// Write the name of the found script language into the console
-		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+			// Get the filename extension of the found script language
+			const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+			if (sScriptLanguageExtension.GetLength()) {
+				// Run a script
+				RunScript("Data/Scripts/40ScriptHelloWorld." + sScriptLanguageExtension);
+			} else {
+				// This script language has no filename extension?!
+				System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
+			}
 
-		// Get the filename extension of the found script language
-		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
-		if (sScriptLanguageExtension.GetLength()) {
-			// Run a script
-			RunScript("Data/Scripts/40ScriptHelloWorld." + sScriptLanguageExtension);
-		} else {
-			// This script language has no filename extension?!
-			System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
+			// Write a new line into the console
+			System::GetInstance()->GetConsole().Print('\n');
 		}
 
-		// Write a new line into the console
-		System::GetInstance()->GetConsole().Print('\n');
+		// Done
+		return 0;
+	} else {
+		// Error!
+		return -1;
 	}
-
-	// Done
-	return 0;
 }

@@ -54,17 +54,20 @@
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
 		/* Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it */ \
-		PLCore::Runtime::ScanDirectoryPluginsAndData(); \
-\
-		/* Setup the frontend context */ \
-		PLCore::FrontendContext cFrontendContext; \
-		cFrontendContext.SetExecutableFilename(sExecutableFilename); \
-		cFrontendContext.SetArguments(lstArguments); \
-		cFrontendContext.SetName(ModuleName); \
-		cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
-\
-		/* Run the frontend */ \
-		return PLCore::Frontend::Run(cFrontendContext); \
+		if (PLCore::Runtime::ScanDirectoryPluginsAndData()) { \
+			/* Setup the frontend context */ \
+			PLCore::FrontendContext cFrontendContext; \
+			cFrontendContext.SetExecutableFilename(sExecutableFilename); \
+			cFrontendContext.SetArguments(lstArguments); \
+			cFrontendContext.SetName(ModuleName); \
+			cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
+	\
+			/* Run the frontend */ \
+			return PLCore::Frontend::Run(cFrontendContext); \
+		} else { \
+			/* Error! */ \
+			return -1; \
+		} \
 	} \
 	\
 	pl_module_plugin(ModuleName)
@@ -87,18 +90,21 @@
 	int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore::String> &lstArguments) \
 	{ \
 		/* Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it */ \
-		PLCore::Runtime::ScanDirectoryPluginsAndData(); \
-\
-		/* Setup the frontend context */ \
-		PLCore::FrontendContext cFrontendContext; \
-		cFrontendContext.SetExecutableFilename(sExecutableFilename); \
-		cFrontendContext.SetArguments(lstArguments); \
-		cFrontendContext.SetName(ModuleName); \
-		cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
-		cFrontendContext.SetFrontendImplementation(FrontendClass); \
-\
-		/* Run the frontend */ \
-		return PLCore::Frontend::Run(cFrontendContext); \
+		if (PLCore::Runtime::ScanDirectoryPluginsAndData()) { \
+			/* Setup the frontend context */ \
+			PLCore::FrontendContext cFrontendContext; \
+			cFrontendContext.SetExecutableFilename(sExecutableFilename); \
+			cFrontendContext.SetArguments(lstArguments); \
+			cFrontendContext.SetName(ModuleName); \
+			cFrontendContext.SetFrontendParameters(PLCore::String("ApplicationClass=\"") + ApplicationClass + '\"'); \
+			cFrontendContext.SetFrontendImplementation(FrontendClass); \
+	\
+			/* Run the frontend */ \
+			return PLCore::Frontend::Run(cFrontendContext); \
+		} else { \
+			/* Error! */ \
+			return -1; \
+		} \
 	} \
 	\
 	pl_module_plugin(ModuleName)
