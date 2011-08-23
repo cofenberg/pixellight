@@ -186,7 +186,7 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 						} else {
 							GLint nSamples = 0;
 							glGetIntegerv(GL_SAMPLES, &nSamples);
-							if (nSamples != nMultisampleAntialiasingSamples)
+							if (nSamples != static_cast<GLint>(nMultisampleAntialiasingSamples))
 								PL_LOG(Warning, String::Format("OpenGL ES 2.0 multisample antialiasing: %d samples per pixel requested but %d samples per pixel received", nMultisampleAntialiasingSamples, nSamples))
 						}
 					}
@@ -575,7 +575,6 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 			return false; // Error!
 
 		// Make this texture buffer to the renderers current one
-		PLRenderer::TextureBuffer *pPreviousTextureBuffer = m_ppCurrentTextureBuffer[nStage];
 		m_ppCurrentTextureBuffer[nStage] = pTextureBuffer;
 
 		// Loop through all sampler states

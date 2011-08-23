@@ -220,17 +220,17 @@ Color4 XmlTextElement::GetColor(const String &sColor)
 
 	// Color in form #RGB
 	else if (sColor.GetSubstring(0, 1) == "#" && sColor.GetLength() == 4) {
-		uint8 nR = ParseTools::ParseHexValue(sColor.GetSubstring(1, 1) + sColor.GetSubstring(1, 1));
-		uint8 nG = ParseTools::ParseHexValue(sColor.GetSubstring(2, 1) + sColor.GetSubstring(2, 1));
-		uint8 nB = ParseTools::ParseHexValue(sColor.GetSubstring(3, 1) + sColor.GetSubstring(3, 1));
+		uint8 nR = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(1, 1) + sColor.GetSubstring(1, 1)));
+		uint8 nG = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(2, 1) + sColor.GetSubstring(2, 1)));
+		uint8 nB = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(3, 1) + sColor.GetSubstring(3, 1)));
 		return Color4(nR, nG, nB, 255);
 	}
 
 	// Color in form #RRGGBB
 	else if (sColor.GetSubstring(0, 1) == "#" && sColor.GetLength() == 7) {
-		uint8 nR = ParseTools::ParseHexValue(sColor.GetSubstring(1, 2));
-		uint8 nG = ParseTools::ParseHexValue(sColor.GetSubstring(3, 2));
-		uint8 nB = ParseTools::ParseHexValue(sColor.GetSubstring(5, 2));
+		uint8 nR = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(1, 2)));
+		uint8 nG = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(3, 2)));
+		uint8 nB = static_cast<uint8>(ParseTools::ParseHexValue(sColor.GetSubstring(5, 2)));
 		return Color4(nR, nG, nB, 255);
 	}
 
