@@ -99,7 +99,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\70SPARK.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\70SPARK${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\71libRocket.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\71libRocket${PROJECT_SUFFIX}.exe\\\"
 		CreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Tools\\\"
-		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Tools\\\\PLViewer.lnk\\\" \\\"$INSTDIR\\\\Tools\\\\Bin\\\\x86\\\\PLViewer${PROJECT_SUFFIX}.exe\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Tools\\\\PLViewer.lnk\\\" \\\"$INSTDIR\\\\Tools\\\\x86\\\\PLViewer${PROJECT_SUFFIX}.exe\\\"
 		CreateDirectory \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightFeatures.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightFeatures.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightBase.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightBase.pdf\\\"
