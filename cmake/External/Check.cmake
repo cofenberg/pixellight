@@ -23,6 +23,11 @@ macro(external_check_download dir checksum)
 	  set(path "${dir}/")
 	endif()
 
+	set(md5sum "")
+	if(NOT "${checksum}" STREQUAL "")
+	  set(md5sum "${checksum}")
+	endif()
+
 	# Get the download URL
 	if (PL_EXTERNAL_USER AND PL_EXTERNAL_PASS)
 		# With
@@ -35,10 +40,10 @@ macro(external_check_download dir checksum)
 	# Download
 	external_fetch_http(
 		${url}
-		${checksum}
+		${md5sum}
 		${CMAKETOOLS_CURRENT_EXT_DIR}/
 	)
-endmacro(external_check_download dir)
+endmacro(external_check_download dir checksum)
 
 ##################################################
 ## MACRO: external_check_unpack
