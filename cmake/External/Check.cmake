@@ -16,7 +16,7 @@ include(${CMAKETOOLS_DIR}/External/Base.cmake)
 ##
 ## Download external package
 ##################################################
-macro(external_check_download dir)
+macro(external_check_download dir checksum)
 	# Get path with or without / at the end
 	set(path "")
 	if(NOT "${dir}" STREQUAL "")
@@ -35,7 +35,7 @@ macro(external_check_download dir)
 	# Download
 	external_fetch_http(
 		${url}
-		""
+		${checksum}
 		${CMAKETOOLS_CURRENT_EXT_DIR}/
 	)
 endmacro(external_check_download dir)

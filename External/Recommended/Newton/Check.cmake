@@ -9,8 +9,26 @@ include(${CMAKETOOLS_DIR}/External/Check.cmake)
 
 # Check if built file exists
 if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
+	set(md5sum "")
+	if(WIN32)
+		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+			# md5sum of the 64bit windows package [TODO]
+			set(md5sum "")
+		else(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+			# md5sum of the 32bit windows package
+			set(md5sum "6a261e49e7f699a549ad0a8816070a8c")
+		endif(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+	elseif(LINUX)
+		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+			# md5sum of the 64bit linux package
+			set(md5sum "1792f25047faed90f7a11da95f0162ee")
+		else(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+			# md5sum of the 32bit linux package
+			set(md5sum "f57d7a310f0298e2e2083ffa199c4ed6")
+		endif(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+	endif()
 	# Download prebuilt package from the repository
-	external_check_download("")
+	external_check_download("" ${md5sum})
 
 	# Unpack the package
 	external_check_unpack()
