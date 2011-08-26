@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\FontGlyphTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FontTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FragmentShaderGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IndexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLRendererOpenGLES2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ProgramAttributeGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ProgramGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ProgramUniformGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderLanguageGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderToolsGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SurfaceTextureBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SurfaceWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureBuffer2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureBuffer3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureBufferCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VertexShaderGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ContextNative.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ContextDesktop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ContextEmulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\PLRendererOpenGLES2\FontGlyphTexture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\FontManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FontManager_GLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\FontTexture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\FragmentShaderGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\IndexBuffer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Linux.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Windows.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ProgramAttributeGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ProgramGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ProgramUniformGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\Renderer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ShaderLanguageGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ShaderToolsGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\SurfaceTextureBuffer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\SurfaceWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\TextureBuffer2D.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\TextureBuffer3D.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\TextureBufferCube.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\VertexBuffer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\VertexShaderGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ContextEmulator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ContextNative.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\Context.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ContextDesktop.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="..\..\Base\PLRenderer\Diary.txt" />
+  </ItemGroup>
+</Project>

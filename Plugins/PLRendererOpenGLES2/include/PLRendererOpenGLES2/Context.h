@@ -1,0 +1,235 @@
+/*********************************************************\
+ *  File: Context.h                                      *
+ *
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *
+ *  This file is part of PixelLight.
+ *
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+\*********************************************************/
+
+
+#ifndef __PLRENDEREROPENGLES2_CONTEXT_H__
+#define __PLRENDEREROPENGLES2_CONTEXT_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <EGL/egl.h>
+#undef Yield 		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef Success		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef None			// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef Always		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef PSize		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+#ifdef LINUX
+	#include <X11/Xutil.h>
+#endif
+#include <PLCore/Core/AbstractContext.h>
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLRendererOpenGLES2 {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Renderer;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Abstract OpenGL ES context base class
+*/
+class Context : public PLCore::AbstractContext {
+
+
+	//[-------------------------------------------------------]
+	//[ Public methods                                        ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~Context();
+
+		/**
+		*  @brief
+		*    Initialize the context
+		*
+		*  @param[in] nMultisampleAntialiasingSamples
+		*    Multisample antialiasing samples per pixel, <=1 means no antialiasing
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
+
+		/**
+		*  @brief
+		*    Returns the used EGL display
+		*
+		*  @return
+		*    The used EGL display
+		*/
+		EGLDisplay GetEGLDisplay() const;
+
+		/**
+		*  @brief
+		*    Returns the used EGL config
+		*
+		*  @return
+		*    The used EGL config
+		*/
+		EGLConfig GetEGLConfig() const;
+
+		/**
+		*  @brief
+		*    Returns the used EGL context
+		*
+		*  @return
+		*    The used EGL context
+		*/
+		EGLContext GetEGLContext() const;
+
+		/**
+		*  @brief
+		*    Makes a given EGL surface to the currently used one
+		*
+		*  @param[in] hEGLSurface
+		*    EGL surface to make to the current one, can be a null pointer, in this case an internal dummy surface is set
+		*
+		*  @return
+		*    'EGL_TRUE' if all went fine, else 'EGL_FALSE'
+		*/
+		EGLBoolean MakeCurrent(EGLSurface hEGLSurface);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected methods                                     ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cRenderer
+		*    The owner renderer
+		*/
+		Context(Renderer &cRenderer);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Context functions                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Chooses a EGL config
+		*
+		*  @param[in] nMultisampleAntialiasingSamples
+		*    Multisample antialiasing samples per pixel
+		*
+		*  @return
+		*    The chosen EGL config, a null pointer on error
+		*
+		*  @note
+		*    - Automatically tries to find fallback configurations
+		*/
+		virtual EGLConfig ChooseConfig(PLCore::uint32 nMultisampleAntialiasingSamples) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		Renderer		   *m_pRenderer;	/**< The owner renderer, always valid! */
+		// X11
+		#ifdef LINUX
+			::Display	   *m_pDisplay;
+		#endif
+		// EGL
+		EGLDisplay m_hDisplay;
+		// EGL
+		EGLConfig			m_hConfig;
+		EGLContext			m_hContext;
+		EGLNativeWindowType	m_nDummyNativeWindow;
+		EGLSurface			m_hDummySurface;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		Context(const Context &cSource);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		Context &operator =(const Context &cSource);
+
+		/**
+		*  @brief
+		*    Shows some OpenGL ES information
+		*/
+		void ShowOpenGLESInformation();
+
+
+};
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLRendererOpenGLES2
+
+
+//[-------------------------------------------------------]
+//[ Implementation includes                               ]
+//[-------------------------------------------------------]
+#ifdef USEEMULATOR
+	#include "PLRendererOpenGLES2/ContextEmulator.h"
+#elif USEDESKTOP
+	#include "PLRendererOpenGLES2/ContextDesktop.h"
+#else
+	#include "PLRendererOpenGLES2/ContextNative.h"
+#endif
+
+
+#endif // __PLRENDEREROPENGLES2_CONTEXT_H__

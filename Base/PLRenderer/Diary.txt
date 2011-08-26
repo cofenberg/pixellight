@@ -1,3 +1,18 @@
+>> 26.08.2011
+[CO]
+- PLRendererOpenGLES: Current AMD GPU drivers are (at least in theory) able to provide native OpenGL ES 2.0 support. So, this renderer implementation now
+  has three supported use cases:
+  - Emulator (for development)
+  - Desktop using GPU drivers supporting this (primarily for development)
+  - Native (for the mobile devices)
+  First, I just saw nothing at all when using the desktop version. No errors, no crashes, but also no graphics. Tested it with "AMD Catalyst 11.8" and Windows
+  7 64 bit on a "ATI Mobility Radeon HD 4850" with Windows Aero active. As soon as I disabled Windows Aero all went fine. Good that I tried that after over two
+  hours of research and experiments... "(?!$$(!"=$/()=!"$
+  Ok, looks like a driver bug or so, but it's really cool that I can now use OpenGL ES 2.0 on my desktop without an emulator! :D
+- Renamed PLRendererOpenGLES into PLRendererOpenGLES2 to avoid any future name conflicts
+
+
+
 >> 20.08.2011
 [CO]
 - "FontManager::GetFontTexture()": Font filename comparison should only be done on the absolute paths to be on the safe side

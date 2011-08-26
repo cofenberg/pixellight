@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLES2", "PLRendererOpenGLES2.vcxproj", "{D757706B-9792-4101-BF6C-E8838292EC48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Desktop|Win32 = Debug Desktop|Win32
+		Debug Emulator|Win32 = Debug Emulator|Win32
+		Debug|Win32 = Debug|Win32
+		Release Desktop|Win32 = Release Desktop|Win32
+		Release Emulator|Win32 = Release Emulator|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug Desktop|Win32.ActiveCfg = Debug Desktop|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug Desktop|Win32.Build.0 = Debug Desktop|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug Emulator|Win32.ActiveCfg = Debug Emulator|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug Emulator|Win32.Build.0 = Debug Emulator|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Debug|Win32.Build.0 = Debug|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release Desktop|Win32.ActiveCfg = Release Desktop|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release Desktop|Win32.Build.0 = Release Desktop|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release Emulator|Win32.ActiveCfg = Release Emulator|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release Emulator|Win32.Build.0 = Release Emulator|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.ActiveCfg = Release|Win32
+		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
