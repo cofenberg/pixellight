@@ -87,7 +87,8 @@ endif()
 ##################################################
 add_compile_defs(
 	PLRENDEREROPENGLES2_EXPORTS
-	USEDESKTOP
+#	USEDESKTOP	# For desktop
+	USEEMULATOR	# For emulator
 )
 if(WIN32)
 	##################################################
