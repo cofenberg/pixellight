@@ -20,12 +20,13 @@ macro(external_check_download dir checksum)
 	# Get path with or without / at the end
 	set(path "")
 	if(NOT "${dir}" STREQUAL "")
-	  set(path "${dir}/")
+		set(path "${dir}/")
 	endif()
 
+	# Checksum
 	set(md5sum "")
 	if(NOT "${checksum}" STREQUAL "")
-	  set(md5sum "${checksum}")
+		set(md5sum "${checksum}")
 	endif()
 
 	# Get the download URL
