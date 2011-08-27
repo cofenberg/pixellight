@@ -15,6 +15,12 @@
     context about it
   - If you don't have such an OS main window, don't create one just for the renderer context and pass in "NULL_HANDLE", the renderer
     implementation must be able to deal with this situation on it's own
+- Bugfix: PLRendererOpenGL & PLRendererOpenGLES2: Automatic texture uncompression was broken ("Passing "empty" images to the GPU no longer creates internal
+  image data"-change in PixelLight 0.9.6-R1)
+  Bug birth "22.03.2011", but death "27.08.2011": PLRendererOpenGL & PLRendererOpenGLES2: When there's an image without data, e.g. "glTexImage2D()" is
+  called with nullptr instead of "ImageBuffer::GetData()" which creates internal image data although it's not required... but only if there's also no
+  compressed data available as well! In here, the new "PLGraphics::ImageBuffer::HasAnyData()"-method is now used instead of the
+  "PLGraphics::ImageBuffer::HasData()"-method just looking for uncompressed data.
 
 
 

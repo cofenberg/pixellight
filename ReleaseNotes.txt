@@ -1,5 +1,6 @@
 Changes in PixelLight 0.9.9-R1 (not yet released)
 - Feature: "PLRendererOpenGLES2" now also supports desktop PC GPU drivers capable of native OpenGL ES 2.0 instead of just an emulator when developing on a desktop PC
+- Bugfix: PLRendererOpenGL & PLRendererOpenGLES2: Automatic texture uncompression was broken ("Passing "empty" images to the GPU no longer creates internal image data"-change in PixelLight 0.9.6-R1)
 
 
 
@@ -82,7 +83,6 @@ Changes in PixelLight 0.9.6-R1 (released on April 23, 2011)
 - Change: "PLGeneral::System::GetMicroseconds()" and similar methods worked with 32 bit unsigned integer, changed to 64 bit unsigned integer
 - Change: PLMath: The operators <, >, <= and >= of Vector2i, Vector3i, Vector2, Vector3 and Vector4 are now using a lexicographical order
 - Change (Windows): The PL SDK now comes with the new "Microsoft Visual C++ 2010 SP1 Redistributable Package" and is build with MSVC 2010 SP1
-- Change: PLRendererOpenGL & PLRendererOpenGLES optimization: Passing "empty" images to the GPU no longer creates internal image data
 - Change: "PLRenderer::GeometryShader" input/output primitive type and the number of output vertices can now be set by the user
 - Change: Updated "Newton Game Dynamics" from "2.24"(Linux)/"2.28"(Windows) to "2.32" (first free open-source version of this physics library)
 - Change: "SPARK_PL": Renamed previously experimental "SPARK_PL::SNFireDemo" scene node into "SPARK_PL::SNFire"

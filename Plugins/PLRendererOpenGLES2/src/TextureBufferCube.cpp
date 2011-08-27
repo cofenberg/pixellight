@@ -140,7 +140,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 								if (bUsePreCompressedData && pFaceImageBuffer->HasCompressedData())
 									glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, pFaceImageBuffer->GetCompressedDataSize(), pFaceImageBuffer->GetCompressedData());
 								else
-									glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasData() ? pFaceImageBuffer->GetData() : nullptr);
+									glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pFaceImageBuffer->HasAnyData() ? pFaceImageBuffer->GetData() : nullptr);
 
 								// If compressed internal format, we would check whether all went fine - but OpenGL ES 2.0 provides no functionality for this :/
 
@@ -165,7 +165,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 									if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
 										glCompressedTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
 									else
-										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+										glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace, nLevel, *pAPIPixelFormat, nSize, nSize, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
 
 									// If compressed internal format, we would check whether all went fine - but OpenGL ES 2.0 provides no functionality for this :/
 								}

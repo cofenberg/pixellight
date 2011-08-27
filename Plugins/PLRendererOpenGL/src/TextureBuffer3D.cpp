@@ -131,7 +131,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						if (bUsePreCompressedData)
 							glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, pImageBuffer->GetCompressedDataSize(), pImageBuffer->GetCompressedData());
 						else 
-							glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+							glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 
 						// If compressed internal format, check whether all went fine
 						if (bCompressedFormat) {
@@ -142,17 +142,17 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 								m_nFormat = nImageFormat;
 								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 								if (pAPIPixelFormatFallback)
-									glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+									glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 							}
 						}
 					} else {
 						// [TODO] It looks like that gluBuild3DMipmaps() is NOT supported under Windows :(
 						m_nNumOfMipmaps = 0;
-						glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+						glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 
 						// No pre compressed image data can be used
 						// gluBuild3DMipmaps(GL_TEXTURE_3D_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z,
-						//				  nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+						//				  nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 
 						// If compressed internal format, check whether all went fine
 						// if (bCompressedFormat) {
@@ -163,7 +163,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 						// 		const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 						// 		if (pAPIPixelFormatFallback) {
 						// 			gluBuild3DMipmaps(GL_TEXTURE_3D_EXT, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z,
-						// 							  nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasData() ? pImageBuffer->GetData() : nullptr);
+						// 							  nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 						// 		}
 						// 	}
 						// }
@@ -191,7 +191,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
 								glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
 							else
-								glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+								glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
 
 							// If compressed internal format, check whether all went fine
 							if (bCompressedFormat) {
@@ -202,7 +202,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 									m_nFormat = nImageFormat;
 									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 									if (pAPIPixelFormatFallback)
-										glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasData() ? pMipmapImageBuffer->GetData() : nullptr);
+										glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 
