@@ -314,16 +314,18 @@ String OSWindowLinux::GetTitle() const
 		unsigned long  nBytesLeft;
 		unsigned long  nNumberOfUnits;
 		unsigned char *pszName;
-
+		
+		Atom utf8_string = XInternAtom (m_pDisplay, "UTF8_STRING", False);
+		
 		// Try first getting as utf-8 string
-		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, UTF8_STRING,
+		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, utf8_string,
 							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
-
+		}
 		// Try getting as plain text
-		} else if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
-									  &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
+		else if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
+							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
 		}
@@ -336,10 +338,13 @@ String OSWindowLinux::GetTitle() const
 void OSWindowLinux::SetTitle(const String &sTitle)
 {
 	if (m_nNativeWindowHandle) {
-		const unsigned char *pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, sTitle.GetNumOfBytes());
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, sTitle.GetNumOfBytes());
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, pszWindowTitle, sTitle.GetNumOfBytes());
+		const unsigned char* pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
+		// We need here the number of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
+		// [TODO] Does String::GetNumOfBytes work here?
+		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
 	}
 }
 
