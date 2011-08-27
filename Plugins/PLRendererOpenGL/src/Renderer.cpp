@@ -77,7 +77,7 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), OpenGLExtensions(*this),
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), OpenGLExtensions(*this),
 	m_pContext(nullptr),
 	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this)),
@@ -86,6 +86,8 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_nTextureBufferTypes(nullptr),
 	m_ppPrevTextureBuffer(nullptr)
 {
+	// Ignore the given native window handle
+
 	// Output log information
 	PL_LOG(Info, "Initialize OpenGL renderer")
 

@@ -64,7 +64,7 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// There's no fixed functions support in D3D11
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// There's no fixed functions support in D3D11
 	m_pDXGIFactory1(nullptr),
 	m_nD3DFeatureLevel(D3D_FEATURE_LEVEL_9_1),
 	m_pD3D11DeviceContext(nullptr),
@@ -72,6 +72,8 @@ Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32
 	m_pD3D11RenderTargetView(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
+	// Ignore the given native window handle
+
 	// This renderer implementation has no shader support at all, so ignore sDefaultShaderLanguage
 
 	// Output log information

@@ -64,10 +64,12 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeFixedFunctions),	// Only fixed functions mode is supported... a kind of *g*
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeFixedFunctions),	// Only fixed functions mode is supported... a kind of *g*
 	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
+	// Ignore the given native window handle
+
 	// This renderer implementation has no shader support at all, so ignore sDefaultShaderLanguage
 
 	// Output log information

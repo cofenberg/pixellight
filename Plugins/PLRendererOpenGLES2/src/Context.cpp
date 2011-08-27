@@ -60,6 +60,15 @@ Context::~Context()
 	}
 	m_hContext = nullptr;
 
+	// Release all resources allocated by the shader compiler
+	glReleaseShaderCompiler();
+
+	// Return EGL to it's state at thread initialization
+	if (eglReleaseThread() == EGL_FALSE) {
+		// Error!
+		PL_LOG(Error, "Failed to release the EGL thread!")
+	}
+
 	// Terminate the EGL display
 	if (eglTerminate(m_hDisplay) == EGL_FALSE) {
 		// Error!
@@ -68,23 +77,43 @@ Context::~Context()
 	m_hDisplay = nullptr;
 	m_hConfig  = nullptr;
 
-	// Destroy the dummy native window
+	// Destroy the dummy native window, if required
 	#ifdef WIN32
-		if (m_nDummyNativeWindow) {
+		if (!m_nNativeWindowHandle && m_nDummyNativeWindow) {
 			DestroyWindow(m_nDummyNativeWindow);
 			UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
-			m_nDummyNativeWindow = NULL_HANDLE;
 		}
 	#endif
 	#ifdef LINUX
 		// Destroy the dummy native window
-		if (m_nDummyNativeWindow)
+		if (!m_nNativeWindowHandle && m_nDummyNativeWindow)
 			XDestroyWindow(m_pX11Display, m_nDummyNativeWindow);
 
 		// Close the X server display connection
-		if (m_pX11Display)
+		if (m_pX11Display) {
 			XCloseDisplay(m_pX11Display);
+			m_pX11Display = nullptr;
+		}
 	#endif
+	m_nDummyNativeWindow = NULL_HANDLE;
+}
+
+/**
+*  @brief
+*    Returns the owner renderer
+*/
+Renderer &Context::GetRenderer() const
+{
+	return *m_pRenderer;
+}
+
+/**
+*  @brief
+*    Returns the handle of a native OS window which is valid as long as the renderer instance exists
+*/
+handle Context::GetNativeWindowHandle() const
+{
+	return m_nNativeWindowHandle;
 }
 
 /**
@@ -128,34 +157,40 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 				EGLint pContextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
 				m_hContext = eglCreateContext(m_hDisplay, m_hConfig, EGL_NO_CONTEXT, pContextAttribs);
 				if (m_hContext != EGL_NO_CONTEXT) {
-					// Create the dummy native window
-					#ifdef WIN32
-					{
-						HINSTANCE hModuleHandle = GetModuleHandle(nullptr);
-						WNDCLASS sWindowClass;
-						sWindowClass.hInstance		= hModuleHandle;
-						sWindowClass.lpszClassName	= TEXT("PLOpenGLESDummyNativeWindow");
-						sWindowClass.lpfnWndProc	= DefWindowProc;
-						sWindowClass.style			= 0;
-						sWindowClass.hIcon			= nullptr;
-						sWindowClass.hCursor		= nullptr;
-						sWindowClass.lpszMenuName	= nullptr;
-						sWindowClass.cbClsExtra		= 0;
-						sWindowClass.cbWndExtra		= 0;
-						sWindowClass.hbrBackground	= nullptr;
-						RegisterClass(&sWindowClass);
-						m_nDummyNativeWindow = CreateWindow(TEXT("PLOpenGLESDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, hModuleHandle, nullptr);
+					// Create a dummy native window?
+					if (m_nNativeWindowHandle) {
+						// There's no need to create a dummy native window, we've got a real native window to work with :D
+						m_nDummyNativeWindow = (EGLNativeWindowType)m_nNativeWindowHandle;	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
+																							// reinterpret_cast<EGLNativeWindowType>(nNativeWindowHandle) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nNativeWindowHandle)
+																							// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
+					} else {
+						// Create the dummy native window
+						#ifdef WIN32
+							HINSTANCE hModuleHandle = GetModuleHandle(nullptr);
+							WNDCLASS sWindowClass;
+							sWindowClass.hInstance		= hModuleHandle;
+							sWindowClass.lpszClassName	= TEXT("PLOpenGLESDummyNativeWindow");
+							sWindowClass.lpfnWndProc	= DefWindowProc;
+							sWindowClass.style			= 0;
+							sWindowClass.hIcon			= nullptr;
+							sWindowClass.hCursor		= nullptr;
+							sWindowClass.lpszMenuName	= nullptr;
+							sWindowClass.cbClsExtra		= 0;
+							sWindowClass.cbWndExtra		= 0;
+							sWindowClass.hbrBackground	= nullptr;
+							RegisterClass(&sWindowClass);
+							m_nDummyNativeWindow = CreateWindow(TEXT("PLOpenGLESDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, hModuleHandle, nullptr);
+						#endif
+						#ifdef LINUX
+							// Create dummy window
+							XSetWindowAttributes sSetWindowAttributes;
+							sSetWindowAttributes.event_mask   = 0;
+							sSetWindowAttributes.border_pixel = 0;
+							m_nDummyNativeWindow = XCreateWindow(m_pX11Display, DefaultRootWindow(m_pX11Display), 0, 0, 300, 300, 0,
+																 CopyFromParent, InputOutput, CopyFromParent,
+																 CWBorderPixel|CWEventMask, &sSetWindowAttributes);
+						#endif
 					}
-					#endif
-					#ifdef LINUX
-						// Create dummy window
-						XSetWindowAttributes sSetWindowAttributes;
-						sSetWindowAttributes.event_mask   = 0;
-						sSetWindowAttributes.border_pixel = 0;
-						m_nDummyNativeWindow = XCreateWindow(m_pX11Display, DefaultRootWindow(m_pX11Display), 0, 0, 300, 300, 0,
-															 CopyFromParent, InputOutput, CopyFromParent,
-															 CWBorderPixel|CWEventMask, &sSetWindowAttributes);
-					#endif
 
 					// Create an EGL dummy surface
 					m_hDummySurface = eglCreateWindowSurface(m_hDisplay, m_hConfig, m_nDummyNativeWindow, nullptr);
@@ -239,6 +274,15 @@ EGLContext Context::GetEGLContext() const
 
 /**
 *  @brief
+*    Returns the used EGL dummy surface
+*/
+EGLSurface Context::GetEGLDummySurface() const
+{
+	return m_hDummySurface;
+}
+
+/**
+*  @brief
 *    Makes a given EGL surface to the currently used one
 */
 EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
@@ -259,8 +303,9 @@ EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
 *  @brief
 *    Constructor
 */
-Context::Context(Renderer &cRenderer) :
+Context::Context(Renderer &cRenderer, handle nNativeWindowHandle) :
 	m_pRenderer(&cRenderer),
+	m_nNativeWindowHandle(nNativeWindowHandle),
 	#ifdef LINUX
 		m_pX11Display(XOpenDisplay(nullptr)),
 	#endif
@@ -339,6 +384,8 @@ EGLConfig Context::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
 *    Copy constructor
 */
 Context::Context(const Context &cSource) :
+	m_pRenderer(nullptr),
+	m_nNativeWindowHandle(NULL_HANDLE),
 	#ifdef LINUX
 		m_pX11Display(nullptr),
 	#endif

@@ -60,8 +60,10 @@ class ContextNative : public Context {
 		*
 		*  @param[in] cRenderer
 		*    The owner renderer
+		*  @param[in] nNativeWindowHandle
+		*    Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window
 		*/
-		ContextNative(Renderer &cRenderer);
+		ContextNative(Renderer &cRenderer, PLCore::handle nNativeWindowHandle);
 
 		/**
 		*  @brief

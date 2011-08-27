@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 namespace PLRendererOpenGLES2 {
 
 
@@ -40,7 +41,7 @@ namespace PLRendererOpenGLES2 {
 *  @brief
 *    Constructor
 */
-ContextNative::ContextNative(Renderer &cRenderer) : Context(cRenderer)
+ContextNative::ContextNative(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle)
 {
 	// We're linking against the platform libaries, so, nothing to do in here
 }
@@ -51,14 +52,6 @@ ContextNative::ContextNative(Renderer &cRenderer) : Context(cRenderer)
 */
 ContextNative::~ContextNative()
 {
-	// Release all resources allocated by the shader compiler
-	glReleaseShaderCompiler();
-
-	// Return EGL to it's state at thread initialization
-	if (eglReleaseThread() == EGL_FALSE) {
-		// Error!
-		PL_LOG(Error, "Failed to release the EGL thread!")
-	}
 }
 
 

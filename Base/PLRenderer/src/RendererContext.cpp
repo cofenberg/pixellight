@@ -47,12 +47,12 @@ namespace PLRenderer {
 *  @brief
 *    Creates a renderer context instance
 */
-RendererContext *RendererContext::CreateInstance(const String &sBackend, Renderer::EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, const String &sDefaultShaderLanguage)
+RendererContext *RendererContext::CreateInstance(const String &sBackend, handle nNativeWindowHandle, Renderer::EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, const String &sDefaultShaderLanguage)
 {
 	// Create renderer instance
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sBackend);
 	if (pClass && pClass->IsDerivedFrom("PLRenderer::Renderer")) {
-		const Object *pObject = pClass->Create(Params<Object*, pl_enum_type(Renderer::EMode), uint32, uint32, uint32, String>(nMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage));
+		const Object *pObject = pClass->Create(Params<Object*, handle, pl_enum_type(Renderer::EMode), uint32, uint32, uint32, String>(nNativeWindowHandle, nMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage));
 		if (pObject)
 			 return &static_cast<const Renderer*>(pObject)->GetRendererContext();
 	}

@@ -77,6 +77,24 @@ class Context : public PLCore::AbstractContext {
 
 		/**
 		*  @brief
+		*    Returns the owner renderer
+		*
+		*  @return
+		*    The owner renderer
+		*/
+		Renderer &GetRenderer() const;
+
+		/**
+		*  @brief
+		*    Returns the handle of a native OS window which is valid as long as the renderer instance exists
+		*
+		*  @return
+		*    The handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window
+		*/
+		PLCore::handle GetNativeWindowHandle() const;
+
+		/**
+		*  @brief
 		*    Initialize the context
 		*
 		*  @param[in] nMultisampleAntialiasingSamples
@@ -127,6 +145,15 @@ class Context : public PLCore::AbstractContext {
 
 		/**
 		*  @brief
+		*    Returns the used EGL dummy surface
+		*
+		*  @return
+		*    The used EGL dummy surface
+		*/
+		EGLSurface GetEGLDummySurface() const;
+
+		/**
+		*  @brief
 		*    Makes a given EGL surface to the currently used one
 		*
 		*  @param[in] hEGLSurface
@@ -148,8 +175,10 @@ class Context : public PLCore::AbstractContext {
 		*
 		*  @param[in] cRenderer
 		*    The owner renderer
+		*  @param[in] nNativeWindowHandle
+		*    Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window
 		*/
-		Context(Renderer &cRenderer);
+		Context(Renderer &cRenderer, PLCore::handle nNativeWindowHandle);
 
 
 	//[-------------------------------------------------------]
@@ -176,17 +205,18 @@ class Context : public PLCore::AbstractContext {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		Renderer		   *m_pRenderer;	/**< The owner renderer, always valid! */
+		Renderer		   *m_pRenderer;			/**< The owner renderer, always valid! */
+		PLCore::handle		m_nNativeWindowHandle;	/**< Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window */
 		// X11
 		#ifdef LINUX
 			::Display	   *m_pX11Display;
 		#endif
 		// EGL
-		EGLDisplay m_hDisplay;
+		EGLDisplay			m_hDisplay;
 		// EGL
 		EGLConfig			m_hConfig;
 		EGLContext			m_hContext;
-		EGLNativeWindowType	m_nDummyNativeWindow;
+		EGLNativeWindowType	m_nDummyNativeWindow;	/**< Native dummy window handle, can be identical to "m_nNativeWindowHandle" if it's in fact no dummy at all, can be "NULL_HANDLE" */
 		EGLSurface			m_hDummySurface;
 
 

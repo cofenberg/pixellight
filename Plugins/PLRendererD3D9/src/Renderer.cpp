@@ -76,11 +76,13 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode),
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode),
 	m_pD3D(nullptr),
 	m_pFixedFunctions(nullptr),
 	m_pFontManager(new FontManager(*this))
 {
+	// Ignore the given native window handle
+
 	// This renderer implementation has just support for Cg as shader language, so ignore sDefaultShaderLanguage
 
 	// Output log information

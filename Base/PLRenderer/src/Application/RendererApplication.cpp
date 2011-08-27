@@ -268,7 +268,7 @@ void RendererApplication::OnCreateRendererContext()
 	const String sDefaultShaderLanguage = GetConfig().GetVar("PLRenderer::Config", "DefaultShaderLanguage");
 
 	// Create and return renderer context instance
-	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, static_cast<Renderer::EMode>(nRendererMode), nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
+	m_pRendererContext = sRenderer.GetLength() ? RendererContext::CreateInstance(sRenderer, GetFrontend().GetNativeWindowHandle(), static_cast<Renderer::EMode>(nRendererMode), nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage) : nullptr;
 	if (!m_pRendererContext) {
 		// Error!
 		PL_LOG(Error, "Can't create renderer context instance: " + sRenderer)

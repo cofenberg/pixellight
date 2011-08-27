@@ -123,21 +123,28 @@ bool SurfaceWindow::Init()
 	// First check if theres a native window
 	const handle nNativeWindowHandle = GetNativeWindowHandle();
 	if (nNativeWindowHandle) {
-		// Get the OpenGL ES renderer
+		// Get the OpenGL ES renderer and context
 		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
+		Context  &cContext          = cRendererOpenGLES.GetContext();
 
-		// Create window surface
-		m_hSurface = eglCreateWindowSurface(cRendererOpenGLES.GetContext().GetEGLDisplay(),
-											cRendererOpenGLES.GetContext().GetEGLConfig(),
-											(EGLNativeWindowType)nNativeWindowHandle,	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
-																						// reinterpret_cast<EGLNativeWindowType>(nNativeWindowHandle) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nNativeWindowHandle)
-																						// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
-											nullptr);
-		if (m_hSurface == EGL_NO_SURFACE) {
-			PL_LOG(Warning, "Could not create OpenGL ES surface")
+		// Is this the native window passed into the renderer constructor?
+		if (nNativeWindowHandle == cContext.GetNativeWindowHandle()) {
+			// Yes, just use the already existing window surface
+			m_hSurface = cContext.GetEGLDummySurface();
+		} else {
+			// Create window surface
+			m_hSurface = eglCreateWindowSurface(cContext.GetEGLDisplay(),
+												cContext.GetEGLConfig(),
+												(EGLNativeWindowType)nNativeWindowHandle,	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
+																							// reinterpret_cast<EGLNativeWindowType>(nNativeWindowHandle) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nNativeWindowHandle)
+																							// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
+												nullptr);
+			if (m_hSurface == EGL_NO_SURFACE) {
+				PL_LOG(Warning, "Could not create OpenGL ES surface")
 
-			// Error!
-			return false;
+				// Error!
+				return false;
+			}
 		}
 	}
 
@@ -149,17 +156,21 @@ void SurfaceWindow::DeInit()
 {
 	// Initialized?
 	if (m_hSurface) {
-		// Get the OpenGL ES renderer
+		// Get the OpenGL ES renderer and context
 		Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
+		Context  &cContext          = cRendererOpenGLES.GetContext();
 
-		// If this is the current render target, make the main window to the new current one
-		if (cRendererOpenGLES.GetRenderTarget() == this) {
-			// Make the internal dummy surface to the currently used one
-			cRendererOpenGLES.GetContext().MakeCurrent(nullptr);
+		// Destroy the EGL surface, but only if we're created it
+		if (m_hSurface != cContext.GetEGLDummySurface()) {
+			// If this is the current render target, make the main window to the new current one
+			if (cRendererOpenGLES.GetRenderTarget() == this) {
+				// Make the internal dummy surface to the currently used one
+				cContext.MakeCurrent(nullptr);
+			}
+
+			// Destroy the EGL surface
+			eglDestroySurface(cContext.GetEGLDisplay(), m_hSurface);
 		}
-
-		// Destroy the EGL surface
-		eglDestroySurface(cRendererOpenGLES.GetContext().GetEGLDisplay(), m_hSurface);
 	}
 }
 

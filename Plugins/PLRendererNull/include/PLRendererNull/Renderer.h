@@ -65,7 +65,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Renderer, "PLRendererNull", PLRenderer::RendererBackend, "Null renderer backend")
 		// Constructors
-		pl_constructor_5(DefaultConstructor,	pl_enum_type(EMode),	PLCore::uint32,	PLCore::uint32,	PLCore::uint32,	PLCore::String,	"Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter",	"")
+		pl_constructor_6(DefaultConstructor,	PLCore::handle,	pl_enum_type(EMode),	PLCore::uint32,	PLCore::uint32,	PLCore::uint32,	PLCore::String,	"Constructor with renderer mode, Z buffer bits, stencil buffer bits, the number of multisample antialiasing samples per pixel and the default shader language as parameter",	"")
 	pl_class_end
 
 
@@ -77,6 +77,8 @@ class Renderer : public PLRenderer::RendererBackend {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] nNativeWindowHandle
+		*    Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window
 		*  @param[in] nMode
 		*    Mode hint the renderer should run in, the renderer is not enforced to use this requested mode
 		*  @param[in] nZBufferBits
@@ -89,7 +91,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*    The name of the default shader language of the renderer (for example "GLSL" or "Cg"), if the string
 		*    is empty, the default is chosen by the renderer implementation, this information is just a hint
 		*/
-		Renderer(EMode nMode, PLCore::uint32 nZBufferBits, PLCore::uint32 nStencilBits, PLCore::uint32 nMultisampleAntialiasingSamples, PLCore::String sDefaultShaderLanguage);
+		Renderer(PLCore::handle nNativeWindowHandle, EMode nMode, PLCore::uint32 nZBufferBits, PLCore::uint32 nStencilBits, PLCore::uint32 nMultisampleAntialiasingSamples, PLCore::String sDefaultShaderLanguage);
 
 		/**
 		*  @brief

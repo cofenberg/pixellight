@@ -246,7 +246,7 @@ void Application::CreateRenderContext(const String &sRendererName)
 			sRenderer = sRendererName;
 
 		// Create an instance of a RendererContext with an renderer given by name
-		m_pRendererContext = PLRenderer::RendererContext::CreateInstance(sRenderer,(PLRenderer::Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage);
+		m_pRendererContext = PLRenderer::RendererContext::CreateInstance(sRenderer, NULL_HANDLE, (PLRenderer::Renderer::EMode)nRendererMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage);
 	}
 }
 

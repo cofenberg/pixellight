@@ -1,3 +1,23 @@
+>> 27.08.2011
+[CO]
+- D'OH! After one hour of experiments it appears that the native OpenGL ES 2.0 support of my ATI desktop driver ("AMD Catalyst 11.8", Windows 7 64 bit,
+  "ATI Mobility Radeon HD 4850" with Windows Aero deactivated) can't deal with multiple windows. Until now, the OpenGL renderer implementations
+  always created an internal dummy window because OpenGL just needs an OS window to work in the first place... even if your application doesn't
+  have a window at all because you're only rendering into background buffers.
+  The renderer context is by design window independent, it doesn't even know anything about one or multiple windows (renderer targets). The renderer
+  instance is connected with the renderer context. So, the renderer doesn't depend on an OS window as well, but the internal renderer implementation
+  may need an OS window. If you have an OS main window which is valid as long as the renderer context instance exists, it's highly recommended to tell
+  the renderer context of this main window during creation, else the internal renderer may create it's own invisible dummy window. Most times, there's
+  no problem with an invisible dummy window holding a renderer implementation together. Sadly, there are e.g. some OpenGL ES 2.0 implementations which
+  just fail when using multiple windows (the internal invisible dummy window and the real visible one => two windows).
+  In a nutshell:
+  - If you've already got an OS main window which is valid as long as the renderer context instance exists, just tell the renderer
+    context about it
+  - If you don't have such an OS main window, don't create one just for the renderer context and pass in "NULL_HANDLE", the renderer
+    implementation must be able to deal with this situation on it's own
+
+
+
 >> 26.08.2011
 [CO]
 - PLRendererOpenGLES: Current AMD GPU drivers are (at least in theory) able to provide native OpenGL ES 2.0 support. So, this renderer implementation now

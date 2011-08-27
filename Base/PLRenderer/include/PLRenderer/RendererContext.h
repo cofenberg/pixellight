@@ -61,8 +61,21 @@ namespace PLRenderer {
 *
 *  @remarks
 *    The renderer context stores and manages all data related to the renderer like e.g. the used PLRenderer implementation,
-*    textures and so on. Please note that the renderer context is in fact window independent, it doesn't even now anything
-*    about one or multiple windows (renderer targets).
+*    textures and so on.
+*
+*    Please note that the renderer context is by design window independent, it doesn't even know anything about one or multiple
+*    windows (renderer targets). The renderer instance is connected with the renderer context. So, the renderer doesn't depend
+*    on an OS window as well, but the internal renderer implementation may need an OS window. If you have an OS main window which is
+*    valid as long as the renderer context instance exists, it's highly recommended to tell the renderer context of this main window
+*    during creation, else the internal renderer may create it's own invisible dummy window. Most times, there's no problem with an
+*    invisible dummy window holding a renderer implementation together. Sadly, there are e.g. some OpenGL ES 2.0 implementations which
+*    just fail when using multiple windows (the internal invisible dummy window and the real visible one => two windows).
+*
+*    In a nutshell:
+*      - If you've already got an OS main window which is valid as long as the renderer context instance exists, just tell the renderer
+*        context about it
+*      - If you don't have such an OS main window, don't create one just for the renderer context and pass in "NULL_HANDLE", the renderer
+*        implementation must be able to deal with this situation on it's own
 *
 *  @note
 *    - There should be only one renderer context instance per application
@@ -93,6 +106,8 @@ class RendererContext : public PLCore::AbstractContext {
 		*
 		*  @param[in] sBackend
 		*    Name of the renderer backend to use (for example 'PLRendererOpenGL::Renderer')
+		*  @param[in] nNativeWindowHandle
+		*    Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window (see class remarks for more information)
 		*  @param[in] nMode
 		*    Mode hint the renderer should run in, the renderer is not enforced to use this requested mode
 		*  @param[in] nZBufferBits
@@ -108,7 +123,7 @@ class RendererContext : public PLCore::AbstractContext {
 		*  @return
 		*    Creates a renderer context instance, a null pointer on error
 		*/
-		PLRENDERER_API static RendererContext *CreateInstance(const PLCore::String &sBackend, Renderer::EMode nMode = Renderer::ModeBoth, PLCore::uint32 nZBufferBits = 24, PLCore::uint32 nStencilBits = 8, PLCore::uint32 nMultisampleAntialiasingSamples = 0, const PLCore::String &sDefaultShaderLanguage = "");
+		PLRENDERER_API static RendererContext *CreateInstance(const PLCore::String &sBackend, PLCore::handle nNativeWindowHandle, Renderer::EMode nMode = Renderer::ModeBoth, PLCore::uint32 nZBufferBits = 24, PLCore::uint32 nStencilBits = 8, PLCore::uint32 nMultisampleAntialiasingSamples = 0, const PLCore::String &sDefaultShaderLanguage = "");
 
 
 	//[-------------------------------------------------------]

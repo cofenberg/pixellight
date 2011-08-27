@@ -43,7 +43,7 @@ namespace PLRendererOpenGLES2 {
 *  @brief
 *    Constructor
 */
-ContextDesktop::ContextDesktop(Renderer &cRenderer) : Context(cRenderer),
+ContextDesktop::ContextDesktop(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle),
 	m_pDynLib(new DynLib())
 {
 	// Load the OpenGL ES 2.0 dynamic library
@@ -62,19 +62,6 @@ ContextDesktop::ContextDesktop(Renderer &cRenderer) : Context(cRenderer),
 */
 ContextDesktop::~ContextDesktop()
 {
-	// Tested with "AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850": Didn't work for me,
-	// "glReleaseShaderCompiler()" & "eglReleaseThread()" resulted within an driver internal infinite loop...
-	/*
-	// Release all resources allocated by the shader compiler
-	// glReleaseShaderCompiler();
-
-	// Return EGL to it's state at thread initialization
-	if (eglReleaseThread() == EGL_FALSE) {
-		// Error!
-		PL_LOG(Error, "Failed to release the EGL thread!")
-	}
-	*/
-
 	// Destroy the dynamic library instance
 	delete m_pDynLib;
 }
@@ -104,7 +91,7 @@ EGLConfig ContextDesktop::ChooseConfig(uint32 nMultisampleAntialiasingSamples) c
 			EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,							// Which types of EGL surfaces are supported
 			EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,						// Which client APIs are supported
 			EGL_DEPTH_SIZE,			EGL_DONT_CARE,							// Bits of Z in the depth buffer
-			// [TODO] Currently something looks still wrong
+			// [TODO] Currently something looks wrong - just black screen when using multisample ("AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850")
 //			EGL_SAMPLE_BUFFERS,		nMultisampleAntialiasingSampleBuffers,	// Number of multisample buffers (enable/disable multisample antialiasing)
 //			EGL_SAMPLES,			nMultisampleAntialiasingSamplesCurrent,	// Number of samples per pixel (multisample antialiasing samples)
 			EGL_BUFFER_SIZE,		16,
