@@ -315,10 +315,8 @@ String OSWindowLinux::GetTitle() const
 		unsigned long  nNumberOfUnits;
 		unsigned char *pszName;
 		
-		Atom utf8_string = XInternAtom (m_pDisplay, "UTF8_STRING", False);
-		
 		// Try first getting as utf-8 string
-		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, utf8_string,
+		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, UTF8_STRING,
 							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
@@ -340,7 +338,11 @@ void OSWindowLinux::SetTitle(const String &sTitle)
 	if (m_nNativeWindowHandle) {
 		const unsigned char* pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
 		// We need here the number of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
-		// [TODO] Does String::GetNumOfBytes work here?
+		// String::GetNumOfBytes can't be used here because the String class doesn't support UTF-8 as an internal Format.
+		// Even if the String class uses UNICODE as internal format this wouldn't work either.
+		// Because the UNICODE String format uses wchar_t as datatype and the size of this type is greater than 1 byte.
+		// And each character in a string needs the same ammount of bytes.
+		// But in an utf-8 encoded string the byte-count per character can differ between 1 byte (ASCII char) and 4 bytes (UNICODE char in Unicode Code point range 	U+010000 to U+10FFFF)
 		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
