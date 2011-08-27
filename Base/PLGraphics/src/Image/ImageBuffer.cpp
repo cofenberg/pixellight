@@ -425,6 +425,16 @@ uint32 ImageBuffer::GetNumOfPixels() const
 
 /**
 *  @brief
+*    Check if uncompressed or compressed data is available
+*/
+bool ImageBuffer::HasAnyData() const
+{
+	// Check if uncompressed or compressed data is available
+	return m_pImageData->HasAnyData();
+}
+
+/**
+*  @brief
 *    Check if uncompressed data is available
 */
 bool ImageBuffer::HasData() const

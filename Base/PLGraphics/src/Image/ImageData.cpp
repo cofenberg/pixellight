@@ -329,6 +329,16 @@ Vector3i ImageData::GetSize() const
 
 /**
 *  @brief
+*    Check if uncompressed or compressed data is available
+*/
+bool ImageData::HasAnyData() const
+{
+	// Check if image buffer is valid
+	return (m_pData != nullptr || m_pCompressedData != nullptr);
+}
+
+/**
+*  @brief
 *    Check if uncompressed data is available
 */
 bool ImageData::HasData() const

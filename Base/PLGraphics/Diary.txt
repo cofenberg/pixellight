@@ -1,3 +1,9 @@
+>> 27.08.2011
+[CO]
+- "ImageData" & "ImageBuffer": Added "HasAnyData()"-method
+
+
+
 >> 10.07.2011
 [SW][CO]
 - Updated libpng from "1.4.5" to "1.4.8"

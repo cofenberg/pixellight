@@ -341,6 +341,15 @@ class ImageBuffer {
 
 		/**
 		*  @brief
+		*    Check if uncompressed or compressed data is available
+		*
+		*  @return
+		*    'true' if image data is available, else 'false'
+		*/
+		PLGRAPHICS_API bool HasAnyData() const;
+
+		/**
+		*  @brief
 		*    Check if uncompressed data is available
 		*
 		*  @return
