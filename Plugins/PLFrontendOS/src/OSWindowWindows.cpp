@@ -238,7 +238,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_pFrontendOS->m_pOSWindow = this;
 
 	// Create window class
-	m_WndClass.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+	m_WndClass.style			= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	m_WndClass.lpfnWndProc		= static_cast<WNDPROC>(WndProc);
 	m_WndClass.cbClsExtra		= 0;
 	m_WndClass.cbWndExtra		= 0;
@@ -277,7 +277,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	if (::RegisterClass(&m_WndClass)) {
 		// Set window style
 		const DWORD dwStyle    = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
-		const DWORD dwExtStyle = WS_EX_ACCEPTFILES;
+		const DWORD dwExtStyle = WS_EX_APPWINDOW | WS_EX_ACCEPTFILES;
 
 		// Create the window
 		m_hWnd = ::CreateWindowExA(dwExtStyle,
