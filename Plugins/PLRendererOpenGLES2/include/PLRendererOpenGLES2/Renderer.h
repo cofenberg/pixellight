@@ -63,12 +63,6 @@ class Renderer : public PLRenderer::RendererBackend {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class SurfaceWindow;
-
-
-	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, Renderer, "PLRendererOpenGLES2", PLRenderer::RendererBackend, "OpenGL ES renderer backend")

@@ -41,8 +41,8 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-#	${CMAKE_SOURCE_DIR}/External/Optional/OpenGLES/include/	# For desktop
-	${OPENGLES_INCLUDE_DIRS}								# For emulator/native
+#	${CMAKE_SOURCE_DIR}/External/Optional/OpenGLES2/include/	# For desktop
+	${OPENGLES2_INCLUDE_DIRS}									# For emulator/native
 	${FREETYPE_INCLUDE_DIRS}
 )
 
@@ -61,7 +61,7 @@ add_libs(
 	PLGraphics
 	PLMath
 	PLRenderer
-	${OPENGLES_LIBRARIES}	# For emulator/native
+	${OPENGLES2_LIBRARIES}	# For emulator/native
 	${FREETYPE_LIBRARIES}
 )
 if(WIN32)
@@ -154,7 +154,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES External-freetype PLCore PLMath PLGraphics PLRenderer)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES2 External-freetype PLCore PLMath PLGraphics PLRenderer)
 add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
@@ -190,8 +190,8 @@ endif()
 		)
 	elseif(LINUX)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
 		)
 	endif()
 #endif()

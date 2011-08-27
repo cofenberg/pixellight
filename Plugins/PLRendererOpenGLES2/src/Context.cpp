@@ -79,12 +79,11 @@ Context::~Context()
 	#ifdef LINUX
 		// Destroy the dummy native window
 		if (m_nDummyNativeWindow)
-			XDestroyWindow(m_pDisplay, m_nDummyNativeWindow);
+			XDestroyWindow(m_pX11Display, m_nDummyNativeWindow);
 
 		// Close the X server display connection
-		if (m_pDisplay) {
-			XCloseDisplay(m_pDisplay);
-		}
+		if (m_pX11Display)
+			XCloseDisplay(m_pX11Display);
 	#endif
 }
 
@@ -96,7 +95,7 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 {
 	// Get display
 	#ifdef LINUX
-		m_hDisplay = eglGetDisplay(static_cast<EGLNativeDisplayType>(m_pDisplay));
+		m_hDisplay = eglGetDisplay(static_cast<EGLNativeDisplayType>(m_pX11Display));
 	#else
 		m_hDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 	#endif
@@ -153,7 +152,7 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 						XSetWindowAttributes sSetWindowAttributes;
 						sSetWindowAttributes.event_mask   = 0;
 						sSetWindowAttributes.border_pixel = 0;
-						m_nDummyNativeWindow = XCreateWindow(m_pDisplay, DefaultRootWindow(m_pDisplay), 0, 0, 300, 300, 0,
+						m_nDummyNativeWindow = XCreateWindow(m_pX11Display, DefaultRootWindow(m_pX11Display), 0, 0, 300, 300, 0,
 															 CopyFromParent, InputOutput, CopyFromParent,
 															 CWBorderPixel|CWEventMask, &sSetWindowAttributes);
 					#endif
@@ -199,6 +198,17 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 	// Error!
 	return false;
 }
+
+#ifdef LINUX
+	/**
+	*  @brief
+	*    Returns the used X11 display
+	*/
+	::Display *Context::GetX11Display() const
+	{
+		return m_pX11Display;
+	}
+#endif
 
 /**
 *  @brief
@@ -252,7 +262,7 @@ EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
 Context::Context(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
 	#ifdef LINUX
-		m_pDisplay(XOpenDisplay(nullptr)),
+		m_pX11Display(XOpenDisplay(nullptr)),
 	#endif
 	m_hDisplay(nullptr),
 	m_hConfig(nullptr),
@@ -330,7 +340,7 @@ EGLConfig Context::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
 */
 Context::Context(const Context &cSource) :
 	#ifdef LINUX
-		m_pDisplay(nullptr),
+		m_pX11Display(nullptr),
 	#endif
 	m_hDisplay(nullptr),
 	m_hConfig(nullptr),

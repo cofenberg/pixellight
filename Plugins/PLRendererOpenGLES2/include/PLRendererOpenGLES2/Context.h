@@ -87,6 +87,17 @@ class Context : public PLCore::AbstractContext {
 		*/
 		bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
 
+	#ifdef LINUX
+		/**
+		*  @brief
+		*    Returns the used X11 display
+		*
+		*  @return
+		*    The used X11 display, can be a null pointer
+		*/
+		::Display *GetX11Display() const;
+	#endif
+
 		/**
 		*  @brief
 		*    Returns the used EGL display
@@ -168,7 +179,7 @@ class Context : public PLCore::AbstractContext {
 		Renderer		   *m_pRenderer;	/**< The owner renderer, always valid! */
 		// X11
 		#ifdef LINUX
-			::Display	   *m_pDisplay;
+			::Display	   *m_pX11Display;
 		#endif
 		// EGL
 		EGLDisplay m_hDisplay;

@@ -98,13 +98,13 @@ Vector2i SurfaceWindow::GetSize() const
 		#endif
 		#ifdef LINUX
 			// Get the X server display connection
-			Display *pDisplay = static_cast<Renderer&>(GetRenderer()).m_pDisplay;
-			if (pDisplay) {
+			Display *pX11Display = static_cast<Renderer&>(GetRenderer()).GetContext().GetX11Display();
+			if (pX11Display) {
 				// Get X window geometry information
 				::Window nRootWindow = 0;
 				int	nPositionX = 0, nPositionY = 0;
 				unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-				XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+				XGetGeometry(pX11Display, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 				return Vector2i(nWidth, nHeight);
 			}
 		#endif
