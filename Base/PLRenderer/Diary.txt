@@ -21,6 +21,7 @@
   called with nullptr instead of "ImageBuffer::GetData()" which creates internal image data although it's not required... but only if there's also no
   compressed data available as well! In here, the new "PLGraphics::ImageBuffer::HasAnyData()"-method is now used instead of the
   "PLGraphics::ImageBuffer::HasData()"-method just looking for uncompressed data.
+- "PLRendererOpenGLES2" -> "FontManager_GLSL.h": The native OpenGL ES 2.0 support of my ATI desktop driver now eats this shader as well
 
 
 

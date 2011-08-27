@@ -41,13 +41,13 @@ void main()\n\
 	gl_Position = ObjectSpaceToClipSpaceMatrix*position;\n\
 \n\
 	// Set the normalized vertex texture coordinate\n\
-	if (VertexPosition.z == 0)		// Vertex 0 - lower/left corner\n\
+	if (int(VertexPosition.z) == 0)			// Vertex 0 - lower/left corner\n\
 		VertexTexCoordVS = vec2(TextureCoordinateMinMax.x, TextureCoordinateMinMax.w);\n\
-	else if (VertexPosition.z == 1)	// Vertex 1 - lower/right corner\n\
+	else if (int(VertexPosition.z) == 1)	// Vertex 1 - lower/right corner\n\
 		VertexTexCoordVS = TextureCoordinateMinMax.zw;\n\
-	else if (VertexPosition.z == 2)	// Vertex 2 - upper/left corner\n\
+	else if (int(VertexPosition.z) == 2)	// Vertex 2 - upper/left corner\n\
 		VertexTexCoordVS = TextureCoordinateMinMax.xy;\n\
-	else if (VertexPosition.z == 3)	// Vertex 3 - upper/right corner\n\
+	else if (int(VertexPosition.z) == 3)	// Vertex 3 - upper/right corner\n\
 		VertexTexCoordVS = vec2(TextureCoordinateMinMax.z, TextureCoordinateMinMax.y);\n\
 }";
 
