@@ -23,9 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifdef WIN32
-	#include <PLCore/PLCoreWindowsIncludes.h>
-#endif
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES2/Renderer.h"
 #include "PLRendererOpenGLES2/SurfaceWindow.h"
@@ -90,24 +87,17 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 Vector2i SurfaceWindow::GetSize() const
 {
-	if (GetNativeWindowHandle()) {
-		#ifdef WIN32
-			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
-			return Vector2i(sRect.right, sRect.bottom);
-		#endif
-		#ifdef LINUX
-			// Get the X server display connection
-			Display *pX11Display = static_cast<Renderer&>(GetRenderer()).GetContext().GetX11Display();
-			if (pX11Display) {
-				// Get X window geometry information
-				::Window nRootWindow = 0;
-				int	nPositionX = 0, nPositionY = 0;
-				unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-				XGetGeometry(pX11Display, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
-				return Vector2i(nWidth, nHeight);
-			}
-		#endif
+	if (m_hSurface) {
+		// Get the EGL display
+		const EGLDisplay hDisplay = static_cast<Renderer&>(GetRenderer()).GetContext().GetEGLDisplay();
+
+		// Query the width and height of the EGL surface
+		EGLint nWidth, nHeight;
+		eglQuerySurface(hDisplay, m_hSurface, EGL_WIDTH,  &nWidth);
+		eglQuerySurface(hDisplay, m_hSurface, EGL_HEIGHT, &nHeight);
+
+		// Done
+		return Vector2i(nWidth, nHeight);
 	}
 
 	// Error
