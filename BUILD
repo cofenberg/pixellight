@@ -231,7 +231,7 @@ Here's a list of the most important "maketool"-options:
 --externals:		Repository URL were to download the packages with the external dependencies from (e.g. "developer.pixellight.org/files/externals")
 --username:			User name for access to restricted packages within the repository
 --password:			User password for access to restricted packages within the repository
---arch:				Architecture (e.g. "x86")
+--arch:				Architecture (e.g. "x86", "arm")
 --bitsize:			Bit size (e.g. "32" or "64")
 --syslibs:			Use system libs
 --minimal:			Do only compile the most important projects

@@ -48,12 +48,19 @@ add_subdirectory(63PhysicsRagdoll)
 add_subdirectory(64Picking)
 add_subdirectory(65PostProcess)
 add_subdirectory(67Game2D)
-# PLFrontendPLGui
-if(PL_PLUGIN_FRONTEND_PLGUI)
+# PLGui
+if(PL_PLGUI)
 	add_subdirectory(20Gui)
 #	add_subdirectory(21GuiWidgets) # [TODO]
-	add_subdirectory(53RendererMultiView)
-	add_subdirectory(66IngameGUI)
+	# PLFrontendPLGui
+	if(PL_PLUGIN_FRONTEND_PLGUI)
+		add_subdirectory(53RendererMultiView)
+		add_subdirectory(66IngameGUI)
+	endif()
+	# PLlibRocket
+	if(PL_PLUGIN_ENGINE_LIBROCKET)
+		add_subdirectory(71libRocket)
+	endif()
 endif()
 # PLFrontendQt
 if(PL_PLUGIN_FRONTEND_QT)
@@ -64,10 +71,6 @@ endif()
 # SPARK_PL
 if(PL_PLUGIN_ENGINE_SPARK)
 	add_subdirectory(70SPARK)
-endif()
-# PLlibRocket
-if(PL_PLUGIN_ENGINE_LIBROCKET)
-	add_subdirectory(71libRocket)
 endif()
 
 ##################################################

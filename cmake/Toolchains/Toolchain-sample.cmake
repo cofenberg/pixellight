@@ -3,7 +3,7 @@
 ##################################################
 
 # Toolchain name
-set(CMAKETOOLS_TOOLCHAIN om)																# Set this to a simple name that you want to pass to maketool --toolchain <name>
+set(CMAKETOOLS_TOOLCHAIN om)															# Set this to a simple name that you want to pass to maketool --toolchain <name>
 
 # Target system
 set(CMAKE_SYSTEM_NAME Linux)															# Name of target system
