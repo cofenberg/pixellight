@@ -23,6 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#ifdef ANDROID
+	#include <android/native_window.h>
+#endif
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES2/Context.h"
 
@@ -51,14 +54,14 @@ Context::~Context()
 		// Error!
 		PL_LOG(Error, "Failed to destroy the used EGL dummy surface!")
 	}
-	m_hDummySurface = nullptr;
+	m_hDummySurface = EGL_NO_SURFACE;
 
 	// Destroy the EGL context
 	if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
 		// Error!
 		PL_LOG(Error, "Failed to destroy the used EGL context!")
 	}
-	m_hContext = nullptr;
+	m_hContext = EGL_NO_CONTEXT;
 
 	// Release all resources allocated by the shader compiler
 	glReleaseShaderCompiler();
@@ -74,7 +77,7 @@ Context::~Context()
 		// Error!
 		PL_LOG(Error, "Failed to terminate the used EGL display!")
 	}
-	m_hDisplay = nullptr;
+	m_hDisplay = EGL_NO_DISPLAY;
 	m_hConfig  = nullptr;
 
 	// Destroy the dummy native window, if required
@@ -163,6 +166,13 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 						m_nDummyNativeWindow = (EGLNativeWindowType)m_nNativeWindowHandle;	// Interesting - in here, we have an OS dependent cast issue when using C++ casts: While we would need
 																							// reinterpret_cast<EGLNativeWindowType>(nNativeWindowHandle) under MS Windows ("HWND"), we would need static_cast<EGLNativeWindowType>(nNativeWindowHandle)
 																							// under Linux ("int")... so, to avoid #ifdefs, we just use old school c-style casts in here...
+
+						#ifdef ANDROID
+							// Reconfigure the ANativeWindow buffers to match
+							EGLint nFormat;
+							eglGetConfigAttrib(m_hDisplay, m_hConfig, EGL_NATIVE_VISUAL_ID, &nFormat);
+							ANativeWindow_setBuffersGeometry(reinterpret_cast<ANativeWindow*>(m_nNativeWindowHandle), 0, 0, nFormat);
+						#endif
 					} else {
 						// Create the dummy native window
 						#ifdef WIN32
@@ -200,7 +210,7 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 					}
 
 					// Make the internal dummy surface to the currently used one
-					if (MakeCurrent(nullptr) == EGL_FALSE) {
+					if (MakeCurrent(EGL_NO_SURFACE) == EGL_FALSE) {
 						// Error!
 						PL_LOG(Error, "Failed to make the EGL dummy surface to the current one!")
 					}
@@ -309,11 +319,11 @@ Context::Context(Renderer &cRenderer, handle nNativeWindowHandle) :
 	#ifdef LINUX
 		m_pX11Display(XOpenDisplay(nullptr)),
 	#endif
-	m_hDisplay(nullptr),
+	m_hDisplay(EGL_NO_DISPLAY),
 	m_hConfig(nullptr),
-	m_hContext(nullptr),
+	m_hContext(EGL_NO_CONTEXT),
 	m_nDummyNativeWindow(NULL_HANDLE),
-	m_hDummySurface(nullptr)
+	m_hDummySurface(EGL_NO_SURFACE)
 {
 }
 
@@ -389,11 +399,11 @@ Context::Context(const Context &cSource) :
 	#ifdef LINUX
 		m_pX11Display(nullptr),
 	#endif
-	m_hDisplay(nullptr),
+	m_hDisplay(EGL_NO_DISPLAY),
 	m_hConfig(nullptr),
-	m_hContext(nullptr),
+	m_hContext(EGL_NO_CONTEXT),
 	m_nDummyNativeWindow(NULL_HANDLE),
-	m_hDummySurface(nullptr)
+	m_hDummySurface(EGL_NO_SURFACE)
 {
 	// No implementation because the copy constructor is never used
 }

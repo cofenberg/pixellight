@@ -48,12 +48,19 @@ In order to build the PixelLight engine with MSVC, all the external packages use
 right place for the build. Have a look at the 'External' directory, there you can find a readme file for every library,
 that describes what files are needed.
 
-You can find the libraries pre-packed in the files-section on our homepage: http://dev.pixellight.org/files/externals/.
+You can find the libraries pre-packed in the files-section on our homepage: http://pixellight.sourceforge.net/externals/
+Examples:
+	zlib package for MS Windows 32 bit -> http://pixellight.sourceforge.net/externals/Windows_x86_32/zlib.tar.gz
+	zlib package for Linux 32 bit      -> http://pixellight.sourceforge.net/externals/Linux_x86_32/zlib.tar.gz
+There are also downloads available containing all public external packages. Examples:
+	All public packages for MS Windows 32 bit -> http://sourceforge.net/projects/pixellight/files/PixelLight%20v0.9/0.9.8-R1/PixelLight-0.9.8-R1-Externals-Windows_x86_32.tar.gz/download
+	All public packages for Linux 32 bit      -> http://sourceforge.net/projects/pixellight/files/PixelLight%20v0.9/0.9.8-R1/PixelLight-0.9.8-R1-Externals-Linux_x86_32.tar.gz/download
+
 Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according
-Readme.txt to determine where to obtain those libraries and where to put the resulting files into your source tree.
+'Readme.txt' to determine where to obtain those libraries and where to put the resulting files into your source tree.
 
 The library packages must be unpacked and need to be at the right position for your specific build type, e.g. on Windows
-and 32 Bit, put everything into the directory 'External\_Windows_x86_32'.
+and 32 Bit, put everything into the directory '<PixelLight root directory>\External\_Windows_x86_32'.
 
 The easiest way to install at least the public packages is to use the CMake based build and make the project "External"
 (see next section). This will download and unpack all public externals for you in the right directory. The non-public
@@ -63,9 +70,9 @@ externals must still be installed manually.
 1.1.2 Build
 -----------
 
-Open the solution 'pixellight.sln' with Microsoft Visual Studio, which includes all projects of the PixelLight framework.
+Open the solution 'PixelLight.sln' with Microsoft Visual Studio, which includes all projects of the PixelLight framework.
 
-Then start 'Build'.
+Then start 'Build'. Done.
 
 
 1.2.  CMake
@@ -224,7 +231,7 @@ Here's a list of the most important "maketool"-options:
 --externals:		Repository URL were to download the packages with the external dependencies from (e.g. "developer.pixellight.org/files/externals")
 --username:			User name for access to restricted packages within the repository
 --password:			User password for access to restricted packages within the repository
---arch:				Architecture (e.g. "x86")
+--arch:				Architecture (e.g. "x86", "arm")
 --bitsize:			Bit size (e.g. "32" or "64")
 --syslibs:			Use system libs
 --minimal:			Do only compile the most important projects

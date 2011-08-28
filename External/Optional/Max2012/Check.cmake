@@ -15,10 +15,10 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Windows package [TODO]
 			set(md5sum "")
-		else(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+		else()
 			# md5sum of the 32bit Windows package
 			set(md5sum "5a289a8b5e37d3247b1aea68ded1de6e")
-		endif(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+		endif()
 	endif()
 	external_check_download("nonpublic" ${md5sum})
 

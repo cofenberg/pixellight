@@ -23,7 +23,6 @@ add_subdirectory(PLCore)
 add_subdirectory(PLGraphics)
 add_subdirectory(PLMath)
 add_subdirectory(PLDatabase)
-add_subdirectory(PLGui)
 add_subdirectory(PLInput)
 add_subdirectory(PLRenderer)
 add_subdirectory(PLMesh)
@@ -31,6 +30,9 @@ add_subdirectory(PLScene)
 add_subdirectory(PLPhysics)
 add_subdirectory(PLSound)
 add_subdirectory(PLEngine)
+if(PL_PLGUI)
+	add_subdirectory(PLGui)
+endif()
 
 ##################################################
 ## Dependencies

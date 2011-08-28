@@ -11,13 +11,27 @@ add_custom_target(External-Recommended)
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(OpenGL)
-add_subdirectory(freetype)
-add_subdirectory(OpenAL)
-add_subdirectory(libogg)
-add_subdirectory(libvorbis)
-add_subdirectory(Newton)
-add_subdirectory(Lua)
+# Script backends
+if(PL_PLUGIN_SCRIPT_LUA)
+	add_subdirectory(Lua)
+endif()
+# PLRenderer backends
+if(PL_PLUGIN_RENDERER_OPENGL)
+	add_subdirectory(OpenGL)
+endif()
+if(PL_PLUGIN_RENDERER_OPENGL OR PL_PLUGIN_RENDERER_OPENGLES2)
+	add_subdirectory(freetype)
+endif()
+# PLPhysics backends
+if(PL_PLUGIN_PHYSICS_NEWTON)
+	add_subdirectory(Newton)
+endif()
+# PLSound backends
+if(PL_PLUGIN_SOUND_OPENAL)
+	add_subdirectory(OpenAL)
+	add_subdirectory(libogg)
+	add_subdirectory(libvorbis)
+endif()
 
 ##################################################
 ## Dependencies
