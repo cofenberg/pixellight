@@ -58,7 +58,7 @@ SurfaceWindow::~SurfaceWindow()
 */
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	m_hSurface(nullptr),
+	m_hSurface(EGL_NO_SURFACE),
 	m_nSwapInterval(-1)
 {
 	// Init
@@ -155,7 +155,7 @@ void SurfaceWindow::DeInit()
 			// If this is the current render target, make the main window to the new current one
 			if (cRendererOpenGLES.GetRenderTarget() == this) {
 				// Make the internal dummy surface to the currently used one
-				cContext.MakeCurrent(nullptr);
+				cContext.MakeCurrent(EGL_NO_SURFACE);
 			}
 
 			// Destroy the EGL surface
@@ -173,7 +173,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 bool SurfaceWindow::UnmakeCurrent()
 {
 	// Make the internal dummy surface to the currently used one
-	return (static_cast<Renderer&>(GetRenderer()).GetContext().MakeCurrent(nullptr) == EGL_TRUE);
+	return (static_cast<Renderer&>(GetRenderer()).GetContext().MakeCurrent(EGL_NO_SURFACE) == EGL_TRUE);
 }
 
 bool SurfaceWindow::Present()
