@@ -36,3 +36,6 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 		--param max-unroll-times=4
 	)
 endif()
+
+# Add Android NDK include directory
+include_directories(${ANDROID_NDK_SYSROOT}/usr/include/)

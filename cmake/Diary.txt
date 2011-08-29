@@ -16,6 +16,9 @@
   (sorry, right now I'am somewhat in "getting into a new world"-stress, so no tiny detail critics, please). If you have any notes or see
   errors I made, just collect them and let us discuss them when I'am done with the Android port and when those errors etc. are still there
   when I'am done. :D
+- "LinuxNDK.cmake": Added Android NDK include directory. Interesting that "Toolchain-ndk.cmake" doesn't set it, but I don't want to manipulate
+  the external script when it's possible to avoid it. Yes, I already also had this change when adding "LinuxNDK.cmake", but I integrate everything
+  I figured out today step by step, as usual.
 
 
 
