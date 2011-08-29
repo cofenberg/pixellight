@@ -146,7 +146,14 @@ Here's how to compile PixelLight by using the CMake-GUI:
 -----------------------------------------
 
 Here's how to compile PixelLight by using the CMake-GUI:
-- Ensure "make" can be found by CMake (add for instance "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable)
+- Android prerequisites: Install the usual Android development stuff (the following versions are those used when writing this, other versions may work as well)
+	- Android SDK for Windows ("installer_r12-windows.exe")
+		- "Android SDK Tools, revision 12"
+		- "Android SDK Platform-tools, revision 6"
+		- "SDK Platform Android 2.2, API 8, revision 3"
+	- Android NDK for Windows ("android-ndk-r6-windows.zip")
+		- Extract it and set the MS Windows PATH environment variable "ANDROID_NDK" to the NDK root directory
+- Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable)
 - Start "CMake (cmake-gui)"
 - "Where is the source code"-field: e.g. "C:\PixelLight"
 - "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
