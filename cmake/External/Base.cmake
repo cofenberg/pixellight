@@ -564,11 +564,6 @@ endmacro(external_vcproj_build file config)
 ## Default actions
 ##################################################
 
-# Include toolchain file
-if(CMAKE_TOOLCHAIN_FILE)
-	include(${CMAKE_TOOLCHAIN_FILE})
-endif()
-
 # Create log directory
 file(MAKE_DIRECTORY ${CMAKETOOLS_CURRENT_BUILD_DIR}/Log)
 
@@ -585,9 +580,9 @@ if(NOT NMAKE_FOUND)
 	# Search for nmake
 	find_program(NMAKE_EXECUTABLE NAMES nmake.exe)
 	if(NMAKE_EXECUTABLE)
-  		set(NMAKE_FOUND ON)
+		set(NMAKE_FOUND ON)
 	else()
-  		set(NMAKE_FOUND OFF)
+		set(NMAKE_FOUND OFF)
 	endif()
 endif()
 
@@ -604,8 +599,8 @@ if(NOT VCBUILD_FOUND)
 	# Search for vcbuild
 	find_program(VCBUILD_EXECUTABLE NAMES vcbuild.exe PATHS ${path_hint})
 	if(VCBUILD_EXECUTABLE)
-  		set(VCBUILD_FOUND ON)
+		set(VCBUILD_FOUND ON)
 	else()
-  		set(VCBUILD_FOUND OFF)
+		set(VCBUILD_FOUND OFF)
 	endif()
 endif()

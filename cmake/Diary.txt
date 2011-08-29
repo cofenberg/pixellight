@@ -1,3 +1,19 @@
+>> 29.08.2011
+[CO]
+- "cmake\External\Base.cmake": Within the "Default actions"-section, the toolchain file was included... again? As far
+  as I can see, the toolchain file is passed into CMake right when invoking CMake in the first place - at least when using
+  the CMake-GUI or command line ("-DCMAKE_TOOLCHAIN_FILE"). Currently I'am working on the Android port - and this toolchain
+  file include caused errors blaming me that I try to play around with "include_directories" were it's not accepted. I spend some
+  time to understand why there's a toolchain file include (no, I didn't just delete code causing problems and which I don't understand!),
+  but I just can't see the point and I have no hints. So, in order to be able to go on and fix the error, I removed this toolchain
+  file include at line 567.
+    # Include toolchain file
+    if(CMAKE_TOOLCHAIN_FILE)
+        include(${CMAKE_TOOLCHAIN_FILE})
+    endif()
+
+
+
 >> 12.07.2011
 [CO]
 - Moved "sfk" from the "PLSDK"-directory into the "cmake"-directory (used by "cmake\Modules\FindSFK.cmake")
