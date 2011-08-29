@@ -1,7 +1,7 @@
 ##################################################
-## Linux/GCC platform definitions
+## Linux/NDK platform definitions
 ##
-## This file contains compiler and linker settings which are specific to the GCC compiler suit under Linux
+## This file contains compiler and linker settings which are specific to the NDK compiler suit under Linux
 ##################################################
 
 
@@ -12,7 +12,8 @@
 # Preprocessor definitions
 set(LINUX_COMPILE_DEFS
 	${LINUX_COMPILE_DEFS}
-	GCC									# We are using the gcc/g++ compiler
+	__STDC_INT64__						# We need "int64_t" and "uint64_t", so force this preprocessor definition
+	ANDROID								# We are using the ANDROID NDK toolchain
 )
 
 
@@ -22,7 +23,6 @@ set(LINUX_COMPILE_DEFS
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
-	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
 	-Wstrict-null-sentinel				# Warn also about the use of an uncasted NULL as sentinel
 )
 

@@ -4,6 +4,7 @@
 ## This file contains compiler and linker settings which are specific to the GCC compiler suit under linux
 ##################################################
 
+
 ##################################################
 ## Version checks
 ##################################################
@@ -43,3 +44,13 @@ IF(CMAKE_GENERATOR MATCHES "Makefiles")
 		Message(FATAL_ERROR "Clang version \"${Clang_VERSION}\" not supported at least Clang version ${MIN_CLANG_VERSION} is needed")
 	endif()
 ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
+
+
+##################################################
+## Compiler flags
+##################################################
+
+set(LINUX_COMPILE_FLAGS
+	${LINUX_COMPILE_FLAGS}
+	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
+)

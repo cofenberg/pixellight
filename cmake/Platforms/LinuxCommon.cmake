@@ -83,7 +83,6 @@ set(LINUX_COMPILE_FLAGS
 	-fno-rtti							# No C++ RTTI
 	-fno-exceptions						# No C++ exception handling
 	-pipe								# Use Pipes
-	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
 	# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 	-ffast-math							# Perform floating point transformations that may break IEEE/ISO rules regarding floating point arithmetic
 	# Some dialect-options of gcc: http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html
@@ -112,7 +111,6 @@ else()
 		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 		-fomit-frame-pointer			# Don't keep the frame pointer in a register for functions that don't need one
 	)
-	
 endif()
 
 

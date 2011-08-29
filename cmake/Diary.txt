@@ -11,6 +11,11 @@
     if(CMAKE_TOOLCHAIN_FILE)
         include(${CMAKE_TOOLCHAIN_FILE})
     endif()
+- Added "LinuxNDK.cmake" for the Android NDK platform (which for example doesn't like the "-msse3" compiler flag).
+  Please, no wise statements like "Hey, Android NDK is no compiler!", I know that. Yes, I also now that GCC means "GNU Compiler Collection"
+  (sorry, right now I'am somewhat in "getting into a new world"-stress, so no tiny detail critics, please). If you have any notes or see
+  errors I made, just collect them and let us discuss them when I'am done with the Android port and when those errors etc. are still there
+  when I'am done. :D
 
 
 
