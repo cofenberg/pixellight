@@ -31,8 +31,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <string.h>
 #include <malloc.h>
-#include <memory.h>
 #include "PLCore/Core/MemoryManager.h"
 
 

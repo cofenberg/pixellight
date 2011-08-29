@@ -1,3 +1,10 @@
+>> 29.08.2011
+[CO]
+- "Core/MemoryManager.cpp": For "memcpy()" etc. "string.h" has to be included when compiling for Android (wow, now I'm glad that we even encapsulated such primitive functions,
+   else there would be more than just this file to update...)
+
+
+
 >> 23.08.2011
 [CO]
 - Qt: It appears that there's going something funny on in here... The PixelLight Linux external packages of Qt Stephan Wezel created, don't need the "src" because the includes
