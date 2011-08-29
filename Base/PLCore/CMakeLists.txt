@@ -228,10 +228,18 @@ elseif(LINUX)
 	## Linux
 	##################################################
 	add_libs(
-		ncurses
 		dl
 		pthread
 	)
+
+	# There's no native curses library on Android, and compiling one
+	# just for this usually never used function would be overkill
+	# (used within "PLCore::ConsoleLinux::GetCursorPosition()" & "PLCore::ConsoleLinux::SetCursorPosition()")
+	if(NOT ANDROID)
+		add_libs(
+			ncurses
+		)
+	endif()
 endif()
 
 ##################################################

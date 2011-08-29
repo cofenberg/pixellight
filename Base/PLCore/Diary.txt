@@ -2,6 +2,10 @@
 [CO]
 - "Core/MemoryManager.cpp": For "memcpy()" etc. "string.h" has to be included when compiling for Android (wow, now I'm glad that we even encapsulated such primitive functions,
    else there would be more than just this file to update...)
+- Android port related: "ConsoleLinux::ClearScreen()" in here, we don't need to use the curses library and can go a more portable way
+- Android port related: "ConsoleLinux::GetCursorPosition()" & "ConsoleLinux::SetCursorPosition()": There's no native curses library on Android, and compiling one
+  just for this usually never used function would be overkill. So, right now, those two methods are not supported when using the Android port (already spend far too much
+  time on this curses library issue!).
 
 
 

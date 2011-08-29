@@ -95,23 +95,23 @@ class Console {
 
 		/**
 		*  @brief
-		*    Gets the console cursor position ('wherex()' and 'wherey()')
+		*    Gets the absolute console cursor position ('wherex()' and 'wherey()')
 		*
 		*  @param[out] nX
-		*    Receives the x position of the console cursor
+		*    Receives the absolute x position of the console cursor, (0,0)=(left,top)
 		*  @param[out] nY
-		*    Receives the y position of the console cursor
+		*    Receives the absolute y position of the console cursor, (0,0)=(left,top)
 		*/
 		virtual void GetCursorPosition(uint16 &nX, uint16 &nY) const = 0;
 
 		/**
 		*  @brief
-		*    Sets the console cursor position ('gotoxy()')
+		*    Sets the absolute console cursor position ('gotoxy()')
 		*
 		*  @param[in] nX
-		*    New x position of the console cursor
+		*    New x absolute position of the console cursor, (0,0)=(left,top)
 		*  @param[in] nY
-		*    New y position of the console cursor
+		*    New y absolute position of the console cursor, (0,0)=(left,top)
 		*/
 		virtual void SetCursorPosition(uint16 nX, uint16 nY) const = 0;
 
