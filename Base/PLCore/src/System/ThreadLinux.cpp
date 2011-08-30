@@ -115,7 +115,14 @@ bool ThreadLinux::Terminate()
 		#ifdef DEBUG
 			printf("\n\n[DEBUG] Terminate thread %d\n\n", m_nThreadID);
 		#endif
-		pthread_cancel(m_nThreadID);
+
+		// "pthread_cancel()" is not supported by the Android NDK.
+		//   "android-ndk-r6/docs/system/libc/OVERVIEW.html" states:
+		//   "pthread_cancel() will *not* be supported in Bionic, because doing this would
+		//   involve making the C library significantly bigger for very little benefit."
+		#ifndef ANDROID
+			pthread_cancel(m_nThreadID);
+		#endif
 		m_nThreadID = 0;
 
 		// Unlock the execution mutex because the thread was terminated

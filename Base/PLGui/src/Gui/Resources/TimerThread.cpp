@@ -77,6 +77,8 @@ void TimerThread::StopTimer()
 
 	// Wait for thread to exit
 	if (!Join(200)) {
+		// We asked politely, but the thread won't listen... so pull out the gun!
+		// (the internal platform implementation may or may not accept this violent act)
 		Terminate();
 		m_pMutex->Unlock();
 	}

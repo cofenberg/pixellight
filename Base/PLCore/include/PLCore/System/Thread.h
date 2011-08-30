@@ -210,6 +210,8 @@ class Thread : public ThreadFunction {
 		*  @remarks
 		*    Terminates the thread ungracefully (does not allow proper thread clean up!). Instead of
 		*    using this function you should signal the thread and wait until it has quit by itself.
+		*    The internal platform implementation may or may not accept this violent act. For example,
+		*    Androids Bionic doesn't support it and a call of this method will have no effect at all.
 		*/
 		PLCORE_API bool Terminate();
 

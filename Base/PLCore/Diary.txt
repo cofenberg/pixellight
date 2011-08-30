@@ -9,6 +9,8 @@
   with minor adjustments to make it compile.
 - Android port related: "PLCore/ConsoleLinux.cpp": The Android NDK has no "term.h", but "termios.h" works (validating Linux build next time when I switch the OS, but not at this very
   moment and not for every minor change, even when a change breakes something under Linux for a short period)
+- Android port related: "PLCore::ThreadLinux::Terminate()": "pthread_cancel()" is not supported by the Android NDK. "android-ndk-r6/docs/system/libc/OVERVIEW.html" states:
+  "pthread_cancel() will *not* be supported in Bionic, because doing this would involve making the C library significantly bigger for very little benefit."
 
 
 
