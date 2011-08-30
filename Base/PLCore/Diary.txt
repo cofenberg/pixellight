@@ -2,6 +2,9 @@
 [CO]
 - Android port related: Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android (no problem, wchar_t is for Windows, UTF-8 for Linux and the string
   class handles both as well as ASCII). Added a "wcscasecmp()" & "wcsncasecmp()" implementation within "PLCoreLinuxWrapper.h" & "PLCoreLinux.cpp" used when compiling for Android.
+- Android port related: "PLCoreLinux.cpp": The Android NDK has no support for "wcstof()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstof.c
+  with minor adjustments to make it compile (no time to reimplement something on my one, and it's also not worth it, there's other stuff to do instead of reimplementing
+  the c standard library...).
 
 
 
