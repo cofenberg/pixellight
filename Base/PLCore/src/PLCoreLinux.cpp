@@ -971,3 +971,33 @@ wchar_t *_wcslwr(wchar_t *s)
 }
 /*********************************************************/
 
+// wchar functions definitions
+#ifdef ANDROID
+	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
+	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
+	int wcscasecmp(const wchar_t *s1, const wchar_t *s2)
+	{
+		wint_t left, right;
+		do {
+			left = towlower(*s1++);
+			right = towlower(*s2++);
+		} while (left && left == right);
+		return (left == right);
+	}
+
+	int wcsncasecmp(const wchar_t *s1, const wchar_t *s2, size_t n)
+	{
+		if (n > 0) {
+			wint_t left, right;
+			do {
+				left = towlower(*s1++);
+				right = towlower(*s2++);
+				if (--n == 0)
+					return 0;
+			} while (left && left == right);
+			return (left == right);
+		} else {
+			return 0;
+		}
+	}
+#endif

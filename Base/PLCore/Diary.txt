@@ -1,3 +1,10 @@
+>> 30.08.2011
+[CO]
+- Android port related: Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android (no problem, wchar_t is for Windows, UTF-8 for Linux and the string
+  class handles both as well as ASCII). Added a "wcscasecmp()" & "wcsncasecmp()" implementation within "PLCoreLinuxWrapper.h" & "PLCoreLinux.cpp" used when compiling for Android.
+
+
+
 >> 29.08.2011
 [CO]
 - "Core/MemoryManager.cpp": For "memcpy()" etc. "string.h" has to be included when compiling for Android (wow, now I'm glad that we even encapsulated such primitive functions,

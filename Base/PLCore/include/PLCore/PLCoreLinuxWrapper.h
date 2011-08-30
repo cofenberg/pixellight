@@ -52,6 +52,12 @@ PLCORE_API long _wtol( const wchar_t *str );
 PLCORE_API float _wtof( const wchar_t *str );
 PLCORE_API wchar_t *_wcsupr(wchar_t *s);
 PLCORE_API wchar_t *_wcslwr(wchar_t *s);
+#ifdef ANDROID
+	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
+	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
+	PLCORE_API int wcscasecmp(const wchar_t *s1, const wchar_t *s2);
+	PLCORE_API int wcsncasecmp(const wchar_t *s1, const wchar_t *s2, size_t n);
+#endif
 
 
 //[-------------------------------------------------------]
