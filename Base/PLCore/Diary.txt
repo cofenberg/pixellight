@@ -7,6 +7,8 @@
   the c standard library...).
 - Android port related: The Android NDK has no support for "wcstoumax()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstoumax.c
   with minor adjustments to make it compile.
+- Android port related: "PLCore/ConsoleLinux.cpp": The Android NDK has no "term.h", but "termios.h" works (validating Linux build next time when I switch the OS, but not at this very
+  moment and not for every minor change, even when a change breakes something under Linux for a short period)
 
 
 

@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <unistd.h>
-#include <term.h>
+#include <termios.h>
 #include <sys/ioctl.h>
 #include "PLCore/File/File.h"
 #include "PLCore/System/ConsoleLinux.h"
@@ -123,7 +123,7 @@ void ConsoleLinux::GetCursorPosition(uint16 &nX, uint16 &nY) const
 		*/
 		nX = 0;
 		nY = 0;
-	#end
+	#endif
 }
 
 void ConsoleLinux::SetCursorPosition(uint16 nX, uint16 nY) const
