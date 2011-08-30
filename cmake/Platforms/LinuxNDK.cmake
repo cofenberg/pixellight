@@ -12,7 +12,8 @@
 # Preprocessor definitions
 set(LINUX_COMPILE_DEFS
 	${LINUX_COMPILE_DEFS}
-	__STDC_INT64__						# We need "int64_t" and "uint64_t", so force this preprocessor definition
+	__STDC_INT64__						# We need "int64_t" and "uint64_t", so force this preprocessor definition (used in "PLCore/PLCoreLinux.h")
+	__STDINT_LIMITS						# We need "UINTMAX_MAX" (used in "PLCore/PLCoreLinux.cpp")
 	ANDROID								# We are using the ANDROID NDK toolchain
 )
 

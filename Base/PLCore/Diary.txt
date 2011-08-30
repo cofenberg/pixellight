@@ -5,6 +5,8 @@
 - Android port related: "PLCoreLinux.cpp": The Android NDK has no support for "wcstof()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstof.c
   with minor adjustments to make it compile (no time to reimplement something on my one, and it's also not worth it, there's other stuff to do instead of reimplementing
   the c standard library...).
+- Android port related: The Android NDK has no support for "wcstoumax()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstoumax.c
+  with minor adjustments to make it compile.
 
 
 
