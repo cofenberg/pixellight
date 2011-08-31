@@ -25,6 +25,8 @@ set(LINUX_COMPILE_DEFS
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
 	-Wstrict-null-sentinel				# Warn also about the use of an uncasted NULL as sentinel
+	-nostdlib							# Don't use the standard C library of the host system (Android uses a stripped down version of libc, called "bionic")
+	-nodefaultlibs						# Do not use the standard system libraries when linking
 )
 
 if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
@@ -40,3 +42,20 @@ endif()
 
 # Add Android NDK include directory
 include_directories(${ANDROID_NDK_SYSROOT}/usr/include/)
+
+
+##################################################
+## Linker flags
+##################################################
+
+# Add Android NDK library directory
+set(LINUX_LINKER_FLAGS
+	${LINUX_LINKER_FLAGS}
+	-Wl,-rpath-link=${ANDROID_NDK_SYSROOT}/usr/lib/
+	-L${ANDROID_NDK_SYSROOT}/usr/lib/					# If we don't set this, we get "cannot find -lc" later on
+)
+
+# Above we set "nostdlib" to avoid using the standard C library of the host system.
+# Now we have to tell the linker to use Androids stripped down version of libc ("bionic"),
+# present in the location specified by using the "-L" in the "LDFLAGS"-option above.
+add_to_list(CMAKETOOLS_CURRENT_LIBS c)
