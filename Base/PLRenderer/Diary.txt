@@ -1,6 +1,7 @@
 >> 31.08.2011
 [CO]
 - Android port related: "PLRendererOpenGLES2": No X11 when using Android
+- Android port related: "PLRendererOpenGLES2" is now compiling as well (when configuring "CMakeFile.txt", this will be changed soon, but one step after another :)
 
 
 
