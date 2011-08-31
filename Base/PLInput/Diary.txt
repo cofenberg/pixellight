@@ -2,6 +2,7 @@
 [CO]
 - Android port related: No X server display connection on Android possible (there's no X11 stuff available in the Android NDK). So, on Android the keyboard & mouse
   implementation using X server display connection is not available.
+- Android port related: No Bluetooth in the way currently used available on Android. Disabled it when building for Android.
 
 
 
