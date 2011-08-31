@@ -26,10 +26,12 @@
 #include "PLInput/Input/Devices/Keyboard.h"
 #include "PLInput/Input/Devices/Mouse.h"
 #include "PLInput/Input/Devices/Joystick.h"
-#include "PLInput/Backend/Linux/LinuxProvider.h"
-#include "PLInput/Backend/Linux/LinuxKeyboardDevice.h"
-#include "PLInput/Backend/Linux/LinuxMouseDevice.h"
+#ifndef ANDROID
+	#include "PLInput/Backend/Linux/LinuxKeyboardDevice.h"
+	#include "PLInput/Backend/Linux/LinuxMouseDevice.h"
+#endif
 #include "PLInput/Backend/Linux/LinuxEventDevice.h"
+#include "PLInput/Backend/Linux/LinuxProvider.h"
 #include <dirent.h>
 #include <fcntl.h>
 
@@ -57,8 +59,11 @@ pl_implement_class(LinuxProvider)
 LinuxProvider::LinuxProvider() :
 	m_pDisplay(nullptr)
 {
-	// Open display
-	m_pDisplay = XOpenDisplay(nullptr);
+	// No X server display connection on Android possible
+	#ifndef ANDROID
+		// Open display
+		m_pDisplay = XOpenDisplay(nullptr);
+	#endif
 }
 
 /**
@@ -67,10 +72,12 @@ LinuxProvider::LinuxProvider() :
 */
 LinuxProvider::~LinuxProvider()
 {
-	// Close display
-	if (m_pDisplay) {
-		XCloseDisplay(m_pDisplay);
-	}
+	// No X server display connection on Android possible
+	#ifndef ANDROID
+		// Close display
+		if (m_pDisplay)
+			XCloseDisplay(m_pDisplay);
+	#endif
 }
 
 
@@ -79,18 +86,21 @@ LinuxProvider::~LinuxProvider()
 //[-------------------------------------------------------]
 void LinuxProvider::QueryDevices()
 {
-	// Create a keyboard device
-	if (!CheckDevice("Keyboard")) {
-		// Add device
-		LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice(m_pDisplay);
-		AddDevice("Keyboard", new Keyboard("Keyboard", pImpl));
-	}
+	// No X server display connection on Android possible
+	#ifndef ANDROID
+		// Create a keyboard device
+		if (m_pDisplay && !CheckDevice("Keyboard")) {
+			// Add device
+			LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice(*m_pDisplay);
+			AddDevice("Keyboard", new Keyboard("Keyboard", pImpl));
+		}
 
-	// Create a mouse device
-	if (!CheckDevice("Mouse")) {
-		LinuxMouseDevice *pImpl = new LinuxMouseDevice(m_pDisplay);
-		AddDevice("Mouse", new Mouse("Mouse", pImpl));
-	}
+		// Create a mouse device
+		if (m_pDisplay && !CheckDevice("Mouse")) {
+			LinuxMouseDevice *pImpl = new LinuxMouseDevice(*m_pDisplay);
+			AddDevice("Mouse", new Mouse("Mouse", pImpl));
+		}
+	#endif
 
 	// List devices in "/dev/input/event*"
 	DIR *pDir = opendir("/dev/input");

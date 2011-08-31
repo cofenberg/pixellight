@@ -57,14 +57,20 @@ elseif(LINUX)
 	##################################################
 	add_sources(
 		src/Backend/Linux/LinuxProvider.cpp
-		src/Backend/Linux/LinuxKeyboardDevice.cpp
-		src/Backend/Linux/LinuxMouseDevice.cpp
 		src/Backend/Linux/LinuxEventDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 		src/Backend/HID/HIDDeviceLinux.cpp
 		src/Backend/Bluetooth/BTLinux.cpp
 		src/Backend/Bluetooth/BTDeviceLinux.cpp
 	)
+
+	# No X server display connection on Android possible
+	if(NOT ANDROID)
+		add_sources(
+			src/Backend/Linux/LinuxKeyboardDevice.cpp
+			src/Backend/Linux/LinuxMouseDevice.cpp
+		)
+	endif()
 endif()
 
 ##################################################

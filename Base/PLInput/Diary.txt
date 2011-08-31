@@ -1,3 +1,10 @@
+>> 31.08.2011
+[CO]
+- Android port related: No X server display connection on Android possible (there's no X11 stuff available in the Android NDK). So, on Android the keyboard & mouse
+  implementation using X server display connection is not available.
+
+
+
 >> 09.08.2011
 [SW]
 - "PLInput::LinuxKeyboardDevice": Fixed key pressed release detection when additional modifier keys are also pressed.

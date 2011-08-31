@@ -41,8 +41,8 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-LinuxMouseDevice::LinuxMouseDevice(::Display *pDisplay) :
-	m_pDisplay(pDisplay),
+LinuxMouseDevice::LinuxMouseDevice(::Display &cDisplay) :
+	m_pDisplay(&cDisplay),
 	m_nMouseX(0),
 	m_nMouseY(0)
 {

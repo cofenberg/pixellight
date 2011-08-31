@@ -42,8 +42,8 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-LinuxKeyboardDevice::LinuxKeyboardDevice(::Display *pDisplay) :
-	m_pDisplay(pDisplay)
+LinuxKeyboardDevice::LinuxKeyboardDevice(::Display &cDisplay) :
+	m_pDisplay(&cDisplay)
 {
 	// Destroy device implementation automatically
 	m_bDelete = true;
