@@ -20,9 +20,13 @@ file(MAKE_DIRECTORY ${PL_TOOLS_BIN_DIR})
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(PLProject)
-add_subdirectory(PLUpgrade)
-if(WIN32)
+if(PL_TOOL_PLPROJECT)
+	add_subdirectory(PLProject)
+endif()
+if(PL_TOOL_PLUPGRADE)
+	add_subdirectory(PLUpgrade)
+endif()
+if(PL_TOOL_PLINSTALL)
 	add_subdirectory(PLInstall)
 endif()
 add_subdirectory(PLViewer)

@@ -1,3 +1,9 @@
+>> 31.08.2011
+[CO]
+- Added CMake build triggers for "PLProject", "PLUpgrade" and "PLInstall" (those are e.g. not required when building for a mobile target platform)
+
+
+
 >> 29.08.2011
 [CO]
 - "cmake\External\Base.cmake": Within the "Default actions"-section, the toolchain file was included... again? As far
