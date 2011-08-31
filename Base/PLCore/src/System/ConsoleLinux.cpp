@@ -24,6 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <unistd.h>
+#ifdef LINUX
+#include "term.h"
+#endif
 #include <termios.h>
 #include <sys/ioctl.h>
 #include "PLCore/File/File.h"
