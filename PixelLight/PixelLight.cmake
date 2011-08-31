@@ -69,7 +69,11 @@ set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name")
 set(PL_EXTERNAL_PASS "" CACHE STRING "External repository user password")
 
 # Use native plproject?
-set(PL_NATIVE_PLPROJECT "1" CACHE BOOL "Use native plproject?")
+if(PL_NATIVE_PLPROJECT)
+	set(PL_NATIVE_PLPROJECT ${PL_NATIVE_PLPROJECT} CACHE BOOL "Use native plproject?")
+else()
+	set(PL_NATIVE_PLPROJECT "1" CACHE BOOL "Use native plproject?")
+endif()
 
 # Build minimal projects?
 if(CMAKETOOLS_MINIMAL)
