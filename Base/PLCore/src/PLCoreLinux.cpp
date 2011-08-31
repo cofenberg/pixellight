@@ -939,6 +939,91 @@ long _wtol( const wchar_t *str )
 	return static_cast<int>(wcstol(str, 0, 10));
 }
 
+#ifdef ANDROID
+	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
+	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
+
+	// Source: http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstof.c
+	// -> Minor adjustments to make it compile
+	/*-
+	 * Copyright (c) 2002, 2003 Tim J. Robbins
+	 * All rights reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without
+	 * modification, are permitted provided that the following conditions
+	 * are met:
+	 * 1. Redistributions of source code must retain the above copyright
+	 *    notice, this list of conditions and the following disclaimer.
+	 * 2. Redistributions in binary form must reproduce the above copyright
+	 *    notice, this list of conditions and the following disclaimer in the
+	 *    documentation and/or other materials provided with the distribution.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	 * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+	 * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+	 * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+	 * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+	 * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+	 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+	 * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+	 * SUCH DAMAGE.
+	 */
+	#include <stdlib.h>
+	float wcstof(const wchar_t *nptr, wchar_t **endptr)
+	{
+		float val;
+		char *buf, *end, *p;
+		const wchar_t *wcp;
+		size_t clen, len;
+
+		while (iswspace(*nptr))
+			nptr++;
+
+		wcp = nptr;
+		{
+			mbstate_t state;
+			if ((len = wcsrtombs(NULL, &wcp, 0, &state)) == (size_t)-1) {
+				if (endptr != NULL)
+					*endptr = (wchar_t *)nptr;
+				return (0.0);
+			}
+		}
+		if ((buf = (char*)malloc(len + 1)) == NULL)
+			return (0.0);
+		{
+			mbstate_t state;
+			wcsrtombs(buf, &wcp, len + 1, &state);
+		}
+
+		val = strtof(buf, &end);
+
+		if (endptr != NULL) {
+	#if 1					/* Fast, assume 1:1 WC:MBS mapping. */
+			*endptr = (wchar_t *)nptr + (end - buf);
+			(void)clen;
+			(void)p;
+	#else					/* Slow, conservative approach. */
+			*endptr = (wchar_t *)nptr;
+			p = buf;
+			{
+				mbstate_t state;
+				while (p < end &&
+					(clen = mbrlen(p, end - p, &state)) > 0) {
+					p += clen;
+					(*endptr)++;
+				}
+			}
+	#endif
+		}
+
+		free(buf);
+
+		return (val);
+	}
+#endif
+
 float _wtof( const wchar_t *str )
 {
 	return wcstof(str,0);
@@ -971,3 +1056,143 @@ wchar_t *_wcslwr(wchar_t *s)
 }
 /*********************************************************/
 
+// wchar functions definitions
+#ifdef ANDROID
+	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
+	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
+	int wcscasecmp(const wchar_t *s1, const wchar_t *s2)
+	{
+		wint_t left, right;
+		do {
+			left = towlower(*s1++);
+			right = towlower(*s2++);
+		} while (left && left == right);
+		return (left == right);
+	}
+
+	int wcsncasecmp(const wchar_t *s1, const wchar_t *s2, size_t n)
+	{
+		if (n > 0) {
+			wint_t left, right;
+			do {
+				left = towlower(*s1++);
+				right = towlower(*s2++);
+				if (--n == 0)
+					return 0;
+			} while (left && left == right);
+			return (left == right);
+		} else {
+			return 0;
+		}
+	}
+
+	// Source: http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstoumax.c
+	// -> Minor adjustments to make it compile
+	/*-
+	 * Copyright (c) 1992, 1993
+	 *	The Regents of the University of California.  All rights reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without
+	 * modification, are permitted provided that the following conditions
+	 * are met:
+	 * 1. Redistributions of source code must retain the above copyright
+	 *    notice, this list of conditions and the following disclaimer.
+	 * 2. Redistributions in binary form must reproduce the above copyright
+	 *    notice, this list of conditions and the following disclaimer in the
+	 *    documentation and/or other materials provided with the distribution.
+	 * 3. All advertising materials mentioning features or use of this software
+	 *    must display the following acknowledgement:
+	 *	This product includes software developed by the University of
+	 *	California, Berkeley and its contributors.
+	 * 4. Neither the name of the University nor the names of its contributors
+	 *    may be used to endorse or promote products derived from this software
+	 *    without specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	 * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+	 * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+	 * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+	 * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+	 * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+	 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+	 * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+	 * SUCH DAMAGE.
+	 */
+	#include <errno.h>
+	#include <stdint.h>
+	uintmax_t wcstoumax(const wchar_t *nptr, wchar_t **endptr, int base)
+	{
+		const wchar_t *s;
+		uintmax_t acc;
+		wchar_t c;
+		uintmax_t cutoff;
+		int neg, any, cutlim;
+
+		/*
+		 * See strtoimax for comments as to the logic used.
+		 */
+		s = nptr;
+		do {
+			c = *s++;
+		} while (iswspace(c));
+		if (c == L'-') {
+			neg = 1;
+			c = *s++;
+		} else {
+			neg = 0;
+			if (c == L'+')
+				c = *s++;
+		}
+		if ((base == 0 || base == 16) &&
+			c == L'0' && (*s == L'x' || *s == L'X')) {
+			c = s[1];
+			s += 2;
+			base = 16;
+		}
+		if (base == 0)
+			base = c == L'0' ? 8 : 10;
+		acc = any = 0;
+		if (base < 2 || base > 36)
+			goto noconv;
+
+		cutoff = UINTMAX_MAX / base;
+		cutlim = UINTMAX_MAX % base;
+		for ( ; ; c = *s++) {
+	#ifdef notyet
+			if (iswdigit(c))
+				c = digittoint(c);
+			else
+	#endif
+			if (c >= L'0' && c <= L'9')
+				c -= L'0';
+			else if (c >= L'A' && c <= L'Z')
+				c -= L'A' - 10;
+			else if (c >= L'a' && c <= L'z')
+				c -= L'a' - 10;
+			else
+				break;
+			if (c >= base)
+				break;
+			if (any < 0 || acc > cutoff || (acc == cutoff && c > cutlim))
+				any = -1;
+			else {
+				any = 1;
+				acc *= base;
+				acc += c;
+			}
+		}
+		if (any < 0) {
+			acc = UINTMAX_MAX;
+			errno = ERANGE;
+		} else if (!any) {
+	noconv:
+			errno = EINVAL;
+		} else if (neg)
+			acc = -acc;
+		if (endptr != NULL)
+			*endptr = (wchar_t *)(any ? s - 1 : nptr);
+		return (acc);
+	}
+#endif

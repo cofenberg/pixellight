@@ -56,10 +56,10 @@ class LinuxMouseDevice : public UpdateDevice {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] pDisplay
+		*  @param[in] cDisplay
 		*    Display connection
 		*/
-		LinuxMouseDevice(::Display *pDisplay);
+		LinuxMouseDevice(::Display &cDisplay);
 
 		/**
 		*  @brief
@@ -79,7 +79,7 @@ class LinuxMouseDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		::Display *m_pDisplay;	/**< X server display connection */
+		::Display *m_pDisplay;	/**< X server display connection, always valid! */
 		int		   m_nMouseX;	/**< Current mouse X position */
 		int		   m_nMouseY;	/**< Current mouse Y position */
 

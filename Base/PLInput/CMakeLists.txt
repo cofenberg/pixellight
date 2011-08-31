@@ -57,14 +57,22 @@ elseif(LINUX)
 	##################################################
 	add_sources(
 		src/Backend/Linux/LinuxProvider.cpp
-		src/Backend/Linux/LinuxKeyboardDevice.cpp
-		src/Backend/Linux/LinuxMouseDevice.cpp
 		src/Backend/Linux/LinuxEventDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 		src/Backend/HID/HIDDeviceLinux.cpp
-		src/Backend/Bluetooth/BTLinux.cpp
-		src/Backend/Bluetooth/BTDeviceLinux.cpp
 	)
+
+	# No X server display connection on Android possible, so,
+	# deactivate the default keyboard & mouse implementation.
+	# No Bluetooth in the way currently used available on Android.
+	if(NOT ANDROID)
+		add_sources(
+			src/Backend/Linux/LinuxKeyboardDevice.cpp
+			src/Backend/Linux/LinuxMouseDevice.cpp
+			src/Backend/Bluetooth/BTLinux.cpp
+			src/Backend/Bluetooth/BTDeviceLinux.cpp
+		)
+	endif()
 endif()
 
 ##################################################
@@ -79,10 +87,13 @@ if(LINUX)
 	##################################################
 	## Linux
 	##################################################
-	add_include_directories(
-		/usr/include/dbus-1.0
-		/usr/lib/dbus-1.0/include
-	)
+	# No DBUS headers available in the Android NDK
+	if(NOT ANDROID)
+		add_include_directories(
+			/usr/include/dbus-1.0
+			/usr/lib/dbus-1.0/include
+		)
+	endif()
 endif()
 
 ##################################################
@@ -112,10 +123,13 @@ elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
-	add_libs(
-		${LINUX_X11_LIBS}
-		dbus-1
-	)
+	# No X11 and DBUS libraries available in the Android NDK
+	if(NOT ANDROID)
+		add_libs(
+			${LINUX_X11_LIBS}
+			dbus-1
+		)
+	endif()
 endif()
 
 ##################################################

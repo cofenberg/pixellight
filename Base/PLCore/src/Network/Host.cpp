@@ -130,6 +130,7 @@ void Host::ClosePort()
 {
 	// Is port open?
 	if (m_bListening) {
+		// [TODO] Do not use "Thread::Terminate()" because it's evil and there are also platforms like Android don't supporting it at all
 		// Stop listener thread
 		m_cServerThread.Terminate();
 

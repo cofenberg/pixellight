@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <unistd.h>
-#include <term.h>
+#include <termios.h>
 #include <sys/ioctl.h>
 #include "PLCore/File/File.h"
 #include "PLCore/System/ConsoleLinux.h"
@@ -94,39 +94,53 @@ int ConsoleLinux::GetCharacter(bool bEcho) const
 
 void ConsoleLinux::ClearScreen() const
 {
-	// Use curses lib
-	setupterm(nullptr, 1, nullptr);
-	putp(clear_screen); 
+	// Don't use the curses library for this, go the more portable way below
+//	setupterm(nullptr, 1, nullptr);
+//	putp(clear_screen); 
 
 	// Another solution: Use ANSI-sequences to achieve the job
-//	printf("\033[H\033[J");
-//	fflush(stdout);
+	printf("\033[H\033[J");
+	fflush(stdout);
 }
 
 void ConsoleLinux::GetCursorPosition(uint16 &nX, uint16 &nY) const
 {
-	// [TODO] Check whether this works...
-	// Use curses lib
-	/*
-	int x, y;
-	setupterm(nullptr, 1, nullptr);
-	getyx(stdscr, y, x);
-	nX = x;
-	nY = y;
-	*/
-	nX = 0;
-	nY = 0;
+	// There's no native curses library on Android, and compiling one
+	// just for this usually never used function would be overkill
+	#ifdef ANDROID
+		// [TODO] Any solution using additional libraries?
+		nX = 0;
+		nY = 0;
+	#else
+		// [TODO] Check whether this works...
+		// Use curses library
+		/*
+		int x, y;
+		setupterm(nullptr, 1, nullptr);
+		getyx(stdscr, y, x);
+		nX = x;
+		nY = y;
+		*/
+		nX = 0;
+		nY = 0;
+	#endif
 }
 
 void ConsoleLinux::SetCursorPosition(uint16 nX, uint16 nY) const
 {
-	// Use curses lib
-	setupterm(nullptr, 1, nullptr);
-	putp(tparm(cursor_address, nY, nX));
-
-	// Another solution: Use ANSI-sequences to achieve the job
-//	printf("\033[%d;%dH", nX, nY);
-//	fflush(stdout);
+	// There's no native curses library on Android, and compiling one
+	// just for this usually never used function would be overkill
+	#ifdef ANDROID
+		// [TODO] Any solution using additional libraries?
+		// Another solution: Use ANSI-sequences to achieve the job
+		// ("\033" moves the cursor relative to it's current position... which is a problem because we need an absolute position change)
+	//	printf("\033[%d;%dH", nX, nY);
+	//	fflush(stdout);
+	#else
+		// Use curses library
+		setupterm(nullptr, 1, nullptr);
+		putp(tparm(cursor_address, nY, nX));
+	#endif
 }
 
 

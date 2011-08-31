@@ -22,6 +22,7 @@ set(LINUX_COMPILE_DEFS
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
+	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
 	-Wstrict-null-sentinel				# Warn also about the use of an uncasted NULL as sentinel
 )
 

@@ -1,3 +1,38 @@
+>> 31.08.2011
+[CO]
+- Android port related: "MutexLinux::TryLock()":  There's no implementation of "pthread_mutex_timedlock()" within the Android NDK, even if the function is listed within the headers.
+  Depending on the API level, it's defined out, meaning no compiler error when using API level 8, but a compiler error when using API level 9 (some sources stating this is an error
+  within the shipped "pthread.h"-header). For Android, we have to fallback to "pthread_mutex_lock()" (right now, I don't want to spend hours to find a work around).
+
+
+
+>> 30.08.2011
+[CO]
+- Android port related: Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android (no problem, wchar_t is for Windows, UTF-8 for Linux and the string
+  class handles both as well as ASCII). Added a "wcscasecmp()" & "wcsncasecmp()" implementation within "PLCoreLinuxWrapper.h" & "PLCoreLinux.cpp" used when compiling for Android.
+- Android port related: "PLCoreLinux.cpp": The Android NDK has no support for "wcstof()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstof.c
+  with minor adjustments to make it compile (no time to reimplement something on my one, and it's also not worth it, there's other stuff to do instead of reimplementing
+  the c standard library...).
+- Android port related: The Android NDK has no support for "wcstoumax()". Added the implementation from http://www.opensource.apple.com/source/Libc/Libc-320/locale/FreeBSD/wcstoumax.c
+  with minor adjustments to make it compile.
+- Android port related: "PLCore/ConsoleLinux.cpp": The Android NDK has no "term.h", but "termios.h" works (validating Linux build next time when I switch the OS, but not at this very
+  moment and not for every minor change, even when a change breakes something under Linux for a short period)
+- Android port related: "PLCore::ThreadLinux::Terminate()": "pthread_cancel()" is not supported by the Android NDK. "android-ndk-r6/docs/system/libc/OVERVIEW.html" states:
+  "pthread_cancel() will *not* be supported in Bionic, because doing this would involve making the C library significantly bigger for very little benefit."
+
+
+
+>> 29.08.2011
+[CO]
+- "Core/MemoryManager.cpp": For "memcpy()" etc. "string.h" has to be included when compiling for Android (wow, now I'm glad that we even encapsulated such primitive functions,
+   else there would be more than just this file to update...)
+- Android port related: "ConsoleLinux::ClearScreen()" in here, we don't need to use the curses library and can go a more portable way
+- Android port related: "ConsoleLinux::GetCursorPosition()" & "ConsoleLinux::SetCursorPosition()": There's no native curses library on Android, and compiling one
+  just for this usually never used function would be overkill. So, right now, those two methods are not supported when using the Android port (already spend far too much
+  time on this curses library issue!).
+
+
+
 >> 23.08.2011
 [CO]
 - Qt: It appears that there's going something funny on in here... The PixelLight Linux external packages of Qt Stephan Wezel created, don't need the "src" because the includes

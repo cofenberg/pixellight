@@ -1,3 +1,9 @@
+>> 31.08.2011
+[CO]
+- Android port related: "PLRendererOpenGLES2": No X11 when using Android
+
+
+
 >> 27.08.2011
 [CO]
 - D'OH! After one hour of experiments it appears that the native OpenGL ES 2.0 support of my ATI desktop driver ("AMD Catalyst 11.8", Windows 7 64 bit,

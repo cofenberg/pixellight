@@ -27,7 +27,7 @@ This document describes how to build PixelLight from the sources.
 ----------
 
 If you want to build PixelLight on Windows, you have two choices:
-- Use the provided Microsoft Visual Studio solutions to build the engine
+- Use the provided Microsoft Visual Studio (MSVC) solutions to build the engine
 - Use the CMake based build system
 
 If you want to create SDK packages or documentation or intend to e.g. use the mingw compiler or something
@@ -104,40 +104,68 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 	- MiKTeX (http://miktex.org/)
 	- Used to create the LaTex documentations.
 
-- "cmake\UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
-	- "Swiss File Knife": file management, search, text processing
-	- Directly used by the CMake scripts
-
-- "cmake\UsedTools\diff"-directory
-	- Some diff binaries directly used by the CMake scripts
-
 - The CMake system automatically searches for an installed Microsoft HTML Help Compiler (hhc.exe)
 	- MS HTML Help Workshop (http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp)
 	  Used to create chm documentations from the html help files created by Doxygen.
 
+- "cmake\UsedTools\sfk\sfk.exe" (http://sourceforge.net/projects/swissfileknife/)
+	- "Swiss File Knife": file management, search, text processing
+	- Directly used by the CMake scripts under MS Windows
 
-1.2.2. Create MSVC solutions and build
+- "cmake\UsedTools\diff"-directory
+	- Some diff binaries directly used by the CMake scripts under MS Windows
+
+- "cmake\UsedTools\make\make.exe" (http://gnuwin32.sourceforge.net/packages/make.htm)
+	- "Make for Windows": Make: GNU make utility to maintain groups of programs
+	- Directly used by the CMake scripts under MS Windows when using the Android NDK toolchain
+	- This tool can't be set within a CMake file automatically, there are two options:
+		- Add "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable *recommended*
+		- Use a MinGW installer from e.g. http://www.tdragon.net/recentgcc/ which can set the PATH environment variable *overkill because only the 171 KiB "make" is required*
+		- Use CMake from inside a command prompt by typing for example ("DCMAKE_TOOLCHAIN_FILE" is only required when using a toolchain) *not really comfortable when working with it on a regular basis*
+			cmake.exe -G"Unix Makefiles" -DCMAKE_MAKE_PROGRAM="<PixelLight root path>\cmake\UsedTools\make\make.exe" -DCMAKE_TOOLCHAIN_FILE="<PixelLight root path>\cmake\Toolchains\Toolchain-ndk.cmake"
+
+
+1.2.2. MSVC: Create solutions and build
 --------------------------------------
 
 Here's how to compile PixelLight by using the CMake-GUI:
-
 - Start "CMake (cmake-gui)"
-
 - "Where is the source code"-field: e.g. "C:\PixelLight"
-
-- "Where to build the binaries"-field: e.g. "C:\PixelLight\build-Release"
-
-- Configure
-
+- "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
+- Press the "Configure"-button
 - Choose the generator, for instance "Visual Studio 10"
-
-- Generate
-
-- Open "build-Release/PixelLight.sln" with Microsoft Visual Studio
-
+- Press the "Generate"-button
+-> The CMake part is done, you can close "CMake (cmake-gui)" now
+-> Ensure you have all required external packages (see "1.1.1 External packages")
+- Open "CMakeOutput/PixelLight.sln" with Microsoft Visual Studio
 - To build the documentation, choose "Docs"
-
 - To create a PixelLight SDK, choose "Pack-SDK", please note that you are free to compile projects individually as well
+
+
+1.2.3. Android: Create makefiles and build
+-----------------------------------------
+
+Here's how to compile PixelLight by using the CMake-GUI:
+- Android prerequisites: Install the usual Android development stuff (the following versions are those used when writing this, other versions may work as well)
+	- Android SDK for Windows ("installer_r12-windows.exe")
+		- "Android SDK Tools, revision 12"
+		- "Android SDK Platform-tools, revision 6"
+		- "SDK Platform Android 2.2, API 8, revision 3"
+	- Android NDK for Windows ("android-ndk-r6-windows.zip")
+		- Extract it and set the MS Windows PATH environment variable "ANDROID_NDK" to the NDK root directory
+- Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable)
+- Start "CMake (cmake-gui)"
+- "Where is the source code"-field: e.g. "C:\PixelLight"
+- "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
+- Press the "Configure"-button
+- Choose the generator "Unix Makefiles" and select the radio box "Specify toolchain file for cross-compiling"
+- Press the "Next"-button
+- "Specify the Toolchain file": e.g. "C:\PixelLight\cmake\Toolchains\Toolchain-ndk.cmake"
+- Press the "Generate"-button
+-> The CMake part is done, you can close "CMake (cmake-gui)" now
+-> Ensure you have all required external packages (see "1.1.1 External packages")
+- Open a MS Windows command prompt and change into e.g. "C:\PixelLight\CMakeOutput" by typing "cd /D C:\PixelLight\CMakeOutput" ("/D" is only required when changing into another partition)
+- Type "make"
 
 
 2. Linux

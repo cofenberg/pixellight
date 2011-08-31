@@ -28,8 +28,13 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLInput/PLInputLinuxIncludes.h"
 #include "PLInput/Backend/Provider.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+struct Display;
 
 
 //[-------------------------------------------------------]
@@ -85,7 +90,7 @@ class LinuxProvider : public Provider {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Display *m_pDisplay;	/**< X server display connection */
+		::Display *m_pDisplay;	/**< X server display connection, can be a null pointer */
 
 
 };
