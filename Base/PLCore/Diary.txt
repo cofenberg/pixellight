@@ -1,3 +1,11 @@
+>> 31.08.2011
+[CO]
+- Android port related: "MutexLinux::TryLock()":  There's no implementation of "pthread_mutex_timedlock()" within the Android NDK, even if the function is listed within the headers.
+  Depending on the API level, it's defined out, meaning no compiler error when using API level 8, but a compiler error when using API level 9 (some sources stating this is an error
+  within the shipped "pthread.h"-header). For Android, we have to fallback to "pthread_mutex_lock()" (right now, I don't want to spend hours to find a work around).
+
+
+
 >> 30.08.2011
 [CO]
 - Android port related: Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android (no problem, wchar_t is for Windows, UTF-8 for Linux and the string

@@ -67,13 +67,23 @@ bool MutexLinux::Lock()
 
 bool MutexLinux::TryLock(uint64 nTimeout)
 {
-	// Setup timeout structure
-	struct timespec timeout;
-	timeout.tv_sec  = nTimeout/1000;
-	timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
+	#ifdef ANDROID
+		// There's no implementation of "pthread_mutex_timedlock()" within the Android NDK, even
+		// if the function is listed within the headers. Depending on the API level, it's defined
+		// out, meaning no compiler error when using API level 8, but a compiler error when using API
+		// level 9 (some sources stating this is an error within the shipped "pthread.h"-header).
 
-	// Lock mutex
-	return !pthread_mutex_timedlock(&m_sMutex, &timeout);
+		// Lock mutex - just use the version without timeout :/
+		return !pthread_mutex_lock(&m_sMutex);
+	#else
+		// Setup timeout structure
+		struct timespec timeout;
+		timeout.tv_sec  = nTimeout/1000;
+		timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
+
+		// Lock mutex
+		return !pthread_mutex_timedlock(&m_sMutex, &timeout);
+	#endif
 }
 
 bool MutexLinux::Unlock()
