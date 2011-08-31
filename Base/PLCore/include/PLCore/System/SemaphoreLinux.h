@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/System/SemaphoreImpl.h"
+#include <semaphore.h>
 
 
 //[-------------------------------------------------------]
@@ -88,8 +89,9 @@ class SemaphoreLinux : public SemaphoreImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		int    m_hSemaphore;	/**< System semaphore handle */
-		uint32 m_nMaxValue;		/**< Maximum value of the semaphore */
+		sem_t	m_hSemaphore;	/**< System semaphore handle */
+		uint32	m_nMaxValue;	/**< Maximum value of the semaphore */
+		bool	m_bCreated;		/**< indicates if the semaphore was created */
 
 
 };
