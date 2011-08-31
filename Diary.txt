@@ -4,6 +4,37 @@
 
 
 
+>> 31.08.2011
+[CO]
+- Ok, the Android port is starting to come to life... but there are still some not so funny issues (don't now what's MS Windows related I'am currently using):
+  - There must be a memory leak or so within "arm-linux-androideabi-g++.exe" due to an issue I just can't pinpoint because it's frequently "jumping".
+    When linking, I receive a single error like "... arm-linux-androideabi-g++.exe: CMakeFies/PLCore.dir/src/File/FileSearchLinux.cpp". Note the
+    "CMakeFies" which should be in fact "CMakeFiles" and when checking all makes files and everything else, it's "CMakeFiles" and not "CMakeFies". But
+    it's not limited to this character, sometimes it's "CMakeFiles/PLCore.dr/src/File/FileSearchLinux.cpp" and so on - it's not even limited to this one
+    file, sometimes it's that file, then another one. But only one file at a time within PLCore. 
+    When linking PLRenderer it's the same with "arm-linux-androideabi-g++.exe: ../PLRendeer/libPLRenderer.so.0.9.9: No such file or directory". Should be and is
+    "../PLRenderer/libPLRenderer.so.0.9.9". I already used other "make" versions and so on, nothing solves this issue. It will be interesting to see whether it's
+    the same when using Linux.
+  - Another issue: When using "Android NDK r6" and "API level 8" all is fine, when using "Android NDK r6" and "API level 9" I receive
+    "... arm-linux-androideabi/bin/ld.exe: warning: type and size of dynamic symbol `__dso_handle' are not defined" linker warnings. It's in fact a bug within
+    "Android NDK r6" and solved within "Android NDK r6b" (see http://code.google.com/p/android/issues/detail?id=19597).
+    When using "Android NDK r6b", the warning is in fact gone - but has been replaced by the following error "crtbegin_so.o: No such file: No such file or directory"
+    ... another issue I tried to resolve for at least one hour without any solution. Another Android NDK bug? Did I messed up something somewhere? So, I have to stick
+    with "Android NDK r6" for now to get some general real progress with the Android port without loosing myself into this issue.
+  - Compiling is really slow, it takes ages :/
+-> Beside those still remaining issues, and a required rewrite of "PLCore::SemaphoreLinux" because the Android NDK doesn't support the features used by the current
+   implementation, I'am now able to compile all 12 base projects for Android. Of course this doesn't mean that the port is finished or near to finished. :/
+-> In general, I decided to use Android 2.3 (Gingerbread, "android-9" NDK API level) for PixelLight even if I started the port by using API level 8 because my smartphone
+   (LG P990 Optimus Speed) was shipped with Android 2.2.2 and there's still no official Android 2.3 update. I try to avoid to hack around on the device (at least for now).
+   But Android 2.3 introduced several really decent features I just don't want to miss, and it's already available for nearly a year. I just don't want to work without the
+   "NativeActivity"-class and without the ability to use EGL within the native application. Especially EGL would be a nasty one because one code would have to run in a
+   Java wrapper class (EGL initialization, page flip) while all the rest would be done within the native application. To be honest, I don't like Java much, and I don't
+   want to write too much special Android-only codes... my spare time is limited and I don't want to waste it by trying to support out-of-date Android versions. Read e.g.
+   http://blogs.arm.com/software-enablement/366-android-23-gingerbread-ndk-now-close-to-pure-native-development/ for more information about this topic. By the way, another
+   nice feature is OpenSLES for sound... so, Android 2.3 it is.
+
+
+
 >> 14.08.2011
 [CO]
 - Started support for MS Windows x64. To be able to continue the development of PixelLight with x86 & x64 at the same time without any effort, all binaries will now be
