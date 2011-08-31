@@ -37,22 +37,24 @@
 #undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
-#ifdef LINUX
-	#include <X11/Xutil.h>
-#endif
 #include <PLCore/Core/AbstractContext.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLRendererOpenGLES2 {
+	class Renderer;
+}
+#if (defined(LINUX) && !defined(ANDROID))
+	struct Display;
+#endif
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRendererOpenGLES2 {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class Renderer;
 
 
 //[-------------------------------------------------------]
@@ -104,17 +106,6 @@ class Context : public PLCore::AbstractContext {
 		*    'true' if all went fine, else 'false'
 		*/
 		bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
-
-	#ifdef LINUX
-		/**
-		*  @brief
-		*    Returns the used X11 display
-		*
-		*  @return
-		*    The used X11 display, can be a null pointer
-		*/
-		::Display *GetX11Display() const;
-	#endif
 
 		/**
 		*  @brief
@@ -208,7 +199,7 @@ class Context : public PLCore::AbstractContext {
 		Renderer		   *m_pRenderer;			/**< The owner renderer, always valid! */
 		PLCore::handle		m_nNativeWindowHandle;	/**< Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window */
 		// X11
-		#ifdef LINUX
+		#if (defined(LINUX) && !defined(ANDROID))
 			::Display	   *m_pX11Display;
 		#endif
 		// EGL

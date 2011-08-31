@@ -25,6 +25,8 @@
 //[-------------------------------------------------------]
 #ifdef ANDROID
 	#include <android/native_window.h>
+#elif LINUX
+	#include <X11/Xutil.h>
 #endif
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES2/Context.h"
@@ -87,7 +89,7 @@ Context::~Context()
 			UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
 		}
 	#endif
-	#ifdef LINUX
+	#if (defined(LINUX) && !defined(ANDROID))
 		// Destroy the dummy native window
 		if (!m_nNativeWindowHandle && m_nDummyNativeWindow)
 			XDestroyWindow(m_pX11Display, m_nDummyNativeWindow);
@@ -126,7 +128,7 @@ handle Context::GetNativeWindowHandle() const
 bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 {
 	// Get display
-	#ifdef LINUX
+	#if (defined(LINUX) && !defined(ANDROID))
 		m_hDisplay = eglGetDisplay(static_cast<EGLNativeDisplayType>(m_pX11Display));
 	#else
 		m_hDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -191,7 +193,7 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 							RegisterClass(&sWindowClass);
 							m_nDummyNativeWindow = CreateWindow(TEXT("PLOpenGLESDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, hModuleHandle, nullptr);
 						#endif
-						#ifdef LINUX
+						#if (defined(LINUX) && !defined(ANDROID))
 							// Create dummy window
 							XSetWindowAttributes sSetWindowAttributes;
 							sSetWindowAttributes.event_mask   = 0;
@@ -243,17 +245,6 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 	// Error!
 	return false;
 }
-
-#ifdef LINUX
-	/**
-	*  @brief
-	*    Returns the used X11 display
-	*/
-	::Display *Context::GetX11Display() const
-	{
-		return m_pX11Display;
-	}
-#endif
 
 /**
 *  @brief
@@ -316,7 +307,7 @@ EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
 Context::Context(Renderer &cRenderer, handle nNativeWindowHandle) :
 	m_pRenderer(&cRenderer),
 	m_nNativeWindowHandle(nNativeWindowHandle),
-	#ifdef LINUX
+	#if (defined(LINUX) && !defined(ANDROID))
 		m_pX11Display(XOpenDisplay(nullptr)),
 	#endif
 	m_hDisplay(EGL_NO_DISPLAY),
@@ -396,7 +387,7 @@ EGLConfig Context::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
 Context::Context(const Context &cSource) :
 	m_pRenderer(nullptr),
 	m_nNativeWindowHandle(NULL_HANDLE),
-	#ifdef LINUX
+	#if (defined(LINUX) && !defined(ANDROID))
 		m_pX11Display(nullptr),
 	#endif
 	m_hDisplay(EGL_NO_DISPLAY),
