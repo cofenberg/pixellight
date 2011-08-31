@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <unistd.h>
-#ifdef LINUX
+#ifndef ANDROID
 #include "term.h"
 #endif
 #include <termios.h>
