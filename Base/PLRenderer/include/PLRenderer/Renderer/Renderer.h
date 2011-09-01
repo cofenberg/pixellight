@@ -120,6 +120,15 @@ class Renderer : public PLCore::Object {
 	public:
 		/**
 		*  @brief
+		*    Returns whether or not the renderer instance was initialized successfully within it's constructor
+		*
+		*  @return
+		*    'true' if the renderer instance was initialized successfully within it's constructor, else 'false'
+		*/
+		virtual bool IsInitialized() const = 0;
+
+		/**
+		*  @brief
 		*    Returns the owner renderer context
 		*
 		*  @return

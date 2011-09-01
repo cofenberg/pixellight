@@ -718,6 +718,11 @@ bool Renderer::QueryDisplayModes()
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Renderer functions         ]
 //[-------------------------------------------------------]
+bool Renderer::IsInitialized() const
+{
+	return (m_pD3D != nullptr);
+}
+
 String Renderer::GetAPI(uint32 *pnVersion) const
 {
 	// Get version

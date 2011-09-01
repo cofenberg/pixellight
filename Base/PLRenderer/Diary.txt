@@ -5,6 +5,7 @@
   and it's now also possible to switch between desktop or emulator by just adding the emulator dlls into the same directory as the renderer dll or removing them
   from this directory. No need to recompile.
   -> Renamed "ContextDesktop" into "ContextRuntimeLinking" and removed "ContextEmulator" and "ContextNative"
+- "Renderer": Added "IsInitialized()"-method returning whether or not the renderer instance was initialized successfully within it's constructor
 
 
 

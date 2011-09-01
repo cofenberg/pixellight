@@ -246,6 +246,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool IsInitialized() const override;
 		virtual PLCore::String GetAPI(PLCore::uint32 *pnVersion = nullptr) const override;
 		virtual PLCore::String GetVendor() const override;
 		virtual PLCore::String GetDefaultShaderLanguage() const override;

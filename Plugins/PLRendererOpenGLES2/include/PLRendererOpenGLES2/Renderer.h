@@ -192,6 +192,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		bool				m_bInitialized;			/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
 		Context			   *m_pContext;				/**< OpenGL ES context, always valid! */
 		FontManager		   *m_pFontManager;			/**< OpenGL ES renderer font manager, always valid! */
 		ShaderLanguageGLSL *m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
@@ -214,6 +215,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool IsInitialized() const override;
 		virtual PLCore::String GetAPI(PLCore::uint32 *pnVersion = nullptr) const override;
 		virtual PLCore::String GetVendor() const override;
 		virtual PLCore::String GetDefaultShaderLanguage() const override;

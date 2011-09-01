@@ -982,6 +982,11 @@ void Renderer::RestoreDeviceStates()
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Renderer functions         ]
 //[-------------------------------------------------------]
+bool Renderer::IsInitialized() const
+{
+	return (m_pContext != nullptr);
+}
+
 String Renderer::GetAPI(uint32 *pnVersion) const
 {
 	// Get version

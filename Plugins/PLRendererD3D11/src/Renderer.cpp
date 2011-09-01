@@ -452,6 +452,11 @@ void Renderer::SetupCapabilities()
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Renderer functions         ]
 //[-------------------------------------------------------]
+bool Renderer::IsInitialized() const
+{
+	return (m_pDXGIFactory1 != nullptr && m_pD3D11DeviceContext != nullptr && m_pD3D11Device != nullptr);
+}
+
 String Renderer::GetAPI(uint32 *pnVersion) const
 {
 	// Get version

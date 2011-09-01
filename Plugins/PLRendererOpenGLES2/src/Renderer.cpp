@@ -67,6 +67,7 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// Only shaders mode is supported by OpenGL ES 2.0
+	m_bInitialized(false),
 	m_pContext(new ContextRuntimeLinking(*this, nNativeWindowHandle)),
 	m_pFontManager(new FontManager(*this)),
 	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this))
@@ -141,6 +142,9 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 
 		// Reset render
 		Reset();
+
+		// Done
+		m_bInitialized = true;
 	}
 }
 
@@ -598,6 +602,11 @@ GLuint Renderer::GetCombinedMinMipFilter(uint32 nStage)
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Renderer functions         ]
 //[-------------------------------------------------------]
+bool Renderer::IsInitialized() const
+{
+	return m_bInitialized;
+}
+
 String Renderer::GetAPI(uint32 *pnVersion) const
 {
 	// Get version

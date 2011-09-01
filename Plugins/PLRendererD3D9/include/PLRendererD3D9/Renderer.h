@@ -172,7 +172,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3D9			  m_pD3D;						/**< Instance of the IDirect3D9 object*/
+		LPDIRECT3D9			  m_pD3D;						/**< Instance of the IDirect3D9 object, can be a null pointer (= renderer not initialized) */
 		HWND				  m_hWnd;						/**< Handle to top level window */
 		LPDIRECT3DDEVICE9	  m_pDevice;					/**< Rendering device */
 		FixedFunctions		 *m_pFixedFunctions;			/**< Fixed functions interface implementation, can be a null pointer */
@@ -184,6 +184,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Public virtual PLRenderer::Renderer functions         ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool IsInitialized() const override;
 		virtual PLCore::String GetAPI(PLCore::uint32 *pnVersion = nullptr) const override;
 		virtual PLCore::String GetVendor() const override;
 		virtual PLCore::String GetDefaultShaderLanguage() const override;

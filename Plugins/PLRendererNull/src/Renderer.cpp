@@ -230,6 +230,11 @@ void Renderer::SetupCapabilities()
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Renderer functions         ]
 //[-------------------------------------------------------]
+bool Renderer::IsInitialized() const
+{
+	return true;
+}
+
 String Renderer::GetAPI(uint32 *pnVersion) const
 {
 	// Get version
