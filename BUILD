@@ -142,30 +142,6 @@ Here's how to compile PixelLight by using the CMake-GUI:
 - To create a PixelLight SDK, choose "Pack-SDK", please note that you are free to compile projects individually as well
 
 
-1.2.3. Android: Create makefiles and build
------------------------------------------
-
-Here's how to compile PixelLight by using the CMake-GUI:
-- Android prerequisites: Install the usual Android development stuff (the following versions are those used when writing this, other versions may work as well)
-	- Android SDK for Windows ("installer_r12-windows.exe")
-		- "Android SDK Tools, revision 12"
-		- "Android SDK Platform-tools, revision 6"
-		- "SDK Platform Android 2.2, API 8, revision 3"
-	- Android NDK for Windows ("android-ndk-r6-windows.zip")
-		- Extract it and set the MS Windows PATH environment variable "ANDROID_NDK" to the NDK root directory
-- Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable)
-- Start "CMake (cmake-gui)"
-- "Where is the source code"-field: e.g. "C:\PixelLight"
-- "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
-- Press the "Configure"-button
-- Choose the generator "Unix Makefiles" and select the radio box "Specify toolchain file for cross-compiling"
-- Press the "Next"-button
-- "Specify the Toolchain file": e.g. "C:\PixelLight\cmake\Toolchains\Toolchain-ndk.cmake"
-- Press the "Generate"-button
--> The CMake part is done, you can close "CMake (cmake-gui)" now
--> Ensure you have all required external packages (see "1.1.1 External packages")
-- Open a MS Windows command prompt and change into e.g. "C:\PixelLight\CMakeOutput" by typing "cd /D C:\PixelLight\CMakeOutput" ("/D" is only required when changing into another partition)
-- Type "make"
 
 
 2. Linux
@@ -385,3 +361,48 @@ Now you should be able to run the applications built by the PixelLight project, 
 
   cd Bin-Linux/Samples/x86
   ./50RendererTriangle
+
+
+
+
+3. Android
+-----------
+
+
+In principle, there's no difference in building PixelLight for Android on a MS Windows or Linux host. So, the
+following description is e.g. not MS Windows only.
+
+
+3.1.1. Prerequisites
+--------------------
+
+Install the usual Android development tools (the following versions are those used when writing this, other versions may work as well)
+- Java JDK & JRE
+- Android SDK ("r12")
+	- "Android SDK Tools, revision 12"
+	- "Android SDK Platform-tools, revision 6"
+	- "SDK Platform Android 2.2, API 9, revision 3"
+- Android NDK ("ndk r6")
+	- (optional) Windows
+		- Extract it and set the MS Windows PATH environment variable "ANDROID_NDK" to the NDK root directory
+		- Set the MS Windows PATH environment variable "ANDROID_NDK_TOOLCHAIN_ROOT" to the NDK toolchain root directory (e.g. "C:\android-ndk-r6b\toolchains\arm-linux-androideabi-4.4.3\prebuilt\windows\arm-linux-androideabi")
+		-> Those variables can also be added/set within the CMake-GUI
+
+
+3.1.2. Create makefiles and build
+----------------------------------
+
+Here's how to compile PixelLight by using the CMake-GUI:
+- Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "<PixelLight root path>\cmake\UsedTools\make\" to the MS Windows PATH environment variable)
+- Start "CMake (cmake-gui)"
+- "Where is the source code"-field: e.g. "C:\PixelLight"
+- "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
+- Press the "Configure"-button
+- Choose the generator "Unix Makefiles" and select the radio box "Specify toolchain file for cross-compiling"
+- Press the "Next"-button
+- "Specify the Toolchain file": e.g. "C:\PixelLight\cmake\Toolchains\Toolchain-ndk.cmake"
+- Press the "Generate"-button
+-> The CMake part is done, you can close "CMake (cmake-gui)" now
+-> Ensure you have all required external packages (see "1.1.1 External packages")
+- Open a command prompt and change into e.g. "C:\PixelLight\CMakeOutput" (MS Windows: by typing "cd /D C:\PixelLight\CMakeOutput" -> "/D" is only required when changing into another partition)
+- Type "make" (example: "make -j 4 -k" will use 4 CPU cores and will keep on going when there are errors)
