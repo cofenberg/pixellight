@@ -140,8 +140,12 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES2 External-freetype PLCore PLMath PLGraphics PLRenderer)
-add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		External-freetype PLCore PLMath PLGraphics PLRenderer)
+if(NOT PL_MOBILE)
+	# No need for OpenGL ES 2.0 emulator external dependencies when building for a mobile device
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES2)
+endif()
+add_dependencies(Plugins							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
