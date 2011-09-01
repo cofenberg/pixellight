@@ -67,18 +67,10 @@ pl_implement_class(Renderer)
 *    Default constructor
 */
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// Only shaders mode is supported by OpenGL ES 2.0
-	#ifdef USEEMULATOR
-		m_pContext(new ContextEmulator(*this, nNativeWindowHandle)),
-	#elif USEDESKTOP
-		m_pContext(new ContextDesktop(*this, nNativeWindowHandle)),
-	#else
-		m_pContext(new ContextNative(*this, nNativeWindowHandle)),
-	#endif
+	m_pContext(new ContextRuntimeLinking(*this, nNativeWindowHandle)),
 	m_pFontManager(new FontManager(*this)),
 	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this))
 {
-	// Ignore the given native window handle
-
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
 
 	// Output log information

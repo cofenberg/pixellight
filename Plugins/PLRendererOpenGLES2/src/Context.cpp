@@ -124,6 +124,60 @@ handle Context::GetNativeWindowHandle() const
 
 /**
 *  @brief
+*    Returns the used EGL display
+*/
+EGLDisplay Context::GetEGLDisplay() const
+{
+	return m_hDisplay;
+}
+
+/**
+*  @brief
+*    Returns the used EGL config
+*/
+EGLConfig Context::GetEGLConfig() const
+{
+	return m_hConfig;
+}
+
+/**
+*  @brief
+*    Returns the used EGL context
+*/
+EGLContext Context::GetEGLContext() const
+{
+	return m_hContext;
+}
+
+/**
+*  @brief
+*    Returns the used EGL dummy surface
+*/
+EGLSurface Context::GetEGLDummySurface() const
+{
+	return m_hDummySurface;
+}
+
+/**
+*  @brief
+*    Makes a given EGL surface to the currently used one
+*/
+EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
+{
+	// Use the EGL dummy surface?
+	if (!hEGLSurface)
+		hEGLSurface = m_hDummySurface;
+
+	// Make the EGL surface to the current one
+	return eglMakeCurrent(m_hDisplay, hEGLSurface, hEGLSurface, m_hContext);
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Context functions                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
 *    Initialize the context
 */
 bool Context::Init(uint32 nMultisampleAntialiasingSamples)
@@ -245,56 +299,6 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Returns the used EGL display
-*/
-EGLDisplay Context::GetEGLDisplay() const
-{
-	return m_hDisplay;
-}
-
-/**
-*  @brief
-*    Returns the used EGL config
-*/
-EGLConfig Context::GetEGLConfig() const
-{
-	return m_hConfig;
-}
-
-/**
-*  @brief
-*    Returns the used EGL context
-*/
-EGLContext Context::GetEGLContext() const
-{
-	return m_hContext;
-}
-
-/**
-*  @brief
-*    Returns the used EGL dummy surface
-*/
-EGLSurface Context::GetEGLDummySurface() const
-{
-	return m_hDummySurface;
-}
-
-/**
-*  @brief
-*    Makes a given EGL surface to the currently used one
-*/
-EGLBoolean Context::MakeCurrent(EGLSurface hEGLSurface)
-{
-	// Use the EGL dummy surface?
-	if (!hEGLSurface)
-		hEGLSurface = m_hDummySurface;
-
-	// Make the EGL surface to the current one
-	return eglMakeCurrent(m_hDisplay, hEGLSurface, hEGLSurface, m_hContext);
 }
 
 

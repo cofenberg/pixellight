@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ContextDesktop.h                               *
+ *  File: ContextRuntimeLinking.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,7 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/DynLib.h>
 #define DEFINEDESKTOP
-#include "PLRendererOpenGLES2/ContextDesktop.h"
+#include "PLRendererOpenGLES2/ContextRuntimeLinking.h"
 
 
 //[-------------------------------------------------------]
@@ -43,15 +43,23 @@ namespace PLRendererOpenGLES2 {
 *  @brief
 *    Constructor
 */
-ContextDesktop::ContextDesktop(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle),
-	m_pDynLib(new DynLib())
+ContextRuntimeLinking::ContextRuntimeLinking(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle),
+	m_pEGLDynLib(new DynLib()),
+	m_pGLESDynLib(new DynLib()),
+	m_bEntryPointsRegistered(false)
 {
-	// Load the OpenGL ES 2.0 dynamic library
-	if (LoadLibrary()) {
+	// Output log information
+	PL_LOG(Info, "Performing OpenGL ES 2.0 dynamic runtime linking")
+
+	// Load the dynamic libraries
+	if (LoadLibraries()) {
 		// Load the EGL entry points
 		if (LoadEGLEntryPoints()) {
 			// Load the OpenGL ES 2.0 entry points
-			LoadGLESEntryPoints();
+			if (LoadGLESEntryPoints()) {
+				// Entry points successfully registered
+				m_bEntryPointsRegistered = true;
+			}
 		}
 	}
 }
@@ -60,17 +68,34 @@ ContextDesktop::ContextDesktop(Renderer &cRenderer, handle nNativeWindowHandle) 
 *  @brief
 *    Destructor
 */
-ContextDesktop::~ContextDesktop()
+ContextRuntimeLinking::~ContextRuntimeLinking()
 {
-	// Destroy the dynamic library instance
-	delete m_pDynLib;
+	// Destroy the dynamic library instances
+	delete m_pEGLDynLib;
+	delete m_pGLESDynLib;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Context functions                      ]
+//[-------------------------------------------------------]
+bool ContextRuntimeLinking::Init(uint32 nMultisampleAntialiasingSamples)
+{
+	// Entry points successfully registered?
+	if (m_bEntryPointsRegistered) {
+		// Call base implementation
+		return Context::Init(nMultisampleAntialiasingSamples);
+	} else {
+		// Error!;
+		return false;
+	}
 }
 
 
 //[-------------------------------------------------------]
 //[ Protected virtual Context functions                   ]
 //[-------------------------------------------------------]
-EGLConfig ContextDesktop::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
+EGLConfig ContextRuntimeLinking::ChooseConfig(uint32 nMultisampleAntialiasingSamples) const
 {
 	// Try to find a working EGL configuration
 	EGLConfig hConfig = nullptr;
@@ -91,7 +116,7 @@ EGLConfig ContextDesktop::ChooseConfig(uint32 nMultisampleAntialiasingSamples) c
 			EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,							// Which types of EGL surfaces are supported
 			EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,						// Which client APIs are supported
 			EGL_DEPTH_SIZE,			EGL_DONT_CARE,							// Bits of Z in the depth buffer
-			// [TODO] Currently something looks wrong - just black screen when using multisample ("AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850")
+			// [TODO] Currently something looks wrong when using the desktop drivers - just black screen when using multisample ("AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850")
 //			EGL_SAMPLE_BUFFERS,		nMultisampleAntialiasingSampleBuffers,	// Number of multisample buffers (enable/disable multisample antialiasing)
 //			EGL_SAMPLES,			nMultisampleAntialiasingSamplesCurrent,	// Number of samples per pixel (multisample antialiasing samples)
 			EGL_BUFFER_SIZE,		16,
@@ -127,29 +152,49 @@ EGLConfig ContextDesktop::ChooseConfig(uint32 nMultisampleAntialiasingSamples) c
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Loads the OpenGL ES 2.0 dynamic library
+*    Loads the EGL dynamic library
 */
-bool ContextDesktop::LoadLibrary()
+bool ContextRuntimeLinking::LoadLibraries()
 {
 	bool bResult = false;	// Error by default
 
+	// EGL and OpenGL ES 2.0 may be within a single dynamic library, or within two separate dynamic libraries
+
 	// Load in the dynamic library
 	#ifdef WIN32
-		// First, try the AMD/ATI driver
-		bResult = m_pDynLib->Load("atioglxx.dll");
-		if (!bResult) {
-			// Second, try the NVIDIA driver
-			bResult = m_pDynLib->Load("nvoglv32.dll");
+		// First, try the OpenGL ES 2.0 Emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		bResult = m_pEGLDynLib->Load("libEGL.dll");
+		if (bResult) {
+			bResult = m_pGLESDynLib->Load("libGLESv2.dll");
+		} else {
+			// Second, try the AMD/ATI driver
+			bResult = m_pEGLDynLib->Load("atioglxx.dll");
+			if (bResult) {
+				bResult = m_pGLESDynLib->Load("atioglxx.dll");
+			} else {
+				// Third, try the NVIDIA driver
+				bResult = m_pEGLDynLib->Load("nvoglv32.dll");
+				if (bResult)
+					bResult = m_pGLESDynLib->Load("nvoglv32.dll");
+			}
 		}
+	#elif ANDROID
+		bResult = m_pEGLDynLib->Load("libEGL.so");
+		if (bResult)
+			bResult = m_pGLESDynLib->Load("libGLESv2.so");
 	#elif LINUX
-		bResult = m_pDynLib->Load("libGL.so");
+		bResult = m_pEGLDynLib->Load("libGL.so");
+		if (bResult)
+			bResult = m_pGLESDynLib->Load("libGL.so");
 	#endif
 
 	// Success?
-	if (bResult)
-		PL_LOG(Info, "Using OpenGL ES 2.0 dynamic library \"" + m_pDynLib->GetAbsPath() + '\"')
-	else
+	if (bResult) {
+		PL_LOG(Info, "Using EGL dynamic library \"" + m_pEGLDynLib->GetAbsPath() + '\"')
+		PL_LOG(Info, "Using OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')
+	} else {
 		PL_LOG(Error, "Failed to load OpenGL ES 2.0 dynamic library")
+	}
 
 	// Done
 	return bResult;
@@ -159,15 +204,15 @@ bool ContextDesktop::LoadLibrary()
 *  @brief
 *    Loads the EGL entry points
 */
-bool ContextDesktop::LoadEGLEntryPoints()
+bool ContextRuntimeLinking::LoadEGLEntryPoints()
 {
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro
 	#define IMPORT_FUNC_DLL(funcName) {						\
-		void *pSymbol = m_pDynLib->GetSymbol(#funcName);	\
+		void *pSymbol = m_pEGLDynLib->GetSymbol(#funcName);	\
 		if (!pSymbol) bResult = false;						\
-		*(reinterpret_cast<void**>(&(funcName))) = pSymbol; }
+		*(reinterpret_cast<void**>(&(funcName))) = pSymbol;	}
 
 	// Load the entry points
 	IMPORT_FUNC_DLL(eglGetError);
@@ -213,15 +258,19 @@ bool ContextDesktop::LoadEGLEntryPoints()
 *  @brief
 *    Loads the OpenGL ES 2.0 entry points
 */
-bool ContextDesktop::LoadGLESEntryPoints()
+bool ContextRuntimeLinking::LoadGLESEntryPoints()
 {
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro (The specification states "eglGetProcAddress" is only for extension functions, but in here we have no other choice, do we?)
-	#define IMPORT_FUNC(funcName) {						\
-		void *pSymbol = eglGetProcAddress((#funcName));	\
-		if (!pSymbol) bResult = false;					\
-		*(reinterpret_cast<void**>(&(funcName))) = pSymbol; }
+	#define IMPORT_FUNC(funcName) {							\
+		void *pSymbol = eglGetProcAddress((#funcName));		\
+		if (!pSymbol) {										\
+			pSymbol = m_pGLESDynLib->GetSymbol(#funcName);	\
+			if (!pSymbol)									\
+				bResult = false;							\
+		}													\
+		*(reinterpret_cast<void**>(&(funcName))) = pSymbol;	}
 
 	// Load the entry points
 	IMPORT_FUNC(glActiveTexture);

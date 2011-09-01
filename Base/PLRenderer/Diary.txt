@@ -1,3 +1,13 @@
+>> 01.09.2011
+[CO]
+- "PLRendererOpenGLES2": The runtime linking approach used in "ContextDesktop" is working really well... time to realize a single source solution working for
+  desktop, emulator and mobile device without reconfigurating the CMake file or the source code. This makes it really easier to use the OpenGL GL 2.0 renderer
+  and it's now also possible to switch between desktop or emulator by just adding the emulator dlls into the same directory as the renderer dll or removing them
+  from this directory. No need to recompile.
+  -> Renamed "ContextDesktop" into "ContextRuntimeLinking" and removed "ContextEmulator" and "ContextNative"
+
+
+
 >> 31.08.2011
 [CO]
 - Android port related: "PLRendererOpenGLES2": No X11 when using Android

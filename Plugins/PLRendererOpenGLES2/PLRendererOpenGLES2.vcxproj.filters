@@ -64,16 +64,10 @@
     <ClCompile Include="src\VertexShaderGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ContextNative.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ContextDesktop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ContextEmulator.cpp">
+    <ClCompile Include="src\ContextRuntimeLinking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -144,16 +138,10 @@
     <ClInclude Include="include\PLRendererOpenGLES2\VertexShaderGLSL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextEmulator.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextNative.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLES2\Context.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextDesktop.h">
+    <ClInclude Include="include\PLRendererOpenGLES2\ContextRuntimeLinking.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

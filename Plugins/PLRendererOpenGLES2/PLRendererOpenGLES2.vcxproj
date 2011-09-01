@@ -350,24 +350,7 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp" />
-    <ClCompile Include="src\ContextDesktop.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\ContextEmulator.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\ContextNative.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="src\ContextRuntimeLinking.cpp" />
     <ClCompile Include="src\FontGlyphTexture.cpp" />
     <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\FontTexture.cpp" />
@@ -390,24 +373,7 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGLES2\Context.h" />
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextDesktop.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextEmulator.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\ContextNative.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\ContextRuntimeLinking.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontGlyphTexture.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontManager.h" />
     <ClInclude Include="src\FontManager_GLSL.h" />

@@ -97,18 +97,6 @@ class Context : public PLCore::AbstractContext {
 
 		/**
 		*  @brief
-		*    Initialize the context
-		*
-		*  @param[in] nMultisampleAntialiasingSamples
-		*    Multisample antialiasing samples per pixel, <=1 means no antialiasing
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
-
-		/**
-		*  @brief
 		*    Returns the used EGL display
 		*
 		*  @return
@@ -154,6 +142,23 @@ class Context : public PLCore::AbstractContext {
 		*    'EGL_TRUE' if all went fine, else 'EGL_FALSE'
 		*/
 		EGLBoolean MakeCurrent(EGLSurface hEGLSurface);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Context functions                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Initialize the context
+		*
+		*  @param[in] nMultisampleAntialiasingSamples
+		*    Multisample antialiasing samples per pixel, <=1 means no antialiasing
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
 
 
 	//[-------------------------------------------------------]
@@ -255,13 +260,7 @@ class Context : public PLCore::AbstractContext {
 //[-------------------------------------------------------]
 //[ Implementation includes                               ]
 //[-------------------------------------------------------]
-#ifdef USEEMULATOR
-	#include "PLRendererOpenGLES2/ContextEmulator.h"
-#elif USEDESKTOP
-	#include "PLRendererOpenGLES2/ContextDesktop.h"
-#else
-	#include "PLRendererOpenGLES2/ContextNative.h"
-#endif
+#include "PLRendererOpenGLES2/ContextRuntimeLinking.h"	// Required in here because we redefine the OpenGL ES 2.0 functions for dynamic runtime linking
 
 
 #endif // __PLRENDEREROPENGLES2_CONTEXT_H__

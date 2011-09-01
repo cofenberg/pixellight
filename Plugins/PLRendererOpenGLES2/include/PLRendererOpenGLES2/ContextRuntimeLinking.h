@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ContextDesktop.h                               *
+ *  File: ContextRuntimeLinking.h                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLES2_CONTEXTDESKTOP_H__
-#define __PLRENDEREROPENGLES2_CONTEXTDESKTOP_H__
+#ifndef __PLRENDEREROPENGLES2_RUNTIMELINKING_H__
+#define __PLRENDEREROPENGLES2_RUNTIMELINKING_H__
 #pragma once
 
 
@@ -50,18 +50,26 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES desktop context
+*    OpenGL ES 2.0 desktop context
 *
 *  @remarks
-*    Implementation for OpenGL ES 2.0 on desktop PC by using a OpenGL ES 2.0 capable graphics driver.
+*    This context implementation links against the OpenGL ES 2.0 dynamic libraries at runtime. There are
+*    three typical variations of this OpenGL ES 2.0 dynamic libraries:
 *
-*    Basing on the example http://developer.amd.com/samples/assets/egl_sample.zip from
-*    http://blogs.amd.com/developer/2010/07/26/opengl-es-2-0-coming-to-a-desktop-near-you/
+*    - Implementation for OpenGL ES 2.0 on mobile devices.
 *
-*    Tested with "AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850", no errors, but just got
-*    a white screen when Windows Aero is active. As soon as I disabled Windows Aero all went fine.
+*    - Implementation for OpenGL ES 2.0 on desktop PC by using a OpenGL ES 2.0 capable graphics driver.
+*      Basing on the example http://developer.amd.com/samples/assets/egl_sample.zip from
+*      http://blogs.amd.com/developer/2010/07/26/opengl-es-2-0-coming-to-a-desktop-near-you/
+*      Tested with "AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850", no errors, but just got
+*      a white screen when Windows Aero is active. As soon as I disabled Windows Aero all went fine.
+*
+*    - Implementation for testing OpenGL ES 2.0 on a desktop PC using OpenGL ES 2.0 Emulator from ARM
+*      (http://www.malideveloper.com/tools/software-development/opengl-es-20-emulator.php). If you have
+*      a OpenGL ES 2.0 capable graphics driver, you may want to use the "ContextNative"-implementation
+*      instead.
 */
-class ContextDesktop : public Context {
+class ContextRuntimeLinking : public Context {
 
 
 	//[-------------------------------------------------------]
@@ -77,13 +85,20 @@ class ContextDesktop : public Context {
 		*  @param[in] nNativeWindowHandle
 		*    Handle of a native OS window which is valid as long as the renderer instance exists, "NULL_HANDLE" if there's no such window
 		*/
-		ContextDesktop(Renderer &cRenderer, PLCore::handle nNativeWindowHandle);
+		ContextRuntimeLinking(Renderer &cRenderer, PLCore::handle nNativeWindowHandle);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ContextDesktop();
+		virtual ~ContextRuntimeLinking();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Context functions                      ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples) override;
 
 
 	//[-------------------------------------------------------]
@@ -99,12 +114,12 @@ class ContextDesktop : public Context {
 	private:
 		/**
 		*  @brief
-		*    Loads the OpenGL ES 2.0 dynamic library
+		*    Loads the dynamic libraries
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool LoadLibrary();
+		bool LoadLibraries();
 
 		/**
 		*  @brief
@@ -135,7 +150,9 @@ class ContextDesktop : public Context {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::DynLib *m_pDynLib;	/**< Graphics driver dynamic library, always valid! (at least the class instance) */
+		PLCore::DynLib *m_pEGLDynLib;				/**< EGL dynamic library, always valid! (at least the class instance) */
+		PLCore::DynLib *m_pGLESDynLib;				/**< OpenGL ES 2.0 dynamic library, always valid! (at least the class instance) */
+		bool			m_bEntryPointsRegistered;	/**< Entry points successfully registered? */
 
 
 };
@@ -532,4 +549,4 @@ FNDEF(void,				glViewport,								(GLint x, GLint y, GLsizei width, GLsizei heig
 } // PLRendererOpenGLES2
 
 
-#endif // __PLRENDEREROPENGLES2_CONTEXTDESKTOP_H__
+#endif // __PLRENDEREROPENGLES2_RUNTIMELINKING_H__

@@ -8,9 +8,7 @@ define_project(PLRendererOpenGLES2)
 ##################################################
 add_sources(
 	src/Context.cpp
-#	src/ContextNative.cpp	# For native
-#	src/ContextDesktop.cpp	# For desktop
-	src/ContextEmulator.cpp	# For emulator
+	src/ContextRuntimeLinking.cpp
 	src/IndexBuffer.cpp
 	src/PLRendererOpenGLES2.cpp
 	src/Renderer.cpp
@@ -41,8 +39,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-#	${CMAKE_SOURCE_DIR}/External/Optional/OpenGLES2/include/	# For desktop
-	${OPENGLES2_INCLUDE_DIRS}									# For emulator/native
+	${CMAKE_SOURCE_DIR}/External/Optional/OpenGLES2/include/
 	${FREETYPE_INCLUDE_DIRS}
 )
 
@@ -61,7 +58,6 @@ add_libs(
 	PLGraphics
 	PLMath
 	PLRenderer
-	${OPENGLES2_LIBRARIES}	# For emulator/native
 	${FREETYPE_LIBRARIES}
 )
 if(WIN32)
@@ -72,14 +68,6 @@ if(WIN32)
 		${WIN32_USER32_LIB}
 		${WIN32_GDI32_LIB}
 	)
-elseif(LINUX)
-	##################################################
-	## Linux
-	##################################################
-	add_libs(
-#		EGL
-#		GLESv2
-	)
 endif()
 
 ##################################################
@@ -87,8 +75,6 @@ endif()
 ##################################################
 add_compile_defs(
 	PLRENDEREROPENGLES2_EXPORTS
-#	USEDESKTOP	# For desktop
-	USEEMULATOR	# For emulator
 )
 if(WIN32)
 	##################################################
@@ -173,28 +159,18 @@ if(LINUX)
 	)
 endif()
 
-# Import library
+# No need for system libraries because we dynamically linking at runtime against the EGL and OpenGL ES 2.0 dynamic libraries, this in here is optional emulator only
 if(WIN32)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} ${PL_LIB_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libEGL.dll	${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libGLESv2.dll	${PL_RUNTIME_BIN_DIR}
+	)
+elseif(LINUX)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
 	)
 endif()
-
-# External dependencies, but only when not using system-libs
-# [TODO] Uncomment this as soon as there's support for system-libs
-#if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
-	if(WIN32)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libEGL.dll	${PL_RUNTIME_BIN_DIR}
-			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libGLESv2.dll	${PL_RUNTIME_BIN_DIR}
-		)
-	elseif(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
-		)
-	endif()
-#endif()
 
 ##################################################
 ## Install
@@ -219,11 +195,7 @@ if(LINUX)
 	)
 endif()
 
-# External dependencies, but only when not using system-libs
-# Due to legal issues, OpenGL ES 2.0 Emulator from ARM is not allowed to be included in the public PixelLight SDK
-# [TODO] However, the cmake projects are not only there to create SDKs! So find a solution for this...
-# [TODO] Uncomment this as soon as there's support for system-libs
-#if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+# External dependencies: Due to legal issues, OpenGL ES 2.0 Emulator from ARM is not allowed to be included in the public PixelLight SDK
 #	if(WIN32)
 #		install(FILES ${PL_RUNTIME_BIN_DIR}/libEGL.dll
 #					  ${PL_RUNTIME_BIN_DIR}/libGLESv2.dll
@@ -235,4 +207,3 @@ endif()
 #			DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 #		)
 #	endif()
-#endif()
