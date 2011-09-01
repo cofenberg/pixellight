@@ -1,24 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug Desktop|Win32">
-      <Configuration>Debug Desktop</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug Emulator|Win32">
-      <Configuration>Debug Emulator</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release Desktop|Win32">
-      <Configuration>Release Desktop</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release Emulator|Win32">
-      <Configuration>Release Emulator</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
@@ -37,25 +21,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -65,129 +31,31 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">build/debug\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">build/debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">build/debug\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">build/debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">true</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">build/release\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">build/release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">build/release\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">build/release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'" />
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'" />
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">$(ProjectName)D</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;libGLESv2.lib;libEGL.lib;libfreetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererOpenGLES2D.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FreeType/lib/;../../External/_Windows_x86_32/OpenGLES2/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy build\debug\PLRendererOpenGLES2D.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Desktop|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;USEDESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level4</WarningLevel>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;libGLESv2.lib;libEGL.lib;libfreetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererOpenGLES2D.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FreeType/lib/;../../External/_Windows_x86_32/OpenGLES2/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy build\debug\PLRendererOpenGLES2D.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Emulator|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;USEEMULATOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -222,96 +90,6 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ExceptionHandling>false</ExceptionHandling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <FloatingPointExceptions>false</FloatingPointExceptions>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;libGLESv2.lib;libEGL.lib;libfreetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererOpenGLES2.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FreeType/lib/;../../External/_Windows_x86_32/OpenGLES2/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <DataExecutionPrevention>true</DataExecutionPrevention>
-      <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy build\release\PLRendererOpenGLES2.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Desktop|Win32'">
-    <ClCompile>
-      <Optimization>Full</Optimization>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;USEDESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <StringPooling>true</StringPooling>
-      <MinimalRebuild>false</MinimalRebuild>
-      <ExceptionHandling>false</ExceptionHandling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <FloatingPointExceptions>false</FloatingPointExceptions>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;libGLESv2.lib;libEGL.lib;libfreetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLRendererOpenGLES2.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/FreeType/lib/;../../External/_Windows_x86_32/OpenGLES2/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <DataExecutionPrevention>true</DataExecutionPrevention>
-      <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <TargetMachine>MachineX86</TargetMachine>
-    </Link>
-    <PostBuildEvent>
-      <Command>copy build\release\PLRendererOpenGLES2.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libEGL.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-</Command>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Emulator|Win32'">
-    <ClCompile>
-      <Optimization>Full</Optimization>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>include/;../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../External/_Windows_x86_32/OpenGLES2/include/;../../External/_Windows_x86_32/FreeType/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLRENDEREROPENGLES2_EXPORTS;USEEMULATOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>

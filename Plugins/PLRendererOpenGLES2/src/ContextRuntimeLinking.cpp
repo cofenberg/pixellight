@@ -70,6 +70,9 @@ ContextRuntimeLinking::ContextRuntimeLinking(Renderer &cRenderer, handle nNative
 */
 ContextRuntimeLinking::~ContextRuntimeLinking()
 {
+	// De-initialize the context while we still can
+	DeInit();
+
 	// Destroy the dynamic library instances
 	delete m_pEGLDynLib;
 	delete m_pGLESDynLib;

@@ -176,6 +176,12 @@ class Context : public PLCore::AbstractContext {
 		*/
 		Context(Renderer &cRenderer, PLCore::handle nNativeWindowHandle);
 
+		/**
+		*  @brief
+		*    De-initialize the context
+		*/
+		void DeInit();
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual Context functions                   ]

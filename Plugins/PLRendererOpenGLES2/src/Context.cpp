@@ -49,62 +49,8 @@ namespace PLRendererOpenGLES2 {
 */
 Context::~Context()
 {
-	// Don't touch anything in case we don't have a display
-	if (m_hDisplay != EGL_NO_DISPLAY) {
-		// Make 'nothing' current
-		eglMakeCurrent(EGL_DEFAULT_DISPLAY, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-
-		// Destroy the EGL dummy surface
-		if (eglDestroySurface(m_hDisplay, m_hDummySurface) == EGL_FALSE) {
-			// Error!
-			PL_LOG(Error, "Failed to destroy the used EGL dummy surface!")
-		}
-		m_hDummySurface = EGL_NO_SURFACE;
-
-		// Destroy the EGL context
-		if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
-			// Error!
-			PL_LOG(Error, "Failed to destroy the used EGL context!")
-		}
-		m_hContext = EGL_NO_CONTEXT;
-
-		// Release all resources allocated by the shader compiler
-		glReleaseShaderCompiler();
-
-		// Return EGL to it's state at thread initialization
-		if (eglReleaseThread() == EGL_FALSE) {
-			// Error!
-			PL_LOG(Error, "Failed to release the EGL thread!")
-		}
-
-		// Terminate the EGL display
-		if (eglTerminate(m_hDisplay) == EGL_FALSE) {
-			// Error!
-			PL_LOG(Error, "Failed to terminate the used EGL display!")
-		}
-		m_hDisplay = EGL_NO_DISPLAY;
-		m_hConfig  = nullptr;
-
-		// Destroy the dummy native window, if required
-		#ifdef WIN32
-			if (!m_nNativeWindowHandle && m_nDummyNativeWindow) {
-				DestroyWindow(m_nDummyNativeWindow);
-				UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
-			}
-		#endif
-		#if (defined(LINUX) && !defined(ANDROID))
-			// Destroy the dummy native window
-			if (!m_nNativeWindowHandle && m_nDummyNativeWindow)
-				XDestroyWindow(m_pX11Display, m_nDummyNativeWindow);
-
-			// Close the X server display connection
-			if (m_pX11Display) {
-				XCloseDisplay(m_pX11Display);
-				m_pX11Display = nullptr;
-			}
-		#endif
-		m_nDummyNativeWindow = NULL_HANDLE;
-	}
+	// Everything must be done in "DeInit()" because when we're in here, the dynamic libaries
+	// are already unloaded and we are no longer allowed to use EGL or OpenGL ES 2.0 functions
 }
 
 /**
@@ -324,6 +270,70 @@ Context::Context(Renderer &cRenderer, handle nNativeWindowHandle) :
 	m_nDummyNativeWindow(NULL_HANDLE),
 	m_hDummySurface(EGL_NO_SURFACE)
 {
+}
+
+/**
+*  @brief
+*    De-initialize the context
+*/
+void Context::DeInit()
+{
+	// Don't touch anything in case we don't have a displayb
+	if (m_hDisplay != EGL_NO_DISPLAY) {
+		// Make 'nothing' current
+		eglMakeCurrent(EGL_DEFAULT_DISPLAY, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+
+		// Destroy the EGL dummy surface
+		if (eglDestroySurface(m_hDisplay, m_hDummySurface) == EGL_FALSE) {
+			// Error!
+			PL_LOG(Error, "Failed to destroy the used EGL dummy surface!")
+		}
+		m_hDummySurface = EGL_NO_SURFACE;
+
+		// Destroy the EGL context
+		if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
+			// Error!
+			PL_LOG(Error, "Failed to destroy the used EGL context!")
+		}
+		m_hContext = EGL_NO_CONTEXT;
+
+		// Release all resources allocated by the shader compiler
+		glReleaseShaderCompiler();
+
+		// Return EGL to it's state at thread initialization
+		if (eglReleaseThread() == EGL_FALSE) {
+			// Error!
+			PL_LOG(Error, "Failed to release the EGL thread!")
+		}
+
+		// Terminate the EGL display
+		if (eglTerminate(m_hDisplay) == EGL_FALSE) {
+			// Error!
+			PL_LOG(Error, "Failed to terminate the used EGL display!")
+		}
+		m_hDisplay = EGL_NO_DISPLAY;
+		m_hConfig  = nullptr;
+
+		// Destroy the dummy native window, if required
+		#ifdef WIN32
+			if (!m_nNativeWindowHandle && m_nDummyNativeWindow) {
+				DestroyWindow(m_nDummyNativeWindow);
+				UnregisterClass(TEXT("PLOpenGLESDummyNativeWindow"), GetModuleHandle(nullptr));
+			}
+		#endif
+		#if (defined(LINUX) && !defined(ANDROID))
+			// Destroy the dummy native window
+			if (!m_nNativeWindowHandle && m_nDummyNativeWindow)
+				XDestroyWindow(m_pX11Display, m_nDummyNativeWindow);
+
+			// Close the X server display connection
+			if (m_pX11Display) {
+				XCloseDisplay(m_pX11Display);
+				m_pX11Display = nullptr;
+			}
+		#endif
+		m_nDummyNativeWindow = NULL_HANDLE;
+	}
 }
 
 
