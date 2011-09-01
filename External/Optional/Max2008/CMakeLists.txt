@@ -6,7 +6,7 @@ define_external_project(Max2008)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for Max2008?
+# [TODO] System libs possible for Max2008?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(Max2008)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for Max2008?
+# [TODO] System libs possible for Max2008?
 #endif()

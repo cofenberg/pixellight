@@ -6,7 +6,7 @@ define_external_project(PhysX)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for PhysX?
+# [TODO] System libs possible for PhysX?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(PhysX)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for PhysX?
+# [TODO] System libs possible for PhysX?
 #endif()

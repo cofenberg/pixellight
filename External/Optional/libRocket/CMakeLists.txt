@@ -6,7 +6,7 @@ define_external_project(libRocket)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for libRocket?
+# [TODO] System libs possible for libRocket?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(libRocket)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for libRocket?
+# [TODO] System libs possible for libRocket?
 #endif()

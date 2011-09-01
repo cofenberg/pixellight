@@ -6,7 +6,7 @@ define_external_project(MySQL)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for MySQL?
+# [TODO] System libs possible for MySQL?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(MySQL)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for MySQL?
+# [TODO] System libs possible for MySQL?
 #endif()

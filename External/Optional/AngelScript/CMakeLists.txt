@@ -6,7 +6,7 @@ define_external_project(AngelScript)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for AngelScript?
+# [TODO] System libs possible for AngelScript?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(AngelScript)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for AngelScript?
+# [TODO] System libs possible for AngelScript?
 #endif()

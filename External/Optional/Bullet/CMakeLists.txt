@@ -6,7 +6,7 @@ define_external_project(Bullet)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for Bullet?
+# [TODO] System libs possible for Bullet?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -64,5 +64,5 @@ define_external_project(Bullet)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for Newton?
+# [TODO] System libs possible for Newton?
 #endif()

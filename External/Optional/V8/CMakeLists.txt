@@ -6,7 +6,7 @@ define_external_project(V8)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for V8?
+# [TODO] System libs possible for V8?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(V8)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for V8?
+# [TODO] System libs possible for V8?
 #endif()

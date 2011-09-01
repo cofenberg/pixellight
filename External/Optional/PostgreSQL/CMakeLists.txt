@@ -6,7 +6,7 @@ define_external_project(PostgreSQL)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for PostgreSQL?
+# [TODO] System libs possible for PostgreSQL?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(PostgreSQL)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for PostgreSQL?
+# [TODO] System libs possible for PostgreSQL?
 #endif()

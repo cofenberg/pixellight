@@ -6,7 +6,7 @@ define_external_project(Newton)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for Newton?
+# [TODO] System libs possible for Newton?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -60,5 +60,5 @@ define_external_project(Newton)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for Newton?
+# [TODO] System libs possible for Newton?
 #endif()

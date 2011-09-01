@@ -6,7 +6,7 @@ define_external_project(Assimp)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for Assimp?
+# [TODO] System libs possible for Assimp?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(Assimp)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for Assimp?
+# [TODO] System libs possible for Assimp?
 #endif()

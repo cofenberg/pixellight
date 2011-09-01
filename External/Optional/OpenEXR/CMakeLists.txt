@@ -6,7 +6,7 @@ define_external_project(OpenEXR)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for OpenEXR?
+# [TODO] System libs possible for OpenEXR?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(OpenEXR)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for OpenEXR?
+# [TODO] System libs possible for OpenEXR?
 #endif()

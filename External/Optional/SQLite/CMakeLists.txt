@@ -6,7 +6,7 @@ define_external_project(SQLite)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for SQLite?
+# [TODO] System libs possible for SQLite?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(SQLite)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for SQLite?
+# [TODO] System libs possible for SQLite?
 #endif()

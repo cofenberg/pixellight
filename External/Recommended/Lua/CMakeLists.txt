@@ -6,7 +6,7 @@ define_external_project(Lua)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for Lua?
+# [TODO] System libs possible for Lua?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(Lua)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for Lua?
+# [TODO] System libs possible for Lua?
 #endif()

@@ -6,7 +6,7 @@ define_external_project(DirectX11)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for DirectX11?
+# [TODO] System libs possible for DirectX11?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(DirectX11)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for DirectX 11?
+# [TODO] System libs possible for DirectX 11?
 #endif()

@@ -6,7 +6,7 @@ define_external_project(ODE)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for ODE?
+# [TODO] System libs possible for ODE?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -57,5 +57,5 @@ define_external_project(ODE)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] Systen libs possible for ODE?
+# [TODO] System libs possible for ODE?
 #endif()

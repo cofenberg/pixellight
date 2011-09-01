@@ -6,7 +6,7 @@ define_external_project(DirectX9)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for DirectX9?
+# [TODO] System libs possible for DirectX9?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -58,5 +58,5 @@ define_external_project(DirectX9)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for DirectX 9?
+# [TODO] System libs possible for DirectX 9?
 #endif()

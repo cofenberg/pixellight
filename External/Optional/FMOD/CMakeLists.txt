@@ -6,7 +6,7 @@ define_external_project(FMOD)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for FMOD?
+# [TODO] System libs possible for FMOD?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -60,5 +60,5 @@ define_external_project(FMOD)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for FMOD?
+# [TODO] System libs possible for FMOD?
 #endif()

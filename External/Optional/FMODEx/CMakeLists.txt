@@ -6,7 +6,7 @@ define_external_project(FMODEx)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] Systen libs possible for FMODEx?
+# [TODO] System libs possible for FMODEx?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
@@ -60,5 +60,5 @@ define_external_project(FMODEx)
 	##################################################
 	external_clean()
 
-# [TODO] Systen libs possible for FMODEx?
+# [TODO] System libs possible for FMODEx?
 #endif()
