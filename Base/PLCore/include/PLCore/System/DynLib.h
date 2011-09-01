@@ -127,6 +127,9 @@ class DynLib {
 		*
 		*  @return
 		*    Pointer to the symbol, or a null pointer on error
+		*
+		*  @note
+		*    - The pointer to the symbol only stays valid as long as this dynamic library instance is not unloaded
 		*/
 		PLCORE_API void *GetSymbol(const String &sSymbol) const;
 
