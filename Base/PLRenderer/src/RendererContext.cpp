@@ -52,9 +52,17 @@ RendererContext *RendererContext::CreateInstance(const String &sBackend, handle 
 	// Create renderer instance
 	const Class *pClass = ClassManager::GetInstance()->GetClass(sBackend);
 	if (pClass && pClass->IsDerivedFrom("PLRenderer::Renderer")) {
-		const Object *pObject = pClass->Create(Params<Object*, handle, pl_enum_type(Renderer::EMode), uint32, uint32, uint32, String>(nNativeWindowHandle, nMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage));
-		if (pObject)
-			 return &static_cast<const Renderer*>(pObject)->GetRendererContext();
+		Object *pObject = pClass->Create(Params<Object*, handle, pl_enum_type(Renderer::EMode), uint32, uint32, uint32, String>(nNativeWindowHandle, nMode, nZBufferBits, nStencilBits, nMultisampleAntialiasingSamples, sDefaultShaderLanguage));
+		if (pObject) {
+			// Cast to renderer instance
+			Renderer *pRenderer = static_cast<Renderer*>(pObject);
+
+			// Check whether or not the renderer instance was initialized successfully within it's constructor
+			if (pRenderer->IsInitialized())
+				return &pRenderer->GetRendererContext();
+			else
+				delete pRenderer;	// It's worthless to us, get rid of it!
+		}
 	}
 
 	// Error!

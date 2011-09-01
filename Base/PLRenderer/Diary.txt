@@ -6,6 +6,8 @@
   from this directory. No need to recompile.
   -> Renamed "ContextDesktop" into "ContextRuntimeLinking" and removed "ContextEmulator" and "ContextNative"
 - "Renderer": Added "IsInitialized()"-method returning whether or not the renderer instance was initialized successfully within it's constructor
+- "RendererContext::CreateInstance()": In case the renderer instance was not initialized successfully within it's constructor, the created instance is destroyed
+  and a null pointer will be returned (would be be to dangerous to use a not correctly initialized renderer instance)
 
 
 
