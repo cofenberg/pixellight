@@ -28,6 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#if (defined(LINUX) && !defined(ANDROID))
+	#include <X11/Xutil.h>	// For "Display"
+#endif
 #include <EGL/egl.h>
 #undef Yield 		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef Success		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
@@ -46,9 +49,6 @@
 namespace PLRendererOpenGLES2 {
 	class Renderer;
 }
-#if (defined(LINUX) && !defined(ANDROID))
-	struct Display;
-#endif
 
 
 //[-------------------------------------------------------]
