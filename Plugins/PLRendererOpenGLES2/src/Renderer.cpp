@@ -74,15 +74,15 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
 
-	// Output log information
-	PL_LOG(Info, "Initialize OpenGL ES 2.0 renderer")
-
 	// Set Z buffer bits and stencil buffer bits capabilities
 	m_sCapabilities.nZBufferBits = nZBufferBits;
 	m_sCapabilities.nStencilBits = nStencilBits;
 
 	// Initialize the context
 	if (m_pContext->Init(nMultisampleAntialiasingSamples)) {
+		// Output log information
+		PL_LOG(Info, "Initialize OpenGL ES 2.0 renderer")
+
 		// Setup the renderer capabilities
 		SetupCapabilities();
 

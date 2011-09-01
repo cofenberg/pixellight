@@ -209,43 +209,49 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro
-	#define IMPORT_FUNC_DLL(funcName) {						\
-		void *pSymbol = m_pEGLDynLib->GetSymbol(#funcName);	\
-		if (!pSymbol) bResult = false;						\
-		*(reinterpret_cast<void**>(&(funcName))) = pSymbol;	}
+	#define IMPORT_FUNC(funcName)																																	\
+		if (bResult) {																																				\
+			void *pSymbol = m_pEGLDynLib->GetSymbol(#funcName);																										\
+			if (pSymbol) {																																			\
+				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																									\
+			} else {																																				\
+				PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the EGL dynamic library \"" + m_pEGLDynLib->GetAbsPath() + '\"')	\
+				bResult = false;																																	\
+			}																																						\
+		}																																							\
 
 	// Load the entry points
-	IMPORT_FUNC_DLL(eglGetError);
-	IMPORT_FUNC_DLL(eglGetDisplay);
-	IMPORT_FUNC_DLL(eglInitialize);
-	IMPORT_FUNC_DLL(eglTerminate);
-	IMPORT_FUNC_DLL(eglQueryString);
-	IMPORT_FUNC_DLL(eglGetConfigs);
-	IMPORT_FUNC_DLL(eglChooseConfig);
-	IMPORT_FUNC_DLL(eglGetConfigAttrib);
-	IMPORT_FUNC_DLL(eglCreateWindowSurface);
-	IMPORT_FUNC_DLL(eglDestroySurface);
-	IMPORT_FUNC_DLL(eglQuerySurface);
-	IMPORT_FUNC_DLL(eglBindAPI);
-	IMPORT_FUNC_DLL(eglQueryAPI);
-	IMPORT_FUNC_DLL(eglWaitClient);
-	IMPORT_FUNC_DLL(eglReleaseThread);
-	IMPORT_FUNC_DLL(eglSurfaceAttrib);
-	IMPORT_FUNC_DLL(eglBindTexImage);
-	IMPORT_FUNC_DLL(eglReleaseTexImage);
-	IMPORT_FUNC_DLL(eglSwapInterval);
-	IMPORT_FUNC_DLL(eglCreateContext);
-	IMPORT_FUNC_DLL(eglDestroyContext);
-	IMPORT_FUNC_DLL(eglMakeCurrent);
-	IMPORT_FUNC_DLL(eglGetCurrentContext);
-	IMPORT_FUNC_DLL(eglGetCurrentSurface);
-	IMPORT_FUNC_DLL(eglGetCurrentDisplay);
-	IMPORT_FUNC_DLL(eglQueryContext);
-	IMPORT_FUNC_DLL(eglWaitGL);
-	IMPORT_FUNC_DLL(eglWaitNative);
-	IMPORT_FUNC_DLL(eglSwapBuffers);
-	IMPORT_FUNC_DLL(eglCopyBuffers);
-	IMPORT_FUNC_DLL(eglGetProcAddress);
+	IMPORT_FUNC(eglGetError);
+	IMPORT_FUNC(eglGetDisplay);
+	IMPORT_FUNC(eglInitialize);
+	IMPORT_FUNC(eglTerminate);
+	IMPORT_FUNC(eglQueryString);
+	IMPORT_FUNC(eglGetConfigs);
+	IMPORT_FUNC(eglChooseConfig);
+	IMPORT_FUNC(eglGetConfigAttrib);
+	IMPORT_FUNC(eglCreateWindowSurface);
+	IMPORT_FUNC(eglDestroySurface);
+	IMPORT_FUNC(eglQuerySurface);
+	IMPORT_FUNC(eglBindAPI);
+	IMPORT_FUNC(eglQueryAPI);
+	IMPORT_FUNC(eglWaitClient);
+	IMPORT_FUNC(eglReleaseThread);
+	IMPORT_FUNC(eglSurfaceAttrib);
+	IMPORT_FUNC(eglBindTexImage);
+	IMPORT_FUNC(eglReleaseTexImage);
+	IMPORT_FUNC(eglSwapInterval);
+	IMPORT_FUNC(eglCreateContext);
+	IMPORT_FUNC(eglDestroyContext);
+	IMPORT_FUNC(eglMakeCurrent);
+	IMPORT_FUNC(eglGetCurrentContext);
+	IMPORT_FUNC(eglGetCurrentSurface);
+	IMPORT_FUNC(eglGetCurrentDisplay);
+	IMPORT_FUNC(eglQueryContext);
+	IMPORT_FUNC(eglWaitGL);
+	IMPORT_FUNC(eglWaitNative);
+	IMPORT_FUNC(eglSwapBuffers);
+	IMPORT_FUNC(eglCopyBuffers);
+	IMPORT_FUNC(eglGetProcAddress);
 
 	// Undefine the helper macro
 	#undef IMPORT_FUNC
@@ -263,14 +269,18 @@ bool ContextRuntimeLinking::LoadGLESEntryPoints()
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro (The specification states "eglGetProcAddress" is only for extension functions, but in here we have no other choice, do we?)
-	#define IMPORT_FUNC(funcName) {							\
-		void *pSymbol = eglGetProcAddress((#funcName));		\
-		if (!pSymbol) {										\
-			pSymbol = m_pGLESDynLib->GetSymbol(#funcName);	\
-			if (!pSymbol)									\
-				bResult = false;							\
-		}													\
-		*(reinterpret_cast<void**>(&(funcName))) = pSymbol;	}
+	#define IMPORT_FUNC(funcName)																																				\
+		if (bResult) {																																							\
+			void *pSymbol = eglGetProcAddress(#funcName);		/* The "correct"-way */																							\
+			if (!pSymbol)																																						\
+				pSymbol = m_pGLESDynLib->GetSymbol(#funcName);	/* The "emulator fallback"-way */																				\
+			if (pSymbol) {																																						\
+				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
+			} else {																																							\
+				PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
+				bResult = false;																																				\
+			}																																									\
+		}																																										\
 
 	// Load the entry points
 	IMPORT_FUNC(glActiveTexture);
