@@ -93,22 +93,22 @@ ThemeDesktop::ThemeDesktop(Gui &cGui) : Theme(cGui, "PixelLight Desktop Theme"),
 	}
 
 	// Load default icon
-	m_cDefaultIcon.Load("PLGui/pixellight.png");
+	m_cDefaultIcon.Load("PLGui/pixellight.tga");
 
 	// Load images
-	m_cImageArrowLeft.			LoadWithColorKey("PLGui/left.png",	Color3::White);
-	m_cImageArrowRight.			LoadWithColorKey("PLGui/right.png",	Color3::White);
-	m_cImageArrowUp.			LoadWithColorKey("PLGui/up.png",	Color3::White);
-	m_cImageArrowDown.			LoadWithColorKey("PLGui/down.png",	Color3::White);
-	m_cImageRadioButton.		Load("PLGui/radiobutton.png");
-	m_cImageRadioButtonChecked.	Load("PLGui/radiobutton-checked.png");
-	m_cImageCheckBox.			Load("PLGui/checkbox.png");
-	m_cImageCheckBoxChecked.	Load("PLGui/checkbox-checked.png");
-	m_cImageCheckBoxPartially.	Load("PLGui/checkbox-partially.png");
-	m_cImageMinimize.			LoadWithColorKey("PLGui/min.png", Color3::White);
-	m_cImageMaximize.			LoadWithColorKey("PLGui/max.png", Color3::White);
-	m_cImageRestore.			LoadWithColorKey("PLGui/wnd.png", Color3::White);
-	m_cImageClose.				LoadWithColorKey("PLGui/x.png",   Color3::White);
+	m_cImageArrowLeft.			LoadWithColorKey("PLGui/left.tga",	Color3::White);
+	m_cImageArrowRight.			LoadWithColorKey("PLGui/right.tga",	Color3::White);
+	m_cImageArrowUp.			LoadWithColorKey("PLGui/up.tga",	Color3::White);
+	m_cImageArrowDown.			LoadWithColorKey("PLGui/down.tga",	Color3::White);
+	m_cImageRadioButton.		Load("PLGui/radiobutton.tga");
+	m_cImageRadioButtonChecked.	Load("PLGui/radiobutton-checked.tga");
+	m_cImageCheckBox.			Load("PLGui/checkbox.tga");
+	m_cImageCheckBoxChecked.	Load("PLGui/checkbox-checked.tga");
+	m_cImageCheckBoxPartially.	Load("PLGui/checkbox-partially.tga");
+	m_cImageMinimize.			LoadWithColorKey("PLGui/min.tga", Color3::White);
+	m_cImageMaximize.			LoadWithColorKey("PLGui/max.tga", Color3::White);
+	m_cImageRestore.			LoadWithColorKey("PLGui/wnd.tga", Color3::White);
+	m_cImageClose.				LoadWithColorKey("PLGui/x.tga",   Color3::White);
 
 	// Window
 	m_nWindowBorderSize		= 4;
