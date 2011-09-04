@@ -42,8 +42,8 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-LinuxKeyboardDevice::LinuxKeyboardDevice(::Display &cDisplay) :
-	m_pDisplay(&cDisplay)
+LinuxKeyboardDevice::LinuxKeyboardDevice() :
+	m_pDisplay(XOpenDisplay(nullptr))
 {
 	// Destroy device implementation automatically
 	m_bDelete = true;
@@ -59,6 +59,9 @@ LinuxKeyboardDevice::LinuxKeyboardDevice(::Display &cDisplay) :
 */
 LinuxKeyboardDevice::~LinuxKeyboardDevice()
 {
+	// Close display
+	if (m_pDisplay)
+		XCloseDisplay(m_pDisplay);
 }
 
 
@@ -67,8 +70,8 @@ LinuxKeyboardDevice::~LinuxKeyboardDevice()
 //[-------------------------------------------------------]
 void LinuxKeyboardDevice::Update()
 {
-	// Check if input device is valid
-	if (m_pDevice) {
+	// Check if display and input device is valid
+	if (m_pDisplay && m_pDevice) {
 		// Get keyboard device
 		Keyboard *pKeyboard = static_cast<Keyboard*>(m_pDevice);
 

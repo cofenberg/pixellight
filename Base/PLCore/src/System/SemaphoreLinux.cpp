@@ -44,10 +44,9 @@ namespace PLCore {
 *    Constructor
 */
 SemaphoreLinux::SemaphoreLinux(uint32 nValue, uint32 nMaxValue) :
-	m_nMaxValue(nMaxValue)
+	m_nMaxValue(nMaxValue),
+	m_bCreated(sem_init(&m_hSemaphore, 0, nValue) == 0)
 {
-	m_bCreated = sem_init(&m_hSemaphore, 0, nValue) == 0;
-	
 	// [DEBUG]
 #ifdef DEBUG
 	if (!m_bCreated)
@@ -90,13 +89,13 @@ bool SemaphoreLinux::TryLock(uint64 nTimeout)
 bool SemaphoreLinux::Unlock()
 {
 	// Get the current value of the semaphore
-	int32 sem_val;
-	int result = sem_getvalue(&m_hSemaphore, &sem_val);
+	int32 nSemaphoreValue = 0;
+	const int nResult = sem_getvalue(&m_hSemaphore, &nSemaphoreValue);
 
 	// Is the value -1 or greater or equal to the maximum value?
 	// Note: If the value is greater or equal to the maximum value, then no unlock is needed because
 	// the semaphore is already unlocked.
-	if (result == 0 && sem_val >= 0 && m_nMaxValue > static_cast<uint32>(sem_val)) {
+	if (nResult == 0 && nSemaphoreValue >= 0 && m_nMaxValue > static_cast<uint32>(nSemaphoreValue)) {
 		// Release semaphore
 		if (m_bCreated && sem_post(&m_hSemaphore) == 0)
 			return true; // Success

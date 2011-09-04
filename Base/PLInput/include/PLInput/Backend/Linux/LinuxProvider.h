@@ -28,19 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifndef ANDROID
-#include "PLInput/PLInputLinuxIncludes.h"
-#endif
-
 #include "PLInput/Backend/Provider.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-#ifdef ANDROID
-struct Display;
-#endif
 
 
 //[-------------------------------------------------------]
@@ -90,13 +78,6 @@ class LinuxProvider : public Provider {
 	//[-------------------------------------------------------]
 	private:
 		virtual void QueryDevices() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		::Display *m_pDisplay;	/**< X server display connection, can be a null pointer */
 
 
 };
