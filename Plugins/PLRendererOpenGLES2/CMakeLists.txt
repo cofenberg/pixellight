@@ -106,7 +106,6 @@ elseif(LINUX)
 	##################################################
 	add_compile_defs(
 		${LINUX_COMPILE_DEFS}
-		GLX_GLXEXT_PROTOTYPES
 	)
 endif()
 

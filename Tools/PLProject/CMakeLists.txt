@@ -33,7 +33,6 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	${ZLIB_LIBRARIES}
 	PLCoreStat
 )
 if(WIN32)
