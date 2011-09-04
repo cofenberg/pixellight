@@ -3,3 +3,4 @@ libpng 1.5.4
 - PNG image loading library
 - Used by image loaders in PLGraphics
 - Download from: http://www.libpng.org/
+- Comes directly with CMake support

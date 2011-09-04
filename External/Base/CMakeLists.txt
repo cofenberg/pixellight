@@ -11,10 +11,8 @@ add_custom_target(External-Base)
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(jpg)
-add_subdirectory(pcre)
-add_subdirectory(png)
 add_subdirectory(zlib)
+add_subdirectory(pcre)
 if(WIN32)
 	add_subdirectory(VC2010)
 endif()

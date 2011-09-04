@@ -1,3 +1,15 @@
+>> 04.09.2011
+[CO]
+- Moved "libpng" and "libjpg" from "Base" into "Recommended"... this was on my list for quite some time now... and now that I'am working on the Android port
+  I really want to be able to exclude external dependencies I just don't need on the device. Also, when porting to a new platform, it's more handy to
+  have as few as possible external dependencies to start with. Usually it's no problem to compile them, and for the Android platform I did without any efforts...
+  but when it comes to experimenting with compiler settings, platform processor targets and so on it's just annoying to recompile external dependencies as well -
+  even if they are never used and just required so satisfy the dependencies. For e.g. games, png and jpg are usually not used - in this use case special texture
+  compression formats are used the GPU is able to understand natively. Within the SDK I'am going to remove the few places were png and jpg images are used - but
+  within the official SDK png and jpg will still be included because this are common formats (but it's a no go to use these formats for shipped textures :).
+
+
+
 >> 26.08.2011
 [CO]
 - Updated "OpenGL ES 2.0 Emulator v1.2 [23-Jul-2010]" to "OpenGL ES 2.0 Emulator v1.3 [05 August 2011]"

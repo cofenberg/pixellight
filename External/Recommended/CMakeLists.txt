@@ -11,6 +11,9 @@ add_custom_target(External-Recommended)
 ##################################################
 ## Projects
 ##################################################
+# PLGraphics image formats
+add_subdirectory(jpg)
+add_subdirectory(png)
 # Script backends
 if(PL_PLUGIN_SCRIPT_LUA)
 	add_subdirectory(Lua)
