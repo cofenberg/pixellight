@@ -20,19 +20,16 @@ add_sources(
 	src/File/FileAccess.cpp
 	src/File/FileHttp.cpp
 	src/File/FileImpl.cpp
-	src/File/FileZip.cpp
 	src/File/FileStdStream.cpp
 	src/File/FileObject.cpp
 	src/File/FileSearch.cpp
 	src/File/FileSearchImpl.cpp
-	src/File/FileSearchZip.cpp
 	src/File/FileSearchHttp.cpp
 	src/File/HttpHandle.cpp
 	src/File/SearchFilter.cpp
 	src/File/SearchFilterRegEx.cpp
 	src/File/SearchFilterWildcard.cpp
 	src/File/Url.cpp
-	src/File/ZipHandle.cpp
 	src/Network/Network.cpp
 	src/Network/Socket.cpp
 	src/Network/SocketAddress.cpp
@@ -158,6 +155,14 @@ add_sources(
 	# src/Frontend/FrontendOpenGL.cpp # Just a test, not added in here
 	src/Frontend/FrontendApplication.cpp
 )
+if(PL_CORE_ZIP)
+	# It's highly recommended to enable ZIP support
+	add_sources(
+		src/File/FileZip.cpp
+		src/File/ZipHandle.cpp
+		src/File/FileSearchZip.cpp
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -195,10 +200,15 @@ endif()
 ##################################################
 add_include_directories(
 	include
-	${ZLIB_INCLUDE_DIR}
 	${PCRE_INCLUDE_DIR}
 	${CMAKE_BINARY_DIR}	# For "PixelLight.h"
 )
+if(PL_CORE_ZIP)
+	# It's highly recommended to enable ZIP support
+	add_include_directories(
+		${ZLIB_INCLUDE_DIR}
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -211,9 +221,14 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
-	${ZLIB_LIBRARIES}
 	${PCRE_LIBRARIES}
 )
+if(PL_CORE_ZIP)
+	# It's highly recommended to enable ZIP support
+	add_libs(
+		${ZLIB_LIBRARIES}
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -249,6 +264,12 @@ endif()
 add_compile_defs(
 	PLCORE_EXPORTS
 )
+if(NOT PL_CORE_ZIP)
+	# Altough not recommended, it's possible to life without ZIP support for minimal builds
+	add_compile_defs(
+		DISABLE_ZIP_SUPPORT
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -321,8 +342,12 @@ build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib External-libpcre)
-add_dependencies(Base							${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		External-libpcre)
+if(PL_CORE_ZIP)
+	# It's highly recommended to enable ZIP support
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-zlib)
+endif()
+add_dependencies(Base								${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build

@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/File/FileZip.h"
+#ifndef DISABLE_ZIP_SUPPORT	// Altough not recommended, it's possible to life without ZIP support for minimal builds
+	#include "PLCore/File/FileZip.h"
+#endif
 #include "PLCore/File/FileHttp.h"
 #if defined(WIN32)
 	#include "PLCore/File/FileWindows.h"
@@ -140,18 +142,19 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	const String sUrlLower = cFinalUrl.GetUrl().ToLower();
 	const int nPos = sUrlLower.LastIndexOf(".zip/");
 	if (nPos > -1) {
-		const String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
-		const String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);
-		m_pFileImpl = new FileZip(cFinalUrl, sZipFile, sPathInZip, pAccess);
-	}
+		// Altough not recommended, it's possible to life without ZIP support for minimal builds
+		#ifndef DISABLE_ZIP_SUPPORT
+			const String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
+			const String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);
+			m_pFileImpl = new FileZip(cFinalUrl, sZipFile, sPathInZip, pAccess);
+		#endif
 
 	// HTTP
-	else if (cFinalUrl.GetProtocol() == "http://") {
+	} else if (cFinalUrl.GetProtocol() == "http://") {
 		m_pFileImpl = new FileHttp(cUrl, pAccess);
-	}
 
 	// System file
-	else {
+	} else {
 		#if defined(WIN32)
 			m_pFileImpl = new FileWindows(cFinalUrl, pAccess);
 		#elif defined(LINUX)
