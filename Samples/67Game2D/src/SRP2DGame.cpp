@@ -119,7 +119,7 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	cDrawHelpers.Begin2DMode(0, 0, 320, 200);
 
 		// Draw the background
-		DrawImage(cRenderer, "Data/Textures/2DGame/Background.png", Vector2::Zero);
+		DrawImage(cRenderer, "Data/Textures/2DGame/Background.tga", Vector2::Zero);
 
 		// Get the scene container
 		SceneContainer &cSceneContainer = cCullQuery.GetSceneContainer();
@@ -131,25 +131,25 @@ void SRP2DGame::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// SNProjectile
 				if (pSceneNode->IsInstanceOf("SNProjectile")) {
 					// Draw the projectile
-					DrawImage(cRenderer, "Data/Textures/2DGame/Projectile.png", pSceneNode->GetTransform().GetPosition() - Vector3(3.0f, 3.0f, 0.0f));
+					DrawImage(cRenderer, "Data/Textures/2DGame/Projectile.tga", pSceneNode->GetTransform().GetPosition() - Vector3(3.0f, 3.0f, 0.0f));
 
 				// SNBomb
 				} else if (pSceneNode->IsInstanceOf("SNBomb")) {
 					// Draw the bomb (original image dimension: 188x18)
 					char nFrame = static_cast<SNBomb*>(pSceneNode)->GetFrame();
-					DrawImage(cRenderer, "Data/Textures/2DGame/Bomb.png", pSceneNode->GetTransform().GetPosition() - Vector3(8.0f, 8.0f, 0.0f), Vector2(16.0f, 16.0f),
+					DrawImage(cRenderer, "Data/Textures/2DGame/Bomb.tga", pSceneNode->GetTransform().GetPosition() - Vector3(8.0f, 8.0f, 0.0f), Vector2(16.0f, 16.0f),
 							  Vector2(static_cast<float>(1+nFrame*17)/188.0f, 0.0f), Vector2(16.0f/188.0f, 1.0f));
 
 				// SNUFO
 				} else if (pSceneNode->IsInstanceOf("SNUFO")) {
 					// Draw the UFO
-					DrawImage(cRenderer, "Data/Textures/2DGame/UFO.png", pSceneNode->GetTransform().GetPosition() - Vector3(25.0f, 10.0f, 0.0f));
+					DrawImage(cRenderer, "Data/Textures/2DGame/UFO.tga", pSceneNode->GetTransform().GetPosition() - Vector3(25.0f, 10.0f, 0.0f));
 
 				// SNGun
 				} else if (pSceneNode->IsInstanceOf("SNGun")) {
 					// Draw the gun
 					char nFrame = static_cast<SNGun*>(pSceneNode)->GetFrame();
-					DrawImage(cRenderer, "Data/Textures/2DGame/Gun.png", pSceneNode->GetTransform().GetPosition() - Vector3(18.0f, 7.0f, 0.0f), Vector2(36.0f, 14.0f),
+					DrawImage(cRenderer, "Data/Textures/2DGame/Gun.tga", pSceneNode->GetTransform().GetPosition() - Vector3(18.0f, 7.0f, 0.0f), Vector2(36.0f, 14.0f),
 							  Vector2(static_cast<float>(1+nFrame*38)/495.0f, 0.0f), Vector2(36.0f/495.0f, 1.0f));
 				}
 			}
