@@ -1,4 +1,12 @@
-﻿/*********************************************************\
+﻿>> 04.09.201
+[SW]
+PLDatabasePosgreSQL
+- updated 32bit linux external build to version 8.4.8. Now the PostgreSQL PL plugin builds for me.
+  The old PosgreSQL.tar.gz external archive on the server wasn't working (the used headers were in the wrong places and too much headers where included)
+
+
+
+/*********************************************************\
  *  The entries below are in German only
 \*********************************************************/
 
