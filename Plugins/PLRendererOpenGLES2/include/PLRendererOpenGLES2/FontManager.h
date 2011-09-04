@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/FontManager.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
+#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
 
 
 //[-------------------------------------------------------]
@@ -56,7 +56,7 @@ namespace PLRendererOpenGLES2 {
 *  @brief
 *    OpenGL ES renderer font manager
 */
-class FontManager : public PLRenderer::FontManager {
+class FontManager : public PLRenderer::FontManagerBackend {
 
 
 	//[-------------------------------------------------------]

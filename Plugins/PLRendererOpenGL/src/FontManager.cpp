@@ -48,7 +48,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Default constructor
 */
-FontManager::FontManager(PLRenderer::Renderer &cRenderer) : PLRenderer::FontManager(cRenderer),
+FontManager::FontManager(PLRenderer::Renderer &cRenderer) : PLRenderer::FontManagerBackend(cRenderer),
 	m_pFTLibrary(new FT_Library),
 	m_pProgramGenerator(nullptr),
 	m_pVertexBuffer(nullptr)

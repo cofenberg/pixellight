@@ -10,9 +10,6 @@
     <ClCompile Include="src\FixedFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FontManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,9 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererD3D9\FixedFunctions.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererD3D9\FontManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererD3D9\IndexBuffer.h">

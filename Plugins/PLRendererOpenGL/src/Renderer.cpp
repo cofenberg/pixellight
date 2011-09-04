@@ -32,8 +32,8 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
+#include "PLRendererOpenGL/FontManager.h"
 #include "PLRendererOpenGL/Program.h"
-#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
@@ -52,7 +52,7 @@
 	#include "PLRendererOpenGL/ContextLinux.h"
 #endif
 #include "PLRendererOpenGL/FixedFunctions.h"
-#include "PLRendererOpenGL/FontManager.h"
+#include "PLRendererOpenGL/Renderer.h"
 
 
 //[-------------------------------------------------------]
@@ -250,7 +250,7 @@ Renderer::~Renderer()
 		m_lstDisplayModeList.Clear();
 
 		// Destroy the OpenGL renderer font manager while there's still an active OpenGL context (... font textures...)
-		delete m_pFontManager;
+		delete static_cast<PLRenderer::FontManagerBackend*>(m_pFontManager);
 		m_pFontManager = nullptr;
 
 		// Destroy the draw helpers instance

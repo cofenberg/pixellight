@@ -41,7 +41,6 @@ namespace PLRendererD3D9 {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class FontManager;
 class FixedFunctions;
 
 
@@ -172,12 +171,12 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		LPDIRECT3D9			  m_pD3D;						/**< Instance of the IDirect3D9 object, can be a null pointer (= renderer not initialized) */
-		HWND				  m_hWnd;						/**< Handle to top level window */
-		LPDIRECT3DDEVICE9	  m_pDevice;					/**< Rendering device */
-		FixedFunctions		 *m_pFixedFunctions;			/**< Fixed functions interface implementation, can be a null pointer */
-		FontManager			 *m_pFontManager;				/**< D3D9 renderer font manager, always valid! */
-		PLRenderer::Surface	 *m_pFirstSwapChainUserSurface;	/**< The surface window which uses the first swap chain */
+		LPDIRECT3D9				 m_pD3D;						/**< Instance of the IDirect3D9 object, can be a null pointer (= renderer not initialized) */
+		HWND					 m_hWnd;						/**< Handle to top level window */
+		LPDIRECT3DDEVICE9		 m_pDevice;						/**< Rendering device */
+		FixedFunctions			*m_pFixedFunctions;				/**< Fixed functions interface implementation, can be a null pointer */
+		PLRenderer::FontManager	*m_pFontManager;				/**< D3D9 renderer font manager, always valid! */
+		PLRenderer::Surface		*m_pFirstSwapChainUserSurface;	/**< The surface window which uses the first swap chain */
 
 
 	//[-------------------------------------------------------]

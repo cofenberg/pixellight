@@ -253,7 +253,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\FixedFunctions.cpp" />
-    <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\OcclusionQuery.cpp" />
     <ClCompile Include="src\PLRendererNull.cpp" />
@@ -269,7 +268,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererNull\FixedFunctions.h" />
-    <ClInclude Include="include\PLRendererNull\FontManager.h" />
     <ClInclude Include="include\PLRendererNull\IndexBuffer.h" />
     <ClInclude Include="include\PLRendererNull\OcclusionQuery.h" />
     <ClInclude Include="include\PLRendererNull\PLRendererNull.h" />

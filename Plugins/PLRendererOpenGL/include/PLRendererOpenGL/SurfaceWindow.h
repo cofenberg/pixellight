@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/SurfaceWindow.h>
 #ifdef WIN32
 	#include <PLCore/PLCoreWindowsIncludes.h>

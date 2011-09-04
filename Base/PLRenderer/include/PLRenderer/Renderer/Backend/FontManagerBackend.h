@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FontManager.h                                  *
+ *  File: FontManagerBackend.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDERERNULL_FONTMANAGER_H__
-#define __PLRENDERERNULL_FONTMANAGER_H__
+#ifndef __PLRENDERERBACKEND_FONTMANAGERRENDERERBACKEND_H__
+#define __PLRENDERERBACKEND_FONTMANAGERRENDERERBACKEND_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/FontManager.h>
+#include "PLRenderer/Renderer/FontManager.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLRendererNull {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
@@ -42,9 +42,12 @@ namespace PLRendererNull {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Null renderer font manager
+*    Renderer font manager null backend
+*
+*  @note
+*    - Use this implementation as dummy implementation of you don't have a real font manager implementation within your renderer implementation
 */
-class FontManager : public PLRenderer::FontManager {
+class FontManagerBackend : public FontManager {
 
 
 	//[-------------------------------------------------------]
@@ -58,20 +61,20 @@ class FontManager : public PLRenderer::FontManager {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		FontManager(PLRenderer::Renderer &cRenderer);
+		PLRENDERER_API FontManagerBackend(Renderer &cRenderer);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~FontManager();
+		PLRENDERER_API virtual ~FontManagerBackend();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::FontManager functions      ]
+	//[ Public virtual FontManager functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual PLRenderer::Font *CreateFontTexture(PLCore::File &cFile, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) override;
+		PLRENDERER_API virtual Font *CreateFontTexture(PLCore::File &cFile, PLCore::uint32 nSize = 12, PLCore::uint32 nResolution = 96) override;
 
 
 };
@@ -80,7 +83,7 @@ class FontManager : public PLRenderer::FontManager {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererNull
+} // PLRenderer
 
 
-#endif // __PLRENDERERNULL_FONTMANAGER_H__
+#endif // __PLRENDERERBACKEND_FONTMANAGERRENDERERBACKEND_H__

@@ -40,7 +40,6 @@ namespace PLRendererNull {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class FontManager;
 class FixedFunctions;
 
 
@@ -115,20 +114,20 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		FixedFunctions *m_pFixedFunctions;	/**< Fixed functions interface implementation, can be a null pointer */
-		FontManager	   *m_pFontManager;		/**< Null renderer font manager, always valid! */
-		PLCore::uint32	m_nViewPortX;
-		PLCore::uint32	m_nViewPortY;
-		PLCore::uint32	m_nViewPortWidth;
-		PLCore::uint32	m_nViewPortHeight;
-		float			m_fViewPortMinZ;
-		float			m_fViewPortMaxZ;
-		PLCore::uint32	m_nScissorRectX;
-		PLCore::uint32	m_nScissorRectY;
-		PLCore::uint32	m_nScissorRectWidth;
-		PLCore::uint32	m_nScissorRectHeight;
-		float			m_fDepthBoundsZMin;
-		float			m_fDepthBoundsZMax;
+		FixedFunctions			*m_pFixedFunctions;	/**< Fixed functions interface implementation, can be a null pointer */
+		PLRenderer::FontManager *m_pFontManager;	/**< Renderer font manager, always valid! */
+		PLCore::uint32			 m_nViewPortX;
+		PLCore::uint32			 m_nViewPortY;
+		PLCore::uint32			 m_nViewPortWidth;
+		PLCore::uint32			 m_nViewPortHeight;
+		float				 	m_fViewPortMinZ;
+		float					 m_fViewPortMaxZ;
+		PLCore::uint32			 m_nScissorRectX;
+		PLCore::uint32			 m_nScissorRectY;
+		PLCore::uint32			 m_nScissorRectWidth;
+		PLCore::uint32			 m_nScissorRectHeight;
+		float					 m_fDepthBoundsZMin;
+		float					 m_fDepthBoundsZMax;
 
 
 	//[-------------------------------------------------------]

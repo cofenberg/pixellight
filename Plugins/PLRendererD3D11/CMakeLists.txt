@@ -19,7 +19,6 @@ add_sources(
 	src/SurfaceWindow.cpp
 	src/SurfaceTextureBuffer.cpp
 	src/OcclusionQuery.cpp
-	src/FontManager.cpp
 )
 
 ##################################################

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FontManager.cpp                                *
+ *  File: FontManagerBackend.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererNull/FontManager.h"
+#include "PLRenderer/Renderer/Backend/FontManagerBackend.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace PLRendererNull {
+namespace PLRenderer {
 
 
 //[-------------------------------------------------------]
@@ -40,7 +40,7 @@ namespace PLRendererNull {
 *  @brief
 *    Default constructor
 */
-FontManager::FontManager(PLRenderer::Renderer &cRenderer) : PLRenderer::FontManager(cRenderer)
+FontManagerBackend::FontManagerBackend(Renderer &cRenderer) : FontManager(cRenderer)
 {
 }
 
@@ -48,17 +48,17 @@ FontManager::FontManager(PLRenderer::Renderer &cRenderer) : PLRenderer::FontMana
 *  @brief
 *    Destructor
 */
-FontManager::~FontManager()
+FontManagerBackend::~FontManagerBackend()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Public virtual PLRenderer::FontManager functions      ]
+//[ Public virtual FontManager functions                  ]
 //[-------------------------------------------------------]
-PLRenderer::Font *FontManager::CreateFontTexture(File &cFile, uint32 nSize, uint32 nResolution)
+Font *FontManagerBackend::CreateFontTexture(File &cFile, uint32 nSize, uint32 nResolution)
 {
-	// [TODO] Implement me
+	// No implementation
 	return nullptr;
 }
 
@@ -66,4 +66,4 @@ PLRenderer::Font *FontManager::CreateFontTexture(File &cFile, uint32 nSize, uint
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLRendererNull
+} // PLRenderer

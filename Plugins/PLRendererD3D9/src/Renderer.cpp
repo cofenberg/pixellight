@@ -30,7 +30,7 @@
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
-#include "PLRendererD3D9/Renderer.h"
+#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
 #include "PLRendererD3D9/SurfaceWindow.h"
 #include "PLRendererD3D9/SurfaceTextureBuffer.h"
 #include "PLRendererD3D9/TextureBuffer1D.h"
@@ -42,7 +42,7 @@
 #include "PLRendererD3D9/VertexBuffer.h"
 #include "PLRendererD3D9/OcclusionQuery.h"
 #include "PLRendererD3D9/FixedFunctions.h"
-#include "PLRendererD3D9/FontManager.h"
+#include "PLRendererD3D9/Renderer.h"
 
 
 //[-------------------------------------------------------]
@@ -79,7 +79,7 @@ pl_implement_class(Renderer)
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode),
 	m_pD3D(nullptr),
 	m_pFixedFunctions(nullptr),
-	m_pFontManager(new FontManager(*this))
+	m_pFontManager(new PLRenderer::FontManagerBackend(*this))
 {
 	// Ignore the given native window handle
 
@@ -265,8 +265,8 @@ Renderer::~Renderer()
 			delete m_lstDisplayModeList[i];
 		m_lstDisplayModeList.Clear();
 
-		// Destroy the D3D9 font manager while there's still an active D9D9 context (... font textures...)
-		delete m_pFontManager;
+		// Destroy the font manager
+		delete static_cast<PLRenderer::FontManagerBackend*>(m_pFontManager);
 		m_pFontManager = nullptr;
 
 		// Destroy the draw helpers instance

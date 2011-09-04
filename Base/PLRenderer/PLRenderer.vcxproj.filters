@@ -316,6 +316,9 @@
     <ClCompile Include="src\Application\Config.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Backend\FontManagerBackend.cpp">
+      <Filter>Renderer\Backend</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRenderer\PLRenderer.h">
@@ -617,6 +620,9 @@
     </ClInclude>
     <ClInclude Include="include\PLRenderer\Application\Config.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h">
+      <Filter>Renderer\Backend</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

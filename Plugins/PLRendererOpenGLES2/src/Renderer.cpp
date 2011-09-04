@@ -31,6 +31,7 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
+#include "PLRendererOpenGLES2/FontManager.h"
 #include "PLRendererOpenGLES2/SurfaceWindow.h"
 #include "PLRendererOpenGLES2/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
@@ -39,7 +40,6 @@
 #include "PLRendererOpenGLES2/IndexBuffer.h"
 #include "PLRendererOpenGLES2/VertexBuffer.h"
 #include "PLRendererOpenGLES2/ProgramGLSL.h"
-#include "PLRendererOpenGLES2/FontManager.h"
 #include "PLRendererOpenGLES2/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGLES2/Renderer.h"
 
@@ -167,7 +167,7 @@ Renderer::~Renderer()
 	m_lstDisplayModeList.Clear();
 
 	// Destroy the OpenGL ES renderer font manager while there's still an active OpenGL ES context (... font textures...)
-	delete m_pFontManager;
+	delete static_cast<PLRenderer::FontManagerBackend*>(m_pFontManager);
 	m_pFontManager = nullptr;
 
 	// Destroy the GLSL shader language instance

@@ -41,7 +41,6 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class FontManager;
 class ShaderLanguageGLSL;
 
 
@@ -192,23 +191,23 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool				m_bInitialized;			/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
-		Context			   *m_pContext;				/**< OpenGL ES context, always valid! */
-		FontManager		   *m_pFontManager;			/**< OpenGL ES renderer font manager, always valid! */
-		ShaderLanguageGLSL *m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
-		PLCore::uint32		m_nViewPortX;
-		PLCore::uint32		m_nViewPortY;
-		PLCore::uint32		m_nViewPortWidth;
-		PLCore::uint32		m_nViewPortHeight;
-		float				m_fViewPortMinZ;
-		float				m_fViewPortMaxZ;
-		PLCore::uint32		m_nScissorRectX;
-		PLCore::uint32		m_nScissorRectY;
-		PLCore::uint32		m_nScissorRectWidth;
-		PLCore::uint32		m_nScissorRectHeight;
-		float				m_fDepthBoundsZMin;
-		float				m_fDepthBoundsZMax;
-		PLCore::uint32		m_nVertexOffset;	/**< Current vertex offset */
+		bool					 m_bInitialized;		/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
+		Context					*m_pContext;			/**< OpenGL ES context, always valid! */
+		PLRenderer::FontManager	*m_pFontManager;		/**< OpenGL ES renderer font manager, always valid! */
+		ShaderLanguageGLSL		*m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
+		PLCore::uint32			 m_nViewPortX;
+		PLCore::uint32		 	 m_nViewPortY;
+		PLCore::uint32	 		 m_nViewPortWidth;
+		PLCore::uint32	 		 m_nViewPortHeight;
+		float			 		 m_fViewPortMinZ;
+		float			 		 m_fViewPortMaxZ;
+		PLCore::uint32		 	 m_nScissorRectX;
+		PLCore::uint32	 		 m_nScissorRectY;
+		PLCore::uint32	 		 m_nScissorRectWidth;
+		PLCore::uint32	 		 m_nScissorRectHeight;
+		float			 		 m_fDepthBoundsZMin;
+		float			 		 m_fDepthBoundsZMax;
+		PLCore::uint32	 		 m_nVertexOffset;		/**< Current vertex offset */
 
 
 	//[-------------------------------------------------------]

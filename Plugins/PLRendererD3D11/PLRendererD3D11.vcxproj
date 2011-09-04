@@ -252,7 +252,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\OcclusionQuery.cpp" />
     <ClCompile Include="src\PLRendererD3D11.cpp" />
@@ -267,7 +266,6 @@
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLRendererD3D11\FontManager.h" />
     <ClInclude Include="include\PLRendererD3D11\IndexBuffer.h" />
     <ClInclude Include="include\PLRendererD3D11\OcclusionQuery.h" />
     <ClInclude Include="include\PLRendererD3D11\PLRendererD3D11.h" />

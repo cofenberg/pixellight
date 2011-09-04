@@ -7,9 +7,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\FontManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLRendererD3D11\FontManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRendererD3D11\IndexBuffer.h">
       <Filter>Source Files</Filter>
     </ClInclude>

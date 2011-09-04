@@ -54,6 +54,7 @@ add_sources(
 	src/Renderer/FontGlyph.cpp
 	src/Renderer/FontGlyphTexture.cpp
 	src/Renderer/Backend/RendererBackend.cpp
+	src/Renderer/Backend/FontManagerBackend.cpp
 	src/Renderer/Backend/DrawHelpersBackend.cpp
 	src/Renderer/Backend/DrawHelpersBackendShaders.cpp
 	src/Renderer/Backend/DrawHelpersBackendFixedFunctions.cpp

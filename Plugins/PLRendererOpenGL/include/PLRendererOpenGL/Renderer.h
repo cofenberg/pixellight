@@ -43,7 +43,6 @@ namespace PLRendererOpenGL {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Context;
-class FontManager;
 class FixedFunctions;
 class ShaderLanguage;
 
@@ -227,7 +226,7 @@ class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
 	private:
 		Context												  *m_pContext;							/**< OpenGL render context, can be a null pointer (= renderer not initialized) */
 		FixedFunctions										  *m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
-		FontManager											  *m_pFontManager;						/**< OpenGL renderer font manager, always valid! */
+		PLRenderer::FontManager								  *m_pFontManager;						/**< OpenGL renderer font manager, always valid! */
 		bool												   m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */
 		PLCore::uint32										   m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
 		PLCore::String										   m_sDefaultShaderLanguage;			/**< Name of the default shader language to use */

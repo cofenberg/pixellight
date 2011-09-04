@@ -39,12 +39,6 @@ namespace PLRendererD3D11 {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class FontManager;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -164,19 +158,19 @@ class Renderer : public PLRenderer::RendererBackend {
 		ID3D11Device			*m_pD3D11Device;			/**< D3D11 device, null pointer on error */
 		ID3D11RenderTargetView	*m_pD3D11RenderTargetView;	/**< Current D3D11 render target view, can be a null pointer */
 		// Misc
-		FontManager			*m_pFontManager;		/**< D3D11 renderer font manager, always valid! */
-		PLCore::uint32		 m_nViewPortX;
-		PLCore::uint32		 m_nViewPortY;
-		PLCore::uint32	 	 m_nViewPortWidth;
-		PLCore::uint32	 	 m_nViewPortHeight;
-		float				 m_fViewPortMinZ;
-		float				 m_fViewPortMaxZ;
-		PLCore::uint32	 	 m_nScissorRectX;
-		PLCore::uint32	 	 m_nScissorRectY;
-		PLCore::uint32	 	 m_nScissorRectWidth;
-		PLCore::uint32	 	 m_nScissorRectHeight;
-		float				 m_fDepthBoundsZMin;
-		float				 m_fDepthBoundsZMax;
+		PLRenderer::FontManager	*m_pFontManager;			/**< Renderer font manager, always valid! */
+		PLCore::uint32			 m_nViewPortX;
+		PLCore::uint32			 m_nViewPortY;
+		PLCore::uint32			 m_nViewPortWidth;
+		PLCore::uint32			 m_nViewPortHeight;
+		float					 m_fViewPortMinZ;
+		float					 m_fViewPortMaxZ;
+		PLCore::uint32			 m_nScissorRectX;
+		PLCore::uint32			 m_nScissorRectY;
+		PLCore::uint32			 m_nScissorRectWidth;
+		PLCore::uint32			 m_nScissorRectHeight;
+		float					 m_fDepthBoundsZMin;
+		float					 m_fDepthBoundsZMax;
 
 
 	//[-------------------------------------------------------]

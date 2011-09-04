@@ -1,3 +1,9 @@
+>> 04.09.2011
+[CO]
+- Moved the null font manager implementation from "PLRendererNull" into "PLRenderer" backend tools
+
+
+
 >> 01.09.2011
 [CO]
 - "PLRendererOpenGLES2": The runtime linking approach used in "ContextDesktop" is working really well... time to realize a single source solution working for

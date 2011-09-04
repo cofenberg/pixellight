@@ -27,6 +27,7 @@
 #include <PLGraphics/Image/Image.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
+#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
 #include "PLRendererNull/SurfaceWindow.h"
 #include "PLRendererNull/SurfaceTextureBuffer.h"
 #include "PLRendererNull/TextureBuffer1D.h"
@@ -38,7 +39,6 @@
 #include "PLRendererNull/VertexBuffer.h"
 #include "PLRendererNull/OcclusionQuery.h"
 #include "PLRendererNull/FixedFunctions.h"
-#include "PLRendererNull/FontManager.h"
 #include "PLRendererNull/Renderer.h"
 
 
@@ -66,7 +66,7 @@ pl_implement_class(Renderer)
 */
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeFixedFunctions),	// Only fixed functions mode is supported... a kind of *g*
 	m_pFixedFunctions(nullptr),
-	m_pFontManager(new FontManager(*this))
+	m_pFontManager(new PLRenderer::FontManagerBackend(*this))
 {
 	// Ignore the given native window handle
 
@@ -126,7 +126,7 @@ Renderer::~Renderer()
 	m_lstDisplayModeList.Clear();
 
 	// Destroy the Null font manager
-	delete m_pFontManager;
+	delete static_cast<PLRenderer::FontManagerBackend*>(m_pFontManager);
 	m_pFontManager = nullptr;
 
 	// Destroy the draw helpers instance

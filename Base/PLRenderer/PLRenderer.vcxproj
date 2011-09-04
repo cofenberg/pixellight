@@ -262,6 +262,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Application\RendererApplication.cpp" />
     <ClCompile Include="src\PLRenderer.cpp" />
     <ClCompile Include="src\RendererContext.cpp" />
+    <ClCompile Include="src\Renderer\Backend\FontManagerBackend.cpp" />
     <ClCompile Include="src\Renderer\ProgramUniformBlock.cpp" />
     <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\SPDefault.cpp" />
@@ -361,6 +362,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRenderer\PLRendererLinux.h" />
     <ClInclude Include="include\PLRenderer\PLRendererWindows.h" />
     <ClInclude Include="include\PLRenderer\RendererContext.h" />
+    <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h" />
     <ClInclude Include="include\PLRenderer\Renderer\ProgramUniformBlock.h" />
     <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h" />
     <ClInclude Include="include\PLRenderer\SPDefault.h" />

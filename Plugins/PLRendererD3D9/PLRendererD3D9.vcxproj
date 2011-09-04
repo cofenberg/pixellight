@@ -256,7 +256,6 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\x86\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\FixedFunctions.cpp" />
-    <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\OcclusionQuery.cpp" />
     <ClCompile Include="src\PLRendererD3D9.cpp" />
@@ -272,7 +271,6 @@ copy ..\..\External\_Windows_x86_32\Cg\bin\cgD3D9.dll ..\..\Bin\Runtime\x86\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererD3D9\FixedFunctions.h" />
-    <ClInclude Include="include\PLRendererD3D9\FontManager.h" />
     <ClInclude Include="include\PLRendererD3D9\IndexBuffer.h" />
     <ClInclude Include="include\PLRendererD3D9\OcclusionQuery.h" />
     <ClInclude Include="include\PLRendererD3D9\PLRendererD3D9.h" />

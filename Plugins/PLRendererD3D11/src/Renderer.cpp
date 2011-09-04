@@ -28,6 +28,7 @@
 #include <PLGraphics/Image/Image.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
+#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
 #include "PLRendererD3D11/SurfaceWindow.h"
 #include "PLRendererD3D11/SurfaceTextureBuffer.h"
 #include "PLRendererD3D11/TextureBuffer1D.h"
@@ -38,7 +39,6 @@
 #include "PLRendererD3D11/IndexBuffer.h"
 #include "PLRendererD3D11/VertexBuffer.h"
 #include "PLRendererD3D11/OcclusionQuery.h"
-#include "PLRendererD3D11/FontManager.h"
 #include "PLRendererD3D11/Renderer.h"
 
 
@@ -70,7 +70,7 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	m_pD3D11DeviceContext(nullptr),
 	m_pD3D11Device(nullptr),
 	m_pD3D11RenderTargetView(nullptr),
-	m_pFontManager(new FontManager(*this))
+	m_pFontManager(new PLRenderer::FontManagerBackend(*this))
 {
 	// Ignore the given native window handle
 
@@ -173,8 +173,8 @@ Renderer::~Renderer()
 		delete m_lstDisplayModeList[i];
 	m_lstDisplayModeList.Clear();
 
-	// Destroy the D3D11 font manager
-	delete m_pFontManager;
+	// Destroy the font manager
+	delete static_cast<PLRenderer::FontManagerBackend*>(m_pFontManager);
 	m_pFontManager = nullptr;
 
 	// Destroy the draw helpers instance
