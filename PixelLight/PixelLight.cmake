@@ -148,6 +148,9 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_ENGINE_PARTICLEGROUPS	"1" CACHE BOOL "Build plugin 'PLParticleGroups'?")
 	set (PL_PLUGIN_ENGINE_SPARK				"1" CACHE BOOL "Build plugin 'SPARK_PL'?")
 	set (PL_PLUGIN_ENGINE_LIBROCKET			"1" CACHE BOOL "Build plugin 'PLlibRocket'?")
+	# PLGraphics image loaders
+	set (PL_PLUGIN_GRAPHICS_PNG				"1" CACHE BOOL "Build in 'png' support within 'PLGraphics'?")
+	set (PL_PLUGIN_GRAPHICS_JPG				"1" CACHE BOOL "Build in 'jpg' support within 'PLGraphics'?")
 	# Network
 	set (PL_PLUGIN_NETWORK_IRC				"1" CACHE BOOL "Build plugin 'PLIRC'?")
 	set (PL_PLUGIN_NETWORK_JABBER			"1" CACHE BOOL "Build plugin 'PLJabber'?")
@@ -220,6 +223,9 @@ else()
 	set (PL_EXPORTER_3DSMAX_2010			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'?")
 	set (PL_EXPORTER_3DSMAX_2011			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'?")
 	set (PL_EXPORTER_3DSMAX_2012			"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'?")
+	# PLGraphics image loaders
+	set (PL_PLUGIN_GRAPHICS_PNG				"0" CACHE BOOL "Build in 'png' support within 'PLGraphics'?")
+	set (PL_PLUGIN_GRAPHICS_JPG				"0" CACHE BOOL "Build in 'jpg' support within 'PLGraphics'?")
 	# Network
 	set (PL_PLUGIN_NETWORK_IRC				"0" CACHE BOOL "Build plugin 'PLIRC'?")
 	set (PL_PLUGIN_NETWORK_JABBER			"0" CACHE BOOL "Build plugin 'PLJabber'?")

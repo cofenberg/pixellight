@@ -4,6 +4,12 @@
 
 
 
+>> 04.09.2011
+[CO]
+- Added triggers within "PixelLight.cmake" so one can exclude the external dependencies "libpng" and "libjpg", within the minimal-build they are excluded by default
+
+
+
 >> 31.08.2011
 [CO]
 - Ok, the Android port is starting to come to life... but there are still some not so funny issues (don't now what's MS Windows related I'am currently using):

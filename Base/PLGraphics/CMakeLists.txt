@@ -27,13 +27,21 @@ add_sources(
 	src/Image/Effects/IEFlipXAxis.cpp
 	src/Image/Effects/IEFlipYAxis.cpp
 	src/Image/Effects/IERemovePalette.cpp
-	src/Image/Loader/ImageLoaderPNG.cpp
 	src/Image/Loader/ImageLoaderBMP.cpp
 	src/Image/Loader/ImageLoaderTGA.cpp
 	src/Image/Loader/ImageLoaderPPM.cpp
-	src/Image/Loader/ImageLoaderJPG.cpp
 	src/Image/Loader/ImageLoaderDDS.cpp
 )
+if(PL_PLUGIN_GRAPHICS_PNG)
+	add_sources(
+		src/Image/Loader/ImageLoaderPNG.cpp
+	)
+endif()
+if(PL_PLUGIN_GRAPHICS_JPG)
+	add_sources(
+		src/Image/Loader/ImageLoaderJPG.cpp
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -56,10 +64,18 @@ add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
-	${JPEG_INCLUDE_DIR}
-	${PNG_INCLUDE_DIR}
-	${ZLIB_INCLUDE_DIR}
 )
+if(PL_PLUGIN_GRAPHICS_PNG)
+	add_include_directories(
+		${PNG_INCLUDE_DIR}
+		${ZLIB_INCLUDE_DIR}
+	)
+endif()
+if(PL_PLUGIN_GRAPHICS_JPG)
+	add_include_directories(
+		${JPEG_INCLUDE_DIR}
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -74,10 +90,18 @@ add_link_directories(
 add_libs(
 	PLCore
 	PLMath
-	${JPEG_LIBRARIES}
-	${PNG_LIBRARIES}
-	${ZLIB_LIBRARIES}
 )
+if(PL_PLUGIN_GRAPHICS_PNG)
+	add_libs(
+		${PNG_LIBRARIES}
+		${ZLIB_LIBRARIES}
+	)
+endif()
+if(PL_PLUGIN_GRAPHICS_JPG)
+	add_libs(
+		${JPEG_LIBRARIES}
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -164,8 +188,14 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath External-libpng External-libjpg External-zlib)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		PLCore PLMath)
+if(PL_PLUGIN_GRAPHICS_PNG)
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-libpng External-zlib)
+endif()
+if(PL_PLUGIN_GRAPHICS_JPG)
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-libjpg)
+endif()
+add_dependencies(Base								${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
