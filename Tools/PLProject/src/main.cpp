@@ -69,16 +69,17 @@ static const int DEBUG		= 10;	/**< Debug message (only if debug mode is on) */
 *    Project infos
 */
 struct Project {
-	String		 sPath;			/**< Path to project*/
-	String		 sName;			/**< Project name */
-	String		 sSuffix;		/**< Project suffix */
-	bool		 bModulePlugin;	/**< Is the module a plugin? */
-	String		 sMainSrc;		/**< Main source file */
-	String		 sSourcePath;	/**< Directory containing the project's source files */
-	String		 sIncludePath;	/**< Directory containing the project's include files */
-	String		 sOutputPath;	/**< Path to output directory */
-	String		 sOutputPlugin;	/**< Plugin output filename */
-	PLPluginInfo cPLPluginInfo;	/**< Parser for generating information for .plugin files */
+	String		 sPath;				/**< Path to project*/
+	String		 sName;				/**< Project name */
+	String		 sEntryFileName;	/**< Name of the source file which has the plugin_* macro in it */
+	String		 sSuffix;			/**< Project suffix */
+	bool		 bModulePlugin;		/**< Is the module a plugin? */
+	String		 sMainSrc;			/**< Main source file */
+	String		 sSourcePath;		/**< Directory containing the project's source files */
+	String		 sIncludePath;		/**< Directory containing the project's include files */
+	String		 sOutputPath;		/**< Path to output directory */
+	String		 sOutputPlugin;		/**< Plugin output filename */
+	PLPluginInfo cPLPluginInfo;		/**< Parser for generating information for .plugin files */
 };
 
 
@@ -141,7 +142,8 @@ bool IsOption(const String &sArgument)
 			sArgument == "--verbose" ||
 			sArgument == "--suffix" ||
 			sArgument == "--output-path" ||
-			sArgument == "--write-plugin");
+			sArgument == "--write-plugin" ||
+			sArgument == "--entry-file");
 }
 
 /**
@@ -402,14 +404,18 @@ bool ParseProject(Project &cProject)
 		Message(ERR, "Could not determine project name!");
 		return false;
 	}
+	
+	// Check if entry filename was given by parameter
+	if (cProject.sEntryFileName.GetLength() == 0)
+		cProject.sEntryFileName = sName + ".cpp";
 
 	// Find main source file
-	String sMainSrc = sPath + "/src/" + sName + ".cpp";
+	String sMainSrc = sPath + "/src/" + cProject.sEntryFileName;
 	if (FileObject(sMainSrc).Exists()) {
 		Message(STATUS, "Found main source file '" + sMainSrc + '\'');
 		cProject.sMainSrc = sMainSrc;
 	} else {
-		Message(ERR, "Could not determine main source file!");
+		Message(ERR, "Could not determine main source file! "+ sMainSrc);
 		return false;
 	}
 
@@ -509,6 +515,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 	String sPath;
 	String sOutputPath;
 	String sSuffix;
+	String sEntryFileName;
 	bool bWritePlugin = false;
 	bool bError = false;
 	if (lstArguments.GetNumOfElements() > 0) {
@@ -547,6 +554,12 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 					} else if (sArgument == "--write-plugin") {
 						// Write plugin file
 						bWritePlugin = true;
+					} else if (sArgument == "--entry-file") {
+						// Get project suffix
+						sEntryFileName = lstArguments[i+1];
+						if (i+1 >= lstArguments.GetNumOfElements() || IsOption(sEntryFileName))
+							bError = true;
+						i++;
 					}
 				} else {
 					bError = true;
@@ -565,6 +578,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		Project cProject;
 		cProject.sPath          = sPath;
 		cProject.sSuffix        = sSuffix;
+		cProject.sEntryFileName = sEntryFileName;
 		cProject.bModulePlugin  = false;
 		cProject.cPLPluginInfo.SetActive(true); // By default, projects are active
 		cProject.cPLPluginInfo.SetDelayed(true); // By default, projects are delayed
@@ -589,7 +603,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		// Output help
 		Message(MESSAGE, "");
 		Message(MESSAGE, "Usage:");
-		Message(MESSAGE, "  PLProject <path> [--write-plugin] [--output-path <filename>] [--suffix <suffix>] [--debug] [--verbose]");
+		Message(MESSAGE, "  PLProject <path> [--write-plugin] [--output-path <filename>] [--suffix <suffix>] [--entry-file <entry file name>] [--debug] [--verbose]");
 		Message(MESSAGE, "");
 
 		// Error!

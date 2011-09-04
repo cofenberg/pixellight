@@ -342,7 +342,7 @@ message(STATUS "Extensions of files to exclude when e.g. copying a directory: ${
 macro(pl_plproject dir outputpath writeplugin)
 	add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLProject)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin}
+		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin} ${ARGN}
 	)
 endmacro(pl_plproject dir outputpath writeplugin)
 
@@ -357,9 +357,15 @@ macro(pl_create_plugin_description src dest)
 	else()
 		set(suffix "")
 	endif()
+	
+	if(NOT "${ARGV2}" STREQUAL "")
+		set(entryFile --entry-file ${ARGV2})
+	else()
+		set(entryFile "")
+	endif()
 
 	# Call PLProject
-	pl_plproject(${src} ${dest} "${suffix}")
+	pl_plproject(${src} ${dest} "${suffix}" "${entryFile}")
 endmacro(pl_create_plugin_description src dest)
 
 
