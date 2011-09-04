@@ -1,3 +1,11 @@
+>> 04.09.2011
+[SW]
+- added optional --entry-file parameter to PLProject. With this parameter a caller can specify the filename of the entry source file
+  which holds the plugin_* makro definition. If this parameter is not given, the project name is used to specify the entry filename.
+  extended the pl_create_plugin_description and pl_project macros in PixelLight.cmake so that a user can specify the entry source filename
+  as an additional parameter (after src and dest)
+
+
 >> 20.08.2011
 [CO]
 - "ParseProject()"-function: When no Visual Studio projects can be found (we can directly use their filename!), a second pass now looks for CMake files
