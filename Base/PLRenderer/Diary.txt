@@ -1,6 +1,9 @@
 >> 04.09.2011
 [CO]
 - Moved the null font manager implementation from "PLRendererNull" into "PLRenderer" backend tools
+- "PLRendererOpenGL" & "PLRendererOpenGLES2": It's now possible to disable the font support and by doing so removing the freetype external dependency. Usually
+  font support is a nice thing to have - except when you start porting to a new platform and want to see first "proof of concept" results as fast as possible
+  before you start to hammer out the details.
 
 
 

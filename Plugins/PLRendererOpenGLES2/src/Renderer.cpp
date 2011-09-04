@@ -31,7 +31,11 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
-#include "PLRendererOpenGLES2/FontManager.h"
+#ifdef DISABLE_FONT_SUPPORT
+	#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
+#else
+	#include "PLRendererOpenGLES2/FontManager.h"
+#endif
 #include "PLRendererOpenGLES2/SurfaceWindow.h"
 #include "PLRendererOpenGLES2/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
@@ -69,7 +73,11 @@ pl_implement_class(Renderer)
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(ModeShaders),	// Only shaders mode is supported by OpenGL ES 2.0
 	m_bInitialized(false),
 	m_pContext(new ContextRuntimeLinking(*this, nNativeWindowHandle)),
-	m_pFontManager(new FontManager(*this)),
+	#ifdef DISABLE_FONT_SUPPORT
+		m_pFontManager(new PLRenderer::FontManagerBackend(*this)),
+	#else
+		m_pFontManager(new FontManager(*this)),
+	#endif
 	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this))
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
@@ -81,7 +89,11 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	// Initialize the context
 	if (m_pContext->Init(nMultisampleAntialiasingSamples)) {
 		// Output log information
-		PL_LOG(Info, "Initialize OpenGL ES 2.0 renderer")
+		#ifdef DISABLE_FONT_SUPPORT
+			PL_LOG(Info, "Initialize OpenGL ES 2.0 renderer (font support is disabled)")
+		#else
+			PL_LOG(Info, "Initialize OpenGL ES 2.0 renderer")
+		#endif
 
 		// Setup the renderer capabilities
 		SetupCapabilities();

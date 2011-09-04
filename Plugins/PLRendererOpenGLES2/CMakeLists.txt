@@ -25,10 +25,14 @@ add_sources(
 	src/ProgramAttributeGLSL.cpp
 	src/ProgramUniformGLSL.cpp
 	src/ShaderToolsGLSL.cpp
-	src/FontManager.cpp
-	src/FontTexture.cpp
-	src/FontGlyphTexture.cpp
 )
+if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
+	add_sources(
+		src/FontManager.cpp
+		src/FontTexture.cpp
+		src/FontGlyphTexture.cpp
+	)
+endif()
 
 ##################################################
 ## Include directories
@@ -40,8 +44,12 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/External/Optional/OpenGLES2/include/
-	${FREETYPE_INCLUDE_DIRS}
 )
+if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
+	add_include_directories(
+		${FREETYPE_INCLUDE_DIRS}
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -58,8 +66,12 @@ add_libs(
 	PLGraphics
 	PLMath
 	PLRenderer
-	${FREETYPE_LIBRARIES}
 )
+if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
+	add_libs(
+		${FREETYPE_LIBRARIES}
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -76,6 +88,11 @@ endif()
 add_compile_defs(
 	PLRENDEREROPENGLES2_EXPORTS
 )
+if(NOT PL_PLUGIN_RENDERER_OPENGLES2_FONT)
+	add_compile_defs(
+		DISABLE_FONT_SUPPORT
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -140,10 +157,13 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		External-freetype PLCore PLMath PLGraphics PLRenderer)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		PLCore PLMath PLGraphics PLRenderer)
 if(NOT PL_MOBILE)
 	# No need for OpenGL ES 2.0 emulator external dependencies when building for a mobile device
 	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES2)
+endif()
+if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-freetype)
 endif()
 add_dependencies(Plugins							${CMAKETOOLS_CURRENT_TARGET})
 

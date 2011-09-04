@@ -32,7 +32,11 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include <PLRenderer/Renderer/Backend/DrawHelpersBackend.h>
-#include "PLRendererOpenGL/FontManager.h"
+#ifdef DISABLE_FONT_SUPPORT
+	#include <PLRenderer/Renderer/Backend/FontManagerBackend.h>
+#else
+	#include "PLRendererOpenGL/FontManager.h"
+#endif
 #include "PLRendererOpenGL/Program.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
@@ -80,7 +84,11 @@ pl_implement_class(Renderer)
 Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), OpenGLExtensions(*this),
 	m_pContext(nullptr),
 	m_pFixedFunctions(nullptr),
-	m_pFontManager(new FontManager(*this)),
+	#ifdef DISABLE_FONT_SUPPORT
+		m_pFontManager(new PLRenderer::FontManagerBackend(*this)),
+	#else
+		m_pFontManager(new FontManager(*this)),
+	#endif
 	m_bSceneRendering(false),
 	m_nMultisampleAntialiasingSamples(nMultisampleAntialiasingSamples),
 	m_nTextureBufferTypes(nullptr),
@@ -89,7 +97,11 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	// Ignore the given native window handle
 
 	// Output log information
-	PL_LOG(Info, "Initialize OpenGL renderer")
+	#ifdef DISABLE_FONT_SUPPORT
+		PL_LOG(Info, "Initialize OpenGL renderer (font support is disabled)")
+	#else
+		PL_LOG(Info, "Initialize OpenGL renderer")
+	#endif
 
 	// Shaders allowed?
 	if (GetMode() != ModeFixedFunctions) {

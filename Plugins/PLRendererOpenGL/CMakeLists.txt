@@ -34,16 +34,20 @@ add_sources(
 	src/ProgramUniformGLSL.cpp
 	src/ProgramUniformBlockGLSL.cpp
 	src/ShaderToolsGLSL.cpp
-	src/FontManager.cpp
-	src/FontTexture.cpp
-	src/FontTextureShaders.cpp
-	src/FontTextureFixedFunctions.cpp
-	src/FontGlyphTexture.cpp
 	src/Misc/Extensions.cpp
 	src/Misc/FrameBufferObject.cpp
 	src/Misc/ExtensionConfig.cpp
 	src/Misc/pbuffer.cpp
 )
+if(PL_PLUGIN_RENDERER_OPENGL_FONT)
+	add_sources(
+		src/FontManager.cpp
+		src/FontTexture.cpp
+		src/FontTextureShaders.cpp
+		src/FontTextureFixedFunctions.cpp
+		src/FontGlyphTexture.cpp
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -74,8 +78,12 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${OPENGL_INCLUDE_DIRS}
-	${FREETYPE_INCLUDE_DIRS}
 )
+if(PL_PLUGIN_RENDERER_OPENGL_FONT)
+	add_include_directories(
+		${FREETYPE_INCLUDE_DIRS}
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -92,8 +100,12 @@ add_libs(
 	PLGraphics
 	PLMath
 	PLRenderer
-	${FREETYPE_LIBRARIES}
 )
+if(PL_PLUGIN_RENDERER_OPENGL_FONT)
+	add_libs(
+		${FREETYPE_LIBRARIES}
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -122,6 +134,11 @@ endif()
 add_compile_defs(
 	PLRENDEREROPENGL_EXPORTS
 )
+if(NOT PL_PLUGIN_RENDERER_OPENGL_FONT)
+	add_compile_defs(
+		DISABLE_FONT_SUPPORT
+	)
+endif()
 if(WIN32)
 	##################################################
 	## Win32
@@ -186,8 +203,11 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGL External-freetype PLCore PLMath PLGraphics PLRenderer)
-add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		External-OpenGL PLCore PLMath PLGraphics PLRenderer)
+if(PL_PLUGIN_RENDERER_OPENGL_FONT)
+	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-freetype)
+endif()
+add_dependencies(Plugins							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build
