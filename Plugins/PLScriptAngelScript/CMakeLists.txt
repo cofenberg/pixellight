@@ -10,10 +10,10 @@ add_sources(
 	src/PLScriptAngelScript.cpp
 	src/Script.cpp
 	src/AngelScriptContext.cpp
-	../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring.cpp
-	../../../External/Optional/AngelScript/add_on/scriptstring/scriptstring_utils.cpp
-	../../../External/Optional/AngelScript/add_on/scriptarray/scriptarray.cpp
-	../../../External/Optional/AngelScript/add_on/scriptmath/scriptmath.cpp
+	${CMAKE_SOURCE_DIR}/External/Optional/AngelScript/add_on/scriptstring/scriptstring.cpp
+	${CMAKE_SOURCE_DIR}/External/Optional/AngelScript/add_on/scriptstring/scriptstring_utils.cpp
+	${CMAKE_SOURCE_DIR}/External/Optional/AngelScript/add_on/scriptarray/scriptarray.cpp
+	${CMAKE_SOURCE_DIR}/External/Optional/AngelScript/add_on/scriptmath/scriptmath.cpp
 )
 
 ##################################################
