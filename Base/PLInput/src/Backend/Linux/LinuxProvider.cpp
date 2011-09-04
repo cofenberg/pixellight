@@ -56,14 +56,8 @@ pl_implement_class(LinuxProvider)
 *  @brief
 *    Default constructor
 */
-LinuxProvider::LinuxProvider() :
-	m_pDisplay(nullptr)
+LinuxProvider::LinuxProvider()
 {
-	// No X server display connection on Android possible
-	#ifndef ANDROID
-		// Open display
-		m_pDisplay = XOpenDisplay(nullptr);
-	#endif
 }
 
 /**
@@ -72,12 +66,6 @@ LinuxProvider::LinuxProvider() :
 */
 LinuxProvider::~LinuxProvider()
 {
-	// No X server display connection on Android possible
-	#ifndef ANDROID
-		// Close display
-		if (m_pDisplay)
-			XCloseDisplay(m_pDisplay);
-	#endif
 }
 
 
@@ -89,15 +77,15 @@ void LinuxProvider::QueryDevices()
 	// No X server display connection on Android possible
 	#ifndef ANDROID
 		// Create a keyboard device
-		if (m_pDisplay && !CheckDevice("Keyboard")) {
+		if (!CheckDevice("Keyboard")) {
 			// Add device
-			LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice(*m_pDisplay);
+			LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice();
 			AddDevice("Keyboard", new Keyboard("Keyboard", pImpl));
 		}
 
 		// Create a mouse device
-		if (m_pDisplay && !CheckDevice("Mouse")) {
-			LinuxMouseDevice *pImpl = new LinuxMouseDevice(*m_pDisplay);
+		if (!CheckDevice("Mouse")) {
+			LinuxMouseDevice *pImpl = new LinuxMouseDevice();
 			AddDevice("Mouse", new Mouse("Mouse", pImpl));
 		}
 	#endif

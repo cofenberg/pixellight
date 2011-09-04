@@ -1,3 +1,14 @@
+>> 04.09.2011
+[CO]
+- When building with CMake, it's now possible to disable the ZIP support in order to remove the zlib external dependency. Please note that it's *not* recommended to disable the ZIP
+  support and this option does only exist to make it easier to create minimal builds which are really helpful when starting with a new platform support. In such a situation, it can
+  be really frustrating to deal with external dependencies when you just want to make the first step and want to see "anything" - but just can't because you first have to compile
+  the external dependencies and pray that you did everything correct: Correct compiler & linker settings, e.g. correct ARM architecture and so on. If e.g. any linker issue occur,
+  and you don't use any external dependency at all (in theory, at this very moment there's still the libpcre external depencency, at least at the moment) - you know that the problem
+  is somewhere within your project and not within an external dependency. :D
+
+
+
 >> 31.08.2011
 [CO]
 - Android port related: "MutexLinux::TryLock()":  There's no implementation of "pthread_mutex_timedlock()" within the Android NDK, even if the function is listed within the headers.

@@ -25,7 +25,8 @@
 //[-------------------------------------------------------]
 #include <unistd.h>
 #ifndef ANDROID
-#include "term.h"
+	// "term.h" is not available within the Android NDK nor required in this use case, but for *normal* Linux we need it
+	#include <term.h>
 #endif
 #include <termios.h>
 #include <sys/ioctl.h>

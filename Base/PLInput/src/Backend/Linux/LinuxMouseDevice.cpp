@@ -41,8 +41,8 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-LinuxMouseDevice::LinuxMouseDevice(::Display &cDisplay) :
-	m_pDisplay(&cDisplay),
+LinuxMouseDevice::LinuxMouseDevice() :
+	m_pDisplay(XOpenDisplay(nullptr)),
 	m_nMouseX(0),
 	m_nMouseY(0)
 {
@@ -56,6 +56,9 @@ LinuxMouseDevice::LinuxMouseDevice(::Display &cDisplay) :
 */
 LinuxMouseDevice::~LinuxMouseDevice()
 {
+	// Close display
+	if (m_pDisplay)
+		XCloseDisplay(m_pDisplay);
 }
 
 
@@ -64,8 +67,8 @@ LinuxMouseDevice::~LinuxMouseDevice()
 //[-------------------------------------------------------]
 void LinuxMouseDevice::Update()
 {
-	// Check if input device is valid
-	if (m_pDevice) {
+	// Check if display and input device is valid
+	if (m_pDisplay && m_pDevice) {
 		// Get mouse device
 		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 

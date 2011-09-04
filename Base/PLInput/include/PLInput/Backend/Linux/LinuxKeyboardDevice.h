@@ -55,11 +55,8 @@ class LinuxKeyboardDevice : public UpdateDevice {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] cDisplay
-		*    Display connection
 		*/
-		LinuxKeyboardDevice(::Display &cDisplay);
+		LinuxKeyboardDevice();
 
 		/**
 		*  @brief
@@ -98,7 +95,7 @@ class LinuxKeyboardDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		::Display	*m_pDisplay;	/**< X server display connection, always valid! */
+		::Display	*m_pDisplay;	/**< X server display connection, can be a null pointer */
 		char		 m_nKeys[32];	/**< State of all keys */
 
 
