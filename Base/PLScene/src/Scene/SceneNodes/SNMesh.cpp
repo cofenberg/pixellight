@@ -375,12 +375,16 @@ bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const Stri
 */
 bool SNMesh::UnloadMesh()
 {
-	if (m_pMeshHandler && m_pMeshHandler->GetMesh()) {
-		// Call mesh de-initialization function
-		MeshDeInitFunction();
+	if (m_pMeshHandler) {
+		if (m_pMeshHandler->GetMesh()) {
+			// Call mesh de-initialization function
+			MeshDeInitFunction();
 
-		// Clear handler
-		m_pMeshHandler->SetMesh();
+			// Clear handler
+			m_pMeshHandler->SetMesh();
+		}
+
+		// Destroy the mesh handler
 		delete m_pMeshHandler;
 		m_pMeshHandler = nullptr;
 	}
