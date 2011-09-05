@@ -40,6 +40,7 @@
 //
 // Implementation of plugin entry points (NPP_*)
 //
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "pluginbase.h"
 
 // here the plugin creates a plugin instance object which 

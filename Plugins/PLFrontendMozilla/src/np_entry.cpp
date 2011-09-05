@@ -40,6 +40,7 @@
 // Main plugin entry point implementation -- exports from the 
 // plugin library
 //
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "npplat.h"
 #include "pluginbase.h"
 

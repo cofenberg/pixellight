@@ -26,6 +26,7 @@
 #include <sstream>
 #include <IGame/IGame.h>
 #include <PixelLight.h>
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "PL3dsMaxSceneExport/PLTools.h"
 
 

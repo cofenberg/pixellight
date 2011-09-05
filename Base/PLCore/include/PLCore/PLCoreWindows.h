@@ -96,7 +96,7 @@
 // Microsoft Visual Studio 2010: Have a look at http://blogs.msdn.com/b/vcblog/archive/2010/04/06/c-0x-core-language-features-in-vc10-the-table.aspx see which C++0x features are supported
 
 // "nullptr"-definition
-#if !defined(_MSC_VER) || _MSC_VER < 1600	// Microsoft Visual Studio 2010
+#if defined(__INTEL_COMPILER) || !defined(_MSC_VER) || _MSC_VER < 1600	// The Intel C++ compiler has no support for nullptr, 1600 = Microsoft Visual Studio 2010
 	/**
 	*  @brief
 	*    nullptr definition for compilers don't supporting this C++0x feature

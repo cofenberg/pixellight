@@ -105,8 +105,8 @@ class IEScale : public ImageEffect {
 	//[ Public virtual ImageEffect functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Apply(Image &cImage) const override;
-		virtual bool Apply(ImageBuffer &cBuffer) const override;
+		PLGRAPHICS_API virtual bool Apply(Image &cImage) const override;
+		PLGRAPHICS_API virtual bool Apply(ImageBuffer &cBuffer) const override;
 
 
 	//[-------------------------------------------------------]

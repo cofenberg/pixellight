@@ -85,7 +85,7 @@ class IEConvert : public ImageEffect {
 	//[ Public virtual ImageEffect functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Apply(ImageBuffer &cBuffer) const override;
+		PLGRAPHICS_API virtual bool Apply(ImageBuffer &cBuffer) const override;
 
 
 	//[-------------------------------------------------------]

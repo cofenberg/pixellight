@@ -1,6 +1,7 @@
 // PLFrontendActiveX.cpp : Implementation of DLL Exports.
 
 
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "stdafx.h"
 #include "resource.h"
 #include "PLFrontendActiveX_i.h"

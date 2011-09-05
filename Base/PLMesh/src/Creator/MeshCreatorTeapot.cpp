@@ -53,9 +53,8 @@ pl_implement_class(MeshCreatorTeapot)
 //[-------------------------------------------------------]
 //[ Teapot data                                           ]
 //[-------------------------------------------------------]
-const int num_teapot_indices = 2781;
+const int num_teapot_indices  = 2781;
 const int num_teapot_vertices = 1364;
-const int num_teapot_normals = 1364;
 
 double teapot_vertices[] = {
 							0.0663056, 0.117825, 2.10688e-008,

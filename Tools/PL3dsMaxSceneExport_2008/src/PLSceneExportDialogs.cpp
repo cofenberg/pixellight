@@ -504,7 +504,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 
 int PLSceneOpenExportDialog(Interface &cInterface)
 {
-	if (!DialogBoxParam(g_hInstance, MAKEINTRESOURCE(IDD_EXPORTOPTIONS), cInterface.GetMAXHWnd(), ExportOptionsDlgProc, (LPARAM)nullptr))
+	if (!DialogBoxParam(g_hInstance, MAKEINTRESOURCE(IDD_EXPORTOPTIONS), cInterface.GetMAXHWnd(), ExportOptionsDlgProc, (LPARAM)0))
 		return 1;
 	else
 		return 0;

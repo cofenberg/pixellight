@@ -40,6 +40,7 @@
 //
 // Implementation of Netscape entry points (NPN_*)
 //
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "npplat.h"
 
 extern NPNetscapeFuncs NPNFuncs;

@@ -24,6 +24,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "PL3dsMaxSceneExport/PLToolbar.h"
 #include "PL3dsMaxSceneExport/PLSceneEnumProc.h"
 
