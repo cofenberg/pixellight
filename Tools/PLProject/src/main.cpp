@@ -404,7 +404,7 @@ bool ParseProject(Project &cProject)
 		Message(ERR, "Could not determine project name!");
 		return false;
 	}
-	
+
 	// Check if entry filename was given by parameter
 	if (cProject.sEntryFileName.GetLength() == 0)
 		cProject.sEntryFileName = sName + ".cpp";

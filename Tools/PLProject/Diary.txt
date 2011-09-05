@@ -6,6 +6,7 @@
   as an additional parameter (after src and dest)
 
 
+
 >> 20.08.2011
 [CO]
 - "ParseProject()"-function: When no Visual Studio projects can be found (we can directly use their filename!), a second pass now looks for CMake files

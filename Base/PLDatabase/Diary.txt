@@ -1,4 +1,4 @@
-﻿>> 04.09.201
+﻿>> 04.09.2011
 [SW]
 PLDatabasePosgreSQL
 - updated 32bit linux external build to version 8.4.8. Now the PostgreSQL PL plugin builds for me.

@@ -26,7 +26,7 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES i386*)
 endif()
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
 	set(X86 1)
-endif() 
+endif()
 
 # Project name
 set(CMAKETOOLS_PROJECT_NAME "PixelLight")
@@ -357,11 +357,11 @@ macro(pl_create_plugin_description src dest)
 	else()
 		set(suffix "")
 	endif()
-	
-	if(NOT "${ARGV2}" STREQUAL "")
-		set(entryFile --entry-file ${ARGV2})
-	else()
+
+	if("${ARGV2}" STREQUAL "")
 		set(entryFile "")
+	else()
+		set(entryFile --entry-file ${ARGV2})
 	endif()
 
 	# Call PLProject
