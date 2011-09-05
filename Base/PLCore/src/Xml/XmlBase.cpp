@@ -476,7 +476,7 @@ void XmlBase::ConvertUTF32ToUTF8(unsigned long nInput, char *pszOutput, int &nLe
 void XmlBase::EncodeString(const String &sInString, String &sOutString)
 {
 	uint32 i = 0;
-	while (i<static_cast<int>(sInString.GetLength())) {
+	while (i<sInString.GetLength()) {
 		unsigned char c = static_cast<unsigned char>(sInString[i]);
 
 		if (c == '&'  && static_cast<int>(i) < (static_cast<int>(sInString.GetLength()) - 2) && sInString[i+1] == '#' && sInString[i+2] == 'x') {

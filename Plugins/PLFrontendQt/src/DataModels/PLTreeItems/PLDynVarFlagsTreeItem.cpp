@@ -47,7 +47,7 @@ PLDynVarFlagsTreeItem::PLDynVarFlagsTreeItem(PLCore::DynVar *dynVar, QObject *pa
 		const List<String> &enumList = typeInfo.GetEnumValues();
 
 		// Assumption that the order in the list equals to the bit which the flag represents
-		for (int i=0; i<enumList.GetNumOfElements(); i++) {
+		for (uint32 i=0; i<enumList.GetNumOfElements(); i++) {
 			QString str(QtStringAdapter::PLToQt(enumList[i]));
 			new FlagValueTreeItem(this, str, 1<<i, this);
 		}

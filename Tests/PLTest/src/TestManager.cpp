@@ -70,8 +70,8 @@ TestManager::~TestManager()
 	// Log test end
 	printf("\n");
 	printf("************************************************************\n");
-	printf("%d test cases: %d success, %d failed\n", m_nSucceededTestCases + m_nFailedTestCases, m_nSucceededTestCases, m_nFailedTestCases);
-	printf("%d tasks: %d success, %d failed\n", m_nSucceededTasks + m_nFailedTasks, m_nSucceededTasks, m_nFailedTasks);
+	printf("%u test cases: %u success, %u failed\n", m_nSucceededTestCases + m_nFailedTestCases, m_nSucceededTestCases, m_nFailedTestCases);
+	printf("%u tasks: %u success, %u failed\n", m_nSucceededTasks + m_nFailedTasks, m_nSucceededTasks, m_nFailedTasks);
 	printf("Test manager %s\n", !m_nFailedTestCases ? "SUCCESS!" : "FAILED.");
 	printf("************************************************************\n");
 	printf("\n");
