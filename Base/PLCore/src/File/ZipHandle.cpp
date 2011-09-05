@@ -495,7 +495,6 @@ bool ZipHandle::OpenFile()
 			m_nReadCompressed	 = m_cCurFile.m_nCompressedSize;
 			m_nReadUncompressed	 = m_cCurFile.m_nUncompressedSize;
 			m_nCompressionMethod = m_cCurFile.m_nCompressionMethod;
-			m_nBytesBeforeZip	 = m_nBytesBeforeZip;
 
 			// Encryption data
 			bool bExtlochead = ((nFlags&8) != 0);
@@ -570,7 +569,7 @@ uint32 ZipHandle::Read(void *pBuffer, uint32 nSize, uint32 nCount)
 			// Read data
 			if (m_pStream->avail_in == 0 && m_nReadCompressed > 0) {
 				// Determine size to read
-				const uint32 nRead = BufferSize < m_nReadCompressed ? BufferSize : m_nReadCompressed;
+				const uint32 nRead = (BufferSize < m_nReadCompressed) ? BufferSize : m_nReadCompressed;
 				if (nRead == 0)
 					return 0;
 

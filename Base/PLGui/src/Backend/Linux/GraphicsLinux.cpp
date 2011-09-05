@@ -79,7 +79,6 @@ GraphicsLinux::GraphicsLinux(Graphics &cGraphics) : GraphicsImpl(cGraphics)
 	m_pDisplay = pGuiLinux->m_pDisplay;
 	m_nScreen = DefaultScreen(m_pDisplay);
 	m_nNativeWindowHandle = RootWindow(m_pDisplay, m_nScreen);
-	Pixmap offscreen = XCreatePixmap(m_pDisplay, m_nNativeWindowHandle, 512, 512, 1);
 
 	// Get color depth
 	m_nColorDepth = DefaultDepth(m_pDisplay, m_nScreen);

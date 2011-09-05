@@ -398,7 +398,7 @@ bool RagdollLoaderPL::LoadV1(SNRagdoll &cSNRagdoll, const XmlElement &cRagdollEl
 			if (pNoCollision) {
 				// Get settings
 				const XmlAttribute *pAttribute = pNoCollisionElement->GetFirstAttribute();
-				if (pAttribute) {
+				while (pAttribute) {
 					// Get the name of the attribute
 					String sName = pAttribute->GetName();
 

@@ -132,11 +132,11 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 
 				// Upload the texture buffer
 				m_nNumOfMipmaps = pImagePart->GetNumOfMipmaps() - 1;
-				bool bMipmaps = nFlags & Mipmaps;
 
 
 				// [TODO] Rectangle texture buffers with mipmaps possible?
-				bMipmaps		= false;
+	//			bool bMipmaps = (nFlags & Mipmaps);
+				bool bMipmaps = false;
 				m_nNumOfMipmaps = 0;
 
 

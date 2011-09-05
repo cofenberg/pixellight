@@ -409,7 +409,7 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 	// Check parameters
 	if (sFilename.GetLength()) {
 		// Destroy old shader
-		if (!m_pVertexShader) {
+		if (m_pVertexShader) {
 			delete m_pVertexShader;
 			m_pVertexShader = nullptr;
 		}
@@ -453,7 +453,7 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 	// Check parameters
 	if (sFilename.GetLength()) {
 		// Destroy old shader
-		if (!m_pFragmentShader) {
+		if (m_pFragmentShader) {
 			delete m_pFragmentShader;
 			m_pFragmentShader = nullptr;
 		}

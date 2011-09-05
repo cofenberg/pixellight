@@ -421,8 +421,6 @@ void SRPLighting::DrawMesh(Renderer &cRenderer, const SQCull &cCullQuery, const 
 	const bool bHasVertexNormal    = (cVertexBuffer.GetVertexAttribute(VertexBuffer::Normal) != nullptr);
 		  bool bHasVertexTangent   = bHasVertexNormal && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Tangent) != nullptr);
 	const bool bHasVertexBinormal  = bHasVertexTangent && (cVertexBuffer.GetVertexAttribute(VertexBuffer::Binormal) != nullptr);
-	if (!bHasVertexBinormal)
-		bHasVertexTangent = false;
 
 	// For better readability, define whether or not normal mapping is possible with the given vertex data
 	const bool bNormalMappingPossible = bHasVertexBinormal;	// We don't need to check for all three vectors in here :D

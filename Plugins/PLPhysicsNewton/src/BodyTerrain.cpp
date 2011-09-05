@@ -248,7 +248,7 @@ void BodyTerrain::CalculateMinExtend3d(const Vector3 &p0, const Vector3 &p1, Vec
 	z1 = Math::Max(p0.z, p1.z) + 1.0e-3f;
 
 	x0 = m_vScale.x*Math::Floor(x0*(1.0f/m_vScale.x));
-	y0 = m_vScale.y*Math::Floor(z0*(1.0f/m_vScale.y));
+	y0 = m_vScale.y*Math::Floor(y0*(1.0f/m_vScale.y));
 	z0 = m_vScale.z*Math::Floor(z0*(1.0f/m_vScale.z));
 
 	x1 = m_vScale.x*Math::Floor(x1*(1.0f/m_vScale.x)) + m_vScale.x;
@@ -260,7 +260,7 @@ void BodyTerrain::CalculateMinExtend3d(const Vector3 &p0, const Vector3 &p1, Vec
 	boxP0.z = Math::Max(z0, m_vBoxMin.z);
 
 	boxP1.x = Math::Min(x1, m_vBoxMax.x);
-	boxP1.y = Math::Min(z1, m_vBoxMax.y);
+	boxP1.y = Math::Min(y1, m_vBoxMax.y);
 	boxP1.z = Math::Min(z1, m_vBoxMax.z);
 }
 

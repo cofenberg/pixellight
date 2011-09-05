@@ -336,8 +336,6 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 
 					uint32 nNum = 0;
 					for (uint32 i=nOffset; i<nPatchSize+nOffset; i+=nLowStep) {
-						uint32 j = i;
-
 						if (nSwitchOrder)
 							pBuffer[nNum++] = HighStep*n + (i+nLowStep/2);
 						pBuffer[nNum++] = i+nLowStep;
@@ -345,7 +343,7 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 							pBuffer[nNum++] = HighStep*n + (i+nLowStep/2);
 						pBuffer[nNum++] = i;
 
-						for (j=i+HighStep; j<i+nLowStep/2; j+=HighStep) {
+						for (uint32 j=i+HighStep; j<i+nLowStep/2; j+=HighStep) {
 							if (nSwitchOrder)
 								pBuffer[nNum++] = HighStep*n+ j+HighStep;
 							pBuffer[nNum++] = i;
@@ -353,7 +351,7 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 								pBuffer[nNum++] = HighStep*n+ j+HighStep;
 							pBuffer[nNum++] = HighStep*n+ j;
 						}
-						for (j=i+nLowStep-HighStep; j>i+nLowStep/2; j-=HighStep) {
+						for (uint32 j=i+nLowStep-HighStep; j>i+nLowStep/2; j-=HighStep) {
 							if (nSwitchOrder)
 								pBuffer[nNum++]  = i+nLowStep;
 							pBuffer[nNum++] = HighStep*n+ j-HighStep;

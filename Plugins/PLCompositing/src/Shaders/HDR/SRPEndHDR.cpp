@@ -172,7 +172,6 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Get the requested features
 					bool bToneMapping				= !(GetFlags() & NoToneMapping);
 					bool bAutomaticAverageLuminance = !(GetFlags() & NoAutomaticAverageLuminance);
-					bool bLightAdaptation			= !(GetFlags() & NoLightAdaptation);
 					bool bBloom						= !(GetFlags() & NoBloom);
 					bool bGammaCorrection			= !(GetFlags() & NoGammaCorrection);
 
@@ -184,7 +183,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						m_pHDRAverageLuminance->CalculateAverageLuminance(sShaderLanguage, static_cast<TextureBufferRectangle&>(*pSurfaceTextureBuffer->GetTextureBuffer()), LuminanceConvert.Get());
 
 						// Light adaptation
-						if (bLightAdaptation && m_pHDRAverageLuminance->GetTextureBuffer()) {
+						if (!(GetFlags() & NoLightAdaptation) && m_pHDRAverageLuminance->GetTextureBuffer()) {
 							// [TODO] Would be nice if the "previous" data would not be stored in the scene renderer pass instance...
 							if (!m_pHDRLightAdaptation)
 								m_pHDRLightAdaptation = new HDRLightAdaptation(cRenderer);
@@ -210,7 +209,6 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 						if (GetFlags() & ShowBloomTexture) {
 							bToneMapping			   = false;
 							bAutomaticAverageLuminance = false;
-							bLightAdaptation		   = false;
 							bBloom					   = false;
 							bGammaCorrection		   = false;
 							pHDRTextureBuffer = static_cast<TextureBufferRectangle*>(m_pHDRBloom->GetTextureBuffer());

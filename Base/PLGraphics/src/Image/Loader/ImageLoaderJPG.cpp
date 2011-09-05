@@ -83,8 +83,18 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
 	JpgReadStruct *pJpgReadStruct = reinterpret_cast<JpgReadStruct*>(cinfo->src);
 
 	// Read bytes from file
-	uint32 nReadBytes = pJpgReadStruct->pFile->Read(pJpgReadStruct->pBuffer, 1, InputBufferSize);
-	if (!nReadBytes) {
+	const uint32 nReadBytes = pJpgReadStruct->pFile->Read(pJpgReadStruct->pBuffer, 1, InputBufferSize);
+	if (nReadBytes) {
+		if (nReadBytes < InputBufferSize) {
+			// Nothing to do
+		}
+
+		pJpgReadStruct->sPublic.next_input_byte = pJpgReadStruct->pBuffer;
+		pJpgReadStruct->sPublic.bytes_in_buffer = nReadBytes;
+		pJpgReadStruct->bStartOfFile			= false;
+
+		return true;
+	} else {
 		if (pJpgReadStruct->bStartOfFile) {
 			// Treat empty input file as fatal error
 //			jpgErrorOccurred = true;
@@ -93,19 +103,9 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
 		// Insert a fake EOI marker
 		pJpgReadStruct->pBuffer[0] = static_cast<JOCTET>(0xFF);
 		pJpgReadStruct->pBuffer[1] = static_cast<JOCTET>(JPEG_EOI);
-		nReadBytes = 2;
 
 		return false;
 	}
-	if (nReadBytes < InputBufferSize) {
-		// Nothing to do
-	}
-
-	pJpgReadStruct->sPublic.next_input_byte = pJpgReadStruct->pBuffer;
-	pJpgReadStruct->sPublic.bytes_in_buffer = nReadBytes;
-	pJpgReadStruct->bStartOfFile			= false;
-
-	return true;
 }
 
 void skip_input_data(j_decompress_ptr cinfo, long num_bytes)

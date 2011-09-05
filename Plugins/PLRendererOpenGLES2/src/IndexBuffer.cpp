@@ -288,11 +288,16 @@ void *IndexBuffer::Lock(uint32 nFlag)
 	m_nLockCount++;
 	if (!m_pLockedData) {
 		// Get lock mode
+		// [TODO] GL_OES_mapbuffer
+//		uint32 nFlagAPI;
 		if (nFlag == PLRenderer::Lock::ReadOnly) {
+	//		nFlagAPI        = GL_READ_ONLY_ARB;
 			m_bLockReadOnly = true;
 		} else if (nFlag == PLRenderer::Lock::WriteOnly) {
+//			nFlagAPI        = GL_WRITE_ONLY_OES;
 			m_bLockReadOnly = false;
 		} else if (nFlag == PLRenderer::Lock::ReadWrite) {
+	//		nFlagAPI        = GL_READ_WRITE_ARB;
 			m_bLockReadOnly = false;
 		} else {
 			return nullptr; // Error!
@@ -306,13 +311,6 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		else if (m_nIndexBuffer) {
 			// Make this index buffer to the current one
 			MakeCurrent();
-
-			// Get API dependent flag
-			uint32 nFlagAPI;
-			if (nFlag == PLRenderer::Lock::WriteOnly)
-				nFlagAPI = GL_WRITE_ONLY_OES;
-			else
-				return nullptr; // Error!
 
 			// [TODO] GL_OES_mapbuffer
 			// Map

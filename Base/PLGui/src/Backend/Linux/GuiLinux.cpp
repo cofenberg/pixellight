@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-//#include <locale.h>
 #include <stdio.h>
 #include <PLCore/String/RegEx.h>
 #include "PLGui/Gui/Base/GuiMessage.h"
@@ -184,8 +183,8 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 	// [sbusch] ToDo
 
 	// Get widget
-	Widget *pWidget = cMessage.GetWidget();
-	::Window nNativeWindowHandle = (pWidget ? static_cast< ::Window>(pWidget->GetNativeWindowHandle()) : NULL_HANDLE);
+//	Widget *pWidget = cMessage.GetWidget();
+//	::Window nNativeWindowHandle = (pWidget ? static_cast< ::Window>(pWidget->GetNativeWindowHandle()) : NULL_HANDLE);
 
 	// Post message
 	switch (cMessage.GetType()) {

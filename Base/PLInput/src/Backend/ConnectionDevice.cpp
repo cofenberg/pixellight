@@ -263,7 +263,7 @@ void ConnectionDevice::StopThread()
 	}
 
 	// Destroy output buffer
-	if (!m_pOutputBuffer) {
+	if (m_pOutputBuffer) {
 		delete [] m_pOutputBuffer;
 		m_pOutputBuffer = nullptr;
 	}

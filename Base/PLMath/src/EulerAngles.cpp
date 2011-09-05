@@ -84,7 +84,7 @@ void EulerAngles::ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quat
 	const double sc = si*ch;
 	const double ss = si*sh;
 
-	double a[3];
+	double a[3] = { 0.0, 0.0, 0.0 };
 	if (s == 1) {
 		a[i] = cj*(cs + sc);	// Could speed up with trig identities
 		a[j] = sj*(cc + ss);

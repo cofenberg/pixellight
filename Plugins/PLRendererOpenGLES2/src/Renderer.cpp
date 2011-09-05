@@ -1463,13 +1463,15 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 				break;
 
 			case PLRenderer::Sampler::MaxAnisotropy:
+			/*
+				// [TODO] GL_EXT_texture_filter_anisotropic
 				if (m_sCapabilities.nMaxAnisotropy) {
 					if (nValue > m_sCapabilities.nMaxAnisotropy)
 						nValue = m_sCapabilities.nMaxAnisotropy;
-					// [TODO] GL_EXT_texture_filter_anisotropic
-					// glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
+					glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
 					break;
 				}
+			*/
 				break;
 
 			default:
