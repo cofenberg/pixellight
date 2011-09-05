@@ -385,10 +385,7 @@ void SNConsole::DrawPost(Renderer &cRenderer, const VisNode *pVisNode)
 				// Draw cursor
 				if ((Timing::GetInstance()->GetPastTime()/500)%2) {
 					const float fX = m_nCursor ? cDrawHelpers.GetTextWidth(*pFont, ">>" + m_sCommand.GetSubstring(0, m_nCursor)) : cDrawHelpers.GetTextWidth(*pFont, ">>");
-					if (m_nCursor)
-						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
-					else
-						cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
+					cDrawHelpers.DrawText(*pFont, '|', cColor, Vector2(5 + fX*VirtualWidth, 480-fY));
 				}
 
 				// Draw selection

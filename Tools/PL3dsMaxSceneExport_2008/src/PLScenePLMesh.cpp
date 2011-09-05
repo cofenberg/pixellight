@@ -532,7 +532,7 @@ bool PLScenePLMesh::WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack, morph
 		int nNumOfDeltas = static_cast<int>(cMorphChannel.mDeltas.size());
 		if (m_nOriginalNumOfVertices != nNumOfDeltas) {
 			g_pLog->LogFLine(PLLog::Warning, "Node: '%s' -> Morph target: '%s' -> Mesh has '%d' vertices, but there are '%d' deltas -> both numbers should be equal",
-				m_pIGameNode->GetName(), cMorphChannel.mName, m_nOriginalNumOfVertices, cMorphChannel.mDeltas.size());
+				m_pIGameNode->GetName(), cMorphChannel.mName.data(), m_nOriginalNumOfVertices, cMorphChannel.mDeltas.size());
 		}
 
 		// Loop through all vertices

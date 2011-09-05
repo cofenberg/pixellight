@@ -547,7 +547,7 @@ void Matrix4x4::ToAxis(Vector3 &vX, Vector3 &vY, Vector3 &vZ) const
 {
 	vX.x = xx; vY.x = xy; vZ.x = xz;
 	vX.y = yx; vY.y = yy; vZ.y = yz;
-	vX.z = zx; vY.z = zy; vZ.y = zz;
+	vX.z = zx; vY.z = zy; vZ.z = zz;
 }
 
 /**

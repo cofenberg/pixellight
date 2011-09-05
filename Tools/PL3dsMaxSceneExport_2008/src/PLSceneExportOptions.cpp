@@ -344,12 +344,19 @@ void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std
 	if (!strlen(szApplicationDrive)) {
 		// Must be a relative filename
 		const TCHAR *pDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
-		if (!pDir || !strlen(pDir))
-			return; // Error!
-		if (pDir[strlen(pDir)-1] == '\\' || pDir[strlen(pDir)-1] == '/')
-			sAbsFilename = std::string(pDir) + sFilename;
-		else
-			sAbsFilename = std::string(pDir) + "\\" + sFilename;
+		if (pDir) {
+			const size_t nDirLength = strlen(pDir);
+			if (nDirLength) {
+				if (pDir[nDirLength-1] == '\\' || pDir[nDirLength-1] == '/')
+					sAbsFilename = std::string(pDir) + sFilename;
+				else
+					sAbsFilename = std::string(pDir) + "\\" + sFilename;
+			} else {
+				// Error!
+			}
+		} else {
+			// Error!
+		}
 	} else {
 		// Must be a absolute filename
 		sAbsFilename = sFilename;

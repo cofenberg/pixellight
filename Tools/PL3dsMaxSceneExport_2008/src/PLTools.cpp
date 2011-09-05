@@ -247,7 +247,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 			strcpy(szSubkeySDK, "SOFTWARE\\PixelLight\\PixelLight-SDK");
 			strcpy(szSubkeyRT,  "SOFTWARE\\PixelLight\\PixelLight-Runtime");
 		}
-		if (strlen(szSuffix) > 0) {
+		if (szSuffix[0] != '\0') {
 			strcat(szSubkeySDK, "-");
 			strcat(szSubkeySDK, szSuffix);
 			strcat(szSubkeyRT,  "-");

@@ -345,7 +345,7 @@ void PLSceneEnumProc::LogUnitDisplayInformation(PLLog &cLog) const
 			break;
 
 		case UNITDISP_CUSTOM:
-			cLog.PrintF("Custom: '%s' = '%g' ", sDispInfo.customName, sDispInfo.customValue);
+			cLog.PrintF("Custom: '%s' = '%g' ", sDispInfo.customName.data(), sDispInfo.customValue);
 			switch (sDispInfo.customUnit) {
 				case UNITS_INCHES:      cLog.Print("inches");      break;
 				case UNITS_FEET:        cLog.Print("feet");        break;

@@ -584,7 +584,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 			sName = pBitmapTex->GetMapName();
 		} else {
 			// Error!
-			g_pLog->LogFLine(PLLog::Warning, "Material '%s' has no texture", pMaxMat->GetName());
+			g_pLog->LogFLine(PLLog::Warning, "Material '%s' has no texture", pMaxMat->GetName().data());
 
 			// Use the standard PixelLight texture as fallback
 			sName = "Data/Textures/Default.dds";

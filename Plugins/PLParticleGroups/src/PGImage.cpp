@@ -229,7 +229,7 @@ void PGImage::OnUpdate()
 							if (Math::GetRand() % 2)
 								cParticle.vDistortion[i] = static_cast<float>(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
 							else
-								cParticle.vDistortion[i] = static_cast<float>(Math::GetRand() % 100)/1000+cParticle.vFixPos[i];
+								cParticle.vDistortion[i] = static_cast<float>(Math::GetRand() % 100)/1000-cParticle.vFixPos[i];
 						}
 					}
 				}
