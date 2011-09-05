@@ -76,13 +76,13 @@ class Vector2 {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Vector2 Zero;			/**<  0.0,  0.0 */
-		PLMATH_API static const Vector2 One;			/**<  1.0,  1.0 */
-		PLMATH_API static const Vector2 NegativeOne;	/**< -1.0, -1.0 */
-		PLMATH_API static const Vector2 UnitX;			/**<  1.0,  0.0 */
-		PLMATH_API static const Vector2 UnitY;			/**<  0.0,  1.0 */
-		PLMATH_API static const Vector2 NegativeUnitX;	/**< -1.0,  0.0 */
-		PLMATH_API static const Vector2 NegativeUnitY;	/**<  0.0, -1.0 */
+		static PLMATH_API const Vector2 Zero;			/**<  0.0,  0.0 */
+		static PLMATH_API const Vector2 One;			/**<  1.0,  1.0 */
+		static PLMATH_API const Vector2 NegativeOne;	/**< -1.0, -1.0 */
+		static PLMATH_API const Vector2 UnitX;			/**<  1.0,  0.0 */
+		static PLMATH_API const Vector2 UnitY;			/**<  0.0,  1.0 */
+		static PLMATH_API const Vector2 NegativeUnitX;	/**< -1.0,  0.0 */
+		static PLMATH_API const Vector2 NegativeUnitY;	/**<  0.0, -1.0 */
 
 
 	//[-------------------------------------------------------]

@@ -65,7 +65,7 @@ class Wrapper {
 		*  @note
 		*    - 'strlen'-wrapper
 		*/
-		PLCORE_API static uint32 GetStringLength(const char szString[]);
+		static PLCORE_API uint32 GetStringLength(const char szString[]);
 
 		/**
 		*  @brief
@@ -81,7 +81,7 @@ class Wrapper {
 		*    This function returns a floating-point value representing the smallest integer value
 		*    that is greater than or equal to the given value.
 		*/
-		PLCORE_API static float Ceil(float fValue);
+		static PLCORE_API float Ceil(float fValue);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class Wrapper {
 		*  @return
 		*    The natural logarithm of the given number
 		*/
-		PLCORE_API static float Log(float x);
+		static PLCORE_API float Log(float x);
 
 
 };

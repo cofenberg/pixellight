@@ -166,7 +166,7 @@ class World : public PLPhysics::World {
 		*  @param[in] nSize
 		*    Size of the data to save (in bytes)
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsSerialize(void *pSerializeHandle, const void *pBuffer, int nSize);
+		static PLPHYSICSNEWTON_API void PhysicsSerialize(void *pSerializeHandle, const void *pBuffer, int nSize);
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class World : public PLPhysics::World {
 		*  @param[in] nSize
 		*    Size of the data to load (in bytes)
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsDeserialize(void *pSerializeHandle, void *pBuffer, int nSize);
+		static PLPHYSICSNEWTON_API void PhysicsDeserialize(void *pSerializeHandle, void *pBuffer, int nSize);
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class World : public PLPhysics::World {
 		*  @param[out] pGlobalSpacePlane
 		*    Will receive the global space planes (always valid!)
 		*/
-		PLPHYSICSNEWTON_API static int PhysicsGetBuoyancyPlane(const int nCollisionID, void *pContext, const dFloat *pGlobalSpaceMatrix, dFloat *pGlobalSpacePlane);
+		static PLPHYSICSNEWTON_API int PhysicsGetBuoyancyPlane(const int nCollisionID, void *pContext, const dFloat *pGlobalSpaceMatrix, dFloat *pGlobalSpacePlane);
 
 		/**
 		*  @brief
@@ -207,7 +207,7 @@ class World : public PLPhysics::World {
 		*  @param[in] nThreadIndex
 		*    Thread index
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsApplyGravityForce(const Newton::NewtonBody *pPhysicsBody, dFloat fTimeStep, int nThreadIndex);
+		static PLPHYSICSNEWTON_API void PhysicsApplyGravityForce(const Newton::NewtonBody *pPhysicsBody, dFloat fTimeStep, int nThreadIndex);
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class World : public PLPhysics::World {
 		*  @param[in] nThreadIndex
 		*    Thread index
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsSetTransform(const Newton::NewtonBody *pPhysicsBody, const dFloat *pfMatrix, int nThreadIndex);
+		static PLPHYSICSNEWTON_API void PhysicsSetTransform(const Newton::NewtonBody *pPhysicsBody, const dFloat *pfMatrix, int nThreadIndex);
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class World : public PLPhysics::World {
 		*  @param[in] pPhysicsBody
 		*    Newton body (always valid!)
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsBodyDestructor(const Newton::NewtonBody *pPhysicsBody);
+		static PLPHYSICSNEWTON_API void PhysicsBodyDestructor(const Newton::NewtonBody *pPhysicsBody);
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class World : public PLPhysics::World {
 		*  @param[in] pPhysicsJoint
 		*    Newton joint (always valid!)
 		*/
-		PLPHYSICSNEWTON_API static void PhysicsJointDestructor(const Newton::NewtonJoint *pPhysicsJoint);
+		static PLPHYSICSNEWTON_API void PhysicsJointDestructor(const Newton::NewtonJoint *pPhysicsJoint);
 
 
 	//[-------------------------------------------------------]

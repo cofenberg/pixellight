@@ -140,7 +140,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embedded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		PLCORE_API static int Run(const FrontendContext &cFrontendContext);
+		static PLCORE_API int Run(const FrontendContext &cFrontendContext);
 
 
 	//[-------------------------------------------------------]

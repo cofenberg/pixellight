@@ -78,7 +78,7 @@ class JointBall : public PLPhysics::JointBall {
 		*  @param[in] fTimeStep
 		*    Time step
 		*/
-		PLPHYSICSNEWTON_API static void JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, dFloat fTimeStep);
+		static PLPHYSICSNEWTON_API void JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, dFloat fTimeStep);
 
 
 	//[-------------------------------------------------------]

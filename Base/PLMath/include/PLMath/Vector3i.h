@@ -58,15 +58,15 @@ class Vector3i {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Vector3i Zero;			/**<  0,  0,  0 */
-		PLMATH_API static const Vector3i One;			/**<  1,  1,  1 */
-		PLMATH_API static const Vector3i NegativeOne;	/**< -1, -1, -1 */
-		PLMATH_API static const Vector3i UnitX;			/**<  1,  0,  0 */
-		PLMATH_API static const Vector3i UnitY;			/**<  0,  1,  0 */
-		PLMATH_API static const Vector3i UnitZ;			/**<  0,  0,  1 */
-		PLMATH_API static const Vector3i NegativeUnitX;	/**< -1,  0,  0 */
-		PLMATH_API static const Vector3i NegativeUnitY;	/**<  0, -1,  0 */
-		PLMATH_API static const Vector3i NegativeUnitZ;	/**<  0,  0, -1 */
+		static PLMATH_API const Vector3i Zero;			/**<  0,  0,  0 */
+		static PLMATH_API const Vector3i One;			/**<  1,  1,  1 */
+		static PLMATH_API const Vector3i NegativeOne;	/**< -1, -1, -1 */
+		static PLMATH_API const Vector3i UnitX;			/**<  1,  0,  0 */
+		static PLMATH_API const Vector3i UnitY;			/**<  0,  1,  0 */
+		static PLMATH_API const Vector3i UnitZ;			/**<  0,  0,  1 */
+		static PLMATH_API const Vector3i NegativeUnitX;	/**< -1,  0,  0 */
+		static PLMATH_API const Vector3i NegativeUnitY;	/**<  0, -1,  0 */
+		static PLMATH_API const Vector3i NegativeUnitZ;	/**<  0,  0, -1 */
 
 
 	//[-------------------------------------------------------]

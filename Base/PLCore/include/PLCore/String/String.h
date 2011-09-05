@@ -131,8 +131,8 @@ class String {
 		*    instead of
 		*      String sMyString = String::Format("The number %d is fantastic!", 42);
 		*/
-		PLCORE_API static String Format(const char *pszFormat, ...);
-		PLCORE_API static String Format(const wchar_t *pszFormat, ...);
+		static PLCORE_API String Format(const char *pszFormat, ...);
+		static PLCORE_API String Format(const wchar_t *pszFormat, ...);
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class String {
 		*  @return
 		*    New UTF8 string
 		*/
-		PLCORE_API static String FromUTF8(const char *pszUTF8, int nLength = -1, uint32 nNumOfBytes = 0);
+		static PLCORE_API String FromUTF8(const char *pszUTF8, int nLength = -1, uint32 nNumOfBytes = 0);
 
 
 	//[-------------------------------------------------------]

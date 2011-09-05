@@ -148,7 +148,7 @@ class XmlBase {
 		*    into a single space or not. The default is to condense. Note changing this
 		*    values is not thread safe.
 		*/
-		PLCORE_API static bool IsWhiteSpaceCondensed();
+		static PLCORE_API bool IsWhiteSpaceCondensed();
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class XmlBase {
 		*  @see
 		*    - IsWhiteSpaceCondensed()
 		*/
-		PLCORE_API static void SetCondenseWhiteSpace(bool bCondense);
+		static PLCORE_API void SetCondenseWhiteSpace(bool bCondense);
 
 
 	//[-------------------------------------------------------]

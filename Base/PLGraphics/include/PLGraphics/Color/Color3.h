@@ -59,24 +59,24 @@ class Color3 {
 	//[-------------------------------------------------------]
 	public:
 		// Special
-		PLGRAPHICS_API static const Color3 Null;	/**< -1.0, -1.0, -1.0 */
+		static PLGRAPHICS_API const Color3 Null;	/**< -1.0, -1.0, -1.0 */
 		// HTML 4/VGA
-		PLGRAPHICS_API static const Color3 Black;	/**< Black (sRGB="0 0 0", Hex="#000000") */
-		PLGRAPHICS_API static const Color3 White;	/**< White (sRGB="255 255 255", Hex="#FFFFFF") */
-		PLGRAPHICS_API static const Color3 Red;		/**< Red (sRGB="255 0 0", Hex="#FF0000") */
-		PLGRAPHICS_API static const Color3 Yellow;	/**< Yellow (sRGB="255 255 0", Hex="#FFFF00") */
-		PLGRAPHICS_API static const Color3 Green;	/**< Green (sRGB="0 128 0", Hex="#008000") */
-		PLGRAPHICS_API static const Color3 Aqua;	/**< Aqua, also called cyan or blue-green (sRGB="0 255 255", Hex="#00FFFF") */
-		PLGRAPHICS_API static const Color3 Blue;	/**< Blue (sRGB="0 0 255", Hex="#0000FF") */
-		PLGRAPHICS_API static const Color3 Fuchsia;	/**< Fuchsia, also called full magenta, bright pink or vivid pink (sRGB="255 0 255", Hex="#FF00FF") */
-		PLGRAPHICS_API static const Color3 Maroon;	/**< Maroon, dark brownish-red color (sRGB="128 0 0", Hex="#800000") */
-		PLGRAPHICS_API static const Color3 Olive;	/**< Olive, dark green/brown color (sRGB="128 128 0", Hex="#808000") */
-		PLGRAPHICS_API static const Color3 Navy;	/**< Navy, also called navy blue, very dark shade of the color blue (sRGB="0 0 128", Hex="#000080") */
-		PLGRAPHICS_API static const Color3 Purple;	/**< Purple, color intermediate to red and blue (sRGB="128 0 128", Hex="#800080") */
-		PLGRAPHICS_API static const Color3 Teal;	/**< Teal, also called teal blue, greenish dark-blue color (sRGB="0 128 128", Hex="#008080") */
-		PLGRAPHICS_API static const Color3 Gray;	/**< Gray (sRGB="128 128 128", Hex="#808080") */
-		PLGRAPHICS_API static const Color3 Silver;	/**< Silver (sRGB="192 192 192", Hex="#C0C0C0") */
-		PLGRAPHICS_API static const Color3 Lime;	/**< Lime, actually corresponds to the green primary of an RGB display (sRGB="0 255 0", Hex="#00FF00") */
+		static PLGRAPHICS_API const Color3 Black;	/**< Black (sRGB="0 0 0", Hex="#000000") */
+		static PLGRAPHICS_API const Color3 White;	/**< White (sRGB="255 255 255", Hex="#FFFFFF") */
+		static PLGRAPHICS_API const Color3 Red;		/**< Red (sRGB="255 0 0", Hex="#FF0000") */
+		static PLGRAPHICS_API const Color3 Yellow;	/**< Yellow (sRGB="255 255 0", Hex="#FFFF00") */
+		static PLGRAPHICS_API const Color3 Green;	/**< Green (sRGB="0 128 0", Hex="#008000") */
+		static PLGRAPHICS_API const Color3 Aqua;	/**< Aqua, also called cyan or blue-green (sRGB="0 255 255", Hex="#00FFFF") */
+		static PLGRAPHICS_API const Color3 Blue;	/**< Blue (sRGB="0 0 255", Hex="#0000FF") */
+		static PLGRAPHICS_API const Color3 Fuchsia;	/**< Fuchsia, also called full magenta, bright pink or vivid pink (sRGB="255 0 255", Hex="#FF00FF") */
+		static PLGRAPHICS_API const Color3 Maroon;	/**< Maroon, dark brownish-red color (sRGB="128 0 0", Hex="#800000") */
+		static PLGRAPHICS_API const Color3 Olive;	/**< Olive, dark green/brown color (sRGB="128 128 0", Hex="#808000") */
+		static PLGRAPHICS_API const Color3 Navy;	/**< Navy, also called navy blue, very dark shade of the color blue (sRGB="0 0 128", Hex="#000080") */
+		static PLGRAPHICS_API const Color3 Purple;	/**< Purple, color intermediate to red and blue (sRGB="128 0 128", Hex="#800080") */
+		static PLGRAPHICS_API const Color3 Teal;	/**< Teal, also called teal blue, greenish dark-blue color (sRGB="0 128 128", Hex="#008080") */
+		static PLGRAPHICS_API const Color3 Gray;	/**< Gray (sRGB="128 128 128", Hex="#808080") */
+		static PLGRAPHICS_API const Color3 Silver;	/**< Silver (sRGB="192 192 192", Hex="#C0C0C0") */
+		static PLGRAPHICS_API const Color3 Lime;	/**< Lime, actually corresponds to the green primary of an RGB display (sRGB="0 255 0", Hex="#00FF00") */
 
 
 	//[-------------------------------------------------------]
@@ -109,7 +109,7 @@ class Color3 {
 		*  @return
 		*    The color as PLCore::uint32
 		*/
-		PLGRAPHICS_API static PLCore::uint32 ToUInt32(float fR, float fG, float fB);
+		static PLGRAPHICS_API PLCore::uint32 ToUInt32(float fR, float fG, float fB);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class Color3 {
 		*  @return
 		*    The red color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float RedFromUInt32(PLCore::uint32 nColor);
+		static PLGRAPHICS_API float RedFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class Color3 {
 		*  @return
 		*    The green color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float GreenFromUInt32(PLCore::uint32 nColor);
+		static PLGRAPHICS_API float GreenFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Color3 {
 		*  @return
 		*    The blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API static float BlueFromUInt32(PLCore::uint32 nColor);
+		static PLGRAPHICS_API float BlueFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class Color3 {
 		*  @note
 		*    - This function is internally assembler optimizes for maximum performance
 		*/
-		PLGRAPHICS_API static void SwapRB(PLCore::uint8 nBuffer[], PLCore::uint32 nNumOfPixels);
+		static PLGRAPHICS_API void SwapRB(PLCore::uint8 nBuffer[], PLCore::uint32 nNumOfPixels);
 
 
 	//[-------------------------------------------------------]

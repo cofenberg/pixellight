@@ -134,7 +134,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The texture buffer pixel format of the given image
 		*/
-		PLRENDERER_API static EPixelFormat GetFormatFromImage(const PLGraphics::Image &cImage, bool bNoCompression = false);
+		static PLRENDERER_API EPixelFormat GetFormatFromImage(const PLGraphics::Image &cImage, bool bNoCompression = false);
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the texture buffer format is compressed, else 'false'
 		*/
-		PLRENDERER_API static bool IsCompressedFormat(EPixelFormat nFormat);
+		static PLRENDERER_API bool IsCompressedFormat(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the texture buffer format is a depth buffer format, else 'false'
 		*/
-		PLRENDERER_API static bool IsDepthFormat(EPixelFormat nFormat);
+		static PLRENDERER_API bool IsDepthFormat(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    Uncompressed texture buffer format, if the given format was not compressed, the given format will be returned
 		*/
-		PLRENDERER_API static EPixelFormat GetUncompressedFormat(EPixelFormat nFormat);
+		static PLRENDERER_API EPixelFormat GetUncompressedFormat(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the texture buffer format is a floating point format, else 'false'
 		*/
-		PLRENDERER_API static bool IsFloatingPointFormat(EPixelFormat nFormat);
+		static PLRENDERER_API bool IsFloatingPointFormat(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of components per pixel, 0 if unknown format
 		*/
-		PLRENDERER_API static PLCore::uint32 GetComponentsPerPixel(EPixelFormat nFormat);
+		static PLRENDERER_API PLCore::uint32 GetComponentsPerPixel(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -206,7 +206,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel component, 0 if unknown format or no full byte per component
 		*/
-		PLRENDERER_API static PLCore::uint32 GetBytesPerPixelComponent(EPixelFormat nFormat);
+		static PLRENDERER_API PLCore::uint32 GetBytesPerPixelComponent(EPixelFormat nFormat);
 
 		/**
 		*  @brief
@@ -218,7 +218,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel, 0 if unknown format or no full byte per pixel (compressed format)
 		*/
-		PLRENDERER_API static PLCore::uint32 GetBytesPerPixel(EPixelFormat nFormat);
+		static PLRENDERER_API PLCore::uint32 GetBytesPerPixel(EPixelFormat nFormat);
 
 
 	//[-------------------------------------------------------]

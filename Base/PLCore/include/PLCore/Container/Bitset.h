@@ -278,7 +278,7 @@ class Bitset : public Container<bool> {
 		uint32 *m_pnIntegers;			/**< Bits data, can be a null pointer */
 		uint32  m_nResizeCount;			/**< Automatic resize count */
 		// Static data
-		PLCORE_API static bool m_bBit;	/**< Last returned bit */
+		static PLCORE_API bool m_bBit;	/**< Last returned bit */
 
 
 	//[-------------------------------------------------------]

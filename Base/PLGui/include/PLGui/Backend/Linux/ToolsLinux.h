@@ -77,7 +77,7 @@ class ToolsLinux {
 		*  @return
 		*    Color value
 		*/
-		PLGUI_API static long GetXColor(const PLGraphics::Color3 &cColor, int nColorDepth);
+		static PLGUI_API long GetXColor(const PLGraphics::Color3 &cColor, int nColorDepth);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class ToolsLinux {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLGUI_API static bool SetNoWindowDecoration(Display *pDisplay, ::Window nNativeWindowHandle, bool bDecorate);
+		static PLGUI_API bool SetNoWindowDecoration(Display *pDisplay, ::Window nNativeWindowHandle, bool bDecorate);
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class ToolsLinux {
 		*    - Creates a X pixmap of the image
 		*    - Use XFreePixmap() to free the pixmap
 		*/
-		PLGUI_API static bool CreatePixmapFromImage(Display *pDisplay, PLGraphics::Image &cImage, Pixmap &pPixmap, Pixmap &pMaskPixmap, const PLGraphics::Color4 &cColorKey = PLGraphics::Color4::Transparent);
+		static PLGUI_API bool CreatePixmapFromImage(Display *pDisplay, PLGraphics::Image &cImage, Pixmap &pPixmap, Pixmap &pMaskPixmap, const PLGraphics::Color4 &cColorKey = PLGraphics::Color4::Transparent);
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class ToolsLinux {
 		*    - Creates a X cursor of the image
 		*    - Use XFreeCursor() to free the cursor
 		*/
-		PLGUI_API static bool CreateCursorFromImage(Display *pDisplay, PLGraphics::Image &cImage, const PLMath::Vector2i &vHotspot, ::Cursor &pCursor);
+		static PLGUI_API bool CreateCursorFromImage(Display *pDisplay, PLGraphics::Image &cImage, const PLMath::Vector2i &vHotspot, ::Cursor &pCursor);
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class ToolsLinux {
 		*  @return
 		*    Cursor
 		*/
-		PLGUI_API static ::Cursor CreateEmptyCursor(Display *pDisplay);
+		static PLGUI_API ::Cursor CreateEmptyCursor(Display *pDisplay);
 
 
 };

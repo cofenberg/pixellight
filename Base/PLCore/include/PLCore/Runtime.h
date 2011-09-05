@@ -80,7 +80,7 @@ class Runtime {
 		*  @return
 		*    Used PixelLight installation type the running process is using
 		*/
-		PLCORE_API static EType GetType();
+		static PLCORE_API EType GetType();
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Runtime {
 		*  @return
 		*    Version of this PixelLight installation the running process is using
 		*/
-		PLCORE_API static Version GetVersion();
+		static PLCORE_API Version GetVersion();
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Runtime {
 		*  @return
 		*    'true' if the running process is using a debug version of PixelLight, else 'false'
 		*/
-		PLCORE_API static bool IsDebugVersion();
+		static PLCORE_API bool IsDebugVersion();
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Runtime {
 		*  @return
 		*    Suffix of this PixelLight installation the running process is using
 		*/
-		PLCORE_API static String GetSuffix();
+		static PLCORE_API String GetSuffix();
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class Runtime {
 		*  @return
 		*    Path to the local PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
 		*/
-		PLCORE_API static String GetLocalDirectory();
+		static PLCORE_API String GetLocalDirectory();
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class Runtime {
 		*  @return
 		*    Path to the local PL-runtime data directory (e.g. "C:\MyApplication\Data"), or ""
 		*/
-		PLCORE_API static String GetLocalDataDirectory();
+		static PLCORE_API String GetLocalDataDirectory();
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class Runtime {
 		*  @see
 		*    - 'Registry' class documentation
 		*/
-		PLCORE_API static String GetSystemDirectory();
+		static PLCORE_API String GetSystemDirectory();
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class Runtime {
 		*  @see
 		*    - 'Registry' class documentation
 		*/
-		PLCORE_API static String GetSystemDataDirectory();
+		static PLCORE_API String GetSystemDataDirectory();
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class Runtime {
 		*    "GetLocalDirectory()" is called at first and if this method returns an empty string, a "GetSystemDirectory()"
 		*    call follows in exactly this order.
 		*/
-		PLCORE_API static String GetDirectory();
+		static PLCORE_API String GetDirectory();
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Runtime {
 		*  @see
 		*    - GetDirectory()
 		*/
-		PLCORE_API static String GetDataDirectory();
+		static PLCORE_API String GetDataDirectory();
 
 
 		//[-------------------------------------------------------]
@@ -205,7 +205,7 @@ class Runtime {
 		*    - Runtime::GetDirectory()
 		*    - ClassManager::ScanPlugins()
 		*/
-		PLCORE_API static void ScanDirectoryPlugins(const String &sDirectory = "", bool bDelayedPluginLoading = true);
+		static PLCORE_API void ScanDirectoryPlugins(const String &sDirectory = "", bool bDelayedPluginLoading = true);
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class Runtime {
 		*    - LoadableManager::AddBaseDir()
 		*    - LoadableManager::ScanPackages()
 		*/
-		PLCORE_API static void ScanDirectoryData(const String &sDirectory = "");
+		static PLCORE_API void ScanDirectoryData(const String &sDirectory = "");
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class Runtime {
 		*    - ScanDirectoryPlugins()
 		*    - ScanDirectoryData()
 		*/
-		PLCORE_API static bool ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed = true);
+		static PLCORE_API bool ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed = true);
 
 
 	//[-------------------------------------------------------]

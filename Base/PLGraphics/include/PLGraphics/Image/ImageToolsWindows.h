@@ -76,7 +76,7 @@ class ImageToolsWindows {
 		*      direct use in Windows
 		*    - Use the windows function DeleteObject() to free the bitmap
 		*/
-		PLGRAPHICS_API static HBITMAP ConvertToHBitmap(Image &cImage, HDC hDC);
+		static PLGRAPHICS_API HBITMAP ConvertToHBitmap(Image &cImage, HDC hDC);
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class ImageToolsWindows {
 		*    understand. The image can then be used just as if you had loaded an image
 		*    via Image::Load(). This function is the opposite of ConvertToHBitmap().
 		*/
-		PLGRAPHICS_API static bool SetHBitmap(Image &cImage, HBITMAP hBitmap);
+		static PLGRAPHICS_API bool SetHBitmap(Image &cImage, HBITMAP hBitmap);
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class ImageToolsWindows {
 		*    Copies the contents of the Windows clipboard into the given image,
 		*    resizing as necessary.
 		*/
-		PLGRAPHICS_API static bool GetWinClipboard(Image &cImage);
+		static PLGRAPHICS_API bool GetWinClipboard(Image &cImage);
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class ImageToolsWindows {
 		*  @return
 		*    Copies the given image to the Windows clipboard
 		*/
-		PLGRAPHICS_API static bool SetWinClipboard(Image &cImage);
+		static PLGRAPHICS_API bool SetWinClipboard(Image &cImage);
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class ImageToolsWindows {
 		*    This feature allows you to have images directly in your .exe and not worry
 		*    whether a particular file is present on the user's hard drive.
 		*/
-		PLGRAPHICS_API static bool LoadResource(Image &cImage, HINSTANCE hInst, int nID, const PLCore::String &sResourceType, const PLCore::String &sFileType);
+		static PLGRAPHICS_API bool LoadResource(Image &cImage, HINSTANCE hInst, int nID, const PLCore::String &sResourceType, const PLCore::String &sFileType);
 
 
 	//[-------------------------------------------------------]

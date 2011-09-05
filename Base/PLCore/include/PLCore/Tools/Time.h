@@ -93,11 +93,11 @@ class Time {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const Time   Null;					/**< Year=0 Month=January Day=1 DayOfWeek=Sunday Hour=0 Minute=0 Second=0 Millisecond=0 */
-		PLCORE_API static const Time   UnixEpochStart;		/**< Year=1970 Month=January Day=1 DayOfWeek=Thursday Hour=0 Minute=0 Second=0 Millisecond=0 */
-		PLCORE_API static const Time   DOSEpochStart;		/**< Year=1980 Month=January Day=1 DayOfWeek=Tuesday Hour=0 Minute=0 Second=0 Millisecond=0 */
-		PLCORE_API static const String ShortMonthName[12];	/**< Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec */
-		PLCORE_API static const String ShortDayName[7];		/**< Sun, Mon, Tue, Wed, Thu, Fri, Sat */
+		static PLCORE_API const Time   Null;					/**< Year=0 Month=January Day=1 DayOfWeek=Sunday Hour=0 Minute=0 Second=0 Millisecond=0 */
+		static PLCORE_API const Time   UnixEpochStart;		/**< Year=1970 Month=January Day=1 DayOfWeek=Thursday Hour=0 Minute=0 Second=0 Millisecond=0 */
+		static PLCORE_API const Time   DOSEpochStart;		/**< Year=1980 Month=January Day=1 DayOfWeek=Tuesday Hour=0 Minute=0 Second=0 Millisecond=0 */
+		static PLCORE_API const String ShortMonthName[12];	/**< Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec */
+		static PLCORE_API const String ShortDayName[7];		/**< Sun, Mon, Tue, Wed, Thu, Fri, Sat */
 
 
 	//[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class Time {
 		*  @return
 		*    'true' if the the given year is a leap year, else 'false'
 		*/
-		PLCORE_API static bool IsLeapYear(uint32 nYear);
+		static PLCORE_API bool IsLeapYear(uint32 nYear);
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class Time {
 		*  @return
 		*    Number of days in the given month
 		*/
-		PLCORE_API static uint8 GetDaysPerMonth(EMonth nMonth, uint32 nYear = 0);
+		static PLCORE_API uint8 GetDaysPerMonth(EMonth nMonth, uint32 nYear = 0);
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class Time {
 		*  @return
 		*    The day of a week
 		*/
-		PLCORE_API static EDay CalculateDayOfWeek(uint8 nDayOfMonth, EMonth nMonth, uint16 nYear);
+		static PLCORE_API EDay CalculateDayOfWeek(uint8 nDayOfMonth, EMonth nMonth, uint16 nYear);
 
 
 	//[-------------------------------------------------------]

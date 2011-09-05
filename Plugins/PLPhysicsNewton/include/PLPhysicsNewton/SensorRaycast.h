@@ -87,7 +87,7 @@ class SensorRaycast : public PLPhysics::SensorRaycast {
 		*  @return
 		*    Intersection parameter: If 0 is returned the ray cast will terminate immediately!
 		*/
-		PLPHYSICSNEWTON_API static float RayFilterCallback(const Newton::NewtonBody *pPhysicsBody, const float *pfNormal,
+		static PLPHYSICSNEWTON_API float RayFilterCallback(const Newton::NewtonBody *pPhysicsBody, const float *pfNormal,
 														   int nCollisionID, void *pUserData, float fIntersectParam);
 
 

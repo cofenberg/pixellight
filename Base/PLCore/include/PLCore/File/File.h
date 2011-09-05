@@ -79,9 +79,9 @@ class File : public FileObject {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static File StandardInput;	/**< Standard OS input stream (stdin) */
-		PLCORE_API static File StandardOutput;	/**< Standard OS output stream (stdout) */
-		PLCORE_API static File StandardError;	/**< Standard OS error stream (stderr) */
+		static PLCORE_API File StandardInput;	/**< Standard OS input stream (stdin) */
+		static PLCORE_API File StandardOutput;	/**< Standard OS output stream (stdout) */
+		static PLCORE_API File StandardError;	/**< Standard OS error stream (stderr) */
 
 
 	//[-------------------------------------------------------]
@@ -98,7 +98,7 @@ class File : public FileObject {
 		*  @return
 		*    The access flags (see EAccess)
 		*/
-		PLCORE_API static uint32 CFileModeToAccessFlags(const String &sMode);
+		static PLCORE_API uint32 CFileModeToAccessFlags(const String &sMode);
 
 
 	//[-------------------------------------------------------]

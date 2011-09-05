@@ -75,7 +75,7 @@ class Database : public PLCore::Object {
 		*  @return
 		*    The database instance, a null pointer on error
 		*/
-		PLDATABASE_API static Database *Create(const PLCore::String &sClass);
+		static PLDATABASE_API Database *Create(const PLCore::String &sClass);
 
 
 	//[-------------------------------------------------------]

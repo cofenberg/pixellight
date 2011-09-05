@@ -126,7 +126,7 @@ class EulerAngles {
 		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
-		PLMATH_API static void ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quaternion &qRotation, EOrder nOrder = XYZs);
+		static PLMATH_API void ToQuaternion(float fAngleX, float fAngleY, float fAngleZ, Quaternion &qRotation, EOrder nOrder = XYZs);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class EulerAngles {
 		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
-		PLMATH_API static void FromQuaternion(const Quaternion &qRotation, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
+		static PLMATH_API void FromQuaternion(const Quaternion &qRotation, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
 
 		/**
 		*  @brief
@@ -163,9 +163,9 @@ class EulerAngles {
 		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
-		PLMATH_API static void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x3 &mRot, EOrder nOrder = XYZs);
-		PLMATH_API static void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x4 &mRot, EOrder nOrder = XYZs);
-		PLMATH_API static void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x4 &mRot, EOrder nOrder = XYZs);
+		static PLMATH_API void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x3 &mRot, EOrder nOrder = XYZs);
+		static PLMATH_API void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix3x4 &mRot, EOrder nOrder = XYZs);
+		static PLMATH_API void ToMatrix(float fAngleX, float fAngleY, float fAngleZ, Matrix4x4 &mRot, EOrder nOrder = XYZs);
 
 		/**
 		*  @brief
@@ -182,9 +182,9 @@ class EulerAngles {
 		*  @param[in]  nOrder
 		*    Order of the Euler angles
 		*/
-		PLMATH_API static void FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
-		PLMATH_API static void FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
-		PLMATH_API static void FromMatrix(const Matrix4x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
+		static PLMATH_API void FromMatrix(const Matrix3x3 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
+		static PLMATH_API void FromMatrix(const Matrix3x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
+		static PLMATH_API void FromMatrix(const Matrix4x4 &mRot, float &fAngleX, float &fAngleY, float &fAngleZ, EOrder nOrder = XYZs);
 
 
 };

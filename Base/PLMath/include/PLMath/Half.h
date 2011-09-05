@@ -57,14 +57,14 @@ class Half {
 	//[-------------------------------------------------------]
 	public:
 		// Some half numbers
-		PLMATH_API static const PLCore::uint16 Zero;				/**< Representation of 0.0 */
-		PLMATH_API static const PLCore::uint16 One;					/**< Representation of 1.0 */
+		static PLMATH_API const PLCore::uint16 Zero;				/**< Representation of 0.0 */
+		static PLMATH_API const PLCore::uint16 One;					/**< Representation of 1.0 */
 
 		// Important values
-		PLMATH_API static const float SmallestPositive;				/**< Smallest positive half (5.96046448e-08f) */
-		PLMATH_API static const float SmallestPositiveNormalized;	/**< Smallest positive normalized half (6.10351562e-05f) */
-		PLMATH_API static const float LargestPositive;				/**< Largest positive half (65504.0f) */
-		PLMATH_API static const float Epsilon;						/**< Smallest positive epsilon for which 1+e!=1 (0.00097656f) */
+		static PLMATH_API const float SmallestPositive;				/**< Smallest positive half (5.96046448e-08f) */
+		static PLMATH_API const float SmallestPositiveNormalized;	/**< Smallest positive normalized half (6.10351562e-05f) */
+		static PLMATH_API const float LargestPositive;				/**< Largest positive half (65504.0f) */
+		static PLMATH_API const float Epsilon;						/**< Smallest positive epsilon for which 1+e!=1 (0.00097656f) */
 
 
 	//[-------------------------------------------------------]

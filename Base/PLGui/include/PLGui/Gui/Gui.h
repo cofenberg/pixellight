@@ -124,7 +124,7 @@ class Gui : public PLCore::Object {
 		*  @return
 		*    Pointer to system GUI
 		*/
-		PLGUI_API static Gui *GetSystemGui();
+		static PLGUI_API Gui *GetSystemGui();
 
 
 	//[-------------------------------------------------------]

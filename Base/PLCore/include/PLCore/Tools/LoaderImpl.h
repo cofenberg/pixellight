@@ -75,10 +75,10 @@ class LoaderImpl : public Object {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const String UnknownFormatVersion;			/**< 'Unknown format version' string */
-		PLCORE_API static const String DeprecatedFormatVersion;			/**< 'Deprecated format version' string */
-		PLCORE_API static const String NoLongerSupportedFormatVersion;	/**< 'No longer supported format version' string */
-		PLCORE_API static const String InvalidFormatVersion;			/**< 'Invalid format version' string */
+		static PLCORE_API const String UnknownFormatVersion;			/**< 'Unknown format version' string */
+		static PLCORE_API const String DeprecatedFormatVersion;			/**< 'Deprecated format version' string */
+		static PLCORE_API const String NoLongerSupportedFormatVersion;	/**< 'No longer supported format version' string */
+		static PLCORE_API const String InvalidFormatVersion;			/**< 'Invalid format version' string */
 
 
 	//[-------------------------------------------------------]

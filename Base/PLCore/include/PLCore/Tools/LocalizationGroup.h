@@ -65,7 +65,7 @@ class LocalizationGroup : public Loadable {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const String English;	/**< "English" (default) */
+		static PLCORE_API const String English;	/**< "English" (default) */
 
 
 	//[-------------------------------------------------------]

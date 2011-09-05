@@ -97,7 +97,7 @@ class RegEx {
 		*  @return
 		*    The converted regular expression (for example "^BeerNumber.*$")
 		*/
-		PLCORE_API static String WildcardToRegEx(const String &sWildcard);
+		static PLCORE_API String WildcardToRegEx(const String &sWildcard);
 
 
 	//[-------------------------------------------------------]

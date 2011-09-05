@@ -77,7 +77,7 @@ class ImageEffects {
 		*  @return
 		*    Image effect
 		*/
-		PLGRAPHICS_API static ImageEffectWrapper Effect(const PLCore::String &sEffect, const PLCore::String &sParameters);
+		static PLGRAPHICS_API ImageEffectWrapper Effect(const PLCore::String &sEffect, const PLCore::String &sParameters);
 
 		/**
 		*  @brief
@@ -86,7 +86,7 @@ class ImageEffects {
 		*  @return
 		*    Image filter
 		*/
-		PLGRAPHICS_API static IEFilter Filter();
+		static PLGRAPHICS_API IEFilter Filter();
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class ImageEffects {
 		*  @return
 		*    Scale image effect
 		*/
-		PLGRAPHICS_API static IEScale Scale(const PLMath::Vector3i &vNewSize, bool bUseMipmaps);
+		static PLGRAPHICS_API IEScale Scale(const PLMath::Vector3i &vNewSize, bool bUseMipmaps);
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class ImageEffects {
 		*  @return
 		*    Image conversion effect
 		*/
-		PLGRAPHICS_API static IEConvert Convert(EDataFormat nDataFormat, EColorFormat nColorFormat);
+		static PLGRAPHICS_API IEConvert Convert(EDataFormat nDataFormat, EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class ImageEffects {
 		*  @return
 		*    Monochrome image effect
 		*/
-		PLGRAPHICS_API static IEMonochrome Monochrome();
+		static PLGRAPHICS_API IEMonochrome Monochrome();
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class ImageEffects {
 		*  @return
 		*    Color key image effect
 		*/
-		PLGRAPHICS_API static IEColorKey ColorKey(const Color3 &cColor, float fTolerance);
+		static PLGRAPHICS_API IEColorKey ColorKey(const Color3 &cColor, float fTolerance);
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class ImageEffects {
 		*  @return
 		*    Flip the image around the x axis image effect
 		*/
-		PLGRAPHICS_API static IEFlipXAxis FlipXAxis();
+		static PLGRAPHICS_API IEFlipXAxis FlipXAxis();
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class ImageEffects {
 		*  @return
 		*    Flip the image around the y axis image effect
 		*/
-		PLGRAPHICS_API static IEFlipYAxis FlipYAxis();
+		static PLGRAPHICS_API IEFlipYAxis FlipYAxis();
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class ImageEffects {
 		*  @return
 		*    Remove palette image effect
 		*/
-		PLGRAPHICS_API static IERemovePalette RemovePalette();
+		static PLGRAPHICS_API IERemovePalette RemovePalette();
 
 
 };

@@ -69,7 +69,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLCore::String Default;	/**< Default texture */
+		static PLRENDERER_API const PLCore::String Default;	/**< Default texture */
 
 
 	//[-------------------------------------------------------]

@@ -113,7 +113,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    to use two or more Application instances after each other, you should *never*
 		*    use more than one Application instance at a time!
 		*/
-		PLCORE_API static CoreApplication *GetApplication();
+		static PLCORE_API CoreApplication *GetApplication();
 
 
 	//[-------------------------------------------------------]

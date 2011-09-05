@@ -61,7 +61,7 @@ class ParseTools {
 		*  @return
 		*    Integer representation of the given hex value
 		*/
-		PLCORE_API static uint32 ParseHexValue(const String &sString);
+		static PLCORE_API uint32 ParseHexValue(const String &sString);
 
 		/**
 		*  @brief
@@ -80,7 +80,7 @@ class ParseTools {
 		*  @note
 		*    - Example string with three values: "0 5 34"
 		*/
-		PLCORE_API static int ParseIntegerArray(const String &sString, int *pnValues, uint32 nMaxNumOfElements);
+		static PLCORE_API int ParseIntegerArray(const String &sString, int *pnValues, uint32 nMaxNumOfElements);
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ParseTools {
 		*  @note
 		*    - Example string with three values: "0 0.0 34.245"
 		*/
-		PLCORE_API static int ParseFloatArray(const String &sString, float *pfValues, uint32 nMaxNumOfElements);
+		static PLCORE_API int ParseFloatArray(const String &sString, float *pfValues, uint32 nMaxNumOfElements);
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class ParseTools {
 		*  @note
 		*    - Example string with three values: "0 0.0 34.245"
 		*/
-		PLCORE_API static int ParseDoubleArray(const String &sString, double *pdValues, uint32 nMaxNumOfElements);
+		static PLCORE_API int ParseDoubleArray(const String &sString, double *pdValues, uint32 nMaxNumOfElements);
 
 		//[-------------------------------------------------------]
 		//[ Flags                                                 ]
@@ -137,7 +137,7 @@ class ParseTools {
 		*    Flags can be stored in strings too. (easy to edit :)\n
 		*    Example: "1|2|4|8"
 		*/
-		PLCORE_API static uint32 GetFlagsFromString(const String &sFlags);
+		static PLCORE_API uint32 GetFlagsFromString(const String &sFlags);
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class ParseTools {
 		*  @see
 		*    - GetFlagsFromString()
 		*/
-		PLCORE_API static String GetStringFromFlags(uint32 nFlags);
+		static PLCORE_API String GetStringFromFlags(uint32 nFlags);
 
 
 };

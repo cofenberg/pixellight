@@ -61,7 +61,7 @@ class MimeTypeManager {
 		*  @return
 		*    MIME type
 		*/
-		PLCORE_API static String GetMimeType(const String &sFilename);
+		static PLCORE_API String GetMimeType(const String &sFilename);
 
 
 };

@@ -73,7 +73,7 @@ class DatabaseQuery {
 		*  @return
 		*    'true' if the given SQL statement is a SELECT one, else 'false'
 		*/
-		PLDATABASE_API static bool IsSelect(const PLCore::String &sSQL);
+		static PLDATABASE_API bool IsSelect(const PLCore::String &sSQL);
 
 
 	//[-------------------------------------------------------]

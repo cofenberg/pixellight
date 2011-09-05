@@ -72,7 +72,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLCore::String Default;	/**< Default effect, ('Default') dynamically created within the 'EffectManager'-constructor */
+		static PLRENDERER_API const PLCore::String Default;	/**< Default effect, ('Default') dynamically created within the 'EffectManager'-constructor */
 
 
 	//[-------------------------------------------------------]

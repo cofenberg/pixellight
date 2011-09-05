@@ -69,7 +69,7 @@ class SystemWindows : public SystemImpl {
 		*  @return
 		*    The resulting string
 		*/
-		PLCORE_API static String ErrorCodeToString(DWORD nErrorCode);
+		static PLCORE_API String ErrorCodeToString(DWORD nErrorCode);
 
 
 	//[-------------------------------------------------------]

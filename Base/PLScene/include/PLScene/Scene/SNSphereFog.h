@@ -51,7 +51,7 @@ class SNSphereFog : public SNFog {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const float MinRange;	/**< Minimum fog range (0.0001) */
+		static PLS_API const float MinRange;	/**< Minimum fog range (0.0001) */
 
 
 	//[-------------------------------------------------------]

@@ -90,8 +90,8 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool SpherePoint(const Sphere &cSphere, const Vector3 &cPoint);
-		PLMATH_API static bool SpherePoint(const Sphere &cSphere, const Vector4 &cPoint);
+		static PLMATH_API bool SpherePoint(const Sphere &cSphere, const Vector3 &cPoint);
+		static PLMATH_API bool SpherePoint(const Sphere &cSphere, const Vector4 &cPoint);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Intersect {
 		*  @return
 		*    Distance to intersection point, -1.0 it there was no intersection
 		*/
-		PLMATH_API static float SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDir);
+		static PLMATH_API float SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDir);
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
+		static PLMATH_API bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
 										 const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
 
 		/**
@@ -146,7 +146,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, float fDistance, Vector3 *pvIntersect = nullptr);
+		static PLMATH_API bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, float fDistance, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
+		static PLMATH_API bool SphereRayInFront(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/line intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereLine(const Sphere &cSphere, const Vector3 &vStart, const Vector3 &vEnd);
+		static PLMATH_API bool SphereLine(const Sphere &cSphere, const Vector3 &vStart, const Vector3 &vEnd);
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/sphere intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereSphere(const Sphere &cSphere, const Vector3 &vPos, float fRadius);
+		static PLMATH_API bool SphereSphere(const Sphere &cSphere, const Vector3 &vPos, float fRadius);
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/sphere intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereSphere(const Sphere &cSphere, const Sphere &cSphere2);
+		static PLMATH_API bool SphereSphere(const Sphere &cSphere, const Sphere &cSphere2);
 
 		/**
 		*  @brief
@@ -228,7 +228,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's an intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereSphere(const Sphere &cSphere, const Sphere &cSphere2, const Vector3 &vMove1, const Vector3 &vMove2);
+		static PLMATH_API bool SphereSphere(const Sphere &cSphere, const Sphere &cSphere2, const Vector3 &vMove1, const Vector3 &vMove2);
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereAABox(const Vector3 &vSpherePos, float fSphereRadius, const AABoundingBox &cAABox);
+		static PLMATH_API bool SphereAABox(const Vector3 &vSpherePos, float fSphereRadius, const AABoundingBox &cAABox);
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereAABox(const Sphere &cSphere, const AABoundingBox &cAABox);
+		static PLMATH_API bool SphereAABox(const Sphere &cSphere, const AABoundingBox &cAABox);
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/box intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereBox(const Vector3 &vSpherePos, float fSphereRadius, const BoundingBox &cBox);
+		static PLMATH_API bool SphereBox(const Vector3 &vSpherePos, float fSphereRadius, const BoundingBox &cBox);
 
 		/**
 		*  @brief
@@ -288,7 +288,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/box intersection, else 'false'
 		*/
-		PLMATH_API static bool SphereBox(const Sphere &cSphere, const BoundingBox &cBox);
+		static PLMATH_API bool SphereBox(const Sphere &cSphere, const BoundingBox &cBox);
 
 		//[-------------------------------------------------------]
 		//[ Axis aligned box                                      ]
@@ -307,7 +307,7 @@ class Intersect {
 		*  @return
 		*    'true' if the given point is inside the axis aligned box, else 'false'
 		*/
-		PLMATH_API static bool AABoxPoint(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vPos);
+		static PLMATH_API bool AABoxPoint(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vPos);
 
 		/**
 		*  @brief
@@ -327,7 +327,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vStart, const Vector3 &vEnd, float *pfIntersection = nullptr);
+		static PLMATH_API bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vStart, const Vector3 &vEnd, float *pfIntersection = nullptr);
 
 		/**
 		*  @brief
@@ -345,7 +345,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Line &cLine, float *pfIntersection = nullptr);
+		static PLMATH_API bool AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Line &cLine, float *pfIntersection = nullptr);
 
 		/**
 		*  @brief
@@ -363,7 +363,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxSphere(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vSpherePos, float fSphereRadius);
+		static PLMATH_API bool AABoxSphere(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax, const Vector3 &vSpherePos, float fSphereRadius);
 
 		/**
 		*  @brief
@@ -381,7 +381,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxAABox(const Vector3 &vAABoxMin1, const Vector3 &vAABoxMax1,
+		static PLMATH_API bool AABoxAABox(const Vector3 &vAABoxMin1, const Vector3 &vAABoxMax1,
 										  const Vector3 &vAABoxMin2, const Vector3 &vAABoxMax2);
 
 		/**
@@ -396,7 +396,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/axis aligned box intersection, else 'false'
 		*/
-		PLMATH_API static bool AABoxAABox(const AABoundingBox &cBox1, const AABoundingBox &cBox2);
+		static PLMATH_API bool AABoxAABox(const AABoundingBox &cBox1, const AABoundingBox &cBox2);
 
 		//[-------------------------------------------------------]
 		//[ Box                                                   ]
@@ -413,7 +413,7 @@ class Intersect {
 		*  @return
 		*    'true' if the given point is inside the box, else 'false'
 		*/
-		PLMATH_API static bool BoxPoint(const BoundingBox &cBox, const Vector3 &vPos);
+		static PLMATH_API bool BoxPoint(const BoundingBox &cBox, const Vector3 &vPos);
 
 		/**
 		*  @brief
@@ -429,7 +429,7 @@ class Intersect {
 		*  @return
 		*    'true' if the given line intersects with the box, else 'false'
 		*/
-		PLMATH_API static bool BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector3 &vB);
+		static PLMATH_API bool BoxLine(const BoundingBox &cBox, const Vector3 &vA, const Vector3 &vB);
 
 		/**
 		*  @brief
@@ -443,7 +443,7 @@ class Intersect {
 		*  @return
 		*    'true' if the given box intersects with this box, else 'false'
 		*/
-		PLMATH_API static bool BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2);
+		static PLMATH_API bool BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2);
 
 		/**
 		*  @brief
@@ -461,7 +461,7 @@ class Intersect {
 		*  @return
 		*    'true' if the given box intersects with this box while moving, else 'false'
 		*/
-		PLMATH_API static bool BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const Vector3 &vMove1, const Vector3 &vMove2);
+		static PLMATH_API bool BoxBox(const BoundingBox &cBox1, const BoundingBox &cBox2, const Vector3 &vMove1, const Vector3 &vMove2);
 
 		/**
 		*  @brief
@@ -475,7 +475,7 @@ class Intersect {
 		*  @return
 		*    'true' if the box is in the plane set, else 'false'
 		*/
-		PLMATH_API static bool BoxPlaneSet(const BoundingBox &cBox, const PlaneSet &cPlaneSet);
+		static PLMATH_API bool BoxPlaneSet(const BoundingBox &cBox, const PlaneSet &cPlaneSet);
 
 		//[-------------------------------------------------------]
 		//[ Plane                                                 ]
@@ -492,7 +492,7 @@ class Intersect {
 		*  @return
 		*    'true' if the ray intersects the plane, else 'false' (ray is parallel to plane)
 		*/
-		PLMATH_API static bool IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDir);
+		static PLMATH_API bool IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDir);
 
 		/**
 		*  @brief
@@ -509,7 +509,7 @@ class Intersect {
 		*    The intersection point, if there was no intersection the ray position
 		*    will be returned
 		*/
-		PLMATH_API static Vector3 PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir);
+		static PLMATH_API Vector3 PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir);
 
 		/**
 		*  @brief
@@ -527,7 +527,7 @@ class Intersect {
 		*  @return
 		*    Factor between 0-1 if there was an intersection, -1.0f if no intersection
 		*/
-		PLMATH_API static float PlaneLine(const Plane &cPlane, const Vector3 &vStartPos, const Vector3 &vEndPos, Vector3 *pvPos = nullptr);
+		static PLMATH_API float PlaneLine(const Plane &cPlane, const Vector3 &vStartPos, const Vector3 &vEndPos, Vector3 *pvPos = nullptr);
 
 		/**
 		*  @brief
@@ -541,7 +541,7 @@ class Intersect {
 		*  @return
 		*    'true' if the plane intersects the plane, else 'false'
 		*/
-		PLMATH_API static bool PlanePlane(const Plane &cPlane, const Plane &cPlane2);
+		static PLMATH_API bool PlanePlane(const Plane &cPlane, const Plane &cPlane2);
 
 		/**
 		*  @brief
@@ -557,7 +557,7 @@ class Intersect {
 		*  @return
 		*    'true' if theres a plane intersection, else 'false'
 		*/
-		PLMATH_API static bool PlanePlane(const Plane &cPlane, const Plane &cPlane2, Ray &cRay);
+		static PLMATH_API bool PlanePlane(const Plane &cPlane, const Plane &cPlane2, Ray &cRay);
 
 		/**
 		*  @brief
@@ -576,7 +576,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's an intersection between the three planes, else 'false'
 		*/
-		PLMATH_API static bool PlanePlanePlane(const Plane &cP1, const Plane &cP2, const Plane &cP3, Vector3 &vRes);
+		static PLMATH_API bool PlanePlanePlane(const Plane &cP1, const Plane &cP2, const Plane &cP3, Vector3 &vRes);
 
 		//[-------------------------------------------------------]
 		//[ Plane set                                             ]
@@ -593,7 +593,7 @@ class Intersect {
 		*  @return
 		*    'true' if the point is in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector3 &vPoint);
+		static PLMATH_API bool PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector3 &vPoint);
 
 		/**
 		*  @brief
@@ -607,7 +607,7 @@ class Intersect {
 		*  @return
 		*    'true' if the point is in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector4 &vPoint);
+		static PLMATH_API bool PlaneSetPoint(const PlaneSet &cPlaneSet, const Vector4 &vPoint);
 
 		/**
 		*  @brief
@@ -621,7 +621,7 @@ class Intersect {
 		*  @return
 		*    'true' if the points are in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector3> &lstPoints);
+		static PLMATH_API bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector3> &lstPoints);
 
 		/**
 		*  @brief
@@ -635,7 +635,7 @@ class Intersect {
 		*  @return
 		*    'true' if the points are in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector4> &lstPoints);
+		static PLMATH_API bool PlaneSetPoints(const PlaneSet &cPlaneSet, const PLCore::Array<Vector4> &lstPoints);
 
 		/**
 		*  @brief
@@ -651,7 +651,7 @@ class Intersect {
 		*  @return
 		*    'true' if the sphere is in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetSphere(const PlaneSet &cPlaneSet, const Vector3 &vSphereOrigin, float fSphereRadius);
+		static PLMATH_API bool PlaneSetSphere(const PlaneSet &cPlaneSet, const Vector3 &vSphereOrigin, float fSphereRadius);
 
 		/**
 		*  @brief
@@ -669,7 +669,7 @@ class Intersect {
 		*  @return
 		*    'true' if the triangle is in plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1,
+		static PLMATH_API bool PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1,
 												const Vector3 &vV2, const Vector3 &vV3);
 
 		/**
@@ -690,7 +690,7 @@ class Intersect {
 		*  @return
 		*    'true' if the axis aligned box is within plane set, else 'false'
 		*/
-		PLMATH_API static bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, PLCore::uint32 *pnOutClipMask = nullptr);
+		static PLMATH_API bool PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, const Vector3 &vMax, PLCore::uint32 *pnOutClipMask = nullptr);
 
 		//[-------------------------------------------------------]
 		//[ Triangle                                              ]
@@ -717,7 +717,7 @@ class Intersect {
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
 		*/
-		PLMATH_API static bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
+		static PLMATH_API bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
 										   const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
 										   Vector3 *pvIntersectionPointPos = nullptr);
@@ -742,7 +742,7 @@ class Intersect {
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
 		*/
-		PLMATH_API static bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
+		static PLMATH_API bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
 										   const Ray &cRay, Vector3 *pvIntersectionPointPos = nullptr);
 

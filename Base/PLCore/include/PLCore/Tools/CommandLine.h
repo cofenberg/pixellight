@@ -76,7 +76,7 @@ class CommandLine {
 		*  @return
 		*    Command string
 		*/
-		PLCORE_API static String ArgumentsToString(const Array<String> &lstArguments);
+		static PLCORE_API String ArgumentsToString(const Array<String> &lstArguments);
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class CommandLine {
 		*  @return
 		*    Command array of arguments
 		*/
-		PLCORE_API static Array<String> StringToArguments(const String &sCmdLine);
+		static PLCORE_API Array<String> StringToArguments(const String &sCmdLine);
 
 
 	//[-------------------------------------------------------]

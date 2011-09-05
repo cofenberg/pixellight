@@ -58,12 +58,12 @@ class HashFunction {
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static uint32 Hash(const int32 &nKey);
-		PLCORE_API static uint32 Hash(const uint32 &nKey);
-		PLCORE_API static uint32 Hash(const int64 &nKey);
-		PLCORE_API static uint32 Hash(const uint64 &nKey);
-		PLCORE_API static uint32 Hash(const char *pszKey);
-		PLCORE_API static uint32 Hash(const String &sKey);
+		static PLCORE_API uint32 Hash(const int32 &nKey);
+		static PLCORE_API uint32 Hash(const uint32 &nKey);
+		static PLCORE_API uint32 Hash(const int64 &nKey);
+		static PLCORE_API uint32 Hash(const uint64 &nKey);
+		static PLCORE_API uint32 Hash(const char *pszKey);
+		static PLCORE_API uint32 Hash(const String &sKey);
 
 
 };
@@ -80,32 +80,32 @@ class CompareFunction {
 	//[-------------------------------------------------------]
 	public:
 		// int32
-		PLCORE_API static bool AreEqual(const int32 &nKey1, const int32 &nKey2);
-		PLCORE_API static bool IsGreater(const int32 &nKey1, const int32 &nKey2);
+		static PLCORE_API bool AreEqual(const int32 &nKey1, const int32 &nKey2);
+		static PLCORE_API bool IsGreater(const int32 &nKey1, const int32 &nKey2);
 
 		// uint32
-		PLCORE_API static bool AreEqual(const uint32 &nKey1, const uint32 &nKey2);
-		PLCORE_API static bool IsGreater(const uint32 &nKey1, const uint32 &nKey2);
+		static PLCORE_API bool AreEqual(const uint32 &nKey1, const uint32 &nKey2);
+		static PLCORE_API bool IsGreater(const uint32 &nKey1, const uint32 &nKey2);
 
 		// int64
-		PLCORE_API static bool AreEqual(const int64 &nKey1, const int64 &nKey2);
-		PLCORE_API static bool IsGreater(const int64 &nKey1, const int64 &nKey2);
+		static PLCORE_API bool AreEqual(const int64 &nKey1, const int64 &nKey2);
+		static PLCORE_API bool IsGreater(const int64 &nKey1, const int64 &nKey2);
 
 		// uint64
-		PLCORE_API static bool AreEqual(const uint64 &nKey1, const uint64 &nKey2);
-		PLCORE_API static bool IsGreater(const uint64 &nKey1, const uint64 &nKey2);
+		static PLCORE_API bool AreEqual(const uint64 &nKey1, const uint64 &nKey2);
+		static PLCORE_API bool IsGreater(const uint64 &nKey1, const uint64 &nKey2);
 
 		// float
-		PLCORE_API static bool AreEqual(const float &fKey1, const float &fKey2);
-		PLCORE_API static bool IsGreater(const float &fKey1, const float &fKey2);
+		static PLCORE_API bool AreEqual(const float &fKey1, const float &fKey2);
+		static PLCORE_API bool IsGreater(const float &fKey1, const float &fKey2);
 
 		// const char *
-		PLCORE_API static bool AreEqual(const char *pszKey1, const char *pszKey2);
-		PLCORE_API static bool IsGreater(const char *pszKey1, const char *pszKey2);
+		static PLCORE_API bool AreEqual(const char *pszKey1, const char *pszKey2);
+		static PLCORE_API bool IsGreater(const char *pszKey1, const char *pszKey2);
 
 		// String
-		PLCORE_API static bool AreEqual(const String &sKey1, const String &sKey2);
-		PLCORE_API static bool IsGreater(const String &sKey1, const String &sKey2);
+		static PLCORE_API bool AreEqual(const String &sKey1, const String &sKey2);
+		static PLCORE_API bool IsGreater(const String &sKey1, const String &sKey2);
 
 
 };
@@ -137,7 +137,7 @@ class GrowFunction {
 		*  @return
 		*    New size, if <= current size then no grow is required
 		*/
-		PLCORE_API static uint32 GetNewSize(uint32 nCurrentSize, uint32 nFreeSlots);
+		static PLCORE_API uint32 GetNewSize(uint32 nCurrentSize, uint32 nFreeSlots);
 
 
 };

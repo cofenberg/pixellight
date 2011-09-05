@@ -67,17 +67,17 @@ class Vector4 {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Vector4 Zero;			/**<  0.0,  0.0,  0.0,  0.0 */
-		PLMATH_API static const Vector4 One;			/**<  1.0,  1.0,  1.0,  1.0 */
-		PLMATH_API static const Vector4 NegativeOne;	/**< -1.0, -1.0, -1.0, -1.0 */
-		PLMATH_API static const Vector4 UnitX;			/**<  1.0,  0.0,  0.0,  1.0 */
-		PLMATH_API static const Vector4 UnitY;			/**<  0.0,  1.0,  0.0,  1.0 */
-		PLMATH_API static const Vector4 UnitZ;			/**<  0.0,  0.0,  1.0,  1.0 */
-		PLMATH_API static const Vector4 UnitW;			/**<  0.0,  0.0,  0.0,  1.0 */
-		PLMATH_API static const Vector4 NegativeUnitX;	/**< -1.0,  0.0,  0.0,  1.0 */
-		PLMATH_API static const Vector4 NegativeUnitY;	/**<  0.0, -1.0,  0.0,  1.0 */
-		PLMATH_API static const Vector4 NegativeUnitZ;	/**<  0.0,  0.0, -1.0,  1.0 */
-		PLMATH_API static const Vector4 NegativeUnitW;	/**<  0.0,  0.0,  0.0, -1.0 */
+		static PLMATH_API const Vector4 Zero;			/**<  0.0,  0.0,  0.0,  0.0 */
+		static PLMATH_API const Vector4 One;			/**<  1.0,  1.0,  1.0,  1.0 */
+		static PLMATH_API const Vector4 NegativeOne;	/**< -1.0, -1.0, -1.0, -1.0 */
+		static PLMATH_API const Vector4 UnitX;			/**<  1.0,  0.0,  0.0,  1.0 */
+		static PLMATH_API const Vector4 UnitY;			/**<  0.0,  1.0,  0.0,  1.0 */
+		static PLMATH_API const Vector4 UnitZ;			/**<  0.0,  0.0,  1.0,  1.0 */
+		static PLMATH_API const Vector4 UnitW;			/**<  0.0,  0.0,  0.0,  1.0 */
+		static PLMATH_API const Vector4 NegativeUnitX;	/**< -1.0,  0.0,  0.0,  1.0 */
+		static PLMATH_API const Vector4 NegativeUnitY;	/**<  0.0, -1.0,  0.0,  1.0 */
+		static PLMATH_API const Vector4 NegativeUnitZ;	/**<  0.0,  0.0, -1.0,  1.0 */
+		static PLMATH_API const Vector4 NegativeUnitW;	/**<  0.0,  0.0,  0.0, -1.0 */
 
 
 	//[-------------------------------------------------------]

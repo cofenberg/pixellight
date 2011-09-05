@@ -81,7 +81,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of components per pixel
 		*/
-		PLGRAPHICS_API static PLCore::uint32 GetComponentsPerPixel(EColorFormat nColorFormat);
+		static PLGRAPHICS_API PLCore::uint32 GetComponentsPerPixel(EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel component
 		*/
-		PLGRAPHICS_API static PLCore::uint32 GetBytesPerPixelComponent(EDataFormat nDataFormat);
+		static PLGRAPHICS_API PLCore::uint32 GetBytesPerPixelComponent(EDataFormat nDataFormat);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel
 		*/
-		PLGRAPHICS_API static PLCore::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
+		static PLGRAPHICS_API PLCore::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class ImageBuffer {
 		*  @return
 		*    The size of a certain mipmap
 		*/
-		PLGRAPHICS_API static PLCore::uint32 GetMipmapSize(PLCore::uint32 nBaseSize, PLCore::uint32 nMipmap);
+		static PLGRAPHICS_API PLCore::uint32 GetMipmapSize(PLCore::uint32 nBaseSize, PLCore::uint32 nMipmap);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class ImageBuffer {
 		*  @return
 		*    'true' if the given color format has an alpha channel, else 'false'
 		*/
-		PLGRAPHICS_API static bool IsAlphaChannelColorFormat(EColorFormat nColorFormat);
+		static PLGRAPHICS_API bool IsAlphaChannelColorFormat(EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class ImageBuffer {
 		*    Color format with alpha channel on success, same color format channel if the given color format
 		*    has already a alpha channel or when there's no version of the given color format with alpha channel
 		*/
-		PLGRAPHICS_API static EColorFormat GetAlphaChannelColorFormat(EColorFormat nColorFormat);
+		static PLGRAPHICS_API EColorFormat GetAlphaChannelColorFormat(EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class ImageBuffer {
 		*    Color format without alpha channel on success, same color format channel if the given color format
 		*    has already no alpha channel or when there's no version of the given color format without alpha channel
 		*/
-		PLGRAPHICS_API static EColorFormat GetNoneAlphaChannelColorFormat(EColorFormat nColorFormat);
+		static PLGRAPHICS_API EColorFormat GetNoneAlphaChannelColorFormat(EColorFormat nColorFormat);
 
 
 	//[-------------------------------------------------------]

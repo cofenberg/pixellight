@@ -52,7 +52,7 @@ class SNPointLight : public SNLight {
 	//[ Public definitions                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API static const float MinRange;	/**< Minimum point light range (0.0001) */
+		static PLS_API const float MinRange;	/**< Minimum point light range (0.0001) */
 
 		/**
 		*  @brief

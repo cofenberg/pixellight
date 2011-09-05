@@ -52,14 +52,14 @@ class Math {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const double Pi;			/**< 3.14159265358979323846 */
-		PLMATH_API static const double Pi2;			/**< 6.28318530717958623200 (Pi*2) */
-		PLMATH_API static const double PiHalf;		/**< 1.57079632679489655800 (Pi/2) */
-		PLMATH_API static const double DegToRad;	/**< 0.01745329251994329576 (Pi/180) */
-		PLMATH_API static const double RadToDeg;	/**< 57.2957795130823208768 (180/Pi) */
-		PLMATH_API static const double Epsilon;		/**< 1.192092896e-07F */
-		PLMATH_API static const double Log2Const;	/**< 0.693147180559945309417 */
-		PLMATH_API static const int    RandMax;		/**< Maximum random value (0x7fff) */
+		static PLMATH_API const double Pi;			/**< 3.14159265358979323846 */
+		static PLMATH_API const double Pi2;			/**< 6.28318530717958623200 (Pi*2) */
+		static PLMATH_API const double PiHalf;		/**< 1.57079632679489655800 (Pi/2) */
+		static PLMATH_API const double DegToRad;	/**< 0.01745329251994329576 (Pi/180) */
+		static PLMATH_API const double RadToDeg;	/**< 57.2957795130823208768 (180/Pi) */
+		static PLMATH_API const double Epsilon;		/**< 1.192092896e-07F */
+		static PLMATH_API const double Log2Const;	/**< 0.693147180559945309417 */
+		static PLMATH_API const int    RandMax;		/**< Maximum random value (0x7fff) */
 
 
 	//[-------------------------------------------------------]
@@ -76,7 +76,7 @@ class Math {
 		*  @return
 		*    'true' if the value is not a number, else 'false'
 		*/
-		PLMATH_API static bool IsNotANumber(float fValue);
+		static PLMATH_API bool IsNotANumber(float fValue);
 
 		/**
 		*  @brief
@@ -85,7 +85,7 @@ class Math {
 		*  @return
 		*    'true' if the value is not a number, else 'false'
 		*/
-		PLMATH_API static bool IsNotANumber(double dValue);
+		static PLMATH_API bool IsNotANumber(double dValue);
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class Math {
 		*  @return
 		*    'true' if the value is finite, (–INF < fValue < +INF) else 'false' (infinite or not a number)
 		*/
-		PLMATH_API static bool IsFinite(float fValue);
+		static PLMATH_API bool IsFinite(float fValue);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class Math {
 		*  @return
 		*    'true' if the value is finite, (–INF < dValue < +INF) else 'false' (infinite or not a number)
 		*/
-		PLMATH_API static bool IsFinite(double dValue);
+		static PLMATH_API bool IsFinite(double dValue);
 
 		//[-------------------------------------------------------]
 		//[ Nearest power of two                                  ]
@@ -132,7 +132,7 @@ class Math {
 		*  @return
 		*    The nearest power of 2, if it couldn't be found 'nNumber'
 		*/
-		PLMATH_API static int GetNearestPowerOfTwo(int nNumber, bool bLower = true);
+		static PLMATH_API int GetNearestPowerOfTwo(int nNumber, bool bLower = true);
 
 		//[-------------------------------------------------------]
 		//[ Random                                                ]
@@ -144,7 +144,7 @@ class Math {
 		*  @return
 		*    A positive random number
 		*/
-		PLMATH_API static PLCore::uint32 GetRand();
+		static PLMATH_API PLCore::uint32 GetRand();
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class Math {
 		*  @return
 		*    A positive float random number between 0..1
 		*/
-		PLMATH_API static float GetRandFloat();
+		static PLMATH_API float GetRandFloat();
 
 		/**
 		*  @brief
@@ -320,7 +320,7 @@ class Math {
 		*  @return
 		*    The value within the interval [fMin, fMax]
 		*/
-		PLMATH_API static float ClampToInterval(float fValue, float fMin, float fMax);
+		static PLMATH_API float ClampToInterval(float fValue, float fMin, float fMax);
 
 		/**
 		*  @brief
@@ -336,7 +336,7 @@ class Math {
 		*  @return
 		*    The value within the interval [fMin, fMax]
 		*/
-		PLMATH_API static float WrapToInterval(float fValue, float fMin, float fMax);
+		static PLMATH_API float WrapToInterval(float fValue, float fMin, float fMax);
 
 		/**
 		*  @brief
@@ -411,7 +411,7 @@ class Math {
 		*    This function returns a floating-point value representing the largest integer value that
 		*    is less than or equal to the given value.
 		*/
-		PLMATH_API static float Floor(float fValue);
+		static PLMATH_API float Floor(float fValue);
 
 		/**
 		*  @brief
@@ -427,7 +427,7 @@ class Math {
 		*    This function returns a floating-point value representing the smallest integer value
 		*    that is greater than or equal to the given value.
 		*/
-		PLMATH_API static float Ceil(float fValue);
+		static PLMATH_API float Ceil(float fValue);
 
 		/**
 		*  @brief
@@ -441,7 +441,7 @@ class Math {
 		*  @return
 		*    The rounded value of the given value
 		*/
-		PLMATH_API static float Round(float fValue, PLCore::uint32 nPrecision = 0);
+		static PLMATH_API float Round(float fValue, PLCore::uint32 nPrecision = 0);
 
 		/**
 		*  @brief
@@ -458,7 +458,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Sine of 0 is 0
 		*/
-		PLMATH_API static float Sin(float fAngle);
+		static PLMATH_API float Sin(float fAngle);
 
 		/**
 		*  @brief
@@ -473,7 +473,7 @@ class Math {
 		*  @see
 		*    - Sin(float) above
 		*/
-		PLMATH_API static double Sin(double dAngle);
+		static PLMATH_API double Sin(double dAngle);
 
 		/**
 		*  @brief
@@ -490,7 +490,7 @@ class Math {
 		*    If the given value is less than –1 or greater than 1, ASin returns an indefinite
 		*    (same as a quiet NaN).
 		*/
-		PLMATH_API static float ASin(float fValue);
+		static PLMATH_API float ASin(float fValue);
 
 		/**
 		*  @brief
@@ -505,7 +505,7 @@ class Math {
 		*  @see
 		*    - ASin(float) above
 		*/
-		PLMATH_API static double ASin(double dValue);
+		static PLMATH_API double ASin(double dValue);
 
 		/**
 		*  @brief
@@ -522,7 +522,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Cosine of 0 is 1
 		*/
-		PLMATH_API static float Cos(float fAngle);
+		static PLMATH_API float Cos(float fAngle);
 
 		/**
 		*  @brief
@@ -537,7 +537,7 @@ class Math {
 		*  @see
 		*    - Cos(float) above
 		*/
-		PLMATH_API static double Cos(double dAngle);
+		static PLMATH_API double Cos(double dAngle);
 
 		/**
 		*  @brief
@@ -554,7 +554,7 @@ class Math {
 		*    If the given value is less than –1 or greater than 1, ACos returns an indefinite
 		*    (same as a quiet NaN).
 		*/
-		PLMATH_API static float ACos(float fValue);
+		static PLMATH_API float ACos(float fValue);
 
 		/**
 		*  @brief
@@ -569,7 +569,7 @@ class Math {
 		*  @see
 		*    - ACos(float) above
 		*/
-		PLMATH_API static double ACos(double dValue);
+		static PLMATH_API double ACos(double dValue);
 
 		/**
 		*  @brief
@@ -586,7 +586,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Tangent of 0 is 0
 		*/
-		PLMATH_API static float Tan(float fAngle);
+		static PLMATH_API float Tan(float fAngle);
 
 		/**
 		*  @brief
@@ -601,7 +601,7 @@ class Math {
 		*  @see
 		*    - Tan(float) above
 		*/
-		PLMATH_API static double Tan(double dAngle);
+		static PLMATH_API double Tan(double dAngle);
 
 		/**
 		*  @brief
@@ -613,7 +613,7 @@ class Math {
 		*  @return
 		*    Arccosine of the given value
 		*/
-		PLMATH_API static float ATan(float fValue);
+		static PLMATH_API float ATan(float fValue);
 
 		/**
 		*  @brief
@@ -625,7 +625,7 @@ class Math {
 		*  @return
 		*    Arccosine of the given value
 		*/
-		PLMATH_API static double ATan(double dValue);
+		static PLMATH_API double ATan(double dValue);
 
 		/**
 		*  @brief
@@ -647,7 +647,7 @@ class Math {
 		*    - If fX is 0, this function returns 0
 		*    - If both parameters are 0, the function returns 0
 		*/
-		PLMATH_API static float ATan2(float fX, float fY);
+		static PLMATH_API float ATan2(float fX, float fY);
 
 		/**
 		*  @brief
@@ -664,7 +664,7 @@ class Math {
 		*  @see
 		*    - ATan2(float, float) above
 		*/
-		PLMATH_API static double ATan2(double dX, double dY);
+		static PLMATH_API double ATan2(double dX, double dY);
 
 		/**
 		*  @brief
@@ -677,7 +677,7 @@ class Math {
 		*  @return
 		*    The square-root of the given value, indefinite on error
 		*/
-		PLMATH_API static float Sqrt(float fValue);
+		static PLMATH_API float Sqrt(float fValue);
 
 		/**
 		*  @brief
@@ -690,7 +690,7 @@ class Math {
 		*  @return
 		*    The square-root of the given value, indefinite on error
 		*/
-		PLMATH_API static double Sqrt(double dValue);
+		static PLMATH_API double Sqrt(double dValue);
 
 		/**
 		*  @brief
@@ -704,7 +704,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		PLMATH_API static float Pow(float x, float y);
+		static PLMATH_API float Pow(float x, float y);
 
 		/**
 		*  @brief
@@ -718,7 +718,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		PLMATH_API static double Pow(double x, double y);
+		static PLMATH_API double Pow(double x, double y);
 
 		/**
 		*  @brief
@@ -732,7 +732,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		PLMATH_API static double Pow(int x, int y);
+		static PLMATH_API double Pow(int x, int y);
 
 		/**
 		*  @brief
@@ -744,7 +744,7 @@ class Math {
 		*  @return
 		*    The natural logarithm of the given number
 		*/
-		PLMATH_API static float Log(float x);
+		static PLMATH_API float Log(float x);
 
 		/**
 		*  @brief
@@ -756,7 +756,7 @@ class Math {
 		*  @return
 		*    The natural logarithm of the given number
 		*/
-		PLMATH_API static double Log(double x);
+		static PLMATH_API double Log(double x);
 
 		/**
 		*  @brief
@@ -771,7 +771,7 @@ class Math {
 		*  @remarks
 		*    Log(x)/Log(2)
 		*/
-		PLMATH_API static float Log2(float x);
+		static PLMATH_API float Log2(float x);
 
 		/**
 		*  @brief
@@ -786,7 +786,7 @@ class Math {
 		*  @remarks
 		*    Log(x)/Log(2)
 		*/
-		PLMATH_API static double Log2(double x);
+		static PLMATH_API double Log2(double x);
 
 		/**
 		*  @brief
@@ -798,7 +798,7 @@ class Math {
 		*  @return
 		*    The e number raised to the power x
 		*/
-		PLMATH_API static float Exp(float x);
+		static PLMATH_API float Exp(float x);
 
 		/**
 		*  @brief
@@ -810,7 +810,7 @@ class Math {
 		*  @return
 		*    The e number raised to the power x
 		*/
-		PLMATH_API static double Exp(double x);
+		static PLMATH_API double Exp(double x);
 
 
 };

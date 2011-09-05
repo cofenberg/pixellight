@@ -70,8 +70,8 @@ class Quaternion {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Quaternion Zero;		/**<  0.0, 0.0, 0.0, 0.0 */
-		PLMATH_API static const Quaternion Identity;	/**<  1.0, 0.0, 0.0, 0.0 */
+		static PLMATH_API const Quaternion Zero;		/**<  0.0, 0.0, 0.0, 0.0 */
+		static PLMATH_API const Quaternion Identity;	/**<  1.0, 0.0, 0.0, 0.0 */
 
 
 	//[-------------------------------------------------------]

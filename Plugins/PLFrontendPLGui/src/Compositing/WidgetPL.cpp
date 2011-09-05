@@ -33,40 +33,40 @@
 
 
 /* [TODO] Send messages
-		PLGUI_API static GuiMessage OnClose(Widget *pWidget);		*not required*
-		PLGUI_API static GuiMessage OnCreate(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnDestroy(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnShow(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnHide(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnEnable(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnDisable(Widget *pWidget);		*done*
-		PLGUI_API static GuiMessage OnGetFocus(Widget *pWidget);	*done*
-		PLGUI_API static GuiMessage OnLooseFocus(Widget *pWidget);
-		PLGUI_API static GuiMessage OnActivate(Widget *pWidget, bool bActivate);
-		PLGUI_API static GuiMessage OnDrawBackground(Widget *pWidget, Graphics *pGraphics);
-		PLGUI_API static GuiMessage OnDraw(Widget *pWidget, Graphics *pGraphics);
-		PLGUI_API static GuiMessage OnMove(Widget *pWidget, const PLMath::Vector2i &vPos);		*done*
-		PLGUI_API static GuiMessage OnSize(Widget *pWidget, const PLMath::Vector2i &vSize);		*done*
-		PLGUI_API static GuiMessage OnWindowState(Widget *pWidget, EWindowState nWindowState);
-		PLGUI_API static GuiMessage OnEnterFullscreen(Widget *pWidget);
-		PLGUI_API static GuiMessage OnLeaveFullscreen(Widget *pWidget);
-		PLGUI_API static GuiMessage OnPreferredSize(Widget *pWidget, const PLMath::Vector2i &vSize);
-		PLGUI_API static GuiMessage OnAdjustContent(Widget *pWidget);
-		PLGUI_API static GuiMessage OnMouseEnter(Widget *pWidget);
-		PLGUI_API static GuiMessage OnMouseLeave(Widget *pWidget);
-		PLGUI_API static GuiMessage OnMouseOver(Widget *pWidget, bool bMouseOver);
-		PLGUI_API static GuiMessage OnMouseMove(Widget *pWidget, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseHover(Widget *pWidget);
-		PLGUI_API static GuiMessage OnMousePosUpdate(Widget *pWidget, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseButtonDown(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseButtonUp(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseButtonClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseButtonDoubleClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
-		PLGUI_API static GuiMessage OnMouseWheel(Widget *pWidget, int nDelta);
-		PLGUI_API static GuiMessage OnKeyDown(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnKeyUp(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
-		PLGUI_API static GuiMessage OnHotkey(Widget *pWidget, PLCore::uint32 nHotkey);		*not required*
-		PLGUI_API static GuiMessage OnDrop(Widget *pWidget, DataObject *pDataObject);
+		static PLGUI_API GuiMessage OnClose(Widget *pWidget);		*not required*
+		static PLGUI_API GuiMessage OnCreate(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnDestroy(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnShow(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnHide(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnEnable(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnDisable(Widget *pWidget);		*done*
+		static PLGUI_API GuiMessage OnGetFocus(Widget *pWidget);	*done*
+		static PLGUI_API GuiMessage OnLooseFocus(Widget *pWidget);
+		static PLGUI_API GuiMessage OnActivate(Widget *pWidget, bool bActivate);
+		static PLGUI_API GuiMessage OnDrawBackground(Widget *pWidget, Graphics *pGraphics);
+		static PLGUI_API GuiMessage OnDraw(Widget *pWidget, Graphics *pGraphics);
+		static PLGUI_API GuiMessage OnMove(Widget *pWidget, const PLMath::Vector2i &vPos);		*done*
+		static PLGUI_API GuiMessage OnSize(Widget *pWidget, const PLMath::Vector2i &vSize);		*done*
+		static PLGUI_API GuiMessage OnWindowState(Widget *pWidget, EWindowState nWindowState);
+		static PLGUI_API GuiMessage OnEnterFullscreen(Widget *pWidget);
+		static PLGUI_API GuiMessage OnLeaveFullscreen(Widget *pWidget);
+		static PLGUI_API GuiMessage OnPreferredSize(Widget *pWidget, const PLMath::Vector2i &vSize);
+		static PLGUI_API GuiMessage OnAdjustContent(Widget *pWidget);
+		static PLGUI_API GuiMessage OnMouseEnter(Widget *pWidget);
+		static PLGUI_API GuiMessage OnMouseLeave(Widget *pWidget);
+		static PLGUI_API GuiMessage OnMouseOver(Widget *pWidget, bool bMouseOver);
+		static PLGUI_API GuiMessage OnMouseMove(Widget *pWidget, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseHover(Widget *pWidget);
+		static PLGUI_API GuiMessage OnMousePosUpdate(Widget *pWidget, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseButtonDown(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseButtonUp(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseButtonClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseButtonDoubleClick(Widget *pWidget, EMouseButton nButton, const PLMath::Vector2i &vPos);
+		static PLGUI_API GuiMessage OnMouseWheel(Widget *pWidget, int nDelta);
+		static PLGUI_API GuiMessage OnKeyDown(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		static PLGUI_API GuiMessage OnKeyUp(Widget *pWidget, PLCore::uint32 nKey, PLCore::uint32 nModifiers);
+		static PLGUI_API GuiMessage OnHotkey(Widget *pWidget, PLCore::uint32 nHotkey);		*not required*
+		static PLGUI_API GuiMessage OnDrop(Widget *pWidget, DataObject *pDataObject);
 */
 
 

@@ -456,7 +456,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @return
 		*    Frontend instance, null pointer on error
 		*/
-		PLCORE_API static Frontend *CreateFrontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
+		static PLCORE_API Frontend *CreateFrontend(const FrontendContext &cFrontendContext, FrontendImpl &cFrontendImpl);
 
 		/**
 		*  @brief
@@ -488,7 +488,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*    - Corrects: The frontend position shouldn't be outside the visible screen
 		*    - Corrects: The size of the frontend shouldn't leave the visible screen
 		*/
-		PLCORE_API static void CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, int nScreenLeft, int nScreenTop, int nScreenWidth, int nScreenHeight, uint32 nMinWidth = 200, uint32 nMinHeight = 200);
+		static PLCORE_API void CorrectPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight, int nScreenLeft, int nScreenTop, int nScreenWidth, int nScreenHeight, uint32 nMinWidth = 200, uint32 nMinHeight = 200);
 
 
 	//[-------------------------------------------------------]

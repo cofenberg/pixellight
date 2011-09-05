@@ -91,7 +91,7 @@ class Localization : public Singleton<Localization> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const String PixelLight;	/**< "PixelLight" (default) */
+		static PLCORE_API const String PixelLight;	/**< "PixelLight" (default) */
 
 
 	//[-------------------------------------------------------]

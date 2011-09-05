@@ -85,15 +85,15 @@ class Material : public PLCore::Resource<Material> {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API static const PLCore::String DiffuseMap;			/**< 'DiffuseMap' string (other usual name: 'decal map') */
-		PLRENDERER_API static const PLCore::String LightMap;			/**< 'LightMap' string (global ambient lighting) */
-		PLRENDERER_API static const PLCore::String AmbientOcclusionMap;	/**< 'AmbientOcclusionMap' string (global ambient occlusion) */
-		PLRENDERER_API static const PLCore::String EmissiveMap;			/**< 'EmissiveMap' string (other usual name: 'self illumination map') */
-		PLRENDERER_API static const PLCore::String ReflectionMap;		/**< 'ReflectionMap' string (other usual name: 'environment map') */
-		PLRENDERER_API static const PLCore::String ReflectivityMap;		/**< 'ReflectivityMap' string */
-		PLRENDERER_API static const PLCore::String NormalMap;			/**< 'NormalMap' string */
-		PLRENDERER_API static const PLCore::String SpecularMap;			/**< 'SpecularMap' string */
-		PLRENDERER_API static const PLCore::String HeightMap;			/**< 'HeightMap' string (other usual name: 'bump map') */
+		static PLRENDERER_API const PLCore::String DiffuseMap;			/**< 'DiffuseMap' string (other usual name: 'decal map') */
+		static PLRENDERER_API const PLCore::String LightMap;			/**< 'LightMap' string (global ambient lighting) */
+		static PLRENDERER_API const PLCore::String AmbientOcclusionMap;	/**< 'AmbientOcclusionMap' string (global ambient occlusion) */
+		static PLRENDERER_API const PLCore::String EmissiveMap;			/**< 'EmissiveMap' string (other usual name: 'self illumination map') */
+		static PLRENDERER_API const PLCore::String ReflectionMap;		/**< 'ReflectionMap' string (other usual name: 'environment map') */
+		static PLRENDERER_API const PLCore::String ReflectivityMap;		/**< 'ReflectivityMap' string */
+		static PLRENDERER_API const PLCore::String NormalMap;			/**< 'NormalMap' string */
+		static PLRENDERER_API const PLCore::String SpecularMap;			/**< 'SpecularMap' string */
+		static PLRENDERER_API const PLCore::String HeightMap;			/**< 'HeightMap' string (other usual name: 'bump map') */
 
 
 	//[-------------------------------------------------------]

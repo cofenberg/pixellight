@@ -106,7 +106,7 @@ class Parameters {
 		*  @return
 		*    The given data type as string
 		*/
-		PLRENDERER_API static PLCore::String DataTypeToString(EDataType nDataType);
+		static PLRENDERER_API PLCore::String DataTypeToString(EDataType nDataType);
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class Parameters {
 		*  @return
 		*    The given data type as number
 		*/
-		PLRENDERER_API static EDataType DataTypeFromString(const PLCore::String &sDataType);
+		static PLRENDERER_API EDataType DataTypeFromString(const PLCore::String &sDataType);
 
 
 	//[-------------------------------------------------------]

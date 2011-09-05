@@ -1,3 +1,10 @@
+>> 05.09.2011
+[CO]
+- The Intel C++ compiler has no support for nullptr + fixed some issues detected by this compiler
+- Fixed "warning #82: storage class is not first"-warnings of the Intel C++ compiler when using warn level 4
+
+
+
 >> 04.09.2011
 [CO]
 - When building with CMake, it's now possible to disable the ZIP support in order to remove the zlib external dependency. Please note that it's *not* recommended to disable the ZIP

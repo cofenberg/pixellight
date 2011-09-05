@@ -65,8 +65,8 @@ class Matrix3x4 {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Matrix3x4 Zero;		/**< Zero matrix */
-		PLMATH_API static const Matrix3x4 Identity;	/**< Identity matrix */
+		static PLMATH_API const Matrix3x4 Zero;		/**< Zero matrix */
+		static PLMATH_API const Matrix3x4 Identity;	/**< Identity matrix */
 
 
 	//[-------------------------------------------------------]

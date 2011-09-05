@@ -68,7 +68,7 @@ class ToolsWindows {
 		*  @note
 		*    - Pass bitmaps having standard cursor sizes like 16*16, 32*32...
 		*/
-		PLGUI_API static void GetMaskBitmaps(HBITMAP hBitmap, COLORREF sColorTransparent, HBITMAP &hMaskAnd, HBITMAP &hMaskXor);
+		static PLGUI_API void GetMaskBitmaps(HBITMAP hBitmap, COLORREF sColorTransparent, HBITMAP &hMaskAnd, HBITMAP &hMaskXor);
 
 		/**
 		*  @brief
@@ -80,7 +80,7 @@ class ToolsWindows {
 		*  @return
 		*    Icon handle
 		*/
-		PLGUI_API static HICON CreateIconFromBitmap(HBITMAP hBitmap);
+		static PLGUI_API HICON CreateIconFromBitmap(HBITMAP hBitmap);
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class ToolsWindows {
 		*  @return
 		*    The converted HBITMAP
 		*/
-		PLGUI_API static HCURSOR CreateCursorFromBitmap(HBITMAP hBitmap, COLORREF sColorTransparent, DWORD nHotspotX, DWORD nHotspotY);
+		static PLGUI_API HCURSOR CreateCursorFromBitmap(HBITMAP hBitmap, COLORREF sColorTransparent, DWORD nHotspotX, DWORD nHotspotY);
 
 
 };

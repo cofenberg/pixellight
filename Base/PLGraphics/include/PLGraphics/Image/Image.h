@@ -107,7 +107,7 @@ class Image : public PLCore::Loadable {
 		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
 		*  @endverbatim
 		*/
-		PLGRAPHICS_API static Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
+		static PLGRAPHICS_API Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Image : public PLCore::Loadable {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLCore::uint8 *pnData = nullptr);
+		static PLGRAPHICS_API Image CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, const PLCore::uint8 *pnData = nullptr);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class Image : public PLCore::Loadable {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
+		static PLGRAPHICS_API Image CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class Image : public PLCore::Loadable {
 		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image!
 		*/
-		PLGRAPHICS_API static Image CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
+		static PLGRAPHICS_API Image CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone, PLCore::uint8 *pnData = nullptr);
 
 
 	//[-------------------------------------------------------]

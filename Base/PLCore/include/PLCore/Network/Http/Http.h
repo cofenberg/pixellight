@@ -175,7 +175,7 @@ class Http {
 		*  @remarks
 		*    Example: GetStatusString(Http_404_NotFound) -> "404 Not Found"
 		*/
-		PLCORE_API static String GetStatusString(EHttpStatus nStatusCode);
+		static PLCORE_API String GetStatusString(EHttpStatus nStatusCode);
 
 
 };

@@ -82,7 +82,7 @@ class JointSlider : public PLPhysics::JointSlider {
 		*     0 if the joint acceleration is not set, 1 if only the joint linear acceleration is set,
 		*     2 if only the joint angular acceleration is set, 3 if the joint linear and angular acceleration is set
 		*/
-		PLPHYSICSNEWTON_API static unsigned JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, Newton::NewtonHingeSliderUpdateDesc *pDesc);
+		static PLPHYSICSNEWTON_API unsigned JointUserCallback(const Newton::NewtonJoint *pNewtonJoint, Newton::NewtonHingeSliderUpdateDesc *pDesc);
 
 
 	//[-------------------------------------------------------]

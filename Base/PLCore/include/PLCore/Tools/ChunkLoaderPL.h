@@ -62,8 +62,8 @@ class ChunkLoaderPL : public ChunkLoader {
 	//[ Public constants                                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API static const uint32 MAGIC;	/**< Magic number of the file format */
-		PLCORE_API static const uint32 VERSION;	/**< File format version */
+		static PLCORE_API const uint32 MAGIC;	/**< Magic number of the file format */
+		static PLCORE_API const uint32 VERSION;	/**< File format version */
 
 
 	//[-------------------------------------------------------]

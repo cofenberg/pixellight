@@ -52,13 +52,13 @@ class Vector2i {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		PLMATH_API static const Vector2i Zero;			/**<  0,  0 */
-		PLMATH_API static const Vector2i One;			/**<  1,  1 */
-		PLMATH_API static const Vector2i NegativeOne;	/**< -1, -1 */
-		PLMATH_API static const Vector2i UnitX;			/**<  1,  0 */
-		PLMATH_API static const Vector2i UnitY;			/**<  0,  1 */
-		PLMATH_API static const Vector2i NegativeUnitX;	/**< -1,  0 */
-		PLMATH_API static const Vector2i NegativeUnitY;	/**<  0, -1 */
+		static PLMATH_API const Vector2i Zero;			/**<  0,  0 */
+		static PLMATH_API const Vector2i One;			/**<  1,  1 */
+		static PLMATH_API const Vector2i NegativeOne;	/**< -1, -1 */
+		static PLMATH_API const Vector2i UnitX;			/**<  1,  0 */
+		static PLMATH_API const Vector2i UnitY;			/**<  0,  1 */
+		static PLMATH_API const Vector2i NegativeUnitX;	/**< -1,  0 */
+		static PLMATH_API const Vector2i NegativeUnitY;	/**<  0, -1 */
 
 
 	//[-------------------------------------------------------]

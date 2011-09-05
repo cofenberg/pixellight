@@ -113,7 +113,7 @@ class MemoryManager {
 		*  @note
 		*    - 'memcpy'-wrapper
 		*/
-		PLCORE_API static void Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes);
+		static PLCORE_API void Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes);
 
 		/**
 		*  @brief
@@ -129,7 +129,7 @@ class MemoryManager {
 		*  @note
 		*    - 'memset'-wrapper
 		*/
-		PLCORE_API static void Set(void *pDestination, int nCharacter, uint32 nNumOfBytes);
+		static PLCORE_API void Set(void *pDestination, int nCharacter, uint32 nNumOfBytes);
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class MemoryManager {
 		*  @note
 		*    - 'memcmp'-wrapper
 		*/
-		PLCORE_API static int Compare(const void *pFirstBuffer, const void *pSecondBuffer, uint32 nNumOfBytes);
+		static PLCORE_API int Compare(const void *pFirstBuffer, const void *pSecondBuffer, uint32 nNumOfBytes);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class MemoryManager {
 		*  @return
 		*    The new allocated memory, a null pointer on error
 		*/
-		PLCORE_API static void *Reallocator(void *pAddress, size_t nNumOfBytes, EType nType = NewArray, const char *pszSourceFile = nullptr, int nSourceLine = -1);
+		static PLCORE_API void *Reallocator(void *pAddress, size_t nNumOfBytes, EType nType = NewArray, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 		/**
 		*  @brief
@@ -191,7 +191,7 @@ class MemoryManager {
 		*  @note
 		*    - Normally there's no reason using this function directly, use the 'new' keyword instead
 		*/
-		PLCORE_API static void *Allocator(EType nType, size_t nNumOfBytes, const char *pszSourceFile = nullptr, int nSourceLine = -1);
+		static PLCORE_API void *Allocator(EType nType, size_t nNumOfBytes, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class MemoryManager {
 		*  @note
 		*    - Normally there's no reason using this function directly, use the 'delete' keyword instead
 		*/
-		PLCORE_API static void Deallocator(EType nType, void *pAddress, const char *pszSourceFile = nullptr, int nSourceLine = -1);
+		static PLCORE_API void Deallocator(EType nType, void *pAddress, const char *pszSourceFile = nullptr, int nSourceLine = -1);
 
 
 };

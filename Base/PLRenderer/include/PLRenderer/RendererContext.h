@@ -123,7 +123,7 @@ class RendererContext : public PLCore::AbstractContext {
 		*  @return
 		*    Creates a renderer context instance, a null pointer on error
 		*/
-		PLRENDERER_API static RendererContext *CreateInstance(const PLCore::String &sBackend, PLCore::handle nNativeWindowHandle, Renderer::EMode nMode = Renderer::ModeBoth, PLCore::uint32 nZBufferBits = 24, PLCore::uint32 nStencilBits = 8, PLCore::uint32 nMultisampleAntialiasingSamples = 0, const PLCore::String &sDefaultShaderLanguage = "");
+		static PLRENDERER_API RendererContext *CreateInstance(const PLCore::String &sBackend, PLCore::handle nNativeWindowHandle, Renderer::EMode nMode = Renderer::ModeBoth, PLCore::uint32 nZBufferBits = 24, PLCore::uint32 nStencilBits = 8, PLCore::uint32 nMultisampleAntialiasingSamples = 0, const PLCore::String &sDefaultShaderLanguage = "");
 
 
 	//[-------------------------------------------------------]
