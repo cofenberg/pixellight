@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
 
-# [TODO] Update vcproj (Microsoft Visual Studio 2008) to vcxproj (Microsoft Visual Studio 2010)
 # [TODO] Add verbose command line option
 # [TODO] Write the current PixelLight version into the XML plugin file
 # [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.8-R1 (Python)")
-# [TODO] Add "Delayed" option within the resulting XML plugin file
+# [TODO] Add "Delayed" option within the resulting XML plugin file (currently always set to "0")
 # [TODO] Add RTTI class metadata within the resulting XML plugin file
 
 
@@ -241,7 +240,7 @@ def ParseProject(project):
 
 	# Find VC projects
 	print("Looking for project files")
-	projects = Find(path, "*.vcproj", False)
+	projects = Find(path, "*.vcxproj", False)
 	PrintList(projects, "found ")
 
 	# Find out name of project
@@ -258,7 +257,7 @@ def ParseProject(project):
 			# Ignore internal projects
 			PrintDebug("This is an internal project file, ignoring ...")
 		else:
-			# Cut extension (.vcproj)
+			# Cut extension (.vcxproj)
 			fpath, fname = os.path.split(filename)
 			name, fext = os.path.splitext(fname)
 			PrintDebug("Taking '" + name + "' as project name")

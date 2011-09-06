@@ -3,6 +3,7 @@
 - "PLProject.py": I learned something today: Under Unix/Linux there's something called "shebang" (http://en.wikipedia.org/wiki/Shebang_%28Unix%29). This is the character
   sequence "#!" used in e.g. "#!/usr/bin/python" within "PLProject.py"... and this has to be at the very top of the file. Fixed an error I introduced a while ago...
   don't dare to laugh, I know other things like shader programming... :)
+- "PLProject.py": Updated "vcproj" (Microsoft Visual Studio 2008) to "vcxproj" (Microsoft Visual Studio 2010)
 
 
 
