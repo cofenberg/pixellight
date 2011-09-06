@@ -940,6 +940,85 @@ long _wtol( const wchar_t *str )
 }
 
 #ifdef ANDROID
+	// Source: http://bsd.unixdev.net/4.5BSD/src/usr.libexec/dictd/mbrtowc.c
+	//         "GNU GENERAL PUBLIC LICENSE" http://bsd.unixdev.net/4.5BSD/src/usr.libexec/dictd/COPYING
+	static const char * utf8_to_ucs4 (
+	   const char *ptr, wchar_t *result)
+	{
+	   wchar_t ret;
+	   int ch;
+	   int octet_count;
+	   int bits_count;
+	   int i;
+
+	   ret = 0;
+
+	   ch = (unsigned char) *ptr++;
+
+	   if ((ch & 0x80) == 0x00){
+		  if (result)
+		 *result = ch;
+	   }else{
+		  if ((ch & 0xE0) == 0xC0){
+		 octet_count = 2;
+		 ch &= ~0xE0;
+		  }else if ((ch & 0xF0) == 0xE0){
+		 octet_count = 3;
+		 ch &= ~0xF0;
+		  }else if ((ch & 0xF8) == 0xF0){
+		 octet_count = 4;
+		 ch &= ~0xF8;
+		  }else if ((ch & 0xFC) == 0xF8){
+		 octet_count = 5;
+		 ch &= ~0xFC;
+		  }else if ((ch & 0xFE) == 0xFC){
+		 octet_count = 6;
+		 ch &= ~0xFE;
+		  }else{
+		 return NULL;
+		  }
+
+		  bits_count = (octet_count-1) * 6;
+		  ret |= (ch << bits_count);
+		  for (i=1; i < octet_count; ++i){
+		 bits_count -= 6;
+
+		 ch = (unsigned char) *ptr++;
+		 if ((ch & 0xC0) != 0x80){
+			return NULL;
+		 }
+
+		 ret |= ((ch & 0x3F) << bits_count);
+		  }
+
+		  if (result)
+		 *result = ret;
+	   }
+
+	   return ptr;
+	}
+	size_t mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
+	{
+	   const char *end;
+
+	   end = utf8_to_ucs4 (s, pwc);
+	   if (end)
+		  return end - s;
+	   else
+		  return (size_t) -1;
+	}
+
+	extern "C" {
+		// "mbtowc" is defined within "stdlib.h", but not implemented
+
+		// Source: http://bsd.unixdev.net/4.5BSD/src/usr.libexec/dictd/mbtowc.c
+		//         "GNU GENERAL PUBLIC LICENSE" http://bsd.unixdev.net/4.5BSD/src/usr.libexec/dictd/COPYING
+		int mbtowc(wchar_t *pwc, const char *s, size_t n)
+		{
+		   return (int) mbrtowc (pwc, s, n, NULL);
+		}
+	}
+
 	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
 	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
 
