@@ -1,3 +1,9 @@
+>> 06.09.2011
+[CO]
+- "PLRendererOpenGLES2": Added Android part to the EGL headers
+
+
+
 >> 04.09.2011
 [CO]
 - Moved the null font manager implementation from "PLRendererNull" into "PLRenderer" backend tools
