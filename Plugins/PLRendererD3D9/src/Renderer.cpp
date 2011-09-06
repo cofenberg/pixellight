@@ -1732,7 +1732,7 @@ bool Renderer::MakeScreenshot(Image &cImage)
 	D3DLOCKED_RECT cLockedRect;
 	if (pSurface->LockRect(&cLockedRect, nullptr, 0) == D3D_OK) {
 		// Create image buffer
-		cImage.Clear();
+		cImage.Unload();
 		ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 		pImageBuffer->CreateImage(DataByte, ColorRGBA, Vector3i(dm.Width, dm.Height, 1));
 

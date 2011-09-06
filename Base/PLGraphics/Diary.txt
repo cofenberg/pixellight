@@ -1,3 +1,11 @@
+>> 06.09.2011
+[CO]
+- Fixed inconsistency: "Image" is derived from "Loadable" which has a "Unload()"-method, but the image class introduced it's own "Clear()"-method for the
+  same task. The result was that the loadable system wasn't able to unload the loadable automatically when e.g. loading a new one and within the image loaders
+  "Clear()" had to be called explicitly. Quite error prone, fixed it.
+
+
+
 >> 27.08.2011
 [CO]
 - "ImageData" & "ImageBuffer": Added "HasAnyData()"-method

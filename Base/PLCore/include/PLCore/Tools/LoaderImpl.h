@@ -46,7 +46,7 @@ namespace PLCore {
 *
 *  @remarks
 *    A loader implementation is ONLY responsible for loading & saving, NOT for opening/closing
-*    concrete file objects!
+*    concrete file objects or for clearing the given loadable!
 *    There's only one instance of each loader within the system, do NOT use class member variables,
 *    do ONLY use local variables else you may get in trouble when using multi-threading.
 *    By default, the loadable system looks for "Load" and "LoadParams" RTTI methods for loading, and

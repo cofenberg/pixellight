@@ -194,7 +194,6 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 						png_set_tRNS_to_alpha(pPng);
 
 					// Create image buffer
-					cImage.Clear();
 					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 					pImageBuffer->CreateImage(nDataFormat, nColorFormat, Vector3i(nWidth, nHeight, 1));
 

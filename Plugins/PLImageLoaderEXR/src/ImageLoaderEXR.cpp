@@ -180,7 +180,6 @@ bool ImageLoaderEXR::Load(Image &cImage, File &cFile)
 		nComponents = 4;
 
 	// Create the image and read in the RGB/RGBA components
-	cImage.Clear();
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(DataFloat, nComponents ? ColorRGB : ColorRGBA, Vector3i(nWidth, nHeight, 1));
 

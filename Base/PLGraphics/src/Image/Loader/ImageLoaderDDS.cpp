@@ -369,9 +369,6 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 			}
 		}
 
-		// Clear the old image
-		cImage.Clear();
-
 		// Get the number of mipmaps
 		const uint32 nMipmaps = (!sHeader.nMipMapCount) ? 1 : sHeader.nMipMapCount;
 
