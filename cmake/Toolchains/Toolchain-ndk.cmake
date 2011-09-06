@@ -16,7 +16,6 @@ set(PL_MOBILE							1)
 set(CMAKETOOLS_CONFIG_NO_FULL_CONTROL	1)	# Don't dare to just reset carefully chosen compiler and linker flags, else we get something like "crtbegin_so.o: No such file: No such file or directory" messages
 
 
-
 # Changes in the following third party script
 # [CHANGED] Do not set output paths, this is done by PixelLight's build system
 # [CHANGED] Changed default Android API level from 8 to 9 (we need native EGL and native activity introduced in this version)
