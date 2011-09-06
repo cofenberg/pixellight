@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLInput/Backend/Bluetooth/Bluetooth.h"
 #include "PLInput/Backend/Bluetooth/BTImpl.h"
-#ifdef LINUX
+#if defined(LINUX) && !defined(ANDROID)
 	#include "PLInput/Backend/Bluetooth/BTLinux.h"
 #endif
 
@@ -75,13 +75,13 @@ const List<BTDevice*> &Bluetooth::GetDevices() const
 *    Constructor
 */
 Bluetooth::Bluetooth() :
-	m_pBTImpl(nullptr)
-{
 	// Create Bluetooth implementation
-	#if defined(LINUX)
-		m_pBTImpl = new BTLinux();
+	#if defined(LINUX) && !defined(ANDROID)
+		m_pBTImpl(new BTLinux())
+	#else
+		m_pBTImpl(nullptr)
 	#endif
-
+{
 	// Detect devices
 	DetectDevices();
 }
@@ -96,7 +96,8 @@ Bluetooth::~Bluetooth()
 	Clear();
 
 	// Delete Bluetooth implementation
-	if (m_pBTImpl) delete m_pBTImpl;
+	if (m_pBTImpl)
+		delete m_pBTImpl;
 }
 
 /**
