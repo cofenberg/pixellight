@@ -129,6 +129,8 @@ void Color4::SwapRB(uint8 nBuffer[], uint32 nNumOfPixels)
 			dec ecx					// Decreases our loop counter
 			jnz label				// If not zero jump back to label
 	}
+// [TODO] Check this: The Linux assembler version of this function is broken?
+/*
 #elif defined(LINUX) && !defined(NO_INLINE_ASM)
 	// 32 Bit assembler method (AT&T)
 	void *p = nBuffer;					// Pointer to the buffer
@@ -143,7 +145,7 @@ void Color4::SwapRB(uint8 nBuffer[], uint32 nNumOfPixels)
 			"add $4,%ebx\n\t"			// Moves through the data by 3 bytes
 			"dec %ecx\n\t"				// Decreases our loop counter
 			"jnz label\n\t"				// If not zero jump back to label
-	);
+	);*/
 #else
 	// C++ method
 	for (uint32 i=0; i<nNumOfPixels; i+=4) {
