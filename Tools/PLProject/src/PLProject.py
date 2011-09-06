@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 # [TODO] Update vcproj (Microsoft Visual Studio 2008) to vcxproj (Microsoft Visual Studio 2010)
 # [TODO] Add verbose command line option
 # [TODO] Write the current PixelLight version into the XML plugin file
@@ -6,7 +9,6 @@
 # [TODO] Add RTTI class metadata within the resulting XML plugin file
 
 
-#!/usr/bin/python
 import sys
 import os
 #import io
