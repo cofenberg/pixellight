@@ -4,6 +4,27 @@
 
 
 
+>> 06.09.2011
+[CO]
+- Finally! Took me quite some time to figure out the "crtbegin_so.o: No such file: No such file or director" linker issue when compiling for Android. For this, I stopped for two days to get to the very
+  basics... building with Unix makefiles, building with Android NDK makefiles, building with CMake... and writing everything step by step down... including how to install and configurate everything as well
+  as some Linux console basics for MS Windows folks like me (imagine someone has no real Linux experience and wants to compile for native Android by using Linux). Maybe I publish the stuff later as tutorials
+  how one can build native applications for Android by using Linux... sadly, most information one can find in the Internet and even on Google's own documents is out-of-date.
+  -> Our CMake macro "define_project" justs resets *all* compiler and linker settings carefully set by the Android toolchain helper script. Tried a few minutes to fix it - but to be honnest, after this long
+     search I currently don't spend more hours with the CMake build system and therefore, I just added a "CMAKETOOLS_CONFIG_NO_FULL_CONTROL" variable disabling the compiler and linker setting reset.
+     "Toolchain-ndk.cmake" defines "CMAKETOOLS_CONFIG_NO_FULL_CONTROL" and so, the linker error is finally gone. Maybe I find a better solution later... later, not now... :D
+  -> By the way, it looks like the not so funny (in fact, absolutly annoying!) character eating bug described on "31.08.2011" doesn't happen when using Linux - maybe the Android NDK standalone toolchain for
+     MS Windows is broken? Also, compiling is muuuuuch faster when using Linux - and the "-j" make option also works, meaning it's possible to use all available CPU cores for compiling. When I sum up
+     everything I learned in the past few days... using MS Windows to compile native Android applications is a no-go, far too complicated, to slow, to buggy - just unusable and a waste of time. :/
+  -> Stephan Wezel rewrote "PLCore::SemaphoreLinux", it's now using POSIX semaphores, ok, this port point is also done
+  -> For a minimal build, PixelLight now only depends on PCRE as external third party library. I had a look into POSIX regex, Android 2.3 supports it correctly (tested it) - but the regular expression syntax
+     is another one used by PCRE, so, we can't really use POSIX regex.
+  -> I also noticed that "armeabi v7a" is not working within the Android Emulator, it just crashs. There's no "armeabi v7a"-target available. For the Android emulator, "armeabi" must be used. This means that I
+     have to provide two kinds of external dependencies packages, one for "armeabi v7a" and one for "armeabi" because I also want to support the Android Emulator (right now the official Android 2.3 for LG P990
+     Optimus Speed is still not available, but should be in a few days... eventually... if it's not, I have to use e.g. Cyanogenmod, but something "official" would be better for testing *g*).
+
+
+
 >> 04.09.2011
 [CO]
 - Added triggers within "PixelLight.cmake" so one can exclude the external dependencies "libpng" and "libjpg", within the minimal-build they are excluded by default
