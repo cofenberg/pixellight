@@ -9,7 +9,7 @@ set(CMAKETOOLS_TOOLCHAIN ndk)
 set(CMAKETOOLS_CONFIG_NO_INLINE_ASM 1)
 
 # Internal options
-set(CMAKETOOLS_TARGET_ARCH	"arm")
+#set(CMAKETOOLS_TARGET_ARCH	${ARMEABI_NDK_NAME})	# Set at the end of this file, should be "ARM_TARGET=armeabi" for the Android emulator and "ARM_TARGET=armeabi-v7a" for an Android device
 set(PL_NATIVE_PLPROJECT		0)
 set(CMAKETOOLS_MINIMAL		1)
 set(PL_MOBILE				1)
@@ -430,3 +430,10 @@ macro(find_host_program)
 endmacro()
 
 MARK_AS_ADVANCED(FORCE_ARM NO_UNDEFINED)
+
+
+
+
+
+# Internal options
+set(CMAKETOOLS_TARGET_ARCH	${ARMEABI_NDK_NAME})
