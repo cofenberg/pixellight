@@ -262,7 +262,6 @@ bool ImageLoaderJPG::LoadParams(Image &cImage, File &cFile, bool bBlockSmoothing
 	}
 
 	// Create image buffer
-	cImage.Clear();
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(DataByte, nColorFormat, Vector3i(sInfo.output_width, sInfo.output_height, 1));
 

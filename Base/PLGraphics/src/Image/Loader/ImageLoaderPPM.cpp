@@ -76,7 +76,6 @@ bool ImageLoaderPPM::Load(Image &cImage, File &cFile)
 				const int nMaxColorValue = cTokenizer.GetNextToken().GetInt();
 				if (nMaxColorValue < 256 && nMaxColorValue > 0) {
 					// Create image buffer
-					cImage.Clear();
 					ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 					pImageBuffer->CreateImage(DataByte, ColorRGB, Vector3i(nWidth, nHeight, 1));
 

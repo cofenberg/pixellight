@@ -203,7 +203,6 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 	}
 
 	// Create image buffer
-	cImage.Clear();
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(DataByte, nColorFormat, Vector3i(sHeader.nWidth, sHeader.nHeight, 1));
 

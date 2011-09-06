@@ -144,7 +144,7 @@ Image::Image(const Image &cSource)
 Image::~Image()
 {
 	// Clear data
-	Clear();
+	Unload();
 }
 
 /**
@@ -154,7 +154,7 @@ Image::~Image()
 Image &Image::operator =(const Image &cSource)
 {
 	// Clear data
-	Clear();
+	Unload();
 
 	// Copy parts
 	for (uint32 i=0; i<cSource.m_lstParts.GetNumOfElements(); i++) {
@@ -170,21 +170,6 @@ Image &Image::operator =(const Image &cSource)
 
 	// Return this
 	return *this;
-}
-
-/**
-*  @brief
-*    Clear data
-*/
-void Image::Clear()
-{
-	// Destroy parts
-	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++)
-		delete m_lstParts[i];
-
-	// Clear frame list
-	m_lstParts.Clear();
-	m_mapParts.Clear();
 }
 
 /**
@@ -412,7 +397,7 @@ ImageBuffer *Image::GetBuffer(uint32 nPart, uint32 nMipmap) const
 void Image::CreateTestImage(ETestImage nTestImage)
 {
 	// Clear data
-	Clear();
+	Unload();
 
 	// Get test image ID
 	switch (nTestImage) {
@@ -434,6 +419,20 @@ void Image::CreateTestImage(ETestImage nTestImage)
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
+bool Image::Unload()
+{
+	// Destroy parts
+	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++)
+		delete m_lstParts[i];
+
+	// Clear frame list
+	m_lstParts.Clear();
+	m_mapParts.Clear();
+
+	// Call base implementation
+	return Loadable::Unload();
+}
+
 String Image::GetLoadableTypeName() const
 {
 	static const String sString = "Image";

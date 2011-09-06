@@ -2426,7 +2426,7 @@ bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 	glGetIntegerv(GL_VIEWPORT, nViewPort);
 
 	// Create image buffer
-	cImage.Clear();
+	cImage.Unload();
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
 	pImageBuffer->CreateImage(DataByte, ColorRGBA, Vector3i(nViewPort[2], nViewPort[3], 1));
 
