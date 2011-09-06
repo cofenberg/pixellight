@@ -372,6 +372,10 @@ Now you should be able to run the applications built by the PixelLight project, 
 In principle, there's no difference in building PixelLight for Android on a MS Windows or Linux host. So, the
 following description is e.g. not MS Windows only.
 
+Warning: We noticed several issues when using the Android NDK under MS Windows ("ndk r6b")
+- The linker eat characters resulting in errors like "CMakeFiles/PLCore.dr/src/File/FileSearchLinux.cpp not found" while the filename was "CMakeFiles/PLCore.dir/src/File/FileSearchLinux.cpp"
+- Performance issues, the build process is slow
+
 
 3.1.1. Prerequisites
 --------------------
@@ -382,8 +386,14 @@ Install the usual Android development tools (the following versions are those us
 	- "Android SDK Tools, revision 12"
 	- "Android SDK Platform-tools, revision 6"
 	- "SDK Platform Android 2.2, API 9, revision 3"
-- Android NDK ("ndk r6")
-	- (optional) Windows
+- Android NDK ("ndk r6b")
+	- Linux
+		- This example assumes that the data has been extracted directly within the home ("~") directory: Open hidden "~/.bashrc"-file and add:
+			# Important Android SDK and NDK paths
+			export ANDROID_SDK=~/android-sdk-linux_86
+			export ANDROID_NDK=~/android-ndk-r6b
+			export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDROID_NDK}
+	- Windows
 		- Extract it and set the MS Windows PATH environment variable "ANDROID_NDK" to the NDK root directory
 		- Set the MS Windows PATH environment variable "ANDROID_NDK_TOOLCHAIN_ROOT" to the NDK toolchain root directory (e.g. "C:\android-ndk-r6b\toolchains\arm-linux-androideabi-4.4.3\prebuilt\windows\arm-linux-androideabi")
 		-> Those variables can also be added/set within the CMake-GUI
@@ -397,6 +407,8 @@ Here's how to compile PixelLight by using the CMake-GUI:
 - Start "CMake (cmake-gui)"
 - "Where is the source code"-field: e.g. "C:\PixelLight"
 - "Where to build the binaries"-field: e.g. "C:\PixelLight\CMakeOutput"
+- In case you want to use the Android Emulator instead of a physical Android device:
+  - Click on "Add Entry", add a variable named "ARM_TARGET" of the type "STRING" and assign the value "armeabi" to it (default is "armeabi-v7a" for a physical Android device)
 - Press the "Configure"-button
 - Choose the generator "Unix Makefiles" and select the radio box "Specify toolchain file for cross-compiling"
 - Press the "Next"-button
