@@ -34,6 +34,7 @@ if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
 	)
 endif()
 
+
 ##################################################
 ## Include directories
 ##################################################
@@ -79,6 +80,14 @@ if(WIN32)
 	add_libs(
 		${WIN32_USER32_LIB}
 		${WIN32_GDI32_LIB}
+	)
+endif()
+if(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_libs(
+		android	# Required for "ANativeWindow_setBuffersGeometry()"
 	)
 endif()
 
@@ -188,7 +197,7 @@ if(WIN32)
 		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libEGL.dll	${PL_RUNTIME_BIN_DIR}
 		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libGLESv2.dll	${PL_RUNTIME_BIN_DIR}
 	)
-elseif(LINUX)
+elseif(LINUX AND NOT ANDROID)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}

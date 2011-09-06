@@ -22,6 +22,8 @@
   -> I also noticed that "armeabi v7a" is not working within the Android Emulator, it just crashs. There's no "armeabi v7a"-target available. For the Android emulator, "armeabi" must be used. This means that I
      have to provide two kinds of external dependencies packages, one for "armeabi v7a" and one for "armeabi" because I also want to support the Android Emulator (right now the official Android 2.3 for LG P990
      Optimus Speed is still not available, but should be in a few days... eventually... if it's not, I have to use e.g. Cyanogenmod, but something "official" would be better for testing *g*).
+- Cool, I just compiled PixelLight (minimal build: all 12 base projects, PLRendererOpenGLES2, PLViewer and the samples) for Android without any errors... I think I'am able to test it tomorrow when the rest like
+  Android frontend and apk compilation is implemented
 
 
 
