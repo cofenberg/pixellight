@@ -161,8 +161,8 @@ void GraphicsLinux::DrawImage(const Image &cImage, const Vector2i &vPos, const V
 {
 	// [TODO] Currently, the image is always drawn with the source size (no scaling implemented)
 
-	// Check if native window handle is valid
-	if (m_nNativeWindowHandle) {
+	// Check if image is valid and check if native window handle is valid
+	if (!cImage.IsEmpty() && m_nNativeWindowHandle) {
 		// Get image and mask pixmaps
 		Pixmap pixmap = static_cast<ImageLinux*>(cImage.GetImpl())->GetPixmap();
 		Pixmap mask   = static_cast<ImageLinux*>(cImage.GetImpl())->GetMaskPixmap();
