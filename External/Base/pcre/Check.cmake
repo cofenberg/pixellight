@@ -20,7 +20,13 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 			set(md5sum "eaab385d7c85136ae07cf6eb3832181e")
 		endif()
 	elseif(ANDROID)
-		# [TODO] Checksum for "armeabi" & "armeabi-v7a"
+		if(ARMEABI_V7A)
+			# md5sum of the 32bit armeabi-v7a package
+			set(md5sum "6893ee174fd384dd2741f1826e728bff")
+		else()
+			# md5sum of the 32bit armeabi package
+			set(md5sum "e4fcfa036d57da0950db15772308ca41")
+		endif()
 	elseif(LINUX)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Linux package
